@@ -13,37 +13,40 @@
  "b02": {
   "mobileTiers": {
    "high": {
-    "events": 32,
+    "events": 38,
     "bySpecies": {
-     "小银菊": 20,
-     "橙辉星": 7,
-     "爆裂星": 4,
-     "金芒菊": 1
+     "点灭星": 27,
+     "Tiny·分裂星": 3,
+     "辉星·中（手游）": 1,
+     "V形四根Tiny": 3,
+     "爆裂星": 4
     }
    },
    "medium": {
-    "events": 30,
+    "events": 36,
     "bySpecies": {
-     "小银菊": 18,
-     "橙辉星": 7,
-     "爆裂星": 4,
-     "金芒菊": 1
+     "点灭星": 25,
+     "Tiny·分裂星": 3,
+     "辉星·中（手游）": 1,
+     "V形四根Tiny": 3,
+     "爆裂星": 4
     }
    },
    "low": {
-    "events": 28,
+    "events": 32,
     "bySpecies": {
-     "小银菊": 16,
-     "橙辉星": 7,
-     "爆裂星": 4,
-     "金芒菊": 1
+     "点灭星": 23,
+     "Tiny·分裂星": 1,
+     "辉星·中（手游）": 1,
+     "V形四根Tiny": 3,
+     "爆裂星": 4
     }
    }
   }
  },
  "gpu": {
-  "peak": 60,
-  "peakAt": 21.0,
+  "peak": 54,
+  "peakAt": 18.0,
   "soft": 200
  },
  "overlap": {
@@ -88,9 +91,9 @@
    1.2,
    1.2,
    1.2,
-   1.95,
-   0.5,
-   0.95,
+   1.75,
+   0.2,
+   1.45,
    0.05,
    0.05,
    0.1,
@@ -125,8 +128,63 @@
  },
  "lastEndS": 38.71,
  "quietTailS": 0.29,
- "newVersions": [],
+ "newVersions": [
+  "R03_GoldRayChry@dz0",
+  "R03_OrangeGlitter@dz0",
+  "R03_Strobe__K108@dz30",
+  "R03_Strobe__K92@dz20"
+ ],
  "mobileRuleBreaks": [],
+ "mobileSpecies": {
+  "点灭星": 27,
+  "爆裂星": 4,
+  "Tiny·分裂星": 3,
+  "V形四根Tiny": 3,
+  "辉星·中（手游）": 1
+ },
+ "mobileScale": {
+  "点灭星": {
+   "cues": 19,
+   "events": 27,
+   "scales": [
+    0.92,
+    1.0,
+    1.08
+   ],
+   "max": 1.08
+  },
+  "Tiny·分裂星": {
+   "cues": 1,
+   "events": 3,
+   "scales": [
+    0.867
+   ],
+   "max": 0.867
+  },
+  "辉星·中（手游）": {
+   "cues": 1,
+   "events": 1,
+   "scales": [
+    1.6
+   ],
+   "max": 1.6
+  },
+  "V形四根Tiny": {
+   "cues": 2,
+   "events": 3,
+   "scales": [],
+   "max": null
+  },
+  "爆裂星": {
+   "cues": 4,
+   "events": 4,
+   "scales": [
+    1.0
+   ],
+   "max": 1.0
+  }
+ },
+ "fanClash": [],
  "noSpoiler": [],
  "aliveBySpecies": {},
  "baseFans": {
@@ -134,6 +192,6 @@
   "skipped": []
  },
  "fanSummary": {
-  "aliveGpuPeak": 60
+  "aliveGpuPeak": 54
  }
 }

@@ -1,5 +1,5 @@
 {
-  "revision": "Day_npc_test_fire_v3_fill5to35_highlight_once",
+  "revision": "Day_npc_test_fire_v4_resourcefx_mobile6_frontflowers_fanfix_from_v3",
   "density": 2,
   "rhythm": null,
   "derivedFlowers": [
@@ -13,13 +13,13 @@
     "revision": "v2-20261012",
     "hero": false,
     "heroId": "Hero",
-    "subTemplates": 21,
+    "subTemplates": 24,
     "skipped": 0,
     "heroOnLarge": [
       "NYR03_GoldKamuro_H280@1"
     ],
     "heroSwitched": [],
-    "templates": 21,
+    "templates": 24,
     "baseResources": 3,
     "samples": [
       "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
@@ -81,22 +81,22 @@
     "mediumNotInHigh": 0
   },
   "oneTable": {
-    "events": 54,
-    "flags14": 32,
-    "flags12": 22,
-    "flags2": 0,
-    "subTemplates": 17,
-    "templates": 34,
-    "scheduleSlots": 36,
+    "events": 85,
+    "flags14": 7,
+    "flags12": 47,
+    "flags2": 31,
+    "subTemplates": 25,
+    "templates": 52,
+    "scheduleSlots": 57,
     "pc": {
       "high": 54,
       "medium": 52,
       "low": 46
     },
     "mobile": {
-      "high": 32,
-      "medium": 30,
-      "low": 28
+      "high": 38,
+      "medium": 36,
+      "low": 32
     }
   },
   "beamFlowers": [
@@ -151,13 +151,134 @@
     }
   ],
   "heroTrailId": "Hero",
+  "resources": {
+    "readback": "analysis/results/RESOURCEFX_20261014/读回.json",
+    "readAt": "2026-10-14T14:11:06.012Z",
+    "renamed": {
+      "P_EFX_FireWorks_OrangeGlitter → P_EFX_FireWorks_Glitter": 2
+    },
+    "metadataSynced": 23,
+    "used": [
+      {
+        "id": "P_EFX_FireWorks_Crackle",
+        "rowName": "跨年烟花3.0_小型_G_爆裂星"
+      },
+      {
+        "id": "P_EFX_FireWorks_FanComet_01",
+        "rowName": "跨年烟花3.0_小型_B_红彗星"
+      },
+      {
+        "id": "P_EFX_FireWorks_FanSilver_01",
+        "rowName": "跨年烟花3.0_小型_C_银星扇"
+      },
+      {
+        "id": "P_EFX_FireWorks_Glitter",
+        "rowName": "跨年烟花3.0_小型_I__橙辉星"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldRayChry",
+        "rowName": "跨年烟花3.0_中型_B_金芒菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_LittleCombo",
+        "rowName": "跨年烟花3.0_小号_D_小分裂"
+      },
+      {
+        "id": "P_EFX_FireWorks_LittleSilver",
+        "rowName": "跨年烟花3.0_小号_B_小银菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_NY_Trail_Medium",
+        "rowName": "跨年烟花3.0_中型_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_NY_Trail_Small",
+        "rowName": "跨年烟花3.0_小型_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+        "rowName": "跨年烟花3.0_极小_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_SilverChry",
+        "rowName": "跨年烟花3.0_小型_F_银冠菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_Strobe",
+        "rowName": "跨年烟花3.0_小型_J_点灭星"
+      }
+    ],
+    "missing": []
+  },
+  "b04": {
+    "tiny": [],
+    "front": [
+      {
+        "id": "B04_XS1_SC_a",
+        "engineId": "NYB04_XS1_SC_a",
+        "from": "XS1A",
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.820226,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XS1_SC_a_M",
+        "engineId": "NYB04_XS1_SC_a_M",
+        "from": null,
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.820226,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XSV4",
+        "engineId": "NYB04_XSV4",
+        "from": "XV4",
+        "trails": 4,
+        "flowers": 0,
+        "flightM": 62.02,
+        "rise": 0,
+        "end": 2.79
+      }
+    ],
+    "placeholders": {
+      "Low80": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+        "confirmed": true
+      },
+      "Front62": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+        "confirmed": true
+      },
+      "Tiny": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+        "confirmed": true
+      },
+      "XS": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+        "confirmed": true
+      }
+    }
+  },
+  "mobileDerived": [
+    {
+      "id": "B05_Glitter_M144",
+      "engineId": "NYB05_Glitter_M144",
+      "resource": "P_EFX_FireWorks_OrangeGlitter",
+      "diameter": 144,
+      "scale": 1.6
+    }
+  ],
   "doc": {
-    "cues": 36,
-    "events": 54,
+    "cues": 57,
+    "events": 85,
     "sections": 2,
     "duration": 39,
     "musicOffset": 0,
-    "balls": 38,
+    "balls": 69,
     "fans": 16
   }
 }

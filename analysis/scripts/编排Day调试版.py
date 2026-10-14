@@ -17,7 +17,12 @@ v3（22:24「从5~35秒你就做满，后面7秒不要空，整齐阶段可以�
     9 点小银菊从中间往外 + 4 把银扇 + 小平台三朵一齐出。
   - 变乱（22–35 s）：先只出低处的扇和小平台（高光还没灭），26 s 起球花乱：一对差半拍、突然一发中号、连发、断点、扫错方向，
     一直乱到 35 s，最后一发 34.9 s。
-v2（22:07，前 5 s 空、先整齐后变乱、尾巴留空给 VO）、v1（21:29，一发一发「试」）见 git 历史。
+v4（10-15 01:04「把day版也一起改了」，跟 Night B06 同一套名字和规则；排法、时刻、点位和 v3 一样）：
+  - 名字：橙辉星 ID OrangeGlitter 已不在表里 → 编译加 --resource-map（Glitter）；
+  - 小平台：小花束尾（银扇 / 红彗星单束缩小当尾缀）→ 前台小花（Tiny「极小_尾缀」62 m + 2801 小银菊；V 形四根 Tiny），同点同刻，和 Night B04 起一样；
+  - 手游 6 种（编排B05.build）：小银菊 / 橙辉星 → 点灭星，中号金芒菊 → 放大辉星，爆裂星照旧，小平台也上手游（分裂星）；
+  - 扇：「乱」的两把（22.4 s B6、23.5 s B1）挪到最外 B7 / B0，B6 那把原来压在 21 s 高光银扇还亮着的同一个点上（B06 的扇不叠尺子）。
+v3（22:24）、v2（22:07，前 5 s 空、先整齐后变乱、尾巴留空给 VO）、v1（21:29，一发一发「试」）见 git 历史。
 输出 协作/编排B01/逻辑方案_Day.json、体检_Day.json。
 用法：python3 -I analysis/scripts/编排Day调试版.py
 """
@@ -27,16 +32,13 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-_spec = importlib.util.spec_from_file_location('b01', ROOT / 'analysis/scripts/编排B01.py')
-b = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(b)
-b.HEIGHTS = 'v2'
-_spec = importlib.util.spec_from_file_location('audit', ROOT / 'analysis/scripts/编排重叠体检.py')
-A = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(A)
+_spec = importlib.util.spec_from_file_location('b06', ROOT / 'analysis/scripts/编排B06.py')
+B06 = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(B06)
+B04, B05, b, A = B06.B04, B06.B05, B06.b, B06.ovl      # v4：和 Night B06 用同一份模块（手游 6 种、前台小花、扇尺子）
 OUT = ROOT / '协作/编排B01'
 DUR = 39.0          # 烟花 5–35 s，最后几朵余烬到约 38.8 s
-NIGHT = OUT / '逻辑方案_B03r2m.json'
+NIGHT = OUT / '逻辑方案_B06.json'
 
 BLANK = 5.0          # 前 5 s 闲聊 VO：天上全空
 TURN = 22.0          # 整齐 → 变乱
@@ -62,8 +64,8 @@ SHOTS = [
     (21.0, 'S5', 'R03_Silver5', ['B1', 'B3', 'B4', 'B6'], 0.0, 0, '高光 · 四把银扇', 'together', 0.0, 'trim'),
     (21.0, 'XS1A', None, ['F1', 'F3', 'F5'], 0.0, 0, '高光 · 小平台三朵', 'together', 0.0, 'trim'),
     # —— 变乱：先低处（高光还亮着），再球花，一直乱到 35 s ——
-    (22.4, 'R5', 'R03_Red5', ['B6'], 0.0, 1, '乱 · 扇只出了一边'),
-    (23.5, 'R5', 'R03_Red5', ['B1'], 0.0, 1, '乱 · 另一边晚了 1 s'),
+    (22.4, 'R5', 'R03_Red5', ['B7'], 0.0, 1, '乱 · 扇只出了一边'),       # v4：B6 → B7（B6 上 21 s 的高光银扇还亮着）
+    (23.5, 'R5', 'R03_Red5', ['B0'], 0.0, 1, '乱 · 另一边晚了 1 s'),     # v4：B1 → B0，和上一把对称
     (24.3, 'XV4', None, ['F2'], 0.0, 1, '乱 · 小平台乱入'),
     (25.1, 'S5', 'R03_Silver5', ['B5'], 0.0, 1, '乱 · 银扇单出一把'),
     (26.1, 'OG', 'R03_OrangeGlitter', ['P5'], 20.0, 1, '乱 · 一对先出了右边'),
@@ -103,6 +105,11 @@ def build():
         size = c['size']
         okm = size in 'SML' and c['group'] == 'P' and sp in b.MOBILE_OK and (size == 'S' or all(int(p[1:]) % 2 == 0 for p in c['points']))
         c['mobile'] = bool(okm)
+    # v4：小平台换前台小花（同 Night B04 起），再按 B05 换名字 / 手游 6 种
+    B04.platform(S.cues, True)
+    S.cues, S.b05 = B05.build(dict(cues=S.cues))
+    for c in S.cues:
+        c['id'] = c['id'].replace('B01_C', 'DAY_C')
     return S
 
 
@@ -136,7 +143,7 @@ def checks(S, night):
                                      gaps=[(round(a, 2), round(z, 2)) for a, z in A.gaps(fl, t_to=DUR)])
     res['overlap'] = ov
     # 同屏朵数（球花，开花到熄灭）
-    balls = sorted((e['burst'], e['end']) for c in S.cues if c['size'] in 'SML' for e in c['events'])
+    balls = sorted((e['burst'], e['end']) for c in S.cues if c['size'] in 'SML' and c.get('mobile') != 'only' for e in c['events'])   # PC（手游替身不重复算）
     res['maxAliveBalls'] = max(sum(1 for a, z in balls if a <= t < z) for t in [x / 10 for x in range(int(DUR * 10))])
     # 前 5 s 全空、整齐 / 变乱的间隔、给最后 VO 的空
     launches = [e['launch'] for c in S.cues for e in c['events']]
@@ -169,7 +176,11 @@ def checks(S, night):
     have = {(c['templateId'], e['dz']) for c in night['cues'] for e in c['events']}
     res['newVersions'] = sorted({f"{c['templateId']}@dz{e['dz']:g}" for c in S.cues for e in c['events'] if (c['templateId'], e['dz']) not in have})
     # 手游规则
-    res['mobileRuleBreaks'] = [c['id'] for c in S.cues if c['mobile'] and (c['group'] != 'P' or c['sp'] not in b.MOBILE_OK or (c['size'] != 'S' and any(int(p[1:]) % 2 for p in c['points'])))]
+    res['mobileRuleBreaks'] = [x['cue'] for x in B05.mobile_rule(S.cues)['violations']] + [c['id'] for c in S.cues if c.get('mobile') is not False and c['size'] in 'ML' and any(int(p[1:]) % 2 for p in c['points'])]
+    res['mobileSpecies'] = B05.mobile_rule(S.cues)['eventsBySpecies']
+    res['mobileScale'] = B05.scale_table(S.cues)
+    ev = sorted(B06.fan_events(S.cues), key=lambda x: x['t'])
+    res['fanClash'] = [dict(a=e['cue'], b=f['cue'], t=round(max(e['t'], f['t']), 2), points=[e['point'], f['point']]) for i, e in enumerate(ev) for f in ev[i + 1:] if B06.clash(e, f)]
     res['noSpoiler'] = [c['id'] for c in S.cues if c['sp'] in ('GK', 'GKH') or c['size'] == 'L']
     # 给动画用的占位（Night 体检里有的键）
     res['aliveBySpecies'], res['baseFans'], res['fanSummary'] = {}, dict(groups=0, skipped=[]), dict(aliveGpuPeak=peak)
@@ -178,17 +189,18 @@ def checks(S, night):
 
 def main():
     S = build()
+    B05.apply_census(B05.census_gpu()[0])          # v4：GPU 按 10-14 读回（同 Night B05 / B06）
     night = json.loads(NIGHT.read_text(encoding='utf-8'))
     ck = checks(S, night)
-    logic = dict(format='df.nagaoka-logic/1', revision='Day_npc_test_fire_v3_fill5to35_highlight_once', rhythm=None, status='draft', generator='analysis/scripts/编排Day调试版.py',
+    logic = dict(format='df.nagaoka-logic/1', revision='Day_npc_test_fire_v4_resourcefx_mobile6_frontflowers_fanfix_from_v3', rhythm=None, status='draft', generator='analysis/scripts/编排Day调试版.py',
                  density=1, musicOffsetS=0.0, barS=None, bar0S=None, duration=DUR, sections=S.sections, musicMarkers=[], cues=S.cues,
-                 noMusic=True, loop=False, note='零点前 NPC 试放（Day 导演）；进图 3 分钟放一次、不循环；不放音乐，有 VO：前 5 s 闲聊（全空）；5–35 s 做满：先整齐（中间一次高光），后变乱到底', base=str(NIGHT.relative_to(ROOT)))
+                 noMusic=True, loop=False, b05=S.b05, note='零点前 NPC 试放（Day 导演）；进图 3 分钟放一次、不循环；不放音乐，有 VO：前 5 s 闲聊（全空）；5–35 s 做满：先整齐（中间一次高光），后变乱到底', base=str(NIGHT.relative_to(ROOT)))
     (OUT / '逻辑方案_Day.json').write_text(json.dumps(logic, ensure_ascii=False, indent=1), encoding='utf-8')
     (OUT / '体检_Day.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
     ov = {k: (len(v['incidents']), v['gaps']) for k, v in ck['overlap'].items()}
     print(json.dumps(dict(fillHoles=ck['fillHoles'], firstLaunch=ck['firstLaunchS'], lastHit=ck['lastHitS'], intervals=ck['intervals'], cues=len(S.cues), pc={t: v['events'] for t, v in ck['tiers'].items()}, mobile={t: v['events'] for t, v in ck['b02']['mobileTiers'].items()},
                           gpu=ck['gpu']['peak'], maxAliveBalls=ck['maxAliveBalls'], lastEnd=ck['lastEndS'], tail=ck['quietTailS'], newVersions=ck['newVersions'],
-                          mobileRuleBreaks=ck['mobileRuleBreaks'], noSpoiler=ck['noSpoiler'], overlap=ov), ensure_ascii=False))
+                          mobileRuleBreaks=ck['mobileRuleBreaks'], mobileSpecies=ck['mobileSpecies'], fanClash=ck['fanClash'], noSpoiler=ck['noSpoiler'], overlap=ov), ensure_ascii=False))
 
 
 if __name__ == '__main__':

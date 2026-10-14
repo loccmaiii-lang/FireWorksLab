@@ -1,6 +1,6 @@
 {
  "format": "df.nagaoka-logic/1",
- "revision": "Day_npc_test_fire_v3_fill5to35_highlight_once",
+ "revision": "Day_npc_test_fire_v4_resourcefx_mobile6_frontflowers_fanfix_from_v3",
  "rhythm": null,
  "status": "draft",
  "generator": "analysis/scripts/编排Day调试版.py",
@@ -87,6 +87,84 @@
    "mobile": false
   },
   {
+   "id": "DAY_C004",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 银菊左到右 1",
+   "name": "整齐 · 整齐 · 银菊左到右 1",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 5.0,
+     "burst": 7.9544,
+     "end": 12.5144,
+     "dz": 0.0,
+     "H": 7.95
+    }
+   ],
+   "H0": 7.95,
+   "profiles": {
+    "medium": [
+     "P0"
+    ],
+    "low": [
+     "P0"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C004m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 5.0,
+     "burst": 7.9544,
+     "end": 11.1544,
+     "dz": 0.0,
+     "H": 7.95
+    }
+   ],
+   "H0": 7.95,
+   "profiles": {
+    "medium": [
+     "P0"
+    ],
+    "low": [
+     "P0"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C004",
+   "sizeK": 1.0
+  },
+  {
    "id": "DAY_C002",
    "section": "D_S0",
    "sp": "S5",
@@ -134,6 +212,84 @@
     ]
    },
    "mobile": false
+  },
+  {
+   "id": "DAY_C005",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P2"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 银菊左到右 2",
+   "name": "整齐 · 整齐 · 银菊左到右 2",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P2",
+     "launch": 6.2,
+     "burst": 9.1544,
+     "end": 13.7144,
+     "dz": 0.0,
+     "H": 9.15
+    }
+   ],
+   "H0": 9.15,
+   "profiles": {
+    "medium": [
+     "P2"
+    ],
+    "low": [
+     "P2"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C005m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P2"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P2",
+     "launch": 6.2,
+     "burst": 9.1544,
+     "end": 12.3544,
+     "dz": 0.0,
+     "H": 9.15
+    }
+   ],
+   "H0": 9.15,
+   "profiles": {
+    "medium": [
+     "P2"
+    ],
+    "low": [
+     "P2"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C005",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C003",
@@ -185,82 +341,6 @@
    "mobile": false
   },
   {
-   "id": "DAY_C004",
-   "section": "D_S0",
-   "sp": "SC",
-   "templateId": "R03_SilverChry",
-   "size": "S",
-   "group": "P",
-   "points": [
-    "P0"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "整齐 · 银菊左到右 1",
-   "name": "整齐 · 整齐 · 银菊左到右 1",
-   "wave": "试放·整齐",
-   "events": [
-    {
-     "point": "P0",
-     "launch": 5.0,
-     "burst": 7.9544,
-     "end": 12.5144,
-     "dz": 0.0,
-     "H": 7.95
-    }
-   ],
-   "H0": 7.95,
-   "profiles": {
-    "medium": [
-     "P0"
-    ],
-    "low": [
-     "P0"
-    ]
-   },
-   "mobile": true
-  },
-  {
-   "id": "DAY_C005",
-   "section": "D_S0",
-   "sp": "SC",
-   "templateId": "R03_SilverChry",
-   "size": "S",
-   "group": "P",
-   "points": [
-    "P2"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "整齐 · 银菊左到右 2",
-   "name": "整齐 · 整齐 · 银菊左到右 2",
-   "wave": "试放·整齐",
-   "events": [
-    {
-     "point": "P2",
-     "launch": 6.2,
-     "burst": 9.1544,
-     "end": 13.7144,
-     "dz": 0.0,
-     "H": 9.15
-    }
-   ],
-   "H0": 9.15,
-   "profiles": {
-    "medium": [
-     "P2"
-    ],
-    "low": [
-     "P2"
-    ]
-   },
-   "mobile": true
-  },
-  {
    "id": "DAY_C006",
    "section": "D_S0",
    "sp": "SC",
@@ -296,7 +376,47 @@
      "P4"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C006m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P4",
+     "launch": 7.4,
+     "burst": 10.3544,
+     "end": 13.5544,
+     "dz": 0.0,
+     "H": 10.35
+    }
+   ],
+   "H0": 10.35,
+   "profiles": {
+    "medium": [
+     "P4"
+    ],
+    "low": [
+     "P4"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C006",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C007",
@@ -334,7 +454,47 @@
      "P6"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C007m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P6",
+     "launch": 8.6,
+     "burst": 11.5544,
+     "end": 14.7544,
+     "dz": 0.0,
+     "H": 11.55
+    }
+   ],
+   "H0": 11.55,
+   "profiles": {
+    "medium": [
+     "P6"
+    ],
+    "low": [
+     "P6"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C007",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C008",
@@ -372,7 +532,47 @@
      "P8"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C008m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P8"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P8",
+     "launch": 9.8,
+     "burst": 12.7544,
+     "end": 15.9544,
+     "dz": 0.0,
+     "H": 12.75
+    }
+   ],
+   "H0": 12.75,
+   "profiles": {
+    "medium": [
+     "P8"
+    ],
+    "low": [
+     "P8"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C008",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C009",
@@ -410,7 +610,47 @@
      "P7"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C009m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P7"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P7",
+     "launch": 11.0,
+     "burst": 13.9544,
+     "end": 17.1544,
+     "dz": 10.0,
+     "H": 13.95
+    }
+   ],
+   "H0": 13.95,
+   "profiles": {
+    "medium": [
+     "P7"
+    ],
+    "low": [
+     "P7"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C009",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C010",
@@ -448,7 +688,47 @@
      "P5"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C010m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P5",
+     "launch": 12.2,
+     "burst": 15.1544,
+     "end": 18.3544,
+     "dz": 10.0,
+     "H": 15.15
+    }
+   ],
+   "H0": 15.15,
+   "profiles": {
+    "medium": [
+     "P5"
+    ],
+    "low": [
+     "P5"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C010",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C011",
@@ -486,7 +766,47 @@
      "P3"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C011m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P3"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P3",
+     "launch": 13.4,
+     "burst": 16.3544,
+     "end": 19.5544,
+     "dz": 10.0,
+     "H": 16.35
+    }
+   ],
+   "H0": 16.35,
+   "profiles": {
+    "medium": [
+     "P3"
+    ],
+    "low": [
+     "P3"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C011",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C012",
@@ -524,56 +844,47 @@
      "P1"
     ]
    },
-   "mobile": true
+   "mobile": false
   },
   {
-   "id": "DAY_C013",
+   "id": "DAY_C012m5",
    "section": "D_S0",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
-   "size": "F",
-   "group": "B",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
    "points": [
-    "B0",
-    "B7"
+    "P1"
    ],
    "order": "together",
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 两端银扇（预备）",
-   "name": "整齐 · 整齐 · 两端银扇（预备）",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
    "wave": "试放·整齐",
    "events": [
     {
-     "point": "B0",
-     "launch": 19.5,
-     "burst": 19.5,
-     "end": 21.95,
-     "dz": 0.0,
-     "H": 19.5
-    },
-    {
-     "point": "B7",
-     "launch": 19.5,
-     "burst": 19.5,
-     "end": 21.95,
-     "dz": 0.0,
-     "H": 19.5
+     "point": "P1",
+     "launch": 14.6,
+     "burst": 17.5544,
+     "end": 20.7544,
+     "dz": 10.0,
+     "H": 17.55
     }
    ],
-   "H0": 19.5,
+   "H0": 17.55,
    "profiles": {
     "medium": [
-     "B0",
-     "B7"
+     "P1"
     ],
     "low": [
-     "B0",
-     "B7"
+     "P1"
     ]
    },
-   "mobile": false
+   "mobile": "only",
+   "standinOf": "DAY_C012",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C014",
@@ -694,7 +1005,296 @@
     ]
    },
    "sizeK": 0.92,
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C014m5",
+   "section": "D_S0",
+   "sp": "ST",
+   "templateId": "R03_Strobe__K92",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8"
+   ],
+   "order": "center-out",
+   "gap": 0.1,
+   "layer": "main",
+   "tier": "trim",
+   "label": "点灭星",
+   "name": "整齐 · 点灭星",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 18.4,
+     "burst": 21.3544,
+     "end": 24.5544,
+     "dz": 20.0,
+     "H": 21.4
+    },
+    {
+     "point": "P1",
+     "launch": 18.3,
+     "burst": 21.2544,
+     "end": 24.4544,
+     "dz": 20.0,
+     "H": 21.3
+    },
+    {
+     "point": "P2",
+     "launch": 18.2,
+     "burst": 21.1544,
+     "end": 24.3544,
+     "dz": 20.0,
+     "H": 21.2
+    },
+    {
+     "point": "P3",
+     "launch": 18.1,
+     "burst": 21.0544,
+     "end": 24.2544,
+     "dz": 20.0,
+     "H": 21.1
+    },
+    {
+     "point": "P4",
+     "launch": 18.0,
+     "burst": 20.9544,
+     "end": 24.1544,
+     "dz": 20.0,
+     "H": 21.0
+    },
+    {
+     "point": "P5",
+     "launch": 18.1,
+     "burst": 21.0544,
+     "end": 24.2544,
+     "dz": 20.0,
+     "H": 21.1
+    },
+    {
+     "point": "P6",
+     "launch": 18.2,
+     "burst": 21.1544,
+     "end": 24.3544,
+     "dz": 20.0,
+     "H": 21.2
+    },
+    {
+     "point": "P7",
+     "launch": 18.3,
+     "burst": 21.2544,
+     "end": 24.4544,
+     "dz": 20.0,
+     "H": 21.3
+    },
+    {
+     "point": "P8",
+     "launch": 18.4,
+     "burst": 21.3544,
+     "end": 24.5544,
+     "dz": 20.0,
+     "H": 21.4
+    }
+   ],
+   "H0": 21.0,
+   "profiles": {
+    "medium": [
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7"
+    ],
+    "low": [
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6"
+    ]
+   },
+   "sizeK": 0.92,
+   "mobile": "only",
+   "standinOf": "DAY_C014"
+  },
+  {
+   "id": "DAY_C016",
+   "section": "D_S0",
+   "sp": "FS1A",
+   "templateId": "B04_XS1_SC_a",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F1",
+    "F3",
+    "F5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "trim",
+   "label": "Tiny·小银菊",
+   "name": "整齐 · 高光 · 小平台三朵",
+   "wave": "小平台·前台小花",
+   "events": [
+    {
+     "point": "F1",
+     "launch": 19.3,
+     "burst": 20.9875,
+     "end": 25.5475,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "F3",
+     "launch": 19.3,
+     "burst": 20.9875,
+     "end": 25.5475,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "F5",
+     "launch": 19.3,
+     "burst": 20.9875,
+     "end": 25.5475,
+     "dz": 0.0,
+     "H": 21.0
+    }
+   ],
+   "H0": 21.0,
+   "profiles": {
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [
+     "F3"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C016m5",
+   "section": "D_S0",
+   "sp": "FS1Am",
+   "templateId": "B04_XS1_SC_a_M",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F1",
+    "F3",
+    "F5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "trim",
+   "label": "Tiny·分裂星",
+   "name": "整齐 · 高光 · 小平台三朵（手游·Tiny·分裂星）",
+   "wave": "小平台·前台小花",
+   "events": [
+    {
+     "point": "F1",
+     "launch": 19.3,
+     "burst": 20.9875,
+     "end": 25.5475,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "F3",
+     "launch": 19.3,
+     "burst": 20.9875,
+     "end": 25.5475,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "F5",
+     "launch": 19.3,
+     "burst": 20.9875,
+     "end": 25.5475,
+     "dz": 0.0,
+     "H": 21.0
+    }
+   ],
+   "H0": 21.0,
+   "profiles": {
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [
+     "F3"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C016",
+   "sizeK": 1.0
+  },
+  {
+   "id": "DAY_C013",
+   "section": "D_S0",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B0",
+    "B7"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 两端银扇（预备）",
+   "name": "整齐 · 整齐 · 两端银扇（预备）",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "B0",
+     "launch": 19.5,
+     "burst": 19.5,
+     "end": 21.95,
+     "dz": 0.0,
+     "H": 19.5
+    },
+    {
+     "point": "B7",
+     "launch": 19.5,
+     "burst": 19.5,
+     "end": 21.95,
+     "dz": 0.0,
+     "H": 19.5
+    }
+   ],
+   "H0": 19.5,
+   "profiles": {
+    "medium": [
+     "B0",
+     "B7"
+    ],
+    "low": [
+     "B0",
+     "B7"
+    ]
+   },
+   "mobile": false
   },
   {
    "id": "DAY_C015",
@@ -766,64 +1366,6 @@
    "mobile": false
   },
   {
-   "id": "DAY_C016",
-   "section": "D_S0",
-   "sp": "XS1A",
-   "templateId": "B02_BeamS1_SC_a",
-   "size": "X",
-   "group": "F",
-   "points": [
-    "F1",
-    "F3",
-    "F5"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "trim",
-   "label": "高光 · 小平台三朵",
-   "name": "整齐 · 高光 · 小平台三朵",
-   "wave": "试放·整齐",
-   "events": [
-    {
-     "point": "F1",
-     "launch": 20.0,
-     "burst": 21.0,
-     "end": 25.56,
-     "dz": 0.0,
-     "H": 21.0
-    },
-    {
-     "point": "F3",
-     "launch": 20.0,
-     "burst": 21.0,
-     "end": 25.56,
-     "dz": 0.0,
-     "H": 21.0
-    },
-    {
-     "point": "F5",
-     "launch": 20.0,
-     "burst": 21.0,
-     "end": 25.56,
-     "dz": 0.0,
-     "H": 21.0
-    }
-   ],
-   "H0": 21.0,
-   "profiles": {
-    "medium": [
-     "F1",
-     "F3",
-     "F5"
-    ],
-    "low": [
-     "F3"
-    ]
-   },
-   "mobile": false
-  },
-  {
    "id": "DAY_C017",
    "section": "D_S1",
    "sp": "R5",
@@ -831,7 +1373,7 @@
    "size": "F",
    "group": "B",
    "points": [
-    "B6"
+    "B7"
    ],
    "order": "together",
    "gap": 0.0,
@@ -842,7 +1384,7 @@
    "wave": "试放·变乱",
    "events": [
     {
-     "point": "B6",
+     "point": "B7",
      "launch": 22.4,
      "burst": 22.4,
      "end": 25.5,
@@ -853,124 +1395,10 @@
    "H0": 22.4,
    "profiles": {
     "medium": [
-     "B6"
+     "B7"
     ],
     "low": [
-     "B6"
-    ]
-   },
-   "mobile": false
-  },
-  {
-   "id": "DAY_C018",
-   "section": "D_S1",
-   "sp": "R5",
-   "templateId": "R03_Red5",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B1"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "乱 · 另一边晚了 1 s",
-   "name": "变乱 · 乱 · 另一边晚了 1 s",
-   "wave": "试放·变乱",
-   "events": [
-    {
-     "point": "B1",
-     "launch": 23.5,
-     "burst": 23.5,
-     "end": 26.6,
-     "dz": 0.0,
-     "H": 23.5
-    }
-   ],
-   "H0": 23.5,
-   "profiles": {
-    "medium": [
-     "B1"
-    ],
-    "low": [
-     "B1"
-    ]
-   },
-   "mobile": false
-  },
-  {
-   "id": "DAY_C019",
-   "section": "D_S1",
-   "sp": "XV4",
-   "templateId": "B02_BeamV4",
-   "size": "X",
-   "group": "F",
-   "points": [
-    "F2"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "乱 · 小平台乱入",
-   "name": "变乱 · 乱 · 小平台乱入",
-   "wave": "试放·变乱",
-   "events": [
-    {
-     "point": "F2",
-     "launch": 24.3,
-     "burst": 24.3,
-     "end": 26.8,
-     "dz": 0.0,
-     "H": 24.3
-    }
-   ],
-   "H0": 24.3,
-   "profiles": {
-    "medium": [
-     "F2"
-    ],
-    "low": [
-     "F2"
-    ]
-   },
-   "mobile": false
-  },
-  {
-   "id": "DAY_C020",
-   "section": "D_S1",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B5"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "乱 · 银扇单出一把",
-   "name": "变乱 · 乱 · 银扇单出一把",
-   "wave": "试放·变乱",
-   "events": [
-    {
-     "point": "B5",
-     "launch": 25.1,
-     "burst": 25.1,
-     "end": 27.55,
-     "dz": 0.0,
-     "H": 25.1
-    }
-   ],
-   "H0": 25.1,
-   "profiles": {
-    "medium": [
-     "B5"
-    ],
-    "low": [
-     "B5"
+     "B7"
     ]
    },
    "mobile": false
@@ -1011,7 +1439,163 @@
      "P5"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C021m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P5",
+     "launch": 23.1,
+     "burst": 26.0544,
+     "end": 29.2544,
+     "dz": 20.0,
+     "H": 26.1
+    }
+   ],
+   "H0": 26.1,
+   "profiles": {
+    "medium": [
+     "P5"
+    ],
+    "low": [
+     "P5"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C021",
+   "sizeK": 1.0
+  },
+  {
+   "id": "DAY_C018",
+   "section": "D_S1",
+   "sp": "R5",
+   "templateId": "R03_Red5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 另一边晚了 1 s",
+   "name": "变乱 · 乱 · 另一边晚了 1 s",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "B0",
+     "launch": 23.5,
+     "burst": 23.5,
+     "end": 26.6,
+     "dz": 0.0,
+     "H": 23.5
+    }
+   ],
+   "H0": 23.5,
+   "profiles": {
+    "medium": [
+     "B0"
+    ],
+    "low": [
+     "B0"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C024",
+   "section": "D_S1",
+   "sp": "GR",
+   "templateId": "R03_GoldRayChry",
+   "size": "M",
+   "group": "P",
+   "points": [
+    "P0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 突然一发中号",
+   "name": "变乱 · 乱 · 突然一发中号",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 23.5,
+     "burst": 27.8772,
+     "end": 32.4372,
+     "dz": 0.0,
+     "H": 27.9
+    }
+   ],
+   "H0": 27.9,
+   "profiles": {
+    "medium": [
+     "P0"
+    ],
+    "low": [
+     "P0"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C024m5",
+   "section": "D_S1",
+   "sp": "OGM",
+   "templateId": "B05_Glitter_M144",
+   "size": "M",
+   "group": "P",
+   "points": [
+    "P0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "辉星·中（手游）",
+   "name": "变乱 · 辉星·中（手游）",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 23.5,
+     "burst": 27.8772,
+     "end": 31.0772,
+     "dz": 0.0,
+     "H": 27.9
+    }
+   ],
+   "H0": 27.9,
+   "profiles": {
+    "medium": [
+     "P0"
+    ],
+    "low": [
+     "P0"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C024",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C022",
@@ -1047,6 +1631,84 @@
     ],
     "low": [
      "P3"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C022m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P3"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P3",
+     "launch": 23.6,
+     "burst": 26.5544,
+     "end": 29.7544,
+     "dz": 0.0,
+     "H": 26.6
+    }
+   ],
+   "H0": 26.6,
+   "profiles": {
+    "medium": [
+     "P3"
+    ],
+    "low": [
+     "P3"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C022",
+   "sizeK": 1.0
+  },
+  {
+   "id": "DAY_C019",
+   "section": "D_S1",
+   "sp": "FV4",
+   "templateId": "B04_XSV4",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F2"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "V形四根Tiny",
+   "name": "变乱 · 乱 · 小平台乱入",
+   "wave": "小平台·前台小花",
+   "events": [
+    {
+     "point": "F2",
+     "launch": 24.3,
+     "burst": 24.3,
+     "end": 27.09,
+     "dz": 0.0,
+     "H": 24.3
+    }
+   ],
+   "H0": 24.3,
+   "profiles": {
+    "medium": [
+     "F2"
+    ],
+    "low": [
+     "F2"
     ]
    },
    "mobile": true
@@ -1090,42 +1752,42 @@
    "mobile": true
   },
   {
-   "id": "DAY_C024",
+   "id": "DAY_C020",
    "section": "D_S1",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
-   "group": "P",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
    "points": [
-    "P0"
+    "B5"
    ],
    "order": "together",
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "乱 · 突然一发中号",
-   "name": "变乱 · 乱 · 突然一发中号",
+   "label": "乱 · 银扇单出一把",
+   "name": "变乱 · 乱 · 银扇单出一把",
    "wave": "试放·变乱",
    "events": [
     {
-     "point": "P0",
-     "launch": 23.5,
-     "burst": 27.8772,
-     "end": 32.4372,
+     "point": "B5",
+     "launch": 25.1,
+     "burst": 25.1,
+     "end": 27.55,
      "dz": 0.0,
-     "H": 27.9
+     "H": 25.1
     }
    ],
-   "H0": 27.9,
+   "H0": 25.1,
    "profiles": {
     "medium": [
-     "P0"
+     "B5"
     ],
     "low": [
-     "P0"
+     "B5"
     ]
    },
-   "mobile": true
+   "mobile": false
   },
   {
    "id": "DAY_C025",
@@ -1164,7 +1826,47 @@
     ]
    },
    "sizeK": 0.92,
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C025m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe__K92",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P6",
+     "launch": 25.6,
+     "burst": 28.5544,
+     "end": 31.7544,
+     "dz": 20.0,
+     "H": 28.6
+    }
+   ],
+   "H0": 28.6,
+   "profiles": {
+    "medium": [
+     "P6"
+    ],
+    "low": [
+     "P6"
+    ]
+   },
+   "sizeK": 0.92,
+   "mobile": "only",
+   "standinOf": "DAY_C025"
   },
   {
    "id": "DAY_C026",
@@ -1203,7 +1905,47 @@
     ]
    },
    "sizeK": 0.92,
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C026m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe__K92",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P7"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P7",
+     "launch": 25.9,
+     "burst": 28.8544,
+     "end": 32.0544,
+     "dz": 0.0,
+     "H": 28.9
+    }
+   ],
+   "H0": 28.9,
+   "profiles": {
+    "medium": [
+     "P7"
+    ],
+    "low": [
+     "P7"
+    ]
+   },
+   "sizeK": 0.92,
+   "mobile": "only",
+   "standinOf": "DAY_C026"
   },
   {
    "id": "DAY_C027",
@@ -1279,7 +2021,47 @@
      "P2"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C028m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P2"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P2",
+     "launch": 27.4,
+     "burst": 30.3544,
+     "end": 33.5544,
+     "dz": 0.0,
+     "H": 30.4
+    }
+   ],
+   "H0": 30.4,
+   "profiles": {
+    "medium": [
+     "P2"
+    ],
+    "low": [
+     "P2"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C028",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C029",
@@ -1317,56 +2099,47 @@
      "P3"
     ]
    },
-   "mobile": true
+   "mobile": false
   },
   {
-   "id": "DAY_C030",
+   "id": "DAY_C029m5",
    "section": "D_S1",
-   "sp": "XV4",
-   "templateId": "B02_BeamV4",
-   "size": "X",
-   "group": "F",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
    "points": [
-    "F0",
-    "F6"
+    "P3"
    ],
    "order": "together",
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "乱 · 小平台两边",
-   "name": "变乱 · 乱 · 小平台两边",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
    "wave": "试放·变乱",
    "events": [
     {
-     "point": "F0",
-     "launch": 31.2,
-     "burst": 31.2,
-     "end": 33.7,
-     "dz": 0.0,
-     "H": 31.2
-    },
-    {
-     "point": "F6",
-     "launch": 31.2,
-     "burst": 31.2,
-     "end": 33.7,
-     "dz": 0.0,
-     "H": 31.2
+     "point": "P3",
+     "launch": 27.6,
+     "burst": 30.5544,
+     "end": 33.7544,
+     "dz": 10.0,
+     "H": 30.55
     }
    ],
-   "H0": 31.2,
+   "H0": 30.55,
    "profiles": {
     "medium": [
-     "F0",
-     "F6"
+     "P3"
     ],
     "low": [
-     "F0",
-     "F6"
+     "P3"
     ]
    },
-   "mobile": false
+   "mobile": "only",
+   "standinOf": "DAY_C029",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C031",
@@ -1404,45 +2177,47 @@
      "P5"
     ]
    },
-   "mobile": true
+   "mobile": false
   },
   {
-   "id": "DAY_C032",
+   "id": "DAY_C031m5",
    "section": "D_S1",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
-   "size": "F",
-   "group": "B",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
    "points": [
-    "B4"
+    "P5"
    ],
    "order": "together",
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "乱 · 扇扫错了方向",
-   "name": "变乱 · 乱 · 扇扫错了方向",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
    "wave": "试放·变乱",
    "events": [
     {
-     "point": "B4",
-     "launch": 32.3,
-     "burst": 32.3,
-     "end": 36.04,
+     "point": "P5",
+     "launch": 28.6,
+     "burst": 31.5544,
+     "end": 34.7544,
      "dz": 0.0,
-     "H": 32.3
+     "H": 31.6
     }
    ],
-   "H0": 32.3,
+   "H0": 31.6,
    "profiles": {
     "medium": [
-     "B4"
+     "P5"
     ],
     "low": [
-     "B4"
+     "P5"
     ]
    },
-   "mobile": false
+   "mobile": "only",
+   "standinOf": "DAY_C031",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C033",
@@ -1480,7 +2255,47 @@
      "P8"
     ]
    },
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C033m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P8"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P8",
+     "launch": 29.8,
+     "burst": 32.7544,
+     "end": 35.9544,
+     "dz": 0.0,
+     "H": 32.8
+    }
+   ],
+   "H0": 32.8,
+   "profiles": {
+    "medium": [
+     "P8"
+    ],
+    "low": [
+     "P8"
+    ]
+   },
+   "mobile": "only",
+   "standinOf": "DAY_C033",
+   "sizeK": 1.0
   },
   {
    "id": "DAY_C034",
@@ -1516,6 +2331,55 @@
     ],
     "low": [
      "P1"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C030",
+   "section": "D_S1",
+   "sp": "FV4",
+   "templateId": "B04_XSV4",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F0",
+    "F6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "V形四根Tiny",
+   "name": "变乱 · 乱 · 小平台两边",
+   "wave": "小平台·前台小花",
+   "events": [
+    {
+     "point": "F0",
+     "launch": 31.2,
+     "burst": 31.2,
+     "end": 33.99,
+     "dz": 0.0,
+     "H": 31.2
+    },
+    {
+     "point": "F6",
+     "launch": 31.2,
+     "burst": 31.2,
+     "end": 33.99,
+     "dz": 0.0,
+     "H": 31.2
+    }
+   ],
+   "H0": 31.2,
+   "profiles": {
+    "medium": [
+     "F0",
+     "F6"
+    ],
+    "low": [
+     "F0",
+     "F6"
     ]
    },
    "mobile": true
@@ -1557,7 +2421,47 @@
     ]
    },
    "sizeK": 1.08,
-   "mobile": true
+   "mobile": false
+  },
+  {
+   "id": "DAY_C035m5",
+   "section": "D_S1",
+   "sp": "ST",
+   "templateId": "R03_Strobe__K108",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "点灭星",
+   "name": "变乱 · 点灭星",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P4",
+     "launch": 31.2,
+     "burst": 34.1544,
+     "end": 37.3544,
+     "dz": 30.0,
+     "H": 34.2
+    }
+   ],
+   "H0": 34.2,
+   "profiles": {
+    "medium": [
+     "P4"
+    ],
+    "low": [
+     "P4"
+    ]
+   },
+   "sizeK": 1.08,
+   "mobile": "only",
+   "standinOf": "DAY_C035"
   },
   {
    "id": "DAY_C036",
@@ -1596,10 +2500,317 @@
     ]
    },
    "mobile": true
+  },
+  {
+   "id": "DAY_C032",
+   "section": "D_S1",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 扇扫错了方向",
+   "name": "变乱 · 乱 · 扇扫错了方向",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "B4",
+     "launch": 32.3,
+     "burst": 32.3,
+     "end": 36.04,
+     "dz": 0.0,
+     "H": 32.3
+    }
+   ],
+   "H0": 32.3,
+   "profiles": {
+    "medium": [
+     "B4"
+    ],
+    "low": [
+     "B4"
+    ]
+   },
+   "mobile": false
   }
  ],
  "noMusic": true,
  "loop": false,
+ "b05": {
+  "lowLayer": [],
+  "labels": 0,
+  "mobileSplit": [
+   {
+    "cue": "DAY_C004m5",
+    "of": "DAY_C004",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C005m5",
+    "of": "DAY_C005",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C006m5",
+    "of": "DAY_C006",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C007m5",
+    "of": "DAY_C007",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C008m5",
+    "of": "DAY_C008",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C009m5",
+    "of": "DAY_C009",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C010m5",
+    "of": "DAY_C010",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C011m5",
+    "of": "DAY_C011",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C012m5",
+    "of": "DAY_C012",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C014m5",
+    "of": "DAY_C014",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 9
+   },
+   {
+    "cue": "DAY_C016m5",
+    "of": "DAY_C016",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "DAY_C021m5",
+    "of": "DAY_C021",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C022m5",
+    "of": "DAY_C022",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C024m5",
+    "of": "DAY_C024",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C025m5",
+    "of": "DAY_C025",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C026m5",
+    "of": "DAY_C026",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C028m5",
+    "of": "DAY_C028",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C029m5",
+    "of": "DAY_C029",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C031m5",
+    "of": "DAY_C031",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C033m5",
+    "of": "DAY_C033",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "DAY_C035m5",
+    "of": "DAY_C035",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K108",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K108",
+    "scale": 1.08,
+    "events": 1
+   }
+  ],
+  "mobileStandinSwap": [],
+  "mobileKept": [
+   {
+    "cue": "DAY_C019",
+    "sp": "FV4"
+   },
+   {
+    "cue": "DAY_C023",
+    "sp": "CR"
+   },
+   {
+    "cue": "DAY_C027",
+    "sp": "CR"
+   },
+   {
+    "cue": "DAY_C030",
+    "sp": "FV4"
+   },
+   {
+    "cue": "DAY_C034",
+    "sp": "CR"
+   },
+   {
+    "cue": "DAY_C036",
+    "sp": "CR"
+   }
+  ],
+  "platform": [
+   "DAY_C016",
+   "DAY_C019",
+   "DAY_C030"
+  ]
+ },
  "note": "零点前 NPC 试放（Day 导演）；进图 3 分钟放一次、不循环；不放音乐，有 VO：前 5 s 闲聊（全空）；5–35 s 做满：先整齐（中间一次高光），后变乱到底",
- "base": "协作/编排B01/逻辑方案_B03r2m.json"
+ "base": "协作/编排B01/逻辑方案_B06.json"
 }

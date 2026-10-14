@@ -1,4 +1,10 @@
-# Day 调试版 v3：零点前 NPC 试放（进图 3 分钟放一次）
+# Day 调试版 v4：零点前 NPC 试放（进图 3 分钟放一次）
+
+> **v4（跨年秀（22）· 2026-10-15，用户 01:04「把day版也一起改了」）**：排法、时刻、点位同 v3，改四处——
+> 橙辉星 ID 换 Glitter（v3 的 OrangeGlitter 表里已没有）、小平台换前台小花（Tiny 62 m + 2801 小银菊；V 形四根 Tiny）、
+> 手游只用 6 种（小银菊 / 橙辉星 → 点灭星，中号金芒菊 → 放大辉星，小平台分裂星；手游 38 / 36 / 32 发）、
+> 「乱」的两把扇 22.4 / 23.5 s 从 B6 / B1 挪到 B7 / B0（B6 那把压在 21 s 高光银扇还亮着的同一点上）。
+> 重叠六档 0、扇不叠 0、GPU 54；同名文件在 `FXtools/节目/NewYearFireWorks_Day/` 已更新，交付选 Day 导演。说明见 `协作/编排B06.md` 最后一节。下面是 v3 的说明，除这四处外仍对。
 
 > 跨年秀（22）· 2026-10-13 22:45。执行结束 + AI 自检通过；没在 UE 里放过；**交给用户合入**。
 > 工作台：云端编排 16.0.28 的对比版「Day调试版v3-做满到35秒-整齐高光后变乱」，要手动打开（节目 → 打开节目）。主编排仍是 B03 修订2，同一份节目，刷新不会重新载入。
@@ -65,7 +71,7 @@
 
 ```
 python3 -I analysis/scripts/编排Day调试版.py
-node analysis/scripts/编排B01_编译.mjs --b02r3 --logic 协作/编排B01/逻辑方案_Day.json --name Day调试版-NPC试放 --no-music --project-id NYFW_DAY_20261013 --project-name NewYearFireWorks_Day --out FXtools/节目/NewYearFireWorks_Day
+node analysis/scripts/编排B01_编译.mjs --b02r3 --logic 协作/编排B01/逻辑方案_Day.json --name Day调试版-NPC试放 --no-music --project-id NYFW_DAY_20261013 --project-name NewYearFireWorks_Day --out FXtools/节目/NewYearFireWorks_Day --resource-map 协作/编排B01/资源名映射.json
 python3 -I analysis/scripts/编排B01_动画.py --day
 ```
 
