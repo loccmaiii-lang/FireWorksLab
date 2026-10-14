@@ -1,0 +1,18 @@
+[
+ {
+  "name": "Silver 3.1（Silver3_Layers）",
+  "script": "全程回放检查.py",
+  "code": 2,
+  "ok": false,
+  "minutes": 0.0,
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\全程回放检查.py\", line 33, in <module>\n    try: code = main(sys.argv[1:])\n                ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\全程回放检查.py\", line 23, in main\n    r = rc.check([rc.Pack(d, i) for i in seqi], out, None, times)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\回放检查.py\", line 190, in check\n    if any(t < 0 or t > span + 1e-6 for t in samples): raise ValueError('采样超出素材或参考有效时间')\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: 采样超出素材或参考有效时间\n"
+ },
+ {
+  "name": "Comet 3.1（Comet3_Layers）",
+  "script": "全程回放检查.py",
+  "code": 2,
+  "ok": false,
+  "minutes": 0.0,
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\全程回放检查.py\", line 33, in <module>\n    try: code = main(sys.argv[1:])\n                ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\全程回放检查.py\", line 23, in main\n    r = rc.check([rc.Pack(d, i) for i in seqi], out, None, times)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\回放检查.py\", line 190, in check\n    if any(t < 0 or t > span + 1e-6 for t in samples): raise ValueError('采样超出素材或参考有效时间')\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: 采样超出素材或参考有效时间\n"
+ }
+]

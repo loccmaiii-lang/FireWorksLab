@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-14 21:32",
+ "generated": "2026-10-14 23:02",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -18251,7 +18251,7 @@
    "name": "Comet 3.1 · 燃尽后分层与扰动",
    "kind": "combo",
    "renderVer": null,
-   "ver": "23bf2c25·emitset4.9.82",
+   "ver": "7e048b87·emitset4.9.82+fullfx4.9.102+head4.9.96",
    "checks": [
     [
      "实时模拟",
@@ -18320,14 +18320,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.7
+   "seconds": 0.4
   },
   "CSLRS": {
    "id": "CSLRS",
    "name": "Silver 3.1 · 末段分层 · 银白长尾",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "1bcfcd0c·emitset4.9.82",
+   "ver": "aa40ff5c·emitset4.9.82+fullfx4.9.102",
    "checks": [
     [
      "实时模拟",
@@ -18372,7 +18372,7 @@
     [
      "屏幕放大 ≤ 1",
      true,
-     "放大 0.39"
+     "放大 0.45"
     ],
     [
      "30fps 显示帧 ≥ 90%",
@@ -18396,7 +18396,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.9
+   "seconds": 0.6
   },
   "SGR1": {
    "id": "SGR1",

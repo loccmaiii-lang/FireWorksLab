@@ -1,0 +1,138 @@
+烟花效果：Silver3_Layers
+工具：烟花母版烘焙器 4.9.102
+完整序列 · PC/手机以各自 cascade 配置为准；单位 cm、cm/s、秒。
+PC「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，16×1 格 × 4 通道 = 64 帧（上升 28 帧、开花后 36 帧，帧号曲线不匀速），面片 17.7 × 99.4 m 立在发射点上（中心在上方 44.8 m），0 s 出现、播 6.93 s；规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。分档火花全部烘进这张贴图；落火（合进贴图）也按实时模拟里的样子烘进了这张图（4.9.102 rtFullFx：逐像素按 Ramp × Color Over Life × 显示强度反推合进灰度——颜色变成 Ramp 色、亮到 253 截顶、入点前的不在；落火按 GPU 落火的亮度 / 大小）。星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 2.61 像素。一个曝光（远段的）：PC 近段单独压的白热段曝光 × 0.55 这里没有，星头和白热段比 PC 白一点。Initial Velocity 向上 0 cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。
+[
+  {
+    "name": "TrailFull",
+    "material": "full",
+    "gpu": false,
+    "max_alive": 1,
+    "required": {
+      "screen_alignment": "Rectangle",
+      "duration_s": 6.9333,
+      "loops": 1,
+      "delay_s": 0,
+      "cutout": "cutoutFull",
+      "max_draw_count": 1,
+      "pivot_offset": [
+        -0.5,
+        -0.5
+      ],
+      "local_space": true
+    },
+    "spawn": {
+      "rate": {
+        "const": 0
+      },
+      "bursts": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "modules": [
+      {
+        "m": "Lifetime",
+        "Lifetime": {
+          "const": 6.9333
+        }
+      },
+      {
+        "m": "InitialLocation",
+        "StartLocation": {
+          "const": [
+            0,
+            0,
+            4478.1
+          ]
+        }
+      },
+      {
+        "m": "InitialVelocity",
+        "StartVelocity": {
+          "const": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "m": "InitialSize",
+        "StartSize": {
+          "const": [
+            1769.5,
+            9935.8,
+            1
+          ]
+        }
+      },
+      {
+        "m": "OrientationAxisLock",
+        "flags": "EPAL_ROTATE_Z",
+        "note": "和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）"
+      },
+      {
+        "m": "DynamicParameter",
+        "params": {
+          "frame": {
+            "curve": [
+              [
+                0,
+                0.01
+              ],
+              [
+                0.0192,
+                4.01
+              ],
+              [
+                0.1058,
+                13.01
+              ],
+              [
+                0.3654,
+                31.01
+              ],
+              [
+                0.9808,
+                63.01
+              ],
+              [
+                1,
+                63.99
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "m": "ColorOverLife",
+        "ColorOverLife": {
+          "curve": [
+            [
+              0,
+              [
+                2.4,
+                2.4,
+                2.4
+              ]
+            ],
+            [
+              1,
+              [
+                2.4,
+                2.4,
+                2.4
+              ]
+            ]
+          ]
+        },
+        "AlphaOverLife": {
+          "const": 1
+        }
+      }
+    ]
+  }
+]

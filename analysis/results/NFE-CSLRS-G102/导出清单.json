@@ -1,0 +1,26 @@
+{
+ "effect": "silver3_layers",
+ "entry": "CSLRS",
+ "ver": "aa40ff5c·emitset4.9.82+fullfx4.9.102",
+ "time": "2026-10-14 23:02",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Silver3_Layers",
+   "replica": "CSLRS",
+   "files": [
+    "Silver3_Layers.json",
+    "Silver3_Layers_Cascade参数.txt",
+    "Silver3_Layers_Mobile.json",
+    "Silver3_Layers_曲线.csv",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

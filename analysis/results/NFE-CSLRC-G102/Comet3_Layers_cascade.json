@@ -1,0 +1,499 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Comet3_Layers",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.102",
+  "combo": true,
+  "layers": [
+   {
+    "type": "tailS",
+    "form": "emitset",
+    "renderVer": 40
+   },
+   {
+    "type": "tailS",
+    "form": "emitset",
+    "renderVer": 40
+   }
+  ],
+  "plan_sig": "69afab81"
+ },
+ "textures": {
+  "L1_full": {
+   "file": "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_HD.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_HD",
+   "sha256": "4c2db84dc7e63ddfa446260bb319c2c94231cc6ceb7cb9b880e1766d4bf652ef"
+  },
+  "L1_cutoutFull": {
+   "file": "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_C",
+   "save_est": 0.642,
+   "hash": "192abd3714cc54f41538",
+   "sha256": "b72517856dc1d773d7366c2b6a5edb7ec1f52269b31459f5ffed0a303d0fda38"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_Comet3_Layers_L1_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Comet3_Layers_L1_R",
+   "hash": "a59e239ac9ec6957143",
+   "sha256": "a7da53e54b5832aa9fe3f4c67bd5a2267bbfb26005c1015b5427d244f860c39e"
+  },
+  "L2_full": {
+   "file": "T_EFX_FireWorks_Comet3_Layers_L2_Full_1x1_01_HD.png",
+   "class": "flipbook",
+   "cols": 1,
+   "rows": 1,
+   "channels": 1,
+   "frames": 1,
+   "asset": "T_EFX_FireWorks_Comet3_Layers_L2_Full_1x1_01_HD",
+   "sha256": "572e9494a3e9e189e7f7912383fec8e3fc18e26626884427f38290b88c8b6fb7"
+  },
+  "L2_ramp": {
+   "file": "T_EFX_FireWorks_Comet3_Layers_L2_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Comet3_Layers_L2_R",
+   "hash": "0a60fc0bc3fff29412e",
+   "sha256": "f406ffdb392f6c2cbc41181471164a65ca054e43ab85d9d66ad8d82d82d12527"
+  }
+ },
+ "materials": {
+  "L1_full": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "L1_full",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  },
+  "L2_full": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "L2_full",
+    "ramp": "L2_ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 1
+   }
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_TrailFull",
+   "material": "L1_full",
+   "gpu": false,
+   "max_alive": 1,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 6.1667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutoutFull",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.5
+    ],
+    "local_space": true
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 6.1667
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       57.7,
+       0,
+       4658.6
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       1696,
+       9599.6,
+       1
+      ]
+     }
+    },
+    {
+     "m": "OrientationAxisLock",
+     "flags": "EPAL_ROTATE_Z",
+     "note": "和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）"
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.0703,
+         13.01
+        ],
+        [
+         0.1892,
+         24.01
+        ],
+        [
+         0.3513,
+         34.01
+        ],
+        [
+         0.9784,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         3,
+         3,
+         3
+        ]
+       ],
+       [
+        1,
+        [
+         3,
+         3,
+         3
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L2_RiseHead",
+   "material": "L2_full",
+   "gpu": false,
+   "max_alive": 1,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 2.1584,
+    "loops": 1,
+    "delay_s": 0,
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4533
+    ],
+    "local_space": true
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1584
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       7145
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       600,
+       600,
+       1
+      ]
+     }
+    },
+    {
+     "m": "VelocityOverLife",
+     "VelOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0,
+         0,
+         7145
+        ]
+       ],
+       [
+        0.0458,
+        [
+         0,
+         0,
+         6725
+        ]
+       ],
+       [
+        0.0958,
+        [
+         0,
+         0,
+         6308
+        ]
+       ],
+       [
+        0.15,
+        [
+         0,
+         0,
+         5897.7
+        ]
+       ],
+       [
+        0.2083,
+        [
+         0,
+         0,
+         5496.7
+        ]
+       ],
+       [
+        0.2708,
+        [
+         0,
+         0,
+         5107
+        ]
+       ],
+       [
+        0.3375,
+        [
+         0,
+         0,
+         4729.5
+        ]
+       ],
+       [
+        0.4125,
+        [
+         0,
+         0,
+         4344.5
+        ]
+       ],
+       [
+        0.4958,
+        [
+         0,
+         0,
+         3957.7
+        ]
+       ],
+       [
+        0.5875,
+        [
+         0,
+         0,
+         3573.2
+        ]
+       ],
+       [
+        0.6875,
+        [
+         0,
+         0,
+         3193.7
+        ]
+       ],
+       [
+        0.8,
+        [
+         0,
+         0,
+         2807.1
+        ]
+       ],
+       [
+        0.9292,
+        [
+         0,
+         0,
+         2405
+        ]
+       ],
+       [
+        1,
+        [
+         0,
+         0,
+         2200
+        ]
+       ]
+      ]
+     },
+     "Absolute": true
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "const": 0
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         3,
+         3,
+         3
+        ]
+       ],
+       [
+        1,
+        [
+         3,
+         3,
+         3
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "layer": 2
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "Comet3_Layers",
+  "layers": [
+   "L1",
+   "L2"
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.102"
+ }
+}

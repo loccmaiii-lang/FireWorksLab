@@ -1,0 +1,21 @@
+23:02:15 第 1/2 步：Silver 3.1（Silver3_Layers）
+23:02:15   ❌ Silver 3.1（Silver3_Layers）（0.0 分钟）：        ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\全程回放检查.py", line 23, in main
+    r = rc.check([rc.Pack(d, i) for i in seqi], out, None, times)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\回放检查.py", line 190, in check
+    if any(t < 0 or t > span + 1e-6 for t in samples): raise ValueError('采样超出素材或参考有效时间')
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 采样超出素材或参考有效时间
+
+23:02:15 第 2/2 步：Comet 3.1（Comet3_Layers）
+23:02:15   ❌ Comet 3.1（Comet3_Layers）（0.0 分钟）：        ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\全程回放检查.py", line 23, in main
+    r = rc.check([rc.Pack(d, i) for i in seqi], out, None, times)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\回放检查.py", line 190, in check
+    if any(t < 0 or t > span + 1e-6 for t in samples): raise ValueError('采样超出素材或参考有效时间')
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 采样超出素材或参考有效时间
+
+23:02:15 完成，用时 0.0 分钟

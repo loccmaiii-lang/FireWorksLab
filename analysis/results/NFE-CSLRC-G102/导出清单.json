@@ -1,0 +1,25 @@
+{
+ "effect": "comet3_layers",
+ "entry": "CSLRC",
+ "ver": "7e048b87·emitset4.9.82+fullfx4.9.102+head4.9.96",
+ "time": "2026-10-14 23:02",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "Comet3_Layers",
+   "replica": "CSLRC",
+   "files": [
+    "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01.png",
+    "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_C.png",
+    "T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_HD.png",
+    "T_EFX_FireWorks_Comet3_Layers_L1_R.png",
+    "T_EFX_FireWorks_Comet3_Layers_L2_Full_1x1_01_HD.png",
+    "T_EFX_FireWorks_Comet3_Layers_L2_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

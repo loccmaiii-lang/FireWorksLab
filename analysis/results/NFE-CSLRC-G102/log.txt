@@ -1,0 +1,7 @@
+23:01:59 开始：Comet3_Layers（导出素材）
+23:02:02 Comet3_Layers 组合素材包 3 秒：T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01.png、T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_C.png、T_EFX_FireWorks_Comet3_Layers_L1_Full_16x1_01_HD.png、T_EFX_FireWorks_Comet3_Layers_L1_R.png、T_EFX_FireWorks_Comet3_Layers_L2_Full_1x1_01_HD.png、T_EFX_FireWorks_Comet3_Layers_L2_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+23:02:03 回放检查：✅ 通过
+23:02:17 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-CSLRC-G102\烘焙回放.jpg
+23:02:17 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-CSLRC-G102\烘焙回放_原尺寸.jpg
+23:02:17 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+23:02:17 完成，用时 0.3 分钟
