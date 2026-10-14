@@ -24,7 +24,8 @@ function layerOut(L) {
   // 4.9.89（导出排查 A10）：尾缀层（循环层 + 粒子）只能按尾缀自己的产物出或不出——单束 / GPU 光点 / 单帧是礼花的（以前选了光点出一个空壳发射器）；
   //   尾缀自己在单层产物表里选了「手机：不出」照它（以前多层里不认，照样出手机）
   const e = L && L.lib && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null;
-  if (e && e.P && typeof isEmit === 'function' && isEmit(e.P)) { if (pc !== 'off') pc = 'seq'; if (mobile !== 'off') mobile = e.P.outMobile === 'off' ? 'off' : 'seq'; }
+  //   4.9.96（导出排查 H1）：纯星头层 PC 可以选「CPU 粒子（星头）」（存成 dots，和手机同一颗软圆点）
+  if (e && e.P && typeof isEmit === 'function' && isEmit(e.P)) { if (pc !== 'off') pc = pc === 'dots' && typeof rtHeadOnly === 'function' && rtHeadOnly(e.P) ? 'dots' : 'seq'; if (mobile !== 'off') mobile = e.P.outMobile === 'off' ? 'off' : 'seq'; }
   return { pc, mobile };
 }
 // ---- 4.9.80 多层的手机格「自动」（用户 10-13 20:00「最近导出功能的Bug有点多，可以排查一遍」→ 导出排查 ①）----
@@ -226,10 +227,77 @@ function dotsTables(e, L) {
   if (e._dots && e._dots.sig === sig) return e._dots.tab;
   const ES = { emitters: [dotsES(L, e.P, comboLayerM(L), e.bake && e.bake.fm)] }; e._dots = { sig, tab: esSpawn(ES, 1) }; return e._dots.tab;
 }
+// ---- 4.9.96（导出排查 B1 / B2，用户 10-14 13:12 / 14:14 按推荐）开花闪光单独导出：Flash = 现有 soft_dot 材质的一颗 CPU 粒子（每个开花闪光一颗）----
+// 以前：烘焙从入点开始（50_bake.js），入点前那段导出 / 回放只放大第 0 帧，开花闪光（衰减 0.035 s）到入点早就没了（15 条 Crackle 入点 0.16–0.59 s）；
+//   单束（20_sim.js 跳过闪光）、GPU 光点（只出星头）本来就没有它。实时模拟从 0 s 画，所以看得到。
+// 现在：和模拟同一份闪光（Sim 构造时的主闪光：位置、亮度、σ、衰减、可见时长、大小 / 亮度随寿命曲线），每个时刻按贴图那一套算：
+//   贴图里闪光是 v = (1 − e^(−亮度 × 曝光))^(1/γ)、再 Ramp(v)·v（中心发白、亮的那圈比 σ 宽）；软圆点是高斯（σ = 大小 / 4、中心 = 颜色），
+//   所以颜色 = 压过以后中心那一点 × Color Over Life × 星头亮度，σ 按「总光量相等」换成 √(∫ g / g(中心)) 倍（亮的时候比模拟的 σ 宽；
+//   暗的时候 Ramp 暗端是黑的，Ramp(v)·v ∝ v²，比模拟的 σ 窄 √2 倍——和贴图里看到的一样）。
+//   序列从入点那一帧起自己带着闪光的余量，所以 Flash 只活到入点；单束 / 光点活完整个可见时长。
+function flashLook(M, x0, G, mono) {
+  if (!(x0 > 0)) return { c: [0, 0, 0], k: 1 };
+  const g = y => { const v = Math.min(Math.pow(1 - Math.exp(-y), 1 / G), 253 / 255), c = mono ? [1, 1, 1] : rampAt(M, v); return c.map(x => x * v); };
+  const lum = c => 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], c0 = g(x0), l0 = lum(c0);
+  const S = Math.max(4, Math.log(x0 / 1e-7)), n = 240; let sum = 0;     // ∫0^∞ lum(g(x0·e^(−s))) ds（高斯 σ² 的面积换到 s = r² / 2σ²）
+  for (let i = 0; i <= n; i++) { const s = S * i / n, w = i === 0 || i === n ? 0.5 : 1; sum += w * lum(g(x0 * Math.exp(-s))); }
+  sum *= S / n;
+  return { c: c0, k: l0 > 0 ? Math.sqrt(Math.max(0.05, sum / l0)) : 1 };
+}
+// P：这一层的参数；M：这一层的颜色；L：层（delay / rate / scale / mirror，单层 = 1）；o.until = 闪光要补到这一层自己的哪一刻（序列 = 入点，单束 / 光点 = ∞）、o.expo、o.mono（星头火花分开时星头那张不查 Ramp）
+const _flashES = new Map();
+function flashES(P, M, L, o = {}) {
+  if (!P || familyOf(P.type) !== 'aerial' || !(+fxP(P).flash > 0)) return [];
+  const until = o.until == null ? Infinity : +o.until; if (!(until > 1 / 60)) return [];
+  const key = JSON.stringify([P, M, L && [L.delay, L.rate, L.scale, L.mirror], o]); if (_flashES.has(key)) return _flashES.get(key);
+  const sim = new Sim({ ...P, engine: 'gpu', _unit: 0 }), Pf = sim.P, E = o.expo > 0 ? +o.expo : fixedExposure(Pf), G = +Pf.encGamma > 0 ? +Pf.encGamma : 1;
+  const r = L && +L.rate > 0 ? +L.rate : 1, sc = L && +L.scale > 0 ? +L.scale : 1, mx = L && L.mirror ? -1 : 1, d0 = L ? +L.delay || 0 : 0, HI = intOr1(M.headInt);
+  const out = [], evs = sim.flashes.filter(f => f.main && f.abs == null && f.t0 < until - 1 / 60).slice(0, 4);     // 簇依次出膛 / 扇面筒距会有几个；最多 4 个
+  evs.forEach((f, k) => {
+    const cut = f.cut || 0.25, dec = f.dec || 0.035, D = Math.min(cut, until - f.t0), N = 24, ks = [];
+    for (let i = 0; i <= N; i++) { const u = (i / N) ** 1.6, a = u * D, x = clamp(a / cut, 0, 1);
+      const x0 = f.I * 1.5 * Math.exp(-a / dec) * (sim.cv.fb ? Math.max(0, lifeCurveAt(sim.cv.fb, x)) : 1) * E, lk = flashLook(M, x0, G, !!o.mono), tn = tintAt(M, f.t0 + a);
+      ks.push([u, lk.c.map((c, j) => c * tn[j] * HI), f.sig * (sim.cv.fs ? Math.max(0, lifeCurveAt(sim.cv.fs, x)) : 1) * lk.k * sc]); }
+    const sMax = Math.max(1e-4, ...ks.map(q => q[2])), cMax = Math.max(1e-6, ...ks.map(q => Math.max(...q[1])));
+    const sizeLife = esThin(ks.map(([u, , s]) => [+u.toFixed(4), +(s / sMax).toFixed(4)]), 0.01);
+    out.push({ name: evs.length > 1 ? 'Flash' + (k + 1) : 'Flash', gpu: false, flash: true, delay: d0 + f.t0 / r, duration: D / r, seed: 1, spawn: [], bursts: [[0, 1]], life: [D / r, D / r], size: [4 * sMax, 4 * sMax],
+      loc: [[0, [mx * f.x * sc, 0, f.y * sc]]], col: esThin(ks.map(([u, c]) => [+u.toFixed(4), c.map(x => +x.toFixed(5))]), 0.01 * cMax), ...(sizeLife.some(q => Math.abs(q[1] - 1) > 1e-3) ? { sizeLife } : {}),
+      fit: { t0: f.t0, D, sig: f.sig, I: f.I, dec, E, k0: ks[0][2] / (f.sig * sc) } });
+  });
+  _flashES.set(key, out); if (_flashES.size > 16) _flashES.delete(_flashES.keys().next().value);
+  return out;
+}
+// 这一层要不要补闪光、补到哪一刻：序列 = 第一段的入点（之后贴图自己有）；单束 / 光点 = 整个闪光；单帧、不出、尾缀不补
+function layerFlashES(kind, b, P, M, L) {
+  if (!b || !b.meta || !P || familyOf(P.type) !== 'aerial' || !['seq', 'unit', 'dots'].includes(kind)) return [];
+  if (kind === 'seq') { if (!['master', 'segments'].includes(b.form)) return []; const t0 = +b.meta.t0 || 0; return t0 > 1 / 60 ? flashES(P, M, L, { until: t0, expo: b.meta.expoH, mono: !!b.tail }) : []; }
+  return flashES(P, M, L, { expo: b.meta.expoH });
+}
+// Flash 发射器 → cascade 的一个发射器（CPU、max_alive 1、soft_dot）；手机同一个（规范 v1 §6 发射器上限放不下时调用方去掉）
+function fwlFlashEmitter(e, mobile, material) {
+  const j = esFwlEmitter(e, mobile, 1), f = e.fit;
+  return { ...j, material, max_alive: 1, notes: [`开花闪光（4.9.96，导出排查 B1 / B2）：模拟里同一个闪光单独一颗软圆点，${r2(e.delay)} s 出生、活 ${r2(e.duration)} s${f.t0 > 0 ? `（第 ${r2(f.t0)} s 那次出膛）` : ''}；`
+    + `颜色 = 贴图口径压过以后的中心（Ramp × Color Over Life × 星头亮度，按 e^(−t / ${r4(f.dec)}) 衰减），大小按总光量和贴图里那团一样（σ = 模拟 σ ${r2(f.sig)} m × ${r2(f.k0)}）。序列从入点那一帧起自己带着闪光的余量。未经 UE 验证`] };
+}
+const isFlashEm = e => !!e && (e._flash || /^(L\d+_)?Flash\d*$/.test(e.name || ''));
+// 手机配置发射器超过 _M 上限时先去掉闪光（闪光是额外补的，不能因为它整包被拦）
+function fwlFlashFit(emitters, mobile, notes) {
+  const lim = (typeof GATE_TIER !== 'undefined' ? GATE_TIER.M.emitters : 3);
+  if (!mobile || emitters.length <= lim || !emitters.some(isFlashEm)) return emitters;
+  const keep = emitters.filter(e => !isFlashEm(e)); if (notes) notes.push(`手机发射器上限 ${lim} 个：开花闪光（Flash）没放进手机配置（PC 有）`);
+  return keep;
+}
+// 引擎回放：和导出同一份
+function flashTables(list) { if (!list || !list.length) return null; const k = list; if (!k._tab) k._tab = esSpawn({ emitters: list }, 1); return k._tab; }
 function fwlCombo(name, layers, mobile = false) {
   const out = { format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
     source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit, frame }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : frame ? 'frame' : b.form, renderVer: 40 })) },     // plan_sig 在下面所有发射器都放好以后写
     textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
+  const addFlash = (kind, b, L, i, pre) => {     // 4.9.96 B1 / B2：这一层的开花闪光（序列只补入点前那段，单束 / 光点补整个）
+    const fl = layerFlashES(kind, b, b.P, comboLayerM(L), L); if (!fl.length) return;
+    out.materials[pre + 'flash'] = { role: 'soft_dot' };
+    for (const e of fl) out.emitters.push({ ...fwlFlashEmitter(e, mobile, pre + 'flash'), name: pre + e.name, layer: i + 1 });
+  };
   layers.forEach(({ L, b, i: li, dots, unit, unitName, frame, frameName }, k) => {
     const i = li == null ? k : li, pre = `L${i + 1}_`;
     if (frame) {     // 4.9.35 单帧层（用户 10-07 18:50 并进产物表）：灰度单帧 + Ramp（现有序列材质 1 × 1 格）+ 功能图 / 溶解标记；PC、手机都是单帧时共用同一张
@@ -243,18 +311,20 @@ function fwlCombo(name, layers, mobile = false) {
       for (const [k2, v] of Object.entries(u.textures)) out.textures[pre + k2] = v;
       for (const [k2, v] of Object.entries(u.materials)) out.materials[pre + k2] = { ...v, textures: { main: pre + v.textures.main, ramp: pre + 'ramp' } };
       for (const em of u.emitters) out.emitters.push({ ...em, name: pre + em.name, material: pre + em.material, layer: i + 1, required: { ...em.required, cutout: pre + em.required.cutout } });     // 4.9.28 变体几张就几个发射器
+      addFlash('unit', b, L, i, pre);
       return;
     }
-    if (dots) {     // 4.2.12：PC 光点层，没有贴图
+    if (dots && !b.esHead) {     // 4.2.12：PC 光点层，没有贴图（4.9.96 H1：纯星头层的「CPU 粒子（星头）」走下面尾缀那条）
       const d = fwlDots(L, b.P, comboLayerM(L), b.fm);
       out.materials[pre + 'dot'] = { role: 'soft_dot' };
       out.emitters.push({ ...d, name: pre + 'Dots', material: pre + 'dot', layer: i + 1 });
+      addFlash('dots', b, L, i, pre);
       return;
     }
     // 4.9.80（导出排查 ⑨）：尾缀层（循环层 + 粒子）一律走 fwlEmitSet——以前只认「合成一张」，PC 合成一张、手机只有近段时手机配置被当成大面片母版写，引用一张不存在的贴图
     // 4.9.87：只有一层的「我的效果」是循环效果（喷泉、分层粒子图）时照单层导出那样一直循环（fwlLoop）——保存窜天猴 / 仙女棒 = 存成一层的我的效果，预览按时间轴循环，导出以前却只播一次；
     //   多层里的循环层照旧播一个周期（和多层预览一致，要不要一直循环等用户定）
-    const ln = comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile) : b.form === 'loop' && layers.length === 1 ? fwlLoop(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
+    const ln = comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile, { dot: !!dots }) : b.form === 'loop' && layers.length === 1 ? fwlLoop(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
     if (es && mobile && !b.esFull) fwlMaxAlive(body.emitters);
     const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
     for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
@@ -283,7 +353,9 @@ function fwlCombo(name, layers, mobile = false) {
         modules, ...(L.mirror ? { notes: ['这一层在烘焙器里水平镜像；导出的贴图没有翻转，引擎里需要把面片 X 尺寸取负或换翻转贴图（未经 UE 验证）'] } : {}) });
     }
     out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, body.system.preview_distance_cm * sc);
+    if (b.form === 'master' || b.form === 'segments') addFlash('seq', b, L, i, pre);
   });
+  if (mobile) { out.emitters = fwlFlashFit(out.emitters, true, out.notes); for (const k of Object.keys(out.materials)) if (/flash$/.test(k) && !out.emitters.some(e => e.material === k)) delete out.materials[k]; }
   out.notes.push('多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。');
   out.source.plan_sig = fwlPlanSig(fwlFinish(out.emitters));     // 4.9.24 每个发射器加 Scale Color/Life
   if (mobile) { out.tier = 'M'; out.name = String(name).replace(/_Mobile$/, '') + '_M'; fwlMaxAlive(out.emitters); }     // 4.9.69 手机 _M（规范 v1 §2 / §6）

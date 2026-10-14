@@ -370,8 +370,9 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
-    if (b.form === 'emitset') b.P.outMobile = state.P.outMobile;     // 4.9.73 产物表改「手机」不重烘：按现在选的出（烘焙时存的那份是旧的）
+    if (b.form === 'emitset') { b.P.outMobile = state.P.outMobile; b.P.outPC = state.P.outPC; }     // 4.9.73 产物表改「手机」不重烘：按现在选的出（烘焙时存的那份是旧的）；4.9.96 纯星头 PC「序列 ↔ CPU 粒子」同样
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
+    if (b.esHead) { const keep = packKeepReferenced(files); files.length = 0; files.push(...keep); }     // 4.9.96 H1：纯星头 PC 选 CPU 粒子 / 不出时没有那张单帧（手机软圆点也不引用手机 Ramp）
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     const sp = exportScalePlan(state.P);

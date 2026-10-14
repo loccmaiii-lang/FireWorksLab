@@ -359,6 +359,9 @@ function cascadeText(name, b, M) {
   else if (b.next) body = bakeParts(b).map((s,i)=>masterEmitter(s,M,' · 段 '+bakeSegmentName(b,i))).join('\n') +
     `\n每段一个发射器，按各段 Emitter Delay 与寿命顺序衔接；全部 ${bakeParts(b).length} 段共用世界取景。\n`;
   else body = masterEmitter(b, M);
+  // 4.9.96（导出排查 B1）：入点以前的开花闪光单独一颗软圆点（和 cascade.json 同一份）
+  if ((b.form === 'master' || b.form === 'segments') && typeof layerFlashES === 'function') for (const e of layerFlashES('seq', b, P, M, null)) { const j = esFwlEmitter(e, false, 1), ca = esColorAlpha(e.col);
+    body += `\n【${e.name}】开花闪光（入点 ${r2(b.meta.t0)} s 以前贴图里没有，单独一颗）CPU · 材质角色 soft_dot · Screen Alignment = Square · Delay ${j.required.delay_s} s · Duration ${j.required.duration_s} s · Burst 0 s × 1 · max_alive 1\n  Lifetime ${r4(e.life[0])} s · Initial Size ${j.modules.find(q => q.m === 'InitialSize').StartSize.uniform[0][0]} cm · Initial Location (${e.loc[0][1].map(x => r1(x * 100)).join(', ')}) cm${e.sizeLife ? ` · Size By Life ${e.sizeLife.length} 个点（${e.sizeLife[0][1]} → ${e.sizeLife[e.sizeLife.length - 1][1]}）` : ''}\n  Color Over Life：RGB = 色相 × ${r4(ca.M)}，Alpha ${ca.a[0][1]} → ${ca.a[ca.a.length - 1][1]}（按 e^(−t / ${r4(e.fit.dec)}) 衰减，${ca.a.length} 个点，完整见 cascade.json）\n`; }
   return `${head}
 ${texSection(name, b)}
 ${cutoutSection(name, b)}

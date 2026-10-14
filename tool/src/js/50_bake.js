@@ -640,7 +640,7 @@ async function bake(P, scale, onProg) {
     case 'loop': return bakeLoop(P, scale, onProg);
     case 'riseLoop': return bakeRiseLoop(P, scale, onProg);
     case 'trail': return bakeTrail(P, scale, onProg);
-    case 'emitset': return rtPcFull(P) ? bakeRiseTailFull(P, scale, onProg, false) : bakeEmitSet(P, scale, onProg);
+    case 'emitset': return rtPcFull(P) || rtHeadOut(P) ? bakeRiseTailFull(P, scale, onProg, false) : bakeEmitSet(P, scale, onProg);     // 4.9.96 H1：纯星头 PC 选 CPU 粒子也是独立星头
     case 'unit': return bakeUnit(P, scale, onProg);
     case 'segments': return bakeSegments(P, scale, onProg);
     default: return bakeMasterLead(P, scale, onProg);

@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-S30-G96",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-S30",
+ "name": "GoldRayRocket_30",
+ "priority": 2,
+ "note": "导出（23）· 烘焙器 4.9.96（导出排查 B2，用户 10-14 13:12 / 14:14）：单束层多一个开花闪光发射器 Flash（单束以前没有闪光）→ 参数不动重导。同一目录覆盖。"
+}

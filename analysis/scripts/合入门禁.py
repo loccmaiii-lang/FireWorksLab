@@ -28,7 +28,7 @@ sys.path.insert(0, str(ROOT / 'analysis' / 'scripts'))
 SRC_PREFIX = ('tool/src/', 'analysis/命名/')
 BUILD_INPUTS = ('tool/src/', 'analysis/命名/', 'tool/design-system/', '更新记录.md', 'spec/尺寸标定.json', 'tool/build.py')
 BUILD_OUTPUTS = ['tool/FireworkBaker.html', 'tool/data/size_spec.js']
-UI_ITEMS = ['N3', 'W7', 'W37', 'R10', 'R11', 'X1', 'R12']     # R12：4.9.89 导出接线（合成一张入出点 / 帧数 / 停几 tick、纯星头）
+UI_ITEMS = ['N3', 'W7', 'W37', 'R10', 'R11', 'X1', 'R12', 'R13']     # R12：4.9.89 导出接线（合成一张入出点 / 帧数 / 停几 tick、纯星头）；R13：4.9.96 纯星头 CPU 粒子 / 开花闪光 / 尾缀层产物表 / 按时间缩
 
 # ---------------------------------------------------------------- 页面里的检查
 LIB = r"""(async () => {
@@ -107,7 +107,7 @@ LIB = r"""(async () => {
   const PIXEL = new Set(['shutter', 'cellPad', 'encGamma']);     // 结构节里只影响像素的几行
   const SKIP = { exposureTarget: '只给「建议曝光」按钮用，不进烘焙', previewBloom: '预览设置（引擎里没有）', rtBurstD: '游戏内大小预览的比例（不进导出）' };
   // 选项之间必须有区别的行（0 / 自动除外：自动可以正好等于某一档）
-  const STRICT = new Set(['frameBudget', 'zoom', 'holdTicks', 'outMode', 'L.out.pc', 'L.out.mobile', 'outPC', 'outMobile']);
+  const STRICT = new Set(['frameBudget', 'zoom', 'holdTicks', 'outMode', 'L.out.pc', 'L.out.mobile', 'outPC', 'outMobile', 'prod.pc', 'prod.mobile']);
   // 有条件才起作用、代表效果上正好不起作用的行：不变只记 ⚠（写明条件），不算接不上
   const COND = { outPack: '帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样', maxHoldBurn: '燃烧段本来就不用停那么久时不变', maxHold: '淡出段本来就不用停那么久时不变',
     pageTarget: '一张就放得下、张数下限没顶到时不变', fadeAt: '自动定的淡出起点正好一样时不变', burstSec: '开花段帧率本来就是每 tick 一帧时不变', exportScaleRise: '只在导出缩放 < 1 时' };
@@ -120,15 +120,20 @@ LIB = r"""(async () => {
       const pcOpts = productPcOptions(L), mbOpts = productMobileOptions(L);
       if (pcOpts.length > 1) rows.push({ key: 'L.out.pc', sec: '产物表', kind: 'lay', opts: pcOpts, cur: o.pc });
       if (mbOpts.length > 1) rows.push({ key: 'L.out.mobile', sec: '产物表', kind: 'lay', opts: mbOpts, cur: layerMobileManual(L) ? o.mobile : 'auto' }); }
+    // 4.9.96：单层尾缀（合成一张 / 纯星头）的 PC、手机怎么出只在交付清单的产物表里（右栏没有这两行）
+    if (state.tab !== 'combo' && isEmit(state.P)) { renderDeliv(); for (const pf of ['pc', 'mobile']) { const sel = prodSelect(pf), opts = sel ? [...sel.options].filter(o => !o.disabled).map(o => o.value) : [];
+      if (opts.length > 1) rows.push({ key: 'prod.' + pf, sec: '产物表', kind: 'prod', opts, cur: sel.value }); } }
     return rows;
   };
   const productPcOptions = L => { const sel = productSelect(L, 'pc'); return sel ? [...sel.options].filter(o => !o.disabled).map(o => o.value) : []; };
   const productMobileOptions = L => { const sel = productSelect(L, 'mobile'); return sel ? [...sel.options].filter(o => !o.disabled).map(o => o.value) : []; };
   const productSelect = (L, pf) => document.querySelector(`#lhOut select[data-out="${pf}"]`);
+  const prodSelect = pf => document.querySelector(`#delivView .dv-prod select[data-prod="${pf}"]`);
   const keyOf = s => JSON.stringify([s.bakes, s.fr, s.cfg, s.names]);
   const rowEl = k => { const x = panelRows.find(([row, it]) => (Array.isArray(it) ? it[0] : it.sel || it.text || it.curve) === k); return x && x[0]; };
   const setRow = (r, v) => {
     if (r.kind === 'lay') { const L = state.layers[state.comboSel], sel = productSelect(L, r.key.slice(6)); if (!sel) return '找不到产物表的下拉'; sel.value = String(v); sel.dispatchEvent(new Event('change', { bubbles: true })); return ''; }
+    if (r.kind === 'prod') { renderDeliv(); const sel = prodSelect(r.key.slice(5)); if (!sel) return '找不到交付清单产物表的下拉'; sel.value = String(v); sel.dispatchEvent(new Event('change', { bubbles: true })); return ''; }
     const row = rowEl(r.key); if (!row) return '找不到这一行';
     const s = row.querySelector('select'); if (s) { const o = [...s.options].find(o => o.value === String(v)); if (!o) return '没有选项 ' + v; s.value = String(v); s.dispatchEvent(new Event('change', { bubbles: true })); return ''; }
     const n = row.querySelector('.num'); if (n) { n.value = String(v); n.dispatchEvent(new Event('input', { bubbles: true })); n.dispatchEvent(new Event('change', { bubbles: true })); return ''; }
@@ -136,7 +141,7 @@ LIB = r"""(async () => {
   };
   // 拨哪几个值：要有区别的行全拨；别的结构行拨两个（上限 + 往上一成，不行就下限）；像素行拨一个
   const valuesFor = (r, strict, pix) => {
-    if (r.kind === 'sel' || r.kind === 'lay') { const o = r.opts.filter(v => String(v) !== String(r.cur)); return strict ? o : pix ? o.slice(-1) : [...new Set([o[0], o[o.length - 1]])].filter(v => v !== undefined); }
+    if (r.kind === 'sel' || r.kind === 'lay' || r.kind === 'prod') { const o = r.opts.filter(v => String(v) !== String(r.cur)); return strict ? o : pix ? o.slice(-1) : [...new Set([o[0], o[o.length - 1]])].filter(v => v !== undefined); }
     const [lo, hi, st] = r.rng, cur = +r.cur, set = new Set(), ok = v => Math.abs(v - cur) > 1e-9;
     if (r.key === 'cutIn' || r.key === 'cutOut') return [0.5, 1.2].filter(ok);     // 入出点拨在内容里面（拨到 30 s 会被夹回自动）
     if (strict && +st >= 1 && Number.isInteger(+st) && (hi - lo) / st <= 8) { for (let v = lo; v <= hi + 1e-9; v += st) set.add(+v.toFixed(6)); return [...set].filter(ok); }
@@ -151,10 +156,13 @@ LIB = r"""(async () => {
       if (!mods.includes('Lifetime')) bad.push(`${f} ${e.name}：没写寿命（Lifetime）`);
       if (!mods.includes('InitialSize')) bad.push(`${f} ${e.name}：没写大小（InitialSize）`);
     } return bad; };
+  // 4.9.96 B1：入点 > 0、有开花闪光的礼花（单层）导出里要有 Flash（入点前的闪光单独一颗软圆点）
+  const flashMiss = cfg => { const P = state.P; if (state.tab === 'combo' || familyOf(P.type) !== 'aerial' || !(+fxP(P).flash > 0) || !(+P.cutIn > 0)) return [];
+    const j = cfg && cfg['cascade.json']; return j && !j.emitters.some(e => /Flash/.test(e.name)) ? ['入点前的开花闪光没导出（cascade.json 没有 Flash）'] : []; };
   window.__contract = async (onlyKeys, budgetMs) => {
     const T0 = performance.now(), rows = __rows().filter(r => !onlyKeys || onlyKeys.includes(r.key)), out = [];
     const b1 = await __sig(), b2 = await __sig();
-    const json = [...new Set([...b1.gate.map(g => '导出拦截：' + g), ...emptyShell(b1.cfg), ...(b1.cfg ? [] : ['导出没出 cascade.json：' + b1.log.join('；')])])];
+    const json = [...new Set([...b1.gate.map(g => '导出拦截：' + g), ...emptyShell(b1.cfg), ...flashMiss(b1.cfg), ...(b1.cfg ? [] : ['导出没出 cascade.json：' + b1.log.join('；')])])];
     if (keyOf(b1) !== keyOf(b2)) return { err: '同一状态导出两次结果不同（检查本身不稳）', rows: [], json };
     const P0 = structuredClone(state.P), L0 = state.tab === 'combo' && state.comboSel >= 0 ? structuredClone(state.layers[state.comboSel].out || null) : undefined, bk = keyOf(b1), bi = JSON.stringify(b1.ins);
     const restore = async () => { for (const k of Object.keys(state.P)) if (!(k in P0)) delete state.P[k]; Object.assign(state.P, structuredClone(P0));
@@ -203,6 +211,8 @@ SCENARIOS = [
     ('空中大面片·多层', "(async () => { await openEffect(EFFS().find(e => e.key === 'hiki_nishiki')); await __idle(); selectComboLayer(1); })()", None),
     ('合成一张·多层', "(async () => { await openReview(entryById('CSLRC')); await __idle(); selectComboLayer(0); })()", None),
     ('纯星头·多层', "(async () => { await openReview(entryById('CSLRC')); await __idle(); selectComboLayer(1); })()", None),
+    ('纯星头·单层', "openReview(entryById('CSLRC-H'))", ['cutIn', 'cutOut', 'rtBright', 'prod.pc', 'prod.mobile']),     # 4.9.96 H1：PC 序列 / CPU 粒子
+    ('空中大面片·入点前闪光', "openReview(entryById('MYCR-O'))", ['cutIn', 'outPC', 'outMobile']),     # 4.9.96 B1 / B2：入点、单束 / 光点都要带 Flash
     ('合成一张·一层的我的效果', "myCreate('rv:CSLRS')", ['zoom', 'frameBudget', 'cutIn', 'outMode', 'rtGrid', 'L.out.pc', 'L.out.mobile']),
     ('分层粒子图·一层的我的效果', "myCreate('rv:SGR1')", ['cellPad', 'cameraMotion', 'L.out.pc', 'L.out.mobile']),
 ]

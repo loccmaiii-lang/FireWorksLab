@@ -43,6 +43,7 @@
   R7 4.9.73 尾缀手机「近段 + 远段合成一张」：1 个发射器 TrailFull、32 列细高格、过导出拦截、打包换名、PC 不变
   R8 4.9.78 已通过的 RT6 左栏分档、尺寸档按时间缩（XS 1.69 s、坝顶低层 80 m）
   R12 4.9.89 导出接线（导出排查 A1–A17 / B4）：多层锚点 / 通道 / 尾缀形态、合成一张入出点按钮、纯星头入出点、帧数只留两种、手动格子按停几 tick 加行、统计写模式、变灰、尾缀层产物格、多层面片位置、格子下拉、空壳发射器
+  R13 4.9.96 纯星头 CPU 粒子 + 开花闪光单独导出（导出排查 H1 / B1 / B2 / A11 / A14）：PC 软圆点、层产物 / 尾缀层产物表、Flash（入点前 / 单束 / 光点、手机上限、大小模型、导出指纹）、尺寸档按时间缩白名单
   R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -640,7 +641,7 @@ async def x1(pg):
     if 'GPU 光点' not in dv: bad.append('交付页没写第 2 层是 GPU 光点')
     cas = await pg.evaluate("(() => { const xs = state.layers.map(L => ({ L, b: layerEntryOf(L).bake })); const pc = fwlCombo('T', comboEntries(xs, false), false); return pc.emitters.filter(e => e.layer === 2).map(e => [e.name, e.gpu, pc.materials[e.material].role]); })()")
     info['PC 第 2 层发射器'] = cas
-    if cas != [['L2_Dots', True, 'soft_dot']]: bad.append(f'cascade.json 第 2 层不是一个 GPU 光点发射器：{cas}')
+    if [e for e in cas if not e[0].endswith('Flash')] != [['L2_Dots', True, 'soft_dot']]: bad.append(f'cascade.json 第 2 层不是一个 GPU 光点发射器（+ 开花闪光）：{cas}')     # 4.9.96 B2
     # 4.9.7 起撤销按一次操作一步：选光点、光点大小 1 → 2、2 → 1 是三步，撤三次一步步回到序列（以前按停手 0.6 s 并步，后两步并成一步、净变化为零就不记）
     steps = []
     for _ in range(3):
@@ -1595,6 +1596,62 @@ async def r12(pg):
     r = await pg.evaluate(R12_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
 
+R13_JS = r"""async () => {
+  // 4.9.96（导出排查 H1 / B1 / B2 / A11 / A14，用户 10-14 13:12 / 14:14）：每处一个能复现的小检查
+  const out = {}, bad = [], approx = (a, b, e = 1e-3) => Math.abs(a - b) <= e;
+  const pm = id => { const x = replicaPM(id); return { P: derive(structuredClone(x.P)), M: x.M }; };
+  // H1：纯星头 PC「CPU 粒子（星头）」= 和手机同一颗软圆点（Burst 1、寿命 T、初速 + Velocity Over Life Absolute、Local Space、没有贴图）
+  const { P: head, M: hM } = pm('CSLRC-H'), ball = rtBallistic(head), hb = { P: { ...head, outPC: 'dots' }, meta: { Ww: 2, Wh: 2, cy: 0 }, esHead: true, esFull: true, form: 'emitset', esMobile: false };
+  const j = fwlRiseHead('H', hb, hM), e = j.emitters[0], vol = e.modules.find(m => m.m === 'VelocityOverLife'), lt = e.modules.find(m => m.m === 'Lifetime').Lifetime, v0 = e.modules.find(m => m.m === 'InitialVelocity').StartVelocity.const;
+  out.dot = [e.material, e.gpu, JSON.stringify(e.spawn.bursts), lt.uniform ? lt.uniform[0] : lt.const, v0[2], vol && vol.Absolute, vol && vol.VelOverLife.curve.slice(-1)[0][1][2], e.required.local_space, Object.keys(j.textures).length];
+  if (e.material !== 'dot' || e.gpu || out.dot[2] !== '[[0,1]]' || !approx(out.dot[3], ball.T, 2e-3) || !approx(v0[2], ball.vz0 * 100, 0.2) || (ball.quad && (!vol || !vol.Absolute)) || !e.required.local_space || out.dot[8]) bad.push('H1 PC CPU 粒子：' + JSON.stringify(out.dot));
+  const seqJ = fwlRiseHead('H', { ...hb, P: { ...head, outPC: 'full' } }, hM), mobJ = fwlRiseHead('H', { ...hb, esMobile: true }, hM), optJ = fwlRiseHead('H', { ...hb, P: { ...head, outPC: 'full' } }, hM, { dot: true });
+  out.seq = [seqJ.emitters[0].material, mobJ.emitters[0].material, mobJ.emitters[0].required.local_space, optJ.emitters[0].material];
+  if (out.seq.join() !== 'full,dot,true,dot') bad.push('H1 序列 / 手机 / 多层指定：' + JSON.stringify(out.seq));
+  out.route = [rtHeadOut({ ...head, outPC: 'dots', outMobile: 'off' }), emitFullOut({ ...head, outPC: 'dots', outMobile: 'off' }), rtHeadOut(pm('CSLRS').P)];
+  if (out.route.join() !== 'true,true,false') bad.push('H1 烘焙路线：' + JSON.stringify(out.route));
+  const eH = { name: '__r13h', P: { ...head } }, eT = { name: '__r13t', P: { ...pm('CSLRS').P } }; state.lib.push(eH, eT);
+  try {
+    out.layerOut = [layerOut({ lib: '__r13h', out: { pc: 'dots' } }).pc, layerOut({ lib: '__r13t', out: { pc: 'dots' } }).pc];
+    if (out.layerOut.join() !== 'dots,seq') bad.push('H1 层产物：' + JSON.stringify(out.layerOut));
+    // A11：多层尾缀层的产物表下拉写回（纯星头 PC 写层上；尾缀手机写这一层尾缀自己的参数）
+    const LH = { lib: '__r13h' }, LT = { lib: '__r13t' };
+    setTailLayerOut(LH, eH, 'pc', 'dots'); setTailLayerOut(LH, eH, 'mobile', 'off'); setTailLayerOut(LT, eT, 'mobile', 'full'); setTailLayerOut(LT, eT, 'pc', 'off');
+    out.a11 = [JSON.stringify(LH.out), eT.P.outMobile, JSON.stringify(LT.out), tailOutText(eH.P, 'dots', 'pc').slice(0, 10)];
+    if (out.a11[0] !== '{"pc":"dots","mobile":"off","mobileManual":true}' || out.a11[1] !== 'full' || out.a11[2] !== '{"pc":"off"}') bad.push('A11 尾缀层产物表：' + JSON.stringify(out.a11));
+  } finally { state.lib.splice(state.lib.indexOf(eH), 1); state.lib.splice(state.lib.indexOf(eT), 1); }
+  // B1：入点 > 0 的礼花多一个 Flash（0 s 出生、活到入点、按衰减变暗）；入点 0 不加；单束 / 光点（B2）活完整个闪光
+  const { P: cr, M: cM } = pm('MYCR-O'), fb = t0 => ({ form: 'master', meta: { t0, expoH: fixedExposure(cr) }, P: cr });
+  const f1 = layerFlashES('seq', fb(0.2), cr, cM, null), f0 = layerFlashES('seq', fb(0), cr, cM, null), fu = layerFlashES('unit', fb(0.2), cr, cM, null);
+  const c = f1[0] && f1[0].col, lum = q => q[1][0] + q[1][1] + q[1][2];
+  out.flash = [f1.length, f1[0] && f1[0].delay, f1[0] && +f1[0].duration.toFixed(3), c && +(lum(c[c.length - 1]) / lum(c[0])).toExponential(1), f0.length, fu[0] && +fu[0].duration.toFixed(3)];
+  if (f1.length !== 1 || f1[0].delay !== 0 || !approx(f1[0].duration, 0.2) || !(lum(c[c.length - 1]) < 0.01 * lum(c[0])) || f0.length || !fu[0] || !approx(fu[0].duration, 0.25)) bad.push('B1/B2 Flash：' + JSON.stringify(out.flash));
+  const fe = fwlFlashEmitter(f1[0], false, 'flash');
+  if (fe.material !== 'flash' || fe.gpu || fe.max_alive !== 1 || JSON.stringify(fe.spawn.bursts) !== '[[0,1]]') bad.push('B1 Flash 发射器：' + JSON.stringify([fe.material, fe.gpu, fe.max_alive, fe.spawn]));
+  const ems = [{ name: 'MainA' }, { name: 'MainB' }, { name: 'MainC' }, { name: 'Flash' }], nt = [];
+  out.fit = [fwlFlashFit(ems, true, nt).length, fwlFlashFit(ems, false, nt).length, fwlFlashFit(ems.slice(1), true, nt).length];
+  if (out.fit.join() !== '3,4,3') bad.push('B1 手机上限：' + JSON.stringify(out.fit));
+  // 软圆点的大小：不查 Ramp、暗的时候 = 模拟的 σ；越亮越宽（贴图里压过的那团）
+  const k1 = flashLook(cM, 1e-3, 1, true).k, k2 = flashLook(cM, 3, 1).k, k3 = flashLook(cM, 300, 1).k;
+  out.look = [+k1.toFixed(3), +k2.toFixed(3), +k3.toFixed(3)]; if (!(k1 > 0.85 && k1 < 1.15) || !(k3 > k2)) bad.push('B1 闪光大小：' + JSON.stringify(out.look));
+  out.ver = [/flash/.test(entryVer(entryById('MYCR-O'))), /flash/.test(entryVer(entryById('MYCR-C-2')) || '')];
+  if (out.ver.join() !== 'true,false') bad.push('B1 导出指纹：' + JSON.stringify(out.ver));
+  // A14：尺寸档按时间缩认 Size By Life / Velocity Over Life（以前一律 time_skipped）
+  const jj = { emitters: [{ gpu: false, spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, required: { duration_s: 2, delay_s: 0 }, modules: [{ m: 'Lifetime', Lifetime: { uniform: [2, 2] } }, { m: 'InitialVelocity', StartVelocity: { const: [0, 0, 1000] } }, { m: 'VelocityOverLife', VelOverLife: { curve: [[0, [0, 0, 1000]], [1, [0, 0, 200]]] }, Absolute: true }, { m: 'SizeByLife', LifeMultiplier: { curve: [[0, [1, 1, 1]]] } }] }], size_spec: {} };
+  fwlTimeScale(jj, { tk: 0.5, name: 'T' }); const m0 = jj.emitters[0].modules;
+  out.time = [!!jj.size_spec.time_skipped, m0[0].Lifetime.uniform[0], m0[1].StartVelocity.const[2], m0[2].VelOverLife.curve[1][1][2]];
+  if (out.time.join() !== 'false,1,2000,400') bad.push('A14 按时间缩：' + JSON.stringify(out.time));
+  const loop = { emitters: [{ name: 'RiseLoop', gpu: false, spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: [{ m: 'Lifetime', Lifetime: { const: 2 } }, { m: 'VelocityOverLife', VelOverLife: { curve: [[0, [0, 0, 1]]] } }] }] };
+  if (fwlTimeScalable(loop)) bad.push('A14 近段循环（回放不按时间放）也被按时间缩了');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r13(pg):
+    """4.9.96 纯星头 CPU 粒子 + 开花闪光单独导出（用户 10-14 13:12 / 14:14）：PC 软圆点 / 路线 / 层产物 / 尾缀层产物表、Flash 发射器（入点前 / 单束 / 光点、手机上限、大小模型、导出指纹）、尺寸档按时间缩的白名单"""
+    r = await pg.evaluate(R13_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
 async def w1(pg):
     """4.5.0 工作台快改（用户 10-05 01:28 / 02:25）：时间轴没有发射器行和曲线、精简布局收起层轨道；AI 效果调了保存 = 存成我的效果（派生）、能加层；
     单层存模板 → 花型库「我的模板」、能打开；删除不弹框、8 秒内能撤销；AI 效果能从左栏隐藏；只还原一个发射器 / 回到模板默认；时长跟随 / 同一时刻粘连两个开关"""
@@ -2353,7 +2410,8 @@ async def x2(pg):
       return { so, em: pc ? pc.emitters.map(e => [e.name, e.gpu, pc.materials[e.material].role]) : null, dotRow: !!dot && !dot[0].hidden, note: ((document.querySelector('#params [data-info=schemeNote]') || {}).textContent || ''), n: dotsCount(state.P) }; })()""")
     info['选光点'] = r
     if {k: r['so'].get(k) for k in ('pc', 'mobile')} != {'pc': 'dots', 'mobile': 'seq'} or r['so'].get('low', 'off') != 'off': bad.append(f"方案没记住：{r['so']}")     # 4.9.29 多了低端（缺省不出）
-    if r['em'] != [['L1_Dots', True, 'soft_dot']]: bad.append(f"cascade.json 不是一个 GPU 光点发射器：{r['em']}")
+    em_d = [e for e in r['em'] if not e[0].endswith('Flash')]; em_f = [e for e in r['em'] if e[0].endswith('Flash')]     # 4.9.96 B2：光点另带一颗开花闪光（CPU 软圆点）
+    if em_d != [['L1_Dots', True, 'soft_dot']] or any(e[1] or e[2] != 'soft_dot' for e in em_f): bad.append(f"cascade.json 不是一个 GPU 光点发射器（+ 开花闪光）：{r['em']}")
     if not r['dotRow']: bad.append('选了光点，没出现光点大小 / 亮度')
     if 'GPU 光点' not in r['note']: bad.append(f"导出说明没写 GPU 光点：{r['note'][:60]}")
     # 引擎回放（云端快速模式不真画）：单层 PC 按光点画、手机按序列；光点数 = 模拟里会亮的星
@@ -3073,7 +3131,9 @@ W24_JS = r"""async () => {
     if (u.materials.main_v2.textures.main !== 'seq_v2' || !/_V2\.png$/.test(u.textures.seq_v2.file) || u.textures.cutout_v3.file.indexOf('_Cutout_V3') < 0 || !u.textures.ramp) bad.push('贴图 / 材质键对不上：' + JSON.stringify(Object.keys(u.textures)));
     // 多层：每层的变体在层上，L1_ 前缀
     { const L = { ...singleLayer(state.P, state.M), unitVariants: 3, unitRandom: 0.6 }, c = fwlCombo('C', [{ L, b: state.bake, i: 0, unit: b }], false);
-      out.combo = c.emitters.map(e => e.name + '>' + e.material + '>' + c.materials[e.material].textures.main);
+      out.combo = c.emitters.filter(e => !/Flash$/.test(e.name)).map(e => e.name + '>' + e.material + '>' + c.materials[e.material].textures.main);     // 4.9.96 B2：单束另带一颗开花闪光（软圆点，没有贴图）
+      out.flash = c.emitters.filter(e => /Flash$/.test(e.name)).map(e => e.name + '>' + c.materials[e.material].role);
+      if (+fxP(state.P).flash > 0 && out.flash.join() !== 'L1_Flash>soft_dot') bad.push('单束层没带开花闪光：' + JSON.stringify(out.flash));
       if (out.combo.join() !== 'L1_Unit>L1_main>L1_seq,L1_Unit_V2>L1_main_v2>L1_seq_v2,L1_Unit_V3>L1_main_v3>L1_seq_v3' || !c.textures.L1_ramp) bad.push('多层单束变体的发射器 / 材质 / 贴图前缀不对：' + JSON.stringify(out.combo)); }
     // 4 文件名：内部 _V2 / _V3 → 素材包序号 02 / 03
     const files = (await texFiles(b, 'X_L1')).map(f => f[0]), named = applyPackNaming((await texFiles(b, 'X_L1')).map(f => f), 'Test', [{ ln: 'X_L1', mn: 'X_Mobile_L1', b, mb: null, layer: '', pcTex: true }]).map(f => f[0]);
@@ -3834,7 +3894,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

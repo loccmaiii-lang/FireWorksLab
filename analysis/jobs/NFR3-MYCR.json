@@ -1,0 +1,185 @@
+{
+ "id": "NFR3-MYCR",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：Crackle · 大小与造型（11 档，4.9.96 重导后）",
+ "steps": [
+  {
+   "name": "原样（Crackle）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle.jpg",
+    "analysis/local/输出/素材包/Crackle",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "3 号（Crackle_03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_03.jpg",
+    "analysis/local/输出/素材包/Crackle_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "5 号（Crackle_05）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_05.jpg",
+    "analysis/local/输出/素材包/Crackle_05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "冠（Crackle_Crown）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Crown.jpg",
+    "analysis/local/输出/素材包/Crackle_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "柳（Crackle_Willow）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Willow.jpg",
+    "analysis/local/输出/素材包/Crackle_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "环（Crackle_Ring）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Ring.jpg",
+    "analysis/local/输出/素材包/Crackle_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "土星（Crackle_Saturn）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Saturn.jpg",
+    "analysis/local/输出/素材包/Crackle_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "万華鏡（Crackle_Kaleido）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Kaleido.jpg",
+    "analysis/local/输出/素材包/Crackle_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "心形（Crackle_Heart）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Heart.jpg",
+    "analysis/local/输出/素材包/Crackle_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "时差（Crackle_Jisa）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Jisa.jpg",
+    "analysis/local/输出/素材包/Crackle_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "芯入（Crackle_Core）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Core.jpg",
+    "analysis/local/输出/素材包/Crackle_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "导出（23）· 4.9.96 重导（多一个 Flash）后再跑一遍；Flash 是软圆点、没有贴图，回放检查按惯例跳过（skipped 里能看到它）。 尺玉 / 2 尺 / 3 尺 / 4 尺（S10–S40）不在里面：分段 4–7 段，手机发射器超过 _M 上限 3，4.9.69 起导出拦截一直拦，重导不出来（要先定手机怎么出）。"
+}

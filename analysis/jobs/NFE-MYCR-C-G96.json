@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYCR-C-G96",
+ "type": "export",
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-C",
+ "name": "Crackle_Core",
+ "priority": 2,
+ "note": "导出（23）· 烘焙器 4.9.96（导出排查 B1，用户 10-14 13:12 / 14:14）：入点 > 0 的礼花多一个开花闪光发射器 Flash（入点前的闪光以前丢了）→ 参数不动重导。同一目录覆盖。"
+}

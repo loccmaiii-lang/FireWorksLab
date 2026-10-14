@@ -1,0 +1,31 @@
+{
+ "id": "NFS-G96",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "MYCR-O",
+  "MYCR-S03",
+  "MYCR-S05",
+  "MYCR-K",
+  "MYCR-Y",
+  "MYCR-R",
+  "MYCR-T",
+  "MYCR-M",
+  "MYCR-H",
+  "MYCR-J",
+  "MYCR-C",
+  "MYJC-O",
+  "MYJC-S03",
+  "MYJC-S05",
+  "MYJC-S10",
+  "MYJC-S20",
+  "MYJC-S30",
+  "MYJC-S40",
+  "MYJC-R",
+  "MYJC-T",
+  "MYJC-M",
+  "MYJC-H",
+  "MYJC-C"
+ ],
+ "note": "导出（23）· 烘焙器 4.9.96：Crackle 11 档（入点前 Flash；S10–S40 手机超发射器上限、导出被拦，不在里面）、窜天猴 12 档（单束层 Flash）重导后跑标准检查。"
+}

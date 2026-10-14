@@ -65,6 +65,7 @@ function outNote(L, e) {
   const ix = typeof state !== 'undefined' && state.tab === 'combo' && state.layers ? state.layers.indexOf(L) : -1, mp = ix >= 0 ? comboMobileNow(ix) : null;     // 4.9.80 手机「自动」
   const o = mp ? { ...layerOut(L), mobile: mp.kind } : layerOut(L), P = e && e.P, w = [];
   if (o.pc === 'off' && o.mobile === 'off') return 'PC、手机都不出这一层（画面里照样看得到，导出时跳过）';
+  if (P && isEmit(P)) return `PC：${tailOutText(P, o.pc, 'pc')} · 手机：${tailOutText(P, o.mobile, 'mobile')}`;     // 4.9.96（导出排查 A11 / H1）：尾缀层写尾缀自己的产物（以前按礼花写「GPU 光点约 N 颗」）
   if ((o.pc === 'unit' || o.mobile === 'unit') && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时按序列出');
   // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
   // 4.9.27 改成量出来的（unitFit，50_bake.js）：以前按花型 / 余烬 / 火花寿命 > 1.2 s / 燃烧 > 4 s 猜
@@ -126,9 +127,12 @@ function buildLayerHead(i) {
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
     for (const pf of ['pc', 'mobile']) { const uo = ex.querySelector(`[data-out=${pf}] option[value=unit]`); if (uo && le) { const many = pf === 'mobile' && mobileUnitTooMany(le.P); uo.disabled = (!unitAllowed(le.P) || many) && o[pf] !== 'unit'; uo.title = !unitAllowed(le.P) ? '千轮、分裂、蜂、非球形图案不能出单束' : many ? MOBILE_UNIT_MANY : ''; } }
     // 4.9.89（导出排查 A10 / H1 前半）：尾缀层只能按尾缀自己的产物出或不出；星头不发光的层不给选 GPU 光点（以前导出一个出生率 0 的空壳发射器）
-    const tail = le && isEmit(le.P);
+    const tail = le && isEmit(le.P), head = tail && typeof rtHeadOnly === 'function' && rtHeadOnly(le.P);     // 4.9.96 H1：纯星头层 PC 能选「CPU 粒子（星头）」
     for (const pf of ['pc', 'mobile']) for (const op of ex.querySelectorAll(`[data-out=${pf}] option`)) {
-      if (tail && ['unit', 'dots', 'frame'].includes(op.value)) { op.disabled = true; op.title = '尾缀层：按尾缀自己的产物出（单层交付清单里选近段 / 合成一张）或不出；单束、GPU 光点、单帧是礼花的'; }
+      const t0 = (pf === 'pc' ? OUT_PC : OUT_MOBILE_UI).find(q => q[0] === op.value); if (t0) op.textContent = t0[1];
+      if (head && pf === 'pc' && op.value === 'dots') { op.disabled = false; op.textContent = 'CPU 粒子（星头）'; op.title = '纯星头：一颗软圆点 CPU 粒子沿弹道走（和手机同一颗），没有贴图'; }
+      else if (head && op.value === 'seq') { op.textContent = pf === 'pc' ? '序列（单帧小面片）' : 'CPU 粒子（星头）'; op.title = ''; }
+      else if (tail && ['unit', 'dots', 'frame'].includes(op.value)) { op.disabled = true; op.title = '尾缀层：按尾缀自己的产物出（交付清单产物表里选近段 / 合成一张）或不出；单束、GPU 光点、单帧是礼花的'; }
       else if (op.value === 'dots' && le && !tail && !(dotsCount(le.P) > 0)) { op.disabled = o.pc !== 'dots'; op.title = '这一层星头不发光（星头亮度 0 或不留星头），GPU 光点导出是空的'; }
     } };
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { setLayerOut(L, sel.dataset.out, sel.value); syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));     // 4.9.80 只改这一格（以前改 PC 会顺手把手机写死成序列）
@@ -643,7 +647,7 @@ function buildTlBars() {
   host.innerHTML = ruler + rows.map(x => {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
-      + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
+      + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大${lp && familyOf(lp.type) === 'aerial' && +fxP(lp).flash > 0 ? '；开花闪光单独导出一颗软圆点（Flash，4.9.96）' : ''}`) : '')
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`)
       + (sp.seq > sp.end + 0.02 && pct(sp.at(sp.seq)) > pct(sp.at(sp.end)) ? `<i class="void" style="left:${pct(sp.at(sp.end))}%;width:${Math.max(0.3, pct(sp.at(sp.seq)) - pct(sp.at(sp.end)))}%" title="${seqVoidText(sp)}"><em>${sp.cut ? '出点后 · 不导出' : '全黑 · 不导出'}</em></i>` : '');
     const cutOK = sp && lp && cutsOn(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
@@ -655,7 +659,7 @@ function buildTlBars() {
     return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + (P || state.tab === 'combo' ? `<div class="tlcut" title="轨道上：上排圆点 = 星（点火、燃烧结束…），菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧从这里开始">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
-      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
+      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') + (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 ? '，开花闪光单独导出一颗软圆点（Flash）' : '') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
       <label class="check tlopt" title="开：拖 / 改点火、燃烧结束这些时间点时，序列时长跟着这一层最后看得见的时刻伸缩，入点跟着点火平移。关：只改你动的那个参数"><input type="checkbox" data-tlopt="follow"${state.followOff ? '' : ' checked'}> 时长 / 入点跟着走</label>${state.tab === 'combo' && (state.links || []).length ? `<label class="check tlopt" title="开：同一批星的几层在同一时刻的点（例：引线火花停 = 锦点火）粘在一起，动一个另一个跟着动（轨道上带链条的点）。关：各改各的"><input type="checkbox" data-tlopt="glue"${state.glueOff ? '' : ' checked'}> 同一时刻的点一起动</label>` : ''}</div>` : '');
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
@@ -879,6 +883,16 @@ function renderDeliv() {
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
     if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）的素材包按它自己的导出规则生成，文件清单以导出的包为准</td></tr>`); continue; }
+    if (x.b.form === 'emitset' && x.b.esHead && (!combo || x.e)) {     // 4.9.96 H1：纯星头——PC 单帧小面片一张或 CPU 粒子（没有贴图），手机 CPU 粒子（没有贴图）
+      const st = tailProdState(x, combo), m = x.b.meta, ly = combo ? nm.layers[x.i] : '', r = combo ? +x.L.rate || 1 : 1, d0 = (combo ? +x.L.delay || 0 : 0) + m.full.t0 / r, life = m.full.Dtot / r;
+      if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · 纯星头 · PC ${tailOutText(st.P, st.pc === 'full' ? 'seq' : st.pc, 'pc')} · 手机 ${tailOutText(st.P, st.mo, 'mobile')}</td></tr>`);
+      if (st.pc === 'full') { rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, 'Full'), m.L, 1, 'tex', false)}.png</td><td>PC · 纯星头单帧小面片 · ${x.b.N}² · 1 帧（CPU 1 颗沿弹道走）</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC）</td><td></td><td></td></tr>`); }
+      else if (st.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · CPU 粒子（星头）1 颗 · 软圆点材质</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+      if (st.mo !== 'off') rows.push(`<tr><td class="dim">（没有贴图）</td><td>手机 · CPU 粒子（星头）1 颗 · 软圆点材质</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+      if (st.pc === 'off' && st.mo === 'off') rows.push(`<tr><td colspan="4" class="dim">PC、手机都不出这一层</td></tr>`);
+      continue;
+    }
     if (x.b.form === 'emitset') {   // 循环层 + 粒子：循环 / 消散两张序列 + 粒子发射器（没有贴图）
       const m = x.b.meta, ly = combo ? nm.layers[x.i] : '';
       for (const [, L, sub, n] of namingSheets(x.b)) {
@@ -1008,13 +1022,54 @@ function prodCellHTML(x, pf, combo) {
   const led = pf === 'pc' ? ledgerOfBake(x.b) : null;
   return `序列 ${nTex} 张 · ${F} 帧${minF < 99 ? ` · 最慢 ${minF.toFixed(minF < 10 ? 1 : 0)} fps` : ''}${led ? ` · 游戏里每帧最多跳 ${led.maxHeld} px${led.over ? `（${led.over} 帧超过金芒菊的 ${STEP_REF_PX}）` : ''}` : ''} · ${L0.cols}×${L0.rows}${L0.chans === 4 ? '×RGBA' : ''} · 单格 ${cell} px · ${nTex} 个发射器${s === 'unit' ? '（这种花型不能出单束，按序列出）' : ''}`;
 }
+// 4.9.96（导出排查 A11 / H1）：尾缀层（循环层 + 粒子 / 合成一张 / 纯星头）产物表的一行。单层改 P.outPC / outMobile；多层 PC「不出 / 序列 / CPU 粒子」写在层上（L.out），
+//   近段 ↔ 合成一张、手机近段 ↔ 合成一张是这一层尾缀自己的参数（e.P，改了重烘这一层 / 作废手机烘焙）
+function tailOutText(P, kind, pf) {
+  const head = typeof rtHeadOnly === 'function' && rtHeadOnly(P);
+  if (kind === 'off') return '不出';
+  if (pf === 'pc') return head ? (kind === 'dots' ? 'CPU 粒子（星头）：1 颗软圆点沿弹道走，和手机同一颗，没有贴图' : '序列（单帧小面片）：1 颗 CPU 粒子沿弹道走') : rtPcFull(P) ? '近段 + 远段合成一张（1 个序列发射器）' : rtIsFar(P) ? '近段 + 远段 + 粒子（PC 全套）' : '循环层 + 粒子（PC 全套）';
+  return head ? 'CPU 粒子（星头）：1 颗软圆点' : rtMobFull(P) ? '_M 近段 + 远段合成一张' : '_M 只有近段循环';
+}
+function tailProdState(x, combo) {
+  const P = combo ? x.e.P : state.P, head = rtHeadOnly(P), far = rtIsFar(P);
+  if (!combo) return { P, head, far, pc: head ? (P.outPC === 'dots' ? 'dots' : P.outPC === 'off' ? 'off' : 'full') : far && rtPcFull(P) ? 'full' : 'seq',
+    mo: P.outMobile === 'off' ? 'off' : head || (P.outMobile === 'full' && far) ? 'full' : 'seq' };
+  const o = layerOut(x.L), mk = x.mob ? x.mob.kind : o.mobile;
+  return { P, head, far, pc: o.pc === 'off' ? 'off' : head ? (o.pc === 'dots' ? 'dots' : 'full') : far && rtPcFull(P) ? 'full' : 'seq', mo: mk === 'off' ? 'off' : head || rtMobFull(P) ? 'full' : 'seq' };
+}
+function tailProdRow(x, combo) {
+  const st = tailProdState(x, combo), { P, head, far } = st, off = combo ? [['off', '不出']] : [];
+  const pcOpts = head ? [['full', '序列（单帧小面片）'], ['dots', 'CPU 粒子（星头）'], ...off] : far ? [['seq', '近段 + 远段 + 粒子'], ['full', '近段 + 远段合成一张'], ...off] : combo ? [['seq', '循环层 + 粒子（PC 全套）'], ...off] : null;
+  const mbOpts = head ? [['full', 'CPU 粒子（星头）'], ['off', '不出']] : OUT_MOBILE_TAIL.filter(([k]) => k !== 'full' || far);
+  const fo = !head && rtFullTailFeatures(P), foT = ' disabled title="落火入贴图 / 燃尽后曲线 / 末段气流开着：只有「合成一张」能烘（关掉这几项才能选）"';     // 4.9.96：以前选了导出才报错
+  const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${fo && k === 'seq' && v !== 'seq' ? foT : ''}>${t}</option>`).join('')}</select>`;
+  const hb = x.b && x.b.esHead ? x.b : null, hN = hb ? hb.N : 512;
+  const pcTxt = st.pc === 'off' ? '<span class="dim">不出</span>' : head ? (st.pc === 'dots' ? 'CPU 1 颗 · 软圆点（和手机同一颗）· 没有贴图 · 1 个发射器' : `单帧小面片 1 张（${hN}²，1 帧）· CPU 1 颗沿弹道走 · 1 个发射器`)
+    : st.pc === 'full' ? '星头及粗中细火花合入全程序列，1 个发射器；按 PC 贴图尺寸烘焙' : far ? 'PC 全套：近段 + 远段 + 粒子' : '循环层 + 粒子（PC 全套）';
+  const fullTxt = '手游 _M：星头 + 全部火花合成一张世界坐标全程序列，1 个发射器、1 层（Rectangle + 锁 Z + Local Space）；星头一帧帧走、一个曝光，在引擎回放切手机看（用户 10-12 23:49）';
+  const mbTxt = st.mo === 'off' ? `<span class="dim">不出${x.mob && x.mob.why ? '（' + x.mob.why + '）' : ''}</span>` : head ? 'CPU 1 颗 · 软圆点 · 没有贴图' : st.mo === 'full' ? fullTxt : '手游 _M：只有近段循环一张大面片（不出远段、火花、星头光晕；用户 10-12 21:34）';
+  return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td>${pcOpts ? sel('pc', pcOpts, st.pc) : ''}<small>${pcTxt}</small></td><td>${sel('mobile', mbOpts, st.mo)}<small>${mbTxt}</small></td></tr>`;
+}
+function setTailLayerOut(L, e, pf, v) {
+  const P = e.P, head = rtHeadOnly(P);
+  if (v === 'off') { setLayerOut(L, pf, 'off'); return; }
+  if (pf === 'pc') {
+    setLayerOut(L, 'pc', head && v === 'dots' ? 'dots' : 'seq');
+    if (!head && rtIsFar(P) && (v === 'full') !== rtPcFull(P)) { P.outPC = v === 'full' ? 'full' : 'seq'; queueLayerBake(e, 0); }     // 近段 ↔ 合成一张：这一层重烘
+    return;
+  }
+  setLayerOut(L, 'mobile', 'auto');
+  const want = head ? (P.outMobile === 'off' ? 'full' : P.outMobile) : v;
+  if (P.outMobile !== want) { P.outMobile = want;
+    if (e.bake) { if (e.bake.P) e.bake.P.outMobile = want; if (e.bake.mobile) { disposeBake(e.bake.mobile); e.bake.mobile = null; } }     // 手机烘焙按新选的重烘（导出 / 切手机时）
+    e.rev = (e.rev || 0) + 1; if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; } }
+}
 function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
     const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
     // 4.9.69 升空尾缀（循环层 + 粒子）：PC 照旧全套；手机能选 _M / 不出（用户 10-10 16:51「升空尾缀无法选择手机导出什么格式，无法创建手机粒子文件」）
-    if (!seqOK && !combo && x.b && x.b.form === 'emitset') { const far = rtIsFar(state.P), mo = state.P.outMobile === 'off' ? 'off' : state.P.outMobile === 'full' && far ? 'full' : 'seq';     // 4.9.73 合成一张只给有远段的（RT6）
-      const fullTxt = '手游 _M：星头 + 全部火花合成一张世界坐标全程序列，1 个发射器、1 层（Rectangle + 锁 Z + Local Space）；星头一帧帧走、一个曝光，在引擎回放切手机看（用户 10-12 23:49）';
-      return `<tr><td>${x.name}</td><td>${far ? `<select data-prod="pc" data-i="${x.i}" aria-label="PC出什么"><option value="seq"${!rtPcFull(state.P) ? ' selected' : ''}>近段 + 远段 + 粒子</option><option value="full"${rtPcFull(state.P) ? ' selected' : ''}>近段 + 远段合成一张</option></select><small>${rtPcFull(state.P) ? '星头及粗中细火花合入全程序列，1 个发射器；按 PC 贴图尺寸烘焙' : 'PC 全套：近段 + 远段 + 粒子'}</small>` : '循环层 + 粒子（PC 全套）'}</td><td><select data-prod="mobile" data-i="${x.i}" aria-label="手机出什么">${OUT_MOBILE_TAIL.filter(([k]) => k !== 'full' || far).map(([k, t]) => `<option value="${k}"${k === mo ? ' selected' : ''}>${t}</option>`).join('')}</select><small>${mo === 'off' ? '<span class="dim">不出</span>' : mo === 'full' ? fullTxt : '手游 _M：只有近段循环一张大面片（不出远段、火花、星头光晕；用户 10-12 21:34）'}</small></td></tr>`; }
+    // 4.9.96（导出排查 A11 / H1）：多层里的尾缀层也给同样的下拉（以前一行灰字，选不了）；纯星头 PC「序列（单帧小面片）/ CPU 粒子（星头）/ 不出」、手机「CPU 粒子 / 不出」
+    if (!seqOK && x.b && x.b.form === 'emitset' && (!combo || x.e)) return tailProdRow(x, combo);
     if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
     const o = outOfX(x, combo), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
@@ -1035,12 +1090,14 @@ function showLowReplay() {
 }
 function setProduct(i, pf, v) {
   if (pf === 'pc' && v === 'frame') setTimeout(() => flash('PC 选了单帧：引擎回放直接按单帧画（表里「在引擎回放里看」）'), 0);
-  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; setLayerOut(L, pf, v);     // 4.9.80 只改这一格；手机可选「自动」
+  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; const e = layerEntryOf(L);
+    if (e && isEmit(e.P)) setTailLayerOut(L, e, pf, v); else setLayerOut(L, pf, v);     // 4.9.80 只改这一格；手机可选「自动」；4.9.96 A11 尾缀层
     if (typeof undoNote === 'function') undoNote(); if (state.comboSel === i && typeof buildLayerHead === 'function') buildLayerHead(i); renderDeliv(); wbSync(); return; }
   state.P[pf === 'pc' ? 'outPC' : 'outMobile'] = v;
   // 4.9.73 尾缀手机换了「只有近段 / 合成一张」：缓存的手机烘焙作废；正在看手机就按新选的重烘
   const b = state.bake; if (pf === 'mobile' && b && b.form === 'emitset' && b.mobile && !!b.mobile.esFull !== rtMobFull(state.P)) { disposeBake(b.mobile); b.mobile = null; if (state.platform === 'mobile') setPreviewPlatform('mobile'); }
-  if (pf === 'pc' && b && b.form === 'emitset' && !!b.esFull !== rtPcFull(state.P)) { onParam(); return; }
+  if (pf === 'pc' && b && b.form === 'emitset' && !!b.esFull !== (rtPcFull(state.P) || rtHeadOut(state.P))) { onParam(); return; }
+  if (pf === 'pc' && b && b.form === 'emitset' && b.P) b.P.outPC = state.P.outPC;     // 4.9.96 H1：纯星头「序列 ↔ CPU 粒子」不用重烘（同一次烘焙），导出 / 回放按现在选的
   onExportScheme();
 }
 function toggleDeliv(on) {

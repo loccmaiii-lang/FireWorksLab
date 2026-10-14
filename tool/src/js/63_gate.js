@@ -42,7 +42,8 @@ function packGateConfig(f, j, dir, png) {
   // 同一时刻的大序列（flipbook 贴图的发射器）不超过 1 张
   const flip = k => { const t = (j.textures || {})[k]; return t && t.class === 'flipbook'; }, mat = e => (j.materials || {})[e.material] || {};
   const seq = ems.filter(e => { const m = mat(e).textures || {}; return Object.values(m).some(flip); }).map(e => { const r = e.required || {}, d0 = +r.delay_s || 0; return [e.name, d0, d0 + (+r.duration_s || 0)]; });
-  let most = 0, who = []; for (const [, a] of seq) { const live = seq.filter(([, b0, b1]) => b0 <= a + 1e-6 && b1 > a + 1e-6); if (live.length > most) { most = live.length; who = live.map(x => x[0]); } }
+  // 4.9.96：前后接力的几段（分段母版 A → B → C）delay / duration 各自取 4 位小数，前一段的结尾会比后一段的开头多 0.0001 s——以前算成「同一时刻 2 张」把 MYCR-O 这类分段 Crackle 的手机包拦下；按 1 ms 判
+  let most = 0, who = []; for (const [, a] of seq) { const live = seq.filter(([, b0, b1]) => b0 <= a + 1e-6 && b1 > a + 1e-3); if (live.length > most) { most = live.length; who = live.map(x => x[0]); } }
   // 4.9.80（导出排查 ①）：写清楚改哪一层（发射器名 L<n>_ 前缀 = 第 n 层）
   const lys = [...new Set(who.map(n => (/^L(\d+)_/.exec(n) || [])[1]).filter(Boolean))], tip = lys.length > 1 ? `：交付清单产物表把第 ${lys.slice(1).join('、')} 层的手机改成「自动」或「不出」` : who.length > 1 && /Tail$/.test(who[1]) ? '：手机不能星头、火花分开（要合成一张）' : '';
   if (most > 1) bad.push(`${tag}：同一时刻有 ${most} 张大序列（${who.join(' + ')}）；手游中低配只能 1 张（规范 §6）${tip}`);

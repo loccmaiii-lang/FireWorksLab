@@ -101,7 +101,9 @@ function entryVer(e) {
   const key = e.id + '@' + e.ver; if (_entryVer.has(key)) return _entryVer.get(key);
   const fams = new Set(), outs = e.kind === 'combo' && e.combo && e.combo.layers ? e.combo.layers.map(L => L.out || {}) : [];
   (e.kind === 'combo' ? e.layerIds || [] : [e.id]).forEach((id, i) => { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f]) + ((P.zoom === 'on' || P.zoom === 'anchor') && OUTPUT_VER.zoom ? '-zoom' + OUTPUT_VER.zoom : ''));     /* 4.9.33 Zoom 取景单独一档；4.9.89（导出排查 A17）锚点也算 */
-    if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots); } } catch (err) { } });   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
+    if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots);
+    if (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 && (+P.cutIn > 0 || ['unit', 'dots'].includes((outs[i] || {}).pc || P.outPC))) fams.add('flash' + OUTPUT_VER.flash);     // 4.9.96 B1 / B2
+    if (isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P)) fams.add('head' + OUTPUT_VER.head); } } catch (err) { } });     // 4.9.96 H1   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
   let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, ''); if (sp) ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期
   const v = e.ver + '·' + ([...fams].sort().join('+') || 'x') + ss;
   _entryVer.set(key, v); return v;
@@ -430,6 +432,8 @@ function setQueuedView(on) {
 // ---------------- 右栏审阅卡 ----------------
 function setReview(e, formal) {
   lib.review = e || null; const box = $('#pReview');
+  // 4.9.96：右栏「不起作用」有几条看条目号（导出尺寸按条目配：RT6S → 坝顶小号尾缀……）；面板在 setReplica 里先建好、那时 lib.review 还是上一个，打开后「导出缩放」没变灰（合入门禁 RT6S 抓到）
+  if (typeof refreshVisibility === 'function' && typeof panelRows !== 'undefined' && panelRows.length) { try { refreshVisibility(); } catch (err) { } }
   const vidEntry = e || (formal && formal.video ? { id: 'rep:' + formal.id, video: '../' + formal.video, vmeta: (typeof FW_VMETA !== 'undefined' && FW_VMETA['../' + formal.video]) || null } : null);
   setRefVideo(vidEntry);
   const ef = lib.effect;

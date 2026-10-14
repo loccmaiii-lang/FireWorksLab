@@ -48,7 +48,7 @@ async function bakeMobileFor(b,onProg=null) {
   // 4.9.73 手机选「近段 + 远段合成一张」：只烘那一张（bakeRiseTailFull），不再把近段 / 远段按手机尺寸全烘一遍
   // 4.9.80 同样封顶 1024（PC 4096 × 0.5 = 2048 以前会被拦）
   if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),cap=typeof GATE_MOBILE_TEX!=='undefined'?GATE_MOBILE_TEX:1024,fc=Math.min(f,cap/Math.max(b.P.texW,b.P.texH)),Pm={...b.P,texW:Math.round(b.P.texW*fc),texH:Math.round(b.P.texH*fc)};
-    if(rtMobFull(b.P))return await bakeRiseTailFull(Pm,1,onProg);
+    if(rtMobFull(b.P)||rtHeadOut(b.P))return await bakeRiseTailFull(Pm,1,onProg);     // 4.9.96 H1：纯星头手机一律软圆点
     const m=await bake({...Pm,outPC:'seq'},1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {

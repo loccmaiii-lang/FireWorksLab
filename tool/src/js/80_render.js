@@ -44,7 +44,7 @@ function preScaleAt(b0, m, b, age0, age) { return b === b0 && m.pre && age < 0 &
 // 4.9.21（用户 10-06 21:51 选「一律绕爆点」）：绕爆点放大（面片坐标原点 = 爆点；导出用 Pivot Offset 把爆点放在粒子上）
 function preRect(r, s) { return [r[0] * s, r[1] * s, r[2] * s, r[3] * s]; }
 function drawLayer(b0, L, t, view, origin = [0, 0]) {
-  if (b0.esHead && b0.esMobile) { const age=(engineTick(t)-L.delay)*L.rate, sc=L.scale||1, v=view.map(x=>x/sc);
+  if (b0.esHead && (b0.esMobile || L._dot)) { const age=(engineTick(t)-L.delay)*L.rate, sc=L.scale||1, v=view.map(x=>x/sc);     // 4.9.96 H1：PC 选「CPU 粒子（星头）」也画这一颗（L._dot）
     const sig=JSON.stringify([b0.P,L]), cache=b0._headDot; if (!cache || cache.sig!==sig) b0._headDot={sig,tab:esSpawn(rtHeadDotES(b0.P,comboLayerM(L)),1)};
     esDraw(b0._headDot.tab,age,v,hdrT.w/(2*v[2]),hdrT.h/(2*v[3]),1); return 0; }
   t=engineTick(t);
@@ -285,17 +285,19 @@ function renderExport() {
   // 4.4.2 单层的导出方案：PC 选 GPU 光点 → 画光点（和 cascade.json 同一份发射器数据）；不出 → 不画
   const Pn = typeof withScheme === 'function' ? withScheme(b.P || state.P) : b.P || state.P, so = typeof singleOut === 'function' && (b.form === 'master' || b.form === 'segments') ? singleOut(Pn) : null, sch = so ? (state.platform === 'mobile' ? so.mobile : so.pc) : 'seq';     // 4.9.35 引擎回放不分平台：按 PC 列（展示模式切手机时按手机列）
   if (sch === 'frame') { renderLowExport(b, Pn, view, sa); return; }     // 4.9.29 单帧（4.9.35 并进产物表）
-  if (sch === 'dots') { esDraw(singleDotsTables(Pn, state.M, b), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false); post(-1); hudText = `导出效果 · PC GPU 光点（约 ${dotsCount(b.P || state.P)} 颗，软圆点，没有贴图）`; hudB = ''; return; }
+  const aer = b.form === 'master' || b.form === 'segments', mobN = sch === 'seq' ? bakeParts(b).length : sch === 'unit' ? unitVarOf(state.P).K : 1;     // 4.9.96 B1 / B2：开花闪光（和导出同一份；手机发射器放不下时导出不放、这里也不画）
+  const fls = aer ? layerFlashES(sch === 'unit' && !unitAllowed(b.P || state.P) ? 'seq' : sch, b, b.P, state.M, null) : [], flsOK = fls.length && !(state.platform === 'mobile' && mobN + fls.length > MOBILE_EMITTERS_MAX) ? fls : null;
+  if (sch === 'dots') { esDraw(singleDotsTables(Pn, state.M, b), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); drawFlashList(flsOK, state.t, view); additive(false); post(-1); hudText = `导出效果 · PC GPU 光点（约 ${dotsCount(b.P || state.P)} 颗，软圆点，没有贴图）`; hudB = ''; return; }
   if (sch === 'off') { additive(false); post(-1); hudText = `导出效果 · ${state.platform === 'mobile' ? '手机' : 'PC'} 不出这一层（产物表里选的「不出」）`; hudB = ''; return; }
   // 4.9.25：单层效果 PC 选单束 → 按单束画（以前这里仍画序列，写「单束的引擎回放在多层效果里看」）；和导出同一份单束烘焙
   if (sch === 'unit' && unitAllowed(b.P || state.P)) {
     const pd = productNow(state.P, null, singleUnitHolder());
     if (!pd.b) { additive(false); post(-1); hudText = '导出效果 · PC 单束：单束贴图烘焙中…'; hudB = ''; return; }
     const ev2 = exportViewAny(pd.b, sa), fu = drawUnitLayer(pd.b, singleLayer(state.P, state.M), engineTick(state.t), ev2.view);
-    additive(false); post(-1);
+    drawFlashList(flsOK, state.t, ev2.view); additive(false); post(-1);
     hudText = `导出效果 · PC 单束 · 每颗星一个面片 × ${Math.round(+pd.b.P.stars || 0)} · ${fu < 0 ? '序列结束' : `第 ${fu + 1}/${pd.b.meta.L.F} 帧`} · 贴图里一颗代表星，轨迹由 Cascade 算（和导出同一套数）`; hudB = ''; return;
   }
-  f = drawExportScene(b, state.M, state.t, view, sa);
+  f = drawExportScene(b, state.M, state.t, view, sa); drawFlashList(flsOK, state.t, view);
   additive(false); post(-1);
   const s = segAt(b, state.t), L = s.meta.L, mag = ev.mag;
   const magTxt = !mag ? '' : mag > 1.5 ? ` · 贴图放大 ${mag.toFixed(1)}×，会显糊` : ` · 贴图放大 ${mag.toFixed(1)}×`;
@@ -303,7 +305,8 @@ function renderExport() {
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
   const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
-  hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（绕爆点）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  const flT = flsOK && engineTick(state.t) < flsOK[0].delay + flsOK[0].duration ? ' · 开花闪光：单独一颗软圆点（Flash，入点前贴图里没有）' : '';
+  hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（绕爆点）· 入点 ${s.meta.t0.toFixed(2)} s${flT}` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' + flT : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = '';
 }
 const flowTrail = [];
@@ -311,6 +314,9 @@ const flowTrail = [];
 // 贴图 / 流转 / 引擎回放 / 交付清单都按它：序列（seq）/ 单束（unit，贴图是另烘的一颗代表星）/ GPU 光点（dots，没有贴图）/ 不出（off）。
 // holder：有 P、unitBake 的对象（多层 = 图层条目 e，单层 = singleUnitHolder()）；单束还没烘就排一个后台烘焙（ensureLayerUnit）
 function productNow(P, L, holder) {
+  if (P && isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P)) {     // 4.9.96 H1：纯星头 PC 选了 CPU 粒子 / 不出时没有贴图
+    const k = L ? (state.platform === 'mobile' ? 'dot' : layerOut(L).pc) : state.platform === 'mobile' ? 'dot' : P.outPC;
+    return { kind: k === 'dots' || k === 'dot' ? 'headDot' : k === 'off' ? 'off' : 'seq' }; }
   if (!P || familyOf(P.type) !== 'aerial') return { kind: 'seq' };
   // 4.9.35（用户 10-07 18:50「引擎回放就只是引擎回放」）：不分平台，按 PC 列（展示模式切到手机时按手机列）
   const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? (L ? comboLayerDraw(L) : o.mobile) : o.pc;     // 4.9.80 手机「自动」
@@ -325,7 +331,7 @@ function productNow(P, L, holder) {
   if (!ub && holder) ensureLayerUnit(holder);
   return { kind: 'unit', b: ub };
 }
-const PRODUCT_NONE = { dots: 'PC 这一层出 GPU 光点：没有贴图（软圆点粒子，数值在 cascade.json；引擎回放里看）', off: 'PC 不出这一层：没有贴图' };
+const PRODUCT_NONE = { dots: 'PC 这一层出 GPU 光点：没有贴图（软圆点粒子，数值在 cascade.json；引擎回放里看）', off: 'PC 不出这一层：没有贴图', headDot: '纯星头出 CPU 粒子（一颗软圆点）：没有贴图（数值在 cascade.json；引擎回放里看）' };
 // 贴图 / 流转看哪一张（4.9.20，对话框23，用户 10-06 21:12「不要单独只为这个尾缀添加功能，切换的时候有好几张贴图，就都可以切换」）：
 // 列出这一层导出的每一张序列，和素材包里的贴图文件一一对应——分张（A / B…）、合并 / 星头 / 尾迹、循环层 / 消散 / 远段；不按效果种类单做。
 // 默认「自动」= 跟着时间走（分张时播完第一张接着播第二张，用户 2026-10-02 13:09）；点一张锁定看它。以前只能切「第 n 张」「星头 / 尾迹」，
@@ -376,7 +382,7 @@ function renderAtlas(ctx = null) {
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   // 4.9.25 按导出方案看：PC 单束看单束那张；光点 / 不出写明没有贴图
   const pd = state.tab === 'asset' ? { kind: 'seq' } : ctx ? productNow(ctx.P, ctx.L, ctx.holder) : productNow(state.P, null, typeof singleUnitHolder === 'function' ? singleUnitHolder() : null);
-  if (pd.kind === 'dots' || pd.kind === 'off') { syncTexSheets(null); state.texSheetNow = null; hudText = PRODUCT_NONE[pd.kind]; hudB = ''; return; }
+  if (pd.kind === 'dots' || pd.kind === 'off' || pd.kind === 'headDot') { syncTexSheets(null); state.texSheetNow = null; hudText = PRODUCT_NONE[pd.kind]; hudB = ''; return; }
   if (pd.kind === 'frame') { syncTexSheets(null); state.texSheetNow = null; if (!pd.lw) { hudText = '单帧：单帧 + 功能图烘焙中…'; hudB = ''; return; } renderLowAtlas(pd.lw, pd.M); return; }     // 4.9.29 单帧
   const b0 = pd.kind === 'unit' ? pd.b : previewBake();
   if (!b0) { syncTexSheets(null); hudText = pd.kind === 'unit' ? 'PC 这一层出单束：单束贴图烘焙中…' : '烘焙中…'; return; }
@@ -506,6 +512,14 @@ function ensureLayerUnit(e) {
 }
 // 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'unit' 单束 / 'dots' 光点 / 'off' 不画
 function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; if (state.platform !== 'mobile') return o.pc; const i = state.layers ? state.layers.indexOf(L) : -1, p = i >= 0 && typeof comboMobileNow === 'function' ? comboMobileNow(i) : null; return p ? p.kind : o.mobile; }     // 4.9.80 手机「自动」按算出来的     // 4.9.35 引擎回放按 PC 列（展示模式切手机时按手机列）：seq / unit / dots / frame / off
+// 4.9.96（导出排查 B1 / B2）：开花闪光的软圆点（和导出同一份 flashES）；手机发射器超过 _M 上限时导出不放，这里也不画
+function drawFlashList(list, t, view) { const tab = list && list.length ? flashTables(list) : null; if (tab) esDraw(tab, engineTick(t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); }
+function comboFlashLists(items, mob) {
+  const lists = [], plan = mob ? comboMobilePlan(state.layers.map(L => { const e = layerEntryOf(L); return { L, b: e && e.bake }; })) : null; let n = 0, nf = 0;
+  items.forEach(([L, e, i]) => { const k = comboLayerDraw(L), b = e.bake, list = layerFlashES(k === 'unit' && !unitAllowed(e.P) ? 'seq' : k, b, b && b.P, comboLayerM(L), L); lists[i] = list; nf += list.length; });
+  if (mob) { state.layers.forEach((L, i) => { const e = layerEntryOf(L), p = plan[i]; if (e && e.bake && p) n += layerMobileUse(L, e.bake, p.kind).n; }); if (n + nf > MOBILE_EMITTERS_MAX) return []; }
+  return lists;
+}
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();
@@ -523,22 +537,23 @@ function renderCombo() {
   const view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
   // 4.2.12 导出方案：这个平台不出的层不画；PC 出光点的层画光点（和 cascade.json 同一份发射器数据）
-  const mob = state.platform === 'mobile', notes = [];
+  const mob = state.platform === 'mobile', notes = [], fl = comboFlashLists(items, mob);     // 4.9.96 B1 / B2：每层的开花闪光（和 cascade.json 同一份）
   for (const [L, e, i] of items) if (layerShown(i)) {
     const s = comboLayerDraw(L);
     if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
     if (s === 'frame') { const e0 = state.lib.find(x => x.name === L.lib) || e, M = comboLayerM(L), lo = lowOf(L), lw = e0.bake ? lowCached(e0.bake, lo, M) : null;     // 4.9.29 单帧
       if (!lw) { if (e0.bake) ensureLow(e0.bake, lo, M); notes.push(`第 ${i + 1} 层单帧烘焙中`); continue; }
       drawLowLayer(lw, L, M, state.t, view, !!state.lowDissolve); notes.push(`第 ${i + 1} 层单帧${state.lowDissolve ? '（溶解预览）' : ''}`); continue; }
-    if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); notes.push(`第 ${i + 1} 层光点`); continue; }
+    if (s === 'dots' && e.bake.esHead) { drawLayer(e.bake, { ...L, _dot: 1 }, state.t, view); notes.push(`第 ${i + 1} 层 CPU 粒子（星头）`); continue; }     // 4.9.96 H1
+    if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); drawFlashList(fl[i], state.t, view); notes.push(`第 ${i + 1} 层光点`); continue; }
     if (s === 'unit' && unitAllowed(e.P)) {     // 4.2.13 单束：每颗星一个面片（drawUnitLayer 按 Cascade 的放射弹道画）；层的延迟 / 倍率换成这一层的年龄，缩放换成取景
       const e0 = state.lib.find(x => x.name === L.lib) || e, ub = unitBakeOf(e0, L);
       if (!ub) { ensureLayerUnit(e0); notes.push(`第 ${i + 1} 层单束烘焙中`); continue; }
       const age = (engineTick(state.t) - (+L.delay || 0)) * (+L.rate || 1), sc = +L.scale || 1;
       if (age >= 0) drawUnitLayer(ub, L, age, view.map(v => v / sc));
-      notes.push(`第 ${i + 1} 层单束`); continue;
+      drawFlashList(fl[i], state.t, view); notes.push(`第 ${i + 1} 层单束`); continue;
     }
-    drawLayer(e.bake, L, state.t, view);
+    drawLayer(e.bake, L, state.t, view); drawFlashList(fl[i], state.t, view);
   }
   additive(false); post();
   hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${notes.length ? ' · ' + (mob ? '手机' : 'PC') + '：' + notes.join('、') : ''}${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';

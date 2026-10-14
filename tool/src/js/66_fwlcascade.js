@@ -135,6 +135,10 @@ function fwlLoop(name,b,M,mobile) {
 function fwlCascade(name, b, M, mobile = false) {
   const body = b.form === 'loop' ? fwlLoop(name,b,M,mobile) : b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
   if (!body) return null;
+  // 4.9.96（导出排查 B1）：入点以前的开花闪光单独一颗软圆点（Flash）；手机发射器放不下就不放（fwlFlashFit）
+  if ((b.form === 'master' || b.form === 'segments') && typeof layerFlashES === 'function') { const fl = layerFlashES('seq', b, b.P, M, null);
+    if (fl.length) { body.materials.flash = { role: 'soft_dot' }; body.emitters.push(...fl.map(e => fwlFlashEmitter(e, mobile, 'flash'))); body.notes = body.notes || [];
+      body.emitters = fwlFlashFit(body.emitters, mobile, body.notes); if (!body.emitters.some(isFlashEm)) delete body.materials.flash; if (!body.notes.length) delete body.notes; } }
   if (mobile) fwlMaxAlive(body.emitters);
   return {
     format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc', ...(mobile ? { tier: 'M' } : {}),     // 4.9.69 手游档位（规范 v1 §2：_H / _M，不做 _L）；_H 以后另出 cascade_mobile_h.json
@@ -209,9 +213,12 @@ function fwlScaleJSON(j, k, keep, spec) {
 // 4.9.78 尺寸档按时间缩（用户 10-13 18:47「XS用1.69秒」）：长度已 × k，这里时间 × tk（= √k，Froude：重力、下坠看着和原大一样对）。
 //   只对「合成一张」这种一个序列面片、没有粒子的配置做（Lifetime / Duration / Delay × tk、初速 ÷ tk；帧号、颜色按相对寿命，不用动）；
 //   配置里有别的模块（粒子、速度曲线、阻力、加速度）就不缩时间、写一条说明——那种只能按长度缩（时间和原效果一样）
-const FWL_TIME_OK = new Set(['Lifetime', 'InitialLocation', 'InitialVelocity', 'InitialSize', 'OrientationAxisLock', 'DynamicParameter', 'ColorOverLife', 'ColorScaleOverLife']);
+// 4.9.96（导出排查 A14）：Size By Life（锚点 Zoom，按相对寿命，不用动）和 Velocity Over Life（纯星头的物理弹道，Absolute 速度 ÷ tk）也能按时间缩——
+//   以前它们不在表里，锚点合成一张 / 纯星头一律「只能按长度缩」，引擎回放却按时间放（对不上）
+const FWL_TIME_OK = new Set(['Lifetime', 'InitialLocation', 'InitialVelocity', 'InitialSize', 'OrientationAxisLock', 'DynamicParameter', 'ColorOverLife', 'ColorScaleOverLife', 'SizeByLife', 'VelocityOverLife']);
 function fwlTimeScalable(j) {
-  return (j.emitters || []).length > 0 && j.emitters.every(e => !e.gpu && (e.modules || []).every(m => FWL_TIME_OK.has(m.m))
+  // 4.9.96：近段循环（RiseLoop / RiseFade，手机 _M 只有近段时）也有 Velocity Over Life，但它的引擎回放不按时间放——照旧只按长度缩（A14 只放开合成一张的锚点和纯星头）
+  return (j.emitters || []).length > 0 && j.emitters.every(e => !e.gpu && !/(^|_)Rise(Loop|Fade)$/.test(e.name || '') && (e.modules || []).every(m => FWL_TIME_OK.has(m.m))
     && !(e.spawn && e.spawn.rate && (e.spawn.rate.curve || +e.spawn.rate.const > 0)) && (e.modules || []).every(m => m.m !== 'DynamicParameter' || !m.params || Object.keys(m.params).every(q => q === 'frame')));
 }
 function fwlTimeScale(j, spec) {
@@ -224,11 +231,13 @@ function fwlTimeScale(j, spec) {
   for (const e of j.emitters) {
     const r = e.required || {}; if (r.duration_s != null) r.duration_s = T(r.duration_s); if (r.delay_s != null) r.delay_s = T(r.delay_s);
     if (e.spawn && Array.isArray(e.spawn.bursts)) e.spawn.bursts = e.spawn.bursts.map(([t, n]) => [T(t), n]);
-    e.modules = e.modules.map(m => m.m === 'Lifetime' ? { ...m, Lifetime: m.Lifetime && 'const' in m.Lifetime ? { ...m.Lifetime, const: T(m.Lifetime.const) } : m.Lifetime }
-      : m.m === 'InitialVelocity' && m.StartVelocity && Array.isArray(m.StartVelocity.const) ? { ...m, StartVelocity: { ...m.StartVelocity, const: m.StartVelocity.const.map(v => +(v / tk).toFixed(2)) } } : m);
+    const V = v => +(v / tk).toFixed(2), sd = d => !d ? d : 'const' in d ? { ...d, const: Array.isArray(d.const) ? d.const.map(V) : V(d.const) } : 'uniform' in d ? { ...d, uniform: d.uniform.map(x => Array.isArray(x) ? x.map(V) : V(x)) } : 'curve' in d ? { ...d, curve: d.curve.map(([u, v]) => [u, Array.isArray(v) ? v.map(V) : V(v)]) } : d;
+    e.modules = e.modules.map(m => m.m === 'Lifetime' ? { ...m, Lifetime: m.Lifetime && 'const' in m.Lifetime ? { ...m.Lifetime, const: T(m.Lifetime.const) } : m.Lifetime && 'uniform' in m.Lifetime ? { ...m.Lifetime, uniform: m.Lifetime.uniform.map(T) } : m.Lifetime }     // 4.9.96：软圆点的寿命是 uniform
+      : m.m === 'InitialVelocity' && m.StartVelocity && Array.isArray(m.StartVelocity.const) ? { ...m, StartVelocity: { ...m.StartVelocity, const: m.StartVelocity.const.map(V) } }
+      : m.m === 'VelocityOverLife' ? { ...m, VelOverLife: sd(m.VelOverLife) } : m);     // 4.9.96 A14：Absolute 速度曲线（按相对寿命）÷ tk
   }
   j.size_spec.tk = tk; if (spec.rise) { j.size_spec.rise_s = spec.rise; j.size_spec.rise_src_s = spec.riseSrc; }
-  (j.notes = j.notes || []).push(`尺寸档「${spec.name}」按时间也缩（4.9.78，用户 10-13 18:47）：长度 × ${spec.k}、时间 × ${tk}（= √${spec.k}，重力看着对）→ 升空 ${spec.rise || '—'} s（原 ${spec.riseSrc || '—'} s）。Lifetime / Duration / Delay × ${tk}，Initial Velocity ÷ ${tk}；帧号曲线、颜色按相对寿命不变；贴图沿用原效果。`);
+  (j.notes = j.notes || []).push(`尺寸档「${spec.name}」按时间也缩（4.9.78，用户 10-13 18:47）：长度 × ${spec.k}、时间 × ${tk}（= √${spec.k}，重力看着对）→ 升空 ${spec.rise || '—'} s（原 ${spec.riseSrc || '—'} s）。Lifetime / Duration / Delay × ${tk}，Initial Velocity${j.emitters.some(e => (e.modules || []).some(m => m.m === 'VelocityOverLife')) ? ' / Velocity Over Life' : ''} ÷ ${tk}；帧号曲线、颜色${j.emitters.some(e => (e.modules || []).some(m => m.m === 'SizeByLife')) ? '、Size By Life' : ''}按相对寿命不变；贴图沿用原效果。`);
   return j;
 }
 // 素材包文件里所有 cascade*.json 按缩放改；返回新的文件表
