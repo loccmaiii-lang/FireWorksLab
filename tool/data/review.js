@@ -36536,7 +36536,7 @@ var FW_EFFECTS = [
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "【对话框新花型 2026-10-07 18:00】待你验收：证据：4.9.31 护栏重导 *-G31（指纹和条目对上、回放检查过）、全程回放 NFR-G31、标准检查 NFS-G31 全过；看法 analysis/results/NFJF10-G31/看法.md。",
+"下一步": "【导出（23）2026-10-14 烘焙器 4.9.96】入点前的开花闪光以前丢了（导出排查 B1），现在多一个 Flash 发射器 → 已排本机重导 NFE-MYCR-{O,S03,S05,K,Y,R,T,M,H,J,C}-G96 + 全程回放 NFR3-MYCR + 标准检查 NFS-G96；结果回来请对话框新花型看引擎回放 0–0.2 s 的闪光、更新看法。S10–S40（分 4–7 段）手机发射器超过上限 3，4.9.69 起导出一直被拦，没排，等用户定手机怎么出（更新记录顶上）。 ｜ 【对话框新花型 2026-10-07 18:00】待你验收：证据：4.9.31 护栏重导 *-G31（指纹和条目对上、回放检查过）、全程回放 NFR-G31、标准检查 NFS-G31 全过；看法 analysis/results/NFJF10-G31/看法.md。",
 "说明": "你保存的「Crackle」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "Crackle",
 "层英文名": [
@@ -36588,6 +36588,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYCR-C-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYCR-C",
 "type": "export",
 "state": "已回来",
@@ -36595,6 +36601,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYCR-H-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYCR-H-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -36618,6 +36630,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYCR-J-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYCR-J",
 "type": "export",
 "state": "已回来",
@@ -36636,6 +36654,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYCR-K-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYCR-K",
 "type": "export",
 "state": "已回来",
@@ -36643,6 +36667,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYCR-M-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYCR-M-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -36660,6 +36690,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYCR-O-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYCR-O",
 "type": "export",
 "state": "已回来",
@@ -36667,6 +36703,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYCR-R-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYCR-R-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -36690,6 +36732,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYCR-S03-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYCR-S03",
 "type": "export",
 "state": "已回来",
@@ -36697,6 +36745,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYCR-S05-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYCR-S05-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -36762,6 +36816,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYCR-T-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYCR-T",
 "type": "export",
 "state": "已回来",
@@ -36769,6 +36829,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYCR-Y-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYCR-Y-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -37835,6 +37901,361 @@ var FW_EFFECTS = [
 "entry": "MYCR-Y",
 "ver": "3542b5f6·master4.3.8-core1",
 "time": "2026-10-07 16:25",
+"packages": [
+{
+"name": "Crackle_Willow",
+"replica": "MYCR-Y",
+"files": [
+"Crackle_Willow.json",
+"Crackle_Willow_Cascade参数.txt",
+"Crackle_Willow_Mobile.json",
+"Crackle_Willow_曲线.csv",
+"T_EFX_FireWorks_Crackle_Willow_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Willow_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Willow_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Willow_4x4_02.png",
+"T_EFX_FireWorks_Crackle_Willow_4x4_02_C.png",
+"T_EFX_FireWorks_Crackle_Willow_4x4_02_HD.png",
+"T_EFX_FireWorks_Crackle_Willow_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-C-G96",
+"entry": "MYCR-C",
+"ver": "886bf2a5·flash4.9.96+master4.3.8-core1+master4.9.31",
+"time": "2026-10-14 18:41",
+"packages": [
+{
+"name": "Crackle_Core",
+"replica": "MYCR-C",
+"files": [
+"T_EFX_FireWorks_Crackle_Core_Core_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Core_Core_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Core_Core_R.png",
+"T_EFX_FireWorks_Crackle_Core_Main_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Core_Main_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Core_Main_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Core_Main_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-H-G96",
+"entry": "MYCR-H",
+"ver": "1fb0030f·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_Heart",
+"replica": "MYCR-H",
+"files": [
+"Crackle_Heart.json",
+"Crackle_Heart_Cascade参数.txt",
+"Crackle_Heart_Mobile.json",
+"Crackle_Heart_曲线.csv",
+"T_EFX_FireWorks_Crackle_Heart_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Heart_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Heart_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Heart_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-J-G96",
+"entry": "MYCR-J",
+"ver": "a02e38b4·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_Jisa",
+"replica": "MYCR-J",
+"files": [
+"Crackle_Jisa.json",
+"Crackle_Jisa_Cascade参数.txt",
+"Crackle_Jisa_Mobile.json",
+"Crackle_Jisa_曲线.csv",
+"T_EFX_FireWorks_Crackle_Jisa_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Jisa_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Jisa_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Jisa_4x4_02.png",
+"T_EFX_FireWorks_Crackle_Jisa_4x4_02_C.png",
+"T_EFX_FireWorks_Crackle_Jisa_4x4_02_HD.png",
+"T_EFX_FireWorks_Crackle_Jisa_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-K-G96",
+"entry": "MYCR-K",
+"ver": "0aac69b7·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_Crown",
+"replica": "MYCR-K",
+"files": [
+"Crackle_Crown.json",
+"Crackle_Crown_Cascade参数.txt",
+"Crackle_Crown_Mobile.json",
+"Crackle_Crown_曲线.csv",
+"T_EFX_FireWorks_Crackle_Crown_3x3_01.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_01_C.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_01_HD.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_02.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_02_C.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_02_HD.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_03.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_03_C.png",
+"T_EFX_FireWorks_Crackle_Crown_3x3_03_HD.png",
+"T_EFX_FireWorks_Crackle_Crown_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-M-G96",
+"entry": "MYCR-M",
+"ver": "c36f95cd·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_Kaleido",
+"replica": "MYCR-M",
+"files": [
+"Crackle_Kaleido.json",
+"Crackle_Kaleido_Cascade参数.txt",
+"Crackle_Kaleido_Mobile.json",
+"Crackle_Kaleido_曲线.csv",
+"T_EFX_FireWorks_Crackle_Kaleido_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Kaleido_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Kaleido_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Kaleido_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-O-G96",
+"entry": "MYCR-O",
+"ver": "8fd3f286·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle",
+"replica": "MYCR-O",
+"files": [
+"Crackle.json",
+"Crackle_Cascade参数.txt",
+"Crackle_Mobile.json",
+"Crackle_曲线.csv",
+"T_EFX_FireWorks_Crackle_4x4_01.png",
+"T_EFX_FireWorks_Crackle_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-R-G96",
+"entry": "MYCR-R",
+"ver": "32db0b17·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_Ring",
+"replica": "MYCR-R",
+"files": [
+"Crackle_Ring.json",
+"Crackle_Ring_Cascade参数.txt",
+"Crackle_Ring_Mobile.json",
+"Crackle_Ring_曲线.csv",
+"T_EFX_FireWorks_Crackle_Ring_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Ring_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Ring_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Ring_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-S03-G96",
+"entry": "MYCR-S03",
+"ver": "45975af9·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_03",
+"replica": "MYCR-S03",
+"files": [
+"Crackle_03.json",
+"Crackle_03_Cascade参数.txt",
+"Crackle_03_Mobile.json",
+"Crackle_03_曲线.csv",
+"T_EFX_FireWorks_Crackle_03_3x3_01.png",
+"T_EFX_FireWorks_Crackle_03_3x3_01_C.png",
+"T_EFX_FireWorks_Crackle_03_3x3_01_HD.png",
+"T_EFX_FireWorks_Crackle_03_3x3_02.png",
+"T_EFX_FireWorks_Crackle_03_3x3_02_C.png",
+"T_EFX_FireWorks_Crackle_03_3x3_02_HD.png",
+"T_EFX_FireWorks_Crackle_03_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-S05-G96",
+"entry": "MYCR-S05",
+"ver": "c12caaca·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:42",
+"packages": [
+{
+"name": "Crackle_05",
+"replica": "MYCR-S05",
+"files": [
+"Crackle_05.json",
+"Crackle_05_Cascade参数.txt",
+"Crackle_05_Mobile.json",
+"Crackle_05_曲线.csv",
+"T_EFX_FireWorks_Crackle_05_4x4_01.png",
+"T_EFX_FireWorks_Crackle_05_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_05_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_05_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-T-G96",
+"entry": "MYCR-T",
+"ver": "5a3a37c6·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:43",
+"packages": [
+{
+"name": "Crackle_Saturn",
+"replica": "MYCR-T",
+"files": [
+"Crackle_Saturn.json",
+"Crackle_Saturn_Cascade参数.txt",
+"Crackle_Saturn_Mobile.json",
+"Crackle_Saturn_曲线.csv",
+"T_EFX_FireWorks_Crackle_Saturn_4x4_01.png",
+"T_EFX_FireWorks_Crackle_Saturn_4x4_01_C.png",
+"T_EFX_FireWorks_Crackle_Saturn_4x4_01_HD.png",
+"T_EFX_FireWorks_Crackle_Saturn_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYCR-Y-G96",
+"entry": "MYCR-Y",
+"ver": "3542b5f6·flash4.9.96+master4.3.8-core1",
+"time": "2026-10-14 18:43",
 "packages": [
 {
 "name": "Crackle_Willow",
@@ -41087,7 +41508,7 @@ var FW_EFFECTS = [
 "原样不过回放检查（中间空帧 23）：你存的第 2 层第二段只有 0.05 s、主段 3.4 s 不亮 → 导出前半段全黑（你的设计，原样一个数没改；14 档变体已改 0.3 s）",
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "【对话框新花型 2026-10-07 18:00】待你验收：证据：4.9.31 护栏重导 *-G31（指纹和条目对上、回放检查过）、全程回放 NFR-G31、标准检查 NFS-G31 全过；看法 analysis/results/NFJF10-G31/看法.md。 另：你 16:13 在烘焙器里改过「金曜菊-窜天猴」（初速 377 → 600、开花闪光 3、星头显示强度 10.5、尾迹显示强度 0、泪滴星头……），这组变体还是按 10-06 22:51 那版做的；要按新版重出就说一声。",
+"下一步": "【导出（23）2026-10-14 烘焙器 4.9.96】单束层以前没有开花闪光（导出排查 B2），现在多一个 Flash 发射器 → 已排本机重导 NFE-MYJC-{O,S03,S05,S10,S20,S30,S40,R,T,M,H,C}-G96 + 全程回放 NFR7-MYJC + 标准检查 NFS-G96；结果回来请对话框新花型看回放、更新看法。 ｜ 【对话框新花型 2026-10-07 18:00】待你验收：证据：4.9.31 护栏重导 *-G31（指纹和条目对上、回放检查过）、全程回放 NFR-G31、标准检查 NFS-G31 全过；看法 analysis/results/NFJF10-G31/看法.md。 另：你 16:13 在烘焙器里改过「金曜菊-窜天猴」（初速 377 → 600、开花闪光 3、星头显示强度 10.5、尾迹显示强度 0、泪滴星头……），这组变体还是按 10-06 22:51 那版做的；要按新版重出就说一声。",
 "说明": "你保存的「金曜菊-窜天猴」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "GoldRayRocket",
 "层英文名": [
@@ -41200,6 +41621,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYJC-C-G96",
+"type": "export",
+"state": "出错",
+"seen": false
+},
+{
 "id": "NFE-MYJC-C",
 "type": "export",
 "state": "已回来",
@@ -41225,6 +41652,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYJC-H-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYJC-H-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -41332,6 +41765,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYJC-M-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYJC-M",
 "type": "export",
 "state": "已回来",
@@ -41339,6 +41778,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYJC-O-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYJC-O-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -41374,6 +41819,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYJC-R-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYJC-R",
 "type": "export",
 "state": "已回来",
@@ -41399,6 +41850,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYJC-S03-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYJC-S03-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -41434,6 +41891,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYJC-S05-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYJC-S05",
 "type": "export",
 "state": "已回来",
@@ -41459,6 +41922,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYJC-S10-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYJC-S10-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -41494,6 +41963,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYJC-S20-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYJC-S20",
 "type": "export",
 "state": "已回来",
@@ -41519,6 +41994,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYJC-S30-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYJC-S30-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -41554,6 +42035,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "NFE-MYJC-S40-G96",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "NFE-MYJC-S40",
 "type": "export",
 "state": "已回来",
@@ -41579,6 +42066,12 @@ var FW_EFFECTS = [
 },
 {
 "id": "NFE-MYJC-T-G31",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "NFE-MYJC-T-G96",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -44132,6 +44625,355 @@ var FW_EFFECTS = [
 "T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_C.png",
 "T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_HD.png",
 "T_EFX_FireWorks_GoldRayRocket_05_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-H-G96",
+"entry": "MYJC-H",
+"ver": "479116d9·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:43",
+"packages": [
+{
+"name": "GoldRayRocket_Heart",
+"replica": "MYJC-H",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-M-G96",
+"entry": "MYJC-M",
+"ver": "61fbbca0·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:43",
+"packages": [
+{
+"name": "GoldRayRocket_Kaleido",
+"replica": "MYJC-M",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-O-G96",
+"entry": "MYJC-O",
+"ver": "55f0d560·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:43",
+"packages": [
+{
+"name": "GoldRayRocket",
+"replica": "MYJC-O",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中间空帧 23"
+]
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-R-G96",
+"entry": "MYJC-R",
+"ver": "c486d306·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:43",
+"packages": [
+{
+"name": "GoldRayRocket_Ring",
+"replica": "MYJC-R",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-S03-G96",
+"entry": "MYJC-S03",
+"ver": "7e9076ff·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:44",
+"packages": [
+{
+"name": "GoldRayRocket_03",
+"replica": "MYJC-S03",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_03_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-S05-G96",
+"entry": "MYJC-S05",
+"ver": "dd0e6714·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:44",
+"packages": [
+{
+"name": "GoldRayRocket_05",
+"replica": "MYJC-S05",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_05_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-S10-G96",
+"entry": "MYJC-S10",
+"ver": "e68e437e·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:44",
+"packages": [
+{
+"name": "GoldRayRocket_10",
+"replica": "MYJC-S10",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-S20-G96",
+"entry": "MYJC-S20",
+"ver": "c99a80ca·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:44",
+"packages": [
+{
+"name": "GoldRayRocket_20",
+"replica": "MYJC-S20",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-S30-G96",
+"entry": "MYJC-S30",
+"ver": "b94db74e·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:44",
+"packages": [
+{
+"name": "GoldRayRocket_30",
+"replica": "MYJC-S30",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-S40-G96",
+"entry": "MYJC-S40",
+"ver": "dd72166c·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:44",
+"packages": [
+{
+"name": "GoldRayRocket_40",
+"replica": "MYJC-S40",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_40_L1_16x2_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_16x2_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_02_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-T-G96",
+"entry": "MYJC-T",
+"ver": "2e6ffb2e·flash4.9.96+master4.9.31",
+"time": "2026-10-14 18:45",
+"packages": [
+{
+"name": "GoldRayRocket_Saturn",
+"replica": "MYJC-T",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_R.png",
 "_检查",
 "cascade.json",
 "cascade_mobile.json",
@@ -48090,7 +48932,7 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。4.9.87（导出（23））起参数在统一右栏：「分层粒子图」+ 每层一个发射器标签，镜头成像在「输出」里；独立面板 / 浏览器键保存 / JSON 区去掉（画面不变）。会改画面的镜头 / 粒子图修正（开关亮度差、亚像素起伏、横竖不等比）等用户点头。",
+"下一步": "【导出（23）2026-10-14 烘焙器 4.9.97】用户 13:12「全部要修」：镜头核 σ 下限 0.28 → 0.55 像素（亚像素火星不再逐帧闪、快速质量不成串珠、总光量不变）→ 画面最细火星更柔；镜头关改走镜头的核（关 / 开光量 1 ± 2 %）。已排本机重导 NFE-SGR1-G97 / NFE-SGS1-G97 + 全程回放 NFR-SG-G97 + 标准检查 NFS-SG-G97，结果回来导出（23）看回放写看法。 ｜ 审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。4.9.87（导出（23））起参数在统一右栏：「分层粒子图」+ 每层一个发射器标签，镜头成像在「输出」里；独立面板 / 浏览器键保存 / JSON 区去掉（画面不变）。会改画面的镜头 / 粒子图修正（开关亮度差、亚像素起伏、横竖不等比）等用户点头。",
 "待验收版": "SGR1",
 "导出任务": [
 "SGR1E1"
@@ -48102,7 +48944,14 @@ var FW_EFFECTS = [
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
 "ver": "c873b9ad",
-"jobs": [],
+"jobs": [
+{
+"id": "NFE-SGR1-G97",
+"type": "export",
+"state": "在算",
+"seen": false
+}
+],
 "exports": [
 {
 "job": "SGR1E1",
@@ -48159,7 +49008,7 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。4.9.87（导出（23））起参数在统一右栏：「分层粒子图」+ 每层一个发射器标签，镜头成像在「输出」里；独立面板 / 浏览器键保存 / JSON 区去掉（画面不变）。会改画面的镜头 / 粒子图修正（开关亮度差、亚像素起伏、横竖不等比）等用户点头。",
+"下一步": "【导出（23）2026-10-14 烘焙器 4.9.97】用户 13:12「全部要修」：镜头核 σ 下限 0.28 → 0.55 像素（亚像素火星不再逐帧闪、快速质量不成串珠、总光量不变）→ 画面最细火星更柔；镜头关改走镜头的核（关 / 开光量 1 ± 2 %）。已排本机重导 NFE-SGR1-G97 / NFE-SGS1-G97 + 全程回放 NFR-SG-G97 + 标准检查 NFS-SG-G97，结果回来导出（23）看回放写看法。 ｜ 审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。4.9.87（导出（23））起参数在统一右栏：「分层粒子图」+ 每层一个发射器标签，镜头成像在「输出」里；独立面板 / 浏览器键保存 / JSON 区去掉（画面不变）。会改画面的镜头 / 粒子图修正（开关亮度差、亚像素起伏、横竖不等比）等用户点头。",
 "待验收版": "SGS1",
 "导出任务": [
 "SGS1E1"
@@ -48171,7 +49020,14 @@ var FW_EFFECTS = [
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
 "ver": "7b78d809",
-"jobs": [],
+"jobs": [
+{
+"id": "NFE-SGS1-G97",
+"type": "export",
+"state": "在算",
+"seen": false
+}
+],
 "exports": [
 {
 "job": "SGS1E1",
