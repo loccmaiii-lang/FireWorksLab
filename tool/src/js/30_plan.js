@@ -83,7 +83,17 @@ function measureRun(P) {
     const drop = g / k * drift, air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air + lateMax; x1 += spread + air + lateMax; y1 += spread + P.turb * drift + lateMax; y0 -= drop + spread + P.turb * drift + lateMax;
     for (const q of prof) q[2] += spread + drop + air + lateAt(q[0]);
-    for (const q of box) { const late = lateAt(q[0]); q[1] -= spread + air + late; q[2] += spread + air + late; q[3] -= drop + spread + P.turb * drift + late; q[4] += spread + P.turb * drift + late; }
+    // 4.9.103（导出排查 A18）：带锚点的 Zoom 每个时刻的范围（box，只给锚点用）按「这一刻的火花最多活了多久」加余量——第 t 秒的火花最老 t 秒，
+    //   散开 / 向后喷按 min(t, 火花寿命)、下坠 / 气流按 min(t, 余烬寿命)，0 s 没有火花就不加；活满寿命以后和以前一样。
+    //   以前从 0 s 就加满寿命的余量，前段面片比内容大很多（FanGold-1.0 第 0 帧竖向 0.35）。固定取景 / 随开花放大（prof、整体范围）照旧
+    const spawn0 = familyOf(P.type) === 'aerial' && (+P.sparkSpawnR > 0 || +P.sparkSpawnHead > 0 || +P.sparkJet > 0) ? Math.max(0, +P.sparkSpawnR || 0) + Math.max(0, +P.sparkSpawnHead || 0) * (+P.headSize || 0) / 2 * Math.exp(1.2 * Math.max(0, +P.headSizeJit || 0)) : 0;
+    const jet0 = familyOf(P.type) === 'aerial' ? Math.max(0, +P.sparkJet || 0) : 0;
+    for (const q of box) {
+      const t = Math.max(0, q[0]), aS = Math.min(t, L), aE = Math.min(t, Le), dr = t > 0 ? aE - (1 - Math.exp(-k * aE)) / k : 0, late = lateAt(q[0]);
+      const spr = t > 0 ? P.sparkSpread * aS * 0.7 * Math.max(1, tailShapeOf(P).w) + 1 + (P.branch > 0 ? 4 : 0) + spawn0 + jet0 * (1 - Math.exp(-k * aS)) / k : 0;
+      const dp = g / k * dr, ar = (Math.abs(P.wind) + P.turb) * dr;
+      q[1] -= spr + ar + late; q[2] += spr + ar + late; q[3] -= dp + spr + P.turb * dr + late; q[4] += spr + P.turb * dr + late;
+    }
   }
   if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; for (const q of box) q[3] = Math.min(q[3], -q[4] * 1.05 - 2); }
   return { x0, x1, y0, y1, prof, box, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };

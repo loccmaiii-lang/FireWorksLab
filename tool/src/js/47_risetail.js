@@ -1040,11 +1040,13 @@ function rtHeadDotES(P, M) {
 //   没有贴图；以前 PC 选「光点」走礼花的 GPU 光点，尾缀里没有礼花星 → 空壳发射器、引擎回放里星头消失。PC 和手机都补 Local Space（和金尾一致，组件倾斜时一起倾）。
 //   o.dot：多层按层上的产物（L.out.pc）给；单层按 P.outPC
 const rtHeadDot = (b, o) => !!b && (b.esMobile || (o && o.dot != null ? !!o.dot : !!b.P && b.P.outPC === 'dots'));
+// 4.9.103（导出排查 B10）：独立星头的喷射脉动（rtPulse）只在实时模拟里——导出的星头亮度恒定（单帧小面片 / 软圆点都没有脉动）
+const rtHeadPulseNote = P => +P.rtPulse > 0 ? ` 喷射脉动（星头亮度 ±${Math.round(+P.rtPulse * 100)} %）只在实时模拟里，导出的星头亮度恒定（4.9.103）。` : '';
 function fwlRiseHead(name, b, M, o) {
   if (rtHeadDot(b, o)) { const mob = !!b.esMobile, ct = rtHeadCut(b.P, rtBallistic(b.P)), em = esFwlEmitter(rtHeadDotES(b.P, M).emitters[0], mob, 1); em.max_alive = 1; em.required = { ...em.required, local_space: true };
     return { textures: {}, materials: { dot: { role: 'soft_dot' } }, emitters: [{ ...em, material: 'dot' }], system: { preview_distance_cm: 30000, preview_warmup_s: 0 },
       notes: [(mob ? '手机红头：' : 'PC「CPU 粒子（星头）」（4.9.96 H1）：') + '现有 soft_dot 材质的单颗 CPU 粒子，RT6 同弹道、同燃尽时刻（Burst 1 颗、寿命 = 弹道时长、初速 + Velocity Over Life Absolute），Local Space；没有贴图。未经 UE 验证。'
-        + (ct.cut ? ` 入点 ${r2(ct.t0)} s（发射器延迟到这里，位置 / 速度从这一刻的弹道接上）、出点 ${r2(ct.t1)} s（4.9.89）。` : '')] }; }
+        + (ct.cut ? ` 入点 ${r2(ct.t0)} s（发射器延迟到这里，位置 / 速度从这一刻的弹道接上）、出点 ${r2(ct.t1)} s（4.9.89）。` : '') + rtHeadPulseNote(b.P)] }; }
   const P=b.P, m=b.meta, ball=rtBallistic(P), ct=rtHeadCut(P, ball), T=ct.D, p0=ball.pos(ct.t0), v0=ct.cut?ball.vel(ct.t0):[ball.vx0,0,ball.vz0];     // 4.9.89 A4：入点 / 出点
   return { textures:{ full:{file:TN(name,'Full')+'.png',class:'flipbook',cols:1,rows:1,channels:1,frames:1},ramp:{file:TN(name,'Ramp')+'.png',class:'ramp'} },
     materials:{full:{role:'beam_flipbook',textures:{main:'full',ramp:'ramp'},scalars:{rows:1,cols:1}}},
@@ -1058,7 +1060,7 @@ function fwlRiseHead(name, b, M, o) {
         ...(ball.quad?[{m:'VelocityOverLife',VelOverLife:{curve:(ct.cut?rtVelLifeSpan(ball,ct.t0,ct.t1):rtVelLife(ball)).map(([u,v])=>[r4(u),v.map(x=>r1(x*100))])},Absolute:true}]:[{m:'Drag',DragCoefficientRaw:{const:r4(ball.k)}},{m:'ConstAcceleration',Acceleration:[0,0,-981]}]),
         {m:'DynamicParameter',params:{frame:{const:0}}},
         {m:'ColorOverLife',ColorOverLife:{curve:fwlColor(M,T,ct.t0,P.rtBright||1)},AlphaOverLife:{const:1}}
-      ]}],system:{preview_distance_cm:30000,preview_warmup_s:0},notes:['独立烘焙星头：单帧小面片 + Ramp，CPU 一个粒子，和金尾同一 RT6 弹道及燃尽时间；无 GPU、无新材质。Velocity Over Life 按 RT6 物理速度采样；未经 UE 验证。' + (ct.cut ? ` 入点 ${r2(ct.t0)} s（发射器延迟到这里，位置 / 速度从这一刻的弹道接上）、出点 ${r2(ct.t1)} s（4.9.89）。` : '')] };
+      ]}],system:{preview_distance_cm:30000,preview_warmup_s:0},notes:['独立烘焙星头：单帧小面片 + Ramp，CPU 一个粒子，和金尾同一 RT6 弹道及燃尽时间；无 GPU、无新材质。Velocity Over Life 按 RT6 物理速度采样；未经 UE 验证。' + (ct.cut ? ` 入点 ${r2(ct.t0)} s（发射器延迟到这里，位置 / 速度从这一刻的弹道接上）、出点 ${r2(ct.t1)} s（4.9.89）。` : '') + rtHeadPulseNote(P)] };
 }
 async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   if (rtHeadOnly(P0)) return bakeRiseHead(P0, scale, onProg, mobile);
@@ -1479,7 +1481,10 @@ function rtLayerBarSync(items) {     // items: [[key, 颗数 | null, GPU?]]
 const rtShowNote = () => rtShow.off.size ? ' · 分层看：关了 ' + [...rtShow.off].map(k => RT_LAYER_CN[k] || k).join('、') : '';
 function renderEmitLive() {
   // 4.9.89（导出排查 B4）：PC 选「合成一张」时实时只画导出里有的——星头 + 全部火花（和烘焙一样 GPU 那份也算进贴图），不画 GPU 粒子 / 引擎里加的效果（哪份导出都没有）
-  const pcFull = rtPcFull(state.P), P = pcFull ? { ...state.P, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 } : state.P, M = state.M, b = state.bake && state.bake.form === 'emitset' ? state.bake : null, mobile = state.platform === 'mobile';
+  // 4.9.103（导出排查 B5）：预览平台选手机时按产物表的手机那一格画（和引擎回放的手机 _M 同一套）——「_M 合成一张」和 PC 合成一张同一套；
+  //   「_M 只有近段」只画近段（近段 + 远段时 = 星头 + 跟着走的年轻火花），不画远段；粒子层只在手机留粒子时画（RT_MOBILE_PARTICLES，4.9.69 起不留）；「不出」什么都不画。以前手机预览照画 PC 全套
+  const mobile = state.platform === 'mobile', S0 = state.P, mobOff = mobile && S0.outMobile === 'off', mobNear = mobile && !mobOff && !rtMobFull(S0);
+  const pcFull = mobile ? rtMobFull(S0) : rtPcFull(S0), P = pcFull ? { ...S0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 } : S0, M = state.M, b = state.bake && state.bake.form === 'emitset' ? state.bake : null;
   const t = Math.min(state.t, P.duration), view = rtView(P, b, t), ppm = rgT.w / (2 * view[2]), ppmY = rgT.h / (2 * view[3]);
   const ball = rtBallistic(P), LI = rtLoopInfo(P), far = rtIsFar(P), T = ball.T;
   // 4.9.102（导出排查 V5）：PC 合成一张开了 rtFullFx——引擎里加的效果 / 落火也烘进了那一张，这里照画（和烘焙同一份出生表、同一种落火软圆点），贴图落火不再走火星的点
@@ -1487,25 +1492,26 @@ function renderEmitLive() {
   rgT.clear(); rgT.bind(); additive(true); PPMY = ppmY;
   let np = 0, nf = 0;
   try {
-    if (!far) { if (rtOn('near')) np = drawRiseTailLive(P, LI, ball, t, view, ppm); }
+    if (mobOff) { }
+    else if (!far) { if (rtOn('near')) np = drawRiseTailLive(P, LI, ball, t, view, ppm); }
     else {     // 近段 + 远段：按年龄权重分开画（两份相加 = 全部）；开花后全归远段
       const nw = rtNearW(P);
       if (rtOn('near') && t <= T) { setParticleProfile(P); const p = ball.pos(t), v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1;
         drawPoints(bufH, rtHeadPts(P, p[0], p[2], -v[0] / sp, -v[2] / sp, P.rtHeadI * LI.pulse(t), 0) / 4, view, ppm, [1, 0, 0, 0], 1); np = rtWorldDraw(P, LI, ball, t, view, ppm, 1, nw, 0, noE); }
-      if (rtOn('far')) nf = rtWorldDraw(P, LI, ball, t, view, ppm, 1, t <= T ? a => 1 - nw(a) : null, 0, noE);
+      if (rtOn('far') && !mobNear) nf = rtWorldDraw(P, LI, ball, t, view, ppm, 1, t <= T ? a => 1 - nw(a) : null, 0, noE);
     }
   } finally { PPMY = 0; }
   additive(false);
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); rtShadeLoop(P, M, t);
   if (fx && (rtLive.fxGen !== state.gen || rtLive.fxSig !== JSON.stringify(P))) { rtLive.fxGen = state.gen; rtLive.fxSig = JSON.stringify(P); rtLive.fxTab = esSpawn({ emitters: rtBuildES(P).emitters.filter(e => RT_FX_NAMES.has(e.name)) }, 1); }
-  const tabs = pcFull ? (fx ? rtLive.fxTab : []) : rtLiveTables(P, mobile), on = tabs.map(x => rtOn(x.e.name)), hpm = hdrT.w / (2 * view[2]), hpmY = hdrT.h / (2 * view[3]);
+  const tabs = pcFull ? (fx ? rtLive.fxTab : []) : mobOff || (mobNear && !RT_MOBILE_PARTICLES) ? [] : rtLiveTables(P, mobile), on = tabs.map(x => rtOn(x.e.name)), hpm = hdrT.w / (2 * view[2]), hpmY = hdrT.h / (2 * view[3]);
   additive(true); const nd = tabs.length ? esDraw(tabs, t, view, hpm, hpmY, 1, on) : 0;
   const texE = fx && rtTexClasses(P, LI).some(C => C.k === 'E'), ne = texE && rtOn('EmbersTex') ? rtEmberDots(P, LI, ball, t, view, hpm, hpmY, 0) : 0; additive(false);
   post();
   const cnt = rtAliveCounts(tabs, t);
-  rtLayerBarSync([['near', np, false], ...(far ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu]), ...(texE ? [['EmbersTex', ne, false]] : [])]);
+  rtLayerBarSync([['near', np, false], ...(far && !mobNear ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu]), ...(texE ? [['EmbersTex', ne, false]] : [])]);
   const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（真实米数：四尺玉 ${GAME_REF_D} m 在 1000 m 占屏高 1/3）` : '';
-  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗${pcFull ? (fx ? ` · PC 合成一张：引擎里加的效果 / 落火也烘进了那一张（${(nd + ne).toLocaleString()} 颗软圆点，导出里按 Ramp 色）；GPU 火花不在导出里、不画` : ' · PC 合成一张：只画导出里有的（星头 + 全部火花），GPU 粒子 / 星头光晕 / 发射口 / 烟带不在导出里、不画') : ` + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）`}${dist}${rtShowNote()}`;
+  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗${mobOff ? ' · 手机预览：产物表手机这一格是「不出」，没有画' : mobNear ? ` · 手机预览：_M 只有近段${far ? '（星头 + 跟着走的年轻火花）' : '循环'}${RT_MOBILE_PARTICLES ? `${far ? '，远段手机没有、不画' : ''} + 粒子层 ${nd.toLocaleString()} 颗（手机减量）` : `，${far ? '远段 / ' : ''}粒子层手机没有、不画`}` : pcFull ? (fx ? ` · ${mobile ? '手机' : 'PC'} 合成一张：引擎里加的效果 / 落火也烘进了那一张（${(nd + ne).toLocaleString()} 颗软圆点，导出里按 Ramp 色）；GPU 火花不在导出里、不画` : ` · ${mobile ? '手机' : 'PC'} 合成一张：只画导出里有的（星头 + 全部火花），GPU 粒子 / 星头光晕 / 发射口 / 烟带不在导出里、不画`) : ` + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）`}${dist}${rtShowNote()}`;
   hudB = '';
 }
 // 4.9.73 手机合成一张：面片固定在世界里（和远段同一套），帧号按寿命曲线

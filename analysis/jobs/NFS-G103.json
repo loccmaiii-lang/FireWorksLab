@@ -1,0 +1,13 @@
+{
+ "id": "NFS-G103",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "MYCR-O",
+  "MYFL-O",
+  "FG7",
+  "QC12",
+  "FC6O"
+ ],
+ "note": "导出（23）4.9.103：爆裂小闪 / 子花闪光 / 辉星 / 锚点 Zoom 前段重导后的标准检查。"
+}

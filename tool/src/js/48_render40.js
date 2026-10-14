@@ -48,14 +48,18 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm, range = null) {
   const fwd = LIVE_VIEW && R.sim && R.sim.noSparks;      // 4.2.22：实时模拟不倒回（见 50_bake.js draw）
   R.liveFwd = !!fwd;
   if (R.frameStart && !pl.loop && !fwd && j0 === 0) R.frameStart(Math.max(0, a + .5 * width / count));
+  // 4.9.103（导出排查 B8）：烘焙（bakeFrames 设了 FLASH_FRAME = 这一帧在引擎里停留的 [开始, 结束]）时，爆裂小闪 / 子花闪光 / 辉星短闪按停留时段里的平均亮度，
+  //   只在最后一个子样本画（那时这一帧里出生的闪光都已经有了）、× 子样本数（每个子样本的权重是 1 / count）；实时模拟没有 FLASH_FRAME，照旧
+  const ff = !LIVE_VIEW && FLASH_FRAME && FLASH_FRAME[1] > FLASH_FRAME[0] ? FLASH_FRAME : null;
   try {
     for (let j=j0;j<j1;j++) {
       const ts = a + (j+.5)*width/count;
       // 以物理时间定闪烁样本，不依赖调用路径或画面刷新次数。
       const tick = Math.floor(ts*240), f = clamp(Math.floor(evalKeys(pl.keys, (t-(pl.t0||0))/pl.duration)),0,pl.L.F-1);
+      if (ff) FLASH_WIN = [ff[0], ff[1], count, j === count - 1, ff[2]];
       R.draw(pl.loop ? ts : Math.max(0,ts),view,ppm,1/count,tick,f);
     }
-  } finally { PPMY = oldPPMY; R.liveFwd = false; }
+  } finally { PPMY = oldPPMY; R.liveFwd = false; FLASH_WIN = null; }
   return [a,b];
 }
 function frameFade40(pl, t, noFade = false) {
@@ -147,7 +151,7 @@ function renderLive40() {
   LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss); LIVE_VIEW = true;
   try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
-  hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
+  hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}${typeof liveSchemeNote==='function'?liveSchemeNote(P):''}`;
   const headPx=(+P.headSize||0)*Math.min(L.cellW/(2*view[2]),L.cellH/(2*view[3]));
   hudB=+P.headBright>0 ? `星头标称直径约 ${headPx.toFixed(2)} 纹素（当前取景）${headPx<3?' · 小光点易受采样影响，可增大单格；超采样不能替代单格分辨率':''}` : '';
   if(P.sparkGraph)hudB=`${P.sparkGraph.emitters.length} 层 · 历史轨迹拉伸 · 当前${graphSolo?'单层观察（导出仍含全部启用层）':'显示全部启用层'}`;

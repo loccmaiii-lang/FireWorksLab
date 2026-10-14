@@ -141,7 +141,16 @@ function fitGrid(P, box) {
   return best ? { ...P, cols: best.c, rows: best.r } : P;
 }
 // 4.3（H2）：加上第二段（afterBurn，按随机的上限），以前第二段长的层导出单束会被截掉
-function unitDuration(P) { return +(P.burn + (P.ignDelay || 0) + (+P.afterBurn > 0 ? +P.afterBurn * (1 + (+P.afterJit || 0) / 100) : 0) + fxv(P, 'sparkLife') * 1.6 + 0.1).toFixed(3); }
+// 4.9.103（导出排查 B3）：余烬比火花活得久（锦冠木炭余烬 3 s 左右）——以前只按火花寿命，单束最后一段余烬被截掉（MYCR-K 2.76 s，实时 4.6 s）。
+//   余烬按 30_plan 取景同一个估法（寿命 × e^0.3 × 0.85），受「余烬跟随」（母星燃尽后多久淡掉）/「余烬结束时刻」限制；没有余烬（或松叶分叉占了余烬那一路）时和以前逐位一样
+function unitDuration(P) {
+  const head = P.burn + (P.ignDelay || 0) + (+P.afterBurn > 0 ? +P.afterBurn * (1 + (+P.afterJit || 0) / 100) : 0), spark = fxv(P, 'sparkLife') * 1.6;
+  if (!(+P.emberFrac > 0) || +P.branch > 0) return +(head + spark + 0.1).toFixed(3);
+  let end = head + (fxv(P, 'emberLife') || 3) * Math.exp(0.3) * 0.85;
+  if (+P.emberFollow > 0) end = Math.min(end, head + +P.emberFollow + 0.15);
+  if (+P.emberEnd > 0) end = Math.min(end, +P.emberEnd + 0.3);
+  return +(head + Math.max(spark, end - head) + 0.1).toFixed(3);
+}
 function loopPlan(P, box, Tp) {
   const L = layoutOf(P), a = L.cellW / L.cellH;
   const W0 = 2 * Math.max(-box[0], box[1]), H0 = box[3] - box[2];
@@ -223,6 +232,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   fH.clear(); fT.clear();
   const ex0 = R.finish ? extra.expo || [fixedExposure(P), fixedExposure(P)] : null;     // 4.9.102 收尾钩子要按编码的曝光反推（和下面编码同一组）
   const t0 = performance.now(); bakePaceReset();
+  const flashSeen = new WeakMap();     // 4.9.103 B8：每个模拟上一帧最后一个子样本时已有几颗闪光（这一帧补画之后新来的那几颗从年龄 0 起的光量）
   try {     // 4.2.16：烘到一半作废（参数又变了，进度回调抛出）时，把这三张工作贴图放掉
   for (let f = 0; f < Math.min(L.F, pl.times.length); f++) {     // 4.9.26 帧比格子少（远段很短时）：多的格子留空
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
@@ -231,13 +241,15 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     const ppmY = ssH / (pl.Wh * sy); PPMY = ppmY;
     sst.clear(); sst.bind(); additive(true);
     R.subW = W / nsub;   // 每个子帧覆盖的时长（尾缀的星头据此再细分，拖出连续亮线）
+    // 4.9.103（导出排查 B8）：这一帧在引擎里停留的时段（帧号按 tick 起点的计划 = [起点, 起点 + 停留]；按中间时刻的 = 居中），短闪光按它积分（drawFrameSamples40）
+    const ffr = (() => { const dd = Math.max(pl.dur[f] || 0, 1 / 30), t1 = pl.t0 + tc; return pl.frameTiming === 'tick-start' ? [t1, t1 + dd, flashSeen] : [t1 - dd / 2, t1 + dd / 2, flashSeen]; })();     // 只在下面同步画的那一下设（等显卡时页面别的绘制不受影响）
     {
       // 4.2.23 分批交给显卡（见上面 bakePace）：等显卡时把全局状态还给页面（PPMY = 0、不叠加），回来再接上
       const n = frameSampleCount40(P, pl, pl.t0 + tc), work = Math.max(1, trackDraws(R.track, P) + (P.stars || 0) * q.ss);
       for (let j0 = 0; j0 < n;) {
         const k = bakeSliceSubs(work, n - j0), a0 = j0;
         if (bakeMustWait()) { additive(false); PPMY = 0; await bakePaceWait(); PPMY = ppmY; sst.bind(); gl.colorMask(true, true, true, true); additive(true); }
-        const drawn = bakeSliceDraw(() => drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [a0, a0 + k]), work * k); j0 += k;
+        const drawn = bakeSliceDraw(() => { FLASH_FRAME = ffr; try { return drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [a0, a0 + k]); } finally { FLASH_FRAME = null; } }, work * k); j0 += k;
         if (drawn > 0) bakePace.perSub = drawn / k;
       }
     }
@@ -258,7 +270,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     gl.colorMask(true, true, true, true);
     if (f % 8 === 7) { PPMY = 0; onProg && onProg((f + 1) / L.F); await nextTick(); }
   }
-  } catch (e) { PPMY = 0; additive(false); gl.colorMask(true, true, true, true); fH.dispose(); fT.dispose(); sst.dispose(); throw e; }
+  } catch (e) { PPMY = 0; FLASH_FRAME = null; FLASH_WIN = null; additive(false); gl.colorMask(true, true, true, true); fH.dispose(); fT.dispose(); sst.dispose(); throw e; }
   PPMY = 0;
   const comb = P.outMode === 'combined';
   const eH = extra.expo ? extra.expo[0] : fixedExposure(P), eT = extra.expo ? extra.expo[1] : fixedExposure(P);

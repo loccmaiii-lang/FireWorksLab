@@ -82,7 +82,7 @@ function outNote(L, e) {
   }
   // 4.9.35（用户 10-07 18:50）：单帧并进产物表，PC / 手机都能选；手机没有 GPU 光点
   const frameTxt = '单帧（一张图 + 功能图，Size By Life 长大、按亮度淡出）';
-  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : o.pc === 'frame' ? frameTxt : '不出'} · 手机：${mp && mp.auto ? mobileAutoText(mp) + '：' : ''}${o.mobile === 'seq' ? '序列（纯图片）' : o.mobile === 'unit' ? '单束（CPU，手机自己的一套贴图 ≤ 1024；每颗星一个粒子，手游最多 50 颗）' : o.mobile === 'frame' ? frameTxt : '不出'}`;
+  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列、所有星共用，尾迹沿速度是直的——没有重力弯曲 / 倒影 / 湍流；引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : o.pc === 'frame' ? frameTxt : '不出'} · 手机：${mp && mp.auto ? mobileAutoText(mp) + '：' : ''}${o.mobile === 'seq' ? '序列（纯图片）' : o.mobile === 'unit' ? '单束（CPU，手机自己的一套贴图 ≤ 1024；每颗星一个粒子，手游最多 50 颗）' : o.mobile === 'frame' ? frameTxt : '不出'}`;
   return s + (w.length ? '。注意：' + w.join('；') : '');
 }
 function buildLayerHead(i) {

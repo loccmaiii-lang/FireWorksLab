@@ -1,0 +1,89 @@
+{
+ "id": "NFR-G103",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：爆裂小闪 / 子花闪光 / 辉星 / 锚点 Zoom 前段（4.9.103 重导后）",
+ "steps": [
+  {
+   "name": "Crackle（MYCR-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle.jpg",
+    "analysis/local/输出/素材包/Crackle",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette（MYFL-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette.jpg",
+    "analysis/local/输出/素材包/Crossette",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "FanGold（FG7）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/FanGold.jpg",
+    "analysis/local/输出/素材包/FanGold",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "QiuxingC40（QC12）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/QiuxingC40.jpg",
+    "analysis/local/输出/素材包/QiuxingC40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "FanCometOrange（FC6O，前段）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/FanCometOrange.jpg",
+    "analysis/local/输出/素材包/FanCometOrange",
+    "--times",
+    "0.005,0.015,0.03,0.06,0.12,0.25,0.5,0.8"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "导出（23）4.9.103：看爆裂小闪 / 子花闪光 / 辉星短闪在引擎回放里是不是一颗颗稳定（不再忽亮忽灭）、有没有过曝；FanCometOrange 看前几帧内容是不是变大、有没有碰边。--times 是全程的比例。"
+}

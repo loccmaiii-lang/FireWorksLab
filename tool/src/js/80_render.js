@@ -145,6 +145,16 @@ function post(split = -1, P = state.P, viewport = null) {
   drawQuad();
 }
 let hudText = '', hudB = '';
+// 4.9.103（导出排查 B9 / B12）：单层产物表选的不是序列时，实时模拟照画完整模拟（只用来调参）——状态栏写明这个平台的导出里有什么、没有什么
+function liveSchemeNote(P) {
+  if (!P || state.tab === 'combo' || familyOf(P.type) !== 'aerial') return '';
+  const mob = state.platform === 'mobile', k = mob ? P.outMobile : P.outPC, pf = mob ? '手机' : 'PC';
+  if (k === 'unit') return ` · ${pf} 导出 = 单束：每颗星一个面片、尾迹沿速度是直的，贴图里没有重力弯曲 / 倒影 / 湍流，所有星共用一张；开花闪光另出 Flash（实时照画完整模拟）`;
+  if (k === 'dots') return ` · ${pf} 导出 = GPU 光点：只有星头，尾迹 / 火花不在里面；开花闪光另出 Flash（实时照画完整模拟）`;
+  if (k === 'frame') return ` · ${pf} 导出 = 单帧：一张图 + 功能图，不是动的序列（实时照画完整模拟）`;
+  if (k === 'off') return ` · ${pf} 不出这一层（实时照画完整模拟）`;
+  return '';
+}
 // 实时模拟：尾缀 / 物理尾缀走自己的渲染器，其余（空中、上升、地面）走 renderLive40 同一套
 function liveBox(P, slot) {
   if (slot.boxGen === slot.gen && slot.box) return slot.box;
@@ -164,6 +174,9 @@ function drawLiveScene(slot, P, t, view, ppm) {
     if (!slot.rtFull) { const Pf = { ...P, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 }; slot.rtFull = makeRiseTailFullRenderer(Pf, rtLoopInfo(Pf), rtBallistic(Pf), 0); }     // 4.9.89 B4：和烘焙一样 GPU 那份火花也画（合成一张里火花全在贴图）
     slot.rtFull.draw(t, view, ppm, 1); return { stars: 1, sparks: slot.rtFull.slots };
   }
+  // 4.9.103（导出排查 B6）：多层里不是合成一张的 RT6 层（4.9.89 起加不进来，旧存档里还可能有）以前走到下面礼花 / 上升的通用模拟（上升 250 m 而不是 190 m）；
+  //   现在和单层实时同一套：星头 + 全部贴图火星（世界坐标，RT6 弹道）。GPU 粒子层多层实时本来就不画
+  if (isEmit(P)) { const n = drawRiseTailLive(P, rtLoopInfo(P), rtBallistic(P), t, view, ppm); return { stars: 1, sparks: n }; }
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按引擎回放选的那一版消散熄灭（4.9.89 导出排查 B7：以前一律按 20 fps 版约 3.2 s，回放 / 导出默认是 30 fps 版约 2.13 s）
@@ -179,6 +192,7 @@ function drawLiveScene(slot, P, t, view, ppm) {
 }
 function sceneView(P, m, slot) {
   if (rtPcFull(P)) { const h = Math.max(m.Ww, m.Wh, m.ball.H) * 0.54; return [m.full ? m.full.cx : 0, m.rtHeadBall ? m.ball.H/2 : m.cy, h, h]; }
+  if (isEmit(P) && m.ball) { const h = Math.max(m.Ww, m.Wh, m.ball.H) * 0.54, x = rtBallistic(P).pos(m.ball.T)[0] / 2; return [x, m.ball.H / 2, h, h]; }     // 4.9.103 B6：近段 + 远段的层按整条弹道取景
   if (isPhys(P)) {
     const v=physView(P,slot,Math.min(state.view==='export'?engineTick(state.t):state.t,P.duration));
     if(state.view==='export' && state.disp==='game')v[2]=v[3]=canvas.width/(2*gamePixelsPerMeter(P,P.phView));
@@ -478,7 +492,7 @@ function renderComboLive() {
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
-  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const P = fxP(e.P), R = !rtPcFull(P) && !isTrail(P) && !isPhys(P) ? liveRenderer40(liveSlot('combo' + i), P) : null; work += R ? trackDraws(R.track, P) + (P.stars || 0) : 0; });
+  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const P = fxP(e.P), R = !isEmit(P) && !isTrail(P) && !isPhys(P) ? liveRenderer40(liveSlot('combo' + i), P) : null; work += R ? trackDraws(R.track, P) + (P.stars || 0) : 0; });     // 4.9.103 B6：尾缀层不走礼花的实时渲染器
   LIVE_CAP = liveCapFor(work); LIVE_VIEW = true;
   try {
   items.forEach(([L, e, i]) => {
@@ -503,7 +517,7 @@ function renderComboLive() {
   });
   } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   post();
-  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}${liveCapNote()}`; hudB = '';
+  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层；不按格子裁切，导出时伸出格子的部分没有）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}${liveCapNote()}`; hudB = '';
 }
 // 引擎回放要画单束时，在后台烘一次这一层的单束序列（不和别的烘焙同时跑）
 let unitTask = null;

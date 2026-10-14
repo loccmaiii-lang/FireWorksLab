@@ -46,6 +46,7 @@
   R13 4.9.96 纯星头 CPU 粒子 + 开花闪光单独导出（导出排查 H1 / B1 / B2 / A11 / A14）：PC 软圆点、层产物 / 尾缀层产物表、Flash（入点前 / 单束 / 光点、手机上限、大小模型、导出指纹）、尺寸档按时间缩白名单
   R14 4.9.97 分层粒子图画面（导出排查 V4 / V2 / V3 / V1）：松叶分叉接燃尽后气流、镜头核 σ 下限 0.55 像素、镜头关世界等比、镜头关走镜头的核（历史线光量 = 一颗点）
   R15 4.9.102 合成一张补效果（导出排查 V5 + 落火）：rtFullFx 缺省 / 条目 / 指纹、收尾钩子、燃尽门只作用在曲线上、引擎回放 = 实时（每组 ±10 %、整幅 ±6 %）、落火按 GPU 口径、材质改了要重烘、右栏出现与变灰
+  R16 4.9.103 导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18：短闪光按帧停留时段积分（逐颗光量 = 实际、辉星每帧 = 细采样）、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段、状态栏 / 产物表标注
   R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -1772,6 +1773,119 @@ async def r15(pg):
     引擎回放 = 实时（光晕 / 发射口 / 烟带 / 落火每组 ±10 %、整幅 ±6 %）、落火按 GPU 口径（每颗光量 1 ± 15 %）、材质改了要重烘、右栏出现与变灰"""
     r = await pg.evaluate(R15_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
+
+R16_JS = r"""async () => {
+  // 4.9.103（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，用户 10-14 14:14 按推荐）：每处一个能复现的小检查
+  const out = {}, bad = [], pm = id => derive(structuredClone(replicaPM(id).P)), oh = window.drawHeads, og = window.drawSparksGPU;
+  const N = 128, tg = new Target(N, N, gl.RGBA16F);
+  const readT = T => { T.bind(); const a = new Float32Array(T.w * T.h * 4); gl.readPixels(0, 0, T.w, T.h, gl.RGBA, gl.FLOAT, a); return a; };
+  const sumc = (a, c) => { let s = 0; for (let i = c; i < a.length; i += 4) s += a[i]; return s; };
+  const med = a => { const b = a.slice().sort((x, y) => x - y); return b.length ? b[b.length >> 1] : NaN; };
+  const frameWin = (pl, f, seen) => { const t = pl.t0 + pl.times[f], dd = Math.max(pl.dur[f] || 0, 1 / 30); return [t, pl.frameTiming === 'tick-start' ? [t, t + dd, seen] : [t - dd / 2, t + dd / 2, seen], dd]; };     // 和 bakeFrames 同一个停留时段
+  const step = async (name, fn) => { try { await fn(); } catch (e) { bad.push(name + ' 出错：' + String(e && e.message || e).slice(0, 160)); } };
+  try {
+    // B8 爆裂小闪 / 子花闪光（CPU 星头核）：按 bakeFrames 同样设 FLASH_FRAME，真链路 drawFrameSamples40 → R.draw → gather，拦下 drawHeads 按位置记每颗闪光
+    //   画进各帧的光量（× 子样本权重 × 这一帧停留时长），和模拟里这颗闪光的实际光量比：中位 1 ± 2 %、98 % 在 0.9–1.1、合计 1 ± 1 %
+    await step('B8 CPU', async () => {
+      window.drawSparksGPU = () => 0; out.B8 = {};
+      for (const [id, kind] of [['MYCR-O', 'crk'], ['FG7', 'crk'], ['MYFL-O', 'sub']]) {
+        const P = { ...pm(id), engine: 'gpu', waterRefl: 0, crackleBrightCurve: '', crackleSizeCurve: '' }; P.subFlash = +P.subFlash >= 0 ? +P.subFlash : P.flash * 0.3; P.flash = 0;
+        const pl = plan(P, measure(P), +P.cutIn || 0, +P.cutOut || P.duration), view = [0, 100, 100, 100], got = new Map(), key = (x, y) => Math.fround(x) + ',' + Math.fround(y); let cur = 0;
+        window.drawHeads = (buf, n, gF, v, ppm, ch, w, xf, gH) => {
+          if (kind === 'crk') for (let i = gH; i < gF; i++) { const r = buf[i * 4 + 3] / 2, k = key(buf[i * 4], buf[i * 4 + 1]); got.set(k, (got.get(k) || 0) + buf[i * 4 + 2] * w * cur * 6.2832 * r * r); }
+          else for (let i = gF; i < n; i++) { const k = key(buf[i * 4], buf[i * 4 + 1]); got.set(k, (got.get(k) || 0) + buf[i * 4 + 2] * w * cur); } };
+        const R = makeRenderer(P, 'burst'), seen = new WeakMap(); if (R.sim) { R.sim.ex = []; R.sim.exDots = []; }     // 自定义发射器的光点和爆裂小闪同一段缓冲，不算
+        try { for (let f = 0; f < pl.times.length; f++) { const [t, ffr, dd] = frameWin(pl, f, seen); cur = dd; FLASH_FRAME = ffr; try { drawFrameSamples40(P, pl, R, t, view, 1, 1); } finally { FLASH_FRAME = null; } } }
+        finally { R.dispose && R.dispose(); window.drawHeads = oh; }
+        const sim = new Sim(P); sim.ex = []; sim.exDots = []; while (sim.t < pl.t0 + pl.duration + 0.5) sim.step(H_STEP);
+        const fl = pl.times.length - 1, tBeg = pl.t0 + pl.times[0], tEnd = pl.t0 + pl.times[fl] + Math.max(pl.dur[fl] || 0, 1 / 30);
+        const EI = (tau, f) => { const cut = f.cut || 0.25, a1 = Math.max(0, tBeg - f.t0), a2 = Math.min(cut, tEnd - f.t0); return a2 > a1 ? tau * (Math.exp(-a1 / tau) - Math.exp(-a2 / tau)) : 0; };
+        const rs = []; let sg = 0, se = 0;
+        for (const f of sim.flashes) { let e;
+          if (kind === 'crk') { if (!f.crk) continue; e = f.abs * EI(f.tau, f); } else { if (f.abs != null || f.main) continue; e = f.I * EI(f.dec || 0.035, f) * 1.5 * 6.2832 * f.sig * f.sig; }
+          if (!(e > 0)) continue; const g = got.get(key(f.x, f.y)) || 0; rs.push(g / e); sg += g; se += e; }
+        const o = { n: rs.length, med: +med(rs).toFixed(3), in10: +(rs.filter(r => Math.abs(r - 1) <= 0.1).length / Math.max(1, rs.length)).toFixed(3), half: +(rs.filter(r => r < 0.5).length / Math.max(1, rs.length)).toFixed(3), tot: +(sg / Math.max(1e-12, se)).toFixed(3) };
+        out.B8[id] = o;
+        if (!(o.n > 10) || Math.abs(o.med - 1) > 0.02 || o.in10 < 0.98 || Math.abs(o.tot - 1) > 0.01) bad.push(`B8 ${id} ${kind === 'crk' ? '爆裂小闪' : '子花闪光'}逐颗光量（中位 / 0.9–1.1 内 / 不到一半 / 合计）：${JSON.stringify(o)}`);
+      }
+    });
+    window.drawHeads = oh; window.drawSparksGPU = og;
+    // B8 辉星短闪（GPU 火花核）：每帧导出的光量 = 这一帧停留时段里细采样（16 个时刻）的平均；只留辉星闪光（glitterDim 1）、火花减到 2 %（快）
+    await step('B8 辉星', async () => {
+      window.drawHeads = () => 0;
+      const P = { ...pm('QC12-3'), engine: 'gpu', glitter: 1, glitterDim: 1, emberFrac: 0 }; P.sparkRate *= 0.02;
+      const fm = measure(P), pl = plan(P, fm, +P.cutIn || 0, +P.cutOut || P.duration), h = Math.max(fm.x1 - fm.x0, fm.y1 - fm.y0) * 0.6, view = [0, (fm.y0 + fm.y1) / 2, h, h], ppm = N / (2 * h);
+      const R = makeRenderer(P, 'burst'), seen = new WeakMap(), rows = [], f0 = Math.floor(pl.times.length * 0.3); let SB = 0, ST = 0;
+      try { for (let f = f0; f < f0 + 12; f++) { const [t, ffr] = frameWin(pl, f, seen);
+          tg.clear(); tg.bind(); additive(true); FLASH_FRAME = ffr; try { drawFrameSamples40(P, pl, R, t, view, ppm, ppm); } finally { FLASH_FRAME = null; additive(false); PPMY = 0; }
+          const Lb = sumc(readT(tg), 1), M = 16; tg.clear(); tg.bind(); additive(true); PPMY = ppm; setParticleProfile(P);
+          try { for (let j = 0; j < M; j++) { const ts = ffr[0] + (j + .5) * (ffr[1] - ffr[0]) / M; R.draw(ts, view, ppm, 1 / M, Math.floor(ts * 240), 0); } } finally { additive(false); PPMY = 0; }
+          const Lt = sumc(readT(tg), 1); rows.push([+t.toFixed(3), Lb, Lt]); SB += Lb; ST += Lt; } }
+      finally { R.dispose(); window.drawHeads = oh; }
+      const mx = Math.max(...rows.map(r => r[2])), rr = rows.filter(r => r[2] > 0.05 * mx).map(r => +(r[1] / r[2]).toFixed(3));
+      out.B8glit = { tot: +(SB / Math.max(1e-12, ST)).toFixed(3), lo: Math.min(...rr), hi: Math.max(...rr), rows: rr };
+      if (!(rr.length >= 8) || Math.abs(out.B8glit.tot - 1) > 0.03 || out.B8glit.lo < 0.85 || out.B8glit.hi > 1.15) bad.push('B8 辉星每帧光量（导出 / 细采样，合计 1 ± 3 %、每帧 0.85–1.15）：' + JSON.stringify(out.B8glit));
+    });
+    window.drawHeads = oh; window.drawSparksGPU = og;
+    // B3 单束时长含余烬：MYCR-K（锦冠余烬 3 s）单束最后 0.05 s 的光量 ≤ 峰值的 1 %（以前 2.76 s 截在峰值 8 % 处）；没有余烬的层（MYFL-O）和以前逐位一样
+    await step('B3', async () => {
+      const P = pm('MYCR-K'), Du = unitDuration(P), D = Du + 1, P2 = { ...P, _unit: true, stars: 1, speedJit: 0, burnJit: 0, duration: D, zoom: 'off', pattern: 'sphere', waterRefl: 0, grav: 0, sparkGrav: 0, wind: 0, turb: 0, engine: 'gpu' };
+      const R = makeRenderer(P2, 'unit'), guess = Math.max(8, P.v0 * P.sparkLife * 0.6 + P.sparkSpread * P.sparkLife * 2), view = [0, -guess * 0.6, guess * 1.6, guess * 1.6], ppm = N / (2 * view[2]);
+      const L = t => { tg.clear(); tg.bind(); additive(true); PPMY = ppm; try { R.draw(t, view, ppm, 1, Math.floor(t * 240)); } finally { additive(false); PPMY = 0; } return sumc(readT(tg), 1); };
+      let pk = 0; try { for (let i = 0; i <= 12; i++) pk = Math.max(pk, L(Du * i / 12)); out.B3 = { Du, end: +(L(Du - 0.05) / Math.max(1e-12, pk)).toFixed(4) }; } finally { R.dispose(); }
+      const Q = pm('MYFL-O'), old = +(Q.burn + (Q.ignDelay || 0) + (+Q.afterBurn > 0 ? +Q.afterBurn * (1 + (+Q.afterJit || 0) / 100) : 0) + fxv(Q, 'sparkLife') * 1.6 + 0.1).toFixed(3);
+      out.B3.noEmber = [unitDuration(Q), old];
+      if (!(out.B3.end <= 0.01) || out.B3.noEmber[0] !== old) bad.push('B3 单束时长（最后 0.05 s 光量 / 峰值 ≤ 1 %；没余烬的层不变）：' + JSON.stringify(out.B3));
+    });
+    // B6 多层里不是合成一张的尾缀层：实时 = 单层（星头在 RT6 弹道上；以前走通用上升模拟，0.9 T 时差 30 m）
+    await step('B6', async () => {
+      const P = { ...pm('RT6M'), outPC: 'seq', outMobile: 'seq' }, ball = rtBallistic(P), slot = liveSlot('r16b6'); out.B6 = [];
+      for (const u of [0.5, 0.9]) { const t = ball.T * u, view = [0, ball.H * 0.6, ball.H * 0.7, ball.H * 0.7], ppm = N / (2 * view[2]);
+        tg.clear(); tg.bind(); additive(true); PPMY = ppm; let r; try { r = drawLiveScene(slot, P, t, view, ppm); } finally { additive(false); PPMY = 0; }
+        const a = readT(tg); let my = -1, iy = 0; for (let y = 0; y < N; y++) { let row = 0; for (let x = 0; x < N; x++) row += a[(y * N + x) * 4]; if (row > my) { my = row; iy = y; } }
+        const hy = view[1] - view[3] + (iy + .5) / N * 2 * view[3], H = ball.pos(t)[2]; out.B6.push([u, +H.toFixed(1), +hy.toFixed(1), r && r.stars]);
+        if (Math.abs(hy - H) > 0.02 * ball.H + 2 * view[3] / N || !(r && r.stars === 1)) bad.push('B6 多层尾缀层实时星头不在 RT6 弹道上：' + JSON.stringify(out.B6[out.B6.length - 1])); }
+    });
+    // A18 锚点 Zoom：0 s 没有火花就不加余量 → FC6O 第 0 帧面片大小 ≤ 0.30（以前 0.32）、之后照样长到 1
+    await step('A18', async () => {
+      const P = pm('FC6O'), fm = measure(P), pl = plan(P, fm, +P.cutIn || 0, +P.cutOut || P.duration), k = [0, 0.1, 0.4, 1].map(u => +evalKeys(pl.sizeKeys, u).toFixed(3));
+      out.A18 = { anchor: !!pl.anchor, k, box0: fm.box[0].map(x => +x.toFixed(2)) };
+      if (!pl.anchor || !(k[0] <= 0.3) || !(k[3] > 0.95) || !(k[0] < k[1] && k[1] < k[2])) bad.push('A18 锚点 Zoom 前段：' + JSON.stringify(out.A18));
+    });
+    // B9 / B10 / B11 / B12 标注
+    await step('标注', async () => {
+      const P = pm('MYCR-O'), plat = state.platform, tab = state.tab; state.platform = 'pc'; if (state.tab === 'combo') state.tab = 'single';
+      try { out.B9 = ['unit', 'dots', 'frame', 'off', 'seq'].map(k => liveSchemeNote({ ...P, outPC: k }).length > 0); } finally { state.platform = plat; state.tab = tab; }
+      out.B10 = [rtHeadPulseNote({ rtPulse: 0.06 }).includes('±6 %'), rtHeadPulseNote({ rtPulse: 0 }) === '', /rtHeadPulseNote\(/.test(fwlRiseHead.toString())];
+      out.B11 = /不按格子裁切/.test(renderComboLive.toString());
+      out.B12 = /没有重力弯曲/.test(outNote({ out: { pc: 'unit', mobile: 'off' } }, { P }));
+      if (out.B9.join() !== 'true,true,true,true,false' || out.B10.join() !== 'true,true,true' || !out.B11 || !out.B12) bad.push('标注（B9 状态栏 / B10 喷射脉动 / B11 多层不裁切 / B12 单束说明）：' + JSON.stringify([out.B9, out.B10, out.B11, out.B12]));
+    });
+  } finally { window.drawHeads = oh; window.drawSparksGPU = og; FLASH_FRAME = null; tg.dispose(); PPMY = 0; }
+  // B5 手机预览按 _M：近段 + 远段时不画远段 / 粒子层，循环层也不画粒子层，「不出」不画，「合成一张」和 PC 合成一张同一套
+  await step('B5', async () => {
+    await openType('tailL'); await new Promise(r => setTimeout(r, 300));
+    const v0 = state.view, t0 = state.t, plat = state.platform, keep = { rtFar: state.P.rtFar, outPC: state.P.outPC, outMobile: state.P.outMobile };
+    state.view = 'live'; state.t = 3; ensureTargets();
+    const run = (pf, o) => { Object.assign(state.P, o); state.gen++; state.platform = pf; renderEmitLive(); const keys = [...document.querySelectorAll('#rtLayerBar [data-k]')].map(x => x.dataset.k), a = readT(rgT); return { hud: hudText, keys, L: sumc(a, 0) + sumc(a, 1) }; };
+    try {
+      const pc = run('pc', { rtFar: 1, outPC: 'seq', outMobile: 'seq' }), mn = run('mobile', { rtFar: 1, outPC: 'seq', outMobile: 'seq' }), mo = run('mobile', { outMobile: 'off' }), mf = run('mobile', { outMobile: 'full' }), ml = run('mobile', { rtFar: 0, outMobile: 'seq' });
+      const gpuK = ks => ks.filter(k => !['near', 'far', 'EmbersTex'].includes(k)).length;
+      out.B5 = { pc: [pc.keys.includes('far'), gpuK(pc.keys)], mob: [/_M 只有近段/.test(mn.hud), mn.keys.includes('far'), gpuK(mn.keys), +(mn.L / Math.max(1e-12, pc.L)).toFixed(3)], off: [/不出/.test(mo.hud), mo.L], full: /手机 合成一张/.test(mf.hud), loop: [/_M 只有近段循环/.test(ml.hud), gpuK(ml.keys)] };
+      const b = out.B5;
+      if (!b.pc[0] || !(b.pc[1] > 0) || !b.mob[0] || b.mob[1] || b.mob[2] || !(b.mob[3] < 0.95) || !b.off[0] || b.off[1] !== 0 || !b.full || !b.loop[0] || b.loop[1]) bad.push('B5 手机预览：' + JSON.stringify(b));
+    } finally { Object.assign(state.P, keep); state.gen++; state.platform = plat; state.view = v0; state.t = t0; selectEmitTab('星'); }
+  });
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r16(pg):
+    """4.9.103 导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18（用户 10-14 14:14 按推荐）：爆裂小闪 / 子花闪光逐颗光量 = 实际（真链路，中位 1 ± 2 %、98 % 在 ±10 %）、
+    辉星短闪每帧 = 细采样（合计 ±3 %、每帧 ±15 %）、单束时长含余烬（末 0.05 s ≤ 峰值 1 %）、多层尾缀层实时星头在 RT6 弹道上、锚点 Zoom 第 0 帧 ≤ 0.30、
+    手机预览按 _M（不画远段 / 粒子层、不出 / 合成一张）、B9–B12 标注"""
+    r = await pg.evaluate(R16_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1400]
 
 async def w1(pg):
     """4.5.0 工作台快改（用户 10-05 01:28 / 02:25）：时间轴没有发射器行和曲线、精简布局收起层轨道；AI 效果调了保存 = 存成我的效果（派生）、能加层；
@@ -4015,7 +4129,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('R16', r16, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

@@ -1,6 +1,20 @@
 // =====================================================================
 //  物理模拟
 // =====================================================================
+// 4.9.103（导出排查 B8）：烘焙一帧时这一帧在引擎里停留的整段时间 [开始, 结束]（48_render40.js drawFrameSamples40 设、画完清掉；实时模拟永远是 null）。
+//   爆裂小闪 / 子花开花闪光 / 辉星短闪比一个 tick 还短：以前只在快门窗口（0.6 × 帧时长）里逐子样本取瞬时亮度，落在窗口外的整颗没了、落在里面的按窗口放大
+//   （FG7 爆裂小闪逐颗光量中位 1.22×、31 % 不到一半、只有 5 % 在 ±10 % 内；MYFL-O 子花闪光中位 0.92×）。设了它，这几类按「这一帧停留时段里的平均亮度」画
+//   （解析积分；上一帧最后一个子样本之后才出现的从年龄 0 起补上），每颗闪光的光量 = 实际光量（界面状态检查 R16）。主花开花闪光、落水闪光、星头、火花不变
+let FLASH_WIN = null, FLASH_FRAME = null;     // FLASH_FRAME：bakeFrames 设的这一帧停留时段 [开始, 结束, 这次烘焙的「已看到几颗闪光」表]；FLASH_WIN：drawFrameSamples40 每个子样本 [开始, 结束, 子样本数, 是不是最后一个, 同一张表]
+// 指数衰减 e^(−a/τ) 在年龄 [a1, a2]（已截到 0…cut）上的积分
+const flashExpInt = (tau, a1, a2) => a2 > a1 ? tau * (Math.exp(-a1 / tau) - Math.exp(-a2 / tau)) : 0;
+// 同一次烘焙里每个模拟（闪光数）/ 每份 GPU 火花轨迹（时刻）在「上一帧最后一个子样本」时的值：那之后才出现的闪光 / 火花上一帧没画到，这一帧从年龄 0 起补上。
+//   同一帧里调几次结果都一样；第一帧 = first。只在一帧的最后一个子样本调
+function flashPrevOf(fw, key, first, cur) {
+  const m = fw[4]; if (!m) return first;
+  const e = m.get(key); if (!e) { m.set(key, { fr: fw[0], prev: first, cur }); return first; }
+  if (e.fr !== fw[0]) { e.prev = e.cur; e.fr = fw[0]; } e.cur = cur; return e.prev;
+}
 class Sparks {
   constructor(cap) {
     this.cap = cap; this.n = 0;
@@ -614,10 +628,17 @@ class Sim {
     }
     this.gHead = nh;     // 4.9.58 [0, gHead) 是星头（含泪滴 / 形状 / 倒影拆出来的点），星头单独光晕只换这一批
     // 爆裂小闪、落水闪光（f.abs）：照旧按星头核画（实心亮核 + 光晕）
-    for (const f of this.flashes) {
-      if (f.abs == null) continue;
-      const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
-      let I = f.abs * Math.exp(-a / f.tau) / (6.2832 * f.sig * f.sig), fs = f.sig * 2;
+    const fw = FLASH_WIN && FLASH_WIN[1] > FLASH_WIN[0] ? FLASH_WIN : null;
+    // 上一帧最后一个子样本时已经有几颗闪光（闪光表只往后加）：之后才出现的（上一帧最后一个子样本之后才出生 / 才排上的）上一帧没画到，这一帧从年龄 0 起补上，光量不丢；第一帧 = 全都算已有
+    const FL = this.flashes, fwSeen = fw && fw[3] ? flashPrevOf(fw, this, Infinity, FL.length) : Infinity;
+    for (let fi = 0; fi < FL.length; fi++) {
+      const f = FL[fi]; if (f.abs == null) continue;
+      let a = this.t - f.t0, I; const cut = f.cut || 0.25;
+      if (fw && f.crk) {     // 4.9.103 B8：爆裂小闪按这一帧停留时段里的平均亮度（随寿命曲线取重叠段中间的年龄）；只在最后一个子样本画、× 子样本数
+        const a1 = fi >= fwSeen ? 0 : Math.max(0, fw[0] - f.t0), a2 = Math.min(cut, fw[1] - f.t0); if (!fw[3] || !(a2 > a1) || nh >= capH - 1) continue;
+        I = f.abs * flashExpInt(f.tau, a1, a2) / (fw[1] - fw[0]) * fw[2] / (6.2832 * f.sig * f.sig); a = (a1 + a2) / 2;
+      } else { if (a < 0 || a > cut || nh >= capH - 1) continue; I = f.abs * Math.exp(-a / f.tau) / (6.2832 * f.sig * f.sig); }
+      let fs = f.sig * 2;
       if (f.crk && (this.cv.cb || this.cv.cs)) { const x = clamp(a / cut, 0, 1); if (this.cv.cb) I *= Math.max(0, lifeCurveAt(this.cv.cb, x)); if (this.cv.cs) fs *= Math.max(0, lifeCurveAt(this.cv.cs, x)); }     // 4.8.0 爆裂小闪随寿命
       push(bufH, nh++, f.x, f.y, I, fs);
       if (refl > 0 && f.y >= 0) push(bufH, nh++, f.x, -f.y - 0.01, I * refl, f.sig * 2.6);
@@ -635,12 +656,16 @@ class Sim {
     // 一团柔光，峰值亮度和以前的实心亮核一样（= 开花闪光 × 1.5 × 衰减），没有硬边、没有伸出格子的光晕。强度照旧由「开花闪光」调。
     // 高斯点的强度口径是总光量（峰值 × 2πσ²），所以这里不再除面积。
     this.gFlash = nh;
-    for (const f of this.flashes) {
-      if (f.abs != null) continue;
-      const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
+    for (let fi = 0; fi < FL.length; fi++) {
+      const f = FL[fi]; if (f.abs != null) continue;
+      let a = this.t - f.t0, ex; const cut = f.cut || 0.25;
+      if (fw && !f.main && this.fam === 'aerial') {     // 4.9.103 B8：子花开花闪光 / 小花闪按这一帧停留时段里的平均亮度（主花开花闪光、上升的闪光不变）；只在最后一个子样本画、× 子样本数
+        const a1 = fi >= fwSeen ? 0 : Math.max(0, fw[0] - f.t0), a2 = Math.min(cut, fw[1] - f.t0); if (!fw[3] || !(a2 > a1) || nh >= capH - 1) continue;
+        ex = flashExpInt(f.dec || 0.035, a1, a2) / (fw[1] - fw[0]) * fw[2]; a = (a1 + a2) / 2;
+      } else { if (a < 0 || a > cut || nh >= capH - 1) continue; ex = Math.exp(-a / (f.dec || 0.035)); }
       if (P._unit) continue;      // 单元序列不含开花闪光（另挂）
       const sig = f.main && this.cv.fs ? f.sig * Math.max(0, lifeCurveAt(this.cv.fs, clamp(a / cut, 0, 1))) : f.sig;     // 4.9.4 开花闪光大小随寿命（峰值不变：总光量按 σ² 跟着变）
-      let I = f.I * Math.exp(-a / (f.dec || 0.035)) * 1.5 * 6.2832 * sig * sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
+      let I = f.I * ex * 1.5 * 6.2832 * sig * sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
       if (f.main && this.cv.fb) I *= Math.max(0, lifeCurveAt(this.cv.fb, clamp(a / cut, 0, 1)));     // 4.8.0 开花闪光亮度随寿命
       push(bufH, nh++, f.x, f.y, I, sig * 2);
       if (refl > 0 && f.y >= 0 && nh < capH - 1) push(bufH, nh++, f.x, -f.y - 0.01, I * refl * 1.69, sig * 2.6);     // 倒影 σ × 1.3，总光量 × 1.69 保持峰值 × refl

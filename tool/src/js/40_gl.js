@@ -147,6 +147,8 @@ uniform float uCq;     // 4.9.71 火花平方阻力系数 c = G / 火花终端�
 uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6], uCvEmS[6], uCvBrS[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN, uCvEmSN, uCvBrSN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）；4.9.4 余烬 / 分叉火花大小
 ${GLSL_CV}
 uniform float uInhA, uInhB, uT0J, uEmbLJ, uEmbDk, uEmbFa, uBrL, uBrLA, uBrLB, uBrV, uBrVA, uBrVB, uBrInh, uBrKd, uBrT, uBrB, uBrFd, uBrS, uGlA, uGlB, uGlW, uGlPk, uGlDim;     // 4.6.0（5.0 第 1 步）：以前写死的随机范围、余烬衰减、分叉火花、辉星闪光，默认 = 以前的常数
+uniform vec4 uFW;     // 4.9.103（导出排查 B8）：烘焙一帧时这一帧在引擎里停留的时段 [开始, 结束] 相对 uT 的偏移、倍数（只有这一帧最后一个子样本 > 0）、上一帧最后一个子样本相对 uT（那之后出生的从年龄 0 起补）；实时 / 别的子样本 = 0 → 辉星短闪照旧按瞬时
+float erfS(float x){ float s=sign(x); x=abs(x); float t=1./(1.+.3275911*x); return s*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x)); }
 // 和 20_sim.js starHash(id, seed, k) 同一个整数哈希（CPU / GPU 内核每颗星的起势时长一样）
 float starHashG(uint id, uint k){ uint h=((id+1u)*0x9E3779B1u)^((uint(uSeed)+7u)*0x85EBCA77u)^((k+3u)*0xC2B2AE3Du); h^=h>>16u; h*=0x7FEB352Du; h^=h>>15u; h*=0x846CA68Bu; h^=h>>16u; return float(h)/4294967296.; }
 uniform vec4 uTm[3]; uniform float uTa[3];
@@ -249,7 +251,11 @@ void main(){
     if(emb) size=uSize*uEmbS;
     if(emb){ if(uCvEmBN>0) gl*=max(0.,CV(uCvEmB,uCvEmBN,clamp(age/life,0.,1.))); if(uCvEmSN>0) size*=max(0.,CV(uCvEmS,uCvEmSN,clamp(age/life,0.,1.))); }
     else { if(uCvSpBN>0) gl*=max(0.,CV(uCvSpB,uCvSpBN,clamp(age/life,0.,1.))); if(uCvSpSN>0) size*=max(0.,CV(uCvSpS,uCvSpSN,clamp(age/life,0.,1.))); }     // 4.8.0
-    if(uGlit>0.){ float tf=uGlitD*(uGlA+uGlB*hsh(uid,17u)); float e=(age-tf)/uGlW; gl=gl*(1.-uGlDim*uGlit)+uGlit*uGlPk*exp(-e*e); }
+    if(uGlit>0.){ float tf=uGlitD*(uGlA+uGlB*hsh(uid,17u)), pk;
+      if(uFW.y>uFW.x){ float lo=age+uFW.w<0. ? 0. : max(0.,age+uFW.x), hi=min(min(life,ts),age+uFW.y);     // 4.9.103 B8：停留时段里的平均（解析积分，截在出生 / 熄灭之间），只在最后一个子样本画、× 子样本数
+        pk=uFW.z>0. && hi>lo ? uFW.z*.88622693*uGlW*(erfS((hi-tf)/uGlW)-erfS((lo-tf)/uGlW))/(uFW.y-uFW.x) : 0.; }
+      else { float e=(age-tf)/uGlW; pk=exp(-e*e); }
+      gl=gl*(1.-uGlDim*uGlit)+uGlit*uGlPk*pk; }
     I=gl;
   } else {
     vec3 pc, vc; if(uCq>0.) motQ(sp,vel,U,g,uK,uCq,ts,pc,vc); else { pc=mot(sp,vel,U,g,uK,ts); vc=motv(vel,U,g,uK,ts); }
@@ -523,6 +529,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
   gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
+  if (pr.u.uFW) { const fw = FLASH_WIN && FLASH_WIN[1] > FLASH_WIN[0] && +P.glitter > 0 ? FLASH_WIN : null, pv = fw && fw[3] ? flashPrevOf(fw, tr, fw[0], t) : fw ? fw[0] : 0; gl.uniform4f(pr.u.uFW, fw ? fw[0] - t : 0, fw ? fw[1] - t : 0, fw && fw[3] ? fw[2] : 0, fw ? pv - t : 0); }     // 4.9.103 B8
   if (pr.u.uLen) { gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, tr.len); gl.uniform1i(pr.u.uLen, 5); }
   gl.activeTexture(gl.TEXTURE0);
   { const air = familyOf(P.type) === 'aerial', u = (k, v) => { if (pr.u[k]) gl.uniform1f(pr.u[k], v); };     // 火花发射器补全（缺省全 0 = 以前）
