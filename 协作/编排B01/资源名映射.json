@@ -1,0 +1,10 @@
+{
+  "format": "df.b05-resource-map/1",
+  "by": "跨年秀（22）2026-10-14",
+  "note": "用户 10-14 21:44 改了 ResourceFX 命名。导演表认 ResourceId（FXResourceId 列，P_EFX_FireWorks_*），行名「跨年烟花3.0_…」只是元数据。编译加 --resource-map 本文件：先按 renames 改 ResourceId，再把每个条目的行名 / 粒子路径换成 T05 读回的值，最后核对一张表里的每个 ResourceId 都在读回里。两根新尾缀的 ResourceId 在 新尾缀.json，小平台专用小花在 前台小花.json，手游 6 种在 手游种类.json。",
+  "readback": "analysis/results/RESOURCEFX_20261014/读回.json",
+  "renames": {
+    "P_EFX_FireWorks_OrangeGlitter": "P_EFX_FireWorks_Glitter"
+  },
+  "renameNote": "橙辉星：截图转录和 T05 读回里 ResourceId 都已是 Glitter（2817「跨年烟花3.0_小型_I__橙辉星」），旧 OrangeGlitter 已不在表里——不改的话导演表里 6 个子模板放不出来。"
+}

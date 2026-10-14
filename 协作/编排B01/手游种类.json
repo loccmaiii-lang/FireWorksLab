@@ -1,0 +1,30 @@
+{
+  "format": "df.b05-mobile-species/1",
+  "by": "跨年秀（22）2026-10-14",
+  "decided": "用户 10-14 21:44（看板 n61，取代 10-14 00:30 i10 的 7 种）：「手游我决定就主角/大号：金芒菊；中号：银冠菊/辉星；小号：爆裂星，点灭星，分裂星；这几个还有办法在模板做放大处理吗？」；22:22「手游的『分裂星』= 2803 小号_D_小分裂」",
+  "rule": "手游片段只用这 6 种资源，PC 不变。按片段所在的「位」换：大位（L 230 m，含主角）→ 金芒菊放大；中位（M 150 m）→ 银冠菊 / 辉星放大；小位（S 90 m）→ 爆裂星 / 点灭星 / 分裂星；小平台 → 分裂星（见 前台小花.json mobileVariant）。PC 和手游共用的片段要换时，拆成「PC 照旧（只上 PC）」+「手游替身（只上手游，同点位、同时刻、同高低、同档位）」，手游发数不变。同一位用同一根尾缀，换花不改时间。中位按 PC 那朵的色系挑：暖色 → 辉星，冷色 → 银冠菊；小位：银色系 → 点灭星，橙 / 金色系 → 分裂星，爆裂星 → 爆裂星。放大只用子模板条目 EffectScale（UE-14 实测整朵等比），单个不超过 ×1.6（推断：手机贴图分辨率固定、面积按平方涨）；超过就压到 1.6，大小随机 ×1.08 会顶破 1.6 的不用略大版。",
+  "species6": [
+    {"zh": "金芒菊", "resource": "P_EFX_FireWorks_GoldRayChry", "rowName": "跨年烟花3.0_中型_B_金芒菊", "tier": "大号 / 主角"},
+    {"zh": "银冠菊", "resource": "P_EFX_FireWorks_SilverChry", "rowName": "跨年烟花3.0_小型_F_银冠菊", "tier": "中号"},
+    {"zh": "辉星（橙辉星）", "resource": "P_EFX_FireWorks_Glitter", "rowName": "跨年烟花3.0_小型_I__橙辉星", "tier": "中号"},
+    {"zh": "爆裂星", "resource": "P_EFX_FireWorks_Crackle", "rowName": "跨年烟花3.0_小型_G_爆裂星", "tier": "小号"},
+    {"zh": "点灭星", "resource": "P_EFX_FireWorks_Strobe", "rowName": "跨年烟花3.0_小型_J_点灭星", "tier": "小号"},
+    {"zh": "分裂星", "resource": "P_EFX_FireWorks_LittleCombo", "rowName": "跨年烟花3.0_小号_D_小分裂", "tier": "小号（含小平台）"}
+  ],
+  "trailsMobile": ["P_EFX_FireWorks_NY_Trail_Small", "P_EFX_FireWorks_NY_Trail_Medium", "P_EFX_FireWorks_NY_Trail_Large", "P_EFX_FireWorks_RiseTrail_Tiny"],
+  "maxScale": 1.6,
+  "slots": {
+    "L": {"*": "GRL"},
+    "M": {"GR": "OGM", "GS": "OGM", "GY": "OGM", "CL": "OGM", "GP": "SCM", "ML": "SCM", "PW": "SCM"},
+    "S": {"SC": "ST", "LM": "ST", "ST": "ST", "OG": "LCS", "GC": "LCS", "CR": "CR"}
+  },
+  "derived": [
+    {"code": "SCM", "id": "B05_SilverChry_M144", "engineId": "NYB05_SilverChry_M144", "name": "B05 · 银冠菊 · 中位 144m（手游）", "zh": "银冠菊·中（手游）",
+     "source": "R03_SilverChry", "frame": "R03_GoldRayChry", "diameter": 144, "color": "#e5efff", "size": "M"},
+    {"code": "OGM", "id": "B05_Glitter_M144", "engineId": "NYB05_Glitter_M144", "name": "B05 · 辉星 · 中位 144m（手游）", "zh": "辉星·中（手游）",
+     "source": "R03_OrangeGlitter", "frame": "R03_GoldRayChry", "diameter": 144, "color": "#f19a4a", "size": "M"},
+    {"code": "LCS", "id": "B05_LittleCombo_S90", "engineId": "NYB05_LittleCombo_S90", "name": "B05 · 分裂星 · 小位 90m（手游）", "zh": "分裂星（手游）",
+     "source": "R03_SilverChry", "frame": "R03_SilverChry", "diameter": 90, "resource": "P_EFX_FireWorks_LittleCombo", "nativeM": 90, "color": "#e8c79a", "size": "S"}
+  ],
+  "scaleNote": "放大倍数 = 花径 ÷ 资源原生花径：金芒菊 150 m、银冠菊 / 辉星 / 爆裂星 / 点灭星 90 m（R03 定的尺寸）；分裂星 2803 原生大小未知，读回里它还指向旧 90 m 小银菊粒子 LittleChry_HD，暂按 90 m 算——真资源进表后要量一次。"
+}

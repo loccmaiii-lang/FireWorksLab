@@ -90,6 +90,41 @@ const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大
 }
 const DER_SRC = new Map(DERIVED.map(f => [f.id, f.source]));
 
+// —— B05（22，用户 10-14 21:44 手游改 6 种）：手游替身用的放大 / 换资源花型（协作/编排B01/手游种类.json derived），只建逻辑方案用到的；
+//    同大号花型的做法（同一资源 EffectScale 放大、挂到 frame 那一档尾缀的终点），可另换资源（resource，按 nativeM 算倍数）。 ——
+const MOBF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/手游种类.json'), 'utf8'));
+const mobileDerivedReport = [];
+{
+  const used = new Set(logic.cues.map(c => c.templateId.split('__K')[0]));
+  const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s]));
+  const rowOf = new Map(MOBF.species6.map(x => [x.resource, x.rowName]));
+  for (const f of MOBF.derived.filter(f => used.has(f.id))) {
+    const st = tmap.get(f.source), ft = tmap.get(f.frame);
+    if (!st || !ft) throw Error('手游花型的来源不存在：' + f.id);
+    const ss = smap.get(st.subTemplateRef), fsub = smap.get(ft.subTemplateRef);
+    const sb = ss.entries.find(e => e.role === 'burst'), ftail = fsub.entries.find(e => e.role === 'trail'), fb = fsub.entries.find(e => e.role === 'burst');
+    const E = fsub.sizeEvidence.endpointM, roll = ss.coupledVariation?.rollDeg ?? 0, hOff = ss.coupledVariation?.heightOffsetM ?? 0, a = roll * Math.PI / 180;
+    const trail = clone(ftail);
+    trail.native.PositionOffset = {X: 0, Y: 0, Z: round(hOff * 100)};
+    trail.native.RotationOffset = {...trail.native.RotationOffset, Roll: roll};
+    const burst = clone(sb), k = f.diameter / (f.nativeM || st.diameter);
+    burst.native.LocalTimeOffset = fb.native.LocalTimeOffset;
+    burst.native.PositionOffset = {X: 0, Y: round(-Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
+    burst.native.RotationOffset = {...burst.native.RotationOffset, Roll: roll};
+    burst.native.EffectScale = f.nativeM ? {X: round(k), Y: round(k), Z: round(k)} : {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)};
+    if (f.resource) { burst.native.FXResourceId = f.resource; burst.baseTemplateRef = f.resource + '|burst'; burst.resourceSource = {table: burst.resourceSource?.table, rowName: rowOf.get(f.resource) || f.resource}; }
+    burst.preview = {...burst.preview, diameterM: f.diameter};
+    const sub = {...clone(ss), name: f.name, id: f.engineId, engineId: f.engineId, key: f.engineId + '@1', version: 1, entries: [trail, burst], sizeEvidence: clone(fsub.sizeEvidence),
+      derivedFrom: {source: ss.key, frame: fsub.key, burstScale: round(k), resource: f.resource || null, rule: '手游 6 种替身：同一资源 EffectScale 放大（≤ 1.6）、挂到这一位的尾缀终点', by: '跨年秀（22）2026-10-14，用户 21:44', engineScaleVerified: false}};
+    doc.subTemplateLibrary.push(sub);
+    const kind = {S: 'small', M: 'medium', L: 'large'}[f.size];
+    doc.templateLibrary.push({...clone(st), id: f.id, name: f.name, kind, diameter: f.diameter, width: f.diameter, z: ft.z, burstZ: ft.burstZ, flightHeight: ft.flightHeight,
+      rise: ft.rise, life: st.life, recipeDuration: round(ft.rise + st.life), subTemplateRef: sub.key, numericSource: 'b05_mobile_species_20261014', engineSizeVerified: false, color: f.color});
+    DER_SRC.set(f.id, f.source);
+    mobileDerivedReport.push({id: f.id, engineId: f.engineId, resource: f.resource || burst.native.FXResourceId, diameter: f.diameter, scale: round(k)});
+  }
+}
+
 // —— 大小随机版本（用户 10-11 23:41「球花的大小也相应略作随机」）：<花型>__K92 / __K108 = 同一花型只把球花条目放大 / 缩小，尾缀和开花点不动 ——
 {
   const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s]));
@@ -116,13 +151,17 @@ const DER_SRC = new Map(DERIVED.map(f => [f.id, f.source]));
 //   ② 前台小花（协作/编排B01/前台小花.json）：XS 尾缀（不缩放，固化倾角）+ 现成小花 EffectScale 缩小挂在 XS 终点，在 XS 到顶时开。
 //   旧方案没有 trail 字段、不用前台小花，不进这一段，产物逐字节不变。
 const NEWT = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/新尾缀.json'), 'utf8'));
+for (const [a, k] of Object.entries(NEWT.aliases || {})) NEWT.trails[a] ??= NEWT.trails[k];   // B05：键按用途（Low80 / Front62），B04 的旧键 Tiny / XS 指向同一根
 const FRONTF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/前台小花.json'), 'utf8'));
+{ const mv = FRONTF.mobileVariant;   // B05：小平台手游版（花换成手游 6 种里的分裂星），同 编排B01.py
+  if (mv) for (const x of [...FRONTF.flowers]) if (x.flowers.length) FRONTF.flowers.push({...x, code: x.code + mv.codeSuffix, id: x.id + mv.idSuffix, engineId: x.engineId + mv.idSuffix,
+    name: x.name + mv.nameSuffix, zh: x.zh.split('·').slice(0, -1).join('·') + '·' + FRONTF.flowerSources[mv.src].zh, flowers: x.flowers.map(f => ({...f, src: mv.src})), mobileOf: x.code, from: null}); }
 const tidOf = c => c.trail ? `${c.templateId}__${c.trail.toUpperCase()}` : c.templateId;
 const b04Report = {tiny: [], front: [], placeholders: Object.fromEntries(Object.entries(NEWT.trails).map(([k, v]) => [k, {resourceId: v.resourceId, confirmed: v.confirmed}]))};
 const newTrail = (e, tr) => {   // 把一条尾缀条目换成新尾缀（行名占位时 resourceSource 标出来）
   e.native.FXResourceId = tr.resourceId; e.baseTemplateRef = tr.resourceId + '|trail';
   e.preview = {...e.preview, heightM: tr.burstM, durationS: tr.riseS};
-  e.resourceSource = {table: e.resourceSource?.table, rowName: tr.confirmed ? tr.resourceId : `（待加行：${tr.resourceId}）`, particle: tr.particle, placeholder: !tr.confirmed};
+  e.resourceSource = {table: e.resourceSource?.table, rowName: tr.confirmed ? (tr.rowName || tr.resourceId) : `（待加行：${tr.resourceId}）`, particle: tr.particle, placeholder: !tr.confirmed};
   return e;
 };
 {
@@ -166,15 +205,18 @@ const newTrail = (e, tr) => {   // 把一条尾缀条目换成新尾缀（行名
     });
     x.flowers.forEach((f, i) => {
       const src = FRONTF.flowerSources[f.src], st = tmap.get(src.template), sb = smap.get(st.subTemplateRef).entries.find(e => e.role === 'burst'), t = x.trails[f.trail];
-      const a = t.roll * Math.PI / 180, k = f.diameter / st.diameter, e = clone(sb);
+      const a = t.roll * Math.PI / 180, k = f.diameter / (src.nativeM || st.diameter), e = clone(sb);
       e.id = `flower-${i}`;
       Object.assign(e.native, {LocalTimeOffset: round(t.off + tr.riseS), PositionOffset: {X: 0, Y: round(-Math.sin(a) * tr.burstM * 100), Z: round(Math.cos(a) * tr.burstM * 100)},
-        RotationOffset: {Pitch: 0, Yaw: 0, Roll: 0}, EffectScale: {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)}});
+        RotationOffset: {Pitch: 0, Yaw: 0, Roll: 0}, EffectScale: src.nativeM ? {X: round(k), Y: round(k), Z: round(k)} : {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)}});
+      if (src.resource && src.resource !== e.native.FXResourceId) {   // B05：小平台专用资源（2800–2803）
+        e.native.FXResourceId = src.resource; e.baseTemplateRef = src.resource + '|burst'; e.resourceSource = {table: e.resourceSource?.table, rowName: src.rowName || src.resource};
+      }
       e.preview = {...e.preview, diameterM: f.diameter};
       entries.push(e); tips.push({z: Math.cos(a) * tr.burstM, t: t.off + tr.riseS, end: t.off + tr.riseS + st.life});
     });
     const sub = {name: x.name, category: x.flowers.length ? 'ball' : 'trail', seed: 1, randomMode: 'materialized', entries, id: x.engineId, engineId: x.engineId, key: x.engineId + '@1', version: 1,
-      sizeEvidence: {trailEndpointM: tr.burstM, trailRiseS: tr.riseS, source: `XS 尾缀烘焙器导出值（${tr.export.split('（')[0]}）；小花 EffectScale 缩小，未在 UE 量`, enginePlaybackVerified: false},
+      sizeEvidence: {trailEndpointM: tr.burstM, trailRiseS: tr.riseS, source: `${tr.userName || 'XS'} 尾缀烘焙器导出值（${tr.export.split('（')[0]}）；小花 EffectScale 缩小，未在 UE 量`, enginePlaybackVerified: false},
       newTrail: {trail: FRONTF.trail, resourceId: tr.resourceId, confirmed: tr.confirmed, particle: tr.particle},
       derivedFrom: {rule: '通用尾缀 XS（不缩放、固化倾角）+ 现成小花缩小挂在 XS 终点；不新增资源', by: '跨年秀（22）2026-10-14，用户 01:27（看板 i12）', from: x.from, engineScaleVerified: false}};
     doc.subTemplateLibrary.push(sub);
@@ -310,6 +352,28 @@ delete doc.meta.defaultStaggerEnabled;
 // —— 修订4：尾缀 v2 开花点（手游编排 10-12，analysis/scripts/尾缀v2开花点.mjs）：引擎尾缀已按尺寸档重导（长度 × k、时间不变），
 //   固定子模板的开花点跟着降到新尾缀终点；编排条目（点位、时刻、dz、档位）不动。主角尾缀等 ResourceFX 加行后再换（hero=true）。 ——
 const trailV2 = TRAIL_V1 ? null : applyTrailV2(doc, {hero: args.some(a => a.startsWith('--hero-trail')), heroId: HERO_ID});
+// —— B05（22，用户 10-14 21:44 改了 ResourceFX 命名）：--resource-map <资源名映射.json>：导演表认 ResourceId（FXResourceId），
+//    按映射改名（OrangeGlitter → Glitter 等），行名 / 粒子元数据跟 T05 读回；不带这个开关时什么都不动。 ——
+const resourceMapInput = option('resource-map');
+let resourceMap = null;
+if (resourceMapInput) {
+  const rm = JSON.parse(fs.readFileSync(path.resolve(ROOT, resourceMapInput), 'utf8')), rb = JSON.parse(fs.readFileSync(path.resolve(ROOT, rm.readback), 'utf8'));
+  const rows = new Map(rb.pc.map(r => [r.ResourceId, r])), ren = rm.renames || {}, renamed = {}, meta = new Set();
+  const fix = e => {
+    const n = e.native; if (!n?.FXResourceId) return;
+    const id0 = n.FXResourceId, id = ren[id0] || id0;
+    if (id !== id0) { n.FXResourceId = id; renamed[id0 + ' → ' + id] = (renamed[id0 + ' → ' + id] || 0) + 1; if (e.baseTemplateRef) e.baseTemplateRef = e.baseTemplateRef.replace(id0 + '|', id + '|'); }
+    const r = rows.get(id);
+    if (r) { e.resourceSource = {...(e.resourceSource || {}), table: rb.tables.pc, rowName: r._row_name, particle: r.FxSP, readAt: rb.readAt}; delete e.resourceSource.placeholder; meta.add(id); }
+  };
+  for (const sub of doc.subTemplateLibrary) for (const e of sub.entries || []) fix(e);
+  for (const r of doc.baseResourceLibrary || []) {
+    const id0 = r.id, id = ren[id0] || id0;
+    if (id !== id0) { r.id = id; if (r.key) r.key = r.key.replace(id0 + '|', id + '|'); }
+    const row = rows.get(id); if (row) r.resourceSource = {...(r.resourceSource || {}), table: rb.tables.pc, rowName: row._row_name, particle: row.FxSP, readAt: rb.readAt};
+  }
+  resourceMap = {file: resourceMapInput, readback: rm.readback, readAt: rb.readAt, rows, renamed, metadataSynced: meta.size};
+}
 doc.choreographyLibrary = [];
 doc.notices = [];
 const finalDoc = normalize(doc);
@@ -384,8 +448,15 @@ if (B02) {
     pc: {high: cnt('pc', 2), medium: cnt('pc', 1), low: cnt('pc', 0)}, mobile: {high: cnt('mobile', 2), medium: cnt('mobile', 1), low: cnt('mobile', 0)}};
   report.beamFlowers = beamReport;
   report.heroTrailId = HERO_ID;
+  if (resourceMap) {   // B05：一张表里每个 FXResourceId 都要在 ResourceFX（T05 读回）里
+    const ids = [...new Set(r1.manifest.EffectSubTemplates.flatMap(s => s.Entries.map(e => e.FXResourceId)))].sort();
+    report.resources = {readback: resourceMap.readback, readAt: resourceMap.readAt, renamed: resourceMap.renamed, metadataSynced: resourceMap.metadataSynced,
+      used: ids.map(id => ({id, rowName: resourceMap.rows.get(id)?._row_name || null})), missing: ids.filter(id => !resourceMap.rows.has(id))};
+    if (report.resources.missing.length) console.error('一张表里有 ResourceFX 读回里没有的资源：' + report.resources.missing.join('、'));
+  }
 }
-if (b04Report.tiny.length || b04Report.front.length) report.b04 = b04Report;   // B04：新尾缀片段 / 前台小花（旧方案不出这一项）
+if (b04Report.tiny.length || b04Report.front.length) report.b04 = b04Report;
+if (mobileDerivedReport.length) report.mobileDerived = mobileDerivedReport;   // B05：手游替身花型   // B04：新尾缀片段 / 前台小花（旧方案不出这一项）
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 if (mixAudio) report.audio = {file: mixAudio.audioRef.name, sha256: mixAudio.audioRef.sha256, duration: mixAudio.audioRef.duration, musicOffset: finalDoc.meta.musicOffset, embeddedBytes: Buffer.byteLength(mixAudio.audioRef.dataUrl), markers: musicMarkers.length};
 fs.writeFileSync(path.join(outDir, `${TABLE}编排检查.json`), JSON.stringify(report, null, 2));

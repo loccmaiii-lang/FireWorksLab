@@ -1,43 +1,53 @@
 {
-  "format": "df.b04-new-trails/1",
-  "by": "跨年秀（22）2026-10-14",
-  "note": "B04（用户 10-14 01:27「先按照这个理解去做，我改完了资源上传和你同步」）用到的两根新尾缀和 Comet / Silver 3.0。ResourceFX 行名（resourceId）是占位：按主角那根叫 Hero 的先例写成 XS / Tiny；用户导入、加行后行名若不同，只改这里的 resourceId（confirmed 改 true），重跑 编排B01_编译.mjs 即可，编排不用动。编排B01.py（高度、GPU）、编排B01_编译.mjs（子模板）、编排B01_动画.py 共用这一份。",
+  "format": "df.b04-new-trails/2",
+  "by": "跨年秀（22）2026-10-14；B05 改（用户 10-14 21:44 改了 ResourceFX 命名）",
+  "note": "编排用到的两根新尾缀和 Comet / Silver 3.0。键按用途起（Low80 = 坝顶低层 +80 m，Front62 = 小平台 +62 m），名字跟用户的 ResourceFX：用户 10-14「S80叫XS,小平台的叫Tiny」，所以坝顶低层这根 = RiseTrail_XS「跨年烟花3.0_低位_尾缀」，小平台这根 = RiseTrail_Tiny「跨年烟花3.0_极小_尾缀」——和 B04 时按导出（23）暂定名写的正好对调。高度 / 升空时间跟用途走，不跟名字走。导演表认 resourceId（= ResourceFX 的 ResourceId 列）。编排B01.py（高度、GPU）、编排B01_编译.mjs（子模板）、编排B01_动画.py 共用这一份。",
   "nativeTrailM": 190.082893,
   "trails": {
-    "Tiny": {
-      "resourceId": "Tiny",
-      "confirmed": false,
-      "zh": "坝顶低层小号尾缀 Tiny（原名 S80）",
-      "particle": "P_EFX_FireWorks_RiseTrail_S80_HD",
+    "Low80": {
+      "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+      "rowName": "跨年烟花3.0_低位_尾缀",
+      "userName": "XS（低位）",
+      "confirmed": true,
+      "zh": "坝顶低层尾缀 XS（低位，原 S80）",
+      "particle": "P_EFX_FireWorks_RiseTrail_XS_HD",
       "spec": "spec/尺寸标定.json T_SLOW",
-      "export": "analysis/results/RT6SE9（烘焙器 4.9.78，PC + 手机 _M，合成一张、1 个发射器、无 GPU）",
+      "export": "analysis/results/RT6SE9（烘焙器 4.9.78，导出时叫 RiseTrail_S80；PC + 手机 _M，合成一张、1 个发射器、无 GPU）",
       "k": 0.4211,
       "burstM": 80.04,
       "riseS": 1.9171,
       "durationS": 3.11,
       "gpu": 0,
       "color": "#edc180",
-      "decided": "用户 10-13 18:47「坝顶低层的需要出」；23:07「S80叫Tiny」"
+      "decided": "用户 10-13 18:47「坝顶低层的需要出」；10-14 19:04「S80叫XS」；ResourceFX 2834（T05 读回 10-14 22:12：FxSP = RiseTrail_XS_HD，1 个发射器、GPU 0）"
     },
-    "XS": {
-      "resourceId": "XS",
-      "confirmed": false,
-      "zh": "小平台通用尾缀 XS",
-      "particle": "P_EFX_FireWorks_RiseTrail_XS_HD",
+    "Front62": {
+      "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+      "rowName": "跨年烟花3.0_极小_尾缀",
+      "userName": "Tiny（极小）",
+      "confirmed": true,
+      "zh": "小平台尾缀 Tiny（极小）",
+      "particle": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
       "spec": "spec/尺寸标定.json T_F",
-      "export": "analysis/results/RT6SE8（烘焙器 4.9.78，PC + 手机 _M，合成一张、1 个发射器、无 GPU）",
+      "export": "analysis/results/RT6SE8（烘焙器 4.9.78，导出时叫 RiseTrail_XS；PC + 手机 _M，合成一张、1 个发射器、无 GPU）",
       "k": 0.3263,
       "burstM": 62.02,
       "riseS": 1.6875,
       "durationS": 2.74,
       "gpu": 0,
       "color": "#edc180",
-      "decided": "用户 10-13 16:46「小平台的烟花尾缀只需要用一个通用的」、18:47「XS用1.69秒」；10-14 00:30 看板 i12 小花束尾换成「前台小花 + XS」"
+      "decided": "用户 10-13 16:46「小平台的烟花尾缀只需要用一个通用的」、18:47「XS用1.69秒」；10-14 19:04「小平台的叫Tiny」；ResourceFX 2835（T05 读回：FxSP = RiseTrail_Tiny_HD，1 个发射器、GPU 0）"
     }
   },
+  "aliases": {
+    "Tiny": "Low80",
+    "XS": "Front62"
+  },
+  "aliasNote": "B04 逻辑方案里的旧内部键（按导出（23）当时的暂定名，和用户 10-14 定的名字正好相反），只为重现 B04；新方案一律用 Low80 / Front62。",
   "fans30": {
-    "note": "Comet / Silver 3.0（烘焙器 4.9.77，用户已认）原位替换红彗星扇 FanComet_01、银扇 FanSilver_01：ResourceFX 行名不变，编排不改调用；3.0 没有 GPU 发射器，GPU 预算里扇子按 0 算。UE 里还没换（看板「导入 Comet / Silver 3.0」用户 10-13「我明天改」），换之前引擎里仍是旧扇（红彗星 1 / 束、银扇 3 / 束），体检两种都算。",
+    "note": "Comet / Silver 3.0 原位替换红彗星扇 FanComet_01、银扇 FanSilver_01（行名不变，编排不改调用）。T05 读回（10-14 22:12）：FanComet_01 已指向 Comet_Layers_HD（4 发射器、GPU 0）；FanSilver_01 仍是 FanSilver_01_HD（2 发射器、GPU 1）。B05 体检按读回算。",
     "gpuPerBeam": {"P_EFX_FireWorks_FanComet_01": 0, "P_EFX_FireWorks_FanSilver_01": 0},
-    "gpuPerBeamBefore": {"P_EFX_FireWorks_FanComet_01": 1, "P_EFX_FireWorks_FanSilver_01": 3}
+    "gpuPerBeamBefore": {"P_EFX_FireWorks_FanComet_01": 1, "P_EFX_FireWorks_FanSilver_01": 3},
+    "gpuPerBeamReadback20261014": {"P_EFX_FireWorks_FanComet_01": 0, "P_EFX_FireWorks_FanSilver_01": 1}
   }
 }

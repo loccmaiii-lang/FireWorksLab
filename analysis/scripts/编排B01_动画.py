@@ -32,8 +32,12 @@ R1M = '--b02r1m' in sys.argv          # B02 修订1（22，10-12 23:13）：错�
 DAY = '--day' in sys.argv             # Day 调试版（22，10-13 21:29）：零点前 NPC 试放 30 s，不放音乐，可循环，输出 Day动画.html
 B03 = '--b03' in sys.argv             # B03（22，10-13 16:28）：合并音频（VO 闲话 + 倒计时 + 汪洋与浩渺），修订3 高度 + 手游替身，输出 B03动画.html
 B04 = '--b04' in sys.argv             # B04（22，10-14 01:27）：B03 修订2 + 坝顶低层 Tiny + 小平台前台小花 XS + 扇 3.0，输出 B04动画.html（可切 B03 修订2 对比）
-B02 = DAY or B03 or B04 or R1M or '--b02' in sys.argv
-SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+B05 = '--b05' in sys.argv             # B05（22，10-14 22:22）：B04 + ResourceFX 新命名 + 手游 6 种，输出 B05动画.html（可切 B04 对比）
+B4P = B04 or B05                      # B04 起的小平台前台小花 / 新尾缀画法
+if B05:
+    b01.register_b05_mobile()
+B02 = DAY or B03 or B4P or R1M or '--b02' in sys.argv
+SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
@@ -46,6 +50,8 @@ if DAY:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_Day/Day调试版-NPC试放编排检查.json'
 if B04:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B04-低层Tiny-小平台前台小花XS-扇3.0编排检查.json'
+if B05:
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B05-ResourceFX新命名-手游6种编排检查.json'
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -103,6 +109,20 @@ def risks_b04():
         f"手游：小平台也上手游（三种小花都在 7 种白名单、XS 有 _M），手游高 / 中 / 低 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（B03 220 / 178 / 164）；低位密奏那 5 s 手游空档现在高中配有小平台补上。",
         f"Comet / Silver 3.0 原位替换（行名不变）：GPU 同秒峰值 {g['peak']}（3.0 没导进 UE 之前按旧扇算是 {CHECK['gpuBefore30']['peak']}）。",
         f"重叠体检同一把尺：PC {ov['pcIncidents']} 处（B03 {ob0['pcIncidents']}，都是原有的后压前余烬），手游三档各 {ov['mobile']['high']['incidents']}。XS / Tiny 的 ResourceFX 行名先占位叫 XS / Tiny；你加行时用这两个名字就不用改，名字不同告诉我改一处重编。页面上方可切「B03 修订2」对比。没在 UE 里放过。",
+    ]
+
+
+def risks_b05():
+    g, ob, b5 = CHECK['gpu'], COMPILE.get('oneTable', {}), CHECK['b05']
+    ov, ob0, gm = CHECK['overlap'], CHECK['overlapBase'], CHECK['gpuModel']
+    sc = b5['mobileScale']
+    return [
+        '只换名字和手游种类，编排结构（时间、点位、高低、大小、档位、PC 的花）和 B04 一样。上方可切「B04」对比，PC 两版只有小平台的花换了资源。',
+        '两根尾缀按用途接上你的新名字：坝顶低层（+80 m）= XS「跨年烟花3.0_低位_尾缀」，小平台（+62 m）= Tiny「跨年烟花3.0_极小_尾缀」——和 B04 的暂定名正好对调。导演表认 ResourceId，全部 26 个都在 T05 读回的表里；橙辉星 ID 改成 Glitter。',
+        f"手游 6 种：大位金芒菊（×1.41–1.53）、中位辉星 / 银冠菊（×1.47–1.6）、小位点灭星 / 分裂星 / 爆裂星、小平台分裂星。共用片段 {len(b5['mobileSplit'])} 个拆成 PC 照旧 + 手游替身，原有替身 {len(b5['mobileStandinSwap'])} 个换花，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发不变。",
+        '手游上看得出的变化：倒计时 10–6 从银冠菊变点灭星、5–2 从橙辉星变分裂星；点火那排金芒菊（中位）变放大的辉星；银彩菊白墙和主角都变成大号金芒菊（主角 230 m，比 PC 的 280 m 小）。',
+        f"分裂星（2803）现在还指向旧小银菊粒子（LittleChry_HD），小平台另外三种（2800 / 2802）也是；真资源进表后看一眼大小。GPU 按 10-14 读回：中号尾缀 6、银扇每束 1，PC 同秒峰值 {g['peak']}（B04 按同一份读回也是 {CHECK['gpuBase']['peak']}）。",
+        f"重叠体检同一把尺：PC {ov['pcIncidents']} 处、手游各 {ov['mobile']['high']['incidents']} 处，和 B04 一样。没在 UE 里放过。",
     ]
 
 
@@ -201,10 +221,10 @@ def b02_data(species):
                            life=b01.TPL[src['template']]['life'], rgb=fmt_rgb(rgb(src['color']))))
         combos[x['code']] = dict(beams=beams, flowers=fl)
         n = sum(len(c['events']) for c in LOGIC['cues'] if c['sp'] == x['code'])
-        if n or not B04:
+        if n or not B4P:
             rows.append(dict(name=x['name'].replace('小平台 · ', ''), beams=len(x['beams']), flowers=len(x['flowers']), h=round(b01.TPL[x['id']]['flightHeight']), n=n))
     tr = b01.NEWT['trails'][b01.FRONTF['trail']]
-    for x in b01.FRONTF['flowers'] if B04 else ():   # B04 前台小花：XS 尾缀（不缩放，到顶 62 m）+ 小花挂在 XS 终点
+    for x in b01.FRONTF['flowers'] if B4P else ():   # B04 前台小花：XS 尾缀（不缩放，到顶 62 m）+ 小花挂在 XS 终点
         beams = [dict(roll=t['roll'], reach=tr['burstM'], off=t['off'], dur=tr['durationS'], rgb=fmt_rgb(rgb(tr['color']))) for t in x['trails']]
         fl = [dict(beam=f['trail'], t=round(x['trails'][f['trail']]['off'] + tr['riseS'], 4), dia=f['diameter'], r=tr['burstM'],
                    life=b01.TPL[b01.FRONTF['flowerSources'][f['src']]['template']]['life'], rgb=fmt_rgb(rgb(b01.FRONTF['flowerSources'][f['src']]['color']))) for f in x['flowers']]
@@ -220,10 +240,10 @@ def b02_data(species):
     span = lambda a, b: sec(a + 0.5) if sec(a + 0.5) == sec(b - 0.5) else f'{sec(a + 0.5)} → {sec(b - 0.5)}'
     gtxt = '；'.join(f"{a:.0f}–{b:.0f} s（{b - a:.0f} s，{span(a, b)}）" for a, b in gaps) or '无'
     b02 = dict(pc=ob.get('pc'), mobile=ob.get('mobile'), mobileSpecies=sp,
-               mobileRule=('只用 P 点 + 小平台；只放 7 种白名单（小银菊、银彩菊、金芒菊含大号、金锦菊、橙辉星、爆裂星、金垂柳）；M / L 一排只放偶数点；坝顶低层（B 点）、托底扇、扇组不上手游。B04 起小平台前台小花上手游（执行方案 §2.2「手机只放有手游版的」：三种小花都在白名单、XS 有 _M），手游中配跟 PC 中配同点、低配不放。替身照旧（只上手游，中低配 P0 / P4 / P8）。' if B04 else None) or '只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。'
+               mobileRule=('手游只用 6 种（用户 10-14 21:44）：大位（含主角）金芒菊放大 ×1.53；中位银冠菊 / 辉星放大 ×1.47–1.6；小位爆裂星 / 点灭星 / 分裂星；小平台分裂星。PC 和手游共用的片段拆成 PC 照旧 + 手游替身（同点、同时、同高低、同档位），手游发数不变。坝顶低层（B 点）、托底扇、扇组不上手游。' if B05 else None) or ('只用 P 点 + 小平台；只放 7 种白名单（小银菊、银彩菊、金芒菊含大号、金锦菊、橙辉星、爆裂星、金垂柳）；M / L 一排只放偶数点；坝顶低层（B 点）、托底扇、扇组不上手游。B04 起小平台前台小花上手游（执行方案 §2.2「手机只放有手游版的」：三种小花都在白名单、XS 有 _M），手游中配跟 PC 中配同点、低配不放。替身照旧（只上手游，中低配 P0 / P4 / P8）。' if B04 else None) or '只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。'
                + ('修订1 加「手游替身」（只上手游，PlatformFlags 2，PC 不放）：PC 放白名单外的花、手游又空着的那一拍，手游放白名单里同色系的花，高配偶数点、中低配 P0 / P4 / P8；挤着还亮的手游花就挪高度或大号退中号。' if R1M else 'PC 三档一个不变。'),
                mobileGaps=gtxt, combos=rows,
-               comboNote=('通用尾缀 XS（不缩放，62 m、升空 1.69 s，行名占位）每根一组固化倾角（甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在 XS 终点、到顶就开；V 形四根不开花、每次放随机 ±6°。和 B03 的小花束尾同点位、第一朵花同一时刻。' if B04 else None) or '现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。')
+               comboNote=('小平台尾缀 Tiny「极小_尾缀」（不缩放，62 m、升空 1.69 s）每根一组固化倾角（甲 / 乙两组），花换成小平台专用资源 2801 小银菊 / 2800 小金花 / 2802 短爆裂，缩到 22–28 m 挂在尾缀终点；手游版同一组尾缀、花换分裂星（2803）。V 形四根不开花。和 B04 同点位、同时刻。' if B05 else None) or ('通用尾缀 XS（不缩放，62 m、升空 1.69 s，行名占位）每根一组固化倾角（甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在 XS 终点、到顶就开；V 形四根不开花、每次放随机 ±6°。和 B03 的小花束尾同点位、第一朵花同一时刻。' if B04 else None) or '现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。')
     return combos, b02
 
 
@@ -304,9 +324,9 @@ def main():
         if B02 and size in 'SML':
             species[k]['dia'] = b01.TPL[tid]['diameter'] or b01.DIA[size]
             species[k]['h'] = round(b01.bloom_h(dict(templateId=tid, size=size)))
-        if B04 and size == 'F':
+        if B4P and size == 'F':
             species[k]['gpu'] = '3.0：0（旧扇 ' + ('银星 3 / 束）' if k[0] == 'S' else '红彗星 1 / 束）')
-        if B04 and size == 'S' and any(c['sp'] == k and c.get('trail') == 'Tiny' for c in LOGIC['cues']):
+        if B4P and size == 'S' and any(c['sp'] == k and c.get('trail') in ('Tiny', 'Low80') for c in LOGIC['cues']):
             species[k]['gpu'] += '；坝顶低层换 Tiny 尾缀 0'
         if size == 'X' and 'frontFlower' in b01.TPL[tid]:
             species[k]['gpu'] = '尾缀 XS 0 + 花 0'
@@ -318,11 +338,19 @@ def main():
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
     native = b01.REL_H
     data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
+                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
     if B02:
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
+    if B05:                           # B05 / B04 一页对比；大号数字跟 VO
+        old = json.loads((OUT / '逻辑方案_B04.json').read_text(encoding='utf-8'))
+        oc, oe, _, osecs, oanch = build(old)
+        au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
+        data['variants'] = [dict(label='B05', note='ResourceFX 新命名 · 手游 6 种', cues=cues, events=events, sections=secs, anchors=anchors),
+                            dict(label='B04', note='手游 7 种 · 尾缀占位名', cues=oc, events=oe, sections=osecs, anchors=oanch)]
+        data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
+                          fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
     if B04:                           # B04 / B03 修订2 一页对比；大号数字跟 VO
         old = json.loads((OUT / '逻辑方案_B03r2m.json').read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
@@ -347,7 +375,7 @@ def main():
                              dict(showS=22.0, musicS=22.0, label='整齐 → 变乱', source='编排', note=''),
                              dict(showS=35.0, musicS=35.0, label='做满到 35 s', source='用户给定', note='')])
     b64 = ''
-    if B03 or B04:                    # 10-13 17:06「这个动画能同步让我听到音乐vo吗」：合并音频原字节内嵌，0 s 起播
+    if B03 or B4P:                    # 10-13 17:06「这个动画能同步让我听到音乐vo吗」：合并音频原字节内嵌，0 s 起播
         mix = ROOT / '协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3'
         raw = mix.read_bytes()
         assert hashlib.sha256(raw).hexdigest() == LOGIC['audio']['mix']['sha256'], '合并音频和逻辑方案的指纹对不上'
@@ -358,8 +386,8 @@ def main():
     if DAY:
         html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>跨年秀 Day 试放</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '零点前 NPC 试放（进图 3 分钟放一次）正面比例动画', 1)
     elif B02:
-        if B04:
-            html = (html.replace('<th>小平台小花束尾</th><th>束 / 花</th><th>挂花高</th>', '<th>小平台前台小花（XS）</th><th>尾缀 / 花</th><th>开花高</th>', 1)
+        if B4P:
+            html = (html.replace('<th>小平台小花束尾</th><th>束 / 花</th><th>挂花高</th>', ('<th>小平台前台小花（Tiny）</th><th>尾缀 / 花</th><th>开花高</th>' if B05 else '<th>小平台前台小花（XS）</th><th>尾缀 / 花</th><th>开花高</th>'), 1)
                     .replace('<td>${x.beams} 束 / ${x.flowers} 朵</td>', '<td>${x.beams} 根 / ${x.flowers} 朵</td>', 1).replace('>小平台小花束尾</i>', '>小平台前台小花</i>', 1))
         html = html.replace('<title>汪洋与浩渺编排B01</title>', f'<title>汪洋与浩渺编排{NAME}</title>', 1).replace('跨年烟花秀 B01 正面比例动画', f'跨年烟花秀 {NAME} 正面比例动画' + (' 修订1' if R1M else ''), 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)

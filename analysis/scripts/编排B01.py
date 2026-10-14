@@ -135,7 +135,15 @@ for _x in BEAMF['flowers']:
 #      小平台「前台小花 + XS」定义在 协作/编排B01/前台小花.json。球花片段带 trail='Tiny' 时只换尾缀（花型、大小不变）。
 #      旧方案没有 trail 字段、不用 FS* / FC* 花型，结果不变。 ————
 NEWT = json.loads((OUTDIR / '新尾缀.json').read_text(encoding='utf-8'))
+for _a, _k in NEWT.get('aliases', {}).items():   # B05：键改成按用途（Low80 / Front62），B04 的旧键 Tiny / XS 指向同一根
+    NEWT['trails'].setdefault(_a, NEWT['trails'][_k])
 FRONTF = json.loads((OUTDIR / '前台小花.json').read_text(encoding='utf-8'))
+_mv = FRONTF.get('mobileVariant')   # B05：小平台手游版（同尾缀、同花位，花换成手游 6 种里的分裂星），只上手游
+for _x in (list(FRONTF['flowers']) if _mv else []):
+    if _x['flowers']:
+        FRONTF['flowers'].append(dict(_x, code=_x['code'] + _mv['codeSuffix'], id=_x['id'] + _mv['idSuffix'], engineId=_x['engineId'] + _mv['idSuffix'],
+                                      name=_x['name'] + _mv['nameSuffix'], zh=_x['zh'].rsplit('·', 1)[0] + '·' + FRONTF['flowerSources'][_mv['src']]['zh'],
+                                      flowers=[dict(f, src=_mv['src']) for f in _x['flowers']], mobileOf=_x['code'], **{'from': None}))
 
 
 def front_tip(x, f):
@@ -157,6 +165,22 @@ for _x in FRONTF['flowers']:
     _col = FRONTF['flowerSources'][_x['flowers'][0]['src']]['color'] if _x['flowers'] else _tr['color']
     SPECIES[_x['code']] = (_x['id'], _x['zh'], 'X', _col, 0)
 fam = lambda sp: FAMILY.get(sp, sp)
+MOBF = json.loads((OUTDIR / '手游种类.json').read_text(encoding='utf-8'))
+
+
+def register_b05_mobile():
+    """B05（22，用户 10-14 21:44 手游改 6 种）：手游替身用的放大 / 换资源花型（协作/编排B01/手游种类.json derived）。
+    只在 B05 用时登记——登记了会多出 S / M 花种，旧方案的体检（领奏、同屏按种类）会跟着变。"""
+    for f in MOBF['derived']:
+        if f['code'] in SPECIES:
+            continue
+        src, frm = TPL[f['source']], TPL[f['frame']]
+        TPL[f['id']] = dict(src, id=f['id'], name=f['name'], kind={'S': 'small', 'M': 'medium', 'L': 'large'}[f['size']], diameter=f['diameter'],
+                            burstZ=frm['burstZ'], flightHeight=frm['flightHeight'], rise=frm['rise'], life=src['life'],
+                            recipeDuration=round((frm['rise'] or 0) + (src['life'] or 0), 6), subTemplateRef=f['engineId'] + '@1', mobileDerived=f)
+        SPECIES[f['code']] = (f['id'], f['zh'], f['size'], f['color'], 0)
+        FAMILY[f['code']] = next(k for k, v in SPECIES.items() if v[0] == f['source'])
+        TID2SP[f['id']] = f['code']
 TID2SP = {v[0]: k for k, v in SPECIES.items()}
 FAN_PTS = {'S9': ['B1', 'B3', 'B4', 'B6'], 'S13': ['B3', 'B4']}   # 银扇 9 / 13 束太重：限点位；S5（每点 15）可整排 8 点，由预算逐波裁
 TAIL_GPU = {'S': 6, 'M': 2, 'L': 6}
