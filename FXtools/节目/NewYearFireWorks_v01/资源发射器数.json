@@ -1,428 +1,15 @@
 {
  "format": "df.resource-emitter-census/1",
- "readAt": "2026-10-11T01:57:36.472Z",
- "source": "UE 4.24 GPUECli 17780 只读：LoadAsset + object/get；未打开编辑器、未保存",
- "note": "enabledLOD0=LOD0启用的发射器；peakActiveLOD0Sum为资产里记录的PeakActiveParticles（编辑器上次预览统计，可能为0/过期，仅参考）",
+ "readAt": "2026-10-14T14:12:07.898Z",
+ "source": "UE4.24 GPUECli只读：datatable/search（T05复用10-11办法）+ LoadAsset + object/get；无保存/改表/导入/P4/开关UE",
+ "note": "enabledLOD0只算LOD0启用；gpu按/Gpu/i，禁用项保留detail；peakActiveLOD0Sum为编辑器历史预览统计，仅参考。PC为当前全部41条3.0行（包括5条窜天猴SKU），mobile保留并重新实读查询到的15条旧资源行，手游3.0目前0行。",
  "pc": [
   {
-   "id": "P_EFX_FireWorks_FanComet_01",
+   "id": "P_EFX_FireWorks_LittleGold",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
-   "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
-    "emitters": 8,
-    "enabledLOD0": 7,
-    "gpu": 1,
-    "mesh": 0,
-    "cpu": 6,
-    "peakActiveLOD0Sum": 53,
-    "lodDistances": [
-     0,
-     2500,
-     5000,
-     7500
-    ],
-    "detail": [
-     {
-      "name": "Trail",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": false,
-      "typeData": "ParticleModuleTypeDataRibbon",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Throw_Trail_33_HD.MI_EFX_Throw_Trail_33_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 29,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Trail_Sparks",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 15,
-      "modules": 10,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Medium",
-      "lodLevels": 4
-     },
-     {
-      "name": "Trail_Main",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_FireWorks_FanComet_Central_01_HD.MI_EFX_FireWorks_FanComet_Central_01_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 12,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Main",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 12,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Dot_A",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 9,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Dot_B",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 9,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Dot_C",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 9,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Particle Emitter",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_Spark_03_dissolve1.MI_EFX_Spark_03_dissolve1",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 5,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     }
-    ]
-   },
-   "FxSP_Low": null,
-   "FxSP_High": null
-  },
-  {
-   "id": "P_EFX_FireWorks_FanSilver_01",
-   "maxInstance": 10,
-   "limit": "True",
-   "fxType": "SHOW",
-   "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
-    "emitters": 6,
-    "enabledLOD0": 5,
-    "gpu": 3,
-    "mesh": 0,
-    "cpu": 2,
-    "peakActiveLOD0Sum": 141,
-    "lodDistances": [
-     0
-    ],
-    "detail": [
-     {
-      "name": "Central_L",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": false,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Velocity",
-      "material": "MI_EFX_FireWorks_FanSilver_Central_01_HD.MI_EFX_FireWorks_FanSilver_Central_01_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 15,
-      "modules": 11,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "Sparks Cloud",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 62,
-      "modules": 11,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Medium",
-      "lodLevels": 1
-     },
-     {
-      "name": "Central_L",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Velocity",
-      "material": "MI_EFX_FireWorks_FanSilver_Central_01_HD.MI_EFX_FireWorks_FanSilver_Central_01_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 12,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "Main",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 12,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "Dot_A",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 54,
-      "modules": 12,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "Dot_A",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 19,
-      "modules": 10,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     }
-    ]
-   },
-   "FxSP_Low": null,
-   "FxSP_High": null
-  },
-  {
-   "id": "P_EFX_FireWorks_GoldCrackle",
-   "maxInstance": 10,
-   "limit": "True",
-   "fxType": "SHOW",
-   "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD.P_EFX_FireWork_NY_Small_B_HD",
-    "emitters": 4,
-    "enabledLOD0": 4,
-    "gpu": 2,
-    "mesh": 0,
-    "cpu": 1,
-    "peakActiveLOD0Sum": 709,
-    "lodDistances": [
-     0,
-     2500,
-     5000,
-     7500
-    ],
-    "detail": [
-     {
-      "name": "Trail",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataRibbon",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Throw_Trail_6.MI_EFX_Throw_Trail_6",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 195,
-      "modules": 10,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Glow_B",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Glow_26.MI_EFX_Glow_26",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 12,
-      "modules": 11,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Dot_Cloud_B",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_Fireworks_Sparks_03.MI_EFX_Fireworks_Sparks_03",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 101,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     },
-     {
-      "name": "Dot_B",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Sparks_Flicker_8x8_03.MI_EFX_Sparks_Flicker_8x8_03",
-      "subImages": [
-       8,
-       8
-      ],
-      "peakActiveLOD0": 401,
-      "modules": 11,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 4
-     }
-    ]
-   },
-   "FxSP_Low": null,
-   "FxSP_High": null
-  },
-  {
-   "id": "P_EFX_FireWorks_SilverChry",
-   "maxInstance": 10,
-   "limit": "True",
-   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小号_A_小金花",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD.P_EFX_FireWorks_LittleChry_HD",
     "emitters": 4,
@@ -517,18 +104,19 @@
    "FxSP_High": null
   },
   {
-   "id": "P_EFX_FireWorks_Crackle",
+   "id": "P_EFX_FireWorks_LittleSilver",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小号_B_小银菊",
    "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
-    "emitters": 1,
-    "enabledLOD0": 1,
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+    "emitters": 2,
+    "enabledLOD0": 2,
     "gpu": 0,
     "mesh": 0,
-    "cpu": 1,
-    "peakActiveLOD0Sum": 3,
+    "cpu": 2,
+    "peakActiveLOD0Sum": 6,
     "lodDistances": [
      0
     ],
@@ -538,8 +126,69 @@
       "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
       "typeData": "CPU",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_FireWorks_Crackle_Main_01_HD.MI_EFX_FireWorks_Crackle_Main_01_HD",
+      "screenAlignment": "PSA_FacingCameraPosition",
+      "material": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD.MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 65535,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L1_Flash",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 6,
+      "detailMode": "DM_Low",
+      "detailBitmask": 65535,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_LittleCrackle",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小号_C_短爆裂",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD.P_EFX_FireWorks_LittleChry_HD",
+    "emitters": 4,
+    "enabledLOD0": 3,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 3,
+    "peakActiveLOD0Sum": 10,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": false,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD.MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD",
       "subImages": [
        1,
        1
@@ -551,6 +200,63 @@
       "qualitySpawnScale": 1,
       "significance": "Critical",
       "lodLevels": 1
+     },
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD.MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Glow_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Glow_01_Depth_03.MI_EFX_Glow_01_Depth_03",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 4,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     },
+     {
+      "name": "Flash",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Glow_16.MI_EFX_Glow_16",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
      }
     ]
    },
@@ -558,91 +264,134 @@
    "FxSP_High": null
   },
   {
-   "id": "P_EFX_FireWorks_Lime",
+   "id": "P_EFX_FireWorks_LittleCombo",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小号_D_小分裂",
    "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD.P_EFX_FireWorks_LittleChry_HD",
     "emitters": 4,
-    "enabledLOD0": 4,
-    "gpu": 1,
+    "enabledLOD0": 3,
+    "gpu": 0,
     "mesh": 0,
     "cpu": 3,
-    "peakActiveLOD0Sum": 510,
+    "peakActiveLOD0Sum": 10,
     "lodDistances": [
      0
     ],
     "detail": [
      {
-      "name": "L1_Main",
+      "name": "Particle Emitter",
       "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
+      "enabledLOD0": false,
       "typeData": "CPU",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_FireWorks_LimeStar_Tail_01_HD.MI_EFX_FireWorks_LimeStar_Tail_01_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 7,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "L2_MainA",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_FireWorks_LimeStar_Head_01_HD.MI_EFX_FireWorks_LimeStar_Head_01_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 7,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "L2_MainB",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "CPU",
-      "screenAlignment": "PSA_Rectangle",
-      "material": "MI_EFX_FireWorks_LimeStar_Head_02_HD.MI_EFX_FireWorks_LimeStar_Head_02_HD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 3,
-      "modules": 7,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Critical",
-      "lodLevels": 1
-     },
-     {
-      "name": "L3_Dots",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
       "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "material": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD.MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD",
       "subImages": [
        1,
        1
       ],
-      "peakActiveLOD0": 501,
+      "peakActiveLOD0": 3,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD.MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Glow_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Glow_01_Depth_03.MI_EFX_Glow_01_Depth_03",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 4,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     },
+     {
+      "name": "Flash",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Glow_16.MI_EFX_Glow_16",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_Comet_Layers_S",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小号_A_短彗星",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_TrailFull",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD.MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
       "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -656,10 +405,403 @@
    "FxSP_High": null
   },
   {
-   "id": "P_EFX_FireWorks_OrangeGlitter",
+   "id": "P_EFX_FireWorks_Silver_Layers_S",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小号_B_短银尾",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "TrailFull",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_Central_01",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_A_金锦冠_中心",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Central_L",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_Central_01_HD.MI_EFX_FireWorks_FanGold_Central_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_Middle_01",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_A_金锦冠_中间",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Medium_L",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_Middle_01_HD.MI_EFX_FireWorks_FanGold_Middle_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_OuterLeft",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_A_金锦冠_外左",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Out_L",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD.MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_OuterRight",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_A_金锦冠_外右",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Out_R",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD.MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_FanComet_01",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_B_红彗星",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+    "emitters": 5,
+    "enabledLOD0": 4,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 4,
+    "peakActiveLOD0Sum": 30,
+    "lodDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "detail": [
+     {
+      "name": "L1_TrailFull",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD.MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "L2_Dots",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": false,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 4,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Dot_A",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 9,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Dot_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 9,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Dot_C",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 9,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_FanSilver_01",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_C_银星扇",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+    "emitters": 2,
+    "enabledLOD0": 2,
+    "gpu": 1,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 57,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Dot_A",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 54,
+      "modules": 12,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "TrailFull",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_GoldCrackle",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_D_金裂星",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
     "emitters": 1,
@@ -697,115 +839,161 @@
    "FxSP_High": null
   },
   {
-   "id": "P_EFX_FireWorks_Strobe",
+   "id": "P_EFX_FireWorks_Comet",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_E_小彗星",
    "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD",
-    "emitters": 5,
-    "enabledLOD0": 5,
-    "gpu": 5,
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+    "emitters": 4,
+    "enabledLOD0": 4,
+    "gpu": 0,
     "mesh": 0,
-    "cpu": 0,
-    "peakActiveLOD0Sum": 2155,
+    "cpu": 2,
+    "peakActiveLOD0Sum": 1290,
+    "lodDistances": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "detail": [
+     {
+      "name": "Trail",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataRibbon",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Throw_Trail_33_HD.MI_EFX_Throw_Trail_33_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 624,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Trail",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataRibbon",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Throw_Trail_33_HD.MI_EFX_Throw_Trail_33_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 624,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Glow_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Glow_26.MI_EFX_Glow_26",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 21,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Glow_C",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Glow_26.MI_EFX_Glow_26",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 21,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_SilverChry",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_F_银冠菊",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+    "emitters": 2,
+    "enabledLOD0": 2,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 2,
+    "peakActiveLOD0Sum": 6,
     "lodDistances": [
      0
     ],
     "detail": [
      {
-      "name": "Sphere_Particle",
+      "name": "L1_Main",
       "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Glow_21_Add.MI_EFX_Glow_21_Add",
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD.MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
       "subImages": [
        1,
        1
       ],
-      "peakActiveLOD0": 551,
+      "peakActiveLOD0": 3,
       "modules": 8,
       "detailMode": "DM_Low",
-      "detailBitmask": 7,
+      "detailBitmask": 65535,
       "qualitySpawnScale": 1,
-      "significance": "Medium",
+      "significance": "Critical",
       "lodLevels": 1
      },
      {
-      "name": "Sphere_Particle",
+      "name": "L1_Flash",
       "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Velocity",
-      "material": "MI_EFX_Glow_21_Add.MI_EFX_Glow_21_Add",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 501,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Medium",
-      "lodLevels": 1
-     },
-     {
-      "name": "dOt",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
+      "typeData": "CPU",
       "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Glow_02_Depth_ADD.MI_EFX_Glow_02_Depth_ADD",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
       "subImages": [
        1,
        1
       ],
-      "peakActiveLOD0": 501,
-      "modules": 9,
+      "peakActiveLOD0": 3,
+      "modules": 6,
       "detailMode": "DM_Low",
-      "detailBitmask": 7,
+      "detailBitmask": 65535,
       "qualitySpawnScale": 1,
-      "significance": "Medium",
-      "lodLevels": 1
-     },
-     {
-      "name": "line",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Velocity",
-      "material": "MI_EFX_Glow_21_Add.MI_EFX_Glow_21_Add",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 301,
-      "modules": 10,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Medium",
-      "lodLevels": 1
-     },
-     {
-      "name": "dot_a",
-      "class": "ParticleSpriteEmitter",
-      "enabledLOD0": true,
-      "typeData": "ParticleModuleTypeDataGpu",
-      "screenAlignment": "PSA_Square",
-      "material": "MI_EFX_Glow_02_Depth_ADD.MI_EFX_Glow_02_Depth_ADD",
-      "subImages": [
-       1,
-       1
-      ],
-      "peakActiveLOD0": 301,
-      "modules": 9,
-      "detailMode": "DM_Low",
-      "detailBitmask": 7,
-      "qualitySpawnScale": 1,
-      "significance": "Medium",
+      "significance": "Critical",
       "lodLevels": 1
      }
     ]
@@ -814,10 +1002,53 @@
    "FxSP_High": null
   },
   {
-   "id": "P_EFX_FireWorks_GreenPeony",
+   "id": "P_EFX_FireWorks_Crackle",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_G_爆裂星",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_FacingCameraPosition",
+      "material": "MI_EFX_FireWorks_Crackle_Main_01_HD.MI_EFX_FireWorks_Crackle_Main_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_Lime",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_H_小青柠",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
     "emitters": 4,
@@ -912,10 +1143,194 @@
    "FxSP_High": null
   },
   {
+   "id": "P_EFX_FireWorks_Glitter",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_I__橙辉星",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_FireWorks_Combo_01_HD.MI_EFX_FireWorks_Combo_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_Strobe",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_J_点灭星",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_FacingCameraPosition",
+      "material": "MI_EFX_FireWorks_Strobe_Strobe_01_HD.MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 65535,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_GreenPeony",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_A_绿牡丹",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+    "emitters": 4,
+    "enabledLOD0": 4,
+    "gpu": 1,
+    "mesh": 0,
+    "cpu": 3,
+    "peakActiveLOD0Sum": 510,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_LimeStar_Tail_01_HD.MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L2_MainA",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_LimeStar_Head_01_HD.MI_EFX_FireWorks_LimeStar_Head_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L2_MainB",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_LimeStar_Head_02_HD.MI_EFX_FireWorks_LimeStar_Head_02_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L3_Dots",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 501,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
    "id": "P_EFX_FireWorks_GoldSpark",
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_B_金锦菊",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
     "emitters": 2,
@@ -976,6 +1391,7 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_C_彩千轮",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
     "emitters": 8,
@@ -983,7 +1399,7 @@
     "gpu": 1,
     "mesh": 0,
     "cpu": 5,
-    "peakActiveLOD0Sum": 204,
+    "peakActiveLOD0Sum": 203,
     "lodDistances": [
      0,
      2500,
@@ -1040,7 +1456,7 @@
        2,
        2
       ],
-      "peakActiveLOD0": 42,
+      "peakActiveLOD0": 41,
       "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -1153,6 +1569,7 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_D_金曜菊",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD.P_EFX_FireWorks_GoldChry_HD",
     "emitters": 9,
@@ -1346,6 +1763,7 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_E_金蕊柠",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
     "emitters": 4,
@@ -1444,6 +1862,7 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_B_金芒菊",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
     "emitters": 4,
@@ -1542,6 +1961,7 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_F_多重菊",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
     "emitters": 4,
@@ -1640,6 +2060,7 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "(INVALID)",
+   "rowName": "跨年烟花3.0_大型_A_金垂柳",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
     "emitters": 6,
@@ -1647,7 +2068,7 @@
     "gpu": 0,
     "mesh": 0,
     "cpu": 6,
-    "peakActiveLOD0Sum": 18,
+    "peakActiveLOD0Sum": 17,
     "lodDistances": [
      0
     ],
@@ -1758,7 +2179,7 @@
        1,
        1
       ],
-      "peakActiveLOD0": 3,
+      "peakActiveLOD0": 2,
       "modules": 7,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -1776,8 +2197,9 @@
    "maxInstance": 10,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_大型_B_银彩菊",
    "FxSP": {
-    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
     "emitters": 4,
     "enabledLOD0": 3,
     "gpu": 0,
@@ -1870,10 +2292,209 @@
    "FxSP_High": null
   },
   {
-   "id": "P_EFX_FireWorks_NY_Trail_Large",
+   "id": "P_EFX_FireWorks_GoldCoreLime_L",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_大型_C_金蕊柠",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+    "emitters": 4,
+    "enabledLOD0": 4,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 4,
+    "peakActiveLOD0Sum": 12,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD.MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L2_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD.MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L3_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD.MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L4_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD.MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_MultiLayerChry_L",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_大型_D_多重菊",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+    "emitters": 4,
+    "enabledLOD0": 4,
+    "gpu": 1,
+    "mesh": 0,
+    "cpu": 3,
+    "peakActiveLOD0Sum": 430,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_Dots",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 421,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L2_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD.MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L3_MainA",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD.MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "L3_MainB",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD.MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Hero",
    "maxInstance": 20,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_超大_尾缀",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
     "emitters": 10,
@@ -1881,7 +2502,7 @@
     "gpu": 6,
     "mesh": 0,
     "cpu": 4,
-    "peakActiveLOD0Sum": 1250,
+    "peakActiveLOD0Sum": 1249,
     "lodDistances": [
      0
     ],
@@ -1916,7 +2537,220 @@
        1,
        1
       ],
+      "peakActiveLOD0": 2,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "SparksFine",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 204,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "SparksTwinkle",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 261,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "SparksCoarse",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 377,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Embers",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 37,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "HeadGlow",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
       "peakActiveLOD0": 3,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "SparkPops",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 198,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "LaunchGlow",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "LaunchSparks",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 161,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Large",
+   "maxInstance": 20,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_大型_尾缀",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+    "emitters": 10,
+    "enabledLOD0": 10,
+    "gpu": 6,
+    "mesh": 0,
+    "cpu": 4,
+    "peakActiveLOD0Sum": 1249,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "RiseLoop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "TrailFar",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 2,
       "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -2086,14 +2920,15 @@
    "maxInstance": 20,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_中型_尾缀",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
     "emitters": 10,
-    "enabledLOD0": 6,
-    "gpu": 2,
+    "enabledLOD0": 10,
+    "gpu": 6,
     "mesh": 0,
     "cpu": 4,
-    "peakActiveLOD0Sum": 201,
+    "peakActiveLOD0Sum": 1095,
     "lodDistances": [
      0
     ],
@@ -2128,7 +2963,7 @@
        1,
        1
       ],
-      "peakActiveLOD0": 3,
+      "peakActiveLOD0": 2,
       "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -2139,7 +2974,7 @@
      {
       "name": "SparksFine",
       "class": "ParticleSpriteEmitter",
-      "enabledLOD0": false,
+      "enabledLOD0": true,
       "typeData": "ParticleModuleTypeDataGpu",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
@@ -2158,7 +2993,7 @@
      {
       "name": "SparksTwinkle",
       "class": "ParticleSpriteEmitter",
-      "enabledLOD0": false,
+      "enabledLOD0": true,
       "typeData": "ParticleModuleTypeDataGpu",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
@@ -2177,7 +3012,7 @@
      {
       "name": "SparksCoarse",
       "class": "ParticleSpriteEmitter",
-      "enabledLOD0": false,
+      "enabledLOD0": true,
       "typeData": "ParticleModuleTypeDataGpu",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
@@ -2196,7 +3031,7 @@
      {
       "name": "Embers",
       "class": "ParticleSpriteEmitter",
-      "enabledLOD0": false,
+      "enabledLOD0": true,
       "typeData": "ParticleModuleTypeDataGpu",
       "screenAlignment": "PSA_Square",
       "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
@@ -2298,6 +3133,7 @@
    "maxInstance": 20,
    "limit": "True",
    "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_小型_尾缀",
    "FxSP": {
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
     "emitters": 10,
@@ -2305,7 +3141,7 @@
     "gpu": 6,
     "mesh": 0,
     "cpu": 4,
-    "peakActiveLOD0Sum": 953,
+    "peakActiveLOD0Sum": 949,
     "lodDistances": [
      0
     ],
@@ -2321,7 +3157,7 @@
        1,
        1
       ],
-      "peakActiveLOD0": 3,
+      "peakActiveLOD0": 2,
       "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -2340,7 +3176,7 @@
        1,
        1
       ],
-      "peakActiveLOD0": 3,
+      "peakActiveLOD0": 2,
       "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -2435,7 +3271,7 @@
        1,
        1
       ],
-      "peakActiveLOD0": 3,
+      "peakActiveLOD0": 2,
       "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -2473,7 +3309,7 @@
        1,
        1
       ],
-      "peakActiveLOD0": 3,
+      "peakActiveLOD0": 2,
       "modules": 7,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
@@ -2504,6 +3340,879 @@
    },
    "FxSP_Low": null,
    "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_XS",
+   "maxInstance": 20,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_低位_尾缀",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "L1_TrailFull",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD.MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 65535,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "maxInstance": 20,
+   "limit": "True",
+   "fxType": "SHOW",
+   "rowName": "跨年烟花3.0_极小_尾缀",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 1,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "TrailFull",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD.MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 65535,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_MusicFest_FireWork_Skyrocket_Boom",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "GAMEMODE",
+   "rowName": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD.P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD",
+    "emitters": 8,
+    "enabledLOD0": 8,
+    "gpu": 2,
+    "mesh": 0,
+    "cpu": 6,
+    "peakActiveLOD0Sum": 2521,
+    "lodDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "detail": [
+     {
+      "name": "Glow_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Glow_01_Depth_03.MI_EFX_Glow_01_Depth_03",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 4,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Second_Explode_01",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_FacingCameraPosition",
+      "material": "MI_EFX_Fireworks_10.MI_EFX_Fireworks_10",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Head",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_FacingCameraPosition",
+      "material": "MI_EFX_Fireworks_11.MI_EFX_Fireworks_11",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sphere_Particle",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Glow_21_Add.MI_EFX_Glow_21_Add",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 51,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Flash",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Glow_16.MI_EFX_Glow_16",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "SparksTou_A",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Spark_09.MI_EFX_Spark_09",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 53,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks Cloud",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Spark_16_NoCameraDepthFade.MI_EFX_Spark_16_NoCameraDepthFade",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 2401,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Light Impulse",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 5,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_MusicFest_FireWork_Skyrocket_Trail",
+   "maxInstance": 20,
+   "limit": "True",
+   "fxType": "GAMEMODE",
+   "rowName": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD.P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD",
+    "emitters": 10,
+    "enabledLOD0": 10,
+    "gpu": 2,
+    "mesh": 0,
+    "cpu": 8,
+    "peakActiveLOD0Sum": 701,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_RGBA_3x3_01_HD.MI_EFX_Sparkler_RGBA_3x3_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Sparkler_Main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Spark_66.MI_EFX_Spark_66",
+      "subImages": [
+       4,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "huoxing02",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Sparks_Flicker_8x8_03.MI_EFX_Sparks_Flicker_8x8_03",
+      "subImages": [
+       8,
+       8
+      ],
+      "peakActiveLOD0": 122,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     },
+     {
+      "name": "Sparks_loop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Spark_15.MI_EFX_Spark_15",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 301,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Sparks_loop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_8x1_02.MI_EFX_Sparks_Streak_8x1_02",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 122,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Spark_Star_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_02.MI_EFX_Sparkler_02",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 11,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     },
+     {
+      "name": "Spark_Star_A",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_03.MI_EFX_Sparkler_03",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 15,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Sparks_main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparks_Sparkler_4x4_01.MI_EFX_Sparks_Sparkler_4x4_01",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 29,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Sparks_loop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_4x2_01.MI_EFX_Sparks_Streak_4x2_01",
+      "subImages": [
+       4,
+       2
+      ],
+      "peakActiveLOD0": 10,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Trail_L1",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_SmokeSub_8x8_DepthFade_04_HD.MI_EFX_SmokeSub_8x8_DepthFade_04_HD",
+      "subImages": [
+       8,
+       8
+      ],
+      "peakActiveLOD0": 85,
+      "modules": 12,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_MusicFest_FireWork_Skyrocket_Fuse",
+   "maxInstance": 20,
+   "limit": "True",
+   "fxType": "GAMEMODE",
+   "rowName": "跨年烟花3.0_窜天猴sku_点火引线",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD.P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD",
+    "emitters": 6,
+    "enabledLOD0": 6,
+    "gpu": 1,
+    "mesh": 0,
+    "cpu": 5,
+    "peakActiveLOD0Sum": 166,
+    "lodDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "detail": [
+     {
+      "name": "Sparks_Flash",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Sparks_Sparkler_4x4_02.MI_EFX_Sparks_Sparkler_4x4_02",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 10,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Streak",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_8x1_02.MI_EFX_Sparks_Streak_8x1_02",
+      "subImages": [
+       8,
+       1
+      ],
+      "peakActiveLOD0": 115,
+      "modules": 12,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks_loop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_4x2_01.MI_EFX_Sparks_Streak_4x2_01",
+      "subImages": [
+       4,
+       2
+      ],
+      "peakActiveLOD0": 12,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks_main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparks_Sparkler_4x4_01.MI_EFX_Sparks_Sparkler_4x4_01",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 11,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks_main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_02.MI_EFX_Sparkler_02",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 11,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Light Impulse",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Square",
+      "material": "",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 7,
+      "modules": 6,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler",
+   "maxInstance": 20,
+   "limit": "True",
+   "fxType": "GAMEMODE",
+   "rowName": "跨年烟花3.0_窜天猴sku_喷射焰火",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+    "emitters": 7,
+    "enabledLOD0": 7,
+    "gpu": 2,
+    "mesh": 0,
+    "cpu": 5,
+    "peakActiveLOD0Sum": 598,
+    "lodDistances": [
+     0,
+     6000,
+     8000,
+     12000
+    ],
+    "detail": [
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_RGBA_3x3_01_HD.MI_EFX_Sparkler_RGBA_3x3_01_HD",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "huoxing02",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Square",
+      "material": "MI_EFX_Sparks_Flicker_8x8_03.MI_EFX_Sparks_Flicker_8x8_03",
+      "subImages": [
+       8,
+       8
+      ],
+      "peakActiveLOD0": 122,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks_loop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "ParticleModuleTypeDataGpu",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Spark_15.MI_EFX_Spark_15",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 301,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks_loop",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_8x1_02.MI_EFX_Sparks_Streak_8x1_02",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 122,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Spark_Star_B",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_02.MI_EFX_Sparkler_02",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 11,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 4
+     },
+     {
+      "name": "Spark_Star_A",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparkler_03.MI_EFX_Sparkler_03",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 13,
+      "modules": 8,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     },
+     {
+      "name": "Sparks_main",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Sparks_Sparkler_4x4_01.MI_EFX_Sparks_Sparkler_4x4_01",
+      "subImages": [
+       4,
+       4
+      ],
+      "peakActiveLOD0": 26,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 4
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
+  },
+  {
+   "id": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint",
+   "maxInstance": 10,
+   "limit": "True",
+   "fxType": "GAMEMODE",
+   "rowName": "跨年烟花3.0_窜天猴sku_二次加速",
+   "FxSP": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+    "emitters": 4,
+    "enabledLOD0": 4,
+    "gpu": 0,
+    "mesh": 0,
+    "cpu": 4,
+    "peakActiveLOD0Sum": 78,
+    "lodDistances": [
+     0
+    ],
+    "detail": [
+     {
+      "name": "QD1",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_8x1_02.MI_EFX_Sparks_Streak_8x1_02",
+      "subImages": [
+       8,
+       1
+      ],
+      "peakActiveLOD0": 53,
+      "modules": 12,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     },
+     {
+      "name": "QD1",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Velocity",
+      "material": "MI_EFX_Sparks_Streak_8x1_02.MI_EFX_Sparks_Streak_8x1_02",
+      "subImages": [
+       8,
+       1
+      ],
+      "peakActiveLOD0": 17,
+      "modules": 11,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Medium",
+      "lodLevels": 1
+     },
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Spark_03_dissolve1.MI_EFX_Spark_03_dissolve1",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 5,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     },
+     {
+      "name": "Particle Emitter",
+      "class": "ParticleSpriteEmitter",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_Glow_43.MI_EFX_Glow_43",
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 7,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
+     }
+    ]
+   },
+   "FxSP_Low": null,
+   "FxSP_High": null
   }
  ],
  "mobile": [
@@ -2512,6 +4221,7 @@
    "usedByR03": false,
    "maxInstance": 20,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_拖尾",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Trail_01_M.P_EFX_FireWorks_Trail_01_M",
     "emitters": 3,
@@ -2731,6 +4441,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_小_Yellow",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Small_Yellow_H.P_EFX_FireWorks_Small_Yellow_H",
     "emitters": 3,
@@ -2950,6 +4661,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_小_White",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Small_Yellow_H.P_EFX_FireWorks_Small_Yellow_H",
     "emitters": 3,
@@ -3169,6 +4881,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_小_Red",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Small_Yellow_H.P_EFX_FireWorks_Small_Yellow_H",
     "emitters": 3,
@@ -3388,6 +5101,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_中_Yellow",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Medium_Yellow_L.P_EFX_FireWorks_Medium_Yellow_L",
     "emitters": 4,
@@ -3664,6 +5378,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_中_White",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Medium_Yellow_L.P_EFX_FireWorks_Medium_Yellow_L",
     "emitters": 4,
@@ -3940,6 +5655,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_中_Red",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Medium_Yellow_L.P_EFX_FireWorks_Medium_Yellow_L",
     "emitters": 4,
@@ -4216,6 +5932,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_大_Yellow",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M.P_EFX_FireWorks_Large_Yellow_M",
     "emitters": 5,
@@ -4511,6 +6228,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_大_White",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M.P_EFX_FireWorks_Large_Yellow_M",
     "emitters": 5,
@@ -4806,6 +6524,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_大_Red",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M.P_EFX_FireWorks_Large_Yellow_M",
     "emitters": 5,
@@ -5101,6 +6820,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_大金",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_M.P_EFX_FireWorks_Hero_M",
     "emitters": 3,
@@ -5377,6 +7097,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_口红烟",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Mark_Smoke_H.P_EFX_FireWorks_Mark_Smoke_H",
     "emitters": 1,
@@ -5482,6 +7203,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_道具_蛋花",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Medium_M.P_EFX_FireWorks_Props_Medium_M",
     "emitters": 4,
@@ -5758,6 +7480,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_道具_小金",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Large_M.P_EFX_FireWorks_Props_Large_M",
     "emitters": 4,
@@ -6015,6 +7738,7 @@
    "usedByR03": false,
    "maxInstance": 10,
    "fxType": "GAMEMODE",
+   "rowName": "新年烟花2.0_道具_大金",
    "FxSP": {
     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Hero_M.P_EFX_FireWorks_Props_Hero_M",
     "emitters": 3,
@@ -6309,10 +8033,10 @@
   "P_EFX_FireWorks_NY_Trail_Medium",
   "P_EFX_FireWorks_NY_Trail_Small"
  ],
- "gpuFix": "2026-10-11 本机同步（8）：原 census.mjs 用 /GPU/ 区分大小写，typeData 实际是 ParticleModuleTypeDataGpu，gpu 字段全被记成 0；已按明细不分大小写重数（只数 LOD0 启用的）。PC 20 个资源里含 GPU 发射器的是 12 个（跨年秀 22 云端数的 12 对，之前回传的 13 不对）。",
+ "gpuFix": "2026-10-14 T05：按不区分大小写/Gpu/i复核全部当前粒子，gpu只统计LOD0启用项。",
  "fanGold": {
-  "readAt": "2026-10-11T07:16:15.216Z",
-  "note": "⑨ 金扇 4 件（中心 / 中档 / 左 / 右）：每件 1 个 CPU 发射器、0 个 GPU，不占 GPU 粒子池。脚本 analysis/results/MOBILE_TEST_20261011/fangold-census.mjs（本机同步 8，只读）。",
+  "readAt": "2026-10-14T14:09:05.860Z",
+  "note": "从本轮PC3.0四条金扇实时统计提取，非旧快照",
   "rows": [
    {
     "id": "P_EFX_FireWorks_FanGold_Central_01",
@@ -6320,16 +8044,31 @@
     "emitters": 1,
     "enabledLOD0": 1,
     "gpu": 0,
+    "mesh": 0,
     "cpu": 1,
-    "beam": 0,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
     "detail": [
      {
       "name": "Central_L",
+      "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
       "typeData": "CPU",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_FireWorks_FanGold_Central_01_HD.MI_EFX_FireWorks_FanGold_Central_01_HD",
-      "peakActiveLOD0": 3
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 9,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
      }
     ]
    },
@@ -6339,16 +8078,31 @@
     "emitters": 1,
     "enabledLOD0": 1,
     "gpu": 0,
+    "mesh": 0,
     "cpu": 1,
-    "beam": 0,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
     "detail": [
      {
       "name": "Medium_L",
+      "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
       "typeData": "CPU",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_FireWorks_FanGold_Middle_01_HD.MI_EFX_FireWorks_FanGold_Middle_01_HD",
-      "peakActiveLOD0": 3
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
      }
     ]
    },
@@ -6358,16 +8112,31 @@
     "emitters": 1,
     "enabledLOD0": 1,
     "gpu": 0,
+    "mesh": 0,
     "cpu": 1,
-    "beam": 0,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
     "detail": [
      {
       "name": "Out_L",
+      "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
       "typeData": "CPU",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD.MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
-      "peakActiveLOD0": 3
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
      }
     ]
    },
@@ -6377,19 +8146,82 @@
     "emitters": 1,
     "enabledLOD0": 1,
     "gpu": 0,
+    "mesh": 0,
     "cpu": 1,
-    "beam": 0,
+    "peakActiveLOD0Sum": 3,
+    "lodDistances": [
+     0
+    ],
     "detail": [
      {
       "name": "Out_R",
+      "class": "ParticleSpriteEmitter",
       "enabledLOD0": true,
       "typeData": "CPU",
       "screenAlignment": "PSA_Rectangle",
       "material": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD.MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
-      "peakActiveLOD0": 3
+      "subImages": [
+       1,
+       1
+      ],
+      "peakActiveLOD0": 3,
+      "modules": 10,
+      "detailMode": "DM_Low",
+      "detailBitmask": 7,
+      "qualitySpawnScale": 1,
+      "significance": "Critical",
+      "lodLevels": 1
      }
     ]
    }
   ]
- }
+ },
+ "current3MissingOnMobile": [
+  "P_EFX_FireWorks_LittleGold",
+  "P_EFX_FireWorks_LittleSilver",
+  "P_EFX_FireWorks_LittleCrackle",
+  "P_EFX_FireWorks_LittleCombo",
+  "P_EFX_FireWorks_Comet_Layers_S",
+  "P_EFX_FireWorks_Silver_Layers_S",
+  "P_EFX_FireWorks_FanGold_Central_01",
+  "P_EFX_FireWorks_FanGold_Middle_01",
+  "P_EFX_FireWorks_FanGold_OuterLeft",
+  "P_EFX_FireWorks_FanGold_OuterRight",
+  "P_EFX_FireWorks_FanComet_01",
+  "P_EFX_FireWorks_FanSilver_01",
+  "P_EFX_FireWorks_GoldCrackle",
+  "P_EFX_FireWorks_Comet",
+  "P_EFX_FireWorks_SilverChry",
+  "P_EFX_FireWorks_Crackle",
+  "P_EFX_FireWorks_Lime",
+  "P_EFX_FireWorks_Glitter",
+  "P_EFX_FireWorks_Strobe",
+  "P_EFX_FireWorks_GreenPeony",
+  "P_EFX_FireWorks_GoldSpark",
+  "P_EFX_FireWorks_PrismWheels",
+  "P_EFX_FireWorks_GoldChry",
+  "P_EFX_FireWorks_GoldCoreLime",
+  "P_EFX_FireWorks_GoldRayChry",
+  "P_EFX_FireWorks_MultiLayerChry",
+  "P_EFX_FireWorks_GoldKamuro",
+  "P_EFX_FireWorks_SilverStrobeChry",
+  "P_EFX_FireWorks_GoldCoreLime_L",
+  "P_EFX_FireWorks_MultiLayerChry_L",
+  "P_EFX_FireWorks_RiseTrail_Hero",
+  "P_EFX_FireWorks_NY_Trail_Large",
+  "P_EFX_FireWorks_NY_Trail_Medium",
+  "P_EFX_FireWorks_NY_Trail_Small",
+  "P_EFX_FireWorks_RiseTrail_XS",
+  "P_EFX_FireWorks_RiseTrail_Tiny",
+  "P_EFX_MusicFest_FireWork_Skyrocket_Boom",
+  "P_EFX_MusicFest_FireWork_Skyrocket_Trail",
+  "P_EFX_MusicFest_FireWork_Skyrocket_Fuse",
+  "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler",
+  "P_EFX_MusicFest_FireWork_Skyrocket_Sprint"
+ ],
+ "current3Counts": {
+  "pc": 41,
+  "mobile": 0
+ },
+ "r03MissingOnMobileNote": "此兼容字段仍按基础模板与尺寸.json的旧R03 IDs计算；改名后的当前3.0缺行以current3MissingOnMobile为准。"
 }
