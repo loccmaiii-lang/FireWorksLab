@@ -1,0 +1,16 @@
+{
+  "bakerVersion": "4.9.84",
+  "entryVersion": "09030814·master4.3.8-core1",
+  "parameters": "anchor-parameters.json",
+  "zipSHA256": "7fdebfd7462d523ec262971560d71db165fd542305b4f2b9cd38b5a56c86fccd",
+  "localDelivery": "F:\\FireWorksLab\\analysis\\local\\输出\\素材包\\FanGold_FC6O_Anchor_20261014\\09030814_4.9.84\\FanComet_Gold.zip",
+  "UE实测": false,
+  "新增末段扰动": false,
+  "checks_lfSHA256": {
+    "标准检查.json": "50b0dca046d785ffe34a02d4485ed7e95b44aecc7b513746f9c83aa28bc945df",
+    "资产规范检查.json": "b1bf4c4e58449cd564c4f233b71fa748e912c12c2a7ced9760d5454a6f603d9f",
+    "export-check.json": "1954c74bdd85d97c3f09e56ed1f9e2f49a2b262fab121bebc3630c28138d6843",
+    "操作走查.json": "48227e4133bb60ded4d2e0fceb84094c8a6aa0df04825dd52f75d25aeba535e0",
+    "版本对比.json": "b927beb35593fa20eb861e7adc2df981c58240f3e6a3480c18bc8cb241f12f12"
+  }
+}

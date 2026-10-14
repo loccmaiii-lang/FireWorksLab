@@ -1,0 +1,89 @@
+{
+ "generated": "2026-10-14 09:36",
+ "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "std": {
+  "pcCell": 512,
+  "mobileCell": 256,
+  "minFps": 10,
+  "minFpsFade": 7.5,
+  "maxMag": 1.0
+ },
+ "items": {
+  "FC6O": {
+   "id": "FC6O",
+   "name": "金锦冠扇形 FanGold1.0 · 整面锚点Zoom",
+   "kind": "preset",
+   "renderVer": 40,
+   "ver": "09030814·master4.3.8-core1",
+   "checks": [
+    [
+     "实时模拟",
+     true,
+     ""
+    ],
+    [
+     "引擎回放 + 游戏内大小",
+     true,
+     ""
+    ],
+    [
+     "贴图 + 流转动画",
+     true,
+     ""
+    ],
+    [
+     "完整参数",
+     true,
+     ""
+    ],
+    [
+     "导出素材包（cascade.json PC + 手机）",
+     true,
+     ""
+    ],
+    [
+     "实拍对照",
+     true,
+     "无参考（不适用）"
+    ],
+    [
+     "单格 ≥ PC 下限",
+     true,
+     "单格 512 px"
+    ],
+    [
+     "手机单格 ≥ 下限",
+     true,
+     ""
+    ],
+    [
+     "屏幕放大 ≤ 1",
+     true,
+     "放大 0.75"
+    ],
+    [
+     "30fps 显示帧 ≥ 90%",
+     true,
+     "64/64"
+    ],
+    [
+     "燃烧段有效帧率 ≥ 下限",
+     true,
+     "21.7 fps"
+    ],
+    [
+     "淡出段有效帧率 ≥ 下限",
+     true,
+     "7.5 fps"
+    ],
+    [
+     "尺寸参数有效",
+     true,
+     ""
+    ]
+   ],
+   "pass": true,
+   "seconds": 0.1
+  }
+ }
+}
