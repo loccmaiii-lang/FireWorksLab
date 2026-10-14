@@ -1,0 +1,15 @@
+{
+  "pass": true,
+  "rows": [
+    {
+      "id": "SGR1",
+      "frames": 3,
+      "identical": true
+    },
+    {
+      "id": "SGS1",
+      "frames": 3,
+      "identical": true
+    }
+  ]
+}

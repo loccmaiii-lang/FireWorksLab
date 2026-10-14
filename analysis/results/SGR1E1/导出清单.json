@@ -1,8 +1,8 @@
 {
   "effect": "rocket_graph",
   "entry": "SGR1",
-  "ver": "4399ce22·loop4.9.83",
-  "time": "2026-10-14 01:39",
+  "ver": "c873b9ad·loop4.9.83",
+  "time": "2026-10-14 07:57",
   "dir": "analysis/local/SparkGraph/",
   "packages": [
     {
@@ -24,7 +24,7 @@
         "T_RocketTail_Graph_Mobile_Ramp.png",
         "T_RocketTail_Graph_Ramp.png"
       ],
-      "sha256": "8347a7928558b5cd838053bf8e529349fb97bb5eb68de9b7442cfa0d8e2632fd"
+      "sha256": "2b39e743972decf3fdfc9da65c85c56db354d63b432e20ba2b239547cdac3bb7"
     }
   ]
 }

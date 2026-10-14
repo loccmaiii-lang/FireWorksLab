@@ -84,5 +84,29 @@ const SparkGraph = (() => {
       }
     }return {data:new Float32Array(out),counts};
   }
-  return {hash,mod,curve,dist,direction,sample,validate,build,geometry};
+  // 曝光窗口内逐粒积分。每项额外保存真实Y深度计算出的散焦半径；不重复画历史拖尾。
+  function cameraGeometry(graph,time,P,ppm,only=null){
+    const c=CameraImaging.validate(P),[a,b]=CameraImaging.window(c,time),width=b-a,r=graph.recipe,out=[],counts={},quality=CameraImaging.quality(c);
+    for(const q of graph.all){const e=q.e;if(e.enabled===false||(only&&e.id!==only))continue;
+      const first=Math.floor((a-q.birth-q.life)/r.period)+1,last=Math.floor((b-q.birth)/r.period);
+      for(let cycle=first;cycle<=last;cycle++){
+        const birth=q.birth+cycle*r.period,start=Math.max(a,birth),end=Math.min(b,birth+q.life);
+        if(width>0?end<=start:!(a>=birth&&a<birth+q.life))continue;
+        const span=end-start,age0=start-birth,mid=age0+span*.5,s0=sample(q,age0),sm=sample(q,mid),s1=sample(q,age0+span);
+        const speed=Math.max(...[s0,sm,s1].map(s=>Math.hypot(s.v[0],s.v[2]))),rad=q.width*.5*Math.max(curve(e.sizeCurve,mid/q.life),.01)*ppm;
+        const step=Math.max(quality.step,Math.min(3,rad*.4)),rotation=Math.abs(e.spin)*Math.PI/180*span*rad*Math.max(1,e.aspect);
+        const n=width?Math.max(1,Math.ceil(speed*span*ppm/step),Math.ceil(span*quality.hz),Math.ceil(rotation/step)):1;
+        if(n>8192||out.length/12+n>1500000)throw Error('镜头采样量过大：请缩短曝光或使用快速质量');
+        const weight=width?span/width/n:1;counts[e.id]=(counts[e.id]||0)+1;
+        for(let j=0;j<n;j++){
+          const age=age0+(j+.5)*span/n,u=age/q.life,fade=Math.min(1,age/.002)*Math.min(1,(q.life-age)/.008),I=q.power*curve(e.brightCurve,u)*fade*weight;if(I<=0)continue;
+          const p=sample(q,age).p;if(c.cameraDof&&c.cameraDistance+p[1]<=0)continue;
+          const radius=q.width*.5*curve(e.sizeCurve,u),ang=q.phase+e.spin*age*Math.PI/180;
+          const sz=radius*(e.shape==='fragment'?Math.max(.25,Math.abs(Math.cos(q.phase+e.twist*age*Math.PI/180))):1),len=e.shape==='line'?0:radius*(e.aspect-1)*2;
+          out.push(p[0],p[2],p[0]+Math.cos(ang)*len,p[2]+Math.sin(ang)*len,sz,sz,I,I,e.shape==='fragment'?2:1,ang,q.phase,CameraImaging.coc(c,p[1]));
+        }
+      }
+    }return{data:new Float32Array(out),counts};
+  }
+  return {hash,mod,curve,dist,direction,sample,validate,build,geometry,cameraGeometry};
 })();

@@ -1,6 +1,7 @@
 // 4.0 采样与曝光：烘焙、实时、定帧共用这里的时间窗口和积分。
 // t 是绝对模拟秒数；plan.times/dur 是相对段起点的时间。
 function shutterWindow(P, pl, t) {
+  if(P.cameraMotion)return CameraImaging.window(P,t);
   const rel = t - (pl.t0 || 0), u = clamp(rel / pl.duration, 0, 1);
   const f = clamp(Math.floor(evalKeys(pl.keys, u)), 0, pl.L.F - 1);
   const width = Math.max(0, +P.shutter || 0) * Math.max(pl.dur[f] || 0, 1 / 30);
@@ -34,9 +35,10 @@ function liveCapFor(work) {
 }
 function liveCapNote() { return liveCtl.lastCap && liveCtl.lastCap < liveCtl.lastFull ? ` · 快门子样本 ${liveCtl.lastCap}/${liveCtl.lastFull}（显卡忙${state.baking ? '：后台在烘焙' : ''}，实时模拟少画几层快门；引擎回放、导出不受影响）` : ''; }
 // 这一帧（不压时）有几个快门子样本：烘焙分批用（4.2.23）
-function frameSampleCount40(P, pl, t) { const [a, b] = shutterWindow(P, pl, t), q = qualityOf(P); return clamp(Math.ceil((b - a) * q.hz), 1, q.maxSub); }
+function frameSampleCount40(P, pl, t) { if(P.sparkGraph&&(P.cameraMotion||P.cameraDof))return 1;const [a, b] = shutterWindow(P, pl, t), q = qualityOf(P); return clamp(Math.ceil((b - a) * q.hz), 1, q.maxSub); }
 // range = [j0, j1)：只画这一帧第 j0 到 j1 − 1 个子样本（4.2.23 烘焙分批交给显卡）；不给 = 整帧。分几次画和一次画完，画的东西、顺序都一样
 function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm, range = null) {
+  if(R.cameraIntegrated){const old=PPMY;PPMY=ppmY;try{R.draw(t,view,ppm,1,Math.floor(t*240),0);}finally{PPMY=old;}return CameraImaging.window(P,t);}
   const [a,b] = shutterWindow(P, pl, t), q = qualityOf(P), width = b-a;
   const full = clamp(Math.ceil(width * q.hz), 1, q.maxSub), count = LIVE_CAP > 0 ? Math.min(full, LIVE_CAP) : full;
   if (LIVE_CAP > 0) { liveCtl.lastFull = Math.max(liveCtl.lastFull, full); liveCtl.lastCap = Math.max(liveCtl.lastCap, count); }

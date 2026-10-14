@@ -1149,8 +1149,11 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-14",
 "name": "窜天猴尾焰 · 分层短促喷射",
-"note": "当前尺寸和亮度为制作候选；未经UE验证。参考来源与完整报告见 analysis/results/SparkGraph。",
-"look": "看连续底量与短爆发、长短粗细火星及延迟分叉。PC/手机都检查；不含升空弹道，喷口跟随由使用场景决定。",
+"note": "镜头设置烘入贴图，不随UE相机重算；两开关按资源保存，旧资产默认关闭。",
+"look": [
+"快火星自动拉长、慢火星变短。",
+"焦内细芯与焦外散焦光斑，短促爆发和分叉仍完整。"
+],
 "opinion": null,
 "tags": "仙女棒 窜天猴 火星 分叉 分层 循环",
 "doc": null,
@@ -1730,7 +1733,7 @@ var FW_REVIEW = [
 1.4
 ],
 "width": 0.0037620000293827616,
-"gain": 1.8,
+"gain": 43.2,
 "drag": 1.7000000476837158,
 "gravity": [
 0,
@@ -1828,7 +1831,7 @@ var FW_REVIEW = [
 2.0
 ],
 "width": 0.0028500001353677362,
-"gain": 6.4,
+"gain": 1228.8000000000002,
 "drag": 1.7000000476837158,
 "gravity": [
 0,
@@ -1934,7 +1937,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 0.006459999975049868,
-"gain": 4.0,
+"gain": 768.0,
 "drag": 1.7000000476837158,
 "gravity": [
 0,
@@ -2040,7 +2043,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.0835999995470047,
-"gain": 0.75,
+"gain": 18.0,
 "drag": 1.7000000476837158,
 "gravity": [
 0,
@@ -2142,7 +2145,7 @@ var FW_REVIEW = [
 1.6
 ],
 "width": 0.004559999884804711,
-"gain": 4.0,
+"gain": 768.0,
 "drag": 1.0,
 "gravity": [
 0,
@@ -2248,7 +2251,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 0.0030399999232031405,
-"gain": 16.799999999999997,
+"gain": 3225.5999999999995,
 "drag": 10.0,
 "gravity": [
 0,
@@ -2354,7 +2357,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 0.0028500001353677362,
-"gain": 15.0,
+"gain": 2880.0,
 "drag": 12.0,
 "gravity": [
 0,
@@ -2460,7 +2463,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 0.0026600000710459426,
-"gain": 12.0,
+"gain": 2304.0,
 "drag": 18.0,
 "gravity": [
 0,
@@ -2566,7 +2569,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.09120000433176756,
-"gain": 0.4,
+"gain": 1.2000000000000002,
 "drag": 1.7000000476837158,
 "gravity": [
 0,
@@ -2668,7 +2671,7 @@ var FW_REVIEW = [
 1.6
 ],
 "width": 0.008740000193938613,
-"gain": 1.5,
+"gain": 36.0,
 "drag": 2.5,
 "gravity": [
 0,
@@ -2782,7 +2785,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.2660000082105398,
-"gain": 0.2,
+"gain": 0.4,
 "drag": 1.7999999523162842,
 "gravity": [
 0,
@@ -2884,7 +2887,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.14440000243484974,
-"gain": 0.45,
+"gain": 10.8,
 "drag": 1.7999999523162842,
 "gravity": [
 0,
@@ -3061,7 +3064,16 @@ var FW_REVIEW = [
 "presetKey": "rocket"
 },
 "type": "sparkgraph",
-"graphSolo": null
+"graphSolo": null,
+"cameraMotion": 1,
+"cameraShutter": 0.03333333333333333,
+"cameraPhase": "end",
+"cameraQuality": "high",
+"cameraDof": 1,
+"cameraDistance": 38,
+"cameraFocus": 38,
+"cameraAperture": 0.6839999999999999,
+"cameraBlades": 0
 },
 "m": {
 "stages": [
@@ -3078,7 +3090,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "4399ce22"
+"ver": "c873b9ad"
 },
 {
 "id": "SGS1",
@@ -3086,8 +3098,11 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-14",
 "name": "仙女棒 · 13层全形态",
-"note": "当前尺寸和亮度为制作候选；未经UE验证。参考来源与完整报告见 analysis/results/SparkGraph。",
-"look": "看连续底量与短爆发、长短粗细火星及延迟分叉。PC/手机都检查；不含升空弹道，喷口跟随由使用场景决定。",
+"note": "镜头设置烘入贴图，不随UE相机重算；两开关按资源保存，旧资产默认关闭。",
+"look": [
+"快火星自动拉长、慢火星变短。",
+"焦内细芯与焦外散焦光斑，短促爆发和分叉仍完整。"
+],
 "opinion": null,
 "tags": "仙女棒 窜天猴 火星 分叉 分层 循环",
 "doc": null,
@@ -3667,7 +3682,7 @@ var FW_REVIEW = [
 1.4
 ],
 "width": 0.00022000000171829015,
-"gain": 1.8,
+"gain": 43.2,
 "drag": 1.7000000476837158,
 "gravity": [
 0.0,
@@ -3765,7 +3780,7 @@ var FW_REVIEW = [
 2.0
 ],
 "width": 7.500000356230885e-05,
-"gain": 16.0,
+"gain": 3072.0,
 "drag": 1.7000000476837158,
 "gravity": [
 0.0,
@@ -3871,7 +3886,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 0.00016999999934341758,
-"gain": 10.0,
+"gain": 1920.0,
 "drag": 1.7000000476837158,
 "gravity": [
 0.0,
@@ -3977,7 +3992,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.002199999988079071,
-"gain": 3.0,
+"gain": 72.0,
 "drag": 1.7000000476837158,
 "gravity": [
 0.0,
@@ -4079,7 +4094,7 @@ var FW_REVIEW = [
 1.6
 ],
 "width": 0.00011999999696854502,
-"gain": 10.0,
+"gain": 1920.0,
 "drag": 1.0,
 "gravity": [
 0.0,
@@ -4185,7 +4200,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 7.999999797903001e-05,
-"gain": 41.99999999999999,
+"gain": 8063.999999999998,
 "drag": 10.0,
 "gravity": [
 0.0,
@@ -4291,7 +4306,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 7.500000356230885e-05,
-"gain": 37.5,
+"gain": 7200.0,
 "drag": 12.0,
 "gravity": [
 0.0,
@@ -4397,7 +4412,7 @@ var FW_REVIEW = [
 1.7
 ],
 "width": 7.000000186963007e-05,
-"gain": 30.0,
+"gain": 5760.0,
 "drag": 18.0,
 "gravity": [
 0.0,
@@ -4503,7 +4518,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.002400000113993883,
-"gain": 1.6,
+"gain": 4.800000000000001,
 "drag": 1.7000000476837158,
 "gravity": [
 0.0,
@@ -4605,7 +4620,7 @@ var FW_REVIEW = [
 1.6
 ],
 "width": 0.0002300000051036477,
-"gain": 1.5,
+"gain": 36.0,
 "drag": 2.5,
 "gravity": [
 0.0,
@@ -4719,7 +4734,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.007000000216066837,
-"gain": 1.0,
+"gain": 2.0,
 "drag": 1.7999999523162842,
 "gravity": [
 0.0,
@@ -4821,7 +4836,7 @@ var FW_REVIEW = [
 1.8
 ],
 "width": 0.003800000064074993,
-"gain": 1.8,
+"gain": 43.2,
 "drag": 1.7999999523162842,
 "gravity": [
 0.0,
@@ -4997,7 +5012,16 @@ var FW_REVIEW = [
 "presetKey": "sparkler"
 },
 "type": "sparkgraph",
-"graphSolo": null
+"graphSolo": null,
+"cameraMotion": 1,
+"cameraShutter": 0.03333333333333333,
+"cameraPhase": "end",
+"cameraQuality": "high",
+"cameraDof": 1,
+"cameraDistance": 1,
+"cameraFocus": 1,
+"cameraAperture": 0.018,
+"cameraBlades": 0
 },
 "m": {
 "stages": [
@@ -5014,7 +5038,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "a7079bea"
+"ver": "7b78d809"
 },
 {
 "id": "CS3C-T",
@@ -48062,25 +48086,25 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "刷新正式烘焙器，在待我验收打开；原速看短促爆发，慢放看长丝与分叉，切PC/手机。",
+"下一步": "审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。",
 "待验收版": "SGR1",
 "导出任务": [
 "SGR1E1"
 ],
 "交付说明": {
-"解决了什么": "13层父子火星、运动路径拉伸与不等间隔短爆发；每层可调并保存；PC/手机素材完整。",
+"解决了什么": "可选曝光积分、真实深度景深、圆/六边形散焦；快速预览/高质量输出，13层与非均匀爆发保留。",
 "素材在哪": "analysis/results/SparkGraph/（本机ZIP及实包回放），解包目录analysis/local/SparkGraph/",
-"仍有差异": "固定周期内非均匀节奏；尾焰跟随喷口，不包含弹体弹道；世界尺寸为候选。",
+"仍有差异": "有限光圈核近似，景深固化到贴图；非V05逐像素复制，未含弹体弹道。",
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
-"ver": "4399ce22",
+"ver": "c873b9ad",
 "jobs": [],
 "exports": [
 {
 "job": "SGR1E1",
 "entry": "SGR1",
-"ver": "4399ce22·loop4.9.83",
-"time": "2026-10-14 01:39",
+"ver": "c873b9ad·loop4.9.83",
+"time": "2026-10-14 07:57",
 "packages": [
 {
 "name": "rocket",
@@ -48101,7 +48125,7 @@ var FW_EFFECTS = [
 "T_RocketTail_Graph_Mobile_Ramp.png",
 "T_RocketTail_Graph_Ramp.png"
 ],
-"sha256": "8347a7928558b5cd838053bf8e529349fb97bb5eb68de9b7442cfa0d8e2632fd"
+"sha256": "2b39e743972decf3fdfc9da65c85c56db354d63b432e20ba2b239547cdac3bb7"
 }
 ],
 "check": {
@@ -48131,25 +48155,25 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "刷新正式烘焙器，在待我验收打开；原速看短促爆发，慢放看长丝与分叉，切PC/手机。",
+"下一步": "审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。",
 "待验收版": "SGS1",
 "导出任务": [
 "SGS1E1"
 ],
 "交付说明": {
-"解决了什么": "13层父子火星、运动路径拉伸与不等间隔短爆发；每层可调并保存；PC/手机素材完整。",
+"解决了什么": "可选曝光积分、真实深度景深、圆/六边形散焦；快速预览/高质量输出，13层与非均匀爆发保留。",
 "素材在哪": "analysis/results/SparkGraph/（本机ZIP及实包回放），解包目录analysis/local/SparkGraph/",
-"仍有差异": "固定周期内非均匀节奏；尾焰跟随喷口，不包含弹体弹道；世界尺寸为候选。",
+"仍有差异": "有限光圈核近似，景深固化到贴图；非V05逐像素复制，未含弹体弹道。",
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
-"ver": "a7079bea",
+"ver": "7b78d809",
 "jobs": [],
 "exports": [
 {
 "job": "SGS1E1",
 "entry": "SGS1",
-"ver": "a7079bea·loop4.9.83",
-"time": "2026-10-14 01:39",
+"ver": "7b78d809·loop4.9.83",
+"time": "2026-10-14 07:57",
 "packages": [
 {
 "name": "sparkler",
@@ -48169,7 +48193,7 @@ var FW_EFFECTS = [
 "T_Sparkler_Graph_Mobile_FrameTest.png",
 "T_Sparkler_Graph_Ramp.png"
 ],
-"sha256": "0dd7bee73ce2ad5591968c6e90c7523a6a1e64441d535aa728a4b277a434245d"
+"sha256": "e17313e159b28a7da9ae51896f64cd3ec5e8aeab96b39c21c2c6757a3f83994f"
 }
 ],
 "check": {

@@ -718,7 +718,7 @@ function panelHelp(row) {
 function buildMasterPanel() {
   if(state.P.sparkGraph)return buildGraphPanel();
   pviewInit();
-  const P = state.P, D = defaultsFor(P.type).P;
+  const P = state.P, D = {...CameraImaging.defaults,...defaultsFor(P.type).P};
   for (const id of ['specBox', 'specMore']) { const box = $('#' + id); if (box && $('#params').contains(box)) $('#specHome').appendChild(box); }   // 规格框先放回原处，别跟着旧的面板一起被清掉
   pmIdentHome(); layerBitsHome();     // 4.9.8：花型 / 产物（效果标签里）、这一层的导出方案 / 位置与时间（输出 / 效果标签里）也先放回原处
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
@@ -1104,7 +1104,7 @@ function setReplica(id) {
   const r = REPLICA_BY_ID[id]; if (!r) return;
   const { P, M } = replicaPM(id); state.P = P; state.M = M; state.activeStage = 0; state.repId = id;
   state.name = id + '_' + r.name.replace(/^V\d+b?r?f?\s*/, '').replace(/[（）·→ ]+/g, '_').replace(/_+$/, '');
-  buildMasterPanel(); $('#type').value = 'rep:' + id; onParam(); state.t = 0;
+  buildMasterPanel(); if($('#type'))$('#type').value = 'rep:' + id; onParam(); state.t = 0;
   flash(r.note);
 }
 // 切换产物时给出合适的格子

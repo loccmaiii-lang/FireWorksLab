@@ -1,0 +1,241 @@
+{
+  "results": {
+    "rocket": {
+      "off": {
+        "ms": 185.20000004768372,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 683982.740660131,
+              "headPeak": 1602,
+              "headHalfPixels": 57
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 695881.9780484438,
+              "headPeak": 1181,
+              "headHalfPixels": 95
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 782658.5210759044,
+              "headPeak": 1516,
+              "headHalfPixels": 57
+            }
+          }
+        ]
+      },
+      "fast": {
+        "ms": 242.70000004768372,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 16423.308588922024,
+              "headPeak": 41.84375,
+              "headHalfPixels": 8
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 16088.514809131622,
+              "headPeak": 45.3125,
+              "headHalfPixels": 4
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 20387.25467056036,
+              "headPeak": 109.4375,
+              "headHalfPixels": 3
+            }
+          }
+        ]
+      },
+      "high": {
+        "ms": 519.7000000476837,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 16412.718748509884,
+              "headPeak": 39.6875,
+              "headHalfPixels": 9
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 16109.007838129997,
+              "headPeak": 44.46875,
+              "headHalfPixels": 4
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 20275.54852092266,
+              "headPeak": 109.5625,
+              "headHalfPixels": 2
+            }
+          }
+        ]
+      },
+      "reference": {
+        "ms": 1053.8999998569489,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 16399.5703009367,
+              "headPeak": 39.625,
+              "headHalfPixels": 9
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 16095.155814528465,
+              "headPeak": 44.375,
+              "headHalfPixels": 4
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 20255.597847104073,
+              "headPeak": 109.5,
+              "headHalfPixels": 2
+            }
+          }
+        ]
+      }
+    },
+    "sparkler": {
+      "off": {
+        "ms": 124.10000014305115,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 647766.1374530792,
+              "headPeak": 1782,
+              "headHalfPixels": 13
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 828183.153863728,
+              "headPeak": 2082,
+              "headHalfPixels": 56
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 1002288.2075681686,
+              "headPeak": 2200,
+              "headHalfPixels": 132
+            }
+          }
+        ]
+      },
+      "fast": {
+        "ms": 205.90000009536743,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 19112.52954763174,
+              "headPeak": 84.625,
+              "headHalfPixels": 1
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 15371.51998668909,
+              "headPeak": 33.375,
+              "headHalfPixels": 63
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 19128.679408848286,
+              "headPeak": 52.8125,
+              "headHalfPixels": 31
+            }
+          }
+        ]
+      },
+      "high": {
+        "ms": 308.09999990463257,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 19055.80405908823,
+              "headPeak": 84.625,
+              "headHalfPixels": 1
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 15274.912504017353,
+              "headPeak": 31.71875,
+              "headHalfPixels": 73
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 18955.829198539257,
+              "headPeak": 51.40625,
+              "headHalfPixels": 28
+            }
+          }
+        ]
+      },
+      "reference": {
+        "ms": 480,
+        "frames": [
+          {
+            "t": 0.4,
+            "linear": {
+              "headSum": 19026.001824080944,
+              "headPeak": 84.25,
+              "headHalfPixels": 1
+            }
+          },
+          {
+            "t": 0.9,
+            "linear": {
+              "headSum": 15192.2632548213,
+              "headPeak": 31.703125,
+              "headHalfPixels": 69
+            }
+          },
+          {
+            "t": 1.75,
+            "linear": {
+              "headSum": 18812.027999281883,
+              "headPeak": 49.34375,
+              "headHalfPixels": 34
+            }
+          }
+        ]
+      }
+    }
+  },
+  "errors": []
+}

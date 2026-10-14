@@ -1,0 +1,47 @@
+{
+  "pass": true,
+  "high_vs_double_samples": [
+    {
+      "key": "rocket",
+      "frame": 0,
+      "mean": 0.0025965372721354165,
+      "lit_mean": 0.0432507616902901,
+      "maximum": 7.0
+    },
+    {
+      "key": "rocket",
+      "frame": 1,
+      "mean": 0.0025685628255208335,
+      "lit_mean": 0.04007851082689629,
+      "maximum": 13.0
+    },
+    {
+      "key": "rocket",
+      "frame": 2,
+      "mean": 0.0031598409016927085,
+      "lit_mean": 0.04698565907441194,
+      "maximum": 17.0
+    },
+    {
+      "key": "sparkler",
+      "frame": 0,
+      "mean": 0.0035502115885416665,
+      "lit_mean": 0.05416949013326763,
+      "maximum": 26.0
+    },
+    {
+      "key": "sparkler",
+      "frame": 1,
+      "mean": 0.002452850341796875,
+      "lit_mean": 0.055478115416782825,
+      "maximum": 7.0
+    },
+    {
+      "key": "sparkler",
+      "frame": 2,
+      "mean": 0.00240325927734375,
+      "lit_mean": 0.05226139601139601,
+      "maximum": 4.0
+    }
+  ]
+}

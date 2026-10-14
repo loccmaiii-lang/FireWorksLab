@@ -1,21 +1,22 @@
 /* 独立候选编辑；不会覆盖正式库或工坊工程。 */
 let graphSelected=0,graphPreset='rocket',graphSolo=null;
 function graphOpen(key,restore=false){
- const entryId=key==='rocket'?'SGR1':'SGS1',entry=(window.FW_REVIEW_LIST||[]).find(x=>x.id===entryId);
+ const entryId=key==='rocket'?'SGR1':'SGS1',entry=(typeof FW_REVIEW_LIST!=='undefined'?FW_REVIEW_LIST:[]).find(x=>x.id===entryId);
  if(entry&&typeof openReview==='function')openReview(entry);
  graphPreset=key;graphSolo=null;const d=defaultsFor('sparkgraph');state.tab='master';state.P=derive({...d.P,type:'sparkgraph',form:'loop',sparkGraph:structuredClone(GRAPH_PRESETS[key]),loopT:64/30,duration:64/30,
  cols:4,rows:4,chans:4,texW:2048,texH:2048,autoGrid:0,shutter:0,exposure:1,outMode:'combined',zoom:'off',cellPad:2,headBright:1,headSize:.001,spacing:0,nozzles:1,sparkSize:.001,graphSolo:null});
- state.M={...d.M,stages:[[0,'#ffffff']],headInt:1,tailInt:1,ramp0:'#120100',ramp1:'#b34104',ramp2:'#ffc064',ramp3:'#fff6dd'};
+ if(entry){const v=replicaPM(entryId);state.P=v.P;state.M=v.M;}else state.M={...d.M,stages:[[0,'#ffffff']],headInt:1,tailInt:1,ramp0:'#120100',ramp1:'#b34104',ramp2:'#ffc064',ramp3:'#fff6dd'};
  if(restore){const saved=localStorage.getItem('fwl.sparkgraph.'+key);if(saved){try{const v=JSON.parse(saved);SparkGraph.validate(v.P.sparkGraph);state.P=v.P;state.P.type='sparkgraph';state.M=v.M;}catch(err){console.warn('候选存档无效，保留原存档并打开模板：',err.message);}}}
  state.name=key==='rocket'?'RocketTail_Graph':'Sparkler_Graph';state.repId=entry?entryId:null;state.t=0;state.view='live';state.playing=true;state.autoBake=false;clearTimeout(bakeTimer);graphSelected=0;buildGraphPanel();onParam();setAutoBake(false);clearTimeout(bakeTimer);if(typeof syncStageTabs==='function')syncStageTabs();
 }
-function graphEdit(mut){const before=structuredClone({P:state.P,M:state.M});try{mut();SparkGraph.validate(state.P.sparkGraph);state.P.loopT=state.P.duration=state.P.sparkGraph.period;onParam();clearTimeout(bakeTimer);document.getElementById('graphStatus').textContent='参数已改；请保存，烘焙后检查引擎回放';return true;}catch(e){state.P=before.P;state.M=before.M;buildGraphPanel();document.getElementById('graphStatus').textContent=e.message;return false;} }
+function graphEdit(mut){const before=structuredClone({P:state.P,M:state.M});try{mut();SparkGraph.validate(state.P.sparkGraph);CameraImaging.validate(state.P);state.P.loopT=state.P.duration=state.P.sparkGraph.period;onParam();clearTimeout(bakeTimer);document.getElementById('graphStatus').textContent='参数已改；请保存，烘焙后检查引擎回放';return true;}catch(e){state.P=before.P;state.M=before.M;buildGraphPanel();document.getElementById('graphStatus').textContent=e.message;return false;} }
 function buildGraphPanel(){
  panelRows=[];const host=document.getElementById('params');host.replaceChildren();if(!state.P.sparkGraph)return;
  const r=state.P.sparkGraph;graphSelected=Math.min(graphSelected,r.emitters.length-1);const e=r.emitters[graphSelected],wrap=document.createElement('div');wrap.style.cssText='padding:12px;display:grid;gap:9px';host.append(wrap);
  const title=document.createElement('b');title.textContent=r.name;wrap.append(title);
  const status=document.createElement('p');status.id='graphStatus';status.textContent='制作候选 · '+r.emitters.length+'层 · 未经UE验证';status.style.cssText='color:#afc5be;font-size:12px';wrap.append(status);
  const save=document.createElement('button');save.textContent='保存当前候选';save.onclick=()=>{try{const key=state.P.sparkGraph.presetKey||graphPreset;localStorage.setItem('fwl.sparkgraph.'+key,JSON.stringify({P:state.P,M:state.M}));status.textContent='已保存；再次点左上候选入口恢复';localStorage.setItem('fwl.sparkgraph.active',key);}catch(err){status.textContent='保存失败：'+err.message;}};wrap.append(save);
+ buildCameraPanel(wrap);
  const sel=document.createElement('select');sel.setAttribute('aria-label','选择粒子层');r.emitters.forEach((x,i)=>{const o=new Option(x.name,i);sel.add(o);});sel.value=graphSelected;sel.onchange=()=>{graphSelected=+sel.value;buildGraphPanel();};wrap.append(sel);
  const row=(label,input)=>{const l=document.createElement('label');l.style.cssText='display:grid;grid-template-columns:1fr 125px;gap:6px;align-items:center;min-height:31px';const t=document.createElement('span');t.textContent=label;l.append(t,input);wrap.append(l);};
  const number=(label,obj,key,min=0,step=.01)=>{const input=document.createElement('input');input.type='number';input.value=Number(obj[key].toFixed?obj[key].toFixed(6):obj[key]);input.min=min;input.step=step;input.setAttribute('aria-label',label);input.onchange=()=>graphEdit(()=>{const v=+input.value;if(!Number.isFinite(v)||v<min)throw Error(label+'数值无效');obj[key]=v;});row(label,input);};
@@ -29,7 +30,7 @@ function buildGraphPanel(){
   number(n+'下限 '+u,e[k],0,0,.001);number(n+'上限 '+u,e[k],1,.001,.001);number(n+'分布偏向',e[k],2,.01,.1);
  }
  number('粒子直径 m',e,'width',.000001,.00001);number('亮度',e,'gain',0,.05);
- if(e.shape==='line'){number('历史线长时间 s',e,'history',0,.001);number('尾端粗细比例',e,'taper',0,.01);}
+ if(e.shape==='line'&&!state.P.cameraMotion&&!state.P.cameraDof){number('历史线长时间 s',e,'history',0,.001);number('尾端粗细比例',e,'taper',0,.01);}
  number('线性阻力 1/s',e,'drag',0,.1);for(let i=0;i<3;i++)number(['横向','纵深','竖直'][i]+'加速度 m/s²',e.gravity,i,-100,.1);
  choice('喷射方向',e,'directionMode',[['sphere','球形散射'],['cone','锥形喷射']]);
  if(e.directionMode==='cone'){number('喷射锥角 °',e,'cone',0,1);for(let i=0;i<3;i++)number('方向 '+['X','Y','Z'][i],e.direction,i,-100,.1);}
@@ -46,4 +47,15 @@ function initGraphLibrary(){
 const graphNav=document.createElement('div');graphNav.style.cssText='display:flex;gap:6px;padding:8px;flex-wrap:wrap';
 for(const [key,label]of [['rocket','窜天猴尾焰'],['sparkler','仙女棒全形态']]){const b=document.createElement('button');b.className='btn';b.textContent=label;b.onclick=()=>graphOpen(key,true);graphNav.append(b);}
 document.getElementById('side').prepend(graphNav);
+}
+function buildCameraPanel(host){
+ const d=document.createElement('details');d.open=true;const summary=document.createElement('summary');summary.textContent='镜头成像 · '+(state.P.cameraMotion?'运动模糊':'快门关闭')+' / '+(state.P.cameraDof?'景深':'景深关闭');d.append(summary);host.append(d);const c=CameraImaging.settings(state.P);
+ const field=(key,label,options,min,max,step)=>{const row=document.createElement('label');row.style.cssText='display:grid;grid-template-columns:1fr 125px;gap:6px;align-items:center;min-height:32px';const text=document.createElement('span');text.textContent=label;const input=document.createElement(options?'select':'input');input.setAttribute('aria-label',label);if(options){for(const [v,n]of options)input.add(new Option(n,v));}else{input.type='number';input.min=min;input.max=max;input.step=step;}
+ input.value=c[key];input.onchange=()=>{if(graphEdit(()=>state.P[key]=options&&typeof options[0][0]==='string'?input.value:+input.value))buildGraphPanel();};row.append(text,input);d.append(row);};
+ field('cameraMotion','快门运动模糊',[[0,'关闭'],[1,'开启']]);
+ if(c.cameraMotion){field('cameraShutter','曝光时间 s',null,.0001,1,.001);field('cameraPhase','快门位置',[['end','当前帧结束'],['center','当前帧居中'],['start','当前帧开始']]);}
+ field('cameraDof','景深与散焦',[[0,'关闭'],[1,'开启']]);
+ if(c.cameraDof){field('cameraDistance','镜头距原点 m',null,.001,10000,.01);field('cameraFocus','对焦距离 m',null,.001,10000,.01);field('cameraAperture','光圈直径 m',null,0,100,.001);field('cameraBlades','散焦光斑',[[0,'圆形'],[6,'六边形']]);}
+ if(c.cameraMotion||c.cameraDof)field('cameraQuality','输出成像质量',[['fast','快速'],['high','高质量'],['reference','加倍精度（核对）']]);
+ const note=document.createElement('small');note.textContent='实时模拟使用快速质量；导出按所选质量。景深烘入贴图，游戏镜头不会重新对焦。';d.append(note);
 }

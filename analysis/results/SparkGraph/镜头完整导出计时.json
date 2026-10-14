@@ -1,0 +1,43 @@
+{
+  "version": "4.9.84",
+  "hardware": "本机Edge/D3D11；RTX5080；含PC512/手机256、64帧、打包；同配方仅切模式",
+  "rows": [
+    {
+      "key": "rocket",
+      "mode": "off",
+      "ms": 1788.5,
+      "bytes": 1878524
+    },
+    {
+      "key": "rocket",
+      "mode": "fast",
+      "ms": 6254.299999952316,
+      "bytes": 2795120
+    },
+    {
+      "key": "rocket",
+      "mode": "high",
+      "ms": 14888.799999952316,
+      "bytes": 2796265
+    },
+    {
+      "key": "sparkler",
+      "mode": "off",
+      "ms": 1596.7999999523163,
+      "bytes": 1911453
+    },
+    {
+      "key": "sparkler",
+      "mode": "fast",
+      "ms": 2551.9000000953674,
+      "bytes": 2702233
+    },
+    {
+      "key": "sparkler",
+      "mode": "high",
+      "ms": 5635,
+      "bytes": 2704733
+    }
+  ],
+  "errors": []
+}

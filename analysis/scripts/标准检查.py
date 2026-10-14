@@ -131,7 +131,7 @@ if __name__ == '__main__':
     ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
     a = ap.parse_args()
     if a.spark_graph_only:
-        for cmd in [['node', str(HERE / 'spark_graph_test.cjs')], ['node', str(HERE / 'spark_graph_bake.cjs')], [sys.executable, str(HERE / 'spark_graph_check.py')]]:
+        for cmd in [['node', str(HERE / 'spark_graph_test.cjs')], ['node', str(HERE / 'spark_camera_test.cjs')], ['node', str(HERE / 'spark_camera_verify.cjs')], ['node', str(HERE / 'spark_graph_bake.cjs')], [sys.executable, str(HERE / 'spark_graph_check.py')]]:
             result = subprocess.run(cmd)
             if result.returncode: raise SystemExit(result.returncode)
         raise SystemExit(0)
