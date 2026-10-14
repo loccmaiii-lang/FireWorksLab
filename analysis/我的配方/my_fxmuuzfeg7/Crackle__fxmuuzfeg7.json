@@ -1,11 +1,11 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmuuzfeg7",
- "tool": "4.9.17",
+ "tool": "4.9.100",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmuuzfeg7",
  "name": "Crackle",
- "at": "2026-10-06 19:55",
+ "at": "2026-10-14 23:52",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -46,16 +46,16 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 9.8,
-     "seed": 7,
-     "stars": 70,
+     "duration": 9.6,
+     "seed": 400,
+     "stars": 150,
      "burstR0": 0,
      "v0": 150,
      "vt": 18,
      "grav": 1,
      "speedJit": 3,
      "dirJit": 1.5,
-     "burn": 1.6,
+     "burn": 1.2,
      "burnJit": 12,
      "fade": 0.2,
      "lastFlare": 0,
@@ -76,7 +76,7 @@
      "sparkStart": 0,
      "sparkRamp": 0,
      "sparkRampJit": 30,
-     "sparkLife": 0.3,
+     "sparkLife": 0.5,
      "sparkLifeEnd": 1,
      "sparkLifeJit": 45,
      "sparkSize": 0.35,
@@ -152,9 +152,8 @@
      "cutOut": 0,
      "preRoll": 1,
      "preFrom": 0,
-     "visTo": 2.8333,
+     "visTo": 2.6333,
      "preScale0": 0,
-     "prePivot": 0,
      "subScaleJit": 0,
      "subVt": 0,
      "subGrav": -1,
@@ -396,8 +395,14 @@
  "ue": {
   "base": "Crackle",
   "layers": [
-   ""
+   "Main"
   ],
+  "system": "Crackle",
   "custom": true
- }
+ },
+ "sizeSource": {
+  "key": "",
+  "entry": ""
+ },
+ "sizePick": "cls:d:dam:90"
 }
