@@ -1,0 +1,25 @@
+18:45:28 MYCR-O ✅ 
+18:45:28 MYCR-S03 ✅ 
+18:45:28 MYCR-S05 ✅ 
+18:45:28 MYCR-K ✅ 
+18:45:28 MYCR-Y ✅ 
+18:45:28 MYCR-R ✅ 
+18:45:28 MYCR-T ✅ 
+18:45:28 MYCR-M ✅ 
+18:45:28 MYCR-H ✅ 
+18:45:28 MYCR-J ✅ 
+18:45:28 MYCR-C ✅ 
+18:45:28 MYJC-O ✅ 
+18:45:28 MYJC-S03 ✅ 
+18:45:28 MYJC-S05 ✅ 
+18:45:28 MYJC-S10 ✅ 
+18:45:28 MYJC-S20 ✅ 
+18:45:28 MYJC-S30 ✅ 
+18:45:28 MYJC-S40 ✅ 
+18:45:28 MYJC-R ✅ 
+18:45:28 MYJC-T ✅ 
+18:45:28 MYJC-M ✅ 
+18:45:28 MYJC-H ✅ 
+18:45:28 MYJC-C ✅ 
+18:45:28 → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\probe\标准检查
+18:45:28 完成，用时 0.1 分钟

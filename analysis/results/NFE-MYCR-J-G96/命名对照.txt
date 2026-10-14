@@ -1,0 +1,10 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_Crackle_Jisa_A.png → T_EFX_FireWorks_Crackle_Jisa_4x4_01_HD.png
+T_Crackle_Jisa_A_Cutout.png → T_EFX_FireWorks_Crackle_Jisa_4x4_01_C.png
+T_Crackle_Jisa_A_FrameTest.png → _检查/T_EFX_FireWorks_Crackle_Jisa_4x4_01_FrameTest.png
+T_Crackle_Jisa_B.png → T_EFX_FireWorks_Crackle_Jisa_4x4_02_HD.png
+T_Crackle_Jisa_B_Cutout.png → T_EFX_FireWorks_Crackle_Jisa_4x4_02_C.png
+T_Crackle_Jisa_B_FrameTest.png → _检查/T_EFX_FireWorks_Crackle_Jisa_4x4_02_FrameTest.png
+T_Crackle_Jisa_Mobile_A.png → T_EFX_FireWorks_Crackle_Jisa_4x4_01.png
+T_Crackle_Jisa_Mobile_B.png → T_EFX_FireWorks_Crackle_Jisa_4x4_02.png
+T_Crackle_Jisa_Ramp.png → T_EFX_FireWorks_Crackle_Jisa_R.png

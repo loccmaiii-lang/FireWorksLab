@@ -1,0 +1,621 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Crackle_M",
+ "platform": "mobile",
+ "tier": "M",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.96",
+  "type": "crackle",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "5343f7f6"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_EFX_FireWorks_Crackle_4x4_01.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_Crackle_4x4_01",
+   "sha256": "5e907413361cdbc3e886e54da4c373864552c66780acbced599fbe3e431376a0"
+  },
+  "cutout": {
+   "file": "T_EFX_FireWorks_Crackle_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Crackle_4x4_01_C",
+   "save_est": 0.356,
+   "hash": "4a18efb5450fd1a21689",
+   "sha256": "77c7f547cf2d32fb0c8da5db65ab7eb6276632b7d860724d615cf192406b2ac6"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_Crackle_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Crackle_R",
+   "hash": "c2e3e43cbfdf1ea3132",
+   "sha256": "58f26f6df3d86a6b1c93ae4b45f45bce8369977d6f338d875d2a416acd57f188"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "flash": {
+   "role": "soft_dot"
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.0333,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4571
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.0333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       18916.4,
+       18916.4,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "preRoll": true,
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0082,
+        [
+         0.1674,
+         0.1674,
+         1
+        ]
+       ],
+       [
+        0.0165,
+        [
+         0.3188,
+         0.3188,
+         1
+        ]
+       ],
+       [
+        0.0247,
+        [
+         0.4568,
+         0.4568,
+         1
+        ]
+       ],
+       [
+        0.033,
+        [
+         0.5828,
+         0.5828,
+         1
+        ]
+       ],
+       [
+        0.0412,
+        [
+         0.6984,
+         0.6984,
+         1
+        ]
+       ],
+       [
+        0.0495,
+        [
+         0.8055,
+         0.8055,
+         1
+        ]
+       ],
+       [
+        0.0577,
+        [
+         0.9056,
+         0.9056,
+         1
+        ]
+       ],
+       [
+        0.0659,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.0659,
+         0.01
+        ],
+        [
+         0.5385,
+         43.01
+        ],
+        [
+         0.978,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "入点前放大：出生后 0.2 s 停在第 0 帧、Size By Life 从 0.02 放大到 1（绕爆点：Pivot Offset 和没设入点时同一个，烟花实播对齐未经 UE 验证），之后从入点 0.2 s 照常播"
+   ],
+   "max_alive": 1
+  },
+  {
+   "name": "Flash",
+   "material": "flash",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 0.2,
+    "loops": 1,
+    "delay_s": 0
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       0.2,
+       0.2
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        3370.5,
+        3370.5,
+        3370.5
+       ],
+       [
+        3370.5,
+        3370.5,
+        3370.5
+       ]
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        0.2082,
+        [
+         0.6774,
+         0.6774,
+         0.6774
+        ]
+       ],
+       [
+        0.287,
+        [
+         0.5595,
+         0.5595,
+         0.5595
+        ]
+       ],
+       [
+        0.3749,
+        [
+         0.4997,
+         0.4997,
+         0.4997
+        ]
+       ],
+       [
+        0.4222,
+        [
+         0.4996,
+         0.4996,
+         0.4996
+        ]
+       ],
+       [
+        0.4714,
+        [
+         0.5997,
+         0.5997,
+         0.5997
+        ]
+       ],
+       [
+        0.9342,
+        [
+         0.569,
+         0.569,
+         0.569
+        ]
+       ],
+       [
+        1,
+        [
+         0.5683,
+         0.5683,
+         0.5683
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": true
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         4,
+         3.9785,
+         3.9455
+        ]
+       ],
+       [
+        0.0569,
+        [
+         4,
+         3.9313,
+         3.8255
+        ]
+       ],
+       [
+        0.1088,
+        [
+         4,
+         3.823,
+         3.5504
+        ]
+       ],
+       [
+        0.1724,
+        [
+         4,
+         3.5923,
+         2.9641
+        ]
+       ],
+       [
+        0.2464,
+        [
+         4,
+         3.214,
+         2.0029
+        ]
+       ],
+       [
+        0.287,
+        [
+         4,
+         2.9959,
+         1.5346
+        ]
+       ],
+       [
+        0.3299,
+        [
+         4,
+         2.7557,
+         1.3702
+        ]
+       ],
+       [
+        0.3749,
+        [
+         4,
+         2.3832,
+         1.1154
+        ]
+       ],
+       [
+        0.4222,
+        [
+         4,
+         1.7739,
+         0.6981
+        ]
+       ],
+       [
+        0.4714,
+        [
+         4,
+         0.8476,
+         0.0642
+        ]
+       ],
+       [
+        0.5759,
+        [
+         4,
+         0.8475,
+         0.0646
+        ]
+       ],
+       [
+        0.8076,
+        [
+         4,
+         0.8429,
+         0.0613
+        ]
+       ],
+       [
+        1,
+        [
+         4,
+         0.8,
+         0
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        0.248
+       ],
+       [
+        0.0569,
+        0.2437
+       ],
+       [
+        0.1088,
+        0.2338
+       ],
+       [
+        0.1724,
+        0.2128
+       ],
+       [
+        0.2464,
+        0.1782
+       ],
+       [
+        0.287,
+        0.1504
+       ],
+       [
+        0.3299,
+        0.1058
+       ],
+       [
+        0.3749,
+        0.0691
+       ],
+       [
+        0.4222,
+        0.0415
+       ],
+       [
+        0.4714,
+        0.0229
+       ],
+       [
+        0.5759,
+        0.008
+       ],
+       [
+        0.8076,
+        0.0007
+       ],
+       [
+        1,
+        0.0001
+       ]
+      ]
+     },
+     "note": "半透明材质：RGB = 色相 × 4（不随寿命变暗），淡出 / 闪烁 / 冷却在 Alpha；黑底上 RGB × Alpha = 烘焙器里的亮度"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "max_alive": 1,
+   "notes": [
+    "开花闪光（4.9.96，导出排查 B1 / B2）：模拟里同一个闪光单独一颗软圆点，0 s 出生、活 0.2 s；颜色 = 贴图口径压过以后的中心（Ramp × Color Over Life × 星头亮度，按 e^(−t / 0.035) 衰减），大小按总光量和贴图里那团一样（σ = 模拟 σ 6.75 m × 1.25）。序列从入点那一帧起自己带着闪光的余量。未经 UE 验证"
+   ]
+  }
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "Crackle",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.96"
+ }
+}

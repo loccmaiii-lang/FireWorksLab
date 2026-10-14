@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-14 07:57",
+ "generated": "2026-10-14 18:45",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -6775,7 +6775,7 @@
    "name": "Crackle · 原样",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "8fd3f286·master4.3.8-core1",
+   "ver": "8fd3f286·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -6851,7 +6851,7 @@
    "name": "Crackle · 3 号",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "45975af9·master4.3.8-core1",
+   "ver": "45975af9·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -6927,7 +6927,7 @@
    "name": "Crackle · 5 号",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "c12caaca·master4.3.8-core1",
+   "ver": "c12caaca·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7307,7 +7307,7 @@
    "name": "Crackle · 冠",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "0aac69b7·master4.3.8-core1",
+   "ver": "0aac69b7·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7383,7 +7383,7 @@
    "name": "Crackle · 柳",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "3542b5f6·master4.3.8-core1",
+   "ver": "3542b5f6·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7459,7 +7459,7 @@
    "name": "Crackle · 环",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "32db0b17·master4.3.8-core1",
+   "ver": "32db0b17·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7535,7 +7535,7 @@
    "name": "Crackle · 土星",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "5a3a37c6·master4.3.8-core1",
+   "ver": "5a3a37c6·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7611,7 +7611,7 @@
    "name": "Crackle · 万華鏡",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "c36f95cd·master4.3.8-core1",
+   "ver": "c36f95cd·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7687,7 +7687,7 @@
    "name": "Crackle · 心形",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "1fb0030f·master4.3.8-core1",
+   "ver": "1fb0030f·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7756,14 +7756,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.1
+   "seconds": 0.0
   },
   "MYCR-J": {
    "id": "MYCR-J",
    "name": "Crackle · 时差",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "a02e38b4·master4.3.8-core1",
+   "ver": "a02e38b4·flash4.9.96+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -7832,14 +7832,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.1
+   "seconds": 0.0
   },
   "MYCR-C": {
    "id": "MYCR-C",
    "name": "Crackle · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "886bf2a5·master4.3.8-core1+master4.9.31",
+   "ver": "886bf2a5·flash4.9.96+master4.3.8-core1+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11107,7 +11107,7 @@
    "name": "金曜菊-窜天猴 · 原样",
    "kind": "combo",
    "renderVer": null,
-   "ver": "55f0d560·master4.9.31",
+   "ver": "55f0d560·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11183,7 +11183,7 @@
    "name": "金曜菊-窜天猴 · 3 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "7e9076ff·master4.9.31",
+   "ver": "7e9076ff·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11259,7 +11259,7 @@
    "name": "金曜菊-窜天猴 · 5 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "dd0e6714·master4.9.31",
+   "ver": "dd0e6714·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11335,7 +11335,7 @@
    "name": "金曜菊-窜天猴 · 尺玉",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e68e437e·master4.9.31",
+   "ver": "e68e437e·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11411,7 +11411,7 @@
    "name": "金曜菊-窜天猴 · 2 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "c99a80ca·master4.9.31",
+   "ver": "c99a80ca·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11487,7 +11487,7 @@
    "name": "金曜菊-窜天猴 · 3 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b94db74e·master4.9.31",
+   "ver": "b94db74e·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11563,7 +11563,7 @@
    "name": "金曜菊-窜天猴 · 4 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "dd72166c·master4.9.31",
+   "ver": "dd72166c·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11791,7 +11791,7 @@
    "name": "金曜菊-窜天猴 · 环",
    "kind": "combo",
    "renderVer": null,
-   "ver": "c486d306·master4.9.31",
+   "ver": "c486d306·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11867,7 +11867,7 @@
    "name": "金曜菊-窜天猴 · 土星",
    "kind": "combo",
    "renderVer": null,
-   "ver": "2e6ffb2e·master4.9.31",
+   "ver": "2e6ffb2e·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -11943,7 +11943,7 @@
    "name": "金曜菊-窜天猴 · 万華鏡",
    "kind": "combo",
    "renderVer": null,
-   "ver": "61fbbca0·master4.9.31",
+   "ver": "61fbbca0·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -12019,7 +12019,7 @@
    "name": "金曜菊-窜天猴 · 心形",
    "kind": "combo",
    "renderVer": null,
-   "ver": "479116d9·master4.9.31",
+   "ver": "479116d9·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -12171,7 +12171,7 @@
    "name": "金曜菊-窜天猴 · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b1e561a2·master4.9.31",
+   "ver": "b1e561a2·flash4.9.96+master4.9.31",
    "checks": [
     [
      "实时模拟",

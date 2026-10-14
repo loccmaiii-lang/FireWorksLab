@@ -1,0 +1,365 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "GoldRayRocket_10_M",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.96",
+  "combo": true,
+  "layers": [
+   {
+    "type": "kiku",
+    "form": "master",
+    "renderVer": 40
+   }
+  ],
+  "plan_sig": "3b26213b"
+ },
+ "textures": {
+  "L1_seqA": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01",
+   "sha256": "67da2f9a8a29afcaaf905351e926006d1614bfe33f98c3ed885b27c8caf3d3b5"
+  },
+  "L1_cutoutA": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01_C",
+   "save_est": 0.342,
+   "hash": "3382921a6c48c95d1e6a",
+   "sha256": "38205bf68ab9f85e67786114eafacc06543082a771d62d85b4064df92e64a3de"
+  },
+  "L1_seqB": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 3,
+   "asset": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02",
+   "sha256": "c03fa354accb99b4a51712f413169b6295c03a41d51c23cfe4965734a6401bb2"
+  },
+  "L1_cutoutB": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02_C",
+   "save_est": 0.679,
+   "hash": "a1ee9b78126fd311acb",
+   "sha256": "6d03507c1184f728169703c747806b7b5eb4e06469e3c5b927683f4533364362"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_10_L1_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_10_L1_R",
+   "hash": "368f1caadbcf978114a",
+   "sha256": "59ee5830a65e787f4a374529f6d58a727fcaacf0c5a475efcb38d4e666ede6aa"
+  }
+ },
+ "materials": {
+  "L1_mainA": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seqA",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L1_mainB": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seqB",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_MainA",
+   "material": "L1_mainA",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 5.1667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutoutA",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4852
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 5.1667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       33047,
+       33047,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.1161,
+         18.01
+        ],
+        [
+         0.129,
+         19.01
+        ],
+        [
+         0.9806,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ],
+       [
+        1,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -4.9 m），仰视时也对得上；未经 UE 验证"
+   ],
+   "layer": 1,
+   "max_alive": 1
+  },
+  {
+   "name": "L1_MainB",
+   "material": "L1_mainB",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 0.3,
+    "loops": 1,
+    "delay_s": 5.1667,
+    "cutout": "L1_cutoutB",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4852
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 0.3
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       33047,
+       33047,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.6667,
+         2.01
+        ],
+        [
+         1,
+         2.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ],
+       [
+        1,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -4.9 m），仰视时也对得上；未经 UE 验证"
+   ],
+   "layer": 1,
+   "max_alive": 1
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 42961,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ],
+ "tier": "M",
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "GoldRayRocket_10",
+  "layers": [
+   "L1",
+   "L2"
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.96"
+ }
+}

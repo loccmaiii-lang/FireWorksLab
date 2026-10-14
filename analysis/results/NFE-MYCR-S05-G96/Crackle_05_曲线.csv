@@ -1,0 +1,15 @@
+﻿段,曲线,相对时间,值1,值2,值3
+,DynamicParameter_帧号通道,0,0.01,,
+,DynamicParameter_帧号通道,0.45454545454545453,40.01,,
+,DynamicParameter_帧号通道,0.9772727272727273,63.01,,
+,DynamicParameter_帧号通道,1,63.99,,
+,ColorOverLife_线性RGB,0,1,1,1
+,ColorOverLife_线性RGB,1,1,1,1
+,Light_BrightnessOverLife,0,0.565,,
+,Light_BrightnessOverLife,0.3977,0.539,,
+,Light_BrightnessOverLife,0.5,0.635,,
+,Light_BrightnessOverLife,0.5682,0.981,,
+,Light_BrightnessOverLife,0.6364,1,,
+,Light_BrightnessOverLife,0.75,0.797,,
+,Light_BrightnessOverLife,0.8636,0.179,,
+,Light_BrightnessOverLife,1,0,,

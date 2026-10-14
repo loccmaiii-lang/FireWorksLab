@@ -1,0 +1,773 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "GoldRayRocket_05",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.96",
+  "combo": true,
+  "layers": [
+   {
+    "type": "kiku",
+    "form": "unit",
+    "renderVer": 40
+   },
+   {
+    "type": "strobe",
+    "form": "master",
+    "renderVer": 40
+   }
+  ],
+  "plan_sig": "62246028"
+ },
+ "textures": {
+  "L1_seq": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_HD.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 4,
+   "channels": 4,
+   "frames": 128,
+   "asset": "T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_HD",
+   "sha256": "191b93a8edf9f7345dbb7d0652eea714c606e24437e9ba6fcd6e75547accd4a5"
+  },
+  "L1_cutout": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_C",
+   "save_est": 0.878,
+   "hash": "7f0fff8a26086555f27",
+   "sha256": "f0854cb3220ea2bf15d5f43b131adb874574a83c2fc03f7ff5c34b611974ad6b"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_05_L1_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_05_L1_R",
+   "hash": "368f1caadbcf978114a",
+   "sha256": "59ee5830a65e787f4a374529f6d58a727fcaacf0c5a475efcb38d4e666ede6aa"
+  },
+  "L2_seq": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 50,
+   "asset": "T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_HD",
+   "sha256": "6e966fbf9d5dd470fa4da84ee40056e8946944a4ea7f84d10970df07eaa554ef"
+  },
+  "L2_cutout": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_C",
+   "save_est": 0.455,
+   "hash": "2b976ba00a4f699c1bda",
+   "sha256": "54c1fb745521f0463f57aa46be5d8f9a25035ca5653cf80573543ea0b750d988"
+  },
+  "L2_ramp": {
+   "file": "T_EFX_FireWorks_GoldRayRocket_05_L2_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_GoldRayRocket_05_L2_R",
+   "hash": "d1a085dc6d380e7913c",
+   "sha256": "7466c14cb80e5f756b3426c8ca0df3eaaf0e95fa3d62c5bfc9f2ff110286616f"
+  }
+ },
+ "materials": {
+  "L1_main": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "L1_seq",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 8
+   }
+  },
+  "L1_flash": {
+   "role": "soft_dot"
+  },
+  "L2_main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L2_seq",
+    "ramp": "L2_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_Unit",
+   "material": "L1_main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 3.401,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutout",
+    "max_draw_count": 71,
+    "pivot_offset": [
+     -0.5,
+     -0.2438
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      71
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       2.165,
+       3.301
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       2511,
+       7846.4,
+       1
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.9807,
+         0.6602,
+         1
+        ]
+       ],
+       [
+        0.125,
+        [
+         0.9995,
+         0.6783,
+         1
+        ]
+       ],
+       [
+        0.275,
+        [
+         0.9938,
+         0.7,
+         1
+        ]
+       ],
+       [
+        0.325,
+        [
+         1,
+         0.7461,
+         1
+        ]
+       ],
+       [
+        0.475,
+        [
+         1,
+         0.8844,
+         1
+        ]
+       ],
+       [
+        0.525,
+        [
+         1,
+         0.9305,
+         1
+        ]
+       ],
+       [
+        0.575,
+        [
+         0.6204,
+         0.9766,
+         1
+        ]
+       ],
+       [
+        0.625,
+        [
+         0.6204,
+         0.7124,
+         1
+        ]
+       ],
+       [
+        0.725,
+        [
+         0.6204,
+         0.7762,
+         1
+        ]
+       ],
+       [
+        0.875,
+        [
+         0.6204,
+         1,
+         1
+        ]
+       ],
+       [
+        0.975,
+        [
+         0.6204,
+         0.5474,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         0.6204,
+         0.5184,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "SphereLocation",
+     "StartRadius": {
+      "const": 10
+     },
+     "VelocityScale": {
+      "uniform": [
+       391.9173,
+       2220.8647
+      ]
+     },
+     "SurfaceOnly": true,
+     "Velocity": true
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "const": 1.5849
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -63.3
+     ]
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.0183,
+         15.61
+        ],
+        [
+         0.0366,
+         26.62
+        ],
+        [
+         0.0854,
+         46.1
+        ],
+        [
+         0.1586,
+         63.96
+        ],
+        [
+         0.2622,
+         80.12
+        ],
+        [
+         0.5488,
+         105.59
+        ],
+        [
+         1,
+         127.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ],
+       [
+        1,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "单束：每颗星一个面片（71 颗），贴图是一颗代表星的序列，轨迹由 Cascade 算（初速 130.64 m/s、阻力 1.5849/s、下坠 0.63 m/s²）；Pivot Offset 把星头放在粒子位置（导入器待支持，未经 UE 验证）"
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L1_Flash",
+   "material": "L1_flash",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 0.25,
+    "loops": 1,
+    "delay_s": 0
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       0.25,
+       0.25
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        3746.8,
+        3746.8,
+        3746.8
+       ],
+       [
+        3746.8,
+        3746.8,
+        3746.8
+       ]
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        0.287,
+        [
+         0.9613,
+         0.9613,
+         0.9613
+        ]
+       ],
+       [
+        1,
+        [
+         0.9554,
+         0.9554,
+         0.9554
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": true
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         4,
+         1.4023,
+         0.333
+        ]
+       ],
+       [
+        0.0188,
+        [
+         4,
+         1.402,
+         0.3331
+        ]
+       ],
+       [
+        0.0359,
+        [
+         4,
+         1.4021,
+         0.3329
+        ]
+       ],
+       [
+        0.0569,
+        [
+         4,
+         1.4022,
+         0.3333
+        ]
+       ],
+       [
+        0.0813,
+        [
+         4,
+         1.4018,
+         0.3328
+        ]
+       ],
+       [
+        0.1088,
+        [
+         4,
+         1.4029,
+         0.3338
+        ]
+       ],
+       [
+        0.1393,
+        [
+         4,
+         1.4024,
+         0.3338
+        ]
+       ],
+       [
+        0.1724,
+        [
+         4,
+         1.4011,
+         0.3344
+        ]
+       ],
+       [
+        0.2464,
+        [
+         4,
+         1.4041,
+         0.3304
+        ]
+       ],
+       [
+        0.4222,
+        [
+         4,
+         1.3793,
+         0.2759
+        ]
+       ],
+       [
+        1,
+        [
+         4,
+         1.3793,
+         0.2759
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        0.023
+       ],
+       [
+        0.0188,
+        0.0182
+       ],
+       [
+        0.0359,
+        0.0146
+       ],
+       [
+        0.0569,
+        0.0111
+       ],
+       [
+        0.0813,
+        0.0081
+       ],
+       [
+        0.1088,
+        0.0056
+       ],
+       [
+        0.1393,
+        0.0037
+       ],
+       [
+        0.1724,
+        0.0024
+       ],
+       [
+        0.2464,
+        0.0008
+       ],
+       [
+        0.4222,
+        0.0001
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     },
+     "note": "半透明材质：RGB = 色相 × 4（不随寿命变暗），淡出 / 闪烁 / 冷却在 Alpha；黑底上 RGB × Alpha = 烘焙器里的亮度"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "max_alive": 1,
+   "notes": [
+    "开花闪光（4.9.96，导出排查 B1 / B2）：模拟里同一个闪光单独一颗软圆点，0 s 出生、活 0.25 s；颜色 = 贴图口径压过以后的中心（Ramp × Color Over Life × 星头亮度，按 e^(−t / 0.035) 衰减），大小按总光量和贴图里那团一样（σ = 模拟 σ 12.65 m × 0.74）。序列从入点那一帧起自己带着闪光的余量。未经 UE 验证"
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L2_Main",
+   "material": "L2_main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 1.6667,
+    "loops": 1,
+    "delay_s": 1.7667,
+    "cutout": "L2_cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4889
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 1.6667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       23098.2,
+       23098.2,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.98,
+         49.01
+        ],
+        [
+         1,
+         49.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0.7231,
+         0.0865,
+         0.9473
+        ]
+       ],
+       [
+        1,
+        [
+         0.7231,
+         0.0865,
+         0.9473
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -2.6 m），仰视时也对得上；未经 UE 验证"
+   ],
+   "layer": 2
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 30028,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "GoldRayRocket_05",
+  "layers": [
+   "L1",
+   "L2"
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.96"
+ }
+}

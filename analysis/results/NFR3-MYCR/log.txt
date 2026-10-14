@@ -1,0 +1,34 @@
+18:45:11 第 1/11 步：原样（Crackle）
+18:45:12   ✅ Crackle 跳过纯粒子发射器：Flash
+18:45:12   ✅ 原样（Crackle）（0.0 分钟）
+18:45:12 第 2/11 步：3 号（Crackle_03）
+18:45:13   ✅ Crackle_03 跳过纯粒子发射器：Flash
+18:45:13   ✅ 3 号（Crackle_03）（0.0 分钟）
+18:45:13 第 3/11 步：5 号（Crackle_05）
+18:45:14   ✅ Crackle_05 跳过纯粒子发射器：Flash
+18:45:14   ✅ 5 号（Crackle_05）（0.0 分钟）
+18:45:14 第 4/11 步：冠（Crackle_Crown）
+18:45:15   ✅ Crackle_Crown 跳过纯粒子发射器：Flash
+18:45:15   ✅ 冠（Crackle_Crown）（0.0 分钟）
+18:45:15 第 5/11 步：柳（Crackle_Willow）
+18:45:16   ✅ Crackle_Willow 跳过纯粒子发射器：Flash
+18:45:16   ✅ 柳（Crackle_Willow）（0.0 分钟）
+18:45:16 第 6/11 步：环（Crackle_Ring）
+18:45:17   ✅ Crackle_Ring 跳过纯粒子发射器：Flash
+18:45:17   ✅ 环（Crackle_Ring）（0.0 分钟）
+18:45:17 第 7/11 步：土星（Crackle_Saturn）
+18:45:18   ✅ Crackle_Saturn 跳过纯粒子发射器：Flash
+18:45:18   ✅ 土星（Crackle_Saturn）（0.0 分钟）
+18:45:18 第 8/11 步：万華鏡（Crackle_Kaleido）
+18:45:18   ✅ Crackle_Kaleido 跳过纯粒子发射器：Flash
+18:45:18   ✅ 万華鏡（Crackle_Kaleido）（0.0 分钟）
+18:45:18 第 9/11 步：心形（Crackle_Heart）
+18:45:19   ✅ Crackle_Heart 跳过纯粒子发射器：Flash
+18:45:19   ✅ 心形（Crackle_Heart）（0.0 分钟）
+18:45:19 第 10/11 步：时差（Crackle_Jisa）
+18:45:20   ✅ Crackle_Jisa 跳过纯粒子发射器：Flash
+18:45:20   ✅ 时差（Crackle_Jisa）（0.0 分钟）
+18:45:20 第 11/11 步：芯入（Crackle_Core）
+18:45:21   ✅ Crackle_Core 跳过纯粒子发射器：L1_Flash
+18:45:21   ✅ 芯入（Crackle_Core）（0.0 分钟）
+18:45:21 完成，用时 0.2 分钟

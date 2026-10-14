@@ -1,0 +1,10 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_Crackle_03_A.png → T_EFX_FireWorks_Crackle_03_3x3_01_HD.png
+T_Crackle_03_A_Cutout.png → T_EFX_FireWorks_Crackle_03_3x3_01_C.png
+T_Crackle_03_A_FrameTest.png → _检查/T_EFX_FireWorks_Crackle_03_3x3_01_FrameTest.png
+T_Crackle_03_B.png → T_EFX_FireWorks_Crackle_03_3x3_02_HD.png
+T_Crackle_03_B_Cutout.png → T_EFX_FireWorks_Crackle_03_3x3_02_C.png
+T_Crackle_03_B_FrameTest.png → _检查/T_EFX_FireWorks_Crackle_03_3x3_02_FrameTest.png
+T_Crackle_03_Mobile_A.png → T_EFX_FireWorks_Crackle_03_3x3_01.png
+T_Crackle_03_Mobile_B.png → T_EFX_FireWorks_Crackle_03_3x3_02.png
+T_Crackle_03_Ramp.png → T_EFX_FireWorks_Crackle_03_R.png
