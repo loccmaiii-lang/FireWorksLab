@@ -1,0 +1,157 @@
+{
+ "format": "df.mobile-placeholder-check-summary/1",
+ "at": "2026-10-15T00:17:23+08:00",
+ "script": "node analysis/scripts/手游占位检查.mjs（16 个 _M，原始 手游占位检查_原始_1015.json）",
+ "chainWhyHD": "L1_Flash 发射器 → MI_EFX_Spark_16_NoCameraDepthFade → 母材质 M_EFX_MainTex → MF_FakePointLight → MPC_EFX_General_HD",
+ "rows": [
+  {
+   "asset": "P_EFX_FireWorks_GoldRayChry_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_SilverChry_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_Glitter_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_Crackle_M",
+   "pass": false,
+   "enabledLOD0": 2,
+   "gpu": 0,
+   "hd": [
+    "MPC_EFX_General_HD"
+   ],
+   "via": [
+    [
+     "L1_Flash",
+     "MI_EFX_Spark_16_NoCameraDepthFade"
+    ]
+   ]
+  },
+  {
+   "asset": "P_EFX_FireWorks_Strobe_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_LittleCombo_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_LittleGold_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_LittleSilver_M",
+   "pass": false,
+   "enabledLOD0": 2,
+   "gpu": 0,
+   "hd": [
+    "MPC_EFX_General_HD"
+   ],
+   "via": [
+    [
+     "L1_Flash",
+     "MI_EFX_Spark_16_NoCameraDepthFade"
+    ]
+   ]
+  },
+  {
+   "asset": "P_EFX_FireWorks_LittleCrackle_M",
+   "pass": false,
+   "enabledLOD0": 2,
+   "gpu": 0,
+   "hd": [
+    "MPC_EFX_General_HD"
+   ],
+   "via": [
+    [
+     "L1_Flash",
+     "MI_EFX_Spark_16_NoCameraDepthFade"
+    ]
+   ]
+  },
+  {
+   "asset": "P_EFX_FireWorks_YonshakuKamuro_M",
+   "pass": true,
+   "enabledLOD0": 2,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_Comet_Layers_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_RiseTrail_S_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_RiseTrail_M_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_RiseTrail_L_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_RiseTrail_XS_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  },
+  {
+   "asset": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "pass": true,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "hd": [],
+   "via": []
+  }
+ ]
+}

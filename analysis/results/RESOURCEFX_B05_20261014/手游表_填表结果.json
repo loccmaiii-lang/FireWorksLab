@@ -1,0 +1,622 @@
+{
+ "format": "df.datatable-write-result/1",
+ "at": "2026-10-14T16:24:01.882Z",
+ "table": "/Game/DataTables/Resource/ResourceFXTable",
+ "writes": [
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_775",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_GoldRayChry",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+     "RowDescription": "跨年烟花3.0_中型_B_金芒菊",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_776",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_SilverChry",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+     "RowDescription": "跨年烟花3.0_小型_F_银冠菊",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_777",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_Glitter",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+     "RowDescription": "跨年烟花3.0_小型_I__橙辉星",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_778",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_Crackle",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+     "RowDescription": "跨年烟花3.0_小型_G_爆裂星",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_779",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_Strobe",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+     "RowDescription": "跨年烟花3.0_小型_J_点灭星",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_780",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_LittleCombo",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+     "RowDescription": "跨年烟花3.0_小号_D_小分裂",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "NewRow_781",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+     "RowDescription": "跨年烟花3.0_小型_尾缀",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "20"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_中型_尾缀"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_中型_尾缀",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+     "RowDescription": "跨年烟花3.0_中型_尾缀",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "20"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_大型_尾缀"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_大型_尾缀",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+     "RowDescription": "跨年烟花3.0_大型_尾缀",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "20"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_极小_尾缀"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_极小_尾缀",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+     "RowDescription": "跨年烟花3.0_极小_尾缀",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "20"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_低位_尾缀"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_低位_尾缀",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_RiseTrail_XS",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+     "RowDescription": "跨年烟花3.0_低位_尾缀",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "20"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_超大_尾缀"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_超大_尾缀",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+     "RowDescription": "跨年烟花3.0_超大_尾缀",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "20"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_小型_B_红彗星"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_小型_B_红彗星",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_FanComet_01",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+     "RowDescription": "跨年烟花3.0_小型_B_红彗星",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_大型_A_金垂柳"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_大型_A_金垂柳",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_GoldKamuro",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+     "RowDescription": "跨年烟花3.0_大型_A_金垂柳",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_小号_B_小银菊"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_小号_B_小银菊",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_LittleSilver",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+     "RowDescription": "跨年烟花3.0_小号_B_小银菊",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/add",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_小号_C_短爆裂"
+   },
+   "success": true,
+   "message": "OK"
+  },
+  {
+   "route": "/datatable/row/update",
+   "payload": {
+    "table": "/Game/DataTables/Resource/ResourceFXTable",
+    "row_name": "跨年烟花3.0_小号_C_短爆裂",
+    "values": {
+     "ResourceId": "P_EFX_FireWorks_LittleCrackle",
+     "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+     "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+     "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+     "RowDescription": "跨年烟花3.0_小号_C_短爆裂",
+     "FXType": "SHOW",
+     "MaxInstanceNum": "10"
+    }
+   },
+   "success": true,
+   "message": "OK"
+  }
+ ],
+ "rows": [
+  {
+   "row": "NewRow_771",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_LittleGold",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "Fireworks_Explostion_Medium",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_775",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_GoldRayChry",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_776",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_SilverChry",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_777",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_Glitter",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_778",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_Crackle",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_779",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_Strobe",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_780",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_LittleCombo",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "NewRow_781",
+   "how": "update",
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_中型_尾缀",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_大型_尾缀",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_极小_尾缀",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_低位_尾缀",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_超大_尾缀",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_FanComet_01",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_GoldKamuro",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_LittleSilver",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  },
+  {
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "how": "add",
+   "resourceId": "P_EFX_FireWorks_LittleCrackle",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "mismatches": [],
+   "fxspLoads": true
+  }
+ ],
+ "resumed": [
+  "NewRow_771"
+ ],
+ "tableCheck": {
+  "before": 2751,
+  "after": 2760,
+  "added": [
+   "跨年烟花3.0_中型_尾缀",
+   "跨年烟花3.0_大型_尾缀",
+   "跨年烟花3.0_极小_尾缀",
+   "跨年烟花3.0_低位_尾缀",
+   "跨年烟花3.0_超大_尾缀",
+   "跨年烟花3.0_小型_B_红彗星",
+   "跨年烟花3.0_大型_A_金垂柳",
+   "跨年烟花3.0_小号_B_小银菊",
+   "跨年烟花3.0_小号_C_短爆裂"
+  ],
+  "removed": [],
+  "changedOutsideTargets": [],
+  "targetFieldsChangedBeyondPlan": []
+ },
+ "uassetMtimeChanged": true,
+ "pass": true
+}

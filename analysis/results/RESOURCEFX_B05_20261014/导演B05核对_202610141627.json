@@ -1,0 +1,1188 @@
+{
+ "format": "df.director-b05-check/1",
+ "readAt": "2026-10-14T16:27:28.813Z",
+ "target": {
+  "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.Default__BP_NewYearFireworks_ShowDirector_Night_C",
+  "assetPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night",
+  "directorId": "NewYear_Night"
+ },
+ "night": {
+  "sub": 147,
+  "tpl": 153,
+  "slots": 197,
+  "duration": 214.39999389648438
+ },
+ "b05": {
+  "sub": 171,
+  "tpl": 199,
+  "slots": 247,
+  "duration": 214.4
+ },
+ "isB05": false,
+ "differences": 473,
+ "diffSample": [
+  {
+   "key": "EffectSubTemplates",
+   "name": "OrangeGlitter",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Small",
+   "b05": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 2.954400062561035,
+   "b05": 1.9171
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": -465.234130859375,
+    "Z": 14831.3271484375
+   },
+   "b05": {
+    "X": 0,
+    "Y": -248.144519,
+    "Z": 7832.039129
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "FanSilverAndSilverChry",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "CrackleAndFanComet",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV03",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Small",
+   "b05": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV03",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 2.954400062561035,
+   "b05": 1.9171
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV03",
+   "i": 1,
+   "field": "EffectScale",
+   "night": {
+    "_struct": "Vector",
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   },
+   "b05": {
+    "X": 0.92,
+    "Y": 0.92,
+    "Z": 0.92
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV03",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": -465.234130859375,
+    "Z": 14831.3271484375
+   },
+   "b05": {
+    "X": 0,
+    "Y": -248.144519,
+    "Z": 7832.039129
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV02",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "FanSilver4Pattern",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldCrackleV02",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Small",
+   "b05": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldCrackleV02",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 2.954400062561035,
+   "b05": 1.9171
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldCrackleV02",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": 142.79371643066406,
+    "Z": 14907.5634765625
+   },
+   "b05": {
+    "X": 0,
+    "Y": 76.162675,
+    "Z": 7905.226768
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV03",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Medium",
+   "b05": "P_EFX_FireWorks_NY_Trail_Large"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV03",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 4.377200126647949,
+   "b05": 7.3651
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV03",
+   "i": 1,
+   "field": "EffectScale",
+   "night": {
+    "_struct": "Vector",
+    "X": 1.0800000429153442,
+    "Y": 1.0800000429153442,
+    "Z": 1.0800000429153442
+   },
+   "b05": {
+    "X": 1.410666,
+    "Y": 1.410666,
+    "Z": 1.410666
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV03",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": -223.26495361328125,
+    "Z": 20941.7265625
+   },
+   "b05": {
+    "X": 0,
+    "Y": -350.84991,
+    "Z": 32947.88244
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "FanSilverAndSilverChryV02",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "FanSilverAndGoldSpark",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "CrackleAndFanCometV02",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "CrackleV02",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV04",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Large",
+   "b05": "P_EFX_FireWorks_NY_Trail_Medium"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV04",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 7.365099906921387,
+   "b05": 4.3772
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV04",
+   "i": 1,
+   "field": "EffectScale",
+   "night": {
+    "_struct": "Vector",
+    "X": 1.5333329439163208,
+    "Y": 1.5333329439163208,
+    "Z": 1.5333329439163208
+   },
+   "b05": {
+    "X": 1.08,
+    "Y": 1.08,
+    "Z": 1.08
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV04",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": -350.84991455078125,
+    "Z": 32947.8828125
+   },
+   "b05": {
+    "X": 0,
+    "Y": -223.264958,
+    "Z": 20941.726219
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "FanSilverAndGoldSparkV02",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldRayChryV05",
+   "i": 1,
+   "field": "EffectScale",
+   "night": {
+    "_struct": "Vector",
+    "X": 1.4106659889221191,
+    "Y": 1.4106659889221191,
+    "Z": 1.4106659889221191
+   },
+   "b05": {
+    "X": 1.533333,
+    "Y": 1.533333,
+    "Z": 1.533333
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldCrackleV03",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Small",
+   "b05": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldCrackleV03",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 2.954400062561035,
+   "b05": 1.9171
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "GoldCrackleV03",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": 142.79371643066406,
+    "Z": 14907.5634765625
+   },
+   "b05": {
+    "X": 0,
+    "Y": 76.162675,
+    "Z": 7905.226768
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "StrobeV02",
+   "i": 1,
+   "field": "EffectScale",
+   "night": {
+    "_struct": "Vector",
+    "X": 1.0800000429153442,
+    "Y": 1.0800000429153442,
+    "Z": 1.0800000429153442
+   },
+   "b05": {
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "OrangeGlitter_U10",
+   "kind": "只在导演"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02_U20",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Small",
+   "b05": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02_U20",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 2.954400062561035,
+   "b05": 1.9171
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02_U20",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": -465.234130859375,
+    "Z": 16831.326171875
+   },
+   "b05": {
+    "X": 0,
+    "Y": -248.144519,
+    "Z": 9832.039129
+   }
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02_U10",
+   "i": 0,
+   "field": "FXResourceId",
+   "night": "P_EFX_FireWorks_NY_Trail_Small",
+   "b05": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02_U10",
+   "i": 1,
+   "field": "LocalTimeOffset",
+   "night": 2.954400062561035,
+   "b05": 1.9171
+  },
+  {
+   "key": "EffectSubTemplates",
+   "name": "SilverChryV02_U10",
+   "i": 1,
+   "field": "PositionOffset",
+   "night": {
+    "_struct": "Vector",
+    "X": 0,
+    "Y": -465.234130859375,
+    "Z": 15831.3271484375
+   },
+   "b05": {
+    "X": 0,
+    "Y": -248.144519,
+    "Z": 8832.039129
+   }
+  }
+ ],
+ "platform": {
+  "night": {
+   "mobileEvents": 440,
+   "pcEvents": 3786,
+   "mobileIds": {
+    "P_EFX_FireWorks_NY_Trail_Small": 61,
+    "P_EFX_FireWorks_SilverChry": 37,
+    "P_EFX_FireWorks_OrangeGlitter": 18,
+    "P_EFX_FireWorks_NY_Trail_Medium": 50,
+    "P_EFX_FireWorks_GoldRayChry": 76,
+    "P_EFX_FireWorks_Crackle": 6,
+    "P_EFX_FireWorks_GoldSpark": 10,
+    "P_EFX_FireWorks_NY_Trail_Large": 109,
+    "P_EFX_FireWorks_SilverStrobeChry": 68,
+    "P_EFX_FireWorks_GoldKamuro": 5
+   },
+   "pcIds": {
+    "P_EFX_FireWorks_NY_Trail_Small": 221,
+    "P_EFX_FireWorks_SilverChry": 151,
+    "P_EFX_FireWorks_OrangeGlitter": 16,
+    "P_EFX_FireWorks_NY_Trail_Medium": 182,
+    "P_EFX_FireWorks_GoldRayChry": 60,
+    "P_EFX_FireWorks_Crackle": 47,
+    "P_EFX_FireWorks_GoldCrackle": 49,
+    "P_EFX_FireWorks_GoldSpark": 63,
+    "P_EFX_FireWorks_GreenPeony": 22,
+    "P_EFX_FireWorks_NY_Trail_Large": 141,
+    "P_EFX_FireWorks_SilverStrobeChry": 86,
+    "P_EFX_FireWorks_MultiLayerChry": 43,
+    "P_EFX_FireWorks_GoldChry": 36,
+    "P_EFX_FireWorks_GoldCoreLime": 35,
+    "P_EFX_FireWorks_PrismWheels": 18,
+    "P_EFX_FireWorks_GoldKamuro": 5,
+    "P_EFX_FireWorks_FanSilver_01": 941,
+    "P_EFX_FireWorks_FanComet_01": 1646,
+    "P_EFX_FireWorks_Strobe": 16,
+    "P_EFX_FireWorks_Lime": 8
+   }
+  },
+  "b05": {
+   "mobileEvents": 714,
+   "pcEvents": 3786,
+   "mobileIds": {
+    "P_EFX_FireWorks_NY_Trail_Small": 61,
+    "P_EFX_FireWorks_Strobe": 55,
+    "P_EFX_FireWorks_NY_Trail_Medium": 50,
+    "P_EFX_FireWorks_Glitter": 40,
+    "P_EFX_FireWorks_Crackle": 6,
+    "P_EFX_FireWorks_NY_Trail_Large": 109,
+    "P_EFX_FireWorks_GoldRayChry": 109,
+    "P_EFX_FireWorks_SilverChry": 10,
+    "P_EFX_FireWorks_RiseTrail_Tiny": 163,
+    "P_EFX_FireWorks_LittleCombo": 111
+   },
+   "pcIds": {
+    "P_EFX_FireWorks_NY_Trail_Small": 45,
+    "P_EFX_FireWorks_SilverChry": 115,
+    "P_EFX_FireWorks_Glitter": 16,
+    "P_EFX_FireWorks_NY_Trail_Medium": 182,
+    "P_EFX_FireWorks_GoldRayChry": 60,
+    "P_EFX_FireWorks_Crackle": 17,
+    "P_EFX_FireWorks_GoldCrackle": 49,
+    "P_EFX_FireWorks_GoldSpark": 18,
+    "P_EFX_FireWorks_GreenPeony": 22,
+    "P_EFX_FireWorks_NY_Trail_Large": 141,
+    "P_EFX_FireWorks_SilverStrobeChry": 86,
+    "P_EFX_FireWorks_MultiLayerChry": 43,
+    "P_EFX_FireWorks_GoldChry": 36,
+    "P_EFX_FireWorks_GoldCoreLime": 35,
+    "P_EFX_FireWorks_PrismWheels": 18,
+    "P_EFX_FireWorks_GoldKamuro": 5,
+    "P_EFX_FireWorks_RiseTrail_XS": 176,
+    "P_EFX_FireWorks_FanSilver_01": 808,
+    "P_EFX_FireWorks_FanComet_01": 1616,
+    "P_EFX_FireWorks_Strobe": 16,
+    "P_EFX_FireWorks_Lime": 8,
+    "P_EFX_FireWorks_RiseTrail_Tiny": 163,
+    "P_EFX_FireWorks_LittleSilver": 36,
+    "P_EFX_FireWorks_LittleCrackle": 30,
+    "P_EFX_FireWorks_LittleGold": 45
+   }
+  }
+ },
+ "mobileVsB05": [
+  {
+   "event": "P|107.97|P_EFX_FireWorks_GoldKamuro|0|1.217",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|107.97|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|108.06|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|11.45|P_EFX_FireWorks_OrangeGlitter|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|112.97|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|113.06|P_EFX_FireWorks_SilverStrobeChry|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|116.17|P_EFX_FireWorks_SilverStrobeChry|0|0.920",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|116.36|P_EFX_FireWorks_SilverStrobeChry|0|0.920",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|116.56|P_EFX_FireWorks_SilverStrobeChry|0|0.920",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|119.38|P_EFX_FireWorks_GoldRayChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|119.78|P_EFX_FireWorks_GoldRayChry|3|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|12.65|P_EFX_FireWorks_OrangeGlitter|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|120.18|P_EFX_FireWorks_GoldRayChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|120.58|P_EFX_FireWorks_GoldRayChry|3|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|120.98|P_EFX_FireWorks_GoldRayChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|122.67|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|122.77|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|122.86|P_EFX_FireWorks_SilverStrobeChry|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|125.88|P_EFX_FireWorks_GoldRayChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|126.08|P_EFX_FireWorks_GoldRayChry|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|126.28|P_EFX_FireWorks_GoldRayChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|129.06|P_EFX_FireWorks_GoldRayChry|0|1.656",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|129.26|P_EFX_FireWorks_GoldRayChry|0|1.656",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|129.47|P_EFX_FireWorks_GoldRayChry|3|1.656",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|13.85|P_EFX_FireWorks_OrangeGlitter|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|132.37|P_EFX_FireWorks_SilverStrobeChry|0|1.080",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|132.47|P_EFX_FireWorks_SilverStrobeChry|0|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|132.56|P_EFX_FireWorks_SilverStrobeChry|0|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|138.85|P_EFX_FireWorks_OrangeGlitter|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|139.05|P_EFX_FireWorks_OrangeGlitter|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|139.25|P_EFX_FireWorks_OrangeGlitter|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|145.25|P_EFX_FireWorks_SilverChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|145.45|P_EFX_FireWorks_SilverChry|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|145.65|P_EFX_FireWorks_SilverChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|151.76|P_EFX_FireWorks_SilverStrobeChry|0|1.080",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|151.87|P_EFX_FireWorks_SilverStrobeChry|0|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|151.97|P_EFX_FireWorks_SilverStrobeChry|2|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|158.26|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 1,
+   "b05": 0
+  },
+  {
+   "event": "P|158.37|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "P|158.47|P_EFX_FireWorks_SilverStrobeChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  }
+ ],
+ "pcVsB05": [
+  {
+   "event": "B|105.50|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|105.60|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|105.70|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|105.80|P_EFX_FireWorks_NY_Trail_Small|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|108.45|P_EFX_FireWorks_SilverChry|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|108.55|P_EFX_FireWorks_SilverChry|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|108.65|P_EFX_FireWorks_SilverChry|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|108.75|P_EFX_FireWorks_SilverChry|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|110.70|P_EFX_FireWorks_NY_Trail_Small|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|110.80|P_EFX_FireWorks_NY_Trail_Small|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|110.90|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|111.00|P_EFX_FireWorks_NY_Trail_Small|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|113.65|P_EFX_FireWorks_SilverChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|113.75|P_EFX_FireWorks_SilverChry|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|113.85|P_EFX_FireWorks_SilverChry|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|113.95|P_EFX_FireWorks_SilverChry|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|123.30|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|123.40|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|123.50|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|123.60|P_EFX_FireWorks_NY_Trail_Small|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|126.25|P_EFX_FireWorks_SilverChry|2|0.920",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|126.35|P_EFX_FireWorks_SilverChry|2|0.920",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|126.45|P_EFX_FireWorks_SilverChry|2|0.920",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|126.55|P_EFX_FireWorks_SilverChry|3|0.920",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|127.00|P_EFX_FireWorks_NY_Trail_Small|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|127.10|P_EFX_FireWorks_NY_Trail_Small|0|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|127.20|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|127.30|P_EFX_FireWorks_NY_Trail_Small|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|129.40|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|129.50|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|129.60|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|129.70|P_EFX_FireWorks_NY_Trail_Small|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|129.95|P_EFX_FireWorks_GoldCrackle|0|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|13.60|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|13.70|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|13.80|P_EFX_FireWorks_NY_Trail_Small|2|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|13.90|P_EFX_FireWorks_NY_Trail_Small|3|1.000",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|130.05|P_EFX_FireWorks_GoldCrackle|0|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|130.15|P_EFX_FireWorks_GoldCrackle|2|1.080",
+   "night": 2,
+   "b05": 0
+  },
+  {
+   "event": "B|130.25|P_EFX_FireWorks_GoldCrackle|3|1.080",
+   "night": 2,
+   "b05": 0
+  }
+ ],
+ "tables": {
+  "mobile": [
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Small",
+    "rows": 1,
+    "row": "NewRow_781",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverChry",
+    "rows": 1,
+    "row": "NewRow_776",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_OrangeGlitter",
+    "rows": 0,
+    "loads": null,
+    "ok": false
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Medium",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_尾缀",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldRayChry",
+    "rows": 1,
+    "row": "NewRow_775",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_Crackle",
+    "rows": 1,
+    "row": "NewRow_778",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldSpark",
+    "rows": 0,
+    "loads": null,
+    "ok": false
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Large",
+    "rows": 1,
+    "row": "跨年烟花3.0_大型_尾缀",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverStrobeChry",
+    "rows": 0,
+    "loads": null,
+    "ok": false
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldKamuro",
+    "rows": 1,
+    "row": "跨年烟花3.0_大型_A_金垂柳",
+    "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+    "allM": true,
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   }
+  ],
+  "pc": [
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Small",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_尾缀",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverChry",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_F_银冠菊",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_OrangeGlitter",
+    "rows": 0,
+    "loads": null,
+    "ok": false
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Medium",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_尾缀",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldRayChry",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_B_金芒菊",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_Crackle",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_G_爆裂星",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldCrackle",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_D_金裂星",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldSpark",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_B_金锦菊",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GreenPeony",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_A_绿牡丹",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Large",
+    "rows": 1,
+    "row": "跨年烟花3.0_大型_尾缀",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverStrobeChry",
+    "rows": 1,
+    "row": "跨年烟花3.0_大型_B_银彩菊",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_MultiLayerChry",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_F_多重菊",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldChry",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_D_金曜菊",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldCoreLime",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_E_金蕊柠",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_PrismWheels",
+    "rows": 1,
+    "row": "跨年烟花3.0_中型_C_彩千轮",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldKamuro",
+    "rows": 1,
+    "row": "跨年烟花3.0_大型_A_金垂柳",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_FanSilver_01",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_C_银星扇",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_FanComet_01",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_B_红彗星",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_Strobe",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_J_点灭星",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   },
+   {
+    "id": "P_EFX_FireWorks_Lime",
+    "rows": 1,
+    "row": "跨年烟花3.0_小型_H_小青柠",
+    "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+    "FXType": "SHOW",
+    "loads": true,
+    "ok": true
+   }
+  ]
+ },
+ "pass": false
+}
