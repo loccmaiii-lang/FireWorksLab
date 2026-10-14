@@ -1,6 +1,6 @@
 # 派生规格首次导入 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 派生规格首次导入允许创建原名称共享贴图，后续复用有保存证明的相同内容，禁止覆盖无法核验的同名目标。
 
@@ -20,15 +20,17 @@
 
 **Interfaces:** `planTextureReuse(item, planned)` 保留现有 `item.textureReuse`；只读探针返回 `{key,pkg,exists,saved,class}`，候选需完整对应请求。
 
-- [ ] 先运行失败测试：派生且目标完全不存在应通过，而原实现抛缺指纹；本批次第二包复用第一包。
-- [ ] 仅选中及必须依赖的贴图参与检查：`new Set([...selectedAssetEntries(item).map(([k])=>k), ...selectionDependencies(item).map(d=>d.key)])`。
-- [ ] 缺复用证明的目标只读核对对象和磁盘：`if (target.exists || target.saved) throw Error(...)`；两者均不存在且选中时保留现有创建流程。
-- [ ] 原生执行前再次核对这些首次创建目标，防止检查后出现同名文件。
-- [ ] 失败计划排除批次写入碰撞：`proposals.has(r.id) && !proposals.get(r.id).errors.length`，真实可执行计划冲突保持。
+- [x] 先运行失败测试：派生且目标完全不存在应通过，而原实现抛缺指纹；本批次第二包复用第一包。
+- [x] 仅选中及必须依赖的贴图参与检查：`new Set([...selectedAssetEntries(item).map(([k])=>k), ...selectionDependencies(item).map(d=>d.key)])`。
+- [x] 缺复用证明的目标只读核对对象和磁盘：`if (target.exists || target.saved) throw Error(...)`；两者均不存在且选中时保留现有创建流程。
+- [x] 原生执行前再次核对这些首次创建目标，防止检查后出现同名文件。
+- [x] 失败计划排除批次写入碰撞：`proposals.has(r.id) && !proposals.get(r.id).errors.length`，真实可执行计划冲突保持。
 
 ### Task 2: 部署与验收
 
-- [ ] 运行缺失/已存在/磁盘残留/类型错误/证明正确/证明失效/范围取消/批次复用/真实内容冲突/执行前变化的隔离检查。
-- [ ] 构建独立入口并部署现有 runtime；原 HTML 哈希保持不变。
-- [ ] 对用户包做只读真实预检，核对两平台就绪、共用贴图单写、粒子目标区分；不替用户确认或导入。
-- [ ] 白名单提交脱敏记录及交接，私有源码不上传。
+- [x] 运行缺失/已存在/磁盘残留/类型错误/证明正确/证明失效/范围取消/批次复用/真实内容冲突/执行前变化的隔离检查。
+- [x] 构建独立入口并部署现有 runtime；原 HTML 哈希保持不变。
+- [x] 对用户包做只读真实预检，核对两平台就绪、共用贴图单写、粒子目标区分；不替用户确认或导入。
+- [x] 白名单提交脱敏记录及交接，私有源码不上传。
+
+执行与限定预检完成；完整UE导入、实际播放和用户验收尚未进行。
