@@ -45,10 +45,15 @@ const headOwnHalo = P => +P.headHaloOwn === 1 && familyOf(P.type || 'kiku') === 
 const layerHaloOthers = P => (isCarrierType(P) ? +P.carrierTail > 0 || +P.subTail > 0 : +P.sparkRate > 0) || +P.crackle > 0 || +P.waterRefl > 0 || +P.x1On > 0 || +P.x2On > 0;
 // 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（云端：拨了曲线 / 帧计划都不变）+ analysis/results/SMOKE15/参数有效性/（本机：再加 4 个时刻的定帧画面也不变）+ 代码（20_sim.js、40_gl.js）
 // 4.9.86：尾缀「合成一张」时只在实时模拟里画的行（GPU 粒子、引擎里加的效果、烟带、粒子层亮度）
-const RT_LIVE_KEYS = ['rtGpuC', 'rtGpuM', 'rtGpuF', 'rtGpuTw', 'rtGpuDisp', 'rtGpuGain', 'rtGpuMax', 'rtDotGain',
-  'rtGlow', 'rtGlowSize', 'rtGlowSizeCurve', 'rtGlowBrightCurve', 'rtPopRate', 'rtPopI', 'rtPopSize', 'rtPopAt', 'rtPopSizeCurve', 'rtPopBrightCurve',
+// 4.9.89（导出排查 B4）：分成两组——这几项还决定贴图里留多少火花（GPU 那份从贴图里扣，手机近段的贴图也按它），只有两个平台都合成一张时才不起作用：
+const RT_GPU_SPLIT_KEYS = ['rtGpuC', 'rtGpuM', 'rtGpuF', 'rtGpuMax', 'rtPopRate'];
+//   别的只在 GPU 粒子 / 引擎里加的效果里：PC 合成一张时哪份导出都没有（手机 _M 的尾缀本来只有近段循环）
+const RT_LIVE_KEYS = ['rtGpuTw', 'rtGpuDisp', 'rtGpuGain', 'rtDotGain',
+  'rtGlow', 'rtGlowSize', 'rtGlowSizeCurve', 'rtGlowBrightCurve', 'rtPopI', 'rtPopSize', 'rtPopAt', 'rtPopSizeCurve', 'rtPopBrightCurve',
   'rtLaunch', 'rtLaunchSize', 'rtLaunchN', 'rtLaunchV', 'rtLaunchCone', 'rtLaunchI', 'rtLaunchSizeCurve', 'rtLaunchBrightCurve', 'rtLaunchSparkSizeCurve', 'rtLaunchSparkBrightCurve',
   'rtSmoke', 'rtSmokeRate', 'rtSmokeLife', 'rtSmokeSize', 'rtSmokeGrow', 'rtSmokeSizeCurve', 'rtSmokeBrightCurve'];
+// 4.9.89（导出排查 A4）：纯星头 = 一颗粒子沿弹道走（PC 单帧小面片、手机软圆点），没有序列帧
+const RT_HEAD_INERT = ['zoom', 'frameBudget', 'holdTicks', 'maxHold', 'maxHoldBurn', 'rtGrid', 'outMode', 'rtLoopMin', 'rtLoopSize', 'rtMobileTex', 'shutter'];
 const INERT = [
   [['coreProfile'], P => isTrail(P), 'V5尾缀沿用已通过的高斯核；本选项不改变它和开花闪光'],
   [['exposureTarget'], P => isTrail(P) || isPhys(P) || isEmit(P), '这类产物目前不使用「建议曝光」；可直接调贴图曝光'],
@@ -86,9 +91,17 @@ const INERT = [
   [['starSizeCurve', 'starBrightCurve'], P => familyOf(P.type) === 'ground' && !(typeof hasComets === 'function' && hasComets(P)), '地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命'],
   // 4.9.86（导出（23）审查 4.9.82–4.9.85，用户 10-14 10:29「有些效果加了我好像调了也没什么用」）：依据是代码（47_risetail.js bakeRiseTailFull 把 GPU 颗数清零、
   //   fwlEmitSetFull 只写 1 个发射器、rtLayoutFar 合成时不按交接年龄、近段 + 远段时不烘消散序列）+ 审查时的拨参对照（同一帧贴图不变）
-  [RT_LIVE_KEYS, P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」：导出只有一张全程序列，不含这一项（GPU 粒子 / 引擎里加的效果）；只有单层「实时模拟」还画它，「引擎回放」和多层效果里都没有'],
+  [RT_LIVE_KEYS, P => isEmit(P) && typeof rtPcFull === 'function' && rtPcFull(P), 'PC「近段 + 远段合成一张」：哪份导出里都没有这一项（GPU 粒子 / 引擎里加的效果；手机 _M 的尾缀只有近段循环）；4.9.89 起实时模拟也不画它，看到的 = 导出的'],
+  [RT_GPU_SPLIT_KEYS, P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」：火花全烘进那一张，GPU 粒子预算不起作用'],
+  [RT_HEAD_INERT, P => isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P), '纯星头：一颗粒子沿弹道走（PC 单帧小面片、手机软圆点），没有序列帧可分配、没有循环层；入点 / 出点、亮度照样起作用'],
+  [['rtLoopMin', 'rtLoopSize'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」：没有循环层，这一项不起作用'],
+  [['rtMobileTex'], P => isEmit(P) && P.outMobile === 'off', '手机选了「不出」：手机贴图边长不起作用'],
+  [['rtMobile'], P => isEmit(P) && typeof RT_MOBILE_PARTICLES !== 'undefined' && !RT_MOBILE_PARTICLES, '手机 _M 的尾缀只留近段循环（4.9.69，用户 10-12 21:34「手机尾缀不要cpu火花粒子了」）：手机粒子比例不起作用'],
+  // 4.9.89（导出排查 A8 / A9）：「星头火花输出 · 分开」只有单层、PC 合成一张时才导出两张
+  [['outMode'], P => typeof state !== 'undefined' && state.tab === 'combo', '多层效果：素材包一律星头火花合并（4.9.89 起预览也合并，看到的 = 导出的）；要分开只能单层导出'],
+  [['outMode'], P => typeof emitFullOut === 'function' && emitFullOut(P) && typeof rtPcFull === 'function' && !rtPcFull(P), '只有 PC 选「合成一张」时能分开（PC 两张、两个发射器）；手机一律合一张'],
   [['rtERate', 'rtELife', 'rtESize', 'rtEI', 'rtEKd', 'rtESizeCurve', 'rtEBrightCurve'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P) && +P.rtETex !== 1, '合成一张时落火是 GPU 粒子，不进贴图：只有单层「实时模拟」还画它，「引擎回放」和多层效果里都没有；要进贴图先把「落火进入合并贴图」打开'],
-  [['rtNearA0', 'rtNearA1', 'rtNearExpo', 'rtMobile'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」时不起作用（没有近段 / 远段交接，也没有手机粒子）'],
+  [['rtNearA0', 'rtNearA1', 'rtNearExpo'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」时不起作用（没有近段 / 远段交接）'],
   [['rtFadeFps', 'rtDissolve'], P => isEmit(P) && +P.rtFar === 1, '「近段 + 远段」没有消散序列（开花后的火花都在远段里），这一项不起作用'],
   [['rtTailAfterBurn'], P => isEmit(P) && !['F', 'M', 'C', 'E'].some(k => parseCurve(P['rt' + k + 'SizeCurve']) || parseCurve(P['rt' + k + 'BrightCurve'])) && !(+P.rtETex === 1 && P.rtERate > 0),
     '火星的「大小 / 亮度随寿命」曲线都没填、落火也没进贴图时不起作用：燃尽后渐入的是这些曲线，先填曲线'],

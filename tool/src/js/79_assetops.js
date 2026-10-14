@@ -92,6 +92,7 @@ function pkMyItems(mode) {
 
 // ---- 我的效果：派生（AI 效果 / 模板 / 正式库调了保存）----
 async function wbDeriveMine(o = {}) {
+  if (state.tab !== 'combo' && typeof multiLayerBlock === 'function') { const why = multiLayerBlock(state.P); if (why) { flash(why, true, 10000); return null; } }     // 4.9.89 A12：我的效果是多层的一种
   if (repoDir.h && !repoDir.ok) await repoPerm(true);
   const fromName = (lib.tpl && lib.tpl.name) || $('#abName').textContent || wbBaseId();
   const from = { key: wb.key, name: fromName, base: wbBaseId(), ver: (lib.review && lib.review.ver) || '' };

@@ -124,7 +124,13 @@ function buildLayerHead(i) {
     q.addEventListener('change', () => { const v = q.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); q.value = v; lset('lowSuffix', '')(v); }); lwh.appendChild(w); }
   const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = layerMobileManual(L) ? o.mobile : 'auto'; lwh.hidden = o.pc !== 'frame' && o.mobile !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit' && o.mobile !== 'unit';
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
-    for (const pf of ['pc', 'mobile']) { const uo = ex.querySelector(`[data-out=${pf}] option[value=unit]`); if (uo && le) { const many = pf === 'mobile' && mobileUnitTooMany(le.P); uo.disabled = (!unitAllowed(le.P) || many) && o[pf] !== 'unit'; uo.title = !unitAllowed(le.P) ? '千轮、分裂、蜂、非球形图案不能出单束' : many ? MOBILE_UNIT_MANY : ''; } } };
+    for (const pf of ['pc', 'mobile']) { const uo = ex.querySelector(`[data-out=${pf}] option[value=unit]`); if (uo && le) { const many = pf === 'mobile' && mobileUnitTooMany(le.P); uo.disabled = (!unitAllowed(le.P) || many) && o[pf] !== 'unit'; uo.title = !unitAllowed(le.P) ? '千轮、分裂、蜂、非球形图案不能出单束' : many ? MOBILE_UNIT_MANY : ''; } }
+    // 4.9.89（导出排查 A10 / H1 前半）：尾缀层只能按尾缀自己的产物出或不出；星头不发光的层不给选 GPU 光点（以前导出一个出生率 0 的空壳发射器）
+    const tail = le && isEmit(le.P);
+    for (const pf of ['pc', 'mobile']) for (const op of ex.querySelectorAll(`[data-out=${pf}] option`)) {
+      if (tail && ['unit', 'dots', 'frame'].includes(op.value)) { op.disabled = true; op.title = '尾缀层：按尾缀自己的产物出（单层交付清单里选近段 / 合成一张）或不出；单束、GPU 光点、单帧是礼花的'; }
+      else if (op.value === 'dots' && le && !tail && !(dotsCount(le.P) > 0)) { op.disabled = o.pc !== 'dots'; op.title = '这一层星头不发光（星头亮度 0 或不留星头），GPU 光点导出是空的'; }
+    } };
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { setLayerOut(L, sel.dataset.out, sel.value); syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));     // 4.9.80 只改这一格（以前改 PC 会顺手把手机写死成序列）
   syncOut();
   host.querySelector('#lhHelp').addEventListener('click', () => { const p = $('#lhHelpText'); p.hidden = !p.hidden; });
@@ -275,7 +281,8 @@ function askConfirm(title, note, yes = '确定', no = '取消') {
 async function wbSave(asNew) {
   if (lib.my) return mySave(asNew);                         // 我的效果：保存 = 覆盖这个效果，另存为 = 复制成新效果（4.2.7）
   // 4.5.0（用户 10-05 #7「你制作的效果，我重新调参保存后，我想再增加别的层数，无法增加」）：其它来源保存 = 存成「我的效果（派生自 ×）」
-  if (typeof wbDeriveMine === 'function') return wbDeriveMine();
+  // 4.9.89（导出排查 A12）：放不进多层的尾缀（RT6 全套、V5、上升循环、物理尾缀）保存 = 存成这个效果的一个版本（资产栏「版本」），不派生成我的效果（我的效果是多层的一种）
+  if (typeof wbDeriveMine === 'function' && !(state.tab !== 'combo' && typeof multiLayerBlock === 'function' && multiLayerBlock(state.P))) return wbDeriveMine();
   if (repoDir.h && !repoDir.ok) await repoPerm(true);      // 连过仓库文件夹：先趁这次点击问一下「允许」（浏览器重开后第一次）
   const list = wbList(), mine = wb.src.kind === 'mine' && list.find(s => s.id === wb.src.id);
   let it = !asNew && mine && !mine.draft && !mine.auto && mine;        // 草稿、导出时自动存的不覆盖：存成正式的一个版本（起名字）；草稿删掉
@@ -466,7 +473,9 @@ function jumpTimes() {
 }
 // 时段条：每层一条。实色 = 贴图在播（入点 → 出点），斜纹 = 入点前放大（停在第 0 帧），淡色 = 整段可见范围（剔掉全黑帧后）；
 // 下面一行是入点 / 出点按钮（单层直接用；多层要先在观察图层选一层）
-function editLayerP() { if (state.tab !== 'combo') return state.tab === 'master' && usesTickPlan40(state.P) ? state.P : null; const L = state.layers[state.comboSel], e = L && layerEntryOf(L); return e && usesTickPlan40(e.P) ? e.P : null; }
+// 4.9.89（导出排查 A3，用户 10-14 13:12「Comet 的出入点我也没法选」）：合成一张的尾缀也有入点 / 出点按钮和把手（以前只给空中大面片；右栏两行滑杆一直有效）。纯星头没有序列，照旧只用右栏
+const cutsOn = P => !!P && (usesTickPlan40(P) || (emitFullOut(P) && !(typeof rtHeadOnly === 'function' && rtHeadOnly(P))));
+function editLayerP() { if (state.tab !== 'combo') return state.tab === 'master' && cutsOn(state.P) ? state.P : null; const L = state.layers[state.comboSel], e = L && layerEntryOf(L); return e && cutsOn(e.P) ? e.P : null; }
 function layerSpans(x) {
   const m = x.b && x.b.meta; if (!m) return null;
   const r = +x.L.rate || 1, d = +x.L.delay || 0, t0 = m.t0 || 0, pre = m.pre;
@@ -637,7 +646,7 @@ function buildTlBars() {
       + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`)
       + (sp.seq > sp.end + 0.02 && pct(sp.at(sp.seq)) > pct(sp.at(sp.end)) ? `<i class="void" style="left:${pct(sp.at(sp.end))}%;width:${Math.max(0.3, pct(sp.at(sp.seq)) - pct(sp.at(sp.end)))}%" title="${seqVoidText(sp)}"><em>${sp.cut ? '出点后 · 不导出' : '全黑 · 不导出'}</em></i>` : '');
-    const cutOK = sp && lp && usesTickPlan40(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
+    const cutOK = sp && lp && cutsOn(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
     const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
     const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
     // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点

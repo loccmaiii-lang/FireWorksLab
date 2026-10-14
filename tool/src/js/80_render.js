@@ -28,7 +28,8 @@ function segAt(b, age) { let s = b; while (s.next && age >= s.next.meta.t0) s = 
 // 某一时刻的面片矩形（相对爆点）：中心 = centerAt，尺寸 = 最大尺寸 × Size By Life
 function layerRectAt(m, L, age) {
   const s = sizeXY(m, age), c = centerAt(m, age);
-  if (m.rtHeadBall) { const p = m.rtHeadBall.pos(clamp(age, 0, m.rtHeadBall.T)); c[0] += p[0]; c[1] += p[2]; }
+  if (m.rtHeadBall) { const p = m.rtHeadBall.pos(clamp(age + (m.t0 || 0), 0, m.rtHeadBall.T)); c[0] += p[0]; c[1] += p[2]; }     // 4.9.89 A4：入点以后从这一刻的弹道接上
+  else if (m.full && !m.full.headOnly) { c[0] += m.full.cx || 0; c[1] += (m.full.vz || 0) * age; }     // 4.9.89（导出排查 A15）：多层里的合成一张和单层回放一样——横向偏 cx、面片按 rtFarVz 往上走（以前 Comet 偏 −0.29 m、Silver −0.9 m）
   const w = m.Ww * L.scale * s[0], h = m.Wh * L.scale * s[1], cx = (L.mirror ? -c[0] : c[0]) * L.scale, cy = c[1] * L.scale;
   return [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
 }
@@ -160,17 +161,17 @@ function prepSlot(slot, P, gen) {
 function drawLiveScene(slot, P, t, view, ppm) {
   setParticleProfile(P);
   if (rtPcFull(P)) {
-    if (!slot.rtFull) slot.rtFull = makeRiseTailFullRenderer(P, rtLoopInfo(P), rtBallistic(P), 0);
+    if (!slot.rtFull) { const Pf = { ...P, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 }; slot.rtFull = makeRiseTailFullRenderer(Pf, rtLoopInfo(Pf), rtBallistic(Pf), 0); }     // 4.9.89 B4：和烘焙一样 GPU 那份火花也画（合成一张里火花全在贴图）
     slot.rtFull.draw(t, view, ppm, 1); return { stars: 1, sparks: slot.rtFull.slots };
   }
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
   if (isTrail(P)) {
-    // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
-    const T = riseInfo(P).ta, F = layoutOf(P).F;
+    // 随体坐标里实时模拟：上升段连续播放，到顶后按引擎回放选的那一版消散熄灭（4.9.89 导出排查 B7：以前一律按 20 fps 版约 3.2 s，回放 / 导出默认是 30 fps 版约 2.13 s）
+    const T = riseInfo(P).ta, F = layoutOf(P).F, fadeFps = state.trailFade === 1 ? 20 : 30;
     if (!slot.trailR) slot.trailR = trailRendererFor(P);
     const R = slot.trailR, Tp = R.Tp, fEnd = Math.floor(((T % Tp) / Tp) * F + 1e-6) % F;
     if (t <= T) { R.stop = -1; R.stopE = -1; R.fadeK = 1; R.frameT = null; R.draw(t % Tp, view, ppm, 1, 0, 0); }
-    else { trailFadeSetup(R, P, fEnd, F / 20); R.frameT = null; R.draw(R.stop + (t - T), view, ppm, 1, 0, 0); }
+    else { trailFadeSetup(R, P, fEnd, F / fadeFps); R.frameT = null; R.draw(R.stop + (t - T), view, ppm, 1, 0, 0); }
     return { stars: 1, sparks: R.slots };
   }
   const R = liveRenderer40(slot, P); drawFrameSamples40(P, slot.plan40, R, t, view, ppm);
@@ -200,14 +201,16 @@ function renderLive() {
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
   const t = Math.min(state.view==='export'?engineTick(state.t):state.t, P.duration);
-  const view = sceneView(P, m, sa), ppm = rgT.w / (2 * view[2]);
-  rgT.clear(); rgT.bind(); additive(true);
+  const view0 = sceneView(P, m, sa), ppm = rgT.w / (2 * view0[2]);
+  // 4.9.89（导出排查 B13）：V5 尾缀的长度跟速度变（引擎里 Size By Life 的 Y 绕星头压，导出 / 回放都有）——实时以前不压；这里同样绕星头（随体坐标 y = 0）把竖向压 sy 倍
+  const sy = isTrail(P) && m.sizeKeysRise ? (t <= m.T ? evalKeys(m.sizeKeysRise, clamp(t / m.T, 0, 1)) : m.sizeKeysRise[m.sizeKeysRise.length - 1][1]) : 1, view = sy !== 1 ? [view0[0], view0[1] / sy, view0[2], view0[3] / sy] : view0;
+  rgT.clear(); rgT.bind(); additive(true); if (sy !== 1) PPMY = rgT.h / (2 * view[3]);
   const info = drawLiveScene(sa, P, familyOf(P.type) === 'ground' ? state.t : t, view, ppm);
-  additive(false);
+  PPMY = 0; additive(false);
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
   gl.uniform1f(pr.u.uEH, fixedExposure(P)); gl.uniform1f(pr.u.uET, fixedExposure(P)); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, P.outMode === 'combined' ? 1 : 0);
-  setMatUniforms(pr, state.M, t); drawQuad();
+  setMatUniforms(pr, isTrail(P) ? { ...state.M, headInt: intOr1(state.M.headInt) * (P.trBright || 1) } : state.M, t); drawQuad();     // 4.9.89 B13：V5 的「引擎亮度倍数」实时也乘（回放、导出一直乘）
   post(-1);
   hudText = isPhys(P) ? `升空尾缀 · 物理实时模拟 · 飞行 ${Math.min(t, P.phT).toFixed(2)} / ${P.phT} s${t > P.phT ? '（已开花，火花燃尽中）' : ''} · 画面里火花 ${info.sparks.toLocaleString()} 颗 · 视野 ${P.phView} m`
     : `实时物理 · ${P.engine === 'gpu' ? 'GPU' : 'CPU'} · 星 ${info.stars} · 火花槽位 ${info.sparks.toLocaleString()}`;

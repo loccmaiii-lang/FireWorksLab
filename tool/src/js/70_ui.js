@@ -437,6 +437,7 @@ function syncExport() {
     n.textContent = ec !== P.cols || er !== P.rows ? `实际 ${ec} × ${er}（单格 ${Math.round(P.texW / ec)} px${oc ? '，按「单格」' : '，单格不小于 512'}）` : '';
   }
   $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom;
+  { const xo = $('#x-out'), multi = state.tab === 'combo'; xo.disabled = multi; xo.title = multi ? '多层效果：素材包一律星头火花合并（4.9.89 起预览也合并，看到的 = 导出的）；要分开只能单层导出' : ''; if (multi) xo.value = 'combined'; }     // 4.9.89 导出排查 A8
   $('#x-flip').checked = !!P.unitFlip; $('#flipBox').hidden = !(k === 'unit' || k === 'riseLoop');
   $('#x-autogrid').checked = !!P.autoGrid; $('#gridBox').hidden = k === 'master' || k === 'segments';
   $('#x-zoom').disabled = k !== 'master' && k !== 'segments'; $('#x-frame').disabled = k === 'loop' || k === 'riseLoop';
@@ -887,6 +888,7 @@ function refreshVisibility() {
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
+    if (vis && it.sel && it.optOK) { const sl = row.querySelector('select'); if (sl) for (const o of sl.options) { const def = it.options.find(x => String(x[0]) === o.value), ok = !def || !!it.optOK(def[0], P); o.disabled = !ok; o.hidden = !ok && o.value !== sl.value; } }     // 4.9.89 只给这个效果能用的选项（合成一张的帧数、没有星头的 GPU 光点）
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
     row.hidden = !vis || folded || lf || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
@@ -1175,7 +1177,10 @@ function setForm(f) {
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
 // 4.2.6：多层里每层的贴图尺寸、格子也按这一层自己的（不再强制 2048 / 最多 4×4；单格 ≥ 512 由取帧计划保证）
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: P.cols, rows: P.rows, chans: 4, outMode: keep && P.outMode ? P.outMode : 'combined', form: rtPcFull(P) ? 'emitset' : 'master', zoom: P.zoom === 'on' ? 'on' : 'off' });
+// 4.9.89（导出排查 A1 / A8 / A12 / A13，用户 10-14 13:12「Silver 点『随内容放大』有用，Comet 点了就没用」）：以前每一层都把「锚点」取景改成固定、单通道改成 RGBA、
+//   PC 不是合成一张的尾缀当空中大面片烘。现在面片取景（固定 / 随开花放大 / 锚点）、通道数、尾缀（循环层 + 粒子）照这一层自己的；
+//   星头火花一律合并：多层素材包本来就合并输出（引擎材质灰度查 Ramp），以前预览按「分开」烘、导出又合并，看到的和导出的不一样（右栏那一行变灰写原因）
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: P.cols, rows: P.rows, chans: [1, 2, 3, 4].includes(+P.chans) ? +P.chans : 4, outMode: 'combined', form: isEmit(P) ? 'emitset' : 'master', zoom: P.zoom === 'on' || P.zoom === 'anchor' ? P.zoom : 'off' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 function libByType(t) {
   if (t.startsWith('rep:')) return state.lib.find(e => e.rep === t.slice(4));

@@ -19,7 +19,14 @@ const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星�
   OUT_MOBILE = [['seq', '序列'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']];
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
-function layerOut(L) { const o = (L && L.out) || {}; return { pc: OUT_PC_KINDS.includes(o.pc) ? o.pc : 'seq', mobile: OUT_MOBILE_KINDS.includes(o.mobile) ? o.mobile : 'seq' }; }
+function layerOut(L) {
+  const o = (L && L.out) || {}; let pc = OUT_PC_KINDS.includes(o.pc) ? o.pc : 'seq', mobile = OUT_MOBILE_KINDS.includes(o.mobile) ? o.mobile : 'seq';
+  // 4.9.89（导出排查 A10）：尾缀层（循环层 + 粒子）只能按尾缀自己的产物出或不出——单束 / GPU 光点 / 单帧是礼花的（以前选了光点出一个空壳发射器）；
+  //   尾缀自己在单层产物表里选了「手机：不出」照它（以前多层里不认，照样出手机）
+  const e = L && L.lib && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null;
+  if (e && e.P && typeof isEmit === 'function' && isEmit(e.P)) { if (pc !== 'off') pc = 'seq'; if (mobile !== 'off') mobile = e.P.outMobile === 'off' ? 'off' : 'seq'; }
+  return { pc, mobile };
+}
 // ---- 4.9.80 多层的手机格「自动」（用户 10-13 20:00「最近导出功能的Bug有点多，可以排查一遍」→ 导出排查 ①）----
 // 以前手机格缺省每层都出「序列」：多层烟花同一时刻有两张大序列，规范 v1 §6（中低配同一时刻 1 张大序列、≤ 3 个发射器）一律被导出拦截拦下（4.9.69 起，引菊 → 锦就是）。
 // 现在手机格没手动选过的层 = 自动：按层号先后，这一层的大序列和前面已经出手机的层同一时刻都在播、或手机发射器会超过 3 个 → 这一层手机不出；不冲突照旧出序列。
@@ -57,6 +64,7 @@ function comboMobilePlan(xs) {
   const used = [], out = []; let n = 0;
   (xs || []).forEach((x, i) => {
     const o = layerOut(x.L), manual = layerMobileManual(x.L) || !(x.b && ['master', 'segments'].includes(x.b.form)); let kind = o.mobile, why = '';     // 自动只管大面片母版层（产物表能选的那种）；尾缀等照旧
+    if (kind === 'off' && x.b && x.b.form === 'emitset' && x.b.P && x.b.P.outMobile === 'off' && !(x.L.out && x.L.out.mobile === 'off')) why = '尾缀自己选了「手机：不出」';     // 4.9.89 A10
     const u = layerMobileUse(x.L, x.b, kind);
     if (!manual && kind !== 'off') {
       const hit = used.find(q => q.wins.some(([a0, a1]) => u.wins.some(([b0, b1]) => a0 < b1 - 1e-6 && b0 < a1 - 1e-6)));

@@ -35,7 +35,15 @@ function myMigrateComboSaves() {
 }
 // 新建：先在花型库里选第一层（模板或现有效果的层），再起名字
 function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第一层（之后可以再加层）', onPick: myCreate }); }
+// 4.9.89（导出排查 A12）：多层 / 我的效果里的尾缀层只认「PC：近段 + 远段合成一张」。别的尾缀形态（RT6 全套、V5、上升循环、物理尾缀）多层的烘焙 / 导出 / 回放没接，
+//   以前被当成空中大面片烘，画面和导出都不对 → 加层 / 新建 / 存成我的效果时拦下、写原因（现有的我的效果里没有这种层）
+function multiLayerBlock(P) {
+  if (!P || familyOf(P.type) !== 'rise' || (isEmit(P) && rtPcFull(P))) return '';
+  return isEmit(P) ? '这个尾缀的 PC 是「近段 + 远段 + 粒子」：多层 / 我的效果里只能放 PC「近段 + 远段合成一张」的尾缀（单层交付清单产物表里先把 PC 改成合成一张）；全套请在单层里导出'
+    : '这种尾缀（V5 / 上升循环 / 物理尾缀）不能放进多层 / 我的效果：多层的烘焙、导出、回放都没接这种形态，请在单层里导出';
+}
 async function myCreate(key) {
+  { const why = multiLayerBlock(mySrc(key).P); if (why) { flash(why, true, 9000); return; } }
   const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', `新效果 ${n}`, '新建');
   if (name == null) return;
   const s = mySrc(key), id = 'fx' + Date.now().toString(36);
@@ -84,7 +92,8 @@ function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     //
 // ---------------- 层：加、删、复制、改名、上下挪 ----------------
 function myAddLayer() { pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
 async function myAddLayerFrom(key) {
-  const s = mySrc(key), e = await libOwn({ type: s.type, P: s.P, M: s.M });
+  const s = mySrc(key); { const why = multiLayerBlock(s.P); if (why) { flash(why, true, 9000); return; } }     // 4.9.89 A12
+  const e = await libOwn({ type: s.type, P: s.P, M: s.M });
   state.layers.push(newLayer(e, { title: s.title, lid: myLid() }));
   myLayersChanged(); selectComboLayer(state.layers.length - 1); flash(`加了第 ${state.layers.length} 层「${s.title}」`);
 }
