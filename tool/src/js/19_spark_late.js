@@ -43,12 +43,14 @@ void lateStep(inout vec3 p,inout vec3 v,vec3 U0,vec3 g,float k,float c,float t,f
     p+=sw>1e-6 ? U*h+w/sw*log(e)/c : v*h;v=U+w/e;v=linV(v,U,g,k,h*.5);
   }else{p=mot(p,v,U,g,k,h);v=motv(v,U,g,k,h);}
 }
-void lateMotion(vec3 sp,vec3 vel,vec3 U,vec3 g,float born,float age,float burn,out vec3 p,out vec3 v){
+// 4.9.97（导出排查 V4）：阻力系数做参数——松叶分叉的阻力是 uK × 分叉阻力倍数（uBrKd），以前分叉不走这里、燃尽后的气流吹不到它
+void lateMotionK(vec3 sp,vec3 vel,vec3 U,vec3 g,float k,float born,float age,float burn,out vec3 p,out vec3 v){
   float pre=clamp(burn-born,0.,age);
-  if(uCq>0.)motQ(sp,vel,U,g,uK,uCq,pre,p,v);else{p=mot(sp,vel,U,g,uK,pre);v=motv(vel,U,g,uK,pre);}
+  if(uCq>0.)motQ(sp,vel,U,g,k,uCq,pre,p,v);else{p=mot(sp,vel,U,g,k,pre);v=motv(vel,U,g,k,pre);}
   float rem=age-pre;int n=max(1,int(ceil(rem*60.)));float h=rem/float(n);
-  for(int i=0;i<n;i++)lateStep(p,v,U,g,uK,uCq,born+pre+float(i)*h,h,burn);
+  for(int i=0;i<n;i++)lateStep(p,v,U,g,k,uCq,born+pre+float(i)*h,h,burn);
 }
+void lateMotion(vec3 sp,vec3 vel,vec3 U,vec3 g,float born,float age,float burn,out vec3 p,out vec3 v){ lateMotionK(sp,vel,U,g,uK,born,age,burn,p,v); }
 `;
 
 // 只在启用末段控制时编译受力变体，缺省着色器保持原指令，避免影响旧图和编译开销。
@@ -63,6 +65,11 @@ function sparkLateSource(source) {
     float curveAge=clamp(age/life,0.,1.),curveGate=1.;
     if(uLateCurves>.5){curveAge=clamp((uT-parentBurn)/max(.05,tb+life-parentBurn),0.,1.);curveGate=lateGate(uT,parentBurn);}
     float gl=emb ?`);
+  // 4.9.97（导出排查 V4，用户 10-14 14:14 按推荐「松叶分叉只跟气流、不跟曲线」）：分叉火花——母火花到分叉那一刻、分叉自己之后的运动都接上燃尽后的气流（燃尽前逐字照旧）
+  put('    vec3 pc, vc; if(uCq>0.) motQ(sp,vel,U,g,uK,uCq,ts,pc,vc); else { pc=mot(sp,vel,U,g,uK,ts); vc=motv(vel,U,g,uK,ts); }',
+    '    vec3 pc, vc; bool lateBr=uLateWind>0. && uT>parentBurn;\n    if(lateBr) lateMotionK(sp,vel,U,g,uK,tb,ts,parentBurn,pc,vc); else if(uCq>0.) motQ(sp,vel,U,g,uK,uCq,ts,pc,vc); else { pc=mot(sp,vel,U,g,uK,ts); vc=motv(vel,U,g,uK,ts); }');
+  put('    if(uCq>0.){ vec3 vb; motQ(pc,vc*uBrInh+dv,U,g,uK*uBrKd,uCq,a2,p,vb); } else p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);',
+    '    if(lateBr){ vec3 vb; lateMotionK(pc,vc*uBrInh+dv,U,g,uK*uBrKd,tb+ts,a2,parentBurn,p,vb); } else if(uCq>0.){ vec3 vb; motQ(pc,vc*uBrInh+dv,U,g,uK*uBrKd,uCq,a2,p,vb); } else p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);');
   for (const c of ['uCvEmB', 'uCvEmS', 'uCvSpB', 'uCvSpS'])
     put(`max(0.,CV(${c},${c}N,clamp(age/life,0.,1.)))`, `mix(1.,max(0.,CV(${c},${c}N,curveAge)),curveGate)`);
   return source;

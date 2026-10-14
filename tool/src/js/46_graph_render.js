@@ -36,7 +36,9 @@ function graphInitGL(){if(graphVAO)return;graphVAO=gl.createVertexArray();gl.bin
 }
 function makeGraphRenderer(P){const graph=SparkGraph.build(P.sparkGraph);graphInitGL();return {
  Tp:graph.recipe.period,slots:graph.all.length,graph,cameraIntegrated:!!(P.cameraMotion||P.cameraDof),
- draw(ts,view,ppm,w){if(this.cameraIntegrated)return drawCameraGraph(graph,P,ts,view,ppm,w,this.solo||(LIVE_VIEW?graphSolo:null));const g=SparkGraph.geometry(graph,ts,this.solo||(LIVE_VIEW?graphSolo:null)),pr=graphProgram;gl.useProgram(pr.p);gl.bindVertexArray(graphVAO);gl.bindBuffer(gl.ARRAY_BUFFER,graphBuffer);gl.bufferData(gl.ARRAY_BUFFER,g.data,gl.DYNAMIC_DRAW);
+ draw(ts,view,ppm,w){if(this.cameraIntegrated)return drawCameraGraph(graph,P,ts,view,ppm,w,this.solo||(LIVE_VIEW?graphSolo:null));
+ if(!window.__graphLegacyFlat)return drawFlatGraph(graph,P,ts,view,ppm,w,this.solo||(LIVE_VIEW?graphSolo:null));     // 4.9.97 V1 / V3：镜头关也走镜头的核（window.__graphLegacyFlat 只给对照检查用，不是参数）
+ const g=SparkGraph.geometry(graph,ts,this.solo||(LIVE_VIEW?graphSolo:null)),pr=graphProgram;gl.useProgram(pr.p);gl.bindVertexArray(graphVAO);gl.bindBuffer(gl.ARRAY_BUFFER,graphBuffer);gl.bufferData(gl.ARRAY_BUFFER,g.data,gl.DYNAMIC_DRAW);
  gl.uniform4fv(pr.u.uView,view);gl.uniform2f(pr.u.uResolution,ppm*view[2]*2,(PPMY||ppm)*view[3]*2);gl.uniform1f(pr.u.uW,w);gl.uniform4fv(pr.u.uChan,[1,0,0,0]);gl.drawArraysInstanced(gl.TRIANGLES,0,6,g.data.length/11);return g.data.length/11;},dispose(){}
 };}
 function graphPlan(P){const b=P.sparkGraph.bounds,pl=loopPlan(P,b,P.sparkGraph.period),F=pl.L.F;

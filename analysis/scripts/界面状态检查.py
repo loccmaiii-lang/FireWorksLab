@@ -44,6 +44,7 @@
   R8 4.9.78 已通过的 RT6 左栏分档、尺寸档按时间缩（XS 1.69 s、坝顶低层 80 m）
   R12 4.9.89 导出接线（导出排查 A1–A17 / B4）：多层锚点 / 通道 / 尾缀形态、合成一张入出点按钮、纯星头入出点、帧数只留两种、手动格子按停几 tick 加行、统计写模式、变灰、尾缀层产物格、多层面片位置、格子下拉、空壳发射器
   R13 4.9.96 纯星头 CPU 粒子 + 开花闪光单独导出（导出排查 H1 / B1 / B2 / A11 / A14）：PC 软圆点、层产物 / 尾缀层产物表、Flash（入点前 / 单束 / 光点、手机上限、大小模型、导出指纹）、尺寸档按时间缩白名单
+  R14 4.9.97 分层粒子图画面（导出排查 V4 / V2 / V3 / V1）：松叶分叉接燃尽后气流、镜头核 σ 下限 0.55 像素、镜头关世界等比、镜头关走镜头的核（历史线光量 = 一颗点）
   R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -1650,6 +1651,53 @@ R13_JS = r"""async () => {
 async def r13(pg):
     """4.9.96 纯星头 CPU 粒子 + 开花闪光单独导出（用户 10-14 13:12 / 14:14）：PC 软圆点 / 路线 / 层产物 / 尾缀层产物表、Flash 发射器（入点前 / 单束 / 光点、手机上限、大小模型、导出指纹）、尺寸档按时间缩的白名单"""
     r = await pg.evaluate(R13_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
+R14_JS = r"""async () => {
+  // 4.9.97（导出排查 V4 / V2 / V3 / V1，用户 10-14 13:12「全部要修」）：松叶分叉接燃尽后气流、镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）
+  const out = {}, bad = [], approx = (a, b, e) => Math.abs(a - b) <= e;
+  // V4：分叉火花（母火花亮度剔掉）燃尽前和没风时逐像素一样，燃尽后被风吹动（以前一动不动）
+  { const P0 = derive(structuredClone(replicaPM('FC6O').P)), mk = w => ({ ...P0, branch: 2, sparkTailAfterBurn: 0, sparkBrightCurve: '0:0,1:0', sparkLateWind: w });
+    const N = 96, T = new Target(N, N, gl.RGBA16F), view = [0, -10, 60, 60], ppm = N / 120;
+    const shot = (P, t) => { const tr = buildTrack(P); T.clear(); T.bind(); additive(true); setParticleProfile(P); drawSparksGPU(tr, t, view, ppm, [1, 0, 0, 0], 1, 0); additive(false); const a = new Float32Array(N * N * 4); T.bind(); gl.readPixels(0, 0, N, N, gl.RGBA, gl.FLOAT, a); return a; };
+    const diff = t => { const a = shot(mk(1e-6), t), b = shot(mk(0.6), t); let d = 0, m = 0; for (let i = 0; i < a.length; i += 4) { d = Math.max(d, Math.abs(a[i] - b[i])); m = Math.max(m, a[i]); } return m > 0 ? d / m : 0; };
+    out.v4 = [+diff(0.8).toExponential(1), +diff(1.6).toFixed(3)]; T.dispose();
+    if (!(out.v4[0] === 0 && out.v4[1] > 0.005)) bad.push('V4 分叉没接燃尽后气流（燃尽前差 / 燃尽后差）：' + JSON.stringify(out.v4)); }
+  // V2：σ 下限 0.55 像素——亚像素粒子随位置的总光量起伏 < 2 %（以前 0.44），快速质量的拉丝沿线最暗 / 最亮 > 0.9（以前 0.25）
+  { const N = 96, T = new Target(N, N, gl.RGBA16F), view = [0, 0, 10, 10], ppm = N / 20, rnd = mulberry32(11); cameraGraphInit();
+    const draw = items => { T.clear(); T.bind(); additive(true); drawCameraItems(new Float32Array(items), {}, view, ppm, 1); additive(false); const a = new Float32Array(N * N * 4); T.bind(); gl.readPixels(0, 0, N, N, gl.RGBA, gl.FLOAT, a); return a; };
+    const tot = a => { let s = 0; for (let i = 0; i < a.length; i += 4) s += a[i]; return s; }, xs = [];
+    for (let i = 0; i < 60; i++) { const x = (rnd() - .5) * 8, y = (rnd() - .5) * 8, r = .1 / ppm; xs.push(tot(draw([x, y, x, y, r, r, 1, 1, 1, 0, 0, 0]))); }
+    const m = xs.reduce((a, b) => a + b, 0) / xs.length, cv = Math.sqrt(xs.reduce((a, b) => a + (b - m) ** 2, 0) / xs.length) / m;
+    const it = [], n = 30, r = .1 / ppm; for (let j = 0; j < n; j++) { const x = -3 + j * 1.2 / ppm; it.push(x, .13 / ppm, x, .13 / ppm, r, r, 1 / n, 1 / n, 1, 0, 0, 0); }
+    const a = draw(it), col = []; for (let px = 0; px < N; px++) { let s = 0; for (let py = 0; py < N; py++) s += a[(py * N + px) * 4]; col.push(s); }
+    const x0 = Math.ceil(7 * ppm) + 4, x1 = Math.floor((7 + (n - 1) * 1.2 / ppm) * ppm) - 4, seg = col.slice(x0, x1), mm = Math.min(...seg) / Math.max(...seg);
+    out.v2 = [+cv.toFixed(4), +mm.toFixed(3)]; T.dispose();
+    if (!(cv < 0.02) || !(mm > 0.9)) bad.push('V2 亚像素起伏 / 快速质量串珠：' + JSON.stringify(out.v2)); }
+  // V3：横竖不等比的格子里，镜头关的圆点在世界里是圆的（σy / σx = 1 ± 1 %）
+  { const N = 96, T = new Target(N, N, gl.RGBA16F), view = [0, 0, 2, 3], ppm = N / 4, ppmY = N / 6; cameraGraphInit();
+    T.clear(); T.bind(); additive(true); PPMY = ppmY; drawCameraItems(new Float32Array([0, 0, 0, 0, .3, .3, 1, 1, 1, 0, 0, 0]), {}, view, ppm, 1); PPMY = 0; additive(false);
+    const a = new Float32Array(N * N * 4); T.bind(); gl.readPixels(0, 0, N, N, gl.RGBA, gl.FLOAT, a); let s = 0, sx = 0, sy = 0, sxx = 0, syy = 0;
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { const v = a[(y * N + x) * 4], wx = (x + .5) / ppm - 2, wy = (y + .5) / ppmY - 3; s += v; sx += v * wx; sy += v * wy; sxx += v * wx * wx; syy += v * wy * wy; }
+    out.v3 = +(Math.sqrt(syy / s - (sy / s) ** 2) / Math.sqrt(sxx / s - (sx / s) ** 2)).toFixed(4); T.dispose();
+    if (!approx(out.v3, 1, 0.01)) bad.push('V3 镜头关横竖拉伸：' + out.v3); }
+  // V1：镜头关走 flatGeometry（和开同一个核）；历史线每颗粒子的光量 = 一颗点（2π r²），不随拖尾变长
+  { const P = derive(structuredClone(replicaPM('SGR1').P)), Poff = { ...P, cameraMotion: 0, cameraDof: 0 }, g = SparkGraph.build(Poff.sparkGraph), ppm = 30;
+    const f = SparkGraph.flatGeometry(g, .9, ppm), d = f.data, per = new Map();
+    for (let i = 0; i < d.length; i += 12) { const k = d[i + 10], rp = d[i + 4] * ppm, len = Math.hypot(d[i + 2] - d[i], d[i + 3] - d[i + 1]) * ppm; per.set(k, (per.get(k) || 0) + d[i + 6] * (2 * Math.PI * rp * rp + Math.sqrt(2 * Math.PI) * rp * len)); }
+    const q = g.all.find(q => { const e = q.e, age = SparkGraph.mod(.9 - q.birth, g.recipe.period); return e.shape === 'line' && e.history > 0 && age < q.life && age > e.history && per.has(Math.fround(q.phase)); });
+    let ok = !!q, want = 0, got = 0; if (q) { const e = q.e, age = SparkGraph.mod(.9 - q.birth, g.recipe.period), u = age / q.life, fade = Math.min(1, age / .002) * Math.min(1, (q.life - age) / .008), I = q.power * SparkGraph.curve(e.brightCurve, u) * fade, rad = q.width * .5 * SparkGraph.curve(e.sizeCurve, u) * ppm; want = I * 2 * Math.PI * rad * rad; got = per.get(Math.fround(q.phase)); }
+    let used = ''; const odf = window.drawFlatGraph; window.drawFlatGraph = (...a) => { used = 'flat'; return 0; };
+    try { const R = makeGraphRenderer(Poff); R.draw(.5, [0, 0, 10, 10], 20, 1); } finally { window.drawFlatGraph = odf; }
+    out.v1 = [used, +(want ? got / want : 0).toFixed(4)];
+    if (used !== 'flat' || !ok || !approx(got / want, 1, 1e-3)) bad.push('V1 镜头关没走镜头的核 / 历史线光量没归一：' + JSON.stringify(out.v1)); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r14(pg):
+    """4.9.97 分层粒子图画面（用户 10-14 13:12「全部要修」）：V4 松叶分叉接燃尽后气流、V2 镜头核 σ 下限 0.55 像素（亚像素不闪、快速质量不成串珠）、V3 镜头关世界等比、V1 镜头关走镜头的核（历史线光量 = 一颗点）"""
+    r = await pg.evaluate(R14_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
 
 async def w1(pg):
@@ -3894,7 +3942,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

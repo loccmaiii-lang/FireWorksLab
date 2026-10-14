@@ -1,0 +1,9 @@
+{
+ "id": "NFE-SGS1-G97",
+ "type": "export",
+ "effect": "sparkler_graph",
+ "entry": "SGS1",
+ "name": "Sparkler_Graph",
+ "priority": 2,
+ "note": "导出（23）· 烘焙器 4.9.97（导出排查 V2，用户 10-14 13:12「全部要修」）：镜头核 σ 下限 0.28 → 0.55 像素（亚像素火星不再随位置一闪一闪、总光量不变，最细火星更柔）→ 参数不动重导、看实包回放。"
+}

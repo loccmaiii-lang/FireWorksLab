@@ -103,7 +103,8 @@ function entryVer(e) {
   (e.kind === 'combo' ? e.layerIds || [] : [e.id]).forEach((id, i) => { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f]) + ((P.zoom === 'on' || P.zoom === 'anchor') && OUTPUT_VER.zoom ? '-zoom' + OUTPUT_VER.zoom : ''));     /* 4.9.33 Zoom 取景单独一档；4.9.89（导出排查 A17）锚点也算 */
     if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots);
     if (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 && (+P.cutIn > 0 || ['unit', 'dots'].includes((outs[i] || {}).pc || P.outPC))) fams.add('flash' + OUTPUT_VER.flash);     // 4.9.96 B1 / B2
-    if (isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P)) fams.add('head' + OUTPUT_VER.head); } } catch (err) { } });     // 4.9.96 H1   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
+    if (isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P)) fams.add('head' + OUTPUT_VER.head);     // 4.9.96 H1
+    if (P.sparkGraph && OUTPUT_VER.graph) fams.add('graph' + OUTPUT_VER.graph); } } catch (err) { } });     // 4.9.97 V1 / V2   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
   let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, ''); if (sp) ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期
   const v = e.ver + '·' + ([...fams].sort().join('+') || 'x') + ss;
   _entryVer.set(key, v); return v;

@@ -1,0 +1,41 @@
+{
+ "id": "NFR-SG-G97",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：窜天猴尾焰 / 仙女棒（4.9.97 重导后）",
+ "note": "导出（23）· 4.9.97 镜头核 σ 下限改了以后的实包回放（一个循环 7 个时刻）。",
+ "steps": [
+  {
+   "name": "窜天猴尾焰（RocketTail_Graph）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/RocketTail_Graph.jpg",
+    "analysis/local/输出/素材包/RocketTail_Graph",
+    "--times",
+    "0.05,0.15,0.3,0.45,0.6,0.75,0.9"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "仙女棒（Sparkler_Graph）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Sparkler_Graph.jpg",
+    "analysis/local/输出/素材包/Sparkler_Graph",
+    "--times",
+    "0.05,0.15,0.3,0.45,0.6,0.75,0.9"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ]
+}

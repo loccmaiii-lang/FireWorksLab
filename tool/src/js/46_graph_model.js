@@ -84,6 +84,27 @@ const SparkGraph = (() => {
       }
     }return {data:new Float32Array(out),counts};
   }
+  // 4.9.97（导出排查 V1 / V3，用户 10-14 13:12「全部要修」）：镜头「关」也走镜头那个核（46_camera_render.js，世界等比、高斯按面积归一化），coc = 0、不积分。
+  //   以前「关」是另一个着色器：历史线 ≤ 12 段每段按自己的面积出光，越快拖得越长越亮（细长暗丝占「关」能量 56%）；点的核 σ = r/2（镜头 σ = r）；半径只按横向像素（SGR1 横竖不等比时拉伸）。
+  //   现在每颗粒子的总光量 = 镜头开时同一颗（2π r²，和拖多长无关）：历史线 ≤ 12 段胶囊按「亮度坡度 × 面积」分这份光。格式同 cameraGeometry（12 个数一项）
+  function flatGeometry(graph,time,ppm,only=null){
+    const out=[],counts={},r=graph.recipe,RT=Math.sqrt(TAU);
+    for(const q of graph.all){const e=q.e;if(e.enabled===false||(only&&e.id!==only))continue;
+      const age=mod(time-q.birth,r.period);if(age>=q.life)continue;
+      counts[e.id]=(counts[e.id]||0)+1;
+      const u=age/q.life,fade=Math.min(1,age/.002)*Math.min(1,(q.life-age)/.008),I=q.power*curve(e.brightCurve,u)*fade;
+      if(I<=0)continue;
+      const radius=q.width*.5*curve(e.sizeCurve,u),p=sample(q,age).p;
+      if(e.shape==='line'&&e.history>0){
+        const start=Math.max(0,age-e.history),n=Math.max(1,Math.min(12,Math.ceil((age-start)*240))),dt=(age-start)/n,seg=[];let a=sample(q,start).p,wsum=0;
+        for(let j=0;j<n;j++){const b=sample(q,start+(j+1)*dt).p,f=(j+.5)/n,rj=radius*(e.taper+(1-e.taper)*f),rp=rj*ppm,len=Math.hypot(b[0]-a[0],b[2]-a[2])*ppm,A=TAU*rp*rp+RT*rp*len,w=.22+.78*f;
+          seg.push([a,b,rj,w]);wsum+=w*A;a=b;}
+        const Apt=TAU*(radius*ppm)**2;
+        for(const [a2,b2,rj,w] of seg){const Ij=wsum>0?I*w*Apt/wsum:0;out.push(a2[0],a2[2],b2[0],b2[2],rj,rj,Ij,Ij,1,0,q.phase,0);}
+      }else{const ang=q.phase+e.spin*age*Math.PI/180,sz=radius*(e.shape==='fragment'?Math.max(.25,Math.abs(Math.cos(q.phase+e.twist*age*Math.PI/180))):1),len=e.shape==='line'?0:radius*(e.aspect-1)*2;
+        out.push(p[0],p[2],p[0]+Math.cos(ang)*len,p[2]+Math.sin(ang)*len,sz,sz,I,I,e.shape==='fragment'?2:1,ang,q.phase,0);}
+    }return{data:new Float32Array(out),counts};
+  }
   // 曝光窗口内逐粒积分。每项额外保存真实Y深度计算出的散焦半径；不重复画历史拖尾。
   function cameraGeometry(graph,time,P,ppm,only=null){
     const c=CameraImaging.validate(P),[a,b]=CameraImaging.window(c,time),width=b-a,r=graph.recipe,out=[],counts={},quality=CameraImaging.quality(c);
@@ -108,7 +129,7 @@ const SparkGraph = (() => {
       }
     }return{data:new Float32Array(out),counts};
   }
-  return {hash,mod,curve,dist,direction,sample,validate,build,geometry,cameraGeometry};
+  return {hash,mod,curve,dist,direction,sample,validate,build,geometry,flatGeometry,cameraGeometry};
 })();
 
 // =====================================================================
