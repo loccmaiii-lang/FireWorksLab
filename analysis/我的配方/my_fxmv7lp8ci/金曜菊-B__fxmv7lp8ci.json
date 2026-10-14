@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-14 15:54",
+ "at": "2026-10-14 16:18",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -17,7 +17,7 @@
     "L": {
      "scale": 1,
      "delay": 0,
-     "rate": 1,
+     "rate": 1.5,
      "mirror": false,
      "stages": [
       [
@@ -383,7 +383,7 @@
     "L": {
      "scale": 1,
      "delay": 0,
-     "rate": 1,
+     "rate": 1.5,
      "mirror": false,
      "stages": [
       [
@@ -696,7 +696,7 @@
      "fpsFloor": 24,
      "frameBudget": "motion",
      "pageTarget": 1,
-     "maxHold": 4,
+     "maxHold": 3,
      "maxHoldBurn": 3,
      "fpsBurst": 30,
      "burstSec": 0.5,
@@ -756,15 +756,11 @@
     "L": {
      "scale": 1,
      "delay": 0,
-     "rate": 1,
+     "rate": 1.5,
      "mirror": false,
      "stages": [
       [
        0,
-       "#ffb45a"
-      ],
-      [
-       2,
        "#b44dff"
       ]
      ],
@@ -795,7 +791,7 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 6.05,
+     "duration": 5.35,
      "seed": 7,
      "stars": 293,
      "burstR0": 0,
@@ -804,7 +800,7 @@
      "grav": 0.25,
      "speedJit": 8,
      "dirJit": 1.5,
-     "burn": 5,
+     "burn": 4.3,
      "burnJit": 12,
      "fade": 0.2,
      "lastFlare": 0,
@@ -826,7 +822,7 @@
      "unitRandom": 0,
      "endMode": "natural",
      "coolMode": 1,
-     "headSize": 0.55,
+     "headSize": 0.65,
      "headBright": 2.3,
      "flicker": 0.1,
      "headHaloOwn": 1,
