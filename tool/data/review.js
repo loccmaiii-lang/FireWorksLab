@@ -41623,7 +41623,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-C-G96",
 "type": "export",
-"state": "出错",
+"state": "已回来",
 "seen": false
 },
 {
@@ -44974,6 +44974,40 @@ var FW_EFFECTS = [
 "T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01_C.png",
 "T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01_HD.png",
 "T_EFX_FireWorks_GoldRayRocket_Saturn_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-MYJC-C-G96",
+"entry": "MYJC-C",
+"ver": "b1e561a2·flash4.9.96+master4.9.31",
+"time": "2026-10-14 21:32",
+"packages": [
+{
+"name": "GoldRayRocket_Core",
+"replica": "MYJC-C",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_R.png",
 "_检查",
 "cascade.json",
 "cascade_mobile.json",
@@ -48948,7 +48982,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-SGR1-G97",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
@@ -48979,6 +49013,38 @@ var FW_EFFECTS = [
 "T_RocketTail_Graph_Ramp.png"
 ],
 "sha256": "2b39e743972decf3fdfc9da65c85c56db354d63b432e20ba2b239547cdac3bb7"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-SGR1-G97",
+"entry": "SGR1",
+"ver": "c873b9ad·graph4.9.97+loop4.9.83",
+"time": "2026-10-14 21:32",
+"packages": [
+{
+"name": "RocketTail_Graph",
+"replica": "SGR1",
+"files": [
+"RocketTail_Graph.json",
+"RocketTail_Graph_Cascade参数.txt",
+"RocketTail_Graph_Mobile.json",
+"RocketTail_Graph_曲线.csv",
+"T_RocketTail_Graph.png",
+"T_RocketTail_Graph_Cutout.png",
+"T_RocketTail_Graph_FrameTest.png",
+"T_RocketTail_Graph_Mobile.png",
+"T_RocketTail_Graph_Mobile_Cutout.png",
+"T_RocketTail_Graph_Mobile_FrameTest.png",
+"T_RocketTail_Graph_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
 }
 ],
 "check": {
@@ -49024,7 +49090,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-SGS1-G97",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
@@ -49054,6 +49120,38 @@ var FW_EFFECTS = [
 "T_Sparkler_Graph_Ramp.png"
 ],
 "sha256": "e17313e159b28a7da9ae51896f64cd3ec5e8aeab96b39c21c2c6757a3f83994f"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "NFE-SGS1-G97",
+"entry": "SGS1",
+"ver": "7b78d809·graph4.9.97+loop4.9.83",
+"time": "2026-10-14 21:32",
+"packages": [
+{
+"name": "Sparkler_Graph",
+"replica": "SGS1",
+"files": [
+"Sparkler_Graph.json",
+"Sparkler_Graph_Cascade参数.txt",
+"Sparkler_Graph_Mobile.json",
+"Sparkler_Graph_曲线.csv",
+"T_Sparkler_Graph.png",
+"T_Sparkler_Graph_Cutout.png",
+"T_Sparkler_Graph_FrameTest.png",
+"T_Sparkler_Graph_Mobile.png",
+"T_Sparkler_Graph_Mobile_Cutout.png",
+"T_Sparkler_Graph_Mobile_FrameTest.png",
+"T_Sparkler_Graph_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
 }
 ],
 "check": {
