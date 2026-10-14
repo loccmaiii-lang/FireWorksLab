@@ -10,6 +10,7 @@
   4. 本机自动同步（GPU Queue 计划任务）最近一次成功是什么时候、连续跳过了多少次
   5. 生成文件 tool/FireworkBaker.html 是否落后于 更新记录.md（成品里嵌了待办，改了没重建会弄脏别人的工作树）
   6. 排队等合并的远端分支（状态清单里写着要合、但还没进 main 的）
+  7. 推送前的合入门禁钩子（.githooks/pre-push，导出排查 G2）有没有在这个工作副本启用
 """
 import os, re, subprocess, sys, json, datetime
 
@@ -72,6 +73,11 @@ def main():
                 warn.append(f'状态清单里排队要合并的分支 {name} 还没进 main（{n} 个提交）')
     except Exception as e:
         warn.append('读状态清单失败：' + str(e)[:80])
+
+    if os.path.isfile(os.path.join(ROOT, '.githooks', 'pre-push')):     # 2026-10-15 导出（23）G2：钩子目录在仓库里，但每个工作副本要自己启用一次
+        hp = git('config', '--get', 'core.hooksPath').replace('\\', '/').rstrip('/')
+        if hp not in ('.githooks', os.path.join(ROOT, '.githooks').replace('\\', '/')):
+            warn.append('推送前的合入门禁钩子没启用（' + (f'core.hooksPath = {hp}' if hp else '没设 core.hooksPath') + '）：在这个工作副本跑一次 git config core.hooksPath .githooks')
 
     for w in warn: print('⚠ ' + w)
     for b in bad: print('❌ ' + b)

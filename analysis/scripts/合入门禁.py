@@ -5,6 +5,8 @@
 
 用法：python3 analysis/scripts/合入门禁.py [--base origin/main] [--all] [--only 体检,构建,契约,导出,界面] [--scn 名字,…] [--out 结果.json] [--html 别的 FireworkBaker.html]
   不带参数：按 `git diff --name-only <base>...HEAD` + 没提交的改动决定跑哪几项（只改记录 / 文档时几秒就完）；--all 全跑。
+  --hook --base <远端原来的提交> --head <要推的提交>：pre-push 钩子用（`.githooks/pre-push`，导出排查 G2）。只看要推的那些提交，不算工作树里没提交的改动；
+    动了源码、而工作树里相关文件（源码 / 成品 / 检查脚本）有没提交的改动、或要推的不是 HEAD 时，在临时工作副本（git worktree，跑完删掉）里按要推的那个提交跑。
 退出码：0 = 可以推；1 = 有 ❌（先修）；2 = 检查本身出错。
 
 查什么（按改动挑，越靠前越快）：
@@ -20,7 +22,7 @@
   界面  动了 tool/src 时：界面状态检查.py 的 N3、W7、W37、R10、R11、X1（再加门禁登记的新项）。
 没做（后续）：动了渲染代码时的小图真烘光量对照（方案 G1 第 3 条）。
 """
-import argparse, asyncio, json, os, pathlib, subprocess, sys, time
+import argparse, asyncio, json, os, pathlib, shutil, subprocess, sys, tempfile, time
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'analysis' / 'scripts'))
@@ -306,14 +308,35 @@ def sh(*a, **k):
     return subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True, encoding='utf-8', errors='replace', **k)
 
 
-def changed_files(base):
+def changed_files(base, head='HEAD', committed_only=False):
     files = set()
-    r = sh('git', 'diff', '--name-only', f'{base}...HEAD')
+    r = sh('git', 'diff', '--name-only', f'{base}...{head}')
     if r.returncode == 0: files |= {x for x in r.stdout.splitlines() if x}
-    r = sh('git', 'status', '--porcelain', '-uno', '-z')
-    for ent in r.stdout.split('\0'):
-        if len(ent) > 3: files.add(ent[3:])
+    elif committed_only: raise RuntimeError(f'git diff {base}...{head} 失败：' + r.stderr.strip()[:200])
+    if not committed_only:
+        r = sh('git', 'status', '--porcelain', '-uno', '-z')
+        for ent in r.stdout.split('\0'):
+            if len(ent) > 3: files.add(ent[3:])
     return sorted(files)
+
+
+HOOK_PATHS = (*BUILD_INPUTS, *BUILD_OUTPUTS, 'analysis/scripts/')     # 钩子在原地跑的前提：这些文件和要推的提交一致
+
+
+def hook_in_temp(a, head_sha):
+    """要推的提交 ≠ 工作树（别的对话框没提交的改动、或推的不是 HEAD）：在临时工作副本里按要推的提交跑，跑完删掉"""
+    tmp = tempfile.mkdtemp(prefix='fwl-gate-')
+    r = sh('git', 'worktree', 'add', '--detach', '--force', tmp, head_sha)
+    if r.returncode != 0:
+        shutil.rmtree(tmp, ignore_errors=True)
+        print('❌ 临时工作副本建不起来：' + (r.stderr or r.stdout).strip()[:300], flush=True); return 2
+    try:
+        print(f'… 工作树里有没提交的相关改动 / 推的不是 HEAD：在临时工作副本 {tmp} 里按 {head_sha[:8]} 跑', flush=True)
+        args = [sys.executable, os.path.join(tmp, 'analysis', 'scripts', '合入门禁.py'), '--hook', '--inner', '--base', a.base, '--head', 'HEAD', '--budget', str(a.budget), '--jobs', str(a.jobs)]
+        if a.out: args += ['--out', os.path.abspath(a.out)]
+        return subprocess.run(args, cwd=tmp).returncode
+    finally:
+        sh('git', 'worktree', 'remove', '--force', tmp); shutil.rmtree(tmp, ignore_errors=True); sh('git', 'worktree', 'prune')
 
 
 def check_sync():
@@ -322,14 +345,14 @@ def check_sync():
     return r.returncode == 0, '；'.join(tail)[-600:]
 
 
-def check_build():
+def check_build(inner=False):
     dirty = sh('git', 'status', '--porcelain', '-uno', '--', *BUILD_INPUTS).stdout.strip()
     r = sh(sys.executable, 'tool/build.py')
     if r.returncode != 0:
         return False, '构建 / 静态检查没过：' + ' '.join(r.stdout.split())[-600:]
     diff = sh('git', 'diff', '--stat', 'HEAD', '--', *BUILD_OUTPUTS).stdout.strip()
     if diff and not dirty:
-        return False, '提交的成品和源码对不上（重新 build 以后变了，已经生成好，提交上去再推）：' + diff.splitlines()[-1]
+        return False, ('提交的成品和源码对不上：在你的工作副本跑 python tool/build.py，把成品一起提交再推（这是临时工作副本里查的）：' if inner else '提交的成品和源码对不上（重新 build 以后变了，已经生成好，提交上去再推）：') + diff.splitlines()[-1]
     return True, ('构建通过（工作树里有没提交的源码改动，成品按工作树生成）' if dirty else '构建通过，成品和提交的一致')
 
 
@@ -383,9 +406,20 @@ def main():
     ap.add_argument('--html', default=''); ap.add_argument('--budget', type=float, default=150, help='每个代表效果最多测几秒（超了的行写「超时没测」）')
     ap.add_argument('--jobs', type=int, default=2, help='并行几个页面（默认 2）')
     ap.add_argument('--compare', default='', help='旧版 FireworkBaker.html：所有条目 + 花型模板新旧两版导出逐项对照（不跑别的检查）'); ap.add_argument('--ids', default='')
+    ap.add_argument('--hook', action='store_true', help='pre-push 钩子用：只看 base...head 这些要推的提交（见文件头）')
+    ap.add_argument('--head', default='HEAD', help='--hook：要推的提交')
+    ap.add_argument('--inner', action='store_true', help=argparse.SUPPRESS)     # 临时工作副本里那一次（体检外面已经跑过）
     a = ap.parse_args()
     only = {x for x in a.only.split(',') if x}
-    files = changed_files(a.base)
+    try: files = changed_files(a.base, a.head, committed_only=a.hook)
+    except RuntimeError as e: print('❌', e, flush=True); sys.exit(2)
+    if a.hook and not a.inner and not only and not a.all and any(f.startswith(BUILD_INPUTS) for f in files):
+        head_sha, cur = sh('git', 'rev-parse', a.head).stdout.strip(), sh('git', 'rev-parse', 'HEAD').stdout.strip()
+        dirty = sh('git', 'status', '--porcelain', '-uno', '--', *HOOK_PATHS).stdout.strip()
+        if head_sha != cur or dirty:
+            ok, why = check_sync(); print(('✅' if ok else '❌'), '体检', why, flush=True)
+            if not ok: print('有 ❌，先修再推', flush=True); sys.exit(1)
+            sys.exit(hook_in_temp(a, head_sha))
     src = a.all or any(f.startswith(SRC_PREFIX) for f in files)
     bld = a.all or any(f.startswith(BUILD_INPUTS) for f in files)
     want = lambda k, cond: (k in only) if only else cond
@@ -397,14 +431,14 @@ def main():
         for r in rows: print(f'  · {r["id"]} {r["kind"]}：' + json.dumps(r['what'], ensure_ascii=False)[:600], flush=True)
         if a.out: json.dump({'ids': ids, 'rows': rows}, open(a.out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         sys.exit(0)
-    print(f'合入门禁：改动 {len(files)} 个文件（相对 {a.base}）' + ('，动了烘焙器源码' if src else ''), flush=True)
+    print(f'合入门禁{"（推送前）" if a.hook else ""}：改动 {len(files)} 个文件（相对 {a.base}{"" if a.hook else "，含没提交的"}）' + ('，动了烘焙器源码' if src else ''), flush=True)
     report, ok_all, T = [], True, time.time()
     def put(item, ok, why):
         nonlocal ok_all
         ok_all &= bool(ok); report.append({'item': item, 'pass': bool(ok), 'why': why})
         print(('✅' if ok else '❌'), item, why, flush=True)
-    if want('体检', True): put('体检', *check_sync())
-    if want('构建', bld): put('构建', *check_build())
+    if want('体检', not a.inner): put('体检', *check_sync())
+    if want('构建', bld): put('构建', *check_build(a.inner))
     if want('契约', src) or want('导出', src):
         names = {x for x in a.scn.split(',') if x}
         print('… 产物契约 + 导出 JSON（代表效果逐个打开，拨「输出」里每一行）', flush=True)

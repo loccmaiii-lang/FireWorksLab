@@ -1,0 +1,36 @@
+#!/bin/sh
+# 合入门禁 · pre-push 钩子（导出排查 G2；用户 10-14 14:14 按推荐同意新建 .githooks/）
+#
+# 启用（每个工作副本跑一次）：  git config core.hooksPath .githooks      没启用时 同步体检.py 会提醒
+#
+# 推之前按「要推的那些提交」跑 analysis/scripts/合入门禁.py --hook：
+#   只改了记录 / 文档 / 结果  → 只跑同步体检（几秒）
+#   动了更新记录 / 尺寸标定    → 再加构建（成品要和提交的一致）
+#   动了 tool/src / 命名表     → 再加产物契约 + 导出 JSON + 界面状态检查子集（云端约 5 分钟，本机更快）
+#   工作树里有别人没提交的相关改动时，在临时工作副本里按要推的提交跑（跑完删掉），不受影响。
+# 不过就不推。只有门禁本身出错（退出码 2）时才用 git push --no-verify 绕过，并在交接里写明原因（CLAUDE.md 第 4 节）。
+root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+py=
+for c in python3 python py; do
+  if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)" >/dev/null 2>&1; then py=$c; break; fi
+done
+if [ -z "$py" ]; then
+  echo "合入门禁：找不到 python 3，没检查就推了（装好后补跑：python analysis/scripts/合入门禁.py）" >&2
+  exit 0
+fi
+z=0000000000000000000000000000000000000000
+rc=0
+while read -r lref lsha rref rsha; do
+  [ -z "$lsha" ] && continue
+  [ "$lsha" = "$z" ] && continue          # 删远端分支：不查
+  base=origin/main
+  if [ "$rsha" != "$z" ] && git cat-file -e "$rsha^{commit}" 2>/dev/null; then base=$rsha; fi
+  echo "合入门禁（推送前）：$lref → $rref，相对 $(git rev-parse --short "$base" 2>/dev/null || echo "$base")" >&2
+  PYTHONIOENCODING=utf-8 "$py" "$root/analysis/scripts/合入门禁.py" --hook --base "$base" --head "$lsha" </dev/null
+  rc=$?
+  [ "$rc" -ne 0 ] && break
+done
+if [ "$rc" -ne 0 ]; then
+  echo "合入门禁没过（退出码 $rc），这次没推：看上面的 ❌，修好、提交再推。门禁本身出错（2）才用 git push --no-verify，并在交接里写明。" >&2
+fi
+exit "$rc"
