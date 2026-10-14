@@ -1,0 +1,339 @@
+{
+ "format": "df.mobile-placeholder-check-summary/1",
+ "at": "2026-10-14T23:45+08:00",
+ "scope": "B05 手游 10 个 ResourceId（手游种类 6 种 + 4 根尾缀）",
+ "script": "node analysis/scripts/手游占位检查.mjs <9 个 _M 路径>（原始结果 手游占位检查_原始.json，CLI 退出 1 = 有未过项）",
+ "counts": {
+  "可写": 8,
+  "缺资产": 1,
+  "检查没过": 1
+ },
+ "rows": [
+  {
+   "resourceId": "P_EFX_FireWorks_GoldRayChry",
+   "pcRowName": "跨年烟花3.0_中型_B_金芒菊",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "derivedMobileName": "P_EFX_FireWorks_GoldRayChry_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_GoldRayChry_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_GoldRayChry_4x4_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_GoldRayChry_4x4_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M",
+   "note": "提示词说金芒菊手游版是 GoldSpark_M；用户重导后 PC 行已改指 GoldRayChry_HD，手游目录也只有 GoldRayChry_M（没有 GoldSpark_M），按新名接"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_SilverChry",
+   "pcRowName": "跨年烟花3.0_小型_F_银冠菊",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "derivedMobileName": "P_EFX_FireWorks_SilverChry_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "check": {
+    "enabledLOD0": 2,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_C",
+      512
+     ],
+     [
+      "T_EFX_Spark_16",
+      256
+     ]
+    ],
+    "hdAssets": [
+     "/Game/Effects_HD/Common_HD/MPC_HD/MPC_EFX_General_HD.MPC_EFX_General_HD"
+    ],
+    "pass": false
+   },
+   "status": "检查没过",
+   "reason": "引用链含 MPC_EFX_General_HD（其余 4 项过）",
+   "whoMakes": "导出（23）改手游材质不引用 MPC_EFX_General_HD → 用户重导"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Glitter",
+   "pcRowName": "跨年烟花3.0_小型_I__橙辉星",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "derivedMobileName": "P_EFX_FireWorks_Glitter_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_Glitter_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_Glitter_4x4_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_Glitter_4x4_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M",
+   "note": "重导后 PC 行已改指 Glitter_HD（T05 时是 Combo_HD）；手游目录有 Glitter_M，没有 Combo_M"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Crackle",
+   "pcRowName": "跨年烟花3.0_小型_G_爆裂星",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "derivedMobileName": "P_EFX_FireWorks_Crackle_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "status": "缺资产",
+   "reason": "手游目录 /Game/Effects/Props/FireWorks（递归 119 个资产）里没有 P_EFX_FireWorks_Crackle_M；按名搜只有 P_EFX_FireWorks_LittleCrackle_M（那是 2802 小号_C_短爆裂 的手游版，不是爆裂星，不拿来顶）",
+   "mobilePath": null,
+   "whoMakes": "导出（23）出 _M 包 → 用户导入"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Strobe",
+   "pcRowName": "跨年烟花3.0_小型_J_点灭星",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "derivedMobileName": "P_EFX_FireWorks_Strobe_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_GoldCoreLime_RedCore_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_Strobe_Strobe_4x4_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_LittleCombo",
+   "pcRowName": "跨年烟花3.0_小号_D_小分裂",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "derivedMobileName": "P_EFX_FireWorks_LittleCombo_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_LittleCombo_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_LittleCombo_4x4_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_LittleCombo_4x4_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "pcRowName": "跨年烟花3.0_小型_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_S_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_L_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "pcRowName": "跨年烟花3.0_中型_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_M_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_L_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_M_Full_32x2_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "pcRowName": "跨年烟花3.0_大型_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_L_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_L_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M"
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "pcRowName": "跨年烟花3.0_极小_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "searchedDir": "/Game/Effects/Props/FireWorks",
+   "mobilePath": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "check": {
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "textures": [
+     [
+      "DefaultTexture",
+      128
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_L_R",
+      256
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+      1024
+     ],
+     [
+      "T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_C",
+      512
+     ]
+    ],
+    "hdAssets": [],
+    "pass": true
+   },
+   "status": "可写",
+   "reason": "5 项全过：启用发射器 1、GPU 0、贴图 ≤1024、引用链无 _HD、名字 _M"
+  }
+ ]
+}

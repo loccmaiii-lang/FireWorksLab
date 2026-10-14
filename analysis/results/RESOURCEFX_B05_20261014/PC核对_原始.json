@@ -1,0 +1,6655 @@
+{
+ "format": "df.resourcefx-pc-check/1",
+ "readAt": "2026-10-14T15:39:40.651Z",
+ "rows": [
+  {
+   "resourceId": "P_EFX_FireWorks_Crackle",
+   "rowName": "跨年烟花3.0_小型_G_爆裂星",
+   "rowDescription": "跨年烟花3.0_小型_G_爆裂星",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "Crackle",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_FanComet_01",
+   "rowName": "跨年烟花3.0_小型_B_红彗星",
+   "rowDescription": "跨年烟花3.0_小型_B_红彗星",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+    "loadOk": true,
+    "lodDistances": 4,
+    "emitters": 5,
+    "enabled": 4,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_TrailFull",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_Dots",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "Dot_A",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Dot_B",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Dot_C",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "Comet_Layers",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_FanSilver_01",
+   "rowName": "跨年烟花3.0_小型_C_银星扇",
+   "rowDescription": "跨年烟花3.0_小型_C_银星扇",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 2,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "Dot_A",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "TrailFull",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "FanSilver_01",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Glitter",
+   "rowName": "跨年烟花3.0_小型_I__橙辉星",
+   "rowDescription": "跨年烟花3.0_小型_I__橙辉星",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "Glitter",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GoldChry",
+   "rowName": "跨年烟花3.0_中型_D_金曜菊",
+   "rowDescription": "跨年烟花3.0_中型_D_金曜菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 3,
+    "enabled": 3,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "GoldSpark",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GoldCoreLime",
+   "rowName": "跨年烟花3.0_中型_E_金蕊柠",
+   "rowDescription": "跨年烟花3.0_中型_E_金蕊柠",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 4,
+    "enabled": 4,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L4_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "GoldCoreLime",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GoldCrackle",
+   "rowName": "跨年烟花3.0_小型_D_金裂星",
+   "rowDescription": "跨年烟花3.0_小型_D_金裂星",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "Combo",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GoldKamuro",
+   "rowName": "跨年烟花3.0_大型_A_金垂柳",
+   "rowDescription": "跨年烟花3.0_大型_A_金垂柳",
+   "hasRow": true,
+   "FXType": "(INVALID)",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 6,
+    "enabled": 6,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "GoldKamuro",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GoldRayChry",
+   "rowName": "跨年烟花3.0_中型_B_金芒菊",
+   "rowDescription": "跨年烟花3.0_中型_B_金芒菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "GoldRayChry",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GoldSpark",
+   "rowName": "跨年烟花3.0_中型_B_金锦菊",
+   "rowDescription": "跨年烟花3.0_中型_B_金锦菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 2,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "GoldRay",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_GreenPeony",
+   "rowName": "跨年烟花3.0_中型_A_绿牡丹",
+   "rowDescription": "跨年烟花3.0_中型_A_绿牡丹",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 4,
+    "enabled": 4,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_MainA",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_MainB",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_Dots",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "LimeStar",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Lime",
+   "rowName": "跨年烟花3.0_小型_H_小青柠",
+   "rowDescription": "跨年烟花3.0_小型_H_小青柠",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 4,
+    "enabled": 4,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_MainA",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_MainB",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "Lime",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_LittleCombo",
+   "rowName": "跨年烟花3.0_小号_D_小分裂",
+   "rowDescription": "跨年烟花3.0_小号_D_小分裂",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "LittleCombo",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_LittleCrackle",
+   "rowName": "跨年烟花3.0_小号_C_短爆裂",
+   "rowDescription": "跨年烟花3.0_小号_C_短爆裂",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 2,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L1_Flash",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "LittleCrackle",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_LittleGold",
+   "rowName": "跨年烟花3.0_小号_A_小金花",
+   "rowDescription": "跨年烟花3.0_小号_A_小金花",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "LittleGold",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_LittleSilver",
+   "rowName": "跨年烟花3.0_小号_B_小银菊",
+   "rowDescription": "跨年烟花3.0_小号_B_小银菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 2,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L1_Flash",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "LittleSilver",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_MultiLayerChry",
+   "rowName": "跨年烟花3.0_中型_F_多重菊",
+   "rowDescription": "跨年烟花3.0_中型_F_多重菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 4,
+    "enabled": 4,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Dots",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L2_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_MainA",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L3_MainB",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "LimeCoreDelay",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "rowName": "跨年烟花3.0_大型_尾缀",
+   "rowDescription": "跨年烟花3.0_大型_尾缀",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 10,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "RiseLoop",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "TrailFar",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "SparksFine",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparksTwinkle",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparksCoarse",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "Embers",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "HeadGlow",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparkPops",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "LaunchGlow",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "LaunchSparks",
+      "enabled": false,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "RiseTrail_L",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "rowName": "跨年烟花3.0_中型_尾缀",
+   "rowDescription": "跨年烟花3.0_中型_尾缀",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 10,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "RiseLoop",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "TrailFar",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "SparksFine",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparksTwinkle",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparksCoarse",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "Embers",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "HeadGlow",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparkPops",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "LaunchGlow",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "LaunchSparks",
+      "enabled": false,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "RiseTrail_M",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "rowName": "跨年烟花3.0_小型_尾缀",
+   "rowDescription": "跨年烟花3.0_小型_尾缀",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 10,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "RiseLoop",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "TrailFar",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "SparksFine",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparksTwinkle",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparksCoarse",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "Embers",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "HeadGlow",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "SparkPops",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "LaunchGlow",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "LaunchSparks",
+      "enabled": false,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "RiseTrail_S",
+   "sharedWith": [],
+   "nameMatchesId": false
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_PrismWheels",
+   "rowName": "跨年烟花3.0_中型_C_彩千轮",
+   "rowDescription": "跨年烟花3.0_中型_C_彩千轮",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+    "loadOk": true,
+    "lodDistances": 4,
+    "emitters": 8,
+    "enabled": 6,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "Dark_Groud",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "Dark_Groud",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Light_Groud",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Dark",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Light_Groud",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Sparks Cloud",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Initial Igniton",
+      "enabled": false,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "PrismWheels",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "rowName": "跨年烟花3.0_极小_尾缀",
+   "rowDescription": "跨年烟花3.0_小型_尾缀",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "TrailFull",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "RiseTrail_Tiny",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+   "rowName": "跨年烟花3.0_低位_尾缀",
+   "rowDescription": "跨年烟花3.0_低位_尾缀",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_TrailFull",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "RiseTrail_XS",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_SilverChry",
+   "rowName": "跨年烟花3.0_小型_F_银冠菊",
+   "rowDescription": "跨年烟花3.0_小型_F_银冠菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 2,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "L1_Flash",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "SilverChry",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_SilverStrobeChry",
+   "rowName": "跨年烟花3.0_大型_B_银彩菊",
+   "rowDescription": "跨年烟花3.0_大型_B_银彩菊",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 4,
+    "enabled": 3,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "Particle Emitter",
+      "enabled": false,
+      "gpu": false
+     },
+     {
+      "name": "Particle Emitter",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Glow_B",
+      "enabled": true,
+      "gpu": false
+     },
+     {
+      "name": "Flash",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "SilverStrobeChry",
+   "sharedWith": [],
+   "nameMatchesId": true
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Strobe",
+   "rowName": "跨年烟花3.0_小型_J_点灭星",
+   "rowDescription": "跨年烟花3.0_小型_J_点灭星",
+   "hasRow": true,
+   "FXType": "SHOW",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "fxspNotNone": true,
+   "fxsp": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_Main",
+      "enabled": true,
+      "gpu": false
+     }
+    ]
+   },
+   "particleCore": "Strobe",
+   "sharedWith": [],
+   "nameMatchesId": true
+  }
+ ],
+ "trails": {
+  "P_EFX_FireWorks_RiseTrail_XS": {
+   "rowName": "跨年烟花3.0_低位_尾缀",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "sys": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "L1_TrailFull",
+      "enabled": true,
+      "gpu": false,
+      "required": {
+       "dur": 3.1147000789642334,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Rectangle",
+       "mat": "MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 2.8499999046325684,
+         "Max": 3.1500000953674316
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": -29.479999542236328,
+          "Y": 0,
+          "Z": 0
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 32.439998626708984
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 550,
+          "Y": 7500,
+          "Z": 0
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 650,
+          "Y": 8500,
+          "Z": 1
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "OrientationAxisLock",
+        "enabled": true,
+        "LockAxisFlags": "EPAL_ROTATE_Z"
+       },
+       {
+        "c": "ParameterDynamic"
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "PivotOffset"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "P_EFX_FireWorks_RiseTrail_Tiny": {
+   "rowName": "跨年烟花3.0_极小_尾缀",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "sys": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 1,
+    "enabled": 1,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "TrailFull",
+      "enabled": true,
+      "gpu": false,
+      "required": {
+       "dur": 2.8178999423980713,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Rectangle",
+       "mat": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatConstant",
+         "Constant": 2.8178999423980713
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 3059.6201171875
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 28.549999237060547
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 261.29998779296875,
+          "Y": 6478.58984375,
+          "Z": 1
+         }
+        }
+       },
+       {
+        "c": "OrientationAxisLock",
+        "enabled": true,
+        "LockAxisFlags": "EPAL_ROTATE_Z"
+       },
+       {
+        "c": "ParameterDynamic"
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "PivotOffset"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "P_EFX_FireWorks_NY_Trail_Small": {
+   "rowName": "跨年烟花3.0_小型_尾缀",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "sys": {
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+    "loadOk": true,
+    "lodDistances": 1,
+    "emitters": 10,
+    "enabled": 2,
+    "gpuEnabled": 0,
+    "detail": [
+     {
+      "name": "RiseLoop",
+      "enabled": true,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Velocity",
+       "mat": "MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatConstant",
+         "Constant": 2.954400062561035
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 375.9599914550781,
+          "Y": 12194.9296875,
+          "Z": 1
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 13038.91015625
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "VelocityOverLifetime",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ParameterDynamic"
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "PivotOffset"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "TrailFar",
+      "enabled": true,
+      "gpu": false,
+      "required": {
+       "dur": 3.5999999046325684,
+       "delay": 0.6000000238418579,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Rectangle",
+       "mat": "MI_EFX_FireWorks_RiseTrail_S_Far_01_HD"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatConstant",
+         "Constant": 3.5999999046325684
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 7740.10009765625
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 39.47999954223633
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 632.22998046875,
+          "Y": 14987.4697265625,
+          "Z": 1
+         }
+        }
+       },
+       {
+        "c": "OrientationAxisLock",
+        "enabled": true,
+        "LockAxisFlags": "EPAL_ROTATE_Z"
+       },
+       {
+        "c": "ParameterDynamic"
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "PivotOffset"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "SparksFine",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Rectangle",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 0.41999998688697815,
+         "Max": 0.9800000190734863
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 65.12999725341797,
+          "Y": 65.12999725341797,
+          "Z": 82.5
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 171.72000122070312,
+          "Y": 171.72000122070312,
+          "Z": 217.5
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1229.800048828125
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2330.760009765625
+           }
+          },
+          {
+           "t": 0.3499999940395355,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3789.679931640625
+           }
+          },
+          {
+           "t": 0.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5064.64013671875
+           }
+          },
+          {
+           "t": 0.6499999761581421,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6193.47021484375
+           }
+          },
+          {
+           "t": 0.8500000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7516.509765625
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8671.7099609375
+           }
+          },
+          {
+           "t": 1.2999999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9926.7802734375
+           }
+          },
+          {
+           "t": 1.5499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 11011.3896484375
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 12129.8798828125
+           }
+          },
+          {
+           "t": 2.1500000953674316,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 13082.9599609375
+           }
+          },
+          {
+           "t": 2.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14020.099609375
+           }
+          },
+          {
+           "t": 2.8499999046325684,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14796.73046875
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 15000.5
+           }
+          }
+         ]
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 10907.259765625
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9477.7900390625
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8316.830078125
+           }
+          },
+          {
+           "t": 0.30000001192092896,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7354.10986328125
+           }
+          },
+          {
+           "t": 0.44999998807907104,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6181.14990234375
+           }
+          },
+          {
+           "t": 0.6000000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5243.31005859375
+           }
+          },
+          {
+           "t": 0.800000011920929,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 4247.27001953125
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3281.39990234375
+           }
+          },
+          {
+           "t": 1.399999976158142,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2263.889892578125
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1304.02001953125
+           }
+          },
+          {
+           "t": 2.450000047683716,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 370.9100036621094
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -236.85000610351562
+           }
+          }
+         ]
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": -434.2200012207031,
+          "Y": -434.2200012207031,
+          "Z": -217.11000061035156
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 434.2200012207031,
+          "Y": 434.2200012207031,
+          "Z": 217.11000061035156
+         },
+         "bUseExtremes": false
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "AccelerationDrag",
+        "enabled": true
+       },
+       {
+        "c": "AccelerationConstant",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "SparksTwinkle",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Rectangle",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 0.7149999737739563,
+         "Max": 1.4850000143051147
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 65.12999725341797,
+          "Y": 65.12999725341797,
+          "Z": 82.5
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 171.72000122070312,
+          "Y": 171.72000122070312,
+          "Z": 217.5
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1229.800048828125
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2330.760009765625
+           }
+          },
+          {
+           "t": 0.3499999940395355,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3789.679931640625
+           }
+          },
+          {
+           "t": 0.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5064.64013671875
+           }
+          },
+          {
+           "t": 0.6499999761581421,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6193.47021484375
+           }
+          },
+          {
+           "t": 0.8500000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7516.509765625
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8671.7099609375
+           }
+          },
+          {
+           "t": 1.2999999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9926.7802734375
+           }
+          },
+          {
+           "t": 1.5499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 11011.3896484375
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 12129.8798828125
+           }
+          },
+          {
+           "t": 2.1500000953674316,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 13082.9599609375
+           }
+          },
+          {
+           "t": 2.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14020.099609375
+           }
+          },
+          {
+           "t": 2.8499999046325684,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14796.73046875
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 15000.5
+           }
+          }
+         ]
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 10907.259765625
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9477.7900390625
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8316.830078125
+           }
+          },
+          {
+           "t": 0.30000001192092896,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7354.10986328125
+           }
+          },
+          {
+           "t": 0.44999998807907104,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6181.14990234375
+           }
+          },
+          {
+           "t": 0.6000000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5243.31005859375
+           }
+          },
+          {
+           "t": 0.800000011920929,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 4247.27001953125
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3281.39990234375
+           }
+          },
+          {
+           "t": 1.399999976158142,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2263.889892578125
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1304.02001953125
+           }
+          },
+          {
+           "t": 2.450000047683716,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 370.9100036621094
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -236.85000610351562
+           }
+          }
+         ]
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": -434.2200012207031,
+          "Y": -434.2200012207031,
+          "Z": -217.11000061035156
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 434.2200012207031,
+          "Y": 434.2200012207031,
+          "Z": 217.11000061035156
+         },
+         "bUseExtremes": false
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "AccelerationDrag",
+        "enabled": true
+       },
+       {
+        "c": "AccelerationConstant",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "SparksCoarse",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Rectangle",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 1.2599999904632568,
+         "Max": 2.3399999141693115
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 65.12999725341797,
+          "Y": 65.12999725341797,
+          "Z": 82.5
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 171.72000122070312,
+          "Y": 171.72000122070312,
+          "Z": 217.5
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1229.800048828125
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2330.760009765625
+           }
+          },
+          {
+           "t": 0.3499999940395355,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3789.679931640625
+           }
+          },
+          {
+           "t": 0.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5064.64013671875
+           }
+          },
+          {
+           "t": 0.6499999761581421,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6193.47021484375
+           }
+          },
+          {
+           "t": 0.8500000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7516.509765625
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8671.7099609375
+           }
+          },
+          {
+           "t": 1.2999999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9926.7802734375
+           }
+          },
+          {
+           "t": 1.5499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 11011.3896484375
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 12129.8798828125
+           }
+          },
+          {
+           "t": 2.1500000953674316,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 13082.9599609375
+           }
+          },
+          {
+           "t": 2.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14020.099609375
+           }
+          },
+          {
+           "t": 2.8499999046325684,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14796.73046875
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 15000.5
+           }
+          }
+         ]
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 10907.259765625
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9477.7900390625
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8316.830078125
+           }
+          },
+          {
+           "t": 0.30000001192092896,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7354.10986328125
+           }
+          },
+          {
+           "t": 0.44999998807907104,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6181.14990234375
+           }
+          },
+          {
+           "t": 0.6000000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5243.31005859375
+           }
+          },
+          {
+           "t": 0.800000011920929,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 4247.27001953125
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3281.39990234375
+           }
+          },
+          {
+           "t": 1.399999976158142,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2263.889892578125
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1304.02001953125
+           }
+          },
+          {
+           "t": 2.450000047683716,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 370.9100036621094
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -236.85000610351562
+           }
+          }
+         ]
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": -434.2200012207031,
+          "Y": -434.2200012207031,
+          "Z": -217.11000061035156
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 434.2200012207031,
+          "Y": 434.2200012207031,
+          "Z": 217.11000061035156
+         },
+         "bUseExtremes": false
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "AccelerationDrag",
+        "enabled": true
+       },
+       {
+        "c": "AccelerationConstant",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "Embers",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Square",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 1.75,
+         "Max": 3.25
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 94.73999786376953,
+          "Y": 94.73999786376953,
+          "Z": 120
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 142.11000061035156,
+          "Y": 142.11000061035156,
+          "Z": 180
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1229.800048828125
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2330.760009765625
+           }
+          },
+          {
+           "t": 0.3499999940395355,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3789.679931640625
+           }
+          },
+          {
+           "t": 0.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5064.64013671875
+           }
+          },
+          {
+           "t": 0.6499999761581421,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6193.47021484375
+           }
+          },
+          {
+           "t": 0.8500000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7516.509765625
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8671.7099609375
+           }
+          },
+          {
+           "t": 1.2999999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9926.7802734375
+           }
+          },
+          {
+           "t": 1.5499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 11011.3896484375
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 12129.8798828125
+           }
+          },
+          {
+           "t": 2.1500000953674316,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 13082.9599609375
+           }
+          },
+          {
+           "t": 2.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14020.099609375
+           }
+          },
+          {
+           "t": 2.8499999046325684,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14796.73046875
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 15000.5
+           }
+          }
+         ]
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 11759.919921875
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 10330.4501953125
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9169.490234375
+           }
+          },
+          {
+           "t": 0.30000001192092896,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8206.76953125
+           }
+          },
+          {
+           "t": 0.44999998807907104,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7033.81005859375
+           }
+          },
+          {
+           "t": 0.6000000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6095.97021484375
+           }
+          },
+          {
+           "t": 0.800000011920929,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5099.93017578125
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 4134.06005859375
+           }
+          },
+          {
+           "t": 1.399999976158142,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3116.550048828125
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2156.679931640625
+           }
+          },
+          {
+           "t": 2.450000047683716,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1223.5699462890625
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 615.8099975585938
+           }
+          }
+         ]
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": -434.2200012207031,
+          "Y": -434.2200012207031,
+          "Z": -217.11000061035156
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 434.2200012207031,
+          "Y": 434.2200012207031,
+          "Z": 217.11000061035156
+         },
+         "bUseExtremes": false
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "AccelerationDrag",
+        "enabled": true
+       },
+       {
+        "c": "AccelerationConstant",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "HeadGlow",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Square",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 2.954400062561035,
+         "Max": 2.954400062561035
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 473.70001220703125,
+          "Y": 473.70001220703125,
+          "Z": 600
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 473.70001220703125,
+          "Y": 473.70001220703125,
+          "Z": 600
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 13038.91015625
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "VelocityOverLifetime",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "SparkPops",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 2.954400062561035,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Square",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 1.0800000429153442,
+         "Max": 2.1600000858306885
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 82.9000015258789,
+          "Y": 82.9000015258789,
+          "Z": 105
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 153.9499969482422,
+          "Y": 153.9499969482422,
+          "Z": 195
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1229.800048828125
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2330.760009765625
+           }
+          },
+          {
+           "t": 0.3499999940395355,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3789.679931640625
+           }
+          },
+          {
+           "t": 0.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5064.64013671875
+           }
+          },
+          {
+           "t": 0.6499999761581421,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6193.47021484375
+           }
+          },
+          {
+           "t": 0.8500000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7516.509765625
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8671.7099609375
+           }
+          },
+          {
+           "t": 1.2999999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9926.7802734375
+           }
+          },
+          {
+           "t": 1.5499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 11011.3896484375
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 12129.8798828125
+           }
+          },
+          {
+           "t": 2.1500000953674316,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 13082.9599609375
+           }
+          },
+          {
+           "t": 2.5,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14020.099609375
+           }
+          },
+          {
+           "t": 2.8499999046325684,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 14796.73046875
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 15000.5
+           }
+          }
+         ]
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstantCurve",
+         "curve": [
+          {
+           "t": 0,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 10907.259765625
+           }
+          },
+          {
+           "t": 0.10000000149011612,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 9477.7900390625
+           }
+          },
+          {
+           "t": 0.20000000298023224,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 8316.830078125
+           }
+          },
+          {
+           "t": 0.30000001192092896,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 7354.10986328125
+           }
+          },
+          {
+           "t": 0.44999998807907104,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 6181.14990234375
+           }
+          },
+          {
+           "t": 0.6000000238418579,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 5243.31005859375
+           }
+          },
+          {
+           "t": 0.800000011920929,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 4247.27001953125
+           }
+          },
+          {
+           "t": 1.0499999523162842,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 3281.39990234375
+           }
+          },
+          {
+           "t": 1.399999976158142,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 2263.889892578125
+           }
+          },
+          {
+           "t": 1.850000023841858,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1304.02001953125
+           }
+          },
+          {
+           "t": 2.450000047683716,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 370.9100036621094
+           }
+          },
+          {
+           "t": 2.954400062561035,
+           "v": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -236.85000610351562
+           }
+          }
+         ]
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": -434.2200012207031,
+          "Y": -434.2200012207031,
+          "Z": -217.11000061035156
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 434.2200012207031,
+          "Y": 434.2200012207031,
+          "Z": 217.11000061035156
+         },
+         "bUseExtremes": false
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "AccelerationDrag",
+        "enabled": true
+       },
+       {
+        "c": "AccelerationConstant",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "LaunchGlow",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 0.5,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Square",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 0.30000001192092896,
+         "Max": 0.30000001192092896
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 473.70001220703125,
+          "Y": 473.70001220703125,
+          "Z": 600
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 473.70001220703125,
+          "Y": 473.70001220703125,
+          "Z": 600
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 78.94999694824219
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     },
+     {
+      "name": "LaunchSparks",
+      "enabled": false,
+      "gpu": false,
+      "required": {
+       "dur": 0.5,
+       "delay": 0,
+       "loops": 1,
+       "grid": "1x1",
+       "align": "PSA_Square",
+       "mat": "MI_EFX_Spark_16_NoCameraDepthFade"
+      },
+      "modules": [
+       {
+        "c": "Lifetime",
+        "enabled": true,
+        "Lifetime": {
+         "class": "DistributionFloatUniform",
+         "Min": 0.3499999940395355,
+         "Max": 1
+        }
+       },
+       {
+        "c": "Size",
+        "enabled": true,
+        "StartSize": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": 9.470000267028809,
+          "Y": 9.470000267028809,
+          "Z": 12
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 23.68000030517578,
+          "Y": 23.68000030517578,
+          "Z": 30
+         },
+         "bUseExtremes": false
+        }
+       },
+       {
+        "c": "Location",
+        "enabled": true,
+        "StartLocation": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 39.47999954223633
+         }
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorConstant",
+         "Constant": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 1480.31005859375
+         }
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "Velocity",
+        "enabled": true,
+        "StartVelocity": {
+         "class": "DistributionVectorUniform",
+         "Min": {
+          "_struct": "Vector",
+          "X": -1015.9299926757812,
+          "Y": -1015.9299926757812,
+          "Z": -592.1300048828125
+         },
+         "Max": {
+          "_struct": "Vector",
+          "X": 1015.9299926757812,
+          "Y": 1015.9299926757812,
+          "Z": 592.1300048828125
+         },
+         "bUseExtremes": false
+        },
+        "StartVelocityRadial": {
+         "class": "DistributionFloatUniform",
+         "Min": 0,
+         "Max": 0
+        }
+       },
+       {
+        "c": "AccelerationDrag",
+        "enabled": true
+       },
+       {
+        "c": "AccelerationConstant",
+        "enabled": true
+       },
+       {
+        "c": "SizeMultiplyLife",
+        "enabled": true
+       },
+       {
+        "c": "ColorOverLife"
+       },
+       {
+        "c": "ColorScaleOverLife"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "requests": [
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD:ParticleSpriteEmitter_5",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD:ParticleSpriteEmitter_5.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_9",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_9.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_10",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_10.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_11",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_11.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_12",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_12.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_13",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD:ParticleSpriteEmitter_13.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD:ParticleSpriteEmitter_5",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD:ParticleSpriteEmitter_5.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_20",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_20.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_21",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_21.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_22",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_22.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_23",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_23.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_24",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_24.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_25",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_25.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_26",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_26.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_27",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_27.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_28",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_28.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_29",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_29.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_5",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_5.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_6",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_6.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_7",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_7.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_8",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_8.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_9",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_9.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_5",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_5.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_6",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_6.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_7",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_7.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_8",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_8.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_9",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_9.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_8",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_8.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_5",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_5.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_7",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_7.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_9",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_9.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_6",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_6.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleRequired_1",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleLifetime_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleLifetime_1.DistributionFloatUniform_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleLocation_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleLocation_1.DistributionVectorConstant_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleVelocity_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleVelocity_1.DistributionVectorConstant_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleVelocity_1.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleSize_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleSize_2.DistributionVectorUniform_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleSizeMultiplyLife_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleOrientationAxisLock_1"
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleRequired_1",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleLifetime_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:DistributionFloatConstant_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleLocation_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:DistributionVectorConstant_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleVelocity_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:DistributionVectorConstant_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleVelocity_1.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleSize_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:DistributionVectorConstant_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleOrientationAxisLock_1"
+  },
+  {
+   "route": "/object/call",
+   "function": "LoadAsset",
+   "AssetPath": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "properties": [
+    "Emitters",
+    "LODDistances"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_0",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_0.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_0",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_0.DistributionFloatConstant_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_0.DistributionVectorConstant_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_0.DistributionVectorConstant_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_0.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocityOverLifetime_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_1",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_1",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_1.DistributionFloatConstant_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_0.DistributionVectorConstant_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_1.DistributionVectorConstant_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_1.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_1.DistributionVectorConstant_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleOrientationAxisLock_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_2",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_2.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_2",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_2.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_2.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_1.DistributionVectorConstantCurve_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_2.DistributionVectorConstantCurve_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_2.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_3.DistributionStartVelocity"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_3.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationDrag_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationConstant_0"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_3",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_3.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_3",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_3.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_3.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_2.DistributionVectorConstantCurve_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_4.DistributionVectorConstantCurve_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_4.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_5.DistributionStartVelocity"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_5.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationDrag_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationConstant_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_4",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_4.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_4",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_4.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_4.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_3.DistributionVectorConstantCurve_7"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_6"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_6.DistributionVectorConstantCurve_8"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_6.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_7"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_7.DistributionStartVelocity"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_7.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationDrag_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationConstant_2"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_5",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_5.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_5",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_5.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_5.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_4.DistributionVectorConstantCurve_10"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_8"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_8.DistributionVectorConstantCurve_11"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_8.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_9"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_9.DistributionStartVelocity"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_9.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationDrag_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationConstant_3"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_6",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_6.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_6",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_6"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_6.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_6"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_6.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_5.DistributionVectorConstant_11"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_10"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_10.DistributionVectorConstant_12"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_10.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocityOverLifetime_1"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_7",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_7.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_7",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_7"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_7.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_7"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_7.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_6"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_6.DistributionVectorConstantCurve_14"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_11"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_11.DistributionVectorConstantCurve_15"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_11.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_12"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_12.DistributionStartVelocity"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_12.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationDrag_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationConstant_4"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_6"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_8",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_8.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_8",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_8"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_8.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_8"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_8.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_7"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_7.DistributionVectorConstant_15"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_13"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_13.DistributionVectorConstant_16"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_13.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_7"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_9",
+   "properties": [
+    "EmitterName",
+    "LODLevels"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_9.ParticleLODLevel_0",
+   "properties": [
+    "bEnabled",
+    "TypeDataModule",
+    "RequiredModule",
+    "Modules",
+    "SpawnModule"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleRequired_9",
+   "properties": [
+    "EmitterDuration",
+    "EmitterDelay",
+    "EmitterLoops",
+    "SubImages_Horizontal",
+    "SubImages_Vertical",
+    "ScreenAlignment",
+    "Material"
+   ]
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_9"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_9.DistributionLifetime"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_9"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_9.DistributionStartSize"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_8"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLocation_8.DistributionVectorConstant_18"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_14"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_14.DistributionVectorConstant_19"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_14.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_15"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_15.DistributionStartVelocity"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_15.DistributionStartVelocityRadial"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationDrag_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleAccelerationConstant_5"
+  },
+  {
+   "route": "/object/get",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_8"
+  }
+ ],
+ "hero": {
+  "rowName": "跨年烟花3.0_超大_尾缀",
+  "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+  "pointsToL": true
+ },
+ "goldKamuro": {
+  "rowName": "跨年烟花3.0_大型_A_金垂柳",
+  "FXType": "(INVALID)"
+ }
+}

@@ -1,0 +1,384 @@
+{
+ "format": "df.director-version-check/1",
+ "readAt": "2026-10-14T15:43:50.281Z",
+ "target": {
+  "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.Default__BP_NewYearFireworks_ShowDirector_Night_C",
+  "assetPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night",
+  "directorId": "NewYear_Night"
+ },
+ "night": {
+  "subTemplates": 147,
+  "templates": 153,
+  "groups": 3,
+  "slots": 197,
+  "subEntries": 346
+ },
+ "duration": 214.39999389648438,
+ "nightResourceIds": [
+  "P_EFX_FireWorks_Crackle",
+  "P_EFX_FireWorks_FanComet_01",
+  "P_EFX_FireWorks_FanSilver_01",
+  "P_EFX_FireWorks_GoldChry",
+  "P_EFX_FireWorks_GoldCoreLime",
+  "P_EFX_FireWorks_GoldCrackle",
+  "P_EFX_FireWorks_GoldKamuro",
+  "P_EFX_FireWorks_GoldRayChry",
+  "P_EFX_FireWorks_GoldSpark",
+  "P_EFX_FireWorks_GreenPeony",
+  "P_EFX_FireWorks_Lime",
+  "P_EFX_FireWorks_MultiLayerChry",
+  "P_EFX_FireWorks_NY_Trail_Large",
+  "P_EFX_FireWorks_NY_Trail_Medium",
+  "P_EFX_FireWorks_NY_Trail_Small",
+  "P_EFX_FireWorks_OrangeGlitter",
+  "P_EFX_FireWorks_PrismWheels",
+  "P_EFX_FireWorks_SilverChry",
+  "P_EFX_FireWorks_SilverStrobeChry",
+  "P_EFX_FireWorks_Strobe"
+ ],
+ "candidates": [
+  {
+   "file": "导演表-B02-一张表.json",
+   "subTemplates": 52,
+   "templates": 144,
+   "groups": 3,
+   "slots": 182,
+   "subEntries": 155,
+   "differences": 345,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U20",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U20",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U30",
+     "只在Night"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B02r1-一张表.json",
+   "subTemplates": 52,
+   "templates": 147,
+   "groups": 3,
+   "slots": 188,
+   "subEntries": 155,
+   "differences": 343,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U20",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U20",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U30",
+     "只在Night"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B02r1m-一张表.json",
+   "subTemplates": 53,
+   "templates": 163,
+   "groups": 3,
+   "slots": 204,
+   "subEntries": 157,
+   "differences": 357,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U20",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U20",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U30",
+     "只在Night"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B02r2-一张表.json",
+   "subTemplates": 309,
+   "templates": 146,
+   "groups": 3,
+   "slots": 188,
+   "subEntries": 669,
+   "differences": 537,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U12",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U14",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U15",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U2",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U20",
+     "只在Night"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B02r3-一张表.json",
+   "subTemplates": 138,
+   "templates": 141,
+   "groups": 3,
+   "slots": 188,
+   "subEntries": 327,
+   "differences": 134,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "Crackle",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "Crackle_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "FanComet",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "GoldCoreLimeV02_U10",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "GoldCoreLimeV02_U20",
+     "内容不同"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B02修订3-高差只往上-10m取整-手游补位-一张表.json",
+   "subTemplates": 153,
+   "templates": 157,
+   "groups": 3,
+   "slots": 204,
+   "subEntries": 357,
+   "differences": 128,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "FanComet",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "GoldCoreLimeV02_U10",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "GoldCoreLimeV02_U20",
+     "内容不同"
+    ],
+    [
+     "EffectSubTemplates",
+     "GoldCoreLimeV02_U30",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "GoldCoreLimeV02_U40",
+     "只在Night"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B03-VO倒计时合并音频-手游补位-一张表.json",
+   "subTemplates": 149,
+   "templates": 153,
+   "groups": 3,
+   "slots": 197,
+   "subEntries": 349,
+   "differences": 41,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "FanComet",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "SilverChry",
+     "内容不同"
+    ],
+    [
+     "EffectSubTemplates",
+     "SilverChryV02",
+     "内容不同"
+    ],
+    [
+     "EffectSubTemplates",
+     "SilverChryV02_U10",
+     "内容不同"
+    ],
+    [
+     "EffectSubTemplates",
+     "SilverChryV02_U20",
+     "内容不同"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B03修订2-倒计时重排-点火开场-手游补位-一张表.json",
+   "subTemplates": 147,
+   "templates": 153,
+   "groups": 3,
+   "slots": 197,
+   "subEntries": 346,
+   "differences": 0,
+   "sample": []
+  },
+  {
+   "file": "导演表-B04-低层Tiny-小平台前台小花XS-扇3.0-一张表.json",
+   "subTemplates": 154,
+   "templates": 153,
+   "groups": 3,
+   "slots": 197,
+   "subEntries": 360,
+   "differences": 145,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "CrackleAndFanComet",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleAndFanCometV02",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleAndTinyV02",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleAndTinyV02_U10",
+     "只在B"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleAndTinyV02_U20",
+     "只在B"
+    ]
+   ]
+  },
+  {
+   "file": "导演表-B05-ResourceFX新命名-手游6种-一张表.json",
+   "subTemplates": 171,
+   "templates": 199,
+   "groups": 3,
+   "slots": 247,
+   "subEntries": 406,
+   "differences": 297,
+   "sample": [
+    [
+     "EffectSubTemplates",
+     "CrackleAndFanComet",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleAndFanCometV02",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U10",
+     "只在Night"
+    ],
+    [
+     "EffectSubTemplates",
+     "CrackleV02_U20",
+     "内容不同"
+    ]
+   ]
+  }
+ ],
+ "verdict": {
+  "matches": "导演表-B03修订2-倒计时重排-点火开场-手游补位-一张表.json",
+  "closest": "导演表-B03修订2-倒计时重排-点火开场-手游补位-一张表.json",
+  "closestDifferences": 0,
+  "isB05": false
+ },
+ "nightIdsMissingInPc": [
+  "P_EFX_FireWorks_OrangeGlitter"
+ ]
+}

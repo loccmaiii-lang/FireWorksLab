@@ -1,0 +1,301 @@
+{
+ "readAt": "2026-10-14T15:40:56.226Z",
+ "mobileDir": "/Game/Effects/Props/FireWorks",
+ "assetsInDir": 119,
+ "particleAssets": [
+  "P_EFX_FireWork_AI_RPG_H",
+  "P_EFX_FireWork_AI_RPG_L",
+  "P_EFX_FireWork_AI_RPG_M",
+  "P_EFX_FireWork_Explosion_Big_02_H",
+  "P_EFX_FireWork_Ignition_Loop_S_H",
+  "P_EFX_FireWork_Ignition_Loop_S_L",
+  "P_EFX_FireWork_Ignition_Loop_S_M",
+  "P_EFX_FireWork_LuckyRain_Long_H",
+  "P_EFX_FireWork_LuckyRain_Long_L",
+  "P_EFX_FireWork_LuckyRain_Long_M",
+  "P_EFX_FireWork_LuckyRain_Short_H",
+  "P_EFX_FireWork_LuckyRain_Short_L",
+  "P_EFX_FireWork_LuckyRain_Short_M",
+  "P_EFX_FireWork_LuckyTips_H",
+  "P_EFX_FireWork_LuckyTips_L",
+  "P_EFX_FireWork_LuckyTips_M",
+  "P_EFX_FireWork_Merge_Hero_H",
+  "P_EFX_FireWork_Merge_Hero_L",
+  "P_EFX_FireWork_Merge_Hero_M",
+  "P_EFX_FireWork_Merge_Large_H",
+  "P_EFX_FireWork_Merge_Large_L",
+  "P_EFX_FireWork_Merge_Large_M",
+  "P_EFX_FireWork_Merge_Medium_H",
+  "P_EFX_FireWork_Merge_Medium_L",
+  "P_EFX_FireWork_Merge_Medium_M",
+  "P_EFX_FireWork_Shoot_H",
+  "P_EFX_FireWork_Shoot_L",
+  "P_EFX_FireWork_Shoot_M",
+  "P_EFX_FireWorksShow_Hero_MB",
+  "P_EFX_FireWorksShow_Large_Red_MB",
+  "P_EFX_FireWorksShow_Large_White_MB",
+  "P_EFX_FireWorksShow_Large_Yellow_MB",
+  "P_EFX_FireWorksShow_Medium_Flower_MB",
+  "P_EFX_FireWorksShow_Merge_A_H",
+  "P_EFX_FireWorksShow_Merge_A_M",
+  "P_EFX_FireWorksShow_Merge_B_H",
+  "P_EFX_FireWorksShow_Merge_B_M",
+  "P_EFX_FireWorksShow_Small_MB",
+  "P_EFX_FireWorksShow_Trail_MB",
+  "P_EFX_FireWorks_Comet_Layers_M",
+  "P_EFX_FireWorks_GlitterChry_D150_M",
+  "P_EFX_FireWorks_Glitter_M",
+  "P_EFX_FireWorks_GoldRayChry_M",
+  "P_EFX_FireWorks_Hero_H",
+  "P_EFX_FireWorks_Hero_L",
+  "P_EFX_FireWorks_Hero_M",
+  "P_EFX_FireWorks_Hero_Props_H",
+  "P_EFX_FireWorks_Large_Props_H",
+  "P_EFX_FireWorks_Large_Yellow_H",
+  "P_EFX_FireWorks_Large_Yellow_L",
+  "P_EFX_FireWorks_Large_Yellow_M",
+  "P_EFX_FireWorks_LittleCombo_M",
+  "P_EFX_FireWorks_LittleCrackle_M",
+  "P_EFX_FireWorks_LittleGold_M",
+  "P_EFX_FireWorks_LittleSilver_M",
+  "P_EFX_FireWorks_Mark_Smoke_H",
+  "P_EFX_FireWorks_Mark_Smoke_L",
+  "P_EFX_FireWorks_Medium_Props_H",
+  "P_EFX_FireWorks_Medium_Red_Backup",
+  "P_EFX_FireWorks_Medium_Red_H",
+  "P_EFX_FireWorks_Medium_Yellow_H",
+  "P_EFX_FireWorks_Medium_Yellow_L",
+  "P_EFX_FireWorks_Medium_Yellow_M",
+  "P_EFX_FireWorks_Props_Hero_H",
+  "P_EFX_FireWorks_Props_Hero_L",
+  "P_EFX_FireWorks_Props_Hero_M",
+  "P_EFX_FireWorks_Props_Large_H",
+  "P_EFX_FireWorks_Props_Large_L",
+  "P_EFX_FireWorks_Props_Large_M",
+  "P_EFX_FireWorks_Props_Medium_H",
+  "P_EFX_FireWorks_Props_Medium_L",
+  "P_EFX_FireWorks_Props_Medium_M",
+  "P_EFX_FireWorks_RiseTrail_L_M",
+  "P_EFX_FireWorks_RiseTrail_M_M",
+  "P_EFX_FireWorks_RiseTrail_S_M",
+  "P_EFX_FireWorks_RiseTrail_Tiny_M",
+  "P_EFX_FireWorks_RiseTrail_XS_M",
+  "P_EFX_FireWorks_Silver3_Layers_S_M",
+  "P_EFX_FireWorks_Silver3_S_M",
+  "P_EFX_FireWorks_SilverChry_M",
+  "P_EFX_FireWorks_Small_Yellow_H",
+  "P_EFX_FireWorks_Strobe_M",
+  "P_EFX_FireWorks_Trail_01_H",
+  "P_EFX_FireWorks_Trail_01_L",
+  "P_EFX_FireWorks_Trail_01_M"
+ ],
+ "rows": [
+  {
+   "resourceId": "P_EFX_FireWorks_GoldRayChry",
+   "pcRow": "跨年烟花3.0_中型_B_金芒菊",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "derivedMobileName": "P_EFX_FireWorks_GoldRayChry_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_GoldRayChry_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M"
+     ]
+    },
+    {
+     "name": "P_EFX_FireWorks_GoldSpark_M",
+     "paths": []
+    }
+   ],
+   "searchByName": {
+    "core": "GoldRayChry",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_SilverChry",
+   "pcRow": "跨年烟花3.0_小型_F_银冠菊",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "derivedMobileName": "P_EFX_FireWorks_SilverChry_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_SilverChry_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "SilverChry",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Glitter",
+   "pcRow": "跨年烟花3.0_小型_I__橙辉星",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "derivedMobileName": "P_EFX_FireWorks_Glitter_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_Glitter_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M"
+     ]
+    },
+    {
+     "name": "P_EFX_FireWorks_Combo_M",
+     "paths": []
+    }
+   ],
+   "searchByName": {
+    "core": "Glitter",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_D150_M.P_EFX_FireWorks_GlitterChry_D150_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Crackle",
+   "pcRow": "跨年烟花3.0_小型_G_爆裂星",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "derivedMobileName": "P_EFX_FireWorks_Crackle_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_Crackle_M",
+     "paths": []
+    }
+   ],
+   "searchByName": {
+    "core": "Crackle",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_Strobe",
+   "pcRow": "跨年烟花3.0_小型_J_点灭星",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "derivedMobileName": "P_EFX_FireWorks_Strobe_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_Strobe_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "Strobe",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_LittleCombo",
+   "pcRow": "跨年烟花3.0_小号_D_小分裂",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "derivedMobileName": "P_EFX_FireWorks_LittleCombo_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_LittleCombo_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "LittleCombo",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "pcRow": "跨年烟花3.0_小型_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_S_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_RiseTrail_S_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "RiseTrail_S",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "pcRow": "跨年烟花3.0_中型_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_M_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_RiseTrail_M_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "RiseTrail_M",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "pcRow": "跨年烟花3.0_大型_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_L_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_RiseTrail_L_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "RiseTrail_L",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M"
+    ]
+   }
+  },
+  {
+   "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "pcRow": "跨年烟花3.0_极小_尾缀",
+   "pcFxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "derivedMobileName": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "exact": [
+    {
+     "name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+     "paths": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M"
+     ]
+    }
+   ],
+   "searchByName": {
+    "core": "RiseTrail_Tiny",
+    "hits": [
+     "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M"
+    ]
+   }
+  }
+ ]
+}
