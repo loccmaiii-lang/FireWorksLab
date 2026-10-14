@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-14 15:31",
+ "at": "2026-10-14 15:54",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -1330,12 +1330,12 @@
   ]
  ],
  "ue": {
-  "base": "MyFx",
+  "base": "GlitterChry",
   "layers": [
    "L1",
-   "L2",
-   "L3"
+   "Main",
+   "Glitter"
   ],
-  "custom": false
+  "custom": true
  }
 }
