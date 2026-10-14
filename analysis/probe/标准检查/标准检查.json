@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-14 23:02",
+ "generated": "2026-10-15 01:22",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -5711,7 +5711,7 @@
    "name": "分裂星 · 原样",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "313c8659·master4.9.31·size3-P_SPLIT-90-150",
+   "ver": "313c8659·flashint4.9.103+master4.9.31·size4-P_SPLIT-90-150",
    "checks": [
     [
      "实时模拟",
@@ -6775,7 +6775,7 @@
    "name": "Crackle · 原样",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "8fd3f286·flash4.9.96+master4.3.8-core1",
+   "ver": "8fd3f286·flash4.9.96+flashint4.9.103+master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -13311,7 +13311,7 @@
    "name": "金锦冠扇形 FanGold · 11 筒逐筒出膛",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "b1204eda·master4.9.31",
+   "ver": "b1204eda·flashint4.9.103+master4.9.31",
    "checks": [
     [
      "实时模拟",
@@ -13463,7 +13463,7 @@
    "name": "球形C · 绿芯入 + 橙引转银辉星",
    "kind": "combo",
    "renderVer": null,
-   "ver": "115482d1·master4.9.31",
+   "ver": "115482d1·flashint4.9.103+master4.9.31·size4-P_MULTI-150-210",
    "checks": [
     [
      "实时模拟",
@@ -13532,7 +13532,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.3
+   "seconds": 0.2
   },
   "QD14": {
    "id": "QD14",
@@ -14752,10 +14752,10 @@
   },
   "FC6O": {
    "id": "FC6O",
-   "name": "金锦冠扇形 FanGold1.0 · 用户参数基线",
+   "name": "金锦冠扇形 FanGold1.0 · 燃尽后扰动",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "6ea2f5ff·master4.3.8-core1-zoom4.9.33",
+   "ver": "02482c6c·anchor4.9.103+master4.3.8-core1-zoom4.9.33",
    "checks": [
     [
      "实时模拟",
@@ -14799,8 +14799,8 @@
     ],
     [
      "屏幕放大 ≤ 1",
-     false,
-     "放大 1.07"
+     true,
+     "放大 0.78"
     ],
     [
      "30fps 显示帧 ≥ 90%",
@@ -14823,7 +14823,7 @@
      ""
     ]
    ],
-   "pass": false,
+   "pass": true,
    "seconds": 0.1
   },
   "FC7R": {

@@ -1,0 +1,37 @@
+[
+ {
+  "name": "Crackle（MYCR-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette（MYFL-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "FanGold（FG7）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "QiuxingC40（QC12）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "FanCometOrange（FC6O，前段）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]

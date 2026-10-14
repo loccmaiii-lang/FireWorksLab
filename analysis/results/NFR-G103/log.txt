@@ -1,0 +1,16 @@
+01:22:29 第 1/5 步：Crackle（MYCR-O）
+01:22:30   ✅ Crackle 跳过纯粒子发射器：Flash
+01:22:30   ✅ Crackle（MYCR-O）（0.0 分钟）
+01:22:30 第 2/5 步：Crossette（MYFL-O）
+01:22:30   ✅ Crossette 
+01:22:30   ✅ Crossette（MYFL-O）（0.0 分钟）
+01:22:30 第 3/5 步：FanGold（FG7）
+01:22:31   ✅ FanGold 
+01:22:31   ✅ FanGold（FG7）（0.0 分钟）
+01:22:31 第 4/5 步：QiuxingC40（QC12）
+01:22:32   ✅ QiuxingC40 
+01:22:32   ✅ QiuxingC40（QC12）（0.0 分钟）
+01:22:32 第 5/5 步：FanCometOrange（FC6O，前段）
+01:22:33   ✅ FanCometOrange 
+01:22:33   ✅ FanCometOrange（FC6O，前段）（0.0 分钟）
+01:22:33 完成，用时 0.1 分钟

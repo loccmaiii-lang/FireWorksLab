@@ -1,0 +1,28 @@
+{
+ "effect": "qiuxing_c",
+ "entry": "QC12",
+ "ver": "115482d1·flashint4.9.103+master4.9.31·size4-P_MULTI-150-210",
+ "time": "2026-10-15 01:22",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "QiuxingC40",
+   "replica": "QC12",
+   "files": [
+    "T_EFX_FireWorks_LimeCoreDelay_Core_4x4_01.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Core_4x4_01_C.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Core_4x4_01_HD.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Core_R.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_C.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Lead_4x4_01_C.png",
+    "T_EFX_FireWorks_LimeCoreDelay_Lead_4x4_01_HD.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

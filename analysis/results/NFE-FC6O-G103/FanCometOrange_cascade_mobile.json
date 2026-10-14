@@ -1,0 +1,413 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "FanComet_Gold_M",
+ "platform": "mobile",
+ "tier": "M",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.103",
+  "type": "kamuro",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "b09cd4b0"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_EFX_FireWorks_FanComet_Gold_4x4_01.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_FanComet_Gold_4x4_01",
+   "sha256": "5a057b2373038d237db159917c772095c07936675a19f9ef93826cc1e3f088e2"
+  },
+  "cutout": {
+   "file": "T_EFX_FireWorks_FanComet_Gold_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_FanComet_Gold_4x4_01_C",
+   "save_est": 0.718,
+   "hash": "2e09002a4ae13c3613ac",
+   "sha256": "f652582203e8e051c1e304a062c4f346fcb6479ac8af7a6ed61bbc64c31a2198"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_FanComet_Gold_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_FanComet_Gold_R",
+   "hash": "9d655e6adffb0bfb14a",
+   "sha256": "15d97cdd0bd8e19862cf50646b78b1e2352c7d4e51dd7088d5802a1d6d596d83"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.1667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.6796
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.1667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       4511.7,
+       4511.7,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.2866,
+         0.2866,
+         1
+        ]
+       ],
+       [
+        0.042,
+        [
+         0.2866,
+         0.2866,
+         1
+        ]
+       ],
+       [
+        0.0421,
+        [
+         0.3409,
+         0.3409,
+         1
+        ]
+       ],
+       [
+        0.063,
+        [
+         0.3409,
+         0.3409,
+         1
+        ]
+       ],
+       [
+        0.0632,
+        [
+         0.3968,
+         0.3968,
+         1
+        ]
+       ],
+       [
+        0.0841,
+        [
+         0.3968,
+         0.3968,
+         1
+        ]
+       ],
+       [
+        0.0842,
+        [
+         0.4805,
+         0.4805,
+         1
+        ]
+       ],
+       [
+        0.1156,
+        [
+         0.4805,
+         0.4805,
+         1
+        ]
+       ],
+       [
+        0.1158,
+        [
+         0.5489,
+         0.5489,
+         1
+        ]
+       ],
+       [
+        0.1472,
+        [
+         0.5489,
+         0.5489,
+         1
+        ]
+       ],
+       [
+        0.1474,
+        [
+         0.6054,
+         0.6054,
+         1
+        ]
+       ],
+       [
+        0.1788,
+        [
+         0.6054,
+         0.6054,
+         1
+        ]
+       ],
+       [
+        0.1789,
+        [
+         0.6808,
+         0.6808,
+         1
+        ]
+       ],
+       [
+        0.2209,
+        [
+         0.6808,
+         0.6808,
+         1
+        ]
+       ],
+       [
+        0.2211,
+        [
+         0.7468,
+         0.7468,
+         1
+        ]
+       ],
+       [
+        0.263,
+        [
+         0.7468,
+         0.7468,
+         1
+        ]
+       ],
+       [
+        0.2632,
+        [
+         0.8049,
+         0.8049,
+         1
+        ]
+       ],
+       [
+        0.3051,
+        [
+         0.8049,
+         0.8049,
+         1
+        ]
+       ],
+       [
+        0.3053,
+        [
+         0.878,
+         0.878,
+         1
+        ]
+       ],
+       [
+        0.3788,
+        [
+         0.878,
+         0.878,
+         1
+        ]
+       ],
+       [
+        0.3789,
+        [
+         0.9234,
+         0.9234,
+         1
+        ]
+       ],
+       [
+        0.4209,
+        [
+         0.9234,
+         0.9234,
+         1
+        ]
+       ],
+       [
+        0.4211,
+        [
+         0.971,
+         0.971,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         0.971,
+         0.971,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.5474,
+         52.01
+        ],
+        [
+         0.5895,
+         54.01
+        ],
+        [
+         0.6211,
+         55.01
+        ],
+        [
+         0.9579,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "随开花放大 · 锚在爆点（4.9.81）：Pivot Offset 把爆点放在粒子位置（面片最大时中心比爆点高 8.1 m），Size By Life 绕爆点放大（24 个点、和换帧同一刻换大小），爆点在面片里的位置不变；未经 UE 验证"
+   ],
+   "max_alive": 1
+  }
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "FanComet_Gold",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.103"
+ }
+}

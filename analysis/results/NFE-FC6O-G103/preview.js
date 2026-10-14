@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("NFE-FC6O-G103", {"manifest": {"title": "FanCometOrange", "duration": 3.47, "view": 48.7, "variants": {"FanCometOrange": "FanCometOrange"}, "emitters": [], "note": "导出（23）· 烘焙器 4.9.103（导出排查 A18）：带锚点的 Zoom 每个时刻的余量按「这一刻火花最多活了多久」长（0 s 没有火花就不加），第 0 帧面片 0.32 → 0.29，前段内容占比变大 → 参数不动重导。同一目录覆盖。"}, "images": {}});
