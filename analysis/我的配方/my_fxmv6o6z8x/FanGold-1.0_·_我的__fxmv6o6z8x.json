@@ -1,11 +1,11 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmv6o6z8x",
- "tool": "4.9.79",
+ "tool": "4.9.96",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv6o6z8x",
  "name": "FanGold-1.0 · 我的",
- "at": "2026-10-13 20:46",
+ "at": "2026-10-14 19:18",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -89,7 +89,7 @@
      "headHaloOwn": 0,
      "headHaloFrac": 0.22,
      "headHaloR": 3,
-     "sparkRate": 280,
+     "sparkRate": 800,
      "sparkRateBy": "sec",
      "sparkPerM": 5,
      "sparkSpawnR": 0,
@@ -579,6 +579,7 @@
   "layers": [
    "Glow"
   ],
+  "system": "FanComet_Gold",
   "custom": true
  }
 }
