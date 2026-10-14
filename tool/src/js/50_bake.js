@@ -221,6 +221,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   gl.activeTexture(gl.TEXTURE0);
   const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
+  const ex0 = R.finish ? extra.expo || [fixedExposure(P), fixedExposure(P)] : null;     // 4.9.102 收尾钩子要按编码的曝光反推（和下面编码同一组）
   const t0 = performance.now(); bakePaceReset();
   try {     // 4.2.16：烘到一半作废（参数又变了，进度回调抛出）时，把这三张工作贴图放掉
   for (let f = 0; f < Math.min(L.F, pl.times.length); f++) {     // 4.9.26 帧比格子少（远段很短时）：多的格子留空
@@ -242,10 +243,12 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     }
     additive(false);
     hazeSamples40(P, sst, ppm);
+    // 4.9.102 渲染器收尾钩子（合成一张 rtFullFx：引擎里加的效果按材质反推合进来）：返回单格分辨率的 HDR，打包时不再超采样平均；没有钩子的渲染器一字不变
+    const src = R.finish ? R.finish(sst, { P, pl, t: pl.t0 + tc, ss: q.ss, w: cw, h: chh, view, ppm, ppmY, expo: ex0 }) : null;
     const ch = Math.floor(f / L.per), k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
     const fade = frameFade40(pl,pl.t0+tc,!!extra.noFade);
-    gl.useProgram(PR.pack.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, sst.tex);
-    gl.uniform1i(PR.pack.u.uS, 0); gl.uniform1i(PR.pack.u.uSS, q.ss); gl.uniform1f(PR.pack.u.uFade, fade);
+    gl.useProgram(PR.pack.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, src ? src.tex : sst.tex);
+    gl.uniform1i(PR.pack.u.uS, 0); gl.uniform1i(PR.pack.u.uSS, src ? 1 : q.ss); gl.uniform1f(PR.pack.u.uFade, fade);
     gl.uniform1f(PR.pack.u.uPad, (P.cellPad || 0) * scale); gl.uniform2f(PR.pack.u.uCell, cw, chh);
     for (const [tg, m] of [[fH, [1, 0, 0, 0]], [fT, [0, 1, 0, 0]]]) {
       tg.bind(col * cw, NH - (row + 1) * chh, cw, chh);
@@ -640,7 +643,9 @@ async function bake(P, scale, onProg) {
     case 'loop': return bakeLoop(P, scale, onProg);
     case 'riseLoop': return bakeRiseLoop(P, scale, onProg);
     case 'trail': return bakeTrail(P, scale, onProg);
-    case 'emitset': return rtPcFull(P) || rtHeadOut(P) ? bakeRiseTailFull(P, scale, onProg, false) : bakeEmitSet(P, scale, onProg);     // 4.9.96 H1：纯星头 PC 选 CPU 粒子也是独立星头
+    case 'emitset':     // 4.9.102 rtFullFx：合进贴图的亮度按材质反推 → 烘的时候记下用的材质（多层的层在 runLayerQueue 里给这一层的颜色；单层用当前材质）
+      if ((rtPcFull(P) || rtMobFull(P)) && rtFxOn(P) && !P._fxM) P._fxM = rtFxSnap(typeof state !== 'undefined' && state.tab !== 'combo' ? state.M : defaultsFor(P.type).M);
+      return rtPcFull(P) || rtHeadOut(P) ? bakeRiseTailFull(P, scale, onProg, false) : bakeEmitSet(P, scale, onProg);     // 4.9.96 H1：纯星头 PC 选 CPU 粒子也是独立星头
     case 'unit': return bakeUnit(P, scale, onProg);
     case 'segments': return bakeSegments(P, scale, onProg);
     default: return bakeMasterLead(P, scale, onProg);

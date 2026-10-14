@@ -1,0 +1,10 @@
+{
+ "id": "NFS-CSL-G102",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "CSLRS",
+  "CSLRC"
+ ],
+ "note": "导出（23）4.9.102：Silver 3.1 / Comet 3.1 重导后的标准检查。"
+}

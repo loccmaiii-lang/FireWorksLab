@@ -45,7 +45,7 @@ ctx.lib = { q: '', key: '', review: null, tpl: null, effect: null, formal: null,
 const load = code => { if (code) vm.runInContext(code, ctx); };
 for (const n of ['libOpenBegin', 'libOpenAlive', 'beforeOpen', 'openEffect', 'openReview', 'openComboEntry', 'openFormal', 'openType', 'effectOfEntry', 'entryById']) load(fn('79_library.js', n));
 load(constLine('70_ui.js', 'libP')); load(constLine('70_ui.js', 'defaultLibName'));
-for (const n of ['dropLibBake', 'libByType', 'ensureLibEntries', 'newLayer', 'libFork', 'libOwn', 'applyCombo']) load(fn('70_ui.js', n));
+for (const n of ['dropLibBake', 'libByType', 'rtFxMatP', 'ensureLibEntries', 'newLayer', 'libFork', 'libOwn', 'applyCombo']) load(fn('70_ui.js', n));     // 4.9.102 rtFxMatP：组合母版按层颜色烘（隔离环境里没有 rtFxOn，原样返回）
 load(src('61_naming.js')); load(src('79_myfx.js'));
 load(fn('18_multitypes.js', 'openMultiType'));
 for (const n of ['wbKey', 'wbLoadAI', 'wbLoad', 'wbApply', 'delivNameFeedback', 'saveDelivNames', 'resetDelivNames']) load(fn('79_workbench.js', n));

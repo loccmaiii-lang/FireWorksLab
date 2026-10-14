@@ -1,0 +1,41 @@
+{
+ "id": "NFR-CSL-G102",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：Silver 3.1 / Comet 3.1（4.9.102 重导后）",
+ "steps": [
+  {
+   "name": "Silver 3.1（Silver3_Layers）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Silver3_Layers.jpg",
+    "analysis/local/输出/素材包/Silver3_Layers",
+    "--times",
+    "0.3,0.8,1.5,2.1,2.6,3.2,4,5"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Comet 3.1（Comet3_Layers）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Comet3_Layers.jpg",
+    "analysis/local/输出/素材包/Comet3_Layers",
+    "--times",
+    "0.3,0.8,1.5,2.1,2.6,3.2,4,5"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "导出（23）4.9.102：落火现在上升段就看得见、亮度按 GPU 落火；看回放里落火有没有、亮不亮、有没有过曝 / 碰边。"
+}

@@ -91,8 +91,11 @@ const INERT = [
   [['starSizeCurve', 'starBrightCurve'], P => familyOf(P.type) === 'ground' && !(typeof hasComets === 'function' && hasComets(P)), '地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命'],
   // 4.9.86（导出（23）审查 4.9.82–4.9.85，用户 10-14 10:29「有些效果加了我好像调了也没什么用」）：依据是代码（47_risetail.js bakeRiseTailFull 把 GPU 颗数清零、
   //   fwlEmitSetFull 只写 1 个发射器、rtLayoutFar 合成时不按交接年龄、近段 + 远段时不烘消散序列）+ 审查时的拨参对照（同一帧贴图不变）
-  [RT_LIVE_KEYS, P => isEmit(P) && typeof rtPcFull === 'function' && rtPcFull(P), 'PC「近段 + 远段合成一张」：哪份导出里都没有这一项（GPU 粒子 / 引擎里加的效果；手机 _M 的尾缀只有近段循环）；4.9.89 起实时模拟也不画它，看到的 = 导出的'],
-  [RT_GPU_SPLIT_KEYS, P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」：火花全烘进那一张，GPU 粒子预算不起作用'],
+  // 4.9.102（导出排查 V5）：「合成一张时烘进贴图」（rtFullFx）开着时引擎里加的效果 / 落火 / 远看直径 / 粒子层亮度都烘进那一张，只剩 GPU 火花自己的几项不起作用
+  [RT_LIVE_KEYS, P => isEmit(P) && typeof rtPcFull === 'function' && rtPcFull(P) && !rtFxOn(P), 'PC「近段 + 远段合成一张」：哪份导出里都没有这一项（GPU 粒子 / 引擎里加的效果；手机 _M 的尾缀只有近段循环）；4.9.89 起实时模拟也不画它，看到的 = 导出的。要烘进去：「尾缀 · 引擎里加的效果 › 合成一张时烘进贴图」选「烘进」'],
+  [['rtGpuTw'], P => isEmit(P) && typeof rtPcFull === 'function' && rtPcFull(P) && rtFxOn(P), 'PC「近段 + 远段合成一张」：火花全烘进那一张，没有 GPU 闪烁火花，这一项不起作用'],
+  [RT_GPU_SPLIT_KEYS, P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P) && !rtFxOn(P), '两个平台都「近段 + 远段合成一张」：火花全烘进那一张，GPU 粒子预算不起作用'],
+  [['rtGpuC', 'rtGpuM', 'rtGpuF'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P) && rtFxOn(P), '两个平台都「近段 + 远段合成一张」：火花全烘进那一张，GPU 粒子预算不起作用'],
   [RT_HEAD_INERT, P => isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P), '纯星头：一颗粒子沿弹道走（PC 单帧小面片、手机软圆点），没有序列帧可分配、没有循环层；入点 / 出点、亮度照样起作用'],
   [['rtLoopMin', 'rtLoopSize'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」：没有循环层，这一项不起作用'],
   [['rtMobileTex'], P => isEmit(P) && P.outMobile === 'off', '手机选了「不出」：手机贴图边长不起作用'],
@@ -100,11 +103,12 @@ const INERT = [
   // 4.9.89（导出排查 A8 / A9）：「星头火花输出 · 分开」只有单层、PC 合成一张时才导出两张
   [['outMode'], P => typeof state !== 'undefined' && state.tab === 'combo', '多层效果：素材包一律星头火花合并（4.9.89 起预览也合并，看到的 = 导出的）；要分开只能单层导出'],
   [['outMode'], P => typeof emitFullOut === 'function' && emitFullOut(P) && typeof rtPcFull === 'function' && !rtPcFull(P), '只有 PC 选「合成一张」时能分开（PC 两张、两个发射器）；手机一律合一张'],
-  [['rtERate', 'rtELife', 'rtESize', 'rtEI', 'rtEKd', 'rtESizeCurve', 'rtEBrightCurve'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P) && +P.rtETex !== 1, '合成一张时落火是 GPU 粒子，不进贴图：只有单层「实时模拟」还画它，「引擎回放」和多层效果里都没有；要进贴图先把「落火进入合并贴图」打开'],
+  [['rtERate', 'rtELife', 'rtESize', 'rtEI', 'rtEKd', 'rtESizeCurve', 'rtEBrightCurve'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P) && +P.rtETex !== 1 && !rtFxOn(P), '合成一张时落火是 GPU 粒子，不进贴图：只有单层「实时模拟」还画它，「引擎回放」和多层效果里都没有；要进贴图先把「落火进入合并贴图」或「合成一张时烘进贴图」打开'],
   [['rtNearA0', 'rtNearA1', 'rtNearExpo'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」时不起作用（没有近段 / 远段交接）'],
   [['rtFadeFps', 'rtDissolve'], P => isEmit(P) && +P.rtFar === 1, '「近段 + 远段」没有消散序列（开花后的火花都在远段里），这一项不起作用'],
-  [['rtTailAfterBurn'], P => isEmit(P) && !['F', 'M', 'C', 'E'].some(k => parseCurve(P['rt' + k + 'SizeCurve']) || parseCurve(P['rt' + k + 'BrightCurve'])) && !(+P.rtETex === 1 && P.rtERate > 0),
-    '火星的「大小 / 亮度随寿命」曲线都没填、落火也没进贴图时不起作用：燃尽后渐入的是这些曲线，先填曲线'],
+  // 4.9.102（导出排查 V5 ③，用户 10-14 14:14 按推荐「燃尽门只作用在曲线上」）：落火不再另乘燃尽门，进没进贴图都一样只看曲线
+  [['rtTailAfterBurn'], P => isEmit(P) && !['F', 'M', 'C', 'E'].some(k => parseCurve(P['rt' + k + 'SizeCurve']) || parseCurve(P['rt' + k + 'BrightCurve'])),
+    '火星 / 落火的「大小 / 亮度随寿命」曲线都没填时不起作用：燃尽后渐入的只是这些曲线（4.9.102 起落火上升段照常可见），先填曲线'],
   [['sparkTailAfterBurn'], P => !['sparkSizeCurve', 'sparkBrightCurve', 'emberSizeCurve', 'emberBrightCurve'].some(k => parseCurve(P[k])) && !(+P.waterRefl > 0),
     '火花 / 余烬的「大小 / 亮度随寿命」曲线都没填时不起作用：燃尽后按剩余寿命走的是这些曲线，先填曲线'],
   [['shutter'], P => !!P.cameraMotion && typeof cameraApplies === 'function' && cameraApplies(P), '「镜头成像 › 快门运动模糊」开着：运动模糊按那里的曝光时间算，这一项不起作用'],

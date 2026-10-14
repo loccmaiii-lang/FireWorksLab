@@ -248,6 +248,16 @@ function queueLayerRefine(e) {
   (state.layerRefine = state.layerRefine || new Set()).add(e);
   clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, 700);
 }
+// 4.9.102（导出排查 V5）：合成一张开了 rtFullFx 的尾缀层按这一层的颜色烘（合进去的效果按材质反推亮度）；颜色改了 rtFxStale 会让它重烘
+function rtFxLayerP(P, e) {
+  if (typeof rtFxOn !== 'function' || !rtFxOn(P) || !emitFullOut(P)) return P;
+  const L = (state.layers || []).find(L => L.lib === e.name); return L ? { ...P, _fxM: rtFxSnap(comboLayerM(L)) } : P;
+}
+// 打开组合时层还没建（ensureLibEntries / libOwn 先烘母版）：按这一层将来的颜色（条目的材质 + 组合里存的这一层的颜色，和 newLayer 同一套）烘
+function rtFxMatP(P, M, over) {
+  if (typeof rtFxOn !== 'function' || !rtFxOn(P) || !emitFullOut(P) || !M) return P;
+  return { ...P, _fxM: rtFxSnap(comboLayerM({ stages: M.stages, xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: M.headInt, tailInt: M.tailInt, ...(over || {}) })) };
+}
 async function runLayerQueue() {
   clearTimeout(state.layerQueueTimer);
   const q = state.layerQueue = state.layerQueue || new Set(), rq = state.layerRefine = state.layerRefine || new Set();
@@ -275,7 +285,7 @@ async function runLayerQueue() {
   const rev = e.pRev, full = bakeMode.demand || !e.bake, idx = () => state.layers.findIndex(L => L.lib === e.name), isCur = () => state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name, tok = state.bakeTok;
   let pending = null;
   try {
-    const b = pending = await bake(libP(e.P, true), 1, p => { if (e.pRev !== rev) throw BAKE_ABORT; bakeGuard(tok); setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`); });
+    const b = pending = await bake(rtFxLayerP(libP(e.P, true), e), 1, p => { if (e.pRev !== rev) throw BAKE_ABORT; bakeGuard(tok); setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`); });
     pending = null;
     if (!state.lib.includes(e)) { disposeBake(b); q.delete(e); return; }
     if (e.pRev !== rev) { disposeBake(b); return; }                          // 烘的时候又改了：留在队列里，按最新参数再烘
@@ -1187,7 +1197,7 @@ function libByType(t) {
   return state.lib.find(e => e.name === defaultLibName(t)) || state.lib.find(e => e.type === t);
 }
 // 组合里用到但还没烘焙的母版（实拍复刻层）现烘
-async function ensureLibEntries(keys) {
+async function ensureLibEntries(keys, mats) {     // 4.9.102 mats：key → 组合里第一层用它时存的颜色（rtFxMatP）
   // 单独调过的层：参数变了就丢掉旧烘焙，按调过的参数重烘
   for (const k of new Set(keys)) {
     if (!k.startsWith('rep:')) continue;
@@ -1199,10 +1209,10 @@ async function ensureLibEntries(keys) {
     const k = need[i];
     if (k.startsWith('rep:')) {
       const id = k.slice(4), r = REPLICA_BY_ID[id], ed = state.layerEdits && state.layerEdits[id], { P, M } = ed ? { P: migrate37(ed.P), M: ed.M } : replicaPM(id);
-      const b = await bake(libP(P, true), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
+      const b = await bake(rtFxMatP(libP(P, true), M, mats && mats.get(k)), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
       state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b, editSig: ed ? JSON.stringify([ed.P, ed.M]) : undefined });
     } else {
-      const d = defaultsFor(k), b = await bake(libP(d.P), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + p) / need.length));
+      const d = defaultsFor(k), b = await bake(rtFxMatP(libP(d.P), d.M, mats && mats.get(k)), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + p) / need.length));
       state.lib.push({ name: defaultLibName(k), type: k, P: d.P, M: d.M, bake: b });
     }
   }
@@ -1222,20 +1232,21 @@ function libFork(e) {
 }
 function layerEntryFor(e, used) { return used.has(e) || state.layers.some(L => L.lib === e.name) ? libFork(e) : e; }
 // 4.2.3（走查 A2）：保存的版本里不是条目的层（默认母版、编辑器里调过的层）带着自己的参数，恢复时按它重烘，不再变回「默认」
-async function libOwn(src) {
+async function libOwn(src, over) {
   const t = src.type || src.P.type, base = (TYPE_NAMES[t] || t).replace(/（.*）/, '') + ' · 我的'; let n = 1; while (state.lib.some(x => x.name === `${base} ${n}`)) n++;
   const P = migrate37(structuredClone(src.P)), M = structuredClone(src.M || defaultsFor(t).M);
-  const b = await bake(libP(P, true), 1, p => busy(true, `烘焙你的层：${base} ${n}`, p)); busy(false);
+  const b = await bake(rtFxMatP(libP(P, true), M, over), 1, p => busy(true, `烘焙你的层：${base} ${n}`, p)); busy(false);
   const e = { name: `${base} ${n}`, type: t, P, M, bake: b, own: true }; state.lib.push(e); return e;
 }
 // 4.9.101 alive：打开代次（79_library.js libOpenBegin）。烘焙期间换了对象 → 不装层、不发布，这次自己烘的层释放（共用母版缓存留着）；返回 false
 async function applyCombo(c, alive = () => true) {
-  await ensureLibEntries(c.layers.filter(l => !l.src).map(l => l.m));
+  const fxMats = new Map(); for (const l of c.layers) if (!l.src && !fxMats.has(l.m)) { const { m, src, ...rest } = l; fxMats.set(l.m, rest); }     // 4.9.102 rtFullFx：母版按这一层将来的颜色烘
+  await ensureLibEntries(c.layers.filter(l => !l.src).map(l => l.m), fxMats);
   const used = new Set(), layers = [], mine = [];
   const drop = () => { for (const x of mine) { if (x.own) dropLibBake(x); const k = state.lib.indexOf(x); if (k >= 0) state.lib.splice(k, 1); } return false; };
   if (!alive()) return false;
   for (const l of c.layers) {
-    let e = l.src ? await libOwn(l.src) : libByType(l.m);
+    let e = l.src ? await libOwn(l.src, (({ m, src, ...rest }) => rest)(l)) : libByType(l.m);
     if (l.src) mine.push(e);
     if (!alive()) return drop();
     if (!l.src && used.has(e)) { e = libFork(e); mine.push(e); }

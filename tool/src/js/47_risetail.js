@@ -176,6 +176,15 @@ const rtTailGate = (P, t, T) => smoothstepJS(0, Math.max(0.05, +P.rtLateFade || 
 const rtTailCurve = (cv, u, gate) => cv ? 1 + (Math.max(0, lifeCurveAt(cv, u)) - 1) * gate : 1;
 const rtTailSize = (C, u) => C.k === 'E' ? esCurve([[0, 1], [0.8, 0.9], [1, 0.4]], u) : (u < 0.7 ? 1 : 1 + (C.shrink - 1) * (u - 0.7) / 0.3);
 const rtFullTailFeatures = P => +P.rtETex === 1 || +P.rtTailAfterBurn === 1 || +P.rtLateWind > 0;
+// 4.9.102（导出排查 V5，用户 10-14 14:14「第 4 节要我定的按推荐默认处理」= 加开关 rtFullFx，RT6 默认关、画面不变，CSLR* 和以后的新条目默认开）：
+//   合成一张（bakeRiseTailFull）时把引擎里加的效果（星头光晕、末段爆亮、发射口闪光 / 火花、烟带、GPU 落火）和贴图落火按它们在实时模拟里的样子烘进这一张：
+//   每帧先照旧画星头 + 火花（HDR），再把这些软圆点画进一张临时图（引擎自发光口径，和 esDraw 一样），逐像素按材质（Ramp × 颜色 × 显示强度 × 4）反推合进灰度。
+//   限制：单通道里软圆点的颜色变成 Ramp 色；> 253 截顶；入点以后才有的帧里才有（入点前的发射口闪光丢）。关着（0）逐字节和 4.9.97 一样
+const rtFxOn = P => !!P && +P.rtFullFx === 1;
+const RT_FX_NAMES = new Set(['HeadGlow', 'SparkPops', 'LaunchGlow', 'LaunchSparks', 'Smoke', 'Embers']);
+const rtFxSnap = M => M ? { stages: (M.stages || []).map(s => [...s]), xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: M.headInt, tailInt: M.tailInt } : null;
+// 烘进去的亮度按烘的那一刻的材质算：材质（Ramp / 颜色 / 显示强度）改了，这张贴图就旧了（导出、引擎回放前重烘）
+const rtFxStale = (b, M) => !!(b && b.P && b.P._fxM && M && JSON.stringify(b.P._fxM) !== JSON.stringify(rtFxSnap(M)));
 // 燃尽前沿用解析解，之后连续接续位置/速度；每次从同一时刻积分，跳帧和倒放不积累状态。
 // 气流是 m/s 的目标空气速度；重力和线性阻力保持原值，非给粒子直接叠加位置噪声。
 function rtLateMotion(P, p, vx0, vz0, q, a, T, R0, dtMax = 1 / 60) {
@@ -287,11 +296,12 @@ function drawRiseTailLive(P, LI, ball, t, view, ppm) {
   return rtWorldDraw(P, LI, ball, t, view, ppm, 1, null, 0);
 }
 // 地面坐标里的火粉 + 贴图火星（实时模拟画全部；4.5.1 远段 TrailFar 画 wf(年龄) 那一份、横向减 cx 放进面片）
-function rtWorldDraw(P, LI, ball, t, view, ppm, w, wf, cx) {
+//   4.9.102 o.noE：贴图落火不在这里画（合成一张开了 rtFullFx 时它按 GPU 落火的样子另画，rtEmberDots）
+function rtWorldDraw(P, LI, ball, t, view, ppm, w, wf, cx, o) {
   const gate = +P.rtTailAfterBurn === 1 ? rtTailGate(P, t, ball.T) : 1;
   const T = ball.T, R0 = (P.rtD || 0) / 2, lifeMax = rtPowderLifeMax(P);
   let n = 0;
-  const CL = rtTexClasses(P, LI);
+  const CL = rtTexClasses(P, LI).filter(C => !(o && o.noE && C.k === 'E'));
   if (CL.length) {
     // 贴图火星在地面坐标：出生时刻的弹体位置 + 速度（同一套随机量），拖影 = 相对星头此刻速度 × 循环层快门
     const te = Math.min(t, T), vh = ball.vel(Math.min(t, T)), ppy = PPMY || ppm, cap = bufT.length / 4, smax = Math.max(1, P.rtStreakMax || 6);
@@ -306,7 +316,8 @@ function rtWorldDraw(P, LI, ball, t, view, ppm, w, wf, cx) {
       let x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1 + q.wx * (a - s1) - cx, z = p[2] + vz0 * s1 - (G / q.kd - q.wz) * (a - s1);
       let rvx = vx0 * e + q.wx * (1 - e) - (t <= T ? vh[0] : 0), rvz = vz0 * e - (G / q.kd - q.wz) * (1 - e) - (t <= T ? vh[2] : 0);
       if (t > T && P.rtLateWind > 0) { const m = rtLateMotion(P, p, vx0, vz0, q, a, T, R0); x = m[0] - cx; z = m[1]; rvx = m[2]; rvz = m[3]; }
-      const I = esCurve(C.lum, u) * (q.size / C.S) * (q.size / C.S) * LI.pulse(q.tb) * wa * rtTailCurve(C.brightCurve, u, gate) * (C.k === 'E' && +P.rtTailAfterBurn === 1 ? gate : 1); if (I <= 0) continue;
+      // 4.9.102（导出排查 V5 ③，用户 10-14 14:14 按推荐「燃尽门只作用在曲线上，落火上升段照常可见」）：以前落火在「燃尽后渐入」开着时再乘一次燃尽门，整个上升段 × 0
+      const I = esCurve(C.lum, u) * (q.size / C.S) * (q.size / C.S) * LI.pulse(q.tb) * wa * rtTailCurve(C.brightCurve, u, gate); if (I <= 0) continue;
       const S = q.size * rtTailSize(C, u) / 2 * rtTailCurve(C.sizeCurve, u, gate), rs = Math.hypot(rvx, rvz) || 1e-6, Lm = Math.min(rs * tau, smax * S * 2); if (S <= 0) continue;
       const m = clamp(Math.ceil(Lm * Math.hypot(rvx * ppm, rvz * ppy) / rs / 1.2), 1, 32);
       for (let i = 0; i < m && n < cap; i++) { const d = m > 1 ? ((i + 0.5) / m - 0.5) * Lm : 0; bufT[n * 4] = x + rvx / rs * d; bufT[n * 4 + 1] = z + rvz / rs * d; bufT[n * 4 + 2] = I / m; bufT[n * 4 + 3] = S; n++; }
@@ -332,6 +343,92 @@ function rtWorldDraw(P, LI, ball, t, view, ppm, w, wf, cx) {
   drawPoints(bufT, np, view, ppm, [0, 1, 0, 0], w);
   return n + np;
 }
+// 4.9.102（导出排查 V5 落火，用户 10-14 14:14 按推荐）：合成一张开了 rtFullFx 时，贴图落火按 GPU 落火的亮度 / 尺寸模型画——高斯软圆点（σ = 尺寸 / 4、最小 0.55 像素，
+//   和 esDraw 同一个着色器），颜色 = GPU 落火的 Color Over Life（rtSparkColor，亮度 rtEI × 粒子层亮度总倍数），按「GPU 火花远看直径 / 增益」放大且光量不变；
+//   出生、寿命、运动（含燃尽后气流）、脉动、燃尽后曲线照 rtWorldDraw（同一套随机量）。以前按贴图火星口径（× 0.01 × 贴图火星亮度 ÷ 细火花亮度），比 GPU 落火暗 125–740 倍
+const rtEmberColCache = new Map();
+function rtEmberCol(P, k2) {
+  const key = [P.rtELife, P.rtEI, P.rtDotGain, P.rtT0, P.rtTb, P.rtTend, P.rtTc, P.rtTw, k2].join(',');
+  let c = rtEmberColCache.get(key);
+  if (!c) { c = rtSparkColor(P, P.rtELife, P.rtEI * (P.rtDotGain == null ? 1 : P.rtDotGain) * k2, -180); rtEmberColCache.set(key, c); if (rtEmberColCache.size > 32) rtEmberColCache.delete(rtEmberColCache.keys().next().value); }
+  return c;
+}
+function rtEmberDots(P, LI, ball, t, view, ppm, ppmY, cx, gain = 1) {
+  const C = rtTexClasses(P, LI).find(C => C.k === 'E'); if (!C) return 0;
+  const T = ball.T, R0 = (P.rtD || 0) / 2, te = Math.min(t, T), gate = +P.rtTailAfterBurn === 1 ? rtTailGate(P, t, T) : 1;
+  const Sd = rtDispS(P, C.S), col = rtEmberCol(P, rtDispK(P, C.S));
+  let n = 0, alive = 0;
+  for (let gi = Math.floor(te * C.rate); gi >= 0; gi--) {
+    const q = rtTexSparkOf(P, C, gi);
+    if (q.tb > te) continue;
+    const a = t - q.tb; if (a > C.lifeMax + 0.02) break; if (a < 0 || a >= q.life) continue;
+    const p = ball.pos(q.tb), v = ball.vel(q.tb), sp = Math.hypot(v[0], v[2]) || 1, dx = v[0] / sp, dz = v[2] / sp;
+    const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd, u = a / q.life;
+    const vx0 = v[0] - (P.rtJet || 0) * q.jetScale * dx - (P.rtFling || 0) * q.flingScale * Math.sin(q.ph) + q.cx, vz0 = v[2] - (P.rtJet || 0) * q.jetScale * dz + q.cz;
+    let x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1 + q.wx * (a - s1) - cx, z = p[2] + vz0 * s1 - (G / q.kd - q.wz) * (a - s1);
+    if (t > T && P.rtLateWind > 0) { const m = rtLateMotion(P, p, vx0, vz0, q, a, T, R0); x = m[0] - cx; z = m[1]; }
+    const S = Sd * (q.size / C.S) * rtTailSize(C, u) * rtTailCurve(C.sizeCurve, u, gate), f = 4 * gain * LI.pulse(q.tb) * rtTailCurve(C.brightCurve, u, gate);
+    if (!(S > 0) || !(f > 0)) continue;
+    const c = esCurve(col, u), o = n * DOTC_N;
+    dotcData[o] = x; dotcData[o + 1] = z; dotcData[o + 2] = 6.2831853 * (S / 4) * (S / 4); dotcData[o + 3] = S / 2;
+    dotcData[o + 4] = c[0] * f; dotcData[o + 5] = c[1] * f; dotcData[o + 6] = c[2] * f; dotcData[o + 7] = 0; dotcData[o + 8] = 1; dotcData[o + 9] = 1;
+    n++; alive++; if (n * DOTC_N >= dotcData.length) { drawDotsC(n, view, ppm, ppmY); n = 0; }
+  }
+  drawDotsC(n, view, ppm, ppmY);
+  return alive;
+}
+// 4.9.102 合成一张的「收尾」（bakeFrames / rtLayoutFar / rtFullAnchor 每帧画完星头 + 火花之后调 R.finish）：
+//   src = 这一帧的 HDR（R 星头、G 火花，可以是 ss 倍超采样），o = { P, pl, t, ss, w, h, view, ppm, ppmY, expo }；
+//   ① 超采样平均到单格分辨率（和打包同一个 FS_PACK）② 软圆点按引擎自发光口径画进另一张（快门窗口里取几个时刻平均）
+//   ③ 逐像素：此刻的显示亮度 lum(Ramp(v) × 颜色) × v × 显示强度 × 4 加上软圆点的亮度，反推新的 v、换回 HDR，加在 G（火花）上。返回单格分辨率的结果
+const rtFxTmp = new Map();
+function rtFxTarget(key, w, h) {
+  const k = key + w + 'x' + h; let tg = rtFxTmp.get(k);
+  if (!tg) { if (rtFxTmp.size > 9) { for (const x of rtFxTmp.values()) x.dispose(); rtFxTmp.clear(); } gl.activeTexture(gl.TEXTURE0); tg = new Target(w, h, gl.RGBA16F); rtFxTmp.set(k, tg); }
+  return tg;
+}
+const FS_FXMERGE = HDR + `uniform sampler2D uA, uB; uniform float uEH, uET, uG, uSplit, uHI, uK; uniform vec3 uTint; out vec4 o;
+${RAMP_FN}
+float dispL(float v){ return dot(ramp(v)*uTint, vec3(.2126,.7152,.0722))*v*uHI*uK; }
+void main(){ ivec2 p=ivec2(gl_FragCoord.xy); vec4 a=texelFetch(uA,p,0); float y=dot(max(texelFetch(uB,p,0).rgb,vec3(0.)),vec3(.2126,.7152,.0722));
+  o=a; if(!(y>0.)||!(uHI>0.)) return;
+  const float vt=253./255.; float x=max(0.,uSplit>.5?a.g*uET:a.r*uEH+a.g*uET), v=min(pow(1.-exp(-x),1./uG),vt), yt=dispL(v)+y, v2;
+  if(yt>=dispL(vt)) v2=vt; else { float lo=v, hi=vt; for(int i=0;i<26;i++){ float m=.5*(lo+hi); if(dispL(m)<yt) lo=m; else hi=m; } v2=.5*(lo+hi); }
+  float x2=-log(max(1e-7,1.-pow(v2,uG)));
+  o.g=a.g+max(0.,x2-x)/uET; }`;
+PR.fxmerge = compile(VS_QUAD, FS_FXMERGE);
+function rtFxFinish(R, src, o) {
+  const P = R.P, M = P._fxM || rtFxSnap(typeof state !== 'undefined' ? state.M : null) || defaultsFor(P.type).M, w = o.w, h = o.h, ss = o.ss || 1;
+  const A = rtFxTarget('A', w, h), B = rtFxTarget('B', w, h), C = rtFxTarget('C', w, h);
+  gl.disable(gl.BLEND);
+  const pk = PR.pack; A.clear(); A.bind(); gl.useProgram(pk.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, src.tex);
+  gl.uniform1i(pk.u.uS, 0); gl.uniform1i(pk.u.uSS, ss); gl.uniform1f(pk.u.uFade, 1); gl.uniform1f(pk.u.uPad, 0); gl.uniform2f(pk.u.uCell, w, h);
+  gl.colorMask(true, false, false, false); gl.uniform4fv(pk.u.uM, [1, 0, 0, 0]); drawQuad();
+  gl.colorMask(false, true, false, false); gl.uniform4fv(pk.u.uM, [0, 1, 0, 0]); drawQuad();
+  gl.colorMask(true, true, true, true);
+  B.clear(); B.bind(); additive(true);
+  const win = o.pl ? shutterWindow(P, o.pl, o.t) : [o.t, o.t], q = qualityOf(P), n = clamp(Math.ceil((win[1] - win[0]) * q.hz), 1, Math.min(8, q.maxSub));
+  const ppm = o.ppm / ss, ppmY = o.ppmY / ss, tabs = R.fxTables();
+  // 贴图里的软圆点 σ 至少 1.5 个像素（光量不变）：引擎按双线性取灰度再查 Ramp（暗处 ∝ v²），σ 0.55 像素的点在回放里只剩约 0.8，1.5 像素约 0.96
+  const sig0 = DOTC_SIGMIN; DOTC_SIGMIN = 1.5;
+  try {
+    for (let j = 0; j < n; j++) {
+      const ts = Math.max(0, win[0] + (j + 0.5) * (win[1] - win[0]) / n), v = R.vz ? [o.view[0], o.view[1] + R.vz * (ts - R.t0), o.view[2], o.view[3]] : o.view;
+      if (tabs.length) esDraw(tabs, ts, [v[0] + R.cx, v[1], v[2], v[3]], ppm, ppmY, 1 / n);     // 出生表在世界坐标，面片坐标横向减了 cx
+      rtEmberDots(P, R.LI, R.ball, ts, v, ppm, ppmY, R.cx, 1 / n);
+    }
+  } finally { DOTC_SIGMIN = sig0; }
+  additive(false);
+  const pr = PR.fxmerge, split = P.outMode === 'split', kB = P.rtBright || 1; gl.useProgram(pr.p); C.bind();
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, A.tex); gl.uniform1i(pr.u.uA, 0);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, B.tex); gl.uniform1i(pr.u.uB, 1);
+  gl.uniform1f(pr.u.uEH, o.expo[0]); gl.uniform1f(pr.u.uET, o.expo[1]); gl.uniform1f(pr.u.uG, P.encGamma || 1); gl.uniform1f(pr.u.uSplit, split ? 1 : 0); gl.uniform1f(pr.u.uK, 4);
+  for (const k of [0, 1, 2, 3]) gl.uniform3fv(pr.u['uR' + k], hexToLin(M['ramp' + k]));
+  // 合并：和引擎回放同一个材质（Ramp × Color Over Life × 显示强度 × rtBright × 4）；分开（PC 两张）：合进火花那张，材质里火花项没有颜色曲线
+  gl.uniform3fv(pr.u.uTint, split ? [1, 1, 1] : tintAt(M, o.t)); gl.uniform1f(pr.u.uHI, (split ? (M.tailInt == null ? 1 : +M.tailInt) : intOr1(M.headInt)) * kB);
+  drawQuad(); gl.activeTexture(gl.TEXTURE0);
+  return C;
+}
 // 4.5.1 远段 TrailFar 渲染器（世界坐标，面片立在发射点附近）：bakeFrames 的接口 draw(ts, view, ppm, w)；ts = 发射后的绝对时间
 //   开花（ts ≥ T）以后所有火花都归远段（近段循环层到 T 结束，没有 RiseFade 消散层）
 //   4.5.3 vz / t0（用户 10-05 18:02 UE 实测：1 cm/s 的初速定不住速度朝向，给 50 cm/s 才竖直）：面片按 vz（m/s）往上走，烘焙时视图跟着面片上移，内容仍按世界坐标（不漂）
@@ -347,7 +444,7 @@ const rtMobFull = P => !!P && P.outMobile === 'full' && rtIsFar(P);
 // 4.9.86：两个平台都「近段 + 远段合成一张」（或手机不出）——导出只有一张全程序列。燃尽后几项（rtFullTailFeatures）只有这时能烘（bakeEmitSet 会拦）；GPU 粒子、引擎里加的效果这时只剩实时模拟里画
 const rtFullOnly = P => rtPcFull(P) && (rtMobFull(P) || P.outMobile === 'off');
 function makeRiseTailFullRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
-  const T = ball.T, hs = Math.max(0.05, +P.rtHeadSize || 0.5);
+  const T = ball.T, hs = Math.max(0.05, +P.rtHeadSize || 0.5), fx = rtFxOn(P), noE = fx ? { noE: true } : null;
   const R = { slots: 0, subW: 0, draw(ts, view, ppm, w) {
     setParticleProfile(P);
     const v = vz ? [view[0], view[1] + vz * (ts - t0), view[2], view[3]] : view;
@@ -357,8 +454,15 @@ function makeRiseTailFullRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
         k = rtHeadPts(P, p[0] - cx, p[2], -u[0] / sp, -u[2] / sp, P.rtHeadI * LI.pulse(tt) / n, k); }
       drawPoints(bufH, k / 4, v, ppm, [1, 0, 0, 0], w);
     }
-    rtWorldDraw(P, LI, ball, ts, v, ppm, w, null, cx);
+    rtWorldDraw(P, LI, ball, ts, v, ppm, w, null, cx, noE);
   }, dispose() { } };
+  // 4.9.102 rtFullFx：引擎里加的效果 + 落火在收尾时合进来（没有这些东西时不挂 finish，和关着一样）
+  if (fx) {
+    const tab = esSpawn({ emitters: rtBuildES(P).emitters.filter(e => RT_FX_NAMES.has(e.name)) }, 1), tex = rtTexClasses(P, LI).some(C => C.k === 'E');
+    Object.assign(R, { P, LI, ball, cx, vz, t0, fxTables: () => tab,
+      fxEnd: () => Math.max(tex ? T + rtTexClasses(P, LI).find(C => C.k === 'E').lifeMax : 0, ...tab.map(x => x.list.reduce((m, q) => Math.max(m, q.t0 + q.life), 0))) });
+    if (tab.some(x => x.list.length) || tex) R.finish = (src, o) => rtFxFinish(R, src, o);
+  }
   return R;
 }
 // ---- 粒子层：按理论生成发射器（46_emitset.js 的数据）----
@@ -730,14 +834,16 @@ function rtLayoutFar(P, ball, LI, full = false) {
   //   a0 到中点之间那些火花一直只亮一半（近段已经在淡出、远段还没来），到中点远段一下补上一半亮度，就是那一下「闪」。现在从 a0 出现：第一帧的火花远段权重≈0，慢慢长出来
   // 4.9.73 full = 手机「近段 + 远段合成一张」：从 0 s 出现、量的是星头 + 全部火花
   const T = ball.T, CL = rtTexClasses(P, LI), [a0, a1] = rtNearA(P), tA = full ? 0 : a0;
-  const Dmax = Math.max(rtPowderLifeMax(P), ...CL.map(C => C.lifeMax)) * 1.02;
+  const R = full ? makeRiseTailFullRenderer(P, LI, ball, 0) : makeRiseTailFarRenderer(P, LI, ball, 0);
+  // 4.9.102 rtFullFx：取景 / 开花后时长也量合进来的效果（R.finish），它们活得比火花久时（烟带、GPU 落火）时长跟着它们
+  const Dmax = Math.max(rtPowderLifeMax(P), ...CL.map(C => C.lifeMax), R.finish ? R.fxEnd() - T : 0) * 1.02;
   const pT = ball.pos(T), pad = 30 + 2 * (+P.rtCone || 0) + 15 * (+P.rtTurb || 0);
   const xlo = Math.min(0, pT[0]) - pad, xhi = Math.max(0, pT[0]) + pad, zlo = -25, zhi = ball.H + 25;
   const view = [(xlo + xhi) / 2, (zlo + zhi) / 2, (xhi - xlo) / 2, (zhi - zlo) / 2];
   const N = 160, NH = 1280, ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]), E = fixedExposure(P), thr = -Math.log(1 - 3 / 255) / E, thr10 = -Math.log(1 - 10 / 255) / E;
   const t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), acc = new Float32Array(N * NH);
-  const R = full ? makeRiseTailFullRenderer(P, LI, ball, 0) : makeRiseTailFarRenderer(P, LI, ball, 0);
   const pass = ts => { t.clear(); t.bind(); additive(true); PPMY = ppmY; R.draw(ts, view, ppm, 1); additive(false); PPMY = 0;
+    if (R.finish) R.finish(t, { P, t: ts, ss: 1, w: N, h: NH, view, ppm, ppmY, expo: [E, E] }).bind();
     gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); let mx = 0; for (let i = 0; i < acc.length; i++) { const v = buf[i * 4] + buf[i * 4 + 1]; if (v > acc[i]) acc[i] = v; if (v > mx) mx = v; } return mx; };
   let tVis = Dmax;
   try {
@@ -827,6 +933,7 @@ function rtFullAnchor(P, ball, LI, fa) {
   const N = 96, NH = 768, ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]), thr = -Math.log(1 - 3 / 255) / fixedExposure(P), pxX = 2 * view[2] / N, pxY = 2 * view[3] / NH;
   const t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), R = makeRiseTailFullRenderer(P, LI, ball, 0), vz = fa.vz || 0;
   const boxAt = ts => { t.clear(); t.bind(); additive(true); PPMY = ppmY; R.subW = 0; R.draw(ts, view, ppm, 1); additive(false); PPMY = 0;
+    if (R.finish) R.finish(t, { P, t: ts, ss: 1, w: N, h: NH, view, ppm, ppmY, expo: [fixedExposure(P), fixedExposure(P)] }).bind();     // 4.9.102 rtFullFx：合进来的效果也量
     gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); let x0 = N, x1 = -1, y0 = NH, y1 = -1;
     for (let y = 0; y < NH; y++) for (let x = 0; x < N; x++) { const i = y * N + x; if (buf[i * 4] + buf[i * 4 + 1] > thr) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
     if (x1 < 0) return null; const d = vz * (ts - fa.t0), X = i => view[0] - view[2] + i * pxX, Y = j => view[1] - view[3] + j * pxY;
@@ -963,8 +1070,10 @@ async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   const an = P0.zoom === 'anchor' ? rtFullAnchor({ ...P, outMode: 'combined' }, ball, LI, fa0) : null, fa = an ? { ...fa0, ...an } : fa0;
   const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys,
     ...(an ? { zoom: true, anchor: true, sizeKeys: an.sizeKeysY, sizeKeysX: an.sizeKeysX, sizeKeysY: an.sizeKeysY, frameScale: an.frameScale, area: an.area } : {}) });
-  const b = await bakeFrames(Pa, scale, onProg, pa, makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
+  const R = makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0);
+  const b = await bakeFrames(Pa, scale, onProg, pa, R, { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, vis: fa.vis, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
+  if (R.finish) b.meta.fullFx = { names: [...R.fxTables().filter(x => x.list.length).map(x => x.e.name), ...(rtTexClasses(P, LI).some(C => C.k === 'E') ? ['EmbersTex'] : [])] };     // 4.9.102 合进来的有哪些（说明 / 统计 / 回放用）
   b.form = 'emitset'; b.esMobile = mobile; b.esFull = true; b.P = { ...P0 }; b.fades = []; b.far = null;
   return b;
 }
@@ -1063,7 +1172,9 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile, o) {
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [`${mobile ? '手机 _M' : 'PC'}「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，`
       + `${L.cols}×${L.rows} 格 × ${L.chans} 通道 = ${L.F} 帧（上升 ${fa.Fr} 帧、开花后 ${fa.Fd} 帧，帧号曲线不匀速），面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在上方 ${r1(fa.cz)} m），0 s 出现、播 ${r2(fa.Dtot)} s；`
-      + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。分档火花全部烘进这张贴图${+P.rtETex === 1 && P.rtERate > 0 ? '，落火也烘进了贴图' : '；落火只在实时模拟的 GPU 粒子里，这里没有'}；星头光晕、末段爆亮、发射口闪光、烟带不进这张图（这里没有）。`
+      + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。分档火花全部烘进这张贴图` + (b.meta.fullFx
+        ? `；${b.meta.fullFx.names.map(k => RT_LAYER_CN[k] || k).join('、') || '（没有要合的效果）'}也按实时模拟里的样子烘进了这张图（4.9.102 rtFullFx：逐像素按 Ramp × Color Over Life × 显示强度反推合进灰度——颜色变成 Ramp 色、亮到 253 截顶、入点前的不在；落火按 GPU 落火的亮度 / 大小）。`
+        : `${+P.rtETex === 1 && P.rtERate > 0 ? '，落火也烘进了贴图' : '；落火只在实时模拟的 GPU 粒子里，这里没有'}；星头光晕、末段爆亮、发射口闪光、烟带不进这张图（这里没有）。`)
       + `星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 ${fa.pxMax} 像素。${kN !== 1 ? '一个曝光（远段的）：PC 近段单独压的白热段曝光 × ' + r2(kN) + ' 这里没有，星头和白热段比 PC 白一点。' : ''}`
       + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`
       + (fa.t0 > 0 || P.cutOut > 0 ? ` 入点 ${r2(fa.t0)} s（之前不显示，发射器延迟到入点）、出点 ${P.cutOut > 0 ? r2(fa.t0 + fa.Dtot) + ' s' : '最后一颗火花看不见'}（4.9.79）。` : '')
@@ -1308,7 +1419,7 @@ function rtStatsHTML(b) {
     const pcK = state.tab !== 'combo' && state.P ? state.P.outPC : '';
     return `纯星头 · CPU 1 颗沿弹道走（PC ${pcK === 'dots' ? 'CPU 粒子 · 软圆点' : pcK === 'off' ? '不出' : '单帧小面片'} / 手机软圆点）· 升空 ${m.T.toFixed(2)} s / ${m.ball.H.toFixed(1)} m${f.t0 > 0 || f.Dtot < m.T - 1e-3 ? ` · 入点 ${f.t0.toFixed(2)} s · 出点 ${(f.t0 + f.Dtot).toFixed(2)} s` : ''}<br>没有序列帧：帧数、格子、取景这些行不起作用`; }
   if (b.esFull) { const m = b.meta, f = m.full, L = m.L;
-    return `近段 + 远段合成一张 · ${L.F} 帧（${L.cols}×${L.rows}×${L.chans}）· 单格 ${L.cellW}×${L.cellH} px<br>${rtFullSchedHTML(m)}<br>升空 ${m.T.toFixed(2)} s / ${m.ball.H.toFixed(1)} m · 全程 ${f.Dtot.toFixed(2)} s · 面片 ${f.Ww.toFixed(1)}×${f.Wh.toFixed(1)} m${f.anchor ? '（随内容放大 · 锚在发射点）' : ''}<br>${b.tail ? '2 个序列发射器（星头 / 火花分开）' : '1 个序列发射器'}，无 GPU 火花；检查以导出报告为准`; }
+    return `近段 + 远段合成一张 · ${L.F} 帧（${L.cols}×${L.rows}×${L.chans}）· 单格 ${L.cellW}×${L.cellH} px<br>${rtFullSchedHTML(m)}<br>升空 ${m.T.toFixed(2)} s / ${m.ball.H.toFixed(1)} m · 全程 ${f.Dtot.toFixed(2)} s · 面片 ${f.Ww.toFixed(1)}×${f.Wh.toFixed(1)} m${f.anchor ? '（随内容放大 · 锚在发射点）' : ''}<br>${b.tail ? '2 个序列发射器（星头 / 火花分开）' : '1 个序列发射器'}，无 GPU 火花${m.fullFx ? '；烘进了 ' + (m.fullFx.names.map(k => RT_LAYER_CN[k] || k).join('、') || '—') + '（按 Ramp 色）' : ''}；检查以导出报告为准`; }
 
   const m = b.meta, P = b.P, bl = m.ball, fd = b.fades[0], c = m.check || {}, cls = ok => ok ? 'ok' : 'warn';
   const pk = esPeakAlive(rtTables(b, false), m.T + 4), pkM = esPeakAlive(rtMobileTables(b), m.T + 4);
@@ -1346,7 +1457,7 @@ function rtShadeLoop(P, M, t) {
 // ---- 4.5.1 分层看（用户 10-05 17:39「我没法单独看近段、远段和 GPU 粒子层」）：只影响观察，不改参数和导出 ----
 //   工具条上一排：近段 / 远段 / 每个 GPU（和 CPU 软圆点）发射器，后面是此刻的颗数；点一下开 / 关，双击只看这一层，「全部」恢复
 const RT_LAYER_CN = { near: '近段', far: '远段', full: '合成一张', SparksCoarse: '粗火花', SparksTwinkle: '闪烁火花', SparksMid: '中火花', SparksFine: '细火花', Embers: '落火', SparkPops: '末段爆亮',
-  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带' };
+  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带', EmbersTex: '落火（合进贴图）' };
 const rtShow = { off: new Set(), sig: '' };
 const rtOn = k => !rtShow.off.has(k);
 function rtAliveCounts(tables, t) { return tables.map(T => { let n = 0; for (const q of T.list) { if (q.t0 > t) break; if (t - q.t0 < q.life) n++; } return n; }); }
@@ -1371,6 +1482,8 @@ function renderEmitLive() {
   const pcFull = rtPcFull(state.P), P = pcFull ? { ...state.P, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 } : state.P, M = state.M, b = state.bake && state.bake.form === 'emitset' ? state.bake : null, mobile = state.platform === 'mobile';
   const t = Math.min(state.t, P.duration), view = rtView(P, b, t), ppm = rgT.w / (2 * view[2]), ppmY = rgT.h / (2 * view[3]);
   const ball = rtBallistic(P), LI = rtLoopInfo(P), far = rtIsFar(P), T = ball.T;
+  // 4.9.102（导出排查 V5）：PC 合成一张开了 rtFullFx——引擎里加的效果 / 落火也烘进了那一张，这里照画（和烘焙同一份出生表、同一种落火软圆点），贴图落火不再走火星的点
+  const fx = pcFull && rtFxOn(P), noE = fx ? { noE: true } : null;
   rgT.clear(); rgT.bind(); additive(true); PPMY = ppmY;
   let np = 0, nf = 0;
   try {
@@ -1378,19 +1491,21 @@ function renderEmitLive() {
     else {     // 近段 + 远段：按年龄权重分开画（两份相加 = 全部）；开花后全归远段
       const nw = rtNearW(P);
       if (rtOn('near') && t <= T) { setParticleProfile(P); const p = ball.pos(t), v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1;
-        drawPoints(bufH, rtHeadPts(P, p[0], p[2], -v[0] / sp, -v[2] / sp, P.rtHeadI * LI.pulse(t), 0) / 4, view, ppm, [1, 0, 0, 0], 1); np = rtWorldDraw(P, LI, ball, t, view, ppm, 1, nw, 0); }
-      if (rtOn('far')) nf = rtWorldDraw(P, LI, ball, t, view, ppm, 1, t <= T ? a => 1 - nw(a) : null, 0);
+        drawPoints(bufH, rtHeadPts(P, p[0], p[2], -v[0] / sp, -v[2] / sp, P.rtHeadI * LI.pulse(t), 0) / 4, view, ppm, [1, 0, 0, 0], 1); np = rtWorldDraw(P, LI, ball, t, view, ppm, 1, nw, 0, noE); }
+      if (rtOn('far')) nf = rtWorldDraw(P, LI, ball, t, view, ppm, 1, t <= T ? a => 1 - nw(a) : null, 0, noE);
     }
   } finally { PPMY = 0; }
   additive(false);
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); rtShadeLoop(P, M, t);
-  const tabs = pcFull ? [] : rtLiveTables(P, mobile), on = tabs.map(x => rtOn(x.e.name));
-  additive(true); const nd = tabs.length ? esDraw(tabs, t, view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1, on) : 0; additive(false);
+  if (fx && (rtLive.fxGen !== state.gen || rtLive.fxSig !== JSON.stringify(P))) { rtLive.fxGen = state.gen; rtLive.fxSig = JSON.stringify(P); rtLive.fxTab = esSpawn({ emitters: rtBuildES(P).emitters.filter(e => RT_FX_NAMES.has(e.name)) }, 1); }
+  const tabs = pcFull ? (fx ? rtLive.fxTab : []) : rtLiveTables(P, mobile), on = tabs.map(x => rtOn(x.e.name)), hpm = hdrT.w / (2 * view[2]), hpmY = hdrT.h / (2 * view[3]);
+  additive(true); const nd = tabs.length ? esDraw(tabs, t, view, hpm, hpmY, 1, on) : 0;
+  const texE = fx && rtTexClasses(P, LI).some(C => C.k === 'E'), ne = texE && rtOn('EmbersTex') ? rtEmberDots(P, LI, ball, t, view, hpm, hpmY, 0) : 0; additive(false);
   post();
   const cnt = rtAliveCounts(tabs, t);
-  rtLayerBarSync([['near', np, false], ...(far ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
+  rtLayerBarSync([['near', np, false], ...(far ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu]), ...(texE ? [['EmbersTex', ne, false]] : [])]);
   const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（真实米数：四尺玉 ${GAME_REF_D} m 在 1000 m 占屏高 1/3）` : '';
-  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗${pcFull ? ' · PC 合成一张：只画导出里有的（星头 + 全部火花），GPU 粒子 / 星头光晕 / 发射口 / 烟带不在导出里、不画' : ` + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）`}${dist}${rtShowNote()}`;
+  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗${pcFull ? (fx ? ` · PC 合成一张：引擎里加的效果 / 落火也烘进了那一张（${(nd + ne).toLocaleString()} 颗软圆点，导出里按 Ramp 色）；GPU 火花不在导出里、不画` : ' · PC 合成一张：只画导出里有的（星头 + 全部火花），GPU 粒子 / 星头光晕 / 发射口 / 烟带不在导出里、不画') : ` + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）`}${dist}${rtShowNote()}`;
   hudB = '';
 }
 // 4.9.73 手机合成一张：面片固定在世界里（和远段同一套），帧号按寿命曲线
@@ -1404,6 +1519,7 @@ function renderEmitExportFull(b) {
   // 4.9.78 尺寸档按时间缩：回放按导出的时间放。4.9.96（导出排查 A14）：纯星头的 Velocity Over Life 也按时间缩了（物理弹道 = 平方阻力那种；线性阻力的 Drag / 重力不缩，回放也不缩）
   const tkN = typeof exportTimeNow === 'function' && (!b.esHead || (b.meta.ball && b.meta.ball.quad)) ? exportTimeNow() : 1;
   const P = b.P, M = state.M, t = engineTick(state.t) / tkN, view = rtView(P, b, t), kw = typeof exportWidthNow === 'function' ? exportWidthNow() : 1;
+  if (state.tab !== 'combo' && rtFxStale(b, M) && !state.baking && !state.dirty) { state.dirty = true; scheduleBake(); }     // 4.9.102 rtFullFx：合进去的效果按烘的时候的材质算，颜色 / 显示强度改了就重烘
   hdrT.clear(); hdrT.bind(); additive(true);
   const dot = b.esHead && (b.esMobile || (state.P && state.P.outPC === 'dots')), offPC = b.esHead && !b.esMobile && state.P && state.P.outPC === 'off';     // 4.9.96 H1：纯星头 CPU 粒子（手机一律、PC 选了的）画和导出同一颗软圆点
   const s = rtOn('full') && !dot && !offPC ? rtFullStateAt(b, t) : null, tilt = rtTiltNow(b), th = -tilt * Math.PI / 180;
@@ -1422,7 +1538,7 @@ function renderEmitExportFull(b) {
   rtLayerBarSync([['full', null, false]]);
   const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
   if (b.esHead) { hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'} · 纯星头 · ${offPC ? 'PC 不出这一层' : dot ? 'CPU 粒子（星头）1 颗软圆点，没有贴图' : '单帧小面片 1 颗（CPU）'}${t < fa.t0 ? ' · 还没到入点' : t > fa.t0 + fa.Dtot ? ' · 已结束' : ''}${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`; hudB = ''; return; }
-  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
+  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${b.meta.fullFx ? ' · 引擎里加的效果 / 落火已烘进贴图（Ramp 色）' : ''}${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
   if (fa.anchor && s) hudText += ` · 随内容放大 · 锚在发射点：这一帧 ${(s.w / fa.Ww).toFixed(2)} × ${(s.h / fa.Wh).toFixed(2)}`;     // 4.9.81
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';

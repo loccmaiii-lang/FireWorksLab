@@ -156,7 +156,8 @@
     "rtMSizeCurve": "0:1,0.7:1,1:0.8",
     "rtMBrightCurve": "0:1,0.7:1,1:0.75",
     "rtESizeCurve": "0:1,0.7:1,1:0.5",
-    "rtEBrightCurve": "0:0.65,0.55:1,1:0"
+    "rtEBrightCurve": "0:0.65,0.55:1,1:0",
+    "rtFullFx": 1
    },
    "m": {
     "stages": [
@@ -501,7 +502,8 @@
     "rtMSizeCurve": "0:1,0.7:1,1:0.8",
     "rtMBrightCurve": "0:1,0.7:1,1:0.75",
     "rtESizeCurve": "0:1,0.7:1,1:0.5",
-    "rtEBrightCurve": "0:0.65,0.55:1,1:0"
+    "rtEBrightCurve": "0:0.65,0.55:1,1:0",
+    "rtFullFx": 1
    },
    "m": {
     "stages": [

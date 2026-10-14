@@ -492,7 +492,14 @@ function renderComboLive() {
     hdrT.bind(); additive(true);
     const pr = PR.rgmat, m = e.bake.meta; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
     gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);
-    setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
+    // 4.9.102：尾缀层（合成一张）和引擎回放一样乘这一层的 rtBright（drawLayer 一直乘，实时以前没乘，暗 rtBright 倍）
+    const kB = e.bake.form === 'emitset' ? (P.rtBright || 1) : 1;
+    setMatUniforms(pr, kB !== 1 ? { ...L, headInt: intOr1(L.headInt) * kB, tailInt: intOr1(L.tailInt) * kB } : L, age); drawQuad();
+    // 4.9.102（导出排查 V5）：合成一张开了 rtFullFx——引擎里加的效果 / 落火也在这一层的贴图里，实时照画（和烘焙同一份出生表、同一种落火软圆点；面片横向减了 cx 的坐标里画）
+    const slot = liveSlot('combo' + i);
+    if (slot.rtFull && slot.rtFull.finish) { const R = slot.rtFull, hpm = hdrT.w / (2 * vL[2]), hpmY = hdrT.h / (2 * vL[3]), tabs = R.fxTables();
+      if (tabs.length) esDraw(tabs, age, vL, hpm, hpmY, 1); rtEmberDots(R.P, R.LI, R.ball, age, vL, hpm, hpmY, 0); }
+    additive(false); n++;
   });
   } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   post();
@@ -524,6 +531,9 @@ function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();
   hdrT.clear();
+  // 4.9.102 rtFullFx：合进贴图的效果按烘的时候这一层的颜色算，颜色 / 显示强度改了这一层重烘
+  const fxSeen = new Set();     // 同一个效果用在几层时按第一层的颜色烘（rtFxLayerP 同一规则），不来回重烘
+  for (const L of state.layers) { if (fxSeen.has(L.lib)) continue; fxSeen.add(L.lib); const e0 = state.lib.find(e => e.name === L.lib); if (e0 && e0.bake && typeof rtFxStale === 'function' && rtFxStale(e0.bake, comboLayerM(L)) && !(state.layerQueue && state.layerQueue.has(e0))) queueLayerBake(e0); }
   const items = state.layers.map((L, i) => [L, state.lib.find(e => e.name === L.lib), i]).filter(x => x[1]).map(([L,e,i])=>[L,{...e,bake:previewBake(e.bake)},i]);
   if(items.some(([,e])=>!e.bake)){post();hudText='手机版还未烘焙；点 PC / 手机可重试';return;}
   if (!items.length) { post(); hudText = '没有图层'; return; }

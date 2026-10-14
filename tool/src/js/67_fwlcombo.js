@@ -371,11 +371,13 @@ async function comboLayerBakes(layers, onProg) {
     // 4.5.8（19-C01）：这一层按新参数烘焙失败了（或还没烘到最新），手上的是旧贴图 → 拦住，不导出和参数对不上的包
     if (e.failedRev != null && e.failedRev === e.pRev) throw new Error(`第 ${i + 1} 层「${layerName(i)}」按新参数烘焙失败，导出会拿旧贴图：先改参数或点「重试」`);
     if (layerStale(e)) throw new Error(`第 ${i + 1} 层「${layerName(i)}」的贴图还不是最新参数烘的（烘焙没跑完）：等烘完再导出`);
+    // 4.9.102 rtFullFx：合进贴图的效果按烘的时候这一层的颜色算，颜色 / 显示强度改过就先重烘
+    if (typeof rtFxStale === 'function' && rtFxStale(e.bake, comboLayerM((state.layers || []).find(x => x.lib === L.lib) || L))) { queueLayerBake(e, 0); throw new Error(`第 ${i + 1} 层「${layerName(i)}」的颜色 / 显示强度改过，烘进贴图的光晕 / 落火要按新颜色重烘：已开始重烘，烘完再导出`); }
     let b = e.bake;
     // 4.2.5：导出用收紧后的取景（预览可能还没来得及在后台收紧）
     if (!b.tail && b.scale === 1 && !b.meta.fitted) { const nb = await refineBake(b, p => onProg && onProg((i + p) / layers.length)); if (nb) { dropLibBake(e); e.bake = b = nb; } }
     if (b.tail || b.scale !== 1) {
-      b = await bakeFinal({ ...libP(e.P, true), outMode: 'combined' }, 1, p => onProg && onProg((i + p) / layers.length));
+      b = await bakeFinal(rtFxLayerP({ ...libP(e.P, true), outMode: 'combined' }, e), 1, p => onProg && onProg((i + p) / layers.length));
       own.push(b);
     }
     out.push({ L, b, e });

@@ -97,8 +97,8 @@ function esVel(q, acc, a, out) {
 }
 // 带颜色的高斯软圆点（每颗自己的颜色）：位置 2 + 光量 1 + 尺寸 1 + 颜色 3 + 朝向 2 + 拉长倍数 1
 const VS_DOTC = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS; layout(location=3) in vec3 aC; layout(location=4) in vec2 aD; layout(location=5) in float aE;
-uniform vec4 uView; uniform float uPPM, uPPMY, uMax; out float vI; out vec2 vSig; out float vPS; out vec3 vC; out vec2 vD; out float vE;
-void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float e=max(1.,aE); float ps=min(ceil(max(sig.x,sig.y)*8.*e)+1.,uMax);
+uniform vec4 uView; uniform float uPPM, uPPMY, uMax, uSigMin; out float vI; out vec2 vSig; out float vPS; out vec3 vC; out vec2 vD; out float vE;
+void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(uSigMin)); float e=max(1.,aE); float ps=min(ceil(max(sig.x,sig.y)*8.*e)+1.,uMax);
   gl_Position=vec4((aP-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; vC=aC; vD=aD; vE=e; }`;
 const FS_DOTC = HDR + `in float vI; in vec2 vSig; in float vPS; in vec3 vC; in vec2 vD; in float vE; uniform float uPPM, uPPMY, uW; out vec4 o;
 vec2 erf2(vec2 x){ vec2 sg=sign(x); x=abs(x); vec2 t=1./(1.+.3275911*x); return sg*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x)); }
@@ -115,11 +115,13 @@ gl.bindVertexArray(dotcVAO); gl.bindBuffer(gl.ARRAY_BUFFER, dotcBuf);
 for (const [i, n, off] of [[0, 2, 0], [1, 1, 8], [2, 1, 12], [3, 3, 16], [4, 2, 28], [5, 1, 36]]) { gl.enableVertexAttribArray(i); gl.vertexAttribPointer(i, n, gl.FLOAT, false, 40, off); }
 gl.bindVertexArray(null);
 const DOTC_N = 10; let dotcData = new Float32Array(DOTC_N * 65536);
+// 4.9.102：σ 下限（像素）。缺省 0.55 和以前一样；合成一张把软圆点烘进贴图时用 1.5（rtFxFinish）——引擎按双线性取灰度再过 Ramp，σ 不到 1 个像素的点会暗 10–20 %
+let DOTC_SIGMIN = 0.55;
 function drawDotsC(n, view, ppm, ppmY, w = 1) {
   if (!n) return;
   const pr = PR.dotc; gl.useProgram(pr.p); gl.bindVertexArray(dotcVAO); gl.bindBuffer(gl.ARRAY_BUFFER, dotcBuf);
   gl.bufferData(gl.ARRAY_BUFFER, dotcData.subarray(0, n * DOTC_N), gl.DYNAMIC_DRAW);
-  gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, ppmY); gl.uniform1f(pr.u.uMax, PT_MAX); gl.uniform1f(pr.u.uW, w);
+  gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, ppmY); gl.uniform1f(pr.u.uMax, PT_MAX); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSigMin, DOTC_SIGMIN);
   gl.drawArrays(gl.POINTS, 0, n); gl.bindVertexArray(null);
 }
 // 画一组发射器在时刻 t 的全部粒子（侧面正交：x 横、z 竖，y 是景深）。tables = esSpawn 的结果；on = 每个发射器开关

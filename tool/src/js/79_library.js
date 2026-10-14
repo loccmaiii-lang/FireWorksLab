@@ -104,6 +104,7 @@ function entryVer(e) {
     if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots);
     if (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 && (+P.cutIn > 0 || ['unit', 'dots'].includes((outs[i] || {}).pc || P.outPC))) fams.add('flash' + OUTPUT_VER.flash);     // 4.9.96 B1 / B2
     if (isEmit(P) && typeof rtHeadOnly === 'function' && rtHeadOnly(P)) fams.add('head' + OUTPUT_VER.head);     // 4.9.96 H1
+    if (isEmit(P) && emitFullOut(P) && OUTPUT_VER.fullfx && (rtFxOn(P) || (+P.rtETex === 1 && +P.rtTailAfterBurn === 1))) fams.add('fullfx' + OUTPUT_VER.fullfx);     // 4.9.102 V5
     if (P.sparkGraph && OUTPUT_VER.graph) fams.add('graph' + OUTPUT_VER.graph); } } catch (err) { } });     // 4.9.97 V1 / V2   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
   let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, ''); if (sp) ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期
   const v = e.ver + '·' + ([...fams].sort().join('+') || 'x') + ss;

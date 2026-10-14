@@ -45,6 +45,7 @@
   R12 4.9.89 导出接线（导出排查 A1–A17 / B4）：多层锚点 / 通道 / 尾缀形态、合成一张入出点按钮、纯星头入出点、帧数只留两种、手动格子按停几 tick 加行、统计写模式、变灰、尾缀层产物格、多层面片位置、格子下拉、空壳发射器
   R13 4.9.96 纯星头 CPU 粒子 + 开花闪光单独导出（导出排查 H1 / B1 / B2 / A11 / A14）：PC 软圆点、层产物 / 尾缀层产物表、Flash（入点前 / 单束 / 光点、手机上限、大小模型、导出指纹）、尺寸档按时间缩白名单
   R14 4.9.97 分层粒子图画面（导出排查 V4 / V2 / V3 / V1）：松叶分叉接燃尽后气流、镜头核 σ 下限 0.55 像素、镜头关世界等比、镜头关走镜头的核（历史线光量 = 一颗点）
+  R15 4.9.102 合成一张补效果（导出排查 V5 + 落火）：rtFullFx 缺省 / 条目 / 指纹、收尾钩子、燃尽门只作用在曲线上、引擎回放 = 实时（每组 ±10 %、整幅 ±6 %）、落火按 GPU 口径、材质改了要重烘、右栏出现与变灰
   R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -1557,10 +1558,10 @@ R12_JS = r"""async () => {
   // A7：统计写帧数模式
   const st = rtFullSchedHTML({ full: { ...s0, sched: s0.sched, t0: 0, Dtot: s0.Nt / 30, F: s0.ks.length, Fr: s0.ks.filter(k => k < s0.Nr).length, cols: s0.cols, rows: s0.rows, dur: s0.ks.map((k, i) => ((i + 1 < s0.ks.length ? s0.ks[i + 1] : s0.Nt) - k) / 30) } });
   out.stats = st.slice(0, 60); if (!/按运动分/.test(st) || !/入点/.test(st)) bad.push('A7 统计：' + st.slice(0, 120));
-  // A8 / A9 / B4：变灰
+  // A8 / A9 / B4：变灰（4.9.102：CSLRS 开了「合成一张时烘进贴图」，光晕这些不再灰；关着照旧灰）
   const pcSeq = { ...full, outPC: 'seq' }, mobSeq = { ...full, outMobile: 'seq' };
-  out.inert = { splitMob: !!inertWhy('outMode', pcSeq), splitPc: !!inertWhy('outMode', full), glow: !!inertWhy('rtGlow', mobSeq), gpuF: !!inertWhy('rtGpuF', mobSeq), gpuFfull: !!inertWhy('rtGpuF', full), mobile: !!inertWhy('rtMobile', rt6) };
-  if (!out.inert.splitMob || out.inert.splitPc || !out.inert.glow || out.inert.gpuF || !out.inert.gpuFfull || !out.inert.mobile) bad.push('A9/B4 变灰：' + JSON.stringify(out.inert));
+  out.inert = { splitMob: !!inertWhy('outMode', pcSeq), splitPc: !!inertWhy('outMode', full), glow: !!inertWhy('rtGlow', { ...mobSeq, rtFullFx: 0 }), glowFx: !!inertWhy('rtGlow', mobSeq), gpuF: !!inertWhy('rtGpuF', mobSeq), gpuFfull: !!inertWhy('rtGpuF', full), mobile: !!inertWhy('rtMobile', rt6) };
+  if (!out.inert.splitMob || out.inert.splitPc || !out.inert.glow || out.inert.glowFx || out.inert.gpuF || !out.inert.gpuFfull || !out.inert.mobile) bad.push('A9/B4 变灰：' + JSON.stringify(out.inert));
   // A10：尾缀层产物格只认「按尾缀自己的 / 不出」，尾缀选了手机不出照它
   const eL = { name: '__r12', P: { ...full, outMobile: 'off' } }; state.lib.push(eL);
   try { const o1 = layerOut({ lib: '__r12', out: { pc: 'dots', mobile: 'unit' } }), o2 = layerOut({ lib: '__r12', out: { pc: 'off' } }); out.tail = [o1.pc, o1.mobile, o2.pc];
@@ -1699,6 +1700,78 @@ async def r14(pg):
     """4.9.97 分层粒子图画面（用户 10-14 13:12「全部要修」）：V4 松叶分叉接燃尽后气流、V2 镜头核 σ 下限 0.55 像素（亚像素不闪、快速质量不成串珠）、V3 镜头关世界等比、V1 镜头关走镜头的核（历史线光量 = 一颗点）"""
     r = await pg.evaluate(R14_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
+R15_JS = r"""async () => {
+  // 4.9.102（导出排查 V5 + 落火，用户 10-14 14:14 按推荐 ② ③）：每处一个能复现的小检查
+  const out = {}, bad = [], lw = [.2126, .7152, .0722];
+  const pm = id => { const x = replicaPM(id); return { P: derive(structuredClone(x.P)), M: x.M }; };
+  // 缺省：存档 / 条目没写 = 0（RT6 不变），新建尾缀模板 = 1，CSLRS / CSLRC-T 条目 = 1；导出指纹 fullfx 只给开了的
+  out.def = [BASE.rtFullFx, defaultsFor('tailS').P.rtFullFx, defaultsFor('tailS', null, true).P.rtFullFx, pm('RT6M').P.rtFullFx, pm('CSLRS').P.rtFullFx, pm('CSLRC-T').P.rtFullFx,
+    /fullfx/.test(entryVer(entryById('CSLRS'))), /fullfx/.test(entryVer(entryById('RT6M')))];
+  if (out.def.join() !== '0,1,0,0,1,1,true,false') bad.push('缺省 / 条目 / 指纹：' + JSON.stringify(out.def));
+  const { P: r6, M } = pm('RT6M'), mk = o => ({ ...r6, outPC: 'full', outMobile: 'full', rtGpuF: 0, rtGpuM: 0, rtGpuC: 0, _fxM: rtFxSnap(M), ...o });
+  const rend = P => makeRiseTailFullRenderer(P, rtLoopInfo(P), rtBallistic(P), 0);
+  // 关着 / 没东西可合时不挂收尾钩子（烘焙逐字节和 4.9.97 一样）
+  out.hook = [!!rend(mk({ rtFullFx: 0 })).finish, !!rend(mk({ rtFullFx: 1 })).finish, !!rend({ ...pm('CS3C-T').P, rtFullFx: 1 }).finish];
+  if (out.hook.join() !== 'false,true,false') bad.push('收尾钩子：' + JSON.stringify(out.hook));
+  const N = 96, NH = 384, src = new Target(N, NH, gl.RGBA16F), B2 = new Target(N, NH, gl.RGBA16F);
+  const read = tg => { tg.bind(); const a = new Float32Array(tg.w * tg.h * 4); gl.readPixels(0, 0, tg.w, tg.h, gl.RGBA, gl.FLOAT, a); return a; };
+  const rgb = M => [0, 1, 2, 3].map(k => hexToLin(M['ramp' + k])), mixv = (a, b, k) => a.map((x, i) => x + (b[i] - x) * k);
+  try {
+    // ③ 燃尽门只作用在曲线上：落火上升段照常可见；填了曲线的燃尽后才渐入
+    { const P0 = pm('CSLRS').P, only = { rtARate: 0, rtFRate: 0, rtMRate: 0, rtCRate: 0, rtHeadI: 0, rtFullFx: 0 }, ball = rtBallistic(P0), T = ball.T, view = [0, ball.H / 2, 40, ball.H / 2 + 20];
+      const g = (P, t) => { src.clear(); src.bind(); additive(true); PPMY = NH / (2 * view[3]); rtWorldDraw(P, rtLoopInfo(P), rtBallistic(P), t, view, N / (2 * view[2]), 1, null, 0); additive(false); PPMY = 0; const a = read(src); let s = 0; for (let i = 0; i < a.length; i += 4) s += a[i + 1]; return s; };
+      const P1 = { ...P0, ...only, rtEBrightCurve: '' }, P2 = { ...P0, ...only, rtEBrightCurve: '0:0,1:0' };
+      out.gate = [+g(P1, T * 0.5).toExponential(2), +g(P2, T * 0.5).toExponential(2), +g(P2, T + (+P0.rtLateFade || 0.4) + 0.3).toExponential(2)];
+      if (!(out.gate[0] > 0) || !(out.gate[1] > 0) || !(out.gate[2] === 0)) bad.push('③ 落火上升段 / 曲线燃尽后渐入（上升段亮 / 曲线 0 上升段亮 / 燃尽后灭）：' + JSON.stringify(out.gate)); }
+    // V5 合并：引擎回放（编码 8 位 → Ramp × 颜色 × 显示强度 × 4）的光量 = 实时（星头 + 火花过材质 + 软圆点）；每组 ±10 %，整幅 ±6 %
+    const groups = { all: {}, glow: { rtPopRate: 0, rtLaunch: 0, rtSmoke: 0, rtERate: 0 }, launch: { rtGlow: 0, rtPopRate: 0, rtSmoke: 0, rtERate: 0 }, smoke: { rtGlow: 0, rtPopRate: 0, rtLaunch: 0, rtERate: 0, rtSmoke: 0.02 }, embersTex: { rtGlow: 0, rtPopRate: 0, rtLaunch: 0, rtSmoke: 0, rtETex: 1 } };
+    out.merge = {};
+    for (const [gname, o] of Object.entries(groups)) {
+      const P = mk({ rtFullFx: 1, ...o }), ball = rtBallistic(P), LI = rtLoopInfo(P), T = ball.T, R = rend(P), E = fixedExposure(P), gm = P.encGamma || 1, HI = intOr1(M.headInt) * (P.rtBright || 1), RR = rgb(M);
+      const view = [0, ball.H / 2, 45, ball.H / 2 + 25], ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]);
+      const ramp = v => v < .3 ? mixv(RR[0], RR[1], v / .3) : v < .65 ? mixv(RR[1], RR[2], (v - .3) / .35) : mixv(RR[2], RR[3], (v - .65) / .35);
+      const disp = (a, t) => { const tint = tintAt(M, t); let s = 0; for (let i = 0; i < a.length; i += 4) { const x = (a[i] + a[i + 1]) * E; if (!(x > 0)) continue; const v = Math.round(Math.min(Math.pow(1 - Math.exp(-x), 1 / gm), 253 / 255) * 255) / 255, c = ramp(v); s += (c[0] * tint[0] * lw[0] + c[1] * tint[1] * lw[1] + c[2] * tint[2] * lw[2]) * v * HI * 4; } return s; };
+      const rows = [];
+      for (const t of gname === 'launch' ? [0.05, 0.15] : gname === 'smoke' ? [T * 0.6, T + 1.5] : gname === 'glow' ? [0.4, T * 0.6, T * 0.95] : [0.4, T * 0.6, T * 0.95, T + 1]) {     // 星头光晕活到开花
+        src.clear(); src.bind(); additive(true); PPMY = ppmY; R.draw(t, view, ppm, 1); additive(false); PPMY = 0;
+        const Lb = disp(read(src), t);
+        B2.clear(); B2.bind(); additive(true); const tabs = R.fxTables(); if (tabs.length) esDraw(tabs, t, view, ppm, ppmY, 1); rtEmberDots(P, LI, ball, t, view, ppm, ppmY, 0); additive(false);
+        const a = read(B2); let Lfx = 0; for (let i = 0; i < a.length; i += 4) Lfx += a[i] * lw[0] + a[i + 1] * lw[1] + a[i + 2] * lw[2];
+        const Lm = disp(read(R.finish(src, { P, t, ss: 1, w: N, h: NH, view, ppm, ppmY, expo: [E, E] })), t);
+        src.clear(); const L0 = disp(read(R.finish(src, { P, t, ss: 1, w: N, h: NH, view, ppm, ppmY, expo: [E, E] })), t);
+        rows.push([+t.toFixed(2), +(Lm / Math.max(1e-9, Lb + Lfx)).toFixed(3), Lfx > 0 ? +(L0 / Lfx).toFixed(3) : null]);
+        if (!(Lfx > 0)) bad.push(`V5 ${gname} ${t.toFixed(2)} s 没画出效果`);
+        else if (Math.abs(L0 / Lfx - 1) > 0.1 || Math.abs(Lm / (Lb + Lfx) - 1) > 0.06) bad.push(`V5 ${gname} ${t.toFixed(2)} s 回放 / 实时（整幅、只看效果）：${rows[rows.length - 1].slice(1).join(' / ')}`);
+      }
+      out.merge[gname] = rows;
+    }
+    // 落火按 GPU 落火的口径：每颗的平均光量和 GPU 落火（rtETex 0）比 1 ± 15 %（两套随机量；出生率加到 150 颗 / 秒、关脉动，按 24 个时刻平均）
+    { const Pt = mk({ rtFullFx: 1, rtETex: 1, rtERate: 150, rtPulse: 0 }), Pg = mk({ rtFullFx: 1, rtETex: 0, rtERate: 150, rtPulse: 0 }), ball = rtBallistic(Pt), LI = rtLoopInfo(Pt), T = ball.T, view = [0, ball.H / 2, 60, ball.H / 2 + 40], ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]);
+      const tabG = esSpawn({ emitters: rtBuildES(Pg).emitters.filter(e => e.name === 'Embers') }, 1); let st = 0, sg = 0, nt = 0, ng = 0;
+      const tot = () => { const a = read(B2); let s = 0; for (let i = 0; i < a.length; i += 4) s += a[i] * lw[0] + a[i + 1] * lw[1] + a[i + 2] * lw[2]; return s; };
+      for (let i = 0; i < 24; i++) { const t = 0.3 + (T + 1.5) * i / 23;
+        B2.clear(); B2.bind(); additive(true); nt += rtEmberDots(Pt, LI, ball, t, view, ppm, ppmY, 0); additive(false); st += tot();
+        B2.clear(); B2.bind(); additive(true); ng += esDraw(tabG, t, view, ppm, ppmY, 1); additive(false); sg += tot(); }
+      out.ember = [nt, ng, +((st / Math.max(1, nt)) / (sg / Math.max(1, ng))).toFixed(3)];
+      if (!(Math.abs(out.ember[2] - 1) <= 0.15)) bad.push('落火每颗光量（贴图 / GPU）：' + JSON.stringify(out.ember)); }
+  } finally { src.dispose(); B2.dispose(); PPMY = 0; }
+  // 材质改了 = 合进去的效果旧了
+  { const b = { P: { _fxM: rtFxSnap(M) } }; out.stale = [rtFxStale(b, M), rtFxStale(b, { ...M, ramp2: '#123456' }), rtFxStale({ P: {} }, M)];
+    if (out.stale.join() !== 'false,true,false') bad.push('材质改了要重烘：' + JSON.stringify(out.stale)); }
+  // 右栏：合成一张才出现；开着时光晕 / 落火这些行不再变灰，GPU 火花预算照旧灰
+  { const P = mk({ rtFullFx: 1 }), Po = mk({ rtFullFx: 0 }), it = SCHEMA.flatMap(s => s.items || []).find(x => x && x.sel === 'rtFullFx'), seq = { ...r6, outPC: 'seq', outMobile: 'seq' };
+    out.ui = [!!it && !!it.show(P), !!it && !!it.show(seq), !!inertWhy('rtGlow', Po), !!inertWhy('rtGlow', P), !!inertWhy('rtGpuF', { ...P, outMobile: 'full' }), !!inertWhy('rtEI', { ...Po, rtETex: 0 }), !!inertWhy('rtEI', { ...P, rtETex: 0 })];
+    if (out.ui.join() !== 'true,false,true,false,true,true,false') bad.push('右栏出现 / 变灰：' + JSON.stringify(out.ui)); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r15(pg):
+    """4.9.102 合成一张补效果（导出排查 V5 + 落火，用户 10-14 14:14 按推荐）：rtFullFx 缺省 / 条目 / 指纹、收尾钩子只在开着且有东西时挂、燃尽门只作用在曲线上（落火上升段可见）、
+    引擎回放 = 实时（光晕 / 发射口 / 烟带 / 落火每组 ±10 %、整幅 ±6 %）、落火按 GPU 口径（每颗光量 1 ± 15 %）、材质改了要重烘、右栏出现与变灰"""
+    r = await pg.evaluate(R15_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
 
 async def w1(pg):
     """4.5.0 工作台快改（用户 10-05 01:28 / 02:25）：时间轴没有发射器行和曲线、精简布局收起层轨道；AI 效果调了保存 = 存成我的效果（派生）、能加层；
@@ -3942,7 +4015,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
