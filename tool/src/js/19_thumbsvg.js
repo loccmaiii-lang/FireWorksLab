@@ -210,22 +210,30 @@ function thUserChanged() {
   if (typeof syncTypeButton === 'function') try { syncTypeButton(); } catch (e) { }
   if (!$('#picker').hidden && typeof pkRender === 'function') pkRender();
 }
+function thFeedback(msg, bad = false) {
+  let out = $('#thSaveStatus'); const btn = $('#thGrab');
+  if (!out && btn) { out = document.createElement('span'); out.id = 'thSaveStatus'; out.className = 'hint'; out.setAttribute('role', 'status'); out.setAttribute('aria-live', 'polite'); btn.after(out); }
+  if (out) { out.textContent = msg; out.dataset.bad = String(bad); out.dataset.key = typeof wbKey === 'function' ? wbKey() : ''; }
+  flash(msg, bad, 6000, true);
+}
 async function thCapture() {
   const keys = thUserKeys();
-  if (!keys.length) { flash('先在左栏打开一项（花型模板 / 多层模板 / 效果 / 我的效果），再截它的缩略图', true); return false; }
-  const btn = $('#thGrab'); if (btn) btn.disabled = true;
+  if (!keys.length) { thFeedback('先在左栏打开一项，再保存它的缩略图', true); return false; }
+  const subject = wbKey(), btn = $('#thGrab'), label = btn && btn.textContent || '生成缩略图'; if (btn && btn.disabled) return false;
+  if (btn) { btn.disabled = true; btn.textContent = '生成中…'; } thFeedback('正在生成缩略图，等待当前画面刷新…');
   try {
     const r = await thGrab();
-    if (!r) { flash('这一刻画面是黑的：把时间轴挪到看得见烟花的那一帧再点', true); return false; }
+    if (wbKey() !== subject) { thFeedback('已切换效果，本次缩略图未保存；请为当前效果重新生成', true); return false; }
+    if (!r) { thFeedback('未保存：这一帧是黑的，请把时间轴挪到烟花可见的时刻', true); return false; }
     const all = { ...thUserAll() }, at = new Date().toISOString(), t = +r.t.toFixed(2), had = keys.some(k => all[k]);
     const when = typeof wbNow === 'function' ? wbNow() : at.slice(0, 16).replace('T', ' ');
     for (const k of keys) all[k] = { img: r.img, at, when, t, view: state.tab === 'combo' ? 'combo:' + state.view : state.view };
-    if (!thUserPut(thUserPrune(all))) return false;
-    thUserChanged();
-    flash(`缩略图换成了 ${t.toFixed(2)} s 这一帧${had ? '（旧的已删掉）' : ''}；⋯ 里能恢复默认`);
+    if (!thUserPut(thUserPrune(all))) { thFeedback('缩略图没存上：浏览器存储写入失败，原缩略图保留', true); return false; }
+    try { thUserChanged(); } catch (e) { thFeedback('缩略图已保存，但界面刷新失败：' + (e.message || e), true); return true; }
+    thFeedback(`缩略图已保存：${t.toFixed(2)} s 这一帧${had ? '（已替换旧图）' : ''}；⋯ 里能恢复默认`);
     return true;
-  } catch (e) { flash('没截到：' + (e.message || e), true); return false; }
-  finally { if (btn) btn.disabled = false; }
+  } catch (e) { thFeedback('缩略图未保存：' + (e.message || e), true); return false; }
+  finally { if (btn) { btn.disabled = false; btn.textContent = label; } }
 }
 // 恢复示意图 = 删掉截图；8 秒内能撤销（交互宪章第 8 节：删除要有撤销提示），撤销 = 把刚删的那张放回去
 function thRestore() {
@@ -246,6 +254,7 @@ function thUserSync(hidden) {
   if (g) { g.hidden = !keys.length; g.classList.toggle('on', !!u);
     g.title = u ? `把现在这一帧截成这一项的缩略图，覆盖 ${u.when || ''} 截的那张（${u.t} s）；⋯ 里能恢复默认` : '把现在这一帧截成这一项在左栏 / 花型库里的缩略图（再点 = 覆盖旧的）'; }
   if (r) r.hidden = !u; if (lb) lb.hidden = !u;
+  const out = $('#thSaveStatus'); if (out) { out.hidden = !keys.length; const key = keys[0] || ''; if (out.dataset.key !== key) { out.dataset.key = key; out.textContent = ''; } }
 }
 function thUserInit() {
   if ($('#thGrab')) return;

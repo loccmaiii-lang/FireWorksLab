@@ -178,7 +178,7 @@ function wbArm() {
 function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:|tpl:|mt:)/.test(wbKey())); }
 function wbRefresh() {
   const k = wbKey();
-  if (k !== wb.key || lib.review !== wb.entry) { if (k !== wb.key) state.linkOff = false; wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }     // 4.5.8（19-C04）：「暂时不联动」只管当前这个效果
+  if (k !== wb.key || lib.review !== wb.entry) { if (k !== wb.key) state.linkOff = false; wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; stage2.delivKey = ''; stage2.delivSig = ''; wbArm(); }     // 换效果也作废清单，不能只看时长是否相同。
   wbSync();
 }
 function wbSync() {
@@ -789,7 +789,7 @@ function stageTick(D) {
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
   buildTlBars(); syncGate();
   abStateSync();
-  if (stage2.deliv && !$('#delivView').hidden && stage2.delivSig !== stage2.tlSig) renderDeliv();
+  if (stage2.deliv && !$('#delivView').hidden && (stage2.delivKey !== wbKey() || (stage2.delivSig !== stage2.tlSig && !document.activeElement?.closest('.dv-names')))) renderDeliv();     // 输入或按保存按钮时不替换节点；换效果始终重绘。
 }
 // 4.9.1：自动烘焙关时改了参数不烘，以前这里一直写「烘焙中…」；现在烘焙中 / 贴图是旧的 / 失败分开写（stageTick 和 wbSync 都调）
 function abStateSync() {
@@ -857,10 +857,25 @@ function delivName() {
   if (state.tab === 'combo') { const rv = lib.review && lib.review.kind === 'combo' ? lib.review.id : ''; return (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo'; }
   return state.name;
 }
+function delivNameFeedback(host, msg, bad = false) {
+  const out = host.querySelector('#dvNameStatus'); if (out) { out.textContent = msg; out.dataset.bad = String(bad); }
+  flash(msg, bad, 6000, true);
+}
+function saveDelivNames(host, subject) {
+  if (subject !== wbKey()) { delivNameFeedback(host, '当前效果已切换，这份旧名称未保存；请重新打开当前交付清单', true); return false; }
+  const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));
+  if (!base) { delivNameFeedback(host, '名称未保存：请填写英文字母或数字', true); return false; }
+  const dup = layers.filter(Boolean).find((v, i, a) => a.indexOf(v) !== i);
+  if (dup) { delivNameFeedback(host, '名称未保存：层名重复 ' + dup, true); return false; }
+  if (!setPackNames(subject, base, layers, { system: base })) { delivNameFeedback(host, '名称没存上：浏览器存储写入失败，原名称和输入保留', true); return false; }
+  try { renderDeliv(); } catch (e) { delivNameFeedback(host, '名称已保存，但清单刷新失败：' + (e.message || e), true); return true; }
+  delivNameFeedback(host, `名称已保存：${base}（不自动追加尺寸后缀）`); return true;
+}
 function renderDeliv() {
-  const host = $('#delivView'), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
+  const host = $('#delivView'), subject = wbKey(), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
   if (combo) comboMobilePlan(xs).forEach((p, k) => { xs[k].mob = p; });     // 4.9.80 手机「自动」：每层实际出什么
-  const nm = packNamesFor(wbKey(), lib.effect, xs.length, name, xs.length === 1 && xs[0].b ? xs[0].b.P.type : ''), useNew = xs.every(x => !x.b || namingApplies(x.b));
+  const nameType = xs.length === 1 && xs[0].b ? xs[0].b.P.type : '', nm = packNamesFor(subject, lib.effect, xs.length, name, nameType), useNew = xs.every(x => !x.b || namingApplies(x.b));
+  const systemName = packSysName(nm.base, nameType, combo ? sizeSpecCombo(state.layers) : sizeSpecNow(state.P), nm.system);
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
     if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）的素材包按它自己的导出规则生成，文件清单以导出的包为准</td></tr>`); continue; }
@@ -922,7 +937,7 @@ function renderDeliv() {
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
-    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；素材包、贴图、UE 资产名都用它（右栏「英文名」显示的就是这个）。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}存在这台电脑的浏览器里，按效果记；我的效果连了仓库文件夹会一起存。</small></div>
+    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。手动保存后按填写的名称导出，不自动追加尺寸后缀。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
     ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
@@ -933,14 +948,15 @@ function renderDeliv() {
   const ssSel = host.querySelector('#dvSizeSpec');
   if (ssSel) ssSel.addEventListener('change', () => { const pk = sizePickKey(sizeSpecKeyNow()), all = store.get('sizeSpecPick', {}); if (!pk) return; if (ssSel.value) all[pk] = ssSel.value; else delete all[pk]; store.set('sizeSpecPick', all); renderDeliv(); if (typeof refreshPanelValues === 'function') refreshPanelValues(); });
   const sv = host.querySelector('#dvSaveNames');
-  if (sv) sv.addEventListener('click', () => {
-    const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));
-    if (!base) { flash('名称不能为空（英文字母 / 数字）', true); return; }
-    const dup = layers.filter(Boolean).find((v, i, a) => a.indexOf(v) !== i); if (dup) { flash('层名重复：' + dup, true); return; }
-    setPackNames(wbKey(), base, layers); renderDeliv(); flash('名称已保存');
+  if (sv) sv.addEventListener('click', () => saveDelivNames(host, subject));
+  host.querySelector('#dvBase').addEventListener('input', e => { host.querySelector('#dvSystemName').textContent = asciiName(e.target.value) || '请填写名称'; host.querySelector('#dvNameStatus').textContent = '名称已修改，尚未保存'; });
+  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => {
+    if (subject !== wbKey()) { delivNameFeedback(host, '当前效果已切换，未修改任何名称', true); return; }
+    const all = { ...store.get('packNames', {}) }; delete all[subject];
+    if (!store.set('packNames', all)) { delivNameFeedback(host, '恢复默认失败：原名称保留', true); return; }
+    syncEnName(); renderDeliv(); delivNameFeedback(host, '已恢复默认名称（尺寸派生按自动规则命名）');
   });
-  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => { const all = store.get('packNames', {}); delete all[wbKey()]; store.set('packNames', all); syncEnName(); renderDeliv(); });
-  stage2.delivSig = stage2.tlSig;
+  stage2.delivSig = stage2.tlSig; stage2.delivKey = subject;
 }
 // 4.9.26 帧账本（用户 10-07 09:20「2.可以，你标定完，我可以多测试几个」）：一份烘焙每帧在游戏里跳多少像素（31_plan40.js frameLedger）；按 bake 记一份
 const ledgerCache = new WeakMap();

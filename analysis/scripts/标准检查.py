@@ -140,5 +140,6 @@ if __name__ == '__main__':
     if a.point_profile_only:
         raise SystemExit(subprocess.run([sys.executable, str(HERE / 'point_profile_check.py')]).returncode)
     if a.ui_state_only:
-        raise SystemExit(subprocess.run(['node', str(HERE / 'bake_state_check.mjs')]).returncode)
+        codes = [subprocess.run(['node', str(HERE / check)]).returncode for check in ('bake_state_check.mjs', '保存身份检查.cjs')]
+        raise SystemExit(next((code for code in codes if code), 0))
     asyncio.run(run(a.targets or None, not a.no_write, merge=bool(a.targets)))

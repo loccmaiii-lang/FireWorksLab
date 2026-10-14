@@ -82,7 +82,7 @@ function pkRender() {
     const pick = () => { const fn = pk.onPick, mode = pk.mode; pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent);
       if (String(it.key).startsWith('mt:')) { Promise.resolve(mode === 'newEffect' ? mtCreateMine(it.key.slice(3)) : openMultiType(it.key.slice(3))).catch(e => { console.error(e); flash('出错了：' + (e.message || e), true); }); return; }     // 4.5.5
       if (fn) { Promise.resolve(fn(it.key)).catch(e => { console.error(e); flash('出错了：' + (e.message || e), true); }); return; }
-      if (String(it.key).startsWith('tpl:')) openTemplate(it.key.slice(4)); else if (String(it.key).startsWith('rep:')) setType(it.key); else openType(it.key); };
+      if (String(it.key).startsWith('tpl:')) openTemplate(it.key.slice(4)); else openType(it.key); };
     c.addEventListener('click', pick); c.addEventListener('keydown', e => { if (e.key === 'Enter') pick(); });
     grid.appendChild(c);
   }

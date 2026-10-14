@@ -7,7 +7,7 @@ for (const [g, types] of TYPE_GROUPS) {
 }
 $('#verLabel').textContent = 'v' + VERSION;
 document.title = '烟花烘培器 · v' + VERSION;
-$('#type').addEventListener('change', e => setType(e.target.value));
+$('#type').addEventListener('change', e => state.tab === 'combo' ? setType(e.target.value) : openType(e.target.value));     // 换整个花型要同时切身份；多层里改当前层仍是编辑参数。
 $('#enNameEdit').addEventListener('click', () => { toggleDeliv(true); setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0); });     // 4.9.4 英文名只在交付清单里改
 $('#x-form').addEventListener('change', e => setForm(e.target.value));
 $('#x-texW').addEventListener('change', e => { state.P.texW = +e.target.value; onParam(); });
@@ -133,7 +133,7 @@ window.__fw = {
     files.push(...await platformFiles(name, b, M));
     const efJ = opt.entry && typeof effectOfEntry === 'function' ? effectOfEntry({ id: opt.entry }) : null, spJ = exportScalePlan(P, { key: efJ ? efJ.key : '', entry: opt.entry || '', pick: opt.size || '' });     // 4.9.52 本机任务：任务里写 size（档 id / 规格 id / none），不写 = 表里配的
     // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名；4.9.69 派生资源（非默认尺寸档）系统名区分、贴图沿用原效果
-    if (namingApplies(b) && opt.naming !== false) { const nm = packNamesFor(efJ ? 'ef:' + efJ.key : 'rv:' + (opt.entry || name), efJ, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: packSysName(nm.base, P.type, spJ.spec), spec: spJ.spec && spJ.spec.id }); }
+    if (namingApplies(b) && opt.naming !== false) { const nm = packNamesFor(efJ ? 'ef:' + efJ.key : 'rv:' + (opt.entry || name), efJ, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: packSysName(nm.base, P.type, spJ.spec, nm.system), spec: spJ.spec && spJ.spec.id }); }
     files = scaleCascadeFiles(files, spJ.k, spJ.keep, spJ.spec);     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）；4.9.51 配了尺寸标定按标定
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());

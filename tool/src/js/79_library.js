@@ -415,7 +415,11 @@ function openFormal(r, ef) {
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
   migEnd();     // 4.9.5 不静默
 }
-function openType(t) { beforeOpen(null); wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
+function openType(t) {
+  // 花型库打开正式条目必须连同身份一起切换；setType只换参数，会把名称/缩略图存到前一个效果。
+  if (String(t).startsWith('rep:')) { const r = REPLICA_BY_ID[t.slice(4)]; if (!r) { flash('找不到这个正式条目', true); return; } openFormal(r); return; }
+  beforeOpen(null); wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]);
+}
 
 // 排队中的条目：还没有结果，只放实拍（要对的目标），右栏只留审阅卡
 function setQueuedView(on) {

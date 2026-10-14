@@ -419,7 +419,7 @@ async function comboPackFiles(name, layers, onProg) {
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
       const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null;     // 4.9.69 派生资源：系统名区分、贴图沿用
-      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: packSysName(nm.base, '', sk), spec: sk && sk.id }), layers);
+      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: packSysName(nm.base, '', sk, nm.system), spec: sk && sk.id }), layers);
     }
     return comboSpecScale(files, layers);
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }

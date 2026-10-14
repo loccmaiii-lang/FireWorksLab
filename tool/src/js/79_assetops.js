@@ -112,7 +112,7 @@ async function wbDeriveMine(o = {}) {
   if (!myPut(rec)) return null;
   // 导出名（UE 资产名）跟着原来的走：派生自引菊 → 锦的，贴图照样叫 HikiNishiki_Hiki / _Nishiki（「查看交付」里能改）
   const combo = state.tab === 'combo', pn = packNamesFor(wb.key, lib.effect, snap.layers.length, combo ? 'MyFx' : (TYPE_EN[state.P.type] || 'MyFx'), combo ? '' : state.P.type);
-  setPackNames('my:' + rec.id, pn.base, pn.layers);
+  setPackNames('my:' + rec.id, pn.base, pn.layers, pn);
   const drafts = wbList().filter(x => x.draft); if (drafts.length) wbPut(wbList().filter(x => !x.draft));
   wb.sig = wbSig();     // 原来那个效果算「没改过」（不再存草稿）
   try { await repoWrite('my:' + rec.id, { id: rec.id, name: rec.name, at: rec.updated, base: '我的效果', from, snap: rec.snap, links: rec.links, ue: packNamesFor('my:' + rec.id, null, snap.layers.length, 'MyFx') }); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); }

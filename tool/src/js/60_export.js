@@ -337,7 +337,7 @@ async function exportSingleScheme(name, b, destination) {
   busy(true, '打包 ZIP…', 1);
   let zipName = name, out = files;
   const sp = exportScalePlan(state.P);
-  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
+  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
   { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
   await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
   wbAutoExport(zipName);
@@ -375,7 +375,7 @@ async function exportMaster() {
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     const sp = exportScalePlan(state.P);
-    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
+    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
     { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
     await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
@@ -408,7 +408,7 @@ async function exportVariants() {
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     const sp = exportScalePlan(state.P);
-    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
+    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
     await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b0), destination);
     wbAutoExport(zipName);

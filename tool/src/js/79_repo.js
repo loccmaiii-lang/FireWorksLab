@@ -117,7 +117,7 @@ async function repoRead({ interactive = false } = {}) {
       }
       myPut(rec);
       if (!myAll()[rec.id] || repoRecipeSig(myAll()[rec.id]) !== repoRecipeSig(rec)) throw new Error('浏览器保存空间不足，配方仍保留在仓库');
-      if (doc.ue && typeof doc.ue.base === 'string' && Array.isArray(doc.ue.layers)) setPackNames('my:' + rec.id, doc.ue.base, doc.ue.layers);
+      if (doc.ue && typeof doc.ue.base === 'string' && Array.isArray(doc.ue.layers)) setPackNames('my:' + rec.id, doc.ue.base, doc.ue.layers, doc.ue);
       added++;
     }
     store.set('repoReadCopies', seen); if (added) renderLib();

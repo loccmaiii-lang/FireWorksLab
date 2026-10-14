@@ -26,12 +26,14 @@ function planSfx(ef, entryId) {
 // entryId：这一包是哪个条目（本机导出任务传条目号）；不传 = 烘焙器里现在打开的那个（左栏点的那一档）
 function packNamesFor(key, ef, nLayers, fallback, type, entryId) {
   const o = (store.get('packNames', {})[key]) || {};
+  // 用户10-14：手动保存名即最终名。旧记录已有base但未写system，按这一决定兼容；程序默认记录显式写空system。
+  const system = asciiName(o.system === undefined ? o.base : o.system);
   let base = asciiName(o.base) || asciiName(ef && ef.英文名) || asciiName(fallback) || 'Firework';
-  const sz = FW_SIZE_SFX[type]; if (sz) base = base.replace(/_[SML]$/, '') + '_' + sz;
+  const sz = FW_SIZE_SFX[type]; if (sz && !system) base = base.replace(/_[SML]$/, '') + '_' + sz;
   const eid = entryId !== undefined ? entryId : (typeof lib !== 'undefined' && lib.review && ef && lib.effect === ef ? lib.review.id : null), ps = planSfx(ef, eid);
-  if (ps && !base.endsWith('_' + ps)) base += '_' + ps;
+  if (ps && !system && !base.endsWith('_' + ps)) base += '_' + ps;
   const layers = Array.from({ length: nLayers }, (_, i) => asciiName((o.layers || [])[i]) || asciiName(((ef && ef.层英文名) || [])[i]) || (nLayers > 1 ? 'L' + (i + 1) : ''));
-  return { base, layers, custom: !!(o.base || (o.layers || []).some(Boolean)) };
+  return { base, layers, system, custom: !!(o.base || (o.layers || []).some(Boolean)) };
 }
 // 4.9.4（交互宪章 5「一个效果只留一个英文名，在交付清单里设」）：以前有三个名字——右栏「母版名称」、交付清单「名称（英文）」、左栏中文名。
 // 现在英文名只有一个：交付清单里设（存在 packNames），右栏只显示、点「在交付清单里改」过去。素材包、贴图、UE 资产名都用它；
@@ -42,7 +44,11 @@ function effEnName() {
 }
 function effEnCustom() { try { return asciiName((store.get('packNames', {})[wbKey()] || {}).base); } catch (e) { return ''; } }
 function syncEnName() { const el = typeof document !== 'undefined' && document.getElementById('enName'); if (el) { const n = effEnName(); if (el.textContent !== n) el.textContent = n; } }
-function setPackNames(key, base, layers) { const all = store.get('packNames', {}); all[key] = { base, layers }; store.set('packNames', all); if (typeof syncEnName === 'function') syncEnName(); }
+function setPackNames(key, base, layers, names = { system: '' }) {
+  const all = { ...store.get('packNames', {}) }; all[key] = { base, layers: [...layers], system: asciiName(names.system === undefined ? base : names.system) };
+  if (!store.set('packNames', all)) return false;
+  if (typeof syncEnName === 'function') syncEnName(); return true;
+}
 function fwTexName(base, layer, L, sheet, kind, mobile) {
   const stem = FW_TEX_PREFIX + base + (layer ? '_' + layer : '');
   if (kind === 'R') return stem + '_R';
@@ -70,7 +76,8 @@ function sizeSysTag(spec) {
   const m = /^cls:(h|d|df):[^:]+:([\d.]+)$/.exec(spec.id || '');
   return m ? { h: 'H', d: 'D', df: 'Fan' }[m[1]] + m[2].replace('.', '_') : asciiName(spec.id);
 }
-function packSysName(base, type, spec) {
+function packSysName(base, type, spec, system = '') {
+  if (asciiName(system)) return asciiName(system);
   const tag = sizeSysTag(spec); if (!tag) return base;
   return (FW_SIZE_SFX[type] ? base.replace(/_[SML]$/, '') : base) + '_' + tag;
 }
