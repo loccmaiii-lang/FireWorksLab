@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv889mzwz2js4",
  "name": "正式资源-小金花",
- "at": "2026-10-14 22:51",
+ "at": "2026-10-14 22:52",
  "base": "我的效果",
  "from": {
   "key": "type:kamuro",
@@ -15,10 +15,32 @@
  },
  "snap": {
   "kind": "combo",
+  "name": "正式资源-小金花",
   "layers": [
    {
     "id": null,
     "type": "kamuro",
+    "L": {
+     "scale": 1,
+     "delay": 0,
+     "rate": 1.5,
+     "mirror": false,
+     "stages": [
+      [
+       0,
+       "#ffffff"
+      ]
+     ],
+     "xw": 0.08,
+     "ramp0": "#000000",
+     "ramp1": "#8a3208",
+     "ramp2": "#ffc266",
+     "ramp3": "#fff0d2",
+     "headInt": 1,
+     "tailInt": 1,
+     "title": "锦冠",
+     "lid": "l9b2ny"
+    },
     "P": {
      "renderVer": 40,
      "exposure": 4,
@@ -36,7 +58,7 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 6.8,
+     "duration": 5,
      "seed": 7,
      "stars": 110,
      "burstR0": 0,
@@ -45,7 +67,7 @@
      "grav": 1,
      "speedJit": 3,
      "dirJit": 1.5,
-     "burn": 3.8,
+     "burn": 2,
      "burnJit": 7,
      "fade": 0.55,
      "lastFlare": 0,
@@ -569,18 +591,9 @@
      "ramp3": "#fff0d2",
      "headInt": 1,
      "tailInt": 1
-    },
-    "L": {
-     "title": "锦冠",
-     "lid": "l9b2ny",
-     "scale": 1,
-     "delay": 0,
-     "rate": 1,
-     "mirror": false
     }
    }
-  ],
-  "name": "正式资源-小金花"
+  ]
  },
  "links": [],
  "ue": {
@@ -589,7 +602,7 @@
    ""
   ],
   "system": "",
-  "custom": false
+  "custom": true
  },
  "sizeSource": {
   "key": "",
