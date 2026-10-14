@@ -174,14 +174,20 @@ function resetToDefaults() {
   flash(`已回到「${TYPE_NAMES[P.type]}」模板的默认值${state.tab === 'combo' ? `（第 ${state.comboSel + 1} 层）` : ''}；Ctrl+Z 能撤销`);
 }
 // 只还原一个发射器（m 给了就只还原那个模块）到「打开时」：AI 版 / 你保存的样子 / 模板默认
+// 4.9.87 分层粒子图：还原后整张图要还成立（例：只还原了周期，可另一层的寿命上限已经改得比它长），不成立就不还原、说为什么
+function graphResetOK(P, sg) {
+  if (!sg || !P.sparkGraph) return true;
+  try { SparkGraph.validate(P.sparkGraph); return true; } catch (e) { P.sparkGraph = sg; flash('没还原：' + e.message + '（先还原相关的那一项）', true); return false; }
+}
 function resetScope(e, m) {
-  const B = panelBaseP(), P = state.P; let n = 0;
+  const B = panelBaseP(), P = state.P, sg = P.sparkGraph ? structuredClone(P.sparkGraph) : null; let n = 0;
   for (const [row, it, sec, det] of panelRows) {
     if (det._g !== e || (m && det._mod !== m) || !row.classList.contains('chg')) continue;
-    const k = Array.isArray(it) ? it[0] : it.sel; if (!k || B[k] === undefined) continue;
-    P[k] = structuredClone(B[k]); n++;
+    const k = Array.isArray(it) ? it[0] : it.sel || (isPathKey(it.text || it.curve || '') ? it.text || it.curve : ''); if (!k || pGet(B, k) === undefined) continue;
+    pSet(P, k, structuredClone(pGet(B, k))); n++;
   }
   if (!n) { flash('这里没有改过的参数'); return; }
+  if (!graphResetOK(P, sg)) { refreshPanelValues(); return; }
   derive(P); refreshPanelValues(); refreshVisibility(); onParam();
   flash(`已把「${e}${m ? ' › ' + m : ''}」的 ${n} 项还原到打开时；Ctrl+Z 能撤销`);
 }
@@ -189,9 +195,12 @@ function resetScope(e, m) {
 function resetRow(row) {
   const pr = panelRows.find(([r]) => r === row); if (!pr) return;
   const it = pr[1], k = Array.isArray(it) ? it[0] : it.sel || it.curve || it.text, B = panelBaseP(), P = state.P;
-  if (!k || B[k] === undefined) { flash('打开时没有这一项，没法还原'); return; }
-  P[k] = structuredClone(B[k]); derive(P); refreshPanelValues(); refreshVisibility(); onParam();
-  flash(`「${row._lab}」还原到打开时（${row._baseTxt != null ? row._baseTxt : B[k]}）；Ctrl+Z 能撤销`);
+  if (!k || pGet(B, k) === undefined) { flash('打开时没有这一项，没法还原'); return; }
+  const sg = P.sparkGraph ? structuredClone(P.sparkGraph) : null;
+  pSet(P, k, structuredClone(pGet(B, k))); if (!graphResetOK(P, sg)) { refreshPanelValues(); return; }
+  derive(P); refreshPanelValues(); refreshVisibility(); onParam();
+  if (row._it && row._it.rebuild) buildMasterPanel();
+  flash(`「${row._lab}」还原到打开时（${row._baseTxt != null ? row._baseTxt : pGet(B, k)}）；Ctrl+Z 能撤销`);
 }
 function changedByEmitter() { const n = {}; for (const [row, , , det] of panelRows) if (row.classList.contains('chg')) n[det._g] = (n[det._g] || 0) + 1; return n; }
 function renderResetMenu() {

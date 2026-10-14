@@ -244,7 +244,9 @@ function fwlCombo(name, layers, mobile = false) {
       return;
     }
     // 4.9.80（导出排查 ⑨）：尾缀层（循环层 + 粒子）一律走 fwlEmitSet——以前只认「合成一张」，PC 合成一张、手机只有近段时手机配置被当成大面片母版写，引用一张不存在的贴图
-    const ln = comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
+    // 4.9.87：只有一层的「我的效果」是循环效果（喷泉、分层粒子图）时照单层导出那样一直循环（fwlLoop）——保存窜天猴 / 仙女棒 = 存成一层的我的效果，预览按时间轴循环，导出以前却只播一次；
+    //   多层里的循环层照旧播一个周期（和多层预览一致，要不要一直循环等用户定）
+    const ln = comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile) : b.form === 'loop' && layers.length === 1 ? fwlLoop(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
     if (es && mobile && !b.esFull) fwlMaxAlive(body.emitters);
     const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
     for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;

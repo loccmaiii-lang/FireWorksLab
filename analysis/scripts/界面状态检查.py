@@ -95,6 +95,7 @@
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
+  W37 4.9.86 / 4.9.87 分层粒子图（窜天猴 / 仙女棒）在统一右栏：打开不删右栏共用块、不改自动烘焙；改一项写进去、标改过；寿命上限超过周期不写；行尾还原；换到别的效果不留粒子图的发射器；左栏没有旧候选按钮
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -3679,13 +3680,51 @@ async def w36(pg):
     r = await pg.evaluate(W36_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
 
+W37_JS = r"""(async () => {
+  // 4.9.86 / 4.9.87（用户 10-14 10:29「仙女棒与尾焰，直接把我的参数系统给换了」）：分层粒子图在统一右栏；打开它不删右栏共用块、不改自动烘焙；
+  // 改 / 拒 / 改过 / 行尾还原；换到别的效果不留粒子图的行。分层粒子图的真烘焙在云端太慢（镜头积分），这里只查界面：烘焙换成马上失败
+  const bad = [], out = {}, wait = ms => new Promise(r => setTimeout(r, ms));
+  window.drawCameraGraph = () => 0; const ob = window.bake; window.bake = async (P, ...a) => { if (P && P.sparkGraph) { await wait(20); throw new Error('检查：不真烘分层粒子图'); } return ob(P, ...a); };
+  const ab0 = store.get('autoBake'), rowBy = k => panelRows.find(([row, it]) => (Array.isArray(it) ? it[0] : it.sel || it.text || it.curve) === k);
+  const setNum = (k, v) => { const r = rowBy(k)[0], n = r.querySelector('.num'); n.value = String(v); n.dispatchEvent(new Event('change')); };
+  try {
+    openReview(entryById('SGR1')); await wait(600);
+    const tabs = [...document.querySelectorAll('#params .etabs [data-e]')].filter(b => !b.hidden).map(b => b.dataset.e);
+    out.tabs = tabs.length; out.first = tabs.slice(0, 4);
+    if (!tabs.includes('分层粒子图') || !tabs.includes('燃烧核心') || !tabs.includes('输出') || tabs.length < 15) bad.push('标签不对：' + tabs.join(' '));
+    if (!$('#type') || !document.querySelector('.pm-ident') || !$('#specBox')) bad.push('右栏共用块（花型 / 英文名 / 规格框）不在了');
+    if (store.get('autoBake') !== ab0) bad.push('打开分层粒子图改了「自动烘焙」');
+    const k = 'sparkGraph.emitters[e01].speed.1', v0 = pGet(state.P, k); setNum(k, v0 + 1); await wait(30); refreshVisibility();
+    out.edit = [v0, pGet(state.P, k), rowBy(k)[0].classList.contains('chg')];
+    if (pGet(state.P, k) !== v0 + 1 || !rowBy(k)[0].classList.contains('chg')) bad.push('改了速度上限没写进去或没标改过：' + JSON.stringify(out.edit));
+    const kl = 'sparkGraph.emitters[e01].life.1', l0 = pGet(state.P, kl); setNum(kl, 9); out.reject = [l0, pGet(state.P, kl)];
+    if (pGet(state.P, kl) !== l0) bad.push('寿命上限超过周期也写进去了');
+    resetRow(rowBy(k)[0]); out.reset = pGet(state.P, k); if (out.reset !== v0) bad.push('行尾还原没回到打开时');
+    if (state.P.loopT !== state.P.sparkGraph.period) bad.push('loopT 没跟循环周期');
+    const e = FW_REVIEW_LIST.find(x => x.kind !== 'combo' && x.kind !== 'queued' && !/^SG/.test(x.id)); openReview(e); await wait(300);
+    const g = [...document.querySelectorAll('#params section.egrp')].map(x => x.dataset.g); out.after = [e.id, g.length];
+    if (g.some(x => x === '分层粒子图' || x === '燃烧核心')) bad.push('换到别的效果还有粒子图的发射器');
+    if ([...document.querySelectorAll('#side button')].some(b => /窜天猴尾焰|仙女棒全形态/.test(b.textContent))) bad.push('左栏还有旧的候选按钮');
+  } catch (err) { bad.push('异常：' + err.message); }
+  finally { window.bake = ob; }
+  return { ok: !bad.length, bad, out };
+})()"""
+
+
+async def w37(pg):
+    """4.9.86 / 4.9.87 分层粒子图（窜天猴 / 仙女棒）在统一右栏：不删共用块、不改自动烘焙、改 / 拒 / 改过 / 还原、换效果不留行"""
+    r = await pg.evaluate(W37_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
   for (const sec of SCHEMA) for (const it of sec.items) { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve || (it.info ? 'info:' + it.info : ''); if (!k) continue; keys.add(k); items.push([sec, it, k]); }
   const types = Object.keys(TYPES), D = types.map(t => defaultsFor(t).P);
+  // 4.9.87 分层粒子图的行是路径键（sparkGraph.emitters[].speed.0）：默认值看分层粒子图模板里第一层
+  const gP = defaultsFor('sparkgraph').P, gId = gP.sparkGraph && gP.sparkGraph.emitters[0].id, pathOK = k => typeof isPathKey === 'function' && isPathKey(k) && pGet(gP, k.replace('[]', '[' + gId + ']')) !== undefined;
   for (const [sec, it, k] of items) {
-    if (!k.startsWith('info:') && k !== '_trailTier' && !(k in BASE) && !D.some(P => P[k] !== undefined)) bad.push(`「${sec.sec}」的 ${k} 没有默认值（BASE 和所有花型模板都没有）`);
+    if (!k.startsWith('info:') && k !== '_trailTier' && !(k in BASE) && !D.some(P => P[k] !== undefined) && !pathOK(k)) bad.push(`「${sec.sec}」的 ${k} 没有默认值（BASE 和所有花型模板都没有）`);
     const nm = pnameOf(sec.sec, k, Array.isArray(it) ? (typeof it[1] === 'function' ? '' : it[1]) : it.label);
     if (!nm) { bad.push(`「${sec.sec}」的 ${k} 在参数名称表里没有`); continue; }
     if (!PEMIT.P[nm.id]) bad.push(`${k}（${nm.id}）在发射器表里没有`);
@@ -3718,7 +3757,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

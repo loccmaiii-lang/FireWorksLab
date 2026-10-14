@@ -9,7 +9,7 @@
 // =====================================================================
 const PNAME = (() => { const m = new Map(); for (const r of (typeof PNAMES !== 'undefined' ? PNAMES : [])) { const k = r.sec + '|' + r.key; if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return m; })();
 // 同一节里同一个键可能有两行（例：形状里「开花图案」和地面的「灯芯图案」都是 pattern）：按旧名对上
-function pnameOf(sec, key, label) { const a = PNAME.get(sec + '|' + key); if (!a) return null; if (a.length > 1 && label != null) { const L = String(label); return a.find(r => r.old === L || L.startsWith(r.old) || r.old.startsWith(L.split('（')[0])) || a[0]; } return a[0]; }
+function pnameOf(sec, key, label) { const a = PNAME.get(sec + '|' + key); if (!a) return /^sparkGraph\..*\.\d+$/.test(key) ? pnameOf(sec, key.replace(/\.\d+$/, ''), label) : null;     /* 4.9.87 分层粒子图：三个数 / 向量的每一项用这个字段的那一行 */ if (a.length > 1 && label != null) { const L = String(label); return a.find(r => r.old === L || L.startsWith(r.old) || r.old.startsWith(L.split('（')[0])) || a[0]; } return a[0]; }
 // 4.4：面板按「发射器 → 模块 → 参数」排（用户 2026-10-04 16:17 / 17:13：按 Niagara 的发射器分层，父级 / 子级清楚、名字不带重复前缀）。
 // 归属和短名只看 analysis/命名/发射器表.json（build.py → PEMIT，唯一来源）；「全名」仍是参数名称表的 cn，用在搜索、说明条。
 // 顶上一排发射器标签（效果 / 星 / 火花 / 余烬 / 爆裂 / 子花 / 开花闪光 / 输出 …），一次看一个发射器；搜索、只看改过的跨所有发射器。
@@ -187,8 +187,8 @@ function p43Skeleton(host) {
     const after = [...host.querySelectorAll(':scope > section.egrp')].find(x => x._i > d.i);
     host.insertBefore(s, after || null); secs[e] = s; return s;
   };
-  return (sec, it, key, nm) => {
-    const x = emitOf(nm, sec), k = x.e + '›' + x.m;
+  return (sec, it, key, nm, ov) => {
+    const x = ov ? { ...emitOf(nm, sec), ...ov } : emitOf(nm, sec), k = x.e + '›' + x.m;     // 4.9.87 ov：分层粒子图每层一个发射器（层名），模块按行指定
     if (!mods[k]) {
       const s = emitSec(x.e), order = (EMIT_DEF[x.e] || {}).mods || [], d = document.createElement('details');
       d.className = 'sec mod'; modSetOpen(d, pview.mopen[k] != null ? pview.mopen[k] : modDefaultOpen(k));

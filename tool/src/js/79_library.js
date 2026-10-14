@@ -629,6 +629,7 @@ function initLibrary() {
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();
   myMigrateComboSaves();
+  if (typeof graphMigrateSaves === 'function') graphMigrateSaves();     // 4.9.87 旧粒子图面板的浏览器存档搬进「版本」
   // 打开时：有「新」的待验收候选就先打开它；否则回到上次看的
   const fresh = EFFS().find(effIsNew), lastKey = store.get('lastKey', '');
   const lastEf = EFFS().find(ef => 'ef:' + ef.key === lastKey), lastRv = FW_REVIEW_LIST.find(e => 'rv:' + e.id === lastKey);

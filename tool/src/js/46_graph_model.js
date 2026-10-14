@@ -110,3 +110,103 @@ const SparkGraph = (() => {
   }
   return {hash,mod,curve,dist,direction,sample,validate,build,geometry,cameraGeometry};
 })();
+
+// =====================================================================
+//  4.9.87 分层粒子图并回统一右栏（导出（23），用户 10-14 10:29「仙女棒与尾焰，直接把我的参数系统给换了……修复与统一参数系统界面」）
+//  · 4.9.83 的独立面板（自己的数字框、浏览器键保存、完整 JSON）去掉：每层一个发射器标签，模块 / 滑杆 / 改过 / ↺ / 撤销 / 保存 / 草稿和别的效果同一套
+//  · 行用路径键读写 P.sparkGraph（10_types.js pGet / pSet）；名字 / 说明按参数名称表「分层粒子图」那几行（每个字段一行，三个数的分下限 / 上限 / 偏向）
+//  · 模板默认 = 候选打开时那套输出设置（4.9.86 起在这里；17_graph_presets.js 是脚本生成的，不手改）
+// =====================================================================
+const GRAPH_TYPE_P = { loopT: 64 / 30, duration: 64 / 30, cols: 4, rows: 4, chans: 4, texW: 2048, texH: 2048, autoGrid: 0, shutter: 0, exposure: 1, outMode: 'combined', zoom: 'off', cellPad: 2, headBright: 1, headSize: .001, spacing: 0, nozzles: 1, sparkSize: .001 };
+const GRAPH_TYPE_M = { stages: [[0, '#ffffff']], headInt: 1, tailInt: 1, ramp0: '#120100', ramp1: '#b34104', ramp2: '#ffc064', ramp3: '#fff6dd' };
+Object.assign(TYPES.sparkgraph.p, GRAPH_TYPE_P); Object.assign(TYPES.sparkgraph.m, GRAPH_TYPE_M);
+// 读写换算：开关存 true / false，爆发时刻存 [[秒, 半宽], …]，曲线存 [[寿命 0–1, 倍率], …]
+const GRAPH_IO = {
+  bool: { get: v => v ? '1' : '0', set: s => String(s) === '1' },
+  bursts: { get: v => Array.isArray(v) ? v.map(([t, w]) => `${+(+t).toFixed(4)}:${+(+w).toFixed(4)}`).join(', ') : '',
+    set: s => String(s || '').split(/[,，;；\n]+/).map(x => x.trim()).filter(Boolean).map(x => x.split(/[:：\s]+/).map(Number)).map(k => { if (k.length !== 2 || !k.every(Number.isFinite)) throw Error('爆发时刻写成「秒:半宽, 秒:半宽」'); return k; }).sort((a, b) => a[0] - b[0]) }
+};
+const graphCurveText = v => Array.isArray(v) ? v.map(([u, x]) => `${+(+u).toFixed(4)}:${+(+x).toFixed(4)}`).join(', ') : String(v || '');
+// 每层的行（模板）：键里的 [] 打开时换成这一层的 id；mod = 放进哪个模块；lshow(P, 层) = 这一层有没有这一项
+const GRAPH_LAYER_MODS = ['生成', '分叉', '寿命', '形状', '初速', '阻力重力', '大小', '亮度', '形态'];
+const graphLayerItems = (() => {
+  const K = f => 'sparkGraph.emitters[].' + f, root = (P, e) => !e.parent, child = (P, e) => !!e.parent, cone = (P, e) => e.directionMode === 'cone';
+  const num = (f, label, unit, min, max, step, mod, lshow, x = {}) => Object.assign([K(f), label, unit, min, max, step, null], { tk: K(f), mod, lshow, gl: true }, x);
+  const tri = (f, nm, unit, max, step, mod, x = {}) => [num(f + '.0', nm + ' · 下限', unit, 0, max, step, mod, null, x), num(f + '.1', nm + ' · 上限', unit, 0, max, step, mod, null, x), num(f + '.2', nm + ' · 分布偏向（1 均匀，越大越偏下限）', '', .1, 4, .05, mod)];
+  const vec = (f, nm, names, unit, min, max, step, mod, lshow) => names.map((n, i) => num(f + '.' + i, nm + ' · ' + n, unit, min, max, step, mod, lshow));
+  return [
+    { text: K('name'), tk: K('name'), label: '层名称', mod: '生成', gl: true, rebuild: true },
+    { sel: K('enabled'), tk: K('enabled'), label: '显示这层（关了子粒照样生成）', mod: '生成', gl: true, io: GRAPH_IO.bool, options: [['1', '显示'], ['0', '隐藏']] },
+    num('count', '每周期粒子数', '粒', 0, 50000, 10, '生成', root, { int: true }),
+    num('seed', '随机种子', '', 0, 999999, 1, '生成', null, { int: true }),
+    num('clusterSize', '每簇候选数量', '粒', 1, 256, 1, '生成', root, { int: true }),
+    num('clusterProbability', '成簇概率', '', 0, 1, .01, '生成', root),
+    num('clusterWidth', '簇内出生半宽', 's', 0, .2, .001, '生成', root),
+    num('clusterDirection', '簇内方向关联', '', 0, 1, .01, '生成', root),
+    num('burstShare', '爆发段粒子比例', '', 0, 1, .01, '生成', root),
+    num('children', '每母粒子粒数', '粒', 0, 32, 1, '分叉', child, { int: true }),
+    num('event', '分叉时刻（× 母粒寿命）', '', 0, 1, .01, '分叉', child),
+    num('delay', '额外延迟', 's', 0, .5, .001, '分叉', child),
+    num('inherit', '速度继承', '×', 0, 2, .01, '分叉', child),
+    num('probability', '子粒发生概率', '', 0, 1, .01, '分叉', child),
+    ...tri('life', '寿命', 's', 1, .001, '寿命'),
+    num('extent', '出生半径', 'm', 0, .5, .0001, '形状', root),
+    ...tri('speed', '速度', 'm/s', 80, .01, '初速'),
+    { sel: K('directionMode'), tk: K('directionMode'), label: '喷射方向', mod: '初速', gl: true, options: [['sphere', '球形散射'], ['cone', '锥形喷射']] },
+    num('cone', '喷射半锥角', '°', 0, 180, 1, '初速', cone),
+    ...vec('direction', '喷射轴', ['X', 'Y（纵深）', 'Z（竖直）'], '', -1, 1, .01, '初速', cone),
+    num('drag', '线性阻力', '1/s', 0, 30, .1, '阻力重力'),
+    ...vec('gravity', '加速度', ['横向', '纵深', '竖直'], 'm/s²', -20, 20, .01, '阻力重力'),
+    num('noise', '位移扰动', 'm/s', 0, .1, .0001, '阻力重力'),
+    num('noiseHz', '扰动频率', 'Hz', 0, 60, .1, '阻力重力'),
+    num('width', '粒子直径', 'm', 0, .3, .00001, '大小'),
+    ...tri('size', '大小倍率', '×', 4, .01, '大小'),
+    { curve: K('sizeCurve'), tk: K('sizeCurve'), label: '大小随寿命', mod: '大小', gl: true },
+    num('gain', '亮度', '×', 0, 60, .05, '亮度'),
+    ...tri('power', '亮度倍率', '×', 6, .01, '亮度'),
+    { curve: K('brightCurve'), tk: K('brightCurve'), label: '亮度随寿命', mod: '亮度', gl: true },
+    { sel: K('shape'), tk: K('shape'), label: '粒子形态', mod: '形态', gl: true, options: [['line', '运动拉丝'], ['point', '柔亮点'], ['fragment', '不规则碎片']] },
+    num('history', '历史线长时间', 's', 0, .1, .001, '形态', (P, e) => e.shape === 'line' && !P.cameraMotion && !P.cameraDof),
+    num('taper', '尾端粗细比例', '', 0, 1, .01, '形态', (P, e) => e.shape === 'line' && !P.cameraMotion && !P.cameraDof),
+    num('aspect', '长宽比', '×', 1, 10, .1, '形态', (P, e) => e.shape !== 'line'),
+    num('spin', '自转', '°/s', -720, 720, 1, '形态', (P, e) => e.shape !== 'line'),
+    num('twist', '翻转', '°/s', -720, 720, 1, '形态', (P, e) => e.shape === 'fragment')
+  ];
+})();
+SCHEMA.push(
+  { sec: '分层粒子图', graphOnly: true, show: P => !!P.sparkGraph, hint: '整张粒子图共用：循环周期、取景范围、偶发爆发时刻、导出时是否跟着喷口轴转。', items: [
+    ['sparkGraph.period', '循环周期（粒子寿命上限要比它短）', 's', .2, 6, .01],
+    ['sparkGraph.bounds.0', '取景 · 左', 'm', -50, 0, .01], ['sparkGraph.bounds.1', '取景 · 右', 'm', 0, 50, .01],
+    ['sparkGraph.bounds.2', '取景 · 下', 'm', -50, 0, .01], ['sparkGraph.bounds.3', '取景 · 上', 'm', 0, 50, .01],
+    { text: 'sparkGraph.bursts', label: '爆发（时刻:半宽，秒）', io: GRAPH_IO.bursts },
+    { sel: 'sparkGraph.followAxis', label: '导出时跟随喷口轴（Orientation Axis Lock）', io: GRAPH_IO.bool, options: [['1', '跟随'], ['0', '不跟随']] }
+  ] },
+  { sec: '分层粒子图', graphOnly: true, perLayer: true, show: P => !!P.sparkGraph, items: graphLayerItems }
+);
+// 这一层在右栏叫什么（去掉「05｜」编号；重名时带上编号）
+function graphTabName(g, e) {
+  const short = x => String(x.name || x.id).replace(/^\d+\s*[｜|]\s*/, ''), n = short(e);
+  const std = typeof PEMIT !== 'undefined' && PEMIT.E.some(x => x.n === n || x.n === String(e.name));     // 和标准发射器同名（「火花」「余烬」……）就加后缀，别占了它的标签
+  return std ? n + '（粒子层 ' + e.id + '）' : g.emitters.some(x => x !== e && short(x) === n) ? String(e.name || e.id) : n;
+}
+const GRAPH_TAB_ID = {};
+// 某一节的行：分层粒子图「每层」那一节按这个效果的层展开（每层一份，键换成这一层的 id），别的节原样
+function secItems(sec, P) {
+  if (sec.graphOnly && !(P && P.sparkGraph)) return [];     // 别的效果不建粒子图的行
+  if (!sec.perLayer) return sec.items.map(it => [it, null]);
+  const g = P && P.sparkGraph; if (!g) return [];
+  const base = (EMIT_DEF['分层粒子图'] || { i: 90 }).i, out = [];
+  g.emitters.forEach((e, idx) => {
+    const tab = graphTabName(g, e), par = e.parent ? g.emitters.find(x => x.id === e.parent) : null; GRAPH_TAB_ID[tab] = e.id;
+    EMIT_DEF[tab] = { n: tab, en: '', lv: e.parent ? '子粒层' : '粒子层', what: par ? `母粒：${par.name}；位置与速度在分叉瞬间继承` : '独立出生；底量、成簇与偶发爆发叠加', mods: GRAPH_LAYER_MODS, i: base + (idx + 1) * .001, graph: e.id };
+    for (const it of sec.items) {
+      const key = (Array.isArray(it) ? it[0] : it.sel || it.text || it.curve).replace('[]', `[${e.id}]`), id = e.id, ls = it.lshow;
+      const show = P => { const x = P.sparkGraph && P.sparkGraph.emitters.find(q => q.id === id); return !!x && (!ls || ls(P, x)); };
+      let c;
+      if (Array.isArray(it)) { c = Object.assign([key, it[1], it[2], it[3], it[4], it[5], show], it); c[0] = key; c[6] = show; }
+      else { c = { ...it, show }; if (it.sel) c.sel = key; else if (it.text) c.text = key; else if (it.curve) c.curve = key; }
+      out.push([c, { e: tab, m: it.mod }]);
+    }
+  });
+  return out;
+}

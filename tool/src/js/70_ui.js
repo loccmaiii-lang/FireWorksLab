@@ -62,6 +62,7 @@ function derive(P) {
   if (familyOf(P.type) === 'rise' && P.form === 'phys') { P.duration = +(P.phT + 3.5).toFixed(2); return P; }
   if (familyOf(P.type) === 'rise' && P.form === 'emitset') { P.duration = rtDuration(P); return P; }
   if (familyOf(P.type) === 'rise') P.duration = P.form === 'trail' ? +(riseInfo(P).ta + 64 / 20 + 0.3).toFixed(2) : +(riseInfo(P).ta + 1.2).toFixed(2);
+  if (P.sparkGraph && +P.sparkGraph.period > 0) P.loopT = +P.sparkGraph.period;     // 4.9.87 分层粒子图：循环周期只有一个（粒子图里的），loopT / 序列时长跟它
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;
   return P;
 }
@@ -624,6 +625,13 @@ function placeSpecBox() {
     if (box && box.parentElement !== where) where.appendChild(box);
   }
 }
+// 4.9.87 分层粒子图只用这些通用的行（贴图规格、格子留边、贴图曝光、快门比例、烘焙采样、镜头成像），地面喷泉那些行对它没意义；别的效果看不到粒子图的节
+const GRAPH_STD_KEYS = new Set(['info:specBox', 'info:specMore', 'cellPad', 'shutter', 'exposure', 'exposureLock', 'qSS', 'qHz', 'qMaxSub']);
+function graphRowOK(P, sec, it) {
+  if (!P.sparkGraph) return !sec.graphOnly;
+  if (sec.graphOnly || sec.graphToo) return true;
+  return GRAPH_STD_KEYS.has(Array.isArray(it) ? it[0] : it.sel || it.text || it.curve || (it.info ? 'info:' + it.info : ''));
+}
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
 // ---------------- 参数栏（4.3 定稿：只有一种面板，按 Cascade 发射器的模块排，名字全用新名，analysis/命名/参数名称表.json）----------------
 // 4.4：发射器 → 模块 → 参数（71_panel43.js、analysis/命名/发射器表.json）；顶上一排发射器标签，一次看一个；随机收在本体参数的「随机」下；
@@ -650,11 +658,22 @@ function panelBaseP() {
   } catch (e) { }
   return defaultsFor(state.P.type).P;
 }
+// 4.9.87 分层粒子图的一项：先检查整张图还成不成立（寿命上限 < 周期、下限 ≤ 上限、整数……），不成立就不改、说为什么
+function graphSetParam(k, v, it) {
+  const P = state.P; if (!P.sparkGraph) return false;
+  try { if (it && it.io && it.io.set) v = it.io.set(v); } catch (e) { flash(e.message, true); return false; }
+  if (it && it.int) v = Math.round(+v);
+  const old = structuredClone(pGet(P, k));
+  if (!pSet(P, k, v)) return false;
+  try { SparkGraph.validate(P.sparkGraph); } catch (e) { pSet(P, k, old); flash('没改：' + e.message, true); return false; }
+  onParam(); return true;
+}
 function rowChanged(it, P, B) {
   if (!B) return false;
-  if (Array.isArray(it)) { const k = it[0], a = +P[k], b = +B[k]; if (!isFinite(a) && !isFinite(b)) return false; return !(Math.abs((isFinite(a) ? a : 0) - (isFinite(b) ? b : 0)) <= (+it[5] || 0) / 2 + 1e-9); }
-  if (it.sel) return String(P[it.sel]) !== String(B[it.sel]);
-  if (it.text) return String(P[it.text]) !== String(B[it.text]);
+  if (Array.isArray(it)) { const k = it[0], a = +pGet(P, k), b = +pGet(B, k); if (!isFinite(a) && !isFinite(b)) return false; return !(Math.abs((isFinite(a) ? a : 0) - (isFinite(b) ? b : 0)) <= (+it[5] || 0) / 2 + 1e-9); }
+  if (it.sel) return String(pGet(P, it.sel)) !== String(pGet(B, it.sel));
+  if (it.text) return isPathKey(it.text) ? JSON.stringify(pGet(P, it.text)) !== JSON.stringify(pGet(B, it.text)) : String(P[it.text]) !== String(B[it.text]);
+  if (it.curve && isPathKey(it.curve)) return JSON.stringify(pGet(P, it.curve) || []) !== JSON.stringify(pGet(B, it.curve) || []);     // 4.9.87 分层粒子图的曲线也算改过（平常的曲线行照旧不算）
   return false;
 }
 function rowMatches(row, it, sec, q) {
@@ -723,9 +742,9 @@ function panelSharedHome() {
 }
 function buildMasterPanel() {
   panelSharedHome();
-  if (state.P.sparkGraph) { buildGraphPanel(); panelColorsAndIdent(state.P); return; }     // 4.9.86：颜色、花型名、导出规格也跟着这个效果（以前留着上一个效果的颜色编辑器，改了写进上一个效果）
   pviewInit();
   const P = state.P, D = {...CameraImaging.defaults,...defaultsFor(P.type).P};
+  if (P.sparkGraph && typeof GRAPH_PRESETS !== 'undefined' && GRAPH_PRESETS[P.sparkGraph.presetKey]) D.sparkGraph = GRAPH_PRESETS[P.sparkGraph.presetKey];     // 4.9.87 双击恢复默认：仙女棒按仙女棒的模板
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   // 4.9.14（对话框23，照 01_顺手调参_深化）：顶上固定一块 = 「金锦 › 火花」+ 独看 / 静音（多层）+ 一行发射器标签；
   // 下面一行搜索框 + 仅改动 + 英文名（总看得见，跟着内容滚；4.9.8 收在「搜索」按钮里，要多点一下）
@@ -746,26 +765,28 @@ function buildMasterPanel() {
   p43BlankControls(host, P);
   const place = p43Skeleton(host);
   for (const sec of SCHEMA) {
-    for (const it of sec.items) {
+    for (const [it, ov] of secItems(sec, P)) {     // 4.9.87 分层粒子图「每层」那一节按层展开（46_graph_model.js），别的节原样
       let row;
-      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve || (it.info ? 'info:' + it.info : ''), nm = ikey ? pnameOf(sec.sec, ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null;
-      const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
+      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve || (it.info ? 'info:' + it.info : ''), nm = ikey ? pnameOf(sec.sec, it.tk || ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null;
+      const det = place(sec, it, ikey, nm, ov), ex = ov ? { ...emitOf(nm, sec), ...ov } : emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
-        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
+        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm && !isPathKey(k) ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         const vw = it[7];     // 4.9.50 显示换算（线条宽度：存散开速度、按米显示 / 输入）
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, shownParam(state.P, k, D)) : shownParam(state.P, k, D), v => { if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
+        row = slider(det, 'p-' + String(k).replace(/[^\w-]/g, '_') + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, shownParam(state.P, k, D)) : shownParam(state.P, k, D), v => { if (isPathKey(k)) { if (!graphSetParam(k, v, it)) setTimeout(() => row && row._refresh && row._refresh(), 0); return; } if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : isPathKey(k) ? pGet(D, k) : D[k], isPathKey(k) ? null : k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
       } else if (it.sel) {
-        const [short0, detail0] = splitLab(it.label), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
+        const [short0, detail0] = splitLab(it.label), short = nm && !isPathKey(it.sel) ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
         row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
         row._lab = short; row._detail = detail; row._nm = nm; rrstBind(row);
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
-        s.value = String(it.sel === '_trailTier' ? P.type : shownParam(P, it.sel, D));     // 4.9.74 旧存档缺新键时显示缺省
+        const selVal = Q => { const v = it.sel === '_trailTier' ? Q.type : Q === P ? shownParam(P, it.sel, D) : isPathKey(it.sel) ? pGet(Q, it.sel) : Q[it.sel]; return String(it.io ? it.io.get(v) : v); };
+        s.value = selVal(P);     // 4.9.74 旧存档缺新键时显示缺省
         s.addEventListener('change', () => {
           if (it.sel === '_trailTier') { openType(s.value); return; }     // 4.3：升空尾缀一个入口，档位切换 = 打开那一档的模板
+          if (isPathKey(it.sel)) { if (!graphSetParam(it.sel, s.value, it)) row._refresh(); else if (it.rebuild) buildMasterPanel(); return; }     // 4.9.87 分层粒子图
           const v = typeof D[it.sel] === 'number' ? +s.value : s.value;
           if (it.sel === 'shellNo') { applyShellLocked(v); buildMasterPanel(); onParam(); return; }
           // 4.4：结尾选「不淡出」→ 序列时长加长到火花约 98% 灭完（只加不减）
@@ -773,7 +794,7 @@ function buildMasterPanel() {
           if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(it.sel)) { state.P[it.sel] = v; onExportScheme(); return; }     // 4.9.25 导出方案不重烘
           state.P[it.sel] = v; onParam();
         });
-        row._refresh = () => { s.value = String(it.sel === '_trailTier' ? state.P.type : state.P[it.sel]); };
+        row._refresh = () => { s.value = selVal(state.P); };
         det.appendChild(row);
       } else if (it.info === 'specBox' || it.info === 'specMore') {   // 4.2.6：规格框放进面板；4.9.5 拆成两块（贴图宽高 + 格子 / 其它）
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = it.info; det.appendChild(row);
@@ -789,13 +810,23 @@ function buildMasterPanel() {
         const lab = nm ? p43Label(nm, it.label) : it.label;
         row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
-        const show = () => { const ks = parseCurve(state.P[it.curve]), bad = !ks && !!String(state.P[it.curve] || '').trim(); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (bad ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
+        const cvRaw = () => isPathKey(it.curve) ? graphCurveText(pGet(state.P, it.curve)) : state.P[it.curve];     // 4.9.87 分层粒子图的曲线存成 [[寿命, 倍率], …]，这里按同一种「时刻:值」写法显示
+        const show = () => { const ks = parseCurve(cvRaw()), bad = !ks && !!String(cvRaw() || '').trim(); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (bad ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
           const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig;
             // 4.9.14（照 01_顺手调参_深化）：图旁边一张小表「寿命 0–1 | 倍率」，就是上面那串数（只读；改还是在输入框里）
             row.querySelector('.cv-tab').innerHTML = ks && !bad ? `<table class="cv-table"><thead><tr><th>寿命 0–1</th><th>倍率</th></tr></thead><tbody>${ks.map(k => `<tr><td>${(+k[0]).toFixed(2)}</td><td>${(+k[1]).toFixed(2)}</td></tr>`).join('')}</tbody></table>` : ''; } };
-        inp.value = P[it.curve] || ''; show();
-        inp.addEventListener('change', () => { state.P[it.curve] = inp.value.trim(); show(); onParam(); });
-        row._refresh = () => { inp.value = state.P[it.curve] || ''; show(); };
+        inp.value = cvRaw() || ''; show();
+        inp.addEventListener('change', () => { if (isPathKey(it.curve)) { graphSetParam(it.curve, parseCurve(inp.value.trim()) || [], it); inp.value = cvRaw() || ''; show(); return; } state.P[it.curve] = inp.value.trim(); show(); onParam(); });
+        row._refresh = () => { inp.value = cvRaw() || ''; show(); };
+        det.appendChild(row);
+      } else if (it.text && isPathKey(it.text)) {     // 4.9.87 分层粒子图的文字行（层名称、爆发时刻）
+        const lab = it.label; row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false"><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
+        row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm; rrstBind(row);
+        const inp = row.querySelector('input'), get = () => { const v = pGet(state.P, it.text); return it.io ? it.io.get(v) : v == null ? '' : String(v); };
+        inp.value = get();
+        inp.addEventListener('change', () => { let v; try { v = it.io ? it.io.set(inp.value) : inp.value.trim(); } catch (e) { flash(e.message, true); inp.value = get(); return; }
+          if (!graphSetParam(it.text, v, null)) inp.value = get(); else if (it.rebuild) buildMasterPanel(); });
+        row._refresh = () => { inp.value = get(); };
         det.appendChild(row);
       } else if (it.text) {
         row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6"><span class="st"></span>`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
@@ -845,13 +876,13 @@ function refreshVisibility() {
   pviewInit();
   const P = state.P, q = (pview.q || '').toLowerCase(), B = panelBaseP(), nChg = {}, appl = {};
   $('#suggestExposure').disabled = !!P.exposureLock;
-  $('#exposureControls').hidden = isTrail(P) || isPhys(P) || isEmit(P);     // 「建议曝光」只会算空中花型和地面循环
+  $('#exposureControls').hidden = isTrail(P) || isPhys(P) || isEmit(P) || !!P.sparkGraph;     // 4.9.87 分层粒子图没核对过「建议曝光」     // 「建议曝光」只会算空中花型和地面循环
   for (const [row, it, sec, det] of panelRows) {
     // 适用 = 这个花型有这一项（空白发射器没加的部分也算不适用）；适用的发射器才有标签
-    const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)) && blankHas(P, row._bm), chg = vis && rowChanged(it, P, B);
+    const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)) && blankHas(P, row._bm) && graphRowOK(P, sec, it), chg = vis && rowChanged(it, P, B);
     if (vis) appl[det._g] = true;
     row.classList.toggle('chg', chg); if (chg) nChg[det._g] = (nChg[det._g] || 0) + 1;
-    { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve; row._baseTxt = k && B && B[k] != null ? (Array.isArray(it) ? fmtV(it[7] ? it[7].get(B, B[k]) : B[k], it[5]) : String(B[k]) || '空') : null;
+    { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve, bk = k && B ? pGet(B, k) : null; row._baseTxt = bk != null ? (Array.isArray(it) ? fmtV(it[7] ? it[7].get(B, bk) : bk, it[5]) : it.io ? it.io.get(bk) : it.curve && isPathKey(k) ? graphCurveText(bk) || '不变' : String(bk) || '空') : null;
       if (Array.isArray(it) && it[7] && it[7].note) { let n = row.querySelector(':scope > .vwnote'); if (!n) { n = document.createElement('div'); n.className = 'vwnote'; row.appendChild(n); } n.textContent = it[7].note(P); } }
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
@@ -906,11 +937,18 @@ function scopeSync() {
   if (path.title !== title) { path.replaceChildren(); for (const [cls, text] of [['ps-layer', ln], ['ps-sep', '›'], ['ps-emit', emit]]) { const part = document.createElement('span'); part.className = cls; part.textContent = text; path.appendChild(part); } path.title = title; }
   // 4.9.14：多层里这一层的独看 / 静音（只影响观察，和图层管理那两个按钮是同一个开关）
   const lay = state.tab === 'combo' && state.comboSel >= 0 && state.layerView, pv = sc.querySelector('.ps-view');
-  if (pv) { pv.hidden = !lay; if (lay) { const v = state.layerView, i = state.comboSel, so = v.solo === i, mu = (v.mute || []).includes(i);
+  // 4.9.87 分层粒子图：选着某一层时「独看」= 实时模拟只画这一层（以前是粒子图面板里的「只看这一层」；导出仍含全部启用层），没有「静音」
+  const gid = state.P && state.P.sparkGraph && typeof GRAPH_TAB_ID !== 'undefined' ? GRAPH_TAB_ID[pview.tabNow] : null;
+  if (pv && !lay && gid) { pv.hidden = false; const bs = pv.querySelector('.ps-solo'), bm = pv.querySelector('.ps-mute'), so = typeof graphSolo !== 'undefined' && graphSolo === gid;
+    bm.hidden = true; bs.classList.toggle('on', so); bs.setAttribute('aria-pressed', String(so)); bs.title = '实时模拟只画这一层（不改参数；导出仍含全部启用层）'; }
+  else if (pv) { const bm = pv.querySelector('.ps-mute'); if (bm) bm.hidden = false; }
+  if (pv && !gid) { pv.hidden = !lay; if (lay) { const v = state.layerView, i = state.comboSel, so = v.solo === i, mu = (v.mute || []).includes(i);
     const bs = pv.querySelector('.ps-solo'), bm = pv.querySelector('.ps-mute'); bs.classList.toggle('on', so); bs.setAttribute('aria-pressed', String(so)); bm.classList.toggle('on', mu); bm.setAttribute('aria-pressed', String(mu)); } }
   inspectorNavSync(sc.querySelector('.etabs'));
 }
 function scopeView(k) {
+  const gid = state.P && state.P.sparkGraph && typeof GRAPH_TAB_ID !== 'undefined' ? GRAPH_TAB_ID[pview.tabNow] : null;
+  if (gid && k === 'solo' && !(state.tab === 'combo' && state.comboSel >= 0 && state.layerView)) { graphSolo = graphSolo === gid ? null : gid; scopeSync(); return; }     // 4.9.87
   if (state.tab !== 'combo' || state.comboSel < 0 || !state.layerView) return;
   const v = state.layerView, i = state.comboSel;
   if (k === 'solo') v.solo = v.solo === i ? -1 : i; else v.mute = (v.mute || []).includes(i) ? v.mute.filter(x => x !== i) : [...(v.mute || []), i];
@@ -995,7 +1033,7 @@ function modSummaryText(d) {
   if (feat && !on.length && v0.classList.contains('sl') && !(+(v0.querySelector('.num') || {}).value)) return '未启用';
   // 第一项名字里有模块名的（生成 › 生成率、寿命 › 火花寿命）只写数，别的写「名字 数」：「300 个/秒 · 起势 0.80 s」「阻力 4.00 1/s · 重力倍率 0.05×」
   const parts = vals.filter(r => !r._inert).slice(0, 2).map((r, i) => !i && String(r._lab).includes(d._mod) ? rowValText(r) : `${r._lab} ${rowValText(r)}`);
-  if (rows.some(r => r.classList.contains('curvef') && String(state.P[r._it.curve] || '').trim())) parts.push('含寿命曲线');
+  if (rows.some(r => r.classList.contains('curvef') && (isPathKey(r._it.curve) ? (pGet(state.P, r._it.curve) || []).length : String(state.P[r._it.curve] || '').trim()))) parts.push('含寿命曲线');
   return (pre ? [pre, ...parts] : parts).join(' · ');
 }
 function modSummarySync() {
