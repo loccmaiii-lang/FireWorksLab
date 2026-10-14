@@ -1,40 +1,44 @@
 {
   "format": "df.b04-front-flowers/2",
   "by": "跨年秀（22）2026-10-14",
-  "note": "B04 小平台「前台小花 + XS」（看板 i12 用户按推荐定：小花束尾换成前台小花 + XS，同位置同时刻；用户 10-14 01:27 开工）。和 小花束尾.json 一一对应：同样的变体、同样的固化倾角和先后（甲 / 乙两组），只把银扇 / 红彗星单束换成通用尾缀 XS（不缩放，开花 62 m、升空 1.6875 s），小花挂在 XS 终点、在 XS 到顶那一刻开；花还是现成小银菊 / 金锦菊 / 爆裂星按 EffectScale 缩到 22–28 m（同 B03）。编排里同一点位、第一朵花开花时刻不变（起飞提前 0.7 s）。V 形四根原来就不开花，换成四根 XS 不开花。不新增资源、不改原花型。由 编排B04.py（排片段、GPU）、编排B01_编译.mjs（建固定子模板与花型）、编排B01_动画.py 共用。 【B05（用户 10-14 21:44 改了 ResourceFX）】尾缀键改成按用途的 Front62（= 用户的 Tiny「跨年烟花3.0_极小_尾缀」）；小花换成小平台专用资源 2801 小号_B_小银菊（LittleSilver）/ 2800 小号_A_小金花（LittleGold）/ 2802 小号_C_短爆裂（LittleCrackle），EffectScale = 直径 ÷ 资源原生直径（nativeM，推断 90 m：读回里 LittleGold / LittleCrackle / LittleCombo 还指向旧 90 m 小银菊粒子 LittleChry_HD，用户 21:26 存的「正式资产-小银菊」也是 90 m 档；真资源进表后量一次再改）。template = 借它的球花条目当字段模板、寿命和预览颜色。mobileVariant：手游 6 种里小平台能用的只有 2803 小分裂（分裂星），同一组尾缀和花位、花换成分裂星，另存 <id>_M 只上手游。",
+  "note": "B04 小平台「前台小花 + XS」（看板 i12 用户按推荐定：小花束尾换成前台小花 + XS，同位置同时刻；用户 10-14 01:27 开工）。和 小花束尾.json 一一对应：同样的变体、同样的固化倾角和先后（甲 / 乙两组），只把银扇 / 红彗星单束换成通用尾缀 XS（不缩放，开花 62 m、升空 1.6875 s），小花挂在 XS 终点、在 XS 到顶那一刻开；花还是现成小银菊 / 金锦菊 / 爆裂星按 EffectScale 缩到 22–28 m（同 B03）。编排里同一点位、第一朵花开花时刻不变（起飞提前 0.7 s）。V 形四根原来就不开花，换成四根 XS 不开花。不新增资源、不改原花型。由 编排B04.py（排片段、GPU）、编排B01_编译.mjs（建固定子模板与花型）、编排B01_动画.py 共用。 【B05（用户 10-14 21:44 改了 ResourceFX）】尾缀键改成按用途的 Front62（= 用户的 Tiny「跨年烟花3.0_极小_尾缀」）；小花换成小平台专用资源 2801 小号_B_小银菊（LittleSilver）/ 2800 小号_A_小金花（LittleGold）/ 2802 小号_C_短爆裂（LittleCrackle），EffectScale = 直径 ÷ 资源原生直径（nativeM：小平台专用资源按前台尺寸做——小银菊 32 / 小金花 40 / 短爆裂 24 m 取尺寸表 F_*，小分裂 30 m 取用户 22:32 存的配方 front:30；UE 未量。读回里 2800 / 2802 / 2803 还指向旧 90 m 粒子 LittleChry_HD，真资源接上前这三种会显得大约 3 倍）。template = 借它的球花条目当字段模板、寿命和预览颜色。mobileVariant：手游 6 种里小平台能用的只有 2803 小分裂（分裂星），同一组尾缀和花位、花换成分裂星，另存 <id>_M 只上手游。",
   "trail": "Front62",
   "flowerSources": {
     "SC": {
       "template": "R03_SilverChry",
       "resource": "P_EFX_FireWorks_LittleSilver",
       "rowName": "跨年烟花3.0_小号_B_小银菊",
-      "nativeM": 90,
+      "nativeM": 32,
       "zh": "小银菊",
-      "color": "#e5efff"
+      "color": "#e5efff",
+      "nativeSource": "尺寸表 F_SILVER 前台·小银菊 32 m"
     },
     "GS": {
       "template": "R03_GoldSpark",
       "resource": "P_EFX_FireWorks_LittleGold",
       "rowName": "跨年烟花3.0_小号_A_小金花",
-      "nativeM": 90,
+      "nativeM": 40,
       "zh": "小金花",
-      "color": "#f0cb87"
+      "color": "#f0cb87",
+      "nativeSource": "尺寸表 F_GOLD 前台·小金花 40 m"
     },
     "CR": {
       "template": "R03_Crackle",
       "resource": "P_EFX_FireWorks_LittleCrackle",
       "rowName": "跨年烟花3.0_小号_C_短爆裂",
-      "nativeM": 90,
+      "nativeM": 24,
       "zh": "短爆裂",
-      "color": "#e0af65"
+      "color": "#e0af65",
+      "nativeSource": "尺寸表 F_CRACKLE 前台·短爆裂 24 m"
     },
     "LC": {
       "template": "R03_SilverChry",
       "resource": "P_EFX_FireWorks_LittleCombo",
       "rowName": "跨年烟花3.0_小号_D_小分裂",
-      "nativeM": 90,
+      "nativeM": 30,
       "zh": "分裂星",
-      "color": "#e8c79a"
+      "color": "#e8c79a",
+      "nativeSource": "用户 10-14 22:32 存的「正式资产-小分裂」sizePick front:30"
     }
   },
   "flowers": [

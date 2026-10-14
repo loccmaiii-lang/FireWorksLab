@@ -704,8 +704,8 @@
   {
    "id": "B03_CD05m5",
    "section": "B01_S0",
-   "sp": "LCS",
-   "templateId": "B05_LittleCombo_S90",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
    "size": "S",
    "group": "P",
    "points": [
@@ -716,15 +716,15 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "分裂星（手游）",
-   "name": "倒计时 · 分裂星（手游）",
+   "label": "点灭星",
+   "name": "倒计时 · 点灭星",
    "wave": "倒计时",
    "events": [
     {
      "point": "P0",
      "launch": 6.9,
      "burst": 9.8544,
-     "end": 14.4144,
+     "end": 13.0544,
      "dz": 10.0,
      "H": 9.88
     },
@@ -732,7 +732,7 @@
      "point": "P8",
      "launch": 6.9,
      "burst": 9.8544,
-     "end": 14.4144,
+     "end": 13.0544,
      "dz": 10.0,
      "H": 9.88
     }
@@ -805,8 +805,8 @@
   {
    "id": "B03_CD04m5",
    "section": "B01_S0",
-   "sp": "LCS",
-   "templateId": "B05_LittleCombo_S90",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
    "size": "S",
    "group": "P",
    "points": [
@@ -817,15 +817,15 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "分裂星（手游）",
-   "name": "倒计时 · 分裂星（手游）",
+   "label": "点灭星",
+   "name": "倒计时 · 点灭星",
    "wave": "倒计时",
    "events": [
     {
      "point": "P1",
      "launch": 8.5,
      "burst": 11.4544,
-     "end": 16.0144,
+     "end": 14.6544,
      "dz": 10.0,
      "H": 11.5
     },
@@ -833,7 +833,7 @@
      "point": "P7",
      "launch": 8.5,
      "burst": 11.4544,
-     "end": 16.0144,
+     "end": 14.6544,
      "dz": 10.0,
      "H": 11.5
     }
@@ -906,8 +906,8 @@
   {
    "id": "B03_CD03m5",
    "section": "B01_S0",
-   "sp": "LCS",
-   "templateId": "B05_LittleCombo_S90",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
    "size": "S",
    "group": "P",
    "points": [
@@ -918,15 +918,15 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "分裂星（手游）",
-   "name": "倒计时 · 分裂星（手游）",
+   "label": "点灭星",
+   "name": "倒计时 · 点灭星",
    "wave": "倒计时",
    "events": [
     {
      "point": "P2",
      "launch": 9.7,
      "burst": 12.6544,
-     "end": 17.2144,
+     "end": 15.8544,
      "dz": 10.0,
      "H": 12.69
     },
@@ -934,7 +934,7 @@
      "point": "P6",
      "launch": 9.7,
      "burst": 12.6544,
-     "end": 17.2144,
+     "end": 15.8544,
      "dz": 10.0,
      "H": 12.69
     }
@@ -1007,8 +1007,8 @@
   {
    "id": "B03_CD02m5",
    "section": "B01_S0",
-   "sp": "LCS",
-   "templateId": "B05_LittleCombo_S90",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
    "size": "S",
    "group": "P",
    "points": [
@@ -1019,15 +1019,15 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "分裂星（手游）",
-   "name": "倒计时 · 分裂星（手游）",
+   "label": "点灭星",
+   "name": "倒计时 · 点灭星",
    "wave": "倒计时",
    "events": [
     {
      "point": "P3",
      "launch": 10.9,
      "burst": 13.8544,
-     "end": 18.4144,
+     "end": 17.0544,
      "dz": 10.0,
      "H": 13.87
     },
@@ -1035,7 +1035,7 @@
      "point": "P5",
      "launch": 10.9,
      "burst": 13.8544,
-     "end": 18.4144,
+     "end": 17.0544,
      "dz": 10.0,
      "H": 13.87
     }
@@ -8184,8 +8184,8 @@
   {
    "id": "B02_C076m",
    "section": "B01_S7",
-   "sp": "LCS",
-   "templateId": "B05_LittleCombo_S90",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
    "size": "S",
    "group": "P",
    "points": [
@@ -8199,15 +8199,15 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "分裂星（手游）",
-   "name": "第二次递进 A · 分裂星（手游）",
+   "label": "点灭星",
+   "name": "第二次递进 A · 点灭星",
    "wave": "整排9·手游替身",
    "events": [
     {
      "point": "P0",
      "launch": 84.0,
      "burst": 86.9544,
-     "end": 91.5144,
+     "end": 90.1544,
      "dz": 10.0,
      "H": 86.9248
     },
@@ -8215,7 +8215,7 @@
      "point": "P2",
      "launch": 84.0,
      "burst": 86.9544,
-     "end": 91.5144,
+     "end": 90.1544,
      "dz": 30.0,
      "H": 86.9248
     },
@@ -8223,7 +8223,7 @@
      "point": "P4",
      "launch": 84.0,
      "burst": 86.9544,
-     "end": 91.5144,
+     "end": 90.1544,
      "dz": 0.0,
      "H": 86.9248
     },
@@ -8231,7 +8231,7 @@
      "point": "P6",
      "launch": 84.0,
      "burst": 86.9544,
-     "end": 91.5144,
+     "end": 90.1544,
      "dz": 20.0,
      "H": 86.9248
     },
@@ -8239,7 +8239,7 @@
      "point": "P8",
      "launch": 84.0,
      "burst": 86.9544,
-     "end": 91.5144,
+     "end": 90.1544,
      "dz": 30.0,
      "H": 86.9248
     }
@@ -12954,8 +12954,8 @@
   {
    "id": "B02_C121m",
    "section": "B01_S10",
-   "sp": "LCS",
-   "templateId": "B05_LittleCombo_S90",
+   "sp": "ST",
+   "templateId": "R03_Strobe",
    "size": "S",
    "group": "P",
    "points": [
@@ -12969,15 +12969,15 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "分裂星（手游）",
-   "name": "转场铺色 A · 分裂星（手游）",
+   "label": "点灭星",
+   "name": "转场铺色 A · 点灭星",
    "wave": "整排9·手游替身",
    "events": [
     {
      "point": "P0",
      "launch": 136.3,
      "burst": 139.2544,
-     "end": 143.8144,
+     "end": 142.4544,
      "dz": 30.0,
      "H": 139.2376
     },
@@ -12985,7 +12985,7 @@
      "point": "P2",
      "launch": 136.1,
      "burst": 139.0544,
-     "end": 143.6144,
+     "end": 142.2544,
      "dz": 30.0,
      "H": 139.0376
     },
@@ -12993,7 +12993,7 @@
      "point": "P4",
      "launch": 135.9,
      "burst": 138.8544,
-     "end": 143.4144,
+     "end": 142.0544,
      "dz": 20.0,
      "H": 138.8376
     },
@@ -13001,7 +13001,7 @@
      "point": "P6",
      "launch": 136.1,
      "burst": 139.0544,
-     "end": 143.6144,
+     "end": 142.2544,
      "dz": 20.0,
      "H": 139.0376
     },
@@ -13009,7 +13009,7 @@
      "point": "P8",
      "launch": 136.3,
      "burst": 139.2544,
-     "end": 143.8144,
+     "end": 142.4544,
      "dz": 30.0,
      "H": 139.2376
     }
@@ -22787,8 +22787,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -22798,8 +22798,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -22809,8 +22809,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -22820,8 +22820,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -23306,8 +23306,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 5
    },
@@ -23339,8 +23339,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 5
    },
@@ -23463,10 +23463,9 @@
    "violations": [],
    "eventsBySpecies": {
     "金芒菊·大": 109,
+    "点灭星": 55,
     "辉星·中（手游）": 40,
-    "点灭星": 37,
     "Tiny·分裂星": 36,
-    "分裂星（手游）": 18,
     "两根Tiny·分裂星": 15,
     "三根Tiny·分裂星": 15,
     "V形四根Tiny": 13,
@@ -23476,18 +23475,10 @@
   },
   "mobileScale": {
    "点灭星": {
-    "cues": 9,
-    "events": 37,
+    "cues": 15,
+    "events": 55,
     "scales": [
      0.92,
-     1.0
-    ],
-    "max": 1.0
-   },
-   "分裂星（手游）": {
-    "cues": 6,
-    "events": 18,
-    "scales": [
      1.0
     ],
     "max": 1.0
@@ -23513,17 +23504,17 @@
     "cues": 2,
     "events": 8,
     "scales": [
-     0.289
+     0.867
     ],
-    "max": 0.289
+    "max": 0.867
    },
    "两根Tiny·分裂星": {
     "cues": 2,
     "events": 8,
     "scales": [
-     0.244
+     0.733
     ],
-    "max": 0.244
+    "max": 0.733
    },
    "V形四根Tiny": {
     "cues": 3,
@@ -23544,9 +23535,9 @@
     "cues": 3,
     "events": 9,
     "scales": [
-     0.311
+     0.933
     ],
-    "max": 0.311
+    "max": 0.933
    },
    "银冠菊·中（手游）": {
     "cues": 2,

@@ -13,13 +13,13 @@
     "revision": "v2-20261012",
     "hero": false,
     "heroId": "Hero",
-    "subTemplates": 47,
+    "subTemplates": 46,
     "skipped": 0,
     "heroOnLarge": [
       "NYR03_GoldKamuro_H280@1"
     ],
     "heroSwitched": [],
-    "templates": 47,
+    "templates": 46,
     "baseResources": 3,
     "samples": [
       "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
@@ -84,7 +84,7 @@
     "flags14": 25,
     "flags12": 910,
     "flags2": 274,
-    "subTemplates": 174,
+    "subTemplates": 171,
     "templates": 199,
     "scheduleSlots": 247,
     "pc": {
@@ -499,13 +499,6 @@
       "resource": "P_EFX_FireWorks_OrangeGlitter",
       "diameter": 144,
       "scale": 1.6
-    },
-    {
-      "id": "B05_LittleCombo_S90",
-      "engineId": "NYB05_LittleCombo_S90",
-      "resource": "P_EFX_FireWorks_LittleCombo",
-      "diameter": 90,
-      "scale": 1
     }
   ],
   "doc": {

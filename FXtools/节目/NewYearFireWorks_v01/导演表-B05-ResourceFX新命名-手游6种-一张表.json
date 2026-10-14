@@ -22,8 +22,8 @@
         "to": "Glitter"
       },
       {
-        "from": "NYB05_LittleCombo_S90_v1",
-        "to": "LittleCombo"
+        "from": "NYR03_Strobe_v1",
+        "to": "StrobeV02"
       },
       {
         "from": "NYR03_GoldRayChry_K092_v1",
@@ -59,7 +59,7 @@
       },
       {
         "from": "NYR03_Strobe_K092_Low80_v1",
-        "to": "StrobeV02"
+        "to": "StrobeV03"
       },
       {
         "from": "NYB04_XS1_SC_a_v1",
@@ -67,7 +67,7 @@
       },
       {
         "from": "NYB04_XS1_SC_a_M_v1",
-        "to": "LittleComboV02"
+        "to": "LittleCombo"
       },
       {
         "from": "NYR03_GoldSpark_K092_v1",
@@ -83,15 +83,11 @@
       },
       {
         "from": "NYB04_XS2_CR_a_M_v1",
-        "to": "LittleComboV03"
+        "to": "LittleComboV02"
       },
       {
         "from": "NYR03_GreenPeony_v1",
         "to": "GreenPeony"
-      },
-      {
-        "from": "NYR03_Strobe_v1",
-        "to": "StrobeV03"
       },
       {
         "from": "NYR03_GoldRayChry_v1",
@@ -131,7 +127,7 @@
       },
       {
         "from": "NYB04_XS1_SC_b_M_v1",
-        "to": "LittleComboV04"
+        "to": "LittleComboV03"
       },
       {
         "from": "NYR03_GoldRayChry_K108_v1",
@@ -171,7 +167,7 @@
       },
       {
         "from": "NYB04_XS3_GS_a_M_v1",
-        "to": "LittleComboV05"
+        "to": "LittleComboV04"
       },
       {
         "from": "NYB04_XS2_CR_b_v1",
@@ -179,7 +175,7 @@
       },
       {
         "from": "NYB04_XS2_CR_b_M_v1",
-        "to": "LittleComboV06"
+        "to": "LittleComboV05"
       },
       {
         "from": "NYR03_GoldChry_v1",
@@ -199,7 +195,7 @@
       },
       {
         "from": "NYB04_XS3_GS_b_M_v1",
-        "to": "LittleComboV07"
+        "to": "LittleComboV06"
       },
       {
         "from": "NYR03_GoldCoreLime_K092_v1",
@@ -278,8 +274,8 @@
         "to": "Glitter_U10"
       },
       {
-        "from": "NYB05_LittleCombo_S90_v1__DZU1000",
-        "to": "LittleCombo_U10"
+        "from": "NYR03_Strobe_v1__DZU1000",
+        "to": "StrobeV02_U10"
       },
       {
         "from": "NYR03_GoldRayChry_K092_v1__DZU4000",
@@ -319,7 +315,7 @@
       },
       {
         "from": "NYR03_Strobe_K092_Low80_v1__DZU3000",
-        "to": "StrobeV02_U30"
+        "to": "StrobeV03_U30"
       },
       {
         "from": "NYR03_GoldSpark_K092_v1__DZU4000",
@@ -343,11 +339,11 @@
       },
       {
         "from": "NYR03_Strobe_v1__DZU2000",
-        "to": "StrobeV03_U20"
+        "to": "StrobeV02_U20"
       },
       {
         "from": "NYR03_Strobe_v1__DZU3000",
-        "to": "StrobeV03_U30"
+        "to": "StrobeV02_U30"
       },
       {
         "from": "NYR03_GoldRayChry_v1__DZU4000",
@@ -508,14 +504,6 @@
       {
         "from": "NYR03_PrismWheels_K092_v1__DZU3000",
         "to": "PrismWheels_U30"
-      },
-      {
-        "from": "NYB05_LittleCombo_S90_v1__DZU3000",
-        "to": "LittleCombo_U30"
-      },
-      {
-        "from": "NYB05_LittleCombo_S90_v1__DZU2000",
-        "to": "LittleCombo_U20"
       },
       {
         "from": "NYR03_MultiLayerChry_L230_v1__DZU7000",
@@ -825,7 +813,7 @@
       },
       {
         "from": "WB_B03_CD05m5_P",
-        "to": "LittleCombo_U10_P_C011_01"
+        "to": "StrobeV02_U10_P_C011_01"
       },
       {
         "from": "WB_B03_CD04_P",
@@ -833,7 +821,7 @@
       },
       {
         "from": "WB_B03_CD04m5_P",
-        "to": "LittleCombo_U10_P_C013_01"
+        "to": "StrobeV02_U10_P_C013_01"
       },
       {
         "from": "WB_B03_CD03_P",
@@ -841,7 +829,7 @@
       },
       {
         "from": "WB_B03_CD03m5_P",
-        "to": "LittleCombo_U10_P_C015_01"
+        "to": "StrobeV02_U10_P_C015_01"
       },
       {
         "from": "WB_B03_CD02_P",
@@ -849,7 +837,7 @@
       },
       {
         "from": "WB_B03_CD02m5_P",
-        "to": "LittleCombo_U10_P_C017_01"
+        "to": "StrobeV02_U10_P_C017_01"
       },
       {
         "from": "WB_B02_C010_P",
@@ -901,7 +889,7 @@
       },
       {
         "from": "WB_B02_C018_B",
-        "to": "StrobeV02_U30_B_C018_01"
+        "to": "StrobeV03_U30_B_C018_01"
       },
       {
         "from": "WB_B02_C029_F",
@@ -909,7 +897,7 @@
       },
       {
         "from": "WB_B02_C029m5_F",
-        "to": "LittleComboV02_F_C032_01"
+        "to": "LittleCombo_F_C032_01"
       },
       {
         "from": "WB_B02_C026_P",
@@ -937,7 +925,7 @@
       },
       {
         "from": "WB_B02_C033m5_F",
-        "to": "LittleComboV03_F_C039_01"
+        "to": "LittleComboV02_F_C039_01"
       },
       {
         "from": "WB_B02_C031_P",
@@ -949,7 +937,7 @@
       },
       {
         "from": "WB_B02_C031m_P",
-        "to": "StrobeV03AndStrobeV03_U20AndStrobeV03_U30_P_C042_01"
+        "to": "StrobeV02AndStrobeV02_U20AndStrobeV02_U30_P_C042_01"
       },
       {
         "from": "WB_B02_C034_P",
@@ -989,7 +977,7 @@
       },
       {
         "from": "WB_B02_C041m5_F",
-        "to": "LittleComboV02_F_C052_01"
+        "to": "LittleCombo_F_C052_01"
       },
       {
         "from": "WB_B02_C043_B",
@@ -1013,7 +1001,7 @@
       },
       {
         "from": "WB_B02_C047m5_F",
-        "to": "LittleComboV04_F_C058_01"
+        "to": "LittleComboV03_F_C058_01"
       },
       {
         "from": "WB_B02_C046_P",
@@ -1073,7 +1061,7 @@
       },
       {
         "from": "WB_B02_C065m5_F",
-        "to": "LittleComboV05_F_C073_01"
+        "to": "LittleComboV04_F_C073_01"
       },
       {
         "from": "WB_B02_C068_F",
@@ -1081,7 +1069,7 @@
       },
       {
         "from": "WB_B02_C068m5_F",
-        "to": "LittleComboV06_F_C075_01"
+        "to": "LittleComboV05_F_C075_01"
       },
       {
         "from": "WB_B02_C066_P",
@@ -1121,7 +1109,7 @@
       },
       {
         "from": "WB_B02_C073m5_F",
-        "to": "LittleComboV07_F_C085_01"
+        "to": "LittleComboV06_F_C085_01"
       },
       {
         "from": "WB_B02_C074_F",
@@ -1129,7 +1117,7 @@
       },
       {
         "from": "WB_B02_C074m5_F",
-        "to": "LittleComboV02_F_C087_01"
+        "to": "LittleCombo_F_C087_01"
       },
       {
         "from": "WB_B02_C071o_P",
@@ -1141,7 +1129,7 @@
       },
       {
         "from": "WB_B02_C075m5_F",
-        "to": "LittleComboV03_F_C090_01"
+        "to": "LittleComboV02_F_C090_01"
       },
       {
         "from": "WB_B02_C076_P",
@@ -1149,7 +1137,7 @@
       },
       {
         "from": "WB_B02_C076m_P",
-        "to": "LittleComboAndLittleCombo_U10AndLittleCombo_U20AndLittleCombo_U30_P_C092_01"
+        "to": "StrobeV02AndStrobeV02_U10AndStrobeV02_U20AndStrobeV02_U30_P_C092_01"
       },
       {
         "from": "WB_B02_C078_P",
@@ -1165,7 +1153,7 @@
       },
       {
         "from": "WB_B02_C080m5_F",
-        "to": "LittleComboV07_F_C096_01"
+        "to": "LittleComboV06_F_C096_01"
       },
       {
         "from": "WB_B02_C078o_P",
@@ -1193,7 +1181,7 @@
       },
       {
         "from": "WB_B02_C085m5_F",
-        "to": "LittleComboV04_F_C103_01"
+        "to": "LittleComboV03_F_C103_01"
       },
       {
         "from": "WB_B02_C086_P",
@@ -1345,7 +1333,7 @@
       },
       {
         "from": "WB_B02_C121m_P",
-        "to": "LittleCombo_U20AndLittleCombo_U30_P_C141_01"
+        "to": "StrobeV02_U20AndStrobeV02_U30_P_C141_01"
       },
       {
         "from": "WB_B02_C127_F",
@@ -1353,7 +1341,7 @@
       },
       {
         "from": "WB_B02_C127m5_F",
-        "to": "LittleComboV06_F_C143_01"
+        "to": "LittleComboV05_F_C143_01"
       },
       {
         "from": "WB_B02_C125_P",
@@ -1365,7 +1353,7 @@
       },
       {
         "from": "WB_B02_C125m_P",
-        "to": "StrobeV03_U20AndStrobeV03_U30_P_C146_01"
+        "to": "StrobeV02_U20AndStrobeV02_U30_P_C146_01"
       },
       {
         "from": "WB_B02_C128_B",
@@ -1385,7 +1373,7 @@
       },
       {
         "from": "WB_B02_C132m5_F",
-        "to": "LittleComboV02_F_C151_01"
+        "to": "LittleCombo_F_C151_01"
       },
       {
         "from": "WB_B02_C131_P",
@@ -1597,10 +1585,10 @@
       "note": "固定子模板 NYR03_OrangeGlitter@1"
     },
     {
-      "templateId": "B05_LittleCombo_S90",
-      "sourceName": "B05 · 分裂星 · 小位 90m（手游）",
-      "exportName": "LittleCombo",
-      "note": "固定子模板 NYB05_LittleCombo_S90@1"
+      "templateId": "R03_Strobe",
+      "sourceName": "R03 · 点灭星 · 90m",
+      "exportName": "StrobeV02",
+      "note": "固定子模板 NYR03_Strobe@1"
     },
     {
       "templateId": "R03_GoldRayChry__K92",
@@ -1653,7 +1641,7 @@
     {
       "templateId": "R03_Strobe__K92__LOW80",
       "sourceName": "R03 · 点灭星 · 90m·略小×0.92·坝顶低层尾缀",
-      "exportName": "StrobeV02",
+      "exportName": "StrobeV03",
       "note": "固定子模板 NYR03_Strobe_K092_Low80@1"
     },
     {
@@ -1665,7 +1653,7 @@
     {
       "templateId": "B04_XS1_SC_a_M",
       "sourceName": "小平台 · Tiny · 小银菊 26m（甲）（手游·分裂星）",
-      "exportName": "LittleComboV02",
+      "exportName": "LittleCombo",
       "note": "固定子模板 NYB04_XS1_SC_a_M@1"
     },
     {
@@ -1689,7 +1677,7 @@
     {
       "templateId": "B04_XS2_CR_a_M",
       "sourceName": "小平台 · 两根 Tiny · 短爆裂 22m（甲）（手游·分裂星）",
-      "exportName": "LittleComboV03",
+      "exportName": "LittleComboV02",
       "note": "固定子模板 NYB04_XS2_CR_a_M@1"
     },
     {
@@ -1697,12 +1685,6 @@
       "sourceName": "R03 · 绿牡丹 · 150m",
       "exportName": "GreenPeony",
       "note": "固定子模板 NYR03_GreenPeony@1"
-    },
-    {
-      "templateId": "R03_Strobe",
-      "sourceName": "R03 · 点灭星 · 90m",
-      "exportName": "StrobeV03",
-      "note": "固定子模板 NYR03_Strobe@1"
     },
     {
       "templateId": "R03_GoldRayChry",
@@ -1761,7 +1743,7 @@
     {
       "templateId": "B04_XS1_SC_b_M",
       "sourceName": "小平台 · Tiny · 小银菊 26m（乙）（手游·分裂星）",
-      "exportName": "LittleComboV04",
+      "exportName": "LittleComboV03",
       "note": "固定子模板 NYB04_XS1_SC_b_M@1"
     },
     {
@@ -1821,7 +1803,7 @@
     {
       "templateId": "B04_XS3_GS_a_M",
       "sourceName": "小平台 · 三根 Tiny · 小金花簇 28m（甲）（手游·分裂星）",
-      "exportName": "LittleComboV05",
+      "exportName": "LittleComboV04",
       "note": "固定子模板 NYB04_XS3_GS_a_M@1"
     },
     {
@@ -1833,7 +1815,7 @@
     {
       "templateId": "B04_XS2_CR_b_M",
       "sourceName": "小平台 · 两根 Tiny · 短爆裂 22m（乙）（手游·分裂星）",
-      "exportName": "LittleComboV06",
+      "exportName": "LittleComboV05",
       "note": "固定子模板 NYB04_XS2_CR_b_M@1"
     },
     {
@@ -1863,7 +1845,7 @@
     {
       "templateId": "B04_XS3_GS_b_M",
       "sourceName": "小平台 · 三根 Tiny · 小金花簇 28m（乙）（手游·分裂星）",
-      "exportName": "LittleComboV07",
+      "exportName": "LittleComboV06",
       "note": "固定子模板 NYB04_XS3_GS_b_M@1"
     },
     {
@@ -1984,8 +1966,8 @@
     "originalEntries": 1209,
     "uniqueEntries": 960,
     "eventCount": 1209,
-    "subTemplates": 174,
-    "heightVariants": 126,
+    "subTemplates": 171,
+    "heightVariants": 124,
     "templates": 199,
     "groups": 3,
     "scheduleSlots": 247
@@ -2139,7 +2121,7 @@
       ]
     },
     {
-      "TemplateName": "LittleCombo",
+      "TemplateName": "StrobeV02",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -2147,12 +2129,12 @@
           "PositionOffset": {
             "X": 0,
             "Y": 0,
-            "Z": -168.5042
+            "Z": 199.0802
           },
           "RotationOffset": {
             "Pitch": 0,
             "Yaw": 0,
-            "Roll": 1.776514
+            "Roll": -1.877422
           },
           "RandomPositionRange": {
             "X": 0,
@@ -2176,17 +2158,17 @@
           }
         },
         {
-          "FXResourceId": "P_EFX_FireWorks_LittleCombo",
+          "FXResourceId": "P_EFX_FireWorks_Strobe",
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
-            "Z": 14831.327095
+            "Y": 491.650764,
+            "Z": 15198.068874
           },
           "RotationOffset": {
             "Pitch": 0,
             "Yaw": 0,
-            "Roll": 1.776514
+            "Roll": -1.877422
           },
           "RandomPositionRange": {
             "X": 0,
@@ -3361,9 +3343,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.288889,
-            "Y": 0.288889,
-            "Z": 0.288889
+            "X": 0.8125,
+            "Y": 0.8125,
+            "Z": 0.8125
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -3374,7 +3356,7 @@
       ]
     },
     {
-      "TemplateName": "LittleComboV02",
+      "TemplateName": "LittleCombo",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
@@ -3434,9 +3416,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.288889,
-            "Y": 0.288889,
-            "Z": 0.288889
+            "X": 0.866667,
+            "Y": 0.866667,
+            "Z": 0.866667
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -3541,9 +3523,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.916667,
+            "Y": 0.916667,
+            "Z": 0.916667
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -3575,9 +3557,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.916667,
+            "Y": 0.916667,
+            "Z": 0.916667
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -3588,7 +3570,7 @@
       ]
     },
     {
-      "TemplateName": "LittleComboV03",
+      "TemplateName": "LittleComboV02",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
@@ -3682,9 +3664,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.733333,
+            "Y": 0.733333,
+            "Z": 0.733333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -3716,9 +3698,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.733333,
+            "Y": 0.733333,
+            "Z": 0.733333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -3777,79 +3759,6 @@
             "Pitch": 0,
             "Yaw": 0,
             "Roll": -1.814506
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        }
-      ]
-    },
-    {
-      "TemplateName": "StrobeV03",
-      "Entries": [
-        {
-          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
-          "LocalTimeOffset": 0,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 199.0802
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": -1.877422
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "FXResourceId": "P_EFX_FireWorks_Strobe",
-          "LocalTimeOffset": 2.9544,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 491.650764,
-            "Z": 15198.068874
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": -1.877422
           },
           "RandomPositionRange": {
             "X": 0,
@@ -4679,9 +4588,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.288889,
-            "Y": 0.288889,
-            "Z": 0.288889
+            "X": 0.8125,
+            "Y": 0.8125,
+            "Z": 0.8125
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -4692,7 +4601,7 @@
       ]
     },
     {
-      "TemplateName": "LittleComboV04",
+      "TemplateName": "LittleComboV03",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
@@ -4752,9 +4661,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.288889,
-            "Y": 0.288889,
-            "Z": 0.288889
+            "X": 0.866667,
+            "Y": 0.866667,
+            "Z": 0.866667
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5433,9 +5342,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.7,
+            "Y": 0.7,
+            "Z": 0.7
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5467,9 +5376,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.7,
+            "Y": 0.7,
+            "Z": 0.7
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5501,9 +5410,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.7,
+            "Y": 0.7,
+            "Z": 0.7
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5514,7 +5423,7 @@
       ]
     },
     {
-      "TemplateName": "LittleComboV05",
+      "TemplateName": "LittleComboV04",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
@@ -5642,9 +5551,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.933333,
+            "Y": 0.933333,
+            "Z": 0.933333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5676,9 +5585,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.933333,
+            "Y": 0.933333,
+            "Z": 0.933333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5710,9 +5619,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.933333,
+            "Y": 0.933333,
+            "Z": 0.933333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5817,9 +5726,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.916667,
+            "Y": 0.916667,
+            "Z": 0.916667
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5851,9 +5760,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.916667,
+            "Y": 0.916667,
+            "Z": 0.916667
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5864,7 +5773,7 @@
       ]
     },
     {
-      "TemplateName": "LittleComboV06",
+      "TemplateName": "LittleComboV05",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
@@ -5958,9 +5867,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.733333,
+            "Y": 0.733333,
+            "Z": 0.733333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -5992,9 +5901,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.244444,
-            "Y": 0.244444,
-            "Z": 0.244444
+            "X": 0.733333,
+            "Y": 0.733333,
+            "Z": 0.733333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -6206,9 +6115,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.7,
+            "Y": 0.7,
+            "Z": 0.7
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -6240,9 +6149,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.7,
+            "Y": 0.7,
+            "Z": 0.7
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -6274,9 +6183,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.7,
+            "Y": 0.7,
+            "Z": 0.7
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -6287,7 +6196,7 @@
       ]
     },
     {
-      "TemplateName": "LittleComboV07",
+      "TemplateName": "LittleComboV06",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
@@ -6415,9 +6324,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.933333,
+            "Y": 0.933333,
+            "Z": 0.933333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -6449,9 +6358,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.933333,
+            "Y": 0.933333,
+            "Z": 0.933333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -6483,9 +6392,9 @@
             "Roll": 0
           },
           "EffectScale": {
-            "X": 0.311111,
-            "Y": 0.311111,
-            "Z": 0.311111
+            "X": 0.933333,
+            "Y": 0.933333,
+            "Z": 0.933333
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -7746,7 +7655,7 @@
       ]
     },
     {
-      "TemplateName": "LittleCombo_U10",
+      "TemplateName": "StrobeV02_U10",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -7754,12 +7663,12 @@
           "PositionOffset": {
             "X": 0,
             "Y": 0,
-            "Z": 831.4958
+            "Z": 1199.0802
           },
           "RotationOffset": {
             "Pitch": 0,
             "Yaw": 0,
-            "Roll": 1.776514
+            "Roll": -1.877422
           },
           "RandomPositionRange": {
             "X": 0,
@@ -7783,17 +7692,17 @@
           }
         },
         {
-          "FXResourceId": "P_EFX_FireWorks_LittleCombo",
+          "FXResourceId": "P_EFX_FireWorks_Strobe",
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
-            "Z": 15831.327095
+            "Y": 491.650764,
+            "Z": 16198.068874
           },
           "RotationOffset": {
             "Pitch": 0,
             "Yaw": 0,
-            "Roll": 1.776514
+            "Roll": -1.877422
           },
           "RandomPositionRange": {
             "X": 0,
@@ -8476,7 +8385,7 @@
       ]
     },
     {
-      "TemplateName": "StrobeV02_U30",
+      "TemplateName": "StrobeV03_U30",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_RiseTrail_XS",
@@ -8914,7 +8823,7 @@
       ]
     },
     {
-      "TemplateName": "StrobeV03_U20",
+      "TemplateName": "StrobeV02_U20",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -8987,7 +8896,7 @@
       ]
     },
     {
-      "TemplateName": "StrobeV03_U30",
+      "TemplateName": "StrobeV02_U30",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -11970,152 +11879,6 @@
             "X": 0.92,
             "Y": 0.92,
             "Z": 0.92
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        }
-      ]
-    },
-    {
-      "TemplateName": "LittleCombo_U30",
-      "Entries": [
-        {
-          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
-          "LocalTimeOffset": 0,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 2831.4958
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 1.776514
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "FXResourceId": "P_EFX_FireWorks_LittleCombo",
-          "LocalTimeOffset": 2.9544,
-          "PositionOffset": {
-            "X": 0,
-            "Y": -465.234144,
-            "Z": 17831.327095
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 1.776514
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        }
-      ]
-    },
-    {
-      "TemplateName": "LittleCombo_U20",
-      "Entries": [
-        {
-          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
-          "LocalTimeOffset": 0,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1831.4958
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 1.776514
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "FXResourceId": "P_EFX_FireWorks_LittleCombo",
-          "LocalTimeOffset": 2.9544,
-          "PositionOffset": {
-            "X": 0,
-            "Y": -465.234144,
-            "Z": 16831.327095
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 1.776514
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
           },
           "RandomScaleRatio": 0,
           "Filter": {
@@ -17723,13 +17486,13 @@
       }
     },
     {
-      "TemplateName": "LittleCombo_U10_P_C011_01",
+      "TemplateName": "StrobeV02_U10_P_C011_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -17766,7 +17529,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -17891,13 +17654,13 @@
       }
     },
     {
-      "TemplateName": "LittleCombo_U10_P_C013_01",
+      "TemplateName": "StrobeV02_U10_P_C013_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -17934,7 +17697,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 7,
           "PositionOffset": {
@@ -18059,13 +17822,13 @@
       }
     },
     {
-      "TemplateName": "LittleCombo_U10_P_C015_01",
+      "TemplateName": "StrobeV02_U10_P_C015_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -18102,7 +17865,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -18227,13 +17990,13 @@
       }
     },
     {
-      "TemplateName": "LittleCombo_U10_P_C017_01",
+      "TemplateName": "StrobeV02_U10_P_C017_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -18270,7 +18033,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -21058,13 +20821,13 @@
       }
     },
     {
-      "TemplateName": "StrobeV02_U30_B_C018_01",
+      "TemplateName": "StrobeV03_U30_B_C018_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -21101,7 +20864,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -21138,7 +20901,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -21175,7 +20938,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -21212,7 +20975,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -21249,7 +21012,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -21286,7 +21049,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -21323,7 +21086,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV02_U30",
+          "SubTemplateName": "StrobeV03_U30",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 7,
           "PositionOffset": {
@@ -21633,13 +21396,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV02_F_C032_01",
+      "TemplateName": "LittleCombo_F_C032_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -21676,7 +21439,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -21713,7 +21476,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -21750,7 +21513,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.5,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -21787,7 +21550,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.6,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -21824,7 +21587,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.8,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -21861,7 +21624,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.9,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -23072,13 +22835,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV03_F_C039_01",
+      "TemplateName": "LittleComboV02_F_C039_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -23115,7 +22878,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -23152,7 +22915,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -23189,7 +22952,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0.6,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -23879,13 +23642,13 @@
       }
     },
     {
-      "TemplateName": "StrobeV03AndStrobeV03_U20AndStrobeV03_U30_P_C042_01",
+      "TemplateName": "StrobeV02AndStrobeV02_U20AndStrobeV02_U30_P_C042_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U20",
+          "SubTemplateName": "StrobeV02_U20",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -23922,7 +23685,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U20",
+          "SubTemplateName": "StrobeV02_U20",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -23959,7 +23722,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03",
+          "SubTemplateName": "StrobeV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -23996,7 +23759,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03",
+          "SubTemplateName": "StrobeV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -24033,7 +23796,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -25866,13 +25629,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV02_F_C052_01",
+      "TemplateName": "LittleCombo_F_C052_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -25909,7 +25672,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -25946,7 +25709,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -25983,7 +25746,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -26020,7 +25783,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.5,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -26057,7 +25820,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.6,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -26094,7 +25857,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.7,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -27258,13 +27021,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV04_F_C058_01",
+      "TemplateName": "LittleComboV03_F_C058_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -27301,7 +27064,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -27338,7 +27101,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -27375,7 +27138,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -27412,7 +27175,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -27449,7 +27212,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0.6,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -27486,7 +27249,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0.7,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -30146,13 +29909,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV05_F_C073_01",
+      "TemplateName": "LittleComboV04_F_C073_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV05",
+          "SubTemplateName": "LittleComboV04",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -30189,7 +29952,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV05",
+          "SubTemplateName": "LittleComboV04",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -30226,7 +29989,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV05",
+          "SubTemplateName": "LittleComboV04",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -30425,13 +30188,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV06_F_C075_01",
+      "TemplateName": "LittleComboV05_F_C075_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -30468,7 +30231,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -30505,7 +30268,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -30542,7 +30305,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -32819,13 +32582,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV07_F_C085_01",
+      "TemplateName": "LittleComboV06_F_C085_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV07",
+          "SubTemplateName": "LittleComboV06",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -32862,7 +32625,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV07",
+          "SubTemplateName": "LittleComboV06",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -32899,7 +32662,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV07",
+          "SubTemplateName": "LittleComboV06",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -33209,13 +32972,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV02_F_C087_01",
+      "TemplateName": "LittleCombo_F_C087_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -33252,7 +33015,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -33289,7 +33052,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -33326,7 +33089,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -33363,7 +33126,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -33400,7 +33163,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -33437,7 +33200,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -33757,13 +33520,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV03_F_C090_01",
+      "TemplateName": "LittleComboV02_F_C090_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -33800,7 +33563,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -33837,7 +33600,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV03",
+          "SubTemplateName": "LittleComboV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -34221,13 +33984,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboAndLittleCombo_U10AndLittleCombo_U20AndLittleCombo_U30_P_C092_01",
+      "TemplateName": "StrobeV02AndStrobeV02_U10AndStrobeV02_U20AndStrobeV02_U30_P_C092_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U10",
+          "SubTemplateName": "StrobeV02_U10",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -34264,7 +34027,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -34301,7 +34064,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo",
+          "SubTemplateName": "StrobeV02",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -34338,7 +34101,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U20",
+          "SubTemplateName": "StrobeV02_U20",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -34375,7 +34138,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -34927,13 +34690,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV07_F_C096_01",
+      "TemplateName": "LittleComboV06_F_C096_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV07",
+          "SubTemplateName": "LittleComboV06",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -34970,7 +34733,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV07",
+          "SubTemplateName": "LittleComboV06",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -35007,7 +34770,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV07",
+          "SubTemplateName": "LittleComboV06",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -35589,13 +35352,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV04_F_C103_01",
+      "TemplateName": "LittleComboV03_F_C103_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV04",
+          "SubTemplateName": "LittleComboV03",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -43221,13 +42984,13 @@
       }
     },
     {
-      "TemplateName": "LittleCombo_U20AndLittleCombo_U30_P_C141_01",
+      "TemplateName": "StrobeV02_U20AndStrobeV02_U30_P_C141_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U20",
+          "SubTemplateName": "StrobeV02_U20",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -43264,7 +43027,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -43301,7 +43064,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U20",
+          "SubTemplateName": "StrobeV02_U20",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -43338,7 +43101,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -43375,7 +43138,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleCombo_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -43574,13 +43337,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV06_F_C143_01",
+      "TemplateName": "LittleComboV05_F_C143_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -43617,7 +43380,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -43654,7 +43417,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -43691,7 +43454,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV06",
+          "SubTemplateName": "LittleComboV05",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -44381,13 +44144,13 @@
       }
     },
     {
-      "TemplateName": "StrobeV03_U20AndStrobeV03_U30_P_C146_01",
+      "TemplateName": "StrobeV02_U20AndStrobeV02_U30_P_C146_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -44424,7 +44187,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -44461,7 +44224,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -44498,7 +44261,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U20",
+          "SubTemplateName": "StrobeV02_U20",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -44535,7 +44298,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "StrobeV03_U30",
+          "SubTemplateName": "StrobeV02_U30",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -45541,13 +45304,13 @@
       }
     },
     {
-      "TemplateName": "LittleComboV02_F_C151_01",
+      "TemplateName": "LittleCombo_F_C151_01",
       "RequiredPointCount": 7,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -45584,7 +45347,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -45621,7 +45384,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -45658,7 +45421,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -45695,7 +45458,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -45732,7 +45495,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -45769,7 +45532,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "LittleComboV02",
+          "SubTemplateName": "LittleCombo",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -54477,7 +54240,7 @@
         },
         {
           "StartTime": 6.9,
-          "TemplateName": "LittleCombo_U10_P_C011_01",
+          "TemplateName": "StrobeV02_U10_P_C011_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -54493,7 +54256,7 @@
         },
         {
           "StartTime": 8.5,
-          "TemplateName": "LittleCombo_U10_P_C013_01",
+          "TemplateName": "StrobeV02_U10_P_C013_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -54509,7 +54272,7 @@
         },
         {
           "StartTime": 9.7,
-          "TemplateName": "LittleCombo_U10_P_C015_01",
+          "TemplateName": "StrobeV02_U10_P_C015_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -54525,7 +54288,7 @@
         },
         {
           "StartTime": 10.9,
-          "TemplateName": "LittleCombo_U10_P_C017_01",
+          "TemplateName": "StrobeV02_U10_P_C017_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -54629,7 +54392,7 @@
         },
         {
           "StartTime": 32.1,
-          "TemplateName": "StrobeV03AndStrobeV03_U20AndStrobeV03_U30_P_C042_01",
+          "TemplateName": "StrobeV02AndStrobeV02_U20AndStrobeV02_U30_P_C042_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -54821,7 +54584,7 @@
         },
         {
           "StartTime": 84,
-          "TemplateName": "LittleComboAndLittleCombo_U10AndLittleCombo_U20AndLittleCombo_U30_P_C092_01",
+          "TemplateName": "StrobeV02AndStrobeV02_U10AndStrobeV02_U20AndStrobeV02_U30_P_C092_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -55077,7 +54840,7 @@
         },
         {
           "StartTime": 135.9,
-          "TemplateName": "LittleCombo_U20AndLittleCombo_U30_P_C141_01",
+          "TemplateName": "StrobeV02_U20AndStrobeV02_U30_P_C141_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -55093,7 +54856,7 @@
         },
         {
           "StartTime": 142.3,
-          "TemplateName": "StrobeV03_U20AndStrobeV03_U30_P_C146_01",
+          "TemplateName": "StrobeV02_U20AndStrobeV02_U30_P_C146_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -55490,7 +55253,7 @@
         },
         {
           "StartTime": 21.7,
-          "TemplateName": "StrobeV02_U30_B_C018_01",
+          "TemplateName": "StrobeV03_U30_B_C018_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56119,7 +55882,7 @@
         },
         {
           "StartTime": 23.6,
-          "TemplateName": "LittleComboV02_F_C032_01",
+          "TemplateName": "LittleCombo_F_C032_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56135,7 +55898,7 @@
         },
         {
           "StartTime": 30.1,
-          "TemplateName": "LittleComboV03_F_C039_01",
+          "TemplateName": "LittleComboV02_F_C039_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56159,7 +55922,7 @@
         },
         {
           "StartTime": 43.1,
-          "TemplateName": "LittleComboV02_F_C052_01",
+          "TemplateName": "LittleCombo_F_C052_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56175,7 +55938,7 @@
         },
         {
           "StartTime": 49.6,
-          "TemplateName": "LittleComboV04_F_C058_01",
+          "TemplateName": "LittleComboV03_F_C058_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56191,7 +55954,7 @@
         },
         {
           "StartTime": 67.4,
-          "TemplateName": "LittleComboV05_F_C073_01",
+          "TemplateName": "LittleComboV04_F_C073_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56207,7 +55970,7 @@
         },
         {
           "StartTime": 69,
-          "TemplateName": "LittleComboV06_F_C075_01",
+          "TemplateName": "LittleComboV05_F_C075_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56231,7 +55994,7 @@
         },
         {
           "StartTime": 73.9,
-          "TemplateName": "LittleComboV07_F_C085_01",
+          "TemplateName": "LittleComboV06_F_C085_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56247,7 +56010,7 @@
         },
         {
           "StartTime": 75.5,
-          "TemplateName": "LittleComboV02_F_C087_01",
+          "TemplateName": "LittleCombo_F_C087_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56263,7 +56026,7 @@
         },
         {
           "StartTime": 77.1,
-          "TemplateName": "LittleComboV03_F_C090_01",
+          "TemplateName": "LittleComboV02_F_C090_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56279,7 +56042,7 @@
         },
         {
           "StartTime": 86.9,
-          "TemplateName": "LittleComboV07_F_C096_01",
+          "TemplateName": "LittleComboV06_F_C096_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56303,7 +56066,7 @@
         },
         {
           "StartTime": 99.8,
-          "TemplateName": "LittleComboV04_F_C103_01",
+          "TemplateName": "LittleComboV03_F_C103_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56319,7 +56082,7 @@
         },
         {
           "StartTime": 133.9,
-          "TemplateName": "LittleComboV05_F_C073_01",
+          "TemplateName": "LittleComboV04_F_C073_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56335,7 +56098,7 @@
         },
         {
           "StartTime": 140.4,
-          "TemplateName": "LittleComboV06_F_C143_01",
+          "TemplateName": "LittleComboV05_F_C143_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56351,7 +56114,7 @@
         },
         {
           "StartTime": 146.9,
-          "TemplateName": "LittleComboV02_F_C151_01",
+          "TemplateName": "LittleCombo_F_C151_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56367,7 +56130,7 @@
         },
         {
           "StartTime": 153.3,
-          "TemplateName": "LittleComboV07_F_C085_01",
+          "TemplateName": "LittleComboV06_F_C085_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -56392,8 +56155,8 @@
       "key": "NYR03_OrangeGlitter@1"
     },
     {
-      "templateId": "B05_LittleCombo_S90",
-      "key": "NYB05_LittleCombo_S90@1"
+      "templateId": "R03_Strobe",
+      "key": "NYR03_Strobe@1"
     },
     {
       "templateId": "R03_GoldRayChry__K92",
@@ -56458,10 +56221,6 @@
     {
       "templateId": "R03_GreenPeony",
       "key": "NYR03_GreenPeony@1"
-    },
-    {
-      "templateId": "R03_Strobe",
-      "key": "NYR03_Strobe@1"
     },
     {
       "templateId": "R03_GoldRayChry",

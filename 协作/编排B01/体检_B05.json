@@ -569,11 +569,6 @@
    "name": "辉星·中（手游）",
    "peak": 0,
    "peakAt": null
-  },
-  "LCS": {
-   "name": "分裂星（手游）",
-   "peak": 0,
-   "peakAt": null
   }
  },
  "barsWithWave": 43,
@@ -586,10 +581,9 @@
     "gpuPeakPerS": 60,
     "bySpecies": {
      "金芒菊·大": 109,
+     "点灭星": 55,
      "辉星·中（手游）": 40,
-     "点灭星": 37,
      "Tiny·分裂星": 36,
-     "分裂星（手游）": 18,
      "两根Tiny·分裂星": 15,
      "三根Tiny·分裂星": 15,
      "V形四根Tiny": 13,
@@ -602,12 +596,11 @@
     "gpuPeakPerS": 48,
     "bySpecies": {
      "金芒菊·大": 97,
-     "点灭星": 29,
+     "点灭星": 43,
      "辉星·中（手游）": 28,
      "Tiny·分裂星": 26,
      "两根Tiny·分裂星": 15,
      "三根Tiny·分裂星": 15,
-     "分裂星（手游）": 14,
      "V形四根Tiny": 11,
      "银冠菊·中（手游）": 6,
      "爆裂星": 4
@@ -618,9 +611,8 @@
     "gpuPeakPerS": 36,
     "bySpecies": {
      "金芒菊·大": 87,
+     "点灭星": 39,
      "辉星·中（手游）": 28,
-     "点灭星": 25,
-     "分裂星（手游）": 14,
      "银冠菊·中（手游）": 6,
      "爆裂星": 4
     }
@@ -776,8 +768,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -787,8 +779,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -798,8 +790,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -809,8 +801,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 2
    },
@@ -1295,8 +1287,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 5
    },
@@ -1328,8 +1320,8 @@
     "size": "S",
     "fromSp": "OG",
     "fromTpl": "R03_OrangeGlitter",
-    "toSp": "LCS",
-    "toTpl": "B05_LittleCombo_S90",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
     "scale": 1.0,
     "events": 5
    },
@@ -1452,10 +1444,9 @@
    "violations": [],
    "eventsBySpecies": {
     "金芒菊·大": 109,
+    "点灭星": 55,
     "辉星·中（手游）": 40,
-    "点灭星": 37,
     "Tiny·分裂星": 36,
-    "分裂星（手游）": 18,
     "两根Tiny·分裂星": 15,
     "三根Tiny·分裂星": 15,
     "V形四根Tiny": 13,
@@ -1465,18 +1456,10 @@
   },
   "mobileScale": {
    "点灭星": {
-    "cues": 9,
-    "events": 37,
+    "cues": 15,
+    "events": 55,
     "scales": [
      0.92,
-     1.0
-    ],
-    "max": 1.0
-   },
-   "分裂星（手游）": {
-    "cues": 6,
-    "events": 18,
-    "scales": [
      1.0
     ],
     "max": 1.0
@@ -1502,17 +1485,17 @@
     "cues": 2,
     "events": 8,
     "scales": [
-     0.289
+     0.867
     ],
-    "max": 0.289
+    "max": 0.867
    },
    "两根Tiny·分裂星": {
     "cues": 2,
     "events": 8,
     "scales": [
-     0.244
+     0.733
     ],
-    "max": 0.244
+    "max": 0.733
    },
    "V形四根Tiny": {
     "cues": 3,
@@ -1533,9 +1516,9 @@
     "cues": 3,
     "events": 9,
     "scales": [
-     0.311
+     0.933
     ],
-    "max": 0.311
+    "max": 0.933
    },
    "银冠菊·中（手游）": {
     "cues": 2,
