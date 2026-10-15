@@ -60,7 +60,7 @@ if B06:
 if B07:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07修订1-球花竖直-扇不叠编排检查.json'
 if B08:
-    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08修订6-扇照R03丰富度编排检查.json'   # B08 修订6（10-16 01:10，16.0.42）；16.0.41 见 B08修订5-加扇-收尾满宽编排检查.json；16.0.39–16.0.35 见 B08修订4-… / 修订3-… / 修订2-… / 修订1-… / B08-…编排检查.json
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08修订7-中配扇不多于B05编排检查.json'   # B08 修订7（10-16 01:20）；修订6 见 B08修订6-扇照R03丰富度编排检查.json；16.0.41 见 B08修订5-加扇-收尾满宽编排检查.json；16.0.39–16.0.35 见 B08修订4-… / 修订3-… / 修订2-… / 修订1-… / B08-…编排检查.json
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -174,6 +174,7 @@ def risks_b08():
     cap = [x for x in l8['capLow'] if not x.get('stuck')]
     return [
         f"低配限峰（用户 22:02，960 低配 Translucency 到 1 ms 会降分辨率；修订3 放宽到约 0.8 ms）：PC 低配亮着的浓密金菊面积 A ≤ 4.0；64 s 那个峰同时开花面积压到 B05 的 75 %。B05 实测的三个峰（64 / 183 / 189 s）附近：B05 A {hv['atB05Peaks']['B05']['64.3']['dense']} / {hv['atB05Peaks']['B05']['182.6']['dense']} / {hv['atB05Peaks']['B05']['189.0']['dense']}、S {hv['atB05Peaks']['B05']['64.3']['burst']} / {hv['atB05Peaks']['B05']['182.6']['burst']} / {hv['atB05Peaks']['B05']['189.0']['burst']}；B08 A {hv['atB05Peaks']['B08']['64.3']['dense']} / {hv['atB05Peaks']['B08']['182.6']['dense']} / {hv['atB05Peaks']['B08']['189.0']['dense']}、S {hv['atB05Peaks']['B08']['64.3']['burst']} / {hv['atB05Peaks']['B08']['182.6']['burst']} / {hv['atB05Peaks']['B08']['189.0']['burst']}。低配里 {len(cap)} 处再隔一次；点火和主角那一刻不动。上限是从一张截图拟的，要 B08 实机测量确认。",
+        f"修订7（用户 10-16 01:13）：中配的扇减到不多于 B05 中配（2046 束）——空档补的扫扇隔一个不放、补的托底扇隔一个不放、一排 4 把以上的隔一把；高配不变。",
         f"修订6（用户 10-16 00:54）：扇照 R03 的丰富度重排——只禁「同一个点、几乎同时」的两把扇（相邻点挨着、部分叠可以）；加「左右交替摆」（相邻点九束左扫 / 右扫交替）、来回扫、宽银扇一排；选扇形时逐束摆的扇优先；空档每 2 s 补扫扇。球花不动。",
         f"修订5（用户 10-16 00:28）：高 / 中配在没扇的空档补扫扇（{l8.get('sweepSlots', 0)} 个扇位），扇不叠照旧；低配留 {len(l8.get('lowFans', []))} 把轻扇（5 束 / 单束，避开限峰时刻）；收尾白墙 7 / 5 不再收成 3 / 2，最后不再单独一朵金垂柳，改成 P4 金芒菊大 + 其余 8 点银彩菊大 + B 排银冠菊满宽一起开。",
         f"小平台：Tiny 尾缀条目缩放 ×0.65，到顶约 40 m（时间不变）；花放大到 36–44 m，对称一对 ±15–22°。没出新尾缀。",
@@ -407,7 +408,7 @@ def main():
         old = json.loads((OUT / ('逻辑方案_B07.json' if B08 else '逻辑方案_B06.json')).read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
         au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
-        data['variants'] = ([dict(label='B08修订6', note='扇照 R03 的丰富度（左右交替摆、摆扇优先、只禁同点同刻）· 收尾满宽 · 低配约 0.7–0.8 ms· 小平台 40 m 放大 · 同时同高两层 · 种类大小 · 时间错开', cues=cues, events=events, sections=secs, anchors=anchors),
+        data['variants'] = ([dict(label='B08修订7', note='扇照 R03 的丰富度 · 中配扇不多于 B05 · 收尾满宽 · 低配约 0.7–0.8 ms· 小平台 40 m 放大 · 同时同高两层 · 种类大小 · 时间错开', cues=cues, events=events, sections=secs, anchors=anchors),
                              dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠', cues=oc, events=oe, sections=osecs, anchors=oanch)] if B08 else
                             [dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠 · 手游中配隔点', cues=cues, events=events, sections=secs, anchors=anchors),
                              dict(label='B06', note='尾缀从坝顶 + 高差出来', cues=oc, events=oe, sections=osecs, anchors=oanch)])

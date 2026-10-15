@@ -613,6 +613,45 @@ def _choose_swing_first(orig, bias=0.45):
     return f
 
 
+def medium_fans(cues, target_beams):
+    """中配扇不多于 B05 中配（用户 10-16 01:13「为了保险起见，中配的扇形你可以根据构图节奏再少一部份」）：
+    先减空档补的扫扇（每隔一个扇位整把不放），再减补的托底扇，最后长扇形（≥ 6 步）隔一步放；托底扇（B05 原来的扇位）和点火 / 收尾那几把不动。"""
+    fans = sorted((c for c in cues if c['size'] == 'F' and c.get('mobile') != 'only'), key=lambda c: min(e['launch'] for e in c['events']))
+
+    def beams():
+        return sum(len(b.fan_beams(c['sp'])) for c in fans for e in c['events'] if e['point'] in c['profiles']['medium'])
+    log = dict(before=beams(), target=target_beams, steps=[])
+    sweep = [c for c in fans if not c.get('slotOf') and not c.get('baseOf')]
+    extra = [c for c in fans if not c.get('slotOf') and c.get('baseOf')]
+    # 同一个扇位拆成几个 cue（按束型）：按扇位（id 去掉 abc 尾巴）成组
+    def groups(cs):
+        g = defaultdict(list)
+        for c in cs:
+            g[c['id'].rstrip('abc')].append(c)
+        return [g[k] for k in sorted(g, key=lambda k: min(e['launch'] for c in g[k] for e in c['events']))]
+    for name, gs in (('扫扇隔一个不放', groups(sweep)), ('补的托底扇隔一个不放', groups(extra))):
+        for i, gcs in enumerate(gs):
+            if beams() <= target_beams:
+                break
+            if i % 2 == 1:
+                for c in gcs:
+                    c['profiles']['medium'] = []
+                    c['profiles']['low'] = []
+                log['steps'].append(dict(rule=name, slot=gcs[0]['id'], t=round(min(e['launch'] for c in gcs for e in c['events']), 2)))
+    if beams() > target_beams:                      # 束多的扇（一排 ≥ 4 把）隔一把放，从束最多的开始
+        for c in sorted(fans, key=lambda c: -len(b.fan_beams(c['sp'])) * len(c['profiles']['medium'])):
+            if beams() <= target_beams:
+                break
+            ev = sorted((e for e in c['events'] if e['point'] in c['profiles']['medium']), key=lambda e: (e['launch'], b.px(e['point'])))
+            if len(ev) >= 4:
+                keep = {e['point'] for e in ev[::2]}
+                c['profiles']['medium'] = [p for p in c['profiles']['medium'] if p in keep]
+                c['profiles']['low'] = [p for p in c['profiles']['low'] if p in keep]
+                log['steps'].append(dict(rule='一排扇隔一把', cue=c['id'], sp=c['sp']))
+    log['after'] = beams()
+    return log
+
+
 LIGHT_FANS = {'S5', 'R5', 'R1'}
 
 
@@ -651,6 +690,7 @@ def main():
     ap.add_argument('--cap-dense', type=float, default=4.0, help='PC 低配亮着的浓密金菊面积上限（B05 实测点火 0.76 ms 时 3.24、≥ 0.95 ms 时 5.1 / 8.7）')
     ap.add_argument('--cap-burst', type=float, default=0.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
     ap.add_argument('--extra-fans', type=int, default=60, help='高 / 中配补扇位个数上限（0 = 照修订4）')
+    ap.add_argument('--medium-fan-beams', type=int, default=2046, help='中配扇束上限（B05 中配 2046 束；0 = 不限）')
     ap.add_argument('--fans-r03', type=int, default=1, help='扇照 R03 的丰富度（只禁同点同刻、加左右交替摆、摆扇优先；0 = 照修订5）')
     ap.add_argument('--sweep-gap', type=float, default=2.0, help='没扇亮着多少秒就补一个扫扇位')
     ap.add_argument('--sweeps', type=int, default=60, help='高 / 中配在没扇的空档补扫扇位个数上限（0 = 不补）')
@@ -708,6 +748,7 @@ def main():
     log['splitShared'] = B07.split_shared(cues)
     log['tiers'] = B07.tiers(cues, a.sparse)
     log['capLow'] = cap_low(cues, {k: v for k, v in (('dense', a.cap_dense), ('burst', a.cap_burst)) if v > 0})
+    log['mediumFans'] = medium_fans(cues, a.medium_fan_beams) if a.medium_fan_beams else {}
     log['lowFans'] = low_fans(cues, a.low_fans) if a.low_fans else []
     log['destackLow'] = destack_low(cues) if a.destack else []   # 修订4：默认不用（119.4 s 换点后 P0 / P8 银彩菊 120 s 就熄，低配宽度窄了 40 % 约 2 s；复核第 3 轮）
     mid = dict(plan, cues=cues)
