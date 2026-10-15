@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv9h8webs6bnz",
  "name": "正式资产-窜天猴尾焰-粒子",
- "at": "2026-10-15 20:44",
+ "at": "2026-10-15 21:29",
  "base": "我的效果",
  "from": {
   "key": "ef:rocket_graph",
@@ -1991,11 +1991,11 @@
  },
  "links": [],
  "ue": {
-  "base": "RocketTail",
+  "base": "RocketDot",
   "layers": [
    ""
   ],
-  "system": "RocketTail",
+  "system": "RocketDot",
   "tiered": false,
   "custom": true
  },
