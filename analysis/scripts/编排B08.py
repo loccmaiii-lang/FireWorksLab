@@ -455,6 +455,7 @@ def main():
     ap.add_argument('--sparse', type=float, default=5.0)
     ap.add_argument('--cap-dense', type=float, default=4.0, help='PC 低配亮着的浓密金菊面积上限（B05 实测点火 0.76 ms 时 3.24、≥ 0.95 ms 时 5.1 / 8.7）')
     ap.add_argument('--cap-burst', type=float, default=0.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
+    ap.add_argument('--destack', action='store_true', help='低配同心叠换点（修订3 用过，修订4 起默认不用）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     b.BAR0, b.OFFSET = plan['bar0S'], plan['musicOffsetS']
@@ -491,7 +492,7 @@ def main():
     log['splitShared'] = B07.split_shared(cues)
     log['tiers'] = B07.tiers(cues, a.sparse)
     log['capLow'] = cap_low(cues, {k: v for k, v in (('dense', a.cap_dense), ('burst', a.cap_burst)) if v > 0})
-    log['destackLow'] = destack_low(cues)
+    log['destackLow'] = destack_low(cues) if a.destack else []   # 修订4：默认不用（119.4 s 换点后 P0 / P8 银彩菊 120 s 就熄，低配宽度窄了 40 % 约 2 s；复核第 3 轮）
     mid = dict(plan, cues=cues)
     cues5, log5 = B05.build(mid)
     for c in cues5:

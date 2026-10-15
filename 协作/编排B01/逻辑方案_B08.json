@@ -13302,9 +13302,8 @@
      "P8"
     ],
     "low": [
-     "P2",
      "P4",
-     "P6"
+     "P8"
     ]
    },
    "sizeK": 0.92,
@@ -13608,7 +13607,9 @@
     "medium": [
      "P0"
     ],
-    "low": []
+    "low": [
+     "P0"
+    ]
    },
    "sizeK": 1.0,
    "mobile": false,
@@ -32064,27 +32065,7 @@
     ]
    }
   ],
-  "destackLow": [
-   {
-    "t": 119.37,
-    "row": "B02_C100",
-    "sp": "MLL",
-    "before": [
-     "P0",
-     "P4",
-     "P8"
-    ],
-    "after": [
-     "P2",
-     "P4",
-     "P6"
-    ],
-    "occupied": [
-     "P0",
-     "P8"
-    ]
-   }
-  ],
+  "destackLow": [],
   "mobileBusy": [
    {
     "cue": "B07_P24m5",

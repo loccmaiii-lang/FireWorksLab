@@ -5023,27 +5023,7 @@
     ]
    }
   ],
-  "destackLow": [
-   {
-    "t": 119.37,
-    "row": "B02_C100",
-    "sp": "MLL",
-    "before": [
-     "P0",
-     "P4",
-     "P8"
-    ],
-    "after": [
-     "P2",
-     "P4",
-     "P6"
-    ],
-    "occupied": [
-     "P0",
-     "P8"
-    ]
-   }
-  ],
+  "destackLow": [],
   "mobileBusy": [
    {
     "cue": "B07_P24m5",
@@ -5415,31 +5395,8 @@
  },
  "tierEnds": {
   "rule": "一排（同 root 合起来）≥ 4 点时，中 / 低配还放就要留最左、最右",
-  "violations": 1,
-  "list": [
-   {
-    "row": "B02_C100",
-    "platform": "pc",
-    "tier": "low",
-    "group": "P",
-    "high": [
-     "P0",
-     "P1",
-     "P2",
-     "P3",
-     "P4",
-     "P5",
-     "P6",
-     "P7",
-     "P8"
-    ],
-    "kept": [
-     "P2",
-     "P4",
-     "P6"
-    ]
-   }
-  ]
+  "violations": 0,
+  "list": []
  },
  "shares": {
   "pc-high": {
