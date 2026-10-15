@@ -1,11 +1,11 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmv96inysff36h",
- "tool": "4.9.103",
+ "tool": "4.9.104",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv96inysff36h",
  "name": "正式资产-窜天猴尾焰",
- "at": "2026-10-15 14:52",
+ "at": "2026-10-15 16:00",
  "base": "我的效果",
  "from": {
   "key": "ef:rocket_graph",
@@ -937,7 +937,7 @@
          3,
          1.8
         ],
-        "width": 0.0835999995470047,
+        "width": 0.054,
         "gain": 18,
         "drag": 1.7000000476837158,
         "gravity": [
@@ -1123,7 +1123,7 @@
         "name": "06｜一级分叉",
         "parent": "e05",
         "seed": 508472,
-        "enabled": true,
+        "enabled": false,
         "count": 0,
         "speed": [
          6.84,
@@ -1266,7 +1266,7 @@
          0
         ],
         "cone": 30,
-        "shape": "line",
+        "shape": "fragment",
         "history": 0.03333333333333333,
         "taper": 0.15000000596046448,
         "aspect": 1,
@@ -1781,7 +1781,7 @@
          2.5,
          1.8
         ],
-        "width": 0.14440000243484974,
+        "width": 0.07614,
         "gain": 10.8,
         "drag": 1.7999999523162842,
         "gravity": [
@@ -1956,7 +1956,12 @@
        }
       ],
       "followAxis": true,
-      "presetKey": "rocket"
+      "presetKey": "rocket",
+      "fieldEnabled": 1,
+      "fieldResponse": 6,
+      "fieldStart": 1,
+      "fieldRamp": 3,
+      "fieldConverge": 7
      },
      "type": "sparkgraph",
      "graphSolo": null
