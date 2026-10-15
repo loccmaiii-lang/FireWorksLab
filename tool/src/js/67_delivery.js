@@ -291,28 +291,39 @@ function deliveryClassification(recipe, plan, spec) {
   if(size==='unclassified'&&tail&&!plan?.spec){const values=new Set(parameters.map(p=>sizes[p.type]||'unclassified'));if(values.size===1)size=[...values][0];}
   return {category:tail?'tail':'firework',size};
 }
-function deliveryMetadata(b = null) {
-  if (typeof exportClockMark === 'function') exportClockMark('缩略图（引擎回放截一帧）');     // 4.9.72 计时
-  // 4.9.80（导出排查 ⑥）：多层的尺寸按整个组合（sizeSpecCombo），以前拿的是右栏选中那一层
-  const comboPlan=()=>{const sk=typeof sizeSpecCombo==='function'?sizeSpecCombo(state.layers):null;return {k:sk?sk.k:1,keep:false,spec:sk||null,sfx:''};};
-  const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:!b&&state.tab==='combo'?comboPlan():typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
-  result.classification=deliveryClassification(result.recipe,result.sizePlan,typeof sizeSpecOf==='function'?sizeSpecOf():null);
-  result.artifactDuration = b ? bakeTotal(b) : comboContentEnd();
-  result.boundsM = b ? {width:b.meta.Ww*(result.sizePlan?.k||1),height:b.meta.Wh*(result.sizePlan?.k||1)} : null;
-  // Render the completed product with the existing engine replay, then restore the editing state.
-  const saved = Object.fromEntries(['t','view','disp','bake','tab','dirty','stillBusy','platform'].map(k=>[k,state[k]]));
+function deliveryMetadata(b = null, job = null, lb = null, unitHolder = null) {
+  if (typeof exportClockMark === 'function') exportClockMark('缩略图（引擎回放截一帧）');
+  const comboPlan = () => { const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null; return { k: sk ? sk.k : 1, keep: false, spec: sk || null, sfx: '' }; };
+  const result = job ? structuredClone(job.metadata) : { bakerVersion: VERSION, sourceKey: wbKey(), recipe: wbSnap(), duration: curDuration(), sizePlan: !b && state.tab === 'combo' ? comboPlan() : typeof exportScalePlan === 'function' ? exportScalePlan(state.P) : null };
+  if (!job) result.classification = deliveryClassification(result.recipe, result.sizePlan, typeof sizeSpecOf === 'function' ? sizeSpecOf() : null);
+  result.artifactDuration = b ? bakeTotal(b) : lb ? Math.max(.5, ...lb.map(x => (+x.L.delay || 0) + bakeTotal(x.b) / (+x.L.rate || 1))) : comboContentEnd();
+  result.boundsM = b ? { width: b.meta.Ww * (result.sizePlan?.k || 1), height: b.meta.Wh * (result.sizePlan?.k || 1) } : null;
+  // Only synchronous rendering sees this temporary view. No global is held across await.
+  const keys = ['t','view','disp','bake','tab','dirty','stillBusy','platform','P','M','layers','lib','comboName','layerView','layerQueue','exportUnitHolder'];
+  const saved = keys.map(k => [k, Object.hasOwn(state, k), state[k]]);
   try {
-    state.stillBusy=true; state.view='export'; state.disp='fit'; state.platform='pc'; state.dirty=false;
-    if(b) { state.bake=b; state.tab='master'; state.t=engineTick((b.meta.t0||0)+b.meta.duration*0.45); }
-    else state.t=engineTick(comboContentEnd()*0.45);
-    ensureTargets(); if(b)renderExport();else renderCombo();
-    const thumbnail=document.createElement('canvas'); thumbnail.width=320; thumbnail.height=240;
-    const ctx=thumbnail.getContext('2d'); ctx.fillStyle='#000';ctx.fillRect(0,0,320,240);
-    const k=Math.min(320/canvas.width,240/canvas.height);ctx.drawImage(canvas,(320-canvas.width*k)/2,(240-canvas.height*k)/2,canvas.width*k,canvas.height*k);
-    result.thumbnailData=thumbnail.toDataURL('image/png'); result.thumbnailTime=state.t;
-  } catch(e) { result.thumbnailError=e.message; } finally { Object.assign(state,saved); }
+    if (job) {
+      state.P = structuredClone(job.P); state.M = structuredClone(job.M); state.comboName = job.comboName;
+      state.exportUnitHolder = unitHolder; state.layerView = { solo: -1, mute: [] };
+      if (lb) {
+        state.layers = lb.map((x, i) => ({ ...structuredClone(x.L), lib: '__export_' + i }));
+        state.lib = lb.map((x, i) => ({ ...x.e, name: '__export_' + i, P: x.b.P, bake: x.b }));
+        state.layerQueue = new Set(state.lib); // thumbnail must not enqueue UI rebakes
+      }
+    }
+    state.stillBusy = true; state.view = 'export'; state.disp = 'fit'; state.platform = 'pc'; state.dirty = false;
+    if (b) { state.bake = b; state.tab = 'master'; state.t = engineTick((b.meta.t0 || 0) + b.meta.duration * .45); }
+    else { state.tab = 'combo'; state.t = engineTick(result.artifactDuration * .45); }
+    ensureTargets(); if (b) renderExport(); else renderCombo();
+    const thumbnail = document.createElement('canvas'); thumbnail.width = 320; thumbnail.height = 240;
+    const ctx = thumbnail.getContext('2d'); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 320, 240);
+    const k = Math.min(320 / canvas.width, 240 / canvas.height); ctx.drawImage(canvas, (320 - canvas.width * k) / 2, (240 - canvas.height * k) / 2, canvas.width * k, canvas.height * k);
+    result.thumbnailData = thumbnail.toDataURL('image/png'); result.thumbnailTime = state.t;
+  } catch (e) { result.thumbnailError = e.message; }
+  finally { for (const [k, had, value] of saved) { if (had) state[k] = value; else delete state[k]; } }
   return result;
 }
+
 
 async function deliverResource(blob, name, metadata, destination) {
   if (destination === 'zip') return download(blob,name);

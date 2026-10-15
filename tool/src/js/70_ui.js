@@ -1308,30 +1308,22 @@ function buildComboPanel() {
   if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。</p>';
 }
 async function exportCombo() {
-  const destination = DeliveryWorkspace.destination();
-  // 4.0：多层效果导出成一个素材包（每层每段一个发射器 + 延迟），附上原来的组合说明 JSON
-  // 4.5.8（19-C05）：组合说明在贴图最终烘焙之后再写（以前在烘之前读，改完时长马上导出，说明和贴图可能对不上）
-  const comboJson = () => ({ name: state.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB',
-    layers: state.layers.map(L => {
-      const e = state.lib.find(x => x.name === L.lib);
-      return { master: L.lib, masterType: e ? e.type : '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
-        colorStages: L.stages, transition: L.xw, Ramp: [L.ramp0, L.ramp1, L.ramp2, L.ramp3], HeadInt: L.headInt, TailInt: L.tailInt,
-        colorOverLife: e ? colorKeys(L, e.bake.meta.duration) : null,
-        spriteSizeCm: e ? [+(e.bake.meta.Ww * L.scale * 100).toFixed(1), +(e.bake.meta.Wh * L.scale * 100).toFixed(1)] : null };
-    }) });
-  // 素材包名要是英文 / 数字（spec）：迭代区组合条目用条目号，否则用组合名里的英文数字部分
-  const rv = typeof lib !== 'undefined' && lib.review && lib.review.kind === 'combo' ? lib.review.id : '';
-  const name = typeof delivName === 'function' ? delivName() : (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo';     // 4.9.106 G4：和交付清单同一个名字来源（以前我的效果导出取中文标题、清单取 MyFx，两边文件名对不上）
   if (!busyCan(true)) return;
-  busy(true, '组合素材包：准备各层…', 0);
   try {
-    await DeliveryWorkspace.beginExport(destination);
-    const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
-    files.push([`${name}_组合说明.json`, utf8(JSON.stringify(comboJson(), null, 2))]);
+    const job = captureExportJob('combo'), name = job.name;
+    busy(true, '组合素材包：准备各层…', 0);
+    await DeliveryWorkspace.beginExport(job.destination);
+    let metadata, description;
+    const files = await comboPackFiles(name, job.layers, p => busy(true, '组合素材包…', p), job, lb => {
+      metadata = deliveryMetadata(null, job, lb);
+      description = comboExportDescription(job, lb);
+    });
+    files.push([name + '_组合说明.json', utf8(JSON.stringify(description, null, 2))]);
     busy(true, '打包 ZIP…', 1);
-    let pk = name; if (files.some(([f]) => f.startsWith(FW_TEX_PREFIX))) { const L1 = state.layers.length === 1 ? layerEntryOf(state.layers[0]) : null, nt = L1 && L1.P ? L1.P.type : '', nm = packNamesFor(wbKey(), lib.effect, state.layers.length, name, nt); pk = packSysName(nm.base, nt, typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null, nm.system); }
-    await deliverResource(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`, deliveryMetadata(), destination);
-    if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
+    const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? job.system : name;
+    const zip = await makeZip(files.map(([f, d]) => [pk + '/' + f, d]), job); busy(true, '准备交付素材包…', 1);
+    await deliverResource(zip, pk + '.zip', metadata, job.destination);
+    if (typeof wbAutoExport === 'function') wbAutoExport(pk, job.history);
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('组合导出失败：' + e.message, true); }
   finally { busy(false); }

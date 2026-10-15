@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: initiating sequence policy changed after await at begin
+    at F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_export_snapshot.cjs:60:58 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

@@ -19,11 +19,11 @@ const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星�
   OUT_MOBILE = [['seq', '序列'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']];
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
-function layerOut(L) {
+function layerOut(L, entry) {
   const o = (L && L.out) || {}; let pc = OUT_PC_KINDS.includes(o.pc) ? o.pc : 'seq', mobile = OUT_MOBILE_KINDS.includes(o.mobile) ? o.mobile : 'seq';
   // 4.9.89（导出排查 A10）：尾缀层（循环层 + 粒子）只能按尾缀自己的产物出或不出——单束 / GPU 光点 / 单帧是礼花的（以前选了光点出一个空壳发射器）；
   //   尾缀自己在单层产物表里选了「手机：不出」照它（以前多层里不认，照样出手机）
-  const e = L && L.lib && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null;
+  const e = entry === undefined ? (L && L.lib && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null) : entry;
   //   4.9.96（导出排查 H1）：纯星头层 PC 可以选「CPU 粒子（星头）」（存成 dots，和手机同一颗软圆点）
   if (e && e.P && typeof isEmit === 'function' && isEmit(e.P)) { if (pc !== 'off') pc = pc === 'dots' && typeof rtHeadOnly === 'function' && rtHeadOnly(e.P) ? 'dots' : 'seq'; if (mobile !== 'off') mobile = e.P.outMobile === 'off' ? 'off' : 'seq'; }
   //   4.9.106（G4）：别的产物按产物形态登记表——地面循环 / V5 / 上升星头循环 / 单元序列只有「序列 / 不出」（以前层页头能选单束 / 光点 / 单帧，导出时悄悄按序列出或出空壳）
@@ -66,7 +66,7 @@ function layerMobileUse(L, b, kind) {
 function comboMobilePlan(xs) {
   const used = [], out = []; let n = 0;
   (xs || []).forEach((x, i) => {
-    const o = layerOut(x.L), manual = layerMobileManual(x.L) || !(x.b && ['master', 'segments'].includes(x.b.form)); let kind = o.mobile, why = '';     // 自动只管大面片母版层（产物表能选的那种）；尾缀等照旧
+    const o = layerOut(x.L, x.e || (x.b && x.b.P ? { P: x.b.P, bake: x.b } : undefined)), manual = layerMobileManual(x.L) || !(x.b && ['master', 'segments'].includes(x.b.form)); let kind = o.mobile, why = '';     // 自动只管大面片母版层（产物表能选的那种）；尾缀等照旧
     if (kind === 'off' && x.b && x.b.form === 'emitset' && x.b.P && x.b.P.outMobile === 'off' && !(x.L.out && x.L.out.mobile === 'off')) why = '尾缀自己选了「手机：不出」';     // 4.9.89 A10
     const u = layerMobileUse(x.L, x.b, kind);
     if (!manual && kind !== 'off') {
@@ -89,7 +89,7 @@ const mobileAutoText = p => p && p.auto ? (p.kind === 'off' ? `自动 → 不出
 // 这个平台要出的层：[{ L, b, i（原层号）, dots, unit（PC 单束的那次烘焙，调用方给）}]
 // 4.9.35：单束 / 单帧手机也能出；x.unit / x.frame = 调用方给的那次单束烘焙 / 单帧，x.unitName / x.frameName = 贴图的内部名（PC、手机都选同一种时手机直接引用 PC 那几张）
 function comboEntries(layers, mobile) {
-  const out = []; layers.forEach((x, i) => { const o = layerOut(x.L), s = mobile ? o.mobile : o.pc; if (s === 'off') return;
+  const out = []; layers.forEach((x, i) => { const o = layerOut(x.L, x.e || (x.b && x.b.P ? { P: x.b.P, bake: x.b } : undefined)), s = mobile ? o.mobile : o.pc; if (s === 'off') return;
     out.push({ ...x, i, dots: !mobile && s === 'dots', unit: s === 'unit' ? x.unit : undefined, frame: s === 'frame' ? x.frame : undefined }); }); return out;
 }
 // 单束层（PC）：每颗星一个 Velocity 对齐的面片，贴图 = 一颗代表星的序列（星头 + 拖尾，bakeUnit），轨迹交给 Cascade（球面放射 + 线性阻力 + 恒定加速度，m.fit）。
@@ -364,7 +364,19 @@ function fwlCombo(name, layers, mobile = false) {
   return out;
 }
 // 组合导出用的层烘焙：分开输出（星头 / 拖尾两张）的层在素材包里改成合并输出，和引擎材质（灰度查 Ramp）一致
-async function comboLayerBakes(layers, onProg) {
+async function comboLayerBakes(layers, onProg, job = null) {
+  if (job) {
+    const out = [], own = [];
+    try {
+      for (let i = 0; i < layers.length; i++) {
+        const L = layers[i], source = job.entries[i], e = { ...source, P: structuredClone(source.P), M: structuredClone(source.M) };
+        const b = await bakeFinal(exportBakeParams({ ...e.P, outMode: 'combined' }, comboLayerM(L)), 1, p => onProg && onProg((i + p) / layers.length));
+        own.push(b); e.bake = b; out.push({ L, b, e });
+      }
+      return { layers: out, own };
+    } catch (e) { own.forEach(disposeBake); throw e; }
+  }
+
   if (typeof bakeFlush === 'function') await bakeFlush();     // 4.2.16：自动烘焙关时攒着的改动先烘完，导出不拿旧贴图
   const out = [], own = [];
   for (let i = 0; i < layers.length; i++) {
@@ -391,7 +403,7 @@ async function comboLayerBakes(layers, onProg) {
 function unitP(P0) { return { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1, outMode: 'combined' }; }
 // 4.9.25 单层效果的单束烘焙也缓存（和多层的 e.unitBake 同一套）：贴图 / 流转 / 引擎回放 / 导出用同一份
 const singleUnitEntry = { P: null, unitBake: null };
-function singleUnitHolder() { singleUnitEntry.P = state.P; singleUnitEntry.unitSrc = state.P; return singleUnitEntry; }
+function singleUnitHolder() { if (state.exportUnitHolder) return state.exportUnitHolder; singleUnitEntry.P = state.P; singleUnitEntry.unitSrc = state.P; return singleUnitEntry; }
 // 单束贴图只和效果参数有关：导出方案（PC / 手机怎么出、光点大小亮度）变了不用重烘；变体数 / 随机感（4.9.28）另算进 unitSigOf
 const unitSig = P => JSON.stringify({ ...P, outPC: 0, outMobile: 0, dotSize: 0, dotBright: 0, unitVariants: 0, unitRandom: 0, outLow: 0, lowPick: 0, lowAt: 0, lowSize: 0, lowJit: 0, lowMaps: 0, lowSuffix: 0, exportScale: 0, exportScaleRise: 0 });
 // 4.9.28 单束变体（用户 10-07 09:20「这些效果要对粗细、长短或多个不同种子一起组合，提升随机感，降低随机感」；11:45 选「变体数 + 随机感」）：
@@ -459,16 +471,16 @@ function packKeepReferenced(files) {
   return cfg ? files.filter(([f]) => !/\.png$/i.test(f) || refd.has(f) || /FrameTest/.test(f)) : files;
 }
 // 4.9.51 多层按尺寸标定（花径 = 最大那层 × 层缩放；和左栏导出、本机任务同一条路）
-function comboSpecScale(files, layers) { const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null; return sk ? scaleCascadeFiles(files, sk.k, false, sk) : files; }
-async function comboPackFiles(name, layers, onProg) {
+function comboSpecScale(files, layers, job = null) { if (job) return scaleCascadeFiles(files, job.sp.k, job.sp.keep, job.sp.spec); const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null; return sk ? scaleCascadeFiles(files, sk.k, false, sk) : files; }
+async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) {
   let files = [];
-  const { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
+  const { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4), job);
   { const np = lb.map((x, i) => productNoPack(x.b) ? `第 ${i + 1} 层：${productNoPack(x.b)}` : '').filter(Boolean); if (np.length) { own.forEach(disposeBake); throw new Error(np.join('；')); } }     // 4.9.106 G4
-  const ownMobile = [], mplan = comboMobilePlan(lb);     // 4.9.80 手机「自动」：按组合时的各层烘焙算（和交付清单同一个 comboMobilePlan）
+  const ownMobile = [];     // 4.9.80 手机「自动」：按组合时的各层烘焙算（和交付清单同一个 comboMobilePlan）
   try {
-    const pcE = [], mbE = [], nmE = [];
+    const mplan = comboMobilePlan(lb), pcE = [], mbE = [], nmE = [];
     for (let i = 0; i < lb.length; i++) {
-      const { L, b, e } = lb[i], ln = comboLayerName(name, i), mn = comboLayerName(name + '_Mobile', i), M = comboLayerM(L), o = layerOut(L), uOK = unitAllowed(b.P);   // 4.2.12：每层的导出方案
+      const { L, b, e } = lb[i], ln = comboLayerName(name, i), mn = comboLayerName(name + '_Mobile', i), M = comboLayerM(L), o = layerOut(L, e), uOK = unitAllowed(b.P);   // 4.2.12：每层的导出方案
       const pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mk = mplan[i] ? mplan[i].kind : o.mobile, mbK = mk === 'unit' && !uOK ? 'seq' : mk;     // 单束不适用的花型（千轮、分裂、蜂、非球形图案）按序列出；4.9.80 手机「自动」按 comboMobilePlan
       const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]), pg = (a, w) => p => onProg && onProg(0.4 + (a + w * (i + p) / lb.length));
       const ub = pcK === 'unit' ? await layerUnitBake(e, pg(0, 0.1), L) : null, um = mbK === 'unit' ? await layerUnitBakeMobile(e, ub, pg(0, 0.1), L) : null;     // 4.9.80 手机单束另出一套
@@ -493,35 +505,37 @@ async function comboPackFiles(name, layers, onProg) {
     files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, sel(pcE, false), false), null, 1))]);
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', sel(mbE, true), true), null, 1))]);
     files = packKeepReferenced(files);
+    if (onBaked) onBaked(lb);
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
-      const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nt = lb.length === 1 && lb[0].b ? lb[0].b.P.type : '', nm = packNamesFor(key, ef, lb.length, name, nt);     // 4.9.106 G4：一层的多层效果和交付清单同样按这一层的花型加档位后缀（尾缀 _S / _M / _L）
-      const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null;     // 4.9.69 派生资源：系统名区分、贴图沿用
-      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: packSysName(nm.base, nt, sk, nm.system), spec: sk && sk.id }), layers);
+      const ef = job ? null : typeof lib !== 'undefined' ? lib.effect : null, key = job ? job.key : typeof wbKey === 'function' ? wbKey() : name, nt = lb.length === 1 && lb[0].b ? lb[0].b.P.type : '', nm = job ? job.naming : packNamesFor(key, ef, lb.length, name, nt);     // 4.9.106 G4：一层的多层效果和交付清单同样按这一层的花型加档位后缀（尾缀 _S / _M / _L）
+      const sk = job ? job.sp.spec : typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null;     // 4.9.69 派生资源：系统名区分、贴图沿用
+      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: job ? job.system : packSysName(nm.base, nt, sk, nm.system), spec: sk && sk.id }), layers, job);
     }
-    return comboSpecScale(files, layers);
-  } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
+    return comboSpecScale(files, layers, job);
+  } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); if (job) lb.forEach(x => disposeExportHolder(x.e)); }
 }
 
 // ---- 4.4.2 单层效果的导出方案（用户 10-04 21:17：以前只有多层效果的层页头能选 GPU 光点 / 单束；单层也要）----
 // 单层没有「层」：用 state.P 里的 outPC / outMobile / dotSize / dotBright 拼一个只有一层的 L（颜色就是 state.M），和多层走同一套 fwlCombo / fwlDots / fwlUnit
 function singleOut(P) { return singleSchemeOn(P) ? { pc: OUT_PC_KINDS.includes(P.outPC) ? P.outPC : 'seq', mobile: OUT_MOBILE_KINDS.includes(P.outMobile) ? P.outMobile : 'seq' } : { pc: 'seq', mobile: 'seq' }; }
 function singleLayer(P, M) { const o = singleOut(P), L = { ...M, delay: 0, rate: 1, scale: 1, out: o }; if (+P.dotSize > 0 && +P.dotSize !== 1) L.dotSize = +P.dotSize; if (+P.dotBright > 0 && +P.dotBright !== 1) L.dotBright = +P.dotBright; return L; }
-function singleSchemeNote(P) { const L = singleLayer(P, state.M); return typeof outNote === 'function' ? outNote(L, { P }) : ''; }
+function singleSchemeNote(P, M = state.M) { const L = singleLayer(P, M); return typeof outNote === 'function' ? outNote(L, { P }) : ''; }
 // 单层的光点：缓存在一个假条目上（参数 / 颜色变了按 dotsTables 自己的签名重算）
 const singleDotsEntry = { P: null, bake: null };
 // 4.9.25 导出方案（PC / 手机怎么出、光点大小 / 亮度）改了不用重烘：画面和导出按现在的方案，模拟的数用烘焙时的参数
 const SCHEME_KEYS = ['outPC', 'outMobile', 'dotSize', 'dotBright', 'unitVariants', 'unitRandom', 'lowPick', 'lowAt', 'lowSize', 'lowJit', 'lowMaps', 'lowSuffix', 'exportScale', 'exportScaleRise'];     // 4.9.29 低端 / 单帧     // 4.9.28 单束变体数 / 随机感：只重烘单束
 function withScheme(P) { if (!P || P === state.P || state.tab === 'combo' || !state.P) return P; const o = { ...P }; for (const k of SCHEME_KEYS) o[k] = state.P[k]; return o; }
-function singleDotsTables(P, M, b) { singleDotsEntry.P = P; singleDotsEntry.bake = b; return dotsTables(singleDotsEntry, singleLayer(P, M)); }
+function singleDotsTables(P, M, b) { const h = state.exportUnitHolder || singleDotsEntry; h.P = P; h.bake = b; return dotsTables(h, singleLayer(P, M)); }
 // 导出：PC / 手机各按方案出；文件名和单层序列一样（单束 / 单帧的贴图用 _L1 层名，cascade.json 里引用的就是它；手机只出单束 / 单帧时用 _Mobile）
-async function singleSchemeFiles(name, b, M, onProg) {
-  const P = withScheme(b.P || state.P), o = singleOut(P), L = singleLayer(P, M), files = [], own = [], ln = comboLayerName(name, 0), mn = name + '_Mobile';
+async function singleSchemeFiles(name, b, M, onProg, holder = null) {
+  const P = holder ? b.P : withScheme(b.P || state.P), o = singleOut(P), L = singleLayer(P, M), files = [], own = [], ln = comboLayerName(name, 0), mn = name + '_Mobile';
   try {
     const uOK = unitAllowed(P), pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mbK = o.mobile === 'unit' && !uOK ? 'seq' : o.mobile;
     const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     // 4.9.25 单束：和贴图 / 引擎回放同一份（缓存，不在这里丢）；4.9.35 单帧（PC / 手机同一张，b.lowCache 缓存）
-    const ub = pcK === 'unit' ? await layerUnitBake(singleUnitHolder(), p => onProg && onProg(0.3 * p)) : null, um = mbK === 'unit' ? await layerUnitBakeMobile(singleUnitHolder(), ub, p => onProg && onProg(0.3 * p)) : null;     // 4.9.80 手机单束另出一套
+    const h = holder || ((pcK === 'unit' || mbK === 'unit') ? singleUnitHolder() : null);
+    const ub = pcK === 'unit' ? await layerUnitBake(h, p => onProg && onProg(0.3 * p)) : null, um = mbK === 'unit' ? await layerUnitBakeMobile(h, ub, p => onProg && onProg(0.3 * p)) : null;     // 4.9.80 手机单束另出一套
     const lw = pcK === 'frame' || mbK === 'frame' ? await lowFor(b, lowOf(P), M, p => onProg && onProg(0.3 + 0.1 * p)) : null, lwM = mbK === 'frame' ? lowMobile(lw) : null;
     if (pcK === 'seq') { files.push(...await texFiles(b, name)); await ramp(name); }
     else if (pcK === 'unit') { files.push(...await texFiles(ub, ln)); await ramp(ln); }

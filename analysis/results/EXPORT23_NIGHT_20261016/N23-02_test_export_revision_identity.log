@@ -1,0 +1,8 @@
+Error: 导出拦截（不符合 spec/烟花特效资产规范.md v1，这次没有出包）：
+· cascade.json：贴图名不合命名规范 main = T_Test（应为 T_EFX_FireWorks_<英文名>_…，只用英文、数字和下划线；在交付清单里设英文名）
+    at Object.packFinalize (evalmachine.<anonymous>:94:45)
+    at async F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_export_revision_identity.cjs:29:2 {
+  gate: [
+    'cascade.json：贴图名不合命名规范 main = T_Test（应为 T_EFX_FireWorks_<英文名>_…，只用英文、数字和下划线；在交付清单里设英文名）'
+  ]
+}

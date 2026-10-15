@@ -327,11 +327,16 @@ async function wbSaveVersion(asNew) {
 // 4.2.10 版本只留一套（走查 B8）：导出时在这个效果的「版本」里自动存一份（以前存在工具页「版本与回滚」，全局一个列表，回滚会把别的效果的参数塞进来）。
 // 每个效果只留最近 3 份；不进左栏「我的版本」；不写仓库文件夹（那是你主动保存的）。
 const WB_AUTO_MAX = 3;
-function wbAutoExport(label) {
+function wbAutoExport(label, source = null) {
   try {
-    const list = wbList(), it = { id: 'x' + Date.now().toString(36), name: '导出时', auto: 'export', label: String(label || ''), at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap(), ov: OUT_SIG() };     // 4.9.1 ov：身份条拿它判断素材包和现在一不一样
-    list.push(it); const autos = list.filter(s => s.auto); for (const s of autos.slice(0, Math.max(0, autos.length - WB_AUTO_MAX))) list.splice(list.indexOf(s), 1);
-    wbPut(list); wbSync();
+    const key = source ? source.key : wb.key, all = wbAll(), list = all[key] || [];
+    const it = { id: 'x' + Date.now().toString(36), name: '导出时', auto: 'export', label: String(label || ''), at: wbNow(),
+      base: source ? source.base : wbBaseId(), baseVer: source ? source.baseVer : lib.review && lib.review.ver || '',
+      snap: source ? structuredClone(source.snap) : wbSnap(), ov: source ? source.ov : OUT_SIG() };
+    list.push(it); const autos = list.filter(s => s.auto);
+    for (const s of autos.slice(0, Math.max(0, autos.length - WB_AUTO_MAX))) list.splice(list.indexOf(s), 1);
+    all[key] = list; store.set('mySaves', all);
+    if (key === wb.key) wbSync();
   } catch (e) { console.warn('导出时存版本失败', e); }
 }
 // 回到 AI 版：丢掉这个效果里调过的层，重新打开条目

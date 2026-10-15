@@ -24,11 +24,11 @@ async function encodePNG(rgba, w, h) {
   return new Blob([new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', idat), chunk('IEND', new Uint8Array(0))]);
 }
 const utf8 = s => new TextEncoder().encode(s);
-async function makeZip(files) {
+async function makeZip(files, job = null) {
   if (typeof exportClockMark === 'function') exportClockMark('整理 Ramp / Cutout');
   { const r = await packTidy(files); files = r.files; packTidyLast = r.report; }     // 4.9.38 Ramp / Cutout 去重、几乎不省的 Cutout 不出
   if (typeof exportClockMark === 'function') exportClockMark('拦截 + sha256');
-  if (files.some(([f]) => FWL_CFG_RE.test(f))) files = await packFinalize(files);     // 4.9.69 贴图写 SHA256 + 导出拦截（不合规范 v1 就抛错，不出包）
+  if (files.some(([f]) => FWL_CFG_RE.test(f))) files = await packFinalize(files, job ? { sourceKey: job.key } : {});     // 4.9.69 贴图写 SHA256 + 导出拦截（不合规范 v1 就抛错，不出包）
   if (typeof exportClockMark === 'function') exportClockMark('ZIP 打包');
   const parts = [], central = []; let offset = 0;
   const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
@@ -330,92 +330,146 @@ async function platformFiles(name,b,M,onProg=null) {
     return files;
   }finally{if(mobile!==b.mobile)disposeBake(mobile);}
 }
-// 4.4.2 单层效果按「导出方案」出包（文件名规则、版本记录和普通单层导出一样）
-async function exportSingleScheme(name, b, destination) {
-  const r = await singleSchemeFiles(name, b, state.M, p => busy(true, '按导出方案烘焙…', 0.93 + 0.05 * p)), files = r.files, so = singleOut(state.P);
-  const kindCN = k => ({ seq: '序列', unit: '单束', dots: 'GPU 光点', frame: '单帧', off: '不出' })[k];
-  files.push([`${name}_Cascade参数.txt`, utf8(`导出方案：PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}（烘焙器 ${VERSION}）\n完整数值见 cascade.json / cascade_mobile.json。\n` + (so.pc === 'seq' ? cascadeText(name, b, state.M) : '') + '\n' + singleSchemeNote(state.P) + '\n')]);
-  files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b, name, state.M), exportScheme: so }, null, 2))]);
-  busy(true, '打包 ZIP…', 1);
-  let zipName = name, out = files;
-  const sp = exportScalePlan(state.P);
-  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, typeof delivName === 'function' ? delivName() : name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
-  { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
-  await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
-  wbAutoExport(zipName);
-  flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）${packTidyNote()}`, false, packTidyNote() ? 8000 : 0);
+// Export jobs contain CPU data only. Editing and WebGL cache ownership stay with the UI.
+function freezeExportData(value, seen = new WeakSet()) {
+  if (!value || typeof value !== 'object' || seen.has(value)) return value;
+  seen.add(value); for (const v of Object.values(value)) freezeExportData(v, seen);
+  return Object.freeze(value);
 }
-async function exportMaster() {
-  const name = safeName();
-  const destination = DeliveryWorkspace.destination();
-  if (!busyCan(true)) return;
-  busy(true, '准备导出…', 0);
-  let own = false, b = null;
+function captureExportJob(kind = 'single') {
+  const combo = kind === 'combo', key = wbKey(), recipe = wbSnap();
+  const P = structuredClone(state.P), M = structuredClone(state.M), layers = combo ? structuredClone(state.layers) : [];
+  const entries = layers.map(L => {
+    const e = layerEntryOf(L); if (!e || !e.P) throw Error('图层「' + L.lib + '」缺少参数，不能导出');
+    return { name: e.name, type: e.type, rep: e.rep || null, P: structuredClone(libP(e.P, true)), M: structuredClone(e.M || {}) };
+  });
+  const name = combo ? (typeof delivName === 'function' ? delivName() : (state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo') : safeName();
+  const sk = combo && typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null;
+  const sp = combo ? { k: sk ? sk.k : 1, keep: false, spec: sk, sfx: '' } : exportScalePlan(state.P);
+  const nt = combo ? entries.length === 1 ? entries[0].P.type : '' : P.type;
+  const naming = packNamesFor(key, lib.effect, combo ? layers.length : 1, combo ? name : typeof delivName === 'function' ? delivName() : name, nt);
+  const metadata = { bakerVersion: VERSION, sourceKey: key, recipe, duration: curDuration(), sizePlan: sp };
+  metadata.classification = deliveryClassification(recipe, sp, typeof sizeSpecOf === 'function' ? sizeSpecOf() : null);
+  return freezeExportData(structuredClone({
+    kind, key, name, P, M, layers, entries, comboName: state.comboName, platform: state.platform,
+    destination: DeliveryWorkspace.destination(), sp, naming,
+    system: packSysName(naming.base, nt, sp.spec, naming.system), metadata,
+    history: { key, base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: recipe, ov: OUT_SIG() }
+  }));
+}
+function exportBakeParams(P, M) {
+  const copy = structuredClone(P);
+  if (typeof rtFxOn === 'function' && rtFxOn(copy) && typeof emitFullOut === 'function' && emitFullOut(copy))
+    copy._fxM = rtFxSnap(M);
+  return copy;
+}
+function disposeExportHolder(holder) {
+  const bakes = new Set([holder?.unitBake?.b, holder?.unitBakeM?.b].filter(Boolean));
+  for (const b of bakes) disposeBake(b);
+  if (holder) { holder.unitBake = null; holder.unitBakeM = null; }
+}
+function comboExportDescription(job, lb) {
+  return { name: job.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB',
+    layers: job.layers.map((L, i) => {
+      const e = job.entries[i], b = lb[i].b;
+      return { master: L.lib, masterType: e.type || '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
+        colorStages: L.stages, transition: L.xw, Ramp: [L.ramp0, L.ramp1, L.ramp2, L.ramp3], HeadInt: L.headInt, TailInt: L.tailInt,
+        colorOverLife: colorKeys(L, b.meta.duration),
+        spriteSizeCm: [+(b.meta.Ww * L.scale * 100).toFixed(1), +(b.meta.Wh * L.scale * 100).toFixed(1)] };
+    }) };
+}
+
+// 4.4.2 单层效果按「导出方案」出包（文件名规则、版本记录和普通单层导出一样）
+async function exportSingleScheme(name, b, destination, job) {
+  const holder = { P: structuredClone(b.P), unitSrc: job.P, unitBake: null, unitBakeM: null };
   try {
-    await DeliveryWorkspace.beginExport(destination);
-    b = state.bake && state.bake.scale === 1 && !state.dirty && !rtFxStale(state.bake, state.M) ? state.bake : null;     // 4.9.102 rtFullFx：材质改过 = 合进去的效果旧了，重烘
-    if (b) { const nb = await refineBake(b, p => busy(true, `取景收紧… ${Math.round(p * 100)}%`, p * 0.9)); if (nb) { disposeBake(b); state.bake = b = nb; showStats(nb); } }   // 4.2.5：导出用收紧后的取景
-    own = !b;
-    if (own) b = await bakeFinal(state.P, 1, p => busy(true, `烘焙 ${state.P.texW}×${state.P.texH}… ${Math.round(p * 100)}%`, p * 0.9));
-    if (productNoPack(b)) throw new Error(productNoPack(b));     // 4.9.106 G4：登记表里不能出包的产物（上升星头循环）
+    const r = await singleSchemeFiles(name, b, job.M, p => busy(true, '按导出方案烘焙…', 0.93 + 0.05 * p), holder), files = r.files, so = singleOut(job.P);
+    const kindCN = k => ({ seq: '序列', unit: '单束', dots: 'GPU 光点', frame: '单帧', off: '不出' })[k];
+    files.push([`${name}_Cascade参数.txt`, utf8(`导出方案：PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}（烘焙器 ${VERSION}）\n完整数值见 cascade.json / cascade_mobile.json。\n` + (so.pc === 'seq' ? cascadeText(name, b, job.M) : '') + '\n' + singleSchemeNote(job.P, job.M) + '\n')]);
+    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b, name, job.M), exportScheme: so }, null, 2))]);
+    busy(true, '打包 ZIP…', 1);
+    const sp = job.sp; let zipName = name, out = files;
+    if (namingApplies(b)) {
+      const nm = job.naming; out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys: job.system, spec: sp.spec && sp.spec.id }); zipName = job.system;
+    }
+    out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx;
+    const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
+    await deliverResource(zip, zipName + '.zip', deliveryMetadata(b, job, null, holder), destination);
+    wbAutoExport(zipName, job.history);
+    flash('已导出 ' + name + '（PC ' + kindCN(so.pc) + ' · 手机 ' + kindCN(so.mobile) + '）' + packTidyNote(), false, packTidyNote() ? 8000 : 0);
+  } finally { disposeExportHolder(holder); }
+}
+
+async function exportMaster() {
+  if (!busyCan(true)) return;
+  let b = null;
+  try {
+    const job = captureExportJob(), name = job.name;
+    busy(true, '准备导出…', 0);
+    await DeliveryWorkspace.beginExport(job.destination);
+    // A private bake cannot be invalidated/disposed by edits or a later open.
+    b = await bakeFinal(exportBakeParams(job.P, job.M), 1, p => busy(true, '烘焙 ' + job.P.texW + '×' + job.P.texH + '… ' + Math.round(p * 100) + '%', p * 0.9));
+    if (productNoPack(b)) throw new Error(productNoPack(b));
     busy(true, '编码 PNG…', 0.93);
-    // 4.4.2：单层效果选了别的导出方案（GPU 光点 / 单束 / 不出，或手机不出）→ 和多层层页头同一套
-    const so = typeof singleOut === 'function' ? singleOut(state.P) : { pc: 'seq', mobile: 'seq' };
-    if ((so.pc !== 'seq' || so.mobile !== 'seq') && (b.form === 'master' || b.form === 'segments')) { await exportSingleScheme(name, b, destination); if (own && b) disposeBake(b); busy(false); return; }
+    const so = typeof singleOut === 'function' ? singleOut(job.P) : { pc: 'seq', mobile: 'seq' };
+    if ((so.pc !== 'seq' || so.mobile !== 'seq') && (b.form === 'master' || b.form === 'segments')) {
+      await exportSingleScheme(name, b, job.destination, job); return;
+    }
     const files = await texFiles(b, name);
-    if (b.form === 'trail' && state.P.trExport4K) {
+    if (b.form === 'trail' && job.P.trExport4K) {
       busy(true, '烘焙 4K 母版…', 0.94);
-      const b4 = await bake(state.P, 2, p => busy(true, `烘焙 4K 母版… ${Math.round(p * 100)}%`, 0.94 + p * 0.04));
+      const b4 = await bake(exportBakeParams(job.P, job.M), 2, p => busy(true, '烘焙 4K 母版… ' + Math.round(p * 100) + '%', 0.94 + p * 0.04));
       try { files.push(...await texFiles(b4, name, '_4K')); } finally { disposeBake(b4); }
     }
-    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
-    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, state.M))]);
-    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
-    files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
-    files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
-    if (b.form === 'emitset' || (typeof productFormOf === 'function' && productFormOf(b) && productFormOf(b) !== PF_AIR)) { b.P.outMobile = state.P.outMobile; b.P.outPC = state.P.outPC; }     // 4.9.106 G4：别的非礼花产物同样按现在选的出；4.9.73 产物表改「手机」不重烘：按现在选的出（烘焙时存的那份是旧的）；4.9.96 纯星头 PC「序列 ↔ CPU 粒子」同样
-    files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
-    if (b.esHead) { const keep = packKeepReferenced(files); files.length = 0; files.push(...keep); }     // 4.9.96 H1：纯星头 PC 选 CPU 粒子 / 不出时没有那张单帧（手机软圆点也不引用手机 Ramp）
+    files.push([TN(name, 'Ramp') + '.png', await encodePNG(rampPixels(job.M), 256, 8)]);
+    files.push([name + '_Cascade参数.txt', utf8(cascadeText(name, b, job.M))]);
+    files.push([name + '_曲线.csv', utf8(curvesCSV(b, job.M))]);
+    files.push([name + '_声音节点.json', utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
+    files.push([name + '.json', utf8(JSON.stringify(masterJSON(b, name, job.M), null, 2))]);
+    files.push(...await platformFiles(name, b, job.M, p => busy(true, '手机独立烘焙…', p)));
+    if (b.esHead) { const keep = packKeepReferenced(files); files.length = 0; files.push(...keep); }
     busy(true, '打包 ZIP…', 1);
-    let zipName = name, out = files;
-    const sp = exportScalePlan(state.P);
-    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, typeof delivName === 'function' ? delivName() : name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
-    { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
-    await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
-    wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
+    const sp = job.sp; let zipName = name, out = files;
+    if (namingApplies(b)) {
+      const nm = job.naming; out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: job.system, spec: sp.spec && sp.spec.id }); zipName = job.system;
+    }
+    out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx;
+    const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
+    await deliverResource(zip, zipName + '.zip', deliveryMetadata(b, job), job.destination);
+    wbAutoExport(zipName, job.history);
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
-  if (own && b) disposeBake(b);
-  busy(false);
+  finally { if (b) disposeBake(b); busy(false); }
 }
+
 // 种子变体：V1–V3 三张贴图，共用一套参数表
 // 4.9.80（用户 10-13 20:00 导出排查 ⑤）：以前手机配置直接引用 PC 第 1 张（_HD、2048，导出拦截一律拦），也没走命名规范、尺寸标定、「导出时」版本。
 //   现在和单层导出同一条路：手机按第 1 张独立烘一份（≤ 1024，platformFiles）；一张贴图的效果把 V2 / V3 挂成变体（命名规范序号 02 / 03）
 async function exportVariants() {
-  const name = safeName();
-  const destination = DeliveryWorkspace.destination();
   if (bakeKind(state.P) !== 'master') { flash('种子变体只用于大面片母版', true); return; }
   if (!busyCan(true)) return;
   busy(true, '烘焙种子变体…', 0);
   let bs = [], hung = false;
   try {
-    await DeliveryWorkspace.beginExport(destination);
-    bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
+    const job = captureExportJob('variants'), name = job.name;
+    await DeliveryWorkspace.beginExport(job.destination);
+    bs = await bakeVariants(exportBakeParams(job.P, job.M), 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
     const b0 = bs[0], files = [];
     hung = !bs.some(b => b.next); if (hung) b0.vars = bs.slice(1);     // 一张贴图：V2 / V3 挂在第 1 张上（texFiles / 命名规范按变体出）
     if (hung) files.push(...await texFiles(b0, name)); else for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
-    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
-    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b0, state.M) + `\n【种子变体】\n第 1 张 / 02 / 03 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样（cascade.json 引用第 1 张；手机只出第 1 张）。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
-    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b0, state.M))]);
-    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b0, name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
-    files.push(...await platformFiles(name, b0, state.M, p => busy(true, '手机独立烘焙…', 0.85 + 0.1 * p)));
+    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(job.M), 256, 8)]);
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b0, job.M) + `\n【种子变体】\n第 1 张 / 02 / 03 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样（cascade.json 引用第 1 张；手机只出第 1 张）。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
+    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b0, job.M))]);
+    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b0, name, job.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
+    files.push(...await platformFiles(name, b0, job.M, p => busy(true, '手机独立烘焙…', 0.85 + 0.1 * p)));
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
-    const sp = exportScalePlan(state.P);
-    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, typeof delivName === 'function' ? delivName() : name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
+    const sp = job.sp;
+    if (hung && namingApplies(b0)) { const nm = job.naming, sys = job.system; out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
-    await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b0), destination);
-    wbAutoExport(zipName);
+    const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
+    await deliverResource(zip, `${zipName}.zip`, deliveryMetadata(b0, job), job.destination);
+    wbAutoExport(zipName, job.history);
     flash('已导出三个种子变体' + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
   if (hung && bs[0]) disposeBake(bs[0]); else bs.forEach(disposeBake);
