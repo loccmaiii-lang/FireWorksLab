@@ -1,0 +1,9 @@
+PASS slow >30s success retains the original request and late response
+PASS disconnected read preserves unknown result, refresh never resends accept
+PASS switching revisions rejects stale receipt presentation
+PASS explicit business failure preserves its reason and starts no polling
+PASS exit stops read polling
+PASS page disposal stops read polling
+PASS export cancellation/failure stops polling and preserves its reason
+PASS unknown-result automatic polling is bounded
+8 accept deadline contracts passed (all fake time, no UE/GPU/browser).

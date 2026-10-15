@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: 30s is not evidence of an offline importer
+    at F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_accept_timeout.cjs:44:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '「Alpha」已保存，但导入检查未完成（没接进导入器）：本机交付服务未响应，请启动 tool/启动烘焙器.cmd 后在此页重试。下方导入区还是「上一份素材」；点左侧资源列表里的「Alpha」重试。',
+  expected: /仍在检查|结果未知/,
+  operator: 'match',
+  diff: 'simple'
+}

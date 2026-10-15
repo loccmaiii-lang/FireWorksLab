@@ -1,0 +1,2 @@
+PASS export opens the existing workspace before resource work
+PASS hidden preview skips rendering and clock advancement, retains next frame

@@ -4,7 +4,8 @@ const DeliveryWorkspace = (() => {
   const frameTarget=localUI?'*':frameOrigin;
   let session=null,resources=[],last=null,active=false,busyDelivery=false,importerBusy=false,importerCurrent=null;
   let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null,queuedDelivery=null,exportFailedState=false;     // 4.9.69 queuedDelivery：导出了、但导入器还在处理别的（排队中）
-  const channel=crypto.randomUUID(),requests=new Map();
+  const channel=crypto.randomUUID(),requests=new Map(),acceptChecks=new Map();
+  let acceptCheck=null,selectionEpoch=0;
   const hostOrigin=location.protocol==='file:'?'http://127.0.0.1:8034':location.origin;
   const node=id=>document.getElementById(id);
   const message=(text,error=false)=>{const n=node('deliveryStatus');n.textContent=text;n.dataset.error=String(error);};
@@ -16,11 +17,67 @@ const DeliveryWorkspace = (() => {
     const blocked=exportFailedState&&!importerBusy;node('deliveryFrame').inert=blocked;
     if(session)node('deliveryFrame').hidden=blocked||!session.importerAvailable;
   }
-  function rpc(command,payload={},timeout=10000){
+  function rpc(command,payload={},timeout=10000,watch=null){
     return new Promise((resolve,reject)=>{
-      const id=crypto.randomUUID(),timer=setTimeout(()=>{requests.delete(id);reject(Error(command==='publish'?'资源写入等待超时，可能仍在进行；请先刷新资源核对修订，再决定是否重新导出':'本机交付服务未响应，请启动 tool/启动烘焙器.cmd 后在此页重试'));},timeout);
-      requests.set(id,{resolve,reject,timer});node('deliveryFrame').contentWindow.postMessage({type:'workspace-host-request',channel,id,command,payload},frameTarget);
+      const id=crypto.randomUUID(),pending={resolve,reject,timer:null,timedOut:false,late:watch?.late};
+      pending.timer=setTimeout(()=>{
+        pending.timedOut=true;
+        // An accept deadline does not cancel the native check. Keep its late reply
+        // only while this revision is being observed; exiting removes the waiter.
+        if(command!=='accept'||!watch)requests.delete(id);
+        const error=Error(command==='accept'?'检查请求已超过等待时间，结果未知':command==='publish'?'资源写入等待超时，可能仍在进行；请先刷新资源核对修订，再决定是否重新导出':'本机交付服务未响应，请检查连接后重读状态');
+        error.code='DELIVERY_RPC_TIMEOUT';error.command=command;reject(error);
+      },timeout);
+      if(watch)watch.cancel=()=>{clearTimeout(pending.timer);requests.delete(id);const e=Error('停止观察检查结果');e.code='DELIVERY_OBSERVER_CANCELLED';reject(e);};
+      requests.set(id,pending);node('deliveryFrame').contentWindow.postMessage({type:'workspace-host-request',channel,id,command,payload},frameTarget);
     });
+  }
+  const currentCheck=op=>acceptCheck===op&&!op.disposed&&last?.deliveryId===op.id&&selectionEpoch===op.epoch;
+  function stopAcceptObservation(){
+    const op=acceptCheck;if(!op)return;op.disposed=true;clearTimeout(op.pollTimer);
+    op.watch?.cancel?.();op.queryWatch?.cancel?.();acceptCheck=null;
+    // Preserve the unresolved identity: returning or refreshing may query it,
+    // but must not repeat accept after an unknown outcome.
+    if(!op.resolved)op.waiting=true;
+  }
+  function unknownCheck(op,extra=''){
+    if(currentCheck(op))message('「'+op.receipt.name+'」已保存，导入检查仍在进行或结果未知。刷新只读取当前回执，不会重复接入。'+(extra?'\n'+extra:''),true);
+  }
+  function scheduleCheck(op){
+    clearTimeout(op.pollTimer);
+    if(active&&currentCheck(op)&&op.attempts<3)op.pollTimer=setTimeout(()=>readAcceptStatus(op),5000);
+  }
+  async function readAcceptStatus(op){
+    if(!currentCheck(op))return;
+    if(op.reading)return op.reading;
+    clearTimeout(op.pollTimer);op.queryWatch={};op.attempts++;
+    op.reading=(async()=>{
+      try{
+        const value=await rpc('resources',{},10000,op.queryWatch);
+        if(!currentCheck(op))return;
+        resources=value.resources||[];render();
+        const receipt=resources.find(r=>r.deliveryId===op.id),rows=receipt?.importReceipt?.rows||[];
+        // A resource receipt can be an older UI report, without a request token.
+        // Show its state, but do not claim it completed this particular accept.
+        unknownCheck(op,rows.length?'当前记录：'+[...new Set(rows.map(r=>importLabel(r.state)))].join(' / '):'尚无可归属到本次请求的检查回执。');
+        scheduleCheck(op);
+      }catch(e){
+        if(currentCheck(op)){clearTimeout(op.pollTimer);unknownCheck(op,'读取状态失败：'+e.message);node('deliveryRetry').hidden=false;}
+      }finally{op.reading=null;}
+    })();
+    return op.reading;
+  }
+  function finishAccept(op,result,error){
+    const visible=currentCheck(op);op.resolved=true;clearTimeout(op.pollTimer);
+    op.queryWatch?.cancel?.();acceptChecks.delete(op.id);
+    if(acceptCheck===op)acceptCheck=null;
+    if(!visible)return{stale:true};
+    if(error){desiredDeliveryId='';message('「'+op.receipt.name+'」已保存，导入检查明确失败：'+error.message,true);return{failed:true};}
+    const running=importerCurrent?.name||'上一份素材';
+    if(result.queued){queuedDelivery={deliveryId:op.id,name:op.receipt.name,behind:running};
+      message('「'+op.receipt.name+'」已保存（修订 '+op.receipt.revisionId.slice(0,8)+'），导入器还在处理「'+running+'」，新修订已排队；下方仍是当前素材。',true);}
+    else{queuedDelivery=null;message('已接入导入清单。核对名称与处理方式后确认导入。');}
+    return result;
   }
   function waitForHost(retry=false){
     if(hostReady)return Promise.resolve();
@@ -45,6 +102,7 @@ const DeliveryWorkspace = (() => {
   function connectionError(error){node('deliveryLoading').hidden=true;node('deliveryRetry').hidden=false;message(error.message,true);}
   function show(open){
     if(active===open)return;
+    if(!open)stopAcceptObservation();
     viewAnimation?.cancel();viewAnimation=null;active=open;
     document.querySelector('.app').classList.toggle('delivery-active',open);node('deliveryWorkspace').hidden=!open;
     node('main').inert=open;node('main').setAttribute('aria-hidden',String(open));
@@ -74,6 +132,7 @@ const DeliveryWorkspace = (() => {
     try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
   }
   function exportFailed(error){
+    stopAcceptObservation();
     if(!exportHome)return;exportFailedState=true;updateRootControls();
     message('本次未导出；当前资源信息来自旧修订'+(last?' '+last.revisionId.slice(0,8):'')+'，旧清单已停止确认与执行。请修正后重新导出，或在历史中明确选择要查看的修订。\n'+error.message,true);
   }
@@ -98,7 +157,7 @@ const DeliveryWorkspace = (() => {
     show(true);if(!prepared)message('正在恢复资源与导入工作区…');
     try{await prepare();if(active&&session.importerAvailable)await rpc('focus.restore');}catch(e){connectionError(e);}
   }
-  async function refresh(){resources=(await rpc('resources')).resources;if(importerCurrent)presentCurrent();render();}
+  async function refresh(){if(acceptCheck?.waiting&&currentCheck(acceptCheck))return readAcceptStatus(acceptCheck);resources=(await rpc('resources')).resources;if(importerCurrent)presentCurrent();render();}
   function render() {
     const list = node('deliveryList'); list.replaceChildren();
     if (!resources.length) { const p = document.createElement('p'); p.textContent = '尚无交付资源。回到效果制作，使用“导出素材包”。'; list.append(p); }
@@ -124,8 +183,10 @@ const DeliveryWorkspace = (() => {
     node('deliveryCheck').disabled = importerBusy || exportFailedState || !session?.importerAvailable;
   }
   async function select(receipt) {
+    stopAcceptObservation();const epoch=++selectionEpoch;
     const previous=last;desiredDeliveryId=receipt.deliveryId;last=receipt;
     const result=await sendToImporter();
+    if(epoch!==selectionEpoch||result?.stale)return result;
     if(result?.queued||result?.failed){desiredDeliveryId='';last=previous;presentCurrent();render();}
     else {exportFailedState=false;updateRootControls();presentReceipt(receipt);}
   }
@@ -139,15 +200,25 @@ const DeliveryWorkspace = (() => {
   }
   async function sendToImporter() {
     if(!last||!session?.importerAvailable)return;
-    try{
-      const result=await rpc('accept',{deliveryId:last.deliveryId},30000);
-      // 4.9.69（用户 10-12 22:01「我做好了分裂星，但是我点导出跳转到导入，默认还是goldray」）：排队时写清楚新的是谁、卡在谁后面、怎么解
-      const running=importerCurrent?.name||'上一份素材';
-      if(result.queued){queuedDelivery={deliveryId:last.deliveryId,name:last.name,behind:running};
-        message(`「${last.name}」已保存（修订 ${last.revisionId.slice(0,8)}），但导入器还在处理「${running}」，新的排在它后面，下方导入区和标题暂时还是「${running}」。「${running}」这一批导入完成或在下方导入区清掉后，会自动换成「${last.name}」。`,true);}
-      else{queuedDelivery=null;message('已接入导入清单。核对名称与处理方式后确认导入。');}
-      return result;
-    }catch(e){desiredDeliveryId='';message(`「${last?.name||'资源'}」已保存，但导入检查未完成（没接进导入器）：${e.message}。下方导入区还是「${importerCurrent?.name||'上一份素材'}」；点左侧资源列表里的「${last?.name||'新资源'}」重试。`,true);return{failed:true};}
+    const receipt=last,id=receipt.deliveryId,known=acceptChecks.get(id);
+    if(known){
+      if(!known.waiting&&!known.disposed)return known.completion;
+      known.disposed=false;known.epoch=selectionEpoch;acceptCheck=known;
+      unknownCheck(known);await readAcceptStatus(known);return{unknown:true};
+    }
+    stopAcceptObservation();
+    const op={id,receipt,epoch:selectionEpoch,attempts:0,disposed:false,resolved:false,waiting:false,watch:{}};
+    acceptCheck=op;acceptChecks.set(id,op);
+    op.watch.late=(value,error)=>finishAccept(op,value,error);
+    op.completion=(async()=>{
+      try{return finishAccept(op,await rpc('accept',{deliveryId:id},30000,op.watch));}
+      catch(e){
+        if(e.code==='DELIVERY_OBSERVER_CANCELLED')return{unknown:true,stale:true};
+        if(e.code==='DELIVERY_RPC_TIMEOUT'){op.waiting=true;unknownCheck(op);scheduleCheck(op);return{unknown:true};}
+        return finishAccept(op,null,e);
+      }
+    })();
+    return op.completion;
   }
   async function publish(blob,name,metadata){
     if(busyDelivery)throw Error('正在交付另一份资源，请等待完成');busyDelivery=true;
@@ -167,7 +238,9 @@ const DeliveryWorkspace = (() => {
       if(data.type==='workspace-host-ready'){hostReady=true;node('deliveryFrame').hidden=false;node('deliveryLoading').hidden=true;updateRootControls();if(readyWait){clearTimeout(readyWait.timer);readyWait.resolve();readyWait=null;}return;}
       if(data.type==='workspace-host-response'){
         const pending=requests.get(data.id);if(!pending)return;requests.delete(data.id);clearTimeout(pending.timer);
-        if(data.ok)pending.resolve(data.value);else pending.reject(Error(data.error||'本机交付请求失败'));return;
+        const error=data.ok?null:Error(data.error||'本机交付请求失败');
+        if(pending.timedOut&&pending.late)pending.late(data.value,error);
+        else if(data.ok)pending.resolve(data.value);else pending.reject(error);return;
       }
       if(data.type==='workspace-host-state'){
         importerBusy=!!data.busy;importerCurrent=data.current||null;
@@ -178,6 +251,7 @@ const DeliveryWorkspace = (() => {
       if(data.type==='workspace-host-resources'){resources=data.resources||[];presentCurrent();render();return;}
       if(data.type==='workspace-host-error')connectionError(Error(data.error));
     });
+    window.addEventListener('pagehide',stopAcceptObservation);
     node('deliveryWorkspace').addEventListener('keydown',e=>e.stopPropagation());
     document.querySelector('.delivery-nav').addEventListener('keydown',e=>{if(active)e.stopPropagation();});
     node('deliveryOpen').addEventListener('click',open);node('deliveryMake').addEventListener('click',()=>show(false));
