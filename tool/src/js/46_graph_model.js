@@ -1,5 +1,16 @@
 /* 通用周期粒子图：秒、米；固定随机流。亲子出生使用同一条解析轨迹。 */
 const SparkGraph = (() => {
+  // 整体倍率只生成有效层副本，保留配方原值；数量只乘根层，避免子孙逐级复乘。
+  const scaleNames={scaleCone:'半锥角倍率',scaleCount:'粒子数量倍率',scaleWidth:'粒子直径倍率',scaleLife:'粒子寿命倍率',scaleGain:'粒子亮度倍率'};
+  const parameterDefault=k=>k.startsWith('sparkGraph.')&&Object.hasOwn(scaleNames,k.slice(11))?1:undefined;
+  const scaleOf=(r,k)=>r[k]??1;
+  function scaledEmitter(r,e){
+    if(Object.keys(scaleNames).every(k=>scaleOf(r,k)===1))return e;
+    return {...e,count:e.parent?e.count:Math.round(e.count*scaleOf(r,'scaleCount')),
+      cone:e.directionMode==='cone'?e.cone*scaleOf(r,'scaleCone'):e.cone,
+      life:[e.life[0]*scaleOf(r,'scaleLife'),e.life[1]*scaleOf(r,'scaleLife'),e.life[2]],
+      width:e.width*scaleOf(r,'scaleWidth'),gain:e.gain*scaleOf(r,'scaleGain')};
+  }
   const TAU = Math.PI * 2, mod = (a,b) => ((a%b)+b)%b;
   const hash = (seed,id,tag) => { let x = (seed ^ Math.imul(id+1,374761393) ^ Math.imul(tag+1,668265263))|0; x=Math.imul(x^(x>>>13),1274126177); return ((x^(x>>>16))>>>0)/4294967296; };
   const norm = v => {const l=Math.hypot(...v)||1;return v.map(x=>x/l);};
@@ -29,6 +40,7 @@ const SparkGraph = (() => {
   }
   function validate(r) {
     if(!r||!(r.period>0&&Number.isFinite(r.period)))throw Error('循环周期必须大于0');
+    for(const [k,name] of Object.entries(scaleNames)){const v=scaleOf(r,k);if(!Number.isFinite(v)||v<0||(k==='scaleLife'&&v===0))throw Error(name+'须为'+(k==='scaleLife'?'正':'非负')+'有限数');}
     if(!Array.isArray(r.emitters)||!r.emitters.length)throw Error('至少需要一个粒子层');
     if(!Array.isArray(r.bounds)||r.bounds.length!==4||!r.bounds.every(Number.isFinite)||r.bounds[0]>=r.bounds[1]||r.bounds[2]>=r.bounds[3])throw Error('取景范围无效');
     if(!Array.isArray(r.bursts)||r.bursts.some(b=>!Array.isArray(b)||b.length!==2||!b.every(Number.isFinite)||b[1]<0))throw Error('爆发时刻或宽度无效');
@@ -38,6 +50,9 @@ const SparkGraph = (() => {
       for(const d of [e.speed,e.life,e.size,e.power])if(!Array.isArray(d)||d.length!==3||!d.every(Number.isFinite)||d[0]<0||d[1]<d[0]||d[2]<=0)throw Error(e.name+'：随机范围无效');
       if(e.life[1]>=r.period)throw Error(e.name+'：寿命上限须小于循环周期');
       if(e.life[0]<=0)throw Error(e.name+'：寿命下限须大于0');
+      if(e.life[1]*scaleOf(r,'scaleLife')>=r.period)throw Error(e.name+'：整体倍率后的寿命上限须小于循环周期，请减小寿命倍率或增加周期');
+      if(e.directionMode==='cone'&&e.cone*scaleOf(r,'scaleCone')>180)throw Error(e.name+'：整体倍率后的半锥角超过180°，请减小半锥角倍率');
+      if(!Number.isFinite(e.width*scaleOf(r,'scaleWidth'))||!Number.isFinite(e.gain*scaleOf(r,'scaleGain')))throw Error(e.name+'：整体直径或亮度倍率过大');
       for(const k of ['drag','count','children','width','gain','history','extent','delay','inherit','noise','noiseHz','clusterWidth'])if(!Number.isFinite(e[k])||e[k]<0)throw Error(e.name+'：'+k+'须为非负有限数');
       for(const k of ['event','probability','clusterProbability','clusterDirection','burstShare','taper'])if(!Number.isFinite(e[k])||e[k]<0||e[k]>1)throw Error(e.name+'：'+k+'须在0到1之间');
       if(!Number.isInteger(e.seed)||!Number.isInteger(e.count)||!Number.isInteger(e.children)||!Number.isInteger(e.clusterSize)||e.clusterSize<1)throw Error(e.name+'：种子和数量须为整数');
@@ -49,7 +64,7 @@ const SparkGraph = (() => {
   }
   function build(r) {
     validate(r);const byId=new Map(),all=[],flow=typeof SparkFlow==='undefined'?null:SparkFlow.prepare(r);
-    for(const e of r.emitters){const out=[],parents=e.parent?byId.get(e.parent):null;
+    for(const original of r.emitters){const e=scaledEmitter(r,original),out=[],parents=e.parent?byId.get(e.parent):null;
       const count=parents?parents.length*Math.round(e.children):Math.round(e.count), h=(id,t)=>hash(e.seed,id,t);
       if(count>200000||all.length+count>500000)throw Error(e.name+'：超过每层20万／全图50万周期粒子的编辑上限');
       for(let id=0;id<count;id++){
@@ -131,7 +146,7 @@ const SparkGraph = (() => {
       }
     }return{data:new Float32Array(out),counts};
   }
-  return {hash,mod,curve,dist,direction,sample,validate,build,geometry,flatGeometry,cameraGeometry};
+  return {hash,mod,curve,dist,direction,sample,validate,build,geometry,flatGeometry,cameraGeometry,parameterDefault};
 })();
 
 // =====================================================================
@@ -198,6 +213,13 @@ const graphLayerItems = (() => {
   ];
 })();
 SCHEMA.push(
+  {sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'整体倍率默认1；各层原值保留。数量只改母粒批次，分叉结构不变；寿命会影响按母粒寿命触发的分叉时刻。',items:[
+    ['sparkGraph.scaleCone','半锥角倍率','×',0,3,.05],
+    ['sparkGraph.scaleCount','粒子数量倍率','×',0,4,.05],
+    ['sparkGraph.scaleWidth','粒子直径倍率','×',0,4,.05],
+    ['sparkGraph.scaleLife','粒子寿命倍率','×',.05,4,.05],
+    ['sparkGraph.scaleGain','粒子亮度倍率','×',0,4,.05]
+  ]},
   { sec: '分层粒子图', graphOnly: true, show: P => !!P.sparkGraph, hint: '整张粒子图共用：循环周期、取景范围、偶发爆发时刻、导出时是否跟着喷口轴转。', items: [
     ['sparkGraph.period', '循环周期（粒子寿命上限要比它短）', 's', .2, 6, .01],
     ['sparkGraph.bounds.0', '取景 · 左', 'm', -50, 0, .01], ['sparkGraph.bounds.1', '取景 · 右', 'm', 0, 50, .01],

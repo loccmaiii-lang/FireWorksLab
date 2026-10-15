@@ -51,7 +51,10 @@ JS = r"""async (a) => {
       if (nv === undefined) { r.v = 'skip'; row.res.push(r); continue; }
       const extra = k === 'headHaloOwn' && +nv === 1 ? { headHaloFrac: (+P0.haloFrac || .22) < .4 ? .6 : .1 } : {};
       if (extra.headHaloFrac != null) r.to = nv + '（占比 ' + extra.headHaloFrac + '）';
-      r.mod = await shot({ ...P0, [k]: nv, ...extra });
+      // 路径参数也按真实面板写入；浅拷贝会污染原配方或把路径误写成普通键。
+      const changed=structuredClone(P0);pSet(changed,k,nv);Object.assign(changed,extra);
+      if(changed.sparkGraph){try{SparkGraph.validate(changed.sparkGraph);}catch(e){nv=+(+cur*.5).toFixed(4);pSet(changed,k,nv);r.to=nv;SparkGraph.validate(changed.sparkGraph);}}
+      r.mod = await shot(changed);
       row.res.push(r);
     }
     out.push(row);

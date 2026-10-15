@@ -1,0 +1,87 @@
+{
+ "ver": "4.9.105",
+ "keys": [
+  "sparkGraph.scaleCone",
+  "sparkGraph.scaleCount",
+  "sparkGraph.scaleWidth",
+  "sparkGraph.scaleLife",
+  "sparkGraph.scaleGain"
+ ],
+ "rows": [
+  {
+   "name": "正式资产-窜天猴尾焰-粒子",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "sparkGraph.scaleCone",
+     "sec": "分层粒子图",
+     "label": "半锥角倍率",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 175,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleCount",
+     "sec": "分层粒子图",
+     "label": "粒子数量倍率",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 168,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleWidth",
+     "sec": "分层粒子图",
+     "label": "粒子直径倍率",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 175,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleLife",
+     "sec": "分层粒子图",
+     "label": "粒子寿命倍率",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 146,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleGain",
+     "sec": "分层粒子图",
+     "label": "粒子亮度倍率",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 110,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.104"
+  }
+ ]
+}

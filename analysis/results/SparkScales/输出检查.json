@@ -1,0 +1,46 @@
+{
+  "PC": {
+    "pass": true,
+    "fails": [
+      []
+    ],
+    "cell": [
+      512,
+      512
+    ],
+    "frames": 64,
+    "source": {
+      "tool": "烟花母版烘焙器 4.9.105",
+      "type": "sparkgraph",
+      "form": "loop",
+      "quality": {
+        "ss": 2,
+        "hz": 300
+      },
+      "plan_sig": "d79d855d"
+    }
+  },
+  "手机": {
+    "pass": true,
+    "fails": [
+      []
+    ],
+    "cell": [
+      256,
+      256
+    ],
+    "frames": 64,
+    "source": {
+      "tool": "烟花母版烘焙器 4.9.105",
+      "type": "sparkgraph",
+      "form": "loop",
+      "quality": {
+        "ss": 2,
+        "hz": 300
+      },
+      "plan_sig": "d79d855d"
+    }
+  },
+  "version": "4.9.105",
+  "sha256": "953f05e14da126efbd1c1d908dbbab5102bea0a6db00445d8c856517a1614a66"
+}

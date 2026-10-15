@@ -55,6 +55,8 @@ const RT_LIVE_KEYS = ['rtGpuTw', 'rtGpuDisp', 'rtGpuGain', 'rtDotGain',
 // 4.9.89（导出排查 A4）：纯星头 = 一颗粒子沿弹道走（PC 单帧小面片、手机软圆点），没有序列帧
 const RT_HEAD_INERT = ['zoom', 'frameBudget', 'holdTicks', 'maxHold', 'maxHoldBurn', 'rtGrid', 'outMode', 'rtLoopMin', 'rtLoopSize', 'rtMobileTex', 'shutter'];
 const INERT = [
+  [['sparkGraph.scaleCone','sparkGraph.scaleWidth','sparkGraph.scaleLife','sparkGraph.scaleGain'], P => !!P.sparkGraph && !P.sparkGraph.emitters.some(e=>!e.parent&&Math.round(e.count*(P.sparkGraph.scaleCount??1))>0), '整体数量与根层数量相乘后为0，没有粒子；先增加粒子数量倍率或根层每周期粒子数'],
+  [['sparkGraph.scaleCone'], P => !!P.sparkGraph && !P.sparkGraph.emitters.some(e=>e.directionMode==='cone'&&e.cone>0&&e.speed[1]>0), '当前图没有非零半锥角的锥形运动层；球形散射不受半锥角倍率影响'],
   [['coreProfile'], P => isTrail(P), 'V5尾缀沿用已通过的高斯核；本选项不改变它和开花闪光'],
   [['exposureTarget'], P => isTrail(P) || isPhys(P) || isEmit(P), '这类产物目前不使用「建议曝光」；可直接调贴图曝光'],
   [['ignJit', 'ignSeed'], P => !(+P.ignDelay > 0) && !isCarrierType(P), '「点火延迟」是 0 时不起作用（随机的是点火延迟的长短）'],

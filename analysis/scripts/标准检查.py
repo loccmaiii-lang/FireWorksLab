@@ -130,7 +130,13 @@ if __name__ == '__main__':
     ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
     ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
     ap.add_argument('--spark-flow-only', action='store_true', help='全局气流模型、关闭像素回归和统一右栏保存检查（需Node Playwright）')
+    ap.add_argument('--spark-scales-only', action='store_true', help='分层粒子图整体倍率模型与真实入口/导出检查（需Node Playwright）')
     a = ap.parse_args()
+    if a.spark_scales_only:
+        for name in ('spark_graph_scales_test.cjs', 'spark_graph_scales_verify.cjs'):
+            rc = subprocess.call(['node', str(HERE / name)])
+            if rc: raise SystemExit(rc)
+        raise SystemExit(subprocess.call([sys.executable, str(HERE / 'spark_graph_scales_check.py')]))
     if a.spark_flow_only:
         for name in ('spark_flow_test.cjs', 'spark_flow_regression.cjs', 'spark_flow_ui.cjs'):
             result = subprocess.run(['node', str(HERE / name)])

@@ -1,0 +1,44 @@
+{
+  "source": "analysis\\我的配方\\my_fxmv9h8webs6bnz\\正式资产-窜天猴尾焰-粒子__fxmv9h8webs6bnz.json",
+  "sourceSHA": "fac08b2e3750e9b1042fd899bdbe5ce782521a424198a0c13ff342abaf3d62d4",
+  "defaultFrames": 24,
+  "effective": [
+    {
+      "key": "scaleCone",
+      "value": 0.65,
+      "changed": true
+    },
+    {
+      "key": "scaleCount",
+      "value": 1.5,
+      "changed": true
+    },
+    {
+      "key": "scaleWidth",
+      "value": 1.5,
+      "changed": true
+    },
+    {
+      "key": "scaleLife",
+      "value": 1.25,
+      "changed": true
+    },
+    {
+      "key": "scaleGain",
+      "value": 1.5,
+      "changed": true
+    }
+  ],
+  "errors": [],
+  "ui": {
+    "edit": true,
+    "undoRedo": true,
+    "reset": true,
+    "saveReload": true,
+    "invalidAngleRejected": true,
+    "sphereInert": true
+  },
+  "exportMs": 22134.299999952316,
+  "version": "4.9.105",
+  "pass": true
+}
