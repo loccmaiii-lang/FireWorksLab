@@ -1,0 +1,18 @@
+{
+  "format": "df.n23-push-receipt/1",
+  "verifiedAt": "2026-10-16T05:33:12+08:00",
+  "repository": "loccmaiii-lang/FireWorksLab",
+  "remoteRef": "refs/heads/main",
+  "remoteReadbackSHA": "dfe1d9897ee7835b2729c2441668eb72445b9dc0",
+  "sourceFixCommit": "b80ec4427133fe8defa8f423dcff994fd9598178",
+  "originalFourCommitsIncluded": true,
+  "normalPrePushPassed": true,
+  "hookLog": "正常推送.log",
+  "firstAttempt": {
+    "normalPrePushPassed": true,
+    "pushSucceeded": false,
+    "reason": "远端引用竞争：预期468e3063，实际前进到3e0b4d6d；非安全拒绝。",
+    "log": "首次推送_引用竞争.log"
+  },
+  "UEConcurrency": "3e0b4d6d认领明确允许其余线程只读UE；本轮只有已批准自动GetPlatformName，不写/播放/导入UE，未改26的任务文件。"
+}

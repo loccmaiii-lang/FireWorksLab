@@ -1,0 +1,41 @@
+at=2026-10-15T21:28:32.074688+00:00
+head=dfe1d9897ee7835b2729c2441668eb72445b9dc0
+command=git push origin HEAD:main
+normal_pre_push_hook_enabled=true
+previous_failure=remote_ref_concurrency_after_successful_gate_not_safety_rejection
+合入门禁（推送前）：HEAD → refs/heads/main，相对 3e0b4d6d
+合入门禁（推送前）：改动 127 个文件（相对 3e0b4d6dfc4194c7fcfb0d9212c55c236f7ba648），动了烘焙器源码
+✅ 体检 ⚠ 领先 origin/main 11 个提交（没推）：dfe1d989 Merge remote-tracking branch 'origin/main'；5063bf5a Merge remote-tracking branch 'origin/main'；b80ec442 N23: restore CPU mobile layout handoff and validate 4.9.110；183f474d Merge remote-tracking branch 'origin/main'；cd55e66a N23: preserve verified CPU repairs and report rejected browser gat；结论：可以干活（⚠ 只是提醒）
+✅ 构建 构建通过，成品和提交的一致
+… 产物契约 + 导出 JSON（代表效果逐个打开，拨「输出」里每一行）
+  ✅ 空中大面片·单层（9.9 s）：测了 25 行
+      ⚠ outPack：代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [fit·]
+  ✅ 地面循环·单层（2.6 s）：测了 14 行
+  ✅ 分层粒子图·单层（11.6 s）：测了 16 行
+  ✅ 合成一张·单层（6.1 s）：测了 24 行
+      ⚠ maxHoldBurn：代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [2· 4·]
+  ✅ 空中大面片·分段（35.1 s）：测了 5 行
+      ⚠ outPack：代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [fit·]
+  ✅ 近段+远段+粒子·单层（6.1 s）：测了 17 行
+  ✅ V5 尾缀·单层（3.4 s）：测了 10 行
+  ✅ 合成一张·固定机位（31.7 s）：测了 1 行
+  ✅ 空中大面片·多层（49.3 s）：测了 24 行
+      ⚠ outPack：代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [fit·]
+      ⚠ fadeAt：代表效果上不起作用（自动定的淡出起点正好一样时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [20· 2·]
+  ✅ 合成一张·多层（37.0 s）：测了 23 行
+      ⚠ maxHoldBurn：代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [2· 4·]
+  ✅ 纯星头·单层（2.1 s）：测了 5 行
+  ✅ 空中大面片·入点前闪光（4.4 s）：测了 3 行
+  ✅ 合成一张·一层的我的效果（2.4 s）：测了 6 行
+  ✅ 分层粒子图·一层的我的效果（5.5 s）：测了 4 行
+  ✅ 上升星头循环·单层（1.0 s）：测了 0 行
+  ✅ 纯星头·多层（35.4 s）：测了 15 行
+  ✅ 单元序列·单层（31.6 s）：测了 1 行
+  ✅ 地面循环·多层（31.7 s）：测了 2 行
+✅ 契约 18 个代表效果、195 行
+✅ 导出 导出拦截、空壳发射器、寿命 / 大小都过
+✅ 界面 8/8 项过
+可以推（191 s）
+To https://github.com/loccmaiii-lang/FireWorksLab.git
+   3e0b4d6d..dfe1d989  HEAD -> main
+exit_code=0

@@ -1,6 +1,6 @@
 {
   "format": "df.export23-night-handoff/1",
-  "at": "2026-10-16T05:17:43+08:00",
+  "at": "2026-10-16T05:33:12+08:00",
   "workspace": "F:/FireWorksLab-Night-Export23-20261016",
   "commits": {
     "N23-20261016-01": "239746282f6a680d8e97b162ad7d6b2b79f87de4",
@@ -39,8 +39,16 @@
     ],
     "limits": "缩小诊断；未验全分辨率质量、真实原生accept、UE实播或用户验收；half仍未实现。"
   },
-  "fullPrePush": null,
-  "sourcePushed": false,
+  "fullPrePush": {
+    "pass": true,
+    "head": "dfe1d9897ee7835b2729c2441668eb72445b9dc0",
+    "base": "3e0b4d6dfc4194c7fcfb0d9212c55c236f7ba648",
+    "report": "正常推送.log",
+    "scenarios": 18,
+    "contractRows": 195,
+    "uiChecksPassed": 8
+  },
+  "sourcePushed": true,
   "privateScope": {
     "explicitUserApproval": true,
     "minimalStaticRead": true,
@@ -51,16 +59,7 @@
     "initialization": "仅自动GetPlatformName、目录session及测试浏览器临时存储",
     "resourcePublishAcceptReceiptRootOrUEWrites": false
   },
-  "resourceReadback": {
-    "knownNewTestProcessMatches": 0,
-    "uePid": 148864,
-    "ueResponding": true,
-    "ue3DPercent": 12,
-    "dwmPid": 812,
-    "dwm3DPercent": 4,
-    "performanceVerified": false
-  },
-  "next": "正常pre-push并核实远端；推送后补确认记录。",
+  "next": "本批认领释放。UE实播、用户验收、half轴向能力和旧命名夹具缺口如实保留；不接手Claude第二段。",
   "ownBackgroundTests": false,
   "historicalBlockedAction": {
     "name": "公共契约/导出诊断子集",
@@ -69,7 +68,7 @@
     "retry": false
   },
   "version": "4.9.110",
-  "execution": "本批修复与批准范围内验证完成；正常推送待确认",
+  "execution": "本批修复、批准验证与正常源码推送执行结束；半球能力未实现，用户尚未验收",
   "userAcceptance": "未做",
   "fullGatePreflight": {
     "pass": true,
@@ -103,7 +102,7 @@
   },
   "followupFix": {
     "version": "4.9.110",
-    "sourceCommit": null,
+    "sourceCommit": "b80ec4427133fe8defa8f423dcff994fd9598178",
     "cause": "私有重烘没有回传既有mobNaming纯CPU布局，手机清单仍显示占位文件名。",
     "proof": "4.9.109五项失败、旧4.9.106同五项通过；补修后完整门禁通过。",
     "scope": "仅对象与完整配方未变才深复制CPU摘要；改参/切对象/图层库参数变化拒绝晚到，不复制GL或改b.P。"
@@ -171,5 +170,26 @@
     "85_stills.js": "b5f9f82a88ab0dec173bb9e6be02f7d17dcb45372ddb036d4ba02d3fb4f34636",
     "90_events.js": "9bca637c1179be8690812a7f083cf433b5084c7cc1118f7b8c73fb9cb0424d4c"
   },
-  "validatedPublicHtmlSha256": "38cdcc5fbfd90d1b8bd48196d75d83d49d80e1c51c21b6b16ab6ef16be1b1f1e"
+  "validatedPublicHtmlSha256": "38cdcc5fbfd90d1b8bd48196d75d83d49d80e1c51c21b6b16ab6ef16be1b1f1e",
+  "sourcePushHead": "dfe1d9897ee7835b2729c2441668eb72445b9dc0",
+  "pushReceipt": "推送回执.json",
+  "historicalResourceReadback": {
+    "knownNewTestProcessMatches": 0,
+    "uePid": 148864,
+    "ueResponding": true,
+    "ue3DPercent": 12,
+    "dwmPid": 812,
+    "dwm3DPercent": 4,
+    "performanceVerified": false
+  },
+  "resourceReadback": {
+    "at": "2026-10-15T21:27:37.1812233Z",
+    "matchingTestJobs": 0,
+    "active17780ClientsAtCheck": 0,
+    "UEOwner": "资源规范统一（26），独占写入/播放",
+    "otherThreadsReadAllowed": true,
+    "gpuIdle": null,
+    "pendingEngineRequests": null,
+    "performanceVerified": false
+  }
 }
