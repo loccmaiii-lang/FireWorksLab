@@ -1,0 +1,48 @@
+{
+ "/Game/Effects_HD/Common_HD/VField_HD/VF_EFX_SNoise_Random_01_HD.VF_EFX_SNoise_Random_01_HD": {
+  "Intensity": 1,
+  "Bounds": {
+   "_struct": "Box",
+   "Min": {
+    "_struct": "Vector",
+    "X": -124.6225357055664,
+    "Y": -124.89513397216797,
+    "Z": -124.20487213134766
+   },
+   "Max": {
+    "_struct": "Vector",
+    "X": 124.1548080444336,
+    "Y": 124.59381866455078,
+    "Z": 124.62968444824219
+   },
+   "IsValid": 1
+  },
+  "SizeX": 25,
+  "SizeY": 25,
+  "SizeZ": 25,
+  "bAllowCPUAccess": false
+ },
+ "/Game/Effects_HD/Common_HD/VField_HD/VF_EFX_SNoise_01_HD.VF_EFX_SNoise_01_HD": {
+  "Intensity": 1,
+  "Bounds": {
+   "_struct": "Box",
+   "Min": {
+    "_struct": "Vector",
+    "X": -124.6225357055664,
+    "Y": -124.89513397216797,
+    "Z": -124.20487213134766
+   },
+   "Max": {
+    "_struct": "Vector",
+    "X": 124.1548080444336,
+    "Y": 124.59381866455078,
+    "Z": 124.62968444824219
+   },
+   "IsValid": 1
+  },
+  "SizeX": 25,
+  "SizeY": 25,
+  "SizeZ": 25,
+  "bAllowCPUAccess": false
+ }
+}

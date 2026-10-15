@@ -1,0 +1,213 @@
+## P_EFX_FireWorks_LittleGold_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleGold_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_LittleSilver_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_LittleCrackle_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly local - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleCrackle_Main_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_LittleCombo_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleCombo_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Comet_Layers_S_HD fixed False (-1, 1, -1, 1)
+   L1_TrailFull lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Silver_Layers_S_HD fixed False (-1, 1, -1, 1)
+   TrailFull lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size SizeMultiplyLife OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_FanGold_Central_01_HD fixed True (-1000, 1000, -1500, 1500)
+   Central_L lods 1 en True PSA_Rectangle None local - | Lifetime Size Color ParameterDynamic SizeMultiplyLife PivotOffset OrientationAxisLock SizeMultiplyLife AccelerationConstant | MI_EFX_FireWorks_FanGold_Central_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_FanGold_Middle_01_HD fixed True (-1000, 1000, -1500, 1500)
+   Medium_L lods 1 en True PSA_Rectangle None local - | Lifetime Size Color ParameterDynamic SizeMultiplyLife PivotOffset OrientationAxisLock Rotation SizeMultiplyLife AccelerationConstant | MI_EFX_FireWorks_FanGold_Middle_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_FanGold_OuterLeft_HD fixed True (-1000, 1000, -1500, 1500)
+   Out_L lods 1 en True PSA_Rectangle None local - | Lifetime Size Color ParameterDynamic SizeMultiplyLife PivotOffset OrientationAxisLock Rotation SizeMultiplyLife AccelerationConstant | MI_EFX_FireWorks_FanGold_OuterLeft_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_FanGold_OuterRight_HD fixed True (-1000, 1000, -1500, 1500)
+   Out_R lods 1 en True PSA_Rectangle None local - | Lifetime Size Color ParameterDynamic SizeMultiplyLife PivotOffset OrientationAxisLock Rotation SizeMultiplyLife AccelerationConstant | MI_EFX_FireWorks_FanGold_OuterRight_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Comet_Layers_HD fixed False (-1, 1, -1, 1)
+   L1_TrailFull lods 4 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Dot_A lods 4 en True PSA_Square RandomFlipUOnly local - | Lifetime Size Color SizeMultiplyLife ColorScaleOverLife SizeMultiplyLife VelocityCone AccelerationDrag AccelerationConstant | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Dot_B lods 4 en True PSA_Square RandomFlipUOnly local - | Lifetime Size Color SizeMultiplyLife ColorScaleOverLife SizeMultiplyLife VelocityCone AccelerationDrag AccelerationConstant | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Dot_C lods 4 en True PSA_Square RandomFlipUOnly local - | Lifetime Size Color SizeMultiplyLife ColorScaleOverLife SizeMultiplyLife VelocityCone AccelerationDrag AccelerationConstant | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_FanSilver_01_HD fixed True (-1000, 1000, -1500, 1500)
+   Dot_A lods 4 en True PSA_Square RandomFlipUOnly local ParticleModuleTypeDataGpu | Lifetime Size Color SizeMultiplyLife ColorScaleOverLife SizeMultiplyLife LocationPrimitiveSphere AccelerationDrag VelocityCone VectorFieldLocal AccelerationConstant Location | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   TrailFull lods 4 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size SizeMultiplyLife OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Combo_HD fixed True (-20000, 20000, -20000, 20000)
+   L1_Main lods 1 en True PSA_Square RandomFlipUV local - | Lifetime Size Location SizeMultiplyLife SizeMultiplyLife ParameterDynamic ColorOverLife | MI_EFX_FireWorks_Combo_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Comet_HD fixed True (-15000, 15000, -15000, 15000)
+   Trail lods 4 en True PSA_Square None world ParticleModuleTypeDataRibbon | SpawnPerUnit Lifetime Size Color SizeMultiplyLife AccelerationDrag Acceleration TrailSource ColorScaleOverLife | MI_EFX_Throw_Trail_33_HD>M_EFX_MainTex
+   Trail lods 4 en True PSA_Square None world ParticleModuleTypeDataRibbon | SpawnPerUnit Lifetime Size Color SizeMultiplyLife AccelerationDrag Acceleration TrailSource ColorScaleOverLife | MI_EFX_Throw_Trail_33_HD>M_EFX_MainTex
+   Glow_B lods 4 en True PSA_Square None world - | Rotation Lifetime AccelerationDrag Size SizeMultiplyLife ColorOverLife ColorScaleOverLife Velocity Location Acceleration Light | MI_EFX_Glow_26>M_EFX_MainTex
+   Glow_C lods 4 en True PSA_Square None world - | Rotation Lifetime AccelerationDrag Size SizeMultiplyLife ColorOverLife ColorScaleOverLife Velocity Location Acceleration Light | MI_EFX_Glow_26>M_EFX_MainTex
+## P_EFX_FireWorks_SilverChry_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_Crackle_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife | MI_EFX_FireWorks_Crackle_Main_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_Lime_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife | MI_EFX_FireWorks_Lime_Core_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L2_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife ColorScaleOverLife | MI_EFX_FireWorks_Lime_Lead_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_MainA lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife ColorScaleOverLife | MI_EFX_FireWorks_Lime_Glitter_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_MainB lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife ColorScaleOverLife | MI_EFX_FireWorks_Lime_Glitter_02_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Glitter_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly local - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Glitter_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Strobe_HD fixed False (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly world - | Lifetime Color_Seeded Size Location SizeMultiplyLife ParameterDynamic ColorScaleOverLife | MI_EFX_FireWorks_Strobe_Strobe_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_LimeStar_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LimeStar_Tail_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L2_MainA lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LimeStar_Head_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L2_MainB lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LimeStar_Head_02_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_Dots lods 1 en True PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size LocationPrimitiveSphere Location AccelerationDrag AccelerationConstant ColorOverLife ColorScaleOverLife SizeMultiplyLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_GoldRay_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife | MI_EFX_FireWorks_GoldRay_A_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L2_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife | MI_EFX_FireWorks_GoldRay_B_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWork_PrismWheels_HD fixed True (-15000, 15000, -15000, 15000)
+   Dark_Groud lods 4 en False PSA_Square RandomFlipUOnly local - | Lifetime Size Color SizeMultiplyLife SizeMultiplyLife SubUV ParameterDynamic ColorScaleOverLife LocationPrimitiveSphere AccelerationConstant ColorScaleOverLife | MI_EFX_FireWorks_PrismWheels_02_HD>M_EFX_DissolveOutline_Soft
+   Dark_Groud lods 4 en True PSA_Square RandomFlipUOnly local - | Lifetime Size Color SizeMultiplyLife SizeMultiplyLife SubUV ParameterDynamic ColorScaleOverLife AccelerationConstant ColorScaleOverLife EventReceiverSpawn LocationEmitter | MI_EFX_FireWorks_PrismWheels_02_HD>M_EFX_DissolveOutline_Soft
+   Light_Groud lods 4 en True PSA_Square RandomFlipUOnly local - | EventGenerator Lifetime Size Color SizeMultiplyLife SizeMultiplyLife SubUV ParameterDynamic ColorScaleOverLife LocationPrimitiveSphere AccelerationConstant | MI_EFX_FireWorks_PrismWheels_01_HD>M_EFX_DissolveOutline_Soft
+   Main lods 4 en True PSA_Square RandomFlipUOnly local - | EventGenerator Lifetime Size Color SizeMultiplyLife SizeMultiplyLife ColorOverLife SubUV LocationPrimitiveSphere AccelerationConstant ColorScaleOverLife | MI_EFX_Glow_01_Depth_03>M_EFX_RadialGradient_Additive
+   Dark lods 4 en True PSA_Square RandomFlipUOnly local - | EventGenerator Lifetime Size Color SizeMultiplyLife SizeMultiplyLife ColorOverLife SubUV LocationPrimitiveSphere AccelerationConstant ColorScaleOverLife | MI_EFX_Glow_01_Depth_03>M_EFX_RadialGradient_Additive
+   Light_Groud lods 4 en True PSA_Square RandomFlipUOnly world - | Lifetime Size Color SizeMultiplyLife SizeMultiplyLife SubUV ParameterDynamic ColorScaleOverLife AccelerationConstant EventReceiverSpawn LocationEmitter | MI_EFX_FireWorks_PrismWheels_01_HD>M_EFX_DissolveOutline_Soft
+   Sparks Cloud lods 4 en True PSA_Square None local ParticleModuleTypeDataGpu | Lifetime Size ColorOverLife LocationPrimitiveSphere SizeMultiplyLife LocationEmitter AccelerationConstant ColorScaleOverLife AccelerationDrag VectorFieldLocal EventReceiverSpawn | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Initial Igniton lods 4 en False PSA_Rectangle None local - | Lifetime Size SizeMultiplyLife ParameterDynamic CameraOffset ColorOverLife Rotation | MI_EFX_Glow_01_Depth_03>M_EFX_RadialGradient_Additive
+## P_EFX_FireWorks_GoldSpark_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldSpark_Main_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L2_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Color Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldSpark_L2_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldSpark_L3_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_GoldCoreLime_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L2_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L4_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_GoldRayChry_HD fixed True (-100000, 100000, -100000, 100000)
+   Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldRayChry_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_LimeCoreDelay_HD fixed True (-100000, 100000, -100000, 100000)
+   L1_Dots lods 1 en True PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size LocationPrimitiveSphere Location Velocity AccelerationDrag AccelerationConstant ColorOverLife ColorScaleOverLife SizeMultiplyLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   L2_Main lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife | MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_MainA lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L3_MainB lods 1 en True PSA_FacingCameraPosition None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_GoldKamuro_HD fixed False (-1, 1, -1, 1)
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Color SizeMultiplyLife SizeMultiplyLife PivotOffset ParameterDynamic | MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Color SizeMultiplyLife ParameterDynamic PivotOffset | MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Color SizeMultiplyLife ParameterDynamic PivotOffset | MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Color SizeMultiplyLife ParameterDynamic PivotOffset | MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Color SizeMultiplyLife ParameterDynamic PivotOffset | MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition None local - | Lifetime Size Color SizeMultiplyLife PivotOffset ParameterDynamic AccelerationConstant | MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_SilverStrobeChry_HD fixed False (-1, 1, -1, 1)
+   Particle Emitter lods 1 en False PSA_Square None local - | Lifetime Size Color SizeMultiplyLife SizeMultiplyLife PivotOffset ParameterDynamic ColorScaleOverLife | MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Particle Emitter lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly local - | Lifetime Size Color SizeMultiplyLife SizeMultiplyLife ParameterDynamic ColorScaleOverLife Velocity AccelerationDrag AccelerationConstant | MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Glow_B lods 1 en True PSA_Rectangle None local - | Lifetime Size SizeMultiplyLife SizeMultiplyLife CameraOffset Rotation ColorOverLife | MI_EFX_Glow_01_Depth_03>M_EFX_RadialGradient_Additive
+   Flash lods 1 en True PSA_Square None local - | Lifetime Size SizeMultiplyLife ColorOverLife SizeMultiplyLife Rotation SizeMultiplyLife | MI_EFX_Glow_16>M_EFX_MainTex
+## P_EFX_FireWorks_RiseTrail_L_HD fixed True (-100000, 100000, -100000, 100000)
+   RiseLoop lods 1 en True PSA_Velocity None world - | Lifetime Size Velocity VelocityOverLifetime SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   TrailFar lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_L_Far_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   SparksFine lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparksTwinkle lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparksCoarse lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Embers lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   HeadGlow lods 1 en False PSA_Square None world - | Lifetime Size Location Velocity VelocityOverLifetime SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparkPops lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   LaunchGlow lods 1 en False PSA_Square None world - | Lifetime Size Location Velocity SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   LaunchSparks lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_RiseTrail_M_HD fixed True (-100000, 100000, -100000, 100000)
+   RiseLoop lods 1 en True PSA_Velocity None world - | Lifetime Size Velocity VelocityOverLifetime SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   TrailFar lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_M_Far_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   SparksFine lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparksTwinkle lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparksCoarse lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Embers lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   HeadGlow lods 1 en False PSA_Square None world - | Lifetime Size Location Velocity VelocityOverLifetime SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparkPops lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   LaunchGlow lods 1 en False PSA_Square None world - | Lifetime Size Location Velocity SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   LaunchSparks lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_RiseTrail_S_HD fixed True (-100000, 100000, -100000, 100000)
+   RiseLoop lods 1 en True PSA_Velocity None world - | Lifetime Size Velocity VelocityOverLifetime SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   TrailFar lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_S_Far_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   SparksFine lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparksTwinkle lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparksCoarse lods 1 en False PSA_Rectangle None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Embers lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   HeadGlow lods 1 en False PSA_Square None world - | Lifetime Size Location Velocity VelocityOverLifetime SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   SparkPops lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   LaunchGlow lods 1 en False PSA_Square None world - | Lifetime Size Location Velocity SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   LaunchSparks lods 1 en False PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Location Velocity Velocity AccelerationDrag AccelerationConstant SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_RiseTrail_XS_HD fixed False (-1, 1, -1, 1)
+   L1_TrailFull lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size SizeMultiplyLife OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_RiseTrail_Tiny_HD fixed True (-100000, 100000, -100000, 100000)
+   TrailFull lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD fixed False (-1, 1, -1, 1)
+   Glow_B lods 4 en True PSA_Rectangle None local - | Lifetime Size SizeMultiplyLife SizeMultiplyLife CameraOffset Rotation ColorOverLife | MI_EFX_Glow_01_Depth_03>M_EFX_RadialGradient_Additive
+   Second_Explode_01 lods 4 en True PSA_Square None local - | Lifetime Size SizeMultiplyLife Color ColorScaleOverLife ParameterDynamic AccelerationConstant SizeMultiplyLife SizeMultiplyLife | MI_EFX_Fireworks_10>M_EFX_DissolveOutline_Soft
+   Head lods 4 en True PSA_Square None local - | Lifetime Size SizeMultiplyLife Color ColorScaleOverLife ParameterDynamic AccelerationConstant SizeMultiplyLife | MI_EFX_Fireworks_11>M_EFX_DissolveOutline_Soft
+   Sphere_Particle lods 4 en True PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size SizeMultiplyLife Color AccelerationConstant ColorScaleOverLife LocationPrimitiveSphere AccelerationDrag | MI_EFX_Glow_21_Add>M_EFX_RadialGradient_Additive
+   Flash lods 4 en True PSA_Square None local - | Lifetime Size SizeMultiplyLife ColorOverLife SizeMultiplyLife Rotation SizeMultiplyLife | MI_EFX_Glow_16>M_EFX_MainTex
+   SparksTou_A lods 4 en True PSA_Velocity None world - | EventGenerator Lifetime Size SizeMultiplyLife LocationPrimitiveSphere AccelerationDrag SizeMultiplyLife AccelerationConstant Color ColorScaleOverLife | MI_EFX_Spark_09>M_EFX_MainTex
+   Sparks Cloud lods 4 en True PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size ColorOverLife LocationPrimitiveSphere SizeMultiplyLife Location LocationEmitter AccelerationConstant ColorScaleOverLife AccelerationDrag VectorFieldLocal | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+   Light Impulse lods 4 en True PSA_Square None local - | Lifetime Size ColorOverLife Light SizeMultiplyLife | None
+## P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD fixed True (-1500, 1500, -1500, 1500)
+   Particle Emitter lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Size ColorOverLife SizeMultiplyLife ParameterDynamic PivotOffset OrientationAxisLock SizeMultiplyLife ColorScaleOverLife | MI_EFX_Sparkler_RGBA_3x3_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Sparkler_Main lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Size ColorOverLife SizeMultiplyLife PivotOffset OrientationAxisLock SubUV | MI_EFX_Spark_66>M_EFX_MainTex
+   huoxing02 lods 1 en True PSA_Square None world ParticleModuleTypeDataGpu | Lifetime Size Rotation ColorOverLife Location AccelerationConstant LocationPrimitiveSphere VelocityCone AccelerationDrag SubUV VectorFieldLocal | MI_EFX_Sparks_Flicker_8x8_03>M_EFX_MainTex
+   Sparks_loop lods 1 en True PSA_Velocity None world ParticleModuleTypeDataGpu | Lifetime Size ColorOverLife SizeMultiplyLife SizeScaleBySpeed VelocityCone AccelerationConstant VectorFieldLocal AccelerationDrag | MI_EFX_Spark_15>M_EFX_MainTex
+   Sparks_loop lods 1 en True PSA_Velocity None world - | Lifetime Size ColorOverLife SizeScaleBySpeed VelocityCone AccelerationConstant AccelerationDrag PivotOffset SizeMultiplyLife | MI_EFX_Sparks_Streak_8x1_02>M_EFX_MainTex
+   Spark_Star_B lods 1 en True PSA_Rectangle RandomFlipUOnly world - | Lifetime Size ColorOverLife SubUV Rotation Location AccelerationConstant VelocityCone | MI_EFX_Sparkler_02>M_EFX_MainTex
+   Spark_Star_A lods 1 en True PSA_Rectangle RandomFlipUOnly world - | Lifetime Size ColorOverLife SubUV Rotation Location AccelerationConstant VelocityCone | MI_EFX_Sparkler_03>M_EFX_MainTex
+   Sparks_main lods 1 en True PSA_Rectangle None local - | Lifetime Size SizeMultiplyLife ColorOverLife SubUV SizeMultiplyLife LocationPrimitiveSphere Rotation VelocityCone AccelerationDrag AccelerationConstant | MI_EFX_Sparks_Sparkler_4x4_01>M_EFX_MainTex
+   Sparks_loop lods 1 en True PSA_Velocity RandomFlipUOnly local - | Lifetime Size SizeMultiplyLife ColorOverLife LocationPrimitiveSphere SubUV PivotOffset ColorScaleOverLife SizeMultiplyLife AccelerationDrag VelocityCone | MI_EFX_Sparks_Streak_4x2_01>M_EFX_MainTex
+   Trail_L1 lods 1 en True PSA_Square RandomFlipUV world - | SpawnPerUnit Size LocationEmitter Rotation SizeMultiplyLife SubUV ColorOverLife Lifetime RotationRate ParameterDynamic WindDirectionalSource AccelerationDrag | MI_EFX_SmokeSub_8x8_DepthFade_04_HD>M_EFX_MainTex_HD
+## P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD fixed True (-1500, 1500, -1500, 1500)
+   Sparks_loop lods 1 en True PSA_Velocity None world ParticleModuleTypeDataGpu | Lifetime Size ColorOverLife SizeMultiplyLife SizeScaleBySpeed VelocityCone AccelerationConstant VectorFieldLocal AccelerationDrag | MI_EFX_Spark_15>M_EFX_MainTex
+   Sparks_loop lods 1 en True PSA_Velocity None world - | Lifetime Size ColorOverLife SizeScaleBySpeed VelocityCone AccelerationConstant AccelerationDrag PivotOffset SizeMultiplyLife | MI_EFX_Sparks_Streak_8x1_02>M_EFX_MainTex
+   Spark_Star_B lods 1 en True PSA_Rectangle RandomFlipUOnly world - | Lifetime Size ColorOverLife SubUV Rotation Location AccelerationConstant VelocityCone | MI_EFX_Sparkler_02>M_EFX_MainTex
+   Spark_Star_A lods 1 en True PSA_Rectangle RandomFlipUOnly world - | Lifetime Size ColorOverLife SubUV Rotation Location AccelerationConstant VelocityCone | MI_EFX_Sparkler_03>M_EFX_MainTex
+   Trail_L1 lods 1 en True PSA_Square RandomFlipUV world - | SpawnPerUnit Size LocationEmitter Rotation SizeMultiplyLife SubUV ColorOverLife Lifetime RotationRate ParameterDynamic WindDirectionalSource AccelerationDrag | MI_EFX_SmokeSub_8x8_DepthFade_04_HD>M_EFX_MainTex_HD
+## P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD fixed True (-1000, 1000, -1000, 1000)
+   Sparks_Flash lods 4 en True PSA_Square RandomFlipUV local - | Lifetime Size ColorOverLife AccelerationConstant SubUV Rotation CameraOffset | MI_EFX_Sparks_Sparkler_4x4_02>M_EFX_MainTex
+   Streak lods 4 en True PSA_Velocity RandomFlipUVIndependent world - | Lifetime Size ColorOverLife SizeScaleBySpeed VelocityCone AccelerationConstant SubUV PivotOffset SizeMultiplyLife ColorScaleOverLife AccelerationDrag CameraOffset | MI_EFX_Sparks_Streak_8x1_02>M_EFX_MainTex
+   Sparks_loop lods 4 en True PSA_Velocity RandomFlipUOnly world - | Lifetime Size SizeMultiplyLife ColorOverLife LocationPrimitiveSphere SubUV PivotOffset ColorScaleOverLife SizeMultiplyLife AccelerationDrag CameraOffset | MI_EFX_Sparks_Streak_4x2_01>M_EFX_MainTex
+   Sparks_main lods 4 en True PSA_Rectangle None world - | Lifetime Size SizeMultiplyLife ColorOverLife AccelerationConstant SubUV SizeMultiplyLife LocationPrimitiveSphere AccelerationDrag Rotation CameraOffset | MI_EFX_Sparks_Sparkler_4x4_01>M_EFX_MainTex
+   Sparks_main lods 4 en True PSA_Rectangle RandomFlipUOnly world ParticleModuleTypeDataGpu | Lifetime Size ColorOverLife AccelerationConstant SizeMultiplyLife LocationPrimitiveSphere Rotation SubUV AccelerationDrag | MI_EFX_Sparkler_02>M_EFX_MainTex
+   Light Impulse lods 4 en True PSA_Square None world - | Lifetime Size ColorOverLife Light SizeMultiplyLife Location | None
+## P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD fixed True (-1000, 1000, -1500, 1500)
+   Particle Emitter lods 4 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Size ColorOverLife SizeMultiplyLife ParameterDynamic PivotOffset OrientationAxisLock SizeMultiplyLife ColorScaleOverLife | MI_EFX_Sparkler_RGBA_3x3_01_HD>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   Sparks_main lods 4 en True PSA_Rectangle None local - | Lifetime Size SizeMultiplyLife ColorOverLife SubUV SizeMultiplyLife LocationPrimitiveSphere Rotation VelocityCone AccelerationDrag AccelerationConstant | MI_EFX_Sparks_Sparkler_4x4_01>M_EFX_MainTex
+## P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD fixed True (-2000, 2000, -2000, 2000)
+   QD1 lods 1 en True PSA_Velocity None world - | Lifetime Size Color ColorScaleOverLife Location Velocity SizeScaleBySpeed VelocityCone SizeMultiplyLife AccelerationConstant PivotOffset SubUV | MI_EFX_Sparks_Streak_8x1_02>M_EFX_MainTex
+   QD1 lods 1 en True PSA_Velocity None world - | Lifetime Size Color ColorScaleOverLife SizeScaleBySpeed AccelerationConstant SizeMultiplyLife VelocityCone PivotOffset SubUV AccelerationDrag | MI_EFX_Sparks_Streak_8x1_02>M_EFX_MainTex
+   Particle Emitter lods 1 en True PSA_Rectangle None local - | Lifetime Size ColorOverLife SubUV SizeMultiplyLife SizeMultiplyLife ParameterDynamic PivotOffset OrientationAxisLock | MI_EFX_Spark_03_dissolve1>M_EFX_DissolveOutline_Soft
+   Particle Emitter lods 1 en True PSA_Rectangle None world - | Lifetime Size ColorOverLife SubUV SizeMultiplyLife SizeMultiplyLife ParameterDynamic | MI_EFX_Glow_43>M_EFX_MainTex
+## P_EFX_FireWorks_LittleGold_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleGold_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_LittleSilver_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleSilver_GinKamuro_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_LittleCrackle_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleCrackle_Main_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_LittleCombo_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_LittleCombo_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Comet_Layers_M fixed False (-1, 1, -1, 1)
+   L1_TrailFull lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Comet_Layers_L1_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Silver3_Layers_S_M fixed False (-1, 1, -1, 1)
+   TrailFull lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size SizeMultiplyLife OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Silver3_Layers_S_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_SilverChry_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_SilverChry_GinKamuro_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Crackle_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife | MI_EFX_FireWorks_Crackle_Main_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_Flash lods 1 en True PSA_Square None world - | Lifetime Size Location SizeMultiplyLife ColorOverLife ColorScaleOverLife | MI_EFX_Spark_16_NoCameraDepthFade>M_EFX_MainTex
+## P_EFX_FireWorks_Glitter_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_Glitter_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_Strobe_M fixed True (-100000, 100000, -100000, 100000)
+   L1_Main lods 1 en True PSA_FacingCameraPosition RandomFlipUOnly world - | Lifetime Color_Seeded Size Location SizeMultiplyLife ParameterDynamic ColorScaleOverLife | MI_EFX_FireWorks_Strobe_Strobe_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_GoldRayChry_M fixed True (-100000, 100000, -100000, 100000)
+   Main lods 1 en True PSA_Rectangle None world - | Lifetime Size Location ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_GoldRayChry_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_YonshakuKamuro_M fixed True (-100000, 100000, -100000, 100000)
+   L1_MainA lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife | MI_EFX_FireWorks_YonshakuKamuro_Main_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+   L1_MainB lods 1 en True PSA_Rectangle None world - | Lifetime Size Location SizeMultiplyLife ParameterDynamic ColorOverLife ColorScaleOverLife | MI_EFX_FireWorks_YonshakuKamuro_Main_02>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_RiseTrail_L_M fixed False (-100000, 100000, -100000, 100000)
+   TrailFull lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_L_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_RiseTrail_M_M fixed False (-100000, 100000, -100000, 100000)
+   TrailFull lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_M_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_RiseTrail_S_M fixed False (-100000, 100000, -100000, 100000)
+   TrailFull lods 1 en True PSA_Rectangle RandomFlipUOnly local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_S_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_RiseTrail_XS_M fixed True (-100000, 100000, -100000, 100000)
+   L1_TrailFull lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size SizeMultiplyLife OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_XS_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit
+## P_EFX_FireWorks_RiseTrail_Tiny_M fixed True (-100000, 100000, -100000, 100000)
+   TrailFull lods 1 en True PSA_Rectangle None local - | Lifetime Location Velocity Size OrientationAxisLock ParameterDynamic ColorOverLife PivotOffset ColorScaleOverLife | MI_EFX_FireWorks_RiseTrail_Tiny_Full_01>M_EFX_FlipBookSuperPack_FireBase_Unlit

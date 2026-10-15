@@ -1,0 +1,5444 @@
+{
+"root": "D:/ProjectTextures/FireWorksLab",
+"count": 153,
+"packages": [
+{
+"file": "BlueBotan/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "BlueBotan",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791297192.0,
+"emitters": [
+{
+"name": "L1_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L1_dot"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+},
+{
+"name": "L4_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L4_main"
+}
+]
+},
+{
+"file": "BlueBotan/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "BlueBotan",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791297192.0,
+"emitters": []
+},
+{
+"file": "Combo/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "Combo",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.0",
+"mtime": 1791187898.7948713,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "Combo/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "Combo",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.0",
+"mtime": 1791187898.8068988,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "Crackle/cascade.json",
+"name": "Crackle_05",
+"system": null,
+"base": "Crackle",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.53",
+"mtime": 1791555724.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "Crackle/cascade_mobile.json",
+"name": "Crackle_05_Mobile",
+"system": null,
+"base": "Crackle",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.53",
+"mtime": 1791555724.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "Crackle_01/cascade.json",
+"name": "Crackle_01",
+"system": null,
+"base": "Crackle_01",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.3.7",
+"mtime": 1791111738.0,
+"emitters": [
+{
+"name": "Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "main"
+}
+]
+},
+{
+"file": "Crackle_01/cascade_mobile.json",
+"name": "Crackle_01_Mobile",
+"system": null,
+"base": "Crackle_01",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.3.7",
+"mtime": 1791111738.0,
+"emitters": [
+{
+"name": "Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "main"
+}
+]
+},
+{
+"file": "GoldCoreLime/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "GoldCoreLime",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.53",
+"mtime": 1791556760.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+},
+{
+"name": "L4_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L4_main"
+}
+]
+},
+{
+"file": "GoldCoreLime/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "GoldCoreLime",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.53",
+"mtime": 1791556760.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+},
+{
+"name": "L4_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L4_main"
+}
+]
+},
+{
+"file": "GoldRay/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "GoldRay",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791298522.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "GoldRay/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "GoldRay",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791298522.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "GoldRay/GoldRay/cascade.json",
+"name": "-A",
+"system": null,
+"base": "GoldRay",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.33",
+"mtime": 1791370696.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "GoldRay/GoldRay/cascade_mobile.json",
+"name": "-A_Mobile",
+"system": null,
+"base": "GoldRay",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.33",
+"mtime": 1791370696.0,
+"emitters": []
+},
+{
+"file": "HN2/cascade.json",
+"name": "HN2",
+"system": null,
+"base": "HN2",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.3.7",
+"mtime": 1791109072.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "HN2/cascade_mobile.json",
+"name": "HN2_Mobile",
+"system": null,
+"base": "HN2",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.3.7",
+"mtime": 1791109072.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "LimeCoreDelay/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "LimeCoreDelay",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.36",
+"mtime": 1791386918.0,
+"emitters": [
+{
+"name": "L1_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L1_dot"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+}
+]
+},
+{
+"file": "LimeCoreDelay/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "LimeCoreDelay",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.36",
+"mtime": 1791386918.0,
+"emitters": []
+},
+{
+"file": "LimeStar/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "LimeStar",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.35",
+"mtime": 1791380336.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_mainA"
+},
+{
+"name": "L2_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_mainB"
+},
+{
+"name": "L3_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L3_dot"
+}
+]
+},
+{
+"file": "LimeStar/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "LimeStar",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.35",
+"mtime": 1791380336.0,
+"emitters": []
+},
+{
+"file": "MieshinKamuroSaki/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "MieshinKamuroSaki",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.32",
+"mtime": 1791368798.0,
+"emitters": [
+{
+"name": "L1_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainA"
+},
+{
+"name": "L1_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainB"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+},
+{
+"name": "L3_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L3_dot"
+},
+{
+"name": "L4_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L4_dot"
+},
+{
+"name": "L5_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L5_main"
+}
+]
+},
+{
+"file": "MieshinKamuroSaki/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "MieshinKamuroSaki",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.32",
+"mtime": 1791368798.0,
+"emitters": [
+{
+"name": "L1_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainA"
+},
+{
+"name": "L1_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainB"
+},
+{
+"name": "L2_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_mainA"
+},
+{
+"name": "L2_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_mainB"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+},
+{
+"name": "L4_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L4_main"
+},
+{
+"name": "L5_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L5_main"
+}
+]
+},
+{
+"file": "RiseTrail_L/cascade.json",
+"name": "RT6L___________GPU_____6__",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.1",
+"mtime": 1791191014.2443743,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_L/cascade_mobile.json",
+"name": "RT6L___________GPU_____6___Mobile",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.1",
+"mtime": 1791191014.2613745,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_L (2)/cascade.json",
+"name": "RiseTrail_L",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.17",
+"mtime": 1791292450.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_L (2)/cascade_mobile.json",
+"name": "RiseTrail_L_Mobile",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.17",
+"mtime": 1791292450.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_L (3)/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.29",
+"mtime": 1791354208.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_L (3)/cascade_mobile.json",
+"name": "RiseTrail_M_Mobile",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.29",
+"mtime": 1791354208.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_M/cascade.json",
+"name": "RT4M_____________4__",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.3.2",
+"mtime": 1791086632.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "RiseFade",
+"align": "Velocity",
+"gpu": false,
+"material": "fade"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksMid",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_M/cascade_mobile.json",
+"name": "RT4M_____________4___Mobile",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.3.2",
+"mtime": 1791086632.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "RiseFade",
+"align": "Velocity",
+"gpu": false,
+"material": "fade"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksMid",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_M (1)/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791293822.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_M (1)/cascade_mobile.json",
+"name": "RiseTrail_M_Mobile",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791293822.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_M (2)/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.29",
+"mtime": 1791354226.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_M (2)/cascade_mobile.json",
+"name": "RiseTrail_M_Mobile",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.29",
+"mtime": 1791354226.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_S (1)/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791293834.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_S (1)/cascade_mobile.json",
+"name": "RiseTrail_M_Mobile",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.19",
+"mtime": 1791293834.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_S (2)/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.29",
+"mtime": 1791354236.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "RiseTrail_S (2)/cascade_mobile.json",
+"name": "RiseTrail_M_Mobile",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.29",
+"mtime": 1791354236.0,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "ShinKiku/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "ShinKiku",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.17",
+"mtime": 1791288882.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "ShinKiku/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "ShinKiku",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.17",
+"mtime": 1791288882.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "TR2L_____V5/cascade.json",
+"name": "TR2L_____V5",
+"system": null,
+"base": null,
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 3.7",
+"mtime": 1790776489.4415052,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "Fade30",
+"align": "Velocity",
+"gpu": false,
+"material": "fade30"
+}
+]
+},
+{
+"file": "TR2L_____V5/cascade_mobile.json",
+"name": "TR2L_____V5",
+"system": null,
+"base": null,
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 3.7",
+"mtime": 1790776489.465663,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "Fade30",
+"align": "Velocity",
+"gpu": false,
+"material": "fade30"
+}
+]
+},
+{
+"file": "Yaeshin/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "Yaeshin",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.5",
+"mtime": 1791203126.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+},
+{
+"name": "L3_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L3_dot"
+}
+]
+},
+{
+"file": "Yaeshin/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "Yaeshin",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.5",
+"mtime": 1791203126.0,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+},
+{
+"file": "YonshakuKamuro/cascade.json",
+"name": "HK10",
+"system": null,
+"base": "YonshakuKamuro",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.0",
+"mtime": 1791181334.0,
+"emitters": [
+{
+"name": "L1_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainA"
+},
+{
+"name": "L1_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainB"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "YonshakuKamuro/cascade_mobile.json",
+"name": "HK10_Mobile",
+"system": null,
+"base": "YonshakuKamuro",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.5.0",
+"mtime": 1791181334.0,
+"emitters": [
+{
+"name": "L1_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainA"
+},
+{
+"name": "L1_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainB"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "尾缀/中/RiseTrailPhys_M/revisions/472c3ec02f47c12d1fa1/PC/cascade.json",
+"name": "RT6M___________GPU_____6__",
+"system": null,
+"base": "RiseTrailPhys_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791620247.4528422,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/中/RiseTrailPhys_M/revisions/472c3ec02f47c12d1fa1/手机/cascade_mobile.json",
+"name": "RT6M___________GPU_____6___Mobile",
+"system": null,
+"base": "RiseTrailPhys_M",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791620247.4618752,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/中/RiseTrail_M/revisions/8ca24f3f335761e9a5c2/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791815685.5841525,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/中/RiseTrail_M/revisions/8ca24f3f335761e9a5c2/手机/cascade_mobile.json",
+"name": "RiseTrail_M_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791815685.5902889,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/中/RiseTrail_M/revisions/b4994b2d3f6fa743e7c3/PC/cascade.json",
+"name": "RiseTrail",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734892.527208,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/中/RiseTrail_M/revisions/b4994b2d3f6fa743e7c3/手机/cascade_mobile.json",
+"name": "RiseTrail_Mobile",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734892.5428972,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_Hero_L/revisions/004bd2f24f5f28506b10/PC/cascade.json",
+"name": "RiseTrail_Hero",
+"system": null,
+"base": "RiseTrail_Hero_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734995.4338808,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_Hero_L/revisions/004bd2f24f5f28506b10/手机/cascade_mobile.json",
+"name": "RiseTrail_Hero_Mobile",
+"system": null,
+"base": "RiseTrail_Hero_L",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734995.4489112,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_L/revisions/c980418669800515b260/PC/cascade.json",
+"name": "RiseTrail_L",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791815685.9394288,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_L/revisions/c980418669800515b260/手机/cascade_mobile.json",
+"name": "RiseTrail_L_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791815685.9444273,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_L/revisions/d11c724a11587dd83029/PC/cascade.json",
+"name": "RiseTrail",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734944.9638793,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_L/revisions/d11c724a11587dd83029/手机/cascade_mobile.json",
+"name": "RiseTrail_Mobile",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734944.9788957,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_L_W80/revisions/7e289eb0c28bcd84b1e9/PC/cascade.json",
+"name": "RiseTrail_M_W80",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791621226.488127,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_L_W80/revisions/7e289eb0c28bcd84b1e9/手机/cascade_mobile.json",
+"name": "RiseTrail_M_Mobile_W80",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791621226.4989529,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_M/revisions/df17fb9218e6d2382b12/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791987491.879992,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/大/RiseTrail_M/revisions/df17fb9218e6d2382b12/手机/cascade_mobile.json",
+"name": "RiseTrail_M_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791987491.886499,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/小/Comet3_Layers/revisions/1817ea86bdd37e1d4351/PC/Comet3_Layers/cascade.json",
+"name": "CSLRC",
+"system": null,
+"base": "Comet3_Layers",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.84",
+"mtime": 1791948494.7158835,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "尾缀/小/Comet3_Layers/revisions/1817ea86bdd37e1d4351/手机/Comet3_Layers/cascade_mobile.json",
+"name": "Comet3_Layers_M",
+"system": null,
+"base": "Comet3_Layers",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.84",
+"mtime": 1791948494.7203827,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+},
+{
+"name": "L2_RiseHead",
+"align": "Square",
+"gpu": false,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "尾缀/小/Comet3_RT6/revisions/8505c561c57904cad271/PC/Comet3_RT6/cascade.json",
+"name": "CS3C",
+"system": null,
+"base": "Comet3_RT6",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.77",
+"mtime": 1791884011.8729842,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+},
+{
+"name": "L2_RiseHead",
+"align": "Velocity",
+"gpu": false,
+"material": "L2_full"
+}
+]
+},
+{
+"file": "尾缀/小/Comet3_RT6/revisions/8505c561c57904cad271/手机/Comet3_RT6/cascade_mobile.json",
+"name": "Comet3_RT6_M",
+"system": null,
+"base": "Comet3_RT6",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.77",
+"mtime": 1791884011.8784914,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+},
+{
+"name": "L2_RiseHead",
+"align": "Square",
+"gpu": false,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "尾缀/小/Comet_Layers/revisions/c325a9e8d33d5ff2c4e8/PC/Comet_Layers/cascade.json",
+"name": "CSLRC",
+"system": null,
+"base": "Comet_Layers",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.84",
+"mtime": 1791948532.5624292,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "尾缀/小/Comet_Layers/revisions/c325a9e8d33d5ff2c4e8/手机/Comet_Layers/cascade_mobile.json",
+"name": "Comet_Layers_M",
+"system": null,
+"base": "Comet_Layers",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.84",
+"mtime": 1791948532.567459,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+},
+{
+"name": "L2_RiseHead",
+"align": "Square",
+"gpu": false,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_S/revisions/50764d6d0def08376683/PC/cascade.json",
+"name": "RiseTrail",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734856.6994987,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_S/revisions/50764d6d0def08376683/手机/cascade_mobile.json",
+"name": "RiseTrail_Mobile",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791734856.7140126,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Velocity",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_S/revisions/c7a0bca096783c277769/PC/cascade.json",
+"name": "RiseTrail_S",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791815685.2583902,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_S/revisions/c7a0bca096783c277769/手机/cascade_mobile.json",
+"name": "RiseTrail_S_M",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791815685.2630851,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_Tiny/revisions/1dcfcd4e306781528f48/PC/cascade.json",
+"name": "RiseTrail_Tiny",
+"system": null,
+"base": "RiseTrail_Tiny",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791981234.5816295,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_Tiny/revisions/1dcfcd4e306781528f48/手机/cascade_mobile.json",
+"name": "RiseTrail_Tiny_M",
+"system": null,
+"base": "RiseTrail_Tiny",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791981234.5889673,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_XS/revisions/3604cca2663a79f84d34/PC/RiseTrail_XS/cascade.json",
+"name": "-_-XS",
+"system": null,
+"base": "RiseTrail_XS",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.96",
+"mtime": 1791975607.9073875,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_XS/revisions/3604cca2663a79f84d34/手机/RiseTrail_XS/cascade_mobile.json",
+"name": "RiseTrail_XS_M",
+"system": null,
+"base": "RiseTrail_XS",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.96",
+"mtime": 1791975607.9123907,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_XS/revisions/39a50086cc34bee09b0a/PC/RiseTrail_XS/cascade.json",
+"name": "-_-XS",
+"system": null,
+"base": "RiseTrail_XS",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.96",
+"mtime": 1791975460.7009277,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_XS/revisions/39a50086cc34bee09b0a/手机/RiseTrail_XS/cascade_mobile.json",
+"name": "RiseTrail_XS_M",
+"system": null,
+"base": "RiseTrail_XS",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.96",
+"mtime": 1791975460.7064533,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_XS/revisions/9e76456d3b93459b41f0/PC/RiseTrail_XS/cascade.json",
+"name": "-_-XS",
+"system": null,
+"base": "RiseTrail_XS",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.96",
+"mtime": 1791975746.072327,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+}
+]
+},
+{
+"file": "尾缀/小/RiseTrail_XS/revisions/9e76456d3b93459b41f0/手机/RiseTrail_XS/cascade_mobile.json",
+"name": "RiseTrail_XS_M",
+"system": null,
+"base": "RiseTrail_XS",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.96",
+"mtime": 1791975746.0778503,
+"emitters": [
+{
+"name": "L1_TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_full"
+}
+]
+},
+{
+"file": "尾缀/小/Silver3_Layers_S/revisions/603ece17457ef20d0905/PC/cascade.json",
+"name": "CSLRS_Silver_3_1____",
+"system": null,
+"base": "Silver3_Layers_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.84",
+"mtime": 1791944518.4861984,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/小/Silver3_Layers_S/revisions/603ece17457ef20d0905/手机/cascade_mobile.json",
+"name": "Silver3_Layers_S_M",
+"system": null,
+"base": "Silver3_Layers_S",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.84",
+"mtime": 1791944518.491724,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/小/Silver3_S/revisions/d5803b7581b88cc76b10/PC/cascade.json",
+"name": "Silver3_S",
+"system": null,
+"base": "Silver3_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.78",
+"mtime": 1791890431.379183,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/小/Silver3_S/revisions/d5803b7581b88cc76b10/手机/cascade_mobile.json",
+"name": "Silver3_S_M",
+"system": null,
+"base": "Silver3_S",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.78",
+"mtime": 1791890431.3831947,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_L/revisions/57c081954f44b78b364f/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.72",
+"mtime": 1791819611.2042794,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_L/revisions/57c081954f44b78b364f/手机/cascade_mobile.json",
+"name": "RiseTrail_L_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.72",
+"mtime": 1791819611.2112794,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_L/revisions/920e5697d7ccc647ee2f/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.75",
+"mtime": 1791874104.4554617,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_L/revisions/920e5697d7ccc647ee2f/手机/cascade_mobile.json",
+"name": "RiseTrail_L_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.75",
+"mtime": 1791874104.4614668,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_L/revisions/f6f44896a5a6f277eb33/PC/cascade.json",
+"name": "RT6L___________GPU_____6__",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791816932.072168,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_L/revisions/f6f44896a5a6f277eb33/手机/cascade_mobile.json",
+"name": "RiseTrail_L_M",
+"system": null,
+"base": "RiseTrail_L",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791816932.0784857,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_M/revisions/3719731a9545d2305650/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.75",
+"mtime": 1791872811.3062515,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_M/revisions/3719731a9545d2305650/手机/cascade_mobile.json",
+"name": "RiseTrail_M_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.75",
+"mtime": 1791872811.3117764,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_M/revisions/42bdc7ae5928fe222868/PC/cascade.json",
+"name": "RT6M___________GPU_____6__",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791816726.8284428,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_M/revisions/42bdc7ae5928fe222868/手机/cascade_mobile.json",
+"name": "RiseTrail_M_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791816726.8354425,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_M/revisions/99c627dc3dbcb9b820f4/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791818064.9924524,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_M/revisions/99c627dc3dbcb9b820f4/手机/cascade_mobile.json",
+"name": "RiseTrail_M_M",
+"system": null,
+"base": "RiseTrail_M",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791818064.9985137,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_S/revisions/1813ed9c36db7a1b34ab/PC/cascade.json",
+"name": "RiseTrail_M",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.75",
+"mtime": 1791873090.0759294,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_S/revisions/1813ed9c36db7a1b34ab/手机/cascade_mobile.json",
+"name": "RiseTrail_S_M",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.75",
+"mtime": 1791873090.0814276,
+"emitters": [
+{
+"name": "TrailFull",
+"align": "Rectangle",
+"gpu": false,
+"material": "full"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_S/revisions/b7dbd0d2d400b37548b7/PC/cascade.json",
+"name": "RT6S___________GPU_____6__",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791816609.387362,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+},
+{
+"name": "TrailFar",
+"align": "Rectangle",
+"gpu": false,
+"material": "far"
+},
+{
+"name": "SparksFine",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksTwinkle",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "SparksCoarse",
+"align": "Rectangle",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "Embers",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "HeadGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "SparkPops",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+},
+{
+"name": "LaunchGlow",
+"align": "Square",
+"gpu": false,
+"material": "dot"
+},
+{
+"name": "LaunchSparks",
+"align": "Square",
+"gpu": true,
+"material": "dot"
+}
+]
+},
+{
+"file": "尾缀/未分类/RiseTrail_S/revisions/b7dbd0d2d400b37548b7/手机/cascade_mobile.json",
+"name": "RiseTrail_S_M",
+"system": null,
+"base": "RiseTrail_S",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.70",
+"mtime": 1791816609.3943605,
+"emitters": [
+{
+"name": "RiseLoop",
+"align": "Velocity",
+"gpu": false,
+"material": "loop"
+}
+]
+},
+{
+"file": "烟花/中/GlitterChry_D150/revisions/7b1a8207ad2117f3170b/PC/GlitterChry_D150/cascade.json",
+"name": "QA20",
+"system": "GlitterChry_D150",
+"base": "GlitterChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.88",
+"mtime": 1791962961.7467036,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+}
+]
+},
+{
+"file": "烟花/中/GlitterChry_D150/revisions/7b1a8207ad2117f3170b/手机/GlitterChry_D150/cascade_mobile.json",
+"name": "GlitterChry_D150_M",
+"system": "GlitterChry_D150",
+"base": "GlitterChry",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.88",
+"mtime": 1791962961.7537293,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/中/GlitterChry_D150/revisions/b3238a7d06029a36a3ae/PC/GlitterChry_D150/cascade.json",
+"name": "QA20",
+"system": "GlitterChry_D150",
+"base": "GlitterChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.88",
+"mtime": 1791963119.0456955,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+}
+]
+},
+{
+"file": "烟花/中/GlitterChry_D150/revisions/b3238a7d06029a36a3ae/手机/GlitterChry_D150/cascade_mobile.json",
+"name": "GlitterChry_D150_M",
+"system": "GlitterChry_D150",
+"base": "GlitterChry",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.88",
+"mtime": 1791963119.0521944,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldChrysanthemum_03_D150/revisions/08a16d8c9a95399feb40/PC/GoldChrysanthemum_03_D150/cascade.json",
+"name": "-",
+"system": "GoldChrysanthemum_03_D150",
+"base": "GoldChrysanthemum_03",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791989873.7386575,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldChrysanthemum_03_D150/revisions/08a16d8c9a95399feb40/手机/GoldChrysanthemum_03_D150/cascade_mobile.json",
+"name": "GoldChrysanthemum_03_D150_M",
+"system": "GoldChrysanthemum_03_D150",
+"base": "GoldChrysanthemum_03",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791989873.7441597,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldChrysanthemum_03_D150/revisions/fec6d8e50e107db58cf6/PC/GoldChrysanthemum_03_D150/cascade.json",
+"name": "-",
+"system": "GoldChrysanthemum_03_D150",
+"base": "GoldChrysanthemum_03",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791981817.3076482,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldChrysanthemum_03_D150/revisions/fec6d8e50e107db58cf6/手机/GoldChrysanthemum_03_D150/cascade_mobile.json",
+"name": "GoldChrysanthemum_03_D150_M",
+"system": "GoldChrysanthemum_03_D150",
+"base": "GoldChrysanthemum_03",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791981817.314825,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldSpark/revisions/17d959903d5595452746/PC/GoldSpark/cascade.json",
+"name": "-",
+"system": null,
+"base": "GoldSpark",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791989912.8650248,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldSpark/revisions/17d959903d5595452746/手机/GoldSpark/cascade_mobile.json",
+"name": "GoldSpark_M",
+"system": null,
+"base": "GoldSpark",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791989912.8720288,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldSpark/revisions/9a2abac1605d094424f3/PC/GoldSpark/cascade.json",
+"name": "-",
+"system": null,
+"base": "GoldSpark",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.105",
+"mtime": 1792071045.073152,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+},
+{
+"file": "烟花/中/GoldSpark/revisions/9a2abac1605d094424f3/手机/GoldSpark/cascade_mobile.json",
+"name": "GoldSpark_M",
+"system": null,
+"base": "GoldSpark",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.105",
+"mtime": 1792071045.080166,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/中/QA20_D150/revisions/7b7064a4ed5ebfd3dcb4/PC/QA20_D150/cascade.json",
+"name": "QA20",
+"system": "QA20_D150",
+"base": "QA20",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.88",
+"mtime": 1791962815.1128986,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+}
+]
+},
+{
+"file": "烟花/中/QA20_D150/revisions/7b7064a4ed5ebfd3dcb4/手机/QA20_D150/cascade_mobile.json",
+"name": "QA20_D150_M",
+"system": "QA20_D150",
+"base": "QA20",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.88",
+"mtime": 1791962815.121445,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/大/GoldRayChry/revisions/1c2bffc44943faa251e6/PC/cascade.json",
+"name": "GoldRayChry",
+"system": null,
+"base": "GoldRayChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991363.491091,
+"emitters": [
+{
+"name": "Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "main"
+}
+]
+},
+{
+"file": "烟花/大/GoldRayChry/revisions/1c2bffc44943faa251e6/手机/cascade_mobile.json",
+"name": "GoldRayChry_M",
+"system": null,
+"base": "GoldRayChry",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991363.49711,
+"emitters": [
+{
+"name": "Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "main"
+}
+]
+},
+{
+"file": "烟花/大/GoldRayChry/revisions/838186ad0cbfc1b4442f/PC/cascade.json",
+"name": "GoldRayChry",
+"system": null,
+"base": "GoldRayChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991350.2914767,
+"emitters": [
+{
+"name": "Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "main"
+}
+]
+},
+{
+"file": "烟花/大/GoldRayChry/revisions/838186ad0cbfc1b4442f/手机/cascade_mobile.json",
+"name": "GoldRayChry_M",
+"system": null,
+"base": "GoldRayChry",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991350.2970252,
+"emitters": [
+{
+"name": "Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "main"
+}
+]
+},
+{
+"file": "烟花/大/YonshakuKamuro/revisions/0e31af841d6954fcd76d/PC/YonshakuKamuro/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "YonshakuKamuro",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791992809.706071,
+"emitters": [
+{
+"name": "L1_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainA"
+},
+{
+"name": "L1_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainB"
+},
+{
+"name": "L2_Dots",
+"align": "Square",
+"gpu": true,
+"material": "L2_dot"
+}
+]
+},
+{
+"file": "烟花/大/YonshakuKamuro/revisions/0e31af841d6954fcd76d/手机/YonshakuKamuro/cascade_mobile.json",
+"name": "YonshakuKamuro_M",
+"system": null,
+"base": "YonshakuKamuro",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791992809.7170203,
+"emitters": [
+{
+"name": "L1_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainA"
+},
+{
+"name": "L1_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_mainB"
+}
+]
+},
+{
+"file": "烟花/小/Crackle/revisions/28daf4753656cc9ddce9/PC/Crackle/cascade.json",
+"name": "Crackle",
+"system": null,
+"base": "Crackle",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791993201.054879,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/Crackle/revisions/28daf4753656cc9ddce9/手机/Crackle/cascade_mobile.json",
+"name": "Crackle_M",
+"system": null,
+"base": "Crackle",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791993201.0606585,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/Crackle/revisions/99a1b26a6c16c7eb3f00/PC/Crackle/cascade.json",
+"name": "-",
+"system": null,
+"base": "Crackle",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988036.3161063,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/Crackle/revisions/99a1b26a6c16c7eb3f00/手机/Crackle/cascade_mobile.json",
+"name": "Crackle_M",
+"system": null,
+"base": "Crackle",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988036.321722,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/Glitter/revisions/3dcf49db4b577f8c0922/PC/Glitter/cascade.json",
+"name": "-",
+"system": null,
+"base": "Glitter",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791985819.893015,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/Glitter/revisions/3dcf49db4b577f8c0922/手机/Glitter/cascade_mobile.json",
+"name": "Glitter_M",
+"system": null,
+"base": "Glitter",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791985819.9000332,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/Lime/revisions/e6fee84bc5f26c210e09/PC/Lime/cascade.json",
+"name": "-_-A",
+"system": null,
+"base": "Lime",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988877.6529465,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+}
+]
+},
+{
+"file": "烟花/小/LimeCoreDelay/revisions/8110a43aa4ed204025d0/PC/LimeCoreDelay/cascade.json",
+"name": "-_-A",
+"system": null,
+"base": "LimeCoreDelay",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988861.4941697,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_MainA",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainA"
+},
+{
+"name": "L3_MainB",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_mainB"
+}
+]
+},
+{
+"file": "烟花/小/LittleCombo/revisions/a1e1a3a5d4416a279157/PC/LittleCombo/cascade.json",
+"name": "-",
+"system": null,
+"base": "LittleCombo",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988383.763421,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/LittleCombo/revisions/a1e1a3a5d4416a279157/手机/LittleCombo/cascade_mobile.json",
+"name": "LittleCombo_M",
+"system": null,
+"base": "LittleCombo",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988383.7689383,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/LittleCrackle/revisions/fc5a1c4f192c576415fd/PC/LittleCrackle/cascade.json",
+"name": "-",
+"system": null,
+"base": "LittleCrackle",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988055.130238,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/LittleCrackle/revisions/fc5a1c4f192c576415fd/手机/LittleCrackle/cascade_mobile.json",
+"name": "LittleCrackle_M",
+"system": null,
+"base": "LittleCrackle",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791988055.1357665,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/LittleGold/revisions/39b4a60d9feac1cd4b4c/PC/LittleGold/cascade.json",
+"name": "-",
+"system": null,
+"base": "LittleGold",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791989551.052579,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/LittleGold/revisions/39b4a60d9feac1cd4b4c/手机/LittleGold/cascade_mobile.json",
+"name": "LittleGold_M",
+"system": null,
+"base": "LittleGold",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791989551.0588,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/LittleSilver/revisions/9e45a97f443b12089b19/PC/LittleSilver/cascade.json",
+"name": "-",
+"system": null,
+"base": "LittleSilver",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791985988.4144895,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/LittleSilver/revisions/9e45a97f443b12089b19/手机/LittleSilver/cascade_mobile.json",
+"name": "LittleSilver_M",
+"system": null,
+"base": "LittleSilver",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791985988.419306,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/SilverChry/revisions/d114e23e14681ce74079/PC/SilverChry/cascade.json",
+"name": "-",
+"system": null,
+"base": "SilverChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791986090.1991704,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/SilverChry/revisions/d114e23e14681ce74079/手机/SilverChry/cascade_mobile.json",
+"name": "SilverChry_M",
+"system": null,
+"base": "SilverChry",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791986090.2047613,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L1_Flash",
+"align": "Square",
+"gpu": false,
+"material": "L1_flash"
+}
+]
+},
+{
+"file": "烟花/小/Strobe_D90/revisions/afe5eaf200fefe56279e/PC/Strobe_D90/cascade.json",
+"name": "-_-Strobe",
+"system": "Strobe_D90",
+"base": "Strobe",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.94",
+"mtime": 1791969493.2075636,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/小/Strobe_D90/revisions/afe5eaf200fefe56279e/手机/Strobe_D90/cascade_mobile.json",
+"name": "Strobe_D90_M",
+"system": "Strobe_D90",
+"base": "Strobe",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.94",
+"mtime": 1791969493.2125666,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-/revisions/1076169c37361c6b806e/PC/-/cascade.json",
+"name": "-",
+"system": null,
+"base": null,
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.104",
+"mtime": 1792051223.8125591,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-/revisions/1076169c37361c6b806e/手机/-/cascade_mobile.json",
+"name": "-_M",
+"system": null,
+"base": null,
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.104",
+"mtime": 1792051223.8161366,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-/revisions/1c633e3d6b96725d455d/PC/-/cascade.json",
+"name": "-",
+"system": null,
+"base": null,
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.104",
+"mtime": 1792063772.049376,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-/revisions/1c633e3d6b96725d455d/手机/-/cascade_mobile.json",
+"name": "-_M",
+"system": null,
+"base": null,
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.104",
+"mtime": 1792063772.0554006,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-/revisions/5c9310d8eb45ef9ae3e4/PC/-/cascade.json",
+"name": "-",
+"system": null,
+"base": null,
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.103",
+"mtime": 1792047045.7194383,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-/revisions/5c9310d8eb45ef9ae3e4/手机/-/cascade_mobile.json",
+"name": "-_M",
+"system": null,
+"base": null,
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.103",
+"mtime": 1792047045.7258399,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-_-/revisions/dc97b485c18711d7ca6e/PC/-_-/cascade.json",
+"name": "-_-",
+"system": null,
+"base": null,
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.105",
+"mtime": 1792068266.693604,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/-_-/revisions/dc97b485c18711d7ca6e/手机/-_-/cascade_mobile.json",
+"name": "-_-_M",
+"system": null,
+"base": null,
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.105",
+"mtime": 1792068266.698146,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/GoldRay/revisions/959ffda279a5bfca1236/PC/GoldRay/cascade.json",
+"name": "Combo",
+"system": null,
+"base": "GoldRay",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791732125.6876793,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "烟花/未分类/GoldRay/revisions/959ffda279a5bfca1236/手机/GoldRay/cascade_mobile.json",
+"name": "Combo_Mobile",
+"system": null,
+"base": "GoldRay",
+"platform": "mobile",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.68",
+"mtime": 1791732125.70553,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+}
+]
+},
+{
+"file": "烟花/未分类/MultiLayerChry/revisions/433449581cbc8f64b2e6/PC/MultiLayerChry/cascade.json",
+"name": "-",
+"system": null,
+"base": "MultiLayerChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991952.9378316,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+},
+{
+"file": "烟花/未分类/MultiLayerChry/revisions/433449581cbc8f64b2e6/手机/MultiLayerChry/cascade_mobile.json",
+"name": "MultiLayerChry_M",
+"system": null,
+"base": "MultiLayerChry",
+"platform": "mobile",
+"tier": "M",
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991952.9423363,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+}
+]
+},
+{
+"file": "烟花/未分类/MultiLayerChry/revisions/b21a8fbb3fb762cc8777/PC/MultiLayerChry/cascade.json",
+"name": "-",
+"system": null,
+"base": "MultiLayerChry",
+"platform": "pc",
+"tier": null,
+"tool": "烟花母版烘焙器 4.9.100",
+"mtime": 1791991978.704418,
+"emitters": [
+{
+"name": "L1_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L1_main"
+},
+{
+"name": "L2_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L2_main"
+},
+{
+"name": "L3_Main",
+"align": "Rectangle",
+"gpu": false,
+"material": "L3_main"
+}
+]
+}
+]
+}
