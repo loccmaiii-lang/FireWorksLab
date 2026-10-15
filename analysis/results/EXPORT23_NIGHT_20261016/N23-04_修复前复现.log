@@ -1,0 +1,29 @@
+F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\待处理.py:22: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\locmai\\AppData\\Local\\Temp\\fwl_pending_fixture_h8e9jf5n\\协作\\状态清单.json' mode='r' encoding='utf-8'>
+  st = json.load(open(os.path.join(ROOT, '协作', '状态清单.json'), encoding='utf-8'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\待处理.py:27: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\locmai\\AppData\\Local\\Temp\\fwl_pending_fixture_h8e9jf5n\\analysis\\jobs\\EX0.json' mode='r' encoding='utf-8'>
+  j = json.load(open(os.path.join(jd, f), encoding='utf-8')); k = job_effect(j)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\待处理.py:22: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\locmai\\AppData\\Local\\Temp\\fwl_pending_fixture_v_rc1u75\\协作\\状态清单.json' mode='r' encoding='utf-8'>
+  st = json.load(open(os.path.join(ROOT, '协作', '状态清单.json'), encoding='utf-8'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\待处理.py:27: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\locmai\\AppData\\Local\\Temp\\fwl_pending_fixture_v_rc1u75\\analysis\\jobs\\EX0.json' mode='r' encoding='utf-8'>
+  j = json.load(open(os.path.join(jd, f), encoding='utf-8')); k = job_effect(j)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\待处理.py:27: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\locmai\\AppData\\Local\\Temp\\fwl_pending_fixture_v_rc1u75\\analysis\\jobs\\EX1.json' mode='r' encoding='utf-8'>
+  j = json.load(open(os.path.join(jd, f), encoding='utf-8')); k = job_effect(j)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F
+======================================================================
+FAIL: test_incremental_export_and_repeat (__main__.PendingTests.test_incremental_export_and_repeat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\test_pending_scanner.py", line 59, in test_incremental_export_and_repeat
+    self.assertTrue(any(x.startswith("export:EX1:") for x in ids), new.get("legacyText", ids))
+AssertionError: False is not true : 没有待处理的事。
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.025s
+
+FAILED (failures=1)

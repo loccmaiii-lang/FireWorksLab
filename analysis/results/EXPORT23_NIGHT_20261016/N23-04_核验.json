@@ -1,0 +1,17 @@
+{
+  "format": "df.pending-scanner-check/1",
+  "checkedAt": "2026-10-16T04:07:46+08:00",
+  "sourceHead": "261ab22cfb137c6f54d926eeb97be6b4e775a451",
+  "fixtures": 14,
+  "fixtureExit": 0,
+  "initialExportDebt": 0,
+  "repeatDelta": {
+    "new": [],
+    "closed": [],
+    "changed": []
+  },
+  "productionInputsModified": false,
+  "scannerSourceSHA256": "f58c9af7c464f6a0a37e6c2667cf0712b2ab1da08ffb47828dbf3665bda176df",
+  "browser": null,
+  "remoteDelivered": false
+}
