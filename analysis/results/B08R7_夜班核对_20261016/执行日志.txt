@@ -1,0 +1,247 @@
+{"lights":[{"light":"SpotLight2","binding":"SpotLight2","component":"LightComponent0","file":"keys_SpotLight2.json","curveFrom":null,"intensityScale":1,"maxIntensity":null,"peak":1800,"intensityKeys":1613,"colorKeys":1029},{"light":"SpotLight","binding":"SpotLight","component":"LightComponent0","file":"keys_SpotLight.json","curveFrom":"SpotLight2","intensityScale":1,"maxIntensity":null,"peak":1800,"intensityKeys":1613,"colorKeys":1029},{"light":"SpotLight3","binding":"SpotLight3","component":"LightComponent0","file":"keys_SpotLight3.json","curveFrom":"SpotLight2","intensityScale":1,"maxIntensity":null,"peak":1800,"intensityKeys":1613,"colorKeys":1029},{"light":"SkyLight","binding":"SkyLight","component":"SkyLightComponent0","file":"keys_SkyLight.json","curveFrom":"SpotLight2","intensityScale":0.003846,"maxIntensity":10,"peak":6.9228,"intensityKeys":1613,"colorKeys":1029}],"errors":[],"warnings":[],"events":1146,"peakAtS":181.17}
+{
+  "version": "16.0.43",
+  "sixTiers": [
+    {
+      "platform": "PC",
+      "tier": "高",
+      "same": true,
+      "B05": {
+        "尾缀": 707,
+        "坝顶球花": 544,
+        "扇束": 2424,
+        "小平台花": 111,
+        "扇发": 312,
+        "合计资源调用": 3786
+      },
+      "R7": {
+        "尾缀": 1022,
+        "坝顶球花": 546,
+        "扇束": 3237,
+        "小平台花": 400,
+        "扇发": 373,
+        "合计资源调用": 5205
+      },
+      "oldGPU": {
+        "value": 9,
+        "at": [
+          35.0,
+          93.0,
+          145.0
+        ]
+      },
+      "actualGPU": {
+        "value": 104,
+        "at": [
+          53.0,
+          92.0,
+          118.0,
+          132.0
+        ]
+      }
+    },
+    {
+      "platform": "PC",
+      "tier": "中",
+      "same": true,
+      "B05": {
+        "尾缀": 603,
+        "坝顶球花": 458,
+        "扇束": 2046,
+        "小平台花": 101,
+        "扇发": 262,
+        "合计资源调用": 3208
+      },
+      "R7": {
+        "尾缀": 837,
+        "坝顶球花": 438,
+        "扇束": 2040,
+        "小平台花": 335,
+        "扇发": 240,
+        "合计资源调用": 3650
+      },
+      "oldGPU": {
+        "value": 9,
+        "at": [
+          35.0,
+          145.0
+        ]
+      },
+      "actualGPU": {
+        "value": 52,
+        "at": [
+          53.0,
+          92.0,
+          118.0,
+          132.0
+        ]
+      }
+    },
+    {
+      "platform": "PC",
+      "tier": "低",
+      "same": true,
+      "B05": {
+        "尾缀": 288,
+        "坝顶球花": 288,
+        "扇束": 144,
+        "扇发": 16,
+        "合计资源调用": 720
+      },
+      "R7": {
+        "尾缀": 641,
+        "坝顶球花": 264,
+        "扇束": 64,
+        "小平台花": 321,
+        "扇发": 16,
+        "合计资源调用": 1290
+      },
+      "oldGPU": {
+        "value": 5,
+        "at": [
+          35.0,
+          145.0
+        ]
+      },
+      "actualGPU": {
+        "value": 10,
+        "at": [
+          141.0
+        ]
+      }
+    },
+    {
+      "platform": "手游",
+      "tier": "高",
+      "same": null,
+      "B05": {
+        "尾缀": 383,
+        "坝顶球花": 220,
+        "小平台花": 111,
+        "扇发": 0,
+        "合计资源调用": 714
+      },
+      "R7": {
+        "尾缀": 702,
+        "坝顶球花": 226,
+        "小平台花": 400,
+        "扇发": 0,
+        "合计资源调用": 1328
+      },
+      "oldGPU": {
+        "value": 0,
+        "at": []
+      },
+      "actualGPU": {
+        "value": 0,
+        "at": []
+      }
+    },
+    {
+      "platform": "手游",
+      "tier": "中",
+      "same": null,
+      "B05": {
+        "尾缀": 323,
+        "坝顶球花": 178,
+        "小平台花": 101,
+        "扇发": 0,
+        "合计资源调用": 602
+      },
+      "R7": {
+        "尾缀": 549,
+        "坝顶球花": 198,
+        "小平台花": 287,
+        "扇发": 0,
+        "合计资源调用": 1034
+      },
+      "oldGPU": {
+        "value": 0,
+        "at": []
+      },
+      "actualGPU": {
+        "value": 0,
+        "at": []
+      }
+    },
+    {
+      "platform": "手游",
+      "tier": "低",
+      "same": null,
+      "B05": {
+        "尾缀": 164,
+        "坝顶球花": 164,
+        "扇发": 0,
+        "合计资源调用": 328
+      },
+      "R7": {
+        "尾缀": 228,
+        "坝顶球花": 172,
+        "扇发": 0,
+        "合计资源调用": 400
+      },
+      "oldGPU": {
+        "value": 0,
+        "at": []
+      },
+      "actualGPU": {
+        "value": 0,
+        "at": []
+      }
+    }
+  ],
+  "light": [
+    {
+      "light": "SpotLight2",
+      "JS_Python_intensityColorIdentical": true,
+      "finite": true,
+      "intensityKeys": 1613,
+      "colorKeys": 1029,
+      "peak": 1800,
+      "firstFrame": 0,
+      "lastFrame": 7215,
+      "fps": 30,
+      "bindingSame": true,
+      "componentSame": true
+    },
+    {
+      "light": "SpotLight",
+      "JS_Python_intensityColorIdentical": true,
+      "finite": true,
+      "intensityKeys": 1613,
+      "colorKeys": 1029,
+      "peak": 1800,
+      "firstFrame": 0,
+      "lastFrame": 7215,
+      "fps": 30,
+      "bindingSame": true,
+      "componentSame": true
+    },
+    {
+      "light": "SpotLight3",
+      "JS_Python_intensityColorIdentical": true,
+      "finite": true,
+      "intensityKeys": 1613,
+      "colorKeys": 1029,
+      "peak": 1800,
+      "firstFrame": 0,
+      "lastFrame": 7215,
+      "fps": 30,
+      "bindingSame": true,
+      "componentSame": true
+    },
+    {
+      "light": "SkyLight",
+      "JS_Python_intensityColorIdentical": true,
+      "finite": true,
+      "intensityKeys": 1613,
+      "colorKeys": 1029,
+      "peak": 6.9228,
+      "firstFrame": 0,
+      "lastFrame": 7215,
+      "fps": 30,
+      "bindingSame": true,
+      "componentSame": true
+    }
+  ]
+}
