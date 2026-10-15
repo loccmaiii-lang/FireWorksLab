@@ -1,7 +1,7 @@
 {
   "格式": "df.dispatch-queue/1",
   "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-15T21:05:00+08:00 导出（23）：T07 取消（17780 绑定失败已由 8 查清）；T08 收窄成 EmissiveDissolve 用途 + 导入器会不会改回",
+  "更新": "2026-10-15T22:45:00+08:00 跨年秀（22）：加 T09（B08 资源只读读数 + 可选颜色 / 大小随机案例，待派）、T10（拆用户录的 B08 实机视频，等用户录好）",
   "dot 怎么派": [
     "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
     "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
@@ -382,6 +382,68 @@
         "EmissiveDissolve / Pow 的表达式链读清，写明是不是只进 Ramp 坐标",
         "写清导入器会不会把手改的材质实例参数改回去、scalars 认不认任意名字",
         "黑块_首选核实.md 第一句是两条判定，有「给导出（23）」一段",
+        "已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T09",
+      "看板": "",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 2,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "只读读数：B08 用到的 26 个 ResourceId 的粒子模块——估真实花径、各种开销、Tiny 缩 0.65 到不到 40 m；（可选）用户的颜色 / 大小随机案例",
+      "为什么": "用户 10-15 22:02：「先出B08，然后再跑B08的实机测量」；「粒子里的颜色，大小随机，我有做了一些案例……让本机读取一部分数据回传给你看」。B08（工作台 16.0.35，协作/编排B08.md）的花径表、开花负担权重、小平台 Tiny ×0.65 到顶约 40 m 都是推断：名义直径没量过（10-11 估有的资源差 1.6–3 倍），负担权重是从 960 一张截图粗标的。读回来跨年秀（22）校表、校权重。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261015/B08资源读数.json（新建）",
+        "analysis/results/UE_READBACK_20261015/B08资源读数.md（新建）",
+        "analysis/results/UE_READBACK_20261015/颜色大小随机案例.json（新建，第 5 步做了才有）",
+        "analysis/results/UE_READBACK_20261015/颜色大小随机案例.md（新建，同上）"
+      ],
+      "案例路径": "",
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T09，按该文件「Codex 共同规则」执行（UE 只读）。先读：协作/编排B08.md、analysis/results/MOBILE_TEST_20261011/看法.md（UE-14：条目 EffectScale 整朵等比、尾缀只改长度不改时间）、analysis/results/RESOURCEFX_20261014/ 的读回（ResourceId → PC / 手游粒子路径）、FXtools/节目/NewYearFireWorks_v01/资源发射器数.json。\n\nB08 一张表（FXtools/节目/NewYearFireWorks_v01/导演表-B08-低配限峰-小平台放大-种类大小-一张表.json）用到的 ResourceId：Crackle、FanComet_01、FanSilver_01、Glitter、GoldChry、GoldCoreLime、GoldCrackle、GoldKamuro、GoldRayChry、GoldSpark、GreenPeony、Lime、LittleCombo、LittleCrackle、LittleGold、LittleSilver、MultiLayerChry、NY_Trail_Large、NY_Trail_Medium、NY_Trail_Small、PrismWheels、RiseTrail_Tiny、SilverChry、SilverStrobeChry、Strobe（前面都是 P_EFX_FireWorks_）。\n\n1. 每个 ResourceId 按 ResourceFX 表找 PC 粒子；手游表里有这一行的，_M 也读。\n2. 每个粒子系统、每个发射器的 LOD0，读这些模块和字段（读不到的写「读不到」，不要猜）：Required（Material 及其父材质、BlendMode 能读就读、ScreenAlignment、bUseLocalSpace、EmitterDuration、EmitterLoops）；TypeData（GPU / Ribbon / Beam / 无）；Spawn（Rate、BurstList 每条 Count / CountLow / Time）；Lifetime；Initial Location / Sphere / Cylinder（半径）；Initial Velocity / Velocity Cone（StartVelocity、StartVelocityRadial、Velocity 的 Min / Max，分布类型）；Drag（DragCoefficient）；Acceleration / Const Acceleration；Velocity / Life；Initial Size / Size By Life / Size Scale；Initial Color / Color Over Life / Scale Color Life；Event Generator / Event Receiver Spawn（二次爆开）；MaxDrawCount；**每个位置 / 速度 / 大小模块的 bInWorldSpace、bApplyOwnerScale 之类和缩放有关的开关**；带 Seed 的模块读 RandomSeedInfo（bGetSeedFromInstance、bInstanceSeedIsIndex、bResetSeedOnEmitterLooping、bRandomlySelectSeedArray、RandomSeeds）；分布是不是 Parameter 类（读 ParameterName）。原始值存 B08资源读数.json。\n3. 估算（写明是从模块算的，不是截图量的）：\n   (a) 每个发射器最大半径 r = ∫v(t)dt：Cascade Drag 按 v(t) = v0·e^(−k·t) 算，r = v0/k·(1 − e^(−k·T))（k = 0 时 r = v0·T），v0 取速度上限、T 取寿命上限；另给 v0、T 都取中值的一版。有 Velocity / Life 曲线就按曲线采样积分。单位 cm → m。\n   (b) 一朵花的直径 = 2 × 主星发射器（不算闪光、烟、余烬）最大半径。写清哪个发射器算主星。\n   (c) 开销：每朵 CPU / GPU 发射器数、一次爆开的粒子总数（Burst 合计 + Rate × 时长）、最大粒子尺寸、寿命、BlendMode，以及一个粗的面积量 Σ(粒子数 × 尺寸² × 寿命)。\n   (d) RiseTrail_Tiny：EffectScale = 0.65 时，到顶高度会不会跟着 × 0.65（看 bUseLocalSpace、速度 / 加速度模块的世界空间和 Owner Scale 开关），升空时间会不会变；按模块算原生到顶高度（作者用的是 62.0 m / 1.6875 s）。\n4. B08资源读数.md：第一句写三条结论（真实花径和作者名义直径最差差几倍、最贵的 5 种、Tiny 缩 0.65 是不是到约 40 m）。一张表：ResourceId、表里中文名、PC 粒子、发射器 CPU / GPU、粒子数、估算直径（上限 / 中值）、面积量、颜色 / 大小有没有逐粒子随机。作者的名义直径：小号 90 m、中号 150 m、大号按金芒菊 150 m 放大、小平台 LittleSilver 32 / LittleGold 40 / LittleCrackle 24 / LittleCombo 30 m。最后一段「给跨年秀（22）」。\n5. （可选）用户的颜色 / 大小随机案例：资产路径看本条「案例路径」，或用户贴给你的补充提示词。没有就跳过、结果里写「案例路径未给」。每个案例照第 2 步读全部模块，重点回答：① 颜色 / 大小随机是逐粒子（一朵里每颗星不一样）还是逐朵（整朵一个随机值）；② 靠什么做到（分布类型、Seed 设置、Instance Parameter 名字、Dynamic Parameter）；③ 同一朵里星头、尾巴、火花几个发射器拿到的随机值是不是同一个（颜色 / 大小会不会对不上）；④ 有没有用到导演能传的参数（RandomScaleRatio 之外）。写 颜色大小随机案例.json 和 .md（第一句写这四条的答案，最后一段「给跨年秀（22）」）。\n\n禁止：保存任何资产或关卡、改属性、导入、替换、P4、开关 UE、改 tool/src / tool/workbench、改编排文件。私有工具代码、凭据、用户名不写进仓库。",
+      "做完的标准": [
+        "26 个 ResourceId 都有 PC 读数，手游表里有的也有 _M 读数；读不到的逐个写原因",
+        "每个都有估算直径（上限 / 中值）和开销四项，写清算法和主星发射器",
+        "写清 Tiny 缩 0.65 后到顶高度、升空时间变不变，依据哪几个开关",
+        "B08资源读数.md 第一句三条结论，有「给跨年秀（22）」一段",
+        "第 5 步：给了案例就有 颜色大小随机案例.md（第一句四条答案）；没给就在结果里写「案例路径未给」",
+        "已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T10",
+      "看板": "",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "等前置",
+      "优先": 3,
+      "前置": [
+        "用户录好 B08 实机视频，放到 analysis/local/B08_实机/（或在派活时告诉你路径），并说明每段是哪台机器、哪一档（PC 高 / 中 / 低、手游）"
+      ],
+      "要 UE": "不要",
+      "标题": "拆用户录的 B08 实机视频：对齐音乐、按时刻截图、拼一张总览，给跨年秀（22）对照复核",
+      "为什么": "用户 10-15 19:23：「我录一个效果给你，然后本机拆解截图，你对着实机效果进行进一步的评价复核吗？」；22:02：「实机录取，你也可以和第4点一起做……先出B08，然后再跑B08的实机测量」。云端只有离线动画，没在 UE 里放过 B08。",
+      "只许改": [
+        "analysis/results/B08_实机/（新建目录：截图、总览、说明）"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 派来的 T10，按 协作/派活队列.json「Codex 共同规则」执行；这条不碰 UE。先读 协作/编排B08.md 和 协作/编排B08_复核/验收单.md。\n\n1. 视频在 analysis/local/B08_实机/（或派活时给的路径）。每段记：文件名、时长、分辨率、哪台机器 / 哪一档（文件名或用户说明里有；没有就写「未说明」）。\n2. 对齐：演出时间 0 = 合并音频文件开头（协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3），第一发点火在 16.2 s。视频有声音就用音频互相关求偏移（ffmpeg 抽 16 kHz 单声道，numpy 互相关）；没声音就找第一发尾缀出现的帧当 16.2 s，写明误差。\n3. 截图（ffmpeg；没有就用 Python 的 imageio-ffmpeg 或 opencv，装在虚拟环境里，不装系统）：\n   (a) 关键时刻原分辨率 PNG：19.0、23.9、49.2、65.5、101.0、132.0、173.0、186.0、195.5 s（演出时间），每个时刻再加 +0.5 s 一张；\n   (b) 全程每 4 s 一张 960 宽 JPG（质量 80）；\n   (c) 用 (b) 拼一张总览图（每行 6 张，左上角写演出时间）。\n   文件名：<段名>_<演出时间 4 位小数点 1 位>.png / .jpg，例如 PC低_0065.5.png。\n4. analysis/results/B08_实机/说明.md：每段的机器 / 档位、对齐方法和偏移、截图清单；肉眼看到的明显问题（花和尾缀对不上、某刻空白、糊成一片、贴图变糊）按时刻列，不评价好坏。\n5. 视频本身不提交（太大，留在 analysis/local）；截图总量控制在 30 MB 内。\n\n禁止：改编排、改 UE、上传视频。",
+      "做完的标准": [
+        "每段视频都对齐到演出时间，写明方法和误差",
+        "关键时刻 PNG、每 4 s 的 JPG 和总览图齐全，文件名带演出时间",
+        "说明.md 列出机器 / 档位和肉眼看到的问题",
         "已提交推送，本条写完成、提交号、结果"
       ],
       "派出": "",
