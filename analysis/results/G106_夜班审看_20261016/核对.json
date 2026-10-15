@@ -1,0 +1,732 @@
+{
+  "format": "df.g106-review/1",
+  "at": "2026-10-16T02:44:00+08:00",
+  "sourceHead": "c852fb110976677be9b724542d11122aacada7cd",
+  "conclusion": "两包已提交元数据的命名/PC手机契约一致，目标标准与回放记录通过；8张静态图片已审，无明显裁切/矩形边/贯穿条纹。原PNG实包、RocketDot、亲眼连续播放与UE缺证据，未替用户验收。",
+  "status": {
+    "execution": "本条只读检查执行结束",
+    "AI": "在本报告限定证据范围内通过，未测项保留",
+    "userAcceptance": "未做"
+  },
+  "inputsSHA256": {
+    "analysis/results/NFE-SGR1-G106/RocketTail_Graph.json": "92c8c6059ee6d826d3d4bb2cd581aada495771c9d620998a08377c8e97f15a94",
+    "analysis/results/NFE-SGR1-G106/RocketTail_Graph_Mobile.json": "5d81aa69d2d5b666fdb306f5f4202a45f2fdce5853c22f7cf2a89aa4bb7f6ed7",
+    "analysis/results/NFE-SGR1-G106/RocketTail_Graph_cascade.json": "06ad93ed4c0bcdfd40b3885f8c13e80f16ac219a661eaa6be12cbf7041dde115",
+    "analysis/results/NFE-SGR1-G106/RocketTail_Graph_cascade_mobile.json": "7e2a9f3988801005aaa6d2900e4182cf655c20a066de15f7be8d124e34f5aa63",
+    "analysis/results/NFE-SGR1-G106/导出清单.json": "58ea2ece65f4cb62a114206862160aa0d334e1bed40c87198caa31f8fa57f5dc",
+    "analysis/results/NFE-SGR1-G106/烘焙回放_采样.json": "206c2e0a2c847a607fabf37963c263ceae7e1092c9a3eea6d8aba379ebcc3a8b",
+    "analysis/results/NFE-SGR1-G106/回放检查.json": "b9c381495cfb76d23bee64cb33f6dc1fd99bbdcda0d6bf6d8b4f1f1d3656e4e6",
+    "analysis/results/NFR-SG-G106/RocketTail_Graph.json": "128792ee835623d9aacda980e54057af338b75ed4325e0047b1cd6231492e4a5",
+    "analysis/results/NFE-SGS1-G106/Sparkler_Graph.json": "9b1f672ada5b4e5463d273377fadc45097440d6c181653166ad0efa1c9b1ef02",
+    "analysis/results/NFE-SGS1-G106/Sparkler_Graph_Mobile.json": "7543db2fd7995c18826b7a39ddce756dc60c2cfe27050f9a22bbc94208e1f282",
+    "analysis/results/NFE-SGS1-G106/Sparkler_Graph_cascade.json": "4023590ace0990e6cf459a09ef7e9423807a8a55ed987278e6e26f396dd207e2",
+    "analysis/results/NFE-SGS1-G106/Sparkler_Graph_cascade_mobile.json": "6b3f487b7340e1be6b61f0916f1d3ec7b7891b5f765c61df456a808c938d4328",
+    "analysis/results/NFE-SGS1-G106/导出清单.json": "769648b49886f729bc5b4c0bc99b1f14cfbb2106866addb19ea8af8e22897806",
+    "analysis/results/NFE-SGS1-G106/烘焙回放_采样.json": "3422f8e9aae24d02b393f75d2dd64f8c7aaf6324d154477700e1d09c8875f18b",
+    "analysis/results/NFE-SGS1-G106/回放检查.json": "1d2853780aca4970e00ccdf2e9cecd109e8bcd6f83c87f00fe97abefeaf0b179",
+    "analysis/results/NFR-SG-G106/Sparkler_Graph.json": "e082a8a2695ca2637747480888fba7a0557f609dbd87446d7ff747d24c67864b",
+    "analysis/results/NFE-SGR1-G106/done.json": "221ed866707a9b8b364e7db32b3a25e65e73dad51873b68de6bcb160a19d231f",
+    "analysis/results/NFE-SGR1-G106/env.json": "1fae02d493a8875761a550e10c2c93eb7764b5cae26757c9cc7707041f6f8da9",
+    "analysis/results/NFE-SGR1-G106/log.txt": "1313c9abcc427810ed7f85170b4bbf6e6fadd6d35d323620fd5dcd74b9c09869",
+    "analysis/results/NFE-SGS1-G106/done.json": "221ed866707a9b8b364e7db32b3a25e65e73dad51873b68de6bcb160a19d231f",
+    "analysis/results/NFE-SGS1-G106/env.json": "85e56aab8c669c6d8a6e9f8ce04fe258797ba3563c7959beb314db01466df784",
+    "analysis/results/NFE-SGS1-G106/log.txt": "4e965fa3c9e0dbaa08e8c182b68e0d6cd13d534bd0c9a6d57fc57f0c84b4688c",
+    "analysis/results/NFR-SG-G106/done.json": "221ed866707a9b8b364e7db32b3a25e65e73dad51873b68de6bcb160a19d231f",
+    "analysis/results/NFR-SG-G106/env.json": "83a9eaa8fcee33277848e86e571fd0714df6e9d3e3d30a799094dcb3b8a39d41",
+    "analysis/results/NFR-SG-G106/log.txt": "70a31cc95d71f8bad6c43a6213c65c4a6dee67c65fe94c5e51acf54a35be7f12",
+    "analysis/results/NFS-SG-G106/done.json": "221ed866707a9b8b364e7db32b3a25e65e73dad51873b68de6bcb160a19d231f",
+    "analysis/results/NFS-SG-G106/env.json": "8dbf91f9311a27f71bcf1e9c8c44dbab45d4a6b2762e69a38fa1261cc9b1a4ec",
+    "analysis/results/NFS-SG-G106/log.txt": "c655c92503486400361997ffbb7247c82d233cef80bbca3df799e691d3d7a741",
+    "analysis/results/NFS-SG-G106/标准检查.json": "3106725dc6e3500655b40bea3e716e6335e4c70ecb2fa6634a373d81ae1a9b52"
+  },
+  "packages": [
+    {
+      "entry": "SGR1",
+      "name": "RocketTail_Graph",
+      "task": "NFE-SGR1-G106",
+      "versionFingerprint": "609bae26·graph4.9.97+loop4.9.106",
+      "parameterSHA256Canonical": {
+        "pc": "d2402f939f913710a248dcbdf44a7f441258029c9a5ad1daf507bc3ecf490dbe",
+        "mobile": "fc55478c3039dd98f5ec8bdbdc7f67fb7c093df14b51669cff929dbc13f27f48"
+      },
+      "tool": "烟花母版烘焙器 4.9.106",
+      "cascadePlanSig": "d79d855d",
+      "versionFingerprintMatchesManifestSampleStandard": true,
+      "sourceMatchesPCMobile": true,
+      "parameterDifferences": {
+        "texW": [
+          2048,
+          1024
+        ],
+        "texH": [
+          2048,
+          1024
+        ]
+      },
+      "textureGrid": {
+        "pc": {
+          "width": 2048,
+          "height": 2048,
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "cellPx": [
+            512,
+            512
+          ],
+          "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+          "encoding": "线性灰度",
+          "output": "combined"
+        },
+        "mobile": {
+          "width": 1024,
+          "height": 1024,
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "cellPx": [
+            256,
+            256
+          ],
+          "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+          "encoding": "线性灰度",
+          "output": "combined"
+        }
+      },
+      "cascadeFormat": {
+        "pc": "fwl.cascade/1",
+        "mobile": "fwl.cascade/1"
+      },
+      "cascadeNames": {
+        "pc": "RocketTail_Graph",
+        "mobile": "RocketTail_Graph_M"
+      },
+      "emitterAndMaterialPCMobileSame": true,
+      "emittersPerPlatform": 1,
+      "cpuEmitters": 1,
+      "durationS": 2.1333333333333333,
+      "declaredFiles": [
+        "RocketTail_Graph.json",
+        "RocketTail_Graph_Cascade参数.txt",
+        "RocketTail_Graph_Mobile.json",
+        "RocketTail_Graph_曲线.csv",
+        "T_EFX_FireWorks_RocketTail_Graph_4x4_01.png",
+        "T_EFX_FireWorks_RocketTail_Graph_4x4_01_C.png",
+        "T_EFX_FireWorks_RocketTail_Graph_4x4_01_HD.png",
+        "T_EFX_FireWorks_RocketTail_Graph_R.png",
+        "_检查",
+        "cascade.json",
+        "cascade_mobile.json",
+        "命名对照.txt"
+      ],
+      "metadataActuallyCommitted": [
+        "RocketTail_Graph.json",
+        "RocketTail_Graph_Cascade参数.txt",
+        "RocketTail_Graph_Mobile.json",
+        "RocketTail_Graph_曲线.csv",
+        "cascade.json",
+        "cascade_mobile.json",
+        "命名对照.txt"
+      ],
+      "filesNotCommitted": [
+        "T_EFX_FireWorks_RocketTail_Graph_4x4_01.png",
+        "T_EFX_FireWorks_RocketTail_Graph_4x4_01_C.png",
+        "T_EFX_FireWorks_RocketTail_Graph_4x4_01_HD.png",
+        "T_EFX_FireWorks_RocketTail_Graph_R.png",
+        "_检查"
+      ],
+      "namingAndReferences": [
+        {
+          "check": "seq:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_RocketTail_Graph_4x4_01_HD",
+          "file": "T_EFX_FireWorks_RocketTail_Graph_4x4_01_HD.png",
+          "sha256DeclaredOnly": "148ad82799c21d7361c5ec6ddfed3e0959bc92fce72c705f43e0f582e27964ba"
+        },
+        {
+          "check": "seq:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "cutout:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_RocketTail_Graph_4x4_01_C",
+          "file": "T_EFX_FireWorks_RocketTail_Graph_4x4_01_C.png",
+          "sha256DeclaredOnly": "54d07abdd04d0890e8004a16f518273bf75403b98376b29550e6243c5ea4f14e"
+        },
+        {
+          "check": "cutout:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "ramp:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_RocketTail_Graph_R",
+          "file": "T_EFX_FireWorks_RocketTail_Graph_R.png",
+          "sha256DeclaredOnly": "976afda77cd502761fb997a7c0c97e20846c0249b3a541298366785df32ad229"
+        },
+        {
+          "check": "ramp:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "材质贴图键引用可解",
+          "pass": true
+        },
+        {
+          "check": "发射器材质引用可解",
+          "pass": true
+        },
+        {
+          "check": "Cutout引用可解",
+          "pass": true
+        },
+        {
+          "check": "seq:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_RocketTail_Graph_4x4_01",
+          "file": "T_EFX_FireWorks_RocketTail_Graph_4x4_01.png",
+          "sha256DeclaredOnly": "87531764a8ef1f3e8a769ccff77cccdbfa22b5b176ff46178869412a930042ff"
+        },
+        {
+          "check": "seq:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "cutout:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_RocketTail_Graph_4x4_01_C",
+          "file": "T_EFX_FireWorks_RocketTail_Graph_4x4_01_C.png",
+          "sha256DeclaredOnly": "54d07abdd04d0890e8004a16f518273bf75403b98376b29550e6243c5ea4f14e"
+        },
+        {
+          "check": "cutout:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "ramp:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_RocketTail_Graph_R",
+          "file": "T_EFX_FireWorks_RocketTail_Graph_R.png",
+          "sha256DeclaredOnly": "976afda77cd502761fb997a7c0c97e20846c0249b3a541298366785df32ad229"
+        },
+        {
+          "check": "ramp:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "材质贴图键引用可解",
+          "pass": true
+        },
+        {
+          "check": "发射器材质引用可解",
+          "pass": true
+        },
+        {
+          "check": "Cutout引用可解",
+          "pass": true
+        }
+      ],
+      "standardTarget": {
+        "id": "SGR1",
+        "name": "窜天猴尾焰 · 分层短促喷射",
+        "kind": "preset",
+        "renderVer": 40,
+        "ver": "609bae26·graph4.9.97+loop4.9.106",
+        "checks": [
+          [
+            "实时模拟",
+            true,
+            ""
+          ],
+          [
+            "引擎回放 + 游戏内大小",
+            true,
+            ""
+          ],
+          [
+            "贴图 + 流转动画",
+            true,
+            ""
+          ],
+          [
+            "完整参数",
+            true,
+            ""
+          ],
+          [
+            "导出素材包（cascade.json PC + 手机）",
+            true,
+            ""
+          ],
+          [
+            "实拍对照",
+            true,
+            "无参考（不适用）"
+          ],
+          [
+            "单格 ≥ PC 下限",
+            true,
+            "单格 512 px"
+          ],
+          [
+            "手机单格 ≥ 下限",
+            true,
+            ""
+          ],
+          [
+            "屏幕放大 ≤ 1",
+            true,
+            "放大 0.703125"
+          ],
+          [
+            "30fps 显示帧 ≥ 90%",
+            true,
+            "64/64"
+          ],
+          [
+            "燃烧段有效帧率 ≥ 下限",
+            true,
+            "30 fps"
+          ],
+          [
+            "尺寸参数有效",
+            true,
+            ""
+          ]
+        ],
+        "pass": true,
+        "seconds": 2.4
+      },
+      "replay": {
+        "pass": true,
+        "fullReplayPass": true,
+        "sameLayerMetrics": true,
+        "sampleTimesS": [
+          0.10666500000000001,
+          0.31999500000000003,
+          0.6399900000000001,
+          0.9599850000000001,
+          1.2799800000000001,
+          1.5999750000000001,
+          1.9199700000000002
+        ],
+        "shownFrac": 0.984,
+        "edgeMax": 0.0,
+        "saturatedMax": 0.0141,
+        "emptyMid": 0,
+        "emptyTail": 0,
+        "backJumps": 0,
+        "jitterApplies": false,
+        "loopWraps": 0,
+        "loopSeamPx512": null
+      },
+      "bakerSelfCheckDifferentDefinition": {
+        "maxClip": 0.1346489696122948,
+        "clipFramesCount": 32,
+        "seamRatio": 1.0281819243022592,
+        "definition": "50_bake.js:312/320：>=253像素占非零采样像素；回放检查.py:203：>=250占整格像素，分母不同，不能直接混比"
+      },
+      "images": [
+        {
+          "file": "analysis/results/NFE-SGR1-G106/烘焙回放.jpg",
+          "sha256": "754f53d211d1e42a41af6306d85613838e004013a08d37ff733d8bc094713855",
+          "dimensions": [
+            1590,
+            622
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        },
+        {
+          "file": "analysis/results/NFE-SGR1-G106/烘焙回放_原尺寸.jpg",
+          "sha256": "14dc64618115bfaaa9b18291003837b217b67910337d3babdcc069713a574d8f",
+          "dimensions": [
+            4005,
+            1588
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        },
+        {
+          "file": "analysis/results/NFE-SGR1-G106/回放检查.jpg",
+          "sha256": "d3224b9937ddb9561f6fc6e1acf87c5f03ba4e87d94e543580ab060461630a52",
+          "dimensions": [
+            1910,
+            742
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        },
+        {
+          "file": "analysis/results/NFR-SG-G106/RocketTail_Graph.jpg",
+          "sha256": "bc5f13655d11015965c17a45074331d54421e3a57b7e838f045de79a6f701a89",
+          "dimensions": [
+            2630,
+            742
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        }
+      ]
+    },
+    {
+      "entry": "SGS1",
+      "name": "Sparkler_Graph",
+      "task": "NFE-SGS1-G106",
+      "versionFingerprint": "7b78d809·graph4.9.97+loop4.9.106",
+      "parameterSHA256Canonical": {
+        "pc": "f8eaad515eafe78fa0ead3e3d9cf6869141a7153d418589771c85a3332886f74",
+        "mobile": "a5baeaa3563084c967669332d8acf4a3d13601a29629aa3a24a7ba74823043c2"
+      },
+      "tool": "烟花母版烘焙器 4.9.106",
+      "cascadePlanSig": "d79d855d",
+      "versionFingerprintMatchesManifestSampleStandard": true,
+      "sourceMatchesPCMobile": true,
+      "parameterDifferences": {
+        "texW": [
+          2048,
+          1024
+        ],
+        "texH": [
+          2048,
+          1024
+        ]
+      },
+      "textureGrid": {
+        "pc": {
+          "width": 2048,
+          "height": 2048,
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "cellPx": [
+            512,
+            512
+          ],
+          "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+          "encoding": "线性灰度",
+          "output": "combined"
+        },
+        "mobile": {
+          "width": 1024,
+          "height": 1024,
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "cellPx": [
+            256,
+            256
+          ],
+          "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+          "encoding": "线性灰度",
+          "output": "combined"
+        }
+      },
+      "cascadeFormat": {
+        "pc": "fwl.cascade/1",
+        "mobile": "fwl.cascade/1"
+      },
+      "cascadeNames": {
+        "pc": "Sparkler_Graph",
+        "mobile": "Sparkler_Graph_M"
+      },
+      "emitterAndMaterialPCMobileSame": true,
+      "emittersPerPlatform": 1,
+      "cpuEmitters": 1,
+      "durationS": 2.1333333333333333,
+      "declaredFiles": [
+        "Sparkler_Graph.json",
+        "Sparkler_Graph_Cascade参数.txt",
+        "Sparkler_Graph_Mobile.json",
+        "Sparkler_Graph_曲线.csv",
+        "T_EFX_FireWorks_Sparkler_Graph_4x4_01.png",
+        "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C.png",
+        "T_EFX_FireWorks_Sparkler_Graph_4x4_01_HD.png",
+        "T_EFX_FireWorks_Sparkler_Graph_R.png",
+        "_检查",
+        "cascade.json",
+        "cascade_mobile.json",
+        "命名对照.txt"
+      ],
+      "metadataActuallyCommitted": [
+        "Sparkler_Graph.json",
+        "Sparkler_Graph_Cascade参数.txt",
+        "Sparkler_Graph_Mobile.json",
+        "Sparkler_Graph_曲线.csv",
+        "cascade.json",
+        "cascade_mobile.json",
+        "命名对照.txt"
+      ],
+      "filesNotCommitted": [
+        "T_EFX_FireWorks_Sparkler_Graph_4x4_01.png",
+        "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C.png",
+        "T_EFX_FireWorks_Sparkler_Graph_4x4_01_HD.png",
+        "T_EFX_FireWorks_Sparkler_Graph_R.png",
+        "_检查"
+      ],
+      "namingAndReferences": [
+        {
+          "check": "seq:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_Sparkler_Graph_4x4_01_HD",
+          "file": "T_EFX_FireWorks_Sparkler_Graph_4x4_01_HD.png",
+          "sha256DeclaredOnly": "e206761546b49fa66dd719d071d70dcb3b8816c6154140d7d3164fec29992100"
+        },
+        {
+          "check": "seq:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "cutout:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C",
+          "file": "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C.png",
+          "sha256DeclaredOnly": "af8a9eb627c68de38e853481cae7cd5a871e41353e2f112d2955426c679b8139"
+        },
+        {
+          "check": "cutout:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "ramp:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_Sparkler_Graph_R",
+          "file": "T_EFX_FireWorks_Sparkler_Graph_R.png",
+          "sha256DeclaredOnly": "976afda77cd502761fb997a7c0c97e20846c0249b3a541298366785df32ad229"
+        },
+        {
+          "check": "ramp:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "材质贴图键引用可解",
+          "pass": true
+        },
+        {
+          "check": "发射器材质引用可解",
+          "pass": true
+        },
+        {
+          "check": "Cutout引用可解",
+          "pass": true
+        },
+        {
+          "check": "seq:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_Sparkler_Graph_4x4_01",
+          "file": "T_EFX_FireWorks_Sparkler_Graph_4x4_01.png",
+          "sha256DeclaredOnly": "bf96b67979afe9f49857333945a7620ab1dfff53913e43ff3b419d4f89f2d25b"
+        },
+        {
+          "check": "seq:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "cutout:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C",
+          "file": "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C.png",
+          "sha256DeclaredOnly": "af8a9eb627c68de38e853481cae7cd5a871e41353e2f112d2955426c679b8139"
+        },
+        {
+          "check": "cutout:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "ramp:完整资产名及大小写",
+          "pass": true,
+          "asset": "T_EFX_FireWorks_Sparkler_Graph_R",
+          "file": "T_EFX_FireWorks_Sparkler_Graph_R.png",
+          "sha256DeclaredOnly": "976afda77cd502761fb997a7c0c97e20846c0249b3a541298366785df32ad229"
+        },
+        {
+          "check": "ramp:清单已列出",
+          "pass": true
+        },
+        {
+          "check": "材质贴图键引用可解",
+          "pass": true
+        },
+        {
+          "check": "发射器材质引用可解",
+          "pass": true
+        },
+        {
+          "check": "Cutout引用可解",
+          "pass": true
+        }
+      ],
+      "standardTarget": {
+        "id": "SGS1",
+        "name": "仙女棒 · 13层全形态",
+        "kind": "preset",
+        "renderVer": 40,
+        "ver": "7b78d809·graph4.9.97+loop4.9.106",
+        "checks": [
+          [
+            "实时模拟",
+            true,
+            ""
+          ],
+          [
+            "引擎回放 + 游戏内大小",
+            true,
+            ""
+          ],
+          [
+            "贴图 + 流转动画",
+            true,
+            ""
+          ],
+          [
+            "完整参数",
+            true,
+            ""
+          ],
+          [
+            "导出素材包（cascade.json PC + 手机）",
+            true,
+            ""
+          ],
+          [
+            "实拍对照",
+            true,
+            "无参考（不适用）"
+          ],
+          [
+            "单格 ≥ PC 下限",
+            true,
+            "单格 512 px"
+          ],
+          [
+            "手机单格 ≥ 下限",
+            true,
+            ""
+          ],
+          [
+            "屏幕放大 ≤ 1",
+            true,
+            "放大 0.703125"
+          ],
+          [
+            "30fps 显示帧 ≥ 90%",
+            true,
+            "64/64"
+          ],
+          [
+            "燃烧段有效帧率 ≥ 下限",
+            true,
+            "30 fps"
+          ],
+          [
+            "尺寸参数有效",
+            true,
+            ""
+          ]
+        ],
+        "pass": true,
+        "seconds": 0.9
+      },
+      "replay": {
+        "pass": true,
+        "fullReplayPass": true,
+        "sameLayerMetrics": true,
+        "sampleTimesS": [
+          0.10666500000000001,
+          0.31999500000000003,
+          0.6399900000000001,
+          0.9599850000000001,
+          1.2799800000000001,
+          1.5999750000000001,
+          1.9199700000000002
+        ],
+        "shownFrac": 0.984,
+        "edgeMax": 0.0001,
+        "saturatedMax": 0.0088,
+        "emptyMid": 0,
+        "emptyTail": 0,
+        "backJumps": 0,
+        "jitterApplies": false,
+        "loopWraps": 0,
+        "loopSeamPx512": null
+      },
+      "bakerSelfCheckDifferentDefinition": {
+        "maxClip": 0.088460068781047,
+        "clipFramesCount": 63,
+        "seamRatio": 1.042156395811176,
+        "definition": "50_bake.js:312/320：>=253像素占非零采样像素；回放检查.py:203：>=250占整格像素，分母不同，不能直接混比"
+      },
+      "images": [
+        {
+          "file": "analysis/results/NFE-SGS1-G106/烘焙回放.jpg",
+          "sha256": "cd84142b7199b5103ab6417a085a923060445fa0be1210e55e92bff335329206",
+          "dimensions": [
+            1590,
+            622
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        },
+        {
+          "file": "analysis/results/NFE-SGS1-G106/烘焙回放_原尺寸.jpg",
+          "sha256": "795da6990bddce1aeba6aa24caba7aaaefed9ae768d68db9ea2cfc66d2febafc",
+          "dimensions": [
+            4005,
+            1588
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        },
+        {
+          "file": "analysis/results/NFE-SGS1-G106/回放检查.jpg",
+          "sha256": "4aca398a16b9b410db18f63f1594b731b15d9fad68cfce4b582b7da3c9700e56",
+          "dimensions": [
+            1910,
+            742
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        },
+        {
+          "file": "analysis/results/NFR-SG-G106/Sparkler_Graph.jpg",
+          "sha256": "365b1a7cb2001c7ab9d26c6648339949f1309817f14247734dc618c835e1bae8",
+          "dimensions": [
+            2630,
+            742
+          ],
+          "humanVisibleInspectionByAI": true,
+          "notesIn": "看法.md：静态图片观察表"
+        }
+      ]
+    }
+  ],
+  "fullReplaySteps": [
+    {
+      "name": "窜天猴尾焰（RocketTail_Graph）",
+      "script": "全程回放检查.py",
+      "code": 0,
+      "ok": true,
+      "minutes": 0.0
+    },
+    {
+      "name": "仙女棒（Sparkler_Graph）",
+      "script": "全程回放检查.py",
+      "code": 0,
+      "ok": true,
+      "minutes": 0.0
+    }
+  ],
+  "limitations": [
+    "原PNG和_检查目录实体按导出日志留在本机analysis/local、没有进Git；无法复算声明贴图SHA256或证明物理包完整，不能把清单引用通过写成实物齐全。",
+    "本批只有SGR1/SGS1预设，不含用户dc97b485血缘的RocketDot存档重新导出，未核其手机Ramp错误是否在用户实际路径消失。",
+    "NFR元数据没有独立参数指纹，任务后缀G106/22:32日志/同名层指标与NFE吻合，但不构成贴图原文件的独立密码学同版证明。",
+    "回放记录是PC512格逐帧检查和7时刻接触表；手机256格有契约与标准记录，没有单独手机回放像素报告。",
+    "loop_wraps=0且loop_seam_px512=null，没有实测跨循环；烘焙器selfCheck.seam是另一种相邻帧缩略特征差比，不能充当循环播放验收。",
+    "连续播放、UE跟随朝向/压缩/Bloom/世界尺度、0.98是否被导入器覆写和用户审美未测。"
+  ]
+}
