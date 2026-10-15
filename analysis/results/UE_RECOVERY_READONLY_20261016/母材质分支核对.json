@@ -1,0 +1,170 @@
+{
+  "source": "analysis/results/UE_READBACK_20261015/黑块排查.json",
+  "currentUERecheck": false,
+  "conclusion": "旧T06完整顶层连线中，两参数先合成查色坐标，均经Ramp取色节点进入发光；没有路径到透明度、遮罩、顶点位移等输出。只说明该母材质快照，不推广到其他母族。",
+  "parameters": [
+    {
+      "node": "MaterialExpressionScalarParameter_12",
+      "name": "EmissiveDissolve",
+      "default": 1
+    },
+    {
+      "node": "MaterialExpressionScalarParameter_4",
+      "name": "EmissiveDissolvePow",
+      "default": 1
+    }
+  ],
+  "topLevelExpressionCount": 177,
+  "taintedNodeCount": 17,
+  "missingTopLevelInputNodes": [],
+  "reachableOutputs": {
+    "DiffuseColor": false,
+    "SpecularColor": false,
+    "BaseColor": false,
+    "Metallic": false,
+    "Specular": false,
+    "Roughness": false,
+    "Anisotropy": false,
+    "Normal": false,
+    "Tangent": false,
+    "EmissiveColor": true,
+    "WetnessMask": false,
+    "Porosity": false,
+    "PuddleMask": false,
+    "Opacity": false,
+    "OpacityMask": false,
+    "WorldPositionOffset": false,
+    "WorldDisplacement": false,
+    "TessellationMultiplier": false,
+    "SubsurfaceColor": false,
+    "ClearCoat": true,
+    "ClearCoatRoughness": true,
+    "AmbientOcclusion": false,
+    "Refraction": false,
+    "CustomizedUVs": false,
+    "PixelDepthOffset": false,
+    "ShadingModelFromMaterialExpression": false
+  },
+  "edges": [
+    {
+      "node": "MaterialExpressionAdd_8",
+      "type": "MaterialExpressionAdd",
+      "next": [
+        "MaterialExpressionMultiply_0"
+      ]
+    },
+    {
+      "node": "MaterialExpressionComponentMask_0",
+      "type": "MaterialExpressionComponentMask",
+      "next": [
+        "MaterialExpressionMultiply_11"
+      ]
+    },
+    {
+      "node": "MaterialExpressionCustom_1",
+      "type": "MaterialExpressionCustom",
+      "next": [
+        "MaterialExpressionComponentMask_0"
+      ]
+    },
+    {
+      "node": "MaterialExpressionDivide_0",
+      "type": "MaterialExpressionDivide",
+      "next": [
+        "MaterialExpressionStaticSwitchParameter_1"
+      ]
+    },
+    {
+      "node": "MaterialExpressionMaterialFunctionCall_0",
+      "type": "MaterialExpressionMaterialFunctionCall",
+      "next": [
+        "MaterialExpressionReroute_0",
+        "MaterialExpressionReroute_4"
+      ]
+    },
+    {
+      "node": "MaterialExpressionMultiply_0",
+      "type": "MaterialExpressionMultiply",
+      "next": [
+        "MaterialExpressionStaticSwitchParameter_1",
+        "MaterialExpressionDivide_0",
+        "MaterialExpressionMaterialFunctionCall_0"
+      ]
+    },
+    {
+      "node": "MaterialExpressionMultiply_11",
+      "type": "MaterialExpressionMultiply",
+      "next": [
+        "MaterialExpressionAdd_8"
+      ]
+    },
+    {
+      "node": "MaterialExpressionMultiply_9",
+      "type": "MaterialExpressionMultiply",
+      "next": [
+        "MaterialExpressionPower_0"
+      ]
+    },
+    {
+      "node": "MaterialExpressionPower_0",
+      "type": "MaterialExpressionPower",
+      "next": [
+        "MaterialExpressionCustom_1"
+      ]
+    },
+    {
+      "node": "MaterialExpressionPower_1",
+      "type": "MaterialExpressionPower",
+      "next": [
+        "MaterialExpressionMultiply_9",
+        "MaterialExpressionSubtract_3"
+      ]
+    },
+    {
+      "node": "MaterialExpressionReroute_0",
+      "type": "MaterialExpressionReroute",
+      "next": []
+    },
+    {
+      "node": "MaterialExpressionReroute_2",
+      "type": "MaterialExpressionReroute",
+      "next": []
+    },
+    {
+      "node": "MaterialExpressionReroute_4",
+      "type": "MaterialExpressionReroute",
+      "next": []
+    },
+    {
+      "node": "MaterialExpressionScalarParameter_12",
+      "type": "MaterialExpressionScalarParameter",
+      "next": [
+        "MaterialExpressionPower_1"
+      ]
+    },
+    {
+      "node": "MaterialExpressionScalarParameter_4",
+      "type": "MaterialExpressionScalarParameter",
+      "next": [
+        "MaterialExpressionPower_1"
+      ]
+    },
+    {
+      "node": "MaterialExpressionStaticSwitchParameter_1",
+      "type": "MaterialExpressionStaticSwitchParameter",
+      "next": [
+        "MaterialExpressionReroute_2"
+      ]
+    },
+    {
+      "node": "MaterialExpressionSubtract_3",
+      "type": "MaterialExpressionSubtract",
+      "next": [
+        "MaterialExpressionPower_0"
+      ]
+    }
+  ],
+  "formulaDescription": "先以EmissiveDissolve和Pow计算缩放，再改变灰度的Ramp查询坐标；本报告不复制私有材质代码。",
+  "dynamicParameterAndParticleColor": "帧/动态参数参与原灰度或亮度等上游；粒子颜色参与发光乘色和独立透明度链。该快照中D/P的可达路径没有进入透明度链。函数内部及编译后GPU行为没有重新实测。",
+  "safeForAllMaterials": false
+}
