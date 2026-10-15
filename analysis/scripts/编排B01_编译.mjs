@@ -215,7 +215,7 @@ const newTrail = (e, tr) => {   // 把一条尾缀条目换成新尾缀（行名
       e.preview = {...e.preview, diameterM: f.diameter};
       entries.push(e); tips.push({z: Math.cos(a) * tr.burstM, t: t.off + tr.riseS, end: t.off + tr.riseS + st.life});
     });
-    const sub = {name: x.name, category: x.flowers.length ? 'ball' : 'trail', seed: 1, randomMode: 'materialized', entries, id: x.engineId, engineId: x.engineId, key: x.engineId + '@1', version: 1,
+    const sub = {name: x.name, category: x.flowers.length ? 'ball' : 'trail', seed: 1, randomMode: 'materialized', entries, id: x.engineId, engineId: x.engineId, key: x.engineId + '@' + (x.version || 1), version: x.version || 1,   // B07 修订1：对称同时的倾角是版本 2
       sizeEvidence: {trailEndpointM: tr.burstM, trailRiseS: tr.riseS, source: `${tr.userName || 'XS'} 尾缀烘焙器导出值（${tr.export.split('（')[0]}）；小花 EffectScale 缩小，未在 UE 量`, enginePlaybackVerified: false},
       newTrail: {trail: FRONTF.trail, resourceId: tr.resourceId, confirmed: tr.confirmed, particle: tr.particle},
       derivedFrom: {rule: '通用尾缀 XS（不缩放、固化倾角）+ 现成小花缩小挂在 XS 终点；不新增资源', by: '跨年秀（22）2026-10-14，用户 01:27（看板 i12）', from: x.from, engineScaleVerified: false}};
@@ -352,6 +352,40 @@ delete doc.meta.defaultStaggerEnabled;
 // —— 修订4：尾缀 v2 开花点（手游编排 10-12，analysis/scripts/尾缀v2开花点.mjs）：引擎尾缀已按尺寸档重导（长度 × k、时间不变），
 //   固定子模板的开花点跟着降到新尾缀终点；编排条目（点位、时刻、dz、档位）不动。主角尾缀等 ResourceFX 加行后再换（hero=true）。 ——
 const trailV2 = TRAIL_V1 ? null : applyTrailV2(doc, {hero: args.some(a => a.startsWith('--hero-trail')), heroId: HERO_ID});
+// —— B07 修订1（22，用户 10-15 12:14「实机手游……尾缀和点灭星的爆发位置不一样」）：--upright = 球花（一根坝顶尾缀 + 花）倾角归 0，
+//    花放在尾缀正上方，沿尾缀的距离不变。原来按「Roll 正 → 局部 Y 负」把花挪到斜尾缀顶端，UE 里没实测过；UE4 FRotationMatrix
+//    是 Roll 正 → +Z 倒向 +Y（相反，点灭星差 9.8 m）。倾角归 0 后不管引擎往哪边转都对得上（原倾角 ≤ 2°，看不出）。
+//    小平台（Tiny 多根斜尾缀 V 形）、扇、小花束尾是有意的倾斜，不动。改过的固定子模板版本号 +1。不带开关时产物不变。 ——
+const UPRIGHT = args.includes('--upright');
+const uprightReport = [];
+if (UPRIGHT) {
+  const usedSubs = new Set(logic.cues.map(c => doc.templateLibrary.find(t => t.id === tidOf(c))?.subTemplateRef).filter(Boolean));
+  for (const sub of doc.subTemplateLibrary) {
+    if (!usedSubs.has(sub.key)) continue;
+    const tails = sub.entries.filter(e => e.role === 'trail'), bursts = sub.entries.filter(e => e.role === 'burst');
+    if (tails.length !== 1 || !bursts.length || /Tiny|Fan/.test(tails[0].native.FXResourceId)) continue;
+    const t = tails[0].native, p0 = t.PositionOffset, rot = t.RotationOffset;
+    if (rot.Pitch || rot.Yaw) throw Error('球花尾缀有 Pitch / Yaw，--upright 没处理：' + sub.key);
+    const tilted = Math.abs(rot.Roll) > 1e-9 || (t.RandomRotationRange?.Roll || 0) !== 0 || bursts.some(b => Math.abs(b.native.PositionOffset.Y - p0.Y) > 0.5 || Math.abs(b.native.PositionOffset.X - p0.X) > 0.5);
+    if (!tilted) continue;
+    let moved = 0;
+    for (const b of bursts) {
+      const p = b.native.PositionOffset, E = Math.hypot(p.X - p0.X, p.Y - p0.Y, p.Z - p0.Z);
+      moved = Math.max(moved, Math.hypot(p.X - p0.X, p.Y - p0.Y) / 100);
+      b.native.PositionOffset = {X: p0.X, Y: p0.Y, Z: round(p0.Z + E)};
+      b.native.RotationOffset = {...b.native.RotationOffset, Roll: 0};
+    }
+    const rollBefore = rot.Roll;
+    t.RotationOffset = {...rot, Roll: 0};
+    if (t.RandomRotationRange) t.RandomRotationRange = {...t.RandomRotationRange, Roll: 0};
+    const from = sub.key, version = (sub.version || 1) + 1, key = (sub.engineId || sub.id) + '@' + version;
+    for (const tp of doc.templateLibrary) if (tp.subTemplateRef === from) tp.subTemplateRef = key;
+    for (const x of [...(doc.events || []), ...(doc.cues || [])]) if (x.recipeRef === from) x.recipeRef = key;   // 场内片段钉的固定版本跟着换
+    if (sub.coupledVariation) sub.coupledVariation = {...sub.coupledVariation, rollDeg: 0, rollRangeDeg: 0, rollDegBefore: rollBefore};
+    Object.assign(sub, {key, version, upright: {from, rollDegBefore: rollBefore, flowerMovedM: round(moved), rule: '倾角归 0，花放尾缀正上方（沿尾缀距离不变）', by: '跨年秀（22）2026-10-15，用户 12:14'}});
+    uprightReport.push({key, from, trail: t.FXResourceId.replace('P_EFX_FireWorks_', ''), rollDegBefore: round(rollBefore), flowerMovedM: round(moved)});
+  }
+}
 // —— B05（22，用户 10-14 21:44 改了 ResourceFX 命名）：--resource-map <资源名映射.json>：导演表认 ResourceId（FXResourceId），
 //    按映射改名（OrangeGlitter → Glitter 等），行名 / 粒子元数据跟 T05 读回；不带这个开关时什么都不动。 ——
 const resourceMapInput = option('resource-map');
@@ -456,7 +490,8 @@ if (B02) {
   }
 }
 if (b04Report.tiny.length || b04Report.front.length) report.b04 = b04Report;
-if (mobileDerivedReport.length) report.mobileDerived = mobileDerivedReport;   // B05：手游替身花型   // B04：新尾缀片段 / 前台小花（旧方案不出这一项）
+if (mobileDerivedReport.length) report.mobileDerived = mobileDerivedReport;
+if (UPRIGHT) report.upright = uprightReport;   // B07 修订1：球花倾角归 0   // B05：手游替身花型   // B04：新尾缀片段 / 前台小花（旧方案不出这一项）
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 if (mixAudio) report.audio = {file: mixAudio.audioRef.name, sha256: mixAudio.audioRef.sha256, duration: mixAudio.audioRef.duration, musicOffset: finalDoc.meta.musicOffset, embeddedBytes: Buffer.byteLength(mixAudio.audioRef.dataUrl), markers: musicMarkers.length};
 fs.writeFileSync(path.join(outDir, `${TABLE}编排检查.json`), JSON.stringify(report, null, 2));

@@ -2,8 +2,8 @@
   "format": "df.offline-build/1",
   "time": "2026-10-13T08:19:46.902Z",
   "html": "烟花编排工作台.html",
-  "bytes": 10687426,
-  "sha256": "dad0b00a0d056b9261eed62c727cab4c4909af0970752507e9066a3d4a53694b",
+  "bytes": 10723224,
+  "sha256": "7086cb4c98ce9f8090c6dc336307e62bcb0f9df9b8bb19f967f7507032568684",
   "programmeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "originalProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "musicIncluded": false,
@@ -12,11 +12,11 @@
   "embeddedMusicSha256": null,
   "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
   "cloudLatest": {
-    "version": "16.0.33",
-    "name": "B07-尾缀落地-档位隔点-小平台加密",
-    "programmeSha256": "0c19309b8e56339957170e38e2db29973110f4d2765392dbe9d7dc0138df42de",
-    "cues": 438,
-    "events": 1328,
+    "version": "16.0.34",
+    "name": "B07修订1-球花竖直-扇不叠",
+    "programmeSha256": "f2ff485affe3fdff6526fc7f270a0fc5fa471bd2dcedf11e0685d3fab18bf5f7",
+    "cues": 449,
+    "events": 1365,
     "musicEmbedded": true,
     "musicSha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613"
   },
@@ -31,7 +31,7 @@
     "public/data/subtemplate-source.json": "63e41141c8c1686a13597728586398bd3fcc8ed32be1e87409f2189d249be718",
     "public/data/size-spec.json": "68da8838657b79247c7662d8a1ce830ee9aade22ae6e915e6f25f658137d22dc",
     "public/data/resource-catalogue.json": "d70182642319e8f95affa6b537a1db61cf3ceeb51bf7e593504c1d76867686ae",
-    "public/data/cloud-latest.json": "813de3c1dafacb7ba1125d21ea49e1550e8965912cb375050cb927df0eb88616",
+    "public/data/cloud-latest.json": "0bf46d50b4854581a7d51a589e2bd31c439268bf85b3c1c21216db86799376c7",
     "src/main.jsx": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8",
     "src/df-theme.css": "c363352bc9380bb42292b900546babd2b9ec4f2a3d47763209a5befc73e1c8d6",
     "src/material-theme.css": "fa93d65d6a3cf3f1ae3ac299a6d3a30b9237c97979ea3788825a21abeefc52a6",
@@ -281,6 +281,44 @@
       "previousVersion": "16.0.32",
       "previousHtmlSha256": "77101c8d916873f8c3bce6bf057389bc193f1b363c64e64e1cd7dffdc24d86f9",
       "productCommit": "98bb80751bb36ebae73684cf3b101934666f5e6a",
+      "sourceCheck": {
+        "byHash": 86,
+        "byGitOnly": []
+      },
+      "environment": {
+        "platform": "linux",
+        "python": "3.13.15"
+      }
+    },
+    {
+      "time": "2026-10-15T04:56:56Z",
+      "key": "cloud-latest",
+      "version": "16.0.34",
+      "name": "B07修订1-球花竖直-扇不叠",
+      "programmeSha256": "136e602f8ab9d1527a2114b85bda180657747236e28134f82533b2cc05eec93b",
+      "appVersion": "16.0.24",
+      "previousVersion": "16.0.33",
+      "previousHtmlSha256": "dad0b00a0d056b9261eed62c727cab4c4909af0970752507e9066a3d4a53694b",
+      "productCommit": "b9c0e590c989ef483e22b09012af48f9991b3806",
+      "sourceCheck": {
+        "byHash": 86,
+        "byGitOnly": []
+      },
+      "environment": {
+        "platform": "linux",
+        "python": "3.13.15"
+      }
+    },
+    {
+      "time": "2026-10-15T05:24:19Z",
+      "key": "cloud-latest",
+      "version": "16.0.34",
+      "name": "B07修订1-球花竖直-扇不叠",
+      "programmeSha256": "f2ff485affe3fdff6526fc7f270a0fc5fa471bd2dcedf11e0685d3fab18bf5f7",
+      "appVersion": "16.0.24",
+      "previousVersion": "16.0.34",
+      "previousHtmlSha256": "91d538a40acca608d5ae9edcc64436f82ac4f785f32bf560a721aa320b325ab8",
+      "productCommit": "6a2d8eb8b21c62be3c205e85f692568f0124d25b",
       "sourceCheck": {
         "byHash": 86,
         "byGitOnly": []

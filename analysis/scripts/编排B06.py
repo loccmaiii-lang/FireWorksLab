@@ -374,7 +374,7 @@ def place_fans(cues, plan, seed):
         last_color = cols.most_common(1)[0][0]
         f = FIG[k]
         wave = ('托底扇·' if s['baseOf'] else '扇组·') + f['zh']
-        for j, sp in enumerate(sorted({e['sp'] for e in ev}, key=lambda z: min(e['t'] for e in ev if e['sp'] == z))):
+        for j, sp in enumerate(sorted({e['sp'] for e in ev}, key=lambda z: (min(e['t'] for e in ev if e['sp'] == z), z))):   # 同刻按名字排，编号不随 set 顺序变
             es = sorted((e for e in ev if e['sp'] == sp), key=lambda e: (e['t'], b.px(e['point'])))
             life = b.life_of(sp)
             cid = f'B06_F{i + 1:02d}' + ('' if j == 0 else 'abc'[j - 1])

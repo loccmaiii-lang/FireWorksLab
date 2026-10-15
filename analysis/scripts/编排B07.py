@@ -492,6 +492,66 @@ def load_at(cues, t):
     return s
 
 
+def mobile_busy(cues, thr):
+    """修订1（复核第 5 条：手游中配同屏面积比 B06 高，多出来的全是小平台）：手游中配球花已经很满（≥ thr 个大号当量）的那一刻，小平台那一点不放"""
+    lit = []
+    for c in cues:
+        if c['size'] not in 'SML' or c.get('mobile') not in ('only', True):
+            continue
+        d2 = ((tpl_of(c)['diameter'] or b.DIA[c['size']]) * (c.get('sizeK') or 1.0)) ** 2 / 230 ** 2
+        pts = set(c['profiles']['medium'])
+        lit += [(e['burst'], e['burst'] + 0.75 * (e['end'] - e['burst']), d2) for e in c['events'] if e['point'] in pts]
+    out = []
+    for c in cues:
+        if c.get('mobile') != 'only' or c['size'] != 'X':
+            continue
+        def peak(e):                            # 这朵小花亮着（开花到寿命 75 %）期间球花面积的最大值
+            z0 = e['burst'] + 0.75 * (e['end'] - e['burst'])
+            ts = [e['burst']] + [a for a, z, d in lit if e['burst'] < a < z0]
+            return max(sum(d for a, z, d in lit if a <= t < z) for t in ts)
+        drop = {e['point'] for e in c['events'] if e['point'] in c['profiles']['medium'] and peak(e) >= thr}
+        if drop:
+            c['profiles']['medium'] = [p for p in c['profiles']['medium'] if p not in drop]
+            out.append(dict(cue=c['id'], t=round(min(e['burst'] for e in c['events']), 2), dropped=sorted(drop)))
+    return out
+
+
+def tier_ends(cues):
+    """回归账本（用户 11:14「看起来播放范围不会变」）：一排 = 同一 root 的所有片段（按尺寸拆的子片段、城垛半排、手游替身）合起来；
+    中 / 低配只要这一排还放，最左、最右两个点都在"""
+    g, by = rows(cues)
+    bad = []
+    for key, rs in g.items():
+        if rs[0]['size'] == 'F':
+            continue
+        for plat, ok in (('pc', (False, True)), ('mobile', ('only', True))):
+            sel = [c for c in rs if c.get('mobile') in ok]
+            for grp in ('P', 'B', 'F'):
+                hi = {e['point'] for c in sel if c['group'] == grp for e in c['events']}
+                if len(hi) < 4:
+                    continue
+                xs = sorted(hi, key=b.px)
+                for t in ('medium', 'low'):
+                    lo = sorted({p for c in sel if c['group'] == grp for p in c['profiles'][t]}, key=b.px)
+                    if lo and (lo[0] != xs[0] or lo[-1] != xs[-1]):
+                        bad.append(dict(row=key, platform=plat, tier=t, group=grp, high=xs, kept=lo))
+    return dict(rule='一排（同 root 合起来）≥ 4 点时，中 / 低配还放就要留最左、最右', violations=len(bad), list=bad[:20])
+
+
+def split_shared(cues):
+    """修订1（复核第 5 条）：PC + 手游共用的球花片段拆成「PC 照旧 + 手游替身」，手游中 / 低配按手游自己那一排的点隔。
+    原来共用片段跟 PC 的隔法（中配 P0 / 2 / 4 / 6 / 8），手游 M / L 本来就只放偶数点，等于中配一个不减，手游中配面积反而比 B06 高。"""
+    add = []
+    for c in cues:
+        if c.get('mobile') is True and c['size'] in 'SML':
+            m = copy.deepcopy(c)
+            m.update(id=c['id'] + 'm5', mobile='only', standinOf=c['id'])
+            c['mobile'] = False
+            add.append(m)
+    cues.extend(add)
+    return [m['id'] for m in add]
+
+
 def tiers(cues, sparse):
     g, by = rows(cues)
     log = Counter()
@@ -532,6 +592,8 @@ def main():
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--seed', type=int, default=20261015)
     ap.add_argument('--sparse', type=float, default=5.0, help='同屏面积（大号朵数当量）低于它算「天上很空」，中配不减')
+    ap.add_argument('--strict-fans', action='store_true', help='修订1：扇同时亮着多短都算叠（复核第 8 条）')
+    ap.add_argument('--mobile-busy', type=float, default=0.0, help='修订1：手游中配球花同屏面积 ≥ 这个值时，那一刻的小平台不放（0 = 不用）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     b.BAR0, b.OFFSET = plan['bar0S'], plan['musicOffsetS']
@@ -560,14 +622,20 @@ def main():
                 s['heavy'] = False
         return out
     B06.fan_slots = slots
+    if a.strict_fans:                           # 修订1（独立复核第 8 条）：两把扇同时亮着多短都算（B06 原来不到 0.2 s 不算）
+        B06.MIN_SHARED = 0.0
     cues, log['fans'], fslots = B06.place_fans(cues, plan, a.seed)
     B06.fan_slots = orig
+    if a.mobile_busy:
+        log['splitShared'] = split_shared(cues)
     log['tiers'] = tiers(cues, a.sparse)
     mid = dict(plan, cues=cues)
     cues5, log5 = B05.build(mid)
     for c in cues5:                             # 手游小平台（分裂星）低配照 B04 不放，弱机不加负担
         if c.get('mobile') == 'only' and c['size'] == 'X':
             c['profiles']['low'] = []
+    if a.mobile_busy:
+        log['mobileBusy'] = mobile_busy(cues5, a.mobile_busy)
     log5['mobileRule'] = B05.mobile_rule(cues5)
     log5['mobileScale'] = B05.scale_table(cues5)
     base_rel = Path(a.base).resolve()
@@ -592,6 +660,7 @@ def main():
     ck['overlapBase'] = dict(file='协作/编排B01/逻辑方案_B06.json', pcIncidents=rb['pcIncidents'], byKind=rb['byKind'],
                              mobile={k: dict(incidents=v['incidents'], totalGapS=v['totalGapS']) for k, v in rb['mobile'].items()})
     ck['fanAudit'] = dict(B07=B06.audit(cues5, out, 'B07'), B06=B06.audit(b06['cues'], b06, 'B06'))
+    ck['tierEnds'] = tier_ends(cues5)
     ck['shares'] = {f'{p}-{t}': B06.shares(cues5, p, t) for p in ('pc', 'mobile') for t in ('high', 'medium', 'low')}
     ck['area'] = {f'{v}-{p}-{t}': area_series(cs, t, p) for v, cs in (('B07', cues5), ('B06', b06['cues'])) for p in ('pc', 'mobile') for t in ('high', 'medium', 'low')}
     ck['score'] = scorecard(out, cues5, b06)
@@ -605,7 +674,8 @@ def main():
                           tierNesting=ck['tierNesting']['ok'], mobileRuleViolations=len(log5['mobileRule']['violations']),
                           overlap=dict(pc=ck['overlap']['pcIncidents'], byKind=ck['overlap']['byKind'], mobile={k: v['incidents'] for k, v in ck['overlap']['mobile'].items()},
                                        mobileGapS={k: v['totalGapS'] for k, v in ck['overlap']['mobile'].items()}),
-                          overlapB06=ck['overlapBase']['pcIncidents'], fanClash=fa['B07']['clashPairs'], area=ck['area'], score=ck['score']), ensure_ascii=False, indent=1))
+                          overlapB06=ck['overlapBase']['pcIncidents'], fanClash=fa['B07']['clashPairs'], fanClashB06=fa['B06']['clashPairs'], fanUnplaced=sum(1 for x in log['fans'] if not x.get('placed')),
+                          tierEnds=ck['tierEnds']['violations'], mobileBusy=len(log.get('mobileBusy', [])), area=ck['area'], score=ck['score']), ensure_ascii=False, indent=1))
 
 
 def scorecard(out, cues, b06):
@@ -617,20 +687,17 @@ def scorecard(out, cues, b06):
         balls = [(e['burst'], c) for c in pc if c['size'] in 'SML' for e in c['events']]
         ev = sorted(t for t, _ in balls)
         peak = {}
-        for s in plan['sections']:
-            best, t = 0, s['start']
-            while t < s['end'] - 1:
-                best = max(best, bisect.bisect_left(ev, t + 4) - bisect.bisect_left(ev, t))
-                t += 0.1
-            peak[s['name']] = best
+        for s in plan['sections']:             # 修订1：段内开花、任意 4 s 窗（和独立复核同一口径；原来窗口起点只到段尾前 1 s，终章少数 2 朵）
+            inside = [t for t in ev if s['start'] <= t < s['end']]
+            peak[s['name']] = max((bisect.bisect_left(inside, t + 4) - i for i, t in enumerate(inside)), default=0)
         sec = {s['name']: s for s in plan['sections']}
         coda_s = sec['白色收束']
         coda_L = sum(1 for t, c in balls if coda_s['start'] <= t < coda_s['end'] and c['size'] == 'L') / (coda_s['end'] - coda_s['start'])
         mains = [c for c in pc if c['size'] in 'SML' and c['layer'] == 'main' and not c.get('splitOf')]
         co = sum(1 for c in mains if c['order'] == 'center-out') / max(1, len(mains))
         dz_up = sum(1 for c in pc if c['size'] in 'SML' for e in c['events'] if e['dz'] > 0.5) / max(1, len(balls))
-        X = sorted(min(e['burst'] for e in c['events']) for c in pc if c['size'] == 'X')
-        span = [t for t in X if t > 17]
+        X = sorted(min(e['launch'] for e in c['events']) for c in pc if c['size'] == 'X')   # 修订1：按起飞算（原来按开花，V 形无花尾缀开花 = 起飞，空档少算 1.4 s）
+        span = [t for t in X if t > 16.2]
         gaps = [round(z - a, 1) for a, z in zip(span, span[1:])]
         col = Counter(COLOR.get(c['sp'], 'other') for c in pc if c['size'] in 'SML' for e in c['events'])
         tot = sum(col.values())

@@ -1,9 +1,9 @@
 {
  "events": {
-  "total": 918,
+  "total": 936,
   "balls": 529,
-  "fans": 162,
-  "cues": 313,
+  "fans": 180,
+  "cues": 316,
   "bySize": {
    "S": 213,
    "M": 196,
@@ -12,15 +12,15 @@
  },
  "tiers": {
   "high": {
-   "events": 918,
+   "events": 936,
    "balls": 756,
-   "fans": 162,
+   "fans": 180,
    "gpuPeakPerS": 130
   },
   "medium": {
-   "events": 758,
+   "events": 776,
    "balls": 596,
-   "fans": 162,
+   "fans": 180,
    "gpuPeakPerS": 130
   },
   "low": {
@@ -43,11 +43,11 @@
   "nearBudgetList": []
  },
  "beatLock": {
-  "within0_1": 0.833,
-  "within0_15": 0.862,
-  "cues": 210
+  "within0_1": 0.845,
+  "within0_15": 0.873,
+  "cues": 213
  },
- "strongBeat": 0.557,
+ "strongBeat": 0.549,
  "generations": {
   "fullWaves": 31,
   "meanTailsInFlightCues": 1.87,
@@ -432,16 +432,16 @@
   "beams": 0
  },
  "fanSummary": {
-  "cues": 52,
-  "events": 162,
+  "cues": 55,
+  "events": 180,
   "bySpecies": {
-   "R1": 18,
-   "R5": 6,
-   "R9": 40,
-   "R9R": 28,
-   "S13": 20,
-   "S5": 28,
-   "S9": 22
+   "R1": 10,
+   "R5": 8,
+   "R9": 33,
+   "R9R": 25,
+   "S13": 24,
+   "S5": 50,
+   "S9": 30
   },
   "aliveGpuPeak": 54
  },
@@ -584,13 +584,13 @@
     }
    },
    "medium": {
-    "events": 372,
+    "events": 349,
     "gpuPeakPerS": 54,
     "bySpecies": {
-     "金芒菊·大": 94,
-     "两根Tiny·分裂星": 60,
-     "三根Tiny·分裂星": 58,
+     "金芒菊·大": 90,
      "点灭星": 55,
+     "两根Tiny·分裂星": 51,
+     "三根Tiny·分裂星": 48,
      "Tiny·分裂星": 41,
      "辉星·中（手游）": 34,
      "V形四根Tiny": 16,
@@ -599,12 +599,12 @@
     }
    },
    "low": {
-    "events": 185,
-    "gpuPeakPerS": 48,
+    "events": 181,
+    "gpuPeakPerS": 36,
     "bySpecies": {
      "金芒菊·大": 90,
      "点灭星": 39,
-     "辉星·中（手游）": 32,
+     "辉星·中（手游）": 28,
      "V形四根Tiny": 14,
      "银冠菊·中（手游）": 6,
      "爆裂星": 4
@@ -612,8 +612,8 @@
    }
   },
   "mobileCues": 138,
-  "pcOnlyCues": 300,
-  "mobileOnlyCues": 125,
+  "pcOnlyCues": 311,
+  "mobileOnlyCues": 133,
   "beamFlowers": {
    "cues": 71,
    "events": 227,
@@ -660,118 +660,8 @@
  },
  "b05": {
   "lowLayer": [],
-  "labels": 36,
+  "labels": 47,
   "mobileSplit": [
-   {
-    "cue": "B03_CD10m5",
-    "of": "B03_CD10",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD09m5",
-    "of": "B03_CD09",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD08m5",
-    "of": "B03_CD08",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD07m5",
-    "of": "B03_CD07",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD06m5",
-    "of": "B03_CD06",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 1
-   },
-   {
-    "cue": "B03_CD05m5",
-    "of": "B03_CD05",
-    "size": "S",
-    "fromSp": "OG",
-    "fromTpl": "R03_OrangeGlitter",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe",
-    "scale": 1.0,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD04m5",
-    "of": "B03_CD04",
-    "size": "S",
-    "fromSp": "OG",
-    "fromTpl": "R03_OrangeGlitter",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe",
-    "scale": 1.0,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD03m5",
-    "of": "B03_CD03",
-    "size": "S",
-    "fromSp": "OG",
-    "fromTpl": "R03_OrangeGlitter",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe",
-    "scale": 1.0,
-    "events": 2
-   },
-   {
-    "cue": "B03_CD02m5",
-    "of": "B03_CD02",
-    "size": "S",
-    "fromSp": "OG",
-    "fromTpl": "R03_OrangeGlitter",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe",
-    "scale": 1.0,
-    "events": 2
-   },
-   {
-    "cue": "B02_C010m5",
-    "of": "B02_C010",
-    "size": "M",
-    "fromSp": "GR",
-    "fromTpl": "R03_GoldRayChry__K92",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144__K92",
-    "scale": 1.472,
-    "events": 5
-   },
    {
     "cue": "B07_P01m5",
     "of": "B07_P01",
@@ -795,39 +685,6 @@
     "events": 2
    },
    {
-    "cue": "B02_C017m5",
-    "of": "B02_C017",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe",
-    "scale": 1.0,
-    "events": 5
-   },
-   {
-    "cue": "B02_C017k108m5",
-    "of": "B02_C017k108",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K108",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K108",
-    "scale": 1.08,
-    "events": 3
-   },
-   {
-    "cue": "B02_C017k92m5",
-    "of": "B02_C017k92",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 1
-   },
-   {
     "cue": "B02_C029m5",
     "of": "B02_C029",
     "size": "X",
@@ -837,39 +694,6 @@
     "toTpl": "B04_XS1_SC_a_M",
     "scale": 1.0,
     "events": 7
-   },
-   {
-    "cue": "B02_C026m5",
-    "of": "B02_C026",
-    "size": "M",
-    "fromSp": "GS",
-    "fromTpl": "R03_GoldSpark__K92",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144__K92",
-    "scale": 1.472,
-    "events": 3
-   },
-   {
-    "cue": "B02_C026k108m5",
-    "of": "B02_C026k108",
-    "size": "M",
-    "fromSp": "GS",
-    "fromTpl": "R03_GoldSpark__K108",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144",
-    "scale": 1.6,
-    "events": 1
-   },
-   {
-    "cue": "B02_C026k100m5",
-    "of": "B02_C026k100",
-    "size": "M",
-    "fromSp": "GS",
-    "fromTpl": "R03_GoldSpark",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144",
-    "scale": 1.6,
-    "events": 1
    },
    {
     "cue": "B07_P03m5",
@@ -905,17 +729,6 @@
     "events": 3
    },
    {
-    "cue": "B02_C034m5",
-    "of": "B02_C034",
-    "size": "M",
-    "fromSp": "GR",
-    "fromTpl": "R03_GoldRayChry",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144",
-    "scale": 1.6,
-    "events": 5
-   },
-   {
     "cue": "B07_P05m5",
     "of": "B07_P05",
     "size": "X",
@@ -949,39 +762,6 @@
     "events": 7
    },
    {
-    "cue": "B02_C042m5",
-    "of": "B02_C042",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K92",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K92",
-    "scale": 0.92,
-    "events": 4
-   },
-   {
-    "cue": "B02_C042k100m5",
-    "of": "B02_C042k100",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe",
-    "scale": 1.0,
-    "events": 3
-   },
-   {
-    "cue": "B02_C042k108m5",
-    "of": "B02_C042k108",
-    "size": "S",
-    "fromSp": "SC",
-    "fromTpl": "R03_SilverChry__K108",
-    "toSp": "ST",
-    "toTpl": "R03_Strobe__K108",
-    "scale": 1.08,
-    "events": 2
-   },
-   {
     "cue": "B07_P07m5",
     "of": "B07_P07",
     "size": "X",
@@ -991,17 +771,6 @@
     "toTpl": "B04_XS3_GS_a_M",
     "scale": 1.0,
     "events": 1
-   },
-   {
-    "cue": "B02_C044m5",
-    "of": "B02_C044",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 5
    },
    {
     "cue": "B02_C047m5",
@@ -1026,50 +795,6 @@
     "events": 2
    },
    {
-    "cue": "B02_C048m5",
-    "of": "B02_C048",
-    "size": "M",
-    "fromSp": "GS",
-    "fromTpl": "R03_GoldSpark__K92",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144__K92",
-    "scale": 1.472,
-    "events": 3
-   },
-   {
-    "cue": "B02_C048k108m5",
-    "of": "B02_C048k108",
-    "size": "M",
-    "fromSp": "GS",
-    "fromTpl": "R03_GoldSpark__K108",
-    "toSp": "OGM",
-    "toTpl": "B05_Glitter_M144",
-    "scale": 1.6,
-    "events": 2
-   },
-   {
-    "cue": "B02_C051m5",
-    "of": "B02_C051",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 3
-   },
-   {
-    "cue": "B02_C051k100m5",
-    "of": "B02_C051k100",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 2
-   },
-   {
     "cue": "B07_P09m5",
     "of": "B07_P09",
     "size": "X",
@@ -1079,17 +804,6 @@
     "toTpl": "B04_XS2_CR_b_M",
     "scale": 1.0,
     "events": 3
-   },
-   {
-    "cue": "B02_C057m5",
-    "of": "B02_C057",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 5
    },
    {
     "cue": "B07_P11m5",
@@ -1224,28 +938,6 @@
     "events": 1
    },
    {
-    "cue": "B02_C086m5",
-    "of": "B02_C086",
-    "size": "L",
-    "fromSp": "GKH",
-    "fromTpl": "R03_GoldKamuro_H280",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 1
-   },
-   {
-    "cue": "B02_C087m5",
-    "of": "B02_C087",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 4
-   },
-   {
     "cue": "B07_P16m5",
     "of": "B07_P16",
     "size": "X",
@@ -1255,17 +947,6 @@
     "toTpl": "B04_XS3_GS_a_M",
     "scale": 1.0,
     "events": 2
-   },
-   {
-    "cue": "B02_C091m5",
-    "of": "B02_C091",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 4
    },
    {
     "cue": "B07_P17m5",
@@ -1279,17 +960,6 @@
     "events": 3
    },
    {
-    "cue": "B02_C096m5",
-    "of": "B02_C096",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 5
-   },
-   {
     "cue": "B07_P19m5",
     "of": "B07_P19",
     "size": "X",
@@ -1299,28 +969,6 @@
     "toTpl": "B04_XS1_SC_a_M",
     "scale": 1.0,
     "events": 7
-   },
-   {
-    "cue": "B02_C102m5",
-    "of": "B02_C102",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 3
-   },
-   {
-    "cue": "B02_C102k100m5",
-    "of": "B02_C102k100",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 2
    },
    {
     "cue": "B07_P20m5",
@@ -1354,17 +1002,6 @@
     "toTpl": "B04_XS1_SC_a_M",
     "scale": 1.0,
     "events": 4
-   },
-   {
-    "cue": "B02_C113m5",
-    "of": "B02_C113",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K108",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 5
    },
    {
     "cue": "B07_P23m5",
@@ -1455,28 +1092,6 @@
     "events": 4
    },
    {
-    "cue": "B02_C129m5",
-    "of": "B02_C129",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 3
-   },
-   {
-    "cue": "B02_C129k100m5",
-    "of": "B02_C129k100",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 2
-   },
-   {
     "cue": "B02_C132m5",
     "of": "B02_C132",
     "size": "X",
@@ -1497,17 +1112,6 @@
     "toTpl": "B04_XS3_GS_b_M",
     "scale": 1.0,
     "events": 3
-   },
-   {
-    "cue": "B02_C133m5",
-    "of": "B02_C133",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 5
    },
    {
     "cue": "B02_C136m5",
@@ -1576,28 +1180,6 @@
     "events": 1
    },
    {
-    "cue": "B02_C146m5",
-    "of": "B02_C146",
-    "size": "L",
-    "fromSp": "GKH",
-    "fromTpl": "R03_GoldKamuro_H280",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 3
-   },
-   {
-    "cue": "B02_C147m5",
-    "of": "B02_C147",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 2
-   },
-   {
     "cue": "B07_P35m5",
     "of": "B07_P35",
     "size": "X",
@@ -1618,17 +1200,6 @@
     "toTpl": "B04_XS3_GS_b_M",
     "scale": 1.0,
     "events": 3
-   },
-   {
-    "cue": "B02_C150m5",
-    "of": "B02_C150",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 2
    },
    {
     "cue": "B07_P37m5",
@@ -1752,17 +1323,6 @@
     "events": 4
    },
    {
-    "cue": "B02_C168m5",
-    "of": "B02_C168",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 5
-   },
-   {
     "cue": "B07_P48m5",
     "of": "B07_P48",
     "size": "X",
@@ -1772,17 +1332,6 @@
     "toTpl": "B04_XS3_GS_b_M",
     "scale": 1.0,
     "events": 1
-   },
-   {
-    "cue": "B02_C171m5",
-    "of": "B02_C171",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 5
    },
    {
     "cue": "B07_P49m5",
@@ -1804,17 +1353,6 @@
     "toSp": "FS3Am",
     "toTpl": "B04_XS3_GS_a_M",
     "scale": 1.0,
-    "events": 3
-   },
-   {
-    "cue": "B02_C174m5",
-    "of": "B02_C174",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
     "events": 3
    },
    {
@@ -1840,17 +1378,6 @@
     "events": 2
    },
    {
-    "cue": "B02_C178m5",
-    "of": "B02_C178",
-    "size": "L",
-    "fromSp": "SS",
-    "fromTpl": "R03_SilverStrobeChry__K92",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230__K92",
-    "scale": 1.411,
-    "events": 2
-   },
-   {
     "cue": "B07_P53m5",
     "of": "B07_P53",
     "size": "X",
@@ -1860,17 +1387,6 @@
     "toTpl": "B04_XS2_CR_b_M",
     "scale": 1.0,
     "events": 3
-   },
-   {
-    "cue": "B02_C181m5",
-    "of": "B02_C181",
-    "size": "L",
-    "fromSp": "GKH",
-    "fromTpl": "R03_GoldKamuro_H280",
-    "toSp": "GRL",
-    "toTpl": "R03_GoldRayChry_L230",
-    "scale": 1.533,
-    "events": 1
    }
   ],
   "mobileStandinSwap": [
@@ -1983,13 +1499,493 @@
     "toTpl": "B05_Glitter_M144",
     "scale": 1.6,
     "events": 5
+   },
+   {
+    "cue": "B03_CD10m5",
+    "of": "B03_CD10",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD09m5",
+    "of": "B03_CD09",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD08m5",
+    "of": "B03_CD08",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD07m5",
+    "of": "B03_CD07",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD06m5",
+    "of": "B03_CD06",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 1
+   },
+   {
+    "cue": "B03_CD05m5",
+    "of": "B03_CD05",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD04m5",
+    "of": "B03_CD04",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD03m5",
+    "of": "B03_CD03",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD02m5",
+    "of": "B03_CD02",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B02_C010m5",
+    "of": "B02_C010",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry__K92",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K92",
+    "scale": 1.472,
+    "events": 5
+   },
+   {
+    "cue": "B02_C017m5",
+    "of": "B02_C017",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 5
+   },
+   {
+    "cue": "B02_C017k108m5",
+    "of": "B02_C017k108",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K108",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K108",
+    "scale": 1.08,
+    "events": 3
+   },
+   {
+    "cue": "B02_C017k92m5",
+    "of": "B02_C017k92",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 1
+   },
+   {
+    "cue": "B02_C026m5",
+    "of": "B02_C026",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K92",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K92",
+    "scale": 1.472,
+    "events": 3
+   },
+   {
+    "cue": "B02_C026k108m5",
+    "of": "B02_C026k108",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K108",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 1
+   },
+   {
+    "cue": "B02_C026k100m5",
+    "of": "B02_C026k100",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 1
+   },
+   {
+    "cue": "B02_C034m5",
+    "of": "B02_C034",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C042m5",
+    "of": "B02_C042",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 4
+   },
+   {
+    "cue": "B02_C042k100m5",
+    "of": "B02_C042k100",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B02_C042k108m5",
+    "of": "B02_C042k108",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K108",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K108",
+    "scale": 1.08,
+    "events": 2
+   },
+   {
+    "cue": "B02_C044m5",
+    "of": "B02_C044",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C048m5",
+    "of": "B02_C048",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K92",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K92",
+    "scale": 1.472,
+    "events": 3
+   },
+   {
+    "cue": "B02_C048k108m5",
+    "of": "B02_C048k108",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K108",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 2
+   },
+   {
+    "cue": "B02_C051m5",
+    "of": "B02_C051",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C051k100m5",
+    "of": "B02_C051k100",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C057m5",
+    "of": "B02_C057",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C086m5",
+    "of": "B02_C086",
+    "size": "L",
+    "fromSp": "GKH",
+    "fromTpl": "R03_GoldKamuro_H280",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 1
+   },
+   {
+    "cue": "B02_C087m5",
+    "of": "B02_C087",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 4
+   },
+   {
+    "cue": "B02_C091m5",
+    "of": "B02_C091",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 4
+   },
+   {
+    "cue": "B02_C096m5",
+    "of": "B02_C096",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C102m5",
+    "of": "B02_C102",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C102k100m5",
+    "of": "B02_C102k100",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C113m5",
+    "of": "B02_C113",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K108",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 5
+   },
+   {
+    "cue": "B02_C129m5",
+    "of": "B02_C129",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C129k100m5",
+    "of": "B02_C129k100",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C133m5",
+    "of": "B02_C133",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 5
+   },
+   {
+    "cue": "B02_C146m5",
+    "of": "B02_C146",
+    "size": "L",
+    "fromSp": "GKH",
+    "fromTpl": "R03_GoldKamuro_H280",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 3
+   },
+   {
+    "cue": "B02_C147m5",
+    "of": "B02_C147",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 2
+   },
+   {
+    "cue": "B02_C150m5",
+    "of": "B02_C150",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 2
+   },
+   {
+    "cue": "B02_C168m5",
+    "of": "B02_C168",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C171m5",
+    "of": "B02_C171",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C174m5",
+    "of": "B02_C174",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C178m5",
+    "of": "B02_C178",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 2
+   },
+   {
+    "cue": "B02_C181m5",
+    "of": "B02_C181",
+    "size": "L",
+    "fromSp": "GKH",
+    "fromTpl": "R03_GoldKamuro_H280",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 1
    }
   ],
   "mobileKept": [
-   {
-    "cue": "B03_CD01",
-    "sp": "CR"
-   },
    {
     "cue": "B02_C015m",
     "sp": "CR"
@@ -2015,36 +2011,12 @@
     "sp": "GRL"
    },
    {
-    "cue": "B02_C081",
-    "sp": "GRL"
-   },
-   {
-    "cue": "B02_C082",
-    "sp": "GRL"
-   },
-   {
     "cue": "B02_C084",
     "sp": "FV4"
    },
    {
     "cue": "B07_P18",
     "sp": "FV4"
-   },
-   {
-    "cue": "B02_C109k100",
-    "sp": "GRL"
-   },
-   {
-    "cue": "B02_C109",
-    "sp": "GRL"
-   },
-   {
-    "cue": "B02_C140",
-    "sp": "GRL"
-   },
-   {
-    "cue": "B02_C140k100",
-    "sp": "GRL"
    },
    {
     "cue": "B02_C143m",
@@ -2055,7 +2027,35 @@
     "sp": "GRL"
    },
    {
-    "cue": "B02_C161",
+    "cue": "B03_CD01m5",
+    "sp": "CR"
+   },
+   {
+    "cue": "B02_C081m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C082m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C109k100m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C109m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C140m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C140k100m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C161m5",
     "sp": "GRL"
    }
   ],
@@ -2194,9 +2194,9 @@
     "cues": 3,
     "events": 15,
     "scales": [
-     0.867
+     0.8
     ],
-    "max": 0.867
+    "max": 0.8
    },
    "V形四根Tiny": {
     "cues": 5,
@@ -3911,12 +3911,12 @@
     ],
     "steps": 4,
     "events": 4,
-    "shiftBeats": 0.0,
+    "shiftBeats": 1.0,
     "times": [
-     56.9,
      57.3,
      57.5,
-     57.9
+     57.9,
+     58.1
     ],
     "onBeat": [
      true,
@@ -3938,10 +3938,9 @@
     "heavy": true,
     "waveDir": "齐发",
     "onsets": 5,
-    "placed": "两翼合拢",
+    "placed": "隔点红扇齐开",
     "species": [
-     "R9",
-     "R9R"
+     "R9"
     ],
     "steps": 1,
     "events": 4,
@@ -4004,7 +4003,7 @@
     "heavy": true,
     "waveDir": "外→里",
     "onsets": 2,
-    "placed": "两翼展开",
+    "placed": "两翼合拢",
     "species": [
      "R9",
      "R9R"
@@ -4030,17 +4029,19 @@
     "heavy": false,
     "waveDir": "齐发",
     "onsets": 3,
-    "placed": "两端一对",
+    "placed": "隔点交替",
     "species": [
-     "S9"
+     "S5"
     ],
-    "steps": 1,
-    "events": 2,
+    "steps": 2,
+    "events": 8,
     "shiftBeats": 0.0,
     "times": [
-     82.9
+     82.9,
+     83.3
     ],
     "onBeat": [
+     true,
      true
     ],
     "old": [
@@ -4055,9 +4056,10 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 3,
-    "placed": "隔点红扇齐开",
+    "placed": "两翼展开",
     "species": [
-     "R9"
+     "R9",
+     "R9R"
     ],
     "steps": 1,
     "events": 4,
@@ -4080,10 +4082,9 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 3,
-    "placed": "两翼展开",
+    "placed": "两翼银扇",
     "species": [
-     "R9",
-     "R9R"
+     "S9"
     ],
     "steps": 1,
     "events": 4,
@@ -4106,23 +4107,18 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 2,
-    "placed": "宽扇隔点走·左→右",
+    "placed": "两翼合拢",
     "species": [
-     "S13"
+     "R9",
+     "R9R"
     ],
-    "steps": 4,
+    "steps": 1,
     "events": 4,
     "shiftBeats": 0.0,
     "times": [
-     100.7,
-     101.1,
-     101.5,
-     101.7
+     100.7
     ],
     "onBeat": [
-     true,
-     false,
-     true,
      true
     ],
     "old": [
@@ -4137,10 +4133,9 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 6,
-    "placed": "两翼合拢",
+    "placed": "隔点宽扇齐开",
     "species": [
-     "R9",
-     "R9R"
+     "S13"
     ],
     "steps": 1,
     "events": 4,
@@ -4163,23 +4158,18 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 4,
-    "placed": "隔点追·右→左",
+    "placed": "两翼展开",
     "species": [
+     "R9",
      "R9R"
     ],
-    "steps": 4,
+    "steps": 1,
     "events": 4,
-    "shiftBeats": 1.0,
+    "shiftBeats": 0.0,
     "times": [
-     109.0,
-     109.4,
-     109.8,
-     110.0
+     108.8
     ],
     "onBeat": [
-     true,
-     true,
-     true,
      true
     ],
     "old": [
@@ -4288,7 +4278,7 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 6,
-    "placed": "两翼合拢",
+    "placed": "两翼展开",
     "species": [
      "R9",
      "R9R"
@@ -4465,17 +4455,23 @@
     "heavy": true,
     "waveDir": "左→右",
     "onsets": 2,
-    "placed": "隔点红扇齐开",
+    "placed": "宽扇隔点走·左→右",
     "species": [
-     "R9"
+     "S13"
     ],
-    "steps": 1,
+    "steps": 4,
     "events": 4,
     "shiftBeats": 2.0,
     "times": [
-     155.0
+     155.0,
+     155.4,
+     155.6,
+     155.8
     ],
     "onBeat": [
+     true,
+     true,
+     true,
      true
     ],
     "old": [
@@ -4490,23 +4486,17 @@
     "heavy": true,
     "waveDir": "齐发",
     "onsets": 3,
-    "placed": "隔点追·左→右",
+    "placed": "两翼银扇",
     "species": [
-     "R9"
+     "S9"
     ],
-    "steps": 4,
+    "steps": 1,
     "events": 4,
     "shiftBeats": 0.0,
     "times": [
-     158.3,
-     158.7,
-     158.9,
-     159.3
+     158.3
     ],
     "onBeat": [
-     true,
-     false,
-     true,
      true
     ],
     "old": [
@@ -4518,18 +4508,9 @@
     "slot": 30,
     "anchor": 160.7,
     "section": "B01_S12",
-    "placed": null,
-    "old": [
-     "B02_C144"
-    ]
-   },
-   {
-    "slot": 31,
-    "anchor": 163.9,
-    "section": "B01_S12",
     "heavy": true,
     "waveDir": "里→外",
-    "onsets": 5,
+    "onsets": 3,
     "placed": "隔点追·右→左",
     "species": [
      "R9R"
@@ -4538,15 +4519,46 @@
     "events": 4,
     "shiftBeats": 0.0,
     "times": [
-     163.9,
+     160.7,
+     161.1,
+     161.5,
+     161.9
+    ],
+    "onBeat": [
+     false,
+     true,
+     true,
+     false
+    ],
+    "old": [
+     "B02_C144"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 31,
+    "anchor": 163.9,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 5,
+    "placed": "宽扇隔点走·右→左",
+    "species": [
+     "S13"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 1.0,
+    "times": [
      164.3,
      164.8,
-     165.2
+     165.2,
+     165.4
     ],
     "onBeat": [
      true,
      true,
-     true,
+     false,
      false
     ],
     "old": [
@@ -4561,22 +4573,20 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 2,
-    "placed": "宽扇隔点走·右→左",
+    "placed": "中心外扩",
     "species": [
-     "S13"
+     "R9",
+     "R9R",
+     "S9"
     ],
-    "steps": 4,
+    "steps": 2,
     "events": 4,
-    "shiftBeats": 1.0,
+    "shiftBeats": 0.0,
     "times": [
-     167.8,
-     168.2,
-     168.4,
-     168.8
+     167.2,
+     167.8
     ],
     "onBeat": [
-     true,
-     true,
      true,
      true
     ],
@@ -4592,9 +4602,10 @@
     "heavy": true,
     "waveDir": "齐发",
     "onsets": 6,
-    "placed": "两翼银扇",
+    "placed": "两翼展开",
     "species": [
-     "S9"
+     "R9",
+     "R9R"
     ],
     "steps": 1,
     "events": 4,
@@ -4615,40 +4626,40 @@
     "slot": 34,
     "anchor": 174.5,
     "section": "B01_S12",
-    "heavy": true,
-    "waveDir": "齐发",
-    "onsets": 5,
-    "placed": "中心外扩",
-    "species": [
-     "R9",
-     "R9R",
-     "S9"
-    ],
-    "steps": 2,
-    "events": 4,
-    "shiftBeats": 2.0,
-    "times": [
-     175.3,
-     176.1
-    ],
-    "onBeat": [
-     true,
-     true
-    ],
+    "placed": null,
     "old": [
      "B02_C158",
      "B02_C159"
-    ],
-    "oldEvents": 8
+    ]
    },
    {
     "slot": 35,
     "anchor": 176.9,
     "section": "B01_S12",
-    "placed": null,
+    "heavy": true,
+    "waveDir": "外→里",
+    "onsets": 5,
+    "placed": "外→里压阵",
+    "species": [
+     "S9"
+    ],
+    "steps": 3,
+    "events": 6,
+    "shiftBeats": 1.0,
+    "times": [
+     177.3,
+     177.7,
+     177.9
+    ],
+    "onBeat": [
+     true,
+     true,
+     true
+    ],
     "old": [
      "B02_C162"
-    ]
+    ],
+    "oldEvents": 8
    },
    {
     "slot": 36,
@@ -4657,23 +4668,17 @@
     "heavy": true,
     "waveDir": "右→左",
     "onsets": 5,
-    "placed": "隔点追·左→右",
+    "placed": "隔点红扇齐开",
     "species": [
      "R9"
     ],
-    "steps": 4,
+    "steps": 1,
     "events": 4,
     "shiftBeats": 0.0,
     "times": [
-     183.4,
-     183.8,
-     184.2,
-     184.6
+     183.4
     ],
     "onBeat": [
-     true,
-     true,
-     true,
      true
     ],
     "old": [
@@ -4697,31 +4702,31 @@
     "heavy": false,
     "waveDir": "里→外",
     "onsets": 4,
-    "placed": "单束红雨",
+    "placed": "逐点走·右→左",
     "species": [
-     "R1"
+     "S5"
     ],
     "steps": 8,
     "events": 8,
-    "shiftBeats": 0.0,
+    "shiftBeats": 1.0,
     "times": [
-     186.6,
-     186.8,
-     187.1,
      187.3,
      187.5,
      187.7,
      187.9,
-     188.1
+     188.1,
+     188.3,
+     188.5,
+     188.7
     ],
     "onBeat": [
      true,
      false,
+     true,
+     true,
      false,
      true,
      false,
-     true,
-     true,
      false
     ],
     "old": [
@@ -4736,17 +4741,23 @@
     "heavy": false,
     "waveDir": "里→外",
     "onsets": 7,
-    "placed": "两端一对",
+    "placed": "里→外",
     "species": [
-     "S9"
+     "S5"
     ],
-    "steps": 1,
-    "events": 2,
-    "shiftBeats": 0.0,
+    "steps": 4,
+    "events": 8,
+    "shiftBeats": 1.0,
     "times": [
-     189.7
+     190.3,
+     190.7,
+     190.9,
+     191.3
     ],
     "onBeat": [
+     true,
+     true,
+     true,
      true
     ],
     "old": [
@@ -4761,18 +4772,21 @@
     "heavy": true,
     "waveDir": "里→外",
     "onsets": 0,
-    "placed": "两翼展开",
+    "placed": "中心外扩",
     "species": [
      "R9",
-     "R9R"
+     "R9R",
+     "S9"
     ],
-    "steps": 1,
+    "steps": 2,
     "events": 4,
     "shiftBeats": 0.0,
     "times": [
-     193.1
+     193.1,
+     193.9
     ],
     "onBeat": [
+     false,
      false
     ],
     "old": [
@@ -4790,7 +4804,7 @@
     "onsets": 0,
     "placed": "中间一对",
     "species": [
-     "S5"
+     "R5"
     ],
     "steps": 1,
     "events": 2,
@@ -4807,12 +4821,135 @@
     "oldEvents": 2
    }
   ],
+  "splitShared": [
+   "B03_CD10m5",
+   "B03_CD09m5",
+   "B03_CD08m5",
+   "B03_CD07m5",
+   "B03_CD06m5",
+   "B03_CD05m5",
+   "B03_CD04m5",
+   "B03_CD03m5",
+   "B03_CD02m5",
+   "B02_C010m5",
+   "B03_CD01m5",
+   "B02_C017m5",
+   "B02_C017k108m5",
+   "B02_C017k92m5",
+   "B02_C026m5",
+   "B02_C026k108m5",
+   "B02_C026k100m5",
+   "B02_C034m5",
+   "B02_C042m5",
+   "B02_C042k100m5",
+   "B02_C042k108m5",
+   "B02_C044m5",
+   "B02_C048m5",
+   "B02_C048k108m5",
+   "B02_C051m5",
+   "B02_C051k100m5",
+   "B02_C057m5",
+   "B02_C081m5",
+   "B02_C082m5",
+   "B02_C086m5",
+   "B02_C087m5",
+   "B02_C091m5",
+   "B02_C096m5",
+   "B02_C102m5",
+   "B02_C102k100m5",
+   "B02_C109k100m5",
+   "B02_C109m5",
+   "B02_C113m5",
+   "B02_C129m5",
+   "B02_C129k100m5",
+   "B02_C133m5",
+   "B02_C140m5",
+   "B02_C140k100m5",
+   "B02_C146m5",
+   "B02_C147m5",
+   "B02_C150m5",
+   "B02_C161m5",
+   "B02_C168m5",
+   "B02_C171m5",
+   "B02_C174m5",
+   "B02_C178m5",
+   "B02_C181m5"
+  ],
   "tiers": {
    "all": 33,
    "sparse": 20,
-   "fan": 52,
+   "fan": 55,
    "thin": 105
-  }
+  },
+  "mobileBusy": [
+   {
+    "cue": "B07_P24m5",
+    "t": 130.69,
+    "dropped": [
+     "F0",
+     "F6"
+    ]
+   },
+   {
+    "cue": "B07_P36m5",
+    "t": 168.39,
+    "dropped": [
+     "F1",
+     "F3",
+     "F5"
+    ]
+   },
+   {
+    "cue": "B07_P37m5",
+    "t": 169.59,
+    "dropped": [
+     "F0",
+     "F6"
+    ]
+   },
+   {
+    "cue": "B07_P38m5",
+    "t": 171.69,
+    "dropped": [
+     "F2",
+     "F4"
+    ]
+   },
+   {
+    "cue": "B07_P39m5",
+    "t": 172.89,
+    "dropped": [
+     "F1",
+     "F3",
+     "F5"
+    ]
+   },
+   {
+    "cue": "B07_P50m5",
+    "t": 190.89,
+    "dropped": [
+     "F1",
+     "F3",
+     "F5"
+    ]
+   },
+   {
+    "cue": "B07_P51m5",
+    "t": 192.29,
+    "dropped": [
+     "F0",
+     "F6"
+    ]
+   },
+   {
+    "cue": "B07_P52m5",
+    "t": 194.19,
+    "dropped": [
+     "F2",
+     "F4"
+    ]
+   }
+  ]
  },
  "overlap": {
   "file": "/home/claude/fireworkslab/协作/编排B01/逻辑方案_B07.json",
@@ -5046,58 +5183,102 @@
  "fanAudit": {
   "B07": {
    "label": "B07",
-   "fanCues": 52,
-   "fanEvents": 162,
+   "fanCues": 55,
+   "fanEvents": 180,
    "clashPairs": 0,
    "clashSamePoint": 0,
    "clashCuePairs": 0,
    "clashList": [],
-   "distinctLaunchTimes": 106,
-   "onBeatOrOnset": 0.792,
-   "slots": 38,
+   "distinctLaunchTimes": 105,
+   "onBeatOrOnset": 0.771,
+   "slots": 39,
    "consecutiveSameShape": 0,
    "distinctShapes": 18,
    "topShapes": [
     [
      "中心外扩",
-     4
-    ],
-    [
-     "隔点追·左→右",
-     4
-    ],
-    [
-     "两翼合拢",
-     3
+     5
     ],
     [
      "两翼展开",
+     4
+    ],
+    [
+     "两翼银扇",
      3
     ],
     [
-     "隔点追·右→左",
-     3
+     "隔点交替",
+     2
+    ],
+    [
+     "逐点走·右→左",
+     2
     ]
    ],
-   "eightPointSweeps": 0,
+   "eightPointSweeps": 1,
    "bySpecies": {
-    "S9": 22,
-    "R9R": 28,
-    "R9": 40,
-    "S5": 28,
-    "R1": 18,
-    "S13": 20,
-    "R5": 6
+    "S9": 30,
+    "R9": 33,
+    "R9R": 25,
+    "S5": 50,
+    "R1": 10,
+    "S13": 24,
+    "R5": 8
    }
   },
   "B06": {
    "label": "B06",
    "fanCues": 56,
    "fanEvents": 176,
-   "clashPairs": 0,
-   "clashSamePoint": 0,
-   "clashCuePairs": 0,
-   "clashList": [],
+   "clashPairs": 8,
+   "clashSamePoint": 6,
+   "clashCuePairs": 6,
+   "clashList": [
+    {
+     "a": "B06_F11",
+     "b": "B06_F12",
+     "t": [
+      73.1
+     ]
+    },
+    {
+     "a": "B06_F18b",
+     "b": "B06_F19",
+     "t": [
+      112.9
+     ]
+    },
+    {
+     "a": "B06_F24",
+     "b": "B06_F25",
+     "t": [
+      134.3
+     ]
+    },
+    {
+     "a": "B06_F32",
+     "b": "B06_F33",
+     "t": [
+      167.2
+     ]
+    },
+    {
+     "a": "B06_F34",
+     "b": "B06_F36",
+     "t": [
+      177.9,
+      178.3
+     ]
+    },
+    {
+     "a": "B06_F40",
+     "b": "B06_F41",
+     "t": [
+      193.5
+     ]
+    }
+   ],
    "distinctLaunchTimes": 109,
    "onBeatOrOnset": 0.752,
    "slots": 39,
@@ -5137,12 +5318,17 @@
    }
   }
  },
+ "tierEnds": {
+  "rule": "一排（同 root 合起来）≥ 4 点时，中 / 低配还放就要留最左、最右",
+  "violations": 0,
+  "list": []
+ },
  "shares": {
   "pc-high": {
    "platform": "pc",
    "tier": "high",
    "balls": 529,
-   "fans": 162,
+   "fans": 180,
    "platformEvents": 227,
    "bySize": {
     "小平台": {
@@ -5158,7 +5344,7 @@
      "pctOfBalls": 37.1
     },
     "扇": {
-     "events": 162,
+     "events": 180,
      "pctOfBalls": null
     },
     "大号": {
@@ -5233,13 +5419,13 @@
     }
    },
    "fansBySpecies": {
-    "扇·红彗星·九束左扫": 40,
-    "扇·红彗星·九束右扫": 28,
-    "扇·银星·五束窄扇": 28,
-    "扇·银星·九束展开": 22,
-    "扇·银星·十三束宽扇": 20,
-    "扇·红彗星·单束": 18,
-    "扇·红彗星·五束": 6
+    "扇·银星·五束窄扇": 50,
+    "扇·红彗星·九束左扫": 33,
+    "扇·银星·九束展开": 30,
+    "扇·红彗星·九束右扫": 25,
+    "扇·银星·十三束宽扇": 24,
+    "扇·红彗星·单束": 10,
+    "扇·红彗星·五束": 8
    },
    "platformBySpecies": {
     "小平台·短爆裂": 76,
@@ -5252,9 +5438,13 @@
    "platform": "pc",
    "tier": "medium",
    "balls": 421,
-   "fans": 162,
+   "fans": 180,
    "platformEvents": 175,
    "bySize": {
+    "扇": {
+     "events": 180,
+     "pctOfBalls": null
+    },
     "小平台": {
      "events": 175,
      "pctOfBalls": null
@@ -5262,10 +5452,6 @@
     "小号": {
      "events": 163,
      "pctOfBalls": 38.7
-    },
-    "扇": {
-     "events": 162,
-     "pctOfBalls": null
     },
     "中号": {
      "events": 146,
@@ -5343,13 +5529,13 @@
     }
    },
    "fansBySpecies": {
-    "扇·红彗星·九束左扫": 40,
-    "扇·红彗星·九束右扫": 28,
-    "扇·银星·五束窄扇": 28,
-    "扇·银星·九束展开": 22,
-    "扇·银星·十三束宽扇": 20,
-    "扇·红彗星·单束": 18,
-    "扇·红彗星·五束": 6
+    "扇·银星·五束窄扇": 50,
+    "扇·红彗星·九束左扫": 33,
+    "扇·银星·九束展开": 30,
+    "扇·红彗星·九束右扫": 25,
+    "扇·银星·十三束宽扇": 24,
+    "扇·红彗星·单束": 10,
+    "扇·红彗星·五束": 8
    },
    "platformBySpecies": {
     "小平台·短爆裂": 60,
@@ -5511,39 +5697,39 @@
   "mobile-medium": {
    "platform": "mobile",
    "tier": "medium",
-   "balls": 197,
+   "balls": 193,
    "fans": 0,
-   "platformEvents": 175,
+   "platformEvents": 156,
    "bySize": {
     "小平台": {
-     "events": 175,
+     "events": 156,
      "pctOfBalls": null
     },
     "大号": {
-     "events": 94,
-     "pctOfBalls": 47.7
+     "events": 90,
+     "pctOfBalls": 46.6
     },
     "小号": {
      "events": 61,
-     "pctOfBalls": 31.0
+     "pctOfBalls": 31.6
     },
     "中号": {
      "events": 42,
-     "pctOfBalls": 21.3
+     "pctOfBalls": 21.8
     }
    },
    "bySpecies": {
     "金芒菊": {
-     "events": 94,
-     "pctOfBalls": 47.7
+     "events": 90,
+     "pctOfBalls": 46.6
     },
     "点灭星": {
      "events": 55,
-     "pctOfBalls": 27.9
+     "pctOfBalls": 28.5
     },
     "橙辉星": {
      "events": 34,
-     "pctOfBalls": 17.3
+     "pctOfBalls": 17.6
     },
     "银冠菊": {
      "events": 8,
@@ -5551,33 +5737,33 @@
     },
     "爆裂星": {
      "events": 6,
-     "pctOfBalls": 3.0
+     "pctOfBalls": 3.1
     }
    },
    "fansBySpecies": {},
    "platformBySpecies": {
-    "小平台·分裂星": 159,
+    "小平台·分裂星": 140,
     "小平台·V形尾缀（不开花）": 16
    }
   },
   "mobile-low": {
    "platform": "mobile",
    "tier": "low",
-   "balls": 171,
+   "balls": 167,
    "fans": 0,
    "platformEvents": 14,
    "bySize": {
     "大号": {
      "events": 90,
-     "pctOfBalls": 52.6
+     "pctOfBalls": 53.9
     },
     "小号": {
      "events": 43,
-     "pctOfBalls": 25.1
+     "pctOfBalls": 25.7
     },
     "中号": {
-     "events": 38,
-     "pctOfBalls": 22.2
+     "events": 34,
+     "pctOfBalls": 20.4
     },
     "小平台": {
      "events": 14,
@@ -5587,23 +5773,23 @@
    "bySpecies": {
     "金芒菊": {
      "events": 90,
-     "pctOfBalls": 52.6
+     "pctOfBalls": 53.9
     },
     "点灭星": {
      "events": 39,
-     "pctOfBalls": 22.8
+     "pctOfBalls": 23.4
     },
     "橙辉星": {
-     "events": 32,
-     "pctOfBalls": 18.7
+     "events": 28,
+     "pctOfBalls": 16.8
     },
     "银冠菊": {
      "events": 6,
-     "pctOfBalls": 3.5
+     "pctOfBalls": 3.6
     },
     "爆裂星": {
      "events": 4,
-     "pctOfBalls": 2.3
+     "pctOfBalls": 2.4
     }
    },
    "fansBySpecies": {},
@@ -5630,7 +5816,7 @@
    171.37
   ],
   "B07-mobile-medium": [
-   8.72,
+   8.46,
    194.37
   ],
   "B07-mobile-low": [
@@ -5680,13 +5866,13 @@
   "B07": {
    "peak4s": {
     "climaxII": 26,
-    "finale": 32
+    "finale": 34
    },
    "codaLperS": 0.75,
    "centerOutShare": 0.47,
    "trailsLifted": 0.0,
    "platformCues": 71,
-   "platformMaxGapS": 4.9,
+   "platformMaxGapS": 6.5,
    "silverGoldShare": 0.65,
    "sameColorLayers": 0,
    "sizeVersions": 4

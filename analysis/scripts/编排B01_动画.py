@@ -57,7 +57,7 @@ if B05:
 if B06:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B06-低层150-扇重排跟拍-P2P4P6等大编排检查.json'
 if B07:
-    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07-尾缀落地-档位隔点-小平台加密编排检查.json'
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07修订1-球花竖直-扇不叠编排检查.json'   # 修订1（10-15 12:14 后）：16.0.33 那份见 B07-尾缀落地-档位隔点-小平台加密编排检查.json
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -153,14 +153,15 @@ def risks_b07():
     g, ob, l7, sc = CHECK['gpu'], COMPILE.get('oneTable', {}), CHECK['b07'], CHECK['score']
     s6, s7 = sc['B06'], sc['B07']
     ov, ob0 = CHECK['overlap'], CHECK['overlapBase']
-    sh = CHECK['shares']['pc-high']
+    ar, up = CHECK['area'], COMPILE.get('upright') or []
+    fa = CHECK['fanAudit']
     return [
-        f"尾缀从地上出来：高差全部归 0（B06 有 {s6['trailsLifted']:.0%} 的球花尾缀从坝顶上方 10–70 m 才出现）。挤的地方用构图解决：9 点大号整排改城垛（奇数点中号）{len(l7['castle'])} 排，P 排 / B 排同时开的之字 B 排缩小 {len(l7['zigzagSmall'])} 排，B 排接 B 排改成两半交替 {len(l7['bRows'])} 对。球花重叠 PC {ov['pcIncidents']} 处（B06 {ob0['pcIncidents']}）。上方可切「B06」看尾缀原来从半空出来的样子。",
-        f"中低配隔点：一排的两端都留，中间隔一个去（9 → 5 → 3、8 → 4 → 2）；天上很空的那几排中配不减。同屏面积（overdraw 的近似）中配、低配都比 B06 低，中配平均和 B06 差不多。PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}。",
-        f"小平台 {s6['platformCues']} → {s7['platformCues']} 组，最长空档 {s6['platformMaxGapS']} → {s7['platformMaxGapS']} s，开花踩起音；高度还是 62 m（不拉伸尾缀就只能等一根更短的尾缀资源）。",
-        f"张力：终章 4 秒峰值 {s7['peak4s']['finale']} 朵 > 高潮 II {s7['peak4s']['climaxII']}（B06 都是 34）；金墙下面加一排 B 点银冠菊；白色收束收成 9 → 3 → 2 → 主角（大号每秒 {s6['codaLperS']} → {s7['codaLperS']}），这段的扇只用轻的。",
-        f"变化：主排「里→外」{s6['centerOutShare']:.0%} → {s7['centerOutShare']:.0%}（轮换左→右 / 右→左 / 外→里 / 齐发）；小中号每点随机 ×0.92 / 1.0 / 1.08；B 排和上面同色的 {s6['sameColorLayers']} 排换成对比色（银金占比 {s6['silverGoldShare']:.0%} → {s7['silverGoldShare']:.0%}）。",
-        f"GPU 同秒峰值 {g['peak']}；扇不叠、跟拍同 B06。没在 UE 里放过。",
+        f"修订1（用户 12:14 实机手游点灭星和尾缀开花位置对不上）：{len(up)} 个球花子模板倾角归 0，花放在尾缀正上方（原来花按「Roll 正 → 往 −Y」挪到斜尾缀顶端，UE 没实测过，按 UE4 公式方向相反，点灭星差 9.8 m）。现在不管引擎往哪边转都对得上。小平台 V 形（有意斜的）还按原约定，等你看一眼方向。",
+        f"尾缀从地上出来：高差全部归 0（B06 有 {s6['trailsLifted']:.0%} 的球花尾缀从坝顶上方 10–70 m 才出现）。9 点大号整排改城垛（奇数点中号）{len(l7['castle'])} 排，P 排 / B 排同时开的之字 B 排缩小 {len(l7['zigzagSmall'])} 排，B 排接 B 排改成两半交替 {len(l7['bRows'])} 对。球花重叠 PC {ov['pcIncidents']} 处（B06 {ob0['pcIncidents']}）。",
+        f"中低配隔点：一排（含按大小拆开的子片段）两端都留、中间隔一个去；天上很空的那几排中配不减。手游共用片段也按手游自己那一排隔，手游中配球花很满时小平台那一刻不放（{len(l7.get('mobileBusy', []))} 组）。同屏面积峰值 PC 中 / 低 {ar['B07-pc-medium'][0]} / {ar['B07-pc-low'][0]}（B06 {ar['B06-pc-medium'][0]}），手游中 / 低 {ar['B07-mobile-medium'][0]} / {ar['B07-mobile-low'][0]}（B06 {ar['B06-mobile-medium'][0]} / {ar['B06-mobile-low'][0]}）。PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}。",
+        f"小平台 {s6['platformCues']} → {s7['platformCues']} 组，起飞最长空档 {s6['platformMaxGapS']} → {s7['platformMaxGapS']} s；高度还是 62 m（不拉伸尾缀就只能等一根更短的尾缀资源）。",
+        f"张力：终章 4 秒峰值 {s7['peak4s']['finale']} 朵（和 B06 一样），高潮 II 降到 {s7['peak4s']['climaxII']}（B06 {s6['peak4s']['climaxII']}）；白色收束收成 9 → 3 → 2 → 主角（大号每秒 {s6['codaLperS']} → {s7['codaLperS']}），这段的扇只用轻的。",
+        f"扇：两把扇同时亮着多短都算叠，修订1 重排后 0 对（B06 用同一把尺 {fa['B06']['clashPairs']} 对）；GPU 同秒峰值 {g['peak']}。没在 UE 里放过。",
     ]
 
 
@@ -386,7 +387,7 @@ def main():
         old = json.loads((OUT / '逻辑方案_B06.json').read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
         au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
-        data['variants'] = [dict(label='B07', note='尾缀落地 · 档位隔点 · 小平台加密', cues=cues, events=events, sections=secs, anchors=anchors),
+        data['variants'] = [dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠 · 手游中配隔点', cues=cues, events=events, sections=secs, anchors=anchors),
                             dict(label='B06', note='尾缀从坝顶 + 高差出来', cues=oc, events=oe, sections=osecs, anchors=oanch)]
         data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
                           fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
