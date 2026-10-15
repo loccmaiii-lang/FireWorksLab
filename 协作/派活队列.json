@@ -1,7 +1,7 @@
 {
   "格式": "df.dispatch-queue/1",
   "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-15T11:40:00+08:00 导出（23）：T06 补用户 11:25 的结果（换旧 Ramp 就好、寻址没用），加读材质实例实际绑定和 Custom 节点",
+  "更新": "2026-10-15T15:40:00+08:00 导出（23）：加 T07（窜天猴尾焰交付检查失败只读排查）、T08（黑块首选 EmissiveDissolve 0.98 的只读核实），都给本机同步（8）",
   "dot 怎么派": [
     "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
     "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
@@ -331,6 +331,66 @@
       "完成": "2026-10-15T12:14:37+08:00",
       "提交": "a2e6535f5d8b7f6eefdef7c6ff933b3b67d27ac0",
       "结果": "只读排查执行结束，非根因闭环：56系统/218发射器/332LOD、78主图（44Ramp序列）；报告analysis/results/UE_READBACK_20261015/黑块排查.json及.md。\n①8张和④30张为同名PNG候选，UE导入源路径/时间均空，实际代际null；②3张均辅助图，③38张仅参数检查标记，45个Ramp实例查询参数1/1中性；16处Ramp不同名中15处有同SHA配套候选，点灭Strobe异SHA优先核实。\n3501次仅get/search读取，无UE写入；155文件SHA与统计/范围覆盖检查通过。缺源身份，不能确定哪些必须重导或只换Ramp，未替用户改。"
+    },
+    {
+      "编号": "T07",
+      "看板": "",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 1,
+      "前置": [],
+      "要 UE": "最好开着（只读）；17780 连不上本身就是要记的结论，不算卡住",
+      "标题": "只读排查「窜天猴尾焰交付：特效工作台报『Python 调用失败：TypeError: Failed to fetch』，PC / 手机两个资源包都检查失败」",
+      "为什么": "用户 10-15 15:06 截图：交付「窜天猴尾焰」（他自己存的「我的效果」，一层分层粒子图，UE 名 RocketTail）后，特效工作台顶上红字「Python 调用失败：TypeError: Failed to fetch」，烘焙器交付清单里 PC / 手机两个资源包都「检查失败」，用户说「还是会报错」。云端看不到私有导入器、UE 日志和 D 盘修订（写任务的：导出（23））。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261015/尾焰检查失败.json（新建）",
+        "analysis/results/UE_READBACK_20261015/尾焰检查失败.md（新建）"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T07，按该文件「Codex 共同规则」执行，只有第 1 步写的一处例外。先读 对话记录/对话框8.md 最近一节、tool/local_delivery/README.md、tool/local_http/README.md。\n\n背景（导出（23）写）：用户 10-15 15:06 截图——交付「窜天猴尾焰」（analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json：一层分层粒子图 sparkgraph，烘成「地面循环」，ue.base / system = RocketTail，custom）后，特效工作台顶上红字「Python 调用失败：TypeError: Failed to fetch」，烘焙器交付清单里 PC / 手机两个资源包都「检查失败」；用户说「还是会报错」。\n导出（23）的判断（推断，要你证实）：「Failed to fetch」是浏览器层面的失败——页面向 http://127.0.0.1:17780/gpcli 发请求，连 HTTP 响应都没拿到（服务没在听 / UE 卡住或崩了 / 服务处理这个请求时出异常、连接被断或错误响应没带跨域头）。两个包都「检查失败」多半是同一次调用失败连带的，不一定是包内容错。要分清是「17780 当时不在」还是「这一个包让 Python 那边出错」。\n\n1. 17780 现在在不在：netstat -ano | findstr 17780（哪个进程在听）；照 analysis/scripts/workbench_engine_acceptance.mjs 的 request() 发一个只读请求（GetPlatformName 或 /object/search 一个已知资产），记返回和耗时。**例外：连不上不算卡住**——把「17780 连不上 / 哪个进程 / UE 开没开」记下来（这本身就是答案），后面不要 UE 的几步照做，最后状态写「完成」。\n2. 找到这次交付：读交付根目录（%USERPROFILE%/.fireworkslab/delivery-settings.json 里的根，默认 D:\\ProjectTextures\\FireWorksLab）的 workspace-resources.json，找名字含 RocketTail 的资源；列出它所有修订（revisionId、createdAt、平台目录、文件名、大小），以 10-15 14:40–15:10 那几次为准。\n3. 对最新那一版跑 python tool/local_delivery/fx_gate.py <修订目录> --root <根> --json（不要加 --register），记退出码和全部原因。\n4. 和最近一个检查通过、导入成功的包比（YonshakuKamuro 修订 0e31af841d6954fcd76d，10-14 23:48 导入）：两边 cascade.json / cascade_mobile.json 的顶层键、textures 每项（file / class / 有没有 asset 字段）、materials 的 role、每个发射器 required 的键和 modules 名单；文件名里有没有非 ASCII 字符、路径长度；列出只在 RocketTail 里出现的东西（比如 OrientationAxisLock、loops 0、local_space、手机贴图名 _Mobile、FrameTest 图）。\n5. 读日志（只读文件，不发 UE 请求）：UE 编辑器当前日志（工程 Saved/Logs/ 最新的 .log；崩过的话 Saved/Crashes/）里 10-15 14:40–15:15 的 Python 报错 / Traceback / LogPython: Error / GPUECli 相关行；交付服务日志（目录配置旁 delivery-server.log）、%USERPROFILE%/.fireworkslab/local-http-tools.log 同一时间段。原样摘相关的几行（去掉凭据和用户名）。\n6. 只读看私有导入器怎么发这次检查：D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html、交付用的 df-fireworks-delivery_locmai.html / tool/local_delivery/runtime/importer.html——「Python 调用失败」在哪里报、检查发的是哪个接口和什么内容、有没有超时、PC / 手机是不是各发一次。**私有代码不复制进仓库**，只用中文写结论（大概第几行、做什么）。\n7. 判定一句（四选一）：A 17780 当时不在 / UE 关着或卡住；B 17780 在、别的包能检查，这一包的请求让 Python 那边出错（给 Traceback 和是哪个字段 / 文件触发的）；C fx_gate 不过（列原因）；D 没找到（写缺什么证据）。\n8. 输出：analysis/results/UE_READBACK_20261015/尾焰检查失败.json（{format:'df.delivery-check-failure/1', readAt, port17780:{listening, pid, process, probe}, resource:{name, revisions:[...]}, gate:{exit, reasons}, diffVsGood:[...], logs:[...], importerNotes, verdict:'A|B|C|D', why}）和 .md（第一句写结论；最后一段「给导出（23）」：要改烘焙器导出的哪一处、还是要改导入器、还是用户只要开着 UE 重试）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。",
+      "做完的标准": [
+        "写清 17780 现在在不在、是哪个进程",
+        "找到 RocketTail 这几次修订，最新一版有 fx_gate 结果",
+        "和 YonshakuKamuro 那一包的差异列出来",
+        "UE / 交付服务日志同一时间段的相关行摘出来（没有就写没有）",
+        "判定 A / B / C / D 之一，写依据",
+        "已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T08",
+      "看板": "",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 2,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "只读核实黑块：截图里会黑的 YonshakuKamuro_Main_4x4_02_HD 是不是封顶 253 的新序列；母材质里 EmissiveDissolve 还接了什么；导入器更新材质实例时会不会把它改回 1",
+      "为什么": "用户 10-15 15:06：同一个效果换 10.06 的旧 Ramp（GoldRay_A_R，末格不黑）就没黑块，换 LittleCrackle_Main_R（末格黑）就有。按 T06 的导入回执，这张序列是 10-14 23:48 从 4.9.100 修订 0e31af84 新建的，应该已封顶 253——那就是 UE 里有东西把 253 推到了 254 / 255（多半是 BC7）。导出（23）的新首选修法：材质实例上已有的参数 EmissiveDissolve 1 → 0.98，查 Ramp 的坐标最高只到 0.98，再亮也碰不到末格黑，细线护栏不动、贴图一张不重导。要先确认这个参数只进 Ramp 坐标、没有别的用途，以及导入器会不会把它改回去。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261015/黑块_首选核实.json（新建）",
+        "analysis/results/UE_READBACK_20261015/黑块_首选核实.md（新建）"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T08，按该文件「Codex 共同规则」执行。先读 analysis/results/UE_READBACK_20261015/看法.md（含 15:30 更正）、黑块排查.md。\n\n背景（导出（23）写）：父材质 M_EFX_FlipBookSuperPack_FireBase_Unlit 查 Ramp 的坐标是 q = pow(v·pow(EmissiveDissolve, EmissiveDissolvePow), 2 − pow(EmissiveDissolve, EmissiveDissolvePow))（T06 读的），现在 45 个材质实例都是 1 / 1（q = v）。导出（23）准备建议用户把 EmissiveDissolve 改 0.98（Pow 保持 1）：q 最高 0.98，Ramp 第 255 格（黑）怎么都碰不到。动手前要确认四件事。\n\n1. 源 PNG：D:\\ProjectTextures\\FireWorksLab\\烟花\\大\\YonshakuKamuro\\revisions\\0e31af841d6954fcd76d\\PC\\YonshakuKamuro\\T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png——sha256（应为 962aca3a…5f30）、每通道最大值、≥254 / =255 / =253 各占多少；同目录 cascade.json 的 source.tool。\n2. UE 资产（GPUECli 只读）/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD：Size、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX/Y、能读到的 NumMips / AssetImportData 源路径和时间。同样读 T_EFX_FireWorks_LittleCrackle_Main_R、T_EFX_FireWorks_GoldRay_A_R、T_EFX_FireWorks_YonshakuKamuro_Main_R。\n3. 母材质里 EmissiveDissolve / EmissiveDissolvePow 两个参数节点连到哪：把从这两个参数到输出的表达式链读出来（节点类型、连线、有没有 DynamicParameter / VertexColor / 粒子颜色参与），回答：它们是不是**只**进 Ramp 查询坐标、有没有进透明度 / 溶解遮罩 / 别的分支。用到这张序列的材质实例（按引用查，如 MI_EFX_FireWorks_YonshakuKamuro_Main_02_HD）的全部 Scalar / Vector / Texture 参数当前值，Ramp 现在绑的哪张（用户在试，可能是 LittleCrackle 或 GoldRay）。\n4. 私有导入器（D:/FXTools/DFWorkbench/ 下的工作台和交付 HTML，只读）：cascade.json 里 materials.<角色>.scalars 是只认 rows / cols，还是任意参数名都写到材质实例；「更新」已有材质实例时，没写在 cascade.json 里的参数（比如用户手改的 EmissiveDissolve）会不会被重置成父材质默认值。**私有代码不复制进仓库**，只写结论。\n5. 工程配置（只读文件）：<工程>/Config/DefaultDeviceProfiles.ini、DefaultEngine.ini、引擎 Config/BaseDeviceProfiles.ini 里 TEXTUREGROUP_Effects 那一行（MinMagFilter、MipFilter、MipGenSettings、LODBias、MaxLODSize），Windows / Android / IOS 有没有覆盖。\n6. 判定：(a) 02_HD 源图最大 ≤ 253 → 「封顶的新序列，黑块是 UE 里冒上去的」，再按第 5 步写是 BC7（Mip 生成 SimpleAverage、没缩小）还是 Mip / 缩小滤镜（Sharpen* / LODBias）；源图有 ≥254 → 「不是封顶序列」，写 UE 里的实际源路径。(b) EmissiveDissolve 只进 Ramp 坐标 → 「改 0.98 只影响查色，可以」；还进了别的分支 → 写清哪条、改 0.98 会变什么。(c) 导入器会 / 不会重置手改参数。\n7. 输出：analysis/results/UE_READBACK_20261015/黑块_首选核实.json 和 .md（第一句写三条判定；最后一段「给导出（23）」）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。改 RGBA8 / 改 EmissiveDissolve 的试验留给用户自己在 UE 里做，你不要改。",
+      "做完的标准": [
+        "02_HD 源图的最大值 / ≥254 占比和 UE 里的压缩、Mip、尺寸设置都有",
+        "EmissiveDissolve / Pow 的表达式链读清，写明是不是只进 Ramp 坐标",
+        "写清导入器会不会把手改的材质实例参数改回去、scalars 认不认任意名字",
+        "Effects 贴图组的 Mip / 缩小设置有",
+        "黑块_首选核实.md 第一句是三条判定，有「给导出（23）」一段",
+        "已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
     }
   ],
   "夜班怎么取": [
