@@ -1,0 +1,48 @@
+{
+  "format": "df.export23-night-handoff/1",
+  "at": "2026-10-16T04:13:36+08:00",
+  "workspace": "F:/FireWorksLab-Night-Export23-20261016",
+  "commits": {
+    "N23-20261016-01": "239746282f6a680d8e97b162ad7d6b2b79f87de4",
+    "N23-20261016-02": "80b04a69ba92de0b06b27bae9a90388c9717c193",
+    "N23-20261016-03": "4effc08fd1c442c1dbf970e92356dcf57dd8cd32",
+    "N23-20261016-04": "43021f8efa253b7490abacbfecabbac5ca04c0af"
+  },
+  "cpu": {
+    "acceptContracts": 8,
+    "snapshotScenarios": 24,
+    "unitPhysicsConfigGroups": 5,
+    "scannerFixtures": 14,
+    "publicBuildVersion": "4.9.109",
+    "staticErrors": 0,
+    "legacyFailure": "test_export_revision_identity.cjs: T_Test旧命名夹具不合4.9.106规范，01之前已存在且保留。"
+  },
+  "halfUnitCapability": "公开合同未声明半球轴向限制，当前仅安全拦截；不冒称半球单束画面完成。",
+  "browserStarted": false,
+  "smallBake": null,
+  "fullPrePush": null,
+  "sourcePushed": false,
+  "blockedAction": {
+    "name": "公共契约/导出诊断子集",
+    "reviewOutcome": "rejected_before_CreateProcess",
+    "reason": "The diagnostic launches the browser contract/export path while T10 is not shown terminal and GPU/UE activity is still present, conflicting with the explicit requirement to wait for safe T10 release and verified idle resources before browser/render validation.",
+    "retry": false
+  },
+  "privateScope": {
+    "configuredPrivatePrepare": true,
+    "privateImporterRead": false,
+    "sidecarGenerated": false,
+    "clarification": "标准构建默认准备私有副本及初始化，原禁令仍在；已通过异步输入请求窄例外，未收到答复。"
+  },
+  "resourceReadback": {
+    "knownNewTestProcessMatches": 0,
+    "uePid": 148864,
+    "ueResponding": true,
+    "ue3DPercent": 12,
+    "dwmPid": 812,
+    "dwm3DPercent": 4,
+    "performanceVerified": false
+  },
+  "next": "父侧取得T10安全释放与GPU空闲的新证据，以及私有sidecar/只读初始化范围确认后，正常审查恢复；不得改门禁/no-verify/换file路由。",
+  "ownBackgroundTests": false
+}
