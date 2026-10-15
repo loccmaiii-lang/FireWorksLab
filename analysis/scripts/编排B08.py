@@ -4,11 +4,11 @@
 用户 10-15 19:23 / 22:02：
 - 「小的烟花太小了，很小气；高度也比较高」「可以不要新出尾缀了嘛，直接缩放行不行」→ 前台小花.json trailScale 0.65、花 36–44 m、对称一对 ±15–22°（数据，不在本文件）；
 - 「图4的比例有点怪，中型的完全把小的盖住了」→ 同一刻同高度的 P 排 / B 排小号之字：P 排挂现有中尾缀（新尾缀.json Up210）、B 排 ×0.8（原 ×0.6）；
-- 「所有90m的，也有90~110的组别种类区分」「如果不行可以变得更小，譬如90~100这样也可以」→ 小号 90–100、中号 150–160（按种类），大号不动；
+- 「所有90m的，也有90~110的组别种类区分」「如果不行可以变得更小，譬如90~100这样也可以」→ 小号按种类 90–100，中 / 大号不放大（修订1：每点随机不再叠乘底稿大小版本）；
 - 「颜色上现在确实有些太一致了……或者爆开的时间再错开一些」→ 三分之一小号排两种花交替；齐发排每点错开 0 / 0.1 / 0.2 s；一半「里→外」放慢；
-- 「B05的性能测试回来了……低配960……两个峰值，到1了之后……降分辨率，贴图会变糊30秒……这几个峰值需要调整下数量」→ PC 低配「开花负担」上限（cap_low），墙 / 入口在低配也允许隔点。
+- 「B05的性能测试回来了……低配960……两个峰值，到1了之后……降分辨率，贴图会变糊30秒……这几个峰值需要调整下数量」→ PC 低配限峰（cap_low：亮着的浓密金菊面积、1 s 内开花面积两个上限；修订1 换掉原「2 s 开花负担」），墙 / 入口在低配也允许隔点。
 
-用法：python3 -I analysis/scripts/编排B08.py [--cap-low 2.0]
+用法：python3 -I analysis/scripts/编排B08.py [--cap-dense 3.2 --cap-burst 6.0]
 """
 import argparse
 import copy
@@ -41,14 +41,19 @@ NOMINAL = {'S': 90, 'M': 150}
 # 换上去的都是非银金色系（橙 / 绿 / 紫），银金占比只降不升
 PARTNER = {'SC': 'OG', 'ST': 'OG', 'GC': 'OG', 'LM': 'OG',
            'GR': 'GP', 'GY': 'PW', 'GS': 'ML', 'CL': 'ML'}   # 中号：金配绿 / 紫 / 橙（多重菊）
-# 开花负担（960 Translucency 峰的粗模型）：种类权重 × (直径 / 230)²，开花后 2 s 内算
-#   依据：B05 低配在 64 s（银彩菊大 ×5 + 金芒菊中 ×4）、181–185 s（金蕊青柠 + 金芒菊大 ×9）到 0.95–1.04 ms；
-#   银彩菊白墙（点灭类）×9 只有约 0.6 ms → 浓密金菊重、点灭轻。权重是估的，B08 实机测量要量每种的真实开销。
-#   粗标定（B05 低配、远距离段，开花后 1–2 s 的峰；曲线是从截图读的，±0.05 ms、时刻 ±2 s）：
-#     16.4 s 金芒菊中 ×9 → 0.76；28.6 s 金锦菊中 ×5 + 橙辉星 ×4 → 0.6；64.3 s 银彩菊大 ×5 + 金芒菊中 ×4 → 0.95；
-#     181–185 s 金蕊青柠大 ×3 + 中 ×2，再接金芒菊大 ×9 → 1.04 / 0.95；173 s 三主角 + 银彩菊 → 0.6；193–196 s 银彩菊大 ×18 → 约 0.6。
-#   按这组权重：≤ 1.6 的时刻都在 0.76 ms 以下，≥ 2.3 的到 0.95 以上 → 低配上限取 1.8。
-HEAVY_W = {'GY': 1.0, 'CL': 1.0, 'CLL': 1.0, 'GR': 0.5, 'GRL': 0.5, 'GS': 0.6, 'SS': 0.3, 'ST': 0.3, 'CR': 0.3, 'GKH': 0.3}
+# 低配限峰（960 Translucency 峰）。修订1（10-15 23:30，独立复核第 1 轮）：原「2 s 内开花 × 种类权重」模型和 B05 实测排序反了 6 / 17 对
+#   （白墙 4.32 实测 0.6 ms、64 s 2.26 实测 0.95 ms），改成两个约束，都按 B05 低配远距离段 25 个读数核过（曲线从截图读，±0.05 ms、时刻 ±2 s）：
+#   ① 亮着的浓密金菊面积 A：金曜菊 / 金蕊青柠 / 金芒菊 / 金锦菊（含大号），开花到寿命 75 %，Σ(直径/230)²。
+#      B05 实测 ≥ 0.95 ms 的 182.6 / 189 s 是 5.1 / 8.7；≤ 0.65 ms 的都 ≤ 3.85；0.76 ms 的 18.3 s 是 3.2 → 上限 3.2。
+#      银彩菊白墙亮着的面积 15.2 只有 0.62 ms → 点灭类不算进 A。
+#   ② 1 s 内开花的面积 S（所有球花，含银彩菊，不含小平台、扇）：64.3 s 那个峰 A 只有 2.0、解释不了，它是 9 朵同时开（5 大 + 4 中，S = 6.7）；
+#      184.6 s 金芒菊大 ×9 是 9.0；16.4 s 金芒菊中 ×9（S = 3.8）只有 0.76 → 上限 5.0（取中间）。超了先隔浓密金菊那排（同样面积，点灭类按一半挑），
+#      代价：白墙一波 9 朵在低配还是会隔到 5 朵（白墙实测是安全的）。
+#   这两个都是从一张截图拟的，排序上 B05 的 25 个读数只有 64.3 / 59 s 一对解释不了（内容几乎一样，0.95 / 0.6 ms）。真实开销等实机测量（派活 T09）。
+#   ③ 64.3 s 这个峰两个量都解释不了（59 s 内容几乎一样只有 0.6 ms），所以那一刻单独压到 B05 的 60 % 以下（A 2.21 → 1.3、S 6.22 → 3.7，±2 s）。
+DENSE = {'GY', 'CL', 'CLL', 'GR', 'GRL', 'GS'}
+LOCAL_CAPS = [(64.3, 'dense', 1.3), (64.3, 'burst', 3.7)]
+B05_PEAKS = [(64.3, 0.95), (182.6, 1.04), (189.0, 0.95)]
 
 
 def ensure_pc_only(c, cues, by):
@@ -136,8 +141,10 @@ def mix_species(cues, rng):
 
 
 def species_base(cues):
-    """小号 / 中号按种类定基准大小（sizeK 乘上 种类直径 ÷ 名义直径）；倒计时、主角、之字 B 排、手游替身不动；
-    B 排小号同一刻上面有 P 排中 / 大号的也不放大（放大了和上面那排同高叠，体检「两排同高」多 2 处）"""
+    """小号按种类定基准大小（baseK = 种类直径 ÷ 名义直径，sizes_b08 在它上面做每点随机）；倒计时、主角、之字 B 排、手游替身不动；
+    B 排小号同一刻上面有 P 排中 / 大号的也不放大（放大了和上面那排同高叠，体检「两排同高」多 2 处）。
+    修订1：底稿里每个片段已有大小版本（×0.92 / 1 / 1.08，B01 §11），sizes_b08 不再乘它（原来叠出 0.85 / 1.17）；
+    sizes_b08 不处理的排（墙、< 3 点）= 原版本 × 种类基准。"""
     n = Counter()
     upper = [min(e['burst'] for e in c['events']) for c in cues if c['group'] == 'P' and c['size'] in 'ML' and c.get('mobile') != 'only']
     for c in cues:
@@ -157,7 +164,7 @@ def species_base(cues):
 
 
 def sizes_b08(cues, rng):
-    """同 B07 的每点随机（小 / 中 ×0.92 / 1 / 1.08，大 ×0.92 / 1），乘在种类基准上"""
+    """同 B07 的每点随机（小 / 中 ×0.92 / 1 / 1.08，大 ×0.92 / 1），乘在种类基准 baseK 上（不乘底稿的片段大小版本）"""
     g, by = rows(cues)
     heroes = [(e['burst'], e['burst'] + 0.75 * (e['end'] - e['burst'])) for c in cues if c['sp'] in HERO and c.get('mobile') != 'only' for e in c['events']]
     log, add = [], []
@@ -169,7 +176,7 @@ def sizes_b08(cues, rng):
             if (c['size'] not in 'SML' or c.get('tier') == 'all' or c['sp'] in HERO or c['section'] == 'B01_S0'
                     or c.get('mobile') == 'only' or len(c['events']) < 3 or c.get('zig')):
                 continue
-            base = c.get('sizeK') or 1.0
+            base = c.get('baseK') or 1.0
             ks = [round(base * x, 2) for x in ([0.92, 1.0] if c['size'] == 'L' else [0.92, 1.0, 1.08])]
             pick = {e['point']: rng.choice(ks) for e in c['events']}
             groups = defaultdict(list)
@@ -232,31 +239,43 @@ def jitter(cues, rng):
     return dict(log)
 
 
-def heavy(c):
-    if c['size'] == 'F':
+def area(c):
+    """球花 (直径/230)²；小平台、扇 0"""
+    if c['size'] in 'FX':
         return 0.0
-    if c['size'] == 'X':
-        f = next(x for x in b.FRONTF['flowers'] if x['code'] == c['sp'])
-        return 0.5 * sum(fl['diameter'] ** 2 for fl in f['flowers']) / 230 ** 2
     d = (tpl_of(c)['diameter'] or b.DIA[c['size']]) * (c.get('sizeK') or 1.0)
-    return HEAVY_W.get(c['sp'], 0.5) * d * d / 230 ** 2
+    return d * d / 230 ** 2
 
 
-def heavy_series(cues, plat='pc', tier='low', win=2.0, dt=0.1, T=216.0):
+def _windows(kind, e):
+    if kind == 'dense':
+        return e['burst'], e['burst'] + 0.75 * (e['end'] - e['burst'])
+    return e['burst'], e['burst'] + 1.0
+
+
+def _weight(kind, c):
+    if kind == 'dense':
+        return area(c) if c['sp'] in DENSE else 0.0
+    return area(c)
+
+
+def load_series(cues, kind, plat='pc', tier='low', dt=0.1, T=216.0):
+    """kind = 'dense'：亮着的浓密金菊面积 A；'burst'：1 s 内开花的面积 S"""
     n = int(T / dt) + 1
     h = [0.0] * n
     for c in cues:
         mob = c.get('mobile')
         if (plat == 'pc' and mob == 'only') or (plat == 'mobile' and mob is False):
             continue
-        w = heavy(c)
+        w = _weight(kind, c)
         if not w:
             continue
         pts = None if tier == 'high' else set(c['profiles'][tier])
         for e in c['events']:
             if pts is not None and e['point'] not in pts:
                 continue
-            for i in range(max(0, int(e['burst'] / dt)), min(n, int((e['burst'] + win) / dt))):
+            a, z = _windows(kind, e)
+            for i in range(max(0, int(round(a / dt))), min(n, int(round(z / dt)))):
                 h[i] += w
     return h
 
@@ -269,26 +288,44 @@ def peaks(h, dt=0.1, k=6, span=3.0):
     return sorted(out, reverse=True)[:k]
 
 
-def cap_low(cues, cap, win=2.0, dt=0.1):
-    """PC 低配：任何时刻「开花负担」≤ cap。超了就把那一刻负担最大的一排在低配里再隔一次（两端留；3 点留两端），
-    墙 / 入口也可以隔（性能优先，用户 22:02）；倒计时、主角不动。"""
+def at_peaks(cues, tier='low'):
+    """B05 实测峰附近（±2 s，曲线读数的时刻误差）的 A / S 最大值"""
+    hs = {k: load_series(cues, k, 'pc', tier) for k in ('dense', 'burst')}
+    return {f'{t}': {k: round(max(h[max(0, int((t - 2) / 0.1)):int((t + 2) / 0.1) + 1]), 2) for k, h in hs.items()} for t, _ in B05_PEAKS}
+
+
+def cap_low(cues, caps, dt=0.1):
+    """PC 低配：亮着的浓密金菊面积 ≤ caps['dense']，1 s 内开花面积 ≤ caps['burst']。超了就把那一刻贡献最大的一排在低配里再隔一次
+    （两端留；3 点留两端；只剩两端换中间一朵），墙 / 入口也可以隔（性能优先，用户 22:02）；倒计时、主角不动。"""
     g, by = rows(cues)
     root_of = {c['id']: key for key, rs in g.items() for c in rs}
-    stuck, log, blocked = set(), [], set()
-    for _ in range(600):
-        h = heavy_series(cues, 'pc', 'low', win, dt)
-        i = max((j for j in range(len(h)) if j not in blocked), key=lambda j: h[j])
-        if h[i] <= cap + 1e-9:
+    cons = [(kind, cap, None) for kind, cap in caps.items()] + [(kind, cap, (t0 - 2.0, t0 + 2.0)) for t0, kind, cap in LOCAL_CAPS]
+    stuck, log, blocked = set(), [], {n: set() for n in range(len(cons))}
+    for _ in range(800):
+        worst = None
+        for n, (kind, cap, win) in enumerate(cons):
+            h = load_series(cues, kind, 'pc', 'low', dt)
+            idx = [j for j in range(len(h)) if j not in blocked[n] and (win is None or win[0] <= j * dt <= win[1])]
+            i = max(idx, key=lambda j: h[j])
+            if h[i] > cap + 1e-9 and (worst is None or h[i] / cap > worst[0]):
+                worst = (h[i] / cap, kind, i, h[i], n)
+        if worst is None:
             break
+        _, kind, i, val, n = worst
         t = i * dt
         contrib = defaultdict(float)
         for c in cues:
-            if c.get('mobile') == 'only' or c['size'] == 'F':
+            if c.get('mobile') == 'only':
                 continue
+            w = _weight(kind, c)
+            if not w:
+                continue
+            if kind == 'burst' and c['sp'] not in DENSE:   # 挑先隔哪一排：同样面积先隔浓密金菊（白墙实测便宜）
+                w *= 0.5
             low = set(c['profiles']['low'])
-            w = heavy(c)
             for e in c['events']:
-                if e['point'] in low and t - win < e['burst'] <= t + 1e-9:
+                a, z = _windows(kind, e)
+                if e['point'] in low and a - 1e-9 <= t < z:
                     contrib[root_of[c['id']]] += w
         done = False
         for key, v in sorted(contrib.items(), key=lambda kv: -kv[1]):
@@ -313,15 +350,16 @@ def cap_low(cues, cap, win=2.0, dt=0.1):
                 for c in rs:
                     if c['group'] == grp:
                         c['profiles']['low'] = [p for p in c['points'] if p in keep and p in c['profiles']['medium']]
-                log.append(dict(t=round(t, 1), load=round(h[i], 2), row=key, before=U, after=sorted(keep, key=b.px)))
+                t0 = min(e['burst'] for c in rs for e in c['events'])
+                log.append(dict(t=round(t, 1), kind=kind, load=round(val, 2), row=key, rowBurst=round(t0, 2), sp=by[key]['sp'], before=U, after=sorted(keep, key=b.px)))
                 done = True
                 break
             if done:
                 break
             stuck.add(key)
         if not done:
-            log.append(dict(t=round(t, 1), load=round(h[i], 2), stuck=True, rows=sorted(contrib)))
-            blocked.update(range(max(0, i - int(win / dt)), i + int(win / dt) + 1))
+            log.append(dict(t=round(t, 1), kind=kind, load=round(val, 2), stuck=True, rows=sorted(contrib)))
+            blocked[n].update(range(max(0, i - 10), i + 11))
     return log
 
 
@@ -332,7 +370,8 @@ def main():
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--seed', type=int, default=20261015)
     ap.add_argument('--sparse', type=float, default=5.0)
-    ap.add_argument('--cap-low', type=float, default=1.8, help='PC 低配开花负担上限（B05 低配到 0.95–1.04 ms 的时刻 ≥ 2.3，0.76 ms 以下的 ≤ 1.6）')
+    ap.add_argument('--cap-dense', type=float, default=3.2, help='PC 低配亮着的浓密金菊面积上限（B05 实测 0.76 ms 时 3.2、≥ 0.95 ms 时 5.1 / 8.7）')
+    ap.add_argument('--cap-burst', type=float, default=5.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     b.BAR0, b.OFFSET = plan['bar0S'], plan['musicOffsetS']
@@ -368,7 +407,7 @@ def main():
     B06.fan_slots = orig
     log['splitShared'] = B07.split_shared(cues)
     log['tiers'] = B07.tiers(cues, a.sparse)
-    log['capLow'] = cap_low(cues, a.cap_low)
+    log['capLow'] = cap_low(cues, {'dense': a.cap_dense, 'burst': a.cap_burst})
     mid = dict(plan, cues=cues)
     cues5, log5 = B05.build(mid)
     for c in cues5:
@@ -398,10 +437,12 @@ def main():
     ck['shares'] = {f'{p}-{t}': B06.shares(cues5, p, t) for p in ('pc', 'mobile') for t in ('high', 'medium', 'low')}
     ck['area'] = {f'{v}-{p}-{t}': B07.area_series(cs, t, p) for v, cs in (('B08', cues5), ('B07', prev['B07']['cues']), ('B05', prev['B05']['cues']))
                   for p in ('pc', 'mobile') for t in ('high', 'medium', 'low')}
-    ck['heavy'] = dict(rule='开花负担 = 种类权重 × (直径/230)²，开花后 2 s 内；PC 低配上限 %.1f（B05 低配到 0.95–1.04 ms 的时刻 ≥ 2.3，0.76 ms 以下 ≤ 1.6）' % a.cap_low,
-                       weights=HEAVY_W, **{f'{v}-{t}': peaks(heavy_series(cs, 'pc', t)) for v, cs in (('B08', cues5), ('B07', prev['B07']['cues']), ('B05', prev['B05']['cues']))
-                                            for t in ('high', 'medium', 'low')})
-    ck['score'] = B07.scorecard(out, cues5, prev['B07'])
+    vs = (('B08', cues5), ('B07修订1', prev['B07']['cues']), ('B05', prev['B05']['cues']))
+    ck['heavy'] = dict(rule='PC 低配：亮着的浓密金菊面积 A（金曜菊 / 金蕊青柠 / 金芒菊 / 金锦菊，开花到寿命 75 %%，Σ(直径/230)²）≤ %.1f；1 s 内开花面积 S（所有球花）≤ %.1f。按 B05 低配实测曲线（截图读）定，推断' % (a.cap_dense, a.cap_burst),
+                       dense=sorted(DENSE), b05Peaks=B05_PEAKS,
+                       **{f'{v}-{t}': dict(dense=peaks(load_series(cs, 'dense', 'pc', t)), burst=peaks(load_series(cs, 'burst', 'pc', t))) for v, cs in vs for t in ('high', 'medium', 'low')},
+                       atB05Peaks={v: at_peaks(cs) for v, cs in vs})
+    ck['score'] = B07.scorecard(out, cues5, prev['B07'])   # 键名沿用 B07 的 B06 / B07：这里 B06 = B07 修订1、B07 = B08
     (od / f'体检_{a.name}.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
     fa = ck['fanAudit']
     print(json.dumps(dict(revision=out['revision'], cues=len(cues5), zigzag=log['zigzagTiers'], mix=len(log['mix']), speciesBase=log['speciesBase'], sizes=len(log['sizes']),
@@ -411,7 +452,7 @@ def main():
                           tierNesting=ck['tierNesting']['ok'], mobileRuleViolations=len(log5['mobileRule']['violations']),
                           overlap=dict(pc=ck['overlap']['pcIncidents'], mobile={k: v['incidents'] for k, v in ck['overlap']['mobile'].items()}),
                           fanClash=fa['B08']['clashPairs'], fanUnplaced=sum(1 for x in log['fans'] if not x.get('placed')), tierEnds=ck['tierEnds']['violations'],
-                          mobileBusy=len(log['mobileBusy']), area=ck['area'], heavy={k: v for k, v in ck['heavy'].items() if '-' in k}, score=ck['score']), ensure_ascii=False, indent=1))
+                          mobileBusy=len(log['mobileBusy']), area=ck['area'], heavy={k: {kk: vv[0] if vv else None for kk, vv in v.items()} for k, v in ck['heavy'].items() if '-' in k}, atB05Peaks=ck['heavy']['atB05Peaks'], score=ck['score']), ensure_ascii=False, indent=1))
 
 
 if __name__ == '__main__':

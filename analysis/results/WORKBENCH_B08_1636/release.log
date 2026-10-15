@@ -1,0 +1,1279 @@
+..........
+----------------------------------------------------------------------
+Ran 10 tests in 0.100s
+
+OK
+TAP version 13
+# Subtest: 音频在 StrictMode 的安装、清理、重新安装后仍可读取
+ok 1 - 音频在 StrictMode 的安装、清理、重新安装后仍可读取
+  ---
+  duration_ms: 80.92019
+  type: 'test'
+  ...
+# Subtest: 切换歌曲时旧清理函数不会释放新歌曲
+ok 2 - 切换歌曲时旧清理函数不会释放新歌曲
+  ---
+  duration_ms: 1.46598
+  type: 'test'
+  ...
+# Subtest: 无音乐和仅节奏参考不产生音频地址，内置歌曲仍使用原路径
+ok 3 - 无音乐和仅节奏参考不产生音频地址，内置歌曲仍使用原路径
+  ---
+  duration_ms: 0.233085
+  type: 'test'
+  ...
+# Subtest: 同资源的不同花型规格分别保留，只读当前固定版本，不拿历史和固有尺寸替代
+ok 4 - 同资源的不同花型规格分别保留，只读当前固定版本，不拿历史和固有尺寸替代
+  ---
+  duration_ms: 4.254729
+  type: 'test'
+  ...
+# Subtest: 缺少尺寸的资源不虚构参照，扇形使用单束长度而非花径
+ok 5 - 缺少尺寸的资源不虚构参照，扇形使用单束长度而非花径
+  ---
+  duration_ms: 0.490706
+  type: 'test'
+  ...
+# Subtest: 节目新基础库覆盖旧目录，包含未使用资源且不从花型反推基础尺寸
+ok 6 - 节目新基础库覆盖旧目录，包含未使用资源且不从花型反推基础尺寸
+  ---
+  duration_ms: 0.893944
+  type: 'test'
+  ...
+# Subtest: read-only table catalogue includes unused IDs and keeps unknown dimensions unknown; derived IDs are only programme additions
+ok 7 - read-only table catalogue includes unused IDs and keeps unknown dimensions unknown; derived IDs are only programme additions
+  ---
+  duration_ms: 0.681635
+  type: 'test'
+  ...
+# Subtest: pattern migration preserves score and fixed native recipes; migration is idempotent
+ok 8 - pattern migration preserves score and fixed native recipes; migration is idempotent
+  ---
+  duration_ms: 69.040622
+  type: 'test'
+  ...
+# Subtest: placing a saved pattern aligns actual entry, overlaps calls and filters points only
+ok 9 - placing a saved pattern aligns actual entry, overlaps calls and filters points only
+  ---
+  duration_ms: 356.922726
+  type: 'test'
+  ...
+# Subtest: immutable pattern and placed recipe references survive future flower changes with director parity
+ok 10 - immutable pattern and placed recipe references survive future flower changes with director parity
+  ---
+  duration_ms: 306.076607
+  type: 'test'
+  ...
+# Subtest: invalid bindings and out-of-show times fail atomically
+ok 11 - invalid bindings and out-of-show times fail atomically
+  ---
+  duration_ms: 245.341346
+  type: 'test'
+  ...
+# Subtest: backup rejects missing pattern provenance and a recipe borrowed from another flower
+ok 12 - backup rejects missing pattern provenance and a recipe borrowed from another flower
+  ---
+  duration_ms: 55.295781
+  type: 'test'
+  ...
+# Subtest: new calls use tenth-second timing, preserve internal precision and pair mirrored point starts
+ok 13 - new calls use tenth-second timing, preserve internal precision and pair mirrored point starts
+  ---
+  duration_ms: 207.821317
+  type: 'test'
+  ...
+# Subtest: a mixed P/B/F pattern exports sparse zero-based slots with native entries and exact common timing in all tiers
+ok 14 - a mixed P/B/F pattern exports sparse zero-based slots with native entries and exact common timing in all tiers
+  ---
+  duration_ms: 2380.614871
+  type: 'test'
+  ...
+# Subtest: version numbers only move forward one patch step
+ok 15 - version numbers only move forward one patch step
+  ---
+  duration_ms: 2.203225
+  type: 'test'
+  ...
+# Subtest: missing cloud data keeps the current programme untouched
+ok 16 - missing cloud data keeps the current programme untouched
+  ---
+  duration_ms: 18.556757
+  type: 'test'
+  ...
+# Subtest: first refresh without a draft loads the cloud programme, stores it and remembers the version
+ok 17 - first refresh without a draft loads the cloud programme, stores it and remembers the version
+  ---
+  duration_ms: 196.360174
+  type: 'test'
+  ...
+# Subtest: an existing draft is backed up to the recovery slot and a per-version slot before loading
+ok 18 - an existing draft is backed up to the recovery slot and a per-version slot before loading
+  ---
+  duration_ms: 214.356664
+  type: 'test'
+  ...
+# Subtest: the same cloud programme loads only once, so later own edits survive refresh
+ok 19 - the same cloud programme loads only once, so later own edits survive refresh
+  ---
+  duration_ms: 146.432381
+  type: 'test'
+  ...
+# Subtest: music already imported with the same sha256 is reused; a different song is not
+ok 20 - music already imported with the same sha256 is reused; a different song is not
+  ---
+  duration_ms: 295.552313
+  type: 'test'
+  ...
+# Subtest: a cloud programme with its own embedded audio (--keep-music) plays that audio by default, offset and waveform included
+ok 21 - a cloud programme with its own embedded audio (--keep-music) plays that audio by default, offset and waveform included
+  ---
+  duration_ms: 318.623341
+  type: 'test'
+  ...
+# Subtest: invalid cloud data or a failed save never silently drops the current programme
+ok 22 - invalid cloud data or a failed save never silently drops the current programme
+  ---
+  duration_ms: 191.580227
+  type: 'test'
+  ...
+# Subtest: the published cloud-latest data, when present, is valid and opens like a programme file
+ok 23 - the published cloud-latest data, when present, is valid and opens like a programme file
+  ---
+  duration_ms: 359.676849
+  type: 'test'
+  ...
+# Subtest: 正式默认目标为Night；手动选择的调试导演仍被尊重
+ok 24 - 正式默认目标为Night；手动选择的调试导演仍被尊重
+  ---
+  duration_ms: 3.135453
+  type: 'test'
+  ...
+# Subtest: 导演实例使用场景显示名，保留内部路径与真实DirectorId
+ok 25 - 导演实例使用场景显示名，保留内部路径与真实DirectorId
+  ---
+  duration_ms: 0.54701
+  type: 'test'
+  ...
+# Subtest: 蓝图名称与无ActorLabel实例回退可用
+ok 26 - 蓝图名称与无ActorLabel实例回退可用
+  ---
+  duration_ms: 2.37408
+  type: 'test'
+  ...
+# Subtest: actor delivery matches 8017 properties and manifest exactly for all tiers
+ok 27 - actor delivery matches 8017 properties and manifest exactly for all tiers
+  ---
+  duration_ms: 175.580657
+  type: 'test'
+  ...
+# Subtest: reject incomplete, duplicate and thumbnail mismatch without changing the programme
+ok 28 - reject incomplete, duplicate and thumbnail mismatch without changing the programme
+  ---
+  duration_ms: 1.581633
+  type: 'test'
+  ...
+# Subtest: pin immutable revision, preserve source events and restore after save
+ok 29 - pin immutable revision, preserve source events and restore after save
+  ---
+  duration_ms: 441.491246
+  type: 'test'
+  ...
+# Subtest: deduplicates definitions but retains every scheduled occurrence and group
+ok 30 - deduplicates definitions but retains every scheduled occurrence and group
+  ---
+  duration_ms: 5.129938
+  type: 'test'
+  ...
+# Subtest: invalid references fail instead of silently dropping shows
+ok 31 - invalid references fail instead of silently dropping shows
+  ---
+  duration_ms: 0.687081
+  type: 'test'
+  ...
+# Subtest: distinguishes authored offsets from target and never reports a measured diameter
+ok 32 - distinguishes authored offsets from target and never reports a measured diameter
+  ---
+  duration_ms: 1.139047
+  type: 'test'
+  ...
+# Subtest: parent SubTemplate entries never carry a height: dz lives in the sub-template height versions
+ok 33 - parent SubTemplate entries never carry a height: dz lives in the sub-template height versions
+  ---
+  duration_ms: 639.651836
+  type: 'test'
+  ...
+# Subtest: every launch ends up at sub-template height + dz (what UE actually plays)
+ok 34 - every launch ends up at sub-template height + dz (what UE actually plays)
+  ---
+  duration_ms: 881.908233
+  type: 'test'
+  ...
+# Subtest: 16.0.23: every exported sub-template is referenced (no orphan base after all its launches moved to height versions)
+ok 35 - 16.0.23: every exported sub-template is referenced (no orphan base after all its launches moved to height versions)
+  ---
+  duration_ms: 844.227821
+  type: 'test'
+  ...
+# Subtest: same base + same dz shares one height version; schedule otherwise identical to the dz=0 compile
+ok 36 - same base + same dz shares one height version; schedule otherwise identical to the dz=0 compile
+  ---
+  duration_ms: 1001.524315
+  type: 'test'
+  ...
+# Subtest: R03三档名称可搜且全部原生播放数据完全保留
+ok 37 - R03三档名称可搜且全部原生播放数据完全保留
+  ---
+  duration_ms: 138.285581
+  type: 'test'
+  ...
+# Subtest: 扇形不同束数方向和同花型不同固定版本不会被合并
+ok 38 - 扇形不同束数方向和同花型不同固定版本不会被合并
+  ---
+  duration_ms: 33.079616
+  type: 'test'
+  ...
+# Subtest: 混合父模板包含全部花型名，直接资源条目不丢失，大小写重名拒绝
+ok 39 - 混合父模板包含全部花型名，直接资源条目不丢失，大小写重名拒绝
+  ---
+  duration_ms: 33.315525
+  type: 'test'
+  ...
+# Subtest: UE connected but no emission points read: one clear sub-level hint instead of one error per point
+ok 40 - UE connected but no emission points read: one clear sub-level hint instead of one error per point
+  ---
+  duration_ms: 1288.575718
+  type: 'test'
+  ...
+# Subtest: explicit source distinguishes duplicate names and rejects old catalogue
+ok 41 - explicit source distinguishes duplicate names and rejects old catalogue
+  ---
+  duration_ms: 1.896525
+  type: 'test'
+  ...
+# Subtest: source rows copy once and all three grades preserve source entries and exact event timing
+ok 42 - source rows copy once and all three grades preserve source entries and exact event timing
+  ---
+  duration_ms: 485.750851
+  type: 'test'
+  ...
+# Subtest: fan source cannot silently replace ball flower
+ok 43 - fan source cannot silently replace ball flower
+  ---
+  duration_ms: 117.288807
+  type: 'test'
+  ...
+# Subtest: sparse slots retain group capacity so high zero-based indices remain in range
+ok 44 - sparse slots retain group capacity so high zero-based indices remain in range
+  ---
+  duration_ms: 130.106514
+  type: 'test'
+  ...
+# Subtest: three-array replacement expands to exact active score times/slots, without old schedule
+ok 45 - three-array replacement expands to exact active score times/slots, without old schedule
+  ---
+  duration_ms: 359.024814
+  type: 'test'
+  ...
+# Subtest: missing source, missing slot, duplicate slot and unknown fan mode block property output
+ok 46 - missing source, missing slot, duplicate slot and unknown fan mode block property output
+  ---
+  duration_ms: 406.94665
+  type: 'test'
+  ...
+# Subtest: launch and first bloom move only selected cue while retaining flight and overlap
+ok 47 - launch and first bloom move only selected cue while retaining flight and overlap
+  ---
+  duration_ms: 151.033475
+  type: 'test'
+  ...
+# Subtest: gap changes actual point spacing in original order and preserves repeats
+ok 48 - gap changes actual point spacing in original order and preserves repeats
+  ---
+  duration_ms: 64.256984
+  type: 'test'
+  ...
+# Subtest: point membership updates events; last point and invalid timing rejected
+ok 49 - point membership updates events; last point and invalid timing rejected
+  ---
+  duration_ms: 229.578497
+  type: 'test'
+  ...
+# Subtest: splitter protects both panes at desktop and laptop heights
+ok 50 - splitter protects both panes at desktop and laptop heights
+  ---
+  duration_ms: 0.393481
+  type: 'test'
+  ...
+# Subtest: direction changes preserve flight, and simultaneous starts clear unused interval
+ok 51 - direction changes preserve flight, and simultaneous starts clear unused interval
+  ---
+  duration_ms: 197.078589
+  type: 'test'
+  ...
+# (node:4970) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 选场景会读取所属蓝图CDO，保留两个真实资源基线
+ok 52 - 选场景会读取所属蓝图CDO，保留两个真实资源基线
+  ---
+  duration_ms: 2.480925
+  type: 'test'
+  ...
+# Subtest: 选蓝图找到唯一正式实例，排除预览世界；多个实例要求明确选择
+ok 53 - 选蓝图找到唯一正式实例，排除预览世界；多个实例要求明确选择
+  ---
+  duration_ms: 3.378141
+  type: 'test'
+  ...
+# Subtest: 场景已新蓝图仍旧时只写旧CDO，回执不能漏蓝图
+ok 54 - 场景已新蓝图仍旧时只写旧CDO，回执不能漏蓝图
+  ---
+  duration_ms: 4.335439
+  type: 'test'
+  ...
+# Subtest: 两个目标预检全部通过才写，关联目标并发变动或正在播放均阻止
+ok 55 - 两个目标预检全部通过才写，关联目标并发变动或正在播放均阻止
+  ---
+  duration_ms: 2.260286
+  type: 'test'
+  ...
+# Subtest: 默认值传播后实例已有正确结果可跳过；未传播则两端完整写入核对
+ok 56 - 默认值传播后实例已有正确结果可跳过；未传播则两端完整写入核对
+  ---
+  duration_ms: 2.515394
+  type: 'test'
+  ...
+# Subtest: 第二目标明确写失败时恢复本轮第一目标，不保存半套节目
+ok 57 - 第二目标明确写失败时恢复本轮第一目标，不保存半套节目
+  ---
+  duration_ms: 2.821604
+  type: 'test'
+  ...
+# Subtest: 写入及保存允许UE在20秒后完成，读取与显式短超时仍会中止
+ok 58 - 写入及保存允许UE在20秒后完成，读取与显式短超时仍会中止
+  ---
+  duration_ms: 1.876084
+  type: 'test'
+  ...
+# Subtest: 超时后已执行的写入必须先重读，重新检查后跳过两端写入并保存
+ok 59 - 超时后已执行的写入必须先重读，重新检查后跳过两端写入并保存
+  ---
+  duration_ms: 1.493257
+  type: 'test'
+  ...
+# Subtest: migration keeps launch times, source native random, and valid timeline
+ok 60 - migration keeps launch times, source native random, and valid timeline
+  ---
+  duration_ms: 69.276918
+  type: 'test'
+  ...
+# Subtest: every native preview entry equals expansion of the three tables for all tiers
+ok 61 - every native preview entry equals expansion of the three tables for all tiers
+  ---
+  duration_ms: 1101.042216
+  type: 'test'
+  ...
+# Subtest: saved edits reach director output; backup restore and undo values retain exact versions
+ok 62 - saved edits reach director output; backup restore and undo values retain exact versions
+  ---
+  duration_ms: 362.830939
+  type: 'test'
+  ...
+# Subtest: new and copied clips derive their duration from the fixed recipe
+ok 63 - new and copied clips derive their duration from the fixed recipe
+  ---
+  duration_ms: 114.470357
+  type: 'test'
+  ...
+# Subtest: base substitution changes ID/reference/preview only and preserves timing, native transforms, random ranges and filters
+ok 64 - base substitution changes ID/reference/preview only and preserves timing, native transforms, random ranges and filters
+  ---
+  duration_ms: 3.635871
+  type: 'test'
+  ...
+# Subtest: English display engine ID validation does not rename fixed identity; layer groups expose actual roles
+ok 65 - English display engine ID validation does not rename fixed identity; layer groups expose actual roles
+  ---
+  duration_ms: 2.297377
+  type: 'test'
+  ...
+# Subtest: fan directions include outside-in and preserve native values
+ok 66 - fan directions include outside-in and preserve native values
+  ---
+  duration_ms: 0.57844
+  type: 'test'
+  ...
+# Subtest: new fans can converge from outside, and fixed identities survive semantic delivery naming
+ok 67 - new fans can converge from outside, and fixed identities survive semantic delivery naming
+  ---
+  duration_ms: 7.461759
+  type: 'test'
+  ...
+# Subtest: 编排随机错开只生成0.1秒刻度，拒绝0.0x配置
+ok 68 - 编排随机错开只生成0.1秒刻度，拒绝0.0x配置
+  ---
+  duration_ms: 3.44461
+  type: 'test'
+  ...
+# Subtest: multi-point together accepts optional jitter and shifts complete native flowers deterministically
+ok 69 - multi-point together accepts optional jitter and shifts complete native flowers deterministically
+  ---
+  duration_ms: 67.376612
+  type: 'test'
+  ...
+# Subtest: edit/reseed/disable jitter do not accumulate, alter original dt or change unrelated cues
+ok 70 - edit/reseed/disable jitter do not accumulate, alter original dt or change unrelated cues
+  ---
+  duration_ms: 33.928444
+  type: 'test'
+  ...
+# Subtest: jitter programme roundtrip and deliberate capture preserve actual starts without rerandomization
+ok 71 - jitter programme roundtrip and deliberate capture preserve actual starts without rerandomization
+  ---
+  duration_ms: 97.799375
+  type: 'test'
+  ...
+# Subtest: invalid jitter and past-show delays are rejected atomically; zero defaults keep old show identical
+ok 72 - invalid jitter and past-show delays are rejected atomically; zero defaults keep old show identical
+  ---
+  duration_ms: 100.137506
+  type: 'test'
+  ...
+# Subtest: 旧六位小数备份经原值核验后迁移，原文件与固定子模板不变
+ok 73 - 旧六位小数备份经原值核验后迁移，原文件与固定子模板不变
+  ---
+  duration_ms: 57.061672
+  type: 'test'
+  ...
+# Subtest: 中文显示名的基础资源可用ResourceId查询，大小写及前后空格不影响
+ok 74 - 中文显示名的基础资源可用ResourceId查询，大小写及前后空格不影响
+  ---
+  duration_ms: 1.194639
+  type: 'test'
+  ...
+# Subtest: 花型和编排仍可按所引用资源及固定版本查询
+ok 75 - 花型和编排仍可按所引用资源及固定版本查询
+  ---
+  duration_ms: 0.356138
+  type: 'test'
+  ...
+# Subtest: scrubbing uses plot coordinates, clamps outside capture, and respects zoomed ranges
+ok 76 - scrubbing uses plot coordinates, clamps outside capture, and respects zoomed ranges
+  ---
+  duration_ms: 1.163265
+  type: 'test'
+  ...
+# Subtest: music selection seeks start and exits clip playback; local view follows the selected section
+ok 77 - music selection seeks start and exits clip playback; local view follows the selected section
+  ---
+  duration_ms: 2.491523
+  type: 'test'
+  ...
+# Subtest: dam closeup is larger while keeping uniform scale and a centred ground reference
+ok 78 - dam closeup is larger while keeping uniform scale and a centred ground reference
+  ---
+  duration_ms: 0.381659
+  type: 'test'
+  ...
+# Subtest: one nested table plays exactly what each separate tier table plays
+ok 79 - one nested table plays exactly what each separate tier table plays
+  ---
+  duration_ms: 1174.596114
+  type: 'test'
+  ...
+# Subtest: a low point that is not in medium blocks the single table
+ok 80 - a low point that is not in medium blocks the single table
+  ---
+  duration_ms: 5.611126
+  type: 'test'
+  ...
+# Subtest: cues marked mobile:false are written PC + Gamepad only (12); others stay 14
+ok 81 - cues marked mobile:false are written PC + Gamepad only (12); others stay 14
+  ---
+  duration_ms: 286.765959
+  type: 'test'
+  ...
+# Subtest: separate tier export is unchanged: every entry stays 14 / VeryLow
+ok 82 - separate tier export is unchanged: every entry stays 14 / VeryLow
+  ---
+  duration_ms: 186.782124
+  type: 'test'
+  ...
+# Subtest: mobile-only cues (mobile:'only', 手游替身) are written Mobile only (2) in the single table and in a tier export
+ok 83 - mobile-only cues (mobile:'only', 手游替身) are written Mobile only (2) in the single table and in a tier export
+  ---
+  duration_ms: 411.371561
+  type: 'test'
+  ...
+# Subtest: whole-pattern lime replacement removes every other actual binding, not merely hiding seven calls
+ok 84 - whole-pattern lime replacement removes every other actual binding, not merely hiding seven calls
+  ---
+  duration_ms: 72.275242
+  type: 'test'
+  ...
+# Subtest: whole replacement preserves call identity, offsets, chosen point order, profiles and deterministic jitter
+ok 85 - whole replacement preserves call identity, offsets, chosen point order, profiles and deterministic jitter
+  ---
+  duration_ms: 157.708376
+  type: 'test'
+  ...
+# Subtest: explicit single-call replacement keeps other flowers and fixed recipe bindings unchanged
+ok 86 - explicit single-call replacement keeps other flowers and fixed recipe bindings unchanged
+  ---
+  duration_ms: 37.712979
+  type: 'test'
+  ...
+# Subtest: same flower can be applied again to repair a mixed copy; exact selected fixed version applies to every call
+ok 87 - same flower can be applied again to repair a mixed copy; exact selected fixed version applies to every call
+  ---
+  duration_ms: 9.690737
+  type: 'test'
+  ...
+# Subtest: incompatible whole replacement fails atomically with the exact call and points, never silently trimming them
+ok 88 - incompatible whole replacement fails atomically with the exact call and points, never silently trimming them
+  ---
+  duration_ms: 1.052054
+  type: 'test'
+  ...
+# Subtest: invalid scope, call and unrelated fixed version reject without modifying the draft
+ok 89 - invalid scope, call and unrelated fixed version reject without modifying the draft
+  ---
+  duration_ms: 0.361261
+  type: 'test'
+  ...
+# Subtest: whole preview, newly saved version and placed cues use only lime; original version and programme stay intact
+ok 90 - whole preview, newly saved version and placed cues use only lime; original version and programme stay intact
+  ---
+  duration_ms: 570.648155
+  type: 'test'
+  ...
+# Subtest: single-call reselecting the same flower keeps its pinned old version instead of silently upgrading
+ok 91 - single-call reselecting the same flower keeps its pinned old version instead of silently upgrading
+  ---
+  duration_ms: 18.745827
+  type: 'test'
+  ...
+# Subtest: reordered and added calls keep their own identities without remapping collisions
+ok 92 - reordered and added calls keep their own identities without remapping collisions
+  ---
+  duration_ms: 616.968442
+  type: 'test'
+  ...
+# Subtest: entry-aligned update follows the same call when the template calls are reordered
+ok 93 - entry-aligned update follows the same call when the template calls are reordered
+  ---
+  duration_ms: 407.621796
+  type: 'test'
+  ...
+# Subtest: save then instantiate atomically; each cue points to an actual immutable template version
+ok 94 - save then instantiate atomically; each cue points to an actual immutable template version
+  ---
+  duration_ms: 249.294915
+  type: 'test'
+  ...
+# Subtest: reusing the exact version does not save another; edited draft cannot masquerade as saved version
+ok 95 - reusing the exact version does not save another; edited draft cannot masquerade as saved version
+  ---
+  duration_ms: 556.876307
+  type: 'test'
+  ...
+# Subtest: placement failure saves neither an unused version nor half an instance
+ok 96 - placement failure saves neither an unused version nor half an instance
+  ---
+  duration_ms: 249.727354
+  type: 'test'
+  ...
+# Subtest: explicit update preserves programme position, cue identity and membership; unrelated instance stays pinned
+ok 97 - explicit update preserves programme position, cue identity and membership; unrelated instance stays pinned
+  ---
+  duration_ms: 532.154036
+  type: 'test'
+  ...
+# Subtest: copied/deleted/individually edited calls cannot cause an accidental whole-instance upgrade
+ok 98 - copied/deleted/individually edited calls cannot cause an accidental whole-instance upgrade
+  ---
+  duration_ms: 229.199181
+  type: 'test'
+  ...
+# Subtest: out-of-show update is atomic and mixed versions in an instance are rejected
+ok 99 - out-of-show update is atomic and mixed versions in an instance are rejected
+  ---
+  duration_ms: 618.877862
+  type: 'test'
+  ...
+# Subtest: copy retains all eight calls, replacing one does not rewrite other flowers or source data
+ok 100 - copy retains all eight calls, replacing one does not rewrite other flowers or source data
+  ---
+  duration_ms: 2.741687
+  type: 'test'
+  ...
+# Subtest: current-call preview excludes all seven other calls and every original-show event
+ok 101 - current-call preview excludes all seven other calls and every original-show event
+  ---
+  duration_ms: 51.497065
+  type: 'test'
+  ...
+# Subtest: all-call preview deliberately includes the retained flowers, ten launches, and pinned versions
+ok 102 - all-call preview deliberately includes the retained flowers, ten launches, and pinned versions
+  ---
+  duration_ms: 44.757035
+  type: 'test'
+  ...
+# Subtest: three tiers filter the same deterministic times; zero-participation tier has a finite empty preview
+ok 103 - three tiers filter the same deterministic times; zero-participation tier has a finite empty preview
+  ---
+  duration_ms: 50.27186
+  type: 'test'
+  ...
+# Subtest: an unfinished other call does not block current-call audition, but whole preview and save still reject it
+ok 104 - an unfinished other call does not block current-call audition, but whole preview and save still reject it
+  ---
+  duration_ms: 11.18731
+  type: 'test'
+  ...
+# Subtest: replacement filters incompatible P/F/B points across all tiers, preserves jitter and exact timing
+ok 105 - replacement filters incompatible P/F/B points across all tiers, preserves jitter and exact timing
+  ---
+  duration_ms: 0.38082
+  type: 'test'
+  ...
+# Subtest: selecting the same flower retains extracted transforms and fixed old version
+ok 106 - selecting the same flower retains extracted transforms and fixed old version
+  ---
+  duration_ms: 0.289824
+  type: 'test'
+  ...
+# Subtest: retained extracted transforms apply only to their source calls, new flower uses its own scale and offset
+ok 107 - retained extracted transforms apply only to their source calls, new flower uses its own scale and offset
+  ---
+  duration_ms: 560.387793
+  type: 'test'
+  ...
+# Subtest: negative and late relative calls can audition without inheriting programme time bounds
+ok 108 - negative and late relative calls can audition without inheriting programme time bounds
+  ---
+  duration_ms: 15.754267
+  type: 'test'
+  ...
+# Subtest: platform ids: only pc / mobile, anything else falls back to pc
+ok 109 - platform ids: only pc / mobile, anything else falls back to pc
+  ---
+  duration_ms: 2.254894
+  type: 'test'
+  ...
+# Subtest: PC preview keeps every event of the current tier (same array, no copy)
+ok 110 - PC preview keeps every event of the current tier (same array, no copy)
+  ---
+  duration_ms: 0.303392
+  type: 'test'
+  ...
+# Subtest: mobile preview hides only cues marked mobile:false, same rule as PlatformFlags 12
+ok 111 - mobile preview hides only cues marked mobile:false, same rule as PlatformFlags 12
+  ---
+  duration_ms: 1.678334
+  type: 'test'
+  ...
+# Subtest: mobile preview with no off-mobile cue says it equals PC
+ok 112 - mobile preview with no off-mobile cue says it equals PC
+  ---
+  duration_ms: 0.178602
+  type: 'test'
+  ...
+# Subtest: App wires the switch into the context bar with Material icons and keeps delivery on full events
+ok 113 - App wires the switch into the context bar with Material icons and keeps delivery on full events
+  ---
+  duration_ms: 1.160783
+  type: 'test'
+  ...
+# Subtest: mobile-only cues (手游替身, PlatformFlags 2): PC preview hides them, mobile preview shows them
+ok 114 - mobile-only cues (手游替身, PlatformFlags 2): PC preview hides them, mobile preview shows them
+  ---
+  duration_ms: 0.338835
+  type: 'test'
+  ...
+# Subtest: footer PC count ignores mobile-only cues
+ok 115 - footer PC count ignores mobile-only cues
+  ---
+  duration_ms: 0.62376
+  type: 'test'
+  ...
+# Subtest: programme clock remains authoritative before music, after its end, and without an audio file
+ok 116 - programme clock remains authoritative before music, after its end, and without an audio file
+  ---
+  duration_ms: 0.874023
+  type: 'test'
+  ...
+# Subtest: cue play/replay seeks actual first launch and stops at last extinction
+ok 117 - cue play/replay seeks actual first launch and stops at last extinction
+  ---
+  duration_ms: 1.475245
+  type: 'test'
+  ...
+# Subtest: show playback resumes current time, replay starts at zero, missing selection fails
+ok 118 - show playback resumes current time, replay starts at zero, missing selection fails
+  ---
+  duration_ms: 0.512346
+  type: 'test'
+  ...
+# Subtest: dense front IDs have breathing room and no labels overlap across groups
+ok 119 - dense front IDs have breathing room and no labels overlap across groups
+  ---
+  duration_ms: 2.880048
+  type: 'test'
+  ...
+# Subtest: zoomed-out or short canvases prioritize the selected ID instead of stacking illegible labels
+ok 120 - zoomed-out or short canvases prioritize the selected ID instead of stacking illegible labels
+  ---
+  duration_ms: 1.662479
+  type: 'test'
+  ...
+# Subtest: zero migration is atomic, idempotent and preserves actual show and tiers
+ok 121 - zero migration is atomic, idempotent and preserves actual show and tiers
+  ---
+  duration_ms: 170.641064
+  type: 'test'
+  ...
+# Subtest: ambiguous mixed numbering is rejected instead of double decrement
+ok 122 - ambiguous mixed numbering is rejected instead of double decrement
+  ---
+  duration_ms: 35.66188
+  type: 'test'
+  ...
+# Subtest: single toggles selection; double toggles isolation independently of preceding click events
+ok 123 - single toggles selection; double toggles isolation independently of preceding click events
+  ---
+  duration_ms: 3.239885
+  type: 'test'
+  ...
+# Subtest: real quality tiers filter point programs without modifying shared timing
+ok 124 - real quality tiers filter point programs without modifying shared timing
+  ---
+  duration_ms: 92.068716
+  type: 'test'
+  ...
+# Subtest: moving stroke honours original delay, advances along the full guide and expires
+ok 125 - moving stroke honours original delay, advances along the full guide and expires
+  ---
+  duration_ms: 2.541043
+  type: 'test'
+  ...
+# Subtest: ball grows within its native diameter and delay, with no invented launch time
+ok 126 - ball grows within its native diameter and delay, with no invented launch time
+  ---
+  duration_ms: 0.286866
+  type: 'test'
+  ...
+# Subtest: ruler and height ticks follow the actual projection at all viewport scales
+ok 127 - ruler and height ticks follow the actual projection at all viewport scales
+  ---
+  duration_ms: 1.561197
+  type: 'test'
+  ...
+# Subtest: active fan draws a coloured segment as well as its gray guide and numbered target
+ok 128 - active fan draws a coloured segment as well as its gray guide and numbered target
+  ---
+  duration_ms: 0.534164
+  type: 'test'
+  ...
+# Subtest: rename commits both visible names without changing programme identity, file version or arrangement
+ok 129 - rename commits both visible names without changing programme identity, file version or arrangement
+  ---
+  duration_ms: 50.558987
+  type: 'test'
+  ...
+# Subtest: manual and automatic saves serialize immutable snapshots and atomically store current plus programme records; failure can retry
+ok 130 - manual and automatic saves serialize immutable snapshots and atomically store current plus programme records; failure can retry
+  ---
+  duration_ms: 81.137393
+  type: 'test'
+  ...
+# Subtest: bloom has a filled round crown of stars and short tails, rather than a hollow ring
+ok 131 - bloom has a filled round crown of stars and short tails, rather than a hollow ring
+  ---
+  duration_ms: 5.400246
+  type: 'test'
+  ...
+# Subtest: local delays and exact end still gate particles
+ok 132 - local delays and exact end still gate particles
+  ---
+  duration_ms: 0.257198
+  type: 'test'
+  ...
+# Subtest: native entry vertical offset and parent height translate the entire bloom exactly once
+ok 133 - native entry vertical offset and parent height translate the entire bloom exactly once
+  ---
+  duration_ms: 3.739859
+  type: 'test'
+  ...
+# Subtest: one saved fan beam stays one beam and native Roll keeps its direction and height scale
+ok 134 - one saved fan beam stays one beam and native Roll keeps its direction and height scale
+  ---
+  duration_ms: 0.567986
+  type: 'test'
+  ...
+# Subtest: a high small bloom fills its thumbnail while saved native geometry remains intact
+ok 135 - a high small bloom fills its thumbnail while saved native geometry remains intact
+  ---
+  duration_ms: 6.878813
+  type: 'test'
+  ...
+# Subtest: a bloom with a short visible lifetime still has a thumbnail
+ok 136 - a bloom with a short visible lifetime still has a thumbnail
+  ---
+  duration_ms: 1.716084
+  type: 'test'
+  ...
+# Subtest: large diagram framing keeps thin spark heads while magnifying the native fan path
+ok 137 - large diagram framing keeps thin spark heads while magnifying the native fan path
+  ---
+  duration_ms: 0.697742
+  type: 'test'
+  ...
+# Subtest: 离线检查入口返回原字节、即时更新、无缓存且拒绝写入
+ok 138 - 离线检查入口返回原字节、即时更新、无缓存且拒绝写入
+  ---
+  duration_ms: 62.932134
+  type: 'test'
+  ...
+# Subtest: true blank clears every programme/music item, preserves fixed libraries and source unchanged
+ok 139 - true blank clears every programme/music item, preserves fixed libraries and source unchanged
+  ---
+  duration_ms: 29.28683
+  type: 'test'
+  ...
+# Subtest: cue extraction preserves exact relative schedule, fixed refs and independent tiers after reapply
+ok 140 - cue extraction preserves exact relative schedule, fixed refs and independent tiers after reapply
+  ---
+  duration_ms: 64.153655
+  type: 'test'
+  ...
+# Subtest: capturing legacy non-grid repeated events does not quantize their relative timing
+ok 141 - capturing legacy non-grid repeated events does not quantize their relative timing
+  ---
+  duration_ms: 115.389196
+  type: 'test'
+  ...
+# Subtest: section boundaries and membership do not silently move cues; explicit whole move preserves relative time
+ok 142 - section boundaries and membership do not silently move cues; explicit whole move preserves relative time
+  ---
+  duration_ms: 38.235206
+  type: 'test'
+  ...
+# Subtest: named programme roundtrip is exact; old backup remains compatible and invalid import is atomic
+ok 143 - named programme roundtrip is exact; old backup remains compatible and invalid import is atomic
+  ---
+  duration_ms: 78.848333
+  type: 'test'
+  ...
+# Subtest: music offset moves only explicitly bound cues and music marks, leaves manual sections and absolute cues fixed
+ok 144 - music offset moves only explicitly bound cues and music marks, leaves manual sections and absolute cues fixed
+  ---
+  duration_ms: 35.24481
+  type: 'test'
+  ...
+# Subtest: front comet reaches its 130m target after the full 1.8s ascent, then has visible afterglow
+ok 145 - front comet reaches its 130m target after the full 1.8s ascent, then has visible afterglow
+  ---
+  duration_ms: 8.98609
+  type: 'test'
+  ...
+# Subtest: launch triangle tip coincides with physical origin and its body stays below that plane
+ok 146 - launch triangle tip coincides with physical origin and its body stays below that plane
+  ---
+  duration_ms: 0.383024
+  type: 'test'
+  ...
+# Subtest: fan vertical offset translates its entire flight once
+ok 147 - fan vertical offset translates its entire flight once
+  ---
+  duration_ms: 7.707439
+  type: 'test'
+  ...
+# Subtest: fireworks draw after point ID plates, never underneath the markers
+ok 148 - fireworks draw after point ID plates, never underneath the markers
+  ---
+  duration_ms: 2.323806
+  type: 'test'
+  ...
+# Subtest: all planned front effects stay below the 150m dam plane throughout playback
+ok 149 - all planned front effects stay below the 150m dam plane throughout playback
+  ---
+  duration_ms: 86.9998
+  type: 'test'
+  ...
+# Subtest: stage elevation preserves saved dimensions and mirrors structural bays about launch centre
+ok 150 - stage elevation preserves saved dimensions and mirrors structural bays about launch centre
+  ---
+  duration_ms: 18.447818
+  type: 'test'
+  ...
+# Subtest: unfolded dam shows five true lengths and 50 metre launch intervals without altering plan coordinates
+ok 151 - unfolded dam shows five true lengths and 50 metre launch intervals without altering plan coordinates
+  ---
+  duration_ms: 16.806416
+  type: 'test'
+  ...
+# Subtest: fan jitter is fixed; timing and angle are compiled once
+ok 152 - fan jitter is fixed; timing and angle are compiled once
+  ---
+  duration_ms: 4.240594
+  type: 'test'
+  ...
+# Subtest: coupled shell shares fixed geometry and time, with explicit height support
+ok 153 - coupled shell shares fixed geometry and time, with explicit height support
+  ---
+  duration_ms: 0.62314
+  type: 'test'
+  ...
+# Subtest: saved versions are immutable, explicit binding and undoable document value
+ok 154 - saved versions are immutable, explicit binding and undoable document value
+  ---
+  duration_ms: 3.968361
+  type: 'test'
+  ...
+# Subtest: invalid resource, NaN, scale and references cannot be exported
+ok 155 - invalid resource, NaN, scale and references cannot be exported
+  ---
+  duration_ms: 1.036277
+  type: 'test'
+  ...
+# Subtest: preview uses the identical native entries and marks geometry as schematic
+ok 156 - preview uses the identical native entries and marks geometry as schematic
+  ---
+  duration_ms: 1.038635
+  type: 'test'
+  ...
+# Subtest: geometry keeps the emission origin on the baseline and full native bounds inside the diagram
+ok 157 - geometry keeps the emission origin on the baseline and full native bounds inside the diagram
+  ---
+  duration_ms: 2.022605
+  type: 'test'
+  ...
+# Subtest: fan edits retain nonuniform geometry and native randomness unless explicitly editing time order
+ok 158 - fan edits retain nonuniform geometry and native randomness unless explicitly editing time order
+  ---
+  duration_ms: 3.404497
+  type: 'test'
+  ...
+# Subtest: library tips use the specification target rather than performance tier or guessed size thresholds
+ok 159 - library tips use the specification target rather than performance tier or guessed size thresholds
+  ---
+  duration_ms: 1.271577
+  type: 'test'
+  ...
+# Subtest: single flower placement needs no extra choreography save and pins the exact recipe
+ok 160 - single flower placement needs no extra choreography save and pins the exact recipe
+  ---
+  duration_ms: 207.91692
+  type: 'test'
+  ...
+# Subtest: add rejects an incompatible selected point, pins the saved version and copy preserves tier point sets
+ok 161 - add rejects an incompatible selected point, pins the saved version and copy preserves tier point sets
+  ---
+  duration_ms: 342.126341
+  type: 'test'
+  ...
+# Subtest: ueText writes empty arrays as empty text so UE does not create a default element
+ok 162 - ueText writes empty arrays as empty text so UE does not create a default element
+  ---
+  duration_ms: 0.980801
+  type: 'test'
+  ...
+# Subtest: ueText keeps non-empty arrays and nested structs unchanged
+ok 163 - ueText keeps non-empty arrays and nested structs unchanged
+  ---
+  duration_ms: 1.180448
+  type: 'test'
+  ...
+# Subtest: 8017 v5 backup roundtrip preserves all show data and tiers
+ok 164 - 8017 v5 backup roundtrip preserves all show data and tiers
+  ---
+  duration_ms: 248.802823
+  type: 'test'
+  ...
+# Subtest: copy, delete, empty program and tier-only removal preserve source
+ok 165 - copy, delete, empty program and tier-only removal preserve source
+  ---
+  duration_ms: 103.360081
+  type: 'test'
+  ...
+# Subtest: deliveries use exactly the active tier, effective time and point heights
+ok 166 - deliveries use exactly the active tier, effective time and point heights
+  ---
+  duration_ms: 78.337628
+  type: 'test'
+  ...
+# Subtest: effective time edit and music binding remain aligned
+ok 167 - effective time edit and music binding remain aligned
+  ---
+  duration_ms: 69.849129
+  type: 'test'
+  ...
+# Subtest: all navigation commits immediately, including unsupported browsers and reduced motion
+ok 168 - all navigation commits immediately, including unsupported browsers and reduced motion
+  ---
+  duration_ms: 1.070174
+  type: 'test'
+  ...
+# Subtest: rapid navigation cancels old motion without delaying or restoring an earlier page
+ok 169 - rapid navigation cancels old motion without delaying or restoring an earlier page
+  ---
+  duration_ms: 0.342357
+  type: 'test'
+  ...
+1..169
+# tests 169
+# suites 0
+# pass 169
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 31517.22021
+TAP version 13
+# Subtest: director picker can return from a selected actor to the default blueprint even if search omits its CDO
+ok 1 - director picker can return from a selected actor to the default blueprint even if search omits its CDO
+  ---
+  duration_ms: 10.936416
+  type: 'test'
+  ...
+# Subtest: director catalogue resolves loaded blueprint CDOs, deduplicates paths and excludes transient/foreign objects
+ok 2 - director catalogue resolves loaded blueprint CDOs, deduplicates paths and excludes transient/foreign objects
+  ---
+  duration_ms: 2.085075
+  type: 'test'
+  ...
+# Subtest: explicit invalid target never silently switches to the default or another director
+ok 3 - explicit invalid target never silently switches to the default or another director
+  ---
+  duration_ms: 0.749032
+  type: 'test'
+  ...
+# Subtest: default UE connection uses only reads and the known director asset
+ok 4 - default UE connection uses only reads and the known director asset
+  ---
+  duration_ms: 0.30539
+  type: 'test'
+  ...
+# Subtest: one discovered director is chosen; ambiguous directors need explicit choice
+ok 5 - one discovered director is chosen; ambiguous directors need explicit choice
+  ---
+  duration_ms: 0.523264
+  type: 'test'
+  ...
+# Subtest: network failure does not write or guess a target
+ok 6 - network failure does not write or guess a target
+  ---
+  duration_ms: 0.23736
+  type: 'test'
+  ...
+# Subtest: omit audio preserves the whole authored show, markers and versions without mutating source
+ok 7 - omit audio preserves the whole authored show, markers and versions without mutating source
+  ---
+  duration_ms: 0.321288
+  type: 'test'
+  ...
+# Subtest: reimporting original music preserves anchors/sections/timing; replacement clears old musical bindings
+ok 8 - reimporting original music preserves anchors/sections/timing; replacement clears old musical bindings
+  ---
+  duration_ms: 0.398451
+  type: 'test'
+  ...
+# Subtest: uses importer POST/text/plain and permits only loopback service
+ok 9 - uses importer POST/text/plain and permits only loopback service
+  ---
+  duration_ms: 3.45162
+  type: 'test'
+  ...
+# Subtest: path distinguishes BP assets and level actors without truncation
+ok 10 - path distinguishes BP assets and level actors without truncation
+  ---
+  duration_ms: 0.431561
+  type: 'test'
+  ...
+# Subtest: engine errors are surfaced instead of success labels
+ok 11 - engine errors are surfaced instead of success labels
+  ---
+  duration_ms: 0.444719
+  type: 'test'
+  ...
+# Subtest: readDirector resolves BP CDO and reads only matching real point actors
+ok 12 - readDirector resolves BP CDO and reads only matching real point actors
+  ---
+  duration_ms: 0.839898
+  type: 'test'
+  ...
+# Subtest: wrong target or active director blocks import
+ok 13 - wrong target or active director blocks import
+  ---
+  duration_ms: 0.256529
+  type: 'test'
+  ...
+# Subtest: concurrent configuration change stops before any write
+ok 14 - concurrent configuration change stops before any write
+  ---
+  duration_ms: 1.20264
+  type: 'test'
+  ...
+# Subtest: director becoming active stops before any write
+ok 15 - director becoming active stops before any write
+  ---
+  duration_ms: 0.423699
+  type: 'test'
+  ...
+# Subtest: only three arrays and duration change; verified then save BP
+ok 16 - only three arrays and duration change; verified then save BP
+  ---
+  duration_ms: 2.259099
+  type: 'test'
+  ...
+# Subtest: save failure preserves verified-write status without false success
+ok 17 - save failure preserves verified-write status without false success
+  ---
+  duration_ms: 0.786503
+  type: 'test'
+  ...
+# Subtest: level actor is not silently saved as blueprint or entire level
+ok 18 - level actor is not silently saved as blueprint or entire level
+  ---
+  duration_ms: 1.917135
+  type: 'test'
+  ...
+# Subtest: write failure has no false success
+ok 19 - write failure has no false success
+  ---
+  duration_ms: 0.64725
+  type: 'test'
+  ...
+# Subtest: native structs/key order and harmless native float precision compare correctly
+ok 20 - native structs/key order and harmless native float precision compare correctly
+  ---
+  duration_ms: 0.139637
+  type: 'test'
+  ...
+# Subtest: partial known write is rolled back and read back without saving
+ok 21 - partial known write is rolled back and read back without saving
+  ---
+  duration_ms: 0.488279
+  type: 'test'
+  ...
+# Subtest: foreign edit during failed write is not overwritten by rollback
+ok 22 - foreign edit during failed write is not overwritten by rollback
+  ---
+  duration_ms: 0.331847
+  type: 'test'
+  ...
+# Subtest: unknown readback values are not guessed or rolled back
+ok 23 - unknown readback values are not guessed or rolled back
+  ---
+  duration_ms: 0.593979
+  type: 'test'
+  ...
+# Subtest: timed-out write does not retry or save because execution status is unknown
+ok 24 - timed-out write does not retry or save because execution status is unknown
+  ---
+  duration_ms: 0.419133
+  type: 'test'
+  ...
+# Subtest: live audio uses a short Blob URL without changing the embedded bytes
+ok 25 - live audio uses a short Blob URL without changing the embedded bytes
+  ---
+  duration_ms: 75.877655
+  type: 'test'
+  ...
+# Subtest: single HTML includes all scripts and styles, no module/CSS/CDN links
+ok 26 - single HTML includes all scripts and styles, no module/CSS/CDN links
+  ---
+  duration_ms: 31.892372
+  type: 'test'
+  ...
+# Subtest: light show keeps native data/versions and musical references, excludes audio bytes
+ok 27 - light show keeps native data/versions and musical references, excludes audio bytes
+  ---
+  duration_ms: 91.991414
+  type: 'test'
+  ...
+# Subtest: all six real data files embedded (plus the 16.0.9 cloud-latest programme when published); independent offline IndexedDB/key names
+ok 28 - all six real data files embedded (plus the 16.0.9 cloud-latest programme when published); independent offline IndexedDB/key names
+  ---
+  duration_ms: 43.299511
+  type: 'test'
+  ...
+# Subtest: updates preserve v1 local storage identity and prefer saved programmes over bundled defaults
+ok 29 - updates preserve v1 local storage identity and prefer saved programmes over bundled defaults
+  ---
+  duration_ms: 59.592847
+  type: 'test'
+  ...
+# Subtest: built HTML checksum and original source fingerprints match
+ok 30 - built HTML checksum and original source fingerprints match
+  ---
+  duration_ms: 202.637423
+  type: 'test'
+  ...
+# Subtest: inline JavaScript parses without browser module loading
+ok 31 - inline JavaScript parses without browser module loading
+  ---
+  duration_ms: 24.434588
+  type: 'test'
+  ...
+# Subtest: bootstrap retrieves local JSON and embedded audio without file:// network calls
+ok 32 - bootstrap retrieves local JSON and embedded audio without file:// network calls
+  ---
+  duration_ms: 5.677652
+  type: 'test'
+  ...
+# Subtest: embedded programme survives real version-file round trip; new programme is truly blank
+ok 33 - embedded programme survives real version-file round trip; new programme is truly blank
+  ---
+  duration_ms: 268.1773
+  type: 'test'
+  ...
+# Subtest: build manifest identifies its runtime
+ok 34 - build manifest identifies its runtime
+  ---
+  duration_ms: 0.785069
+  type: 'test'
+  ...
+# Subtest: data-only patches swap only the cloud programme and keep the app build they sit on
+ok 35 - data-only patches swap only the cloud programme and keep the app build they sit on
+  ---
+  duration_ms: 0.295405
+  type: 'test'
+  ...
+# Subtest: a failed source check never replaces the last successful HTML or runs packaging
+ok 36 - a failed source check never replaces the last successful HTML or runs packaging
+  ---
+  duration_ms: 10.534248
+  type: 'test'
+  ...
+# Subtest: theme maps all primary and surface roles to the original DF tokens
+ok 37 - theme maps all primary and surface roles to the original DF tokens
+  ---
+  duration_ms: 0.551945
+  type: 'test'
+  ...
+# 8025检查通过，已生成一次离线HTML：/tmp/df-release-TmlxAm/workbench.html
+# Subtest: successful release packages once and records the final filename
+ok 38 - successful release packages once and records the final filename
+  ---
+  duration_ms: 12.247538
+  type: 'test'
+  ...
+# Subtest: failed package verification preserves both previous files
+ok 39 - failed package verification preserves both previous files
+  ---
+  duration_ms: 5.83377
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1368.275829
+已只换编排：云端编排 16.0.36 · B08修订1-限峰改口径-大小修正（工具仍是 16.0.24）
+仓库离线包已就绪：/home/claude/fireworkslab/tool/烟花编排工作台.html
+检查入口：http://127.0.0.1:8025/release/；个人节目、音乐及浏览器历史未改动。

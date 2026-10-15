@@ -60,7 +60,7 @@ if B06:
 if B07:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07修订1-球花竖直-扇不叠编排检查.json'
 if B08:
-    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08-低配限峰-小平台放大-种类大小编排检查.json'   # 修订1（10-15 12:14 后）：16.0.33 那份见 B07-尾缀落地-档位隔点-小平台加密编排检查.json
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08修订1-限峰改口径-大小修正编排检查.json'   # B08 修订1（10-15 23:40，16.0.36）；16.0.35 那份见 B08-低配限峰-小平台放大-种类大小编排检查.json
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -173,10 +173,10 @@ def risks_b08():
     hv, ar, ov = CHECK['heavy'], CHECK['area'], CHECK['overlap']
     cap = [x for x in l8['capLow'] if not x.get('stuck')]
     return [
-        f"低配限峰（用户 22:02，960 低配 Translucency 到 1 ms 会降分辨率）：PC 低配「开花负担」最高 {hv['B08-low'][0][0]}（B05 {hv['B05-low'][0][0]}、B07 修订1 {hv['B07-low'][0][0]}；上限 1.8）。为此低配里 {len(cap)} 处再隔一次，墙 / 入口也隔。中、高配和 B05 持平（{hv['B08-medium'][0][0]} / {hv['B08-high'][0][0]}，B05 {hv['B05-medium'][0][0]} / {hv['B05-high'][0][0]}）。负担是按 B05 实测曲线粗标的，要 B08 实机测量确认。",
+        f"低配限峰（用户 22:02，960 低配 Translucency 到 1 ms 会降分辨率；修订1 按独立复核换了口径）：PC 低配两个上限——亮着的浓密金菊面积 A ≤ 3.2、1 s 内开花面积 S ≤ 5.0。B05 实测的三个峰（64 / 183 / 189 s）附近：B05 A {hv['atB05Peaks']['B05']['64.3']['dense']} / {hv['atB05Peaks']['B05']['182.6']['dense']} / {hv['atB05Peaks']['B05']['189.0']['dense']}、S {hv['atB05Peaks']['B05']['64.3']['burst']} / {hv['atB05Peaks']['B05']['182.6']['burst']} / {hv['atB05Peaks']['B05']['189.0']['burst']}；B08 A {hv['atB05Peaks']['B08']['64.3']['dense']} / {hv['atB05Peaks']['B08']['182.6']['dense']} / {hv['atB05Peaks']['B08']['189.0']['dense']}、S {hv['atB05Peaks']['B08']['64.3']['burst']} / {hv['atB05Peaks']['B08']['182.6']['burst']} / {hv['atB05Peaks']['B08']['189.0']['burst']}。低配里 {len(cap)} 处再隔一次，墙 / 入口也隔。上限是从一张截图拟的，要 B08 实机测量确认。",
         f"小平台：Tiny 尾缀条目缩放 ×0.65，到顶约 40 m（时间不变）；花放大到 36–44 m，对称一对 ±15–22°。没出新尾缀。",
         f"同时同高的 P 排 / B 排小号（{len(l8['zigzagTiers'])} 处）：P 排挂现有中尾缀开到 +210 m，B 排 ×0.8 留在 +150 m，上下两层，不再被盖住。",
-        f"种类大小：小号 90–100 m（爆裂星 / 金裂星 100、点灭星 / 小银菊 95）；B 排小号同一刻上面有中大号的不放大（放大了会和上面那排同高叠）。中号、大号不放大。再叠每点 ×0.92 / 1 / 1.08。",
+        f"种类大小：单独开的小号排按种类定基准（爆裂星 / 金裂星 100、点灭星 / 小银菊 95、橙辉星 / 小青柠 90 m），再叠每点 ×0.92 / 1 / 1.08；B 排小号同一刻上面有中大号的不放大（放大了会和上面那排同高叠）。中号、大号不放大（和 B07 修订1 同范围）。",
         f"更随机：{len(l8['mix'])} 排两种花交替（奇数位换不同色系）；齐发排每点错开 0–0.2 s，一半里→外放慢到 0.15 s / 步。",
         f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}；球花重叠 PC {ov['pcIncidents']} 处；GPU 同秒峰值 {g['peak']}。没在 UE 里放过。",
     ]
@@ -405,7 +405,7 @@ def main():
         old = json.loads((OUT / ('逻辑方案_B07.json' if B08 else '逻辑方案_B06.json')).read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
         au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
-        data['variants'] = ([dict(label='B08', note='低配限峰 · 小平台 40 m 放大 · 同时同高两层 · 种类大小 · 时间错开', cues=cues, events=events, sections=secs, anchors=anchors),
+        data['variants'] = ([dict(label='B08修订1', note='低配限峰（浓密金菊 + 同时开花两个上限）· 小平台 40 m 放大 · 同时同高两层 · 种类大小 · 时间错开', cues=cues, events=events, sections=secs, anchors=anchors),
                              dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠', cues=oc, events=oe, sections=osecs, anchors=oanch)] if B08 else
                             [dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠 · 手游中配隔点', cues=cues, events=events, sections=secs, anchors=anchors),
                              dict(label='B06', note='尾缀从坝顶 + 高差出来', cues=oc, events=oe, sections=osecs, anchors=oanch)])
