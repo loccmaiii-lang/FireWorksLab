@@ -60,7 +60,7 @@ if B06:
 if B07:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07修订1-球花竖直-扇不叠编排检查.json'
 if B08:
-    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08修订3-低配放宽约0.8ms编排检查.json'   # B08 修订3（10-16，16.0.38）；16.0.37 / 16.0.36 / 16.0.35 见 B08修订2-… / B08修订1-… / B08-…编排检查.json
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08修订3-低配放宽约0.8ms编排检查.json'   # B08 修订3（10-15 23:55，16.0.38）；16.0.37 / 16.0.36 / 16.0.35 见 B08修订2-… / B08修订1-… / B08-…编排检查.json
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
