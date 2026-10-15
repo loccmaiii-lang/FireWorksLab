@@ -39,7 +39,8 @@
       "ownerPID": 148864,
       "serverVersion": "4.2.1",
       "successfulReadOnlyProbes": "World=Login、DFMShowDirector=0、Tiny资产get、两张ResourceFX搜索成功",
-      "lastBulkAttempt": "第一个World请求WinError10053，脚本立即退出，无重试；03:31仍监听，后续须单次只读检查健康"
+      "lastBulkAttempt": "第一个World请求WinError10053，脚本立即退出，无重试；03:31仍监听，后续须单次只读检查健康",
+      "latestCheck": "03:37 limit1成功，03:38原limit100失败；仍监听不代表API可靠，停止批量。"
     },
     "GPUECliPriorReport": "25报告崩溃后17780不通，本轮未连接UE。",
     "readinessVerified": true,
@@ -122,7 +123,8 @@
   "statusColumns": {
     "执行": "同一项目已重开；旧测试停止已核，完成轻量只读探测与离线整理",
     "检查": "03:31唯一编辑器响应、17780监听；World/导演前探测成功",
-    "未测": "T10续播和新现场全量资源干跑；首个盘点请求中止后按父侧要求先回执",
+    "未测": "可靠只读采集、完整资源干跑及T10，10053根因未明。",
     "用户验收": "未取得"
-  }
+  },
+  "connectionFollowup": "连接诊断.json"
 }

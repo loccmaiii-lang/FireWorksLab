@@ -1,0 +1,65 @@
+{
+  "checks": [
+    {
+      "at": "2026-10-15T19:37:49.866580+00:00",
+      "route": "/object/search",
+      "payload": {
+        "class": "World",
+        "limit": 1
+      },
+      "requestBytes": 30,
+      "automaticRetry": false,
+      "httpStatus": 200,
+      "responseBytes": 222,
+      "response": {
+        "success": true,
+        "message": "OK",
+        "server_version": "4.2.1",
+        "data": {
+          "objects": [
+            {
+              "name": "Login",
+              "path": "/Game/Maps/Login/Login.Login",
+              "class": "World",
+              "outer": "/Game/Maps/Login/Login"
+            }
+          ],
+          "count": 1,
+          "total": 1,
+          "offset": 0,
+          "limit": 1
+        }
+      },
+      "success": true,
+      "elapsedMs": 31.0
+    },
+    {
+      "at": "2026-10-15T19:38:18.364306+00:00",
+      "route": "/object/search",
+      "payload": {
+        "class": "World",
+        "limit": 100
+      },
+      "requestBytes": 32,
+      "automaticRetry": false,
+      "purpose": "与03:31失败请求同一payload，单次验证",
+      "success": false,
+      "errorType": "URLError",
+      "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>",
+      "elapsedMs": 63.0
+    }
+  ],
+  "basis": "上次采集首请求失败；本轮经明确授权只做单条小读验证，不改网络/安全/服务配置。",
+  "conclusion": "连接中止仍可复现，小请求验证未达到可靠条件；停止批量只读采集，根因未确定。",
+  "hostCheck": "03:39只读检查同一UE PID148864仍唯一实例、有响应，17780仍监听。",
+  "supportedInterfaceBasis": "已提交workbench_engine_acceptance.mjs的request允许/object/get和/object/search；World limit100不是未知接口试探，先前就绪核实曾成功。",
+  "logEvidence": "现有DeltaForce.log未见对应应用错误或新崩溃。启动OPTIONS绑定警告早于成功读取，不能据此确诊。",
+  "requestSizeAnalysis": "成功30字节，失败32字节；同一World搜索，已知世界结果仅Login一个。不能以2字节差或limit差确诊。",
+  "push": "原自动安全审查拒绝保持，等待已提出的用户批准；未重试。",
+  "stoppedActions": [
+    "不重启UE/服务",
+    "不改配置/权限/安全设置",
+    "不换路径、端口、代理或工具绕过",
+    "不继续批量读、不加载地图、不续T10"
+  ]
+}
