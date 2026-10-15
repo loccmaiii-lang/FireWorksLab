@@ -1,0 +1,59 @@
+{
+  "_说明": "换机器时通常只需改 ue.project_root / ue.engine_root；相对路径以本 config.json 所在目录为基准。完整说明见 交接文档_烟花灯光曲线.md",
+
+  "ue": {
+    "project_root": "H:/ranranzhao__Ma5/DFMEditor/DFM",
+    "engine_root": "H:/ranranzhao__Ma5/DFMEditor/Engine",
+    "remote_multicast_group": "239.0.0.1",
+    "remote_multicast_port": 6777,
+    "remote_multicast_bind": "0.0.0.0",
+    "remote_command_port": 6776,
+    "remote_discover_timeout_s": 8,
+    "remote_discover_retries": 4,
+    "sequence_asset": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2",
+    "level_asset": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night",
+    "effect_point_prefix": "NewYear_Night_ShowEffect_",
+    "tick_resolution": 24000
+  },
+
+  "show": {
+    "dfshow": "data/NewYearFireWorks_v01-v13.dfshow",
+    "platform": "pc",
+    "time_offset_s": 0.0,
+    "seq_end_s": 240.4667,
+    "exclude_zones": [],
+    "exclude_templates": []
+  },
+
+  "_lights说明": "binding=序列里的 Actor 绑定名; component=其下组件绑定名; level_actor=关卡里的 Actor 名(用于取坐标); curve_from=直接复用另一盏灯的曲线; intensity_scale/offset=对复用的强度做线性变换。以下 SpotLight/SpotLight3/SkyLight 的设置按 2026-10-15 22:13 读到的资产现状反推。",
+  "lights": {
+    "SpotLight2": { "binding": "SpotLight2", "component": "LightComponent0", "level_actor": "SpotLight2" },
+    "SpotLight":  { "binding": "SpotLight",  "component": "LightComponent0", "level_actor": "SpotLight_1", "curve_from": "SpotLight2" },
+    "SpotLight3": { "binding": "SpotLight3", "component": "LightComponent0", "level_actor": "SpotLight3",  "curve_from": "SpotLight2" },
+    "SkyLight":   { "binding": "SkyLight",   "component": "SkyLightComponent0", "curve_from": "SpotLight2", "intensity_scale": 0.003846, "intensity_offset": 0.0 }
+  },
+
+  "model": {
+    "fps": 30,
+    "i_peak": 1800.0,
+    "gamma": 0.72,
+    "r0_m": 300.0,
+    "size_exp": 2.5,
+    "sat_boost": 1.30,
+    "int_tol": 0.015,
+    "col_tol": 0.03,
+    "seed": 20261231,
+    "flash_tau_s": 0.09,
+    "fan_power_per_beam": 0.04,
+    "comet_power": 0.06,
+    "fan_height_m": 60.0,
+    "launch_flash": 0.10,
+    "rise_glow": 0.025,
+    "dark_color_hold": 0.03,
+    "start_color": "#f0d69d"
+  },
+
+  "model_overrides": {
+    "SpotLight2": {}
+  }
+}

@@ -1,0 +1,192 @@
+{
+ "format": "fwlight.pack/1",
+ "generator": "烟花编排工作台 16.0.40",
+ "generatedAt": "2026-10-15T16:13:37.098Z",
+ "programme": {
+  "name": "NewYearFireWorks_v01",
+  "version": "16.0.40",
+  "cloudName": "B08修订4-低配放宽保宽度",
+  "compositionRevision": "B08_lowcap_platform40_tiers_species_jitter_from_B03r2m_vo_countdown_zero16.20_from_B02r2_upOnly_declutter_mobileStandins_up70_s10",
+  "programFileVersion": 12
+ },
+ "platform": "pc",
+ "events": 936,
+ "sequence": {
+  "asset": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2",
+  "fps": 30,
+  "endS": 240.4667,
+  "timeOffsetS": 0
+ },
+ "level": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night",
+ "model": {
+  "fps": 30,
+  "i_peak": 1800,
+  "gamma": 0.72,
+  "r0_m": 300,
+  "size_exp": 2.5,
+  "sat_boost": 1.3,
+  "int_tol": 0.015,
+  "col_tol": 0.03,
+  "seed": 20261231,
+  "flash_tau_s": 0.09,
+  "fan_power_per_beam": 0.04,
+  "comet_power": 0.06,
+  "fan_height_m": 60,
+  "launch_flash": 0.1,
+  "rise_glow": 0.025,
+  "dark_color_hold": 0.03,
+  "start_color": "#f0d69d"
+ },
+ "peakAtS": 164.97,
+ "sMax": 7.6318424462612136,
+ "lights": [
+  {
+   "light": "SpotLight2",
+   "binding": "SpotLight2",
+   "component": "LightComponent0",
+   "file": "keys_SpotLight2.json",
+   "curveFrom": null,
+   "intensityScale": 1,
+   "maxIntensity": null,
+   "peak": 1800,
+   "intensityKeys": 1577,
+   "colorKeys": 1099
+  },
+  {
+   "light": "SpotLight",
+   "binding": "SpotLight",
+   "component": "LightComponent0",
+   "file": "keys_SpotLight.json",
+   "curveFrom": "SpotLight2",
+   "intensityScale": 1,
+   "maxIntensity": null,
+   "peak": 1800,
+   "intensityKeys": 1577,
+   "colorKeys": 1099
+  },
+  {
+   "light": "SpotLight3",
+   "binding": "SpotLight3",
+   "component": "LightComponent0",
+   "file": "keys_SpotLight3.json",
+   "curveFrom": "SpotLight2",
+   "intensityScale": 1,
+   "maxIntensity": null,
+   "peak": 1800,
+   "intensityKeys": 1577,
+   "colorKeys": 1099
+  },
+  {
+   "light": "SkyLight",
+   "binding": "SkyLight",
+   "component": "SkyLightComponent0",
+   "file": "keys_SkyLight.json",
+   "curveFrom": "SpotLight2",
+   "intensityScale": 0.003846,
+   "maxIntensity": 10,
+   "peak": 6.9228,
+   "intensityKeys": 1577,
+   "colorKeys": 1099
+  }
+ ],
+ "sections": [
+  {
+   "name": "倒计时",
+   "start": 0,
+   "end": 16.2,
+   "mean": 100.16,
+   "peak": 245.12
+  },
+  {
+   "name": "开场高潮",
+   "start": 16.2,
+   "end": 28.539,
+   "mean": 448.14,
+   "peak": 925.79
+  },
+  {
+   "name": "密集问答",
+   "start": 28.539,
+   "end": 41.512,
+   "mean": 382.02,
+   "peak": 997.11
+  },
+  {
+   "name": "往返扫射",
+   "start": 41.512,
+   "end": 54.485,
+   "mean": 385.53,
+   "peak": 735.8
+  },
+  {
+   "name": "第一次抬升",
+   "start": 54.485,
+   "end": 67.457,
+   "mean": 818.31,
+   "peak": 1482.71
+  },
+  {
+   "name": "低位密奏",
+   "start": 67.457,
+   "end": 80.43,
+   "mean": 377.79,
+   "peak": 1033.66
+  },
+  {
+   "name": "第二次递进 A",
+   "start": 80.43,
+   "end": 93.403,
+   "mean": 447.4,
+   "peak": 1185.3
+  },
+  {
+   "name": "蓄势收窄",
+   "start": 93.403,
+   "end": 107.997,
+   "mean": 428.13,
+   "peak": 1450.91
+  },
+  {
+   "name": "高潮 II",
+   "start": 107.997,
+   "end": 133.943,
+   "mean": 873.55,
+   "peak": 1514.41
+  },
+  {
+   "name": "转场铺色 A",
+   "start": 133.943,
+   "end": 145.294,
+   "mean": 412.64,
+   "peak": 956.26
+  },
+  {
+   "name": "转场铺色 B",
+   "start": 145.294,
+   "end": 158.267,
+   "mean": 523.02,
+   "peak": 1149.5
+  },
+  {
+   "name": "终章",
+   "start": 158.267,
+   "end": 193.942,
+   "mean": 883.47,
+   "peak": 1800
+  },
+  {
+   "name": "白色收束",
+   "start": 193.942,
+   "end": 214.4,
+   "mean": 341.48,
+   "peak": 1434.18
+  }
+ ],
+ "errors": [],
+ "warnings": [],
+ "notes": [
+  "光量按 PC 高配全部片段（去掉只上手游的替身）计算；序列只有一份，PC / 手游、高中低共用。",
+  "Intensity 按全场最亮一帧归一：峰值 = i_peak × 比例，和编排疏密无关；编排变了，整场会一起缩放。",
+  "写入 UE：python tool/fwlight/fwlight.py apply-pack <本目录>（先 P4 迁出序列；--no-save 只写内存）。"
+ ]
+}

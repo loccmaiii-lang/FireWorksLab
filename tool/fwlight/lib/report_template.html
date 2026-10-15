@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__LIGHT__ 烟花光照分析 · __SHOW__</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1d2329;--sub:#5c6670;--line:#e3e7eb;--acc:#00a77a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 60px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:0 0 12px}
+.sub{color:var(--sub);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi b{display:block;font-size:20px}.kpi span{color:var(--sub);font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;margin:14px 0}
+canvas{width:100%;display:block}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:600;background:#fafbfc}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;border:1px solid #0002;margin-right:6px}
+.bar{height:8px;background:#e9edf0;border-radius:4px;overflow:hidden;min-width:80px}.bar i{display:block;height:100%;background:var(--acc)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.note{color:var(--sub);font-size:12.5px}
+code{background:#f0f2f4;padding:1px 5px;border-radius:4px;font-size:12px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--sub);margin:4px 0 8px}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px}
+ul{margin:6px 0;padding-left:18px}li{margin:3px 0}
+#tip{position:fixed;pointer-events:none;background:#fff;border:1px solid var(--line);box-shadow:0 4px 14px #0001;border-radius:8px;padding:6px 9px;font-size:12px;display:none}
+</style></head><body><div class="wrap">
+<h1>__LIGHT__ 烟花光照分析</h1>
+<div class="sub">节目 __SHOW__ → <code>__SEQ__</code> / __LIGHT__ / LightComponent0 · Intensity + LightColor · 生成于 __TIME__</div>
+<div class="kpis" id="kpis"></div>
+
+<div class="card"><h2>光照时间线（全场 0–240 s）</h2>
+<div class="legend"><span><i style="background:#1d2329"></i>本次计算的 Intensity</span><span id="lgold"><i style="background:#c3c9cf"></i>对比曲线（__CMP__）</span><span>底部色带 = LightColor × 亮度</span></div>
+<canvas id="tl" height="330"></canvas>
+<div class="note">鼠标悬停查看时刻、强度与灯光颜色。灰色竖带为 13 个编排段落。</div></div>
+
+<div class="card"><h2>段落光照变化</h2><table id="sec"><thead><tr><th>段落</th><th>时间</th><th>平均强度</th><th>峰值</th><th>暗场占比</th><th>主色</th><th>爆点数</th><th>主要花型</th></tr></thead><tbody></tbody></table></div>
+
+<div class="grid2">
+<div class="card"><h2>最亮的 8 个瞬间</h2><table id="pk"><thead><tr><th>时刻</th><th>强度</th><th>颜色</th><th>±0.35s 内开花</th></tr></thead><tbody></tbody></table></div>
+<div class="card"><h2>发射点对 __LIGHT__ 的权重</h2>
+<div class="note" style="margin-bottom:8px">__LIGHT__ 的 UE 坐标 <span id="lp"></span>（cm）。按 3D 距离做软衰减 w = R₀²/(R₀²+r²)，R₀ = <span id="r0"></span> m，以中号花（150 m 花径、升空 210 m）的爆点计。</div>
+<table id="pwt"><thead><tr><th>点位</th><th>距离</th><th>相对权重</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<div class="card"><h2>光照模型（如何从编排推导灯光）</h2>
+<ul>
+<li><b>数据源</b>：.dfshow 中 __PLATFORM__ 版片段，共 <span id="ev"></span> 个事件；发射点坐标取自关卡 BP_ShowEffectPoint 实际位置。</li>
+<li><b>时间对齐</b>：Sequence 秒 = 节目秒 + __OFFSET__ s（Director 调度 StartTime/LocalTimeOffset 均为 0 时偏移为 0），开花时刻对齐到显示帧。</li>
+<li><b>单发包络</b>：发射炮口闪 + 升空尾缀微光 → 开花瞬时闪光（τ≈0.09 s）→ 星体燃烧衰减至 effectiveEnd。花型差异：点灭星 6 Hz 闪烁、辉星 9 Hz 微颤、多重菊 0.3/0.6 s 二三次闪、彩千轮 1.0 s 二次爆、裂星末段白色噼啪、金垂柳长拖尾（约 9.7 s）。扇形/彗星按束数计光，持续整个生命期。</li>
+<li><b>光量</b>：球花光通量 ∝ (直径/150 m)^<span id="se"></span>，即 90 m ≈ 0.28、150 m = 1、230 m ≈ 2.9、280 m 主角 ≈ 4.7。</li>
+<li><b>颜色</b>：各花型色值转线性空间，按"光量 × 距离权重"加权混合，再做 1.3 倍饱和度补偿（多色混合会发灰），最后按最大通道归一（亮度由 Intensity 承担）；暗场保持上一颜色，避免黑场里颜色乱跳。</li>
+<li><b>动态范围</b>：Intensity = <span id="ip"></span> × (S/S<sub>max</sub>)^<span id="gm"></span>。γ&lt;1 抬起安静段、压住高潮。</li>
+<li><b>关键帧</b>：线性插值误差 ≤ __ITOL__（强度，相对峰值）/ __CTOL__（颜色）约束下精简，并强制保留所有爆点峰值；全部 Linear 插值，避免 Cubic 过冲出现负强度。</li>
+</ul></div>
+
+<div class="card"><h2>本次参数</h2><pre id="params" style="margin:0;font-size:12px;white-space:pre-wrap"></pre></div>
+</div><div id="tip"></div>
+<script>
+const D = __DATA__;
+const $=s=>document.querySelector(s);
+const kp=[["节目时长",D.dur.toFixed(1)+" s"],["参与计光事件",D.events],["编排段落",D.secs.length],["Intensity 键",D.nI],["LightColor 键",D.nC+" ×3"]];
+$("#kpis").innerHTML=kp.map(k=>`<div class="kpi"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
+$("#ev").textContent=D.events;$("#se").textContent=D.sizeexp;$("#ip").textContent=D.ipeak;$("#gm").textContent=D.gamma;$("#r0").textContent=D.r0;$("#lp").textContent=D.light_pos.join(", ");$("#params").textContent=JSON.stringify(D.params,null,1);if(!D.old.length)$("#lgold").style.display="none";
+const maxMean=Math.max(...D.secs.map(s=>s.mean));
+$("#sec tbody").innerHTML=D.secs.map(s=>`<tr title="${s.detail.replace(/"/g,'&quot;')}"><td><b>${s.name}</b></td><td>${s.start.toFixed(1)}–${s.end.toFixed(1)} s</td><td><div style="display:flex;gap:8px;align-items:center"><div class="bar"><i style="width:${(100*s.mean/maxMean).toFixed(0)}%"></i></div>${s.mean}</div></td><td>${s.peak}</td><td>${s.dark}%</td><td><span class="sw" style="background:${s.color}"></span>${s.color}</td><td>${s.n}${s.large?` <span class="note">(大号 ${s.large})</span>`:""}</td><td class="note">${s.top}</td></tr>`).join("");
+$("#pk tbody").innerHTML=D.peaks.map(p=>`<tr><td>${p.t.toFixed(2)} s</td><td><b>${p.v}</b></td><td><span class="sw" style="background:${p.color}"></span></td><td class="note">${p.shells} 发 · ${p.what}</td></tr>`).join("");
+$("#pwt tbody").innerHTML=D.pw.map(p=>`<tr><td>${p[0]}</td><td>${p[1]} m</td><td><div style="display:flex;gap:8px;align-items:center"><div class="bar" style="flex:1"><i style="width:${p[3]*100}%"></i></div>${p[3].toFixed(2)}</div></td></tr>`).join("");
+
+const cv=$("#tl"),ctx=cv.getContext("2d");
+function draw(){
+ const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=330;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+ const L=46,Rr=10,T=10,B=64,PH=H-T-B,T1=241,YM0=Math.max(...D.samples.map(s=>s[1]),...D.old.map(s=>s[1]),1e-6),GS=(()=>{const r=Math.pow(10,Math.floor(Math.log10(YM0/4)));return [1,2,5,10].map(x=>x*r).find(x=>YM0/x<=5)})(),YM=Math.ceil(YM0/GS)*GS,SMAX=Math.max(...D.samples.map(s=>s[1]),1e-6);
+ const X=t=>L+(W-L-Rr)*t/T1,Y=v=>T+PH*(1-v/YM);
+ ctx.clearRect(0,0,W,H);
+ D.secs.forEach((s,i)=>{ctx.fillStyle=i%2?"#f3f5f7":"#fafbfc";ctx.fillRect(X(s.start),T,X(s.end)-X(s.start),PH);
+   ctx.save();ctx.fillStyle="#7a848d";ctx.font="11px sans-serif";ctx.translate(X(s.start)+3,T+12);ctx.fillText(s.name.length>6&&X(s.end)-X(s.start)<60?s.name.slice(0,4):s.name,0,0);ctx.restore();});
+ ctx.strokeStyle="#e3e7eb";ctx.fillStyle="#5c6670";ctx.font="11px sans-serif";ctx.lineWidth=1;
+ for(let v=0;v<=YM+1e-9;v+=GS){ctx.beginPath();ctx.moveTo(L,Y(v));ctx.lineTo(W-Rr,Y(v));ctx.stroke();ctx.fillText(+v.toPrecision(4),6,Y(v)+4);}
+ for(let t=0;t<=240;t+=20){ctx.fillText(t+"s",X(t)-8,T+PH+14);}
+ ctx.strokeStyle="#c3c9cf";ctx.lineWidth=1.2;ctx.beginPath();D.old.forEach((p,i)=>{i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1]))});ctx.stroke();
+ ctx.strokeStyle="#1d2329";ctx.lineWidth=1;ctx.beginPath();D.samples.forEach((p,i)=>{i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1]))});ctx.stroke();
+ const sy=T+PH+22,sh=26;
+ D.samples.forEach((p,i)=>{const k=Math.min(1,Math.pow(p[1]/(SMAX*0.78),0.7));const c=p[2];const r=parseInt(c.slice(1,3),16),g=parseInt(c.slice(3,5),16),b=parseInt(c.slice(5,7),16);
+   ctx.fillStyle=`rgb(${Math.round(17+(r-17)*k)},${Math.round(22+(g-22)*k)},${Math.round(28+(b-28)*k)})`;ctx.fillRect(X(p[0]),sy,Math.max(1,X(p[0]+0.1)-X(p[0]))+0.5,sh);});
+ ctx.strokeStyle="#d0d5da";ctx.strokeRect(L,sy,X(241)-L,sh);
+ cv._X=X;cv._L=L;cv._W=W;cv._Rr=Rr;
+}
+draw();addEventListener("resize",draw);
+const tip=$("#tip");
+cv.addEventListener("mousemove",e=>{const r=cv.getBoundingClientRect();const x=e.clientX-r.left;const t=(x-cv._L)/(cv._W-cv._L-cv._Rr)*241;if(t<0||t>241){tip.style.display="none";return;}
+ const i=Math.min(D.samples.length-1,Math.max(0,Math.round(t*10)));const s=D.samples[i];const sec=D.secs.find(q=>t>=q.start&&t<q.end);
+ tip.innerHTML=`<b>${s[0].toFixed(1)} s</b> · ${sec?sec.name:"—"}<br>Intensity ${s[1]}<br><span class="sw" style="background:${s[2]}"></span>${s[2]}`;tip.style.display="block";tip.style.left=(e.clientX+14)+"px";tip.style.top=(e.clientY+10)+"px";});
+cv.addEventListener("mouseleave",()=>tip.style.display="none");
+</script></body></html>

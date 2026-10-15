@@ -1,0 +1,237 @@
+{
+ "level": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night",
+ "umap": "H:\\ranranzhao__Ma5\\DFMEditor\\DFM\\Content\\Maps\\Dam_Iris_Long3\\DynamicRequest\\Event\\MA5_FireworkOnDam\\MA5_FireworkOnDam_Night.umap",
+ "saved_at": "2026-10-15 22:38:56",
+ "positions": {
+  "NewYear_Night_ShowAudio_Audio01": [
+   338160.0,
+   -791540.0,
+   -13650.0
+  ],
+  "NewYear_Night_ShowAudio_Audio02": [
+   358970.0,
+   -791550.0,
+   -15670.0
+  ],
+  "NewYear_Night_ShowAudio_Audio03": [
+   374910.0,
+   -786730.0,
+   -15820.0
+  ],
+  "NewYear_Night_ShowAudio_Audio04": [
+   336840.0,
+   -778290.0,
+   -15820.0
+  ],
+  "NewYear_Night_ShowAudio_Audio05": [
+   369880.0,
+   -765030.0,
+   -15820.0
+  ],
+  "NewYear_Night_ShowAudio_Audio06": [
+   393960.0,
+   -754550.0,
+   -12730.0
+  ],
+  "NewYear_Night_ShowEffect_B0": [
+   399287.40625,
+   -788278.125,
+   -3400.95556640625
+  ],
+  "NewYear_Night_ShowEffect_B1": [
+   391912.0625,
+   -794879.3125,
+   -3400.95556640625
+  ],
+  "NewYear_Night_ShowEffect_B2": [
+   384259.71875,
+   -800540.4375,
+   -3400.95556640625
+  ],
+  "NewYear_Night_ShowEffect_B3": [
+   375319.0,
+   -803979.875,
+   -3400.962890625
+  ],
+  "NewYear_Night_ShowEffect_B4": [
+   368476.6875,
+   -806582.875,
+   -3400.95947265625
+  ],
+  "NewYear_Night_ShowEffect_B5": [
+   359850.3125,
+   -809370.375,
+   -3400.9560546875
+  ],
+  "NewYear_Night_ShowEffect_B6": [
+   350417.34375,
+   -810297.9375,
+   -3400.95751953125
+  ],
+  "NewYear_Night_ShowEffect_B7": [
+   343357.09375,
+   -810282.8125,
+   -3400.95751953125
+  ],
+  "NewYear_Night_ShowEffect_F0": [
+   377577.46875,
+   -794925.3125,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_F1": [
+   374930.875,
+   -795934.1875,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_F2": [
+   371938.625,
+   -797076.0,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_F3": [
+   369217.65625,
+   -798112.3125,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_F4": [
+   366474.3125,
+   -799158.4375,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_F5": [
+   363710.6875,
+   -800212.3125,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_F6": [
+   360683.34375,
+   -801367.0,
+   -11796.7109375
+  ],
+  "NewYear_Night_ShowEffect_Lm0": [
+   349223.34375,
+   -808200.375,
+   -7268.28662109375
+  ],
+  "NewYear_Night_ShowEffect_Lm1": [
+   351369.75,
+   -807940.6875,
+   -7268.28857421875
+  ],
+  "NewYear_Night_ShowEffect_Lm2": [
+   353452.3125,
+   -807775.75,
+   -7268.29150390625
+  ],
+  "NewYear_Night_ShowEffect_Lm3": [
+   355930.78125,
+   -807476.0,
+   -7268.29150390625
+  ],
+  "NewYear_Night_ShowEffect_Lm4": [
+   357735.375,
+   -807305.875,
+   -7268.29052734375
+  ],
+  "NewYear_Night_ShowEffect_Lm5": [
+   360149.1875,
+   -807032.625,
+   -7268.2900390625
+  ],
+  "NewYear_Night_ShowEffect_P0": [
+   401961.75,
+   -784978.0,
+   -3400.95556640625
+  ],
+  "NewYear_Night_ShowEffect_P1": [
+   396541.34375,
+   -791666.6875,
+   -3400.95556640625
+  ],
+  "NewYear_Night_ShowEffect_P2": [
+   387785.3125,
+   -797932.0625,
+   -3400.95556640625
+  ],
+  "NewYear_Night_ShowEffect_P3": [
+   378483.4375,
+   -802753.25,
+   -3400.962890625
+  ],
+  "NewYear_Night_ShowEffect_P4": [
+   371995.21875,
+   -805151.0625,
+   -3400.962890625
+  ],
+  "NewYear_Night_ShowEffect_P5": [
+   364805.40625,
+   -808027.875,
+   -3400.95947265625
+  ],
+  "NewYear_Night_ShowEffect_P6": [
+   355148.28125,
+   -809832.75,
+   -3400.95751953125
+  ],
+  "NewYear_Night_ShowEffect_P7": [
+   345764.5625,
+   -810646.875,
+   -3400.95751953125
+  ],
+  "NewYear_Night_ShowEffect_P8": [
+   340579.90625,
+   -809862.9375,
+   -3400.95751953125
+  ],
+  "NewYear_Night_ShowEffect_Rm0": [
+   391095.5625,
+   -792831.375,
+   -7093.736328125
+  ],
+  "NewYear_Night_ShowEffect_Rm1": [
+   389087.40625,
+   -794157.5,
+   -7093.73681640625
+  ],
+  "NewYear_Night_ShowEffect_Rm2": [
+   387363.78125,
+   -795295.75,
+   -7093.7373046875
+  ],
+  "NewYear_Night_ShowEffect_Rm3": [
+   385558.9375,
+   -796487.6875,
+   -7093.73681640625
+  ],
+  "NewYear_Night_ShowEffect_Rm4": [
+   383838.09375,
+   -797624.0625,
+   -7093.7373046875
+  ],
+  "NewYear_Night_ShowEffect_Rm5": [
+   381883.4375,
+   -798914.8125,
+   -7093.7373046875
+  ],
+  "NewYear_ShowSequence_light1": [
+   372008.96875,
+   -805216.875,
+   -3400.958251953125
+  ],
+  "SpotLight2": [
+   344383.78125,
+   -800521.625,
+   -1016.63037109375
+  ],
+  "SpotLight3": [
+   394225.90625,
+   -777683.875,
+   -2558.85302734375
+  ],
+  "SpotLight_1": [
+   372900.90625,
+   -796930.125,
+   -1501.5693359375
+  ]
+ }
+}

@@ -1,0 +1,4 @@
+out/
+backup/
+data/*.dfshow
+*.uasset

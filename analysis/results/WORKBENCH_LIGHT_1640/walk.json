@@ -1,0 +1,29 @@
+{
+ "header": "NewYearFireWorks_v01",
+ "rows": [
+  "SpotLight2\t1800\t1577\t1099",
+  "SpotLight\n= SpotLight2\n\t1800\t1577\t1099",
+  "SpotLight3\n= SpotLight2\n\t1800\t1577\t1099",
+  "SkyLight\n= SpotLight2 × 0.003846\n\t6.92\t1577\t1099"
+ ],
+ "summary": "936\n次播放 · PC 高配\n云端编排 16.0.40 · B08修订4-低配放宽保宽度",
+ "download_enabled_default": true,
+ "zip": "fwlight-16.0.40-20261016-0013.zip",
+ "alert_12": [
+  "SkyLight 峰值 12.00 超过上限 10"
+ ],
+ "download_enabled_12": false,
+ "rows_10": "SkyLight\n= SpotLight2 × 0.005556\n\t10\t1577\t1099",
+ "download_enabled_10": true,
+ "director_tab_ok": "true",
+ "page_errors": [],
+ "zip_files": [
+  "fwlight-16.0.40-20261016-0013/manifest.json",
+  "fwlight-16.0.40-20261016-0013/keys_SpotLight2.json",
+  "fwlight-16.0.40-20261016-0013/keys_SpotLight.json",
+  "fwlight-16.0.40-20261016-0013/keys_SpotLight3.json",
+  "fwlight-16.0.40-20261016-0013/keys_SkyLight.json",
+  "fwlight-16.0.40-20261016-0013/使用说明.txt"
+ ],
+ "zip_test": null
+}
