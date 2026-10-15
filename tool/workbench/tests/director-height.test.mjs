@@ -13,6 +13,10 @@ const seed=migrateNumbering(JSON.parse(fs.readFileSync(new URL('../public/data/s
 const file=new URL('../public/data/cloud-latest.json',import.meta.url);
 const load=()=>{const cloud=JSON.parse(fs.readFileSync(file,'utf8'));return preflightProject(JSON.stringify(cloud.project),seed)};
 
+// 16.0.33（跨年秀 22，B07）：云端编排起高差全部归 0（用户 10-15「线条还是从地上出来好一点」），云端节目本身不再有 dz；
+// 机制照测：节目里高差不够时，给事件轮流注入 0 / 10 / 20 / 30 m 再编（只在测试里，不改节目）。
+const withSyntheticDz=events=>events.filter(e=>e.dz).length>100?events:events.map((e,i)=>({...e,dz:[0,10,20,30][i%4]}));
+
 function launches(arrays){
  // 按 UE 的实际行为展开：父条目只取时间 / 点位 / 子模板，子模板条目给高度。
  const subs=new Map(arrays.EffectSubTemplates.map(s=>[s.TemplateName,s])),parents=new Map(arrays.EffectTemplates.map(p=>[p.TemplateName,p])),out=[];
@@ -25,7 +29,7 @@ function launches(arrays){
 
 test('parent SubTemplate entries never carry a height: dz lives in the sub-template height versions',()=>{
  if(!fs.existsSync(file))return;
- const state=load(),nested=nestedQualityEvents(state.doc,state.profiles),events=nested.events,r=compileDirector(state.doc,events,undefined);
+ const state=load(),nested=nestedQualityEvents(state.doc,state.profiles),events=withSyntheticDz(nested.events),r=compileDirector(state.doc,events,undefined);
  assert.deepEqual(nested.issues,[]);assert.deepEqual(r.issues,[]);
  for(const p of r.arrays.EffectTemplates)for(const e of p.Entries)assert.equal(e.PositionOffset.Z,0,p.TemplateName+' 父条目还带着高度');
  const withDz=events.filter(e=>e.dz);assert(withDz.length>100,'云端编排应有大量高低错落');
@@ -35,7 +39,7 @@ test('parent SubTemplate entries never carry a height: dz lives in the sub-templ
 
 test('every launch ends up at sub-template height + dz (what UE actually plays)',()=>{
  if(!fs.existsSync(file))return;
- const state=load(),events=qualityEvents(state.doc,state.profiles,'high');
+ const state=load(),events=withSyntheticDz(qualityEvents(state.doc,state.profiles,'high'));
  const byKey=r=>{const m=new Map();for(const x of launches(r.arrays)){const k=x.point+'@'+x.t;m.set(k,[...(m.get(k)||[]),x])}return m};
  const now=byKey(compileDirector(state.doc,events,undefined)),zero=byKey(compileDirector(state.doc,events.map(e=>({...e,dz:0})),undefined));
  const want=new Map();for(const e of events){const k=e.pointId+'@'+(+e.effectiveLaunch.toFixed(3));want.set(k,[...(want.get(k)||[]),Math.round((e.dz||0)*100)])}

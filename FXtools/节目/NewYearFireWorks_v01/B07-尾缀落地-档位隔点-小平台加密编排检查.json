@@ -1,0 +1,451 @@
+{
+  "revision": "B07_ground_trails_interval_tiers_platform_dense_orders_sizes_colors_from_B03r2m_vo_countdown_zero16.20_from_B02r2_upOnly_declutter_mobileStandins_up70_s10",
+  "density": 2,
+  "rhythm": null,
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "trailV2": {
+    "revision": "v2-20261012",
+    "hero": false,
+    "heroId": "Hero",
+    "subTemplates": 55,
+    "skipped": 0,
+    "heroOnLarge": [
+      "NYR03_GoldKamuro_H280@1"
+    ],
+    "heroSwitched": [],
+    "templates": 55,
+    "baseResources": 3,
+    "samples": [
+      "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
+      "R03 · 小银菊 · 90m：开花 188.3 → 148.3 m",
+      "R03 · 爆裂星 · 90m：开花 187.6 → 147.6 m",
+      "R03 · 小青柠 · 90m：开花 189.3 → 149.3 m",
+      "R03 · 橙辉星 · 90m：开花 191.7 → 151.7 m",
+      "R03 · 点灭星 · 90m：开花 192.0 → 152.0 m"
+    ]
+  },
+  "tiers": {
+    "high": {
+      "events": 918,
+      "subTemplates": 66,
+      "templates": 237,
+      "scheduleSlots": 313,
+      "groups": {
+        "P": 136,
+        "B": 106,
+        "F": 71
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 758,
+      "subTemplates": 64,
+      "templates": 213,
+      "scheduleSlots": 288,
+      "groups": {
+        "P": 115,
+        "B": 102,
+        "F": 71
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 414,
+      "subTemplates": 51,
+      "templates": 126,
+      "scheduleSlots": 181,
+      "groups": {
+        "P": 101,
+        "B": 9,
+        "F": 71
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B07-尾缀落地-档位隔点-小平台加密.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
+  "oneTable": {
+    "events": 1328,
+    "flags14": 38,
+    "flags12": 880,
+    "flags2": 410,
+    "subTemplates": 74,
+    "templates": 318,
+    "scheduleSlots": 438,
+    "pc": {
+      "high": 918,
+      "medium": 758,
+      "low": 414
+    },
+    "mobile": {
+      "high": 448,
+      "medium": 372,
+      "low": 185
+    }
+  },
+  "beamFlowers": [
+    {
+      "id": "B02_BeamS1_SC_a",
+      "engineId": "NYB02_BeamS1_SC_a",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 38.550423
+    },
+    {
+      "id": "B02_BeamS1_SC_b",
+      "engineId": "NYB02_BeamS1_SC_b",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 35.178982
+    },
+    {
+      "id": "B02_BeamS3_GS_a",
+      "engineId": "NYB02_BeamS3_GS_a",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.971519
+    },
+    {
+      "id": "B02_BeamS3_GS_b",
+      "engineId": "NYB02_BeamS3_GS_b",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.956383
+    },
+    {
+      "id": "B02_BeamC2_CR_a",
+      "engineId": "NYB02_BeamC2_CR_a",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 36.758732
+    },
+    {
+      "id": "B02_BeamC2_CR_b",
+      "engineId": "NYB02_BeamC2_CR_b",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 35.625588
+    },
+    {
+      "id": "B02_BeamV4",
+      "engineId": "NYB02_BeamV4",
+      "beams": 4,
+      "flowers": 0,
+      "flightM": 29.9
+    }
+  ],
+  "heroTrailId": "Hero",
+  "resources": {
+    "readback": "analysis/results/RESOURCEFX_20261014/读回.json",
+    "readAt": "2026-10-14T14:11:06.012Z",
+    "renamed": {
+      "P_EFX_FireWorks_OrangeGlitter → P_EFX_FireWorks_Glitter": 5
+    },
+    "metadataSynced": 25,
+    "used": [
+      {
+        "id": "P_EFX_FireWorks_Crackle",
+        "rowName": "跨年烟花3.0_小型_G_爆裂星"
+      },
+      {
+        "id": "P_EFX_FireWorks_FanComet_01",
+        "rowName": "跨年烟花3.0_小型_B_红彗星"
+      },
+      {
+        "id": "P_EFX_FireWorks_FanSilver_01",
+        "rowName": "跨年烟花3.0_小型_C_银星扇"
+      },
+      {
+        "id": "P_EFX_FireWorks_Glitter",
+        "rowName": "跨年烟花3.0_小型_I__橙辉星"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldChry",
+        "rowName": "跨年烟花3.0_中型_D_金曜菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldCoreLime",
+        "rowName": "跨年烟花3.0_中型_E_金蕊柠"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldCrackle",
+        "rowName": "跨年烟花3.0_小型_D_金裂星"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldKamuro",
+        "rowName": "跨年烟花3.0_大型_A_金垂柳"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldRayChry",
+        "rowName": "跨年烟花3.0_中型_B_金芒菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_GoldSpark",
+        "rowName": "跨年烟花3.0_中型_B_金锦菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_GreenPeony",
+        "rowName": "跨年烟花3.0_中型_A_绿牡丹"
+      },
+      {
+        "id": "P_EFX_FireWorks_Lime",
+        "rowName": "跨年烟花3.0_小型_H_小青柠"
+      },
+      {
+        "id": "P_EFX_FireWorks_LittleCombo",
+        "rowName": "跨年烟花3.0_小号_D_小分裂"
+      },
+      {
+        "id": "P_EFX_FireWorks_LittleCrackle",
+        "rowName": "跨年烟花3.0_小号_C_短爆裂"
+      },
+      {
+        "id": "P_EFX_FireWorks_LittleGold",
+        "rowName": "跨年烟花3.0_小号_A_小金花"
+      },
+      {
+        "id": "P_EFX_FireWorks_LittleSilver",
+        "rowName": "跨年烟花3.0_小号_B_小银菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_MultiLayerChry",
+        "rowName": "跨年烟花3.0_中型_F_多重菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_NY_Trail_Large",
+        "rowName": "跨年烟花3.0_大型_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_NY_Trail_Medium",
+        "rowName": "跨年烟花3.0_中型_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_NY_Trail_Small",
+        "rowName": "跨年烟花3.0_小型_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_PrismWheels",
+        "rowName": "跨年烟花3.0_中型_C_彩千轮"
+      },
+      {
+        "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+        "rowName": "跨年烟花3.0_极小_尾缀"
+      },
+      {
+        "id": "P_EFX_FireWorks_SilverChry",
+        "rowName": "跨年烟花3.0_小型_F_银冠菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_SilverStrobeChry",
+        "rowName": "跨年烟花3.0_大型_B_银彩菊"
+      },
+      {
+        "id": "P_EFX_FireWorks_Strobe",
+        "rowName": "跨年烟花3.0_小型_J_点灭星"
+      }
+    ],
+    "missing": []
+  },
+  "b04": {
+    "tiny": [],
+    "front": [
+      {
+        "id": "B04_XS3_GS_b",
+        "engineId": "NYB04_XS3_GS_b",
+        "from": "XS3B",
+        "trails": 3,
+        "flowers": 3,
+        "flightM": 61.876379,
+        "rise": 1.6875,
+        "end": 7.2275
+      },
+      {
+        "id": "B04_XS3_GS_b_M",
+        "engineId": "NYB04_XS3_GS_b_M",
+        "from": null,
+        "trails": 3,
+        "flowers": 3,
+        "flightM": 61.876379,
+        "rise": 1.6875,
+        "end": 6.4875
+      },
+      {
+        "id": "B04_XS2_CR_a",
+        "engineId": "NYB04_XS2_CR_a",
+        "from": "XC2A",
+        "trails": 2,
+        "flowers": 2,
+        "flightM": 61.657243,
+        "rise": 1.6875,
+        "end": 3.3375
+      },
+      {
+        "id": "B04_XS2_CR_a_M",
+        "engineId": "NYB04_XS2_CR_a_M",
+        "from": null,
+        "trails": 2,
+        "flowers": 2,
+        "flightM": 61.657243,
+        "rise": 1.6875,
+        "end": 6.3975
+      },
+      {
+        "id": "B04_XS1_SC_a",
+        "engineId": "NYB04_XS1_SC_a",
+        "from": "XS1A",
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.820226,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XS1_SC_a_M",
+        "engineId": "NYB04_XS1_SC_a_M",
+        "from": null,
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.820226,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XSV4",
+        "engineId": "NYB04_XSV4",
+        "from": "XV4",
+        "trails": 4,
+        "flowers": 0,
+        "flightM": 62.02,
+        "rise": 0,
+        "end": 2.79
+      },
+      {
+        "id": "B04_XS3_GS_a",
+        "engineId": "NYB04_XS3_GS_a",
+        "from": "XS3A",
+        "trails": 3,
+        "flowers": 3,
+        "flightM": 61.992703,
+        "rise": 1.6875,
+        "end": 7.2275
+      },
+      {
+        "id": "B04_XS3_GS_a_M",
+        "engineId": "NYB04_XS3_GS_a_M",
+        "from": null,
+        "trails": 3,
+        "flowers": 3,
+        "flightM": 61.992703,
+        "rise": 1.6875,
+        "end": 6.4875
+      },
+      {
+        "id": "B04_XS1_SC_b",
+        "engineId": "NYB04_XS1_SC_b",
+        "from": "XS1B",
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.702502,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XS1_SC_b_M",
+        "engineId": "NYB04_XS1_SC_b_M",
+        "from": null,
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.702502,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XS2_CR_b",
+        "engineId": "NYB04_XS2_CR_b",
+        "from": "XC2B",
+        "trails": 2,
+        "flowers": 2,
+        "flightM": 61.890727,
+        "rise": 1.6875,
+        "end": 3.3375
+      },
+      {
+        "id": "B04_XS2_CR_b_M",
+        "engineId": "NYB04_XS2_CR_b_M",
+        "from": null,
+        "trails": 2,
+        "flowers": 2,
+        "flightM": 61.890727,
+        "rise": 1.6875,
+        "end": 6.3975
+      }
+    ],
+    "placeholders": {
+      "Low80": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+        "confirmed": true
+      },
+      "Front62": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+        "confirmed": true
+      },
+      "Tiny": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+        "confirmed": true
+      },
+      "XS": {
+        "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+        "confirmed": true
+      }
+    }
+  },
+  "mobileDerived": [
+    {
+      "id": "B05_SilverChry_M144",
+      "engineId": "NYB05_SilverChry_M144",
+      "resource": "P_EFX_FireWorks_SilverChry",
+      "diameter": 144,
+      "scale": 1.6
+    },
+    {
+      "id": "B05_Glitter_M144",
+      "engineId": "NYB05_Glitter_M144",
+      "resource": "P_EFX_FireWorks_OrangeGlitter",
+      "diameter": 144,
+      "scale": 1.6
+    }
+  ],
+  "doc": {
+    "cues": 438,
+    "events": 1328,
+    "sections": 13,
+    "duration": 214.4,
+    "musicOffset": 0,
+    "balls": 1166,
+    "fans": 162
+  },
+  "audio": {
+    "file": "VO倒计时+汪洋与浩渺.mp3",
+    "sha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613",
+    "duration": 211.644,
+    "musicOffset": 0,
+    "embeddedBytes": 6772703,
+    "markers": 30
+  }
+}

@@ -34,11 +34,12 @@ B03 = '--b03' in sys.argv             # B03（22，10-13 16:28）：合并音频
 B04 = '--b04' in sys.argv             # B04（22，10-14 01:27）：B03 修订2 + 坝顶低层 Tiny + 小平台前台小花 XS + 扇 3.0，输出 B04动画.html（可切 B03 修订2 对比）
 B05 = '--b05' in sys.argv             # B05（22，10-14 22:22）：B04 + ResourceFX 新命名 + 手游 6 种，输出 B05动画.html（可切 B04 对比）
 B06 = '--b06' in sys.argv             # B06（22，10-15 01:04）：低层回 150 m、扇重排（不叠、跟拍、不重复）、P2 / P4 / P6 三朵等大，输出 B06动画.html（可切 B05 对比）
-B4P = B04 or B05 or B06 or DAY        # B04 起的小平台前台小花 / 新尾缀画法（Day v4 起也是）
-if B05 or B06 or DAY:
+B07 = '--b07' in sys.argv             # B07（22，10-15 11:14）：尾缀从地上出来、档位隔点、小平台加密、方向 / 大小 / 颜色，输出 B07动画.html（可切 B06 对比）
+B4P = B04 or B05 or B06 or B07 or DAY  # B04 起的小平台前台小花 / 新尾缀画法（Day v4 起也是）
+if B05 or B06 or B07 or DAY:
     b01.register_b05_mobile()
 B02 = DAY or B03 or B4P or R1M or '--b02' in sys.argv
-SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B06', 'B06', 'B06') if B06 else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B07', 'B07', 'B07') if B07 else ('_B06', 'B06', 'B06') if B06 else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
@@ -55,6 +56,8 @@ if B05:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B05-ResourceFX新命名-手游6种编排检查.json'
 if B06:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B06-低层150-扇重排跟拍-P2P4P6等大编排检查.json'
+if B07:
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07-尾缀落地-档位隔点-小平台加密编排检查.json'
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -143,6 +146,21 @@ def risks_b06():
         (f"蓄势收窄的「3」（{tr['t']:.1f} s）：P4 大 + P3 / P5 中号 → P2 / P4 / P6 三朵同一种大号金芒菊、同样大；两侧比中间低 20 m，晚 0.1 s。手游也放这三朵（偶数点）。" if tr else '蓄势收窄的「3」没找到。'),
         f"占比（PC 高配，球花 {sh['balls']} 发）：小号 {sh['bySize'].get('小号', {}).get('pctOfBalls')}%、中号 {sh['bySize'].get('中号', {}).get('pctOfBalls')}%、大号 {sh['bySize'].get('大号', {}).get('pctOfBalls')}%、主角 {sh['bySize'].get('主角', {}).get('pctOfBalls')}%；另有扇 {sh['fans']}、小平台 {sh['platformEvents']}。",
         f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}；GPU 同秒峰值 {g['peak']}；球花重叠 PC {ov['pcIncidents']} 处、手游各 {ov['mobile']['high']['incidents']}（同 B05 {ob0['pcIncidents']} / {ob0['mobile']['high']['incidents']}）。没在 UE 里放过。",
+    ]
+
+
+def risks_b07():
+    g, ob, l7, sc = CHECK['gpu'], COMPILE.get('oneTable', {}), CHECK['b07'], CHECK['score']
+    s6, s7 = sc['B06'], sc['B07']
+    ov, ob0 = CHECK['overlap'], CHECK['overlapBase']
+    sh = CHECK['shares']['pc-high']
+    return [
+        f"尾缀从地上出来：高差全部归 0（B06 有 {s6['trailsLifted']:.0%} 的球花尾缀从坝顶上方 10–70 m 才出现）。挤的地方用构图解决：9 点大号整排改城垛（奇数点中号）{len(l7['castle'])} 排，P 排 / B 排同时开的之字 B 排缩小 {len(l7['zigzagSmall'])} 排，B 排接 B 排改成两半交替 {len(l7['bRows'])} 对。球花重叠 PC {ov['pcIncidents']} 处（B06 {ob0['pcIncidents']}）。上方可切「B06」看尾缀原来从半空出来的样子。",
+        f"中低配隔点：一排的两端都留，中间隔一个去（9 → 5 → 3、8 → 4 → 2）；天上很空的那几排中配不减。同屏面积（overdraw 的近似）中配、低配都比 B06 低，中配平均和 B06 差不多。PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}。",
+        f"小平台 {s6['platformCues']} → {s7['platformCues']} 组，最长空档 {s6['platformMaxGapS']} → {s7['platformMaxGapS']} s，开花踩起音；高度还是 62 m（不拉伸尾缀就只能等一根更短的尾缀资源）。",
+        f"张力：终章 4 秒峰值 {s7['peak4s']['finale']} 朵 > 高潮 II {s7['peak4s']['climaxII']}（B06 都是 34）；金墙下面加一排 B 点银冠菊；白色收束收成 9 → 3 → 2 → 主角（大号每秒 {s6['codaLperS']} → {s7['codaLperS']}），这段的扇只用轻的。",
+        f"变化：主排「里→外」{s6['centerOutShare']:.0%} → {s7['centerOutShare']:.0%}（轮换左→右 / 右→左 / 外→里 / 齐发）；小中号每点随机 ×0.92 / 1.0 / 1.08；B 排和上面同色的 {s6['sameColorLayers']} 排换成对比色（银金占比 {s6['silverGoldShare']:.0%} → {s7['silverGoldShare']:.0%}）。",
+        f"GPU 同秒峰值 {g['peak']}；扇不叠、跟拍同 B06。没在 UE 里放过。",
     ]
 
 
@@ -261,10 +279,10 @@ def b02_data(species):
     span = lambda a, b: sec(a + 0.5) if sec(a + 0.5) == sec(b - 0.5) else f'{sec(a + 0.5)} → {sec(b - 0.5)}'
     gtxt = '；'.join(f"{a:.0f}–{b:.0f} s（{b - a:.0f} s，{span(a, b)}）" for a, b in gaps) or '无'
     b02 = dict(pc=ob.get('pc'), mobile=ob.get('mobile'), mobileSpecies=sp,
-               mobileRule=('手游只用 6 种（用户 10-14 21:44）：大位（含主角）金芒菊放大 ×1.53；中位银冠菊 / 辉星放大 ×1.47–1.6；小位点灭星 / 爆裂星；小平台分裂星（2803 原生 30 m，进不了 90 m 小位）。PC 和手游共用的片段拆成 PC 照旧 + 手游替身（同点、同时、同高低、同档位），手游发数不变。坝顶低层（B 点）、托底扇、扇组不上手游。' if (B05 or B06 or DAY) else None) or ('只用 P 点 + 小平台；只放 7 种白名单（小银菊、银彩菊、金芒菊含大号、金锦菊、橙辉星、爆裂星、金垂柳）；M / L 一排只放偶数点；坝顶低层（B 点）、托底扇、扇组不上手游。B04 起小平台前台小花上手游（执行方案 §2.2「手机只放有手游版的」：三种小花都在白名单、XS 有 _M），手游中配跟 PC 中配同点、低配不放。替身照旧（只上手游，中低配 P0 / P4 / P8）。' if B04 else None) or '只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。'
+               mobileRule=('手游只用 6 种（用户 10-14 21:44）：大位（含主角）金芒菊放大 ×1.53；中位银冠菊 / 辉星放大 ×1.47–1.6；小位点灭星 / 爆裂星；小平台分裂星（2803 原生 30 m，进不了 90 m 小位）。PC 和手游共用的片段拆成 PC 照旧 + 手游替身（同点、同时、同高低、同档位），手游发数不变。坝顶低层（B 点）、托底扇、扇组不上手游。' if (B05 or B06 or B07 or DAY) else None) or ('只用 P 点 + 小平台；只放 7 种白名单（小银菊、银彩菊、金芒菊含大号、金锦菊、橙辉星、爆裂星、金垂柳）；M / L 一排只放偶数点；坝顶低层（B 点）、托底扇、扇组不上手游。B04 起小平台前台小花上手游（执行方案 §2.2「手机只放有手游版的」：三种小花都在白名单、XS 有 _M），手游中配跟 PC 中配同点、低配不放。替身照旧（只上手游，中低配 P0 / P4 / P8）。' if B04 else None) or '只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。'
                + ('修订1 加「手游替身」（只上手游，PlatformFlags 2，PC 不放）：PC 放白名单外的花、手游又空着的那一拍，手游放白名单里同色系的花，高配偶数点、中低配 P0 / P4 / P8；挤着还亮的手游花就挪高度或大号退中号。' if R1M else 'PC 三档一个不变。'),
                mobileGaps=gtxt, combos=rows,
-               comboNote=('小平台尾缀 Tiny「极小_尾缀」（不缩放，62 m、升空 1.69 s）每根一组固化倾角（甲 / 乙两组），花换成小平台专用资源 2801 小银菊 / 2800 小金花 / 2802 短爆裂，缩到 22–28 m 挂在尾缀终点；手游版同一组尾缀、花换分裂星（2803）。V 形四根不开花。和 B04 同点位、同时刻。' if (B05 or B06 or DAY) else None) or ('通用尾缀 XS（不缩放，62 m、升空 1.69 s，行名占位）每根一组固化倾角（甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在 XS 终点、到顶就开；V 形四根不开花、每次放随机 ±6°。和 B03 的小花束尾同点位、第一朵花同一时刻。' if B04 else None) or '现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。')
+               comboNote=('小平台尾缀 Tiny「极小_尾缀」（不缩放，62 m、升空 1.69 s）每根一组固化倾角（甲 / 乙两组），花换成小平台专用资源 2801 小银菊 / 2800 小金花 / 2802 短爆裂，缩到 22–28 m 挂在尾缀终点；手游版同一组尾缀、花换分裂星（2803）。V 形四根不开花。和 B04 同点位、同时刻。' if (B05 or B06 or B07 or DAY) else None) or ('通用尾缀 XS（不缩放，62 m、升空 1.69 s，行名占位）每根一组固化倾角（甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在 XS 终点、到顶就开；V 形四根不开花、每次放随机 ±6°。和 B03 的小花束尾同点位、第一朵花同一时刻。' if B04 else None) or '现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。')
     return combos, b02
 
 
@@ -346,7 +364,7 @@ def main():
             species[k]['dia'] = b01.TPL[tid]['diameter'] or b01.DIA[size]
             species[k]['h'] = round(b01.bloom_h(dict(templateId=tid, size=size)))
         if B4P and size == 'F':
-            species[k]['gpu'] = ('10-14 读回：' + ('银扇 1 / 束' if k[0] == 'S' else '红彗星 3.0 0')) if (B06 or DAY) else '3.0：0（旧扇 ' + ('银星 3 / 束）' if k[0] == 'S' else '红彗星 1 / 束）')
+            species[k]['gpu'] = ('10-14 读回：' + ('银扇 1 / 束' if k[0] == 'S' else '红彗星 3.0 0')) if (B06 or B07 or DAY) else '3.0：0（旧扇 ' + ('银星 3 / 束）' if k[0] == 'S' else '红彗星 1 / 束）')
         if B4P and size == 'S' and any(c['sp'] == k and c.get('trail') in ('Tiny', 'Low80') for c in LOGIC['cues']):
             species[k]['gpu'] += '；坝顶低层换 Tiny 尾缀 0'
         if size == 'X' and 'frontFlower' in b01.TPL[tid]:
@@ -359,11 +377,19 @@ def main():
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
     native = b01.REL_H
     data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b06() if B06 else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
+                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b07() if B07 else risks_b06() if B06 else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
     if B02:
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
+    if B07:                           # B07 / B06 一页对比；大号数字跟 VO
+        old = json.loads((OUT / '逻辑方案_B06.json').read_text(encoding='utf-8'))
+        oc, oe, _, osecs, oanch = build(old)
+        au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
+        data['variants'] = [dict(label='B07', note='尾缀落地 · 档位隔点 · 小平台加密', cues=cues, events=events, sections=secs, anchors=anchors),
+                            dict(label='B06', note='尾缀从坝顶 + 高差出来', cues=oc, events=oe, sections=osecs, anchors=oanch)]
+        data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
+                          fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
     if B06:                           # B06 / B05 一页对比；大号数字跟 VO
         old = json.loads((OUT / '逻辑方案_B05.json').read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
@@ -418,7 +444,7 @@ def main():
                 .replace('<td>${x.beams} 束 / ${x.flowers} 朵</td>', '<td>${x.beams} 根 / ${x.flowers} 朵</td>', 1).replace('>小平台小花束尾</i>', '>小平台前台小花</i>', 1))
     elif B02:
         if B4P:
-            html = (html.replace('<th>小平台小花束尾</th><th>束 / 花</th><th>挂花高</th>', ('<th>小平台前台小花（Tiny）</th><th>尾缀 / 花</th><th>开花高</th>' if (B05 or B06) else '<th>小平台前台小花（XS）</th><th>尾缀 / 花</th><th>开花高</th>'), 1)
+            html = (html.replace('<th>小平台小花束尾</th><th>束 / 花</th><th>挂花高</th>', ('<th>小平台前台小花（Tiny）</th><th>尾缀 / 花</th><th>开花高</th>' if (B05 or B06 or B07) else '<th>小平台前台小花（XS）</th><th>尾缀 / 花</th><th>开花高</th>'), 1)
                     .replace('<td>${x.beams} 束 / ${x.flowers} 朵</td>', '<td>${x.beams} 根 / ${x.flowers} 朵</td>', 1).replace('>小平台小花束尾</i>', '>小平台前台小花</i>', 1))
         html = html.replace('<title>汪洋与浩渺编排B01</title>', f'<title>汪洋与浩渺编排{NAME}</title>', 1).replace('跨年烟花秀 B01 正面比例动画', f'跨年烟花秀 {NAME} 正面比例动画' + (' 修订1' if R1M else ''), 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)

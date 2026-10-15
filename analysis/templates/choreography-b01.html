@@ -271,7 +271,8 @@ function draw(){
     const d=e.d??SZ[e.sz].d,H0=(e.h??D.native[e.sz])+e.dz,top=z0+H0,col=colOf(e);
     if(t<e.b){ // 升空尾缀
       nUp++;if(!showTail)continue;
-      const u=(t-e.l)/(e.b-e.l),pr=1-(1-u)*(1-u),zh=z0+H0*pr,trail=Math.min(zh-z0,Math.max(16,H0*.3));
+      // 10-15（22）：高差 dz 在 UE 里是整组尾缀 + 花一起抬（director-model heightVariant），尾缀从 坝顶 + dz 出来，不是从坝顶——按实际画
+      const z1=z0+(e.dz||0),Hr=H0-(e.dz||0),u=(t-e.l)/(e.b-e.l),pr=1-(1-u)*(1-u),zh=z1+Hr*pr,trail=Math.min(zh-z1,Math.max(16,Hr*.3));
       const big=e.sz==='L'?2.6:e.sz==='M'?2.1:1.6,tc=SP[e.sp].tail;
       const gr=ctx.createLinearGradient(X(x0),Z(zh-trail),X(x0),Z(zh));gr.addColorStop(0,rgba(tc,0));gr.addColorStop(1,rgba(tc,.95));
       ctx.strokeStyle=gr;ctx.lineWidth=Math.max(1.1,sc*big);ctx.beginPath();ctx.moveTo(X(x0),Z(zh-trail));ctx.lineTo(X(x0),Z(zh));ctx.stroke();
