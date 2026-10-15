@@ -62,10 +62,42 @@ function fwTexName(base, layer, L, sheet, kind, mobile) {
   if (kind === 'FrameTest') return `_检查/${stem}_${g}_${nn}_FrameTest`;
   return `${stem}_${g}_${nn}${kind === 'Head' || kind === 'Tail' ? '_' + kind : ''}${mobile ? '' : '_HD'}`;
 }
-// 大面片（master / segments）和循环层 + 粒子（emitset，用户 2026-10-02 14:46「改一下」）换名；尾缀 V5、单束等照旧
-const namingApplies = b => b && (b.form === 'master' || b.form === 'segments' || b.form === 'emitset');
+// =====================================================================
+//  4.9.106 产物形态登记表（导出排查 G4；用户 10-15 20:53「我希望所有导出规范都是统一的，不要因为某个效果就是新增的就单独不同……每次新出一个效果，这些就要修一遍」）
+//  以前命名（namingApplies）、交付清单产物表（prodTableHTML）、包内文件清单（renderDeliv）三处各写死一份「哪几种产物走规范」，只认大面片 / 分段 / 循环层 + 粒子；
+//  地面循环（喷泉、分层粒子图 = 窜天猴尾焰 / 仙女棒）、升空尾缀 V5、上升星头循环、单元序列掉进「按自己的规则 / 沿用原来的命名」：贴图名用内部名或中文标题
+//  （多层「我的效果」只滤非 ASCII → T_-_-_L1_Ramp，导入器拒收）、手机不能选、清单看不到文件。
+//  现在每种产物在这里登记一行：PC / 手机能出哪几种（OUT_PC / OUT_MOBILE 的键，其余选项在产物表和层页头变灰、写 why）、序列在下拉里叫什么。
+//  命名、产物表、包内文件清单、导出拦截都从这张表读；新加一种产物不登记 → 合入门禁「统一规范」检查不过、推不上去。
+//  own：这种产物的 PC / 手机格有自己的选项（尾缀：近段 / 合成一张，见 79_workbench.js tailProdRow），只用 pc / mobile 限制层页头
+// =====================================================================
+const PF_AIR = { pc: ['seq', 'unit', 'dots', 'frame', 'off'], mobile: ['seq', 'unit', 'frame', 'off'], seq: '序列（大面片）' };
+const PRODUCT_FORMS = {
+  master: PF_AIR, segments: PF_AIR,
+  unit: { pc: ['seq', 'off'], mobile: ['seq', 'off'], seq: '序列（单元序列）', why: '这一层本身就是单元序列（每颗星一个面片）：GPU 光点、单帧是大面片的出法' },
+  emitset: { pc: ['seq', 'off'], mobile: ['seq', 'off'], own: true, why: '尾缀层：按尾缀自己的产物出（交付清单产物表里选近段 / 合成一张）或不出；单束、GPU 光点、单帧是礼花的' },
+  trail: { pc: ['seq', 'off'], mobile: ['seq', 'off'], seq: '序列（循环 + 消散）', why: '升空尾缀 V5 是循环 + 消散两张序列：单束、GPU 光点、单帧是空中礼花的出法' },
+  riseLoop: { pc: ['seq', 'off'], mobile: ['seq', 'off'], seq: '序列（星头循环）', why: '上升星头循环是一张循环序列：单束、GPU 光点、单帧是空中礼花的出法',
+    noPack: '上升星头循环（花型模板「上升」/ 物理尾缀）一直没有 Cascade 出口：只出贴图、没有 cascade.json，导入器导不了，这次起导出直接拦下；升空尾缀请用「循环层 + 粒子」（RT6）' },     // 4.9.106：以前悄悄出一个缺配置的包
+  loop: { pc: ['seq', 'off'], mobile: ['seq', 'off'], seq: '序列（循环）', why: '地面循环 / 分层粒子图是一直循环的一张序列：单束、GPU 光点、单帧接不上循环' },
+};
+// 这一层（烘焙 b，或者参数 P）是哪种产物：没烘好时按参数推（bakeKind 和烘焙同一条）
+const productFormKey = x => !x ? '' : x.form && x.meta ? x.form : x.type && typeof bakeKind === 'function' ? bakeKind(x) : '';
+const productFormOf = x => PRODUCT_FORMS[productFormKey(x)] || null;
+// 某一格能不能选 kind：single = 单层效果（单层 PC 不出就没有素材包了，不给选）
+function productAllows(x, pf, kind, single = false) {
+  const F = productFormOf(x); if (!F) return false;
+  if (single && pf === 'pc' && kind === 'off' && F !== PF_AIR) return false;
+  return (pf === 'pc' ? F.pc : F.mobile).includes(kind);
+}
+// 登记表写了 noPack 的产物不能出素材包（原因写在 noPack）：导出入口、交付清单按钮、导出拦截同一条
+const productNoPack = x => { const F = productFormOf(x); return F && F.noPack ? F.noPack : ''; };
+const productWhy = (x, single) => { const F = productFormOf(x); return F ? (F.why || '') : '这种产物没在产物形态登记表里（61_naming.js PRODUCT_FORMS）'; };
+// 所有登记了的产物都按规范换名（以前只有大面片 / 分段 / 循环层 + 粒子）
+const namingApplies = b => !!(b && PRODUCT_FORMS[b.form]);
 // 一个烘焙在包里的每张序列：[内部段名, 格子, 名字里加的部分, 序号]。emitset 的循环 / 消散两张按「层」Loop / Fade 命名
 function namingSheets(b) {
+  if (b.form === 'trail') return [['Loop', b.meta.L, 'Loop', 1], ...(b.fades || []).map(f => ['Fade' + f.fps, (f.meta && f.meta.L) || b.meta.L, 'Fade' + f.fps, 1])];     // 4.9.106 V5：循环 + 消散（20 / 30 fps 各一张）
   if (b.form === 'emitset' && b.esFull) return [['Full', b.meta.L, 'Full', 1]];     // 4.9.73 手机合成一张（T_EFX_FireWorks_<名称>_Full_32x2_01）
   if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1],...(b.fades[0] ? [['Fade', b.fades[0].meta.L, 'Fade', 1]] : []), ...(b.far ? [['Far', b.far.meta.L, 'Far', 1]] : [])];     // 4.5.1 远段 Far
   if (b.vars) return [b, ...b.vars].map((s, k) => ['', s.meta.L, '', k + 1, k + 1]);     // 4.9.28 单束变体：序号 01…04（内部名第 2 张起带 _V2…）
@@ -99,6 +131,7 @@ function applyPackNaming(files, base, entries, o = {}) {
       for (const ht of ['Head', 'Tail']) map.set(TN(ln, joinPart(seg, ht), null, vi) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png');
       map.set(TN(ln, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
       map.set(TN(ln, joinPart(seg, 'FrameTest'), null, vi) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png');
+      map.set(TN(ln, joinPart(seg, '4K'), null, vi) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '_4K.png');     // 4.9.106 V5 的 4K 母版（只在要求时出）
     }
     for (const [seg, L, sub, n, vi = 1] of namingSheets(mb || (b && b.mobNaming) || b)) {     // 4.9.73 b.mobNaming：尾缀手机合成一张（platformFiles 记的）
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';

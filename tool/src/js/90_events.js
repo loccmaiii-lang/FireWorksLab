@@ -149,7 +149,10 @@ window.__fw = {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     files.push(...await platformFiles(name, b, M));
-    const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); disposeBake(b);
+    // 4.9.106 G4：V5 也按命名规范换名（导出拦截查贴图名，以前这里出 T_<内部名>_Loop，会被拦）
+    let out = files; { const ef = typeof EFFS === 'function' ? EFFS().find(e => e.key === key) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + name, ef, 1, name, P.type, null);
+      out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: packSysName(nm.base, P.type, null, nm.system) }); }
+    const u8 = new Uint8Array(await (await makeZip(out)).arrayBuffer()); disposeBake(b);
     let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
     return btoa(s);
   },

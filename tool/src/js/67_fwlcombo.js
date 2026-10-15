@@ -26,6 +26,8 @@ function layerOut(L) {
   const e = L && L.lib && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null;
   //   4.9.96（导出排查 H1）：纯星头层 PC 可以选「CPU 粒子（星头）」（存成 dots，和手机同一颗软圆点）
   if (e && e.P && typeof isEmit === 'function' && isEmit(e.P)) { if (pc !== 'off') pc = pc === 'dots' && typeof rtHeadOnly === 'function' && rtHeadOnly(e.P) ? 'dots' : 'seq'; if (mobile !== 'off') mobile = e.P.outMobile === 'off' ? 'off' : 'seq'; }
+  //   4.9.106（G4）：别的产物按产物形态登记表——地面循环 / V5 / 上升星头循环 / 单元序列只有「序列 / 不出」（以前层页头能选单束 / 光点 / 单帧，导出时悄悄按序列出或出空壳）
+  else if (e && e.P && typeof productFormOf === 'function') { const F = productFormOf(e.bake || e.P); if (F && F !== PF_AIR) { if (!F.pc.includes(pc)) pc = 'seq'; if (!F.mobile.includes(mobile)) mobile = 'seq'; } }
   return { pc, mobile };
 }
 // ---- 4.9.80 多层的手机格「自动」（用户 10-13 20:00「最近导出功能的Bug有点多，可以排查一遍」→ 导出排查 ①）----
@@ -461,6 +463,7 @@ function comboSpecScale(files, layers) { const sk = typeof sizeSpecCombo === 'fu
 async function comboPackFiles(name, layers, onProg) {
   let files = [];
   const { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
+  { const np = lb.map((x, i) => productNoPack(x.b) ? `第 ${i + 1} 层：${productNoPack(x.b)}` : '').filter(Boolean); if (np.length) { own.forEach(disposeBake); throw new Error(np.join('；')); } }     // 4.9.106 G4
   const ownMobile = [], mplan = comboMobilePlan(lb);     // 4.9.80 手机「自动」：按组合时的各层烘焙算（和交付清单同一个 comboMobilePlan）
   try {
     const pcE = [], mbE = [], nmE = [];
@@ -476,7 +479,8 @@ async function comboPackFiles(name, layers, onProg) {
       let mb = null;
       // 4.9.80 缓存的手机烘焙要和尾缀现在选的（只有近段 / 合成一张）一致，不一致按现在选的重烘（和单层 platformFiles 同一条）
       const keepM = b.mobile && (b.form !== 'emitset' || !!b.mobile.esFull === rtMobFull(b.P)) ? b.mobile : null;
-      if (mbK === 'seq') { mb = keepM || await bakeMobileFor(b, pg(0.2, 0.3)); if (mb !== b.mobile) ownMobile.push(mb); files.push(...await texFiles(mb, mn)); await ramp(mn); }
+      if (mbK === 'seq') { mb = keepM || await bakeMobileFor(b, pg(0.2, 0.3)); if (mb !== b.mobile) ownMobile.push(mb); files.push(...await texFiles(mb, mn)); await ramp(mn);
+        if (b.form === 'emitset' && mb && mb.meta) b.mobNaming = { form: 'emitset', esFull: !!mb.esFull, meta: { L: mb.meta.L, full: mb.meta.full ? { Dtot: mb.meta.full.Dtot } : null }, fades: [], far: null }; }     // 4.9.106 交付清单按导出时的手机格子列文件（和单层 platformFiles 同一条）
       else if (mbK === 'unit') { files.push(...await texFiles(um, mn)); await ramp(mn); }
       else if (mbK === 'frame') files.push(...await lowFiles(mn, lwM, M));
       pcE.push({ L, b, unit: pcK === 'unit' ? ub : undefined, unitName: ln, frame: pcK === 'frame' ? lw : undefined, frameName: ln, kind: pcK });
@@ -491,9 +495,9 @@ async function comboPackFiles(name, layers, onProg) {
     files = packKeepReferenced(files);
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
-      const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
+      const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nt = lb.length === 1 && lb[0].b ? lb[0].b.P.type : '', nm = packNamesFor(key, ef, lb.length, name, nt);     // 4.9.106 G4：一层的多层效果和交付清单同样按这一层的花型加档位后缀（尾缀 _S / _M / _L）
       const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null;     // 4.9.69 派生资源：系统名区分、贴图沿用
-      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: packSysName(nm.base, '', sk, nm.system), spec: sk && sk.id }), layers);
+      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: packSysName(nm.base, nt, sk, nm.system), spec: sk && sk.id }), layers);
     }
     return comboSpecScale(files, layers);
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }

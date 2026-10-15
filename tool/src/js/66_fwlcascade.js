@@ -133,7 +133,8 @@ function fwlLoop(name,b,M,mobile) {
   }return body;
 }
 function fwlCascade(name, b, M, mobile = false) {
-  const body = b.form === 'loop' ? fwlLoop(name,b,M,mobile) : b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
+  // 4.9.106 G4：单元序列（右栏产物选「单元序列」的单层效果）以前这里返回 null——包里没有 cascade.json，导入器导不了；现在和多层单束层同一个 fwlUnit
+  const body = b.form === 'unit' && typeof fwlUnit === 'function' ? { ...fwlUnit(name, b, M, {}), system: { preview_distance_cm: 30000, preview_warmup_s: 0 } } : b.form === 'loop' ? fwlLoop(name,b,M,mobile) : b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
   if (!body) return null;
   // 4.9.96（导出排查 B1）：入点以前的开花闪光单独一颗软圆点（Flash）；手机发射器放不下就不放（fwlFlashFit）
   if ((b.form === 'master' || b.form === 'segments') && typeof layerFlashES === 'function') { const fl = layerFlashES('seq', b, b.P, M, null);

@@ -1210,7 +1210,7 @@ R6_JS = r"""async () => {
   // 4.9.69 手机 _M：只留 RiseLoop + 星头光 + 1 组 CPU 火花，没有远段、没有 GPU，每个发射器 max_alive ≤ 50，配置里不引用远段贴图；包里写了理由；导出拦截过得去
   { const jm = fwlCascade('T_Mobile', b, defaultsFor('tailL').M, true); jm.name = 'T_M';
     out.mob = { em: jm.emitters.map(x => x.name), gpu: jm.emitters.filter(x => x.gpu).length, alive: jm.emitters.map(x => x.max_alive), tex: Object.keys(jm.textures), tier: jm.tier, note: !!(jm.notes || []).find(x => /手机 _M/.test(x)) };
-    const g = packGateConfig('cascade_mobile.json', jm, '', {});
+    const g = packGateConfig('cascade_mobile.json', jm, '', {}).filter(x => !/贴图名不合命名规范/.test(x));     // 4.9.106：这里直接拿内部名的配置查别的规则（换名在打包那一步，统一规范归合入门禁查）
     if (jm.emitters.length !== 1 || jm.emitters[0].name !== 'RiseLoop' || out.mob.em.includes('TrailFar') || out.mob.gpu || jm.emitters.some(x => !(x.max_alive >= 1 && x.max_alive <= 50)) || jm.textures.far || jm.tier !== 'M' || !out.mob.note || g.length)
       bad.push('手机 _M 尾缀不对：' + JSON.stringify(out.mob) + ' ' + g.join('；'));
     const jp = fwlCascade('T', b, defaultsFor('tailL').M, false); out.pcEm = jp.emitters.length;
@@ -1290,7 +1290,7 @@ R7_JS = r"""async () => {
     lock: (mods.OrientationAxisLock || {}).flags, tex: Object.keys(jm.textures), tier: jm.tier, keys: mods.DynamicParameter && mods.DynamicParameter.params.frame.curve.length, size: mods.InitialSize && mods.InitialSize.StartSize.const, note: !!(jm.notes || []).find(x => /合成一张/.test(x)) };
   if (out.mob.n !== 1 || out.mob.name !== 'TrailFull' || out.mob.gpu || out.mob.alive !== 1 || out.mob.align !== 'Rectangle' || out.mob.local !== true || out.mob.delay !== 0 || out.mob.lock !== 'EPAL_ROTATE_Z'
     || out.mob.tex.join() !== 'full,cutoutFull,ramp' || out.mob.tier !== 'M' || !out.mob.keys || !out.mob.note || out.mob.size[1] !== 19200) bad.push('手机合成一张的 cascade_mobile 不对：' + JSON.stringify(out.mob));
-  const g = packGateConfig('cascade_mobile.json', jm, '', { [jm.textures.full.file]: { size: [1024, 1024] }, [jm.textures.cutoutFull.file]: { size: [512, 512] }, [jm.textures.ramp.file]: { size: [256, 8] } });
+  const g = packGateConfig('cascade_mobile.json', jm, '', { [jm.textures.full.file]: { size: [1024, 1024] }, [jm.textures.cutoutFull.file]: { size: [512, 512] }, [jm.textures.ramp.file]: { size: [256, 8] } }).filter(x => !/贴图名不合命名规范/.test(x));     // 4.9.106 同上
   out.gate = g; if (g.length) bad.push('合成一张被导出拦截拦了：' + g.join('；'));
   out.sheets = namingSheets(mb).map(x => x[0]).join(); if (out.sheets !== 'Full') bad.push('合成一张的命名段不对：' + out.sheets);
   // 打包换名：手机那张叫 …_Full_32x2_01、Cut 是手机自己的（不当成 PC 共用丢掉）、Ramp 和 PC 共用一张；手机粒子名 <名>_M
@@ -3982,6 +3982,8 @@ W36_JS = r"""async () => {
   const png = { 'T_EFX_FireWorks_GoldSpark_4x4_01.png': { sha256: 'a', size: [1024, 1024] }, 'T_EFX_FireWorks_GoldSpark_R.png': { sha256: 'b', size: [256, 8] } };
   const G = (j, p = png) => packGateConfig('cascade_mobile.json', j, '', p);
   out.good = G(good()); if (out.good.length) bad.push('合规的手机包被拦了：' + out.good.join('；'));
+  // 4.9.106 G4：贴图名不合命名规范（多层我的效果取中文标题留下的 T_-_-_L1_Ramp）要拦
+  { const j = good(); j.textures.ramp.asset = 'T_-_-_L1_Ramp'; j.textures.ramp.file = 'T_-_-_L1_Ramp.png'; const r = G(j, { ...png, 'T_-_-_L1_Ramp.png': { size: [256, 8] } }); out.c0 = r; if (!r.some(x => /贴图名不合命名规范 ramp = T_-_-_L1_Ramp/.test(x))) bad.push('⓪ 不合规范的贴图名没拦：' + r.join('；')); }
   // ① 名字 / 档位
   { const j = good(); j.name = 'GoldSpark_Mobile_HD'; const r = G(j); out.c1 = r; if (!r.some(x => /带 _HD \/ _Mobile/.test(x))) bad.push('① 名字带 _Mobile_HD 没拦'); }
   { const j = good(); j.tier = 'L'; j.name = 'GoldSpark_L'; const r = G(j); out.c1b = r; if (!r.some(x => /不是 H \/ M/.test(x))) bad.push('① 档位 L 没拦'); }

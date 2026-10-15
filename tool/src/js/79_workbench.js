@@ -133,6 +133,8 @@ function buildLayerHead(i) {
       if (head && pf === 'pc' && op.value === 'dots') { op.disabled = false; op.textContent = 'CPU 粒子（星头）'; op.title = '纯星头：一颗软圆点 CPU 粒子沿弹道走（和手机同一颗），没有贴图'; }
       else if (head && op.value === 'seq') { op.textContent = pf === 'pc' ? '序列（单帧小面片）' : 'CPU 粒子（星头）'; op.title = ''; }
       else if (tail && ['unit', 'dots', 'frame'].includes(op.value)) { op.disabled = true; op.title = '尾缀层：按尾缀自己的产物出（交付清单产物表里选近段 / 合成一张）或不出；单束、GPU 光点、单帧是礼花的'; }
+      else if (le && !tail && op.value !== 'auto' && productFormOf(le.bake || le.P) !== PF_AIR && !productAllows(le.bake || le.P, pf, op.value)) { op.disabled = true; op.title = productWhy(le.bake || le.P); }     // 4.9.106 G4：地面循环 / V5 / 上升星头循环 / 单元序列按产物形态登记表
+      else if (le && !tail && op.value === 'seq' && productFormOf(le.bake || le.P) && productFormOf(le.bake || le.P).seq && productFormOf(le.bake || le.P) !== PF_AIR) op.textContent = productFormOf(le.bake || le.P).seq;
       else if (op.value === 'dots' && le && !tail && !(dotsCount(le.P) > 0)) { op.disabled = o.pc !== 'dots'; op.title = '这一层星头不发光（星头亮度 0 或不留星头），GPU 光点导出是空的'; }
     } };
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { setLayerOut(L, sel.dataset.out, sel.value); syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));     // 4.9.80 只改这一格（以前改 PC 会顺手把手机写死成序列）
@@ -917,7 +919,7 @@ function renderDeliv() {
   const systemName = packSysName(nm.base, nameType, combo ? sizeSpecCombo(state.layers) : sizeSpecNow(state.P), nm.system);
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
-    if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）的素材包按它自己的导出规则生成，文件清单以导出的包为准</td></tr>`); continue; }
+    if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="warn">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）没在产物形态登记表里（61_naming.js PRODUCT_FORMS），导出会被拦</td></tr>`); continue; }     // 4.9.106 G4：登记了的产物都按规范列文件
     if (x.b.form === 'emitset' && x.b.esHead && (!combo || x.e)) {     // 4.9.96 H1：纯星头——PC 单帧小面片一张或 CPU 粒子（没有贴图），手机 CPU 粒子（没有贴图）
       const st = tailProdState(x, combo), m = x.b.meta, ly = combo ? nm.layers[x.i] : '', r = combo ? +x.L.rate || 1 : 1, d0 = (combo ? +x.L.delay || 0 : 0) + m.full.t0 / r, life = m.full.Dtot / r;
       if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · 纯星头 · PC ${tailOutText(st.P, st.pc === 'full' ? 'seq' : st.pc, 'pc')} · 手机 ${tailOutText(st.P, st.mo, 'mobile')}</td></tr>`);
@@ -937,12 +939,24 @@ function renderDeliv() {
         if (mobLoop) rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
         rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（${mobLoop ? 'PC / 手机共用' : 'PC'}，512）</td><td></td><td></td></tr>`);
       }
-      if (!combo && rtMobFull(state.P)) { const mf = x.b.mobile && x.b.mobile.esFull ? x.b.mobile : null, Lm = mf ? mf.meta.L : null, g = Lm ? `${Lm.cols}x${Lm.rows}` : '<列>x<行>';     // 4.9.73 手机合成一张（格子烘了才知道）
-        const stem = FW_TEX_PREFIX + nm.base + '_Full_' + g + '_01', life = mf ? mf.meta.full.Dtot.toFixed(2) + ' s' : '—';
+      const tP = combo ? (x.e && x.e.P) : state.P, tMob = combo ? (x.mob ? x.mob.kind : layerOut(x.L).mobile) !== 'off' : state.P.outMobile !== 'off';
+      if (tP && tMob && rtMobFull(tP)) { const mf = x.b.mobile && x.b.mobile.esFull ? x.b.mobile : x.b.mobNaming && x.b.mobNaming.esFull ? x.b.mobNaming : null, Lm = mf ? mf.meta.L : null, g = Lm ? `${Lm.cols}x${Lm.rows}` : '<列>x<行>';     // 4.9.73 手机合成一张（格子烘了才知道；4.9.106 导出过一次就按导出时的格子，多层也列）
+        const stem = FW_TEX_PREFIX + nm.base + (ly ? '_' + ly : '') + '_Full_' + g + '_01', life = mf && mf.meta.full ? mf.meta.full.Dtot.toFixed(2) + ' s' : '—';
         rows.push(`<tr><td>${stem}.png</td><td>手机 · 近段 + 远段合成一张${Lm ? ` · 单格 ${Math.round(Lm.cellW)}×${Math.round(Lm.cellH)} px · ${Lm.F} 帧` : '（格子导出时按内容定）'}</td><td>0.00 s</td><td>${life}</td></tr>`);
         rows.push(`<tr class="dim"><td>${stem}_C.png</td><td>Cut（手机自己的，512）</td><td></td><td></td></tr>`); }
       rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
       if (!x.b.esFull) rows.push(`<tr class="dim"><td colspan="4">粒子发射器（火花、落火）没有贴图：用软圆点材质，数值在 cascade.json</td></tr>`);
+      continue;
+    }
+    if (x.b.form === 'trail') {     // 4.9.106 G4：V5 循环 + 消散（20 / 30 fps）各一张，和导出同一份 namingSheets
+      const m = x.b.meta, ly = combo ? nm.layers[x.i] : '', o = outOfX(x, combo), d0 = (+x.L.delay || 0);
+      if (o.pc === 'off' && o.mobile === 'off') { rows.push(`<tr><td colspan="4" class="dim">PC、手机都不出这一层</td></tr>`); continue; }
+      for (const [, L, sub, n] of namingSheets(x.b)) { const fps = /^Fade(\d+)/.exec(sub), life = fps ? L.F / +fps[1] : +m.T || m.duration;
+        if (o.pc !== 'off') rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', false)}.png</td><td>PC · ${fps ? `消散 ${fps[1]} fps` : '上升循环'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${(+life || 0).toFixed(2)} s</td></tr>`);
+        if (o.mobile !== 'off') rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${(+life || 0).toFixed(2)} s</td></tr>`);
+        if (!combo && state.P.trExport4K && o.pc !== 'off') rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}_4K.png</td><td>4K 母版（只留档，cascade 不引用）</td><td></td><td></td></tr>`);
+        rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`); }
+      rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
       continue;
     }
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
@@ -981,11 +995,11 @@ function renderDeliv() {
   }
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
-  const prod = prodTableHTML(xs, combo);
+  const prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || '';     // 4.9.106 G4：登记表里不能出包的产物，按钮变灰写原因
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
-  host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
-    <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
+  host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '有一层的产物没在产物形态登记表里，导出会被拦'}</small></div><span class="sp"></span>
+    <button class="btn primary" type="button" id="dvExport"${noPackWhy ? ` disabled title="${noPackWhy.replace(/"/g, '&quot;')}"` : ''}>导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
     <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
     ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
@@ -1026,7 +1040,10 @@ function frameTrialHTML(P) {
 // 多少张贴图 / 帧 / 发射器。这里的选择 = 层页头「导出方案」= 右栏「输出 › 直接调」的 PC / 手机怎么出（同一个值）；导出按钮导的就是这张表。
 // 以前单束另有三处入口（资产栏 ⌄ 菜单、交付页「导出单束包」、「把产物改成单束」），4.9.25 都并到这里
 // 4.9.80 每层导出方案：多层的手机格按 comboMobilePlan 算出来的（x.mob，renderDeliv 挂上）
-function outOfX(x, combo) { if (!combo) return singleOut(state.P); const o = layerOut(x.L); return x.mob ? { ...o, mobile: x.mob.kind } : o; }
+function outOfX(x, combo) {
+  if (!combo) { if (singleSchemeOn(state.P)) return singleOut(state.P); const src = x.b || state.P, F = productFormOf(src);     // 4.9.106 G4：别的单层产物手机也能「不出」（P.outMobile）
+    return { pc: 'seq', mobile: state.P.outMobile === 'off' && F && F !== PF_AIR && productAllows(src, 'mobile', 'off', true) ? 'off' : 'seq' }; }
+  const o = layerOut(x.L); return x.mob ? { ...o, mobile: x.mob.kind } : o; }
 const MOBILE_UNIT_MANY = '星数超过 50：手机单束每颗星一个粒子，手游同时最多 50 个（规范 v1 §6），导出一定被拦；手机用序列 / 单帧';
 const mobileUnitTooMany = P => !!P && Math.round(+P.stars || 0) > (typeof GATE_MAX_ALIVE !== 'undefined' ? GATE_MAX_ALIVE : 50);
 function prodCellHTML(x, pf, combo) {
@@ -1054,6 +1071,20 @@ function prodCellHTML(x, pf, combo) {
 }
 // 4.9.96（导出排查 A11 / H1）：尾缀层（循环层 + 粒子 / 合成一张 / 纯星头）产物表的一行。单层改 P.outPC / outMobile；多层 PC「不出 / 序列 / CPU 粒子」写在层上（L.out），
 //   近段 ↔ 合成一张、手机近段 ↔ 合成一张是这一层尾缀自己的参数（e.P，改了重烘这一层 / 作废手机烘焙）
+// 4.9.106（导出排查 G4，用户 10-15 20:53）：产物形态登记表（61_naming.js PRODUCT_FORMS）里大面片和尾缀以外的产物——地面循环（喷泉、分层粒子图 = 窜天猴尾焰 / 仙女棒）、
+//   升空尾缀 V5、上升星头循环、单元序列——产物表一行和大面片同样两格下拉：能出的按登记表，做不到的选项变灰、悬停写原因
+function formProdRow(x, combo) {
+  const P = layerPOf(x), src = x.b || P, F = productFormOf(src), single = !combo, why = productWhy(src), esc = t => String(t).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const o = outOfX(x, combo), lockAir = F === PF_AIR && single && !singleSchemeOn(P);     // 单层的大面片只有普通序列花型有导出方案
+  const offWhy = '单层效果 PC 不出就没有素材包了；只要手机就放进多层效果里选';
+  const opts = (pf, list, v) => list.map(([k, t]) => {
+    const ok = !lockAir && productAllows(src, pf, k, single), cur = k === v, label = k === 'seq' && F && F.seq ? F.seq : t;
+    return `<option value="${k}"${cur ? ' selected' : ''}${ok || cur ? '' : ` disabled title="${esc(single && pf === 'pc' && k === 'off' && F ? offWhy : lockAir ? '这种花型单层只出序列' : why)}"`}>${label}</option>`; }).join('');
+  const sel = (pf, list, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么"${F ? '' : ' disabled'}>${opts(pf, list, v)}</select>`;
+  const cell = pf => { try { return prodCellHTML(x, pf, combo); } catch (e) { return x.b ? '序列' : '还没烘好'; } };
+  const kind = `<span class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : P ? FORM_NAMES[productFormKey(P)] || '' : ''}</span>`;
+  return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}<small>${kind}${F ? '' : ' · ' + esc(why)}${productNoPack(src) ? ' · <span class="warn">' + esc(productNoPack(src)) + '</span>' : ''}</small></td><td>${sel('pc', OUT_PC, o.pc)}<small>${cell('pc')}</small></td><td>${sel('mobile', OUT_MOBILE, o.mobile)}<small>${cell('mobile')}</small></td></tr>`;
+}
 function tailOutText(P, kind, pf) {
   const head = typeof rtHeadOnly === 'function' && rtHeadOnly(P);
   if (kind === 'off') return '不出';
@@ -1069,7 +1100,7 @@ function tailProdState(x, combo) {
 }
 function tailProdRow(x, combo) {
   const st = tailProdState(x, combo), { P, head, far } = st, off = combo ? [['off', '不出']] : [];
-  const pcOpts = head ? [['full', '序列（单帧小面片）'], ['dots', 'CPU 粒子（星头）'], ...off] : far ? [['seq', '近段 + 远段 + 粒子'], ['full', '近段 + 远段合成一张'], ...off] : combo ? [['seq', '循环层 + 粒子（PC 全套）'], ...off] : null;
+  const pcOpts = head ? [['full', '序列（单帧小面片）'], ['dots', 'CPU 粒子（星头）'], ...off] : far ? [['seq', '近段 + 远段 + 粒子'], ['full', '近段 + 远段合成一张'], ...off] : [['seq', '循环层 + 粒子（PC 全套）'], ...off];     // 4.9.106 G4：单层没有远段的尾缀 PC 格也给下拉（只有一项），不再空着
   const mbOpts = head ? [['full', 'CPU 粒子（星头）'], ['off', '不出']] : OUT_MOBILE_TAIL.filter(([k]) => k !== 'full' || far);
   const fo = !head && rtFullTailFeatures(P), foT = ' disabled title="落火入贴图 / 燃尽后曲线 / 末段气流开着：只有「合成一张」能烘（关掉这几项才能选）"';     // 4.9.96：以前选了导出才报错
   const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${fo && k === 'seq' && v !== 'seq' ? foT : ''}>${t}</option>`).join('')}</select>`;
@@ -1100,7 +1131,7 @@ function prodTableHTML(xs, combo) {
     // 4.9.69 升空尾缀（循环层 + 粒子）：PC 照旧全套；手机能选 _M / 不出（用户 10-10 16:51「升空尾缀无法选择手机导出什么格式，无法创建手机粒子文件」）
     // 4.9.96（导出排查 A11 / H1）：多层里的尾缀层也给同样的下拉（以前一行灰字，选不了）；纯星头 PC「序列（单帧小面片）/ CPU 粒子（星头）/ 不出」、手机「CPU 粒子 / 不出」
     if (!seqOK && x.b && x.b.form === 'emitset' && (!combo || x.e)) return tailProdRow(x, combo);
-    if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
+    if (!seqOK) return formProdRow(x, combo);     // 4.9.106 G4：以前一行灰字「按这种产物自己的规则出（PC + 手机）」，选不了
     const o = outOfX(x, combo), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
     const uMany = mobileUnitTooMany(P) ? ` disabled title="${MOBILE_UNIT_MANY}"` : '';     // 4.9.80 手机单束 > 50 颗：一定被拦，不让选

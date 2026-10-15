@@ -311,6 +311,8 @@ function masterJSON(b, name, M) {
 async function platformFiles(name,b,M,onProg=null) {
   // 4.9.69 升空尾缀（循环层 + 粒子）在交付清单选「手机：不出」→ 只出 PC（以前尾缀没有手机这一格，用户 10-10 16:51「升空尾缀无法选择手机导出什么格式」）
   if(b.form==='emitset'&&b.P.outMobile==='off'){b.mobNaming=null;return fwlFiles(name,b,M).filter(([f])=>f!=='cascade_mobile.json');}
+  // 4.9.106（G4）：别的单层产物（地面循环 / 分层粒子图 / V5 / 上升星头循环 / 单元序列）手机「不出」同一条——以前这几种手机格一行灰字、不能选
+  if(b.P.outMobile==='off'&&typeof productAllows==='function'&&productFormOf(b)!==PF_AIR&&productAllows(b,'mobile','off',true))return fwlFiles(name,b,M).filter(([f])=>f!=='cascade_mobile.json');
   // 4.9.73 尾缀手机「近段 + 远段合成一张」：预览时缓存的手机烘焙要和现在选的一致（只有近段 / 合成一张），不一致就按现在选的重烘
   const keep=b.mobile&&(b.form!=='emitset'||!!b.mobile.esFull===rtMobFull(b.P))?b.mobile:null;
   const mobile=keep||await bakeMobileFor(b,onProg);
@@ -337,7 +339,7 @@ async function exportSingleScheme(name, b, destination) {
   busy(true, '打包 ZIP…', 1);
   let zipName = name, out = files;
   const sp = exportScalePlan(state.P);
-  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
+  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, typeof delivName === 'function' ? delivName() : name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
   { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
   await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
   wbAutoExport(zipName);
@@ -355,6 +357,7 @@ async function exportMaster() {
     if (b) { const nb = await refineBake(b, p => busy(true, `取景收紧… ${Math.round(p * 100)}%`, p * 0.9)); if (nb) { disposeBake(b); state.bake = b = nb; showStats(nb); } }   // 4.2.5：导出用收紧后的取景
     own = !b;
     if (own) b = await bakeFinal(state.P, 1, p => busy(true, `烘焙 ${state.P.texW}×${state.P.texH}… ${Math.round(p * 100)}%`, p * 0.9));
+    if (productNoPack(b)) throw new Error(productNoPack(b));     // 4.9.106 G4：登记表里不能出包的产物（上升星头循环）
     busy(true, '编码 PNG…', 0.93);
     // 4.4.2：单层效果选了别的导出方案（GPU 光点 / 单束 / 不出，或手机不出）→ 和多层层页头同一套
     const so = typeof singleOut === 'function' ? singleOut(state.P) : { pc: 'seq', mobile: 'seq' };
@@ -370,13 +373,13 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
-    if (b.form === 'emitset') { b.P.outMobile = state.P.outMobile; b.P.outPC = state.P.outPC; }     // 4.9.73 产物表改「手机」不重烘：按现在选的出（烘焙时存的那份是旧的）；4.9.96 纯星头 PC「序列 ↔ CPU 粒子」同样
+    if (b.form === 'emitset' || (typeof productFormOf === 'function' && productFormOf(b) && productFormOf(b) !== PF_AIR)) { b.P.outMobile = state.P.outMobile; b.P.outPC = state.P.outPC; }     // 4.9.106 G4：别的非礼花产物同样按现在选的出；4.9.73 产物表改「手机」不重烘：按现在选的出（烘焙时存的那份是旧的）；4.9.96 纯星头 PC「序列 ↔ CPU 粒子」同样
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     if (b.esHead) { const keep = packKeepReferenced(files); files.length = 0; files.push(...keep); }     // 4.9.96 H1：纯星头 PC 选 CPU 粒子 / 不出时没有那张单帧（手机软圆点也不引用手机 Ramp）
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     const sp = exportScalePlan(state.P);
-    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
+    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, typeof delivName === 'function' ? delivName() : name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
     { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
     await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
@@ -409,7 +412,7 @@ async function exportVariants() {
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     const sp = exportScalePlan(state.P);
-    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
+    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, typeof delivName === 'function' ? delivName() : name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec, nm.system); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
     await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b0), destination);
     wbAutoExport(zipName);

@@ -1321,7 +1321,7 @@ async function exportCombo() {
     }) });
   // 素材包名要是英文 / 数字（spec）：迭代区组合条目用条目号，否则用组合名里的英文数字部分
   const rv = typeof lib !== 'undefined' && lib.review && lib.review.kind === 'combo' ? lib.review.id : '';
-  const name = (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo';
+  const name = typeof delivName === 'function' ? delivName() : (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo';     // 4.9.106 G4：和交付清单同一个名字来源（以前我的效果导出取中文标题、清单取 MyFx，两边文件名对不上）
   if (!busyCan(true)) return;
   busy(true, '组合素材包：准备各层…', 0);
   try {
@@ -1329,7 +1329,7 @@ async function exportCombo() {
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
     files.push([`${name}_组合说明.json`, utf8(JSON.stringify(comboJson(), null, 2))]);
     busy(true, '打包 ZIP…', 1);
-    let pk = name; if (files.some(([f]) => f.startsWith(FW_TEX_PREFIX))) { const nm = packNamesFor(wbKey(), lib.effect, state.layers.length, name); pk = packSysName(nm.base, '', typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null, nm.system); }
+    let pk = name; if (files.some(([f]) => f.startsWith(FW_TEX_PREFIX))) { const L1 = state.layers.length === 1 ? layerEntryOf(state.layers[0]) : null, nt = L1 && L1.P ? L1.P.type : '', nm = packNamesFor(wbKey(), lib.effect, state.layers.length, name, nt); pk = packSysName(nm.base, nt, typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null, nm.system); }
     await deliverResource(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`, deliveryMetadata(), destination);
     if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);

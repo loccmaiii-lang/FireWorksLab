@@ -1,0 +1,9 @@
+{
+ "id": "NFE-SGS1-G106",
+ "type": "export",
+ "effect": "sparkler_graph",
+ "entry": "SGS1",
+ "name": "Sparkler_Graph",
+ "priority": 3,
+ "note": "导出（23）· 烘焙器 4.9.106（产物形态登记表 G4，用户 10-15 20:53「所有导出规范都是统一的」）：画面不变，贴图名改成 T_EFX_FireWorks_<英文名>_…、导出拦截查贴图名 → 重导看实包能不能过拦截、回放和以前一样。"
+}

@@ -9,6 +9,7 @@
 // =====================================================================
 const FWL_CFG_RE = /(^|\/)cascade(_mobile(_h)?|_low)?\.json$/;
 const GATE_TIER = { M: { emitters: 3 }, H: { emitters: 6 } }, GATE_MAX_ALIVE = 50, GATE_MOBILE_TEX = 1024;
+const FW_NAME_RE = /^T_EFX_FireWorks_[A-Za-z0-9]+(_[A-Za-z0-9]+)*$/;     // 4.9.106 G4：贴图名规范（导出拦截和合入门禁「统一规范」同一条）
 let packGateLast = null;
 function pngSize(u8) {
   if (!u8 || u8.length < 24 || u8[0] !== 0x89 || u8[1] !== 0x50 || u8[2] !== 0x4E || u8[3] !== 0x47) return null;
@@ -21,6 +22,10 @@ function packGateConfig(f, j, dir, png) {
   const bad = [], mobile = /_mobile/.test(f) || j.platform === 'mobile', tag = f.replace(/^.*\//, '');
   const texs = Object.entries(j.textures || {}), ems = (j.emitters || []).filter(e => e.enabled !== false);
   const assetOf = t => t.asset || String(t.file || '').replace(/^.*\//, '').replace(/\.png$/i, '');
+  // 4.9.106（导出排查 G4，用户 10-15 20:53「所有导出规范都是统一的」）：每张贴图（file 和 asset）都按命名规范 T_EFX_FireWorks_<英文名>_…，只有英文、数字、下划线；
+  //   以前地面循环 / 分层粒子图 / V5 / 上升星头循环用内部名，多层「我的效果」用中文标题只滤掉非 ASCII（T_-_-_L1_Ramp），导入器拒收
+  const badName = texs.filter(([, t]) => t && t.file).map(([k, t]) => [k, assetOf(t), String(t.file).replace(/^.*\//, '').replace(/\.png$/i, '')]).filter(([, a, f]) => !FW_NAME_RE.test(a) || !FW_NAME_RE.test(f));
+  if (badName.length) bad.push(`${tag}：贴图名不合命名规范 ${badName.map(([k, a]) => `${k} = ${a}`).join('、')}（应为 T_EFX_FireWorks_<英文名>_…，只用英文、数字和下划线；在交付清单里设英文名）`);
   if (j.derived && j.derived.from) {
     const stem = FW_TEX_PREFIX + j.derived.from, wrong = texs.filter(([, t]) => t && t.file && !assetOf(t).startsWith(stem)).map(([, t]) => assetOf(t));
     if (wrong.length) bad.push(`${tag}：派生资源开了新贴图名 ${wrong.join('、')}（应沿用 ${stem}_…，规范 §2）`);
@@ -84,6 +89,7 @@ async function packFinalize(files, o = {}) {
   try { if (known === undefined && typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.knownTextures) known = DeliveryWorkspace.knownTextures(); } catch (e) { known = null; }
   try { if (sk === undefined && typeof wbKey === 'function') sk = wbKey(); } catch (e) { sk = ''; }
   bad.push(...packGateClash(png, known, sk, o.resourceName || (resourceNames.size === 1 ? [...resourceNames][0] : '')));
+  if (!files.some(([f]) => FWL_CFG_RE.test(f))) bad.push('素材包里没有 cascade.json：这种产物还没接 Cascade 出口，导入器导不了（4.9.106 G4）');
   packGateLast = { at: Date.now(), bad };
   if (bad.length && !o.noThrow) { const e = new Error('导出拦截（不符合 spec/烟花特效资产规范.md v1，这次没有出包）：\n· ' + bad.join('\n· ')); e.gate = bad; throw e; }
   return out;

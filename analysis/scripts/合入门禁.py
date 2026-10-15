@@ -123,7 +123,8 @@ LIB = r"""(async () => {
       if (pcOpts.length > 1) rows.push({ key: 'L.out.pc', sec: '产物表', kind: 'lay', opts: pcOpts, cur: o.pc });
       if (mbOpts.length > 1) rows.push({ key: 'L.out.mobile', sec: '产物表', kind: 'lay', opts: mbOpts, cur: layerMobileManual(L) ? o.mobile : 'auto' }); }
     // 4.9.96：单层尾缀（合成一张 / 纯星头）的 PC、手机怎么出只在交付清单的产物表里（右栏没有这两行）
-    if (state.tab !== 'combo' && isEmit(state.P)) { renderDeliv(); for (const pf of ['pc', 'mobile']) { const sel = prodSelect(pf), opts = sel ? [...sel.options].filter(o => !o.disabled).map(o => o.value) : [];
+    // 4.9.106 G4：地面循环 / 分层粒子图 / V5 / 上升星头循环 / 单元序列的单层同样只在产物表里选（手机 序列 / 不出）
+    if (state.tab !== 'combo' && (isEmit(state.P) || !singleSchemeOn(state.P))) { renderDeliv(); for (const pf of ['pc', 'mobile']) { const sel = prodSelect(pf), opts = sel ? [...sel.options].filter(o => !o.disabled).map(o => o.value) : [];
       if (opts.length > 1) rows.push({ key: 'prod.' + pf, sec: '产物表', kind: 'prod', opts, cur: sel.value }); } }
     return rows;
   };
@@ -161,10 +162,41 @@ LIB = r"""(async () => {
   // 4.9.96 B1：入点 > 0、有开花闪光的礼花（单层）导出里要有 Flash（入点前的闪光单独一颗软圆点）
   const flashMiss = cfg => { const P = state.P; if (state.tab === 'combo' || familyOf(P.type) !== 'aerial' || !(+fxP(P).flash > 0) || !(+P.cutIn > 0)) return [];
     const j = cfg && cfg['cascade.json']; return j && !j.emitters.some(e => /Flash/.test(e.name)) ? ['入点前的开花闪光没导出（cascade.json 没有 Flash）'] : []; };
+  // 4.9.106（导出排查 G4，用户 10-15 20:53「我希望所有导出规范都是统一的，不要因为某个效果就是新增的就单独不同」）：每种产物同一套出口——
+  //   ① 包里每张贴图（PNG 文件名、cascade 里 textures[].file / asset）都是 T_EFX_FireWorks_<英文名>_…，只有英文、数字、下划线（以前地面循环 / 分层粒子图 / V5 用内部名，
+  //      多层「我的效果」取中文标题只滤非 ASCII 留了减号 → T_-_-_L1_Ramp，导入器拒收）；② 交付清单不出现「按自己的规则 / 沿用原来的命名」；
+  //   ③ 产物表每一行 PC、手机两格都有下拉（做不到的选项变灰写原因，不是一行灰字）；④ 交付清单「包内文件」列出了包里的每张贴图
+  const NAME_RE = /^T_EFX_FireWorks_[A-Za-z0-9]+(_[A-Za-z0-9]+)*$/, stem = n => String(n || '').replace(/^.*\//, '').replace(/\.png$/i, '');
+  const uniform = s => {
+    const bad = [];
+    for (const [f, j] of Object.entries(s.cfg || {})) for (const [k, t] of Object.entries({ ...(j.textures || {}), ...(j.extras || {}) })) {
+      if (!t || !t.file) continue; const a = t.asset || stem(t.file);
+      if (!NAME_RE.test(a) || !NAME_RE.test(stem(t.file))) bad.push(`${f} ${k} 贴图名 ${t.asset ? a : stem(t.file)} 不合命名规范`); }
+    const png = (s.names || []).filter(n => /\.png$/i.test(n) && !/FrameTest/.test(n));
+    for (const n of png) if (!NAME_RE.test(stem(n))) bad.push(`包里 ${n} 不合命名规范`);
+    try { renderDeliv(); } catch (e) { bad.push('交付清单画不出来：' + e.message); return bad; }
+    const host = $('#delivView'), txt = host.textContent;
+    for (const w of ['自己的规则', '自己的导出规则', '沿用原来的命名']) if (txt.includes(w)) bad.push(`交付清单还写着「${w}」`);
+    const prow = [...host.querySelectorAll('.dv-prod tbody tr')];
+    if (!prow.length) bad.push('产物表一行都没有');
+    prow.forEach((tr, i) => { const miss = ['pc', 'mobile'].filter(pf => !tr.querySelector(`select[data-prod="${pf}"]`)); if (miss.length) bad.push(`产物表第 ${i + 1} 行没有 ${miss.map(p => p === 'pc' ? 'PC' : '手机').join(' / ')} 下拉`); });
+    const listed = new Set([...host.querySelectorAll('table.dv-t:not(.dv-prod) td:first-child')].map(td => td.textContent.trim()));
+    const miss = png.filter(n => !listed.has(n.replace(/^.*\//, '')));
+    if (miss.length) bad.push(`交付清单「包内文件」没列出 ${miss.slice(0, 3).join('、')}${miss.length > 3 ? ` 等 ${miss.length} 张` : ''}`);
+    return bad.map(x => '统一规范：' + x);
+  };
+  window.__uniform = async () => uniform(await __sig());
   window.__contract = async (onlyKeys, budgetMs) => {
-    const T0 = performance.now(), rows = __rows().filter(r => !onlyKeys || onlyKeys.includes(r.key)), out = [];
+    const T0 = performance.now(), out = [], formsNow = () => state.tab === 'combo' ? state.layers.map(L => { const e = layerEntryOf(L); return e && e.bake ? e.bake.form : ''; }) : [state.bake ? state.bake.form : ''];
+    const reg = { forms: formsNow(), registry: Object.keys(PRODUCT_FORMS), formNames: Object.keys(FORM_NAMES) };
+    // 4.9.106 G4：登记表写了 noPack 的产物（上升星头循环）：导出必须被拦、原因要写出来；别的行不拨（没有包可比）
+    const np = (state.tab === 'combo' ? state.layers.map(L => { const e = layerEntryOf(L); return e && e.bake; }) : [state.bake]).map(b => b && productNoPack(b)).filter(Boolean);
+    if (np.length) { const s = await __sig(); renderDeliv(); const btn = $('#dvExport');
+      const json = [...(s.cfg && Object.keys(s.cfg).length ? ['登记为不能出包，导出却出了 cascade'] : []), ...(s.log.some(l => l.includes(np[0].slice(0, 12))) ? [] : ['登记为不能出包，导出没写原因：' + s.log.join('；').slice(0, 160)]), ...(btn && btn.disabled ? [] : ['交付清单的导出按钮没变灰'])];
+      return { rows: [], json, ms: Math.round(performance.now() - T0), ...reg }; }
+    const rows = __rows().filter(r => !onlyKeys || onlyKeys.includes(r.key));
     const b1 = await __sig(), b2 = await __sig();
-    const json = [...new Set([...b1.gate.map(g => '导出拦截：' + g), ...emptyShell(b1.cfg), ...flashMiss(b1.cfg), ...(b1.cfg ? [] : ['导出没出 cascade.json：' + b1.log.join('；')])])];
+    const json = [...new Set([...b1.gate.map(g => '导出拦截：' + g), ...emptyShell(b1.cfg), ...flashMiss(b1.cfg), ...uniform(b1), ...(b1.cfg && Object.keys(b1.cfg).length ? [] : ['导出没出 cascade.json：' + b1.log.join('；')])])];     // 4.9.106：空的也算没出（上升星头循环以前出一个没有 cascade.json 的包）
     if (keyOf(b1) !== keyOf(b2)) return { err: '同一状态导出两次结果不同（检查本身不稳）', rows: [], json };
     const P0 = structuredClone(state.P), L0 = state.tab === 'combo' && state.comboSel >= 0 ? structuredClone(state.layers[state.comboSel].out || null) : undefined, bk = keyOf(b1), bi = JSON.stringify(b1.ins);
     const restore = async () => { for (const k of Object.keys(state.P)) if (!(k in P0)) delete state.P[k]; Object.assign(state.P, structuredClone(P0));
@@ -195,7 +227,7 @@ LIB = r"""(async () => {
       if (!bad && ok.some(t => t.shell.length)) bad = '有的值导出空壳发射器：' + gate.filter(g => /空壳|没写/.test(g)).slice(0, 3).join('；');
       out.push({ key: r.key, sec: r.sec, cur: r.cur, bad, note, warn: gate.slice(0, 4), vals: tried.map(t => t.err ? `${t.v}!` : `${t.v}${t.out ? '✓' : t.inp ? '·' : '✗'}`).join(' '), log: [...new Set(ok.flatMap(t => t.log))].slice(0, 2) });
     }
-    return { rows: out, json, ms: Math.round(performance.now() - T0) };
+    return { rows: out, json, ms: Math.round(performance.now() - T0), ...reg };
   };
   return 0;
 })()"""
@@ -217,6 +249,10 @@ SCENARIOS = [
     ('空中大面片·入点前闪光', "openReview(entryById('MYCR-O'))", ['cutIn', 'outPC', 'outMobile']),     # 4.9.96 B1 / B2：入点、单束 / 光点都要带 Flash
     ('合成一张·一层的我的效果', "myCreate('rv:CSLRS')", ['zoom', 'frameBudget', 'cutIn', 'outMode', 'rtGrid', 'L.out.pc', 'L.out.mobile']),
     ('分层粒子图·一层的我的效果', "myCreate('rv:SGR1')", ['cellPad', 'cameraMotion', 'L.out.pc', 'L.out.mobile']),
+    # 4.9.106 G4：产物形态登记表里每一种都要有代表（门禁按登记表核对，缺了算 ❌）
+    ('上升星头循环·单层', "openType('rise')", None),
+    ('单元序列·单层', "(async () => { openType('kiku'); await __idle(); state.P.form = 'unit'; state.P.stars = 40; onParam(); })()", ['prod.pc', 'prod.mobile', 'cutIn']),     # 手机单束每颗星一个粒子，规范 ≤ 50
+    ('地面循环·多层', "(async () => { await myCreate('fountain'); await __idle(); selectComboLayer(0); })()", ['L.out.pc', 'L.out.mobile']),
 ]
 
 
@@ -447,6 +483,15 @@ def main():
         errs = [(r['name'], r['err']) for r in res if r.get('err')]
         put('契约', not bad and not errs, f'{len(res)} 个代表效果、{sum(len([x for x in r.get("rows", []) if not x.get("skip")]) for r in res)} 行' + (f'；{len(bad)} 行接不上：' + '；'.join(f'{n} › {x["key"]}' for n, x in bad[:12]) if bad else '') + (f'；{len(errs)} 个出错' if errs else ''))
         jbad = [(r['name'], j) for r in res for j in r.get('json', [])]
+        # 4.9.106 G4：产物形态登记表 ⊇ 烘焙器所有产物（FORM_NAMES），代表效果覆盖登记表里每一种；只挑了几个代表（--scn）时不查覆盖
+        reg = next((r for r in res if r.get('registry')), None)
+        if reg:
+            miss_reg = sorted(set(reg['formNames']) - set(reg['registry']))
+            if miss_reg: jbad.append(('产物形态登记表', '烘焙器有产物没登记（61_naming.js PRODUCT_FORMS）：' + '、'.join(miss_reg)))
+            if not names:
+                seen = {f for r in res for f in r.get('forms', []) if f}
+                miss_scn = sorted(set(reg['registry']) - seen)
+                if miss_scn: jbad.append(('产物形态登记表', '这几种产物没有代表效果（合入门禁.py SCENARIOS 加一行）：' + '、'.join(miss_scn)))
         put('导出', not jbad, '导出拦截、空壳发射器、寿命 / 大小都过' if not jbad else '；'.join(f'{n}：{j}' for n, j in jbad[:8]))
         report.append({'item': '契约明细', 'data': res})
     if want('界面', src):

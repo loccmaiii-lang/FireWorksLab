@@ -1,0 +1,10 @@
+{
+ "id": "NFS-SG-G106",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "SGR1",
+  "SGS1"
+ ],
+ "note": "导出（23）· 烘焙器 4.9.106：换名后跑标准检查。"
+}
