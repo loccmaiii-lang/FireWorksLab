@@ -34,12 +34,13 @@ B03 = '--b03' in sys.argv             # B03（22，10-13 16:28）：合并音频
 B04 = '--b04' in sys.argv             # B04（22，10-14 01:27）：B03 修订2 + 坝顶低层 Tiny + 小平台前台小花 XS + 扇 3.0，输出 B04动画.html（可切 B03 修订2 对比）
 B05 = '--b05' in sys.argv             # B05（22，10-14 22:22）：B04 + ResourceFX 新命名 + 手游 6 种，输出 B05动画.html（可切 B04 对比）
 B06 = '--b06' in sys.argv             # B06（22，10-15 01:04）：低层回 150 m、扇重排（不叠、跟拍、不重复）、P2 / P4 / P6 三朵等大，输出 B06动画.html（可切 B05 对比）
-B07 = '--b07' in sys.argv             # B07（22，10-15 11:14）：尾缀从地上出来、档位隔点、小平台加密、方向 / 大小 / 颜色，输出 B07动画.html（可切 B06 对比）
+B08 = '--b08' in sys.argv             # B08（22，10-15 22:02）：低配限峰、小平台降高放大、同时同高两层、种类大小、时间错开，输出 B08动画.html（可切 B07 修订1 对比）
+B07 = '--b07' in sys.argv or B08     # B07（22，10-15 11:14）：尾缀从地上出来、档位隔点、小平台加密、方向 / 大小 / 颜色，输出 B07动画.html（可切 B06 对比）
 B4P = B04 or B05 or B06 or B07 or DAY  # B04 起的小平台前台小花 / 新尾缀画法（Day v4 起也是）
 if B05 or B06 or B07 or DAY:
     b01.register_b05_mobile()
 B02 = DAY or B03 or B4P or R1M or '--b02' in sys.argv
-SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B07', 'B07', 'B07') if B07 else ('_B06', 'B06', 'B06') if B06 else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B08', 'B08', 'B08') if B08 else ('_B07', 'B07', 'B07') if B07 else ('_B06', 'B06', 'B06') if B06 else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
@@ -57,7 +58,9 @@ if B05:
 if B06:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B06-低层150-扇重排跟拍-P2P4P6等大编排检查.json'
 if B07:
-    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07修订1-球花竖直-扇不叠编排检查.json'   # 修订1（10-15 12:14 后）：16.0.33 那份见 B07-尾缀落地-档位隔点-小平台加密编排检查.json
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B07修订1-球花竖直-扇不叠编排检查.json'
+if B08:
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B08-低配限峰-小平台放大-种类大小编排检查.json'   # 修订1（10-15 12:14 后）：16.0.33 那份见 B07-尾缀落地-档位隔点-小平台加密编排检查.json
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -165,6 +168,20 @@ def risks_b07():
     ]
 
 
+def risks_b08():
+    g, ob, l8 = CHECK['gpu'], COMPILE.get('oneTable', {}), CHECK['b08']
+    hv, ar, ov = CHECK['heavy'], CHECK['area'], CHECK['overlap']
+    cap = [x for x in l8['capLow'] if not x.get('stuck')]
+    return [
+        f"低配限峰（用户 22:02，960 低配 Translucency 到 1 ms 会降分辨率）：PC 低配「开花负担」最高 {hv['B08-low'][0][0]}（B05 {hv['B05-low'][0][0]}、B07 修订1 {hv['B07-low'][0][0]}；上限 1.8）。为此低配里 {len(cap)} 处再隔一次，墙 / 入口也隔。中、高配和 B05 持平（{hv['B08-medium'][0][0]} / {hv['B08-high'][0][0]}，B05 {hv['B05-medium'][0][0]} / {hv['B05-high'][0][0]}）。负担是按 B05 实测曲线粗标的，要 B08 实机测量确认。",
+        f"小平台：Tiny 尾缀条目缩放 ×0.65，到顶约 40 m（时间不变）；花放大到 36–44 m，对称一对 ±15–22°。没出新尾缀。",
+        f"同时同高的 P 排 / B 排小号（{len(l8['zigzagTiers'])} 处）：P 排挂现有中尾缀开到 +210 m，B 排 ×0.8 留在 +150 m，上下两层，不再被盖住。",
+        f"种类大小：小号 90–100 m（爆裂星 / 金裂星 100、点灭星 / 小银菊 95）；B 排小号同一刻上面有中大号的不放大（放大了会和上面那排同高叠）。中号、大号不放大。再叠每点 ×0.92 / 1 / 1.08。",
+        f"更随机：{len(l8['mix'])} 排两种花交替（奇数位换不同色系）；齐发排每点错开 0–0.2 s，一半里→外放慢到 0.15 s / 步。",
+        f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}；球花重叠 PC {ov['pcIncidents']} 处；GPU 同秒峰值 {g['peak']}。没在 UE 里放过。",
+    ]
+
+
 def risks_day():
     ck, ob = CHECK, COMPILE.get('oneTable', {})
     iv = ck.get('intervals', {})
@@ -265,8 +282,9 @@ def b02_data(species):
             rows.append(dict(name=x['name'].replace('小平台 · ', ''), beams=len(x['beams']), flowers=len(x['flowers']), h=round(b01.TPL[x['id']]['flightHeight']), n=n))
     tr = b01.NEWT['trails'][b01.FRONTF['trail']]
     for x in b01.FRONTF['flowers'] if B4P else ():   # B04 前台小花：XS 尾缀（不缩放，到顶 62 m）+ 小花挂在 XS 终点
-        beams = [dict(roll=t['roll'], reach=tr['burstM'], off=t['off'], dur=tr['durationS'], rgb=fmt_rgb(rgb(tr['color']))) for t in x['trails']]
-        fl = [dict(beam=f['trail'], t=round(x['trails'][f['trail']]['off'] + tr['riseS'], 4), dia=f['diameter'], r=tr['burstM'],
+        R = tr['burstM'] * b01.FRONTF.get('trailScale', 1.0)   # B08：Tiny 条目缩放后的到顶高度
+        beams = [dict(roll=t['roll'], reach=R, off=t['off'], dur=tr['durationS'], rgb=fmt_rgb(rgb(tr['color']))) for t in x['trails']]
+        fl = [dict(beam=f['trail'], t=round(x['trails'][f['trail']]['off'] + tr['riseS'], 4), dia=f['diameter'], r=R,
                    life=b01.TPL[b01.FRONTF['flowerSources'][f['src']]['template']]['life'], rgb=fmt_rgb(rgb(b01.FRONTF['flowerSources'][f['src']]['color']))) for f in x['flowers']]
         combos[x['code']] = dict(beams=beams, flowers=fl)
         n = sum(len(c['events']) for c in LOGIC['cues'] if c['sp'] == x['code'])
@@ -378,17 +396,19 @@ def main():
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
     native = b01.REL_H
     data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b07() if B07 else risks_b06() if B06 else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
+                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b08() if B08 else risks_b07() if B07 else risks_b06() if B06 else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
     if B02:
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
-    if B07:                           # B07 / B06 一页对比；大号数字跟 VO
-        old = json.loads((OUT / '逻辑方案_B06.json').read_text(encoding='utf-8'))
+    if B07:                           # B07 / B06 一页对比（B08：B08 / B07 修订1）；大号数字跟 VO
+        old = json.loads((OUT / ('逻辑方案_B07.json' if B08 else '逻辑方案_B06.json')).read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
         au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
-        data['variants'] = [dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠 · 手游中配隔点', cues=cues, events=events, sections=secs, anchors=anchors),
-                            dict(label='B06', note='尾缀从坝顶 + 高差出来', cues=oc, events=oe, sections=osecs, anchors=oanch)]
+        data['variants'] = ([dict(label='B08', note='低配限峰 · 小平台 40 m 放大 · 同时同高两层 · 种类大小 · 时间错开', cues=cues, events=events, sections=secs, anchors=anchors),
+                             dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠', cues=oc, events=oe, sections=osecs, anchors=oanch)] if B08 else
+                            [dict(label='B07修订1', note='球花尾缀竖直 · 扇不叠 · 手游中配隔点', cues=cues, events=events, sections=secs, anchors=anchors),
+                             dict(label='B06', note='尾缀从坝顶 + 高差出来', cues=oc, events=oe, sections=osecs, anchors=oanch)])
         data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
                           fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
     if B06:                           # B06 / B05 一页对比；大号数字跟 VO

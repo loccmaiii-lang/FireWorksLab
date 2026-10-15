@@ -53,6 +53,8 @@ const FILE_VERSION = 12;   // 修订5（22，10-12）：B02 手机开关（片�
 const HERO_ID = (args.find(a => a.startsWith('--hero-trail=')) || '').split('=')[1] || 'Hero';   // 用户 10-12 20:18：主角尾缀 ResourceFX 行叫 Hero（行加好、资源同步进基础库后再带 --hero-trail）   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D；修订4（手游编排 10-12）：尾缀 v2 开花点
 const TRAIL_V1 = args.includes('--trail-v1');   // 旧尾缀高度（190 / 265 / 410 m），只做对比；默认跟引擎里已重导的尾缀 v2（150 / 210 / 330 m）
 const clone = x => structuredClone(x);
+// B08（22，10-15）：Roll 正 → 局部 +Y（UE 标准）。用户 10-15 19:23 倾角归 0 后错位消失 → 旧约定「Roll 正 → Y 负」和 UE 相反。--roll-legacy 复现旧产物。
+const RS = args.includes('--roll-legacy') ? -1 : 1;
 const round = x => Math.round(x * 1e6) / 1e6;
 const sec = (x) => round(x);
 
@@ -77,7 +79,7 @@ const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大
     const burst = clone(sb);      // 原花的同一个资源，放大、升到大号尾缀的终点
     const k = f.diameter / st.diameter;
     burst.native.LocalTimeOffset = fb.native.LocalTimeOffset;
-    burst.native.PositionOffset = {X: 0, Y: round(-Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
+    burst.native.PositionOffset = {X: 0, Y: round(RS * Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
     burst.native.RotationOffset = {...burst.native.RotationOffset, Roll: roll};
     burst.native.EffectScale = {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)};
     burst.preview = {...burst.preview, diameterM: f.diameter};
@@ -109,7 +111,7 @@ const mobileDerivedReport = [];
     trail.native.RotationOffset = {...trail.native.RotationOffset, Roll: roll};
     const burst = clone(sb), k = f.diameter / (f.nativeM || st.diameter);
     burst.native.LocalTimeOffset = fb.native.LocalTimeOffset;
-    burst.native.PositionOffset = {X: 0, Y: round(-Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
+    burst.native.PositionOffset = {X: 0, Y: round(RS * Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
     burst.native.RotationOffset = {...burst.native.RotationOffset, Roll: roll};
     burst.native.EffectScale = f.nativeM ? {X: round(k), Y: round(k), Z: round(k)} : {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)};
     if (f.resource) { burst.native.FXResourceId = f.resource; burst.baseTemplateRef = f.resource + '|burst'; burst.resourceSource = {table: burst.resourceSource?.table, rowName: rowOf.get(f.resource) || f.resource}; }
@@ -157,6 +159,7 @@ const FRONTF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/前�
   if (mv) for (const x of [...FRONTF.flowers]) if (x.flowers.length) FRONTF.flowers.push({...x, code: x.code + mv.codeSuffix, id: x.id + mv.idSuffix, engineId: x.engineId + mv.idSuffix,
     name: x.name + mv.nameSuffix, zh: x.zh.split('·').slice(0, -1).join('·') + '·' + FRONTF.flowerSources[mv.src].zh, flowers: x.flowers.map(f => ({...f, src: mv.src})), mobileOf: x.code, from: null}); }
 const tidOf = c => c.trail ? `${c.templateId}__${c.trail.toUpperCase()}` : c.templateId;
+const TS = FRONTF.trailScale ?? 1;   // B08：小平台 Tiny 尾缀条目 EffectScale（到顶跟着缩、时间不变）
 const b04Report = {tiny: [], front: [], placeholders: Object.fromEntries(Object.entries(NEWT.trails).map(([k, v]) => [k, {resourceId: v.resourceId, confirmed: v.confirmed}]))};
 const newTrail = (e, tr) => {   // 把一条尾缀条目换成新尾缀（行名占位时 resourceSource 标出来）
   e.native.FXResourceId = tr.resourceId; e.baseTemplateRef = tr.resourceId + '|trail';
@@ -200,27 +203,27 @@ const newTrail = (e, tr) => {   // 把一条尾缀条目换成新尾缀（行名
       const e = newTrail(clone(sTrail), tr);
       e.id = `trail-${i}`;
       Object.assign(e.native, {LocalTimeOffset: round(t.off), PositionOffset: {X: 0, Y: 0, Z: 0}, RotationOffset: {Pitch: 0, Yaw: 0, Roll: round(t.roll)},
-        RandomRotationRange: {Pitch: 0, Yaw: 0, Roll: round(t.randomRoll || 0)}, EffectScale: {X: 1, Y: 1, Z: 1}});
+        RandomRotationRange: {Pitch: 0, Yaw: 0, Roll: round(t.randomRoll || 0)}, EffectScale: {X: round(TS), Y: round(TS), Z: round(TS)}});
       entries.push(e);
     });
     x.flowers.forEach((f, i) => {
       const src = FRONTF.flowerSources[f.src], st = tmap.get(src.template), sb = smap.get(st.subTemplateRef).entries.find(e => e.role === 'burst'), t = x.trails[f.trail];
       const a = t.roll * Math.PI / 180, k = f.diameter / (src.nativeM || st.diameter), e = clone(sb);
       e.id = `flower-${i}`;
-      Object.assign(e.native, {LocalTimeOffset: round(t.off + tr.riseS), PositionOffset: {X: 0, Y: round(-Math.sin(a) * tr.burstM * 100), Z: round(Math.cos(a) * tr.burstM * 100)},
+      Object.assign(e.native, {LocalTimeOffset: round(t.off + tr.riseS), PositionOffset: {X: 0, Y: round(RS * Math.sin(a) * tr.burstM * TS * 100), Z: round(Math.cos(a) * tr.burstM * TS * 100)},
         RotationOffset: {Pitch: 0, Yaw: 0, Roll: 0}, EffectScale: src.nativeM ? {X: round(k), Y: round(k), Z: round(k)} : {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)}});
       if (src.resource && src.resource !== e.native.FXResourceId) {   // B05：小平台专用资源（2800–2803）
         e.native.FXResourceId = src.resource; e.baseTemplateRef = src.resource + '|burst'; e.resourceSource = {table: e.resourceSource?.table, rowName: src.rowName || src.resource};
       }
       e.preview = {...e.preview, diameterM: f.diameter};
-      entries.push(e); tips.push({z: Math.cos(a) * tr.burstM, t: t.off + tr.riseS, end: t.off + tr.riseS + st.life});
+      entries.push(e); tips.push({z: Math.cos(a) * tr.burstM * TS, t: t.off + tr.riseS, end: t.off + tr.riseS + st.life});
     });
     const sub = {name: x.name, category: x.flowers.length ? 'ball' : 'trail', seed: 1, randomMode: 'materialized', entries, id: x.engineId, engineId: x.engineId, key: x.engineId + '@' + (x.version || 1), version: x.version || 1,   // B07 修订1：对称同时的倾角是版本 2
-      sizeEvidence: {trailEndpointM: tr.burstM, trailRiseS: tr.riseS, source: `${tr.userName || 'XS'} 尾缀烘焙器导出值（${tr.export.split('（')[0]}）；小花 EffectScale 缩小，未在 UE 量`, enginePlaybackVerified: false},
+      sizeEvidence: {trailEndpointM: round(tr.burstM * TS), trailRiseS: tr.riseS, trailScale: TS, source: `${tr.userName || 'XS'} 尾缀烘焙器导出值（${tr.export.split('（')[0]}）${TS !== 1 ? `，条目 EffectScale ×${TS}（到顶跟着缩、时间不变，UE-14 实测尾缀条目缩放；Tiny 本身未量）` : ''}；小花 EffectScale 缩放，未在 UE 量`, enginePlaybackVerified: false},
       newTrail: {trail: FRONTF.trail, resourceId: tr.resourceId, confirmed: tr.confirmed, particle: tr.particle},
       derivedFrom: {rule: '通用尾缀 XS（不缩放、固化倾角）+ 现成小花缩小挂在 XS 终点；不新增资源', by: '跨年秀（22）2026-10-14，用户 01:27（看板 i12）', from: x.from, engineScaleVerified: false}};
     doc.subTemplateLibrary.push(sub);
-    const flight = tips.length ? Math.max(...tips.map(t => t.z)) : tr.burstM, rise = tips.length ? Math.min(...tips.map(t => t.t)) : 0;
+    const flight = tips.length ? Math.max(...tips.map(t => t.z)) : tr.burstM * TS, rise = tips.length ? Math.min(...tips.map(t => t.t)) : 0;
     const end = Math.max(...x.trails.map(t => t.off + tr.durationS), ...tips.map(t => t.end));
     const proto = tmap.get(FRONTF.flowerSources[x.flowers[0]?.src || 'SC'].template), dia = Math.max(0, ...x.flowers.map(f => f.diameter));
     doc.templateLibrary.push({...clone(proto), id: x.id, name: x.name, zone: 'front', kind: x.kind || 'small', shape: x.kind === 'comet' ? 'comet' : 'sphere', diameter: dia, width: dia,
@@ -255,7 +258,7 @@ if (B02) {
       const R = est.beamReachM[b.res] * b.scale * est.tipFrac, a = b.roll * Math.PI / 180, k = f.diameter / st.diameter;
       const e = clone(sb);
       e.id = `flower-${i}`;
-      Object.assign(e.native, {LocalTimeOffset: round(b.off + est.tipTimeS), PositionOffset: {X: 0, Y: round(-Math.sin(a) * R * 100), Z: round(Math.cos(a) * R * 100)},
+      Object.assign(e.native, {LocalTimeOffset: round(b.off + est.tipTimeS), PositionOffset: {X: 0, Y: round(RS * Math.sin(a) * R * 100), Z: round(Math.cos(a) * R * 100)},
         RotationOffset: {Pitch: 0, Yaw: 0, Roll: 0}, EffectScale: {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)}});
       e.preview = {...e.preview, diameterM: f.diameter};
       entries.push(e); tips.push({z: Math.cos(a) * R, t: b.off + est.tipTimeS});

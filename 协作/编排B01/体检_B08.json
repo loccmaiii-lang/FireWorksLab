@@ -1,0 +1,6737 @@
+{
+ "events": {
+  "total": 936,
+  "balls": 529,
+  "fans": 180,
+  "cues": 326,
+  "bySize": {
+   "S": 213,
+   "M": 196,
+   "L": 120
+  }
+ },
+ "tiers": {
+  "high": {
+   "events": 936,
+   "balls": 756,
+   "fans": 180,
+   "gpuPeakPerS": 124
+  },
+  "medium": {
+   "events": 776,
+   "balls": 596,
+   "fans": 180,
+   "gpuPeakPerS": 94
+  },
+  "low": {
+   "events": 360,
+   "balls": 360,
+   "fans": 0,
+   "gpuPeakPerS": 60
+  }
+ },
+ "gpu": {
+  "soft": 200,
+  "hard": 234,
+  "peak": 124,
+  "peakAt": 105.5,
+  "softOver": 0,
+  "hardOver": 0,
+  "softList": [],
+  "hardList": [],
+  "nearBudget": 0,
+  "nearBudgetList": []
+ },
+ "beatLock": {
+  "within0_1": 0.836,
+  "within0_15": 0.883,
+  "cues": 213
+ },
+ "strongBeat": 0.54,
+ "generations": {
+  "fullWaves": 31,
+  "meanTailsInFlightCues": 1.87,
+  "fullWavesWithNextTails": 27,
+  "share": 0.871
+ },
+ "relayViolations": [],
+ "lead": {
+  "SC": {
+   "name": "小银菊",
+   "fullWaves": 2,
+   "firstAt": 23.7
+  },
+  "GC": {
+   "name": "金裂星",
+   "fullWaves": 1,
+   "firstAt": 21.2
+  },
+  "CR": {
+   "name": "爆裂星",
+   "fullWaves": 1,
+   "firstAt": 58.6
+  },
+  "LM": {
+   "name": "小青柠",
+   "fullWaves": 2,
+   "firstAt": 48.9
+  },
+  "OG": {
+   "name": "橙辉星",
+   "fullWaves": 1,
+   "firstAt": 29.5
+  },
+  "ST": {
+   "name": "点灭星",
+   "fullWaves": 1,
+   "firstAt": 23.7
+  },
+  "GP": {
+   "name": "绿牡丹",
+   "fullWaves": 2,
+   "firstAt": 35.1
+  },
+  "GS": {
+   "name": "金锦菊",
+   "fullWaves": 2,
+   "firstAt": 28.6
+  },
+  "PW": {
+   "name": "彩千轮",
+   "fullWaves": 2,
+   "firstAt": 86.9
+  },
+  "GY": {
+   "name": "金曜菊",
+   "fullWaves": 4,
+   "firstAt": 74.0
+  },
+  "CL": {
+   "name": "金蕊青柠星",
+   "fullWaves": 3,
+   "firstAt": 80.5
+  },
+  "GR": {
+   "name": "金芒菊",
+   "fullWaves": 5,
+   "firstAt": 16.2
+  },
+  "ML": {
+   "name": "多重菊",
+   "fullWaves": 3,
+   "firstAt": 93.4
+  },
+  "GK": {
+   "name": "金垂柳",
+   "fullWaves": 0,
+   "firstAt": null
+  },
+  "SS": {
+   "name": "银彩菊",
+   "fullWaves": 3,
+   "firstAt": 116.2
+  }
+ },
+ "leadMissing": [],
+ "heroes": {
+  "goldKamuroEvents": 5,
+  "heroCues": 3,
+  "hero280": 5,
+  "nonHero": []
+ },
+ "share": {
+  "S": 0.403,
+  "M": 0.371,
+  "L": 0.227
+ },
+ "largeBySpecies": {
+  "金蕊青柠星·大": 15,
+  "金垂柳·主角": 5,
+  "金芒菊·大": 18,
+  "多重菊·大": 15,
+  "银彩菊": 67
+ },
+ "density": null,
+ "rhythm": null,
+ "vary": null,
+ "wavesPerBar": {
+  "release": 1.46,
+  "push": 1.27
+ },
+ "tierNesting": {
+  "ok": true,
+  "violations": []
+ },
+ "sectionShare": {
+  "B01_S0": {
+   "name": "倒计时",
+   "lead": "SC",
+   "leadShare": 0.5,
+   "top": [
+    [
+     "SC",
+     9
+    ],
+    [
+     "OG",
+     8
+    ],
+    [
+     "CR",
+     1
+    ]
+   ]
+  },
+  "B01_S1": {
+   "name": "开场高潮",
+   "lead": "GR",
+   "leadShare": 0.26,
+   "top": [
+    [
+     "GR",
+     9
+    ],
+    [
+     "SC",
+     9
+    ],
+    [
+     "ST",
+     8
+    ]
+   ]
+  },
+  "B01_S3": {
+   "name": "密集问答",
+   "lead": "SC",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "GS",
+     9
+    ],
+    [
+     "GP",
+     9
+    ],
+    [
+     "OG",
+     8
+    ]
+   ]
+  },
+  "B01_S4": {
+   "name": "往返扫射",
+   "lead": "GR",
+   "leadShare": 0.35,
+   "top": [
+    [
+     "GR",
+     9
+    ],
+    [
+     "SC",
+     9
+    ],
+    [
+     "LM",
+     8
+    ]
+   ]
+  },
+  "B01_S5": {
+   "name": "第一次抬升",
+   "lead": "SS",
+   "leadShare": 0.34,
+   "top": [
+    [
+     "SS",
+     15
+    ],
+    [
+     "GR",
+     8
+    ],
+    [
+     "ML",
+     8
+    ]
+   ]
+  },
+  "B01_S6": {
+   "name": "低位密奏",
+   "lead": "ST",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "GY",
+     9
+    ]
+   ]
+  },
+  "B01_S7": {
+   "name": "第二次递进 A",
+   "lead": "CLL",
+   "leadShare": 0.28,
+   "top": [
+    [
+     "PW",
+     9
+    ],
+    [
+     "CLL",
+     5
+    ],
+    [
+     "CL",
+     4
+    ]
+   ]
+  },
+  "B01_S8": {
+   "name": "蓄势收窄",
+   "lead": "GS",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "MLL",
+     5
+    ],
+    [
+     "ML",
+     4
+    ],
+    [
+     "GRL",
+     3
+    ]
+   ]
+  },
+  "B01_S9": {
+   "name": "高潮 II",
+   "lead": "MLL",
+   "leadShare": 0.06,
+   "top": [
+    [
+     "SS",
+     23
+    ],
+    [
+     "ML",
+     14
+    ],
+    [
+     "LM",
+     12
+    ]
+   ]
+  },
+  "B01_S10": {
+   "name": "转场铺色 A",
+   "lead": "SC",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "PW",
+     9
+    ]
+   ]
+  },
+  "B01_S11": {
+   "name": "转场铺色 B",
+   "lead": "GP",
+   "leadShare": 0.72,
+   "top": [
+    [
+     "GP",
+     13
+    ],
+    [
+     "SS",
+     5
+    ]
+   ]
+  },
+  "B01_S12": {
+   "name": "终章",
+   "lead": "GRL",
+   "leadShare": 0.11,
+   "top": [
+    [
+     "GY",
+     18
+    ],
+    [
+     "SS",
+     14
+    ],
+    [
+     "CL",
+     12
+    ]
+   ]
+  },
+  "B01_S13": {
+   "name": "白色收束",
+   "lead": "SS",
+   "leadShare": 0.67,
+   "top": [
+    [
+     "SS",
+     10
+    ],
+    [
+     "SCM",
+     4
+    ],
+    [
+     "GKH",
+     1
+    ]
+   ]
+  }
+ },
+ "quietBars": {
+  "bar41": {
+   "span": [
+    67.46,
+    68.98
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 0
+  },
+  "bar65": {
+   "span": [
+    106.38,
+    107.9
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 21
+  },
+  "bar96": {
+   "span": [
+    156.65,
+    158.17
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 29
+  }
+ },
+ "baseFans": {
+  "groups": 0,
+  "cues": 0,
+  "events": 0,
+  "coverage": 0.0,
+  "skipped": [],
+  "bySpecies": {},
+  "byDirection": {},
+  "launchOffsetMax": null,
+  "beams": 0
+ },
+ "fanSummary": {
+  "cues": 55,
+  "events": 180,
+  "bySpecies": {
+   "R1": 10,
+   "R5": 8,
+   "R9": 33,
+   "R9R": 25,
+   "S13": 24,
+   "S5": 50,
+   "S9": 30
+  },
+  "aliveGpuPeak": 54
+ },
+ "grid": {
+  "offGridLaunch": 0,
+  "maxAbsDz": 0.0,
+  "minLaunch": 1.3,
+  "lastEnd": 214.37
+ },
+ "aliveBodies": {
+  "peak": 34,
+  "peakAt": 188.5,
+  "mean": 10.8
+ },
+ "aliveBySpecies": {
+  "SC": {
+   "name": "小银菊",
+   "peak": 10,
+   "peakAt": 185.0
+  },
+  "GC": {
+   "name": "金裂星",
+   "peak": 8,
+   "peakAt": 65.0
+  },
+  "CR": {
+   "name": "爆裂星",
+   "peak": 8,
+   "peakAt": 59.0
+  },
+  "LM": {
+   "name": "小青柠",
+   "peak": 8,
+   "peakAt": 49.5
+  },
+  "OG": {
+   "name": "橙辉星",
+   "peak": 8,
+   "peakAt": 30.0
+  },
+  "ST": {
+   "name": "点灭星",
+   "peak": 8,
+   "peakAt": 24.0
+  },
+  "GP": {
+   "name": "绿牡丹",
+   "peak": 9,
+   "peakAt": 35.5
+  },
+  "GS": {
+   "name": "金锦菊",
+   "peak": 9,
+   "peakAt": 29.0
+  },
+  "PW": {
+   "name": "彩千轮",
+   "peak": 9,
+   "peakAt": 87.5
+  },
+  "GY": {
+   "name": "金曜菊",
+   "peak": 9,
+   "peakAt": 75.0
+  },
+  "CL": {
+   "name": "金蕊青柠星",
+   "peak": 4,
+   "peakAt": 81.0
+  },
+  "GR": {
+   "name": "金芒菊",
+   "peak": 9,
+   "peakAt": 17.0
+  },
+  "ML": {
+   "name": "多重菊",
+   "peak": 8,
+   "peakAt": 61.5
+  },
+  "GK": {
+   "name": "金垂柳",
+   "peak": 0,
+   "peakAt": null
+  },
+  "SS": {
+   "name": "银彩菊",
+   "peak": 10,
+   "peakAt": 64.5
+  },
+  "GRL": {
+   "name": "金芒菊·大",
+   "peak": 5,
+   "peakAt": 130.0
+  },
+  "CLL": {
+   "name": "金蕊青柠星·大",
+   "peak": 5,
+   "peakAt": 81.0
+  },
+  "MLL": {
+   "name": "多重菊·大",
+   "peak": 5,
+   "peakAt": 94.0
+  },
+  "GKH": {
+   "name": "金垂柳·主角",
+   "peak": 3,
+   "peakAt": 171.5
+  },
+  "SCM": {
+   "name": "银冠菊·中（手游）",
+   "peak": 8,
+   "peakAt": 194.5
+  },
+  "OGM": {
+   "name": "辉星·中（手游）",
+   "peak": 0,
+   "peakAt": null
+  }
+ },
+ "barsWithWave": 41,
+ "b02": {
+  "split": null,
+  "beamFlowerCues": 137,
+  "mobileTiers": {
+   "high": {
+    "events": 448,
+    "gpuPeakPerS": 60,
+    "bySpecies": {
+     "金芒菊·大": 110,
+     "两根Tiny·分裂星": 76,
+     "Tiny·分裂星": 74,
+     "三根Tiny·分裂星": 58,
+     "点灭星": 55,
+     "辉星·中（手游）": 40,
+     "V形四根Tiny": 19,
+     "银冠菊·中（手游）": 10,
+     "爆裂星": 6
+    }
+   },
+   "medium": {
+    "events": 349,
+    "gpuPeakPerS": 54,
+    "bySpecies": {
+     "金芒菊·大": 90,
+     "点灭星": 55,
+     "两根Tiny·分裂星": 51,
+     "三根Tiny·分裂星": 48,
+     "Tiny·分裂星": 41,
+     "辉星·中（手游）": 34,
+     "V形四根Tiny": 16,
+     "银冠菊·中（手游）": 8,
+     "爆裂星": 6
+    }
+   },
+   "low": {
+    "events": 181,
+    "gpuPeakPerS": 36,
+    "bySpecies": {
+     "金芒菊·大": 90,
+     "点灭星": 39,
+     "辉星·中（手游）": 28,
+     "V形四根Tiny": 14,
+     "银冠菊·中（手游）": 6,
+     "爆裂星": 4
+    }
+   }
+  },
+  "mobileCues": 133,
+  "pcOnlyCues": 321,
+  "mobileOnlyCues": 128,
+  "beamFlowers": {
+   "cues": 71,
+   "events": 227,
+   "byType": {
+    "FC2A": 29,
+    "FC2B": 47,
+    "FS1A": 55,
+    "FS1B": 19,
+    "FS3A": 34,
+    "FS3B": 24,
+    "FV4": 19
+   },
+   "medium": 175,
+   "low": 159
+  },
+  "heights": "v2",
+  "overlap": {
+   "heavyOverlapSamples": 944,
+   "heroOverlapSamples": 46
+  }
+ },
+ "gpuModel": {
+  "source": "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json",
+  "readAt": "2026-10-14T14:12:07.898Z",
+  "trail": {
+   "S": 6,
+   "M": 6,
+   "L": 6
+  },
+  "fanPerBeam": {
+   "R": 0,
+   "S": 1
+  },
+  "lowLayerTrail": 0,
+  "platformTrail": 0,
+  "bodies": {
+   "小青柠": 1,
+   "绿牡丹": 1,
+   "彩千轮": 1,
+   "金曜菊": 2,
+   "多重菊": 1,
+   "多重菊·大": 1
+  }
+ },
+ "b05": {
+  "lowLayer": [],
+  "labels": 40,
+  "mobileSplit": [
+   {
+    "cue": "B07_P01m5",
+    "of": "B07_P01",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P02m5",
+    "of": "B07_P02",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B02_C029m5",
+    "of": "B02_C029",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B07_P03m5",
+    "of": "B07_P03",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B02_C033m5",
+    "of": "B02_C033",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P04m5",
+    "of": "B07_P04",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P05m5",
+    "of": "B07_P05",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P06m5",
+    "of": "B07_P06",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B02_C041m5",
+    "of": "B02_C041",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B07_P07m5",
+    "of": "B07_P07",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B02_C047m5",
+    "of": "B02_C047",
+    "size": "X",
+    "fromSp": "FS1B",
+    "fromTpl": "B04_XS1_SC_b",
+    "toSp": "FS1Bm",
+    "toTpl": "B04_XS1_SC_b_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B07_P08m5",
+    "of": "B07_P08",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P09m5",
+    "of": "B07_P09",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P11m5",
+    "of": "B07_P11",
+    "size": "X",
+    "fromSp": "FS1B",
+    "fromTpl": "B04_XS1_SC_b",
+    "toSp": "FS1Bm",
+    "toTpl": "B04_XS1_SC_b_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B02_C065m5",
+    "of": "B02_C065",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B02_C068m5",
+    "of": "B02_C068",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B02_C073m5",
+    "of": "B02_C073",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B02_C074m5",
+    "of": "B02_C074",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B02_C075m5",
+    "of": "B02_C075",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P12m5",
+    "of": "B07_P12",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P13m5",
+    "of": "B07_P13",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B02_C080m5",
+    "of": "B02_C080",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P14m5",
+    "of": "B07_P14",
+    "size": "X",
+    "fromSp": "FS1B",
+    "fromTpl": "B04_XS1_SC_b",
+    "toSp": "FS1Bm",
+    "toTpl": "B04_XS1_SC_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P15m5",
+    "of": "B07_P15",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B02_C085m5",
+    "of": "B02_C085",
+    "size": "X",
+    "fromSp": "FS1B",
+    "fromTpl": "B04_XS1_SC_b",
+    "toSp": "FS1Bm",
+    "toTpl": "B04_XS1_SC_b_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B07_P16m5",
+    "of": "B07_P16",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P17m5",
+    "of": "B07_P17",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P19m5",
+    "of": "B07_P19",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B07_P20m5",
+    "of": "B07_P20",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P21m5",
+    "of": "B07_P21",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B07_P22m5",
+    "of": "B07_P22",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P23m5",
+    "of": "B07_P23",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P24m5",
+    "of": "B07_P24",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B02_C123m5",
+    "of": "B02_C123",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P25m5",
+    "of": "B07_P25",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P26m5",
+    "of": "B07_P26",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B02_C127m5",
+    "of": "B02_C127",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P27m5",
+    "of": "B07_P27",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B07_P28m5",
+    "of": "B07_P28",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B02_C132m5",
+    "of": "B02_C132",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 7
+   },
+   {
+    "cue": "B07_P29m5",
+    "of": "B07_P29",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B02_C136m5",
+    "of": "B02_C136",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P30m5",
+    "of": "B07_P30",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P31m5",
+    "of": "B07_P31",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P32m5",
+    "of": "B07_P32",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P33m5",
+    "of": "B07_P33",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P34m5",
+    "of": "B07_P34",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B07_P35m5",
+    "of": "B07_P35",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P36m5",
+    "of": "B07_P36",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P37m5",
+    "of": "B07_P37",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P38m5",
+    "of": "B07_P38",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P39m5",
+    "of": "B07_P39",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P40m5",
+    "of": "B07_P40",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P41m5",
+    "of": "B07_P41",
+    "size": "X",
+    "fromSp": "FS3B",
+    "fromTpl": "B04_XS3_GS_b",
+    "toSp": "FS3Bm",
+    "toTpl": "B04_XS3_GS_b_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B07_P42m5",
+    "of": "B07_P42",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P43m5",
+    "of": "B07_P43",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P44m5",
+    "of": "B07_P44",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P45m5",
+    "of": "B07_P45",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P46m5",
+    "of": "B07_P46",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P47m5",
+    "of": "B07_P47",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P48m5",
+    "of": "B07_P48",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 1
+   },
+   {
+    "cue": "B07_P49m5",
+    "of": "B07_P49",
+    "size": "X",
+    "fromSp": "FS1A",
+    "fromTpl": "B04_XS1_SC_a",
+    "toSp": "FS1Am",
+    "toTpl": "B04_XS1_SC_a_M",
+    "scale": 1.0,
+    "events": 4
+   },
+   {
+    "cue": "B07_P50m5",
+    "of": "B07_P50",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 3
+   },
+   {
+    "cue": "B07_P51m5",
+    "of": "B07_P51",
+    "size": "X",
+    "fromSp": "FC2B",
+    "fromTpl": "B04_XS2_CR_b",
+    "toSp": "FC2Bm",
+    "toTpl": "B04_XS2_CR_b_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P52m5",
+    "of": "B07_P52",
+    "size": "X",
+    "fromSp": "FS3A",
+    "fromTpl": "B04_XS3_GS_a",
+    "toSp": "FS3Am",
+    "toTpl": "B04_XS3_GS_a_M",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B07_P53m5",
+    "of": "B07_P53",
+    "size": "X",
+    "fromSp": "FC2A",
+    "fromTpl": "B04_XS2_CR_a",
+    "toSp": "FC2Am",
+    "toTpl": "B04_XS2_CR_a_M",
+    "scale": 1.0,
+    "events": 3
+   }
+  ],
+  "mobileStandinSwap": [
+   {
+    "cue": "B02_C017m5",
+    "of": "B02_C017",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 9
+   },
+   {
+    "cue": "B02_C031m",
+    "of": "B02_C031",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 5
+   },
+   {
+    "cue": "B02_C042m5",
+    "of": "B02_C042",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 9
+   },
+   {
+    "cue": "B02_C048m5",
+    "of": "B02_C048",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K108",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C066m",
+    "of": "B02_C066",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C076m",
+    "of": "B02_C076",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 5
+   },
+   {
+    "cue": "B02_C100m",
+    "of": "B02_C100",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "SCM",
+    "toTpl": "B05_SilverChry_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C107m",
+    "of": "B02_C107",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C121m",
+    "of": "B02_C121",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 5
+   },
+   {
+    "cue": "B02_C125m",
+    "of": "B02_C125",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 5
+   },
+   {
+    "cue": "B02_C137m",
+    "of": "B02_C137",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "SCM",
+    "toTpl": "B05_SilverChry_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C154m",
+    "of": "B02_C154",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C165m",
+    "of": "B02_C165",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B03_CD10m5",
+    "of": "B03_CD10",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD09m5",
+    "of": "B03_CD09",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD08m5",
+    "of": "B03_CD08",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD07m5",
+    "of": "B03_CD07",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD06m5",
+    "of": "B03_CD06",
+    "size": "S",
+    "fromSp": "SC",
+    "fromTpl": "R03_SilverChry__K92",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe__K92",
+    "scale": 0.92,
+    "events": 1
+   },
+   {
+    "cue": "B03_CD05m5",
+    "of": "B03_CD05",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD04m5",
+    "of": "B03_CD04",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD03m5",
+    "of": "B03_CD03",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B03_CD02m5",
+    "of": "B03_CD02",
+    "size": "S",
+    "fromSp": "OG",
+    "fromTpl": "R03_OrangeGlitter",
+    "toSp": "ST",
+    "toTpl": "R03_Strobe",
+    "scale": 1.0,
+    "events": 2
+   },
+   {
+    "cue": "B02_C010m5",
+    "of": "B02_C010",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry__K92",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K92",
+    "scale": 1.472,
+    "events": 5
+   },
+   {
+    "cue": "B02_C026m5",
+    "of": "B02_C026",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K85",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K85",
+    "scale": 1.36,
+    "events": 3
+   },
+   {
+    "cue": "B02_C026k99m5",
+    "of": "B02_C026k99",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K99",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K99",
+    "scale": 1.584,
+    "events": 1
+   },
+   {
+    "cue": "B02_C026k92m5",
+    "of": "B02_C026k92",
+    "size": "M",
+    "fromSp": "GS",
+    "fromTpl": "R03_GoldSpark__K92",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144__K92",
+    "scale": 1.472,
+    "events": 1
+   },
+   {
+    "cue": "B02_C034m5",
+    "of": "B02_C034",
+    "size": "M",
+    "fromSp": "GR",
+    "fromTpl": "R03_GoldRayChry",
+    "toSp": "OGM",
+    "toTpl": "B05_Glitter_M144",
+    "scale": 1.6,
+    "events": 5
+   },
+   {
+    "cue": "B02_C044m5",
+    "of": "B02_C044",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C051m5",
+    "of": "B02_C051",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C051k100m5",
+    "of": "B02_C051k100",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C057m5",
+    "of": "B02_C057",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C086m5",
+    "of": "B02_C086",
+    "size": "L",
+    "fromSp": "GKH",
+    "fromTpl": "R03_GoldKamuro_H280",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 1
+   },
+   {
+    "cue": "B02_C087m5",
+    "of": "B02_C087",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 4
+   },
+   {
+    "cue": "B02_C091m5",
+    "of": "B02_C091",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 4
+   },
+   {
+    "cue": "B02_C096m5",
+    "of": "B02_C096",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C102m5",
+    "of": "B02_C102",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C102k100m5",
+    "of": "B02_C102k100",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C109k108m5",
+    "of": "B02_C109k108",
+    "size": "L",
+    "fromSp": "GRL",
+    "fromTpl": "R03_GoldRayChry_L230__K108",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C113m5",
+    "of": "B02_C113",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K108",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 5
+   },
+   {
+    "cue": "B02_C129m5",
+    "of": "B02_C129",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K99",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K99",
+    "scale": 1.518,
+    "events": 3
+   },
+   {
+    "cue": "B02_C129k108m5",
+    "of": "B02_C129k108",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K108",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 2
+   },
+   {
+    "cue": "B02_C133m5",
+    "of": "B02_C133",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 5
+   },
+   {
+    "cue": "B02_C146m5",
+    "of": "B02_C146",
+    "size": "L",
+    "fromSp": "GKH",
+    "fromTpl": "R03_GoldKamuro_H280",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 3
+   },
+   {
+    "cue": "B02_C147m5",
+    "of": "B02_C147",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 2
+   },
+   {
+    "cue": "B02_C150m5",
+    "of": "B02_C150",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 2
+   },
+   {
+    "cue": "B02_C168m5",
+    "of": "B02_C168",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C171m5",
+    "of": "B02_C171",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 5
+   },
+   {
+    "cue": "B02_C174m5",
+    "of": "B02_C174",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 3
+   },
+   {
+    "cue": "B02_C178m5",
+    "of": "B02_C178",
+    "size": "L",
+    "fromSp": "SS",
+    "fromTpl": "R03_SilverStrobeChry__K92",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230__K92",
+    "scale": 1.411,
+    "events": 2
+   },
+   {
+    "cue": "B02_C181m5",
+    "of": "B02_C181",
+    "size": "L",
+    "fromSp": "GKH",
+    "fromTpl": "R03_GoldKamuro_H280",
+    "toSp": "GRL",
+    "toTpl": "R03_GoldRayChry_L230",
+    "scale": 1.533,
+    "events": 1
+   }
+  ],
+  "mobileKept": [
+   {
+    "cue": "B02_C015m",
+    "sp": "CR"
+   },
+   {
+    "cue": "B02_C037",
+    "sp": "FV4"
+   },
+   {
+    "cue": "B07_P10",
+    "sp": "FV4"
+   },
+   {
+    "cue": "B02_C070",
+    "sp": "FV4"
+   },
+   {
+    "cue": "B02_C071m",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C078m",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C084",
+    "sp": "FV4"
+   },
+   {
+    "cue": "B07_P18",
+    "sp": "FV4"
+   },
+   {
+    "cue": "B02_C143m",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C156m",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B03_CD01m5",
+    "sp": "CR"
+   },
+   {
+    "cue": "B02_C081m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C082m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C109m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C140k100m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C140m5",
+    "sp": "GRL"
+   },
+   {
+    "cue": "B02_C161m5",
+    "sp": "GRL"
+   }
+  ],
+  "platform": [
+   "B07_P01",
+   "B07_P02",
+   "B02_C029",
+   "B07_P03",
+   "B02_C033",
+   "B07_P04",
+   "B07_P05",
+   "B02_C037",
+   "B07_P06",
+   "B02_C041",
+   "B07_P07",
+   "B02_C047",
+   "B07_P08",
+   "B07_P09",
+   "B07_P10",
+   "B07_P11",
+   "B02_C065",
+   "B02_C068",
+   "B02_C070",
+   "B02_C073",
+   "B02_C074",
+   "B02_C075",
+   "B07_P12",
+   "B07_P13",
+   "B02_C080",
+   "B07_P14",
+   "B02_C084",
+   "B07_P15",
+   "B02_C085",
+   "B07_P16",
+   "B07_P17",
+   "B07_P18",
+   "B07_P19",
+   "B07_P20",
+   "B07_P21",
+   "B07_P22",
+   "B07_P23",
+   "B07_P24",
+   "B02_C123",
+   "B07_P25",
+   "B07_P26",
+   "B02_C127",
+   "B07_P27",
+   "B07_P28",
+   "B02_C132",
+   "B07_P29",
+   "B02_C136",
+   "B07_P30",
+   "B07_P31",
+   "B07_P32",
+   "B07_P33",
+   "B07_P34",
+   "B07_P35",
+   "B07_P36",
+   "B07_P37",
+   "B07_P38",
+   "B07_P39",
+   "B07_P40",
+   "B07_P41",
+   "B07_P42",
+   "B07_P43",
+   "B07_P44",
+   "B07_P45",
+   "B07_P46",
+   "B07_P47",
+   "B07_P48",
+   "B07_P49",
+   "B07_P50",
+   "B07_P51",
+   "B07_P52",
+   "B07_P53"
+  ],
+  "mobileRule": {
+   "violations": [],
+   "eventsBySpecies": {
+    "金芒菊·大": 110,
+    "两根Tiny·分裂星": 76,
+    "Tiny·分裂星": 74,
+    "三根Tiny·分裂星": 58,
+    "点灭星": 55,
+    "辉星·中（手游）": 40,
+    "V形四根Tiny": 19,
+    "银冠菊·中（手游）": 10,
+    "爆裂星": 6
+   }
+  },
+  "mobileScale": {
+   "点灭星": {
+    "cues": 15,
+    "events": 55,
+    "scales": [
+     0.92,
+     1.0
+    ],
+    "max": 1.0
+   },
+   "辉星·中（手游）": {
+    "cues": 10,
+    "events": 40,
+    "scales": [
+     1.36,
+     1.472,
+     1.584,
+     1.6
+    ],
+    "max": 1.6
+   },
+   "爆裂星": {
+    "cues": 2,
+    "events": 6,
+    "scales": [
+     1.0
+    ],
+    "max": 1.0
+   },
+   "三根Tiny·分裂星": {
+    "cues": 11,
+    "events": 24,
+    "scales": [
+     1.467
+    ],
+    "max": 1.467
+   },
+   "两根Tiny·分裂星": {
+    "cues": 10,
+    "events": 29,
+    "scales": [
+     1.2
+    ],
+    "max": 1.2
+   },
+   "Tiny·分裂星": {
+    "cues": 4,
+    "events": 19,
+    "scales": [
+     1.267
+    ],
+    "max": 1.267
+   },
+   "V形四根Tiny": {
+    "cues": 5,
+    "events": 19,
+    "scales": [],
+    "max": null
+   },
+   "金芒菊·大": {
+    "cues": 33,
+    "events": 110,
+    "scales": [
+     1.411,
+     1.518,
+     1.533
+    ],
+    "max": 1.533
+   },
+   "银冠菊·中（手游）": {
+    "cues": 2,
+    "events": 10,
+    "scales": [
+     1.6
+    ],
+    "max": 1.6
+   }
+  }
+ },
+ "b08": {
+  "base": "B03 修订2 → B04 小平台（不换 Tiny）",
+  "trio": [
+   {
+    "cue": "B02_C082",
+    "with_": "B02_C081",
+    "t": 99.87,
+    "before": {
+     "points": [
+      "P3",
+      "P5"
+     ],
+     "sp": "GR",
+     "size": "M",
+     "dz": [
+      30.0,
+      40.0
+     ],
+     "burst": 99.8772
+    },
+    "after": {
+     "points": [
+      "P2",
+      "P6"
+     ],
+     "sp": "GRL",
+     "size": "L",
+     "dz": [
+      20.0,
+      20.0
+     ],
+     "burst": 99.965,
+     "centerDz": 40.0
+    }
+   }
+  ],
+  "dzFlattened": {
+   "S": 121,
+   "M": 181,
+   "L": 129
+  },
+  "coda": [
+   {
+    "cue": "B02_C174",
+    "wave": "白墙7",
+    "before": [
+     "P2",
+     "P4",
+     "P6"
+    ],
+    "after": [
+     "P2",
+     "P4",
+     "P6"
+    ]
+   },
+   {
+    "cue": "B02_C176",
+    "wave": "白墙7",
+    "before": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "after": []
+   },
+   {
+    "cue": "B02_C178",
+    "wave": "白墙5",
+    "before": [
+     "P2",
+     "P4",
+     "P6"
+    ],
+    "after": [
+     "P2",
+     "P6"
+    ]
+   },
+   {
+    "cue": "B02_C179",
+    "wave": "白墙5",
+    "before": [
+     "P3",
+     "P5"
+    ],
+    "after": []
+   },
+   {
+    "cue": "B07_C900",
+    "t": 184.47,
+    "added": "金墙下面 B 点一排银冠菊（外→里）"
+   }
+  ],
+  "castle": [
+   {
+    "row": "B02_C096",
+    "cue": "B02_C098",
+    "t": 116.28,
+    "fromSp": "SS",
+    "toSp": "SCM",
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ]
+   },
+   {
+    "row": "B02_C161",
+    "cue": "B02_C163",
+    "t": 184.38,
+    "fromSp": "GRL",
+    "toSp": "GR",
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ]
+   },
+   {
+    "row": "B02_C168",
+    "cue": "B02_C169",
+    "t": 192.48,
+    "fromSp": "SS",
+    "toSp": "SCM",
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ]
+   },
+   {
+    "row": "B02_C171",
+    "cue": "B02_C172",
+    "t": 194.08,
+    "fromSp": "SS",
+    "toSp": "SCM",
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ]
+   }
+  ],
+  "zigzagTiers": [
+   {
+    "t": 23.65,
+    "up": "B02_C017",
+    "upSp": "SC",
+    "low": "B02_C018",
+    "lowSp": "ST",
+    "standin": "B02_C017m5"
+   },
+   {
+    "t": 48.85,
+    "up": "B02_C042",
+    "upSp": "SC",
+    "low": "B02_C043",
+    "lowSp": "LM",
+    "standin": "B02_C042m5"
+   }
+  ],
+  "orders": [
+   {
+    "row": "B02_C015",
+    "t": 21.15,
+    "order": "left"
+   },
+   {
+    "row": "B02_C017",
+    "t": 23.68,
+    "order": "right"
+   },
+   {
+    "row": "B02_C026",
+    "t": 28.58,
+    "order": "outside-in"
+   },
+   {
+    "row": "B02_C042",
+    "t": 48.08,
+    "order": "left"
+   },
+   {
+    "row": "B02_C048",
+    "t": 57.78,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C051",
+    "t": 60.97,
+    "order": "together"
+   },
+   {
+    "row": "B02_C056",
+    "t": 60.98,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C066",
+    "t": 73.98,
+    "order": "right"
+   },
+   {
+    "row": "B02_C071",
+    "t": 80.47,
+    "order": "outside-in"
+   },
+   {
+    "row": "B02_C078",
+    "t": 93.37,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C095",
+    "t": 112.88,
+    "order": "together"
+   },
+   {
+    "row": "B02_C091",
+    "t": 112.97,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C106",
+    "t": 122.58,
+    "order": "together"
+   },
+   {
+    "row": "B02_C102",
+    "t": 122.67,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C107",
+    "t": 125.88,
+    "order": "together"
+   },
+   {
+    "row": "B02_C109",
+    "t": 129.07,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C121",
+    "t": 138.88,
+    "order": "right"
+   },
+   {
+    "row": "B02_C125",
+    "t": 145.28,
+    "order": "outside-in"
+   },
+   {
+    "row": "B02_C129",
+    "t": 151.77,
+    "order": "right"
+   },
+   {
+    "row": "B02_C131",
+    "t": 151.78,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C140",
+    "t": 164.77,
+    "order": "together"
+   },
+   {
+    "row": "B02_C143",
+    "t": 167.97,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C153",
+    "t": 174.48,
+    "order": "together"
+   },
+   {
+    "row": "B02_C154",
+    "t": 177.78,
+    "order": "center-out"
+   },
+   {
+    "row": "B02_C165",
+    "t": 187.48,
+    "order": "right"
+   }
+  ],
+  "contrast": [
+   {
+    "cue": "B02_C038",
+    "t": 41.75,
+    "over": "gold",
+    "fromSp": "GC",
+    "toSp": "SC"
+   },
+   {
+    "cue": "B02_C062",
+    "t": 64.25,
+    "over": "silver",
+    "fromSp": "SC",
+    "toSp": "GC"
+   },
+   {
+    "cue": "B02_C090",
+    "t": 108.45,
+    "over": "silver",
+    "fromSp": "SC",
+    "toSp": "OG"
+   },
+   {
+    "cue": "B02_C099",
+    "t": 113.65,
+    "over": "silver",
+    "fromSp": "SC",
+    "toSp": "LM"
+   },
+   {
+    "cue": "B02_C115",
+    "t": 129.95,
+    "over": "gold",
+    "fromSp": "GC",
+    "toSp": "LM"
+   },
+   {
+    "cue": "B02_C119",
+    "t": 132.35,
+    "over": "silver",
+    "fromSp": "SC",
+    "toSp": "GC"
+   },
+   {
+    "cue": "B02_C139",
+    "t": 158.25,
+    "over": "silver",
+    "fromSp": "SC",
+    "toSp": "OG"
+   },
+   {
+    "cue": "B02_C145",
+    "t": 165.15,
+    "over": "gold",
+    "fromSp": "GC",
+    "toSp": "OG"
+   },
+   {
+    "cue": "B02_C160",
+    "t": 178.15,
+    "over": "gold",
+    "fromSp": "GC",
+    "toSp": "SC"
+   },
+   {
+    "cue": "B02_C167",
+    "t": 187.85,
+    "over": "gold",
+    "fromSp": "GC",
+    "toSp": "LM"
+   }
+  ],
+  "bRows": [
+   {
+    "first": "B02_C115",
+    "then": "B02_C119",
+    "t": 132.35,
+    "firstKeeps": [
+     "B0",
+     "B2",
+     "B5",
+     "B7"
+    ],
+    "thenKeeps": [
+     "B1",
+     "B3",
+     "B4",
+     "B6"
+    ]
+   },
+   {
+    "first": "B02_C160",
+    "then": "B02_C164",
+    "t": 180.95,
+    "firstKeeps": [
+     "B0",
+     "B2",
+     "B5",
+     "B7"
+    ],
+    "thenKeeps": [
+     "B1",
+     "B3",
+     "B4",
+     "B6"
+    ]
+   }
+  ],
+  "mix": [
+   {
+    "t": 21.15,
+    "row": "B02_C015",
+    "cue": "B02_C015",
+    "sp": "GC",
+    "partner": "OG",
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ]
+   },
+   {
+    "t": 57.78,
+    "row": "B02_C048",
+    "cue": "B02_C049",
+    "sp": "GS",
+    "partner": "ML",
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ]
+   },
+   {
+    "t": 112.88,
+    "row": "B02_C095",
+    "cue": "B02_C095",
+    "sp": "CL",
+    "partner": "ML",
+    "points": [
+     "P3",
+     "P7"
+    ]
+   },
+   {
+    "t": 126.25,
+    "row": "B02_C112",
+    "cue": "B02_C112",
+    "sp": "SC",
+    "partner": "OG",
+    "points": [
+     "B1",
+     "B3",
+     "B5",
+     "B7"
+    ]
+   },
+   {
+    "t": 138.85,
+    "row": "B02_C124",
+    "cue": "B02_C124",
+    "sp": "SC",
+    "partner": "OG",
+    "points": [
+     "B1",
+     "B3",
+     "B5",
+     "B7"
+    ]
+   },
+   {
+    "t": 171.65,
+    "row": "B02_C152",
+    "cue": "B02_C152",
+    "sp": "SC",
+    "partner": "OG",
+    "points": [
+     "B1",
+     "B3",
+     "B5",
+     "B7"
+    ]
+   },
+   {
+    "t": 180.95,
+    "row": "B02_C164",
+    "cue": "B02_C164",
+    "sp": "SC",
+    "partner": "OG",
+    "points": [
+     "B3",
+     "B6"
+    ]
+   },
+   {
+    "t": 187.85,
+    "row": "B02_C167",
+    "cue": "B02_C167",
+    "sp": "LM",
+    "partner": "OG",
+    "points": [
+     "B1",
+     "B3",
+     "B5",
+     "B7"
+    ]
+   }
+  ],
+  "speciesBase": {
+   "skipUnderUpper": 26,
+   "GC": 5,
+   "SC": 18
+  },
+  "sizes": [
+   {
+    "cue": "B02_C013",
+    "sizes": {
+     "0.99": 2,
+     "1.08": 3,
+     "1.17": 3
+    }
+   },
+   {
+    "cue": "B02_C015",
+    "sizes": {
+     "0.94": 3,
+     "1.02": 1,
+     "1.1": 1
+    }
+   },
+   {
+    "cue": "B02_C015x",
+    "sizes": {
+     "0.85": 3,
+     "0.92": 1
+    }
+   },
+   {
+    "cue": "B02_C017",
+    "sizes": {
+     "0.89": 1,
+     "0.97": 5,
+     "1.05": 3
+    }
+   },
+   {
+    "cue": "B02_C026",
+    "sizes": {
+     "0.85": 3,
+     "0.92": 1,
+     "0.99": 1
+    }
+   },
+   {
+    "cue": "B02_C027",
+    "sizes": {
+     "0.85": 1,
+     "0.92": 1,
+     "0.99": 2
+    }
+   },
+   {
+    "cue": "B02_C030",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 4,
+     "1.08": 3
+    }
+   },
+   {
+    "cue": "B02_C031",
+    "sizes": {
+     "0.92": 3,
+     "1.0": 1,
+     "1.08": 5
+    }
+   },
+   {
+    "cue": "B02_C038",
+    "sizes": {
+     "0.92": 3,
+     "1.0": 3,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C042",
+    "sizes": {
+     "0.89": 4,
+     "0.97": 3,
+     "1.05": 2
+    }
+   },
+   {
+    "cue": "B02_C048",
+    "sizes": {
+     "0.99": 3,
+     "1.17": 2
+    }
+   },
+   {
+    "cue": "B02_C049x",
+    "sizes": {
+     "0.85": 1,
+     "0.92": 2,
+     "0.99": 1
+    }
+   },
+   {
+    "cue": "B02_C051",
+    "sizes": {
+     "0.92": 3,
+     "1.0": 2
+    }
+   },
+   {
+    "cue": "B02_C055",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 3,
+     "1.08": 4
+    }
+   },
+   {
+    "cue": "B02_C056",
+    "sizes": {
+     "0.92": 2,
+     "0.99": 2
+    }
+   },
+   {
+    "cue": "B02_C062",
+    "sizes": {
+     "0.85": 3,
+     "0.92": 3,
+     "0.99": 2
+    }
+   },
+   {
+    "cue": "B02_C066",
+    "sizes": {
+     "0.92": 6,
+     "1.0": 1,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C069",
+    "sizes": {
+     "0.99": 3,
+     "1.08": 2,
+     "1.17": 3
+    }
+   },
+   {
+    "cue": "B02_C071",
+    "sizes": {
+     "0.85": 4,
+     "0.92": 1
+    }
+   },
+   {
+    "cue": "B02_C071o",
+    "sizes": {
+     "0.92": 2,
+     "0.99": 2
+    }
+   },
+   {
+    "cue": "B02_C076",
+    "sizes": {
+     "0.85": 3,
+     "0.92": 4,
+     "0.99": 2
+    }
+   },
+   {
+    "cue": "B02_C078",
+    "sizes": {
+     "0.92": 4,
+     "1.0": 1
+    }
+   },
+   {
+    "cue": "B02_C078o",
+    "sizes": {
+     "0.92": 2,
+     "1.0": 1,
+     "1.08": 1
+    }
+   },
+   {
+    "cue": "B02_C100",
+    "sizes": {
+     "0.92": 4,
+     "1.0": 1
+    }
+   },
+   {
+    "cue": "B02_C100o",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 2,
+     "1.08": 1
+    }
+   },
+   {
+    "cue": "B02_C102",
+    "sizes": {
+     "0.92": 3,
+     "1.0": 2
+    }
+   },
+   {
+    "cue": "B02_C106",
+    "sizes": {
+     "0.99": 3,
+     "1.17": 1
+    }
+   },
+   {
+    "cue": "B02_C107",
+    "sizes": {
+     "0.85": 3,
+     "0.92": 1,
+     "0.99": 5
+    }
+   },
+   {
+    "cue": "B02_C109",
+    "sizes": {
+     "0.99": 3,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C110",
+    "sizes": {
+     "0.85": 2,
+     "0.92": 2
+    }
+   },
+   {
+    "cue": "B02_C112",
+    "sizes": {
+     "0.85": 2,
+     "0.92": 1,
+     "0.99": 1
+    }
+   },
+   {
+    "cue": "B02_C112x",
+    "sizes": {
+     "0.85": 2,
+     "0.92": 1,
+     "0.99": 1
+    }
+   },
+   {
+    "cue": "B02_C115",
+    "sizes": {
+     "0.99": 1,
+     "1.08": 3
+    }
+   },
+   {
+    "cue": "B02_C119",
+    "sizes": {
+     "1.0": 2,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C121",
+    "sizes": {
+     "0.99": 1,
+     "1.08": 4,
+     "1.17": 4
+    }
+   },
+   {
+    "cue": "B02_C124",
+    "sizes": {
+     "1.0": 2,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C124x",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 1,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C125",
+    "sizes": {
+     "0.99": 6,
+     "1.08": 2,
+     "1.17": 1
+    }
+   },
+   {
+    "cue": "B02_C128",
+    "sizes": {
+     "0.92": 4,
+     "1.0": 3,
+     "1.08": 1
+    }
+   },
+   {
+    "cue": "B02_C129",
+    "sizes": {
+     "0.99": 3,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C131",
+    "sizes": {
+     "0.99": 3,
+     "1.08": 1
+    }
+   },
+   {
+    "cue": "B02_C137",
+    "sizes": {
+     "0.92": 2,
+     "1.0": 3
+    }
+   },
+   {
+    "cue": "B02_C137o",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 1,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C139",
+    "sizes": {
+     "0.99": 3,
+     "1.08": 4,
+     "1.17": 1
+    }
+   },
+   {
+    "cue": "B02_C140",
+    "sizes": {
+     "0.92": 3,
+     "1.0": 2
+    }
+   },
+   {
+    "cue": "B02_C141",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 1,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C143",
+    "sizes": {
+     "0.92": 3,
+     "1.0": 2
+    }
+   },
+   {
+    "cue": "B02_C143o",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 1,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B02_C145",
+    "sizes": {
+     "0.92": 5,
+     "1.08": 3
+    }
+   },
+   {
+    "cue": "B02_C149",
+    "sizes": {
+     "0.99": 4,
+     "1.08": 1,
+     "1.17": 3
+    }
+   },
+   {
+    "cue": "B02_C156",
+    "sizes": {
+     "0.85": 4,
+     "0.92": 1
+    }
+   },
+   {
+    "cue": "B02_C156o",
+    "sizes": {
+     "0.85": 1,
+     "0.92": 2,
+     "0.99": 1
+    }
+   },
+   {
+    "cue": "B02_C165",
+    "sizes": {
+     "0.85": 3,
+     "0.92": 4,
+     "0.99": 2
+    }
+   },
+   {
+    "cue": "B02_C167",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 3
+    }
+   },
+   {
+    "cue": "B02_C167x",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 1,
+     "1.08": 2
+    }
+   },
+   {
+    "cue": "B07_C900",
+    "sizes": {
+     "0.92": 1,
+     "1.0": 2,
+     "1.08": 5
+    }
+   }
+  ],
+  "jitter": {
+   "together": 9,
+   "centerOutSlow": 3
+  },
+  "platform": [
+   {
+    "cue": "B07_P01",
+    "t": 18.81,
+    "section": "开场高潮",
+    "sp": "FS3A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P02",
+    "t": 22.05,
+    "section": "开场高潮",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P03",
+    "t": 28.54,
+    "section": "密集问答",
+    "sp": "FS3B",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P04",
+    "t": 33.4,
+    "section": "密集问答",
+    "sp": "FC2B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P05",
+    "t": 39.89,
+    "section": "密集问答",
+    "sp": "FS3A",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P06",
+    "t": 41.51,
+    "section": "往返扫射",
+    "sp": "FC2B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P07",
+    "t": 48.0,
+    "section": "往返扫射",
+    "sp": "FS3A",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P08",
+    "t": 54.48,
+    "section": "第一次抬升",
+    "sp": "FS3B",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P09",
+    "t": 58.13,
+    "section": "第一次抬升",
+    "sp": "FC2A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P10",
+    "t": 61.38,
+    "section": "第一次抬升",
+    "sp": "FV4",
+    "points": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P11",
+    "t": 64.62,
+    "section": "第一次抬升",
+    "sp": "FS1B",
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P12",
+    "t": 80.43,
+    "section": "第二次递进 A",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P13",
+    "t": 83.88,
+    "section": "第二次递进 A",
+    "sp": "FS3A",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P14",
+    "t": 90.36,
+    "section": "第二次递进 A",
+    "sp": "FS1B",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P15",
+    "t": 96.65,
+    "section": "蓄势收窄",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P16",
+    "t": 103.13,
+    "section": "蓄势收窄",
+    "sp": "FS3B",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P17",
+    "t": 108.0,
+    "section": "高潮 II",
+    "sp": "FC2A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P18",
+    "t": 111.24,
+    "section": "高潮 II",
+    "sp": "FV4",
+    "points": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P19",
+    "t": 114.48,
+    "section": "高潮 II",
+    "sp": "FS1A",
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P20",
+    "t": 117.73,
+    "section": "高潮 II",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P21",
+    "t": 120.97,
+    "section": "高潮 II",
+    "sp": "FS3A",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P22",
+    "t": 124.21,
+    "section": "高潮 II",
+    "sp": "FS1A",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P23",
+    "t": 127.46,
+    "section": "高潮 II",
+    "sp": "FS3A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P24",
+    "t": 130.7,
+    "section": "高潮 II",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P25",
+    "t": 137.19,
+    "section": "转场铺色 A",
+    "sp": "FS3A",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P26",
+    "t": 139.01,
+    "section": "转场铺色 A",
+    "sp": "FC2B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P27",
+    "t": 143.67,
+    "section": "转场铺色 A",
+    "sp": "FS3B",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P28",
+    "t": 145.29,
+    "section": "转场铺色 B",
+    "sp": "FS1A",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P29",
+    "t": 151.78,
+    "section": "转场铺色 B",
+    "sp": "FS3B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P30",
+    "t": 158.27,
+    "section": "终章",
+    "sp": "FC2A",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P31",
+    "t": 159.89,
+    "section": "终章",
+    "sp": "FS3A",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P32",
+    "t": 161.51,
+    "section": "终章",
+    "sp": "FC2B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P33",
+    "t": 163.13,
+    "section": "终章",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P34",
+    "t": 164.75,
+    "section": "终章",
+    "sp": "FS3B",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P35",
+    "t": 166.37,
+    "section": "终章",
+    "sp": "FS1A",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P36",
+    "t": 168.4,
+    "section": "终章",
+    "sp": "FS3B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P37",
+    "t": 169.62,
+    "section": "终章",
+    "sp": "FC2A",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P38",
+    "t": 171.65,
+    "section": "终章",
+    "sp": "FS3A",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P39",
+    "t": 172.86,
+    "section": "终章",
+    "sp": "FC2B",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P40",
+    "t": 174.89,
+    "section": "终章",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P41",
+    "t": 176.1,
+    "section": "终章",
+    "sp": "FS3B",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P42",
+    "t": 177.93,
+    "section": "终章",
+    "sp": "FS1A",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P43",
+    "t": 179.35,
+    "section": "终章",
+    "sp": "FS3A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P44",
+    "t": 181.37,
+    "section": "终章",
+    "sp": "FC2A",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P45",
+    "t": 182.59,
+    "section": "终章",
+    "sp": "FS3A",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P46",
+    "t": 184.62,
+    "section": "终章",
+    "sp": "FC2A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   },
+   {
+    "cue": "B07_P47",
+    "t": 185.83,
+    "section": "终章",
+    "sp": "FC2A",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P48",
+    "t": 187.86,
+    "section": "终章",
+    "sp": "FS3A",
+    "points": [
+     "F3"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P49",
+    "t": 189.08,
+    "section": "终章",
+    "sp": "FS1A",
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "order": "left"
+   },
+   {
+    "cue": "B07_P50",
+    "t": 190.9,
+    "section": "终章",
+    "sp": "FS3A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "center-out"
+   },
+   {
+    "cue": "B07_P51",
+    "t": 192.32,
+    "section": "终章",
+    "sp": "FC2B",
+    "points": [
+     "F0",
+     "F6"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P52",
+    "t": 194.14,
+    "section": "白色收束",
+    "sp": "FS3A",
+    "points": [
+     "F2",
+     "F4"
+    ],
+    "order": "together"
+   },
+   {
+    "cue": "B07_P53",
+    "t": 198.81,
+    "section": "白色收束",
+    "sp": "FC2A",
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "order": "outside-in"
+   }
+  ],
+  "fans": [
+   {
+    "slot": 0,
+    "anchor": 16.2,
+    "section": "B01_S1",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 1,
+    "placed": "中心外扩",
+    "species": [
+     "R9",
+     "R9R",
+     "S9"
+    ],
+    "steps": 2,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     16.2,
+     16.8
+    ],
+    "onBeat": [
+     false,
+     false
+    ],
+    "old": [
+     "B02_C012"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 1,
+    "anchor": 20.4,
+    "section": "B01_S1",
+    "heavy": false,
+    "waveDir": "齐发",
+    "onsets": 4,
+    "placed": "隔点交替",
+    "species": [
+     "S5"
+    ],
+    "steps": 2,
+    "events": 8,
+    "shiftBeats": 0.0,
+    "times": [
+     20.4,
+     21.2
+    ],
+    "onBeat": [
+     true,
+     true
+    ],
+    "old": [
+     "B02_C016",
+     "B02_C019"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 2,
+    "anchor": 24.3,
+    "section": "B01_S3",
+    "heavy": false,
+    "waveDir": "外→里",
+    "onsets": 3,
+    "placed": "逐点走·右→左",
+    "species": [
+     "S5"
+    ],
+    "steps": 8,
+    "events": 8,
+    "shiftBeats": 0.0,
+    "times": [
+     24.1,
+     24.3,
+     24.5,
+     24.7,
+     24.9,
+     25.1,
+     25.3,
+     25.5
+    ],
+    "onBeat": [
+     true,
+     false,
+     false,
+     true,
+     false,
+     true,
+     true,
+     false
+    ],
+    "old": [
+     "B02_C028"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 3,
+    "anchor": 30.7,
+    "section": "B01_S3",
+    "heavy": false,
+    "waveDir": "齐发",
+    "onsets": 5,
+    "placed": "中段一对",
+    "species": [
+     "R1"
+    ],
+    "steps": 1,
+    "events": 2,
+    "shiftBeats": 0.0,
+    "times": [
+     30.6
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C032"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 4,
+    "anchor": 37.2,
+    "section": "B01_S4",
+    "heavy": false,
+    "waveDir": "右→左",
+    "onsets": 1,
+    "placed": "中间一对",
+    "species": [
+     "S9"
+    ],
+    "steps": 1,
+    "events": 2,
+    "shiftBeats": 0.0,
+    "times": [
+     37.1
+    ],
+    "onBeat": [
+     false
+    ],
+    "old": [
+     "B02_C035"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 5,
+    "anchor": 41.5,
+    "section": "B01_S4",
+    "heavy": false,
+    "waveDir": "齐发",
+    "onsets": 5,
+    "placed": "单束红雨",
+    "species": [
+     "R1"
+    ],
+    "steps": 8,
+    "events": 8,
+    "shiftBeats": 0.0,
+    "times": [
+     41.5,
+     41.7,
+     41.9,
+     42.1,
+     42.3,
+     42.5,
+     42.7,
+     42.9
+    ],
+    "onBeat": [
+     true,
+     false,
+     false,
+     true,
+     true,
+     true,
+     false,
+     false
+    ],
+    "old": [
+     "B02_C039",
+     "B02_C040"
+    ],
+    "oldEvents": 6
+   },
+   {
+    "slot": 6,
+    "anchor": 47.1,
+    "section": "B01_S5",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 3,
+    "placed": "两翼银扇",
+    "species": [
+     "S9"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     47.2
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C045"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 7,
+    "anchor": 53.5,
+    "section": "B01_S5",
+    "heavy": true,
+    "waveDir": "齐发",
+    "onsets": 3,
+    "placed": "隔点追·左→右",
+    "species": [
+     "R9"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     53.3,
+     53.7,
+     54.1,
+     54.5
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C050",
+     "B02_C052",
+     "B02_C053",
+     "B02_C054"
+    ],
+    "oldEvents": 14
+   },
+   {
+    "slot": 8,
+    "anchor": 56.9,
+    "section": "B01_S5",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 3,
+    "placed": "宽扇隔点走·左→右",
+    "species": [
+     "S13"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 1.0,
+    "times": [
+     57.3,
+     57.5,
+     57.9,
+     58.1
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C058",
+     "B02_C059",
+     "B02_C060"
+    ],
+    "oldEvents": 14
+   },
+   {
+    "slot": 9,
+    "anchor": 64.2,
+    "section": "B01_S5",
+    "heavy": true,
+    "waveDir": "齐发",
+    "onsets": 5,
+    "placed": "隔点红扇齐开",
+    "species": [
+     "R9"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     64.0
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C063",
+     "B02_C064"
+    ],
+    "oldEvents": 6
+   },
+   {
+    "slot": 10,
+    "anchor": 69.6,
+    "section": "B01_S6",
+    "heavy": false,
+    "waveDir": "右→左",
+    "onsets": 4,
+    "placed": "逐点走·左→右",
+    "species": [
+     "S5"
+    ],
+    "steps": 8,
+    "events": 8,
+    "shiftBeats": 0.0,
+    "times": [
+     69.5,
+     69.7,
+     69.9,
+     70.1,
+     70.3,
+     70.5,
+     70.7,
+     70.9
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "old": [
+     "B02_C067"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 11,
+    "anchor": 73.1,
+    "section": "B01_S7",
+    "heavy": true,
+    "waveDir": "外→里",
+    "onsets": 2,
+    "placed": "两翼合拢",
+    "species": [
+     "R9",
+     "R9R"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     73.1
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C072"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 12,
+    "anchor": 82.6,
+    "section": "B01_S7",
+    "heavy": false,
+    "waveDir": "齐发",
+    "onsets": 3,
+    "placed": "隔点交替",
+    "species": [
+     "S5"
+    ],
+    "steps": 2,
+    "events": 8,
+    "shiftBeats": 0.0,
+    "times": [
+     82.9,
+     83.3
+    ],
+    "onBeat": [
+     true,
+     true
+    ],
+    "old": [
+     "B02_C077"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 13,
+    "anchor": 86.0,
+    "section": "B01_S8",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 3,
+    "placed": "两翼展开",
+    "species": [
+     "R9",
+     "R9R"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     86.1
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C079"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 14,
+    "anchor": 92.6,
+    "section": "B01_S8",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 3,
+    "placed": "两翼银扇",
+    "species": [
+     "S9"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     92.4
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C083"
+    ],
+    "oldEvents": 2
+   },
+   {
+    "slot": 15,
+    "anchor": 100.6,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 2,
+    "placed": "两翼合拢",
+    "species": [
+     "R9",
+     "R9R"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     100.7
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C088"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 16,
+    "anchor": 105.5,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 6,
+    "placed": "隔点宽扇齐开",
+    "species": [
+     "S13"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     105.6
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C092"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 17,
+    "anchor": 108.8,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 4,
+    "placed": "两翼展开",
+    "species": [
+     "R9",
+     "R9R"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     108.8
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C093",
+     "B02_C094",
+     "B02_C097"
+    ],
+    "oldEvents": 14
+   },
+   {
+    "slot": 18,
+    "anchor": 112.1,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "右→左",
+    "onsets": 7,
+    "placed": "宽扇隔点走·右→左",
+    "species": [
+     "S13"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 1.0,
+    "times": [
+     112.5,
+     112.9,
+     113.3,
+     113.7
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C101"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 19,
+    "anchor": 115.3,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 5,
+    "placed": "中心外扩",
+    "species": [
+     "R9",
+     "R9R",
+     "S9"
+    ],
+    "steps": 2,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     115.3,
+     116.1
+    ],
+    "onBeat": [
+     true,
+     true
+    ],
+    "old": [
+     "B02_C103",
+     "B02_C104",
+     "B02_C105"
+    ],
+    "oldEvents": 14
+   },
+   {
+    "slot": 20,
+    "anchor": 121.6,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 5,
+    "placed": "外→里压阵",
+    "species": [
+     "R5"
+    ],
+    "steps": 3,
+    "events": 6,
+    "shiftBeats": 0.0,
+    "times": [
+     121.8,
+     122.2,
+     122.6
+    ],
+    "onBeat": [
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C108",
+     "B02_C111"
+    ],
+    "oldEvents": 12
+   },
+   {
+    "slot": 21,
+    "anchor": 125.0,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 6,
+    "placed": "两翼展开",
+    "species": [
+     "R9",
+     "R9R"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     125.0
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C114"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 22,
+    "anchor": 129.1,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "齐发",
+    "onsets": 5,
+    "placed": "隔点宽扇齐开",
+    "species": [
+     "S13"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     129.1
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C117",
+     "B02_C118"
+    ],
+    "oldEvents": 6
+   },
+   {
+    "slot": 23,
+    "anchor": 132.3,
+    "section": "B01_S9",
+    "heavy": true,
+    "waveDir": "齐发",
+    "onsets": 7,
+    "placed": "隔点追·左→右",
+    "species": [
+     "R9"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     132.5,
+     132.9,
+     133.1,
+     133.5
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C120"
+    ],
+    "oldEvents": 2
+   },
+   {
+    "slot": 24,
+    "anchor": 134.6,
+    "section": "B01_S10",
+    "placed": null,
+    "old": [
+     "B02_C122"
+    ]
+   },
+   {
+    "slot": 25,
+    "anchor": 140.9,
+    "section": "B01_S11",
+    "heavy": false,
+    "waveDir": "外→里",
+    "onsets": 2,
+    "placed": "中段一对",
+    "species": [
+     "S5"
+    ],
+    "steps": 1,
+    "events": 2,
+    "shiftBeats": 0.0,
+    "times": [
+     141.0
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C126"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 26,
+    "anchor": 144.4,
+    "section": "B01_S11",
+    "heavy": true,
+    "waveDir": "右→左",
+    "onsets": 4,
+    "placed": "隔点追·右→左",
+    "species": [
+     "R9R"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     144.3,
+     144.5,
+     144.9,
+     145.3
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C130"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 27,
+    "anchor": 150.9,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 5,
+    "placed": "中心外扩",
+    "species": [
+     "R9",
+     "R9R",
+     "S9"
+    ],
+    "steps": 2,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     150.8,
+     151.4
+    ],
+    "onBeat": [
+     true,
+     true
+    ],
+    "old": [
+     "B02_C134"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 28,
+    "anchor": 154.3,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "左→右",
+    "onsets": 2,
+    "placed": "宽扇隔点走·左→右",
+    "species": [
+     "S13"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 2.0,
+    "times": [
+     155.0,
+     155.4,
+     155.6,
+     155.8
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C138"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 29,
+    "anchor": 158.3,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "齐发",
+    "onsets": 3,
+    "placed": "两翼银扇",
+    "species": [
+     "S9"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     158.3
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C142"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 30,
+    "anchor": 160.7,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 3,
+    "placed": "隔点追·右→左",
+    "species": [
+     "R9R"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     160.7,
+     161.1,
+     161.5,
+     161.9
+    ],
+    "onBeat": [
+     false,
+     true,
+     true,
+     false
+    ],
+    "old": [
+     "B02_C144"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 31,
+    "anchor": 163.9,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 5,
+    "placed": "宽扇隔点走·右→左",
+    "species": [
+     "S13"
+    ],
+    "steps": 4,
+    "events": 4,
+    "shiftBeats": 1.0,
+    "times": [
+     164.3,
+     164.8,
+     165.2,
+     165.4
+    ],
+    "onBeat": [
+     true,
+     true,
+     false,
+     false
+    ],
+    "old": [
+     "B02_C148"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 32,
+    "anchor": 167.1,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 2,
+    "placed": "中心外扩",
+    "species": [
+     "R9",
+     "R9R",
+     "S9"
+    ],
+    "steps": 2,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     167.2,
+     167.8
+    ],
+    "onBeat": [
+     true,
+     true
+    ],
+    "old": [
+     "B02_C151"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 33,
+    "anchor": 173.5,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "齐发",
+    "onsets": 6,
+    "placed": "两翼展开",
+    "species": [
+     "R9",
+     "R9R"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     173.7
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C155",
+     "B02_C157"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 34,
+    "anchor": 174.5,
+    "section": "B01_S12",
+    "placed": null,
+    "old": [
+     "B02_C158",
+     "B02_C159"
+    ]
+   },
+   {
+    "slot": 35,
+    "anchor": 176.9,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "外→里",
+    "onsets": 5,
+    "placed": "外→里压阵",
+    "species": [
+     "S9"
+    ],
+    "steps": 3,
+    "events": 6,
+    "shiftBeats": 1.0,
+    "times": [
+     177.3,
+     177.7,
+     177.9
+    ],
+    "onBeat": [
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C162"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 36,
+    "anchor": 183.2,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "右→左",
+    "onsets": 5,
+    "placed": "隔点红扇齐开",
+    "species": [
+     "R9"
+    ],
+    "steps": 1,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     183.4
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C166"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 37,
+    "anchor": 185.1,
+    "section": "B01_S12",
+    "placed": null,
+    "old": [
+     "B02_C170"
+    ]
+   },
+   {
+    "slot": 38,
+    "anchor": 186.7,
+    "section": "B01_S13",
+    "heavy": false,
+    "waveDir": "里→外",
+    "onsets": 4,
+    "placed": "逐点走·右→左",
+    "species": [
+     "S5"
+    ],
+    "steps": 8,
+    "events": 8,
+    "shiftBeats": 1.0,
+    "times": [
+     187.3,
+     187.5,
+     187.7,
+     187.9,
+     188.1,
+     188.3,
+     188.5,
+     188.7
+    ],
+    "onBeat": [
+     true,
+     false,
+     true,
+     true,
+     false,
+     true,
+     false,
+     false
+    ],
+    "old": [
+     "B02_C173"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 39,
+    "anchor": 189.8,
+    "section": "B01_S13",
+    "heavy": false,
+    "waveDir": "里→外",
+    "onsets": 7,
+    "placed": "里→外",
+    "species": [
+     "S5"
+    ],
+    "steps": 4,
+    "events": 8,
+    "shiftBeats": 1.0,
+    "times": [
+     190.3,
+     190.7,
+     190.9,
+     191.3
+    ],
+    "onBeat": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "old": [
+     "B02_C175"
+    ],
+    "oldEvents": 4
+   },
+   {
+    "slot": 40,
+    "anchor": 193.2,
+    "section": "B01_S12",
+    "heavy": true,
+    "waveDir": "里→外",
+    "onsets": 0,
+    "placed": "中心外扩",
+    "species": [
+     "R9",
+     "R9R",
+     "S9"
+    ],
+    "steps": 2,
+    "events": 4,
+    "shiftBeats": 0.0,
+    "times": [
+     193.1,
+     193.9
+    ],
+    "onBeat": [
+     false,
+     false
+    ],
+    "old": [
+     "B02_C177",
+     "B02_C180"
+    ],
+    "oldEvents": 8
+   },
+   {
+    "slot": 41,
+    "anchor": 197.3,
+    "section": "B01_S13",
+    "heavy": false,
+    "waveDir": "齐发",
+    "onsets": 0,
+    "placed": "中间一对",
+    "species": [
+     "R5"
+    ],
+    "steps": 1,
+    "events": 2,
+    "shiftBeats": 0.0,
+    "times": [
+     197.2
+    ],
+    "onBeat": [
+     true
+    ],
+    "old": [
+     "B02_C182"
+    ],
+    "oldEvents": 2
+   }
+  ],
+  "splitShared": [
+   "B03_CD10m5",
+   "B03_CD09m5",
+   "B03_CD08m5",
+   "B03_CD07m5",
+   "B03_CD06m5",
+   "B03_CD05m5",
+   "B03_CD04m5",
+   "B03_CD03m5",
+   "B03_CD02m5",
+   "B02_C010m5",
+   "B03_CD01m5",
+   "B02_C026m5",
+   "B02_C026k99m5",
+   "B02_C026k92m5",
+   "B02_C034m5",
+   "B02_C044m5",
+   "B02_C051m5",
+   "B02_C051k100m5",
+   "B02_C057m5",
+   "B02_C081m5",
+   "B02_C082m5",
+   "B02_C086m5",
+   "B02_C087m5",
+   "B02_C091m5",
+   "B02_C096m5",
+   "B02_C102m5",
+   "B02_C102k100m5",
+   "B02_C109k108m5",
+   "B02_C109m5",
+   "B02_C113m5",
+   "B02_C129m5",
+   "B02_C129k108m5",
+   "B02_C133m5",
+   "B02_C140k100m5",
+   "B02_C140m5",
+   "B02_C146m5",
+   "B02_C147m5",
+   "B02_C150m5",
+   "B02_C161m5",
+   "B02_C168m5",
+   "B02_C171m5",
+   "B02_C174m5",
+   "B02_C178m5",
+   "B02_C181m5"
+  ],
+  "tiers": {
+   "all": 33,
+   "sparse": 20,
+   "fan": 55,
+   "thin": 105
+  },
+  "capLow": [
+   {
+    "t": 194.3,
+    "load": 3.96,
+    "row": "B02_C168",
+    "before": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ]
+   },
+   {
+    "t": 159.8,
+    "load": 3.36,
+    "row": "B02_C135",
+    "before": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "after": [
+     "P1",
+     "P7"
+    ]
+   },
+   {
+    "t": 194.3,
+    "load": 3.18,
+    "row": "B02_C171",
+    "before": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ]
+   },
+   {
+    "t": 185.9,
+    "load": 2.96,
+    "row": "B02_C161",
+    "before": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ]
+   },
+   {
+    "t": 169.5,
+    "load": 2.91,
+    "row": "B02_C143",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 132.5,
+    "load": 2.52,
+    "row": "B02_C113",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 159.8,
+    "load": 2.51,
+    "row": "B02_C133",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 163.2,
+    "load": 2.47,
+    "row": "B02_C137",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 108.1,
+    "load": 2.44,
+    "row": "B02_C087",
+    "before": [
+     "P0",
+     "P2",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 194.3,
+    "load": 2.4,
+    "row": "B02_C168",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 54.6,
+    "load": 2.37,
+    "row": "B02_C046",
+    "before": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "after": [
+     "P1",
+     "P7"
+    ]
+   },
+   {
+    "t": 80.8,
+    "load": 2.34,
+    "row": "B02_C071",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 181.0,
+    "load": 2.33,
+    "row": "B02_C156",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 75.7,
+    "load": 2.3,
+    "row": "B02_C066",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 65.1,
+    "load": 2.29,
+    "row": "B02_C057",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 185.9,
+    "load": 2.24,
+    "row": "B02_C161",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 117.8,
+    "load": 2.1,
+    "row": "B02_C096",
+    "before": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ]
+   },
+   {
+    "t": 173.0,
+    "load": 2.02,
+    "row": "B02_C147",
+    "before": [
+     "P0",
+     "P8"
+    ],
+    "after": []
+   },
+   {
+    "t": 159.8,
+    "load": 1.91,
+    "row": "B02_C133",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 169.5,
+    "load": 1.91,
+    "row": "B02_C143",
+    "before": [
+     "P0",
+     "P8"
+    ],
+    "after": [
+     "P4"
+    ]
+   },
+   {
+    "t": 194.3,
+    "load": 1.89,
+    "row": "B02_C168",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 194.3,
+    "load": 1.89,
+    "row": "B02_C171",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 54.6,
+    "load": 1.88,
+    "row": "B02_C044",
+    "before": [
+     "P0",
+     "P2",
+     "P4",
+     "P6",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P4",
+     "P8"
+    ]
+   },
+   {
+    "t": 164.9,
+    "load": 1.87,
+    "row": "B02_C137",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 164.9,
+    "load": 1.87,
+    "row": "B02_C137",
+    "before": [
+     "P0",
+     "P8"
+    ],
+    "after": [
+     "P4"
+    ]
+   },
+   {
+    "t": 122.8,
+    "load": 1.86,
+    "row": "B02_C100",
+    "before": [
+     "P0",
+     "P4",
+     "P8"
+    ],
+    "after": [
+     "P0",
+     "P8"
+    ]
+   },
+   {
+    "t": 122.8,
+    "load": 1.86,
+    "row": "B02_C100",
+    "before": [
+     "P0",
+     "P8"
+    ],
+    "after": [
+     "P4"
+    ]
+   },
+   {
+    "t": 108.1,
+    "load": 1.84,
+    "row": "B02_C089",
+    "before": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "after": [
+     "P1",
+     "P7"
+    ]
+   },
+   {
+    "t": 132.5,
+    "load": 1.82,
+    "row": "B02_C116",
+    "before": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "after": [
+     "P1",
+     "P7"
+    ]
+   }
+  ],
+  "mobileBusy": [
+   {
+    "cue": "B07_P24m5",
+    "t": 130.69,
+    "dropped": [
+     "F0",
+     "F6"
+    ]
+   },
+   {
+    "cue": "B07_P36m5",
+    "t": 168.39,
+    "dropped": [
+     "F1",
+     "F3",
+     "F5"
+    ]
+   },
+   {
+    "cue": "B07_P37m5",
+    "t": 169.59,
+    "dropped": [
+     "F0",
+     "F6"
+    ]
+   },
+   {
+    "cue": "B07_P38m5",
+    "t": 171.69,
+    "dropped": [
+     "F2",
+     "F4"
+    ]
+   },
+   {
+    "cue": "B07_P39m5",
+    "t": 172.89,
+    "dropped": [
+     "F1",
+     "F3",
+     "F5"
+    ]
+   },
+   {
+    "cue": "B07_P50m5",
+    "t": 190.89,
+    "dropped": [
+     "F1",
+     "F3",
+     "F5"
+    ]
+   },
+   {
+    "cue": "B07_P51m5",
+    "t": 192.29,
+    "dropped": [
+     "F0",
+     "F6"
+    ]
+   },
+   {
+    "cue": "B07_P52m5",
+    "t": 194.19,
+    "dropped": [
+     "F2",
+     "F4"
+    ]
+   }
+  ]
+ },
+ "overlap": {
+  "file": "/home/claude/fireworkslab/协作/编排B01/逻辑方案_B08.json",
+  "pcIncidents": 10,
+  "byKind": {
+   "后压前": 8,
+   "同排太挤": 1,
+   "两排同高": 1
+  },
+  "heroIncidents": 0,
+  "mobile": {
+   "high": {
+    "gaps": [
+     {
+      "start": 69.0,
+      "end": 74.0,
+      "len": 5.0,
+      "section": "低位密奏"
+     }
+    ],
+    "totalGapS": 5.0,
+    "incidents": 2
+   },
+   "medium": {
+    "gaps": [
+     {
+      "start": 69.0,
+      "end": 74.0,
+      "len": 5.0,
+      "section": "低位密奏"
+     }
+    ],
+    "totalGapS": 5.0,
+    "incidents": 2
+   },
+   "low": {
+    "gaps": [
+     {
+      "start": 69.0,
+      "end": 74.0,
+      "len": 5.0,
+      "section": "低位密奏"
+     }
+    ],
+    "totalGapS": 5.0,
+    "incidents": 2
+   }
+  },
+  "pcList": [
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C096",
+     "B02_C100"
+    ],
+    "t": 119.67,
+    "until": 119.99,
+    "pairs": 1,
+    "minSep": 0.0,
+    "points": [
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "银彩菊（L·整排9）× 多重菊·大（L·整排9）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C100",
+     "B02_C102"
+    ],
+    "t": 122.97,
+    "until": 124.14,
+    "pairs": 3,
+    "minSep": 0.0,
+    "points": [
+     "P0",
+     "P2",
+     "P4"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "多重菊·大（L·整排9）× 银彩菊（L·城垛L）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C100",
+     "B02_C106"
+    ],
+    "t": 123.08,
+    "until": 123.95,
+    "pairs": 2,
+    "minSep": 0.0,
+    "points": [
+     "P1",
+     "P3"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "多重菊（M·整排9）× 多重菊（M·城垛M）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C107",
+     "B02_C109"
+    ],
+    "t": 129.58,
+    "until": 130.58,
+    "pairs": 4,
+    "minSep": 0.0,
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "金曜菊（M·叠层）× 金芒菊（M·整排9）"
+   },
+   {
+    "kind": "同排太挤",
+    "rows": [
+     "B02_C121",
+     "B02_C121"
+    ],
+    "t": 139.28,
+    "until": 141.5,
+    "pairs": 1,
+    "minSep": 0.49,
+    "points": [
+     "P7",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S10",
+    "desc": "彩千轮（M·整排9）× 彩千轮（M·整排9）"
+   },
+   {
+    "kind": "两排同高",
+    "rows": [
+     "B02_C121",
+     "B02_C124"
+    ],
+    "t": 139.35,
+    "until": 141.6,
+    "pairs": 3,
+    "minSep": 0.54,
+    "points": [
+     "B6",
+     "B7",
+     "P7",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S10",
+    "desc": "彩千轮（M·整排9）× 橙辉星（S·低位8）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C137",
+     "B02_C140"
+    ],
+    "t": 165.17,
+    "until": 166.34,
+    "pairs": 4,
+    "minSep": 0.0,
+    "points": [
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "多重菊（M·整排9）× 金芒菊（M·叠层）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C143",
+     "B02_C147"
+    ],
+    "t": 171.57,
+    "until": 171.87,
+    "pairs": 2,
+    "minSep": 0.0,
+    "points": [
+     "P0",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "金蕊青柠星·大（L·叠层）× 银彩菊（L·三主角收边）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C154",
+     "B02_C156"
+    ],
+    "t": 181.28,
+    "until": 182.68,
+    "pairs": 4,
+    "minSep": 0.0,
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "金曜菊（M·叠层）× 金蕊青柠星（M·整排9）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C168",
+     "B02_C171"
+    ],
+    "t": 194.27,
+    "until": 196.19,
+    "pairs": 9,
+    "minSep": 0.0,
+    "points": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "银彩菊（L·整排9）× 银彩菊（L·白墙9）"
+   }
+  ]
+ },
+ "fanAudit": {
+  "B08": {
+   "label": "B08",
+   "fanCues": 55,
+   "fanEvents": 180,
+   "clashPairs": 0,
+   "clashSamePoint": 0,
+   "clashCuePairs": 0,
+   "clashList": [],
+   "distinctLaunchTimes": 105,
+   "onBeatOrOnset": 0.771,
+   "slots": 39,
+   "consecutiveSameShape": 0,
+   "distinctShapes": 18,
+   "topShapes": [
+    [
+     "中心外扩",
+     5
+    ],
+    [
+     "两翼展开",
+     4
+    ],
+    [
+     "两翼银扇",
+     3
+    ],
+    [
+     "隔点交替",
+     2
+    ],
+    [
+     "逐点走·右→左",
+     2
+    ]
+   ],
+   "eightPointSweeps": 1,
+   "bySpecies": {
+    "S9": 30,
+    "R9": 33,
+    "R9R": 25,
+    "S5": 50,
+    "R1": 10,
+    "S13": 24,
+    "R5": 8
+   }
+  },
+  "B07": {
+   "label": "B07",
+   "fanCues": 55,
+   "fanEvents": 180,
+   "clashPairs": 0,
+   "clashSamePoint": 0,
+   "clashCuePairs": 0,
+   "clashList": [],
+   "distinctLaunchTimes": 105,
+   "onBeatOrOnset": 0.771,
+   "slots": 39,
+   "consecutiveSameShape": 0,
+   "distinctShapes": 18,
+   "topShapes": [
+    [
+     "中心外扩",
+     5
+    ],
+    [
+     "两翼展开",
+     4
+    ],
+    [
+     "两翼银扇",
+     3
+    ],
+    [
+     "隔点交替",
+     2
+    ],
+    [
+     "逐点走·右→左",
+     2
+    ]
+   ],
+   "eightPointSweeps": 1,
+   "bySpecies": {
+    "S9": 30,
+    "R9": 33,
+    "R9R": 25,
+    "S5": 50,
+    "R1": 10,
+    "S13": 24,
+    "R5": 8
+   }
+  }
+ },
+ "tierEnds": {
+  "rule": "一排（同 root 合起来）≥ 4 点时，中 / 低配还放就要留最左、最右",
+  "violations": 3,
+  "list": [
+   {
+    "row": "B02_C100",
+    "platform": "pc",
+    "tier": "low",
+    "group": "P",
+    "high": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "kept": [
+     "P4"
+    ]
+   },
+   {
+    "row": "B02_C137",
+    "platform": "pc",
+    "tier": "low",
+    "group": "P",
+    "high": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "kept": [
+     "P4"
+    ]
+   },
+   {
+    "row": "B02_C143",
+    "platform": "pc",
+    "tier": "low",
+    "group": "P",
+    "high": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "kept": [
+     "P4"
+    ]
+   }
+  ]
+ },
+ "shares": {
+  "pc-high": {
+   "platform": "pc",
+   "tier": "high",
+   "balls": 529,
+   "fans": 180,
+   "platformEvents": 227,
+   "bySize": {
+    "小平台": {
+     "events": 227,
+     "pctOfBalls": null
+    },
+    "小号": {
+     "events": 213,
+     "pctOfBalls": 40.3
+    },
+    "中号": {
+     "events": 196,
+     "pctOfBalls": 37.1
+    },
+    "扇": {
+     "events": 180,
+     "pctOfBalls": null
+    },
+    "大号": {
+     "events": 115,
+     "pctOfBalls": 21.7
+    },
+    "主角": {
+     "events": 5,
+     "pctOfBalls": 0.9
+    }
+   },
+   "bySpecies": {
+    "银冠菊": {
+     "events": 89,
+     "pctOfBalls": 16.8
+    },
+    "银彩菊": {
+     "events": 67,
+     "pctOfBalls": 12.7
+    },
+    "橙辉星": {
+     "events": 62,
+     "pctOfBalls": 11.7
+    },
+    "金芒菊": {
+     "events": 60,
+     "pctOfBalls": 11.3
+    },
+    "多重菊": {
+     "events": 49,
+     "pctOfBalls": 9.3
+    },
+    "金曜菊": {
+     "events": 36,
+     "pctOfBalls": 6.8
+    },
+    "金蕊青柠星": {
+     "events": 33,
+     "pctOfBalls": 6.2
+    },
+    "小青柠": {
+     "events": 24,
+     "pctOfBalls": 4.5
+    },
+    "绿牡丹": {
+     "events": 22,
+     "pctOfBalls": 4.2
+    },
+    "彩千轮": {
+     "events": 18,
+     "pctOfBalls": 3.4
+    },
+    "爆裂星": {
+     "events": 17,
+     "pctOfBalls": 3.2
+    },
+    "金裂星": {
+     "events": 17,
+     "pctOfBalls": 3.2
+    },
+    "点灭星": {
+     "events": 16,
+     "pctOfBalls": 3.0
+    },
+    "金锦菊": {
+     "events": 14,
+     "pctOfBalls": 2.6
+    },
+    "金垂柳（主角）": {
+     "events": 5,
+     "pctOfBalls": 0.9
+    }
+   },
+   "fansBySpecies": {
+    "扇·银星·五束窄扇": 50,
+    "扇·红彗星·九束左扫": 33,
+    "扇·银星·九束展开": 30,
+    "扇·红彗星·九束右扫": 25,
+    "扇·银星·十三束宽扇": 24,
+    "扇·红彗星·单束": 10,
+    "扇·红彗星·五束": 8
+   },
+   "platformBySpecies": {
+    "小平台·短爆裂": 76,
+    "小平台·小银菊": 74,
+    "小平台·小金花": 58,
+    "小平台·V形尾缀（不开花）": 19
+   }
+  },
+  "pc-medium": {
+   "platform": "pc",
+   "tier": "medium",
+   "balls": 421,
+   "fans": 180,
+   "platformEvents": 175,
+   "bySize": {
+    "扇": {
+     "events": 180,
+     "pctOfBalls": null
+    },
+    "小平台": {
+     "events": 175,
+     "pctOfBalls": null
+    },
+    "小号": {
+     "events": 163,
+     "pctOfBalls": 38.7
+    },
+    "中号": {
+     "events": 146,
+     "pctOfBalls": 34.7
+    },
+    "大号": {
+     "events": 107,
+     "pctOfBalls": 25.4
+    },
+    "主角": {
+     "events": 5,
+     "pctOfBalls": 1.2
+    }
+   },
+   "bySpecies": {
+    "银冠菊": {
+     "events": 78,
+     "pctOfBalls": 18.5
+    },
+    "银彩菊": {
+     "events": 59,
+     "pctOfBalls": 14.0
+    },
+    "金芒菊": {
+     "events": 52,
+     "pctOfBalls": 12.4
+    },
+    "橙辉星": {
+     "events": 47,
+     "pctOfBalls": 11.2
+    },
+    "多重菊": {
+     "events": 34,
+     "pctOfBalls": 8.1
+    },
+    "金曜菊": {
+     "events": 24,
+     "pctOfBalls": 5.7
+    },
+    "绿牡丹": {
+     "events": 20,
+     "pctOfBalls": 4.8
+    },
+    "金蕊青柠星": {
+     "events": 20,
+     "pctOfBalls": 4.8
+    },
+    "小青柠": {
+     "events": 18,
+     "pctOfBalls": 4.3
+    },
+    "彩千轮": {
+     "events": 18,
+     "pctOfBalls": 4.3
+    },
+    "金锦菊": {
+     "events": 14,
+     "pctOfBalls": 3.3
+    },
+    "点灭星": {
+     "events": 12,
+     "pctOfBalls": 2.9
+    },
+    "金裂星": {
+     "events": 11,
+     "pctOfBalls": 2.6
+    },
+    "爆裂星": {
+     "events": 9,
+     "pctOfBalls": 2.1
+    },
+    "金垂柳（主角）": {
+     "events": 5,
+     "pctOfBalls": 1.2
+    }
+   },
+   "fansBySpecies": {
+    "扇·银星·五束窄扇": 50,
+    "扇·红彗星·九束左扫": 33,
+    "扇·银星·九束展开": 30,
+    "扇·红彗星·九束右扫": 25,
+    "扇·银星·十三束宽扇": 24,
+    "扇·红彗星·单束": 10,
+    "扇·红彗星·五束": 8
+   },
+   "platformBySpecies": {
+    "小平台·短爆裂": 60,
+    "小平台·小金花": 58,
+    "小平台·小银菊": 41,
+    "小平台·V形尾缀（不开花）": 16
+   }
+  },
+  "pc-low": {
+   "platform": "pc",
+   "tier": "low",
+   "balls": 201,
+   "fans": 0,
+   "platformEvents": 159,
+   "bySize": {
+    "小平台": {
+     "events": 159,
+     "pctOfBalls": null
+    },
+    "中号": {
+     "events": 82,
+     "pctOfBalls": 40.8
+    },
+    "大号": {
+     "events": 63,
+     "pctOfBalls": 31.3
+    },
+    "小号": {
+     "events": 51,
+     "pctOfBalls": 25.4
+    },
+    "主角": {
+     "events": 5,
+     "pctOfBalls": 2.5
+    }
+   },
+   "bySpecies": {
+    "银彩菊": {
+     "events": 41,
+     "pctOfBalls": 20.4
+    },
+    "金芒菊": {
+     "events": 38,
+     "pctOfBalls": 18.9
+    },
+    "银冠菊": {
+     "events": 19,
+     "pctOfBalls": 9.5
+    },
+    "多重菊": {
+     "events": 14,
+     "pctOfBalls": 7.0
+    },
+    "橙辉星": {
+     "events": 12,
+     "pctOfBalls": 6.0
+    },
+    "绿牡丹": {
+     "events": 12,
+     "pctOfBalls": 6.0
+    },
+    "金曜菊": {
+     "events": 12,
+     "pctOfBalls": 6.0
+    },
+    "金锦菊": {
+     "events": 10,
+     "pctOfBalls": 5.0
+    },
+    "彩千轮": {
+     "events": 10,
+     "pctOfBalls": 5.0
+    },
+    "小青柠": {
+     "events": 8,
+     "pctOfBalls": 4.0
+    },
+    "金蕊青柠星": {
+     "events": 8,
+     "pctOfBalls": 4.0
+    },
+    "金裂星": {
+     "events": 5,
+     "pctOfBalls": 2.5
+    },
+    "金垂柳（主角）": {
+     "events": 5,
+     "pctOfBalls": 2.5
+    },
+    "点灭星": {
+     "events": 4,
+     "pctOfBalls": 2.0
+    },
+    "爆裂星": {
+     "events": 3,
+     "pctOfBalls": 1.5
+    }
+   },
+   "fansBySpecies": {},
+   "platformBySpecies": {
+    "小平台·短爆裂": 60,
+    "小平台·小金花": 58,
+    "小平台·小银菊": 27,
+    "小平台·V形尾缀（不开花）": 14
+   }
+  },
+  "mobile-high": {
+   "platform": "mobile",
+   "tier": "high",
+   "balls": 221,
+   "fans": 0,
+   "platformEvents": 227,
+   "bySize": {
+    "小平台": {
+     "events": 227,
+     "pctOfBalls": null
+    },
+    "大号": {
+     "events": 110,
+     "pctOfBalls": 49.8
+    },
+    "小号": {
+     "events": 61,
+     "pctOfBalls": 27.6
+    },
+    "中号": {
+     "events": 50,
+     "pctOfBalls": 22.6
+    }
+   },
+   "bySpecies": {
+    "金芒菊": {
+     "events": 110,
+     "pctOfBalls": 49.8
+    },
+    "点灭星": {
+     "events": 55,
+     "pctOfBalls": 24.9
+    },
+    "橙辉星": {
+     "events": 40,
+     "pctOfBalls": 18.1
+    },
+    "银冠菊": {
+     "events": 10,
+     "pctOfBalls": 4.5
+    },
+    "爆裂星": {
+     "events": 6,
+     "pctOfBalls": 2.7
+    }
+   },
+   "fansBySpecies": {},
+   "platformBySpecies": {
+    "小平台·分裂星": 208,
+    "小平台·V形尾缀（不开花）": 19
+   }
+  },
+  "mobile-medium": {
+   "platform": "mobile",
+   "tier": "medium",
+   "balls": 193,
+   "fans": 0,
+   "platformEvents": 156,
+   "bySize": {
+    "小平台": {
+     "events": 156,
+     "pctOfBalls": null
+    },
+    "大号": {
+     "events": 90,
+     "pctOfBalls": 46.6
+    },
+    "小号": {
+     "events": 61,
+     "pctOfBalls": 31.6
+    },
+    "中号": {
+     "events": 42,
+     "pctOfBalls": 21.8
+    }
+   },
+   "bySpecies": {
+    "金芒菊": {
+     "events": 90,
+     "pctOfBalls": 46.6
+    },
+    "点灭星": {
+     "events": 55,
+     "pctOfBalls": 28.5
+    },
+    "橙辉星": {
+     "events": 34,
+     "pctOfBalls": 17.6
+    },
+    "银冠菊": {
+     "events": 8,
+     "pctOfBalls": 4.1
+    },
+    "爆裂星": {
+     "events": 6,
+     "pctOfBalls": 3.1
+    }
+   },
+   "fansBySpecies": {},
+   "platformBySpecies": {
+    "小平台·分裂星": 140,
+    "小平台·V形尾缀（不开花）": 16
+   }
+  },
+  "mobile-low": {
+   "platform": "mobile",
+   "tier": "low",
+   "balls": 167,
+   "fans": 0,
+   "platformEvents": 14,
+   "bySize": {
+    "大号": {
+     "events": 90,
+     "pctOfBalls": 53.9
+    },
+    "小号": {
+     "events": 43,
+     "pctOfBalls": 25.7
+    },
+    "中号": {
+     "events": 34,
+     "pctOfBalls": 20.4
+    },
+    "小平台": {
+     "events": 14,
+     "pctOfBalls": null
+    }
+   },
+   "bySpecies": {
+    "金芒菊": {
+     "events": 90,
+     "pctOfBalls": 53.9
+    },
+    "点灭星": {
+     "events": 39,
+     "pctOfBalls": 23.4
+    },
+    "橙辉星": {
+     "events": 28,
+     "pctOfBalls": 16.8
+    },
+    "银冠菊": {
+     "events": 6,
+     "pctOfBalls": 3.6
+    },
+    "爆裂星": {
+     "events": 4,
+     "pctOfBalls": 2.4
+    }
+   },
+   "fansBySpecies": {},
+   "platformBySpecies": {
+    "小平台·V形尾缀（不开花）": 14
+   }
+  }
+ },
+ "area": {
+  "B08-pc-high": [
+   14.06,
+   132.57
+  ],
+  "B08-pc-medium": [
+   12.15,
+   194.37
+  ],
+  "B08-pc-low": [
+   7.37,
+   64.47
+  ],
+  "B08-mobile-high": [
+   10.12,
+   171.37
+  ],
+  "B08-mobile-medium": [
+   8.46,
+   194.37
+  ],
+  "B08-mobile-low": [
+   8.46,
+   194.37
+  ],
+  "B07-pc-high": [
+   13.63,
+   132.57
+  ],
+  "B07-pc-medium": [
+   12.15,
+   194.37
+  ],
+  "B07-pc-low": [
+   12.15,
+   194.37
+  ],
+  "B07-mobile-high": [
+   10.12,
+   171.37
+  ],
+  "B07-mobile-medium": [
+   8.46,
+   194.37
+  ],
+  "B07-mobile-low": [
+   8.46,
+   194.37
+  ],
+  "B05-pc-high": [
+   15.24,
+   194.37
+  ],
+  "B05-pc-medium": [
+   15.24,
+   194.37
+  ],
+  "B05-pc-low": [
+   15.24,
+   194.37
+  ],
+  "B05-mobile-high": [
+   9.69,
+   171.37
+  ],
+  "B05-mobile-medium": [
+   8.46,
+   194.37
+  ],
+  "B05-mobile-low": [
+   8.46,
+   194.37
+  ]
+ },
+ "heavy": {
+  "rule": "开花负担 = 种类权重 × (直径/230)²，开花后 2 s 内；PC 低配上限 1.8（B05 低配到 0.95–1.04 ms 的时刻 ≥ 2.3，0.76 ms 以下 ≤ 1.6）",
+  "weights": {
+   "GY": 1.0,
+   "CL": 1.0,
+   "CLL": 1.0,
+   "GR": 0.5,
+   "GRL": 0.5,
+   "GS": 0.6,
+   "SS": 0.3,
+   "ST": 0.3,
+   "CR": 0.3,
+   "GKH": 0.3
+  },
+  "B08-high": [
+   [
+    6.95,
+    169.5
+   ],
+   [
+    5.65,
+    181.1
+   ],
+   [
+    5.39,
+    80.8
+   ],
+   [
+    4.17,
+    75.7
+   ],
+   [
+    4.05,
+    159.8
+   ],
+   [
+    4.03,
+    127.6
+   ]
+  ],
+  "B08-medium": [
+   [
+    4.97,
+    169.5
+   ],
+   [
+    4.05,
+    181.1
+   ],
+   [
+    3.96,
+    194.3
+   ],
+   [
+    3.94,
+    75.7
+   ],
+   [
+    3.79,
+    80.8
+   ],
+   [
+    3.69,
+    159.8
+   ]
+  ],
+  "B08-low": [
+   [
+    1.78,
+    130.6
+   ],
+   [
+    1.78,
+    65.1
+   ],
+   [
+    1.69,
+    80.5
+   ],
+   [
+    1.67,
+    16.5
+   ],
+   [
+    1.62,
+    58.8
+   ],
+   [
+    1.61,
+    181.0
+   ]
+  ],
+  "B07-high": [
+   [
+    6.89,
+    169.5
+   ],
+   [
+    6.56,
+    181.1
+   ],
+   [
+    6.33,
+    80.8
+   ],
+   [
+    4.74,
+    127.6
+   ],
+   [
+    4.44,
+    189.2
+   ],
+   [
+    4.11,
+    75.7
+   ]
+  ],
+  "B07-medium": [
+   [
+    4.94,
+    169.5
+   ],
+   [
+    4.72,
+    181.1
+   ],
+   [
+    4.43,
+    80.8
+   ],
+   [
+    4.11,
+    75.7
+   ],
+   [
+    3.96,
+    194.3
+   ],
+   [
+    3.64,
+    159.8
+   ]
+  ],
+  "B07-low": [
+   [
+    3.96,
+    194.3
+   ],
+   [
+    3.36,
+    159.8
+   ],
+   [
+    2.96,
+    185.9
+   ],
+   [
+    2.91,
+    169.5
+   ],
+   [
+    2.74,
+    80.8
+   ],
+   [
+    2.7,
+    180.9
+   ]
+  ],
+  "B05-high": [
+   [
+    7.13,
+    168.7
+   ],
+   [
+    6.28,
+    181.3
+   ],
+   [
+    5.67,
+    80.8
+   ],
+   [
+    4.42,
+    75.7
+   ],
+   [
+    4.35,
+    130.2
+   ],
+   [
+    4.32,
+    194.3
+   ]
+  ],
+  "B05-medium": [
+   [
+    5.02,
+    168.6
+   ],
+   [
+    4.44,
+    181.2
+   ],
+   [
+    4.32,
+    194.3
+   ],
+   [
+    3.98,
+    80.7
+   ],
+   [
+    3.81,
+    185.9
+   ],
+   [
+    3.74,
+    158.5
+   ]
+  ],
+  "B05-low": [
+   [
+    4.32,
+    194.3
+   ],
+   [
+    3.85,
+    168.1
+   ],
+   [
+    3.81,
+    184.6
+   ],
+   [
+    3.26,
+    180.9
+   ],
+   [
+    3.26,
+    80.6
+   ],
+   [
+    3.2,
+    158.4
+   ]
+  ]
+ },
+ "score": {
+  "B06": {
+   "peak4s": {
+    "climaxII": 26,
+    "finale": 34
+   },
+   "codaLperS": 0.75,
+   "centerOutShare": 0.47,
+   "trailsLifted": 0.0,
+   "platformCues": 71,
+   "platformMaxGapS": 6.5,
+   "silverGoldShare": 0.65,
+   "sameColorLayers": 0,
+   "sizeVersions": 4
+  },
+  "B07": {
+   "peak4s": {
+    "climaxII": 26,
+    "finale": 34
+   },
+   "codaLperS": 0.75,
+   "centerOutShare": 0.47,
+   "trailsLifted": 0.0,
+   "platformCues": 71,
+   "platformMaxGapS": 6.5,
+   "silverGoldShare": 0.61,
+   "sameColorLayers": 0,
+   "sizeVersions": 13
+  }
+ }
+}

@@ -1,7 +1,7 @@
 {
   "format": "df.b04-front-flowers/2",
   "by": "跨年秀（22）2026-10-14",
-  "note": "B04 小平台「前台小花 + XS」（看板 i12 用户按推荐定：小花束尾换成前台小花 + XS，同位置同时刻；用户 10-14 01:27 开工）。和 小花束尾.json 一一对应：同样的变体、同样的固化倾角和先后（甲 / 乙两组），只把银扇 / 红彗星单束换成通用尾缀 XS（不缩放，开花 62 m、升空 1.6875 s），小花挂在 XS 终点、在 XS 到顶那一刻开；花还是现成小银菊 / 金锦菊 / 爆裂星按 EffectScale 缩到 22–28 m（同 B03）。编排里同一点位、第一朵花开花时刻不变（起飞提前 0.7 s）。V 形四根原来就不开花，换成四根 XS 不开花。不新增资源、不改原花型。由 编排B04.py（排片段、GPU）、编排B01_编译.mjs（建固定子模板与花型）、编排B01_动画.py 共用。 【B05（用户 10-14 21:44 改了 ResourceFX）】尾缀键改成按用途的 Front62（= 用户的 Tiny「跨年烟花3.0_极小_尾缀」）；小花换成小平台专用资源 2801 小号_B_小银菊（LittleSilver）/ 2800 小号_A_小金花（LittleGold）/ 2802 小号_C_短爆裂（LittleCrackle），EffectScale = 直径 ÷ 资源原生直径（nativeM：小平台专用资源按前台尺寸做——小银菊 32 / 小金花 40 / 短爆裂 24 m 取尺寸表 F_*，小分裂 30 m 取用户 22:32 存的配方 front:30；UE 未量。读回里 2800 / 2802 / 2803 还指向旧 90 m 粒子 LittleChry_HD，真资源接上前这三种会显得大约 3 倍）。template = 借它的球花条目当字段模板、寿命和预览颜色。mobileVariant：手游 6 种里小平台能用的只有 2803 小分裂（分裂星），同一组尾缀和花位、花换成分裂星，另存 <id>_M 只上手游。 【B07 修订1（跨年秀（22）10-15，用户 12:14 实机手游点灭星和尾缀开花位置对不上）】带花的变体改成「对称、同时」：单根竖直（0°）；两根 / 三根里斜的成对 ±a、同一时刻起飞，中间那根竖直。原因：花按「Roll 正 → 局部 Y 负」挂在斜尾缀顶端，这个方向 UE 没实测，UE4 FRotationMatrix 推出来是反的（差到 28 m）；对称同时的一对，方向反了花也正好落在另一根的顶端，两种约定都对得上。原来的角度留在 trailsV1；固定子模板版本 2。单根的甲 / 乙都竖直后一模一样，乙的花改小到 24 m（原 26 m，留在 flowersV1），免得两个子模板内容重复。V 形四根（FV4）不开花，不动。",
+  "note": "B04 小平台「前台小花 + XS」（看板 i12 用户按推荐定：小花束尾换成前台小花 + XS，同位置同时刻；用户 10-14 01:27 开工）。和 小花束尾.json 一一对应：同样的变体、同样的固化倾角和先后（甲 / 乙两组），只把银扇 / 红彗星单束换成通用尾缀 XS（不缩放，开花 62 m、升空 1.6875 s），小花挂在 XS 终点、在 XS 到顶那一刻开；花还是现成小银菊 / 金锦菊 / 爆裂星按 EffectScale 缩到 22–28 m（同 B03）。编排里同一点位、第一朵花开花时刻不变（起飞提前 0.7 s）。V 形四根原来就不开花，换成四根 XS 不开花。不新增资源、不改原花型。由 编排B04.py（排片段、GPU）、编排B01_编译.mjs（建固定子模板与花型）、编排B01_动画.py 共用。 【B05（用户 10-14 21:44 改了 ResourceFX）】尾缀键改成按用途的 Front62（= 用户的 Tiny「跨年烟花3.0_极小_尾缀」）；小花换成小平台专用资源 2801 小号_B_小银菊（LittleSilver）/ 2800 小号_A_小金花（LittleGold）/ 2802 小号_C_短爆裂（LittleCrackle），EffectScale = 直径 ÷ 资源原生直径（nativeM：小平台专用资源按前台尺寸做——小银菊 32 / 小金花 40 / 短爆裂 24 m 取尺寸表 F_*，小分裂 30 m 取用户 22:32 存的配方 front:30；UE 未量。读回里 2800 / 2802 / 2803 还指向旧 90 m 粒子 LittleChry_HD，真资源接上前这三种会显得大约 3 倍）。template = 借它的球花条目当字段模板、寿命和预览颜色。mobileVariant：手游 6 种里小平台能用的只有 2803 小分裂（分裂星），同一组尾缀和花位、花换成分裂星，另存 <id>_M 只上手游。 【B07 修订1（跨年秀（22）10-15，用户 12:14 实机手游点灭星和尾缀开花位置对不上）】带花的变体改成「对称、同时」：单根竖直（0°）；两根 / 三根里斜的成对 ±a、同一时刻起飞，中间那根竖直。原因：花按「Roll 正 → 局部 Y 负」挂在斜尾缀顶端，这个方向 UE 没实测，UE4 FRotationMatrix 推出来是反的（差到 28 m）；对称同时的一对，方向反了花也正好落在另一根的顶端，两种约定都对得上。原来的角度留在 trailsV1；固定子模板版本 2。单根的甲 / 乙都竖直后一模一样，乙的花改小到 24 m（原 26 m，留在 flowersV1），免得两个子模板内容重复。V 形四根（FV4）不开花，不动。 【B08（跨年秀（22）10-15 22:30，用户 19:23「小的烟花太小了，很小气；高度也比较高」「可以不要新出尾缀了嘛，直接缩放行不行」）】trailScale 0.65：Tiny 尾缀条目 EffectScale ×0.65，到顶约 40 m（时间不变，UE-14 实测尾缀条目缩放只改长度；Tiny 是合成一张单发射器，没有近段 / 远段错位，推断）；花放大到小银菊 40 / 38、小金花 44、短爆裂 36 m（手游分裂星同尺寸，原生 30 m，≤ ×1.47）；对称一对角度放大到 ±15–22°（40 m 高、40 m 大的两朵半叠不糊）。上一版的角度 / 花径留在 trailsV2 / flowersV2；固定子模板版本 3。",
   "trail": "Front62",
   "flowerSources": {
     "SC": {
@@ -58,7 +58,7 @@
       "flowers": [
         {
           "src": "SC",
-          "diameter": 26,
+          "diameter": 40,
           "trail": 0
         }
       ],
@@ -68,7 +68,14 @@
           "off": 0
         }
       ],
-      "version": 2
+      "version": 3,
+      "flowersV2": [
+        {
+          "src": "SC",
+          "diameter": 26,
+          "trail": 0
+        }
+      ]
     },
     {
       "code": "FS1B",
@@ -86,7 +93,7 @@
       "flowers": [
         {
           "src": "SC",
-          "diameter": 24,
+          "diameter": 38,
           "trail": 0
         }
       ],
@@ -96,11 +103,18 @@
           "off": 0
         }
       ],
-      "version": 2,
+      "version": 3,
       "flowersV1": [
         {
           "src": "SC",
           "diameter": 26,
+          "trail": 0
+        }
+      ],
+      "flowersV2": [
+        {
+          "src": "SC",
+          "diameter": 24,
           "trail": 0
         }
       ]
@@ -118,28 +132,28 @@
           "off": 0
         },
         {
-          "roll": -9.4,
+          "roll": -16,
           "off": 0.12
         },
         {
-          "roll": 9.4,
+          "roll": 16,
           "off": 0.12
         }
       ],
       "flowers": [
         {
           "src": "GS",
-          "diameter": 28,
+          "diameter": 44,
           "trail": 0
         },
         {
           "src": "GS",
-          "diameter": 28,
+          "diameter": 44,
           "trail": 1
         },
         {
           "src": "GS",
-          "diameter": 28,
+          "diameter": 44,
           "trail": 2
         }
       ],
@@ -157,30 +171,22 @@
           "off": 0.24
         }
       ],
-      "version": 2
-    },
-    {
-      "code": "FS3B",
-      "from": "XS3B",
-      "id": "B04_XS3_GS_b",
-      "engineId": "NYB04_XS3_GS_b",
-      "name": "小平台 · 三根 Tiny · 小金花簇 28m（乙）",
-      "zh": "三根Tiny·小金花簇",
-      "trails": [
-        {
-          "roll": -11.3,
-          "off": 0
-        },
-        {
-          "roll": 11.3,
-          "off": 0
-        },
+      "version": 3,
+      "trailsV2": [
         {
           "roll": 0,
-          "off": 0.24
+          "off": 0
+        },
+        {
+          "roll": -9.4,
+          "off": 0.12
+        },
+        {
+          "roll": 9.4,
+          "off": 0.12
         }
       ],
-      "flowers": [
+      "flowersV2": [
         {
           "src": "GS",
           "diameter": 28,
@@ -194,6 +200,45 @@
         {
           "src": "GS",
           "diameter": 28,
+          "trail": 2
+        }
+      ]
+    },
+    {
+      "code": "FS3B",
+      "from": "XS3B",
+      "id": "B04_XS3_GS_b",
+      "engineId": "NYB04_XS3_GS_b",
+      "name": "小平台 · 三根 Tiny · 小金花簇 28m（乙）",
+      "zh": "三根Tiny·小金花簇",
+      "trails": [
+        {
+          "roll": -20,
+          "off": 0
+        },
+        {
+          "roll": 20,
+          "off": 0
+        },
+        {
+          "roll": 0,
+          "off": 0.24
+        }
+      ],
+      "flowers": [
+        {
+          "src": "GS",
+          "diameter": 44,
+          "trail": 0
+        },
+        {
+          "src": "GS",
+          "diameter": 44,
+          "trail": 1
+        },
+        {
+          "src": "GS",
+          "diameter": 44,
           "trail": 2
         }
       ],
@@ -211,7 +256,38 @@
           "off": 0.24
         }
       ],
-      "version": 2
+      "version": 3,
+      "trailsV2": [
+        {
+          "roll": -11.3,
+          "off": 0
+        },
+        {
+          "roll": 11.3,
+          "off": 0
+        },
+        {
+          "roll": 0,
+          "off": 0.24
+        }
+      ],
+      "flowersV2": [
+        {
+          "src": "GS",
+          "diameter": 28,
+          "trail": 0
+        },
+        {
+          "src": "GS",
+          "diameter": 28,
+          "trail": 1
+        },
+        {
+          "src": "GS",
+          "diameter": 28,
+          "trail": 2
+        }
+      ]
     },
     {
       "code": "FC2A",
@@ -222,23 +298,23 @@
       "zh": "两根Tiny·短爆裂",
       "trails": [
         {
-          "roll": -8.1,
+          "roll": -15,
           "off": 0
         },
         {
-          "roll": 8.1,
+          "roll": 15,
           "off": 0
         }
       ],
       "flowers": [
         {
           "src": "CR",
-          "diameter": 22,
+          "diameter": 36,
           "trail": 0
         },
         {
           "src": "CR",
-          "diameter": 22,
+          "diameter": 36,
           "trail": 1
         }
       ],
@@ -252,7 +328,29 @@
           "off": 0.15
         }
       ],
-      "version": 2
+      "version": 3,
+      "trailsV2": [
+        {
+          "roll": -8.1,
+          "off": 0
+        },
+        {
+          "roll": 8.1,
+          "off": 0
+        }
+      ],
+      "flowersV2": [
+        {
+          "src": "CR",
+          "diameter": 22,
+          "trail": 0
+        },
+        {
+          "src": "CR",
+          "diameter": 22,
+          "trail": 1
+        }
+      ]
     },
     {
       "code": "FC2B",
@@ -263,23 +361,23 @@
       "zh": "两根Tiny·短爆裂",
       "trails": [
         {
-          "roll": -10.5,
+          "roll": -22,
           "off": 0
         },
         {
-          "roll": 10.5,
+          "roll": 22,
           "off": 0
         }
       ],
       "flowers": [
         {
           "src": "CR",
-          "diameter": 22,
+          "diameter": 36,
           "trail": 0
         },
         {
           "src": "CR",
-          "diameter": 22,
+          "diameter": 36,
           "trail": 1
         }
       ],
@@ -293,7 +391,29 @@
           "off": 0
         }
       ],
-      "version": 2
+      "version": 3,
+      "trailsV2": [
+        {
+          "roll": -10.5,
+          "off": 0
+        },
+        {
+          "roll": 10.5,
+          "off": 0
+        }
+      ],
+      "flowersV2": [
+        {
+          "src": "CR",
+          "diameter": 22,
+          "trail": 0
+        },
+        {
+          "src": "CR",
+          "diameter": 22,
+          "trail": 1
+        }
+      ]
     },
     {
       "code": "FV4",
@@ -333,5 +453,6 @@
     "idSuffix": "_M",
     "codeSuffix": "m",
     "nameSuffix": "（手游·分裂星）"
-  }
+  },
+  "trailScale": 0.65
 }

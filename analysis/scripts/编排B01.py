@@ -147,10 +147,12 @@ for _x in (list(FRONTF['flowers']) if _mv else []):
 
 
 def front_tip(x, f):
-    """前台小花挂在 XS 终点（相对发射点）：(横向 m, 高 m, 出尾缀后秒)。Roll 正 → 局部 Y 负（同 beam_tip）"""
+    """前台小花挂在 XS 终点（相对发射点）：(横向 m, 高 m, 出尾缀后秒)。
+    B08（22，10-15）：Roll 正 → 局部 +Y（UE 标准；用户 10-15 19:23 倾角归 0 后错位消失，证明旧的「Roll 正 → Y 负」和 UE 相反）；
+    FRONTF['trailScale']：尾缀条目 EffectScale，到顶高度跟着缩、时间不变（UE-14 实测）"""
     tr, t = NEWT['trails'][FRONTF['trail']], x['trails'][f['trail']]
-    a = math.radians(t['roll'])
-    return -math.sin(a) * tr['burstM'], math.cos(a) * tr['burstM'], t['off'] + tr['riseS']
+    a, R = math.radians(t['roll']), tr['burstM'] * FRONTF.get('trailScale', 1.0)
+    return math.sin(a) * R, math.cos(a) * R, t['off'] + tr['riseS']
 
 
 for _x in FRONTF['flowers']:
@@ -158,10 +160,10 @@ for _x in FRONTF['flowers']:
     _tips = [front_tip(_x, f) for f in _x['flowers']]
     _rise = min(t for _, _, t in _tips) if _tips else 0.0
     _ends = [t['off'] + _tr['durationS'] for t in _x['trails']] + [t + TPL[FRONTF['flowerSources'][f['src']]['template']]['life'] for f, (_, _, t) in zip(_x['flowers'], _tips)]
-    _reach = max([z for _, z, _ in _tips] or [_tr['burstM']])
+    _reach = max([z for _, z, _ in _tips] or [_tr['burstM'] * FRONTF.get('trailScale', 1.0)])
     TPL[_x['id']] = dict(id=_x['id'], name=_x['name'], kind=_x.get('kind', 'small'), zone='front', diameter=max([f['diameter'] for f in _x['flowers']] or [0]),
                          flightHeight=round(_reach, 3), rise=round(_rise, 4), life=round(max(_ends) - _rise, 4), recipeDuration=round(max(_ends), 4),
-                         subTemplateRef=_x['engineId'] + '@1', frontFlower=_x)
+                         subTemplateRef=_x['engineId'] + '@' + str(_x.get('version', 1)), frontFlower=_x)
     _col = FRONTF['flowerSources'][_x['flowers'][0]['src']]['color'] if _x['flowers'] else _tr['color']
     SPECIES[_x['code']] = (_x['id'], _x['zh'], 'X', _col, 0)
 fam = lambda sp: FAMILY.get(sp, sp)
