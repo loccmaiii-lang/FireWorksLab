@@ -1,0 +1,16 @@
+[
+ {
+  "name": "窜天猴尾焰（RocketTail_Graph）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "仙女棒（Sparkler_Graph）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]

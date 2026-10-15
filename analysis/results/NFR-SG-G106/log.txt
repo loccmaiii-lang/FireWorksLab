@@ -1,0 +1,7 @@
+22:32:09 第 1/2 步：窜天猴尾焰（RocketTail_Graph）
+22:32:09   ✅ RocketTail_Graph 
+22:32:09   ✅ 窜天猴尾焰（RocketTail_Graph）（0.0 分钟）
+22:32:09 第 2/2 步：仙女棒（Sparkler_Graph）
+22:32:10   ✅ Sparkler_Graph 
+22:32:10   ✅ 仙女棒（Sparkler_Graph）（0.0 分钟）
+22:32:10 完成，用时 0.0 分钟

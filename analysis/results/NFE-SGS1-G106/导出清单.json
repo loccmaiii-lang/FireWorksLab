@@ -1,0 +1,27 @@
+{
+ "effect": "sparkler_graph",
+ "entry": "SGS1",
+ "ver": "7b78d809·graph4.9.97+loop4.9.106",
+ "time": "2026-10-15 22:32",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Sparkler_Graph",
+   "replica": "SGS1",
+   "files": [
+    "Sparkler_Graph.json",
+    "Sparkler_Graph_Cascade参数.txt",
+    "Sparkler_Graph_Mobile.json",
+    "Sparkler_Graph_曲线.csv",
+    "T_EFX_FireWorks_Sparkler_Graph_4x4_01.png",
+    "T_EFX_FireWorks_Sparkler_Graph_4x4_01_C.png",
+    "T_EFX_FireWorks_Sparkler_Graph_4x4_01_HD.png",
+    "T_EFX_FireWorks_Sparkler_Graph_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
