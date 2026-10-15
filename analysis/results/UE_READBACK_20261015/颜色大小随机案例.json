@@ -1,0 +1,1432 @@
+{
+ "format": "df.ue-random-case/1",
+ "task": "派活 T09 第 5 步（本机实测（25），用户 10-16 01:48 给的路径）",
+ "readAt": "2026-10-15T18:01:28.506Z",
+ "source": "GPUECli 只读：LoadAsset + /object/get（同 B08资源读数.json）",
+ "assets": {
+  "pc": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+  "mobile": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M（同一套随机设置）"
+ },
+ "answers": {
+  "q1_perParticleOrPerFlower": "逐朵：这个系统只有 1 个发射器 L1_Main、每朵 Burst 1 个粒子（整朵花是一张序列面片），所以「逐粒子」= 逐朵；同一朵里的星都画在贴图里，颜色 / 大小一样。",
+  "q2_how": {
+   "size": "Size 模块 DistributionVectorUniform X 9500–10500 cm（不锁轴、只用 X，FacingCameraPosition）：普通全局随机，连续取值 → 面片 95–105 m，约 ±5 %",
+   "color": "Color_Seeded 模块：StartColor = DistributionVectorUniform Min (1, 0.428, 0) / Max (0.0151, 0, 1)，bLockAxes = false → R、G、B 三个通道各自独立随机（不是橙↔蓝的插值，会出紫 / 洋红 / 暗色）；RandomSeedInfo：bRandomlySelectSeedArray = true、RandomSeeds = [9512, 576, 8165, 3559, 1243, 569, 1263]、bGetSeedFromInstance = false、bInstanceSeedIsIndex = false、bResetSeedOnEmitterLooping = true、ParameterName = None → 每个发射器实例开播时从 7 个种子里随机挑 1 个，种子定了随机数就定了 → 每朵只会是 7 种颜色之一",
+   "other": "Location Uniform Z −200…200 cm（每朵高低 ±2 m）；Lifetime Uniform 2.0–2.4 s（帧号按相对寿命走 → 每朵播放快慢 ±9 %）；ColorScaleOverLife 常量 100",
+   "notUsed": "没有 Instance Parameter（没有 DistributionParticleParameter，种子 ParameterName = None），Dynamic Parameter 4 个通道都是 UserSet 常量 / 曲线（AnimPase 帧号曲线、FlipBooxSpeed_Param、DissolveProgress_Param、EmissiveIntensity），不参与随机"
+  },
+  "q3_sameValueAcrossEmitters": "这个案例只有 1 个发射器，不存在对不上。推到多层花（星头 / 尾巴 / 火花分开发射器，如金蕊柠 4 层、金曜菊 3 层）：每个发射器各自挑种子（bRandomlySelectSeedArray 按发射器实例独立抽），普通 Uniform 尺寸也是各发射器各自抽 → 颜色、大小都会对不上。要对上只能各层用同一个固定种子（不随机选）或 bGetSeedFromInstance + 实例参数（导演得传参数，现在没有）。（推断：按 UE 4.24 Cascade 种子模块的行为，没在编辑器里放两层验证）",
+  "q4_directorParams": "没有用到导演能传的参数。导演侧只有条目的 EffectScale 和 RandomScaleRatio（缩放整个组件，整朵等比），和资产里的 Uniform 尺寸叠乘。"
+ },
+ "raw": {
+  "resourceId": "P_EFX_FireWorks_Strobe",
+  "rowName": "跨年烟花3.0_小型_J_点灭星",
+  "pcRow": {
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "MaxInstanceNum": "10",
+   "FXType": "SHOW"
+  },
+  "mobileRow": {
+   "rowName": "跨年烟花3.0_小型_J_点灭星",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)"
+  },
+  "pc": {
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "system": {
+    "UpdateTime_FPS": 10,
+    "UpdateTime_Delta": 0.10000000149011612,
+    "SystemUpdateMode": "EPSUM_FixedTime",
+    "WarmupTime": 0,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "PARTICLESYSTEMLODMETHOD_ActivateAutomatic",
+    "CullingDistance": 120000,
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "Min": {
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    },
+    "Delay": 0,
+    "DelayLow": 0,
+    "bUseDelayRange": false,
+    "bAutoDeactivate": true,
+    "MaxPoolSize": 32,
+    "bOrientZAxisTowardCamera": false,
+    "SecondsBeforeInactive": 0,
+    "InsignificantReaction": "Auto",
+    "MaxSignificanceLevel": "Critical"
+   },
+   "emitters": [
+    {
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD:ParticleSpriteEmitter_0",
+     "class": "ParticleSpriteEmitter",
+     "name": "L1_Main",
+     "detailMode": "DM_Low",
+     "detailBitmask": 7,
+     "qualitySpawnScale": 1,
+     "significance": "Critical",
+     "peakActive": 0,
+     "lodLevels": 1,
+     "enabledLOD0": true,
+     "peakActiveLOD0": 3,
+     "required": {
+      "role": "Required",
+      "class": "ParticleModuleRequired",
+      "name": "ParticleModuleRequired_0",
+      "props": {
+       "Material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD.MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+       "MinFacingCameraBlendDistance": 0,
+       "MaxFacingCameraBlendDistance": 0,
+       "EmitterOrigin": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+       },
+       "EmitterRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+       },
+       "ScreenAlignment": "PSA_FacingCameraPosition",
+       "bUseInLocalSpace": false,
+       "bUseFPPCamera": false,
+       "bKillOnDeactivate": false,
+       "bKillOnCompleted": false,
+       "bCastShadow": false,
+       "SortMode": "PSORTMODE_None",
+       "bUseLegacyEmitterTime": true,
+       "bRemoveHMDRoll": false,
+       "bEmitterDurationUseRange": false,
+       "EmitterDuration": 2.200000047683716,
+       "SpawnRate": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 0
+        }
+       },
+       "BurstList": [],
+       "EmitterDelay": 0,
+       "EmitterDelayLow": 0,
+       "bDelayFirstLoopOnly": false,
+       "InterpolationMethod": "PSUVIM_None",
+       "bScaleUV": false,
+       "bEmitterDelayUseRange": false,
+       "ParticleBurstMethod": "EPBM_Instant",
+       "bOverrideSystemMacroUV": false,
+       "bUseMaxDrawCount": true,
+       "OpacitySourceMode": "OSM_Alpha",
+       "EmitterNormalsMode": "ENM_CameraFacing",
+       "bOrbitModuleAffectsVelocityAlignment": false,
+       "SubImages_Horizontal": 1,
+       "SubImages_Vertical": 1,
+       "RandomImageTime": 1,
+       "RandomImageChanges": 0,
+       "MacroUVPosition": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+       },
+       "MacroUVRadius": 0,
+       "UVFlippingMode": "RandomFlipUOnly",
+       "BoundingMode": "BVC_EightVertices",
+       "bDurationRecalcEachLoop": false,
+       "NormalsSphereCenter": {
+        "X": 0,
+        "Y": 0,
+        "Z": 100
+       },
+       "AlphaThreshold": 0.10000000149011612,
+       "EmitterLoops": 1,
+       "CutoutTexture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01_C.T_EFX_FireWorks_Strobe_Strobe_4x4_01_C",
+       "MaxDrawCount": 1,
+       "EmitterDurationLow": 0,
+       "NormalsCylinderDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 1
+       },
+       "NamedMaterialOverrides": [],
+       "bEnabled": true,
+       "bSupportsRandomSeed": false
+      }
+     },
+     "typeData": null,
+     "spawn": {
+      "role": "Spawn",
+      "class": "ParticleModuleSpawn",
+      "name": "ParticleModuleSpawn_0",
+      "props": {
+       "Rate": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 0
+        }
+       },
+       "RateScale": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 1
+        }
+       },
+       "ParticleBurstMethod": "EPBM_Instant",
+       "BurstList": [
+        {
+         "Count": 1,
+         "CountLow": -1,
+         "Time": 0
+        }
+       ],
+       "BurstScale": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 1
+        }
+       },
+       "bApplyGlobalSpawnRateScale": true,
+       "bSampleRainMask": false,
+       "bRainDirectionCull": false,
+       "bSpawnScreenSpace": false,
+       "bAttachToOpaque": false,
+       "bVelocityUseWorldNormal": false,
+       "bProcessSpawnRate": true,
+       "bProcessBurstList": true,
+       "bEnabled": true,
+       "bSupportsRandomSeed": false
+      }
+     },
+     "eventGenerator": null,
+     "modules": [
+      {
+       "role": "Module",
+       "class": "ParticleModuleLifetime",
+       "name": "ParticleModuleLifetime_0",
+       "props": {
+        "Lifetime": {
+         "dist": "DistributionFloatUniform",
+         "value": {
+          "Min": 2,
+          "Max": 2.4000000953674316
+         }
+        },
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleColor_Seeded",
+       "name": "ParticleModuleColor_Seeded_0",
+       "props": {
+        "RandomSeedInfo": {
+         "ParameterName": "None",
+         "bGetSeedFromInstance": false,
+         "bInstanceSeedIsIndex": false,
+         "bResetSeedOnEmitterLooping": true,
+         "bRandomlySelectSeedArray": true,
+         "RandomSeeds": [
+          9512,
+          576,
+          8165,
+          3559,
+          1243,
+          569,
+          1263
+         ]
+        },
+        "StartColor": {
+         "dist": "DistributionVectorUniform",
+         "value": {
+          "Max": {
+           "X": 0.015147999860346317,
+           "Y": 0,
+           "Z": 1
+          },
+          "Min": {
+           "X": 1,
+           "Y": 0.42805999517440796,
+           "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false
+         }
+        },
+        "StartAlpha": {
+         "dist": "DistributionFloatConstant",
+         "value": {
+          "Constant": 1
+         }
+        },
+        "bClampAlpha": true,
+        "bEnabled": true,
+        "bSupportsRandomSeed": true
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleSize",
+       "name": "ParticleModuleSize_0",
+       "props": {
+        "StartSize": {
+         "dist": "DistributionVectorUniform",
+         "value": {
+          "Max": {
+           "X": 10500,
+           "Y": 0,
+           "Z": 0
+          },
+          "Min": {
+           "X": 9500,
+           "Y": 0,
+           "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false
+         }
+        },
+        "bConsiderCameraDistanceSizeScalar": false,
+        "StartCameraDistance": 1000,
+        "EndCameraDistance": 10000,
+        "StartSizeScalar": 1,
+        "EndSizeScalar": 1,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleLocation",
+       "name": "ParticleModuleLocation_0",
+       "props": {
+        "StartLocation": {
+         "dist": "DistributionVectorUniform",
+         "value": {
+          "Max": {
+           "X": 0,
+           "Y": 0,
+           "Z": 200
+          },
+          "Min": {
+           "X": 0,
+           "Y": 0,
+           "Z": -200
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false
+         }
+        },
+        "DistributeOverNPoints": 0,
+        "DistributeThreshold": 0,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleSizeMultiplyLife",
+       "name": "ParticleModuleSizeMultiplyLife_0",
+       "props": {
+        "LifeMultiplier": {
+         "dist": "DistributionVectorConstantCurve",
+         "value": {
+          "ConstantCurve": {
+           "Points": [
+            {
+             "InVal": 0,
+             "OutVal": {
+              "X": 0.451200008392334,
+              "Y": 0.451200008392334,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.03020000085234642,
+             "OutVal": {
+              "X": 0.451200008392334,
+              "Y": 0.451200008392334,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.030300000682473183,
+             "OutVal": {
+              "X": 0.3370000123977661,
+              "Y": 0.3370000123977661,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.10589999705553055,
+             "OutVal": {
+              "X": 0.3370000123977661,
+              "Y": 0.3370000123977661,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.10610000044107437,
+             "OutVal": {
+              "X": 0.4228000044822693,
+              "Y": 0.4228000044822693,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.1665000021457672,
+             "OutVal": {
+              "X": 0.4228000044822693,
+              "Y": 0.4228000044822693,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.16670000553131104,
+             "OutVal": {
+              "X": 0.544700026512146,
+              "Y": 0.544700026512146,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.24230000376701355,
+             "OutVal": {
+              "X": 0.544700026512146,
+              "Y": 0.544700026512146,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.24240000545978546,
+             "OutVal": {
+              "X": 0.6248000264167786,
+              "Y": 0.6248000264167786,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.33320000767707825,
+             "OutVal": {
+              "X": 0.6248000264167786,
+              "Y": 0.6248000264167786,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.33329999446868896,
+             "OutVal": {
+              "X": 0.7093999981880188,
+              "Y": 0.7093999981880188,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.4392000138759613,
+             "OutVal": {
+              "X": 0.7093999981880188,
+              "Y": 0.7093999981880188,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.43939998745918274,
+             "OutVal": {
+              "X": 0.7960000038146973,
+              "Y": 0.7960000038146973,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.5302000045776367,
+             "OutVal": {
+              "X": 0.7960000038146973,
+              "Y": 0.7960000038146973,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.5303000211715698,
+             "OutVal": {
+              "X": 0.8781999945640564,
+              "Y": 0.8781999945640564,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.6362000107765198,
+             "OutVal": {
+              "X": 0.8781999945640564,
+              "Y": 0.8781999945640564,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.6363999843597412,
+             "OutVal": {
+              "X": 0.941100001335144,
+              "Y": 0.941100001335144,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.7271000146865845,
+             "OutVal": {
+              "X": 0.941100001335144,
+              "Y": 0.941100001335144,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.7272999882698059,
+             "OutVal": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.8938000202178955,
+             "OutVal": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.8938999772071838,
+             "OutVal": {
+              "X": 0.7928000092506409,
+              "Y": 0.7928000092506409,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.9391999840736389,
+             "OutVal": {
+              "X": 0.7928000092506409,
+              "Y": 0.7928000092506409,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.9394000172615051,
+             "OutVal": {
+              "X": 0.5023999810218811,
+              "Y": 0.5023999810218811,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 1,
+             "OutVal": {
+              "X": 0.5023999810218811,
+              "Y": 0.5023999810218811,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            }
+           ],
+           "bIsLooped": false,
+           "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None"
+         }
+        },
+        "MultiplyX": true,
+        "MultiplyY": true,
+        "MultiplyZ": false,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleParameterDynamic",
+       "name": "ParticleModuleParameterDynamic_0",
+       "props": {
+        "DynamicParams": [
+         {
+          "ParamName": "AnimPase",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstantCurve",
+           "value": {
+            "ConstantCurve": {
+             "Points": [
+              {
+               "InVal": 0,
+               "OutVal": 0.009999999776482582,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 0.1363999992609024,
+               "OutVal": 9.010000228881836,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 0.19699999690055847,
+               "OutVal": 11.010000228881836,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 0.9847999811172485,
+               "OutVal": 63.0099983215332,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 1,
+               "OutVal": 63.9900016784668,
+               "InterpMode": "CIM_Linear"
+              }
+             ],
+             "bIsLooped": false,
+             "LoopKeyOffset": 0
+            }
+           }
+          }
+         },
+         {
+          "ParamName": "FlipBooxSpeed_Param",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstant",
+           "value": {
+            "Constant": 0
+           }
+          }
+         },
+         {
+          "ParamName": "DissolveProgress_Param",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstant",
+           "value": {
+            "Constant": 0
+           }
+          }
+         },
+         {
+          "ParamName": "EmissiveIntensity",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstant",
+           "value": {
+            "Constant": 0
+           }
+          }
+         }
+        ],
+        "UpdateFlags": 15,
+        "bUsesVelocity": false,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleColorScaleOverLife",
+       "name": "ParticleModuleColorScaleOverLife_0",
+       "props": {
+        "ColorScaleOverLife": {
+         "dist": "DistributionVectorConstant",
+         "value": {
+          "Constant": {
+           "X": 100,
+           "Y": 100,
+           "Z": 100
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None"
+         }
+        },
+        "AlphaScaleOverLife": {
+         "dist": "DistributionFloatConstant",
+         "value": {
+          "Constant": 1
+         }
+        },
+        "bEmitterTime": false,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      }
+     ],
+     "materialPath": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD.MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+     "material": {
+      "chain": [
+       {
+        "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD.MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+        "class": "/Script/Engine.MaterialInstanceConstant",
+        "blendMode": null,
+        "override": {
+         "bOverride_BlendMode": false,
+         "BlendMode": "BLEND_Translucent"
+        }
+       },
+       {
+        "path": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+        "class": "/Script/Engine.Material",
+        "blendMode": "BLEND_Translucent",
+        "override": null
+       }
+      ],
+      "effectiveBlendMode": "BLEND_Translucent"
+     }
+    }
+   ],
+   "ms": 766
+  },
+  "mobile": {
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "system": {
+    "UpdateTime_FPS": 10,
+    "UpdateTime_Delta": 0.10000000149011612,
+    "SystemUpdateMode": "EPSUM_FixedTime",
+    "WarmupTime": 0,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "PARTICLESYSTEMLODMETHOD_Automatic",
+    "CullingDistance": 120000,
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "Min": {
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    },
+    "Delay": 0,
+    "DelayLow": 0,
+    "bUseDelayRange": false,
+    "bAutoDeactivate": true,
+    "MaxPoolSize": 32,
+    "bOrientZAxisTowardCamera": false,
+    "SecondsBeforeInactive": 0,
+    "InsignificantReaction": "Auto",
+    "MaxSignificanceLevel": "Critical"
+   },
+   "emitters": [
+    {
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M:ParticleSpriteEmitter_1",
+     "class": "ParticleSpriteEmitter",
+     "name": "L1_Main",
+     "detailMode": "DM_Low",
+     "detailBitmask": 7,
+     "qualitySpawnScale": 1,
+     "significance": "Critical",
+     "peakActive": 0,
+     "lodLevels": 1,
+     "enabledLOD0": true,
+     "peakActiveLOD0": 3,
+     "required": {
+      "role": "Required",
+      "class": "ParticleModuleRequired",
+      "name": "ParticleModuleRequired_1",
+      "props": {
+       "Material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01.MI_EFX_FireWorks_Strobe_Strobe_01",
+       "MinFacingCameraBlendDistance": 0,
+       "MaxFacingCameraBlendDistance": 0,
+       "EmitterOrigin": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+       },
+       "EmitterRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+       },
+       "ScreenAlignment": "PSA_FacingCameraPosition",
+       "bUseInLocalSpace": false,
+       "bUseFPPCamera": false,
+       "bKillOnDeactivate": false,
+       "bKillOnCompleted": false,
+       "bCastShadow": false,
+       "SortMode": "PSORTMODE_None",
+       "bUseLegacyEmitterTime": true,
+       "bRemoveHMDRoll": false,
+       "bEmitterDurationUseRange": false,
+       "EmitterDuration": 2.200000047683716,
+       "SpawnRate": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 0
+        }
+       },
+       "BurstList": [],
+       "EmitterDelay": 0,
+       "EmitterDelayLow": 0,
+       "bDelayFirstLoopOnly": false,
+       "InterpolationMethod": "PSUVIM_None",
+       "bScaleUV": false,
+       "bEmitterDelayUseRange": false,
+       "ParticleBurstMethod": "EPBM_Instant",
+       "bOverrideSystemMacroUV": false,
+       "bUseMaxDrawCount": true,
+       "OpacitySourceMode": "OSM_Alpha",
+       "EmitterNormalsMode": "ENM_CameraFacing",
+       "bOrbitModuleAffectsVelocityAlignment": false,
+       "SubImages_Horizontal": 1,
+       "SubImages_Vertical": 1,
+       "RandomImageTime": 1,
+       "RandomImageChanges": 0,
+       "MacroUVPosition": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+       },
+       "MacroUVRadius": 0,
+       "UVFlippingMode": "RandomFlipUOnly",
+       "BoundingMode": "BVC_EightVertices",
+       "bDurationRecalcEachLoop": false,
+       "NormalsSphereCenter": {
+        "X": 0,
+        "Y": 0,
+        "Z": 100
+       },
+       "AlphaThreshold": 0.10000000149011612,
+       "EmitterLoops": 1,
+       "CutoutTexture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01_C.T_EFX_FireWorks_Strobe_Strobe_4x4_01_C",
+       "MaxDrawCount": 1,
+       "EmitterDurationLow": 0,
+       "NormalsCylinderDirection": {
+        "X": 0,
+        "Y": 0,
+        "Z": 1
+       },
+       "NamedMaterialOverrides": [],
+       "bEnabled": true,
+       "bSupportsRandomSeed": false
+      }
+     },
+     "typeData": null,
+     "spawn": {
+      "role": "Spawn",
+      "class": "ParticleModuleSpawn",
+      "name": "ParticleModuleSpawn_1",
+      "props": {
+       "Rate": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 0
+        }
+       },
+       "RateScale": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 1
+        }
+       },
+       "ParticleBurstMethod": "EPBM_Instant",
+       "BurstList": [
+        {
+         "Count": 1,
+         "CountLow": -1,
+         "Time": 0
+        }
+       ],
+       "BurstScale": {
+        "dist": "DistributionFloatConstant",
+        "value": {
+         "Constant": 1
+        }
+       },
+       "bApplyGlobalSpawnRateScale": true,
+       "bSampleRainMask": false,
+       "bRainDirectionCull": false,
+       "bSpawnScreenSpace": false,
+       "bAttachToOpaque": false,
+       "bVelocityUseWorldNormal": false,
+       "bProcessSpawnRate": true,
+       "bProcessBurstList": true,
+       "bEnabled": true,
+       "bSupportsRandomSeed": false
+      }
+     },
+     "eventGenerator": null,
+     "modules": [
+      {
+       "role": "Module",
+       "class": "ParticleModuleLifetime",
+       "name": "ParticleModuleLifetime_1",
+       "props": {
+        "Lifetime": {
+         "dist": "DistributionFloatUniform",
+         "value": {
+          "Min": 2,
+          "Max": 2.4000000953674316
+         }
+        },
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleColor_Seeded",
+       "name": "ParticleModuleColor_Seeded_0",
+       "props": {
+        "RandomSeedInfo": {
+         "ParameterName": "None",
+         "bGetSeedFromInstance": false,
+         "bInstanceSeedIsIndex": false,
+         "bResetSeedOnEmitterLooping": true,
+         "bRandomlySelectSeedArray": true,
+         "RandomSeeds": [
+          9512,
+          576,
+          8165,
+          3559,
+          1243,
+          569,
+          1263
+         ]
+        },
+        "StartColor": {
+         "dist": "DistributionVectorUniform",
+         "value": {
+          "Max": {
+           "X": 0.015147999860346317,
+           "Y": 0,
+           "Z": 1
+          },
+          "Min": {
+           "X": 1,
+           "Y": 0.42805999517440796,
+           "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false
+         }
+        },
+        "StartAlpha": {
+         "dist": "DistributionFloatConstant",
+         "value": {
+          "Constant": 1
+         }
+        },
+        "bClampAlpha": true,
+        "bEnabled": true,
+        "bSupportsRandomSeed": true
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleSize",
+       "name": "ParticleModuleSize_1",
+       "props": {
+        "StartSize": {
+         "dist": "DistributionVectorUniform",
+         "value": {
+          "Max": {
+           "X": 10500,
+           "Y": 0,
+           "Z": 0
+          },
+          "Min": {
+           "X": 9500,
+           "Y": 0,
+           "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false
+         }
+        },
+        "bConsiderCameraDistanceSizeScalar": false,
+        "StartCameraDistance": 1000,
+        "EndCameraDistance": 10000,
+        "StartSizeScalar": 1,
+        "EndSizeScalar": 1,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleLocation",
+       "name": "ParticleModuleLocation_1",
+       "props": {
+        "StartLocation": {
+         "dist": "DistributionVectorUniform",
+         "value": {
+          "Max": {
+           "X": 0,
+           "Y": 0,
+           "Z": 200
+          },
+          "Min": {
+           "X": 0,
+           "Y": 0,
+           "Z": -200
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false
+         }
+        },
+        "DistributeOverNPoints": 0,
+        "DistributeThreshold": 0,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleSizeMultiplyLife",
+       "name": "ParticleModuleSizeMultiplyLife_1",
+       "props": {
+        "LifeMultiplier": {
+         "dist": "DistributionVectorConstantCurve",
+         "value": {
+          "ConstantCurve": {
+           "Points": [
+            {
+             "InVal": 0,
+             "OutVal": {
+              "X": 0.451200008392334,
+              "Y": 0.451200008392334,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.03020000085234642,
+             "OutVal": {
+              "X": 0.451200008392334,
+              "Y": 0.451200008392334,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.030300000682473183,
+             "OutVal": {
+              "X": 0.3370000123977661,
+              "Y": 0.3370000123977661,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.10589999705553055,
+             "OutVal": {
+              "X": 0.3370000123977661,
+              "Y": 0.3370000123977661,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.10610000044107437,
+             "OutVal": {
+              "X": 0.4228000044822693,
+              "Y": 0.4228000044822693,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.1665000021457672,
+             "OutVal": {
+              "X": 0.4228000044822693,
+              "Y": 0.4228000044822693,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.16670000553131104,
+             "OutVal": {
+              "X": 0.544700026512146,
+              "Y": 0.544700026512146,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.24230000376701355,
+             "OutVal": {
+              "X": 0.544700026512146,
+              "Y": 0.544700026512146,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.24240000545978546,
+             "OutVal": {
+              "X": 0.6248000264167786,
+              "Y": 0.6248000264167786,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.33320000767707825,
+             "OutVal": {
+              "X": 0.6248000264167786,
+              "Y": 0.6248000264167786,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.33329999446868896,
+             "OutVal": {
+              "X": 0.7093999981880188,
+              "Y": 0.7093999981880188,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.4392000138759613,
+             "OutVal": {
+              "X": 0.7093999981880188,
+              "Y": 0.7093999981880188,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.43939998745918274,
+             "OutVal": {
+              "X": 0.7960000038146973,
+              "Y": 0.7960000038146973,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.5302000045776367,
+             "OutVal": {
+              "X": 0.7960000038146973,
+              "Y": 0.7960000038146973,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.5303000211715698,
+             "OutVal": {
+              "X": 0.8781999945640564,
+              "Y": 0.8781999945640564,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.6362000107765198,
+             "OutVal": {
+              "X": 0.8781999945640564,
+              "Y": 0.8781999945640564,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.6363999843597412,
+             "OutVal": {
+              "X": 0.941100001335144,
+              "Y": 0.941100001335144,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.7271000146865845,
+             "OutVal": {
+              "X": 0.941100001335144,
+              "Y": 0.941100001335144,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.7272999882698059,
+             "OutVal": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.8938000202178955,
+             "OutVal": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.8938999772071838,
+             "OutVal": {
+              "X": 0.7928000092506409,
+              "Y": 0.7928000092506409,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.9391999840736389,
+             "OutVal": {
+              "X": 0.7928000092506409,
+              "Y": 0.7928000092506409,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 0.9394000172615051,
+             "OutVal": {
+              "X": 0.5023999810218811,
+              "Y": 0.5023999810218811,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            },
+            {
+             "InVal": 1,
+             "OutVal": {
+              "X": 0.5023999810218811,
+              "Y": 0.5023999810218811,
+              "Z": 1
+             },
+             "InterpMode": "CIM_Linear"
+            }
+           ],
+           "bIsLooped": false,
+           "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None"
+         }
+        },
+        "MultiplyX": true,
+        "MultiplyY": true,
+        "MultiplyZ": false,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleParameterDynamic",
+       "name": "ParticleModuleParameterDynamic_1",
+       "props": {
+        "DynamicParams": [
+         {
+          "ParamName": "AnimPase",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstantCurve",
+           "value": {
+            "ConstantCurve": {
+             "Points": [
+              {
+               "InVal": 0,
+               "OutVal": 0.009999999776482582,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 0.1363999992609024,
+               "OutVal": 9.010000228881836,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 0.19699999690055847,
+               "OutVal": 11.010000228881836,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 0.9847999811172485,
+               "OutVal": 63.0099983215332,
+               "InterpMode": "CIM_Linear"
+              },
+              {
+               "InVal": 1,
+               "OutVal": 63.9900016784668,
+               "InterpMode": "CIM_Linear"
+              }
+             ],
+             "bIsLooped": false,
+             "LoopKeyOffset": 0
+            }
+           }
+          }
+         },
+         {
+          "ParamName": "FlipBooxSpeed_Param",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstant",
+           "value": {
+            "Constant": 0
+           }
+          }
+         },
+         {
+          "ParamName": "DissolveProgress_Param",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstant",
+           "value": {
+            "Constant": 0
+           }
+          }
+         },
+         {
+          "ParamName": "EmissiveIntensity",
+          "bUseEmitterTime": false,
+          "bSpawnTimeOnly": false,
+          "ValueMethod": "EDPV_UserSet",
+          "bScaleVelocityByParamValue": false,
+          "ParamValue": {
+           "dist": "DistributionFloatConstant",
+           "value": {
+            "Constant": 0
+           }
+          }
+         }
+        ],
+        "UpdateFlags": 15,
+        "bUsesVelocity": false,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      },
+      {
+       "role": "Module",
+       "class": "ParticleModuleColorScaleOverLife",
+       "name": "ParticleModuleColorScaleOverLife_1",
+       "props": {
+        "ColorScaleOverLife": {
+         "dist": "DistributionVectorConstant",
+         "value": {
+          "Constant": {
+           "X": 100,
+           "Y": 100,
+           "Z": 100
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None"
+         }
+        },
+        "AlphaScaleOverLife": {
+         "dist": "DistributionFloatConstant",
+         "value": {
+          "Constant": 1
+         }
+        },
+        "bEmitterTime": false,
+        "bEnabled": true,
+        "bSupportsRandomSeed": false
+       }
+      }
+     ],
+     "materialPath": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01.MI_EFX_FireWorks_Strobe_Strobe_01",
+     "material": {
+      "chain": [
+       {
+        "path": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01.MI_EFX_FireWorks_Strobe_Strobe_01",
+        "class": "/Script/Engine.MaterialInstanceConstant",
+        "blendMode": null,
+        "override": {
+         "bOverride_BlendMode": false,
+         "BlendMode": "BLEND_Translucent"
+        }
+       },
+       {
+        "path": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+        "class": "/Script/Engine.Material",
+        "blendMode": "BLEND_Translucent",
+        "override": null
+       }
+      ],
+      "effectiveBlendMode": "BLEND_Translucent"
+     }
+    }
+   ],
+   "ms": 779
+  }
+ }
+}
