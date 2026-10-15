@@ -8,7 +8,7 @@
 - 「颜色上现在确实有些太一致了……或者爆开的时间再错开一些」→ 三分之一小号排两种花交替；齐发排每点错开 0 / 0.1 / 0.2 s；一半「里→外」放慢；
 - 「B05的性能测试回来了……低配960……两个峰值，到1了之后……降分辨率，贴图会变糊30秒……这几个峰值需要调整下数量」→ PC 低配限峰（cap_low：亮着的浓密金菊面积、1 s 内开花面积两个上限；修订1 换掉原「2 s 开花负担」），墙 / 入口在低配也允许隔点。
 
-用法：python3 -I analysis/scripts/编排B08.py [--cap-dense 3.2 --cap-burst 6.0]
+用法：python3 -I analysis/scripts/编排B08.py [--cap-dense 3.3 --cap-burst 5.0]
 """
 import argparse
 import copy
@@ -42,17 +42,21 @@ NOMINAL = {'S': 90, 'M': 150}
 PARTNER = {'SC': 'OG', 'ST': 'OG', 'GC': 'OG', 'LM': 'OG',
            'GR': 'GP', 'GY': 'PW', 'GS': 'ML', 'CL': 'ML'}   # 中号：金配绿 / 紫 / 橙（多重菊）
 # 低配限峰（960 Translucency 峰）。修订1（10-15 23:30，独立复核第 1 轮）：原「2 s 内开花 × 种类权重」模型和 B05 实测排序反了 6 / 17 对
-#   （白墙 4.32 实测 0.6 ms、64 s 2.26 实测 0.95 ms），改成两个约束，都按 B05 低配远距离段 25 个读数核过（曲线从截图读，±0.05 ms、时刻 ±2 s）：
+#   （白墙 4.32 实测 0.6 ms、64 s 2.26 实测 0.95 ms），改成两个量 + 一处单独压；修订2（10-16，第 2 轮）：点火 / 主角那一刻的排不隔、小平台花算进 S、读数放进 B05_READINGS。
 #   ① 亮着的浓密金菊面积 A：金曜菊 / 金蕊青柠 / 金芒菊 / 金锦菊（含大号），开花到寿命 75 %，Σ(直径/230)²。
-#      B05 实测 ≥ 0.95 ms 的 182.6 / 189 s 是 5.1 / 8.7；≤ 0.65 ms 的都 ≤ 3.85；0.76 ms 的 18.3 s 是 3.2 → 上限 3.2。
-#      银彩菊白墙亮着的面积 15.2 只有 0.62 ms → 点灭类不算进 A。
-#   ② 1 s 内开花的面积 S（所有球花，含银彩菊，不含小平台、扇）：64.3 s 那个峰 A 只有 2.0、解释不了，它是 9 朵同时开（5 大 + 4 中，S = 6.7）；
-#      184.6 s 金芒菊大 ×9 是 9.0；16.4 s 金芒菊中 ×9（S = 3.8）只有 0.76 → 上限 5.0（取中间）。超了先隔浓密金菊那排（同样面积，点灭类按一半挑），
-#      代价：白墙一波 9 朵在低配还是会隔到 5 朵（白墙实测是安全的）。
-#   这两个都是从一张截图拟的，排序上 B05 的 25 个读数只有 64.3 / 59 s 一对解释不了（内容几乎一样，0.95 / 0.6 ms）。真实开销等实机测量（派活 T09）。
-#   ③ 64.3 s 这个峰两个量都解释不了（59 s 内容几乎一样只有 0.6 ms），所以那一刻单独压到 B05 的 60 % 以下（A 2.21 → 1.3、S 6.22 → 3.7，±2 s）。
+#      B05 低配：实测 ≥ 0.95 ms 的 182.6 / 189 s 是 5.1 / 8.7；≤ 0.65 ms 的都 ≤ 3.85；0.76 ms 的 18.3 s（点火）3.24 → 上限 3.3。
+#   ② 1 s 内开花的面积 S（所有球花 + 小平台花，不含扇）：64.3 s 那个峰 A 只有 2.0，是 9 朵同时开（5 大 + 4 中，S = 6.2）；上限 5.0。
+#      S 的区分力很弱：B05 白墙 S 7.6 读数只有 0.62 ms。但白墙和 189 s 都在 182.6 s 那个 1.04 ms 峰之后 30 s 内，
+#      用户说到 1 ms 后会降分辨率 30 s，这两个读数可能偏低（推断）→ 不能据此说点灭类便宜，所以 S 把银彩菊也算进去，当作保险。
+#   ③ 64.3 s 这个峰两个量都解释不了（59 s 内容几乎一样只有 0.6 ms），所以那一刻单独压到 B05 的 60 % 以下（A 2.0 → 1.3、S 6.2 → 3.7，±2 s 闭区间）。
+#   不隔：倒计时、点火（17 s 前开花的排）、主角和主角前后 1 s 内开花的排（主角那一刻的宽度靠两边收边）。
+#   这些都是从一张截图拟的（读数见 B05_READINGS，时刻 ±2 s、数值 ±0.05 ms），真实开销等实机测量（派活 T09）。
 DENSE = {'GY', 'CL', 'CLL', 'GR', 'GRL', 'GS'}
 LOCAL_CAPS = [(64.3, 'dense', 1.3), (64.3, 'burst', 3.7)]
+# B05 低配、PerfDog 远距离段 Translucency 曲线（用户 10-15 22:02 截图，作者目读；时刻 = 演出秒，±2 s；ms ±0.05）
+B05_READINGS = [(5, .22), (16, .3), (18.3, .76), (22, .4), (28.9, .6), (34.5, .65), (40, .45), (50, .32), (59, .6), (65.3, .95), (75, .35), (90, .3),
+                (110.8, .52), (120, .45), (125, .6), (140, .35), (148.6, .65), (164.8, .55), (173, .6), (182.6, 1.04), (189, .95), (191.7, .65),
+                (195, .62), (199.3, .65), (208, .3)]
 B05_PEAKS = [(64.3, 0.95), (182.6, 1.04), (189.0, 0.95)]
 
 
@@ -256,6 +260,9 @@ def _windows(kind, e):
 def _weight(kind, c):
     if kind == 'dense':
         return area(c) if c['sp'] in DENSE else 0.0
+    if c['size'] == 'X':                     # 小平台：一组里几朵花的面积（36–44 m，一朵约 0.03）
+        f = next(x for x in b.FRONTF['flowers'] if x['code'] == c['sp'])
+        return sum(fl['diameter'] ** 2 for fl in f['flowers']) / 230 ** 2
     return area(c)
 
 
@@ -294,11 +301,33 @@ def at_peaks(cues, tier='low'):
     return {f'{t}': {k: round(max(h[max(0, int((t - 2) / 0.1)):int((t + 2) / 0.1) + 1]), 2) for k, h in hs.items()} for t, _ in B05_PEAKS}
 
 
+def readings_check(cues):
+    """B05 低配：每个读数时刻前 2 s 到当时（闭区间）的 A / S 最大值，和读数比高低（差 > 0.1 ms 的读数对）"""
+    hs = {k: load_series(cues, k, 'pc', 'low') for k in ('dense', 'burst')}
+    rows_ = [dict(t=t, ms=ms, **{k: round(max(h[max(0, int(round((t - 2) / 0.1))):int(round(t / 0.1)) + 1]), 2) for k, h in hs.items()}) for t, ms in B05_READINGS]
+    out = dict(readings=rows_)
+    for k in ('dense', 'burst'):
+        same = rev = 0
+        for x in rows_:
+            for y in rows_:
+                if x['ms'] > y['ms'] + 0.1:
+                    if x[k] > y[k]:
+                        same += 1
+                    elif x[k] < y[k]:
+                        rev += 1
+        out[k] = dict(sameOrder=same, reversed=rev)
+    return out
+
+
 def cap_low(cues, caps, dt=0.1):
     """PC 低配：亮着的浓密金菊面积 ≤ caps['dense']，1 s 内开花面积 ≤ caps['burst']。超了就把那一刻贡献最大的一排在低配里再隔一次
     （两端留；3 点留两端；只剩两端换中间一朵），墙 / 入口也可以隔（性能优先，用户 22:02）；倒计时、主角不动。"""
     g, by = rows(cues)
     root_of = {c['id']: key for key, rs in g.items() for c in rs}
+    hero_t = [e['burst'] for c in cues if c['sp'] in HERO and c.get('mobile') != 'only' for e in c['events']]
+    keep_rows = {key for key, rs in g.items()
+                 if min(e['burst'] for c in rs for e in c['events']) < 17.0                       # 倒计时、点火
+                 or any(abs(e['burst'] - h) <= 1.0 for c in rs for e in c['events'] for h in hero_t)}   # 主角和它前后 1 s 的收边
     cons = [(kind, cap, None) for kind, cap in caps.items()] + [(kind, cap, (t0 - 2.0, t0 + 2.0)) for t0, kind, cap in LOCAL_CAPS]
     stuck, log, blocked = set(), [], {n: set() for n in range(len(cons))}
     for _ in range(800):
@@ -330,7 +359,7 @@ def cap_low(cues, caps, dt=0.1):
         done = False
         for key, v in sorted(contrib.items(), key=lambda kv: -kv[1]):
             rs = [c for c in g[key] if c.get('mobile') != 'only']
-            if key in stuck or by[key]['section'] == 'B01_S0' or any(c['sp'] in HERO for c in rs):
+            if key in stuck or key in keep_rows or by[key]['section'] == 'B01_S0' or any(c['sp'] in HERO for c in rs):
                 continue
             wall = by[key].get('tier') == 'all'
             for grp in ('P', 'B', 'F'):
@@ -370,7 +399,7 @@ def main():
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--seed', type=int, default=20261015)
     ap.add_argument('--sparse', type=float, default=5.0)
-    ap.add_argument('--cap-dense', type=float, default=3.2, help='PC 低配亮着的浓密金菊面积上限（B05 实测 0.76 ms 时 3.2、≥ 0.95 ms 时 5.1 / 8.7）')
+    ap.add_argument('--cap-dense', type=float, default=3.3, help='PC 低配亮着的浓密金菊面积上限（B05 实测点火 0.76 ms 时 3.24、≥ 0.95 ms 时 5.1 / 8.7）')
     ap.add_argument('--cap-burst', type=float, default=5.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
@@ -441,7 +470,7 @@ def main():
     ck['heavy'] = dict(rule='PC 低配：亮着的浓密金菊面积 A（金曜菊 / 金蕊青柠 / 金芒菊 / 金锦菊，开花到寿命 75 %%，Σ(直径/230)²）≤ %.1f；1 s 内开花面积 S（所有球花）≤ %.1f。按 B05 低配实测曲线（截图读）定，推断' % (a.cap_dense, a.cap_burst),
                        dense=sorted(DENSE), b05Peaks=B05_PEAKS,
                        **{f'{v}-{t}': dict(dense=peaks(load_series(cs, 'dense', 'pc', t)), burst=peaks(load_series(cs, 'burst', 'pc', t))) for v, cs in vs for t in ('high', 'medium', 'low')},
-                       atB05Peaks={v: at_peaks(cs) for v, cs in vs})
+                       atB05Peaks={v: at_peaks(cs) for v, cs in vs}, b05Readings=readings_check(prev['B05']['cues']))
     ck['score'] = B07.scorecard(out, cues5, prev['B07'])   # 键名沿用 B07 的 B06 / B07：这里 B06 = B07 修订1、B07 = B08
     (od / f'体检_{a.name}.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
     fa = ck['fanAudit']
