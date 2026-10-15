@@ -7,7 +7,9 @@ export function normalizePath(value){let p=String(value||'').trim().replace(/^[A
 function engineBase(value){const url=new URL(value||DEFAULT_ENGINE);if(url.protocol!=='http:'||!['127.0.0.1','localhost','[::1]'].includes(url.hostname)||url.username||url.password||url.search||url.hash||url.pathname!=='/gpcli')throw Error('只能连接本机 GPUECli 服务（http://127.0.0.1:17780/gpcli）');return url.href.replace(/\/$/,'');}
 export async function engineRequest(route,payload,{base=DEFAULT_ENGINE,fetch:fetcher=globalThis.fetch,signal,timeout}={}){
  const address=engineBase(base);if(!['/object/get','/object/search','/object/set','/object/call'].includes(route))throw Error('不允许的引擎端点');
- if(route==='/object/call'&&(payload.path!=='/Script/EditorScriptingUtilities.Default__EditorAssetLibrary'||payload.function!=='SaveAsset'))throw Error('不允许的引擎函数');
+ // 16.0.42：另放行灯光交付自己生成的 UE Python 脚本（light-engine.mjs，开头固定一行 fwlight-workbench 标记），其他 Python 一律拒绝。
+ const lightScript=payload?.path==='/Script/PythonScriptPlugin.Default__PythonScriptLibrary'&&payload.function==='ExecutePythonCommandEx'&&payload.args?.ExecutionMode==='ExecuteFile'&&String(payload.args?.PythonCommand||'').startsWith('# -*- coding: utf-8 -*-\n# fwlight-workbench/1 ');
+ if(route==='/object/call'&&!lightScript&&(payload.path!=='/Script/EditorScriptingUtilities.Default__EditorAssetLibrary'||payload.function!=='SaveAsset'))throw Error('不允许的引擎函数');
  if(route==='/object/set'&&(Object.keys(payload.properties||{}).length!==1||!Object.hasOwn(payload.properties,'DefaultConfig')))throw Error('只允许写入导演三表配置');
  // UE更新大型默认配置/保存资产可能超过读取时限；超时仍按结果未知处理。
  const requestTimeout=timeout??(route==='/object/set'||route==='/object/call'?120000:15000);

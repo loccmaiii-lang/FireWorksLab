@@ -1,0 +1,57 @@
+{
+ "format": "fwlight.pack/1",
+ "generator": "烟花编排工作台（UE 写入前备份）",
+ "generatedAt": "2026-10-15T16:50:34.652Z",
+ "programme": {
+  "name": "UE 写入前备份"
+ },
+ "sequence": {
+  "asset": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2",
+  "fps": 30,
+  "endS": 240.4667,
+  "timeOffsetS": 0
+ },
+ "lights": [
+  {
+   "light": "SpotLight2",
+   "binding": "SpotLight2",
+   "component": "LightComponent0",
+   "file": "keys_SpotLight2.json",
+   "peak": 1800,
+   "intensityKeys": 1502,
+   "colorKeys": 1058
+  },
+  {
+   "light": "SpotLight",
+   "binding": "SpotLight",
+   "component": "LightComponent0",
+   "file": "keys_SpotLight.json",
+   "peak": 1800,
+   "intensityKeys": 1502,
+   "colorKeys": 1058
+  },
+  {
+   "light": "SpotLight3",
+   "binding": "SpotLight3",
+   "component": "LightComponent0",
+   "file": "keys_SpotLight3.json",
+   "peak": 1800,
+   "intensityKeys": 1502,
+   "colorKeys": 1058
+  },
+  {
+   "light": "SkyLight",
+   "binding": "SkyLight",
+   "component": "SkyLightComponent0",
+   "file": "keys_SkyLight.json",
+   "peak": 6.922615,
+   "intensityKeys": 1502,
+   "colorKeys": 1058
+  }
+ ],
+ "errors": [],
+ "warnings": [],
+ "notes": [
+  "写入前从 UE 读出的原曲线。还原：python tool/fwlight/fwlight.py apply-pack <本目录>（先 P4 迁出序列）。"
+ ]
+}

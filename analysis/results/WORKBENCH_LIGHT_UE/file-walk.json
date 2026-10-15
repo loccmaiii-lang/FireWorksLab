@@ -1,0 +1,17 @@
+{
+ "header": "云端编排 16.0.42 · B08修订6-扇照R03丰富度 · 节目文件 v12",
+ "panel_text": "自动导入 UE\n\n目标：蓝图 · BP_NewYearFireworks_ShowDirector_Night\n\n选择导演\n\n导入内容：一张导演表（高中低合一，UE 按玩家画质自动取）· 1580 次点位播放；在下方「交付档位」切换。\n\n同时写入灯光（Seq_NewYear_TestShowTemplate_2 · 4 盏灯 · 天光峰值 6.9228）\n\n灯光检查通过 · 将替换 4 盏灯的强度 1613 键 / 颜色 1029 键（按当前编排 PC 高配算） · 序列文件只读（P4 未迁出）：保存走和导演蓝图同一个 UE 保存，保存不上会提示 看灯光曲线\n\n自动导入 UE（导演表 + 灯光）\n确认替换导演蓝图与此场景实例的导演表（高中低合一）及节目时长、4 盏灯的灯光曲线\n\n检查通过 · 36 个现场点 · 1580 次播放。将替换所选目标的三表和节目时长。将同时核对并同步导演蓝图默认值与这个场景实例（2个对象）；当前两端一致。\n\n重新检查导演与发射点\n\n79 个子模板 · 355 个模板 · 497 个时序项。导入前自动备份两个对象，其他导演设置保留。\n\n连接与目标详情",
+ "import_button": "自动导入 UE（导演表 + 灯光）",
+ "import_enabled_before_confirm": false,
+ "confirm_label": "确认替换导演蓝图与此场景实例的导演表（高中低合一）及节目时长、4 盏灯的灯光曲线",
+ "off_button": "自动导入 UE",
+ "off_confirm_label": "确认替换导演蓝图与此场景实例的导演表（高中低合一）及节目时长",
+ "light_tab_rows": [
+  "SpotLight2\t1800\t1613\t1029",
+  "SpotLight\n= SpotLight2\n\t1800\t1613\t1029",
+  "SpotLight3\n= SpotLight2\n\t1800\t1613\t1029",
+  "SkyLight\n= SpotLight2 × 0.003846\n\t6.92\t1613\t1029"
+ ],
+ "light_tab_ue": "写进 UE\n\n现在：「导演表 → 自动导入 UE」会一起写这四盏灯（同一个确认、同一次点击；写前自动下载 UE 里原来的灯光曲线备份）。也可以下载交付包，用 tool/fwlight 的 python fwlight.py apply-pack <目录> 手动写。",
+ "page_errors": []
+}

@@ -1,0 +1,75 @@
+{
+ "ok": true,
+ "issues": [],
+ "notes": [
+  "序列文件只读（P4 未迁出）：保存走和导演蓝图同一个 UE 保存，保存不上会提示"
+ ],
+ "info": {
+  "tpf": 800,
+  "ok": true,
+  "file": "E:/loc_ma5/DFMEditor/DFM/Content/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2.uasset",
+  "package": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2",
+  "end_s": 240.46665954589844,
+  "t_meta": 0.007,
+  "t_tracks": 0.009,
+  "registry_loading": false,
+  "lights": [
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SpotLight2",
+    "ok": true
+   },
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SpotLight",
+    "ok": true
+   },
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SpotLight3",
+    "ok": true
+   },
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SkyLight",
+    "ok": true
+   }
+  ],
+  "readonly": true,
+  "t_total": 0.009,
+  "mode": "check",
+  "fps": [
+   30,
+   1
+  ],
+  "tick": [
+   24000,
+   1
+  ],
+  "dirty": false
+ }
+}

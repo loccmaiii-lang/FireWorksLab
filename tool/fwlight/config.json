@@ -1,5 +1,5 @@
 {
-  "_说明": "本机配置（FireWorksLab 入库版，2026-10-15）：ue.* 指向本机 E:/loc_ma5 工程；show.dfshow 指向仓库里的云端最新编排（B08修订4，16.0.39）。同事原始配置留在 config.handover.json。工作台交付页「灯光」导出的交付包用 python fwlight.py apply-pack <目录> 写入。完整说明见 交接文档_烟花灯光曲线.md 与 README.md",
+  "_说明": "本机配置（FireWorksLab 入库版，2026-10-15）：ue.* 指向本机 E:/loc_ma5 工程；show.dfshow 指向仓库里的云端最新编排（B08修订6，16.0.42）。同事原始配置留在 config.handover.json。工作台交付页「灯光」导出的交付包用 python fwlight.py apply-pack <目录> 写入。完整说明见 交接文档_烟花灯光曲线.md 与 README.md",
   "ue": {
     "project_root": "E:/loc_ma5/DFMEditor/DFM",
     "engine_root": "E:/loc_ma5/DFMEditor/Engine",
@@ -15,7 +15,7 @@
     "tick_resolution": 24000
   },
   "show": {
-    "dfshow": "../../FXtools/节目/云端最新/16.0.39-B08修订4-低配放宽保宽度.dfshow",
+    "dfshow": "../../FXtools/节目/云端最新/16.0.42-B08修订6-扇照R03丰富度.dfshow",
     "platform": "pc",
     "time_offset_s": 0.0,
     "seq_end_s": 240.4667,

@@ -6,7 +6,7 @@
 
 | 改动 | 原因 |
 |---|---|
-| `config.json` 指向本机 `E:/loc_ma5` 工程、编排指向仓库 `FXtools/节目/云端最新/16.0.39-B08修订4…dfshow`；同事原配置留在 `config.handover.json` | 换机器 |
+| `config.json` 指向本机 `E:/loc_ma5` 工程、编排指向仓库 `FXtools/节目/云端最新/16.0.42-B08修订6…dfshow`；同事原配置留在 `config.handover.json` | 换机器 |
 | `lights.SkyLight.max_intensity = 10`：`apply` 前检查，任一关键帧超过就拒绝写入 | 用户 10-15「skylight 的峰值要控制在 10 以内」 |
 | `apply --keys` 的文件路径含中文时先复制到 `out/` | UE 内 Python 2.7 读不了非 ASCII 路径 |
 | 新命令 `apply-pack <目录>`：写入编排工作台「交付 → 灯光」导出的四盏灯（manifest `fwlight.pack/1` + `keys_<灯>.json`），逐盏 apply → verify | 工作台交付包一条命令进 UE |
@@ -26,3 +26,5 @@ python fwlight.py apply-pack deliveries\<交付包目录>             :: 或一�
 ```
 
 UE 写入遵守仓库「UE 单写」规则：写之前在状态清单登记，做完删。
+
+**16.0.42 起一般不用这里的命令**：编排工作台「交付 → 导演表 → 自动导入 UE」勾「同时写入灯光」，一次点击写导演表和四盏灯（同一套写法，写前自动下载可还原的备份包）。这里留作手动写、还原备份（`apply-pack fwlight-before-<时间>`）和同事机器上用。

@@ -1,5 +1,5 @@
 import {engineRequest,normalizePath,EFFECT_KEYS} from './engine.mjs';
-export const WORKBENCH_VERSION='16.0.40';
+export const WORKBENCH_VERSION='16.0.42';
 // 用户 10-13：正式演出用 Night；手动选定的其他导演仍由 preferred 精确指定。
 export const DEFAULT_DIRECTOR='/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night';
 const network=e=>/fetch|network|超时|取消/i.test(e.message);

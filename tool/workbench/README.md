@@ -60,7 +60,7 @@ python tool/workbench/release.py --deploy-only
 
 ## 源码边界
 
-- `src/`：唯一的界面、模型、渲染、存储、交付业务实现。交付页「灯光」（16.0.40）：`LightDeliveryPanel.jsx` + `light-curve-model.mjs`（逐行移植 `tool/fwlight/lib/light_model.py`，`tests/light-curve.test.mjs` 守逐键一致）+ `light-rig.mjs`（关卡实测坐标、四盏灯、参数）+ `zip-store.mjs`。
+- `src/`：唯一的界面、模型、渲染、存储、交付业务实现。交付页「灯光」（16.0.40）：`LightDeliveryPanel.jsx` + `light-curve-model.mjs`（逐行移植 `tool/fwlight/lib/light_model.py`，`tests/light-curve.test.mjs` 守逐键一致）+ `light-rig.mjs`（关卡实测坐标、四盏灯、参数）+ `zip-store.mjs`。16.0.42 起「导演表 → 自动导入 UE」可勾「同时写入灯光」一起写进 UE：`light-engine.mjs`（生成 UE Python 脚本，经 GPUECli 的 ExecutePythonCommandEx 执行；check / dry 只读、write 写入）+ `light-settings.mjs`（天光峰值、开关，存浏览器），测试 `tests/light-engine.test.mjs`。
 - `public/data/`：六份实际目录数据。
 - `tests/fixtures/legacy/`：历史对照快照，只用于兼容性检查。
 - `server/`：只读开发辅助接口和原字节产物预览。

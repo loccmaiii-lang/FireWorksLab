@@ -1,0 +1,29 @@
+{
+ "header": "NewYearFireWorks_v01",
+ "rows": [
+  "SpotLight2\t1800\t1613\t1029",
+  "SpotLight\n= SpotLight2\n\t1800\t1613\t1029",
+  "SpotLight3\n= SpotLight2\n\t1800\t1613\t1029",
+  "SkyLight\n= SpotLight2 × 0.003846\n\t6.92\t1613\t1029"
+ ],
+ "summary": "1146\n次播放 · PC 高配\n云端编排 16.0.42 · B08修订6-扇照R03丰富度",
+ "download_enabled_default": true,
+ "zip": "fwlight-16.0.42-20261016-0111.zip",
+ "alert_12": [
+  "SkyLight 峰值 12.00 超过上限 10"
+ ],
+ "download_enabled_12": false,
+ "rows_10": "SkyLight\n= SpotLight2 × 0.005556\n\t10\t1613\t1029",
+ "download_enabled_10": true,
+ "director_tab_ok": "skip",
+ "page_errors": [],
+ "zip_files": [
+  "fwlight-16.0.42-20261016-0111/manifest.json",
+  "fwlight-16.0.42-20261016-0111/keys_SpotLight2.json",
+  "fwlight-16.0.42-20261016-0111/keys_SpotLight.json",
+  "fwlight-16.0.42-20261016-0111/keys_SpotLight3.json",
+  "fwlight-16.0.42-20261016-0111/keys_SkyLight.json",
+  "fwlight-16.0.42-20261016-0111/使用说明.txt"
+ ],
+ "zip_test": null
+}

@@ -1,5 +1,5 @@
 灯光交付包（编排工作台 → 交付 → 灯光）
-编排：NewYearFireWorks_v01 16.0.40
+编排：NewYearFireWorks_v01 16.0.42
 
 写进 UE（本机）：
   1. P4 迁出 Seq_NewYear_TestShowTemplate_2，打开 UE 编辑器；按仓库规则在状态清单登记「UE 写入」
@@ -10,7 +10,7 @@
      或一步：python fwlight.py apply-pack <解压目录>      （备份 → 写入 → 保存 → 磁盘逐键核对）
   3. 回滚：tool/fwlight/baseline/rollback_<灯>_before_20261015.json，或 backup/ 里每次写入前的自动备份
 
-SpotLight2: 强度键 1577，颜色键 1099，峰值 1800
-SpotLight: 强度键 1577，颜色键 1099，峰值 1800，复用 SpotLight2 × 1
-SpotLight3: 强度键 1577，颜色键 1099，峰值 1800，复用 SpotLight2 × 1
-SkyLight: 强度键 1577，颜色键 1099，峰值 6.9228（上限 10），复用 SpotLight2 × 0.003846
+SpotLight2: 强度键 1613，颜色键 1029，峰值 1800
+SpotLight: 强度键 1613，颜色键 1029，峰值 1800，复用 SpotLight2 × 1
+SpotLight3: 强度键 1613，颜色键 1029，峰值 1800，复用 SpotLight2 × 1
+SkyLight: 强度键 1613，颜色键 1029，峰值 6.9228（上限 10），复用 SpotLight2 × 0.003846

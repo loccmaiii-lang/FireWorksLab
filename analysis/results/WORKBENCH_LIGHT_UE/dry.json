@@ -1,0 +1,103 @@
+{
+ "result": {
+  "tpf": 800,
+  "ok": true,
+  "file": "E:/loc_ma5/DFMEditor/DFM/Content/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2.uasset",
+  "package": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2",
+  "end_s": 240.46665954589844,
+  "t_meta": 0.003,
+  "t_tracks": 0.004,
+  "registry_loading": false,
+  "dry_keys": {
+   "SkyLight": {
+    "I": 1575,
+    "A": 0,
+    "B": 1098,
+    "R": 1098,
+    "G": 1098
+   },
+   "SpotLight2": {
+    "I": 1575,
+    "A": 0,
+    "B": 1098,
+    "R": 1098,
+    "G": 1098
+   },
+   "SpotLight": {
+    "I": 1575,
+    "A": 0,
+    "B": 1098,
+    "R": 1098,
+    "G": 1098
+   },
+   "SpotLight3": {
+    "I": 1575,
+    "A": 0,
+    "B": 1098,
+    "R": 1098,
+    "G": 1098
+   }
+  },
+  "lights": [
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SpotLight2",
+    "ok": true
+   },
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SpotLight",
+    "ok": true
+   },
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SpotLight3",
+    "ok": true
+   },
+   {
+    "keys": {
+     "I": 1502,
+     "A": 0,
+     "R": 1058,
+     "B": 1058,
+     "G": 1058
+    },
+    "light": "SkyLight",
+    "ok": true
+   }
+  ],
+  "readonly": true,
+  "t_total": 0.168,
+  "mode": "dry",
+  "fps": [
+   30,
+   1
+  ],
+  "dry_ticks_ok": true,
+  "tick": [
+   24000,
+   1
+  ],
+  "t_backup": 0.159,
+  "dirty": false
+ },
+ "returned": true
+}
