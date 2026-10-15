@@ -1,11 +1,11 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmv9h8webs6bnz",
- "tool": "4.9.104",
+ "tool": "4.9.105",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv9h8webs6bnz",
  "name": "正式资产-窜天猴尾焰-粒子",
- "at": "2026-10-15 20:00",
+ "at": "2026-10-15 20:40",
  "base": "我的效果",
  "from": {
   "key": "ef:rocket_graph",
@@ -704,7 +704,7 @@
         "parent": null,
         "seed": 503244,
         "enabled": false,
-        "count": 17280,
+        "count": 2980,
         "speed": [
          15.200000000000001,
          68.4,
@@ -809,7 +809,7 @@
         "name": "03｜中等金丝",
         "parent": null,
         "seed": 504551,
-        "enabled": true,
+        "enabled": false,
         "count": 1296,
         "speed": [
          22.8,
@@ -1958,10 +1958,15 @@
       "followAxis": true,
       "presetKey": "rocket",
       "fieldEnabled": 1,
-      "fieldResponse": 14.5,
-      "fieldStart": 0,
+      "fieldResponse": 5,
+      "fieldStart": 0.85,
       "fieldRamp": 3,
-      "fieldConverge": 7
+      "fieldConverge": 7,
+      "scaleCone": 1.5,
+      "scaleLife": 1.5,
+      "scaleCount": 0.45,
+      "scaleGain": 1,
+      "scaleWidth": 0.7
      },
      "type": "sparkgraph",
      "graphSolo": null
