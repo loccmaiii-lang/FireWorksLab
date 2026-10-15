@@ -1,0 +1,10 @@
+{
+  "action": "git push origin main",
+  "destination": "https://github.com/loccmaiii-lang/FireWorksLab.git",
+  "localReportCommit": "a95d8688",
+  "outcome": "自动安全审查拒绝，未执行推送",
+  "reason": "审查认为具体GitHub目的地尚未验证为受信任，现有证据未明确授权向该目的地披露内部项目路径、UE状态和核查数据。",
+  "bypassAttempted": false,
+  "UEStopped": false,
+  "next": "需用户明确批准向该具体仓库披露本报告后，才可重试原目的地；不改路径或换工具绕过。"
+}
