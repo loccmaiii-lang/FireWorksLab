@@ -8,7 +8,8 @@
 读两份文件（都在 协作/）：
   看板对账.json  对账表：每条来源（对话框打勾项、计划、规范……）对到看板哪一行，或为什么不用上看板
   看板快照.json  在线看板数据库的快照（总管每次改完看板重导）
---snapshot-from 同时把快照嵌进 协作/全局看板.html（在线看板同一页的离线副本，本机直接双击打开、只读）。
+--snapshot-from 同时生成本地视图并嵌进 协作/全局看板.html（本机双击可看最新整理、保存反馈并主动导出）。
+--local 只读本地派生视图；在线基线看板快照.json不被离线巡检改写。
 另列「用户勾了我做好了、还没同步给负责对话框」的行（等同步），总管同步后在看板写 syncedAt / syncedTo。
 
 查四件事：
@@ -24,6 +25,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -63,8 +65,11 @@ def main():
                     help="先用这个目录重写 看板快照.json：DIR/items、DIR/resources、DIR/dialogs 下每行一个 <id>.json"
                          "（总管用 ArtifactData list 加 out_dir 导出的）")
     ap.add_argument("--daily", action="store_true", help="每日巡检（夜班早班）：另列要跟进的，不算问题")
+    ap.add_argument("--local", action="store_true", help="只读本地视图（在线基线叠加待同步），不伪改在线快照")
     ap.add_argument("--time", help="配合 --snapshot-from：导出时间，如 2026-10-13T21:50:00+08:00")
     a = ap.parse_args()
+    if a.local and a.snapshot_from:
+        ap.error("--local只读本地视图，不能同时导入在线快照")
 
     if a.snapshot_from:
         src = Path(a.snapshot_from)
@@ -83,10 +88,18 @@ def main():
         blob = json.dumps(snap, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
         PAGE.write_text(SNAP_RE.sub(lambda m: m.group(1) + blob + m.group(3), page), encoding="utf-8")
         print("快照已重写（并嵌进 协作/全局看板.html）：" + "、".join(f"{c} {len(snap[c])}" for c in COLLS))
+        # 在线基线独立保存，HTML继续叠加尚未应用的本机修改，避免反馈恢复前看板退回旧版。
+        from 看板本地视图 import build as build_local
+        head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+        build_local(ROOT, snap['导出时间'], head)
 
     ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
     entries = ledger["条目"]
-    snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    source = ROOT / '协作/看板本地视图.json' if a.local else SNAPSHOT
+    snap = json.loads(source.read_text(encoding="utf-8"))
+    if a.local:
+        meta = snap.get('本地视图', {})
+        print(f"本地视图 {meta.get('生成时间', '未核')}；待云端应用 {len(meta.get('尚未应用', []))} 条（非线上已同步）")
     board = {}
     for coll in ("items", "resources", "dialogs"):
         board.update(snap.get(coll, {}))
