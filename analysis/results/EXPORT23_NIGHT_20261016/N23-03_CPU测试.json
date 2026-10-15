@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-15T19:44:31.467510+00:00",
+  "tests": [
+    {
+      "test": "tool/local_delivery/test_accept_timeout.cjs",
+      "exit": 0,
+      "output": "PASS slow >30s success retains the original request and late response\nPASS disconnected read preserves unknown result, refresh never resends accept\nPASS switching revisions rejects stale receipt presentation\nPASS explicit business failure preserves its reason and starts no polling\nPASS exit stops read polling\nPASS page disposal stops read polling\nPASS export cancellation/failure stops polling and preserves its reason\nPASS unknown-result automatic polling is bounded\n8 accept deadline contracts passed (all fake time, no UE/GPU/browser).\n"
+    },
+    {
+      "test": "tool/local_delivery/test_baker_handoff.cjs",
+      "exit": 0,
+      "output": "PASS file entry stays in the maker document\nPASS repeated navigation retains maker values and one importer instance\nPASS return to maker remains available during native work\nPASS forged host events cannot change native task guards\nPASS interruptible motion and host-owned focus restore\nPASS reduced motion preserves the same view behavior\nPASS cold service failure has in-place retry and a working maker return\nPASS directory outage leaves the actual local importer visible\n8 single-document navigation contracts passed.\n"
+    },
+    {
+      "test": "tool/local_delivery/test_delivery_host.cjs",
+      "exit": 0,
+      "output": "PASS opaque direct file parent connects without receiving credentials\nPASS remote sandbox ancestry is rejected\nPASS reauthentication retains the original native importer without navigation\nPASS source pinning and command allowlist do not expose UE execution\nPASS acceptance uses indexed receipts instead of parent paths\nPASS repeated publication writes once and does not reread historic resources\nPASS queued export does not replace running identity and adopts its context later\nPASS original native receipts persist in the host and refresh parent resources\nPASS local UI is ready even when directory transport is down\nPASS serialized file origin still uses wildcard reply with source/channel pinning\nPASS local receipt presentation has an absolute trusted thumbnail URL\nPASS historic receipts outside the active root are not written\n12 embedded host contracts passed.\n"
+    },
+    {
+      "test": "tool/local_delivery/test_delivery_metadata.cjs",
+      "exit": 0,
+      "output": "8 actual-size and tail classification checks passed.\n"
+    },
+    {
+      "test": "tool/local_delivery/test_delivery_responsiveness.cjs",
+      "exit": 0,
+      "output": "PASS export opens the existing workspace before resource work\nPASS hidden preview skips rendering and clock advancement, retains next frame\n"
+    },
+    {
+      "test": "tool/local_delivery/test_directory_transport.cjs",
+      "exit": 0,
+      "output": "PASS credentials stay in same-origin directory transport\nPASS no arbitrary paths, external sources or UE commands\nPASS service token rotation recovers without changing importer\nPASS sandboxed remote ancestors cannot use local directory channel\n4 directory transport groups passed.\n"
+    },
+    {
+      "test": "tool/local_delivery/test_export_failure_state.cjs",
+      "exit": 0,
+      "output": "6 导出失败旧清单隔离、成功恢复与最新指纹检查通过。\n"
+    },
+    {
+      "test": "tool/local_delivery/test_export_revision_identity.cjs",
+      "exit": 1,
+      "output": "Error: 导出拦截（不符合 spec/烟花特效资产规范.md v1，这次没有出包）：\n· cascade.json：贴图名不合命名规范 main = T_Test（应为 T_EFX_FireWorks_<英文名>_…，只用英文、数字和下划线；在交付清单里设英文名）\n    at Object.packFinalize (evalmachine.<anonymous>:94:45)\n    at async F:\\FireWorksLab-Night-Export23-20261016\\tool\\local_delivery\\test_export_revision_identity.cjs:29:2 {\n  gate: [\n    'cascade.json：贴图名不合命名规范 main = T_Test（应为 T_EFX_FireWorks_<英文名>_…，只用英文、数字和下划线；在交付清单里设英文名）'\n  ]\n}\n"
+    },
+    {
+      "test": "tool/local_delivery/test_export_snapshot.cjs",
+      "exit": 0,
+      "output": "PASS single export start snapshot survives six async pause positions\nPASS non-air products keep their snapshot and never mutate shared bake policy\nPASS combo layers, entries, metadata and names use the initiating snapshot\nPASS cancelled/failed export has no delivery or history and releases only owned bake\nPASS real combo packing uses private captured layer parameters across bake/encode/mobile waits\nPASS real single-unit scheme keeps its job policy and disposes its private cache\nPASS seed-variant export keeps the same initiating identity and policy\nPASS actual history writer appends to the initiating key, retains manual records and limits only that key\nPASS real combo cancellation releases private sequence/unit caches without touching UI cache\nPASS actual cancellation flag during ZIP is checked before publication\n"
+    },
+    {
+      "test": "tool/local_delivery/test_file_export_handoff.cjs",
+      "exit": 0,
+      "output": "PASS file export automatically reaches the same-page actual checklist\nPASS export return and re-entry do not reset confirmation or recheck\nPASS export receipt does not disable return during native work\nPASS queued export keeps running identity until the native importer adopts it\nPASS popup, opener relay and page closing removed from production controller\nPASS failed handoff does not replace the current native identity\n6 embedded export contracts passed; real file browser and UE write acceptance remain separate.\n"
+    },
+    {
+      "test": "tool/local_delivery/test_unit_directions.cjs",
+      "exit": 0,
+      "output": "PASS half is blocked before baking, cached unit reuse or Cascade output\nFIT {\"actual\":{\"px\":1.32,\"devM\":2.28,\"tau\":0.55,\"spread\":0,\"level\":\"ok\",\"why\":[],\"directionCount\":24,\"worstDirection\":[-0.532363,-0.054823,-0.844739]},\"oracle\":{\"px\":1.315153657821581,\"directions\":24,\"star\":9}}\nFIT {\"actual\":{\"px\":17.71,\"devM\":30.7,\"tau\":1.2,\"spread\":0,\"level\":\"bad\",\"why\":[\"尾迹偏离速度直线：单束的直尾最多偏 17.7 px（800 m，所有星方向的最大值）\"],\"directionCount\":24,\"worstDirection\":[-0.895976,-0.283566,0.341785]},\"oracle\":{\"px\":17.709569477055883,\"directions\":24,\"star\":7}}\nPASS existing sphere direction set matches independent full-history 3D maximum\nPASS horizontal, oblique, vertical and depth-facing paths use the same conservative rule\nSPHERE_CONFIG_SHA256 a0aa547fa35b65fa49a428cfd8cac7d82a2589171e315d874914c1c71f025c0c\nPASS sphere config and shader source preserve the pre-task behavior\nPASS half direction axes and unsupported fan/cluster remain explicit\n5 CPU physics/config groups passed; no GL or UE visual acceptance.\n"
+    }
+  ],
+  "browser": null,
+  "pixels": null,
+  "ue": null
+}

@@ -64,6 +64,7 @@ function drawLayer(b0, L, t, view, origin = [0, 0]) {
 // 单元序列：模拟 Cascade 的每颗星一个粒子
 // 4.9.28 单束变体：每一张一个发射器（fwlUnit），星数平分、编号接着排；随机感 → 每颗星宽 / 长随机（uSJ）
 function drawUnitLayer(b0, L, t, view) {
+  if (!unitAllowed(b0.P)) return -1;
   const uv = b0.meta.unitVar, sj = uv ? uv.sj : [0, 0]; let id0 = 0, fr = -1;
   for (const b of [b0, ...(b0.vars || [])]) { const n = b.meta.unitN > 0 ? b.meta.unitN : b.P.stars, f = drawUnitOne(b, L, t, view, id0, sj, n); if (b === b0) fr = f; id0 += Math.round(n); }
   return fr;
@@ -291,6 +292,7 @@ function renderLowExport(b, Pn, view, sa) {
 function renderExport() {
   const b = previewBake(); hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
+  if (b.form === 'unit' && !unitAllowed(b.P)) { post(); hudText = unitBlockReason(b.P); hudB = ''; return; }
   if (b.form === 'emitset') return renderEmitExport(b);
   const sa = liveSlot('XA'); prepSlot(sa, b.P, state.gen);
   const ev = exportViewAny(b, sa), view = ev.view;

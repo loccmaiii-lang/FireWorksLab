@@ -95,6 +95,7 @@ function comboEntries(layers, mobile) {
 // 单束层（PC）：每颗星一个 Velocity 对齐的面片，贴图 = 一颗代表星的序列（星头 + 拖尾，bakeUnit），轨迹交给 Cascade（球面放射 + 线性阻力 + 恒定加速度，m.fit）。
 // 和 65_cascade.js 的单元序列参数表同一套数；层的缩放 × 长度，时间倍率 ÷ 时间。CPU 发射器（GPU Sprites 对动态参数帧号的支持没在 UE 验证过）
 function fwlUnit(name, b0, M, L) {
+  const why = unitBlockReason(b0.P); if (why) throw Error(why);
   // 4.3（H10）：模拟里寿命、初速的随机是正态（σ = 寿命随机 / 初速随机 %），Cascade 只有均匀分布 → 取同方差的均匀范围 ±√3σ；风按线性阻力折成 X 加速度（k × 风速）。湍流没有（单束近似）
   // 4.9.28 变体：b0.vars 里的每一张各一个发射器（贴图 / 材质 / 发射器名第 2 张起带 _V2…），星数平分（meta.unitN）；随机感 > 0 时 Initial Size 宽 / 长各自均匀随机
   const r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, R = 10 * sc, uv = b0.meta.unitVar, sj = uv ? uv.sj : [0, 0];
@@ -435,6 +436,7 @@ async function bakeUnitSet(P, uv, onProg) {
   return b;
 }
 async function layerUnitBake(e, onProg, L) {
+  const why = unitBlockReason(e.P); if (why) throw Error(why);
   if (L) e.unitSrc = L;
   const sig = unitSigOf(e);
   if (e.unitBake && e.unitBake.sig === sig) return e.unitBake.b;
@@ -447,6 +449,7 @@ async function layerUnitBake(e, onProg, L) {
 const MOBILE_TEX_MAX = () => typeof GATE_MOBILE_TEX !== 'undefined' ? GATE_MOBILE_TEX : 1024;
 function capMobileTex(P) { const s = Math.max(+P.texW || 0, +P.texH || 0), cap = MOBILE_TEX_MAX(); return s > cap ? { ...P, texW: Math.round(P.texW * cap / s), texH: Math.round(P.texH * cap / s) } : P; }
 async function layerUnitBakeMobile(h, ub, onProg, L) {
+  const why = unitBlockReason(h.P); if (why) throw Error(why);
   if (L) h.unitSrc = L;
   const P0 = unitP(h.P), Pm = capMobileTex(P0);
   if (Pm === P0) return ub || await layerUnitBake(h, onProg, L);
@@ -481,6 +484,7 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
     const mplan = comboMobilePlan(lb), pcE = [], mbE = [], nmE = [];
     for (let i = 0; i < lb.length; i++) {
       const { L, b, e } = lb[i], ln = comboLayerName(name, i), mn = comboLayerName(name + '_Mobile', i), M = comboLayerM(L), o = layerOut(L, e), uOK = unitAllowed(b.P);   // 4.2.12：每层的导出方案
+      if (b.P.pattern === 'half' && (o.pc === 'unit' || o.mobile === 'unit')) throw Error(unitBlockReason(b.P));
       const pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mk = mplan[i] ? mplan[i].kind : o.mobile, mbK = mk === 'unit' && !uOK ? 'seq' : mk;     // 单束不适用的花型（千轮、分裂、蜂、非球形图案）按序列出；4.9.80 手机「自动」按 comboMobilePlan
       const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]), pg = (a, w) => p => onProg && onProg(0.4 + (a + w * (i + p) / lb.length));
       const ub = pcK === 'unit' ? await layerUnitBake(e, pg(0, 0.1), L) : null, um = mbK === 'unit' ? await layerUnitBakeMobile(e, ub, pg(0, 0.1), L) : null;     // 4.9.80 手机单束另出一套
@@ -531,6 +535,7 @@ function singleDotsTables(P, M, b) { const h = state.exportUnitHolder || singleD
 async function singleSchemeFiles(name, b, M, onProg, holder = null) {
   const P = holder ? b.P : withScheme(b.P || state.P), o = singleOut(P), L = singleLayer(P, M), files = [], own = [], ln = comboLayerName(name, 0), mn = name + '_Mobile';
   try {
+    if (P.pattern === 'half' && (o.pc === 'unit' || o.mobile === 'unit')) throw Error(unitBlockReason(P));
     const uOK = unitAllowed(P), pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mbK = o.mobile === 'unit' && !uOK ? 'seq' : o.mobile;
     const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     // 4.9.25 单束：和贴图 / 引擎回放同一份（缓存，不在这里丢）；4.9.35 单帧（PC / 手机同一张，b.lowCache 缓存）

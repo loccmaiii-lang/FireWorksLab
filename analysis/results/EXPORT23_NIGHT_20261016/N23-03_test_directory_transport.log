@@ -1,0 +1,5 @@
+PASS credentials stay in same-origin directory transport
+PASS no arbitrary paths, external sources or UE commands
+PASS service token rotation recovers without changing importer
+PASS sandboxed remote ancestors cannot use local directory channel
+4 directory transport groups passed.

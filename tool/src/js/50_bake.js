@@ -519,6 +519,7 @@ function envelopeKeys(sp, maxN = 8) {
 // 单元序列：一颗代表星在自己的随体坐标里（速度朝上），星头 + 拖尾；Cascade 负责轨迹。
 // 横、竖分别用 Size By Life 缩放：拖尾变短、变窄时面片跟着变小（星头在缩放中心，不会被裁掉）
 async function bakeUnit(P, scale, onProg) {
+  const why = unitBlockReason(P); if (why) throw Error(why);
   const Du = unitDuration(P);
   // 贴图里的拖尾按直线烘焙（去掉重力造成的弯曲）：面片沿速度对齐后，弯曲由 Cascade 的轨迹自己体现，
   // 否则一颗水平星的弯尾巴会让面片变得很宽，而且对向上、向下飞的星都不对
@@ -607,44 +608,82 @@ function bakeKind(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return 'loop';
   if (fam === 'rise') return P.form === 'master' ? 'master' : P.form === 'trail' ? 'trail' : P.form === 'emitset' ? 'emitset' : 'riseLoop';
-  if (P.form === 'unit' && unitAllowed(P)) return 'unit';
+  if (P.form === 'unit') { const why = unitBlockReason(P); if (why) throw Error(why); return 'unit'; }
   if (P.form === 'segments') return 'segments';
   return 'master';
 }
-function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
+function unitBlockReason(P) {
+  if (P?.pattern === 'half') return '半球单束暂不支持，无法保证上半球方向；请改用序列。';
+  if (!P || familyOf(P.type) !== 'aerial' || ['senrin', 'crossette', 'hachi'].includes(P.type) || P.pattern !== 'sphere')
+    return '这种花型或图案暂不支持单束，请改用序列。';
+  return '';
+}
+function unitAllowed(P) { return !unitBlockReason(P); }
 // 4.9.27 这一层合不合适出单束（用户 10-07 09:20「还是用断尾快星或者没有什么下坠直线星用」；对话框新花型 10:43 证据：窜天猴冠 / 柳 / 时差第 1 层单束和实时对不上，
 //   NFE-MYJC-K/Y/J-4 烘焙回放：冠的光束从顶上一点散开、柳成短彗星、时差开头全黑后一起亮）。
-// 单束贴图里的尾迹是直的、沿速度方向（bakeUnit 关了重力），真的尾迹顺着星走过的弧。量一颗水平飞的星（下垂最明显）燃烧的每一刻：
+// 单束贴图里的尾迹是直的、沿速度方向（bakeUnit 关了重力），真的尾迹顺着星走过的弧。按现有实际星方向集（含纵深）量燃烧的每一刻：
 //   尾迹那段路（最近 τ 秒的星头位置；τ = 火花寿命 × 末段倍数，有余烬取余烬寿命）离「沿现在速度的直线」最远几米 → 游戏里 800 m 外几像素（帧账本同一口径）。
 //   先后点亮（点火延迟 × 点火离散）：单束所有星同一刻出生、贴图同一张 → 同时亮。
 const UNIT_FIT_OK = 1.5, UNIT_FIT_BAD = 4, UNIT_IGN_BAD = 0.1;
 const _unitFit = new Map();
+function unitDirectionDeviation(P, Du, tau, ign, tb) {
+  // Sim's "gpu" mode computes stars on the CPU, without allocating spark particles.
+  // Keep the existing seeded directions, including depth, wind and shell velocity.
+  const sim = new Sim({ ...P, _unit: false, engine: 'gpu', speedJit: 0, burnJit: 0, ignJit: 0, sparkRate: 0, crackle: 0 });
+  sim.ex = [];
+  const stars = sim.all.slice(0, P.stars), n = stars.length;
+  if (!n) throw Error('没有可评估的星方向');
+  const directions = stars.map(q => { const v = Math.hypot(q.vx, q.vy, q.vz) || 1; q.vis = q.burn; q.burn = 1e9; return [q.vx / v, q.vy / v, q.vz / v]; });
+  const cap = Math.max(2, Math.ceil(Math.min(tau, Du) / (8 * H_STEP)) + 2);
+  if (cap * n * 3 * 8 > 64 * 1024 * 1024) throw Error('方向集与尾迹窗口超过评估内存预算，未作适合判断');
+  const xyz = new Float64Array(cap * n * 3), times = new Float64Array(cap);
+  let samples = 0, dev = 0, worst = -1;
+  const end = Math.min(Du, tb);
+  for (let i = 0; i <= Math.ceil(end / H_STEP); i++) {
+    if (i % 8 === 0) {
+      const t = sim.t, slot = samples % cap, count = Math.min(samples, cap - 1);
+      times[slot] = t;
+      for (let k = 0; k < n; k++) {
+        const q = stars[k], at = (slot * n + k) * 3; xyz[at] = q.x; xyz[at + 1] = q.y; xyz[at + 2] = q.z;
+        if (t < ign || t > tb) continue;
+        const vl = Math.hypot(q.vx, q.vy, q.vz), start = Math.max(ign, t - tau);
+        for (let j = 1; j <= count; j++) {
+          const old = (slot - j + cap) % cap; if (times[old] < start) break;
+          const p = (old * n + k) * 3, x = xyz[p] - q.x, y = xyz[p + 1] - q.y, z = xyz[p + 2] - q.z;
+          // 3D distance bounds the visible projected deviation for every viewing axis.
+          const d = vl > 1e-12 ? Math.hypot(y * q.vz - z * q.vy, z * q.vx - x * q.vz, x * q.vy - y * q.vx) / vl : Math.hypot(x, y, z);
+          if (d > dev) { dev = d; worst = k; }
+        }
+      }
+      samples++;
+    }
+    sim.step(H_STEP);
+  }
+  return { dev, directionCount: n, worstDirection: worst >= 0 ? directions[worst].map(v => +v.toFixed(6)) : null };
+}
 function unitFit(P0) {
   if (!P0 || !unitAllowed(P0)) return null;
   const P = fxP(P0); let key = ''; try { key = JSON.stringify(P); } catch (e) { }
   if (key && _unitFit.has(key)) return _unitFit.get(key);
   let r = null;
   try {
-    const Du = unitDuration(P), path = starPath(P, Du), ppm = gamePixelsPerMeter(P, 0, 1080, 800);
+    const Du = unitDuration(P), ppm = gamePixelsPerMeter(P, 0, 1080, 800);
     const tau = Math.max((+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1), +P.emberFrac > 0 ? (+P.emberLife || 0) : 0);
-    const ign = +P.ignDelay || 0, tb = (+P.burn || 0) + ign; let dev = 0;
-    for (let i = 1; i < path.length; i++) {
-      const [t, x, y] = path[i]; if (t < ign || t > tb) continue;
-      const vx = x - path[i - 1][1], vy = y - path[i - 1][2], vl = Math.hypot(vx, vy) || 1, ux = vx / vl, uy = vy / vl;
-      for (let j = i - 1; j >= 0 && path[j][0] >= Math.max(ign, t - tau); j--) dev = Math.max(dev, Math.abs((path[j][1] - x) * uy - (path[j][2] - y) * ux));
-    }
+    const ign = +P.ignDelay || 0, tb = (+P.burn || 0) + ign;
+    const { dev, directionCount, worstDirection } = unitDirectionDeviation(P, Du, tau, ign, tb);
     const spread = ign > 0 ? 2 * ign * Math.abs(+P.ignJit || 0) / 100 : 0, px = dev * ppm;
     const level = px > UNIT_FIT_BAD || spread > UNIT_IGN_BAD ? 'bad' : px > UNIT_FIT_OK ? 'soft' : 'ok';
     const why = [];
-    if (px > UNIT_FIT_OK) why.push(`尾迹下垂成弧：单束的直尾最多偏 ${px.toFixed(1)} px（800 m）`);
-    if (spread > UNIT_IGN_BAD) why.push(`先后点亮（前后差 ${spread.toFixed(2)} s）：单束所有星同一刻亮`);
-    r = { px: +px.toFixed(2), devM: +dev.toFixed(2), tau: +tau.toFixed(2), spread: +spread.toFixed(2), level, why };
-  } catch (e) { r = null; }
+    if (px > UNIT_FIT_OK) why.push('尾迹偏离速度直线：单束的直尾最多偏 ' + px.toFixed(1) + ' px（800 m，所有星方向的最大值）');
+    if (spread > UNIT_IGN_BAD) why.push('先后点亮（前后差 ' + spread.toFixed(2) + ' s）：单束所有星同一刻亮');
+    r = { px: +px.toFixed(2), devM: +dev.toFixed(2), tau: +tau.toFixed(2), spread: +spread.toFixed(2), level, why, directionCount, worstDirection };
+  } catch (e) { r = { px: null, devM: null, level: 'unknown', why: [e.message] }; }
   if (key) { _unitFit.set(key, r); if (_unitFit.size > 24) _unitFit.delete(_unitFit.keys().next().value); }
   return r;
 }
 function unitFitText(f) {
   if (!f) return '';
+  if (f.level === 'unknown') return '⚠ 单束合适度未完成：' + f.why.join('；');
   if (f.level === 'ok') return `适合单束（直尾最多偏 ${f.px} px，800 m）`;
   return `${f.level === 'bad' ? '⚠ 不适合单束，建议序列' : '单束近看会偏直'}：${f.why.join('；')}`;
 }

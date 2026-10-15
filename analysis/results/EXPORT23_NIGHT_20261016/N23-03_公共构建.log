@@ -1,0 +1,4 @@
+Public-only build: private-local sidecar prepare disabled, standard lint/static kept.
+built 2140388 bytes 4.9.109
+脚本静态检查：0 个错误、20 个提示（--warn 看提示）
+静态核对：0 个错误、4 个提示（--warn 看提示）

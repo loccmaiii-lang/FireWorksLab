@@ -1,0 +1,27 @@
+{
+  "format": "df.unit-contract-gap/1",
+  "checkedAt": "2026-10-16T03:46:12+08:00",
+  "contract": "spec/cascade_params_v1.md",
+  "module": "SphereLocation",
+  "declared": [
+    "StartRadius",
+    "VelocityScale",
+    "StartLocation",
+    "Velocity",
+    "SurfaceOnly"
+  ],
+  "wanted": {
+    "simulationUpAxis": "Y",
+    "simulationHalf": "Y>=0",
+    "cascadeAxisMap": [
+      "X",
+      "Z",
+      "Y"
+    ],
+    "requiredHalf": "UE Z>=0"
+  },
+  "supportedHalfField": null,
+  "reason": "公开合同未声明半球正负轴字段；当前导出和回放为整球，不能推定私有端支持。",
+  "action": "明确拦截half单束，序列可用；不改私有导入器/合同/资产。",
+  "visualVerified": null
+}

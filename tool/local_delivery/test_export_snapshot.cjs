@@ -41,7 +41,7 @@ function fixture({form='master',pause='begin',fail=false,combo=false,actual=fals
  vm.runInContext(extract(fs.readFileSync(dir+'70_ui.js','utf8'),'busy'),ctx);
  if(actual)vm.runInContext(fs.readFileSync(dir+'67_fwlcombo.js','utf8'),ctx);
  Object.assign(ctx,{
-  clamp:(v,a,b)=>Math.min(b,Math.max(a,v)),singleSchemeOn:()=>true,unitAllowed:()=>true,unitDuration:()=>2,
+  unitBlockReason:()=>'',clamp:(v,a,b)=>Math.min(b,Math.max(a,v)),singleSchemeOn:()=>true,unitAllowed:()=>true,unitDuration:()=>2,
   bakeMobileFor:async b=>{await wait('mobile');return bakeP(b.P)},bakeUnitSet:async p=>bakeP(p),
   fwlCombo:(n,x,m)=>({name:n,platform:m?'mobile':'pc',textures:{},emitters:x.map(y=>({P:y.b.P,L:y.L,unit:y.unit?.P})),notes:[]}),
   fwlCascade:(n,b,m,mob)=>({name:n,textures:{},emitters:[{P:b.P,M:m}],platform:mob?'mobile':'pc'}),

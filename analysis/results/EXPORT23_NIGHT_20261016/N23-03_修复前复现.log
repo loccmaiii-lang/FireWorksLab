@@ -1,0 +1,45 @@
+Against committed baseline 80b04a69.
+SPHERE_CONFIG_SHA256 a0aa547fa35b65fa49a428cfd8cac7d82a2589171e315d874914c1c71f025c0c
+PASS sphere config and shader source preserve the pre-task behavior
+PASS half direction axes and unsupported fan/cluster remain explicit
+FAIL half is blocked before baking, cached unit reuse or Cascade output AssertionError [ERR_ASSERTION]: public contract cannot express Y>=0 -> UE Z>=0
+
+true !== false
+
+    at Object.fn (F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:26:9)
+    at F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:69:56
+    at Object.<anonymous> (F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:69:250)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+FAIL existing sphere direction set matches independent full-history 3D maximum AssertionError [ERR_ASSERTION]: all actual directions: {"expected":{"px":1.315153657821581,"directions":24,"star":9},"actual":{"px":1.28,"devM":2.22,"tau":0.55,"spread":0,"level":"ok","why":[]}}
+    at Object.fn (F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:38:18)
+    at F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:69:56 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+FAIL horizontal, oblique, vertical and depth-facing paths use the same conservative rule AssertionError [ERR_ASSERTION]: {"expected":{"px":12.960698002289279,"directions":4,"star":2},"actual":{"px":4.97,"devM":8.62,"tau":1,"spread":0,"level":"bad","why":["尾迹下垂成弧：单束的直尾最多偏 5.0 px（800 m）"]}}
+    at Object.fn (F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:48:56)
+    at F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_unit_directions.cjs:69:56 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
