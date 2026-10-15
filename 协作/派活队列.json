@@ -1,7 +1,7 @@
 {
   "格式": "df.dispatch-queue/1",
   "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-14T21:51:00+08:00 总管（21）：T05 改待派（读回改名后的资源表）；加 C03（编排跟上新命名和手游种类，出 B05）",
+  "更新": "2026-10-15T11:20:00+08:00 导出（23）：加 T06（只读排查最亮处黑块，用户 10-15 01:40 / 11:00）",
   "dot 怎么派": [
     "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
     "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
@@ -301,6 +301,35 @@
       "完成": "2026-10-14T23:05:00+08:00",
       "提交": "43445486（16.0.30）、b931236e（16.0.31 修正）",
       "结果": "B05 = 工作台云端编排 16.0.31（16.0.30 的修正：用户 22:32 小分裂配方是前台 30 m → 小平台按前台尺寸算倍数、手游小位不放分裂星）；协作/编排B05.md。导演表认 ResourceId：两根尾缀按用途接（坝顶低层 RiseTrail_XS 低位_尾缀、小平台 RiseTrail_Tiny 极小_尾缀）、橙辉星 OrangeGlitter→Glitter、小平台花换 2801/2800/2802；一张表 26 个 ResourceId 全在 T05 读回里，对不上 0 行。手游只用 6 种（大位金芒菊×1.41–1.53、中位辉星/银冠菊×1.47–1.6、小位点灭星/爆裂星、小平台分裂星），共用片段拆 PC 照旧+手游替身，PC/手游发数同 B04。等用户：手游表加 3.0 行；银冠菊_M 检查没过（中位 2 排）；2800/2802/2803 还指向 LittleChry_HD。"
+    },
+    {
+      "编号": "T06",
+      "看板": "",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 1,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "只读排查「最亮处黑块在闪」：序列图有没有超过 253、Ramp 末格是不是黑的、UE 里有没有缩小、材质参数有没有推高查询坐标",
+      "为什么": "用户 10-15 01:40 截图：好多贴图导入 UE 后最亮处一块块黑色马赛克在闪；11:00 改 RGBA8（不压缩）也没用 → 不是 BC7。云端复现了「旧序列（不封顶）+ 末格黑 Ramp」会出同样的黑块（analysis/probe/BC7护栏黑块_2026-10-15/），但要本机读回用户 UE 里实际是哪种（写任务的：导出（23））。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261015/黑块排查.json",
+        "analysis/results/UE_READBACK_20261015/黑块排查.md"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T06，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节和 analysis/probe/BC7护栏黑块_2026-10-15/README.md。\n\n背景（导出（23）写，用户 10-15 01:40 / 11:00）：好多贴图导入 UE 后，最亮的地方出现一块块黑色马赛克在闪。用户把序列图改成 RGBA8（不压缩）也没用，所以不是 BC7 压缩造成的。\n机制：4.9.31（10-07）起烘焙器的 Ramp（256×8）最后一格是黑的（护栏），序列图最亮只写到 253；材质按「查询坐标 = 序列灰度 v」双线性查 Ramp，v 到 254 就混进黑格、255 全黑。现在怀疑三条路让最亮的像素查到了黑格：\n  ① 序列图是 10-07 以前导出的（没封顶，最亮到 255），配的 Ramp 却是新的（末格黑）——比如 Ramp 后来重导 / 被别的效果的同色 Ramp 顶替 / 派生资源沿用了旧序列；\n  ② UE 里把序列图缩小过（Max Texture Size / LOD Bias / LOD Group 比源图小），缩小滤镜（Sharpen 一类）把亮度冲过 253；\n  ③ 材质实例里有曝光 / 亮度 / 溶解 / 对比度一类参数改了查询坐标，把 v 往上推。\n这条只读回证据、不改任何东西，看哪条成立。\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc 和 mobile 每一行 FxSP / FxSP_Low / FxSP_High 引用的全部粒子系统（去重），每个系统里每个发射器的材质（实例）用到的序列图和 Ramp 贴图（去重）。\n\n1. 用 GPUECli 只读：\n   - 每张贴图：路径、SizeX / SizeY、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX / AddressY，能读到的话 Downscale / DownscaleOptions 和 AssetImportData 里的源文件路径与时间。\n   - 每个材质实例：父材质路径、全部 Scalar / Vector / Texture 参数的当前值（重点列出名字带 曝光 / Exposure / 亮度 / Bright / 溶解 / Dissolve / 对比 / Contrast / Gamma / Power 的）。\n2. 找到每张贴图的源 PNG（AssetImportData 里的路径；读不到就在本机导出根目录 / ResourceFX 素材目录按贴图名找同名 .png），用 Python + Pillow 只读统计：\n   - 序列图：每个通道的最大值、≥254 和 =255 的像素各占多少（百分比）；\n   - Ramp：宽 × 高、最后一格和倒数第二格的 RGB；\n   - 同目录有 cascade.json 的，记下里面写的烘焙器版本（tool 字段）。\n3. 判定（每张序列图一行）：\n   - 序列有 ≥254 的像素 且 它的 Ramp 末格是黑的 → 「① 序列没封顶 + Ramp 末格黑：会出黑块」；\n   - MaxTextureSize / LODBias 让 UE 里的尺寸比源图小 → 「② UE 里缩小过」，同时写 MipGenSettings / DownscaleOptions；\n   - 材质实例里有上面那几类参数不是缺省值 → 「③ 材质参数可能推高查询坐标」，写出名字和值；\n   - 都不是 → 「没找到原因」。\n4. 输出：\n   - analysis/results/UE_READBACK_20261015/黑块排查.json：{format:'df.ue-black-block-check/1', readAt, rows:[{resourceId, side, system, emitter, material, parentMaterial, seq:{path, size, compression, srgb, filter, lodGroup, maxSize, lodBias, mipGen, downscale, source, max:[r,g,b,a], ge254:[...], eq255:[...], bakerVersion}, ramp:{path, size, compression, srgb, address, mipGen, source, last, prev}, params:{...}, verdict:[...]}]}\n   - analysis/results/UE_READBACK_20261015/黑块排查.md：第一句写结论（几张序列图命中 ① / ② / ③、几张没找到原因），再按 ① ② ③ 分组列资源名，最后一段「给导出（23）」：哪些需要重导序列、哪些只要换回配套的 Ramp。不要替用户改。\n\n禁止：保存、改值、导入、替换贴图、P4、开关 UE、改 tool/src。UE 没开 → 卡住。",
+      "做完的标准": [
+        "范围里每张序列图一行，读不到的写 null 和原因",
+        "每行有源 PNG 的最大值 / ≥254 占比、Ramp 末格颜色、UE 尺寸与源图尺寸",
+        "每行有判定（① / ② / ③ / 没找到原因）",
+        "黑块排查.md 第一句是结论，有「给导出（23）」一段",
+        "已提交推送，本条写了完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
     }
   ],
   "夜班怎么取": [
