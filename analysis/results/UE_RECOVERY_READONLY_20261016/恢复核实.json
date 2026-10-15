@@ -1,0 +1,130 @@
+{
+  "format": "df.ue-recovery-readonly/1",
+  "checkedAt": "2026-10-16T03:31:38+08:00",
+  "host": "LOCMAI-PC1",
+  "pause25": {
+    "confirmed": true,
+    "listThreadsLimit": 50,
+    "targetFound": false,
+    "recordOwner": "本机实测（25），记录标明另一执行应用",
+    "coordinationThread": "01a14002-2956-7453-8db3-53ac8c818c01",
+    "coordinationTitle": "总管21-CodeX",
+    "readIdentityConfirmed": true,
+    "pauseRequestSendConfirmed": true,
+    "pauseAcknowledgement": null,
+    "knownB08NodePythonProcessMatches": 0,
+    "absenceIsPauseConfirmation": false,
+    "confirmationBasis": "按用户补充判据：25已提交卡住终态；两次实际主机查询无旧T10/采样/17780客户端进程与连接；run/run2只有限循环和重试，无常驻重连；不强求外部聊天回执"
+  },
+  "editor": {
+    "processQuery": "本机获准只读Win32_Process；默认沙箱查询不可靠，获准实际主机查询确认",
+    "processCount": 1,
+    "startedByThisTask": true,
+    "crashReporterPID": 142252,
+    "oldEditorPID": 140888,
+    "version": "4.24.2-0+++UE4+Release-4.24",
+    "executable": "E:/loc_ma5/DFMEditor/Engine/Binaries/Win64/UE4Editor.exe",
+    "projectDirectory": "E:/loc_ma5/DFMEditor/DFM",
+    "projectCandidates": [
+      "E:/loc_ma5/DFMEditor/DFM/DeltaForce.uproject",
+      "E:/loc_ma5/DFMEditor/DFM/DFM.uproject"
+    ],
+    "originalProjectFileConfirmed": true,
+    "originalProjectEvidence": "Engine/Saved/Config/Windows/EditorSettings.ini的RecentlyOpenedProjectFiles明确该文件；标准启动行和旧日志参数一致。仅直接启动编辑器，未执行启动包装脚本。",
+    "mapNow": "/Game/Maps/Login/Login.Login",
+    "directorNow": [],
+    "GPUECliNow": {
+      "port": 17780,
+      "listening": true,
+      "ownerPID": 148864,
+      "serverVersion": "4.2.1",
+      "successfulReadOnlyProbes": "World=Login、DFMShowDirector=0、Tiny资产get、两张ResourceFX搜索成功",
+      "lastBulkAttempt": "第一个World请求WinError10053，脚本立即退出，无重试；03:31仍监听，后续须单次只读检查健康",
+      "latestCheck": "03:37 limit1成功，03:38原limit100失败；仍监听不代表API可靠，停止批量。"
+    },
+    "GPUECliPriorReport": "25报告崩溃后17780不通，本轮未连接UE。",
+    "readinessVerified": true,
+    "newEditorPID": 148864,
+    "startTime": "2026-10-16T03:24:16.9066132+08:00",
+    "responding": true,
+    "windowTitle": "DeltaForce - 虚幻编辑器",
+    "projectFile": "E:/loc_ma5/DFMEditor/DFM/DeltaForce.uproject"
+  },
+  "crash": {
+    "contextPath": "E:/loc_ma5/DFMEditor/DFM/Saved/Crashes/UE4CC-Windows-81AB88B64595F195114B0DBA7CE306B1_0000/CrashContext.runtime-xml",
+    "logPath": "E:/loc_ma5/DFMEditor/DFM/Saved/Logs/DeltaForce.log",
+    "assertion": "CurrentScope != nullptr",
+    "file": "RenderGraphEvent.inl",
+    "line": 36,
+    "logLastWriteLocal": "2026-10-16T02:56:54+08:00",
+    "rootCause": "未确定；短时间连续ProfileGPU是25的推断，非已证实根因",
+    "uploaded": false,
+    "reporterInteracted": false
+  },
+  "existingBackup": {
+    "path": "F:/FireWorksLab/analysis/local/B08_实机/instance-before.json",
+    "sha256": "b926ced5cd79b8fbe9c1a8ef1104a3c025e8ff18e311e6bf8fdb0ac0d316be2f",
+    "readAt": "2026-10-15T18:26:21.054Z",
+    "directorPath": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.BP_NewYearFireworks_ShowDirector_Night_2",
+    "camera": {
+      "loc": "(X=367487.437500,Y=-764689.625000,Z=-16876.970703)",
+      "rot": "(Pitch=36.581020,Yaw=-434.457306,Roll=0.000000)"
+    },
+    "debug": {
+      "DebugPlatform": "None",
+      "DebugQualityLevel": "EQuality_High",
+      "DebugPreviewStartTime": 0,
+      "bShowActive": false
+    },
+    "configCounts": {
+      "EffectSubTemplates": 79,
+      "EffectTemplates": 364,
+      "EffectScheduleGroups": 3,
+      "SequenceTemplates": 1
+    },
+    "lastRestoreEvidence": "25已提交记录：02:54全量读回一致；本轮未重新验证。",
+    "canUseForNewScene": "只能对照；续测必须以恢复后新现场完整备份为准，不自动回灌旧备份。"
+  },
+  "mapCandidates": {
+    "persistentLevelPackage": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3",
+    "persistentLevelEvidence": "25最初用户截图称Dam_Iris_Long3；这个包名未在新现场确认，不能据此自动加载。",
+    "directorLevelPackage": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night",
+    "directorLevelEvidence": "本轮只读既有instance-before.json中的完整对象路径，精确子关卡候选。",
+    "mustNotAutoLoad": true
+  },
+  "T10": {
+    "status": "卡住，未续跑",
+    "commit": "6b40ee23035308953ccb88f5cebb8605d6e0cad5",
+    "oldReadingsUsableFor": "保留参考和故障追溯；不能给B08性能放行，不能混到新现场结果",
+    "measured": "5080单帧PC低配22时刻；132%/121%/88%，差值在噪声内",
+    "missing": [
+      "当前Login地图没有Night测试子关卡/导演实例",
+      "峰值多帧窗口",
+      "整场截图",
+      "小平台开关同刻对照",
+      "真实花径/到顶高度大部分未量成",
+      "960真机测量"
+    ],
+    "T09Complete": true,
+    "T09Commit": "50dfded182d38a995d51375a0f00bd6e8ed31eeb"
+  },
+  "prohibitedActionsPerformed": {
+    "assetWrites": 0,
+    "saves": 0,
+    "imports": 0,
+    "P4": 0,
+    "unknownProcessKills": 0,
+    "toolChanges": 0,
+    "serviceOrSecurityChanges": 0,
+    "scheduledTasks": 0,
+    "crashUploads": 0,
+    "GPUQueueChanges": 0
+  },
+  "statusColumns": {
+    "执行": "同一项目已重开；旧测试停止已核，完成轻量只读探测与离线整理",
+    "检查": "03:31唯一编辑器响应、17780监听；World/导演前探测成功",
+    "未测": "可靠只读采集、完整资源干跑及T10，10053根因未明。",
+    "用户验收": "未取得"
+  },
+  "connectionFollowup": "连接诊断.json"
+}

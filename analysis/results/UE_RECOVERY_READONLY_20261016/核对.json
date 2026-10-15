@@ -1,0 +1,46 @@
+{
+  "format": "df.ue-recovery-report-checks/1",
+  "checks": {
+    "scopeCoverage": true,
+    "noDuplicateSystems": true,
+    "allAssetWritesBlocked": true,
+    "allFinalBoundsUnknownUntilNewScene": true,
+    "allEmitterRowsHaveFourItems": true,
+    "allUVUnknownProtected": true,
+    "parentMissingGraphNodesZero": true,
+    "parentOpacityNotReachable": true,
+    "T09PC25Mobile16": true,
+    "noUECallsInReport": true
+  },
+  "pass": true,
+  "counts": {
+    "resourceRowsPC": 42,
+    "resourceRowsMobile": 18,
+    "systems": 56,
+    "T09RawSystems": 41,
+    "T09RawPC": 25,
+    "T09RawMobile": 16,
+    "systemsWithoutAnyFullSnapshot": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD.P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD"
+    ],
+    "emitterLodRows": 273,
+    "materialReferencesResolved": 92,
+    "materialParametersKnownHistorical": 66,
+    "materialActions": {
+      "条件候选，暂停": 69,
+      "跳过当前候选": 23
+    },
+    "screenAlignmentCandidates": 13,
+    "conditionalBoundsSystemCandidates": 31,
+    "uvReturnToNoneCandidates": 91,
+    "conditionalSystemAssetsUnique": 39,
+    "conditionalMaterialAssetsUnique": 69,
+    "conditionalAssetsUnique": 108,
+    "appliedAssetChanges": 0,
+    "readyToWriteAssets": 0,
+    "newUERequests": 0,
+    "liveDryRunCompleted": false
+  },
+  "limits": "检查只验证此离线报告的覆盖及保护条件；不验证UE资产、实际轨迹和私有导入器执行行为。"
+}

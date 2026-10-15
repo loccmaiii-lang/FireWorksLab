@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "cadf505d2a81d0cebd331635e0415dd5a6237f29",
+  "files": {
+    "analysis/results/UE_READBACK_20261015/B08资源读数.json": {
+      "commit": "cadf505d2a81d0cebd331635e0415dd5a6237f29",
+      "sha256": "8c5717628e70e80fd9be6fbd1303d0a43800f871ec07297481bd2a9172d9d78c",
+      "bytes": 1382199
+    },
+    "analysis/results/UE_READBACK_20261015/黑块排查.json": {
+      "commit": "cadf505d2a81d0cebd331635e0415dd5a6237f29",
+      "sha256": "3525f0ca4eca6f8fa404ed1f34cc0513dc798f41221959106f5a24a9cb1a9dd0",
+      "bytes": 22917084
+    },
+    "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json": {
+      "commit": "cadf505d2a81d0cebd331635e0415dd5a6237f29",
+      "sha256": "f7097f9bd293e72207f20360bf5815fbf072ba2a9377a6529801bc994ef50eb8",
+      "bytes": 257070
+    },
+    "analysis/results/B08_实机/Translucency.json": {
+      "commit": "cadf505d2a81d0cebd331635e0415dd5a6237f29",
+      "sha256": "96c13d401c949c327564fc7d123100b0baf7c8f8b7fabe0654fc0af7f411b711",
+      "bytes": 26926
+    }
+  },
+  "T09Commit": "50dfded182d38a995d51375a0f00bd6e8ed31eeb",
+  "T10Commit": "6b40ee23035308953ccb88f5cebb8605d6e0cad5",
+  "privateImporter": {
+    "execution": "只读源码和两个已部署HTML；没有运行导入/更新/检查入口",
+    "scalarMapping": "按角色映射写入，不接受任意UE参数名；部署配置仅映射行数、列数，EmissiveDissolve未配置",
+    "updateReset": "更新选中的既有材质实例先清除全部参数覆盖，再恢复模板的纹理/标量/向量，最后写素材包映射值；素材包未写的手调0.98不会可靠保留。模板有该覆盖则取模板，否则继承父默认（本族旧读数1）。未选中材质、复用角色走不同分支，不作全路径重置断言。",
+    "basis": [
+      "获准私有目录内fireworks-import.js第184—211行",
+      "fireworks-plan.js第128—136行",
+      "已部署交付HTML、旧工作台HTML有相同清覆盖逻辑；部署标量映射仅行列"
+    ],
+    "testedByExecutingUpdate": false,
+    "privateCodeCopiedToRepository": false,
+    "toolChange": "本轮不改；是否修复更新保留规则及增加角色映射须用户后续明确同意"
+  },
+  "rawCrashDataUploaded": false,
+  "privateSourceCopied": false,
+  "sourceWorkspaceModified": false
+}
