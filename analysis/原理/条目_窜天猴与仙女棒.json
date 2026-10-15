@@ -648,7 +648,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       },
       {
        "id": "e02",
@@ -754,7 +755,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       },
       {
        "id": "e03",
@@ -860,7 +862,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       },
       {
        "id": "e04",
@@ -962,7 +965,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       },
       {
        "id": "e05",
@@ -1068,7 +1072,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       },
       {
        "id": "e06",
@@ -1174,7 +1179,8 @@
          0.0
         ]
        ],
-       "burstShare": 0
+       "burstShare": 0,
+       "fieldCoupling": 1
       },
       {
        "id": "e07",
@@ -1280,7 +1286,8 @@
          0.0
         ]
        ],
-       "burstShare": 0
+       "burstShare": 0,
+       "fieldCoupling": 1
       },
       {
        "id": "e08",
@@ -1386,7 +1393,8 @@
          0.0
         ]
        ],
-       "burstShare": 0
+       "burstShare": 0,
+       "fieldCoupling": 1
       },
       {
        "id": "e09",
@@ -1488,7 +1496,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 0.45
       },
       {
        "id": "e10",
@@ -1602,7 +1611,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       },
       {
        "id": "e11",
@@ -1704,7 +1714,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 0.45
       },
       {
        "id": "e12",
@@ -1806,7 +1817,8 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 0.45
       },
       {
        "id": "e13",
@@ -1904,11 +1916,27 @@
          0.0
         ]
        ],
-       "burstShare": 0.38
+       "burstShare": 0.38,
+       "fieldCoupling": 1
       }
      ],
      "followAxis": true,
-     "presetKey": "rocket"
+     "presetKey": "rocket",
+     "fieldEnabled": 1,
+     "fieldResponse": 25,
+     "fieldStart": 1.5,
+     "fieldRamp": 3.5,
+     "fieldAxisX": 0,
+     "fieldAxisY": 0,
+     "fieldAxisZ": -1,
+     "fieldWindX": 0,
+     "fieldWindY": 0,
+     "fieldWindZ": -45,
+     "fieldConverge": 4.5,
+     "fieldTurbulence": 12,
+     "fieldScale": 10,
+     "fieldCycles": 1,
+     "fieldSeed": 17
     },
     "type": "sparkgraph",
     "graphSolo": null,
@@ -1937,10 +1965,10 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "why": "13层同模拟事件；可选快门曝光积分与真实Y深度散焦。",
+   "why": "全局气流叠加、有限惯性响应；真实轨迹同时驱动分叉和快门拉伸。",
    "look": [
-    "快火星自动拉长、慢火星变短。",
-    "焦内细芯与焦外散焦光斑，短促爆发和分叉仍完整。"
+    "近喷口保留锥形扩散，中段向轴线收束，再随连续气流向下弯动。",
+    "13层形态、亲子分叉与短促爆发保留；场与镜头成像均可关闭。"
    ],
    "note": "镜头设置烘入贴图，不随UE相机重算；两开关按资源保存，旧资产默认关闭。"
   },

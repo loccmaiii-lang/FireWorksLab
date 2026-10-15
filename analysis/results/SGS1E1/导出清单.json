@@ -1,8 +1,8 @@
 {
   "effect": "sparkler_graph",
   "entry": "SGS1",
-  "ver": "7b78d809·loop4.9.83",
-  "time": "2026-10-14 07:57",
+  "ver": "7b78d809·graph4.9.97+loop4.9.83",
+  "time": "2026-10-15 14:59",
   "dir": "analysis/local/SparkGraph/",
   "packages": [
     {
@@ -23,7 +23,7 @@
         "T_Sparkler_Graph_Mobile_FrameTest.png",
         "T_Sparkler_Graph_Ramp.png"
       ],
-      "sha256": "e17313e159b28a7da9ae51896f64cd3ec5e8aeab96b39c21c2c6757a3f83994f"
+      "sha256": "080c95369ffbb6b99c0e8795b553d8acf5b9e85eafa86fe9c5bfd7e5b08399ba"
     }
   ]
 }

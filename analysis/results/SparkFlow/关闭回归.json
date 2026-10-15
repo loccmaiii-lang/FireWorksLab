@@ -1,0 +1,29 @@
+{
+  "pass": true,
+  "rows": [
+    {
+      "id": "SGR1",
+      "camera": 0,
+      "frames": 3,
+      "identical": true
+    },
+    {
+      "id": "SGR1",
+      "camera": 1,
+      "frames": 3,
+      "identical": true
+    },
+    {
+      "id": "SGS1",
+      "camera": 0,
+      "frames": 3,
+      "identical": true
+    },
+    {
+      "id": "SGS1",
+      "camera": 1,
+      "frames": 3,
+      "identical": true
+    }
+  ]
+}

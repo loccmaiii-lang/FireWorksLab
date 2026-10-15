@@ -1,0 +1,9 @@
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
+const root=path.resolve(__dirname,'../..'),out=path.join(root,'analysis/results/SparkFlow');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});try{
+ const old=path.join(root,'analysis/local/SparkGraph/baseline-4.9.103.html');if(!fs.existsSync(old)){fs.mkdirSync(path.dirname(old),{recursive:true});fs.writeFileSync(old,require('child_process').execFileSync('git',['show','c116c9b6:tool/FireworkBaker.html'],{cwd:root,maxBuffer:20*1024*1024}));}let html=fs.readFileSync(old,'utf8');if(!html.includes('<base href'))fs.writeFileSync(old,html.replace('<head>','<head><base href="../../../tool/">'));
+ const pages=[];for(const file of [old,path.join(root,'tool/FireworkBaker.html')]){const p=await b.newPage();await p.addInitScript('window.requestAnimationFrame=()=>0');await p.goto(pathToFileURL(file).href+'?fast');await p.waitForFunction(()=>window.__fw);await p.evaluate(()=>{clearTimeout(bakeTimer);state.autoBake=false;state.playing=false;state.stillBusy=true;});pages.push(p);}
+ const entries=JSON.parse(fs.readFileSync(path.join(out,'修订前参数.json'),'utf8')).entries,rows=[];
+ for(const e of entries)for(const camera of [0,1]){const results=[];for(const p of pages)results.push(await p.evaluate(async({e,camera})=>{e.p.cameraMotion=camera;e.p.cameraDof=camera;const frames=await renderStills40(e.p,e.m,{px:512,times:[.4,.9,1.75]});return frames.map(f=>f.png);},{e,camera}));assert.deepEqual(results[0],results[1]);rows.push({id:e.id,camera,frames:3,identical:true});}
+ fs.writeFileSync(path.join(out,'关闭回归.json'),JSON.stringify({pass:true,rows},null,2));console.log(rows);
+ }finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -129,7 +129,13 @@ if __name__ == '__main__':
     ap.add_argument('--startup-only', action='store_true', help='只跑显卡程序按需初始化回归，不启动浏览器')
     ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
     ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
+    ap.add_argument('--spark-flow-only', action='store_true', help='全局气流模型、关闭像素回归和统一右栏保存检查（需Node Playwright）')
     a = ap.parse_args()
+    if a.spark_flow_only:
+        for name in ('spark_flow_test.cjs', 'spark_flow_regression.cjs', 'spark_flow_ui.cjs'):
+            result = subprocess.run(['node', str(HERE / name)])
+            if result.returncode: raise SystemExit(result.returncode)
+        raise SystemExit(0)
     if a.spark_graph_only:
         for cmd in [['node', str(HERE / 'spark_graph_test.cjs')], ['node', str(HERE / 'spark_camera_test.cjs')], ['node', str(HERE / 'spark_camera_verify.cjs')], ['node', str(HERE / 'spark_graph_bake.cjs')], [sys.executable, str(HERE / 'spark_graph_check.py')]]:
             result = subprocess.run(cmd)

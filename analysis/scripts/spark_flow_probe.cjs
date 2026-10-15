@@ -1,0 +1,9 @@
+const fs=require('fs'),path=require('path'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
+const root=path.resolve(__dirname,'../..'),out=path.join(root,'analysis/results/SparkFlow');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});try{
+ const p=await b.newPage({viewport:{width:1600,height:1000}}),errors=[];p.on('pageerror',e=>{errors.push(e.message);console.log('PAGE',e.message)});await p.goto(pathToFileURL(path.join(root,'tool/FireworkBaker.html')).href+'?fast');await p.waitForFunction(()=>window.__fw);
+ await p.evaluate(()=>{clearTimeout(bakeTimer);state.autoBake=false;state.playing=false;state.stillBusy=true;});const rows=[];
+ for(const enabled of [0,1]){const result=await p.evaluate(async enabled=>{const {P,M}=replicaPM('SGR1');P.sparkGraph.fieldEnabled=enabled;const start=performance.now(),frames=await renderStills40(P,M,{px:768,times:[.4,.9,1.75],metrics:true});return{enabled,ms:performance.now()-start,frames:frames.map(f=>({t:f.t,png:f.png,linear:f.linear}))};},enabled);for(let i=0;i<result.frames.length;i++){fs.writeFileSync(path.join(out,`气流${enabled}-${i}.png`),Buffer.from(result.frames[i].png.split(',')[1],'base64'));delete result.frames[i].png;}rows.push(result);console.log('mode',enabled,result.ms);}
+ await p.evaluate(()=>{state.stillBusy=false;graphOpen('rocket');clearTimeout(bakeTimer);state.autoBake=false;state.playing=false;state.t=.9;});await p.waitForTimeout(800);await p.screenshot({path:path.join(out,'统一入口初检.png')});
+ fs.writeFileSync(path.join(out,'初检.json'),JSON.stringify({rows,errors,controls:await p.locator('input,select,button').evaluateAll(a=>a.filter(e=>e.closest('#params')).map(e=>({tag:e.tagName,label:e.getAttribute('aria-label'),key:e.dataset.key,text:e.innerText,value:e.value})))},null,2));if(errors.length)throw Error(errors.join('\n'));
+ }finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,11 @@
+// 只读用户现有配方，在隔离浏览器副本上验证新场；不回写该配方。
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
+const root=path.resolve(__dirname,'../..'),out=path.join(root,'analysis/results/SparkFlow'),source=path.join(root,'analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json');
+(async()=>{const raw=fs.readFileSync(source),recipe=JSON.parse(raw),b=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});try{const p=await b.newPage();await p.addInitScript('window.requestAnimationFrame=()=>0');await p.goto(pathToFileURL(path.join(root,'tool/FireworkBaker.html')).href+'?fast');await p.waitForFunction(()=>window.__fw);
+ const result=await p.evaluate(async recipe=>{state.autoBake=false;clearTimeout(bakeTimer);const layer=recipe.snap.layers[0],P=structuredClone(layer.P),M=layer.M,original=JSON.stringify(P.sparkGraph.emitters);if(pGet(P,'sparkGraph.fieldEnabled')!==0)throw Error('旧存档没有默认关闭');
+ const recommended=replicaPM('SGR1').P.sparkGraph;for(const k of Object.keys(SparkFlow.defaults))P.sparkGraph[k]=recommended[k]??SparkFlow.defaults[k];
+ const pic=await renderStills40(P,M,{px:768,times:[.9]});if(JSON.stringify(P.sparkGraph.emitters)!==original)throw Error('覆盖用户粒子层');const copy=structuredClone(recipe.snap);copy.layers[0].P=P;setTab('combo');await wbApply(copy);selectComboLayer(0);clearTimeout(bakeTimer);
+ return{png:pic[0].png,kind:state.tab,hasGraph:!!state.P.sparkGraph,fields:state.P.sparkGraph.fieldEnabled,emitterUnchanged:JSON.stringify(state.P.sparkGraph.emitters)===original};},recipe);
+ assert.equal(result.hasGraph,true);assert.equal(result.fields,1);assert.equal(result.emitterUnchanged,true);assert.equal(result.kind,'combo');fs.writeFileSync(path.join(out,'用户存档副本气流.png'),Buffer.from(result.png.split(',')[1],'base64'));delete result.png;
+ assert(fs.readFileSync(source).equals(raw),'用户存档发生变化');fs.writeFileSync(path.join(out,'用户存档兼容检查.json'),JSON.stringify({pass:true,source:path.relative(root,source),sha256:crypto.createHash('sha256').update(raw).digest('hex'),...result},null,2));console.log('用户现有单层组合配方：默认关闭、复制启用、原粒子参数与源文件不变，通过');
+ }finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});

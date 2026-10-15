@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('fs'),path=require('path');
-const root=path.resolve(__dirname,'../..'),G=require('vm').runInNewContext(fs.readFileSync(path.join(root,'tool/src/js/46_graph_model.js'),'utf8')+';SparkGraph'),presets=JSON.parse(fs.readFileSync(path.join(root,'experiments/spark-graph/presets.json'),'utf8'));
+const root=path.resolve(__dirname,'../..'),read=n=>fs.readFileSync(path.join(root,'tool/src/js',n),'utf8'),G=require('vm').runInNewContext(read('45_spark_flow.js')+read('46_graph_model.js').split('// =====================================================================')[0]+';SparkGraph'),presets=JSON.parse(fs.readFileSync(path.join(root,'experiments/spark-graph/presets.json'),'utf8'));
 const results={};
 for(const [key,recipe]of Object.entries(presets)){
  const g=G.build(recipe);assert.equal(recipe.emitters.length,13);

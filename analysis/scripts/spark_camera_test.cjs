@@ -1,7 +1,7 @@
 // 镜头数学与事件边界：独立于预设外观，避免以截图通过冒充正确性。
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),read=n=>fs.readFileSync(path.join(root,'tool/src/js',n),'utf8');
-const ctx=vm.createContext({});vm.runInContext(read('46_camera.js')+read('46_graph_model.js')+';this.C=CameraImaging;this.G=SparkGraph',ctx);
+const ctx=vm.createContext({});vm.runInContext(read('45_spark_flow.js')+read('46_camera.js')+read('46_graph_model.js').split('// =====================================================================')[0]+';this.C=CameraImaging;this.G=SparkGraph',ctx);
 const {C,G}=ctx,P={cameraMotion:1,cameraShutter:.04,cameraPhase:'end',cameraQuality:'high',cameraDof:1,cameraDistance:1,cameraFocus:1,cameraAperture:.02,cameraBlades:0};
 assert.deepEqual(Array.from(C.window(P,.1)),[.060000000000000005,.1]);assert.equal(C.coc(P,0),0);assert.equal(C.coc(P,.5),.005);assert.equal(C.coc({...P,cameraAperture:.04},.5),.01);
 assert.throws(()=>C.validate({...P,cameraFocus:0}));assert.throws(()=>C.validate({...P,cameraShutter:NaN}));

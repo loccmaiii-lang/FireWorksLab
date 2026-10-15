@@ -19,6 +19,7 @@ const SparkGraph = (() => {
     return keys[keys.length-1][1];
   }
   function sample(q,a) {
+    if(q.flow)return SparkFlow.sample(q,a);
     const k=q.e.drag, ex=Math.exp(-k*a), s=k>1e-7?-Math.expm1(-k*a)/k:a, t=k>1e-7?(a-s)/k:a*a/2;
     const p=q.p.map((x,i)=>x+q.v[i]*s+q.e.gravity[i]*t),v=q.v.map((x,i)=>x*ex+q.e.gravity[i]*s);
     // 平滑位移从零开始，同时返回其导数，使子粒继承完整速度。
@@ -31,6 +32,7 @@ const SparkGraph = (() => {
     if(!Array.isArray(r.emitters)||!r.emitters.length)throw Error('至少需要一个粒子层');
     if(!Array.isArray(r.bounds)||r.bounds.length!==4||!r.bounds.every(Number.isFinite)||r.bounds[0]>=r.bounds[1]||r.bounds[2]>=r.bounds[3])throw Error('取景范围无效');
     if(!Array.isArray(r.bursts)||r.bursts.some(b=>!Array.isArray(b)||b.length!==2||!b.every(Number.isFinite)||b[1]<0))throw Error('爆发时刻或宽度无效');
+    if(typeof SparkFlow!=='undefined')SparkFlow.prepare(r);
     const seen=new Set();
     for(const e of r.emitters){if(!e||!e.id||seen.has(e.id))throw Error('粒子层ID缺失或重复');if(e.parent&&!seen.has(e.parent))throw Error('母粒必须在子粒之前');seen.add(e.id);
       for(const d of [e.speed,e.life,e.size,e.power])if(!Array.isArray(d)||d.length!==3||!d.every(Number.isFinite)||d[0]<0||d[1]<d[0]||d[2]<=0)throw Error(e.name+'：随机范围无效');
@@ -46,7 +48,7 @@ const SparkGraph = (() => {
     }
   }
   function build(r) {
-    validate(r);const byId=new Map(),all=[];
+    validate(r);const byId=new Map(),all=[],flow=typeof SparkFlow==='undefined'?null:SparkFlow.prepare(r);
     for(const e of r.emitters){const out=[],parents=e.parent?byId.get(e.parent):null;
       const count=parents?parents.length*Math.round(e.children):Math.round(e.count), h=(id,t)=>hash(e.seed,id,t);
       if(count>200000||all.length+count>500000)throw Error(e.name+'：超过每层20万／全图50万周期粒子的编辑上限');
@@ -61,7 +63,7 @@ const SparkGraph = (() => {
           if(selected&&e.clusterDirection){const d=direction(e,cluster,111);v=norm(v.map((x,i)=>x*(1-e.clusterDirection)+d[i]*e.clusterDirection));}
           const pos=direction({...e,directionMode:'sphere'},id,130),rad=e.extent*Math.cbrt(h(id,132));p=pos.map(x=>x*rad);v=v.map(x=>x*dist(e.speed,h(id,3)));
         }
-        const q={id,e,birth,life:Math.max(.001,dist(e.life,h(id,4))),width:e.width*dist(e.size,h(id,5)),power:e.gain*dist(e.power,h(id,6)),p,v,phase:TAU*h(id,7),parent,eventAge};out.push(q);all.push(q);
+        const q={id,e,birth,life:Math.max(.001,dist(e.life,h(id,4))),width:e.width*dist(e.size,h(id,5)),power:e.gain*dist(e.power,h(id,6)),p,v,phase:TAU*h(id,7),parent,eventAge};if(flow)SparkFlow.attach(q,flow);out.push(q);all.push(q);
       }byId.set(e.id,out);
     }return {recipe:r,all,byId};
   }
@@ -177,6 +179,7 @@ const graphLayerItems = (() => {
     num('cone', '喷射半锥角', '°', 0, 180, 1, '初速', cone),
     ...vec('direction', '喷射轴', ['X', 'Y（纵深）', 'Z（竖直）'], '', -1, 1, .01, '初速', cone),
     num('drag', '线性阻力', '1/s', 0, 30, .1, '阻力重力'),
+    num('fieldCoupling', '随流倍率（0 不受全局气流）', '×', 0, 4, .05, '阻力重力', P => !!P.sparkGraph.fieldEnabled),
     ...vec('gravity', '加速度', ['横向', '纵深', '竖直'], 'm/s²', -20, 20, .01, '阻力重力'),
     num('noise', '位移扰动', 'm/s', 0, .1, .0001, '阻力重力'),
     num('noiseHz', '扰动频率', 'Hz', 0, 60, .1, '阻力重力'),
@@ -231,3 +234,25 @@ function secItems(sec, P) {
   });
   return out;
 }
+
+
+
+
+// 全局气流参数（由spark_flow_register.py登记）
+SCHEMA.push({sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'全局气流作用于当前图全部层；先扩散再渐入。定向风、轴向收束和涡流可叠加。',items:[
+{sel:'sparkGraph.fieldEnabled',label:'全局气流',io:{get:v=>v,set:v=>+v},options:[[0,'关闭'],[1,'开启']]} ,
+["sparkGraph.fieldResponse", "随流响应率", "1/s", 0, 100, 0.5,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldStart", "开始影响距离", "m", 0, 20, 0.05,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldRamp", "渐入长度", "m", 0.001, 20, 0.05,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldAxisX", "气流轴 · X", "1", -1, 1, 0.01,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldAxisY", "气流轴 · Y（纵深）", "1", -1, 1, 0.01,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldAxisZ", "气流轴 · Z（竖直）", "1", -1, 1, 0.01,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldWindX", "定向风 · X", "m/s", -100, 100, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldWindY", "定向风 · Y（纵深）", "m/s", -100, 100, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldWindZ", "定向风 · Z（竖直）", "m/s", -100, 100, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldConverge", "轴向收束率", "1/s", 0, 30, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldTurbulence", "涡流扰动速度", "m/s", 0, 50, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldScale", "涡流空间尺度", "m", 0.01, 30, 0.05,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldCycles", "每循环演化次数", "1", 0, 10, 1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldSeed", "气流随机种子", "1", 0, 999999, 1,P=>!!P.sparkGraph.fieldEnabled]
+]});

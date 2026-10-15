@@ -292,11 +292,25 @@
     "rtTend": 1450,
     "rtTw": 0.3,
     "rtShrink": 0.5,
+    "sparkLateWind": 0,
+    "sparkLateScale": 1.5,
+    "sparkLateFade": 0.4,
+    "sparkTailAfterBurn": 0,
     "rtETex": 0,
     "rtTailAfterBurn": 0,
     "rtLateWind": 0,
     "rtLateScale": 1.5,
     "rtLateFade": 0.4,
+    "rtFullFx": 0,
+    "cameraMotion": 1,
+    "cameraShutter": 0.03333333333333333,
+    "cameraPhase": "end",
+    "cameraQuality": "high",
+    "cameraDof": 1,
+    "cameraDistance": 1,
+    "cameraFocus": 1,
+    "cameraAperture": 0.018,
+    "cameraBlades": 0,
     "rtERate": 10,
     "rtELife": 3,
     "rtESize": 0.8,
@@ -1902,16 +1916,7 @@
       "presetKey": "sparkler"
     },
     "type": "sparkgraph",
-    "graphSolo": null,
-    "cameraMotion": 1,
-    "cameraShutter": 0.03333333333333333,
-    "cameraPhase": "end",
-    "cameraQuality": "high",
-    "cameraDof": 1,
-    "cameraDistance": 1,
-    "cameraFocus": 1,
-    "cameraAperture": 0.018,
-    "cameraBlades": 0
+    "graphSolo": null
   },
   "M": {
     "stages": [
@@ -1929,7 +1934,7 @@
     "tailInt": 1
   },
   "entry": "SGS1",
-  "ver": "7b78d809·loop4.9.83",
-  "version": "4.9.84",
-  "exportMs": 5308.099999904633
+  "ver": "7b78d809·graph4.9.97+loop4.9.83",
+  "version": "4.9.104",
+  "exportMs": 5513.100000143051
 }

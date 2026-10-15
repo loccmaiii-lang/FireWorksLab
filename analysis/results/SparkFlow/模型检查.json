@@ -1,0 +1,31 @@
+{
+  "pass": true,
+  "disabledExact": true,
+  "windAnalyticError": 3.810421977945566e-10,
+  "near": [
+    0.25000000000000006,
+    0,
+    -0.5000000000000001
+  ],
+  "mid": [
+    0.6495801579727346,
+    0,
+    -2.0000000000000013
+  ],
+  "far": [
+    0.02571627088930507,
+    0,
+    -5.000000000000001
+  ],
+  "halfStepPositionError": 1.6514983218839044e-7,
+  "childChecks": 16,
+  "randomSeekExact": true,
+  "periodicField": true,
+  "layerExclusion": true,
+  "velocityDerivative": true,
+  "particleCount": 69888,
+  "birthScheduleUnchanged": true,
+  "radialRatio": 0.6159131937600926,
+  "inward": 8,
+  "measured": 18
+}
