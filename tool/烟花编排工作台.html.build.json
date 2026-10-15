@@ -2,8 +2,8 @@
   "format": "df.offline-build/1",
   "time": "2026-10-15T16:12:28.495Z",
   "html": "烟花编排工作台.html",
-  "bytes": 10781943,
-  "sha256": "18b8f529650bf25875704709b4c334ad10d9d01ba07056f63123a34ba773c0b7",
+  "bytes": 10826027,
+  "sha256": "794fb96b19fcc9eec149437b2bfb722a988468a28521bdab8a7ad41989ecf2cb",
   "programmeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "originalProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "musicIncluded": false,
@@ -12,11 +12,11 @@
   "embeddedMusicSha256": null,
   "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
   "cloudLatest": {
-    "version": "16.0.40",
-    "name": "B08修订4-低配放宽保宽度",
-    "programmeSha256": "d050544df17438c9d673412c065ef90912ae44acd9aa3d7d7f37eecf1553ce4c",
-    "cues": 454,
-    "events": 1365,
+    "version": "16.0.41",
+    "name": "B08修订5-加扇-收尾满宽",
+    "programmeSha256": "364f4b229cca065a4da419cec82eb39f1d9bba94753379f78e32dd0badb4759f",
+    "cues": 470,
+    "events": 1441,
     "musicEmbedded": true,
     "musicSha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613"
   },
@@ -31,7 +31,7 @@
     "public/data/subtemplate-source.json": "63e41141c8c1686a13597728586398bd3fcc8ed32be1e87409f2189d249be718",
     "public/data/size-spec.json": "68da8838657b79247c7662d8a1ce830ee9aade22ae6e915e6f25f658137d22dc",
     "public/data/resource-catalogue.json": "d70182642319e8f95affa6b537a1db61cf3ceeb51bf7e593504c1d76867686ae",
-    "public/data/cloud-latest.json": "8399fe3729d5bf88027bf9ed6860e0164618775ab1cb6a685cd52ee7fca58bd0",
+    "public/data/cloud-latest.json": "edf28c58278031704bb7eb074ee8dbbc5402d84ed675384fc2cc7e5aa9a642f1",
     "src/main.jsx": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8",
     "src/ConnectionProvider.jsx": "d2e2fe00a09344159a533c73cc480f4b3ee8a9ea0ab14cd8777fbd3152eafd9c",
     "src/App.jsx": "774f094ac179096ca702a925852d9180235d0783a1e4bf4da395316ef2db2fe1",
@@ -121,5 +121,26 @@
     "platform": "win32",
     "node": "v22.22.2",
     "arch": "x64"
-  }
+  },
+  "dataPatches": [
+    {
+      "time": "2026-10-15T16:37:50Z",
+      "key": "cloud-latest",
+      "version": "16.0.41",
+      "name": "B08修订5-加扇-收尾满宽",
+      "programmeSha256": "364f4b229cca065a4da419cec82eb39f1d9bba94753379f78e32dd0badb4759f",
+      "appVersion": "16.0.40",
+      "previousVersion": "16.0.40",
+      "previousHtmlSha256": "18b8f529650bf25875704709b4c334ad10d9d01ba07056f63123a34ba773c0b7",
+      "productCommit": "d5317c0d947522d5b0012c00c326bae7ccd9c191",
+      "sourceCheck": {
+        "byHash": 90,
+        "byGitOnly": []
+      },
+      "environment": {
+        "platform": "linux",
+        "python": "3.13.15"
+      }
+    }
+  ]
 }
