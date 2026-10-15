@@ -6,5 +6,12 @@
   "reason": "审查认为具体GitHub目的地尚未验证为受信任，现有证据未明确授权向该目的地披露内部项目路径、UE状态和核查数据。",
   "bypassAttempted": false,
   "UEStopped": false,
-  "next": "需用户明确批准向该具体仓库披露本报告后，才可重试原目的地；不改路径或换工具绕过。"
+  "next": "按原目的地正常push一次；若再次拒绝则停止，不绕过。",
+  "approval": {
+    "at": "2026-10-15T19:41:02Z",
+    "userReply": "同意",
+    "destination": "https://github.com/loccmaiii-lang/FireWorksLab.git",
+    "scope": "本次UE重启/连接诊断报告及必要记录，允许其中内部项目路径与UE核查数据；不含凭据、私有代码、UE资产或他人文件。",
+    "proof": "本轮受信用户委派所附原问答：明确上述仓库和重启报告内容后，用户回答同意。"
+  }
 }
