@@ -1,0 +1,336 @@
+{
+  "format": "df.n23-small-gpu-check/1",
+  "readAt": "2026-10-15T21:06:11.756274+00:00",
+  "reference": "3205cba7",
+  "scale": 0.125,
+  "scope": "Reduced diagnostic atlases; no production export, full-size quality, native importer, UE playback, or user acceptance.",
+  "renderers": {
+    "old": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "new": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "comparisons": [
+    {
+      "case": "kiku",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "botan",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "kamuro",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "senrin",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "strobe",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        },
+        {
+          "part": "segment1/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "crackle",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "JM4-40",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "sphere-unit",
+      "planSame": true,
+      "rampSame": true,
+      "textures": [
+        {
+          "part": "segment0/head",
+          "shapeSame": true,
+          "maxDelta": 0,
+          "changedPixels": 0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "atlasEvidence": {
+    "old": {
+      "kiku": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "fb66647b19edd2c3e7b287f1a2deba67d0e51ff9dbd34c4573cc299478c55c4c",
+          "nonzero": 42707
+        }
+      ],
+      "botan": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "5dbec5c4b146f293a3d8de7652f05391539874258a9f364f4fefdf0e2feaadf0",
+          "nonzero": 38316
+        }
+      ],
+      "kamuro": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "b225a6c6af23874c41b96fa03cae2053691d0670770e743302bdffed1dc0de7c",
+          "nonzero": 30300
+        }
+      ],
+      "senrin": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "672294eb8d327ed090f2462f9730548a90a4fd383bb825f6193b2a419b89e52a",
+          "nonzero": 50506
+        }
+      ],
+      "strobe": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "7184193dcf1e15bb7f0753bcf76c8fc79cc3feb0b3fd5312f05020f87c724df9",
+          "nonzero": 26078
+        },
+        {
+          "part": "segment1/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "5bf7e02c05f7c5a5c2add2f81ce6300c72c506d79e63503f4d8b1f317fdbb51c",
+          "nonzero": 10321
+        }
+      ],
+      "crackle": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "68fb73244f9f9458c07e69b58166c63c8cdd6314a13f300ad80c58a68d92197e",
+          "nonzero": 25473
+        }
+      ],
+      "JM4-40": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "4707d9329ac889bbddab2a2b229cc17f85d6eec15a06b5476e40a9d051f65647",
+          "nonzero": 67928
+        }
+      ],
+      "sphere-unit": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "961d2c52e2ef4929e8965e475f2fd4304b15540a4d6955cbb5d316d032b443fc",
+          "nonzero": 109929
+        }
+      ]
+    },
+    "new": {
+      "kiku": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "fb66647b19edd2c3e7b287f1a2deba67d0e51ff9dbd34c4573cc299478c55c4c",
+          "nonzero": 42707
+        }
+      ],
+      "botan": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "5dbec5c4b146f293a3d8de7652f05391539874258a9f364f4fefdf0e2feaadf0",
+          "nonzero": 38316
+        }
+      ],
+      "kamuro": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "b225a6c6af23874c41b96fa03cae2053691d0670770e743302bdffed1dc0de7c",
+          "nonzero": 30300
+        }
+      ],
+      "senrin": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "672294eb8d327ed090f2462f9730548a90a4fd383bb825f6193b2a419b89e52a",
+          "nonzero": 50506
+        }
+      ],
+      "strobe": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "7184193dcf1e15bb7f0753bcf76c8fc79cc3feb0b3fd5312f05020f87c724df9",
+          "nonzero": 26078
+        },
+        {
+          "part": "segment1/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "5bf7e02c05f7c5a5c2add2f81ce6300c72c506d79e63503f4d8b1f317fdbb51c",
+          "nonzero": 10321
+        }
+      ],
+      "crackle": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "68fb73244f9f9458c07e69b58166c63c8cdd6314a13f300ad80c58a68d92197e",
+          "nonzero": 25473
+        }
+      ],
+      "JM4-40": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "4707d9329ac889bbddab2a2b229cc17f85d6eec15a06b5476e40a9d051f65647",
+          "nonzero": 67928
+        }
+      ],
+      "sphere-unit": [
+        {
+          "part": "segment0/head",
+          "width": 256,
+          "height": 256,
+          "sha256": "961d2c52e2ef4929e8965e475f2fd4304b15540a4d6955cbb5d316d032b443fc",
+          "nonzero": 109929
+        }
+      ]
+    }
+  },
+  "snapshotHelperGPU": {
+    "case": "snapshot-kiku",
+    "planSame": true,
+    "rampSame": true,
+    "textures": [
+      {
+        "part": "segment0/head",
+        "shapeSame": true,
+        "maxDelta": 0,
+        "changedPixels": 0,
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "context": {
+      "capturedSeed": 7,
+      "currentSeed": 1006,
+      "capturedPattern": "sphere",
+      "currentPattern": "half",
+      "frozen": true
+    }
+  },
+  "halfSafetyBlock": {
+    "blocked": true,
+    "message": "半球单束暂不支持，无法保证上半球方向；请改用序列。",
+    "implemented": false
+  },
+  "versions": {
+    "old": "4.9.106",
+    "new": "4.9.110"
+  },
+  "pass": true
+}

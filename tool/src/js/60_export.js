@@ -363,6 +363,20 @@ function exportBakeParams(P, M) {
     copy._fxM = rtFxSnap(M);
   return copy;
 }
+// Keep only the exported CPU layout for the unchanged current editor context.
+// Private bake targets stay export-owned and are never copied into UI caches.
+function rememberExportLayouts(job, baked) {
+  try {
+    if (!job || job.key !== wbKey() || JSON.stringify(wbSnap()) !== JSON.stringify(job.metadata.recipe)) return false;
+    const current = curLayerBakes(); if (current.length !== baked.length) return false;
+    for (let i = 0; i < current.length; i++) {
+      const source = baked[i].b;
+      if (current[i].b && source && Object.hasOwn(source, 'mobNaming'))
+        current[i].b.mobNaming = structuredClone(source.mobNaming);
+    }
+    return true;
+  } catch (_) { return false; } // An unverified UI context must not receive a late layout.
+}
 function disposeExportHolder(holder) {
   const bakes = new Set([holder?.unitBake?.b, holder?.unitBakeM?.b].filter(Boolean));
   for (const b of bakes) disposeBake(b);
@@ -427,6 +441,7 @@ async function exportMaster() {
     files.push([name + '_声音节点.json', utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
     files.push([name + '.json', utf8(JSON.stringify(masterJSON(b, name, job.M), null, 2))]);
     files.push(...await platformFiles(name, b, job.M, p => busy(true, '手机独立烘焙…', p)));
+    rememberExportLayouts(job, [{ b }]);
     if (b.esHead) { const keep = packKeepReferenced(files); files.length = 0; files.push(...keep); }
     busy(true, '打包 ZIP…', 1);
     const sp = job.sp; let zipName = name, out = files;

@@ -510,6 +510,7 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', sel(mbE, true), true), null, 1))]);
     files = packKeepReferenced(files);
     if (onBaked) onBaked(lb);
+    if (job) rememberExportLayouts(job, lb);
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = job ? null : typeof lib !== 'undefined' ? lib.effect : null, key = job ? job.key : typeof wbKey === 'function' ? wbKey() : name, nt = lb.length === 1 && lb[0].b ? lb[0].b.P.type : '', nm = job ? job.naming : packNamesFor(key, ef, lb.length, name, nt);     // 4.9.106 G4：一层的多层效果和交付清单同样按这一层的花型加档位后缀（尾缀 _S / _M / _L）

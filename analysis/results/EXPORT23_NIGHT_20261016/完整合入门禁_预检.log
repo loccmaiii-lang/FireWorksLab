@@ -1,0 +1,36 @@
+at=2026-10-15T21:08:03.874745+00:00
+version=4.9.110
+normal_unmodified_gate=true
+合入门禁：改动 73 个文件（相对 origin/main，含没提交的），动了烘焙器源码
+✅ 体检 cd55e66a N23: preserve verified CPU repairs and report rejected browser gate；43021f8e N23-04: report incremental export reviews and shared queue occupancy；261ab22c N23: preserve local repairs while merging latest shared task receipts；4effc08f N23-0；⚠ 已跟踪文件有本地改动 8 个（本机自动同步会因此跳过）：ool/CHANGELOG.md；tool/FireworkBaker.html；tool/local_delivery/test_export_snapshot.cjs；tool/src/js/10_types.js；tool/src/js/60_export.js；结论：可以干活（⚠ 只是提醒）
+✅ 构建 构建通过（工作树里有没提交的源码改动，成品按工作树生成）
+… 产物契约 + 导出 JSON（代表效果逐个打开，拨「输出」里每一行）
+  ✅ 空中大面片·单层（9.8 s）：测了 25 行
+      ⚠ outPack：代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [fit·]
+  ✅ 空中大面片·分段（34.5 s）：测了 5 行
+      ⚠ outPack：代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [fit·]
+  ✅ 地面循环·单层（2.6 s）：测了 14 行
+  ✅ 分层粒子图·单层（11.8 s）：测了 16 行
+  ✅ 合成一张·单层（6.4 s）：测了 24 行
+      ⚠ maxHoldBurn：代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [2· 4·]
+  ✅ 合成一张·固定机位（31.8 s）：测了 1 行
+  ✅ 近段+远段+粒子·单层（5.0 s）：测了 17 行
+  ✅ V5 尾缀·单层（3.1 s）：测了 10 行
+  ✅ 空中大面片·多层（49.8 s）：测了 24 行
+      ⚠ outPack：代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [fit·]
+      ⚠ fadeAt：代表效果上不起作用（自动定的淡出起点正好一样时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [20· 2·]
+  ✅ 合成一张·多层（37.0 s）：测了 23 行
+      ⚠ maxHoldBurn：代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [2· 4·]
+  ✅ 纯星头·多层（34.4 s）：测了 15 行
+  ✅ 纯星头·单层（3.2 s）：测了 5 行
+  ✅ 空中大面片·入点前闪光（4.7 s）：测了 3 行
+  ✅ 合成一张·一层的我的效果（2.4 s）：测了 6 行
+  ✅ 分层粒子图·一层的我的效果（5.6 s）：测了 4 行
+  ✅ 上升星头循环·单层（1.0 s）：测了 0 行
+  ✅ 单元序列·单层（31.6 s）：测了 1 行
+  ✅ 地面循环·多层（31.8 s）：测了 2 行
+✅ 契约 18 个代表效果、195 行
+✅ 导出 导出拦截、空壳发射器、寿命 / 大小都过
+✅ 界面 8/8 项过
+可以推（337 s）
+exit_code=0

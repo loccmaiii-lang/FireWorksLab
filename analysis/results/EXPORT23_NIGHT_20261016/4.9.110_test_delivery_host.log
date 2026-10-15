@@ -1,0 +1,13 @@
+PASS opaque direct file parent connects without receiving credentials
+PASS remote sandbox ancestry is rejected
+PASS reauthentication retains the original native importer without navigation
+PASS source pinning and command allowlist do not expose UE execution
+PASS acceptance uses indexed receipts instead of parent paths
+PASS repeated publication writes once and does not reread historic resources
+PASS queued export does not replace running identity and adopts its context later
+PASS original native receipts persist in the host and refresh parent resources
+PASS local UI is ready even when directory transport is down
+PASS serialized file origin still uses wildcard reply with source/channel pinning
+PASS local receipt presentation has an absolute trusted thumbnail URL
+PASS historic receipts outside the active root are not written
+12 embedded host contracts passed.

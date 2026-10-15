@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-15T21:08:38.337670+00:00",
+  "version": "4.9.110",
+  "rows": [
+    {
+      "name": "test_accept_timeout.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_baker_handoff.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_delivery_host.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_delivery_metadata.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_delivery_responsiveness.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_directory_transport.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_export_failure_state.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_export_revision_identity.cjs",
+      "exit": 1,
+      "pass": false,
+      "sameAsRecordedBaseline": true
+    },
+    {
+      "name": "test_export_snapshot.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_file_export_handoff.cjs",
+      "exit": 0,
+      "pass": true
+    },
+    {
+      "name": "test_unit_directions.cjs",
+      "exit": 0,
+      "pass": true
+    }
+  ],
+  "pass": false,
+  "knownFailures": [
+    {
+      "name": "test_export_revision_identity.cjs",
+      "exit": 1,
+      "pass": false,
+      "sameAsRecordedBaseline": true
+    }
+  ]
+}

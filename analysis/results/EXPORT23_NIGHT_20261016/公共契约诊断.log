@@ -1,0 +1,25 @@
+at=2026-10-15T20:49:28.707079+00:00
+standard_existing_file_route=true
+private_sidecar_standard_user_authorized=true
+This is the original contract/export diagnostic subset, not full pre-push.
+合入门禁：改动 73 个文件（相对 origin/main，含没提交的），动了烘焙器源码
+… 产物契约 + 导出 JSON（代表效果逐个打开，拨「输出」里每一行）
+Traceback (most recent call last):
+  File "F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\合入门禁.py", line 508, in <module>
+    main()
+  File "F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\合入门禁.py", line 481, in main
+    res = asyncio.run(run_contract(html, names, a.budget, a.jobs))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_HOME>\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "<LOCAL_HOME>\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_HOME>\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab-Night-Export23-20261016\analysis\scripts\合入门禁.py", line 397, in run_contract
+    from playwright.async_api import async_playwright
+ModuleNotFoundError: No module named 'playwright'
+exit_code=1

@@ -1,6 +1,6 @@
 {
   "format": "df.export23-night-handoff/1",
-  "at": "2026-10-16T04:13:36+08:00",
+  "at": "2026-10-16T05:17:43+08:00",
   "workspace": "F:/FireWorksLab-Night-Export23-20261016",
   "commits": {
     "N23-20261016-01": "239746282f6a680d8e97b162ad7d6b2b79f87de4",
@@ -10,29 +10,46 @@
   },
   "cpu": {
     "acceptContracts": 8,
-    "snapshotScenarios": 24,
+    "snapshotScenarios": 28,
     "unitPhysicsConfigGroups": 5,
     "scannerFixtures": 14,
-    "publicBuildVersion": "4.9.109",
+    "publicBuildVersion": "4.9.110",
     "staticErrors": 0,
-    "legacyFailure": "test_export_revision_identity.cjs: T_Test旧命名夹具不合4.9.106规范，01之前已存在且保留。"
+    "legacyFailure": "test_export_revision_identity.cjs: T_Test旧命名夹具不合4.9.106规范，01之前已存在且保留。",
+    "localDeliveryScripts": 11,
+    "passedScripts": 10,
+    "legacyFailureSameAsRecordedBaseline": true
   },
   "halfUnitCapability": "公开合同未声明半球轴向限制，当前仅安全拦截；不冒称半球单束画面完成。",
-  "browserStarted": false,
-  "smallBake": null,
+  "browserStarted": true,
+  "smallBake": {
+    "pass": true,
+    "reference": "3205cba7 / 4.9.106",
+    "cases": 8,
+    "atlasesPerVersion": 9,
+    "gpu": "RTX5080 / ANGLE D3D11",
+    "scale": 0.125,
+    "maxDelta": 0,
+    "changedPixels": 0,
+    "snapshotHelperGPU": true,
+    "report": "小图实烘/小图实烘.json",
+    "manualAtlasReview": [
+      "kiku",
+      "sphere-unit"
+    ],
+    "limits": "缩小诊断；未验全分辨率质量、真实原生accept、UE实播或用户验收；half仍未实现。"
+  },
   "fullPrePush": null,
   "sourcePushed": false,
-  "blockedAction": {
-    "name": "公共契约/导出诊断子集",
-    "reviewOutcome": "rejected_before_CreateProcess",
-    "reason": "The diagnostic launches the browser contract/export path while T10 is not shown terminal and GPU/UE activity is still present, conflicting with the explicit requirement to wait for safe T10 release and verified idle resources before browser/render validation.",
-    "retry": false
-  },
   "privateScope": {
-    "configuredPrivatePrepare": true,
-    "privateImporterRead": false,
-    "sidecarGenerated": false,
-    "clarification": "标准构建默认准备私有副本及初始化，原禁令仍在；已通过异步输入请求窄例外，未收到答复。"
+    "explicitUserApproval": true,
+    "minimalStaticRead": true,
+    "sidecarGenerated": true,
+    "sidecarGitIgnored": true,
+    "originalImporterModified": false,
+    "privateSourceUploaded": false,
+    "initialization": "仅自动GetPlatformName、目录session及测试浏览器临时存储",
+    "resourcePublishAcceptReceiptRootOrUEWrites": false
   },
   "resourceReadback": {
     "knownNewTestProcessMatches": 0,
@@ -43,6 +60,116 @@
     "dwm3DPercent": 4,
     "performanceVerified": false
   },
-  "next": "父侧取得T10安全释放与GPU空闲的新证据，以及私有sidecar/只读初始化范围确认后，正常审查恢复；不得改门禁/no-verify/换file路由。",
-  "ownBackgroundTests": false
+  "next": "正常pre-push并核实远端；推送后补确认记录。",
+  "ownBackgroundTests": false,
+  "historicalBlockedAction": {
+    "name": "公共契约/导出诊断子集",
+    "reviewOutcome": "rejected_before_CreateProcess",
+    "reason": "The diagnostic launches the browser contract/export path while T10 is not shown terminal and GPU/UE activity is still present, conflicting with the explicit requirement to wait for safe T10 release and verified idle resources before browser/render validation.",
+    "retry": false
+  },
+  "version": "4.9.110",
+  "execution": "本批修复与批准范围内验证完成；正常推送待确认",
+  "userAcceptance": "未做",
+  "fullGatePreflight": {
+    "pass": true,
+    "checks": [
+      {
+        "item": "体检",
+        "pass": true
+      },
+      {
+        "item": "构建",
+        "pass": true
+      },
+      {
+        "item": "契约",
+        "pass": true
+      },
+      {
+        "item": "导出",
+        "pass": true
+      },
+      {
+        "item": "界面",
+        "pass": true
+      }
+    ],
+    "scenarios": 18,
+    "contractRows": 195,
+    "uiChecksPassed": 8,
+    "report": "完整合入门禁_预检.json",
+    "baseAtRun": "da0e8c3d"
+  },
+  "followupFix": {
+    "version": "4.9.110",
+    "sourceCommit": null,
+    "cause": "私有重烘没有回传既有mobNaming纯CPU布局，手机清单仍显示占位文件名。",
+    "proof": "4.9.109五项失败、旧4.9.106同五项通过；补修后完整门禁通过。",
+    "scope": "仅对象与完整配方未变才深复制CPU摘要；改参/切对象/图层库参数变化拒绝晚到，不复制GL或改b.P。"
+  },
+  "initialRuntimeFailure": "默认Python缺Playwright，随后使用本项目已配置依赖，仅设进程PYTHONPATH，无安装或配置改动。",
+  "validatedSourceSha256": {
+    "00_util.js": "c25ef70d6543065607a65f32db9d2e9e1de12720f3719f8062fba0bf6ed9875f",
+    "05_quality.js": "40e4929b5cb2167d13799718da232592aebf93c1a8d57a6b0e02c5247045a0b3",
+    "10_types.js": "bfd11bbbf8997d195cfd56eb6c50159388e67f68513e575c9969545043f25bad",
+    "12_tempo.js": "db7a0f78529469f542b7645858deb06ee7abab7be1691320c4e6f2cd1795cef7",
+    "14_pending.js": "c280cc9f7539416b5d84869a0c3442e788f28043eb25b4aaedf3ce2180f29405",
+    "15_replica.js": "a8f77c850a4e06bbd8f27d1208a14584f1e285f55ec877fe80839ad8d3b281b9",
+    "16_thumbs.js": "656334bf32378b910a4a281fb70a1809da0169145a1cd51dff3f7f8d098200c0",
+    "17_cloudrecipes.js": "ba9cffb87251caf7e344da8aad1a398b0edf754100631129e2fac3bde2581138",
+    "17_graph_presets.js": "1bd0ca7071a5e4d8b8b5f1e70ca2b7cacce902bc5d808b4e51b66b7f9ddf2776",
+    "18_multitypes.js": "b8cae8db9377e5bcc1b2fcc952f53fc091e85e0dfbb1901a00212a7dccf5b609",
+    "19_spark_late.js": "a8a2f523780e357310bdc451bb5f4d459cbaf2fbc3f1e1d1705c9b4c48ac9406",
+    "19_thumbsvg.js": "fee8e42505acbbef7932d2ff278e629e8970590d92b96cca06f4d3dd856ecf87",
+    "20_sim.js": "688c44f4c8067315fd76b4e2bde9720c213bc0ef1fd2cb7567107e0a734ee267",
+    "30_plan.js": "90241cf676d7ad2b7d9c149bd767ec57d5b6663421cc917a440f2fcf23b58943",
+    "31_plan40.js": "53d7924eb9222cb942f9639aa35822e24a7f5231115411f98e1d44e12633ea18",
+    "39_programs.js": "f4b4f565ded61ba1a865b226a5c384b437ee569a56f386a2125ade3945e67955",
+    "40_gl.js": "528253c33e30b08c57c5b23233f5369e2854c9eb25cd3348fb674ec8bde54b25",
+    "41_particles40.js": "3480bc866c84ab1a17481031bb684f7971ef301f6d2be4442b4806fd5415828d",
+    "42_trail.js": "3cb3b7dccab4476c9dc52391e8ecbb24ed27d822862b25e9bab2999f4f2bbed3",
+    "43_phystrail.js": "f5b6f05652a8fa720cc10a6504adb598e05d54bc2da234e32b75b42372cb70f1",
+    "44_physrecipes.js": "e64b3507c758bf29eb5fc244dd748af0ad29e55e8581d77754a1ef758a76ffe3",
+    "45_physbody.js": "e95f672828cad99acad8173ee8f34078ddb94abb2ed0d40f40ae41aa676acd59",
+    "45_spark_flow.js": "b15815740bd8be559de274572dd1d12189079006cbbe6720b5ec032489f5a25d",
+    "46_camera.js": "8b896b62de47cc276974ce32351e80c56e212d100f49882864954c87c5b83d04",
+    "46_camera_render.js": "886c889fb2d7d818e4a497ebed6590c1bfe666db085691f5fbf097a18c52160b",
+    "46_emitset.js": "398747414d339a15ed226620137f374489413db304fa96c4da1d349855ab25fd",
+    "46_graph_model.js": "e2033ac6e9d080bdcbbefa4dca6299abda3f4bb2f0688d1eb8ce784e9868de5a",
+    "46_graph_render.js": "0691b3ccf9cb1e2d4b3b33d5526d5776758f3bb1de5c26343f451ef890fb5c16",
+    "47_risetail.js": "b82e666382c02bb2765847644fecc6ddbf46ec12f88265ede4b975453df8c5ff",
+    "48_render40.js": "31bab4babefba70ffef51099fa7a788a649db662dc6d157b1b7f62f6fd7ce442",
+    "49_playback.js": "b7f6f7c14fe18d323c819c2ffa7fbe505680251dc6dc5da13008796230fe7cd7",
+    "50_bake.js": "d663f7d8152aae5afc956ebe36c428537d69e676976649bf4e7b8c099e7963ed",
+    "60_export.js": "f4c4c4b2923080f634442de0757528c3672ebac14525f57b34cac88149c40ca3",
+    "61_naming.js": "7da6fc651f7bd0789cda62d451b003d8b48efbe7c8065438cdabe0209d0c1a70",
+    "63_gate.js": "ef3daa096888ac1dbb4fdb5ec9daf4d07fbf1c8f7d94a93102a839f4718c5d5c",
+    "65_cascade.js": "43d33b0cc8a1f146c37bd54908c70d80548cc011193e87ef36f44fd4cc46ab04",
+    "66_fwlcascade.js": "04b2ec4854b0e5bb8c47ac6280272e6c385b1482f2ea4066fdd660cd0cf64214",
+    "67_delivery.js": "2578d62ebc1c1451667f2d373921671c13440c9f30e5865025edfe96f3889657",
+    "67_fwlcombo.js": "1168a0cedff52eab4daae7783df8519d07a06801c73318904478c65f30ae6a95",
+    "68_keys.js": "07c25693953159570e25b6770826d16524acf44b68ff6f9a9a8bd75a7ec8c950",
+    "68_lowframe.js": "04330472ceb53e7f6227dec6d5e5af14b2180ed1ef67421f3643f83571c04ca1",
+    "69_icons.js": "026c1cb1453d6b30d2b7c5149042f8f2768d48e9423519019da3a47b628ef001",
+    "70_ui.js": "518fdd22dcef852999cb4b0c6c9168f718f260ea2d3abba7f1f50fb039effd90",
+    "71_panel43.js": "e63d91aa5e7652ca49a9b40c6db472545650cc7905badd64f4bccf276ef4ff12",
+    "72_picker.js": "cf7aac76bc098d45bbedfade1ab7641741e19de4ceb8dd91168c2b9a02314ce3",
+    "75_iter.js": "5730d8d2d3cdfe2d15a932379089fea99fe5fa178e003462ce6832cd949438c4",
+    "77_assets.js": "a7de006c5ab268f9eae2a67b7d680936aeb5074bef758a92b257606db7879e57",
+    "78_updates.js": "b89843c5b4844176a05d5827534fe05fc2ffddc2ae758bc6fc1c6026be1bc0ce",
+    "79_assetops.js": "6ccfedd39a675f39aae2fa892f00dad72fcbf5745bc7e175667214dd72dc0550",
+    "79_curves.js": "20932e7a7503296ae96426fd2f971b9653125e479629fe403184e6cd8685cb80",
+    "79_graph_editor.js": "020c4308c41108bd7e859819b731deeba342a6cdcae0038d15e1934d4827cabc",
+    "79_library.js": "83e7ea4d209ff430beada1b427bbc9abb499503dc0ed89409878f2fdc6360512",
+    "79_myfx.js": "690772dfe2d69750a418a08b558a0b1c9983e16d1ec3e69df9299d5ab51e667a",
+    "79_repo.js": "9819966e1795f732c0f25e73a6c7acf87db1f84b1520844f91cdb34ecb158dc6",
+    "79_undo.js": "4ec782fc1b5736c9a3726b63cde3e5007f0a30e1a110d9aeaeeb2fc2a8c2fff6",
+    "79_workbench.js": "0e5a09afd9c8188b2e38488bca638ce8e62a60d620c2f0fca9599f30842973db",
+    "80_render.js": "8e8dcf74c151c9a631202a5302a3b3ac65d60ca00c461db24b0742f2f92c24fb",
+    "82_showcase.js": "5979beca229f0c1df6c5eeddaf2a87106fc2f32028d9753aba4be1b9fddfdfff",
+    "85_stills.js": "b5f9f82a88ab0dec173bb9e6be02f7d17dcb45372ddb036d4ba02d3fb4f34636",
+    "90_events.js": "9bca637c1179be8690812a7f083cf433b5084c7cc1118f7b8c73fb9cb0424d4c"
+  },
+  "validatedPublicHtmlSha256": "38cdcc5fbfd90d1b8bd48196d75d83d49d80e1c51c21b6b16ab6ef16be1b1f1e"
 }

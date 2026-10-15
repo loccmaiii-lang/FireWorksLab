@@ -1,0 +1,143 @@
+{
+  "before": {
+    "state": {
+      "outPC": "full",
+      "outMobile": "full",
+      "frameCount": 24,
+      "rtHeadSize": 0.6,
+      "rtHeadI": 6,
+      "rtHeadFl": 1.6,
+      "rtHeadFlI": 1.1,
+      "rtGrid": -1,
+      "frameBudget": "motion",
+      "texW": 2048,
+      "texH": 2048,
+      "cols": 16,
+      "rows": 1,
+      "chans": 4,
+      "outMode": "combined",
+      "frameMode": "uniform",
+      "form": "emitset",
+      "autoGrid": 0,
+      "type": "tailS"
+    },
+    "bake": {
+      "outPC": "full",
+      "outMobile": "full",
+      "frameCount": 24,
+      "rtHeadSize": 0.6,
+      "rtHeadI": 6,
+      "rtHeadFl": 1.6,
+      "rtHeadFlI": 1.1,
+      "rtGrid": -1,
+      "frameBudget": "motion",
+      "texW": 2048,
+      "texH": 2048,
+      "cols": 16,
+      "rows": 1,
+      "chans": 4,
+      "outMode": "combined",
+      "frameMode": "uniform",
+      "form": "emitset",
+      "autoGrid": 0,
+      "type": "tailS"
+    },
+    "layout": {
+      "cols": 16,
+      "rows": 1,
+      "chans": 4,
+      "per": 16,
+      "F": 64,
+      "cellW": 128,
+      "cellH": 2048
+    },
+    "job": {
+      "base": "Silver3_Layers_S",
+      "layers": [
+        ""
+      ],
+      "system": "",
+      "tiered": true,
+      "custom": false
+    }
+  },
+  "trace": [
+    {
+      "input": {
+        "outPC": "full",
+        "outMobile": "full",
+        "frameCount": 24,
+        "rtHeadSize": 0.6,
+        "rtHeadI": 6,
+        "rtHeadFl": 1.6,
+        "rtHeadFlI": 1.1,
+        "rtGrid": -1,
+        "frameBudget": "motion",
+        "texW": 2048,
+        "texH": 2048,
+        "cols": 16,
+        "rows": 1,
+        "chans": 4,
+        "outMode": "combined",
+        "frameMode": "uniform",
+        "form": "emitset",
+        "autoGrid": 0,
+        "type": "tailS"
+      },
+      "resultP": {
+        "outPC": "full",
+        "outMobile": "full",
+        "frameCount": 24,
+        "rtHeadSize": 0.6,
+        "rtHeadI": 6,
+        "rtHeadFl": 1.6,
+        "rtHeadFlI": 1.1,
+        "rtGrid": -1,
+        "frameBudget": "motion",
+        "texW": 2048,
+        "texH": 2048,
+        "cols": 16,
+        "rows": 1,
+        "chans": 4,
+        "outMode": "combined",
+        "frameMode": "uniform",
+        "form": "emitset",
+        "autoGrid": 0,
+        "type": "tailS"
+      },
+      "form": "emitset",
+      "layout": {
+        "cols": 16,
+        "rows": 1,
+        "chans": 4,
+        "per": 16,
+        "F": 64,
+        "cellW": 128,
+        "cellH": 2048
+      }
+    }
+  ],
+  "names": [
+    "CSLRS_Silver_3_1____.json",
+    "CSLRS_Silver_3_1_____Cascade参数.txt",
+    "CSLRS_Silver_3_1_____Mobile.json",
+    "CSLRS_Silver_3_1_____声音节点.json",
+    "CSLRS_Silver_3_1_____曲线.csv",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+  ],
+  "listed": [
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_<列>x<行>_01.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_Full_<列>x<行>_01_C.png",
+    "T_EFX_FireWorks_Silver3_Layers_S_R.png",
+    "cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt"
+  ],
+  "gate": []
+}

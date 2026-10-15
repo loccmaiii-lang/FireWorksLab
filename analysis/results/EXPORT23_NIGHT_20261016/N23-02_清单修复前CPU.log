@@ -1,0 +1,22 @@
+PASS single export start snapshot survives six async pause positions
+PASS non-air products keep their snapshot and never mutate shared bake policy
+PASS combo layers, entries, metadata and names use the initiating snapshot
+PASS cancelled/failed export has no delivery or history and releases only owned bake
+PASS real combo packing uses private captured layer parameters across bake/encode/mobile waits
+PASS real single-unit scheme keeps its job policy and disposes its private cache
+PASS seed-variant export keeps the same initiating identity and policy
+PASS actual history writer appends to the initiating key, retains manual records and limits only that key
+PASS real combo cancellation releases private sequence/unit caches without touching UI cache
+PASS actual cancellation flag during ZIP is checked before publication
+AssertionError [ERR_ASSERTION]: private export must retain current CPU file layout
+
+undefined !== 16
+
+    at F:\FireWorksLab-Night-Export23-20261016\tool\local_delivery\test_export_snapshot.cjs:146:28 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: 16,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

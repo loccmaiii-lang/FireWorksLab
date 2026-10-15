@@ -1,0 +1,7 @@
+at=2026-10-15T20:48:39.577769+00:00
+command=python -B -X utf8 tool/build.py
+private_prepare=standard_unmodified_user_authorized
+built 2140388 bytes 4.9.109
+脚本静态检查：0 个错误、20 个提示（--warn 看提示）
+静态核对：0 个错误、4 个提示（--warn 看提示）
+本机导入组件已部署（不进入公共 HTML / Git）

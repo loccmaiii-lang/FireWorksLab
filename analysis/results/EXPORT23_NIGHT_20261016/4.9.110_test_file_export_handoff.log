@@ -1,0 +1,7 @@
+PASS file export automatically reaches the same-page actual checklist
+PASS export return and re-entry do not reset confirmation or recheck
+PASS export receipt does not disable return during native work
+PASS queued export keeps running identity until the native importer adopts it
+PASS popup, opener relay and page closing removed from production controller
+PASS failed handoff does not replace the current native identity
+6 embedded export contracts passed; real file browser and UE write acceptance remain separate.

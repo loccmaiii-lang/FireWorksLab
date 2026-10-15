@@ -1,0 +1,9 @@
+PASS file entry stays in the maker document
+PASS repeated navigation retains maker values and one importer instance
+PASS return to maker remains available during native work
+PASS forged host events cannot change native task guards
+PASS interruptible motion and host-owned focus restore
+PASS reduced motion preserves the same view behavior
+PASS cold service failure has in-place retry and a working maker return
+PASS directory outage leaves the actual local importer visible
+8 single-document navigation contracts passed.

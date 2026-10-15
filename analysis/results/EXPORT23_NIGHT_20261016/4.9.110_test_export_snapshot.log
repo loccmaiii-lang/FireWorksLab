@@ -1,0 +1,12 @@
+PASS single export start snapshot survives six async pause positions
+PASS non-air products keep their snapshot and never mutate shared bake policy
+PASS combo layers, entries, metadata and names use the initiating snapshot
+PASS cancelled/failed export has no delivery or history and releases only owned bake
+PASS real combo packing uses private captured layer parameters across bake/encode/mobile waits
+PASS real single-unit scheme keeps its job policy and disposes its private cache
+PASS seed-variant export keeps the same initiating identity and policy
+PASS actual history writer appends to the initiating key, retains manual records and limits only that key
+PASS real combo cancellation releases private sequence/unit caches without touching UI cache
+PASS actual cancellation flag during ZIP is checked before publication
+PASS actual export retains only current CPU mobile layout and rejects parameter/object changes
+PASS combo CPU layout is independent and a later layer edit rejects stale handoff

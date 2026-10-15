@@ -1,0 +1,28 @@
+at=2026-10-15T21:06:11.192742+00:00
+Real GPU reduced-atlas diagnostics; not full-size quality/UE/user acceptance.
+old kiku real textures 1
+old botan real textures 1
+old kamuro real textures 1
+old senrin real textures 1
+old strobe real textures 2
+old crackle real textures 1
+old JM4-40 real textures 1
+old sphere-unit real textures 1
+new kiku real textures 1
+new botan real textures 1
+new kamuro real textures 1
+new senrin real textures 1
+new strobe real textures 2
+new crackle real textures 1
+new JM4-40 real textures 1
+new sphere-unit real textures 1
+PASS kiku
+PASS botan
+PASS kamuro
+PASS senrin
+PASS strobe
+PASS crackle
+PASS JM4-40
+PASS sphere-unit
+small_gpu_pass True
+exit_code=0

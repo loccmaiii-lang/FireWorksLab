@@ -1,0 +1,9 @@
+PASS half is blocked before baking, cached unit reuse or Cascade output
+FIT {"actual":{"px":1.32,"devM":2.28,"tau":0.55,"spread":0,"level":"ok","why":[],"directionCount":24,"worstDirection":[-0.532363,-0.054823,-0.844739]},"oracle":{"px":1.315153657821581,"directions":24,"star":9}}
+FIT {"actual":{"px":17.71,"devM":30.7,"tau":1.2,"spread":0,"level":"bad","why":["尾迹偏离速度直线：单束的直尾最多偏 17.7 px（800 m，所有星方向的最大值）"],"directionCount":24,"worstDirection":[-0.895976,-0.283566,0.341785]},"oracle":{"px":17.709569477055883,"directions":24,"star":7}}
+PASS existing sphere direction set matches independent full-history 3D maximum
+PASS horizontal, oblique, vertical and depth-facing paths use the same conservative rule
+SPHERE_CONFIG_SHA256 a0aa547fa35b65fa49a428cfd8cac7d82a2589171e315d874914c1c71f025c0c
+PASS sphere config and shader source preserve the pre-task behavior
+PASS half direction axes and unsupported fan/cluster remain explicit
+5 CPU physics/config groups passed; no GL or UE visual acceptance.

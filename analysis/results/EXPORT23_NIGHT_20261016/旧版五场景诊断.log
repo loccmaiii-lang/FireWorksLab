@@ -1,0 +1,16 @@
+at=2026-10-15T20:58:06.087364+00:00
+reference=3205cba7 / 4.9.106
+Baseline diagnostic only; same existing browser implementation and file directory, not a substitute gate.
+合入门禁：改动 73 个文件（相对 origin/main，含没提交的），动了烘焙器源码
+… 产物契约 + 导出 JSON（代表效果逐个打开，拨「输出」里每一行）
+  ✅ 合成一张·单层（5.7 s）：测了 24 行
+      ⚠ maxHoldBurn：代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [2· 4·]
+  ✅ 合成一张·固定机位（31.7 s）：测了 1 行
+  ✅ 合成一张·多层（36.8 s）：测了 23 行
+      ⚠ maxHoldBurn：代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变  [2· 4·]
+  ✅ 纯星头·多层（34.0 s）：测了 15 行
+  ✅ 合成一张·一层的我的效果（2.4 s）：测了 6 行
+✅ 契约 5 个代表效果、69 行
+✅ 导出 导出拦截、空壳发射器、寿命 / 大小都过
+可以推（112 s）
+exit_code=0

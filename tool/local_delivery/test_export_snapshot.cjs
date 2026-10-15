@@ -5,7 +5,7 @@ const clone=x=>structuredClone(x);
 async function flush(){for(let i=0;i<100;i++)await Promise.resolve();}
 function deferred(){let yes,no;const promise=new Promise((a,b)=>{yes=a;no=b});return {promise,yes,no};}
 function extract(src,name){const start=src.indexOf('function '+name+'(');assert(start>=0,name);let open=src.indexOf('{',start),n=1,i=open+1;for(;n&&i<src.length;i++){if(src[i]==='{')n++;else if(src[i]==='}')n--;}return (src.slice(start-6,start)==='async '?'async ':'')+src.slice(start,i);}
-function fixture({form='master',pause='begin',fail=false,combo=false,actual=false,scheme='seq',variants=false}={}){
+function fixture({form='master',pause='begin',fail=false,combo=false,actual=false,scheme='seq',variants=false,layout=false}={}){
  const waits=[],events=[],released=[],history=[],renders=[],errors=[],deliveries=[];let didPause=false,current='my:alpha',named='Alpha',dest='directory',scale=.8,spec='small',version='revA';
  const P={type:'kiku',form,texW:16,texH:16,duration:2,seed:11,outPC:scheme,outMobile:scheme,nested:{curve:[[0,1],[1,2]]},sparkGraph:{layers:[{gain:3}]},exportScale:.8};
  const M={ramp0:'#111111',ramp1:'#222222',ramp2:'#333333',ramp3:'#444444',stages:[[0,'#abcdef']],headInt:1,tailInt:1};
@@ -35,11 +35,12 @@ function fixture({form='master',pause='begin',fail=false,combo=false,actual=fals
   singleSchemeFiles:async(n,b,m)=>({files:[[n+'.scheme',new TextEncoder().encode(JSON.stringify({P:b.P,M:m}))]],ln:n,mn:n+'_Mobile'}),
   wbAutoExport:(name,job)=>history.push({current,name,job:job?clone(job):{key:current,snap:{P:clone(state.P)}}})
  });
- vm.runInContext(fs.readFileSync(dir+'60_export.js','utf8'),ctx);
+ const exportSource=name=>process.env.N23_EXPORT_SRC_REF?require('node:child_process').execFileSync('git',['show',process.env.N23_EXPORT_SRC_REF+':tool/src/js/'+name],{cwd:__dirname+'/../..',encoding:'utf8'}):fs.readFileSync(dir+name,'utf8');
+ vm.runInContext(exportSource('60_export.js'),ctx);
  vm.runInContext(extract(fs.readFileSync(dir+'67_delivery.js','utf8'),'deliveryMetadata'),ctx);
  vm.runInContext(extract(fs.readFileSync(dir+'70_ui.js','utf8'),'exportCombo'),ctx);
  vm.runInContext(extract(fs.readFileSync(dir+'70_ui.js','utf8'),'busy'),ctx);
- if(actual)vm.runInContext(fs.readFileSync(dir+'67_fwlcombo.js','utf8'),ctx);
+ if(actual)vm.runInContext(exportSource('67_fwlcombo.js'),ctx);
  Object.assign(ctx,{
   unitBlockReason:()=>'',clamp:(v,a,b)=>Math.min(b,Math.max(a,v)),singleSchemeOn:()=>true,unitAllowed:()=>true,unitDuration:()=>2,
   bakeMobileFor:async b=>{await wait('mobile');return bakeP(b.P)},bakeUnitSet:async p=>bakeP(p),
@@ -48,7 +49,8 @@ function fixture({form='master',pause='begin',fail=false,combo=false,actual=fals
   texFiles:async(b,n)=>{await wait('encode');return [[n+'.seq',new TextEncoder().encode(JSON.stringify(b.P))]];},
   rampPixels:m=>clone(m),encodePNG:async rgba=>{await wait('ramp');return new Blob([JSON.stringify(rgba)]);},
   masterJSON:(b,n,m)=>({name:n,params:b.P,materialDefaults:m}),curvesCSV:(b,m)=>JSON.stringify({P:b.P,M:m}),colorKeys:m=>clone(m.stages),
-  platformFiles:async(n,b,m)=>[[n+'.platform',new TextEncoder().encode(JSON.stringify({P:b.P,M:m}))]],
+  curLayerBakes:()=>state.tab==='combo'?state.layers.map(L=>({b:state.lib.find(e=>e.name===L.lib)?.bake})):[{b:state.bake}],
+   platformFiles:async(n,b,m)=>{if(layout)b.mobNaming={form:'emitset',esFull:true,meta:{L:{cols:16,rows:1,F:64,cellW:64,cellH:1024}}};return [[n+'.platform',new TextEncoder().encode(JSON.stringify({P:b.P,M:m}))]];},
   makeZip:async(files,job)=>{await wait('zip');return {files,job};},
   deliverResource:async(blob,name,metadata,destination)=>{await wait('deliver');deliveries.push({blob,name,metadata,destination});},
   ...(actual?{}:{comboPackFiles:async(n,l,prog,job,onBaked)=>{await wait('combo');const lb=l.map((L,i)=>({L,b:{P:job?.entries[i]?.P||state.lib[i].P,meta:{duration:2,Ww:10,Wh:10}},e:{}}));onBaked?.(lb);return [[n+'.combo',new TextEncoder().encode(JSON.stringify(lb.map(x=>({L:x.L,P:x.b.P}))))]];}})
@@ -136,4 +138,26 @@ function fixture({form='master',pause='begin',fail=false,combo=false,actual=fals
   assert.equal(f.deliveries.length,0,'cancel during ZIP must stop before publication');assert.equal(f.history.length,0);assert(!f.released.includes(f.oldBake));assert(f.released.length>0);
  }
  console.log('PASS actual cancellation flag during ZIP is checked before publication');
+ for(const edit of ['none','parameter','object']){
+  const f=fixture({layout:true,pause:'begin'}),p=f.run();await f.reach();
+  if(edit==='parameter')f.state.P.nested.curve[0][1]=7;
+  if(edit==='object')f.mutate();
+  f.release();await p;assert(f.deliveries[0],JSON.stringify(f.errors));
+  if(edit==='none'){assert.equal(f.oldBake.mobNaming?.meta.L.cols,16,'private export must retain current CPU file layout');assert.equal(f.oldBake.mobile,undefined);assert.equal(f.oldBake.head.gpu,true);}
+  else assert.equal(f.oldBake.mobNaming,undefined,'late layout cannot reach an edited/new context');
+  assert(!f.released.includes(f.oldBake),'UI GPU target remains owned by UI');
+ }
+ console.log('PASS actual export retains only current CPU mobile layout and rejects parameter/object changes');
+ {
+  const f=fixture({combo:true}),naming={form:'emitset',esFull:true,meta:{L:{cols:16,rows:1}}};
+  vm.runInContext(extract(fs.readFileSync(dir+'79_workbench.js','utf8'),'wbSnap'),f.ctx);
+  const job=vm.runInContext("captureExportJob('combo')",f.ctx);f.ctx.job=job;f.ctx.layoutSources=[{b:{mobNaming:naming,head:{gpu:true}}}];
+  assert(vm.runInContext('rememberExportLayouts(job,layoutSources)',f.ctx));assert.equal(f.oldBake.mobNaming.meta.L.cols,16);
+  naming.meta.L.cols=2;assert.equal(f.oldBake.mobNaming.meta.L.cols,16,'CPU layout is copied without aliasing');
+  f.state.lib[0].P.seed=77;assert.equal(vm.runInContext('rememberExportLayouts(job,layoutSources)',f.ctx),false,'actual wbSnap catches library parameter edits');f.state.lib[0].P.seed=11;
+  f.state.layers[0].scale=9;assert.equal(vm.runInContext('rememberExportLayouts(job,layoutSources)',f.ctx),false);assert.equal(f.oldBake.mobNaming.meta.L.cols,16);
+  assert.equal(f.oldBake.mobile,undefined);assert.equal(f.oldBake.head.gpu,true);
+ }
+ console.log('PASS combo CPU layout is independent and a later layer edit rejects stale handoff');
+
 })().catch(e=>{console.error(e);process.exitCode=1;});
