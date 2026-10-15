@@ -526,7 +526,7 @@ def extra_fan_slots(cues, have, limit=40):
     return out
 
 
-SWEEPS = ('chaseLR', 'chaseRL', 'walkLR', 'walkRL')
+SWEEPS = ('zigLR', 'zigRL', 'chaseLR', 'chaseRL', 'pingpong', 'walkLR', 'walkRL')
 
 
 def sweep_slots(cues, plan, gap_min=3.0, step=3.0, limit=30):
@@ -569,6 +569,50 @@ def _choose_sweep(orig):
     return f
 
 
+# —— 修订6：扇照 R03 的丰富度重排（用户 10-16 00:54）——
+# 「我之前说的扇形重叠是因为你两个效果同时在一个点播放的重叠……只是不要两个效果完全没什么错开」→ 只禁同一个点、开始时刻差 < 0.3 s；
+# 「多样性与左右来回摆」→ 加「左右交替摆」扇形（相邻点红彗星九束左扫 / 右扫交替）、来回扫，选扇形时摆扇（逐束扫：九束左扫 / 右扫 / 银九束展开）优先。
+SWING_SP = {'R9', 'R9R', 'S9'}
+SAME_POINT_DT = 0.3
+
+
+def clash_same_point(e1, e2):
+    return e1['point'] == e2['point'] and abs(e1['t'] - e2['t']) < SAME_POINT_DT
+
+
+NEW_FIGS = {
+    'zigLR':   dict(zh='左右交替摆·左→右', pool='H', dir='left', gap=(1, 1),
+                    steps=lambda r, x: [[(f'B{i}', 'R9' if i % 2 == 0 else 'R9R')] for i in range(8)]),
+    'zigRL':   dict(zh='左右交替摆·右→左', pool='H', dir='right', gap=(1, 1),
+                    steps=lambda r, x: [[(f'B{i}', 'R9R' if i % 2 else 'R9')] for i in reversed(range(8))]),
+    'pingpong': dict(zh='来回扫', pool='L', dir='together', gap=(1, 1),
+                     steps=lambda r, x: [[(p, 'R9')] for p in ('B0', 'B2', 'B5', 'B7')] + [[(p, 'R9R')] for p in ('B6', 'B4', 'B1')]),
+    'silverSwing': dict(zh='银扇隔点摆', pool='L', dir='together', gap=(2, 3),
+                        steps=lambda r, x: [[(p, 'S9') for p in ('B0', 'B2', 'B5', 'B7')], [(p, 'S9') for p in ('B1', 'B3', 'B4', 'B6')]]),
+    'wideWall': dict(zh='宽银扇一排', pool='H', dir='together', gap=(0, 0), steps=lambda r, x: [[(f'B{i}', 'S13') for i in range(8)]]),
+}
+
+
+def _is_swing(k):
+    f = B06.FIG[k]
+    import random as _r
+    try:
+        st = f['steps'](_r.Random(0), (f.get('sp') or (None,))[0])
+    except Exception:
+        return False
+    return any(sp in SWING_SP for step in st for _, sp in step)
+
+
+def _choose_swing_first(orig, bias=0.45):
+    def f(slot, rng, recent, last_color, used, used_sec):
+        res = orig(slot, rng, recent, last_color, used, used_sec)
+        if slot.get('sweep'):
+            return res
+        keyed = [((i * (bias if _is_swing(k) else 1.0)), i, (k, x)) for i, (k, x) in enumerate(res)]
+        return [kx for _, _, kx in sorted(keyed)]
+    return f
+
+
 LIGHT_FANS = {'S5', 'R5', 'R1'}
 
 
@@ -606,8 +650,10 @@ def main():
     ap.add_argument('--sparse', type=float, default=5.0)
     ap.add_argument('--cap-dense', type=float, default=4.0, help='PC 低配亮着的浓密金菊面积上限（B05 实测点火 0.76 ms 时 3.24、≥ 0.95 ms 时 5.1 / 8.7）')
     ap.add_argument('--cap-burst', type=float, default=0.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
-    ap.add_argument('--extra-fans', type=int, default=40, help='高 / 中配补扇位个数上限（0 = 照修订4）')
-    ap.add_argument('--sweeps', type=int, default=30, help='高 / 中配在没扇的空档补扫扇位个数上限（0 = 不补）')
+    ap.add_argument('--extra-fans', type=int, default=60, help='高 / 中配补扇位个数上限（0 = 照修订4）')
+    ap.add_argument('--fans-r03', type=int, default=1, help='扇照 R03 的丰富度（只禁同点同刻、加左右交替摆、摆扇优先；0 = 照修订5）')
+    ap.add_argument('--sweep-gap', type=float, default=2.0, help='没扇亮着多少秒就补一个扫扇位')
+    ap.add_argument('--sweeps', type=int, default=60, help='高 / 中配在没扇的空档补扫扇位个数上限（0 = 不补）')
     ap.add_argument('--low-fans', type=int, default=16, help='低配轻扇最多几发（0 = 低配不放扇）')
     ap.add_argument('--coda-b07', action='store_true', help='收尾照 B07（9 → 3 → 2 → 主角）')
     ap.add_argument('--destack', action='store_true', help='低配同心叠换点（修订3 用过，修订4 起默认不用）')
@@ -644,10 +690,14 @@ def main():
         return out
     B06.fan_slots = slots
     B06.MIN_SHARED = 0.0
+    if a.fans_r03:                                   # 修订6：扇照 R03 的丰富度
+        B06.clash = clash_same_point
+        B06.FIG.update(NEW_FIGS)
+        B06.choose = _choose_swing_first(B06.choose)
     base_cues = copy.deepcopy(cues)
     cues, log['fans'], fslots = B06.place_fans(cues, plan, a.seed)
     if a.sweeps:                                   # 第二遍：空档里补扫扇，再整体重排一次
-        extra = sweep_slots(cues, plan, limit=a.sweeps)
+        extra = sweep_slots(cues, plan, gap_min=a.sweep_gap, step=a.sweep_gap, limit=a.sweeps)
         ochoose = B06.choose
         B06.choose = _choose_sweep(ochoose)
         B06.fan_slots = lambda cs: sorted(slots(cs) + extra, key=lambda s: s['anchor'])
