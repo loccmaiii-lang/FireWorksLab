@@ -1,7 +1,7 @@
 {
   "格式": "df.dispatch-queue/1",
   "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-15T15:40:00+08:00 导出（23）：加 T07（窜天猴尾焰交付检查失败只读排查）、T08（黑块首选 EmissiveDissolve 0.98 的只读核实），都给本机同步（8）",
+  "更新": "2026-10-15T21:05:00+08:00 导出（23）：T07 取消（17780 绑定失败已由 8 查清）；T08 收窄成 EmissiveDissolve 用途 + 导入器会不会改回",
   "dot 怎么派": [
     "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
     "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
@@ -337,7 +337,7 @@
       "看板": "",
       "交给": "本机同步（8）",
       "在哪": "本机",
-      "状态": "待派",
+      "状态": "取消",
       "优先": 1,
       "前置": [],
       "要 UE": "最好开着（只读）；17780 连不上本身就是要记的结论，不算卡住",
@@ -360,7 +360,7 @@
       "开始": "",
       "完成": "",
       "提交": "",
-      "结果": ""
+      "结果": "取消（导出（23）10-15 21:05）：本机同步（8）15:39 已查到 17780 端口绑定失败（UE 日志 HttpListener unable to bind），用户重启后窜天猴启动正常；剩下的检查失败是烘焙器命名问题（4.9.106 修），不用再排查。"
     },
     {
       "编号": "T08",
@@ -371,19 +371,17 @@
       "优先": 2,
       "前置": [],
       "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "只读核实黑块：截图里会黑的 YonshakuKamuro_Main_4x4_02_HD 是不是封顶 253 的新序列；母材质里 EmissiveDissolve 还接了什么；导入器更新材质实例时会不会把它改回 1",
-      "为什么": "用户 10-15 15:06：同一个效果换 10.06 的旧 Ramp（GoldRay_A_R，末格不黑）就没黑块，换 LittleCrackle_Main_R（末格黑）就有。按 T06 的导入回执，这张序列是 10-14 23:48 从 4.9.100 修订 0e31af84 新建的，应该已封顶 253——那就是 UE 里有东西把 253 推到了 254 / 255（多半是 BC7）。导出（23）的新首选修法：材质实例上已有的参数 EmissiveDissolve 1 → 0.98，查 Ramp 的坐标最高只到 0.98，再亮也碰不到末格黑，细线护栏不动、贴图一张不重导。要先确认这个参数只进 Ramp 坐标、没有别的用途，以及导入器会不会把它改回去。",
+      "标题": "只读核实：母材质里 EmissiveDissolve 还接了什么；导入器更新材质实例时会不会把用户手改的 EmissiveDissolve 0.98 改回 1",
+      "为什么": "用户 10-15 20:53：把 EmissiveDissolve 改成 0.98 黑块直接解决了。要确认这个参数没有别的用途、以后导入器「更新」材质实例时不会把它改回 1（会改回的话要排给导入器（5）写 0.98）。原 T08 第 1、2、5 步（源图封顶、贴图组设置）不用做了。",
       "只许改": [
         "analysis/results/UE_READBACK_20261015/黑块_首选核实.json（新建）",
         "analysis/results/UE_READBACK_20261015/黑块_首选核实.md（新建）"
       ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T08，按该文件「Codex 共同规则」执行。先读 analysis/results/UE_READBACK_20261015/看法.md（含 15:30 更正）、黑块排查.md。\n\n背景（导出（23）写）：父材质 M_EFX_FlipBookSuperPack_FireBase_Unlit 查 Ramp 的坐标是 q = pow(v·pow(EmissiveDissolve, EmissiveDissolvePow), 2 − pow(EmissiveDissolve, EmissiveDissolvePow))（T06 读的），现在 45 个材质实例都是 1 / 1（q = v）。导出（23）准备建议用户把 EmissiveDissolve 改 0.98（Pow 保持 1）：q 最高 0.98，Ramp 第 255 格（黑）怎么都碰不到。动手前要确认四件事。\n\n1. 源 PNG：D:\\ProjectTextures\\FireWorksLab\\烟花\\大\\YonshakuKamuro\\revisions\\0e31af841d6954fcd76d\\PC\\YonshakuKamuro\\T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png——sha256（应为 962aca3a…5f30）、每通道最大值、≥254 / =255 / =253 各占多少；同目录 cascade.json 的 source.tool。\n2. UE 资产（GPUECli 只读）/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD：Size、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX/Y、能读到的 NumMips / AssetImportData 源路径和时间。同样读 T_EFX_FireWorks_LittleCrackle_Main_R、T_EFX_FireWorks_GoldRay_A_R、T_EFX_FireWorks_YonshakuKamuro_Main_R。\n3. 母材质里 EmissiveDissolve / EmissiveDissolvePow 两个参数节点连到哪：把从这两个参数到输出的表达式链读出来（节点类型、连线、有没有 DynamicParameter / VertexColor / 粒子颜色参与），回答：它们是不是**只**进 Ramp 查询坐标、有没有进透明度 / 溶解遮罩 / 别的分支。用到这张序列的材质实例（按引用查，如 MI_EFX_FireWorks_YonshakuKamuro_Main_02_HD）的全部 Scalar / Vector / Texture 参数当前值，Ramp 现在绑的哪张（用户在试，可能是 LittleCrackle 或 GoldRay）。\n4. 私有导入器（D:/FXTools/DFWorkbench/ 下的工作台和交付 HTML，只读）：cascade.json 里 materials.<角色>.scalars 是只认 rows / cols，还是任意参数名都写到材质实例；「更新」已有材质实例时，没写在 cascade.json 里的参数（比如用户手改的 EmissiveDissolve）会不会被重置成父材质默认值。**私有代码不复制进仓库**，只写结论。\n5. 工程配置（只读文件）：<工程>/Config/DefaultDeviceProfiles.ini、DefaultEngine.ini、引擎 Config/BaseDeviceProfiles.ini 里 TEXTUREGROUP_Effects 那一行（MinMagFilter、MipFilter、MipGenSettings、LODBias、MaxLODSize），Windows / Android / IOS 有没有覆盖。\n6. 判定：(a) 02_HD 源图最大 ≤ 253 → 「封顶的新序列，黑块是 UE 里冒上去的」，再按第 5 步写是 BC7（Mip 生成 SimpleAverage、没缩小）还是 Mip / 缩小滤镜（Sharpen* / LODBias）；源图有 ≥254 → 「不是封顶序列」，写 UE 里的实际源路径。(b) EmissiveDissolve 只进 Ramp 坐标 → 「改 0.98 只影响查色，可以」；还进了别的分支 → 写清哪条、改 0.98 会变什么。(c) 导入器会 / 不会重置手改参数。\n7. 输出：analysis/results/UE_READBACK_20261015/黑块_首选核实.json 和 .md（第一句写三条判定；最后一段「给导出（23）」）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。改 RGBA8 / 改 EmissiveDissolve 的试验留给用户自己在 UE 里做，你不要改。",
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T08，按该文件「Codex 共同规则」执行。先读 analysis/results/UE_READBACK_20261015/看法.md（含 15:30 更正）、黑块排查.md。\n\n背景（导出（23）写）：父材质 M_EFX_FlipBookSuperPack_FireBase_Unlit 查 Ramp 的坐标是 q = pow(v·pow(EmissiveDissolve, EmissiveDissolvePow), 2 − pow(EmissiveDissolve, EmissiveDissolvePow))（T06 读的），现在 45 个材质实例都是 1 / 1（q = v）。导出（23）准备建议用户把 EmissiveDissolve 改 0.98（Pow 保持 1）：q 最高 0.98，Ramp 第 255 格（黑）怎么都碰不到。用户 20:53 已在 UE 试过 0.98，黑块解决。现在只做下面第 3、4、7 步（第 1、2、5、6(a) 不用做），判定只写 (b)(c) 两条。\n\n1. 源 PNG：D:\\ProjectTextures\\FireWorksLab\\烟花\\大\\YonshakuKamuro\\revisions\\0e31af841d6954fcd76d\\PC\\YonshakuKamuro\\T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png——sha256（应为 962aca3a…5f30）、每通道最大值、≥254 / =255 / =253 各占多少；同目录 cascade.json 的 source.tool。\n2. UE 资产（GPUECli 只读）/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD：Size、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX/Y、能读到的 NumMips / AssetImportData 源路径和时间。同样读 T_EFX_FireWorks_LittleCrackle_Main_R、T_EFX_FireWorks_GoldRay_A_R、T_EFX_FireWorks_YonshakuKamuro_Main_R。\n3. 母材质里 EmissiveDissolve / EmissiveDissolvePow 两个参数节点连到哪：把从这两个参数到输出的表达式链读出来（节点类型、连线、有没有 DynamicParameter / VertexColor / 粒子颜色参与），回答：它们是不是**只**进 Ramp 查询坐标、有没有进透明度 / 溶解遮罩 / 别的分支。用到这张序列的材质实例（按引用查，如 MI_EFX_FireWorks_YonshakuKamuro_Main_02_HD）的全部 Scalar / Vector / Texture 参数当前值，Ramp 现在绑的哪张（用户在试，可能是 LittleCrackle 或 GoldRay）。\n4. 私有导入器（D:/FXTools/DFWorkbench/ 下的工作台和交付 HTML，只读）：cascade.json 里 materials.<角色>.scalars 是只认 rows / cols，还是任意参数名都写到材质实例；「更新」已有材质实例时，没写在 cascade.json 里的参数（比如用户手改的 EmissiveDissolve）会不会被重置成父材质默认值。**私有代码不复制进仓库**，只写结论。\n5. 工程配置（只读文件）：<工程>/Config/DefaultDeviceProfiles.ini、DefaultEngine.ini、引擎 Config/BaseDeviceProfiles.ini 里 TEXTUREGROUP_Effects 那一行（MinMagFilter、MipFilter、MipGenSettings、LODBias、MaxLODSize），Windows / Android / IOS 有没有覆盖。\n6. 判定：(a) 02_HD 源图最大 ≤ 253 → 「封顶的新序列，黑块是 UE 里冒上去的」，再按第 5 步写是 BC7（Mip 生成 SimpleAverage、没缩小）还是 Mip / 缩小滤镜（Sharpen* / LODBias）；源图有 ≥254 → 「不是封顶序列」，写 UE 里的实际源路径。(b) EmissiveDissolve 只进 Ramp 坐标 → 「改 0.98 只影响查色，可以」；还进了别的分支 → 写清哪条、改 0.98 会变什么。(c) 导入器会 / 不会重置手改参数。\n7. 输出：analysis/results/UE_READBACK_20261015/黑块_首选核实.json 和 .md（第一句写三条判定；最后一段「给导出（23）」）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。改 RGBA8 / 改 EmissiveDissolve 的试验留给用户自己在 UE 里做，你不要改。",
       "做完的标准": [
-        "02_HD 源图的最大值 / ≥254 占比和 UE 里的压缩、Mip、尺寸设置都有",
         "EmissiveDissolve / Pow 的表达式链读清，写明是不是只进 Ramp 坐标",
         "写清导入器会不会把手改的材质实例参数改回去、scalars 认不认任意名字",
-        "Effects 贴图组的 Mip / 缩小设置有",
-        "黑块_首选核实.md 第一句是三条判定，有「给导出（23）」一段",
+        "黑块_首选核实.md 第一句是两条判定，有「给导出（23）」一段",
         "已提交推送，本条写完成、提交号、结果"
       ],
       "派出": "",
