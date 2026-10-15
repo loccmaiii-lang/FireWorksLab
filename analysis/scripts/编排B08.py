@@ -8,7 +8,7 @@
 - 「颜色上现在确实有些太一致了……或者爆开的时间再错开一些」→ 三分之一小号排两种花交替；齐发排每点错开 0 / 0.1 / 0.2 s；一半「里→外」放慢；
 - 「B05的性能测试回来了……低配960……两个峰值，到1了之后……降分辨率，贴图会变糊30秒……这几个峰值需要调整下数量」→ PC 低配限峰（cap_low：亮着的浓密金菊面积、1 s 内开花面积两个上限；修订1 换掉原「2 s 开花负担」），墙 / 入口在低配也允许隔点。
 
-用法：python3 -I analysis/scripts/编排B08.py [--cap-dense 3.3 --cap-burst 5.0]
+用法：python3 -I analysis/scripts/编排B08.py [--cap-dense 4.0 --cap-burst 0（0 = 不用全场 S 上限）]
 """
 import argparse
 import copy
@@ -50,9 +50,12 @@ PARTNER = {'SC': 'OG', 'ST': 'OG', 'GC': 'OG', 'LM': 'OG',
 #      用户说到 1 ms 后会降分辨率 30 s，这两个读数可能偏低（推断）→ 不能据此说点灭类便宜，所以 S 把银彩菊也算进去，当作保险。
 #   ③ 64.3 s 这个峰两个量都解释不了（59 s 内容几乎一样只有 0.6 ms），所以那一刻单独压到 B05 的 60 % 以下（A 2.0 → 1.3、S 6.2 → 3.7，±2 s 闭区间）。
 #   不隔：倒计时、点火（17 s 前开花的排）、主角和主角前后 1 s 内开花的排（主角那一刻的宽度靠两边收边）。
+#   修订3（10-16 00:10，用户 10-15 23:48「只要不超过1ms就可以了，也不用减的太厉害……譬如在0.8左右就差不多……构图有点丑」）：
+#     A 上限 4.0（B05：3.85 → 0.6 ms、3.24 → 0.76、5.06 → 1.04，按读数插值约 0.8 ms）；不再用全场 S 上限（区分力弱，它造成了大部分刀口）；
+#     64.3 s 只压到 S ≤ 4.7（B05 6.2，按比例约 0.8 ms）；低配后一排和前一排同点同心叠的，在中配点里换一组（destack_low）。
 #   这些都是从一张截图拟的（读数见 B05_READINGS，时刻 ±2 s、数值 ±0.05 ms），真实开销等实机测量（派活 T09）。
 DENSE = {'GY', 'CL', 'CLL', 'GR', 'GRL', 'GS'}
-LOCAL_CAPS = [(64.3, 'dense', 1.3), (64.3, 'burst', 3.7)]
+LOCAL_CAPS = [(64.3, 'burst', 4.7)]
 # B05 低配、PerfDog 远距离段 Translucency 曲线（用户 10-15 22:02 截图，作者目读；时刻 = 演出秒，±2 s；ms ±0.05）
 B05_READINGS = [(5, .22), (16, .3), (18.3, .76), (22, .4), (28.9, .6), (34.5, .65), (40, .45), (50, .32), (59, .6), (65.3, .95), (75, .35), (90, .3),
                 (110.8, .52), (120, .45), (125, .6), (140, .35), (148.6, .65), (164.8, .55), (173, .6), (182.6, 1.04), (189, .95), (191.7, .65),
@@ -392,6 +395,57 @@ def cap_low(cues, caps, dt=0.1):
     return log
 
 
+def destack_low(cues):
+    """低配错开叠点（用户 10-15 23:48「构图有点丑」）：低配里后一排开在前一排还亮着的同一个点、同一档大小、同一根尾缀上（同心叠），
+    就在这一排中配的点里换一组：点数不变，先少叠，再保宽度（和还亮着的花合起来最左到最右），再拉开间距。倒计时、点火、主角和收边不动。"""
+    import itertools
+    g, by = rows(cues)
+    hero_t = [e['burst'] for c in cues if c['sp'] in HERO and c.get('mobile') != 'only' for e in c['events']]
+    order = sorted(g, key=lambda k: min(e['burst'] for c in g[k] for e in c['events']))
+    log = []
+    for key in order:
+        rs = [c for c in g[key] if c.get('mobile') != 'only' and c['size'] in 'LM' and c['group'] == 'P']
+        if not rs or by[key]['section'] == 'B01_S0' or any(c['sp'] in HERO for c in rs):
+            continue
+        t0 = min(e['burst'] for c in rs for e in c['events'])
+        if t0 < 17.0 or any(abs(t0 - h) <= 1.0 for h in hero_t):
+            continue
+        size, trail = rs[0]['size'], rs[0].get('trail')
+        U = sorted({p for c in rs for p in c['profiles']['low']}, key=b.px)
+        M = sorted({p for c in rs for p in c['profiles']['medium']}, key=b.px)
+        if len(U) < 1 or len(M) <= len(U):
+            continue
+        occ, lit = set(), set()
+        for c in cues:
+            if c.get('mobile') == 'only' or c['size'] in 'FX' or c['group'] != 'P' or c in rs:
+                continue
+            low = set(c['profiles']['low'])
+            for e in c['events']:
+                if e['point'] in low and e['burst'] < t0 + 0.3 and e['burst'] + 0.75 * (e['end'] - e['burst']) > t0 + 0.5:
+                    lit.add(e['point'])
+                    if c['size'] == size and c.get('trail') == trail:
+                        occ.add(e['point'])
+        coll0 = len(set(U) & occ)
+        if not coll0:
+            continue
+
+        def score(T):
+            xs = sorted(b.px(p) for p in set(T) | lit)
+            own = sorted(b.px(p) for p in T)
+            gap = min((y - x for x, y in zip(own, own[1:])), default=999)
+            sym = -abs(sum(own) / len(own))
+            return (-len(set(T) & occ), xs[-1] - xs[0], gap, sym)
+        best = max(itertools.combinations(M, len(U)), key=score)
+        sc = score(best)
+        if sc[0] <= -coll0 or (sc[0] < 0 and sc[3] < -50):   # 没少叠，或者还叠着又歪到一边：不换
+            continue
+        keep = set(best)
+        for c in rs:
+            c['profiles']['low'] = [p for p in c['points'] if p in keep and p in c['profiles']['medium']]
+        log.append(dict(t=round(t0, 2), row=key, sp=by[key]['sp'], before=U, after=sorted(keep, key=b.px), occupied=sorted(occ, key=b.px)))
+    return log
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--base', default=str(ROOT / '协作/编排B01/逻辑方案_B03r2m.json'))
@@ -399,8 +453,8 @@ def main():
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--seed', type=int, default=20261015)
     ap.add_argument('--sparse', type=float, default=5.0)
-    ap.add_argument('--cap-dense', type=float, default=3.3, help='PC 低配亮着的浓密金菊面积上限（B05 实测点火 0.76 ms 时 3.24、≥ 0.95 ms 时 5.1 / 8.7）')
-    ap.add_argument('--cap-burst', type=float, default=5.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
+    ap.add_argument('--cap-dense', type=float, default=4.0, help='PC 低配亮着的浓密金菊面积上限（B05 实测点火 0.76 ms 时 3.24、≥ 0.95 ms 时 5.1 / 8.7）')
+    ap.add_argument('--cap-burst', type=float, default=0.0, help='PC 低配 1 s 内开花面积上限（B05 64.3 s 0.95 ms 时 6.7、184.6 s 9.0；16.4 s 0.76 ms 时 3.8）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     b.BAR0, b.OFFSET = plan['bar0S'], plan['musicOffsetS']
@@ -436,7 +490,8 @@ def main():
     B06.fan_slots = orig
     log['splitShared'] = B07.split_shared(cues)
     log['tiers'] = B07.tiers(cues, a.sparse)
-    log['capLow'] = cap_low(cues, {'dense': a.cap_dense, 'burst': a.cap_burst})
+    log['capLow'] = cap_low(cues, {k: v for k, v in (('dense', a.cap_dense), ('burst', a.cap_burst)) if v > 0})
+    log['destackLow'] = destack_low(cues)
     mid = dict(plan, cues=cues)
     cues5, log5 = B05.build(mid)
     for c in cues5:
@@ -467,7 +522,7 @@ def main():
     ck['area'] = {f'{v}-{p}-{t}': B07.area_series(cs, t, p) for v, cs in (('B08', cues5), ('B07', prev['B07']['cues']), ('B05', prev['B05']['cues']))
                   for p in ('pc', 'mobile') for t in ('high', 'medium', 'low')}
     vs = (('B08', cues5), ('B07修订1', prev['B07']['cues']), ('B05', prev['B05']['cues']))
-    ck['heavy'] = dict(rule='PC 低配：亮着的浓密金菊面积 A（金曜菊 / 金蕊青柠 / 金芒菊 / 金锦菊，开花到寿命 75 %%，Σ(直径/230)²）≤ %.1f；1 s 内开花面积 S（所有球花）≤ %.1f。按 B05 低配实测曲线（截图读）定，推断' % (a.cap_dense, a.cap_burst),
+    ck['heavy'] = dict(rule='PC 低配：亮着的浓密金菊面积 A（金曜菊 / 金蕊青柠 / 金芒菊 / 金锦菊，开花到寿命 75 %%，Σ(直径/230)²）≤ %.1f；1 s 内开花面积 S（所有球花 + 小平台）全场上限 %s；局部 %s。按 B05 低配实测曲线（截图读）定，推断' % (a.cap_dense, a.cap_burst or '不用', LOCAL_CAPS),
                        dense=sorted(DENSE), b05Peaks=B05_PEAKS,
                        **{f'{v}-{t}': dict(dense=peaks(load_series(cs, 'dense', 'pc', t)), burst=peaks(load_series(cs, 'burst', 'pc', t))) for v, cs in vs for t in ('high', 'medium', 'low')},
                        atB05Peaks={v: at_peaks(cs) for v, cs in vs}, b05Readings=readings_check(prev['B05']['cues']))
@@ -475,7 +530,7 @@ def main():
     (od / f'体检_{a.name}.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
     fa = ck['fanAudit']
     print(json.dumps(dict(revision=out['revision'], cues=len(cues5), zigzag=log['zigzagTiers'], mix=len(log['mix']), speciesBase=log['speciesBase'], sizes=len(log['sizes']),
-                          jitter=log['jitter'], platformAdded=len(log['platform']), capLow=len(log['capLow']), capLowStuck=[x for x in log['capLow'] if x.get('stuck')],
+                          jitter=log['jitter'], platformAdded=len(log['platform']), capLow=len(log['capLow']), destackLow=log['destackLow'], capLowStuck=[x for x in log['capLow'] if x.get('stuck')],
                           tiers={k: v['events'] for k, v in ck['tiers'].items()}, mobile={k: v['events'] for k, v in ck['b02']['mobileTiers'].items()},
                           gpu=ck['gpu']['peak'], gpuTiers={k: v['gpuPeakPerS'] for k, v in ck['tiers'].items()}, beatLock=ck['beatLock'],
                           tierNesting=ck['tierNesting']['ok'], mobileRuleViolations=len(log5['mobileRule']['violations']),
