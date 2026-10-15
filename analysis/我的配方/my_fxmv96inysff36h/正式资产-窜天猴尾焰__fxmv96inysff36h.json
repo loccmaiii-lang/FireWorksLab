@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv96inysff36h",
  "name": "正式资产-窜天猴尾焰",
- "at": "2026-10-15 14:50",
+ "at": "2026-10-15 14:52",
  "base": "我的效果",
  "from": {
   "key": "ef:rocket_graph",
@@ -15,10 +15,32 @@
  },
  "snap": {
   "kind": "combo",
+  "name": "正式资产-窜天猴尾焰",
   "layers": [
    {
     "id": null,
     "type": "sparkgraph",
+    "L": {
+     "scale": 1,
+     "delay": 0,
+     "rate": 1,
+     "mirror": false,
+     "stages": [
+      [
+       0,
+       "#ffffff"
+      ]
+     ],
+     "xw": 0.08,
+     "ramp0": "#120100",
+     "ramp1": "#b34104",
+     "ramp2": "#ffc064",
+     "ramp3": "#fff6dd",
+     "headInt": 1,
+     "tailInt": 1,
+     "title": "窜天猴尾焰 · 分层喷射",
+     "lid": "lqnj58"
+    },
     "P": {
      "renderVer": 40,
      "exposure": 1,
@@ -1953,28 +1975,19 @@
      "ramp3": "#fff6dd",
      "headInt": 1,
      "tailInt": 1
-    },
-    "L": {
-     "title": "窜天猴尾焰 · 分层喷射",
-     "lid": "lqnj58",
-     "scale": 1,
-     "delay": 0,
-     "rate": 1,
-     "mirror": false
     }
    }
-  ],
-  "name": "正式资产-窜天猴尾焰"
+  ]
  },
  "links": [],
  "ue": {
-  "base": "RocketTail_Graph",
+  "base": "RocketTail",
   "layers": [
    ""
   ],
-  "system": "",
+  "system": "RocketTail",
   "tiered": false,
-  "custom": false
+  "custom": true
  },
  "sizeSource": {
   "key": "rocket_graph",
