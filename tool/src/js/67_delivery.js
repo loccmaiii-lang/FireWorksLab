@@ -6,6 +6,7 @@ const DeliveryWorkspace = (() => {
   let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null,queuedDelivery=null,exportFailedState=false;     // 4.9.69 queuedDelivery：导出了、但导入器还在处理别的（排队中）
   const channel=crypto.randomUUID(),requests=new Map(),acceptChecks=new Map();
   let acceptCheck=null,selectionEpoch=0;
+  let exportName='',exportPrevious=null;
   const hostOrigin=location.protocol==='file:'?'http://127.0.0.1:8034':location.origin;
   const node=id=>document.getElementById(id);
   const message=(text,error=false)=>{const n=node('deliveryStatus');n.textContent=text;n.dataset.error=String(error);};
@@ -119,10 +120,11 @@ const DeliveryWorkspace = (() => {
     if(active)node('deliveryWorkspace').append(progress);
     else exportHome.parent.insertBefore(progress,exportHome.next);
   }
-  async function beginExport(target){
+  async function beginExport(target,name=''){
     if(target==='zip')return;
+    exportName=name;exportPrevious=last?{name:last.name,revisionId:last.revisionId}:null;
     const progress=node('busy');exportHome={parent:progress.parentNode,next:progress.nextSibling};
-    show(true);placeExportProgress();message('正在准备交付资源…（导出完成前，下方导入区还是上一份素材）');
+    show(true);placeExportProgress();message((name?'正在导出「'+name+'」…':'正在准备交付资源…')+'（导出完成前，下方导入区还是上一份素材）');
     updateRootControls();
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
     // 4.9.80（导出排查）：标签页在后台时浏览器不出帧，两帧 rAF 永远等不到 → 导出一直挂着；最多等 150 ms
@@ -134,7 +136,13 @@ const DeliveryWorkspace = (() => {
   function exportFailed(error){
     stopAcceptObservation();
     if(!exportHome)return;exportFailedState=true;updateRootControls();
-    message('本次未导出；当前资源信息来自旧修订'+(last?' '+last.revisionId.slice(0,8):'')+'，旧清单已停止确认与执行。请修正后重新导出，或在历史中明确选择要查看的修订。\n'+error.message,true);
+    presentExportFailure();
+    message((exportName?'「'+exportName+'」':'')+'本次未导出；'+(exportPrevious?'上次成功为「'+exportPrevious.name+'」，旧修订 '+exportPrevious.revisionId.slice(0,8)+'。':'当前没有新的成功修订。')+'旧清单已停止确认与执行。请修正后重新导出，或在历史中明确选择要查看的修订。\n'+error.message,true);
+  }
+  function presentExportFailure(){
+    node('deliveryTitle').textContent=(exportName||'本次导出')+' · 本次未导出';
+    node('deliveryContext').textContent=exportPrevious?'上次成功：「'+exportPrevious.name+'」 · 修订 '+exportPrevious.revisionId.slice(0,8):'尚无本次成功交付';
+    node('deliveryThumbnail').hidden=true;node('deliveryThumbnailMissing').hidden=true;
   }
   function finishExport(){
     if(exportHome){exportHome.parent?.insertBefore(node('busy'),exportHome.next);exportHome=null;}
@@ -191,6 +199,7 @@ const DeliveryWorkspace = (() => {
     else {exportFailedState=false;updateRootControls();presentReceipt(receipt);}
   }
   function presentCurrent() {
+    if(exportFailedState){presentExportFailure();return;}
     const current=importerCurrent,receipt=current&&resources.find(r=>r.deliveryId===current.deliveryId);
     if(desiredDeliveryId&&current?.deliveryId!==desiredDeliveryId)return;
     if(current?.deliveryId===desiredDeliveryId)desiredDeliveryId='';
@@ -277,7 +286,7 @@ const DeliveryWorkspace = (() => {
   // 4.9.69 导出拦截用：交付目录里已有资源的贴图（文件名 → 内容 SHA256、来自哪个效果），按名字查撞名
   // 4.9.72 导出计时等附加说明：接在状态行后面（不盖掉排队 / 检查的提示）
   function note(text){const n=node('deliveryStatus');if(!n||!text)return;n.textContent=(n.textContent?n.textContent+'\n':'')+text;}
-  function knownTextures(){const m=new Map();for(const r of [...(resources||[])].reverse())for(const f of r.files||[]){if(!/\.png$/i.test(f.path||''))continue;const k=f.path.replace(/^.*\//,'');if(!m.has(k))m.set(k,{sha256:f.sha256,resource:r.name,sourceKey:(r.metadata||{}).sourceKey||''});}return m;}
+  function knownTextures(){const m=new Map();for(const r of [...(resources||[])].reverse())for(const f of r.files||[]){if(!/\.png$/i.test(f.path||''))continue;const k=f.path.replace(/^.*\//,'');if(!m.has(k))m.set(k,{sha256:f.sha256,resource:r.name,sourceKey:(r.metadata||{}).sourceKey||'',iterationOf:r.metadata?.iterationOf||null});}return m;}
   return{init,open,publish,destination,beginExport,finishExport,exportFailed,knownTextures,note,get active(){return active;}};
 })();
 
@@ -326,6 +335,8 @@ function deliveryMetadata(b = null, job = null, lb = null, unitHolder = null) {
 
 
 async function deliverResource(blob, name, metadata, destination) {
+  const iterationOf = typeof packIterationInfo !== 'undefined' ? packIterationInfo.get(blob) : null;
+  if (iterationOf) metadata = { ...metadata, iterationOf: { ...structuredClone(iterationOf), deliveryName: name.replace(/\.zip$/i, '') } };
   if (destination === 'zip') return download(blob,name);
   return DeliveryWorkspace.publish(blob,name,metadata);
 }

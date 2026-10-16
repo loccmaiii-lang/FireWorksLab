@@ -1316,7 +1316,7 @@ async function exportCombo() {
   try {
     const job = captureExportJob('combo'), name = job.name;
     busy(true, '组合素材包：准备各层…', 0);
-    await DeliveryWorkspace.beginExport(job.destination);
+    await DeliveryWorkspace.beginExport(job.destination, job.system);
     let metadata, description;
     const files = await comboPackFiles(name, job.layers, p => busy(true, '组合素材包…', p), job, lb => {
       metadata = deliveryMetadata(null, job, lb);

@@ -162,18 +162,24 @@ def load_registry(root):
     return {'format': 'df.texture-fingerprints/1', 'textures': {}}
 
 
-def check_registry(classes, png_by_asset, registry, source, resource_name=''):
+def check_registry(classes, png_by_asset, registry, source, resource_name='', iteration_of=None):
     """撞名 / 内容重复。classes：资产名 → 类别；png_by_asset：资产名 → {sha256, size}。"""
     bad, info = [], []
     known = registry.get('textures') or {}
+    proof = iteration_of if isinstance(iteration_of, dict) else {}
+    approved = proof.get('assets', []) if proof.get('sourceKey') == source and (proof.get('deliveryName') or proof.get('resourceName')) == resource_name else []
+    if not isinstance(approved, list):
+        approved = []
     by_sha = {}
     for a, v in known.items():
         by_sha.setdefault(v.get('sha256'), []).append(a)
     for a, v in png_by_asset.items():
         k = known.get(a)
-        same_resource = bool(resource_name and k and k.get('resourceName') and resource_name.casefold() == k['resourceName'].casefold())
         same_source = bool(k and k.get('source') and source and k['source'] == source)
-        if k and k.get('sha256') != v['sha256'] and not same_source and not same_resource:
+        item = {'file': a + '.png', 'before': (k or {}).get('sha256'), 'after': v['sha256'],
+                'sourceKey': (k or {}).get('source') or '', 'resource': (k or {}).get('resourceName') or ''}
+        explicit_iteration = any(isinstance(x, dict) and all(x.get(key) == val for key, val in item.items()) for x in approved)
+        if k and k.get('sha256') != v['sha256'] and not same_source and not explicit_iteration:
             bad.append(f'{a}：和已登记的贴图撞名但内容不同（那份来自 {k.get("resource") or k["source"]}）')
         same = [x for x in by_sha.get(v['sha256'], []) if x != a]
         if same and not k:
@@ -210,10 +216,16 @@ def check(path, root=None, source=None):
                 by_asset[a] = png[d + t['file']]
     meta = files.get('workspace-resource.json')
     document = json.loads(meta.decode('utf-8-sig')) if meta else {}
-    resource_name = document.get('name', '')
+    export_meta = files.get('workspace-export.json')
+    exported = json.loads(export_meta.decode('utf-8-sig')) if export_meta else {}
+    if exported.get('format') != 'df.firework-export/1':
+        exported = {}
+    metadata = document.get('metadata') or exported
+    resource_name = document.get('name') or exported.get('resourceName', '')
     if source is None:
-        source = (document.get('metadata') or {}).get('sourceKey', '')
-    reg_bad, info = check_registry(classes, by_asset, load_registry(root), source, resource_name)
+        source = metadata.get('sourceKey', '')
+    reg_bad, info = check_registry(classes, by_asset, load_registry(root), source, resource_name,
+                                   metadata.get('iterationOf'))
     return {'ok': not (bad or reg_bad), 'problems': bad + reg_bad, 'info': info, 'configs': [f for f, _ in cfgs],
             'textures': {a: {**v, 'class': classes.get(a)} for a, v in by_asset.items()}, 'source': source, 'resourceName': resource_name}
 

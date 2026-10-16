@@ -56,7 +56,10 @@ class Gate(unittest.TestCase):
     def test_same_delivery_survives_editor_identity_change(self):
         known = {'textures': {'T': {'sha256': 'old', 'source': 'rv:old', 'resourceName': 'Same'}}}
         incoming = {'T': {'sha256': 'new'}}
-        self.assertEqual(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new', 'Same')[0], [])
+        self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new', 'Same')[0], '同名但来源不同，须明确确认迭代')
+        proof = {'sourceKey': 'my:new', 'resourceName': 'Same', 'assets': [
+            {'file': 'T.png', 'before': 'old', 'after': 'new', 'sourceKey': 'rv:old', 'resource': 'Same'}]}
+        self.assertEqual(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new', 'Same', proof)[0], [])
         self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new', 'Other')[0])
         self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new')[0])
         self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, '')[0])
@@ -161,6 +164,56 @@ class Gate(unittest.TestCase):
         self.assertTrue(any('改用 T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01' in x for x in r['problems']), r['problems'])
         self.assertTrue(any('T_EFX_FireWorks_RiseTrail_S_R' in x and '导入器会复用' in x for x in r['info']), r['info'])
         self.assertFalse(any(x.startswith('T_EFX_FireWorks_RiseTrail_M_R：') for x in r['problems']), r['problems'])
+
+    def test_iteration_requires_exact_content_and_ownership(self):
+        asset = 'T_EFX_FireWorks_GlitterChry_Main_4x4_01_HD'
+        known = {'textures': {asset: {'sha256': 'old', 'source': 'rv:QA20', 'resourceName': 'GlitterChry_D150'}}}
+        pngs = {asset: {'sha256': 'new', 'size': [2048, 2048]}}
+        proof = {'sourceKey': 'my:goldB', 'resourceName': 'GlitterChry', 'assets': [
+            {'file': asset + '.png', 'before': 'old', 'after': 'new', 'sourceKey': 'rv:QA20', 'resource': 'GlitterChry_D150'}]}
+        def problems(p=None, source='my:goldB', name='GlitterChry'):
+            return fx_gate.check_registry({}, pngs, known, source, name, p)[0]
+        self.assertTrue(problems(), '没有明确迭代仍要拦截')
+        self.assertFalse(problems(proof), '保存的逐资产迭代证据可供导入检查核对')
+        variant = copy.deepcopy(proof)
+        variant['deliveryName'] = 'GlitterChry_V1-V3'
+        self.assertFalse(problems(variant, name='GlitterChry_V1-V3'), '种子变体容器名可不同于逻辑粒子名')
+        self.assertTrue(problems(proof, source='my:unrelated'))
+        self.assertTrue(problems(proof, name='Other'))
+        known['textures'][asset]['sha256'] = 'changed'
+        self.assertTrue(problems(proof), '旧文件改变后，旧确认失效')
+        known['textures'][asset]['sha256'] = 'old'
+        pngs[asset]['sha256'] = 'changed'
+        self.assertTrue(problems(proof), '包内容改变后，旧确认失效')
+        pngs[asset]['sha256'] = 'new'
+        known['textures'][asset]['resourceName'] = 'GlitterChry'
+        self.assertTrue(problems(), '同名不能代替来源与指纹')
+
+    def test_iteration_metadata_reaches_real_check_entry(self):
+        root = Path(self.tmp) / 'registry'
+        old = fx_gate.check(make(self.tmp, name='old'), root, 'rv:old')
+        old['resourceName'] = 'Same_D150'
+        fx_gate.register(old, root, 'Same_D150')
+        package = make(self.tmp, name='next')
+        asset = 'T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD'
+        before = old['textures'][asset]['sha256']
+        (package / (asset + '.png')).write_bytes(png(2048, 2048, 99))
+        after = hashlib.sha256((package / (asset + '.png')).read_bytes()).hexdigest()
+        metadata = {'sourceKey': 'my:new', 'iterationOf': {'sourceKey': 'my:new', 'resourceName': 'Same', 'assets': [
+            {'file': asset + '.png', 'before': before, 'after': after, 'sourceKey': 'rv:old', 'resource': 'Same_D150'}]}}
+        receipt = package / 'workspace-resource.json'
+        receipt.write_text(json.dumps({'name': 'Same', 'metadata': metadata}), encoding='utf-8')
+        checked = fx_gate.check(package, root)
+        self.assertTrue(checked['ok'], checked['problems'])
+        # 直接下载 ZIP 没有服务回执，消费同一生产来源和确认记录。
+        receipt.unlink()
+        exported = package / 'workspace-export.json'
+        exported.write_text(json.dumps({'format': 'df.firework-export/1', 'resourceName': 'Same', **metadata}), encoding='utf-8')
+        self.assertTrue(fx_gate.check(package, root)['ok'])
+        exported.unlink()
+        metadata.pop('iterationOf')
+        receipt.write_text(json.dumps({'name': 'Same', 'metadata': metadata}), encoding='utf-8')
+        self.assertFalse(fx_gate.check(package, root)['ok'])
 
     def test_cli_exit_codes(self):
         self.assertEqual(fx_gate.main([str(make(self.tmp)), '--json']), 0)

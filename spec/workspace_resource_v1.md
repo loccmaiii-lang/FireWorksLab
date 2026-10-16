@@ -33,12 +33,15 @@ ZIP发布前读回验证哈希，文件与索引失败回滚本次新版本。�
 | `latestExport/exportCount` | HTTP 回执中的最近 ZIP 版本、路径/是否存在，以及该修订留档次数 |
 | `packages[]` | `relativeDirectory/configFile/platform/name`；HTTP 回执补 `directory`。平台由 PC/手机/低配配置文件识别 |
 | `metadata.bakerVersion/sourceKey/recipe` | 生产版本、制作对象来源、当次配方快照；不授权消费端回写制作参数 |
+| `metadata.iterationOf` | 4.9.112起可选的明确同名迭代证据：`sourceKey`为本次来源，`resourceName`为逻辑目标名，`deliveryName`为实际交付容器名（如种子变体）；`assets[]`逐项记录`file/before/after/sourceKey/resource`（文件名、旧/新SHA、旧来源、旧交付名）。仅匹配的资产可用于归属核对；不授权自动写UE，不放宽其他规范。已发布同源修订可以保留旧登记的确认链并更新`after`，未发布的临时确认不能跨任务复用。 |
 | `metadata.duration` | 当前候选完整时长；历史首批资源只有此字段 |
 | `metadata.artifactDuration` | 新出口记录的完成烘焙范围；裁帧与原生发射器时长仍须区分，不能称 UE 实测寿命 |
 | `metadata.sizePlan` | 原导出缩放/尺寸规格含目标、原测量、缩放；不是新 UE 实测 |
 | `metadata.boundsM` | 新出口记录的完成贴图取景宽高（已乘导出缩放）；不等于花径或发射高度 |
 | `thumbnail` | `missing + reason` 或 `ready + file + source + revisionId`；来源 `baker-final-product-replay`，同产物按现有引擎回放口径生成 |
 | `metadata.thumbnailTime/thumbnailError` | 回放时刻或生成失败原因；缩略图不参与原生版本身份 |
+
+4.9.112起，生产ZIP根目录另带`workspace-export.json`（`format: df.firework-export/1`），包含`sourceKey`、逻辑`resourceName`及可选的`iterationOf`，供直接ZIP交付的归属核对；不是完成回执，不授权写UE。目录交付仍以服务生成的`workspace-resource.json`及其`metadata`为准，不能用包内生产记录覆盖正式回执。
 | `importReceipt` | HTTP 回执关联本机原导入器报告，未执行时也可能有检查记录 |
 
 导入记录存 `.workspace/receipts/<deliveryId>.json`：包含报告来源 `existing-importer-ui`、UTC `reportedAt`、逐项 `rows` 和 `enginePlaybackVerified:false`。行记录状态、原目标、操作/资产选择、已完成资产键、错误、检查时间和原执行进度。不能把 `ready` 称为“UE 已导入”；实际引擎保存、版本管理、实播和用户认可各有独立证据。

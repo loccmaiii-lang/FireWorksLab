@@ -28,7 +28,23 @@ async function makeZip(files, job = null) {
   if (typeof exportClockMark === 'function') exportClockMark('整理 Ramp / Cutout');
   { const r = await packTidy(files); files = r.files; packTidyLast = r.report; }     // 4.9.38 Ramp / Cutout 去重、几乎不省的 Cutout 不出
   if (typeof exportClockMark === 'function') exportClockMark('拦截 + sha256');
-  if (files.some(([f]) => FWL_CFG_RE.test(f))) files = await packFinalize(files, job ? { sourceKey: job.key } : {});     // 4.9.69 贴图写 SHA256 + 导出拦截（不合规范 v1 就抛错，不出包）
+  let iterationOf = null;
+  if (files.some(([f]) => FWL_CFG_RE.test(f))) {
+    const options = { ...(job ? { sourceKey: job.key, resourceName: job.system } : {}), onIteration: proof => { iterationOf = proof; } };
+    try { files = await packFinalize(files, options); }
+    catch (e) {
+      if (!job || !e.onlyOwnership || !e.iterationOf?.assets.length || typeof askConfirm !== 'function') throw e;
+      const old = [...new Set(e.iterationOf.assets.map(x => x.resource))].join('、'), names = [...new Set(e.iterationOf.assets.map(x => x.file))];
+      const note = `本次：${job.metadata.recipe.name || job.system}（${job.system}）。\n已有交付：${old}。\n${names.length} 张同名贴图内容已改变：${names.slice(0, 3).join('、')}${names.length > 3 ? '…' : ''}。\n若是继续迭代，可保留英文名导出新修订；若是独立效果，请取消并修改英文名。历史修订保留，UE 更新仍需在导入清单中确认并执行。`;
+      if (!await askConfirm('导出同名迭代版本？', note, '导出迭代版本', '取消导出')) throw Error('已取消同名迭代导出；当前编辑与历史交付均保留。');
+      if (typeof busyJob !== 'undefined' && busyJob.req) throw Error('已取消导出');
+      iterationOf = e.iterationOf;
+      // 对话框等待期间目录可能改变；重新查当前指纹，不放宽新的冲突。
+      files = await packFinalize(files, { ...options, iterationOf });
+    }
+  }
+  // ZIP 直接交付也保留来源/迭代证据；目录模式的正式回执仍由交付服务生成。
+  if (job) files = [...files, ['workspace-export.json', utf8(JSON.stringify({ format: 'df.firework-export/1', sourceKey: job.key, resourceName: job.system, ...(iterationOf ? { iterationOf } : {}) }, null, 1))]];
   if (typeof exportClockMark === 'function') exportClockMark('ZIP 打包');
   const parts = [], central = []; let offset = 0;
   const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
@@ -47,7 +63,9 @@ async function makeZip(files, job = null) {
   }
   const cdSize = central.reduce((a, c) => a + c.length, 0), end = new Uint8Array(22), ev = new DataView(end.buffer);
   ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, files.length, true); ev.setUint16(10, files.length, true); ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true);
-  return new Blob([...parts, ...central, end], { type: 'application/zip' });
+  const blob = new Blob([...parts, ...central, end], { type: 'application/zip' });
+  if (iterationOf) packIterationInfo.set(blob, iterationOf);
+  return blob;
 }
 function download(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); }
 
@@ -423,7 +441,7 @@ async function exportMaster() {
   try {
     const job = captureExportJob(), name = job.name;
     busy(true, '准备导出…', 0);
-    await DeliveryWorkspace.beginExport(job.destination);
+    await DeliveryWorkspace.beginExport(job.destination, job.system);
     // A private bake cannot be invalidated/disposed by edits or a later open.
     b = await bakeFinal(exportBakeParams(job.P, job.M), 1, p => busy(true, '烘焙 ' + job.P.texW + '×' + job.P.texH + '… ' + Math.round(p * 100) + '%', p * 0.9));
     if (productNoPack(b)) throw new Error(productNoPack(b));
@@ -470,7 +488,7 @@ async function exportVariants() {
   let bs = [], hung = false;
   try {
     const job = captureExportJob('variants'), name = job.name;
-    await DeliveryWorkspace.beginExport(job.destination);
+    await DeliveryWorkspace.beginExport(job.destination, job.system);
     bs = await bakeVariants(exportBakeParams(job.P, job.M), 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
     const b0 = bs[0], files = [];
     hung = !bs.some(b => b.next); if (hung) b0.vars = bs.slice(1);     // 一张贴图：V2 / V3 挂在第 1 张上（texFiles / 命名规范按变体出）

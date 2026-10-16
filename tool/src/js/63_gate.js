@@ -11,6 +11,8 @@ const FWL_CFG_RE = /(^|\/)cascade(_mobile(_h)?|_low)?\.json$/;
 const GATE_TIER = { M: { emitters: 3 }, H: { emitters: 6 } }, GATE_MAX_ALIVE = 50, GATE_MOBILE_TEX = 1024;
 const FW_NAME_RE = /^T_EFX_FireWorks_[A-Za-z0-9]+(_[A-Za-z0-9]+)*$/;     // 4.9.106 G4：贴图名规范（导出拦截和合入门禁「统一规范」同一条）
 let packGateLast = null;
+// 确认只属于这一个 ZIP；不把临时授权写进当前配方或全局命名偏好。
+const packIterationInfo = new WeakMap();
 function pngSize(u8) {
   if (!u8 || u8.length < 24 || u8[0] !== 0x89 || u8[1] !== 0x50 || u8[2] !== 0x4E || u8[3] !== 0x47) return null;
   const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength); return [dv.getUint32(16), dv.getUint32(20)];
@@ -64,38 +66,70 @@ function packGateConfig(f, j, dir, png) {
   return bad;
 }
 // 撞名：交付目录里已有同名贴图、内容不同、来自别的效果（同一个效果重导 = 更新，照常）
-function packGateClash(png, known, sourceKey, resourceName = '') {
-  const bad = [];
-  if (!known || !known.size) return bad;
+function packGateConflicts(png, known, sourceKey, resourceName = '', iterationOf = null) {
+  const conflicts = [], seen = new Set();
+  if (!known || !known.size) return conflicts;
+  const approved = iterationOf && iterationOf.sourceKey === sourceKey && iterationOf.resourceName === resourceName ? iterationOf.assets || [] : [];
   for (const [p, v] of Object.entries(png)) {
-    const k = known.get(p.replace(/^.*\//, ''));
-    // 保存为个人配方会改变编辑器ID；同一交付资源的归属保持稳定。
-    const sameResource = resourceName && k?.resource && resourceName.toLowerCase() === k.resource.toLowerCase();
+    const file = p.replace(/^.*\//, ''), k = known.get(file);
     const sameSource = k?.sourceKey && sourceKey && k.sourceKey === sourceKey;
-    if (k && k.sha256 && k.sha256 !== v.sha256 && !sameSource && !sameResource) bad.push(`${p.replace(/^.*\//, '')}：和已有资源「${k.resource}」撞名但内容不同（归属不同或无法核验）`);
+    if (!k || !k.sha256 || k.sha256 === v.sha256 || sameSource) continue;
+    const item = { file, before: k.sha256, after: v.sha256, sourceKey: k.sourceKey || '', resource: k.resource || '' };
+    // 同名不能证明血缘；明确迭代的证据必须逐资产匹配旧/新内容及旧来源。
+    if (approved.some(a => Object.keys(item).every(key => a[key] === item[key]))) continue;
+    const sig = JSON.stringify(item); if (!seen.has(sig)) { seen.add(sig); conflicts.push(item); }
   }
-  return bad;
+  return conflicts;
+}
+function packGateClash(png, known, sourceKey, resourceName = '', iterationOf = null) {
+  return packGateConflicts(png, known, sourceKey, resourceName, iterationOf).map(x => `${x.file}：和已有资源「${x.resource}」撞名但内容不同（归属不同或无法核验）`);
+}
+// 已发布的同源修订可以延续此前明确确认的归属，供尚未更新的 UE 登记核对。
+// 另存为再次确认时同时保留这条链；不能让导出已通过、导入却因旧来源再次卡住。
+function packGateIteration(png, known, sourceKey, resourceName, iterationOf) {
+  const assets = [], add = a => { if (!assets.some(x => JSON.stringify(x) === JSON.stringify(a))) assets.push(a); };
+  const approved = iterationOf?.sourceKey === sourceKey && iterationOf?.resourceName === resourceName ? iterationOf.assets || [] : [];
+  for (const [path, v] of Object.entries(png)) {
+    const file = path.replace(/^.*\//, ''), k = known?.get(file); if (!k) continue;
+    const item = { file, before: k.sha256, after: v.sha256, sourceKey: k.sourceKey || '', resource: k.resource || '' };
+    const explicit = approved.some(a => Object.keys(item).every(key => a[key] === item[key]));
+    if (!explicit && !(sourceKey && k.sourceKey === sourceKey)) continue;
+    if (explicit) add(item);
+    if (k.iterationOf?.sourceKey === k.sourceKey) for (const a of k.iterationOf.assets || [])
+      if (a.file === file && a.after === k.sha256) add({ ...a, after: v.sha256 });
+  }
+  return assets.length ? { sourceKey, resourceName, assets } : null;
 }
 async function packFinalize(files, o = {}) {
   const dec = new TextDecoder(), png = {};
   for (const [f, d] of files) if (/\.png$/i.test(f)) { const u = await gateBytes(d); png[f] = { sha256: await sha256Hex(u), size: pngSize(u) }; }
-  const out = [], bad = [], resourceNames = new Set();
+  const out = [], bad = [], resourceNames = new Set(), assets = {};
   for (const [f, d] of files) {
     if (!FWL_CFG_RE.test(f)) { out.push([f, d]); continue; }
     const j = JSON.parse(dec.decode(await gateBytes(d))), dir = f.includes('/') ? f.slice(0, f.lastIndexOf('/') + 1) : '';
     if (/_mobile/.test(f) && !(j.emitters || []).length) continue;     // 手机全部「不出」
     const resourceName = j.naming?.system || j.naming?.base || String(j.name || '').replace(/_(?:M|H)$/, '');
     if (resourceName) resourceNames.add(resourceName);
-    for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file && png[dir + t.file]) t.sha256 = png[dir + t.file].sha256;
+    for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file && png[dir + t.file]) {
+      t.sha256 = png[dir + t.file].sha256; assets[dir + t.file] = png[dir + t.file];
+    }
     bad.push(...packGateConfig(f, j, dir, png));
     out.push([f, utf8(JSON.stringify(j, null, 1))]);
   }
   let known = o.known, sk = o.sourceKey;
   try { if (known === undefined && typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.knownTextures) known = DeliveryWorkspace.knownTextures(); } catch (e) { known = null; }
   try { if (sk === undefined && typeof wbKey === 'function') sk = wbKey(); } catch (e) { sk = ''; }
-  bad.push(...packGateClash(png, known, sk, o.resourceName || (resourceNames.size === 1 ? [...resourceNames][0] : '')));
+  const resourceName = o.resourceName || (resourceNames.size === 1 ? [...resourceNames][0] : '');
+  // 只检查 Cascade 真正引用的贴图；_检查/FrameTest 等资料不进入 UE。
+  const conflicts = packGateConflicts(assets, known, sk, resourceName, o.iterationOf);
   if (!files.some(([f]) => FWL_CFG_RE.test(f))) bad.push('素材包里没有 cascade.json：这种产物还没接 Cascade 出口，导入器导不了（4.9.106 G4）');
+  const onlyOwnership = !bad.length && !!conflicts.length;
+  bad.push(...conflicts.map(x => `${x.file}：和已有资源「${x.resource}」撞名但内容不同（归属不同或无法核验）`));
   packGateLast = { at: Date.now(), bad };
-  if (bad.length && !o.noThrow) { const e = new Error('导出拦截（不符合 spec/烟花特效资产规范.md v1，这次没有出包）：\n· ' + bad.join('\n· ')); e.gate = bad; throw e; }
+  if (bad.length && !o.noThrow) {
+    const e = new Error('导出拦截（不符合 spec/烟花特效资产规范.md v1，这次没有出包）：\n· ' + bad.join('\n· '));
+    e.gate = bad; e.onlyOwnership = onlyOwnership; e.iterationOf = { sourceKey: sk || '', resourceName, assets: conflicts }; throw e;
+  }
+  if (!bad.length && o.onIteration) o.onIteration(packGateIteration(assets, known, sk, resourceName, o.iterationOf));
   return out;
 }

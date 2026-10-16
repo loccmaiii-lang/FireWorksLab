@@ -1,11 +1,15 @@
 const assert=require('node:assert/strict');const {fixture}=require('./test_baker_handoff.cjs');
 (async()=>{
  const f=fixture();await f.api.publish(new Blob(['ZIP']),'Test',{});
- await f.api.beginExport('directory');f.api.exportFailed(Error('名称冲突'));f.api.finishExport();
+ f.receipt.name='RiseTrail_Hero';
+ await f.api.beginExport('directory','GlitterChry');f.api.exportFailed(Error('名称冲突'));f.api.finishExport();
  assert.match(f.node('deliveryStatus').textContent,/本次未导出.*旧修订/s);
+ assert.match(f.node('deliveryTitle').textContent,/GlitterChry.*未导出/,'失败标题必须是本次目标，不是旧Hero');
+ assert.match(f.node('deliveryContext').textContent,/上次成功.*RiseTrail_Hero.*12345678/,'旧资源只显示为上一次成功记录');
  assert.equal(f.node('deliveryFrame').inert,true,'失败旧清单不能误确认或执行');
  f.state({busy:false,current:{deliveryId:'known',name:'Test',platform:'pc'}});
  assert.equal(f.node('deliveryFrame').inert,true,'回执刷新不能解除失败门禁');
+ assert.match(f.node('deliveryTitle').textContent,/GlitterChry.*未导出/,'旧回执刷新不能盖回旧标题');
  f.recover();assert.equal(f.node('deliveryFrame').hidden,true,'子页面重连不能显示失败后的旧清单');
  await f.api.publish(new Blob(['NEW']),'Test',{});
  assert.equal(f.node('deliveryFrame').inert,false,'本次新交付成功后恢复操作');
