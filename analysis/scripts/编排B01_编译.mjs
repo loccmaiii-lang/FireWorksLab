@@ -17,7 +17,7 @@ import {fileURLToPath} from 'node:url';
 import {normalize, validateDoc, validateProfiles, qualityEvents, nestedQualityEvents} from '../../tool/workbench/src/editing-model.mjs';
 import {compileDirector} from '../../tool/workbench/src/director-model.mjs';
 import {preflightProject} from '../../tool/workbench/src/program-project.mjs';
-import {applyTrailV2} from './尾缀v2开花点.mjs';
+import {applyTrailV2, HERO_TRAIL} from './尾缀v2开花点.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, '../..');
@@ -354,6 +354,43 @@ if (projectId || projectName) Object.assign(doc.meta, {...(projectId ? {programI
 delete doc.meta.defaultStaggerEnabled;
 // —— 修订4：尾缀 v2 开花点（手游编排 10-12，analysis/scripts/尾缀v2开花点.mjs）：引擎尾缀已按尺寸档重导（长度 × k、时间不变），
 //   固定子模板的开花点跟着降到新尾缀终点；编排条目（点位、时刻、dz、档位）不动。主角尾缀等 ResourceFX 加行后再换（hero=true）。 ——
+// —— B09（22，用户 10-17 00:47「用之前400m的高度」）：ResourceFX 2830「跨年烟花3.0_超大_尾缀」= P_EFX_FireWorks_RiseTrail_Hero 已在表里，
+//    基础资源库还没有这一行：带 --hero-trail=<id> 时照大尾缀那一行补一行（同一套模块，k 0.9756，升空时间不变）。不带开关时产物不变。 ——
+if (args.some(a => a.startsWith('--hero-trail=')) && !(doc.baseResourceLibrary || []).some(r => r.id === HERO_ID)) {
+  const lg = doc.baseResourceLibrary.find(r => r.id === 'P_EFX_FireWorks_NY_Trail_Large');
+  if (!lg) throw Error('基础资源库里没有大尾缀，补不了主角尾缀行');
+  const row = clone(lg);
+  Object.assign(row, {id: HERO_ID, key: HERO_ID + '|trail', name: HERO_ID, label: '跨年烟花3.0_超大_尾缀',
+    addedBy: '跨年秀（22）2026-10-17 B09：照大尾缀补的主角尾缀行（ResourceFX 2830）；粒子以 ResourceFX 那一行为准'});
+  row.native = {...row.native, FXResourceId: HERO_ID};
+  row.preview = {...row.preview, heightM: round(HERO_TRAIL.fromM * HERO_TRAIL.k)};
+  doc.baseResourceLibrary.push(row);
+}
+// —— B09：--template-life <父模板 id>=<秒>[,…]：改花型寿命（含 __K 大小版本），只影响工作台时间轴 / 体检，导演表不带寿命 ——
+const lifeArg = option('template-life');
+const lifeReport = [];
+if (lifeArg) for (const kv of lifeArg.split(',')) {
+  const [tid0, sTxt] = kv.split('='), s = Number(sTxt);
+  if (!(s > 0)) throw Error('--template-life 秒数不对：' + kv);
+  for (const t of doc.templateLibrary) if (t.id === tid0 || t.id.startsWith(tid0 + '__K')) {
+    lifeReport.push({id: t.id, before: t.life, after: s});
+    t.life = s; t.recipeDuration = round((t.rise || 0) + s);
+  }
+}
+// —— B09（用户 10-17 00:47「小号这几个前缀带Little的都是小平台的，小型才是90m」）：--name-fix 把父模板 / 子模板显示名按 ResourceFX 行名改：
+//    放 2814 SilverChry 的「小银菊」→ 银冠菊（2801 小号_B 才叫小银菊）；金芯柠 / 金蕊青柠星 → 金蕊柠；「小号花」「小号尾缀」→ 小型。ResourceId 不动。 ——
+const nameFixReport = [];
+if (args.includes('--name-fix')) {
+  const smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s]));
+  const fixName = (name, ids) => {
+    let n = name;
+    if (ids.includes('P_EFX_FireWorks_SilverChry')) n = n.replace(/小银菊/g, '银冠菊');
+    return n.replace(/金芯柠|金蕊青柠星/g, '金蕊柠').replace(/小号花/g, '小型花').replace(/小号尾缀/g, '小型尾缀');
+  };
+  const burstIds = s => (s?.entries || []).filter(e => e.role !== 'trail').map(e => e.native?.FXResourceId).filter(Boolean);
+  for (const s of doc.subTemplateLibrary) { const n = fixName(s.name || '', burstIds(s)); if (n !== s.name) { nameFixReport.push({kind: 'sub', from: s.name, to: n}); s.name = n; } }
+  for (const t of doc.templateLibrary) { const n = fixName(t.name || '', burstIds(smap.get(t.subTemplateRef))); if (n !== t.name) { nameFixReport.push({kind: 'template', from: t.name, to: n}); t.name = n; } }
+}
 const trailV2 = TRAIL_V1 ? null : applyTrailV2(doc, {hero: args.some(a => a.startsWith('--hero-trail')), heroId: HERO_ID});
 // —— B07 修订1（22，用户 10-15 12:14「实机手游……尾缀和点灭星的爆发位置不一样」）：--upright = 球花（一根坝顶尾缀 + 花）倾角归 0，
 //    花放在尾缀正上方，沿尾缀的距离不变。原来按「Roll 正 → 局部 Y 负」把花挪到斜尾缀顶端，UE 里没实测过；UE4 FRotationMatrix
@@ -494,6 +531,8 @@ if (B02) {
 }
 if (b04Report.tiny.length || b04Report.front.length) report.b04 = b04Report;
 if (mobileDerivedReport.length) report.mobileDerived = mobileDerivedReport;
+if (lifeReport.length) report.templateLife = lifeReport;   // B09：主角寿命 14 s
+if (nameFixReport.length) report.nameFix = nameFixReport;   // B09：显示名按 ResourceFX 行名
 if (UPRIGHT) report.upright = uprightReport;   // B07 修订1：球花倾角归 0   // B05：手游替身花型   // B04：新尾缀片段 / 前台小花（旧方案不出这一项）
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 if (mixAudio) report.audio = {file: mixAudio.audioRef.name, sha256: mixAudio.audioRef.sha256, duration: mixAudio.audioRef.duration, musicOffset: finalDoc.meta.musicOffset, embeddedBytes: Buffer.byteLength(mixAudio.audioRef.dataUrl), markers: musicMarkers.length};

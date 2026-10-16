@@ -39,13 +39,20 @@
       "resource": "P_EFX_FireWorks_LittleCombo",
       "rowName": "跨年烟花3.0_小号_D_小分裂",
       "tier": "小号（小平台；原生 30 m，放到 90 m 小位要 ×3，超过 1.6，所以小位不用它）"
+    },
+    {
+      "zh": "金垂柳",
+      "resource": "P_EFX_FireWorks_GoldKamuro",
+      "rowName": "跨年烟花3.0_大型_A_金垂柳",
+      "tier": "主角（B09 起；用户 10-17 00:47「手游的金垂柳我也替换上去了，你之前的占位可以换回手游的金垂柳ID了」，手游表这一行读回 10-16 04:06 指 YonshakuKamuro_M）"
     }
   ],
   "trailsMobile": [
     "P_EFX_FireWorks_NY_Trail_Small",
     "P_EFX_FireWorks_NY_Trail_Medium",
     "P_EFX_FireWorks_NY_Trail_Large",
-    "P_EFX_FireWorks_RiseTrail_Tiny"
+    "P_EFX_FireWorks_RiseTrail_Tiny",
+    "P_EFX_FireWorks_RiseTrail_Hero"
   ],
   "maxScale": 1.6,
   "slots": {
@@ -97,5 +104,6 @@
     }
   ],
   "scaleNote": "放大倍数 = 花径 ÷ 资源原生花径：金芒菊 150 m、银冠菊 / 辉星 / 爆裂星 / 点灭星 90 m（R03 定的尺寸）；分裂星 2803 原生 30 m（用户 10-14 22:32 配方 front:30），只放小平台（22–28 m，×0.73–0.93）。",
-  "correction": "10-14 22:55 改：16.0.30 按 90 m 推断把分裂星放进了小位、小平台花也按 90 m 算倍数；用户 22:32 的小分裂配方是前台 30 m → 小位改用点灭星 / 爆裂星（橙辉星那几排用点灭星：寿命一样 3.2 s，换成 1.5 s 的爆裂星手游会多出两段 4.5–5 s 的空档），小平台按前台尺寸算（16.0.31）。"
+  "correction": "10-14 22:55 改：16.0.30 按 90 m 推断把分裂星放进了小位、小平台花也按 90 m 算倍数；用户 22:32 的小分裂配方是前台 30 m → 小位改用点灭星 / 爆裂星（橙辉星那几排用点灭星：寿命一样 3.2 s，换成 1.5 s 的爆裂星手游会多出两段 4.5–5 s 的空档），小平台按前台尺寸算（16.0.31）。",
+  "b09": "B09（10-17）：主角不再用金芒菊·大替身，PC + 手游共用金垂柳（GoldKamuro），挂主角尾缀 RiseTrail_Hero（2830 超大_尾缀）。species6 名字沿用（现在是 7 种），只给 B09 起的核对用；B05–B08 的手游规则在代码里（编排B05.py ALLOWED），不受影响。"
 }

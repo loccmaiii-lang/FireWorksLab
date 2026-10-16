@@ -707,6 +707,35 @@
         "原话": "你先暂停吧，先让画质排查工作",
         "恢复条件": "等用户明确恢复；不自动接着执行"
       }
+    },
+    {
+      "编号": "T19",
+      "看板": "",
+      "交给": "本机实测（25）（或本机同步（8））",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 1,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（例：用户 10-16 22:xx 暂停 T18 做画质排查）就等，别抢",
+      "标题": "只读核对 B09 主角：2830「超大_尾缀」（RiseTrail_Hero）PC / 手游指向哪个粒子、400 m 的 RiseTrail_Hero_L 在不在 UE 里、到顶多高多久；新网格金垂柳（GoldKamuro PC / 手游）的发射器、寿命、包围盒和大小",
+      "为什么": "用户 10-17 00:47：「我重新用mesh生成了一份新的金垂柳，现在很大，停留时间也变长了，大约为14秒……我希望可以变高点，用之前400m的高度？」「手游的金垂柳我也替换上去了」。B09（工作台 16.0.44，协作/编排B09.md）主角挂 2830 RiseTrail_Hero、开花点放在 398 m、寿命按 14 s、缩放 ×1.0、P0 / P4 / P8 间距 375 m。但 10-16 04:06 的读回（analysis/results/资源规范统一_20261016/采集/resourcefx_30.json）里 2830 和 2831 大型_尾缀都指 RiseTrail_L_HD（330 m，手游 RiseTrail_L_M）；400 m 的 P_EFX_FireWorks_RiseTrail_Hero_L_HD 在 10-12 导入器回执里建过（analysis/results/UE_READBACK_20261015/黑块排查.json 里的 receipt 004bd2f24f5f28506b10），10-13 本机同步核高度时又写「UE 里没有 RiseTrail_Hero_L」（analysis/results/UE_HEIGHT_1621/结论.json）。新垂柳的真实大小 / 寿命 / 开销没人读过，B09 的间距和 14 s 都是按用户口述。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261017/B09主角读数.json（新建）",
+        "analysis/results/UE_READBACK_20261017/B09主角读数.md（新建）"
+      ],
+      "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T19，按该文件「Codex 共同规则」执行（UE 只读）。先读：协作/编排B09.md 第 1 节第 1 条和第 2 节、analysis/results/UE_HEIGHT_1621/结论.json（尾缀高度怎么从 RiseLoop vZ / sizeY 算）、analysis/results/UE_READBACK_20261015/B08资源读数.md（上次读金垂柳的方法）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable，读三行 P_EFX_FireWorks_RiseTrail_Hero、P_EFX_FireWorks_NY_Trail_Large、P_EFX_FireWorks_GoldKamuro 的 FxSP / FxSP_Low / FxSP_High / EffectScale / FXType / MaxInstanceNum（行名一起记）。\n2. 搜资产名含 RiseTrail_Hero 的粒子系统（PC _HD 和手机版）：有没有、路径。找到的和 RiseTrail_L_HD / RiseTrail_L_M 各读 RiseLoop / Far 发射器的 Initial Velocity（Z）、Const Acceleration、Lifetime、Initial Size / Size Scale，按 UE_HEIGHT_1621 同一算法算到顶高度（m）和升空时间（s），和 400 m / 7.37 s、330 m / 7.37 s 比。\n3. GoldKamuro：按第 1 步 PC / 手游 FxSP 指的粒子，读每个发射器 LOD0：TypeData（Mesh / GPU / 无）、Mesh 资产路径和顶点数（读得到就读）、Required（Material、ScreenAlignment、bUseLocalSpace、EmitterDuration、EmitterLoops、UseFixedRelativeBoundingBox / FixedRelativeBoundingBox）、Spawn、Lifetime、Initial Size、Size By Life、Color Over Life 时长、Dynamic Parameter。估：一朵从开花到最后一个发射器结束多少秒；包围盒（或网格范围）给出的宽度和往下垂多少 m（EffectScale 1；B09 实际 0.998）；PC 有几个发射器、几个 GPU。\n4. B09主角读数.md 第一句写三条：① 2830 现在 PC / 手游各指哪个粒子；② 400 m 的主角尾缀粒子在不在、到顶几 m / 几 s；③ 新金垂柳 PC / 手游寿命、宽度、下垂、发射器数。再写「给跨年秀（22）」一段：B09 的 398 m、14 s、375 m 间距、×1.0 哪个要改、改成多少。原始值存 B09主角读数.json。",
+      "做完的标准": [
+        "三行 ResourceFX（PC + 手游）读数齐全，读不到的写原因",
+        "写清 RiseTrail_Hero_L 粒子在不在（PC / 手游），在的话给到顶高度和升空时间及算法",
+        "GoldKamuro PC / 手游各有寿命、宽度、下垂、发射器 / GPU 数，写清从哪些模块算的",
+        "B09主角读数.md 第一句三条结论 + 「给跨年秀（22）」一段",
+        "没有任何写入 / 保存；已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
     }
   ],
   "夜班怎么取": [
