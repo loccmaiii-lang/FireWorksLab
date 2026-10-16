@@ -1,15 +1,15 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmv7lp8ci",
- "tool": "4.9.88",
+ "tool": "4.9.110",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-14 16:18",
+ "at": "2026-10-16 22:29",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
-  "name": "引菊 → 锦（橙色直线菊转金锦）",
+  "name": "金曜菊-B",
   "layers": [
    {
     "id": null,
@@ -48,7 +48,7 @@
      "mods": [],
      "duration": 3.86,
      "seed": 7,
-     "stars": 293,
+     "stars": 200,
      "burstR0": 0,
      "v0": 250,
      "vt": 20,
@@ -412,9 +412,9 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 6.85,
+     "duration": 6.56,
      "seed": 7,
-     "stars": 293,
+     "stars": 200,
      "burstR0": 0,
      "v0": 250,
      "vt": 20,
@@ -479,7 +479,7 @@
      "ringFrac": 0.45,
      "text": "祭",
      "waterRefl": 0,
-     "ignDelay": 0.44,
+     "ignDelay": 0.15,
      "ignJit": 11,
      "ignSeed": 91,
      "keepFrac": 1,
@@ -517,8 +517,8 @@
      "cutIn": 0,
      "cutOut": 5.3,
      "preRoll": 1,
-     "preFrom": 0.4333,
-     "visTo": 6.5333,
+     "preFrom": 0.15,
+     "visTo": 6.2433,
      "preScale0": 0,
      "subScaleJit": 0,
      "subVt": 0,
@@ -791,9 +791,9 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 5.35,
+     "duration": 5.5,
      "seed": 7,
-     "stars": 293,
+     "stars": 200,
      "burstR0": 0,
      "v0": 250,
      "vt": 20,
@@ -888,7 +888,7 @@
      "clusterFan": 90,
      "clusterSweep": 0,
      "clusterGap": 0,
-     "ignDelay": 0,
+     "ignDelay": 0.15,
      "ignJit": 10,
      "ignSeed": 0,
      "keepFrac": 1,
@@ -1332,6 +1332,13 @@
    "Main",
    "Glitter"
   ],
+  "system": "GlitterChry",
+  "tiered": false,
   "custom": true
- }
+ },
+ "sizeSource": {
+  "key": "",
+  "entry": ""
+ },
+ "sizePick": "cls:d:dam:150"
 }
