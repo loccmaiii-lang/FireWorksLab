@@ -610,7 +610,8 @@
       "UE": "T18临时Actor0、回调None，已让出；不覆盖画质排查的新机位/CVar",
       "结果": "基线/Alpha常量0、0.4、1/曲线零时刻首轮已做，完整结论未完成；22:15首次沙盒崩溃和修正已留档，两个原uasset哈希未变。",
       "接续": "协作/派活队列.json T18；analysis/results/INITCOLOR_SANDBOX_20261016/暂停回执.json；定时t18-initial-color=PAUSED"
-    }
+    },
+    "跨年秀（22） · B09（主角抬高 400 m、手游金垂柳、名字更正）与工作台 16.0.44": "负责（10-17 00:55 起）：跨年秀（22）。用户 10-17 00:47「出一版B09吧」。只改 analysis/scripts/编排B09.py（新）、编排B01_编译.mjs（加开关，不带开关产物不变）、编排B01_动画.py（加 --b09）、协作/编排B01/逻辑方案_B09.json / 体检_B09.json / B09动画.html、FXtools/节目/NewYearFireWorks_v01/*B09*、工作台只换编排 16.0.44（publish-show --data-only）。不动 tool/src、工作台界面源码。"
   },
   "effects": [
     {
