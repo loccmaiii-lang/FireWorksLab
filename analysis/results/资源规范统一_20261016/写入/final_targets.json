@@ -1,0 +1,5459 @@
+{
+ "format": "df.resource-spec-targets/1",
+ "note": "12:28第2步接续；修订盒=原模块包络并UE全寿命CPU动态盒，10%余量。矢量场两系统Bounds未改；GoldKamuro他人锁定。第三步不做。",
+ "systems": [
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+   "name": "P_EFX_FireWorks_LittleGold_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -7320,
+     -7320,
+     -7320
+    ],
+    "max": [
+     7320,
+     7320,
+     7320
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -3300,
+     -3300,
+     -3300
+    ],
+    "max": [
+     3300,
+     3300,
+     3300
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+   "name": "P_EFX_FireWorks_LittleSilver_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -6220,
+     -6220,
+     -6220
+    ],
+    "max": [
+     6220,
+     6220,
+     6220
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleSpriteEmitter_0",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_FacingCameraPosition",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -2820,
+     -2820,
+     -2820
+    ],
+    "max": [
+     2820,
+     2820,
+     2820
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+   "name": "P_EFX_FireWorks_LittleCrackle_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -5870,
+     -5870,
+     -5870
+    ],
+    "max": [
+     5870,
+     5870,
+     5870
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -2650,
+     -2650,
+     -2650
+    ],
+    "max": [
+     2650,
+     2650,
+     2650
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "name": "P_EFX_FireWorks_LittleCombo_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -6120,
+     -6120,
+     -6120
+    ],
+    "max": [
+     6120,
+     6120,
+     6120
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -2580,
+     -2580,
+     -2580
+    ],
+    "max": [
+     2580,
+     2580,
+     2580
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+   "name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -26310,
+     -26310,
+     -21570
+    ],
+    "max": [
+     26310,
+     26310,
+     31210
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -5290,
+     -5290,
+     -800
+    ],
+    "max": [
+     5290,
+     5290,
+     12200
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+   "name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -36370,
+     -36280,
+     -36270
+    ],
+    "max": [
+     36190,
+     36280,
+     36280
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10340,
+     -10250,
+     -10250
+    ],
+    "max": [
+     10160,
+     10250,
+     10250
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+   "name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1000,
+      "Y": -1000,
+      "Z": -1500
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1000,
+      "Y": 1000,
+      "Z": 1500
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -33460,
+     -30340,
+     -33460
+    ],
+    "max": [
+     33460,
+     30340,
+     33460
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10170,
+     -10170,
+     -10300
+    ],
+    "max": [
+     10170,
+     10170,
+     9660
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1000,
+      "Y": -1000,
+      "Z": -1500
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1000,
+      "Y": 1000,
+      "Z": 1500
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -33130,
+     -33000,
+     -33130
+    ],
+    "max": [
+     33130,
+     33000,
+     33130
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10120,
+     -10120,
+     -10260
+    ],
+    "max": [
+     10120,
+     10120,
+     9620
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1000,
+      "Y": -1000,
+      "Z": -1500
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1000,
+      "Y": 1000,
+      "Z": 1500
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -31770,
+     -33620,
+     -33620
+    ],
+    "max": [
+     31770,
+     33620,
+     33620
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10030,
+     -10030,
+     -10160
+    ],
+    "max": [
+     10030,
+     10030,
+     9530
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1000,
+      "Y": -1000,
+      "Z": -1500
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1000,
+      "Y": 1000,
+      "Z": 1500
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -34340,
+     -34400,
+     -34400
+    ],
+    "max": [
+     34340,
+     34400,
+     34400
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10060,
+     -10060,
+     -10200
+    ],
+    "max": [
+     10060,
+     10060,
+     9560
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+   "name": "P_EFX_FireWorks_Comet_Layers_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -26410,
+     -26400,
+     -21640
+    ],
+    "max": [
+     26410,
+     26400,
+     31390
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -5290,
+     -5290,
+     -800
+    ],
+    "max": [
+     5290,
+     5290,
+     12200
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+   "name": "P_EFX_FireWorks_FanSilver_01_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1000,
+      "Y": -1000,
+      "Z": -1500
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1000,
+      "Y": 1000,
+      "Z": 1500
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -35100,
+     -39750,
+     -39090
+    ],
+    "max": [
+     35100,
+     39750,
+     40400
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": false,
+   "boundsSkipReasons": [
+    "矢量场/未建模模块缺原生GPU粒子位置上界；保留原Bounds，不能标完整验收"
+   ],
+   "boundsOriginalPlan": {
+    "min": [
+     -11240,
+     -11240,
+     -10760
+    ],
+    "max": [
+     11240,
+     11240,
+     13010
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+   "name": "P_EFX_FireWorks_Combo_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -20000,
+      "Y": -20000,
+      "Z": -20000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 20000,
+      "Y": 20000,
+      "Z": 20000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -23820,
+     -23820,
+     -23820
+    ],
+    "max": [
+     23820,
+     23820,
+     23820
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "RandomFlipUV"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -9960,
+     -9960,
+     -9960
+    ],
+    "max": [
+     9960,
+     9960,
+     9960
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+   "name": "P_EFX_FireWorks_Comet_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -15000,
+      "Y": -15000,
+      "Z": -15000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 15000,
+      "Y": 15000,
+      "Z": 15000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -2440,
+     -9060,
+     -8460
+    ],
+    "max": [
+     12440,
+     7190,
+     2290
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "Glow_B",
+     "index": 2,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleSpriteEmitter_2",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_2",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 1,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_2",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 2,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_2",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 3,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_2",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "Glow_C",
+     "index": 3,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleSpriteEmitter_3",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_3",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 1,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_3",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 2,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_3",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 3,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD:ParticleModuleRequired_3",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -1290,
+     -8450,
+     -8390
+    ],
+    "max": [
+     12300,
+     6580,
+     1210
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "name": "P_EFX_FireWorks_SilverChry_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -18530,
+     -18530,
+     -18530
+    ],
+    "max": [
+     18530,
+     18530,
+     18530
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_FacingCameraPosition",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleSpriteEmitter_2",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD:ParticleModuleRequired_2",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8390,
+     -8390,
+     -8390
+    ],
+    "max": [
+     8390,
+     8390,
+     8390
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "name": "P_EFX_FireWorks_Crackle_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -24560,
+     -24560,
+     -24560
+    ],
+    "max": [
+     24560,
+     24560,
+     24560
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD:ParticleSpriteEmitter_2",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD:ParticleModuleRequired_2",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10360,
+     -10360,
+     -10360
+    ],
+    "max": [
+     10360,
+     10360,
+     10360
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+   "name": "P_EFX_FireWorks_Lime_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -20670,
+     -20670,
+     -20670
+    ],
+    "max": [
+     20670,
+     20670,
+     20670
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8180,
+     -8180,
+     -8180
+    ],
+    "max": [
+     8180,
+     8180,
+     8180
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "name": "P_EFX_FireWorks_Glitter_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -18270,
+     -18270,
+     -18270
+    ],
+    "max": [
+     18270,
+     18270,
+     18270
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -7790,
+     -7790,
+     -7790
+    ],
+    "max": [
+     7790,
+     7790,
+     7790
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "name": "P_EFX_FireWorks_Strobe_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -20490,
+     -20490,
+     -20570
+    ],
+    "max": [
+     20490,
+     20490,
+     20400
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8170,
+     -8170,
+     -8450
+    ],
+    "max": [
+     8170,
+     8170,
+     8450
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+   "name": "P_EFX_FireWorks_LimeStar_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -59700,
+     -59700,
+     -59700
+    ],
+    "max": [
+     59700,
+     59700,
+     59700
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -25330,
+     -25330,
+     -25330
+    ],
+    "max": [
+     25330,
+     25330,
+     25330
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+   "name": "P_EFX_FireWorks_GoldRay_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -49120,
+     -49120,
+     -49120
+    ],
+    "max": [
+     49120,
+     49120,
+     49120
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -21300,
+     -21300,
+     -21300
+    ],
+    "max": [
+     21300,
+     21300,
+     21300
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+   "name": "P_EFX_FireWork_PrismWheels_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -15000,
+      "Y": -15000,
+      "Z": -15000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 15000,
+      "Y": 15000,
+      "Z": 15000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -15540,
+     -15980,
+     -17100
+    ],
+    "max": [
+     16730,
+     16040,
+     14990
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "Initial Igniton",
+     "index": 7,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleSpriteEmitter_3",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleModuleRequired_4",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 1,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleModuleRequired_4",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 2,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleModuleRequired_4",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      },
+      {
+       "lod": 3,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD:ParticleModuleRequired_4",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": false,
+   "boundsSkipReasons": [
+    "矢量场/未建模模块缺原生GPU粒子位置上界；保留原Bounds，不能标完整验收"
+   ],
+   "boundsOriginalPlan": {
+    "min": [
+     -12060,
+     -12060,
+     -13650
+    ],
+    "max": [
+     12060,
+     12060,
+     11840
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+   "name": "P_EFX_FireWorks_GoldSpark_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -30780,
+     -30780,
+     -30780
+    ],
+    "max": [
+     30780,
+     30780,
+     30780
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -12610,
+     -12610,
+     -12610
+    ],
+    "max": [
+     12610,
+     12610,
+     12610
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+   "name": "P_EFX_FireWorks_GoldCoreLime_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -31760,
+     -31760,
+     -31760
+    ],
+    "max": [
+     31760,
+     31760,
+     31760
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -12920,
+     -12920,
+     -12920
+    ],
+    "max": [
+     12920,
+     12920,
+     12920
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "name": "P_EFX_FireWorks_GoldRayChry_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -44900,
+     -44900,
+     -44900
+    ],
+    "max": [
+     44900,
+     44900,
+     44900
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -18920,
+     -18920,
+     -18920
+    ],
+    "max": [
+     18920,
+     18920,
+     18920
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+   "name": "P_EFX_FireWorks_LimeCoreDelay_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -59170,
+     -59170,
+     -59170
+    ],
+    "max": [
+     59170,
+     59170,
+     59170
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -24590,
+     -24590,
+     -24590
+    ],
+    "max": [
+     24590,
+     24590,
+     24590
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+   "name": "P_EFX_FireWorks_GoldKamuro_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -38490,
+     -38490,
+     -40190
+    ],
+    "max": [
+     38490,
+     38490,
+     38570
+    ]
+   },
+   "emitters": [],
+   "skipSystem": true,
+   "writeBounds": false,
+   "boundsSkipReasons": [
+    "P4被他人迁出；不写整个粒子系统"
+   ],
+   "boundsOriginalPlan": {
+    "min": [
+     -38490,
+     -38490,
+     -40190
+    ],
+    "max": [
+     38490,
+     38490,
+     38570
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+   "name": "P_EFX_FireWorks_SilverStrobeChry_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -69100,
+     -69100,
+     -69100
+    ],
+    "max": [
+     69100,
+     69100,
+     69100
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "Glow_B",
+     "index": 2,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_4",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleModuleRequired_6",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "Flash",
+     "index": 3,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleSpriteEmitter_6",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD:ParticleModuleRequired_3",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -28070,
+     -28010,
+     -29570
+    ],
+    "max": [
+     28030,
+     28010,
+     28080
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "name": "P_EFX_FireWorks_RiseTrail_L_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -66560,
+     -66520,
+     -49980
+    ],
+    "max": [
+     66490,
+     66520,
+     83510
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -18670,
+     -18640,
+     -5960
+    ],
+    "max": [
+     18610,
+     18640,
+     45810
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "name": "P_EFX_FireWorks_RiseTrail_M_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -41790,
+     -41730,
+     -31040
+    ],
+    "max": [
+     41670,
+     41730,
+     52630
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -11760,
+     -11700,
+     -4640
+    ],
+    "max": [
+     11640,
+     11700,
+     29970
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "name": "P_EFX_FireWorks_RiseTrail_S_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -29470,
+     -29470,
+     -21730
+    ],
+    "max": [
+     29470,
+     29470,
+     37210
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8260,
+     -8260,
+     -3850
+    ],
+    "max": [
+     8260,
+     8260,
+     22160
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "name": "P_EFX_FireWorks_RiseTrail_XS_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -20620,
+     -20590,
+     -20550
+    ],
+    "max": [
+     20560,
+     20590,
+     20630
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "index": 0,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -9030,
+     -9000,
+     -8960
+    ],
+    "max": [
+     8970,
+     9000,
+     9110
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "platform": "pc",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -18440,
+     -18440,
+     -15380
+    ],
+    "max": [
+     18440,
+     18440,
+     21500
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "index": 0,
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -3570,
+     -3570,
+     -520
+    ],
+    "max": [
+     3570,
+     3570,
+     6720
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "name": "P_EFX_FireWorks_LittleGold_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -7990,
+     -7990,
+     -7990
+    ],
+    "max": [
+     7990,
+     7990,
+     7990
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -3340,
+     -3340,
+     -3340
+    ],
+    "max": [
+     3340,
+     3340,
+     3340
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "name": "P_EFX_FireWorks_LittleSilver_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -6210,
+     -6210,
+     -6210
+    ],
+    "max": [
+     6210,
+     6210,
+     6210
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -2820,
+     -2820,
+     -2820
+    ],
+    "max": [
+     2820,
+     2820,
+     2820
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "name": "P_EFX_FireWorks_LittleCrackle_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -6530,
+     -6530,
+     -6530
+    ],
+    "max": [
+     6530,
+     6530,
+     6530
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -2660,
+     -2660,
+     -2660
+    ],
+    "max": [
+     2660,
+     2660,
+     2660
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "name": "P_EFX_FireWorks_LittleCombo_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -6110,
+     -6110,
+     -6110
+    ],
+    "max": [
+     6110,
+     6110,
+     6110
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -2500,
+     -2500,
+     -2500
+    ],
+    "max": [
+     2500,
+     2500,
+     2500
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "name": "P_EFX_FireWorks_Comet_Layers_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -26310,
+     -26310,
+     -21630
+    ],
+    "max": [
+     26310,
+     26310,
+     31210
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -5290,
+     -5290,
+     -800
+    ],
+    "max": [
+     5290,
+     5290,
+     12200
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -36280,
+     -36280,
+     -36270
+    ],
+    "max": [
+     36280,
+     36280,
+     36280
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10250,
+     -10250,
+     -10250
+    ],
+    "max": [
+     10250,
+     10250,
+     10250
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "name": "P_EFX_FireWorks_SilverChry_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -17790,
+     -17790,
+     -17790
+    ],
+    "max": [
+     17790,
+     17790,
+     17790
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8140,
+     -8140,
+     -8140
+    ],
+    "max": [
+     8140,
+     8140,
+     8140
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "name": "P_EFX_FireWorks_Crackle_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -24560,
+     -24560,
+     -24560
+    ],
+    "max": [
+     24560,
+     24560,
+     24560
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_Flash",
+     "index": 1,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M:ParticleSpriteEmitter_1",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Square",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -10360,
+     -10360,
+     -10360
+    ],
+    "max": [
+     10360,
+     10360,
+     10360
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "name": "P_EFX_FireWorks_Glitter_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -18270,
+     -18270,
+     -18270
+    ],
+    "max": [
+     18270,
+     18270,
+     18270
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -7790,
+     -7790,
+     -7790
+    ],
+    "max": [
+     7790,
+     7790,
+     7790
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "name": "P_EFX_FireWorks_Strobe_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -20380,
+     -20380,
+     -20400
+    ],
+    "max": [
+     20380,
+     20380,
+     20370
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8170,
+     -8170,
+     -8450
+    ],
+    "max": [
+     8170,
+     8170,
+     8450
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "name": "P_EFX_FireWorks_GoldRayChry_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -46340,
+     -46340,
+     -46340
+    ],
+    "max": [
+     46340,
+     46340,
+     46340
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "Main",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -18920,
+     -18920,
+     -18920
+    ],
+    "max": [
+     18920,
+     18920,
+     18920
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "name": "P_EFX_FireWorks_YonshakuKamuro_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -56410,
+     -56410,
+     -56410
+    ],
+    "max": [
+     56410,
+     56410,
+     56410
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_MainA",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M:ParticleSpriteEmitter_0",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    },
+    {
+     "emitter": "L1_MainB",
+     "index": 1,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M:ParticleSpriteEmitter_1",
+     "set": {
+      "ScreenAlignment": "PSA_FacingCameraPosition"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M:ParticleModuleRequired_1",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -22320,
+     -22320,
+     -22320
+    ],
+    "max": [
+     22320,
+     22320,
+     22320
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "name": "P_EFX_FireWorks_RiseTrail_L_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -67810,
+     -67750,
+     -51510
+    ],
+    "max": [
+     67680,
+     67750,
+     84430
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -19040,
+     -18980,
+     -2740
+    ],
+    "max": [
+     18910,
+     18980,
+     35710
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "name": "P_EFX_FireWorks_RiseTrail_M_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -43180,
+     -43120,
+     -32780
+    ],
+    "max": [
+     43060,
+     43120,
+     53680
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -12140,
+     -12080,
+     -1740
+    ],
+    "max": [
+     12020,
+     12080,
+     22720
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "name": "P_EFX_FireWorks_RiseTrail_S_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": false,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -30840,
+     -30820,
+     -23410
+    ],
+    "max": [
+     30790,
+     30820,
+     38220
+    ]
+   },
+   "emitters": [],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -8660,
+     -8630,
+     -1240
+    ],
+    "max": [
+     8610,
+     8630,
+     16240
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "name": "P_EFX_FireWorks_RiseTrail_XS_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -20960,
+     -20930,
+     -20890
+    ],
+    "max": [
+     20900,
+     20930,
+     20970
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M:ParticleSpriteEmitter_0",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -9080,
+     -9050,
+     -9000
+    ],
+    "max": [
+     9020,
+     9050,
+     9150
+    ]
+   }
+  },
+  {
+   "system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "platform": "mobile",
+   "before": {
+    "bUseFixedRelativeBoundingBox": true,
+    "FixedRelativeBoundingBox": {
+     "_struct": "Box",
+     "Min": {
+      "_struct": "Vector",
+      "X": -100000,
+      "Y": -100000,
+      "Z": -100000
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 100000,
+      "Y": 100000,
+      "Z": 100000
+     },
+     "IsValid": 1
+    }
+   },
+   "bounds": {
+    "min": [
+     -18440,
+     -18440,
+     -15380
+    ],
+    "max": [
+     18440,
+     18440,
+     21500
+    ]
+   },
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "index": 0,
+     "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M:ParticleSpriteEmitter_0",
+     "set": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "lods": [
+      {
+       "lod": 0,
+       "required": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M:ParticleModuleRequired_0",
+       "before": {
+        "ScreenAlignment": "PSA_Rectangle",
+        "UVFlippingMode": "None"
+       }
+      }
+     ]
+    }
+   ],
+   "skipSystem": false,
+   "writeBounds": true,
+   "boundsSkipReasons": [],
+   "boundsOriginalPlan": {
+    "min": [
+     -3570,
+     -3570,
+     -520
+    ],
+    "max": [
+     3570,
+     3570,
+     6720
+    ]
+   }
+  }
+ ],
+ "materials": [
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Comet_Layers_L1_Full_01.MI_EFX_FireWorks_Comet_Layers_L1_Full_01",
+   "name": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Crackle_Main_01.MI_EFX_FireWorks_Crackle_Main_01",
+   "name": "MI_EFX_FireWorks_Crackle_Main_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Glitter_01.MI_EFX_FireWorks_Glitter_01",
+   "name": "MI_EFX_FireWorks_Glitter_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_GoldRayChry_01.MI_EFX_FireWorks_GoldRayChry_01",
+   "name": "MI_EFX_FireWorks_GoldRayChry_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCombo_01.MI_EFX_FireWorks_LittleCombo_01",
+   "name": "MI_EFX_FireWorks_LittleCombo_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCrackle_Main_01.MI_EFX_FireWorks_LittleCrackle_Main_01",
+   "name": "MI_EFX_FireWorks_LittleCrackle_Main_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleGold_01.MI_EFX_FireWorks_LittleGold_01",
+   "name": "MI_EFX_FireWorks_LittleGold_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleSilver_GinKamuro_01.MI_EFX_FireWorks_LittleSilver_GinKamuro_01",
+   "name": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Full_01.MI_EFX_FireWorks_RiseTrail_L_Full_01",
+   "name": "MI_EFX_FireWorks_RiseTrail_L_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_M_Full_01.MI_EFX_FireWorks_RiseTrail_M_Full_01",
+   "name": "MI_EFX_FireWorks_RiseTrail_M_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_S_Full_01.MI_EFX_FireWorks_RiseTrail_S_Full_01",
+   "name": "MI_EFX_FireWorks_RiseTrail_S_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01.MI_EFX_FireWorks_RiseTrail_Tiny_Full_01",
+   "name": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_XS_Full_01.MI_EFX_FireWorks_RiseTrail_XS_Full_01",
+   "name": "MI_EFX_FireWorks_RiseTrail_XS_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Silver3_Layers_S_Full_01.MI_EFX_FireWorks_Silver3_Layers_S_Full_01",
+   "name": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_SilverChry_GinKamuro_01.MI_EFX_FireWorks_SilverChry_GinKamuro_01",
+   "name": "MI_EFX_FireWorks_SilverChry_GinKamuro_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01.MI_EFX_FireWorks_Strobe_Strobe_01",
+   "name": "MI_EFX_FireWorks_Strobe_Strobe_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_01.MI_EFX_FireWorks_YonshakuKamuro_Main_01",
+   "name": "MI_EFX_FireWorks_YonshakuKamuro_Main_01",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_02.MI_EFX_FireWorks_YonshakuKamuro_Main_02",
+   "name": "MI_EFX_FireWorks_YonshakuKamuro_Main_02",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Combo_01_HD.MI_EFX_FireWorks_Combo_01_HD",
+   "name": "MI_EFX_FireWorks_Combo_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD.MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+   "name": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD.MI_EFX_FireWorks_Crackle_Main_01_HD",
+   "name": "MI_EFX_FireWorks_Crackle_Main_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Central_01_HD.MI_EFX_FireWorks_FanGold_Central_01_HD",
+   "name": "MI_EFX_FireWorks_FanGold_Central_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": [
+    "P_EFX_FireWorks_FanGold_All_HD"
+   ]
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Middle_01_HD.MI_EFX_FireWorks_FanGold_Middle_01_HD",
+   "name": "MI_EFX_FireWorks_FanGold_Middle_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": [
+    "P_EFX_FireWorks_FanGold_All_HD"
+   ]
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterLeft_01_HD.MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+   "name": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": [
+    "P_EFX_FireWorks_FanGold_All_HD"
+   ]
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterRight_01_HD.MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+   "name": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": [
+    "P_EFX_FireWorks_FanGold_All_HD"
+   ]
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Glitter_01_HD.MI_EFX_FireWorks_Glitter_01_HD",
+   "name": "MI_EFX_FireWorks_Glitter_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD.MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+   "name": "MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD.MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+   "name": "MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD.MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+   "name": "MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD.MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+   "name": "MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD.MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "name": "MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_A_01_HD.MI_EFX_FireWorks_GoldRay_A_01_HD",
+   "name": "MI_EFX_FireWorks_GoldRay_A_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_B_01_HD.MI_EFX_FireWorks_GoldRay_B_01_HD",
+   "name": "MI_EFX_FireWorks_GoldRay_B_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L2_01_HD.MI_EFX_FireWorks_GoldSpark_L2_01_HD",
+   "name": "MI_EFX_FireWorks_GoldSpark_L2_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L3_01_HD.MI_EFX_FireWorks_GoldSpark_L3_01_HD",
+   "name": "MI_EFX_FireWorks_GoldSpark_L3_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_Main_01_HD.MI_EFX_FireWorks_GoldSpark_Main_01_HD",
+   "name": "MI_EFX_FireWorks_GoldSpark_Main_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD.MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+   "name": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD.MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+   "name": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD.MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+   "name": "MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_01_HD.MI_EFX_FireWorks_LimeStar_Head_01_HD",
+   "name": "MI_EFX_FireWorks_LimeStar_Head_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_02_HD.MI_EFX_FireWorks_LimeStar_Head_02_HD",
+   "name": "MI_EFX_FireWorks_LimeStar_Head_02_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Tail_01_HD.MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+   "name": "MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Core_01_HD.MI_EFX_FireWorks_Lime_Core_01_HD",
+   "name": "MI_EFX_FireWorks_Lime_Core_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_01_HD.MI_EFX_FireWorks_Lime_Glitter_01_HD",
+   "name": "MI_EFX_FireWorks_Lime_Glitter_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_02_HD.MI_EFX_FireWorks_Lime_Glitter_02_HD",
+   "name": "MI_EFX_FireWorks_Lime_Glitter_02_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Lead_01_HD.MI_EFX_FireWorks_Lime_Lead_01_HD",
+   "name": "MI_EFX_FireWorks_Lime_Lead_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCombo_01_HD.MI_EFX_FireWorks_LittleCombo_01_HD",
+   "name": "MI_EFX_FireWorks_LittleCombo_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCrackle_Main_01_HD.MI_EFX_FireWorks_LittleCrackle_Main_01_HD",
+   "name": "MI_EFX_FireWorks_LittleCrackle_Main_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleGold_01_HD.MI_EFX_FireWorks_LittleGold_01_HD",
+   "name": "MI_EFX_FireWorks_LittleGold_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD.MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+   "name": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD.MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD.MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD.MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD.MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD",
+   "name": "MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+   "name": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "继承母材质缺省",
+   "beforeOverride": [],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD.MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
+   "name": "MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  },
+  {
+   "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD.MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+   "name": "MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+   "root": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit",
+   "beforeValue": 1,
+   "beforeSource": "本实例覆盖",
+   "beforeOverride": [
+    {
+     "_struct": "ScalarParameterValue",
+     "ParameterName": "None",
+     "AtlasData": {
+      "_struct": "ScalarParameterAtlasInstanceData",
+      "bIsUsedAsAtlasPosition": false,
+      "Curve": "None",
+      "Atlas": "None"
+     },
+     "ParameterInfo": {
+      "_struct": "MaterialParameterInfo",
+      "Name": "EmissiveDissolve",
+      "Association": "GlobalParameter",
+      "Index": -1,
+      "ParameterLocation": {
+       "_struct": "SoftObjectPath",
+       "AssetPathName": "None",
+       "SubPathString": ""
+      }
+     },
+     "ParameterValue": 1,
+     "ExpressionGUID": {
+      "_struct": "Guid",
+      "A": -1502591047,
+      "B": 1192121343,
+      "C": -1595342957,
+      "D": -1100721025
+     }
+    }
+   ],
+   "set": {
+    "EmissiveDissolve": 0.98
+   },
+   "usedOutsideScope": []
+  }
+ ],
+ "counts": {
+  "systems": 50,
+  "materials": 67,
+  "align": 12,
+  "uv": 28,
+  "requiredModules": 39,
+  "actualSystemsToSave": 48,
+  "boundsToSave": 47,
+  "boundsPending": 3
+ }
+}

@@ -1,0 +1,42 @@
+[
+ {
+  "emitter": "RiseLoop",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_0"
+ },
+ {
+  "emitter": "TrailFar",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_1"
+ },
+ {
+  "emitter": "SparksFine",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_2"
+ },
+ {
+  "emitter": "SparksTwinkle",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_3"
+ },
+ {
+  "emitter": "SparksCoarse",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_4"
+ },
+ {
+  "emitter": "Embers",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_5"
+ },
+ {
+  "emitter": "HeadGlow",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_6"
+ },
+ {
+  "emitter": "SparkPops",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_7"
+ },
+ {
+  "emitter": "LaunchGlow",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_8"
+ },
+ {
+  "emitter": "LaunchSparks",
+  "required": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleRequired_9"
+ }
+]

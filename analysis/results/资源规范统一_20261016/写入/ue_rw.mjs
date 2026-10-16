@@ -47,10 +47,15 @@ function once(route, payload, timeout) {
 }
 export async function request(route, payload, timeout = 60000) {
   if (!ALLOW.has(route)) throw Error('白名单外的路由：' + route);
-  if (route === '/object/set' && !targets().has(pkgOf(payload.path))) throw Error('不在 targets 里的对象，不写：' + payload.path);
+  if (route === '/object/set') {
+    if (!targets().has(pkgOf(payload.path))) throw Error('不在 targets 里的对象，不写：' + payload.path);
+    if (pkgOf(payload.path).endsWith('/P_EFX_FireWorks_GoldKamuro_HD')) throw Error('他人锁定系统，禁止写入：' + payload.path);
+    const allowed = new Set(['bUseFixedRelativeBoundingBox', 'FixedRelativeBoundingBox', 'ScreenAlignment', 'UVFlippingMode', 'ThumbnailWarmup']);
+    for (const key of Object.keys(payload.properties || {})) if (!allowed.has(key)) throw Error('本任务字段白名单外：' + key);
+  }
   if (route === '/object/call') {
     const fn = payload.function;
-    if (fn === 'SaveAsset' && !targets().has(pkgOf(payload.args?.AssetToSave))) throw Error('不在 targets 里的包，不存：' + payload.args?.AssetToSave);
+    if (fn === 'SaveAsset' && (!targets().has(pkgOf(payload.args?.AssetToSave)) || pkgOf(payload.args?.AssetToSave).endsWith('/P_EFX_FireWorks_GoldKamuro_HD'))) throw Error('未授权或他人锁定的包，不存：' + payload.args?.AssetToSave);
     if (fn === 'ExecuteConsoleCommand' && !/^(HighResShot |r\.)/.test(payload.args?.Command || '')) throw Error('白名单外的控制台命令：' + payload.args?.Command);
     if (!['LoadAsset', 'SaveAsset', 'ExecutePythonCommandEx', 'ExecuteConsoleCommand', 'DoesAssetExist'].includes(fn)) throw Error('白名单外的函数：' + fn);
   }

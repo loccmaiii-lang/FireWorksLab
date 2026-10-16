@@ -1,0 +1,95 @@
+{
+ "at": "2026-10-16T04:45:56.635Z",
+ "dump": {
+  "written": "F:/FireWorksLab/analysis/local/RSU26_tmp/phase2_recovered.json",
+  "done": true,
+  "running": false,
+  "shots": 32,
+  "error": null
+ },
+ "cleanup": {
+  "camRestored": [
+   [
+    400.6181640625,
+    -195.83966064453125,
+    348.8963317871094
+   ],
+   [
+    -46.200103759765625,
+    -161.9998779296875,
+    0
+   ]
+  ],
+  "removed": 4,
+  "left": 0
+ },
+ "emitters": [
+  [
+   "P_EFX_FireWorks_Crackle_HD",
+   2
+  ],
+  [
+   "P_EFX_FireWorks_RiseTrail_XS_HD",
+   1
+  ]
+ ],
+ "materials": [
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD.MI_EFX_FireWorks_Crackle_Main_01_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   1,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD.MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   null,
+   1
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   null,
+   1
+  ]
+ ],
+ "after": {
+  "runs": 4,
+  "wall": 41.18,
+  "notes": [],
+  "running": false,
+  "done": true,
+  "t": 3.61,
+  "shots": 32,
+  "error": null,
+  "frames": 1758,
+  "ri": 4
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "at": "2026-10-16T05:22:37.035Z",
+ "systemsSaved": 48,
+ "materialsSaved": 67,
+ "skippedSystems": [
+  {
+   "name": "P_EFX_FireWorks_FanSilver_01_HD",
+   "reasons": [
+    "矢量场/未建模模块缺原生GPU粒子位置上界；保留原Bounds，不能标完整验收"
+   ]
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldKamuro_HD",
+   "reasons": [
+    "P4被他人迁出；不写整个粒子系统"
+   ]
+  }
+ ],
+ "protectedSharedMI": [
+  "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD",
+  "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+  "MI_EFX_Sparkler_RGBA_3x3_01_HD"
+ ],
+ "diffs": [],
+ "env": {
+  "world": "/Game/Maps/Login/Login.Login",
+  "temporary_actors": []
+ }
+}

@@ -1,0 +1,704 @@
+[
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD"
+ },
+ {
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD",
+  "checkout": false,
+  "writable": false,
+  "error": "blocked: checked out by another user; do not override"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Comet_Layers_L1_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Crackle_Main_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Glitter_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_GoldRayChry_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCombo_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCrackle_Main_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleGold_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleSilver_GinKamuro_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_M_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_S_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_XS_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Silver3_Layers_S_Full_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_SilverChry_GinKamuro_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_01"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_02"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Combo_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Central_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Middle_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterLeft_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterRight_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Glitter_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_A_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_B_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L2_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L3_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_Main_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_02_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Tail_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Core_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_02_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Lead_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCombo_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCrackle_Main_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleGold_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD"
+ },
+ {
+  "writable": true,
+  "error": "",
+  "checkout": true,
+  "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD"
+ }
+]

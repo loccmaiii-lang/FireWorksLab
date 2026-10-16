@@ -1,0 +1,1323 @@
+{
+ "materials": [
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD.MI_EFX_FireWorks_Crackle_Main_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD.MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ]
+ ],
+ "result": {
+  "shotList": [
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 0.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t00.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 0.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t00.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 1.52,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t01.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 1.52,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t01.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 2.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t02.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 2.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t02.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 3.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t03.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 3.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t03.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 4.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t04.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_Crackle_HD",
+    "t": 4.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_Crackle_HD_t04.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 2.01,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t02.0_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 2.01,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t02.0_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 3.61,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t03.6_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 3.61,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t03.6_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 3.91,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t03.9_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 3.91,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t03.9_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 6.61,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t06.6_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 6.61,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t06.6_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 6.9,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t06.9_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 6.9,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t06.9_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 9.02,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t09.0_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_GoldKamuro_HD",
+    "t": 9.02,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_GoldKamuro_HD_t09.0_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 1.5,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t01.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 1.5,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t01.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 3.52,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t03.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 3.52,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t03.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 5.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t05.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 5.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t05.5_low.png",
+    "cam": "low"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 6.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t06.5_front.png",
+    "cam": "front"
+   },
+   {
+    "run": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "t": 6.51,
+    "file": "F:/FireWorksLab/analysis/local/RSU26_tmp/C/P_EFX_FireWorks_RiseTrail_M_HD_t06.5_low.png",
+    "cam": "low"
+   }
+  ],
+  "runs": 3,
+  "wall": 42,
+  "notes": [],
+  "cam0": [
+   [
+    400.6181640625,
+    -195.83966064453125,
+    348.8963317871094
+   ],
+   [
+    -46.200103759765625,
+    -161.9998779296875,
+    0
+   ]
+  ],
+  "meas": {
+   "rep2": {
+    "lastT": 9.755488004535437,
+    "activeN": 492,
+    "lastParticles": 0,
+    "min": [
+     -41790,
+     -41730,
+     -31040
+    ],
+    "series": [
+     [
+      0.02,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      0.28,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      0.54,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      0.8,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      1.06,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      1.32,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      1.61,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      1.86,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      2.12,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      2.39,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      2.64,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      2.9,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      3.17,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      3.43,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      3.72,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      3.98,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      4.24,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      4.49,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      4.76,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      5.02,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      5.27,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      5.58,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      5.84,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      6.1,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      6.35,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      6.63,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      6.89,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      7.15,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      7.4,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      7.65,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      7.92,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      8.19,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      8.45,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      8.71,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      8.97,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      9.23,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      9.49,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ],
+     [
+      9.76,
+      -41790,
+      -41730,
+      -31040,
+      41670,
+      41730,
+      52630
+     ]
+    ],
+    "max": [
+     41670,
+     41730,
+     52630
+    ],
+    "maxParticles": 2,
+    "lastLive": 9.871925305575132,
+    "n": 492
+   },
+   "rep1": {
+    "lastT": 11.881451897323132,
+    "activeN": 563,
+    "lastParticles": 1,
+    "min": [
+     -64057.1171875,
+     -64057.1171875,
+     -64057.125
+    ],
+    "series": [
+     [
+      0.03,
+      -4956,
+      -4956,
+      -4956,
+      4956,
+      4956,
+      4956
+     ],
+     [
+      0.3,
+      -7706,
+      -7706,
+      -7706,
+      7706,
+      7706,
+      7706
+     ],
+     [
+      0.57,
+      -10726,
+      -10726,
+      -10726,
+      10726,
+      10726,
+      10726
+     ],
+     [
+      0.83,
+      -14696,
+      -14696,
+      -14696,
+      14696,
+      14696,
+      14696
+     ],
+     [
+      1.1,
+      -16318,
+      -16318,
+      -16318,
+      16318,
+      16318,
+      16318
+     ],
+     [
+      1.37,
+      -20013,
+      -20013,
+      -20013,
+      20013,
+      20013,
+      20013
+     ],
+     [
+      1.63,
+      -24394,
+      -24394,
+      -24394,
+      24394,
+      24394,
+      24394
+     ],
+     [
+      1.9,
+      -26861,
+      -26861,
+      -26861,
+      26861,
+      26861,
+      26861
+     ],
+     [
+      2.16,
+      -26861,
+      -26861,
+      -26861,
+      26861,
+      26861,
+      26861
+     ],
+     [
+      2.42,
+      -26861,
+      -26861,
+      -26861,
+      26861,
+      26861,
+      26861
+     ],
+     [
+      2.67,
+      -26861,
+      -26861,
+      -26861,
+      26861,
+      26861,
+      26861
+     ],
+     [
+      2.93,
+      -29658,
+      -29658,
+      -29658,
+      29658,
+      29658,
+      29658
+     ],
+     [
+      3.2,
+      -32753,
+      -32753,
+      -32753,
+      32753,
+      32753,
+      32753
+     ],
+     [
+      3.47,
+      -36208,
+      -36208,
+      -36208,
+      36208,
+      36208,
+      36208
+     ],
+     [
+      3.76,
+      -36208,
+      -36208,
+      -36208,
+      36208,
+      36208,
+      36208
+     ],
+     [
+      4.01,
+      -36208,
+      -36208,
+      -36208,
+      36208,
+      36208,
+      36208
+     ],
+     [
+      4.26,
+      -36208,
+      -36208,
+      -36208,
+      36208,
+      36208,
+      36208
+     ],
+     [
+      4.52,
+      -36208,
+      -36208,
+      -36208,
+      36208,
+      36208,
+      36208
+     ],
+     [
+      4.79,
+      -39844,
+      -39844,
+      -39844,
+      39844,
+      39844,
+      39844
+     ],
+     [
+      5.04,
+      -44033,
+      -44033,
+      -44033,
+      44033,
+      44033,
+      44033
+     ],
+     [
+      5.3,
+      -44033,
+      -44033,
+      -44033,
+      44033,
+      44033,
+      44033
+     ],
+     [
+      5.56,
+      -48457,
+      -48457,
+      -48457,
+      48457,
+      48457,
+      48457
+     ],
+     [
+      5.82,
+      -48457,
+      -48457,
+      -48457,
+      48457,
+      48457,
+      48457
+     ],
+     [
+      6.08,
+      -48457,
+      -48457,
+      -48457,
+      48457,
+      48457,
+      48457
+     ],
+     [
+      6.33,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      6.59,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      6.86,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      7.16,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      7.42,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      7.69,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      7.96,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      8.21,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      8.47,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      8.73,
+      -55889,
+      -55889,
+      -55889,
+      55889,
+      55889,
+      55889
+     ],
+     [
+      9,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      9.27,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      9.52,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      9.79,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      10.06,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      10.32,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      10.58,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      10.84,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      11.09,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      11.36,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      11.62,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ],
+     [
+      11.88,
+      -64057,
+      -64057,
+      -64057,
+      64057,
+      64057,
+      64057
+     ]
+    ],
+    "max": [
+     64057.1171875,
+     64057.1171875,
+     64057.125
+    ],
+    "maxParticles": 2,
+    "lastLive": 12.016588497906923,
+    "n": 563
+   },
+   "rep0": {
+    "lastT": 6.426374409347773,
+    "activeN": 294,
+    "lastParticles": 0,
+    "min": [
+     -24560,
+     -24560,
+     -24560
+    ],
+    "series": [
+     [
+      0.12,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      0.39,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      0.66,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      0.91,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      1.17,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      1.43,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      1.72,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      1.98,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      2.24,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      2.5,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      2.78,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      3.04,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      3.3,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      3.56,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      3.82,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      4.09,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      4.34,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      4.62,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      4.88,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      5.14,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      5.39,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      5.65,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      5.91,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      6.16,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ],
+     [
+      6.43,
+      -24560,
+      -24560,
+      -24560,
+      24560,
+      24560,
+      24560
+     ]
+    ],
+    "max": [
+     24560,
+     24560,
+     24560
+    ],
+    "maxParticles": 2,
+    "lastLive": 6.5502349101006985,
+    "n": 294
+   }
+  },
+  "running": false,
+  "done": true,
+  "t": 10.01,
+  "shots": 30,
+  "error": null,
+  "frames": 1653,
+  "ri": 3
+ },
+ "cleanup": {
+  "camRestored": [
+   [
+    400.6181640625,
+    -195.83966064453125,
+    348.8963317871094
+   ],
+   [
+    -46.200103759765625,
+    -161.9998779296875,
+    0
+   ]
+  ],
+  "removed": 3,
+  "left": 0
+ }
+}

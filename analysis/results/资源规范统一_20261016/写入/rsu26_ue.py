@@ -86,11 +86,13 @@ def start(cfg):
         try:
             comp.set_editor_property('override_lod_method', True)
             comp.set_editor_property('lod_method', unreal.ParticleSystemLODMethod.PARTICLESYSTEMLODMETHOD_DIRECT_SET)
+            comp.set_editor_property('force_preview_lod_index', int(a.get('lod', 0)))
+            comp.set_editor_property('cannot_skip_tick_due_to_visibility', True)
         except Exception as e:
             st['notes'].append('LOD fix failed %s: %r' % (str(a['key']), e))
         comp.deactivate()
         st['actors'][a['key']] = {'actor': act, 'comp': comp, 'loc': a['loc'], 's': a['s']}
-        st['meas'][a['key']] = {'min': None, 'max': None, 'n': 0, 'activeN': 0, 'series': [], 'lastT': -1.0}
+        st['meas'][a['key']] = {'min': None, 'max': None, 'n': 0, 'activeN': 0, 'series': [], 'lastT': -1.0, 'maxParticles': 0, 'lastParticles': 0, 'lastLive': 0.0}
     runs = []
     for r in cfg['runs']:
         r = dict(r)
@@ -125,13 +127,18 @@ def _sample(run, t):
         a = st['actors'][k]
         m = st['meas'][k]
         comp = a['comp']
-        if not comp.is_active():
+        np = comp.get_num_active_particles()
+        m['lastParticles'] = np
+        m['maxParticles'] = max(m['maxParticles'], np)
+        if np > 0:
+            m['lastLive'] = t
+        if not comp.is_active() and not np:
             continue
         o, e = _bounds(comp)
         lo = [o.x - e.x - a['loc'][0], o.y - e.y - a['loc'][1], o.z - e.z - a['loc'][2]]
         hi = [o.x + e.x - a['loc'][0], o.y + e.y - a['loc'][1], o.z + e.z - a['loc'][2]]
         m['activeN'] += 1
-        if max(e.x, e.y, e.z) < 2.0:
+        if max(e.x, e.y, e.z) < 2.0 or not np:
             continue
         m['n'] += 1
         m['min'] = lo if m['min'] is None else [min(m['min'][i], lo[i]) for i in range(3)]
@@ -191,7 +198,12 @@ def _step(dt):
             st['queue'].append(('cam', c['loc'], c['rot']))
             st['queue'].append(('shot', sh['dir'] + '/' + run['id'] + '_t%04.1f_' % sh['t'] + c['name'] + '.png', c['name']))
         return
-    if t >= run['dur'] and not run['shots']:
+    no_particles = all(st['meas'][k]['lastParticles'] == 0 for k in run['actors'])
+    ended = (t >= run['dur'] and no_particles) if run.get('until_dead') else t >= run['dur']
+    if run.get('until_dead') and t >= run.get('maxdur', run['dur'] * 3 + 10) and not ended:
+        st['notes'].append('timeout with live particles: ' + str(run['id']))
+        ended = True
+    if ended and not run['shots']:
         for k in run['actors']:
             try:
                 st['actors'][k]['comp'].deactivate()
