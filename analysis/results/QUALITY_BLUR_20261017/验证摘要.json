@@ -1,0 +1,1123 @@
+{
+  "status": {
+    "sourceAssetsSaved": true,
+    "sourceAssets": 8,
+    "wholeProblemResolved": false,
+    "userAccepted": false,
+    "p4Submitted": false,
+    "rampScopePending": true
+  },
+  "renderer": {
+    "localRHI": "DX12",
+    "localShaderPath": "SM6",
+    "viewportFpsCap": 30,
+    "gtx960ClientTested": false,
+    "exact1080RenderVerified": false
+  },
+  "assets": [
+    {
+      "asset": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+      "beforeSHA256": "42243e2d48a7c08b3f00e4c4817a54e287dab40c8c3ab4d7ee6d077ccd1b9382",
+      "savedSHA256": "1277e2e2aba404aed87f6d3e2ef3fec0fc020d05c14236264e05b2b825be6c28",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+      "beforeSHA256": "05428a058ab5034dd0ca2ec6a552be71e797a750eace031430c324f36ac927f7",
+      "savedSHA256": "099243275e795d0c34416d705efb66f922ae9ef314ab49f8f6ad59ff435f5354",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+      "beforeSHA256": "664685bb2dfdceedfef059fe7543a9a7d53ffbf595f7d2275d7521598c496d9b",
+      "savedSHA256": "c4904015c69c808c086f73b133294606eb45833dd0f73a6266ea56dc878b2d9c",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD.T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD",
+      "beforeSHA256": "9d76eb1e6893a9114b1f5e176f086ae4a8a39f38b300d87703161ae4a8350ad6",
+      "savedSHA256": "8f6713095326f83b2828cd57ea1e005e5ce3a4096dedf2c44068375288b9617f",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD.MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD",
+      "beforeSHA256": "b30c5d21d4b6c89e05de5104b7d3f5071258848798f8986badf62dfd02fe38d3",
+      "savedSHA256": "392210564e78d9ad5824b0614a4cb3106120ffee186d89475b7dc8ed40e54a1a",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD.T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+      "beforeSHA256": "edb116b1ad7bc1c65cbdf08c72df9936781eb6d94107128cc3219e887f4ae28c",
+      "savedSHA256": "75690d16175bb9c98bf93b3c9bb2557ec5e8a033bc938945227ea2952bf4e41a",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+      "beforeSHA256": "562e9047cfd83cace057c654ae98eb28bd6654d773d758f1bac0694ba10e1591",
+      "savedSHA256": "46d2439859220747ddab94e735f5d84c9b2602b3278fbeb106a0e0672a7398de",
+      "changed": true
+    },
+    {
+      "asset": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+      "beforeSHA256": "c182c541a2418fe66692bfbdb412e05c27eeeca6ef06a462189bc9fbf9a7833c",
+      "savedSHA256": "d08adec9186a45ae5f98b8244b411ef21b5cc2010d36a2180447da2e966ebe74",
+      "changed": true
+    }
+  ],
+  "bindings": {
+    "rows": [
+      {
+        "ResourceId": "P_EFX_FireWorks_FanComet_01",
+        "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+        "FxSP_Low": "None",
+        "FxSP_High": "None"
+      },
+      {
+        "ResourceId": "P_EFX_FireWorks_FanSilver_01",
+        "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+        "FxSP_Low": "None",
+        "FxSP_High": "None"
+      }
+    ],
+    "bindings": [
+      {
+        "system": "RiseTrail_L_HD",
+        "emitter": "RiseLoop",
+        "slot": 0,
+        "lods": 1,
+        "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD"
+      },
+      {
+        "system": "RiseTrail_L_HD",
+        "emitter": "TrailFar",
+        "slot": 1,
+        "lods": 1,
+        "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.MI_EFX_FireWorks_RiseTrail_L_Far_01_HD"
+      },
+      {
+        "system": "Comet_Layers_HD",
+        "emitter": "L1_TrailFull",
+        "slot": 3,
+        "lods": 4,
+        "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD.MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD"
+      },
+      {
+        "system": "FanSilver_01_HD",
+        "emitter": "TrailFull",
+        "slot": 1,
+        "lods": 4,
+        "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD"
+      },
+      {
+        "system": "Silver_Layers_S_HD",
+        "emitter": "TrailFull",
+        "slot": 0,
+        "lods": 1,
+        "material": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD"
+      }
+    ]
+  },
+  "references": {
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.MI_EFX_FireWorks_RiseTrail_L_Far_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD": [
+      "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": [
+      "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD.MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD.T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD": [
+      "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD",
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD.T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD": [
+      "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+    ]
+  },
+  "rampSharedReferences": {
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Loop_01": [],
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_S_Full_01": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M"
+    ],
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_Hero_Full_01": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_M"
+    ],
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_XS_Full_01": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+    ],
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Full_01": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_Hero_Full_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Hero_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD"
+    ],
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD"
+    ],
+    "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD": [
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD"
+    ],
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_M_Full_01": [
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M"
+    ]
+  },
+  "rampReversal": {
+    "frozenWorldTime": 9.455078125,
+    "sequence": [
+      "Wrap",
+      "Clamp",
+      "Wrap"
+    ],
+    "eyeAdaptationQuality": 0,
+    "bloomQuality": 0,
+    "postProcessAAQuality": 0,
+    "AF": 0,
+    "separatePercentage": 50,
+    "VRS": false,
+    "materialQuality": 4,
+    "roi": [
+      604,
+      344,
+      656,
+      416
+    ],
+    "wrapRepeatMeanAbs": 0.054754273504273504,
+    "wrapClampMeanAbs": 3.050925925925926,
+    "note": "冻结可逆机制对照；原症状另由移动播放证明；不是客户端画质评分"
+  },
+  "sourcePixels": [
+    {
+      "index": 0,
+      "size": [
+        2048,
+        2048
+      ],
+      "rgba_sha256": "911da5ebffad8579e83296d86a43b9198879502b81a65bc75167905892526362",
+      "unchanged": true
+    },
+    {
+      "index": 1,
+      "size": [
+        2048,
+        2048
+      ],
+      "rgba_sha256": "480c7e6ccf2fff69dd9fc210ce615d781d5c6f1246bd9015f4275087adc80ae4",
+      "unchanged": true
+    },
+    {
+      "index": 2,
+      "size": [
+        2048,
+        2048
+      ],
+      "rgba_sha256": "43291221039af6303060aec35235dea4165dae61bafbe89c504969075ec98b12",
+      "unchanged": true
+    },
+    {
+      "index": 3,
+      "size": [
+        2048,
+        2048
+      ],
+      "rgba_sha256": "7371287c73e0f610b8a4b554c421e8a08056d4dbedaf3649b54f57634e3fe2d0",
+      "unchanged": true
+    }
+  ],
+  "runs": [
+    {
+      "run": "formal-rise-low",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 6.787109375
+        },
+        "after": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 7.1220703125
+        }
+      },
+      "frames": 357,
+      "endWorldTime": 12.03125,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          0
+        ],
+        [
+          45,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-rise-far-low",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 9.3857421875
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 9.7197265625
+        }
+      },
+      "frames": 357,
+      "endWorldTime": 12.025390625,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          0
+        ],
+        [
+          45,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-comet-low",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.201171875
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.53515625
+        }
+      },
+      "frames": 123,
+      "endWorldTime": 4.205078125,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          42000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-silver-low",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              65,
+              1,
+              64
+            ],
+            [
+              33,
+              1,
+              32
+            ]
+          ],
+          "error": null,
+          "elapsed": 1.9453125
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.3125
+        }
+      },
+      "frames": 123,
+      "endWorldTime": 4.216796875,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          39000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-comet-high",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.205078125
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.66796875
+        }
+      },
+      "frames": 112,
+      "endWorldTime": 4.2255859375,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          42000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-rise-high",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 6.7958984375
+        },
+        "after": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 7.2041015625
+        }
+      },
+      "frames": 307,
+      "endWorldTime": 12.0029296875,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          0
+        ],
+        [
+          45,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-silver-high",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.2685546875
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.63671875
+        }
+      },
+      "frames": 118,
+      "endWorldTime": 4.2080078125,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          39000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-silver-extra-high",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.0390625
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.373046875
+        }
+      },
+      "frames": 123,
+      "endWorldTime": 4.208984375,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          39000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "formal-scene-high",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              33,
+              1,
+              32
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.1181640625
+        },
+        "after": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.9599609375
+        }
+      },
+      "frames": 339,
+      "endWorldTime": 12.0185546875,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          375478.40625,
+          -756768,
+          -15684.154296875
+        ],
+        [
+          6.780168056488037,
+          -810.0579223632812,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "run": "formal-rise-high-1000m",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 6.7822265625
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 8.787109375
+        }
+      },
+      "frames": 350,
+      "endWorldTime": 12.02734375,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -705150,
+          0
+        ],
+        [
+          15,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "saved-comet-end",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.6455078125
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 3.013671875
+        }
+      },
+      "frames": 123,
+      "endWorldTime": 4.2158203125,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          42000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    },
+    {
+      "run": "saved-silver-end",
+      "capture": {
+        "before": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.6220703125
+        },
+        "after": {
+          "counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "error": null,
+          "elapsed": 2.9560546875
+        }
+      },
+      "frames": 123,
+      "endWorldTime": 4.2255859375,
+      "endCounts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "done": true,
+      "error": null,
+      "camera": [
+        [
+          373000,
+          -778000,
+          39000
+        ],
+        [
+          0,
+          -90,
+          0
+        ]
+      ],
+      "sourceWithoutMaterialOverride": [
+        false,
+        true
+      ]
+    }
+  ],
+  "recovery": {
+    "actorCount": 34751,
+    "ownActorCount": 0,
+    "callback": "None",
+    "cameraAndSelectionRestored": true,
+    "originalDirtyContentCount": 5,
+    "originalDirtyMapCount": 29,
+    "dirtySetsUnchanged": true,
+    "cvarValueDifferences": [],
+    "cvarSetByRestored": false,
+    "engineTemporaryFilesRemaining": 0,
+    "uePID": 145568,
+    "ueRestarted": false
+  },
+  "excludedRuns": [
+    "comet-fade-low: stale slot0 and old material",
+    "comet-fade-scene: stale slot0 and old material",
+    "comet-current-fade: screenshot bracket reached empty phase",
+    "formal-silver-extra-low: screenshot bracket reached empty phase"
+  ]
+}

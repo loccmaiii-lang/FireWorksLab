@@ -1,0 +1,38 @@
+[
+  {
+    "index": 0,
+    "size": [
+      2048,
+      2048
+    ],
+    "rgba_sha256": "911da5ebffad8579e83296d86a43b9198879502b81a65bc75167905892526362",
+    "unchanged": true
+  },
+  {
+    "index": 1,
+    "size": [
+      2048,
+      2048
+    ],
+    "rgba_sha256": "480c7e6ccf2fff69dd9fc210ce615d781d5c6f1246bd9015f4275087adc80ae4",
+    "unchanged": true
+  },
+  {
+    "index": 2,
+    "size": [
+      2048,
+      2048
+    ],
+    "rgba_sha256": "43291221039af6303060aec35235dea4165dae61bafbe89c504969075ec98b12",
+    "unchanged": true
+  },
+  {
+    "index": 3,
+    "size": [
+      2048,
+      2048
+    ],
+    "rgba_sha256": "7371287c73e0f610b8a4b554c421e8a08056d4dbedaf3649b54f57634e3fe2d0",
+    "unchanged": true
+  }
+]
