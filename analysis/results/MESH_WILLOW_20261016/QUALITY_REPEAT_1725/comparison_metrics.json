@@ -1,0 +1,5 @@
+{
+  "sampling_roi_mae_255": 1.7696357514539334,
+  "sampling_roi_psnr": 39.63346119215621,
+  "scope": "same postprocess; only MaxAnisotropy 0/8; whole frame may include animated sky, no final visual acceptance"
+}

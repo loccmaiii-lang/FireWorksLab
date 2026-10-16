@@ -1,0 +1,1150 @@
+{
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionOutput_0": {
+    "OutputName": "Result",
+    "Description": "",
+    "SortPriority": 0,
+    "A": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionPanner_3",
+        "class": "MaterialExpressionPanner",
+        "name": "MaterialExpressionPanner_3"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "bLastPreviewed": true,
+    "Id": {
+      "_struct": "Guid",
+      "A": 681428607,
+      "B": 1078829455,
+      "C": -473022550,
+      "D": -157392241
+    },
+    "MaterialExpressionEditorX": 176,
+    "MaterialExpressionEditorY": 336,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": -519443821,
+      "B": 1336450505,
+      "C": 2022220698,
+      "D": -217145158
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": false,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": false,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionPanner_3": {
+    "Coordinate": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionMultiply_15",
+        "class": "MaterialExpressionMultiply",
+        "name": "MaterialExpressionMultiply_15"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "Time": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_6",
+        "class": "MaterialExpressionFunctionInput",
+        "name": "MaterialExpressionFunctionInput_6"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "Speed": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionAppendVector_12",
+        "class": "MaterialExpressionAppendVector",
+        "name": "MaterialExpressionAppendVector_12"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "SpeedX": 0,
+    "SpeedY": 0,
+    "ConstCoordinate": 0,
+    "bFractionalPart": true,
+    "MaterialExpressionEditorX": -80,
+    "MaterialExpressionEditorY": 368,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 864841574,
+      "B": 1184928462,
+      "C": 1501463187,
+      "D": 1731382294
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Coordinates\", \"Coordinates\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionAppendVector_11": {
+    "A": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_0",
+        "class": "MaterialExpressionFunctionInput",
+        "name": "MaterialExpressionFunctionInput_0"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "B": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_1",
+        "class": "MaterialExpressionFunctionInput",
+        "name": "MaterialExpressionFunctionInput_1"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "MaterialExpressionEditorX": -352,
+    "MaterialExpressionEditorY": 266,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 310459351,
+      "B": 1254009457,
+      "C": 1726521252,
+      "D": -92984946
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Math\", \"Math\")",
+      "NSLOCTEXT(\"MaterialExpression\", \"VectorOps\", \"VectorOps\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionMultiply_15": {
+    "A": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_2",
+        "class": "MaterialExpressionFunctionInput",
+        "name": "MaterialExpressionFunctionInput_2"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "B": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionAppendVector_11",
+        "class": "MaterialExpressionAppendVector",
+        "name": "MaterialExpressionAppendVector_11"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "ConstA": 0,
+    "ConstB": 1,
+    "MaterialExpressionEditorX": -224,
+    "MaterialExpressionEditorY": 239,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": -1016048433,
+      "B": 1184354928,
+      "C": -227146317,
+      "D": 620078767
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Math\", \"Math\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionAppendVector_12": {
+    "A": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_3",
+        "class": "MaterialExpressionFunctionInput",
+        "name": "MaterialExpressionFunctionInput_3"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "B": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_4",
+        "class": "MaterialExpressionFunctionInput",
+        "name": "MaterialExpressionFunctionInput_4"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "MaterialExpressionEditorX": -304,
+    "MaterialExpressionEditorY": 512,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 310459351,
+      "B": 1254009457,
+      "C": 1726521252,
+      "D": -92984946
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Math\", \"Math\")",
+      "NSLOCTEXT(\"MaterialExpression\", \"VectorOps\", \"VectorOps\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_0": {
+    "Preview": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_0",
+        "class": "MaterialExpressionConstant",
+        "name": "MaterialExpressionConstant_0"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "InputName": "Tiling_U",
+    "Description": "",
+    "Id": {
+      "_struct": "Guid",
+      "A": 1866679598,
+      "B": 1259216004,
+      "C": 675629492,
+      "D": -258337960
+    },
+    "InputType": "FunctionInput_Scalar",
+    "PreviewValue": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "bUsePreviewValueAsDefault": true,
+    "SortPriority": 1,
+    "MaterialExpressionEditorX": -672,
+    "MaterialExpressionEditorY": 219,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1039478335,
+      "B": 1263263776,
+      "C": -560431448,
+      "D": 924448880
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_1": {
+    "Preview": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_1",
+        "class": "MaterialExpressionConstant",
+        "name": "MaterialExpressionConstant_1"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "InputName": "Tiling_V",
+    "Description": "",
+    "Id": {
+      "_struct": "Guid",
+      "A": -774349980,
+      "B": 1221516386,
+      "C": 622446234,
+      "D": 821754900
+    },
+    "InputType": "FunctionInput_Scalar",
+    "PreviewValue": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "bUsePreviewValueAsDefault": true,
+    "SortPriority": 2,
+    "MaterialExpressionEditorX": -672,
+    "MaterialExpressionEditorY": 288,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1039478335,
+      "B": 1263263776,
+      "C": -560431448,
+      "D": 924448880
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_2": {
+    "Preview": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionTextureCoordinate_0",
+        "class": "MaterialExpressionTextureCoordinate",
+        "name": "MaterialExpressionTextureCoordinate_0"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "InputName": "UV",
+    "Description": "",
+    "Id": {
+      "_struct": "Guid",
+      "A": -2007649842,
+      "B": 1088186792,
+      "C": -1732095060,
+      "D": 516773061
+    },
+    "InputType": "FunctionInput_Vector2",
+    "PreviewValue": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "bUsePreviewValueAsDefault": true,
+    "SortPriority": 0,
+    "MaterialExpressionEditorX": -672,
+    "MaterialExpressionEditorY": 144,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1039478335,
+      "B": 1263263776,
+      "C": -560431448,
+      "D": 924448880
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionTextureCoordinate_0": {
+    "CoordinateIndex": 0,
+    "UTiling": 1,
+    "VTiling": 1,
+    "UnMirrorU": false,
+    "UnMirrorV": false,
+    "MaterialExpressionEditorX": -921,
+    "MaterialExpressionEditorY": 144,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": -713667843,
+      "B": 1183214829,
+      "C": -1973364301,
+      "D": -1597880414
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Coordinates\", \"Coordinates\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_0": {
+    "R": 1,
+    "MaterialExpressionEditorX": -853,
+    "MaterialExpressionEditorY": 219,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1330971718,
+      "B": 1143028190,
+      "C": 1749885321,
+      "D": -115012790
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Constants\", \"Constants\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_1": {
+    "R": 1,
+    "MaterialExpressionEditorX": -853,
+    "MaterialExpressionEditorY": 288,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 265955973,
+      "B": 1326694069,
+      "C": 998945929,
+      "D": 1849923306
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Constants\", \"Constants\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_3": {
+    "Preview": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_2",
+        "class": "MaterialExpressionConstant",
+        "name": "MaterialExpressionConstant_2"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "InputName": "Offset_U",
+    "Description": "",
+    "Id": {
+      "_struct": "Guid",
+      "A": 932574079,
+      "B": 1076991435,
+      "C": -856285044,
+      "D": -459475954
+    },
+    "InputType": "FunctionInput_Scalar",
+    "PreviewValue": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "bUsePreviewValueAsDefault": true,
+    "SortPriority": 3,
+    "MaterialExpressionEditorX": -672,
+    "MaterialExpressionEditorY": 512,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1039478335,
+      "B": 1263263776,
+      "C": -560431448,
+      "D": 924448880
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_4": {
+    "Preview": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_3",
+        "class": "MaterialExpressionConstant",
+        "name": "MaterialExpressionConstant_3"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "InputName": "Offset_V",
+    "Description": "",
+    "Id": {
+      "_struct": "Guid",
+      "A": 243226221,
+      "B": 1292513672,
+      "C": 1273686971,
+      "D": 1294705881
+    },
+    "InputType": "FunctionInput_Scalar",
+    "PreviewValue": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "bUsePreviewValueAsDefault": true,
+    "SortPriority": 4,
+    "MaterialExpressionEditorX": -672,
+    "MaterialExpressionEditorY": 576,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1039478335,
+      "B": 1263263776,
+      "C": -560431448,
+      "D": 924448880
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_2": {
+    "R": 0,
+    "MaterialExpressionEditorX": -848,
+    "MaterialExpressionEditorY": 512,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 1330971718,
+      "B": 1143028190,
+      "C": 1749885321,
+      "D": -115012790
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Constants\", \"Constants\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionConstant_3": {
+    "R": 0,
+    "MaterialExpressionEditorX": -848,
+    "MaterialExpressionEditorY": 576,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": 265955973,
+      "B": 1326694069,
+      "C": 998945929,
+      "D": 1849923306
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Constants\", \"Constants\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionFunctionInput_6": {
+    "Preview": {
+      "_struct": "ExpressionInput",
+      "Expression": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionTime_1",
+        "class": "MaterialExpressionTime",
+        "name": "MaterialExpressionTime_1"
+      },
+      "OutputIndex": 0,
+      "InputName": "None",
+      "Mask": 0,
+      "MaskR": 0,
+      "MaskG": 0,
+      "MaskB": 0,
+      "MaskA": 0,
+      "ExpressionName": "None"
+    },
+    "InputName": "Time",
+    "Description": "",
+    "Id": {
+      "_struct": "Guid",
+      "A": 1864133628,
+      "B": 1293546106,
+      "C": 1567619460,
+      "D": 250498793
+    },
+    "InputType": "FunctionInput_Scalar",
+    "PreviewValue": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "bUsePreviewValueAsDefault": true,
+    "SortPriority": -1,
+    "MaterialExpressionEditorX": -672,
+    "MaterialExpressionEditorY": 400,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": -627506587,
+      "B": 1165058350,
+      "C": 829917058,
+      "D": -2114294198
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": false,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Functions\", \"Functions\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  },
+  "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner:MaterialExpressionTime_1": {
+    "bIgnorePause": false,
+    "bOverride_Period": false,
+    "Period": 0,
+    "MaterialExpressionEditorX": -944,
+    "MaterialExpressionEditorY": 385,
+    "MaterialExpressionGuid": {
+      "_struct": "Guid",
+      "A": -1429896616,
+      "B": 1200153034,
+      "C": 1767203250,
+      "D": 113195591
+    },
+    "Material": null,
+    "Function": {
+      "_type": "object_ref",
+      "path": "/Game/MaterialLib/Materials/FX/MaterialFunction/MF_FX_Panner.MF_FX_Panner",
+      "class": "MaterialFunction",
+      "name": "MF_FX_Panner"
+    },
+    "Desc": "",
+    "bRealtimePreview": false,
+    "bIsParameterExpression": false,
+    "bCommentBubbleVisible": false,
+    "bShowOutputNameOnPin": false,
+    "bShowMaskColorsOnPin": true,
+    "bHidePreviewWindow": false,
+    "bCollapsed": true,
+    "bShaderInputData": true,
+    "bShowInputs": true,
+    "bShowOutputs": true,
+    "MenuCategories": [
+      "NSLOCTEXT(\"MaterialExpression\", \"Constants\", \"Constants\")"
+    ],
+    "Outputs": [
+      {
+        "_struct": "ExpressionOutput",
+        "OutputName": "None",
+        "Mask": 0,
+        "MaskR": 0,
+        "MaskG": 0,
+        "MaskB": 0,
+        "MaskA": 0
+      }
+    ]
+  }
+}

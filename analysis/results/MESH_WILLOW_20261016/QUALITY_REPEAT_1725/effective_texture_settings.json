@@ -1,0 +1,22 @@
+{
+  "T_MW_Strip": {
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "Filter": "TF_Default",
+    "SRGB": false,
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "LODGroup": "TEXTUREGROUP_World",
+    "LODBias": 0,
+    "NeverStream": true
+  },
+  "T_MW_FlowFixed": {
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Clamp",
+    "Filter": "TF_Bilinear",
+    "SRGB": false,
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "LODGroup": "TEXTUREGROUP_World",
+    "LODBias": 0,
+    "NeverStream": true
+  }
+}

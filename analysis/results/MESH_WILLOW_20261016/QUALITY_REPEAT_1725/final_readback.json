@@ -1,0 +1,2327 @@
+{
+  "system": {
+    "UpdateTime_FPS": 60,
+    "UpdateTime_Delta": 0.01666666753590107,
+    "WarmupTime": 0,
+    "WarmupTickRate": 0,
+    "Emitters": [
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1",
+        "class": "ParticleSpriteEmitter",
+        "name": "ParticleSpriteEmitter_1"
+      }
+    ],
+    "ThumbnailAngle": {
+      "_struct": "Rotator",
+      "Pitch": 0,
+      "Yaw": 0,
+      "Roll": 0
+    },
+    "ThumbnailDistance": 200,
+    "ThumbnailWarmup": 0,
+    "CurveEdSetup": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:InterpCurveEdSetup_0",
+      "class": "InterpCurveEdSetup",
+      "name": "InterpCurveEdSetup_0"
+    },
+    "LODDistanceCheckTime": 1,
+    "MacroUVRadius": 200,
+    "LODDistances": [
+      0
+    ],
+    "CullingDistance": 25000,
+    "CullingScreenSize": 0.309656023979187,
+    "EditorLODSetting": 0,
+    "LODSettings": [
+      {
+        "_struct": "ParticleSystemLOD"
+      },
+      {
+        "_struct": "ParticleSystemLOD"
+      },
+      {
+        "_struct": "ParticleSystemLOD"
+      },
+      {
+        "_struct": "ParticleSystemLOD"
+      }
+    ],
+    "FixedRelativeBoundingBox": {
+      "_struct": "Box",
+      "Min": {
+        "_struct": "Vector",
+        "X": -60000,
+        "Y": -60000,
+        "Z": -60000
+      },
+      "Max": {
+        "_struct": "Vector",
+        "X": 60000,
+        "Y": 60000,
+        "Z": 60000
+      },
+      "IsValid": 1
+    },
+    "RenderOrderBoundingBox": {
+      "_struct": "Box",
+      "Min": {
+        "_struct": "Vector",
+        "X": -100,
+        "Y": -100,
+        "Z": -100
+      },
+      "Max": {
+        "_struct": "Vector",
+        "X": 100,
+        "Y": 100,
+        "Z": 100
+      },
+      "IsValid": 1
+    },
+    "SecondsBeforeInactive": 0,
+    "FloorMesh": "/Engine/EditorMeshes/AnimTreeEd_PreviewFloor.AnimTreeEd_PreviewFloor",
+    "FloorPosition": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "FloorRotation": {
+      "_struct": "Rotator",
+      "Pitch": 0,
+      "Yaw": 0,
+      "Roll": 0
+    },
+    "FloorScale": 1,
+    "FloorScale3D": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+    },
+    "BackgroundColor": {
+      "_struct": "Color",
+      "B": 58,
+      "G": 58,
+      "R": 58,
+      "A": 0
+    },
+    "Delay": 0,
+    "DelayLow": 0,
+    "bOrientZAxisTowardCamera": false,
+    "bUseFixedRelativeBoundingBox": true,
+    "bUseRenderingOrderBoundingBox": false,
+    "bShouldResetPeakCounts": true,
+    "bUseRealtimeThumbnail": false,
+    "ThumbnailImageOutOfDate": true,
+    "ThumbnailImage": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ThumbnailTexture",
+      "class": "Texture2D",
+      "name": "ThumbnailTexture"
+    },
+    "bUseDelayRange": false,
+    "bAllowManagedTicking": true,
+    "bAutoDeactivate": true,
+    "bRegenerateLODDuplicate": false,
+    "SystemUpdateMode": "EPSUM_FixedTime",
+    "MaxVRSShadingRate": "VRS_2X2",
+    "ForceVRSShadingRate": "VRS_None",
+    "AssetsTags": [],
+    "LODMethod": "PARTICLESYSTEMLODMETHOD_DirectSet",
+    "InsignificantReaction": "Auto",
+    "OcclusionBoundsMethod": "EPSOBM_ParticleBounds",
+    "MaxSignificanceLevel": "Critical",
+    "MinTimeBetweenTicks": 0,
+    "InsignificanceDelay": 0,
+    "BenchmarkDistance": 100,
+    "BenchmarkRotationAngle": 0,
+    "MacroUVPosition": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "CustomOcclusionBounds": {
+      "_struct": "Box",
+      "Min": {
+        "_struct": "Vector",
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Max": {
+        "_struct": "Vector",
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "IsValid": 1
+    },
+    "NamedMaterialSlots": [],
+    "bIsImmortal": false,
+    "bWillBecomeZombie": false,
+    "MaxPoolSize": 32
+  },
+  "emitter": {
+    "EmitterName": "Particle Emitter",
+    "EmitterRenderMode": "ERM_Normal",
+    "SignificanceLevel": "Critical",
+    "bUseLegacySpawningBehavior": false,
+    "ConvertedModules": true,
+    "bCookedOut": false,
+    "bDisabledLODsKeepEmitterAlive": false,
+    "bDisableWhenInsignficant": false,
+    "bCollapsed": false,
+    "DetailMode": "DM_Low",
+    "EmitterEditorColor": {
+      "_struct": "Color",
+      "B": 255,
+      "G": 70,
+      "R": 0,
+      "A": 255
+    },
+    "LODLevels": [
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+        "class": "ParticleLODLevel",
+        "name": "ParticleLODLevel_0"
+      }
+    ],
+    "PeakActiveParticles": 0,
+    "InitialAllocationCount": 0,
+    "QualityLevelSpawnRateScale": 1,
+    "DetailModeBitmask": 7
+  },
+  "lod": {
+    "Level": 0,
+    "bEnabled": false,
+    "RequiredModule": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2",
+      "class": "ParticleModuleRequired",
+      "name": "ParticleModuleRequired_2"
+    },
+    "Modules": [
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2",
+        "class": "ParticleModuleLifetime",
+        "name": "ParticleModuleLifetime_2"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2",
+        "class": "ParticleModuleColor",
+        "name": "ParticleModuleColor_2"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2",
+        "class": "ParticleModuleSize",
+        "name": "ParticleModuleSize_2"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1",
+        "class": "ParticleModuleSizeMultiplyLife",
+        "name": "ParticleModuleSizeMultiplyLife_1"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1",
+        "class": "ParticleModuleParameterDynamic",
+        "name": "ParticleModuleParameterDynamic_1"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2",
+        "class": "ParticleModuleSizeMultiplyLife",
+        "name": "ParticleModuleSizeMultiplyLife_2"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0",
+        "class": "ParticleModuleMeshRotation",
+        "name": "ParticleModuleMeshRotation_0"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_7",
+        "class": "ParticleModuleColorScaleOverLife",
+        "name": "ParticleModuleColorScaleOverLife_7"
+      }
+    ],
+    "TypeDataModule": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_2",
+      "class": "ParticleModuleTypeDataMesh",
+      "name": "ParticleModuleTypeDataMesh_2"
+    },
+    "SpawnModule": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSpawn_4",
+      "class": "ParticleModuleSpawn",
+      "name": "ParticleModuleSpawn_4"
+    },
+    "EventGenerator": null,
+    "ConvertedModules": true,
+    "PeakActiveParticles": 3
+  },
+  "type": {
+    "Mesh": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Single_N400_LockZ.SM_MW_Single_N400_LockZ",
+      "class": "StaticMesh",
+      "name": "SM_MW_Single_N400_LockZ"
+    },
+    "LODSizeScale": 1,
+    "bUseStaticMeshLODs": true,
+    "CastShadows": false,
+    "DoCollisions": false,
+    "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+    "bOverrideMaterial": true,
+    "bOverrideDefaultMotionBlurSettings": false,
+    "bEnableMotionBlur": false,
+    "bAllowDistributionParaForRollPitchYaw": false,
+    "RollPitchYawRange": {
+      "_struct": "RawDistributionVector",
+      "MinValue": 0,
+      "MaxValue": 0,
+      "MinValueVec": {
+        "_struct": "Vector",
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "MaxValueVec": {
+        "_struct": "Vector",
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Distribution": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_2.DistributionRollPitchYaw",
+        "class": "DistributionVectorUniform",
+        "name": "DistributionRollPitchYaw"
+      },
+      "Table": {
+        "_struct": "DistributionLookupTable",
+        "TimeScale": 0,
+        "TimeBias": 0,
+        "Values": [
+          0,
+          0,
+          0
+        ],
+        "Op": 1,
+        "EntryCount": 1,
+        "EntryStride": 3,
+        "SubEntryStride": 0,
+        "LockFlag": 0
+      }
+    },
+    "AxisLockOption": "EPAL_Z",
+    "bCameraFacing": true,
+    "CameraFacingUpAxisOption": "CameraFacing_NoneUP",
+    "CameraFacingOption": "LockedAxis_ZAxisFacing",
+    "bApplyParticleRotationAsSpin": false,
+    "bFaceCameraDirectionRatherThanPosition": false,
+    "bCollisionsConsiderPartilceSize": true,
+    "bCanBeInCluster": false,
+    "bSpawnModule": false,
+    "bUpdateModule": false,
+    "bFinalUpdateModule": false,
+    "bUpdateForGPUEmitter": false,
+    "bCurvesAsColor": false,
+    "b3DDrawMode": false,
+    "bSupported3DDrawMode": false,
+    "bEnabled": true,
+    "bEditable": true,
+    "LODDuplicate": true,
+    "bSupportsRandomSeed": false,
+    "bRequiresLoopingNotification": false,
+    "LODValidity": 15,
+    "ModuleEditorColor": {
+      "_struct": "Color",
+      "B": 0,
+      "G": 255,
+      "R": 255,
+      "A": 255
+    }
+  },
+  "required": {
+    "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_FlowFixed.MI_FlowFixed",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_FlowFixed"
+    },
+    "MinFacingCameraBlendDistance": 0,
+    "MaxFacingCameraBlendDistance": 0,
+    "EmitterOrigin": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "EmitterRotation": {
+      "_struct": "Rotator",
+      "Pitch": 0,
+      "Yaw": 0,
+      "Roll": 0
+    },
+    "ScreenAlignment": "PSA_Square",
+    "bUseInLocalSpace": false,
+    "bUseFPPCamera": false,
+    "bKillOnDeactivate": false,
+    "bKillOnCompleted": false,
+    "bCastShadow": false,
+    "SortMode": "PSORTMODE_None",
+    "bUseLegacyEmitterTime": false,
+    "bRemoveHMDRoll": false,
+    "bEmitterDurationUseRange": false,
+    "EmitterDuration": 16.100000381469727,
+    "SpawnRate": {
+      "_struct": "RawDistributionFloat",
+      "MinValue": 0,
+      "MaxValue": 0,
+      "Distribution": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2.RequiredDistributionSpawnRate",
+        "class": "DistributionFloatConstant",
+        "name": "RequiredDistributionSpawnRate"
+      },
+      "Table": {
+        "_struct": "DistributionLookupTable",
+        "TimeScale": 0,
+        "TimeBias": 0,
+        "Values": [],
+        "Op": 0,
+        "EntryCount": 0,
+        "EntryStride": 0,
+        "SubEntryStride": 0,
+        "LockFlag": 0
+      }
+    },
+    "BurstList": [],
+    "EmitterDelay": 0,
+    "EmitterDelayLow": 0,
+    "bDelayFirstLoopOnly": false,
+    "InterpolationMethod": "PSUVIM_None",
+    "bScaleUV": false,
+    "bEmitterDelayUseRange": false,
+    "ParticleBurstMethod": "EPBM_Instant",
+    "bOverrideSystemMacroUV": false,
+    "bUseMaxDrawCount": true,
+    "OpacitySourceMode": "OSM_Alpha",
+    "EmitterNormalsMode": "ENM_CameraFacing",
+    "bOrbitModuleAffectsVelocityAlignment": false,
+    "SubImages_Horizontal": 1,
+    "SubImages_Vertical": 1,
+    "RandomImageTime": 1,
+    "RandomImageChanges": 0,
+    "MacroUVPosition": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "MacroUVRadius": 0,
+    "UVFlippingMode": "None",
+    "BoundingMode": "BVC_EightVertices",
+    "bDurationRecalcEachLoop": false,
+    "NormalsSphereCenter": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 100
+    },
+    "AlphaThreshold": 0.10000000149011612,
+    "EmitterLoops": 1,
+    "CutoutTexture": null,
+    "MaxDrawCount": 1,
+    "EmitterDurationLow": 0,
+    "NormalsCylinderDirection": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 1
+    },
+    "NamedMaterialOverrides": [],
+    "bSpawnModule": true,
+    "bUpdateModule": true,
+    "bFinalUpdateModule": false,
+    "bUpdateForGPUEmitter": false,
+    "bCurvesAsColor": false,
+    "b3DDrawMode": false,
+    "bSupported3DDrawMode": false,
+    "bEnabled": true,
+    "bEditable": true,
+    "LODDuplicate": true,
+    "bSupportsRandomSeed": false,
+    "bRequiresLoopingNotification": false,
+    "LODValidity": 15,
+    "ModuleEditorColor": {
+      "_struct": "Color",
+      "B": 255,
+      "G": 0,
+      "R": 232,
+      "A": 255
+    }
+  },
+  "modules": [
+    {
+      "class": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2",
+      "properties": {
+        "Lifetime": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 16.100000381469727,
+          "MaxValue": 16.100000381469727,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2.DistributionFloatConstant_0",
+            "class": "DistributionFloatConstant",
+            "name": "DistributionFloatConstant_0"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              16.100000381469727
+            ],
+            "Op": 1,
+            "EntryCount": 1,
+            "EntryStride": 1,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "bSpawnModule": true,
+        "bUpdateModule": false,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 0,
+          "G": 194,
+          "R": 255,
+          "A": 255
+        }
+      }
+    },
+    {
+      "class": "ParticleModuleColor",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2",
+      "properties": {
+        "StartColor": {
+          "_struct": "RawDistributionVector",
+          "MinValue": 1,
+          "MaxValue": 1,
+          "MinValueVec": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "MaxValueVec": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2.DistributionStartColor",
+            "class": "DistributionVectorConstant",
+            "name": "DistributionStartColor"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              1,
+              1,
+              1
+            ],
+            "Op": 1,
+            "EntryCount": 1,
+            "EntryStride": 3,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "StartAlpha": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 1,
+          "MaxValue": 1,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2.DistributionStartAlpha",
+            "class": "DistributionFloatConstant",
+            "name": "DistributionStartAlpha"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              1
+            ],
+            "Op": 1,
+            "EntryCount": 1,
+            "EntryStride": 1,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "bClampAlpha": true,
+        "bSpawnModule": true,
+        "bUpdateModule": false,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": true,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 0,
+          "G": 255,
+          "R": 162,
+          "A": 255
+        }
+      }
+    },
+    {
+      "class": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2",
+      "properties": {
+        "StartSize": {
+          "_struct": "RawDistributionVector",
+          "MinValue": 1,
+          "MaxValue": 1,
+          "MinValueVec": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "MaxValueVec": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2.DistributionVectorConstant_0",
+            "class": "DistributionVectorConstant",
+            "name": "DistributionVectorConstant_0"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              1,
+              1,
+              1
+            ],
+            "Op": 1,
+            "EntryCount": 1,
+            "EntryStride": 3,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "bConsiderCameraDistanceSizeScalar": false,
+        "StartCameraDistance": 1000,
+        "EndCameraDistance": 10000,
+        "StartSizeScalar": 1,
+        "EndSizeScalar": 1,
+        "bSpawnModule": true,
+        "bUpdateModule": false,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 148,
+          "G": 255,
+          "R": 0,
+          "A": 255
+        }
+      }
+    },
+    {
+      "class": "ParticleModuleSizeMultiplyLife",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1",
+      "properties": {
+        "LifeMultiplier": {
+          "_struct": "RawDistributionVector",
+          "MinValue": 0.6000000238418579,
+          "MaxValue": 0.6000000238418579,
+          "MinValueVec": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "MaxValueVec": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1.DistributionVectorConstant_0",
+            "class": "DistributionVectorConstant",
+            "name": "DistributionVectorConstant_0"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              0.6000000238418579,
+              0.6000000238418579,
+              0.6000000238418579
+            ],
+            "Op": 1,
+            "EntryCount": 1,
+            "EntryStride": 3,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "MultiplyX": true,
+        "MultiplyY": true,
+        "MultiplyZ": true,
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": false,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 228,
+          "G": 0,
+          "R": 255,
+          "A": 255
+        }
+      }
+    },
+    {
+      "class": "ParticleModuleParameterDynamic",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1",
+      "properties": {
+        "DynamicParams": [
+          {
+            "_struct": "EmitterDynamicParameter",
+            "ParamName": "UVIncrement",
+            "bUseEmitterTime": false,
+            "bSpawnTimeOnly": false,
+            "ValueMethod": "EDPV_UserSet",
+            "bScaleVelocityByParamValue": false,
+            "ParamValue": {
+              "_struct": "RawDistributionFloat",
+              "MinValue": -1.2049000263214111,
+              "MaxValue": 0.9940999746322632,
+              "Distribution": {
+                "_type": "object_ref",
+                "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1.DistributionFloatConstantCurve_5",
+                "class": "DistributionFloatConstantCurve",
+                "name": "DistributionFloatConstantCurve_5"
+              },
+              "Table": {
+                "_struct": "DistributionLookupTable",
+                "TimeScale": 1,
+                "TimeBias": 0,
+                "Values": [
+                  0.9940999746322632,
+                  -1.2049000263214111
+                ],
+                "Op": 1,
+                "EntryCount": 2,
+                "EntryStride": 1,
+                "SubEntryStride": 0,
+                "LockFlag": 0
+              }
+            }
+          },
+          {
+            "_struct": "EmitterDynamicParameter",
+            "ParamName": "Param2",
+            "bUseEmitterTime": false,
+            "bSpawnTimeOnly": false,
+            "ValueMethod": "EDPV_UserSet",
+            "bScaleVelocityByParamValue": false,
+            "ParamValue": {
+              "_struct": "RawDistributionFloat",
+              "MinValue": 1.0199999809265137,
+              "MaxValue": 1.0199999809265137,
+              "Distribution": {
+                "_type": "object_ref",
+                "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1.DistributionFloatConstantCurve_6",
+                "class": "DistributionFloatConstantCurve",
+                "name": "DistributionFloatConstantCurve_6"
+              },
+              "Table": {
+                "_struct": "DistributionLookupTable",
+                "TimeScale": 0,
+                "TimeBias": 0,
+                "Values": [
+                  1.0199999809265137
+                ],
+                "Op": 1,
+                "EntryCount": 1,
+                "EntryStride": 1,
+                "SubEntryStride": 0,
+                "LockFlag": 0
+              }
+            }
+          },
+          {
+            "_struct": "EmitterDynamicParameter",
+            "ParamName": "DistortIntensity",
+            "bUseEmitterTime": false,
+            "bSpawnTimeOnly": false,
+            "ValueMethod": "EDPV_UserSet",
+            "bScaleVelocityByParamValue": false,
+            "ParamValue": {
+              "_struct": "RawDistributionFloat",
+              "MinValue": 1,
+              "MaxValue": 1,
+              "Distribution": {
+                "_type": "object_ref",
+                "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1.DistributionParam3",
+                "class": "DistributionFloatConstant",
+                "name": "DistributionParam3"
+              },
+              "Table": {
+                "_struct": "DistributionLookupTable",
+                "TimeScale": 0,
+                "TimeBias": 0,
+                "Values": [
+                  1
+                ],
+                "Op": 1,
+                "EntryCount": 1,
+                "EntryStride": 1,
+                "SubEntryStride": 0,
+                "LockFlag": 0
+              }
+            }
+          },
+          {
+            "_struct": "EmitterDynamicParameter",
+            "ParamName": "AlphaMaskUVScale",
+            "bUseEmitterTime": false,
+            "bSpawnTimeOnly": false,
+            "ValueMethod": "EDPV_UserSet",
+            "bScaleVelocityByParamValue": false,
+            "ParamValue": {
+              "_struct": "RawDistributionFloat",
+              "MinValue": 1,
+              "MaxValue": 1,
+              "Distribution": {
+                "_type": "object_ref",
+                "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1.DistributionParam4",
+                "class": "DistributionFloatConstant",
+                "name": "DistributionParam4"
+              },
+              "Table": {
+                "_struct": "DistributionLookupTable",
+                "TimeScale": 0,
+                "TimeBias": 0,
+                "Values": [
+                  1
+                ],
+                "Op": 1,
+                "EntryCount": 1,
+                "EntryStride": 1,
+                "SubEntryStride": 0,
+                "LockFlag": 0
+              }
+            }
+          }
+        ],
+        "UpdateFlags": 15,
+        "bUsesVelocity": false,
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 0,
+          "G": 133,
+          "R": 255,
+          "A": 255
+        }
+      },
+      "DP0": {
+        "ConstantCurve": {
+          "_struct": "InterpCurveFloat",
+          "Points": [
+            {
+              "_struct": "InterpCurvePointFloat",
+              "InVal": 0,
+              "OutVal": 0.9940999746322632,
+              "ArriveTangent": 0,
+              "LeaveTangent": 0,
+              "InterpMode": "CIM_Linear"
+            },
+            {
+              "_struct": "InterpCurvePointFloat",
+              "InVal": 1,
+              "OutVal": -1.2049000263214111,
+              "ArriveTangent": 0,
+              "LeaveTangent": 0,
+              "InterpMode": "CIM_Linear"
+            }
+          ],
+          "bIsLooped": false,
+          "LoopKeyOffset": 0
+        },
+        "bCanBeBaked": true,
+        "bBakedDataSuccesfully": true
+      },
+      "DP1": {
+        "ConstantCurve": {
+          "_struct": "InterpCurveFloat",
+          "Points": [
+            {
+              "_struct": "InterpCurvePointFloat",
+              "InVal": 0,
+              "OutVal": 1.0199999809265137,
+              "ArriveTangent": 0,
+              "LeaveTangent": 0,
+              "InterpMode": "CIM_Linear"
+            },
+            {
+              "_struct": "InterpCurvePointFloat",
+              "InVal": 1,
+              "OutVal": 1.0199999809265137,
+              "ArriveTangent": 0,
+              "LeaveTangent": 0,
+              "InterpMode": "CIM_Linear"
+            }
+          ],
+          "bIsLooped": false,
+          "LoopKeyOffset": 0
+        },
+        "bCanBeBaked": true,
+        "bBakedDataSuccesfully": true
+      },
+      "DP2": {
+        "Constant": 1,
+        "bCanBeBaked": true,
+        "bBakedDataSuccesfully": true
+      },
+      "DP3": {
+        "Constant": 1,
+        "bCanBeBaked": true,
+        "bBakedDataSuccesfully": true
+      }
+    },
+    {
+      "class": "ParticleModuleSizeMultiplyLife",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2",
+      "properties": {
+        "LifeMultiplier": {
+          "_struct": "RawDistributionVector",
+          "MinValue": 0.5,
+          "MaxValue": 1.5,
+          "MinValueVec": {
+            "_struct": "Vector",
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          },
+          "MaxValueVec": {
+            "_struct": "Vector",
+            "X": 1.5,
+            "Y": 1.5,
+            "Z": 1.5
+          },
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2.DistributionVectorConstantCurve_0",
+            "class": "DistributionVectorConstantCurve",
+            "name": "DistributionVectorConstantCurve_0"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 31,
+            "TimeBias": 0,
+            "Values": [
+              0.5,
+              0.5,
+              0.5,
+              0.6612902879714966,
+              0.6612902879714966,
+              0.6612902879714966,
+              0.8225805759429932,
+              0.8225805759429932,
+              0.8225805759429932,
+              0.9808229804039001,
+              0.9808229804039001,
+              0.9808229804039001,
+              1.0161290168762207,
+              1.0161290168762207,
+              1.0161290168762207,
+              1.0340502262115479,
+              1.0340502262115479,
+              1.0340502262115479,
+              1.0519713163375854,
+              1.0519713163375854,
+              1.0519713163375854,
+              1.0698925256729126,
+              1.0698925256729126,
+              1.0698925256729126,
+              1.0878136157989502,
+              1.0878136157989502,
+              1.0878136157989502,
+              1.1057347059249878,
+              1.1057347059249878,
+              1.1057347059249878,
+              1.123655915260315,
+              1.123655915260315,
+              1.123655915260315,
+              1.1415770053863525,
+              1.1415770053863525,
+              1.1415770053863525,
+              1.1594982147216797,
+              1.1594982147216797,
+              1.1594982147216797,
+              1.1774194240570068,
+              1.1774194240570068,
+              1.1774194240570068,
+              1.1953405141830444,
+              1.1953405141830444,
+              1.1953405141830444,
+              1.213261604309082,
+              1.213261604309082,
+              1.213261604309082,
+              1.2311828136444092,
+              1.2311828136444092,
+              1.2311828136444092,
+              1.2491039037704468,
+              1.2491039037704468,
+              1.2491039037704468,
+              1.267025113105774,
+              1.267025113105774,
+              1.267025113105774,
+              1.2849462032318115,
+              1.2849462032318115,
+              1.2849462032318115,
+              1.3028672933578491,
+              1.3028672933578491,
+              1.3028672933578491,
+              1.3207883834838867,
+              1.3207883834838867,
+              1.3207883834838867,
+              1.3387097120285034,
+              1.3387097120285034,
+              1.3387097120285034,
+              1.356630802154541,
+              1.356630802154541,
+              1.356630802154541,
+              1.3745518922805786,
+              1.3745518922805786,
+              1.3745518922805786,
+              1.3924729824066162,
+              1.3924729824066162,
+              1.3924729824066162,
+              1.4103941917419434,
+              1.4103941917419434,
+              1.4103941917419434,
+              1.4283154010772705,
+              1.4283154010772705,
+              1.4283154010772705,
+              1.446236491203308,
+              1.446236491203308,
+              1.446236491203308,
+              1.4641575813293457,
+              1.4641575813293457,
+              1.4641575813293457,
+              1.4820789098739624,
+              1.4820789098739624,
+              1.4820789098739624,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "Op": 1,
+            "EntryCount": 32,
+            "EntryStride": 3,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "MultiplyX": true,
+        "MultiplyY": true,
+        "MultiplyZ": true,
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": false,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 246,
+          "G": 0,
+          "R": 255,
+          "A": 255
+        }
+      }
+    },
+    {
+      "class": "ParticleModuleMeshRotation",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0",
+      "properties": {
+        "StartRotation": {
+          "_struct": "RawDistributionVector",
+          "MinValue": -1,
+          "MaxValue": 1,
+          "MinValueVec": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "MaxValueVec": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0.DistributionStartRotation",
+            "class": "DistributionVectorUniform",
+            "name": "DistributionStartRotation"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              0,
+              0,
+              -1,
+              1,
+              1,
+              1
+            ],
+            "Op": 2,
+            "EntryCount": 1,
+            "EntryStride": 6,
+            "SubEntryStride": 3,
+            "LockFlag": 0
+          }
+        },
+        "bInheritParent": false,
+        "bSpawnModule": true,
+        "bUpdateModule": false,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 148,
+          "G": 255,
+          "R": 0,
+          "A": 255
+        }
+      }
+    },
+    {
+      "class": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_7",
+      "properties": {
+        "ColorScaleOverLife": {
+          "_struct": "RawDistributionVector",
+          "MinValue": 5.113677978515625,
+          "MaxValue": 40,
+          "MinValueVec": {
+            "_struct": "Vector",
+            "X": 40,
+            "Y": 16.75531578063965,
+            "Z": 5.113677978515625
+          },
+          "MaxValueVec": {
+            "_struct": "Vector",
+            "X": 40,
+            "Y": 16.75531578063965,
+            "Z": 5.113677978515625
+          },
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_7.DistributionVectorConstant_1",
+            "class": "DistributionVectorConstant",
+            "name": "DistributionVectorConstant_1"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [
+              40,
+              16.75531578063965,
+              5.113677978515625
+            ],
+            "Op": 1,
+            "EntryCount": 1,
+            "EntryStride": 3,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "AlphaScaleOverLife": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 0,
+          "MaxValue": 1,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_7.DistributionFloatConstantCurve_0",
+            "class": "DistributionFloatConstantCurve",
+            "name": "DistributionFloatConstantCurve_0"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 127,
+            "TimeBias": 0,
+            "Values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0.846668541431427,
+              0.4233343005180359,
+              0
+            ],
+            "Op": 1,
+            "EntryCount": 128,
+            "EntryStride": 1,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "bEmitterTime": false,
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": true,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 0,
+          "G": 255,
+          "R": 49,
+          "A": 255
+        }
+      }
+    }
+  ],
+  "material": {
+    "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_FlowFixed.MI_FlowFixed",
+    "properties": {
+      "ParameterStateId": {
+        "_struct": "Guid",
+        "A": -2021688056,
+        "B": 1114648216,
+        "C": 509697459,
+        "D": 241680360
+      },
+      "PhysMaterial": null,
+      "Parent": {
+        "_type": "object_ref",
+        "path": "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft.M_EFX_DissolveOutline_Soft",
+        "class": "Material",
+        "name": "M_EFX_DissolveOutline_Soft"
+      },
+      "bHasStaticPermutationResource": true,
+      "bOverrideSubsurfaceProfile": false,
+      "ScalarParameterValues": [
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "DepthFadeDistance",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 100,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 2080567472,
+            "B": 1303662833,
+            "C": -1110915188,
+            "D": -1533278322
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "DissolveOffset",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 0,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 1521006801,
+            "B": 1200343079,
+            "C": 1990839444,
+            "D": 1714330325
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "hardness",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 0,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 2123068593,
+            "B": 1134991351,
+            "C": -1930951751,
+            "D": -1038998707
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "OutlineWidth",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 0,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": -1977952796,
+            "B": 1085363820,
+            "C": 1594324886,
+            "D": -1118830966
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "Progress",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 0,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": -1074251671,
+            "B": 1135399435,
+            "C": 1408786577,
+            "D": 1633302747
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "ColorIntensity",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 1,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": -768129503,
+            "B": 1196818295,
+            "C": 291740054,
+            "D": -376922514
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "ColorPower",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 1,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 839000731,
+            "B": 1287805987,
+            "C": -1330129270,
+            "D": 124553828
+          }
+        },
+        {
+          "_struct": "ScalarParameterValue",
+          "ParameterName": "None",
+          "AtlasData": {
+            "_struct": "ScalarParameterAtlasInstanceData",
+            "bIsUsedAsAtlasPosition": false,
+            "Curve": "None",
+            "Atlas": "None"
+          },
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "RefractionDepthBias",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": 0,
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0
+          }
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "NoiseChannel",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 1,
+            "G": 0,
+            "B": 0,
+            "A": 0
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 1123132051,
+            "B": 1148163586,
+            "C": 985659029,
+            "D": 2057892185
+          }
+        },
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "NoiseUVParam",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 1,
+            "G": 1,
+            "B": 0,
+            "A": 0
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": -1317743009,
+            "B": 1331924676,
+            "C": -828039777,
+            "D": -585916750
+          }
+        },
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "OutlineColor",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 10000,
+            "G": 10000,
+            "B": 10000,
+            "A": 1
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 453751629,
+            "B": 1150482591,
+            "C": -1044525665,
+            "D": -221895611
+          }
+        },
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "AlphaChannel",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 0,
+            "G": 0,
+            "B": 0,
+            "A": 1
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": -704583715,
+            "B": 1238930799,
+            "C": -8853117,
+            "D": -1203382339
+          }
+        },
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "MultiColor",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 1,
+            "G": 1,
+            "B": 1,
+            "A": 1
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 1734962870,
+            "B": 1268364277,
+            "C": 187631285,
+            "D": 52833972
+          }
+        },
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "UVParam",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 1,
+            "G": 1,
+            "B": 0,
+            "A": 0
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 487926495,
+            "B": 1313890173,
+            "C": 623851401,
+            "D": 1765754781
+          }
+        },
+        {
+          "_struct": "VectorParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "UVIncrementChannel",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_struct": "LinearColor",
+            "R": 0,
+            "G": 1,
+            "B": 0,
+            "A": 0
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 2048121410,
+            "B": 1137400778,
+            "C": -1046428280,
+            "D": -1794359801
+          }
+        }
+      ],
+      "TextureParameterValues": [
+        {
+          "_struct": "TextureParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "NoiseMap",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_type": "object_ref",
+            "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62.T_EFX_Mask_62",
+            "class": "Texture2D",
+            "name": "T_EFX_Mask_62"
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": 292630185,
+            "B": 1156079715,
+            "C": 1995236993,
+            "D": -737376064
+          }
+        },
+        {
+          "_struct": "TextureParameterValue",
+          "ParameterName": "None",
+          "ParameterInfo": {
+            "_struct": "MaterialParameterInfo",
+            "Name": "MainTex",
+            "Association": "GlobalParameter",
+            "Index": -1,
+            "ParameterLocation": {
+              "_struct": "SoftObjectPath",
+              "AssetPathName": "None",
+              "SubPathString": ""
+            }
+          },
+          "ParameterValue": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/T_MW_FlowFixed.T_MW_FlowFixed",
+            "class": "Texture2D",
+            "name": "T_MW_FlowFixed"
+          },
+          "ExpressionGUID": {
+            "_struct": "Guid",
+            "A": -1261717255,
+            "B": 1098441394,
+            "C": -435711595,
+            "D": 7282304
+          }
+        }
+      ],
+      "SpriteTextureParameterValues": [],
+      "RuntimeVirtualTextureParameterValues": [],
+      "FontParameterValues": [],
+      "AtlasBatchNumericArgumentValues": [],
+      "AtlasMapRegionArrayValues": [],
+      "AtlasBatchIndexerLayersValues": [],
+      "AtlasDimensions": [],
+      "LandscapeLayerTillingsArray": [],
+      "bOverrideBaseProperties": false,
+      "EditorBakeSourceMaterialInstances": [],
+      "BasePropertyOverrides": {
+        "_struct": "MaterialInstanceBasePropertyOverrides",
+        "bOverride_OpacityMaskClipValue": false,
+        "bOverride_SoftDepthOffsetValue": false,
+        "bOverride_TranslucentFogDensity": false,
+        "bOverride_BlendMode": false,
+        "bOverride_WetnessMode": false,
+        "bOverride_ShadingRate": false,
+        "bOverride_ShadingModel": false,
+        "bOverride_LightingChannelMask": false,
+        "bOverride_RenderAfterDOF": false,
+        "bOverride_DitheredLODTransition": false,
+        "bOverride_CastDynamicShadowAsMasked": false,
+        "bOverride_TwoSided": true,
+        "bOverride_DisableDepthTest": false,
+        "TwoSided": true,
+        "bDisableDepthTest": false,
+        "bOverride_UseLandscapeShadowmask": false,
+        "UseLandscapeShadowmask": false,
+        "bOverride_UseGBufferCustomDataAlphaSaveDepthOffset": false,
+        "UseGBufferCustomDataAlphaSaveDepthOffset": false,
+        "bOverride_UseLandscapeLocalHeightmap": false,
+        "UseLandscapeLocalHeightmap": false,
+        "bOverride_TranslucencyRenderLast": false,
+        "bOverride_OutputsVelocity": false,
+        "DitheredLODTransition": false,
+        "bOverride_ToForceFlattenGI": false,
+        "ToForceFlattenGI": false,
+        "bOverride_ToForceTranslucentFramePredict": false,
+        "ToForceTranslucentFramePredict": false,
+        "bCastDynamicShadowAsMasked": false,
+        "bOverride_MaterialDeprecated": false,
+        "bOverride_NaniteSupportedProgrammable": false,
+        "bOverride_NaniteCVDMethod": false,
+        "bOverride_MaterialDebugModeColorType": false,
+        "bOverride_EnablePostProcessDifferentMI": false,
+        "bEnablePostProcessDifferentMI": false,
+        "bOverride_MiniWorldShadingType": false,
+        "bMiniWorldShadingType": false,
+        "bOverride_TranslucencyWriteCustomData": false,
+        "bTranslucencyWriteCustomData": true,
+        "bOverride_TranslucencyRenderFullPercentageLast": false,
+        "bTranslucencyRenderFullPercentageLast": false,
+        "bOverride_MaxWorldPositionOffsetDisplacement": false,
+        "MaxWorldPositionOffsetDisplacement": 0,
+        "bOverride_bHasPixelAnimation": false,
+        "bHasPixelAnimation": false,
+        "bOverride_UsedWith3DUI": false,
+        "bUsedWith3DUI": false,
+        "bOverride_IsNeedExtraBone": false,
+        "bIsNeedExtraBone": false,
+        "bOverride_UsedWithLightMap": false,
+        "bUsedWithLightMap": false,
+        "bOverride_MobileMaskPreZRender": false,
+        "bMobileMaskPreZRender": false,
+        "bOverride_EnableFoliageBillboardBatch": false,
+        "bEnableFoliageBillboardBatch": false,
+        "bOverride_IsBatchedFoliageBillboard": false,
+        "bIsBatchedFoliageBillboard": false,
+        "bOverride_IsSimpleEFXLit": false,
+        "bIsSimpleEFXLit": false,
+        "bOverride_SimpleEFXLitSubShadingModels": false,
+        "SimpleEFXLitSubShadingModels": 0,
+        "bIsDisableWritingToSceneDepthAux": false,
+        "bOverride_IsDisableWritingToSceneDepthAux": false,
+        "bOverride_IsSkippingTetLight": false,
+        "bIsSkippingTetLight": false,
+        "BlendMode": "BLEND_Translucent",
+        "WetnessMode": "MWM_None",
+        "ShadingRate": "MSR_2x2",
+        "ShadingModel": "MSM_Unlit",
+        "LightingChannelMask": "MLCM_0000",
+        "bEnableSeparateTranslucency": true,
+        "SoftDepthOffsetValue": 0.33329999446868896,
+        "OpacityMaskClipValue": 0.33329999446868896,
+        "MaterialDebugModeColorType": 0,
+        "bTranslucencyRenderLast": false,
+        "bOutputsVelocity": true,
+        "bMaterialDeprecated": false,
+        "bNaniteSupportedProgrammable": false,
+        "NaniteCVDMethod": "None",
+        "TranslucentFogDensity": 1
+      },
+      "ReferencedTextureGuids": [
+        {
+          "_struct": "Guid",
+          "A": -1496555423,
+          "B": 1165984162,
+          "C": 800539294,
+          "D": -1996999117
+        },
+        {
+          "_struct": "Guid",
+          "A": -835099035,
+          "B": 1087744987,
+          "C": -1222390871,
+          "D": -1437405439
+        }
+      ],
+      "StaticParameters": {
+        "_struct": "StaticParameterSet",
+        "StaticSwitchParameters": [
+          {
+            "_struct": "StaticSwitchParameter",
+            "Value": true,
+            "ParameterInfo": {
+              "_struct": "MaterialParameterInfo",
+              "Name": "UseDynamicUVIncrement",
+              "Association": "GlobalParameter",
+              "Index": -1,
+              "ParameterLocation": {
+                "_struct": "SoftObjectPath",
+                "AssetPathName": "None",
+                "SubPathString": ""
+              }
+            },
+            "bOverride": true,
+            "ExpressionGUID": {
+              "_struct": "Guid",
+              "A": 1038773103,
+              "B": 1309907617,
+              "C": -818859084,
+              "D": -1069619284
+            }
+          }
+        ],
+        "StaticComponentMaskParameters": [],
+        "TerrainLayerWeightParameters": [],
+        "MaterialLayersParameters": []
+      },
+      "SubsurfaceProfile": null,
+      "LightmassSettings": {
+        "_struct": "LightmassMaterialInterfaceSettings",
+        "EmissiveBoost": 1,
+        "DiffuseBoost": 1,
+        "ExportResolutionScale": 1,
+        "bCastShadowAsMasked": false,
+        "bOverrideCastShadowAsMasked": false,
+        "bOverrideEmissiveBoost": false,
+        "bOverrideDiffuseBoost": false,
+        "bOverrideExportResolutionScale": false,
+        "bOverrideExportAsLightmapUV": false,
+        "bExportAsLightmapUV": false,
+        "bOverrideForceNoExportAsLightmapUV": false,
+        "bForceNoExportAsLightmapUV": false
+      },
+      "TextureStreamingDataVersion": 1,
+      "TextureStreamingData": [
+        {
+          "_struct": "MaterialTextureInfo",
+          "SamplingScale": 1,
+          "UVChannelIndex": 0,
+          "TextureName": "T_EFX_Mask_62",
+          "TextureReference": {
+            "_struct": "SoftObjectPath",
+            "AssetPathName": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62.T_EFX_Mask_62",
+            "SubPathString": ""
+          },
+          "TextureIndex": -1
+        },
+        {
+          "_struct": "MaterialTextureInfo",
+          "SamplingScale": 1,
+          "UVChannelIndex": 0,
+          "TextureName": "T_EFX_ShellTrail_02",
+          "TextureReference": {
+            "_struct": "SoftObjectPath",
+            "AssetPathName": "/Game/Effects/Common/Texture/Trail/T_EFX_ShellTrail_02.T_EFX_ShellTrail_02",
+            "SubPathString": ""
+          },
+          "TextureIndex": -1
+        }
+      ],
+      "AssetUserData": [],
+      "PreviewMesh": {
+        "_struct": "SoftObjectPath",
+        "AssetPathName": "None",
+        "SubPathString": ""
+      },
+      "ThumbnailInfo": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_FlowFixed.MI_FlowFixed:SceneThumbnailInfoWithPrimitive_0",
+        "class": "SceneThumbnailInfoWithPrimitive",
+        "name": "SceneThumbnailInfoWithPrimitive_0"
+      },
+      "LayerParameterExpansion": [],
+      "ParameterOverviewExpansion": [],
+      "AssetImportData": null,
+      "LightingGuid": {
+        "_struct": "Guid",
+        "A": -387206291,
+        "B": 1092626435,
+        "C": -1857885054,
+        "D": 472079578
+      }
+    }
+  },
+  "texture": {
+    "FirstResourceMemMip": 0,
+    "bHasBeenPaintedInEditor": false,
+    "EditorBakeSourceTexures": [],
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Clamp",
+    "ImportedSize": {
+      "_struct": "IntPoint",
+      "X": 0,
+      "Y": 0
+    },
+    "Source": {
+      "_struct": "TextureSource",
+      "Id": {
+        "_struct": "Guid",
+        "A": 428295393,
+        "B": 1301541121,
+        "C": 1084870574,
+        "D": 838552717
+      },
+      "BaseBlockX": 0,
+      "BaseBlockY": 0,
+      "SizeX": 16,
+      "SizeY": 1024,
+      "NumSlices": 1,
+      "NumMips": 1,
+      "NumLayers": 1,
+      "bPNGCompressed": true,
+      "bGuidIsHash": false,
+      "Format": "TSF_BGRA8",
+      "LayerFormat": [
+        "TSF_BGRA8"
+      ],
+      "Blocks": []
+    },
+    "SourceMipsChain": [],
+    "LightingGuid": {
+      "_struct": "Guid",
+      "A": -1496555423,
+      "B": 1165984162,
+      "C": 800539294,
+      "D": -1996999117
+    },
+    "SourceFilePath": "",
+    "AssetImportData": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/T_MW_FlowFixed.T_MW_FlowFixed:AssetImportData",
+      "class": "AssetImportData",
+      "name": "AssetImportData"
+    },
+    "AdjustBrightness": 1,
+    "AdjustBrightnessCurve": 1,
+    "AdjustVibrance": 0,
+    "AdjustSaturation": 1,
+    "AdjustRGBCurve": 1,
+    "AdjustHue": 0,
+    "AdjustMinAlpha": 0,
+    "AdjustMaxAlpha": 1,
+    "CompressionNoAlpha": false,
+    "SplitAlphaChannel": false,
+    "CompressionNone": false,
+    "DeferCompression": false,
+    "LossyCompressionAmount": "TLCA_Default",
+    "MaxTextureSize": 0,
+    "CompressionQuality": "TCQ_Default",
+    "bDitherMipMapAlpha": false,
+    "AlphaCoverageThresholds": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 0
+    },
+    "AlphaCoverageBoostInMips": {
+      "_struct": "Vector4",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 0
+    },
+    "bPreserveBorder": false,
+    "bFlipGreenChannel": false,
+    "PowerOfTwoMode": "None",
+    "PaddingColor": {
+      "_struct": "Color",
+      "B": 0,
+      "G": 0,
+      "R": 0,
+      "A": 255
+    },
+    "bChromaKeyTexture": false,
+    "ChromaKeyThreshold": 0.003921568859368563,
+    "ChromaKeyColor": {
+      "_struct": "Color",
+      "B": 255,
+      "G": 0,
+      "R": 255,
+      "A": 255
+    },
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "CompositeTexture": null,
+    "CompositeTextureMode": "CTM_NormalRoughnessToAlpha",
+    "CompositePower": 1,
+    "bCompositeSelfNormalRoughness": false,
+    "FullyRoughnessValue": 1,
+    "FadeRoughnessBeginMips": 0,
+    "FullyRoughnessFirstMips": 0,
+    "BlendChannel": "BC_BlendToBlue",
+    "BlendRoughness": 0,
+    "bCompositeReplaceRoughness": true,
+    "bCompositeReplaceNormal": true,
+    "CompositeNormalChannels": "CCT_RG_As_Normalized_Normal",
+    "bGenMipChainFromSource": false,
+    "BlendTexture": null,
+    "BlendWeight": [],
+    "LayerFormatSettings": [],
+    "LODBias": 0,
+    "UHDOptionalLODBias": 0,
+    "CompressionSettings": "TC_VectorDisplacementmap",
+    "bPreferNVTT3Compressor": false,
+    "Filter": "TF_Bilinear",
+    "MipLoadOptions": "Default",
+    "LODGroup": "TEXTUREGROUP_World",
+    "TextureTags": [],
+    "SRGB": false,
+    "bImportAsIBL": false,
+    "bIBLNormalization": false,
+    "IBLNormalizationHighCut": 1,
+    "IBLNormalizationLowCut": 0,
+    "bOutdoorReflection": false,
+    "bMobileResource": false,
+    "IBLRotation": 0,
+    "bSHUseCubemapping": false,
+    "bSHCopyUpperHalf": false,
+    "ForcePlatformSettings": [],
+    "DownSampleAmountForMobile": "TDSA_FromTextureGroup",
+    "DownscaleOptions": "Legacy",
+    "AstcCompressionQuality": "TCQ_ASTC_Default",
+    "AstcPreferCompressor": "TAPC_Default",
+    "RGBMClampedMultipiler": 32,
+    "bUseLegacyGamma": false,
+    "SignatureHash": 0,
+    "bNoTiling": false,
+    "VirtualTextureStreaming": false,
+    "CompressionYCoCg": false,
+    "AssetUserData": [],
+    "NumCinematicMipLevels": 0,
+    "NeverStream": true,
+    "bGlobalForceMipLevelsToBeResident": false
+  },
+  "scene": {
+    "files": [
+      {
+        "sha256": "cd8e5032dae45154d0912d540e00317c38c53dcd5ae9311e60703a61c45b2996",
+        "name": "PS_FixedR.uasset",
+        "exists": true
+      },
+      {
+        "sha256": "a4a7a97ea887a72017b10a28e47ce0ffe64d0866c541e8605dff697453bd47d9",
+        "name": "MI_FlowFixed.uasset",
+        "exists": true
+      },
+      {
+        "sha256": "ba946a76f24df75e8ca71e2f5a76a252ad8e7f9bfdefcd1e7f3cd60bee2e4e86",
+        "name": "T_MW_FlowFixed.uasset",
+        "exists": true
+      }
+    ],
+    "actors": [
+      {
+        "path": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.PS_FixedR_27",
+        "label": "PS_FixedR"
+      },
+      {
+        "path": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.PS_FixedR2",
+        "label": "PS_FixedR2"
+      },
+      {
+        "path": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.PS_FixedR3",
+        "label": "PS_FixedR3"
+      }
+    ]
+  }
+}

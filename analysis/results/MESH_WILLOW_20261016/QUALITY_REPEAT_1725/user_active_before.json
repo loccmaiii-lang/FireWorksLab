@@ -1,0 +1,845 @@
+{
+  "emitter": {
+    "EmitterName": "Particle Emitter",
+    "EmitterRenderMode": "ERM_Normal",
+    "SignificanceLevel": "Critical",
+    "bUseLegacySpawningBehavior": false,
+    "ConvertedModules": true,
+    "bCookedOut": false,
+    "bDisabledLODsKeepEmitterAlive": false,
+    "bDisableWhenInsignficant": false,
+    "bCollapsed": false,
+    "DetailMode": "DM_Low",
+    "EmitterEditorColor": {
+      "_struct": "Color",
+      "B": 255,
+      "G": 70,
+      "R": 0,
+      "A": 255
+    },
+    "LODLevels": [
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+        "class": "ParticleLODLevel",
+        "name": "ParticleLODLevel_0"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_1",
+        "class": "ParticleLODLevel",
+        "name": "ParticleLODLevel_1"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_2",
+        "class": "ParticleLODLevel",
+        "name": "ParticleLODLevel_2"
+      },
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_3",
+        "class": "ParticleLODLevel",
+        "name": "ParticleLODLevel_3"
+      }
+    ],
+    "PeakActiveParticles": 0,
+    "InitialAllocationCount": 0,
+    "QualityLevelSpawnRateScale": 1,
+    "DetailModeBitmask": 7
+  },
+  "lods": [
+    {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+      "lod": {
+        "Level": 0,
+        "bEnabled": true,
+        "RequiredModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2",
+          "class": "ParticleModuleRequired",
+          "name": "ParticleModuleRequired_2"
+        },
+        "Modules": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2",
+            "class": "ParticleModuleLifetime",
+            "name": "ParticleModuleLifetime_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2",
+            "class": "ParticleModuleColor",
+            "name": "ParticleModuleColor_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2",
+            "class": "ParticleModuleSize",
+            "name": "ParticleModuleSize_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1",
+            "class": "ParticleModuleParameterDynamic",
+            "name": "ParticleModuleParameterDynamic_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0",
+            "class": "ParticleModuleMeshRotation",
+            "name": "ParticleModuleMeshRotation_0"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_7",
+            "class": "ParticleModuleColorScaleOverLife",
+            "name": "ParticleModuleColorScaleOverLife_7"
+          }
+        ],
+        "TypeDataModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_2",
+          "class": "ParticleModuleTypeDataMesh",
+          "name": "ParticleModuleTypeDataMesh_2"
+        },
+        "SpawnModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSpawn_4",
+          "class": "ParticleModuleSpawn",
+          "name": "ParticleModuleSpawn_4"
+        },
+        "EventGenerator": null,
+        "ConvertedModules": true,
+        "PeakActiveParticles": 3
+      },
+      "required": {
+        "Material": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_Plain.MI_Plain",
+          "class": "MaterialInstanceConstant",
+          "name": "MI_Plain"
+        },
+        "MinFacingCameraBlendDistance": 0,
+        "MaxFacingCameraBlendDistance": 0,
+        "EmitterOrigin": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "EmitterRotation": {
+          "_struct": "Rotator",
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "ScreenAlignment": "PSA_Square",
+        "bUseInLocalSpace": false,
+        "bUseFPPCamera": false,
+        "bKillOnDeactivate": false,
+        "bKillOnCompleted": false,
+        "bCastShadow": false,
+        "SortMode": "PSORTMODE_None",
+        "bUseLegacyEmitterTime": false,
+        "bRemoveHMDRoll": false,
+        "bEmitterDurationUseRange": false,
+        "EmitterDuration": 16.100000381469727,
+        "SpawnRate": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 0,
+          "MaxValue": 0,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2.RequiredDistributionSpawnRate",
+            "class": "DistributionFloatConstant",
+            "name": "RequiredDistributionSpawnRate"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [],
+            "Op": 0,
+            "EntryCount": 0,
+            "EntryStride": 0,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "BurstList": [],
+        "EmitterDelay": 0,
+        "EmitterDelayLow": 0,
+        "bDelayFirstLoopOnly": false,
+        "InterpolationMethod": "PSUVIM_None",
+        "bScaleUV": false,
+        "bEmitterDelayUseRange": false,
+        "ParticleBurstMethod": "EPBM_Instant",
+        "bOverrideSystemMacroUV": false,
+        "bUseMaxDrawCount": true,
+        "OpacitySourceMode": "OSM_Alpha",
+        "EmitterNormalsMode": "ENM_CameraFacing",
+        "bOrbitModuleAffectsVelocityAlignment": false,
+        "SubImages_Horizontal": 1,
+        "SubImages_Vertical": 1,
+        "RandomImageTime": 1,
+        "RandomImageChanges": 0,
+        "MacroUVPosition": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MacroUVRadius": 0,
+        "UVFlippingMode": "None",
+        "BoundingMode": "BVC_EightVertices",
+        "bDurationRecalcEachLoop": false,
+        "NormalsSphereCenter": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 100
+        },
+        "AlphaThreshold": 0.10000000149011612,
+        "EmitterLoops": 1,
+        "CutoutTexture": null,
+        "MaxDrawCount": 1,
+        "EmitterDurationLow": 0,
+        "NormalsCylinderDirection": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 1
+        },
+        "NamedMaterialOverrides": [],
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 255,
+          "G": 0,
+          "R": 232,
+          "A": 255
+        }
+      }
+    },
+    {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_1",
+      "lod": {
+        "Level": 1,
+        "bEnabled": true,
+        "RequiredModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2",
+          "class": "ParticleModuleRequired",
+          "name": "ParticleModuleRequired_2"
+        },
+        "Modules": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2",
+            "class": "ParticleModuleLifetime",
+            "name": "ParticleModuleLifetime_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2",
+            "class": "ParticleModuleColor",
+            "name": "ParticleModuleColor_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2",
+            "class": "ParticleModuleSize",
+            "name": "ParticleModuleSize_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1",
+            "class": "ParticleModuleParameterDynamic",
+            "name": "ParticleModuleParameterDynamic_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0",
+            "class": "ParticleModuleMeshRotation",
+            "name": "ParticleModuleMeshRotation_0"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_12",
+            "class": "ParticleModuleColorScaleOverLife",
+            "name": "ParticleModuleColorScaleOverLife_12"
+          }
+        ],
+        "TypeDataModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_2",
+          "class": "ParticleModuleTypeDataMesh",
+          "name": "ParticleModuleTypeDataMesh_2"
+        },
+        "SpawnModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSpawn_4",
+          "class": "ParticleModuleSpawn",
+          "name": "ParticleModuleSpawn_4"
+        },
+        "EventGenerator": null,
+        "ConvertedModules": true,
+        "PeakActiveParticles": 2
+      },
+      "required": {
+        "Material": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_Plain.MI_Plain",
+          "class": "MaterialInstanceConstant",
+          "name": "MI_Plain"
+        },
+        "MinFacingCameraBlendDistance": 0,
+        "MaxFacingCameraBlendDistance": 0,
+        "EmitterOrigin": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "EmitterRotation": {
+          "_struct": "Rotator",
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "ScreenAlignment": "PSA_Square",
+        "bUseInLocalSpace": false,
+        "bUseFPPCamera": false,
+        "bKillOnDeactivate": false,
+        "bKillOnCompleted": false,
+        "bCastShadow": false,
+        "SortMode": "PSORTMODE_None",
+        "bUseLegacyEmitterTime": false,
+        "bRemoveHMDRoll": false,
+        "bEmitterDurationUseRange": false,
+        "EmitterDuration": 16.100000381469727,
+        "SpawnRate": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 0,
+          "MaxValue": 0,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2.RequiredDistributionSpawnRate",
+            "class": "DistributionFloatConstant",
+            "name": "RequiredDistributionSpawnRate"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [],
+            "Op": 0,
+            "EntryCount": 0,
+            "EntryStride": 0,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "BurstList": [],
+        "EmitterDelay": 0,
+        "EmitterDelayLow": 0,
+        "bDelayFirstLoopOnly": false,
+        "InterpolationMethod": "PSUVIM_None",
+        "bScaleUV": false,
+        "bEmitterDelayUseRange": false,
+        "ParticleBurstMethod": "EPBM_Instant",
+        "bOverrideSystemMacroUV": false,
+        "bUseMaxDrawCount": true,
+        "OpacitySourceMode": "OSM_Alpha",
+        "EmitterNormalsMode": "ENM_CameraFacing",
+        "bOrbitModuleAffectsVelocityAlignment": false,
+        "SubImages_Horizontal": 1,
+        "SubImages_Vertical": 1,
+        "RandomImageTime": 1,
+        "RandomImageChanges": 0,
+        "MacroUVPosition": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MacroUVRadius": 0,
+        "UVFlippingMode": "None",
+        "BoundingMode": "BVC_EightVertices",
+        "bDurationRecalcEachLoop": false,
+        "NormalsSphereCenter": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 100
+        },
+        "AlphaThreshold": 0.10000000149011612,
+        "EmitterLoops": 1,
+        "CutoutTexture": null,
+        "MaxDrawCount": 1,
+        "EmitterDurationLow": 0,
+        "NormalsCylinderDirection": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 1
+        },
+        "NamedMaterialOverrides": [],
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 255,
+          "G": 0,
+          "R": 232,
+          "A": 255
+        }
+      }
+    },
+    {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_2",
+      "lod": {
+        "Level": 2,
+        "bEnabled": true,
+        "RequiredModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2",
+          "class": "ParticleModuleRequired",
+          "name": "ParticleModuleRequired_2"
+        },
+        "Modules": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2",
+            "class": "ParticleModuleLifetime",
+            "name": "ParticleModuleLifetime_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2",
+            "class": "ParticleModuleColor",
+            "name": "ParticleModuleColor_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2",
+            "class": "ParticleModuleSize",
+            "name": "ParticleModuleSize_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1",
+            "class": "ParticleModuleParameterDynamic",
+            "name": "ParticleModuleParameterDynamic_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0",
+            "class": "ParticleModuleMeshRotation",
+            "name": "ParticleModuleMeshRotation_0"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_14",
+            "class": "ParticleModuleColorScaleOverLife",
+            "name": "ParticleModuleColorScaleOverLife_14"
+          }
+        ],
+        "TypeDataModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_2",
+          "class": "ParticleModuleTypeDataMesh",
+          "name": "ParticleModuleTypeDataMesh_2"
+        },
+        "SpawnModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSpawn_4",
+          "class": "ParticleModuleSpawn",
+          "name": "ParticleModuleSpawn_4"
+        },
+        "EventGenerator": null,
+        "ConvertedModules": true,
+        "PeakActiveParticles": 2
+      },
+      "required": {
+        "Material": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_Plain.MI_Plain",
+          "class": "MaterialInstanceConstant",
+          "name": "MI_Plain"
+        },
+        "MinFacingCameraBlendDistance": 0,
+        "MaxFacingCameraBlendDistance": 0,
+        "EmitterOrigin": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "EmitterRotation": {
+          "_struct": "Rotator",
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "ScreenAlignment": "PSA_Square",
+        "bUseInLocalSpace": false,
+        "bUseFPPCamera": false,
+        "bKillOnDeactivate": false,
+        "bKillOnCompleted": false,
+        "bCastShadow": false,
+        "SortMode": "PSORTMODE_None",
+        "bUseLegacyEmitterTime": false,
+        "bRemoveHMDRoll": false,
+        "bEmitterDurationUseRange": false,
+        "EmitterDuration": 16.100000381469727,
+        "SpawnRate": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 0,
+          "MaxValue": 0,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2.RequiredDistributionSpawnRate",
+            "class": "DistributionFloatConstant",
+            "name": "RequiredDistributionSpawnRate"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [],
+            "Op": 0,
+            "EntryCount": 0,
+            "EntryStride": 0,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "BurstList": [],
+        "EmitterDelay": 0,
+        "EmitterDelayLow": 0,
+        "bDelayFirstLoopOnly": false,
+        "InterpolationMethod": "PSUVIM_None",
+        "bScaleUV": false,
+        "bEmitterDelayUseRange": false,
+        "ParticleBurstMethod": "EPBM_Instant",
+        "bOverrideSystemMacroUV": false,
+        "bUseMaxDrawCount": true,
+        "OpacitySourceMode": "OSM_Alpha",
+        "EmitterNormalsMode": "ENM_CameraFacing",
+        "bOrbitModuleAffectsVelocityAlignment": false,
+        "SubImages_Horizontal": 1,
+        "SubImages_Vertical": 1,
+        "RandomImageTime": 1,
+        "RandomImageChanges": 0,
+        "MacroUVPosition": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MacroUVRadius": 0,
+        "UVFlippingMode": "None",
+        "BoundingMode": "BVC_EightVertices",
+        "bDurationRecalcEachLoop": false,
+        "NormalsSphereCenter": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 100
+        },
+        "AlphaThreshold": 0.10000000149011612,
+        "EmitterLoops": 1,
+        "CutoutTexture": null,
+        "MaxDrawCount": 1,
+        "EmitterDurationLow": 0,
+        "NormalsCylinderDirection": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 1
+        },
+        "NamedMaterialOverrides": [],
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 255,
+          "G": 0,
+          "R": 232,
+          "A": 255
+        }
+      }
+    },
+    {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_3",
+      "lod": {
+        "Level": 3,
+        "bEnabled": true,
+        "RequiredModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2",
+          "class": "ParticleModuleRequired",
+          "name": "ParticleModuleRequired_2"
+        },
+        "Modules": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_2",
+            "class": "ParticleModuleLifetime",
+            "name": "ParticleModuleLifetime_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_2",
+            "class": "ParticleModuleColor",
+            "name": "ParticleModuleColor_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_2",
+            "class": "ParticleModuleSize",
+            "name": "ParticleModuleSize_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_1",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_1",
+            "class": "ParticleModuleParameterDynamic",
+            "name": "ParticleModuleParameterDynamic_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_2",
+            "class": "ParticleModuleSizeMultiplyLife",
+            "name": "ParticleModuleSizeMultiplyLife_2"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_0",
+            "class": "ParticleModuleMeshRotation",
+            "name": "ParticleModuleMeshRotation_0"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_15",
+            "class": "ParticleModuleColorScaleOverLife",
+            "name": "ParticleModuleColorScaleOverLife_15"
+          }
+        ],
+        "TypeDataModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_2",
+          "class": "ParticleModuleTypeDataMesh",
+          "name": "ParticleModuleTypeDataMesh_2"
+        },
+        "SpawnModule": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSpawn_4",
+          "class": "ParticleModuleSpawn",
+          "name": "ParticleModuleSpawn_4"
+        },
+        "EventGenerator": null,
+        "ConvertedModules": true,
+        "PeakActiveParticles": 2
+      },
+      "required": {
+        "Material": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_Plain.MI_Plain",
+          "class": "MaterialInstanceConstant",
+          "name": "MI_Plain"
+        },
+        "MinFacingCameraBlendDistance": 0,
+        "MaxFacingCameraBlendDistance": 0,
+        "EmitterOrigin": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "EmitterRotation": {
+          "_struct": "Rotator",
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "ScreenAlignment": "PSA_Square",
+        "bUseInLocalSpace": false,
+        "bUseFPPCamera": false,
+        "bKillOnDeactivate": false,
+        "bKillOnCompleted": false,
+        "bCastShadow": false,
+        "SortMode": "PSORTMODE_None",
+        "bUseLegacyEmitterTime": false,
+        "bRemoveHMDRoll": false,
+        "bEmitterDurationUseRange": false,
+        "EmitterDuration": 16.100000381469727,
+        "SpawnRate": {
+          "_struct": "RawDistributionFloat",
+          "MinValue": 0,
+          "MaxValue": 0,
+          "Distribution": {
+            "_type": "object_ref",
+            "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleRequired_2.RequiredDistributionSpawnRate",
+            "class": "DistributionFloatConstant",
+            "name": "RequiredDistributionSpawnRate"
+          },
+          "Table": {
+            "_struct": "DistributionLookupTable",
+            "TimeScale": 0,
+            "TimeBias": 0,
+            "Values": [],
+            "Op": 0,
+            "EntryCount": 0,
+            "EntryStride": 0,
+            "SubEntryStride": 0,
+            "LockFlag": 0
+          }
+        },
+        "BurstList": [],
+        "EmitterDelay": 0,
+        "EmitterDelayLow": 0,
+        "bDelayFirstLoopOnly": false,
+        "InterpolationMethod": "PSUVIM_None",
+        "bScaleUV": false,
+        "bEmitterDelayUseRange": false,
+        "ParticleBurstMethod": "EPBM_Instant",
+        "bOverrideSystemMacroUV": false,
+        "bUseMaxDrawCount": true,
+        "OpacitySourceMode": "OSM_Alpha",
+        "EmitterNormalsMode": "ENM_CameraFacing",
+        "bOrbitModuleAffectsVelocityAlignment": false,
+        "SubImages_Horizontal": 1,
+        "SubImages_Vertical": 1,
+        "RandomImageTime": 1,
+        "RandomImageChanges": 0,
+        "MacroUVPosition": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MacroUVRadius": 0,
+        "UVFlippingMode": "None",
+        "BoundingMode": "BVC_EightVertices",
+        "bDurationRecalcEachLoop": false,
+        "NormalsSphereCenter": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 100
+        },
+        "AlphaThreshold": 0.10000000149011612,
+        "EmitterLoops": 1,
+        "CutoutTexture": null,
+        "MaxDrawCount": 1,
+        "EmitterDurationLow": 0,
+        "NormalsCylinderDirection": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 1
+        },
+        "NamedMaterialOverrides": [],
+        "bSpawnModule": true,
+        "bUpdateModule": true,
+        "bFinalUpdateModule": false,
+        "bUpdateForGPUEmitter": false,
+        "bCurvesAsColor": false,
+        "b3DDrawMode": false,
+        "bSupported3DDrawMode": false,
+        "bEnabled": true,
+        "bEditable": true,
+        "LODDuplicate": true,
+        "bSupportsRandomSeed": false,
+        "bRequiresLoopingNotification": false,
+        "LODValidity": 15,
+        "ModuleEditorColor": {
+          "_struct": "Color",
+          "B": 255,
+          "G": 0,
+          "R": 232,
+          "A": 255
+        }
+      }
+    }
+  ]
+}

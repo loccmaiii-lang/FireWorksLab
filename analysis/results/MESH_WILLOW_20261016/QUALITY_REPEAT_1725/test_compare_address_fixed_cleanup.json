@@ -1,0 +1,29 @@
+{
+  "removed": 1,
+  "remaining": 0,
+  "restored": {
+    "sg.EffectsQuality": 0,
+    "sg.PostProcessQuality": 0,
+    "r.BloomQuality": 4,
+    "r.Tonemapper.Quality": 5,
+    "r.RefractionQuality": 1,
+    "r.SceneColorFormat": 3,
+    "r.MaterialQualityLevel": 0,
+    "r.DetailMode": 2,
+    "sg.AntiAliasingQuality": 0,
+    "r.ParticleLODBias": 0,
+    "sg.ViewDistanceQuality": 3,
+    "sg.ResolutionQuality": 100,
+    "r.SeparateTranslucency": 1,
+    "r.EmitterSpawnRateScale": 1,
+    "r.PostProcessAAQuality": 4,
+    "sg.ShadowQuality": 3,
+    "r.MaxAnisotropy": 8,
+    "sg.TextureQuality": 0,
+    "r.EyeAdaptationQuality": 2,
+    "sg.FoliageQuality": 3,
+    "r.ScreenPercentage": 100,
+    "r.Streaming.MipBias": 0,
+    "r.DetailLevel": 0
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "system": {
+    "Emitters": [
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1",
+        "class": "ParticleSpriteEmitter",
+        "name": "ParticleSpriteEmitter_1"
+      }
+    ],
+    "LODDistances": [
+      0
+    ],
+    "LODMethod": "PARTICLESYSTEMLODMETHOD_DirectSet",
+    "SystemUpdateMode": "EPSUM_FixedTime"
+  },
+  "emitter": {
+    "LODLevels": [
+      {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleSpriteEmitter_1.ParticleLODLevel_0",
+        "class": "ParticleLODLevel",
+        "name": "ParticleLODLevel_0"
+      }
+    ]
+  },
+  "required": {
+    "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/MI_FlowFixed.MI_FlowFixed",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_FlowFixed"
+    },
+    "EmitterLoops": 1,
+    "EmitterDuration": 16.100000381469727
+  },
+  "type": {
+    "Mesh": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Single_N400_LockZ.SM_MW_Single_N400_LockZ",
+      "class": "StaticMesh",
+      "name": "SM_MW_Single_N400_LockZ"
+    },
+    "bCameraFacing": true,
+    "AxisLockOption": "EPAL_Z",
+    "CameraFacingOption": "LockedAxis_ZAxisFacing"
+  }
+}
