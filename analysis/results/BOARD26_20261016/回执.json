@@ -263,16 +263,30 @@
     "canonicalAndOtherOwnerFilesUntouched": true,
     "realBrowserFilePage": "未测；此前file://安全拒绝未绕行"
   },
-  "gitPushed": null,
+  "gitPushed": {
+    "sha": "6b48c3f2a4d8520e7e8358afe0294ca1a5b9925b",
+    "remoteHeadVerified": true,
+    "verification": "正常pre-push通过；git ls-remote origin refs/heads/main读回同SHA；仅5个本批白名单文件"
+  },
   "cloud": {
     "owner": "总管（21）",
     "url": "https://claude.ai/chat/85703728-8905-4bf8-a39e-ef5424677224",
     "channelVerified": true,
     "messageSentAt": null,
-    "accepted": null,
+    "accepted": {
+      "verified": true,
+      "evidence": "既有会话Message31为本次请求；Claude明确回复：批次 BOARD26-20261016 我收到了，现在开始：先查有没有处理过，再同步 main，读规则和待同步文件，然后合并到在线看板并读回核对。",
+      "method": "受支持浏览器可见DOM及截图",
+      "screenshotLocalOnly": true,
+      "screenshotFileName": "BOARD26-云端受理-20261016.jpg"
+    },
     "onlineReadback": null,
     "remainingPending": 147,
-    "status": "本机推送后仅请求一次；尚未发送"
+    "status": "明确受理；云端执行中，尚未取得线上成功读回",
+    "messageSent": true,
+    "messageObservedAt": "2026-10-16T11:16:34+08:00",
+    "timeBasis": "发送后受理证据登记时刻来自clock；Claude服务器精确发送时间未读",
+    "messageCount": 1
   },
   "untouched": [
     "协作/看板快照.json",
