@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-16 22:47",
+ "at": "2026-10-16 22:57",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -76,7 +76,7 @@
      "sparkStart": 0,
      "sparkRamp": 0,
      "sparkRampJit": 30,
-     "sparkLife": 1,
+     "sparkLife": 0.6,
      "sparkLifeEnd": 2,
      "sparkLifeJit": 20,
      "sparkSize": 0.45,
@@ -768,6 +768,10 @@
      "stages": [
       [
        0,
+       "#eef2ff"
+      ],
+      [
+       0.676,
        "#3d6cff"
       ]
      ],
@@ -798,7 +802,7 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 6.2,
+     "duration": 6.8,
      "seed": 7,
      "stars": 200,
      "burstR0": 0,
@@ -807,8 +811,8 @@
      "grav": 0.15,
      "speedJit": 8,
      "dirJit": 1.5,
-     "burn": 4.3,
-     "burnJit": 12,
+     "burn": 5.2,
+     "burnJit": 20,
      "fade": 0.5,
      "lastFlare": 0.7,
      "flash": 0,
@@ -830,7 +834,7 @@
      "endMode": "natural",
      "coolMode": 1,
      "headSize": 0.65,
-     "headBright": 2.3,
+     "headBright": 3,
      "flicker": 0.1,
      "headHaloOwn": 1,
      "headHaloFrac": 0.85,
