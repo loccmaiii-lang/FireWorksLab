@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-16 22:38",
+ "at": "2026-10-16 22:47",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -76,11 +76,11 @@
      "sparkStart": 0,
      "sparkRamp": 0,
      "sparkRampJit": 30,
-     "sparkLife": 0.35,
+     "sparkLife": 1,
      "sparkLifeEnd": 2,
      "sparkLifeJit": 20,
      "sparkSize": 0.45,
-     "sparkSpread": 0.3,
+     "sparkSpread": 0,
      "sparkInherit": 0,
      "sparkDrag": 6,
      "sparkGrav": 0.05,
@@ -359,7 +359,9 @@
      "autoGrid": 1,
      "type": "kiku",
      "flashR": 11.3,
-     "flashLife": 0.15
+     "flashLife": 0.15,
+     "sparkRateBy": "m",
+     "sparkPerM": 10.2
     },
     "M": {
      "stages": [
@@ -733,10 +735,11 @@
      "clusterFan": 90,
      "clusterSweep": 0,
      "clusterGap": 0,
-     "sparkSpawnHead": 0.97,
+     "sparkSpawnHead": 0,
      "sparkRateBy": "m",
-     "sparkPerM": 26.3,
-     "sparkLateWind": 1
+     "sparkPerM": 15,
+     "sparkLateWind": 1,
+     "adjTailLen": 1
     },
     "M": {
      "stages": [
@@ -765,7 +768,7 @@
      "stages": [
       [
        0,
-       "#b44dff"
+       "#3d6cff"
       ]
      ],
      "xw": 0.08,
@@ -795,19 +798,19 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 5.5,
+     "duration": 6.2,
      "seed": 7,
      "stars": 200,
      "burstR0": 0,
-     "v0": 250,
+     "v0": 300,
      "vt": 20,
      "grav": 0.15,
      "speedJit": 8,
      "dirJit": 1.5,
      "burn": 4.3,
      "burnJit": 12,
-     "fade": 0.2,
-     "lastFlare": 0,
+     "fade": 0.5,
+     "lastFlare": 0.7,
      "flash": 0,
      "flashSize": 0.3,
      "outPC": "seq",
@@ -899,7 +902,7 @@
      "afterBurn": 0,
      "afterJit": 15,
      "headDim": 0,
-     "headDimUntil": 1.4,
+     "headDimUntil": 1,
      "emberFrac": 0,
      "emberLife": 3,
      "emberBright": 0.1,
@@ -947,9 +950,9 @@
      "subVt": 0,
      "subGrav": -1,
      "subFlash": -1,
-     "strobeHz": 4.1,
+     "strobeHz": 2,
      "strobeDuty": 0.44,
-     "strobeStart": 0.35,
+     "strobeStart": 0.8,
      "glitter": 0,
      "glitterDelay": 0.25,
      "crackle": 0,
