@@ -587,6 +587,9 @@ function colorPair(host, label, keys, obj, onChange) {
 // 分段变色编辑器：最多 5 段；点焰色预设给当前选中的段上色
 function stageEditor(host, M, maxT, onChange, compact) {
   host.innerHTML = '';
+  if(typeof EventInstances!=='undefined'&&EventInstances.on(M)&&EventInstances.config(M).color==='random'){
+    host.innerHTML='<p class="hint" style="opacity:.65">固定颜色曲线未启用：此层每颗小割使用随机初始色。请在“出生方式”调整RGB范围；Ramp仍生效。</p>';return;
+  }
   const redraw = () => stageEditor(host, M, maxT, onChange, compact);
   M.stages.forEach((s, i) => {
     const row = document.createElement('div'); row.className = 'stage-row';
@@ -619,6 +622,7 @@ function stageEditor(host, M, maxT, onChange, compact) {
 }
 function flameChips(host, getM, onChange) {
   host.innerHTML = '';
+  if(typeof EventInstances!=='undefined'&&EventInstances.on(getM())&&EventInstances.config(getM()).color==='random'){host.innerHTML='<span class="hint">随机初始色已接管颜色，点焰色预设未启用。</span>';return;}
   for (const [nm, col] of FLAME) {
     const b = document.createElement('button'); b.className = 'chip'; b.type = 'button'; b.innerHTML = `<i style="background:${col}"></i>${nm}`;
     b.addEventListener('click', () => { const M = getM(), i = Math.min(state.activeStage, M.stages.length - 1); M.stages[i][1] = col; onChange && onChange(); });
@@ -1268,7 +1272,7 @@ async function applyCombo(c, alive = () => true) {
 function seqEndOf(P) { return P && familyOf(P.type) === 'aerial' && !isEmit(P) ? Math.max(0, +P.duration || 0) : 0; }
 function comboContentEnd() {
   let d = 0.5;
-  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, (+L.delay || 0) + bakeTotal(e.bake) / (+L.rate || 1)); }
+  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, typeof EventInstances!=='undefined'&&EventInstances.on(L)?EventInstances.end(L,e.P,e.bake):(+L.delay || 0) + bakeTotal(e.bake) / (+L.rate || 1)); }
   return d;
 }
 function comboDuration() {

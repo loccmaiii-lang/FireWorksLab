@@ -1,0 +1,22 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_PRISM3_L1.png → T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_HD.png
+T_PRISM3_L1_Cutout.png → T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_C.png
+T_PRISM3_L1_FrameTest.png → _检查/T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_FrameTest.png
+T_PRISM3_L1_Ramp.png → T_EFX_FireWorks_PrismWheels3_RingCore_R.png
+T_PRISM3_L2.png → T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_HD.png
+T_PRISM3_L2_Cutout.png → T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_C.png
+T_PRISM3_L2_FrameTest.png → _检查/T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_FrameTest.png
+T_PRISM3_L2_Ramp.png → T_EFX_FireWorks_PrismWheels3_TiltCore_R.png
+T_PRISM3_L3.png → T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_HD.png
+T_PRISM3_L3_Cutout.png → T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_C.png
+T_PRISM3_L3_FrameTest.png → _检查/T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_FrameTest.png
+T_PRISM3_L3_Ramp.png → T_EFX_FireWorks_PrismWheels3_FlatCore_R.png
+T_PRISM3_L4.png → T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_HD.png
+T_PRISM3_L4_Cutout.png → T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_C.png
+T_PRISM3_L4_FrameTest.png → _检查/T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_FrameTest.png
+T_PRISM3_L4_Ramp.png → T_EFX_FireWorks_PrismWheels3_SphereRing_R.png
+
+素材包整理（4.9.38）：
+T_EFX_FireWorks_PrismWheels3_TiltCore_R.png → 和 T_EFX_FireWorks_PrismWheels3_RingCore_R.png 一模一样，不出（引用改指它）
+T_EFX_FireWorks_PrismWheels3_FlatCore_R.png → 和 T_EFX_FireWorks_PrismWheels3_RingCore_R.png 一模一样，不出（引用改指它）
+T_EFX_FireWorks_PrismWheels3_SphereRing_R.png → 和 T_EFX_FireWorks_PrismWheels3_RingCore_R.png 一模一样，不出（引用改指它）

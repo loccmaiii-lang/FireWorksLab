@@ -482,6 +482,7 @@ function renderComboAtlas() {
   hudText = `第 ${i + 1} 层 · ${hudText}`;
 }
 function renderComboLive() {
+  if(typeof renderEventInstances==='function'&&state.layers.some(EventInstances.on))return renderEventInstances(true);
   const items = state.layers.map((L, i) => [L, state.lib.find(e => e.name === L.lib), i]).filter(x => x[1] && x[1].bake);
   hdrT.clear();
   if (!items.length) { post(); hudText = '没有图层'; return; }
@@ -546,6 +547,7 @@ function comboFlashLists(items, mob) {
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();
+  if(typeof renderEventInstances==='function'&&state.layers.some(EventInstances.on))return renderEventInstances(false);
   hdrT.clear();
   // 4.9.102 rtFullFx：合进贴图的效果按烘的时候这一层的颜色算，颜色 / 显示强度改了这一层重烘
   const fxSeen = new Set();     // 同一个效果用在几层时按第一层的颜色烘（rtFxLayerP 同一规则），不来回重烘

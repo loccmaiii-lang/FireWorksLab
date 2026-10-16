@@ -100,6 +100,7 @@ function entryVer(e) {
   if (!e || !e.ver) return null;
   const key = e.id + '@' + e.ver; if (_entryVer.has(key)) return _entryVer.get(key);
   const fams = new Set(), outs = e.kind === 'combo' && e.combo && e.combo.layers ? e.combo.layers.map(L => L.out || {}) : [];
+  if(e.kind==='combo'&&e.combo&&e.combo.layers.some(L=>L.eventSpawn))fams.add('events4.9.111');
   (e.kind === 'combo' ? e.layerIds || [] : [e.id]).forEach((id, i) => { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f]) + ((P.zoom === 'on' || P.zoom === 'anchor') && OUTPUT_VER.zoom ? '-zoom' + OUTPUT_VER.zoom : ''));     /* 4.9.33 Zoom 取景单独一档；4.9.89（导出排查 A17）锚点也算 */
     if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots);
     if (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 && (+P.cutIn > 0 || ['unit', 'dots'].includes((outs[i] || {}).pc || P.outPC))) fams.add('flash' + OUTPUT_VER.flash);     // 4.9.96 B1 / B2

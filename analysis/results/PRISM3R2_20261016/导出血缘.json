@@ -1,0 +1,126 @@
+{
+  "time": "2026-10-16T23:20:37+08:00",
+  "candidate": "PRISM3 修订2",
+  "tool": "4.9.111",
+  "entry_ver": "192edbc3·events4.9.111+master4.3.8-core1",
+  "plan_sig": "e9455744",
+  "actual_export": "正常打开PRISM3→导出素材包→ZIP；见导出入口检查.png",
+  "source_unchanged": "90f4c42abe630c90196cd31e62f2b45a907fdc781e1cea8ed0ae5c0f75fc4d4c",
+  "cascade_sha256": "af68e26d9d36bdb798c9048b7411a4b07ab20c7a056a32ccfce6e935c764d087",
+  "zip_sha256": "4beee5acf2d567818139c3195da3191b46b3f205c5bcf7ec7acc8c7313d44f31",
+  "recipe_sha256": "68c61cde7243bcdd9e42d0764d88d4f17660a21ebe0a93e1b268588b7ec5e3fc",
+  "components": [
+    {
+      "id": "PRISM3-A",
+      "pattern": "saturn",
+      "ringFrac": 0.68,
+      "tilt": 12,
+      "stars": 100,
+      "speedJit": 18,
+      "burn": 1.85,
+      "lifetime_s": 2.3667,
+      "sampled_birth_s": [
+        0.36666666666666664,
+        0.9
+      ],
+      "sampled_end_s": 3.2666999999999997,
+      "frames": 51,
+      "sequence": "T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_HD.png"
+    },
+    {
+      "id": "PRISM3-B",
+      "pattern": "saturn",
+      "ringFrac": 0.44,
+      "tilt": 48,
+      "stars": 116,
+      "speedJit": 22,
+      "burn": 1.85,
+      "lifetime_s": 2.3333,
+      "sampled_birth_s": [
+        0.43333333333333335,
+        0.7333333333333333
+      ],
+      "sampled_end_s": 3.0666333333333333,
+      "frames": 52,
+      "sequence": "T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_HD.png"
+    },
+    {
+      "id": "PRISM3-C",
+      "pattern": "saturn",
+      "ringFrac": 0.74,
+      "tilt": 66,
+      "stars": 98,
+      "speedJit": 32,
+      "burn": 1.85,
+      "lifetime_s": 2.3,
+      "sampled_birth_s": [
+        0.6,
+        0.9666666666666667
+      ],
+      "sampled_end_s": 3.2666666666666666,
+      "frames": 50,
+      "sequence": "T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_HD.png"
+    },
+    {
+      "id": "PRISM3-D",
+      "pattern": "saturn",
+      "ringFrac": 0.32,
+      "tilt": 32,
+      "stars": 108,
+      "speedJit": 42,
+      "burn": 1.85,
+      "lifetime_s": 2.2667,
+      "sampled_birth_s": [
+        0.36666666666666664,
+        0.5666666666666667
+      ],
+      "sampled_end_s": 2.8333666666666666,
+      "frames": 48,
+      "sequence": "T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_HD.png"
+    }
+  ],
+  "texture_sha256_checks": {
+    "L1_seq": true,
+    "L1_cutout": true,
+    "L1_ramp": true,
+    "L2_seq": true,
+    "L2_cutout": true,
+    "L2_ramp": true,
+    "L3_seq": true,
+    "L3_cutout": true,
+    "L3_ramp": true,
+    "L4_seq": true,
+    "L4_cutout": true,
+    "L4_ramp": true
+  },
+  "files": {
+    "cascade.json": "af68e26d9d36bdb798c9048b7411a4b07ab20c7a056a32ccfce6e935c764d087",
+    "PRISM3_组合说明.json": "bcc4273db055f57f20282d7c4e1a3c7a66d73fea68f6d4f2621ad37b29dfbf97",
+    "T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_C.png": "5210f994c1e238dd4ef262bbf0b0d38c4d35cb25b1fca65419fbe4a3007a6637",
+    "T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_HD.png": "b142fe588a8572678e0b83124f221b8f8d89c11e700d2a5b1bc8d89d4514d6ae",
+    "T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_C.png": "1cb5d39718b35a229eda62c4cdd30b36608e82ce3410e8ae8813e5b4b5da007c",
+    "T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_HD.png": "33a0c209b4452c9646b615b9390e78ff7f53fd747cee951757e9497fd3597390",
+    "T_EFX_FireWorks_PrismWheels3_RingCore_R.png": "5f529f80a644a35caf502332c0cedb22c0052fd69abca0f137d142e9e3ca8740",
+    "T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_C.png": "7d6e3f61314f8bdc66cea7bb307d87cef1abdc928a4f00922ebbfc379c8eddff",
+    "T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_HD.png": "2863c378056cc37f002f8e2f9effb2e0e98ec35bf8552504c7daf6df41edcd37",
+    "T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_C.png": "02867322351251fd40c9784152ca264426b3a1beb94d5d62de35bd87681319bc",
+    "T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_HD.png": "0452bd72dba69986d94e5681dd267cbb9a2ff92f547ef43bcc1bfba2daa21dbe",
+    "命名对照.txt": "4bdcfa9b4270b0f092d65a10ade821c4b6effe5600494d4a3900b3285a24f487"
+  },
+  "ui_flow": {
+    "edit_count": 5,
+    "undo_count": 4,
+    "redo_count": 5,
+    "saved_id": "fxmvb3i8olvsujw",
+    "refresh_preserved": true,
+    "exported_carrier_count": 5,
+    "preserved_ringFrac": [
+      0.68,
+      0.44,
+      0.74,
+      0.32
+    ]
+  },
+  "page_errors": [],
+  "ue_execution": false
+}

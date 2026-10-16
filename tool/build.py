@@ -7,6 +7,7 @@ css = open(os.path.join(src, 'style.css'), encoding='utf-8').read()
 css = ''.join(open(os.path.join(here, 'design-system', f), encoding='utf-8').read() for f in ('tokens.css', 'components.css')) + '\n' + css
 body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
 js = ''.join(open(f, encoding='utf-8').read() for f in sorted(glob.glob(os.path.join(src, 'js', '*.js'))))
+js = open(os.path.join(here, 'shared', 'cascade_events.js'), encoding='utf-8').read() + '\n' + js
 ver = re.search(r"const VERSION = '([^']+)'", js)
 # 仓库根目录的 更新记录.md（最新在上）→ UPDATES，烘焙器顶栏「更新记录」里显示
 import json

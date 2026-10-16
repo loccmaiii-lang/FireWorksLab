@@ -297,6 +297,7 @@ function fwlCombo(name, layers, mobile = false) {
     source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit, frame }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : frame ? 'frame' : b.form, renderVer: 40 })) },     // plan_sig 在下面所有发射器都放好以后写
     textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
   const addFlash = (kind, b, L, i, pre) => {     // 4.9.96 B1 / B2：这一层的开花闪光（序列只补入点前那段，单束 / 光点补整个）
+    if (typeof EventInstances !== 'undefined' && EventInstances.on(L)) return;
     const fl = layerFlashES(kind, b, b.P, comboLayerM(L), L); if (!fl.length) return;
     out.materials[pre + 'flash'] = { role: 'soft_dot' };
     for (const e of fl) out.emitters.push({ ...fwlFlashEmitter(e, mobile, pre + 'flash'), name: pre + e.name, layer: i + 1 });
@@ -360,6 +361,7 @@ function fwlCombo(name, layers, mobile = false) {
   });
   if (mobile) { out.emitters = fwlFlashFit(out.emitters, true, out.notes); for (const k of Object.keys(out.materials)) if (/flash$/.test(k) && !out.emitters.some(e => e.material === k)) delete out.materials[k]; }
   out.notes.push('多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。');
+  if(typeof EventInstances!=='undefined')EventInstances.apply(out,layers,mobile);
   out.source.plan_sig = fwlPlanSig(fwlFinish(out.emitters));     // 4.9.24 每个发射器加 Scale Color/Life
   if (mobile) { out.tier = 'M'; out.name = String(name).replace(/_Mobile$/, '') + '_M'; fwlMaxAlive(out.emitters); }     // 4.9.69 手机 _M（规范 v1 §2 / §6）
   return out;

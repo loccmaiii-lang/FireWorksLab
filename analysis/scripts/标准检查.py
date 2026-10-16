@@ -131,7 +131,13 @@ if __name__ == '__main__':
     ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
     ap.add_argument('--spark-flow-only', action='store_true', help='全局气流模型、关闭像素回归和统一右栏保存检查（需Node Playwright）')
     ap.add_argument('--spark-scales-only', action='store_true', help='分层粒子图整体倍率模型与真实入口/导出检查（需Node Playwright）')
+    ap.add_argument('--event-instances-only', action='store_true', help='CPU事件合同与导出门禁回归，不连接UE')
     a = ap.parse_args()
+    if a.event_instances_only:
+        for check in ('cascade_events_test.cjs','event_instances_check.cjs'):
+            rc=subprocess.call(['node',str(HERE/check)])
+            if rc:raise SystemExit(rc)
+        raise SystemExit(0)
     if a.spark_scales_only:
         for name in ('spark_graph_scales_test.cjs', 'spark_graph_scales_verify.cjs'):
             rc = subprocess.call(['node', str(HERE / name)])

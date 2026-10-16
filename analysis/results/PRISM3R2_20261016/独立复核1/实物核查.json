@@ -1,0 +1,236 @@
+{
+  "scope": "正式包、源存档及原片只读核查；非UE实播",
+  "cascade_sha256": "af68e26d9d36bdb798c9048b7411a4b07ab20c7a056a32ccfce6e935c764d087",
+  "plan_sig": "e9455744",
+  "textures": {
+    "L1_seq": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L1_cutout": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L1_ramp": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L2_seq": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L2_cutout": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L2_ramp": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L3_seq": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L3_cutout": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L3_ramp": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L4_seq": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L4_cutout": {
+      "exists": true,
+      "sha_matches": true
+    },
+    "L4_ramp": {
+      "exists": true,
+      "sha_matches": true
+    }
+  },
+  "formal_replay": [
+    {
+      "name": "L1_Bloom",
+      "pass": true,
+      "life": 2.3667,
+      "frames": 51,
+      "size_range_cm": [
+        [
+          4041.9,
+          0,
+          0
+        ],
+        [
+          4467.3,
+          0,
+          0
+        ]
+      ],
+      "scope": "仅贴图质量；uniform取中值供静态摆图，不证明UE事件或随机尺寸",
+      "metrics": {
+        "shown_frac": 1.0,
+        "max_skip": 1,
+        "edge_max": 0.0,
+        "saturated_max": 0.0,
+        "empty_mid": 0,
+        "empty_tail": 0,
+        "fails": []
+      }
+    },
+    {
+      "name": "L2_Bloom",
+      "pass": true,
+      "life": 2.3333,
+      "frames": 52,
+      "size_range_cm": [
+        [
+          4095.4,
+          0,
+          0
+        ],
+        [
+          4526.4,
+          0,
+          0
+        ]
+      ],
+      "scope": "仅贴图质量；uniform取中值供静态摆图，不证明UE事件或随机尺寸",
+      "metrics": {
+        "shown_frac": 1.0,
+        "max_skip": 1,
+        "edge_max": 0.0,
+        "saturated_max": 0.0,
+        "empty_mid": 0,
+        "empty_tail": 0,
+        "fails": []
+      }
+    },
+    {
+      "name": "L3_Bloom",
+      "pass": true,
+      "life": 2.3,
+      "frames": 50,
+      "size_range_cm": [
+        [
+          4096.5,
+          0,
+          0
+        ],
+        [
+          4527.7,
+          0,
+          0
+        ]
+      ],
+      "scope": "仅贴图质量；uniform取中值供静态摆图，不证明UE事件或随机尺寸",
+      "metrics": {
+        "shown_frac": 1.0,
+        "max_skip": 1,
+        "edge_max": 0.0,
+        "saturated_max": 0.0,
+        "empty_mid": 0,
+        "empty_tail": 0,
+        "fails": []
+      }
+    },
+    {
+      "name": "L4_Bloom",
+      "pass": true,
+      "life": 2.2667,
+      "frames": 48,
+      "size_range_cm": [
+        [
+          4415.9,
+          0,
+          0
+        ],
+        [
+          4880.7,
+          0,
+          0
+        ]
+      ],
+      "scope": "仅贴图质量；uniform取中值供静态摆图，不证明UE事件或随机尺寸",
+      "metrics": {
+        "shown_frac": 1.0,
+        "max_skip": 1,
+        "edge_max": 0.0,
+        "saturated_max": 0.0,
+        "empty_mid": 0,
+        "empty_tail": 0,
+        "fails": []
+      }
+    }
+  ],
+  "video": [
+    {
+      "file": "vidio/2.0/万彩千轮A.mp4",
+      "sha256": "1dc9f4db1de5cacbb29f633bd695354ab4a3ea5bc515b3cf1948bcb83dd1814e",
+      "fps": 30.0,
+      "decoded_frames": 105,
+      "size": [
+        2560,
+        1440
+      ]
+    },
+    {
+      "file": "vidio/2.0/万彩千轮B.mp4",
+      "sha256": "1e87b34f1827695c888b75e989071d5741fadbf7ffcf513050422faaaa3bb9ec",
+      "fps": 30.0,
+      "decoded_frames": 99,
+      "size": [
+        2560,
+        1440
+      ]
+    },
+    {
+      "file": "analysis/results/PRISM3R2_20261016/整体回放.mp4",
+      "sha256": "7916a2a64629ac5014d55d8c46e2abd8d4ee17a96147e46dc1f1e172f51c2edd",
+      "fps": 30.0,
+      "decoded_frames": 100,
+      "size": [
+        436,
+        436
+      ]
+    }
+  ],
+  "game_evidence": [
+    {
+      "distance": 800,
+      "bright_threshold": 35,
+      "bright_pixels": 74,
+      "bbox": [
+        150,
+        148,
+        168,
+        172
+      ]
+    },
+    {
+      "distance": 1000,
+      "bright_threshold": 35,
+      "bright_pixels": 45,
+      "bbox": [
+        151,
+        151,
+        167,
+        168
+      ]
+    },
+    {
+      "distance": 1200,
+      "bright_threshold": 35,
+      "bright_pixels": 34,
+      "bbox": [
+        153,
+        151,
+        165,
+        166
+      ]
+    }
+  ]
+}

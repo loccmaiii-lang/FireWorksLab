@@ -383,12 +383,15 @@ function disposeExportHolder(holder) {
   if (holder) { holder.unitBake = null; holder.unitBakeM = null; }
 }
 function comboExportDescription(job, lb) {
-  return { name: job.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB',
+  const events=typeof EventInstances!=='undefined'&&job.layers.some(EventInstances.on);
+  return { name: job.comboName, note: events?'启用事件的层由飞行星头Death后原位生成小割，一事件一朵；每组数量与随机见eventSpawn，固定曲线和随机初色互斥；recipe保留全部配方。颜色为sRGB十六进制，分布值为线性RGB': '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB',
+    ...(events?{bakerVersion:VERSION,recipe:job.metadata.recipe}:{}),
     layers: job.layers.map((L, i) => {
       const e = job.entries[i], b = lb[i].b;
       return { master: L.lib, masterType: e.type || '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
         colorStages: L.stages, transition: L.xw, Ramp: [L.ramp0, L.ramp1, L.ramp2, L.ramp3], HeadInt: L.headInt, TailInt: L.tailInt,
-        colorOverLife: colorKeys(L, b.meta.duration),
+        ...(events&&EventInstances.on(L)?{eventSpawn:EventInstances.config(L)}:{}),
+        colorOverLife: events&&EventInstances.on(L)&&EventInstances.config(L).color==='random'?null:colorKeys(L, b.meta.duration),
         spriteSizeCm: [+(b.meta.Ww * L.scale * 100).toFixed(1), +(b.meta.Wh * L.scale * 100).toFixed(1)] };
     }) };
 }

@@ -97,6 +97,7 @@ function buildLayerHead(i) {
   slider(pos, `lh${i}-delay`, '开始时间', 's', 0, 10, 0.01, () => L.delay, v => { L.delay = v; const c = document.querySelector(`#layerCard [data-st="${i}"]`); if (c) c.value = (+v).toFixed(2); stage2.tlSig = ''; }, 0);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
   slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
+  if(typeof eventInstancePanel==='function')eventInstancePanel(pos,L,i);
   const mir = document.createElement('label'); mir.className = 'check'; mir.innerHTML = '<input type="checkbox"> 水平镜像';
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
@@ -130,6 +131,8 @@ function buildLayerHead(i) {
     const tail = le && isEmit(le.P), head = tail && typeof rtHeadOnly === 'function' && rtHeadOnly(le.P);     // 4.9.96 H1：纯星头层 PC 能选「CPU 粒子（星头）」
     for (const pf of ['pc', 'mobile']) for (const op of ex.querySelectorAll(`[data-out=${pf}] option`)) {
       const t0 = (pf === 'pc' ? OUT_PC : OUT_MOBILE_UI).find(q => q[0] === op.value); if (t0) op.textContent = t0[1];
+      const eventWhy=typeof EventInstances!=='undefined'?EventInstances.outputReason(L,pf,op.value):'';
+      if(eventWhy){op.disabled=true;op.title=eventWhy;continue;}
       if (head && pf === 'pc' && op.value === 'dots') { op.disabled = false; op.textContent = 'CPU 粒子（星头）'; op.title = '纯星头：一颗软圆点 CPU 粒子沿弹道走（和手机同一颗），没有贴图'; }
       else if (head && op.value === 'seq') { op.textContent = pf === 'pc' ? '序列（单帧小面片）' : 'CPU 粒子（星头）'; op.title = ''; }
       else if (tail && ['unit', 'dots', 'frame'].includes(op.value)) { op.disabled = true; op.title = '尾缀层：按尾缀自己的产物出（交付清单产物表里选近段 / 合成一张）或不出；单束、GPU 光点、单帧是礼花的'; }
@@ -225,7 +228,7 @@ function wbSync() {
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 // 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
 const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), zz = q => !!q && (q.zoom === 'on' || q.zoom === 'anchor'), z = s.kind === 'combo' ? (s.layers || []).some(l => zz(l.P)) : zz(s.P); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
-    return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + ss; } catch (e) { return ''; } };
+    return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + (s.kind==='combo'&&(s.layers||[]).some(x=>x.L&&x.L.eventSpawn)?'|events4.9.111':'') + ss; } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
@@ -1140,7 +1143,7 @@ function prodTableHTML(xs, combo) {
     const o = outOfX(x, combo), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
     const uMany = mobileUnitTooMany(P) ? ` disabled title="${MOBILE_UNIT_MANY}"` : '';     // 4.9.80 手机单束 > 50 颗：一定被拦，不让选
-    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' ? (pf === 'mobile' && uMany && v !== 'unit' ? uMany : uAttr) : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`).join('')}</select>`;
+    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => {const eventWhy=combo&&typeof EventInstances!=='undefined'?EventInstances.outputReason(x.L,pf,k):'';return `<option value="${k}"${k === v ? ' selected' : ''}${eventWhy?' disabled title="'+eventWhy+'"':k === 'unit' ? (pf === 'mobile' && uMany && v !== 'unit' ? uMany : uAttr) : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`;}).join('')}</select>`;
     const mobV = combo && !layerMobileManual(x.L) ? 'auto' : o.mobile;
     return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
       <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', combo ? OUT_MOBILE_UI : OUT_MOBILE, mobV)}<small>${x.mob && x.mob.auto && x.mob.kind !== 'off' ? mobileAutoText(x.mob) + ' · ' : ''}${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）

@@ -1,0 +1,94 @@
+{
+  "cascade_sha256": "af68e26d9d36bdb798c9048b7411a4b07ab20c7a056a32ccfce6e935c764d087",
+  "cache_vs_formal_rgba": [
+    {
+      "layer": 1,
+      "max_delta": 0,
+      "changed": 0,
+      "total": 16777216
+    },
+    {
+      "layer": 2,
+      "max_delta": 0,
+      "changed": 0,
+      "total": 16777216
+    },
+    {
+      "layer": 3,
+      "max_delta": 1,
+      "changed": 6,
+      "total": 16777216
+    },
+    {
+      "layer": 4,
+      "max_delta": 1,
+      "changed": 2,
+      "total": 16777216
+    }
+  ],
+  "formal_pngs_loaded": true,
+  "formal_size_curve_loaded": true,
+  "export_description_full_recipe": true,
+  "unsupported_options_disabled": [
+    {
+      "platform": "pc",
+      "value": "seq",
+      "disabled": false,
+      "title": ""
+    },
+    {
+      "platform": "pc",
+      "value": "unit",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "pc",
+      "value": "dots",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "pc",
+      "value": "frame",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "pc",
+      "value": "off",
+      "disabled": false,
+      "title": ""
+    },
+    {
+      "platform": "mobile",
+      "value": "auto",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "mobile",
+      "value": "seq",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "mobile",
+      "value": "unit",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "mobile",
+      "value": "frame",
+      "disabled": true,
+      "title": "CPU事件实例目前只支持PC单段序列；此方案不能输出事件小割"
+    },
+    {
+      "platform": "mobile",
+      "value": "off",
+      "disabled": false,
+      "title": ""
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+ {
+  "item": "体检",
+  "pass": true,
+  "why": "工作副本 F:\\FireWorksLab · 分支 main · HEAD fecea4ee · origin/main fecea4ee；ℹ skip-worktree 文件 1 个（本机刻意不跟踪的改动）：vidio/找到属于你的那黄金60秒点燃你的新春烟花 烟花的浪漫 烟花像极了爱情 愿在烟火的绚烂中闪耀 烟花是中式浪漫天；⚠ 已跟踪文件有本地改动 25 个（本机自动同步会因此跳过）：nalysis/probe/标准检查/标准检查.json；analysis/probe/标准检查/标准检查.md；analysis/scripts/标准检查.py；analysis/scripts/网格垂柳_UE/run.mjs；analysis/scripts/网格垂柳_生成.mjs；⚠ 本机自动同步：最近一次成功 2026-10-16T05:31:48；之后连续跳过 / 失败 212 次；最后原因：er checkout sync skipped (after): tracked files have local edits.；结论：可以干活（⚠ 只是提醒）"
+ }
+]

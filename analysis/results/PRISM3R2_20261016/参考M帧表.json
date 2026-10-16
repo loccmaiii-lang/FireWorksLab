@@ -1,0 +1,73 @@
+{
+  "video": "vidio/2.0/万彩千轮A.mp4",
+  "roi": [
+    1965,
+    490,
+    2115,
+    640
+  ],
+  "birth_anchor": "frame23首次可见红色云团，frame26首次清楚分离星点；不是主爆时刻",
+  "samples": [
+    {
+      "frame": 23,
+      "clip_s": 0.7666666666666667,
+      "age_from_first_diffuse_s": 0.0
+    },
+    {
+      "frame": 26,
+      "clip_s": 0.8666666666666667,
+      "age_from_first_diffuse_s": 0.1
+    },
+    {
+      "frame": 30,
+      "clip_s": 1.0,
+      "age_from_first_diffuse_s": 0.23333333333333334
+    },
+    {
+      "frame": 36,
+      "clip_s": 1.2,
+      "age_from_first_diffuse_s": 0.43333333333333335
+    },
+    {
+      "frame": 45,
+      "clip_s": 1.5,
+      "age_from_first_diffuse_s": 0.7333333333333333
+    },
+    {
+      "frame": 54,
+      "clip_s": 1.8,
+      "age_from_first_diffuse_s": 1.0333333333333334
+    },
+    {
+      "frame": 63,
+      "clip_s": 2.1,
+      "age_from_first_diffuse_s": 1.3333333333333333
+    },
+    {
+      "frame": 72,
+      "clip_s": 2.4,
+      "age_from_first_diffuse_s": 1.6333333333333333
+    },
+    {
+      "frame": 81,
+      "clip_s": 2.7,
+      "age_from_first_diffuse_s": 1.9333333333333333
+    },
+    {
+      "frame": 90,
+      "clip_s": 3.0,
+      "age_from_first_diffuse_s": 2.2333333333333334
+    },
+    {
+      "frame": 96,
+      "clip_s": 3.2,
+      "age_from_first_diffuse_s": 2.433333333333333
+    },
+    {
+      "frame": 102,
+      "clip_s": 3.4,
+      "age_from_first_diffuse_s": 2.6333333333333333
+    }
+  ],
+  "censoring": "ROI固定，后段有其他小割重叠；不得用最大亮点当该朵精确燃尽时刻"
+}

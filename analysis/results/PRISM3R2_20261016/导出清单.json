@@ -1,0 +1,30 @@
+{
+  "effect": "wancai",
+  "entry": "PRISM3",
+  "ver": "192edbc3·events4.9.111+master4.3.8-core1",
+  "time": "2026-10-16 23:19",
+  "dir": "analysis/results/PRISM3R2_20261016/正式包/",
+  "combo_pack": true,
+  "packages": [
+    {
+      "name": "PrismWheels3",
+      "replica": "PRISM3",
+      "dir": "正式包/PrismWheels3",
+      "files": [
+        "cascade.json",
+        "PRISM3_组合说明.json",
+        "T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_C.png",
+        "T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_HD.png",
+        "T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_C.png",
+        "T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_HD.png",
+        "T_EFX_FireWorks_PrismWheels3_RingCore_R.png",
+        "T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_C.png",
+        "T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_HD.png",
+        "T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_C.png",
+        "T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_HD.png",
+        "命名对照.txt"
+      ]
+    }
+  ],
+  "scope": "仅PC；9个CPU发射器。正式纹理检查、浏览器事件回放、离线导入分别验证；不是UE实播。"
+}

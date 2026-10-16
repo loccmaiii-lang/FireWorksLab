@@ -1,0 +1,194 @@
+{
+  "version": "192edbc3·events4.9.111+master4.3.8-core1",
+  "reference": [
+    {
+      "path": "vidio/2.0/万彩千轮A.mp4",
+      "sha256": "1dc9f4db1de5cacbb29f633bd695354ab4a3ea5bc515b3cf1948bcb83dd1814e",
+      "fps": 30,
+      "frames": 105
+    },
+    {
+      "path": "vidio/2.0/万彩千轮B.mp4",
+      "sha256": "1e87b34f1827695c888b75e989071d5741fadbf7ffcf513050422faaaa3bb9ec",
+      "fps": 30,
+      "frames": 99
+    }
+  ],
+  "method": "原片按帧号检查。单朵M以23帧首次红色云团为观察零点，26帧出现清楚分离的亮星；整体t0=视频A剪辑0，只作同剪辑相对时刻比较，不能证明主爆零点。",
+  "anchors_A": [
+    {
+      "phase": "首朵E由亮橙点变为展开的红色星团",
+      "before_frame": 13,
+      "after_frame": 14,
+      "interval_s": [
+        0.43333333333333335,
+        0.4666666666666667
+      ],
+      "roi": [
+        1688,
+        233,
+        1828,
+        373
+      ]
+    },
+    {
+      "phase": "单朵M首次可辨红色云团",
+      "frame": 23,
+      "time_s": 0.7666666666666667,
+      "roi": [
+        1965,
+        490,
+        2115,
+        640
+      ]
+    },
+    {
+      "phase": "M出现清楚分离亮星",
+      "before_frame": 25,
+      "after_frame": 26,
+      "interval_s": [
+        0.8333333333333334,
+        0.8666666666666667
+      ]
+    },
+    {
+      "phase": "末批L由橙点变为红色星团",
+      "before_frame": 28,
+      "after_frame": 29,
+      "interval_s": [
+        0.9333333333333333,
+        0.9666666666666667
+      ],
+      "roi": [
+        1860,
+        610,
+        2000,
+        750
+      ]
+    },
+    {
+      "phase": "多数小割仍完整且持续变色",
+      "interval_s": [
+        1.2,
+        1.8
+      ]
+    },
+    {
+      "phase": "整团明显稀疏、向余火过渡",
+      "interval_s": [
+        2.1,
+        2.7
+      ]
+    },
+    {
+      "phase": "只剩零散余火，片尾仍有弱点",
+      "interval_s": [
+        3,
+        3.466666666666667
+      ],
+      "right_censored": true
+    }
+  ],
+  "B_crosscheck": "B片首帧已处在小割阶段，不能当主爆起点；中段再次可见不同圆/椭圆小割与后段稀疏，末段出现下一发，不能用片长确认当前发燃尽。",
+  "simulation": {
+    "components": [
+      {
+        "id": "PRISM3-A",
+        "pattern": "saturn",
+        "ringFrac": 0.68,
+        "tilt": 12,
+        "stars": 100,
+        "speedJit": 18,
+        "burn": 1.85,
+        "lifetime_s": 2.3667,
+        "sampled_birth_s": [
+          0.36666666666666664,
+          0.9
+        ],
+        "sampled_end_s": 3.2666999999999997,
+        "frames": 51,
+        "sequence": "T_EFX_FireWorks_PrismWheels3_RingCore_4x4_01_HD.png"
+      },
+      {
+        "id": "PRISM3-B",
+        "pattern": "saturn",
+        "ringFrac": 0.44,
+        "tilt": 48,
+        "stars": 116,
+        "speedJit": 22,
+        "burn": 1.85,
+        "lifetime_s": 2.3333,
+        "sampled_birth_s": [
+          0.43333333333333335,
+          0.7333333333333333
+        ],
+        "sampled_end_s": 3.0666333333333333,
+        "frames": 52,
+        "sequence": "T_EFX_FireWorks_PrismWheels3_TiltCore_4x4_01_HD.png"
+      },
+      {
+        "id": "PRISM3-C",
+        "pattern": "saturn",
+        "ringFrac": 0.74,
+        "tilt": 66,
+        "stars": 98,
+        "speedJit": 32,
+        "burn": 1.85,
+        "lifetime_s": 2.3,
+        "sampled_birth_s": [
+          0.6,
+          0.9666666666666667
+        ],
+        "sampled_end_s": 3.2666666666666666,
+        "frames": 50,
+        "sequence": "T_EFX_FireWorks_PrismWheels3_FlatCore_4x4_01_HD.png"
+      },
+      {
+        "id": "PRISM3-D",
+        "pattern": "saturn",
+        "ringFrac": 0.32,
+        "tilt": 32,
+        "stars": 108,
+        "speedJit": 42,
+        "burn": 1.85,
+        "lifetime_s": 2.2667,
+        "sampled_birth_s": [
+          0.36666666666666664,
+          0.5666666666666667
+        ],
+        "sampled_end_s": 2.8333666666666666,
+        "frames": 48,
+        "sequence": "T_EFX_FireWorks_PrismWheels3_SphereRing_4x4_01_HD.png"
+      }
+    ],
+    "ignition_delay_s": 0.1,
+    "burn_mean_s": 1.85,
+    "burn_jitter_percent": 8,
+    "birth_distribution_s": [
+      0.22,
+      1.12
+    ],
+    "sampled_births_s": [
+      0.36666666666666664,
+      0.9666666666666667
+    ],
+    "first_resolved_stars_approx_s": 0.5,
+    "comparison_precision": "仅比较可观察阶段；特征与主爆零点不一致，不能给出精确拟合tick误差",
+    "notes": "原片红色云团、序列初闪和首批亮星不是同一观测特征。当前首批亮星约0.50s，A首团约0.467s；末批Death0.967s加本地0.1s点火约1.067s。仅比较陆续展开时段，不声称精确拟合误差或逐颗位置与真实烟花一一对应。"
+  },
+  "burning_evidence": {
+    "source": "https://www.jes.or.jp/mag/stem/Vol.67/No.1.09.html",
+    "title": "Ooki et al. (2006), Burning and air resistance of fireworks stars, 67(1),43–47",
+    "measured_sample_burning_s": [
+      0.8,
+      2.4
+    ],
+    "mean_relative_sd": 0.051,
+    "interpretation": "1.85s均值处于论文实测量级；8%随机是沿用用户候选，不是论文5.1%的复制。视频M约0.767s出生，至1.8s仍可辨，之后漂移/邻朵重叠使精确单朵归属和燃尽不确定。序列2.27–2.37s含点火与淡出，不能当燃烧均值。没有目标星体直径/药剂资料，不能反推或证明具体化学配方。"
+  },
+  "limits": [
+    "源片不能确证主闪光零点；CPU主闪光寿命/大小为保守设计值。",
+    "固定ROI后段有邻朵重叠，精确单朵燃尽被遮挡；只对观察下限和量级交叉校核。",
+    "原片没有物理标尺，厘米数沿原项目尺度与用户示例，不由视频像素反推出真实米数。"
+  ]
+}

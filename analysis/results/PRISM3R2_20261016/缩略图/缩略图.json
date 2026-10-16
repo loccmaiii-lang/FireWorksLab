@@ -1,0 +1,18 @@
+{
+  "ver": "192edbc3·events4.9.111+master4.3.8-core1",
+  "alias": {
+    "ef:wancai": "rv:PRISM3"
+  },
+  "items": {
+    "rv:PRISM3": {
+      "file": "rv_PRISM3.jpg",
+      "pick": 0,
+      "cands": [
+        {
+          "t": 1.4
+        }
+      ],
+      "source": "正式包PNG原始RGBA＋正式尺寸/帧曲线→当前普通查看器，1.4s"
+    }
+  }
+}

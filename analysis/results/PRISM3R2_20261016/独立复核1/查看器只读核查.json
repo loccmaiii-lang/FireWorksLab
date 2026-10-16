@@ -1,0 +1,1216 @@
+{
+  "version": "4.9.111",
+  "entry_ver": "192edbc3·events4.9.111+master4.3.8-core1",
+  "layers": [
+    {
+      "index": 0,
+      "title": "正环球芯",
+      "ringFrac": 0.68,
+      "config": {
+        "count": 4,
+        "seed": 1101,
+        "flight": [
+          0.22,
+          1.12
+        ],
+        "speed": [
+          200,
+          280
+        ],
+        "drag": 4,
+        "gravity": 1,
+        "inherit": 0.35,
+        "childDrag": 1.6,
+        "childGravity": 0.2,
+        "sizeJit": 0.05,
+        "rotation": 1,
+        "color": "fixed",
+        "colorMin": [
+          0.015148,
+          0,
+          0
+        ],
+        "colorMax": [
+          1,
+          0.42806,
+          1
+        ],
+        "headSize": [
+          0.95,
+          1.05
+        ],
+        "headColor": "#ffb060",
+        "flash": true,
+        "flashLife": 0.12,
+        "flashSize": 10,
+        "flashAlpha": 0.5
+      }
+    },
+    {
+      "index": 1,
+      "title": "斜环密芯",
+      "ringFrac": 0.44,
+      "config": {
+        "count": 4,
+        "seed": 2072,
+        "flight": [
+          0.22,
+          1.12
+        ],
+        "speed": [
+          200,
+          280
+        ],
+        "drag": 4,
+        "gravity": 1,
+        "inherit": 0.35,
+        "childDrag": 1.6,
+        "childGravity": 0.2,
+        "sizeJit": 0.05,
+        "rotation": 1,
+        "color": "fixed",
+        "colorMin": [
+          0.015148,
+          0,
+          0
+        ],
+        "colorMax": [
+          1,
+          0.42806,
+          1
+        ],
+        "headSize": [
+          0.95,
+          1.05
+        ],
+        "headColor": "#ffb060",
+        "flash": false,
+        "flashLife": 0.12,
+        "flashSize": 10,
+        "flashAlpha": 0.5
+      }
+    },
+    {
+      "index": 2,
+      "title": "扁环疏芯",
+      "ringFrac": 0.74,
+      "config": {
+        "count": 4,
+        "seed": 3043,
+        "flight": [
+          0.22,
+          1.12
+        ],
+        "speed": [
+          200,
+          280
+        ],
+        "drag": 4,
+        "gravity": 1,
+        "inherit": 0.35,
+        "childDrag": 1.6,
+        "childGravity": 0.2,
+        "sizeJit": 0.05,
+        "rotation": 1,
+        "color": "random",
+        "colorMin": [
+          0.015148,
+          0,
+          0
+        ],
+        "colorMax": [
+          1,
+          0.42806,
+          1
+        ],
+        "headSize": [
+          0.95,
+          1.05
+        ],
+        "headColor": "#ffb060",
+        "flash": false,
+        "flashLife": 0.12,
+        "flashSize": 10,
+        "flashAlpha": 0.5
+      }
+    },
+    {
+      "index": 3,
+      "title": "厚球偏环",
+      "ringFrac": 0.32,
+      "config": {
+        "count": 4,
+        "seed": 4014,
+        "flight": [
+          0.22,
+          1.12
+        ],
+        "speed": [
+          200,
+          280
+        ],
+        "drag": 4,
+        "gravity": 1,
+        "inherit": 0.35,
+        "childDrag": 1.6,
+        "childGravity": 0.2,
+        "sizeJit": 0.05,
+        "rotation": 1,
+        "color": "random",
+        "colorMin": [
+          0.015148,
+          0,
+          0
+        ],
+        "colorMax": [
+          1,
+          0.42806,
+          1
+        ],
+        "headSize": [
+          0.95,
+          1.05
+        ],
+        "headColor": "#ffb060",
+        "flash": false,
+        "flashLife": 0.12,
+        "flashSize": 10,
+        "flashAlpha": 0.5
+      }
+    }
+  ],
+  "game_distances": [
+    {
+      "distance": 800,
+      "pxPerM": 0.23290598290598288
+    },
+    {
+      "distance": 1000,
+      "pxPerM": 0.1863247863247863
+    },
+    {
+      "distance": 1200,
+      "pxPerM": 0.15527065527065526
+    }
+  ],
+  "renderEntry": "function",
+  "errors": [],
+  "panel_layers": [
+    {
+      "index": 0,
+      "controls": [
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "ev0-count",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "ev0-seed",
+          "type": "range",
+          "value": "1101",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1101",
+          "disabled": false
+        },
+        {
+          "id": "ev0-flight0",
+          "type": "range",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "ev0-flight1",
+          "type": "range",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "ev0-speed0",
+          "type": "range",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "ev0-speed1",
+          "type": "range",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "ev0-headSize0",
+          "type": "range",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "ev0-headSize1",
+          "type": "range",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "ev0-drag",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4.0",
+          "disabled": false
+        },
+        {
+          "id": "ev0-gravity",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev0-inherit",
+          "type": "range",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "ev0-childDrag",
+          "type": "range",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "ev0-childGravity",
+          "type": "range",
+          "value": "0.2",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.20",
+          "disabled": false
+        },
+        {
+          "id": "ev0-sizeJit",
+          "type": "range",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "ev0-rotation",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev0-flashLife",
+          "type": "range",
+          "value": "0.12",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.12",
+          "disabled": false
+        },
+        {
+          "id": "ev0-flashSize",
+          "type": "range",
+          "value": "10",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "10.0",
+          "disabled": false
+        },
+        {
+          "id": "ev0-flashAlpha",
+          "type": "range",
+          "value": "0.5",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.50",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "select-one",
+          "value": "fixed",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "color",
+          "value": "#ffb060",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "controls": [
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "ev1-count",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "ev1-seed",
+          "type": "range",
+          "value": "2072",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "2072",
+          "disabled": false
+        },
+        {
+          "id": "ev1-flight0",
+          "type": "range",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "ev1-flight1",
+          "type": "range",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "ev1-speed0",
+          "type": "range",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "ev1-speed1",
+          "type": "range",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "ev1-headSize0",
+          "type": "range",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "ev1-headSize1",
+          "type": "range",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "ev1-drag",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4.0",
+          "disabled": false
+        },
+        {
+          "id": "ev1-gravity",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev1-inherit",
+          "type": "range",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "ev1-childDrag",
+          "type": "range",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "ev1-childGravity",
+          "type": "range",
+          "value": "0.2",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.20",
+          "disabled": false
+        },
+        {
+          "id": "ev1-sizeJit",
+          "type": "range",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "ev1-rotation",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "select-one",
+          "value": "fixed",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "color",
+          "value": "#ffb060",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "controls": [
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "ev2-count",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "ev2-seed",
+          "type": "range",
+          "value": "3043",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "3043",
+          "disabled": false
+        },
+        {
+          "id": "ev2-flight0",
+          "type": "range",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "ev2-flight1",
+          "type": "range",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "ev2-speed0",
+          "type": "range",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "ev2-speed1",
+          "type": "range",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "ev2-headSize0",
+          "type": "range",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "ev2-headSize1",
+          "type": "range",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "ev2-drag",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4.0",
+          "disabled": false
+        },
+        {
+          "id": "ev2-gravity",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev2-inherit",
+          "type": "range",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "ev2-childDrag",
+          "type": "range",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "ev2-childGravity",
+          "type": "range",
+          "value": "0.2",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.20",
+          "disabled": false
+        },
+        {
+          "id": "ev2-sizeJit",
+          "type": "range",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "ev2-rotation",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "select-one",
+          "value": "random",
+          "disabled": false
+        },
+        {
+          "id": "ev2-colorMin0",
+          "type": "range",
+          "value": "0.02",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.02",
+          "disabled": false
+        },
+        {
+          "id": "ev2-colorMin1",
+          "type": "range",
+          "value": "0",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.00",
+          "disabled": false
+        },
+        {
+          "id": "ev2-colorMin2",
+          "type": "range",
+          "value": "0",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.00",
+          "disabled": false
+        },
+        {
+          "id": "ev2-colorMax0",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev2-colorMax1",
+          "type": "range",
+          "value": "0.43",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.43",
+          "disabled": false
+        },
+        {
+          "id": "ev2-colorMax2",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "color",
+          "value": "#ffb060",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "controls": [
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "ev3-count",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "ev3-seed",
+          "type": "range",
+          "value": "4014",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4014",
+          "disabled": false
+        },
+        {
+          "id": "ev3-flight0",
+          "type": "range",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.22",
+          "disabled": false
+        },
+        {
+          "id": "ev3-flight1",
+          "type": "range",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.12",
+          "disabled": false
+        },
+        {
+          "id": "ev3-speed0",
+          "type": "range",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "200",
+          "disabled": false
+        },
+        {
+          "id": "ev3-speed1",
+          "type": "range",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "280",
+          "disabled": false
+        },
+        {
+          "id": "ev3-headSize0",
+          "type": "range",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.95",
+          "disabled": false
+        },
+        {
+          "id": "ev3-headSize1",
+          "type": "range",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.05",
+          "disabled": false
+        },
+        {
+          "id": "ev3-drag",
+          "type": "range",
+          "value": "4",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "4.0",
+          "disabled": false
+        },
+        {
+          "id": "ev3-gravity",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev3-inherit",
+          "type": "range",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.35",
+          "disabled": false
+        },
+        {
+          "id": "ev3-childDrag",
+          "type": "range",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.6",
+          "disabled": false
+        },
+        {
+          "id": "ev3-childGravity",
+          "type": "range",
+          "value": "0.2",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.20",
+          "disabled": false
+        },
+        {
+          "id": "ev3-sizeJit",
+          "type": "range",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.05",
+          "disabled": false
+        },
+        {
+          "id": "ev3-rotation",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "select-one",
+          "value": "random",
+          "disabled": false
+        },
+        {
+          "id": "ev3-colorMin0",
+          "type": "range",
+          "value": "0.02",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.02",
+          "disabled": false
+        },
+        {
+          "id": "ev3-colorMin1",
+          "type": "range",
+          "value": "0",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.00",
+          "disabled": false
+        },
+        {
+          "id": "ev3-colorMin2",
+          "type": "range",
+          "value": "0",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.00",
+          "disabled": false
+        },
+        {
+          "id": "ev3-colorMax0",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "ev3-colorMax1",
+          "type": "range",
+          "value": "0.43",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "0.43",
+          "disabled": false
+        },
+        {
+          "id": "ev3-colorMax2",
+          "type": "range",
+          "value": "1",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "number",
+          "value": "1.00",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "checkbox",
+          "value": "on",
+          "disabled": false
+        },
+        {
+          "id": "",
+          "type": "color",
+          "value": "#ffb060",
+          "disabled": false
+        }
+      ]
+    }
+  ]
+}

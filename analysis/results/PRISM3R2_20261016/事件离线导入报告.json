@@ -1,0 +1,135 @@
+{
+  "status": "离线模拟导入通过；不是UE写入/读回",
+  "input_sha256": "af68e26d9d36bdb798c9048b7411a4b07ab20c7a056a32ccfce6e935c764d087",
+  "legacyRegression": {
+    "baseline_version": "2.26",
+    "current_version": "2.27",
+    "tested_modules": [
+      "Lifetime",
+      "InitialSize",
+      "VelocityOverLife",
+      "SizeByLife",
+      "ColorScaleOverLife"
+    ],
+    "baseline_plan_sha256": "fe27a478d74fcdc2df8d3aa0e0ec7219cba6e1f3a60d32796ffa09075d4cf2f3",
+    "current_plan_sha256": "fe27a478d74fcdc2df8d3aa0e0ec7219cba6e1f3a60d32796ffa09075d4cf2f3",
+    "identical": true
+  },
+  "emitters": [
+    {
+      "emitter": "L1_Flash"
+    },
+    {
+      "emitter": "L1_Bloom",
+      "receiver": {
+        "properties": {
+          "LODValidity": 1,
+          "EventGeneratorType": "EPET_Death",
+          "EventName": "L1_Bloom",
+          "SpawnCount": "(Distribution=DistributionFloatConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionFloatConstant_37')",
+          "bUseParticleTime": false,
+          "bUsePSysLocation": false,
+          "bInheritVelocity": true,
+          "InheritVelocityScale": "(Distribution=DistributionVectorConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionVectorConstant_38')"
+        },
+        "SpawnCount": 1,
+        "InheritVelocityScale": [
+          0.35,
+          0.35,
+          0.35
+        ]
+      }
+    },
+    {
+      "emitter": "L2_Bloom",
+      "receiver": {
+        "properties": {
+          "LODValidity": 1,
+          "EventGeneratorType": "EPET_Death",
+          "EventName": "L2_Bloom",
+          "SpawnCount": "(Distribution=DistributionFloatConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionFloatConstant_66')",
+          "bUseParticleTime": false,
+          "bUsePSysLocation": false,
+          "bInheritVelocity": true,
+          "InheritVelocityScale": "(Distribution=DistributionVectorConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionVectorConstant_67')"
+        },
+        "SpawnCount": 1,
+        "InheritVelocityScale": [
+          0.35,
+          0.35,
+          0.35
+        ]
+      }
+    },
+    {
+      "emitter": "L3_Bloom",
+      "receiver": {
+        "properties": {
+          "LODValidity": 1,
+          "EventGeneratorType": "EPET_Death",
+          "EventName": "L3_Bloom",
+          "SpawnCount": "(Distribution=DistributionFloatConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionFloatConstant_93')",
+          "bUseParticleTime": false,
+          "bUsePSysLocation": false,
+          "bInheritVelocity": true,
+          "InheritVelocityScale": "(Distribution=DistributionVectorConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionVectorConstant_94')"
+        },
+        "SpawnCount": 1,
+        "InheritVelocityScale": [
+          0.35,
+          0.35,
+          0.35
+        ]
+      }
+    },
+    {
+      "emitter": "L4_Bloom",
+      "receiver": {
+        "properties": {
+          "LODValidity": 1,
+          "EventGeneratorType": "EPET_Death",
+          "EventName": "L4_Bloom",
+          "SpawnCount": "(Distribution=DistributionFloatConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionFloatConstant_122')",
+          "bUseParticleTime": false,
+          "bUsePSysLocation": false,
+          "bInheritVelocity": true,
+          "InheritVelocityScale": "(Distribution=DistributionVectorConstant'/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_YonshakuKamuro_HD.P_EFX_FireWorks_YonshakuKamuro_HD:DistributionVectorConstant_123')"
+        },
+        "SpawnCount": 1,
+        "InheritVelocityScale": [
+          0.35,
+          0.35,
+          0.35
+        ]
+      }
+    },
+    {
+      "emitter": "L1_Carrier",
+      "generator": {
+        "Events": "((Type=EPET_Death,Frequency=1,ParticleFrequency=1,FirstTimeOnly=False,LastTimeOnly=False,UseReflectedImpactVector=False,bUseOrbitOffset=False,CustomName=\"L1_Bloom\"))",
+        "LOD_reference_matches": true
+      }
+    },
+    {
+      "emitter": "L2_Carrier",
+      "generator": {
+        "Events": "((Type=EPET_Death,Frequency=1,ParticleFrequency=1,FirstTimeOnly=False,LastTimeOnly=False,UseReflectedImpactVector=False,bUseOrbitOffset=False,CustomName=\"L2_Bloom\"))",
+        "LOD_reference_matches": true
+      }
+    },
+    {
+      "emitter": "L3_Carrier",
+      "generator": {
+        "Events": "((Type=EPET_Death,Frequency=1,ParticleFrequency=1,FirstTimeOnly=False,LastTimeOnly=False,UseReflectedImpactVector=False,bUseOrbitOffset=False,CustomName=\"L3_Bloom\"))",
+        "LOD_reference_matches": true
+      }
+    },
+    {
+      "emitter": "L4_Carrier",
+      "generator": {
+        "Events": "((Type=EPET_Death,Frequency=1,ParticleFrequency=1,FirstTimeOnly=False,LastTimeOnly=False,UseReflectedImpactVector=False,bUseOrbitOffset=False,CustomName=\"L4_Bloom\"))",
+        "LOD_reference_matches": true
+      }
+    }
+  ]
+}

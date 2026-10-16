@@ -1,0 +1,74 @@
+{
+ "ver": "4.9.110",
+ "keys": [
+  "exposure",
+  "headStretch",
+  "headSizeJit",
+  "sparkShape"
+ ],
+ "rows": [
+  {
+   "name": "万彩千轮 · 小割示例",
+   "li": 1,
+   "title": "万彩千轮",
+   "type": "botan",
+   "res": [
+    {
+     "key": "exposure",
+     "sec": "光点与曝光（4.0）",
+     "label": "贴图曝光",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 1.6,
+     "max": 82,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "headStretch",
+     "sec": "炭头（星头）",
+     "label": "星头拉长（沿运动方向，1 = 一帧 30 fps 的相机拖影；跑得快拉得长）",
+     "vis": true,
+     "inert": "",
+     "from": 1.43,
+     "to": 2.86,
+     "max": 164,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "headSizeJit",
+     "sec": "炭头（星头）",
+     "label": "星头大小随机（每颗星一个倍数，平均不变）",
+     "vis": true,
+     "inert": "",
+     "from": 0.15,
+     "to": 0.3,
+     "max": 93,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkShape",
+     "sec": "尾缀（炭火火花）",
+     "label": "火花形状",
+     "vis": true,
+     "inert": "",
+     "from": 0,
+     "to": 1,
+     "max": 0,
+     "verdict": "❌ 骗人",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.682,
+    1.463,
+    2.075
+   ],
+   "saved": "4.9.110"
+  }
+ ]
+}

@@ -1,0 +1,606 @@
+[
+ {
+  "item": "体检",
+  "pass": false,
+  "why": "工作副本 F:\\FireWorksLab · 分支 main · HEAD c6e5e687 · origin/main fecea4ee；ℹ skip-worktree 文件 1 个（本机刻意不跟踪的改动）：vidio/找到属于你的那黄金60秒点燃你的新春烟花 烟花的浪漫 烟花像极了爱情 愿在烟火的绚烂中闪耀 烟花是中式浪漫天；⚠ 已跟踪文件有本地改动 25 个（本机自动同步会因此跳过）：nalysis/probe/标准检查/标准检查.json；analysis/probe/标准检查/标准检查.md；analysis/scripts/标准检查.py；analysis/scripts/网格垂柳_UE/run.mjs；analysis/scripts/网格垂柳_生成.mjs；❌ 落后 origin/main 5 个提交（≥5，先同步再干活）；❌ 本机自动同步：最近一次成功 2026-10-16T05:31:48；之后连续跳过 / 失败 210 次；最后原因：er checkout sync skipped (after): tracked files have local edits.；结论：先处理 ❌ 再干活"
+ },
+ {
+  "item": "构建",
+  "pass": true,
+  "why": "构建通过（工作树里有没提交的源码改动，成品按工作树生成）"
+ },
+ {
+  "item": "契约",
+  "pass": true,
+  "why": "2 个代表效果、49 行"
+ },
+ {
+  "item": "导出",
+  "pass": true,
+  "why": "导出拦截、空壳发射器、寿命 / 大小都过"
+ },
+ {
+  "item": "契约明细",
+  "data": [
+   {
+    "rows": [
+     {
+      "key": "exportScale",
+      "sec": "导出缩放",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.8✓ 0.5✓",
+      "log": []
+     },
+     {
+      "key": "outPC",
+      "sec": "导出方案",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "unit✓ dots✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "outMobile",
+      "sec": "导出方案",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [
+       "unit → 导出拦截：cascade_mobile.json：同时活着的粒子超过 50：L1_Unit 150（手机单束每颗星一个粒子：这一层手机改序列 / 单帧 / 不出）"
+      ],
+      "vals": "unit✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓ lean✓ count✓ tiers✓ full✓",
+      "log": []
+     },
+     {
+      "key": "outPack",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "grid",
+      "bad": "",
+      "note": "代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "fit·",
+      "log": []
+     },
+     {
+      "key": "outCell",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [
+       "2048 → 导出拦截：cascade_mobile.json：发射器 13 个，超过 _M 上限 3（规范 §6；交付清单产物表里把多余的层改成「不出」）"
+      ],
+      "vals": "512· 2048✓",
+      "log": []
+     },
+     {
+      "key": "pageTarget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8✓ 2✓",
+      "log": []
+     },
+     {
+      "key": "maxHoldBurn",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 4·",
+      "log": []
+     },
+     {
+      "key": "maxHold",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 5✓",
+      "log": []
+     },
+     {
+      "key": "burstSec",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 0·",
+      "log": []
+     },
+     {
+      "key": "fadeAt",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20✓ 2·",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.6,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureTarget",
+      "skip": "只给「建议曝光」按钮用，不进烘焙"
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 8396,
+    "forms": [
+     "master"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "空中大面片·单层",
+    "sec": 10.1,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓ lean✓ count✓ tiers✓ full✓",
+      "log": []
+     },
+     {
+      "key": "outPack",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "grid",
+      "bad": "",
+      "note": "代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "fit·",
+      "log": []
+     },
+     {
+      "key": "outCell",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "512· 2048✓",
+      "log": []
+     },
+     {
+      "key": "pageTarget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8✓ 2·",
+      "log": []
+     },
+     {
+      "key": "maxHoldBurn",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 4·",
+      "log": []
+     },
+     {
+      "key": "maxHold",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 5·",
+      "log": []
+     },
+     {
+      "key": "burstSec",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 0·",
+      "log": []
+     },
+     {
+      "key": "fadeAt",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "代表效果上不起作用（自动定的淡出起点正好一样时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "20· 2·",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.6,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 1.3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureTarget",
+      "skip": "只给「建议曝光」按钮用，不进烘焙"
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "unit✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [
+       "seq → 导出拦截：cascade_mobile.json：同一时刻有 2 张大序列（L1_Main + L2_MainA）；手游中低配只能 1 张（规范 §6）：交付清单产物表把第 2 层的手机改成「自动」或「不出」",
+       "frame → 导出拦截：cascade_mobile.json：同一时刻有 2 张大序列（L1_Main + L2_Frame）；手游中低配只能 1 张（规范 §6）：交付清单产物表把第 2 层的手机改成「自动」或「不出」"
+      ],
+      "vals": "seq✓ frame✓ off✗",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 15578,
+    "forms": [
+     "master",
+     "master"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "空中大面片·多层",
+    "sec": 46.9,
+    "pageErrors": []
+   }
+  ]
+ },
+ {
+  "item": "界面",
+  "pass": true,
+  "why": "8/8 项过"
+ }
+]

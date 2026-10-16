@@ -16,6 +16,25 @@
 - 🟡 格式已定，引擎里的实际播放还没验证；
 - ⚪ 建议值，还没测过。
 
+### 2026-10-16 CPU事件扩展（离线验证，尚未经UE实测）
+
+本机导入器2.27增加`EventGenerator`、`EventReceiverSpawn`，用户已授权本次工具改动；无引擎代码。契约校验见`tool/shared/cascade_events.js`，回归见`analysis/scripts/cascade_events_test.cjs`。不是所有Cascade事件模块的完整覆盖。
+
+```json
+{"m":"EventGenerator","Events":[{"Type":"EPET_Death","CustomName":"BloomA","Frequency":1,"ParticleFrequency":1}]}
+```
+
+```json
+{"m":"EventReceiverSpawn","EventGeneratorType":"EPET_Death","EventName":"BloomA","SpawnCount":{"const":1},"bUseParticleTime":false,"bUsePSysLocation":false,"bInheritVelocity":true,"InheritVelocityScale":{"const":[0.35,0.35,0.35]}}
+```
+
+- 仅CPU；每个发射器一个生成器模块，模块内可有多个事件。当前支持Spawn、Death、Collision、Burst，事件名使用1–64位ASCII字母/数字/下划线、字母开头。
+- Frequency和ParticleFrequency支持非负整数；原生快照常见0，不能错误拒绝。官方定义Frequency≤1为每次触发。生产候选显式填1。
+- 事件数组写为原生结构体数组；生成器既出现在Modules，也由LOD.EventGenerator引用同一对象，不能创建两个独立生成器。
+- Receiver的三个布尔字段必须显式提供；当前SpawnCount支持正整数常量，InheritVelocityScale支持三维有限数常量。不声称已支持随时间变化的接收数量。
+- 自主生成与事件生成独立；要求“一事件一朵”时接收器Rate=0、Burst为空、SpawnCount=1。UsePSysLocation=false取事件位置，true取系统原点。接收器生命周期覆盖最晚事件时刻。
+- 官方说明：[Event Modules（UE4.27）](https://dev.epicgames.com/documentation/en-us/unreal-engine/event-modules?application_version=4.27)。目标工程UE4.24，字段另有本机原资产快照佐证；实际Death触发顺序、位置/速度继承与材质显示仍需UE验证。离线模拟不是引擎通过标记。
+
 ---
 
 ## 1. 顶层结构

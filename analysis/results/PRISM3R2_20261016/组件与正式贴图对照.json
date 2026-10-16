@@ -1,0 +1,22 @@
+[
+  {
+    "id": "A",
+    "max": 0,
+    "fraction_changed": 0.0
+  },
+  {
+    "id": "B",
+    "max": 0,
+    "fraction_changed": 0.0
+  },
+  {
+    "id": "C",
+    "max": 0,
+    "fraction_changed": 0.0
+  },
+  {
+    "id": "D",
+    "max": 1,
+    "fraction_changed": 4.172325134277344e-07
+  }
+]
