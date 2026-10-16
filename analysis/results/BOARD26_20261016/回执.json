@@ -1,0 +1,285 @@
+{
+  "batch": "BOARD26-20261016",
+  "scope": "本机看板清理+请求一次手动云端合并；不恢复夜班/不派新开发",
+  "at": "2026-10-16T11:08:15+08:00",
+  "sourceHead": "528c907baf995fa8eb481a6b81162665c00388b3",
+  "authorization": "用户02:57 UTC原话由本机同步8-b转达，见本机总管记录本批",
+  "requestedModel": "gpt-6.1-sol/max",
+  "actualModelVerified": false,
+  "oldPendingCount": 129,
+  "oldTargetRows": 51,
+  "appended": [
+    {
+      "pending": "P130",
+      "collection": "items",
+      "row": "i19",
+      "fields": [
+        "title",
+        "status",
+        "doneAt",
+        "detail",
+        "recommend",
+        "next",
+        "waitsOn",
+        "source"
+      ]
+    },
+    {
+      "pending": "P131",
+      "collection": "items",
+      "row": "i41",
+      "fields": [
+        "title",
+        "status",
+        "doneAt",
+        "detail",
+        "recommend",
+        "next",
+        "waitsOn",
+        "source"
+      ]
+    },
+    {
+      "pending": "P132",
+      "collection": "items",
+      "row": "i39",
+      "fields": [
+        "title",
+        "detail",
+        "recommend",
+        "next",
+        "waitsOn",
+        "source"
+      ]
+    },
+    {
+      "pending": "P133",
+      "collection": "items",
+      "row": "n37",
+      "fields": [
+        "detail",
+        "recommend",
+        "next",
+        "waitsOn"
+      ]
+    },
+    {
+      "pending": "P134",
+      "collection": "items",
+      "row": "n39",
+      "fields": [
+        "detail"
+      ]
+    },
+    {
+      "pending": "P135",
+      "collection": "items",
+      "row": "n60",
+      "fields": [
+        "title",
+        "detail",
+        "recommend",
+        "next"
+      ]
+    },
+    {
+      "pending": "P136",
+      "collection": "items",
+      "row": "n74",
+      "fields": [
+        "title",
+        "detail",
+        "recommend",
+        "next"
+      ]
+    },
+    {
+      "pending": "P137",
+      "collection": "items",
+      "row": "local-P006",
+      "fields": [
+        "title",
+        "owner",
+        "detail",
+        "recommend",
+        "waitsOn",
+        "warn"
+      ]
+    },
+    {
+      "pending": "P138",
+      "collection": "items",
+      "row": "n23",
+      "fields": [
+        "dispatch",
+        "recommend",
+        "next"
+      ]
+    },
+    {
+      "pending": "P139",
+      "collection": "items",
+      "row": "n20",
+      "fields": [
+        "detail",
+        "recommend"
+      ]
+    },
+    {
+      "pending": "P140",
+      "collection": "dialogs",
+      "row": "g02",
+      "fields": [
+        "now",
+        "open",
+        "state"
+      ]
+    },
+    {
+      "pending": "P141",
+      "collection": "dialogs",
+      "row": "g03",
+      "fields": [
+        "now",
+        "open"
+      ]
+    },
+    {
+      "pending": "P142",
+      "collection": "dialogs",
+      "row": "g04",
+      "fields": [
+        "now",
+        "open",
+        "state"
+      ]
+    },
+    {
+      "pending": "P143",
+      "collection": "dialogs",
+      "row": "g17",
+      "fields": [
+        "now",
+        "open",
+        "state"
+      ]
+    },
+    {
+      "pending": "P144",
+      "collection": "dialogs",
+      "row": "g18",
+      "fields": [
+        "now",
+        "open",
+        "state"
+      ]
+    },
+    {
+      "pending": "P145",
+      "collection": "dialogs",
+      "row": "g19",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "where",
+        "state",
+        "order",
+        "scope",
+        "now",
+        "open"
+      ]
+    },
+    {
+      "pending": "P146",
+      "collection": "dialogs",
+      "row": "g20",
+      "fields": [
+        "id",
+        "code",
+        "name",
+        "where",
+        "state",
+        "order",
+        "scope",
+        "now",
+        "open"
+      ]
+    },
+    {
+      "pending": "P147",
+      "collection": "reports",
+      "row": "rep-BOARD26-20261016",
+      "fields": [
+        "id",
+        "kind",
+        "at",
+        "by",
+        "upto",
+        "title",
+        "summary",
+        "today",
+        "findings",
+        "closed",
+        "changed",
+        "added",
+        "routed",
+        "openDialogs"
+      ]
+    }
+  ],
+  "pendingCount": 147,
+  "localClosed": [
+    "i19",
+    "i41"
+  ],
+  "preserved": [
+    "stable IDs",
+    "P001-P129",
+    "原始用户反馈和历史",
+    "T13/T16/n39完成状态",
+    "n37剩余项",
+    "accept/half/UE/用户未验边界",
+    "DAY23 cd5c0909及他方三份撤回内容"
+  ],
+  "localValidation": {
+    "pass": true,
+    "oldPendingPreserved": 129,
+    "pending": 147,
+    "targetRows": 57,
+    "addedRows": [
+      "g19",
+      "g20",
+      "rep-BOARD26-20261016"
+    ],
+    "closedImplementationReminders": [
+      "i19",
+      "i41"
+    ],
+    "userFieldsPreserved": true,
+    "htmlDataEqualsView": true,
+    "htmlCodeUnchanged": true,
+    "newSourceLinksAndCommitRefsValid": true,
+    "canonicalAndOtherOwnerFilesUntouched": true,
+    "realBrowserFilePage": "未测；此前file://安全拒绝未绕行"
+  },
+  "gitPushed": null,
+  "cloud": {
+    "owner": "总管（21）",
+    "url": "https://claude.ai/chat/85703728-8905-4bf8-a39e-ef5424677224",
+    "channelVerified": true,
+    "messageSentAt": null,
+    "accepted": null,
+    "onlineReadback": null,
+    "remainingPending": 147,
+    "status": "本机推送后仅请求一次；尚未发送"
+  },
+  "untouched": [
+    "协作/看板快照.json",
+    "协作/看板对账.json",
+    "协作/全局看板.md",
+    "协作/派活队列.json",
+    "协作/状态清单.json",
+    "F:/FireWorksLab及8-b副本/未推DAY23内容"
+  ]
+}
