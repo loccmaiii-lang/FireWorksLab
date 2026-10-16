@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-16 22:57",
+ "at": "2026-10-16 23:13",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -1346,5 +1346,5 @@
   "key": "",
   "entry": ""
  },
- "sizePick": "cls:d:dam:150"
+ "sizePick": "cls:d:front:24"
 }
