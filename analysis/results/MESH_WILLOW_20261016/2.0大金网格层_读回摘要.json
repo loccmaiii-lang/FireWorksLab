@@ -1,0 +1,431 @@
+{
+ "format": "df.ue-readback-summary/1",
+ "readAt": "2026-10-15T21:19:08.214Z",
+ "说明": "只读读回（GPUECli /object/get、LoadAsset、EditorStaticMeshLibrary 读取函数），没写、没保存、没播放。原始 454 个对象在本机 analysis/local/MESH_WILLOW_READ_20261016/hero_raw.json（不进仓库）。",
+ "ResourceFX": {
+  "行": "新年烟花2.0_大金",
+  "ResourceId": "P_EFX_FireWorks_Hero",
+  "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Hero_HD",
+  "EffectScale": 1,
+  "另有": "新年烟花2.0_道具_大金 = P_EFX_FireWorks_Props_Hero_HD；手游 Hero_H / Props_Hero_H 用 SM_EFX_Plane_FireWork_Hero（与 PC 的 SM_EFX_Plane_FireWork_01_HD 顶点数、包围盒完全相同）"
+ },
+ "系统": {
+  "SystemUpdateMode": "EPSUM_FixedTime",
+  "UpdateTime_FPS": 10,
+  "LODDistances": [
+   0,
+   15000,
+   20000,
+   25000
+  ],
+  "bUseFixedRelativeBoundingBox": true,
+  "FixedRelativeBoundingBox": {
+   "_struct": "Box",
+   "Min": {
+    "_struct": "Vector",
+    "X": -2500,
+    "Y": -2500,
+    "Z": -2500
+   },
+   "Max": {
+    "_struct": "Vector",
+    "X": 2500,
+    "Y": 2500,
+    "Z": 2500
+   },
+   "IsValid": 1
+  },
+  "WarmupTime": 0
+ },
+ "发射器数": 13,
+ "网格层": {
+  "emitter": "Particle Emitter",
+  "index": 5,
+  "LOD数": 4,
+  "TypeDataMesh": {
+   "Mesh": "/Game/Effects_HD/Common_HD/Mesh_HD/Plane_HD/SM_EFX_Plane_FireWork_01_HD.SM_EFX_Plane_FireWork_01_HD",
+   "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+   "bOverrideMaterial": true,
+   "bCameraFacing": false,
+   "AxisLockOption": "EPAL_NONE",
+   "CameraFacingOption": "XAxisFacing_NoUp",
+   "bFaceCameraDirectionRatherThanPosition": false,
+   "bApplyParticleRotationAsSpin": false,
+   "bUseStaticMeshLODs": true,
+   "CastShadows": false
+  },
+  "Required": {
+   "ScreenAlignment": "PSA_Square",
+   "bUseInLocalSpace": false,
+   "SortMode": "PSORTMODE_None",
+   "EmitterDuration": 1,
+   "EmitterLoops": 1,
+   "UVFlippingMode": "None",
+   "bUseMaxDrawCount": true,
+   "MaxDrawCount": 1
+  },
+  "Spawn": {
+   "Rate": 0,
+   "Burst": [
+    {
+     "count": 1,
+     "time": 0
+    }
+   ]
+  },
+  "Modules": [
+   {
+    "module": "Lifetime",
+    "enabled": true,
+    "Lifetime": {
+     "class": "DistributionFloatConstant",
+     "Constant": 7
+    }
+   },
+   {
+    "module": "Color",
+    "enabled": true,
+    "StartColor": {
+     "class": "DistributionVectorConstant",
+     "Constant": {
+      "_struct": "Vector",
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+     },
+     "LockedAxes": "EDVLF_None"
+    },
+    "StartAlpha": {
+     "class": "DistributionFloatConstant",
+     "Constant": 1
+    }
+   },
+   {
+    "module": "Size",
+    "enabled": true,
+    "StartSize": {
+     "class": "DistributionVectorConstant",
+     "Constant": {
+      "_struct": "Vector",
+      "X": 3.200000047683716,
+      "Y": 2.5,
+      "Z": 0
+     },
+     "LockedAxes": "EDVLF_XYZ"
+    }
+   },
+   {
+    "module": "SizeMultiplyLife",
+    "enabled": true,
+    "LifeMultiplier": {
+     "class": "DistributionVectorConstant",
+     "Constant": {
+      "_struct": "Vector",
+      "X": 0.6000000238418579,
+      "Y": 0,
+      "Z": 0
+     },
+     "LockedAxes": "EDVLF_XYZ"
+    }
+   },
+   {
+    "module": "ParameterDynamic",
+    "enabled": true,
+    "DynamicParams": [
+     {
+      "name": "UVIncrement",
+      "method": "EDPV_UserSet",
+      "emitterTime": false,
+      "value": {
+       "class": "DistributionFloatConstantCurve",
+       "points": [
+        {
+         "t": 0,
+         "v": 1,
+         "mode": "CIM_Linear"
+        },
+        {
+         "t": 0.8837,
+         "v": -1.18271803855896,
+         "mode": "CIM_Linear"
+        }
+       ]
+      }
+     },
+     {
+      "name": "Param2",
+      "method": "EDPV_UserSet",
+      "emitterTime": false,
+      "value": {
+       "class": "DistributionFloatConstantCurve",
+       "points": [
+        {
+         "t": 0.1264,
+         "v": 1.0182695388793945,
+         "mode": "CIM_CurveAuto"
+        },
+        {
+         "t": 1.0019,
+         "v": -2.1036500930786133,
+         "mode": "CIM_CurveAuto"
+        }
+       ]
+      }
+     },
+     {
+      "name": "DistortIntensity",
+      "method": "EDPV_UserSet",
+      "emitterTime": false,
+      "value": {
+       "class": "DistributionFloatConstant",
+       "Constant": 1
+      }
+     },
+     {
+      "name": "AlphaMaskUVScale",
+      "method": "EDPV_UserSet",
+      "emitterTime": false,
+      "value": {
+       "class": "DistributionFloatConstant",
+       "Constant": 1
+      }
+     }
+    ]
+   },
+   {
+    "module": "SizeMultiplyLife",
+    "enabled": true,
+    "LifeMultiplier": {
+     "class": "DistributionVectorConstantCurve",
+     "LockedAxes": "EDVLF_XYZ",
+     "points": [
+      {
+       "t": 0,
+       "v": {
+        "_struct": "Vector",
+        "X": 0.5,
+        "Y": 1,
+        "Z": 1
+       },
+       "mode": "CIM_Linear"
+      },
+      {
+       "t": 0.1,
+       "v": {
+        "_struct": "Vector",
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+       },
+       "mode": "CIM_Linear"
+      },
+      {
+       "t": 1,
+       "v": {
+        "_struct": "Vector",
+        "X": 1.5,
+        "Y": 0,
+        "Z": 0
+       },
+       "mode": "CIM_Linear"
+      }
+     ]
+    }
+   },
+   {
+    "module": "MeshRotation",
+    "enabled": true,
+    "StartRotation": {
+     "class": "DistributionVectorUniform",
+     "Min": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+     },
+     "Max": {
+      "_struct": "Vector",
+      "X": 0,
+      "Y": 0,
+      "Z": 1
+     },
+     "LockedAxes": "EDVLF_None"
+    }
+   },
+   {
+    "module": "ColorScaleOverLife",
+    "enabled": true,
+    "ColorScaleOverLife": {
+     "class": "DistributionVectorConstant",
+     "Constant": {
+      "_struct": "Vector",
+      "X": 50,
+      "Y": 10,
+      "Z": 0
+     },
+     "LockedAxes": "EDVLF_None"
+    },
+    "AlphaScaleOverLife": {
+     "class": "DistributionFloatConstantCurve",
+     "points": [
+      {
+       "t": 0,
+       "v": 1,
+       "mode": "CIM_Linear"
+      },
+      {
+       "t": 0.95,
+       "v": 0,
+       "mode": "CIM_Linear"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "材质实例": {
+  "path": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWork_Trail_01",
+  "parent": "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft",
+  "Scalar": {
+   "DepthFadeDistance": 100,
+   "DissolveOffset": 0,
+   "hardness": 0,
+   "OutlineWidth": 0,
+   "Progress": 0,
+   "ColorIntensity": 1,
+   "ColorPower": 1,
+   "RefractionDepthBias": 0
+  },
+  "Vector": {
+   "NoiseChannel": {
+    "R": 1,
+    "G": 0,
+    "B": 0,
+    "A": 0
+   },
+   "NoiseUVParam": {
+    "R": 1,
+    "G": 1,
+    "B": 0,
+    "A": 0
+   },
+   "OutlineColor": {
+    "R": 10000,
+    "G": 10000,
+    "B": 10000,
+    "A": 1
+   },
+   "AlphaChannel": {
+    "R": 1,
+    "G": 0,
+    "B": 0,
+    "A": 0
+   },
+   "MultiColor": {
+    "R": 1,
+    "G": 1,
+    "B": 1,
+    "A": 1
+   },
+   "UVParam": {
+    "R": 1,
+    "G": 1,
+    "B": 0,
+    "A": 0
+   },
+   "UVIncrementChannel": {
+    "R": 0,
+    "G": 1,
+    "B": 0,
+    "A": 0
+   }
+  },
+  "Texture": {
+   "NoiseMap": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62",
+   "MainTex": "/Game/Effects/Common/Texture/Trail/T_EFX_ShellTrail_02"
+  },
+  "StaticSwitch": {
+   "UseDynamicUVIncrement": true
+  },
+  "TwoSided覆盖": true
+ },
+ "母材质要点": {
+  "BlendMode": "BLEND_Translucent",
+  "ShadingModel": "MSM_Unlit",
+  "bUsedWithMeshParticles": true,
+  "DynamicParameter": [
+   "0 UVIncrement → 乘 UVIncrementChannel 后加到 MainTex UV 上 = UV 流动（MI 里 Channel = G → 只动 V）",
+   "1 Param2 → 溶解阈值（与 NoiseMap、Progress、hardness 做 SmoothStep）→ 不透明度与描边自发光",
+   "2 DistortIntensity → UV 扭曲（UseDistortUV 关时无效）",
+   "3 AlphaMaskUVScale → AlphaMask 缩放（UseAlphaMask 关时无效）"
+  ],
+  "颜色": "MainTex 的 RGB（Desaturation = 0 时保留颜色）× MultiColor × 粒子颜色 → 自发光；透明度 = AlphaChannel 指定通道 × 粒子 Alpha × DepthFade",
+  "来源": "analysis/results/资源规范统一_20261016/采集/raw_crawl.json.gz 里该母材质的表达式图（26 已采）"
+ },
+ "网格": {
+  "SM_EFX_Plane_FireWork_01_HD": {
+   "verts_LOD0": "1180",
+   "LOD数": "1",
+   "包围盒": "(Min=(X=-796.372681,Y=-1074.383667,Z=-1051.957764),Max=(X=748.767944,Y=825.740356,Z=719.873291),IsValid=1)",
+   "Bounds": "(Origin=(X=-23.802368,Y=-124.321655,Z=-166.042236),BoxExtent=(X=772.570312,Y=950.062012,Z=885.915527),SphereRadius=1166.951904)",
+   "导入源文件": "",
+   "自动碰撞": true,
+   "生成光照UV": true
+  },
+  "SM_EFX_Plane_FireWork_Hero": {
+   "verts_LOD0": "1180",
+   "LOD数": "1",
+   "包围盒": "(Min=(X=-796.372681,Y=-1074.383667,Z=-1051.957764),Max=(X=748.767944,Y=825.740356,Z=719.873291),IsValid=1)",
+   "Bounds": "(Origin=(X=-23.802368,Y=-124.321655,Z=-166.042236),BoxExtent=(X=772.570312,Y=950.062012,Z=885.915527),SphereRadius=1166.951904)",
+   "导入源文件": "",
+   "自动碰撞": true,
+   "生成光照UV": true
+  }
+ },
+ "对照面片": {
+  "SM_EFX_Plane_10": {
+   "verts_LOD0": "0",
+   "包围盒": "ERR {\"success\":false,\"error\":\"Call failed (object or function not found)\",\"code\":400,\"server_version\":\"4.2.1\"}"
+  },
+  "SM_EFX_Plane_17": {
+   "verts_LOD0": "8",
+   "包围盒": "(Min=(X=-50.000000,Y=0.000000,Z=-50.000000),Max=(X=50.000000,Y=200.000000,Z=50.000000),IsValid=1)"
+  }
+ },
+ "贴图": {
+  "/Game/Effects/Common/Texture/Trail/T_EFX_ShellTrail_02": {
+   "AddressX": "TA_Clamp",
+   "AddressY": "TA_Clamp",
+   "SRGB": false,
+   "CompressionSettings": "TC_BC7",
+   "LODGroup": "TEXTUREGROUP_Effects",
+   "MaxTextureSize": 0,
+   "Filter": "TF_Default",
+   "MipGenSettings": "TMGS_FromTextureGroup",
+   "ImportedSize": {
+    "_struct": "IntPoint",
+    "X": 64,
+    "Y": 512
+   },
+   "CompressionNoAlpha": false,
+   "bFlipGreenChannel": false
+  },
+  "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62": {
+   "AddressX": "TA_Clamp",
+   "AddressY": "TA_Clamp",
+   "SRGB": true,
+   "CompressionSettings": "TC_Default",
+   "LODGroup": "TEXTUREGROUP_Effects",
+   "MaxTextureSize": 512,
+   "Filter": "TF_Default",
+   "MipGenSettings": "TMGS_FromTextureGroup",
+   "ImportedSize": {
+    "_struct": "IntPoint",
+    "X": 1024,
+    "Y": 1024
+   },
+   "CompressionNoAlpha": false,
+   "bFlipGreenChannel": false
+  }
+ }
+}

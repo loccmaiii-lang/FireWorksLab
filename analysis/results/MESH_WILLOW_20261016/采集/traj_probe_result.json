@@ -1,0 +1,20 @@
+{
+ "1": {
+  "eps_m": 1.56,
+  "time_mean": 14.1,
+  "time_p95": 16,
+  "geom_mean": 8
+ },
+ "0.25": {
+  "eps_m": 0.39,
+  "time_mean": 29.4,
+  "time_p95": 34,
+  "geom_mean": 15.5
+ },
+ "0.5": {
+  "eps_m": 0.78,
+  "time_mean": 20.3,
+  "time_p95": 24,
+  "geom_mean": 11.1
+ }
+}
