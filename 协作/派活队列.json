@@ -624,6 +624,36 @@
       "完成": "2026-10-16T03:45:06+08:00",
       "提交": "b9e2a38d0aa701ccb8bab63e1eb2c65107c18f85",
       "结果": "入口10处事实差异已核，固定源ed388a66；结果b9e2a38d，对话记录/对话框21-本机.md:146及交接顶部源时间提示。原历史正文/用户意见保留，云端MD/快照/对账及生产文件未动。T16子项完成，n37整体仍待云端及未覆盖欠项；T10和8-b四项不改。"
+    },
+    {
+      "编号": "T17",
+      "看板": "",
+      "交给": "本机实测（25）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 1,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "只读排查：去年手游「新年烟花2.0」粒子里 Initial Color 带曲线的发射器（定位 + 分组，不改）",
+      "为什么": "用户 10-16 19:26 / 20:05：去年手游烟花有个别发射器把淡出做在 Initial Color 的曲线上，客户端查出手机实机上某些效果刚开始不显示；要先定位全部、对话框15 出改法、用户审过再写入。",
+      "只许改": [
+        "analysis/results/INITCOLOR_M_20261016/读数.json（新建）",
+        "analysis/results/INITCOLOR_M_20261016/清单.csv（新建）",
+        "analysis/results/INITCOLOR_M_20261016/清单.md（新建）"
+      ],
+      "提示词": "你是本机实测（25）。这是 dot 从 协作/派活队列.json 派来的任务 T17，按该文件「Codex 共同规则」执行（UE 只读）。先读 对话记录/对话框15.md 最后两段（用户 10-16 19:26 / 20:05）。\n\n背景（用户 10-16 20:05）：去年「新年烟花2.0」手游粒子里，有个别发射器在 Initial Color 上做了曲线（例：某发射器 Dot_B，Start Alpha = Distribution Float Constant Curve，(0 s, 0.4) → (1.9 s, 0.0)，Linear），客户端查出这会让手机实机上某些效果刚开始不显示。很多发射器是复制出来的，曲线数值相近。这次只读排查、定位，**不改任何东西**；改法由对话框15 出、用户审过后另派写入任务。\n\n1. 范围：手游 ResourceFX 表里 RowDescription / 名字含「新年烟花2.0」的行（10-14 备份 analysis/results/RESOURCEFX_B05_20261014/手游表_备份_写前.json 里是 23 行），按表**现在**的值取每行的 FxSP、FxSP_Low、FxSP_High，去重成粒子系统清单（10-14 是 46 个，全在 /Game/Effects/Props/FireWorks）。注意有的 ResourceId 是 P_EFX_FireWork_（没有 s），不要按名字前缀筛。表现在的值和备份不一样的，写出来。\n2. 每个粒子系统：LODDistances；每个发射器：EmitterName；**每个 LOD**（不只 LOD0）：bEnabled、Modules 全列表（序号、类、bEnabled、对象路径）。同一个模块对象被几个 LOD 共用的，标出来。\n3. 命中条件：ParticleModuleColor（Initial Color）或 ParticleModuleColor_Seeded 的 StartColor 或 StartAlpha，分布类名带 Curve（ConstantCurve / UniformCurve 等）。另外单独标：ParticleModuleColorScaleOverLife（Scale Color / Life）勾了 bEmitterTime 且是曲线的。命中模块读：两个分布的类名、全部关键点（InVal、OutVal、ArriveTangent、LeaveTangent、InterpMode）、bClampAlpha、RawDistribution 的 Table（TimeScale、TimeBias、Values、EntryCount、LockFlag）。没命中但有 Initial Color 的，也记下它是常量值多少。\n4. 命中的发射器再读（改法要靠这些判断）：Required（EmitterDuration、EmitterDurationLow、bEmitterDurationUseRange、EmitterLoops、EmitterDelay、EmitterDelayLow、bDelayFirstLoopOnly）；Spawn（Rate 分布与值、RateScale、BurstList 每条 Count / CountLow / Time、BurstScale）；有没有 Event Receiver Spawn / Spawn Per Unit（这些粒子不在 0 秒出生）；Lifetime 分布与值；这个 LOD 里所有 Color Over Life、Scale Color / Life 模块（ColorOverLife / AlphaOverLife、ColorScaleOverLife / AlphaScaleOverLife 的分布和关键点、bEmitterTime、在模块列表里的序号，排在 Initial Color 前面还是后面）。读不到的写「读不到」，不要猜。\n5. 把命中按「曲线关键点 + 出生方式」相同的分组（复制出来的应该是一组），每组给一个代表发射器。\n\n产出（只建这三个文件）：\n- analysis/results/INITCOLOR_M_20261016/读数.json：原始读回（每个请求的路径、返回）。\n- analysis/results/INITCOLOR_M_20261016/清单.csv：每个命中模块一行：粒子系统、引用它的 ResourceId 和中文名、发射器、LOD、模块序号、命中的是颜色 / Alpha / 都有、关键点、出生方式（Burst 时刻和数量 / Rate / 事件）、寿命、时长 / 循环 / 延迟、Scale Color / Life 和 Color Over Life 的情况、是否共用模块、分组号。\n- analysis/results/INITCOLOR_M_20261016/清单.md：第一句写结论（读了几个粒子系统、几个发射器、有 Initial Color 的几个、带曲线的几个、分几组、读失败几个）；然后分组表；最后列读失败和表值变化。\n\n禁止：保存任何资产或关卡、改属性、导入、替换、P4、开关 UE、改 tool/src / tool/workbench / 编排文件。私有工具代码、凭据、用户名不写进仓库。",
+      "做完的标准": [
+        "23 行 × FxSP / Low / High 去重后的每个粒子系统都读了，读失败的逐个写原因",
+        "每个发射器、每个 LOD 的 Initial Color 都列了（命中的有完整关键点和 Table）",
+        "命中发射器的出生方式、寿命、时长 / 延迟、Scale Color / Life、Color Over Life 都有值或写「读不到」",
+        "清单.md 第一句是计数结论，有分组表",
+        "没有保存、没有改任何资产；已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
     }
   ],
   "夜班怎么取": [
