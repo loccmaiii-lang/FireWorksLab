@@ -1,0 +1,104 @@
+{
+  "batch": "BOARD26-20261016",
+  "by": "总管（21）云端",
+  "at": "2026-10-16T11:56:00+08:00",
+  "status": "已应用并读回核对：线上合并成功",
+  "messageAccepted": {
+    "accepted": true,
+    "when": "2026-10-16T11:14+08:00 用户消息送达；11:48 用户再贴巡检提示词",
+    "note": "受理不等于线上同步成功；线上成功以下面 onlineReadback 为准，Git 推送另算"
+  },
+  "git": {
+    "baseHead": "6b48c3f2a4d8520e7e8358afe0294ca1a5b9925b（本机清理提交）",
+    "rebasedOn": "origin/main 7a7877bc",
+    "finalSha": "见最终答复（文件不能包含自己所在提交的 SHA）"
+  },
+  "dedupe": {
+    "alreadyProcessed": false,
+    "evidence": "写入前线上无 g17–g20、rep-BOARD26-20261016，待同步 appliedAt 全为 null"
+  },
+  "write": {
+    "phaseA": "11:5x 先写其余文档（update 带 if_version，新建用 set）",
+    "phaseB": "2026-10-16 11:52:03 写 g17 与 rep-BOARD26-20261016 的实际结果",
+    "atomic": "batch 每批 ≤50 条，原子"
+  },
+  "onlineReadback": {
+    "when": "2026-10-16T11:51+08:00（阶段 A 后）与 11:52+08:00（阶段 B 后），四集合重新 list + out_dir",
+    "counts": {
+      "items": 138,
+      "resources": 30,
+      "dialogs": 20,
+      "reports": 24
+    },
+    "before": {
+      "items": 131,
+      "resources": 30,
+      "dialogs": 16,
+      "reports": 19
+    },
+    "checks": [
+      "每个写入文档的载荷字段与线上逐字段一致",
+      "未被写入的文档与合并前逐字相同",
+      "被改文档没有丢字段",
+      "feedback / feedbackAt / feedbackSeen / feedbackReply / syncedAt / syncedTo 无变化",
+      "answer 只有 n60 变化（原为空，写入本机转述的用户 10-16 01:38 要求）"
+    ],
+    "keyRows": {
+      "i19": "已做｜周四以后｜30秒慢检查误报已修（4.9.110）；真实原生accept仍未测",
+      "i41": "已做｜周四以后｜导出快照冻结已交（4.9.110）；切对象与中途改参不串入发起包",
+      "i39": "没做｜周四以后｜单束方向诊断已修；half仅安全拦截，半球能力仍未实现",
+      "n20": "没做｜周四以后｜导出说明还按 24 fps 报「尾段可能发卡」，产物名还写「分段母版」",
+      "n23": "已做｜周四以后｜T09已完成：25个ID模块读数已回，花径/GPU模型需按新证据复核",
+      "n37": "没做｜周四以后｜文档卫生：T13/T16本轮已核，云端副本刷新及其余欠项待接续",
+      "n39": "已做｜周四以后｜5.0剩余需求证据索引已补；实施/决定/验收继续按原条目",
+      "n60": "已做｜周四以后｜朝向方向已定、26干跑已交；当前暂停，非等比XY仍需实播证据",
+      "n74": "已做｜周四以后｜黑块0.98用户已验证；T08分支/更新重置已核，规则落地仍待交接",
+      "n75": "已做｜周三前必须｜B07修订1（16.0.34）已交付，用户已确认错位解决",
+      "n78": "已做｜周四以后｜B08两轮独立复核及修订已完成，最终16.0.37已交",
+      "n79": "没做｜周四以后｜T10仍卡住：待单写现场交接，部分5080数据不足放行960",
+      "n80": "没做｜周四以后｜4.9.106预设包契约/静态图已审；RocketDot与实物/连续播放仍待收口",
+      "n81": "不做了｜周四以后｜旧T10录视频前置已取消；实机证据跟踪并入n79",
+      "n82": "已做｜周四以后｜灯光交付功能已交：16.0.42支持导演表同次写四灯；当前编排16.0.43",
+      "n83": "已做｜周四以后｜T11已完成：G106契约与8图静态审看；原包/连续播放/UE未测",
+      "n84": "已做｜周四以后｜T12已完成：修订7交付/数量/灯光离线核对；GPU旧口径不适用",
+      "g17": "state=歇着｜总管（本机）",
+      "g18": "state=歇着（stateLocal=等接续）｜本机实测",
+      "g19": "state=歇着（stateLocal=暂停）｜资源规范统一",
+      "g20": "state=在做｜网格垂柳",
+      "rep-BOARD26-20261016": "kind=board-reconcile｜by=总管（21）云端｜at=2026-10-16T11:52:03+08:00｜upto=7a7877bc"
+    }
+  },
+  "result": {
+    "applied": 149,
+    "targetDocs": 57,
+    "updated": 41,
+    "created": 16,
+    "conflicts": 0,
+    "remainingUnsynced": 0,
+    "entriesAllFieldsFinal": 58,
+    "entriesSomeFieldsSupersededByLaterEntry": 91,
+    "stateNormalization": "本机写的 暂停 / 等接续 落为 歇着，原值在 stateLocal",
+    "baselineMismatchesInsideBatch": [
+      "P046 基线里的 local-P005 → n78，映射文本差异",
+      "P100 基线 upto c8713108 与批内 P093 的 f00a30d9 不一致，仅涉及本批新建的本机报告，后面条目已覆盖"
+    ],
+    "cloudRewrote": "P148 的 g17 now/open/state 与 P149 的 rep-BOARD26-20261016 已由云端按实际结果改写，不再有「待发送」"
+  },
+  "boundaries": [
+    "i19 / i41 只到「实现 + 限定 AI 检查」；真实原生 accept、完整质量/性能、UE、用户验收未测",
+    "26 暂停（g19 state 歇着）；UE 被网格垂柳沙盒单写占用；26 内存改动保留、无完整保存回执",
+    "DAY23 撤回；8-b 本地 cd5c0909 与三份未提交文件未合入",
+    "T13 / T16 / n39 没重做；n37 剩余项保留",
+    "没有操作 UE / 导入 / P4 / GPU Queue / 凭据 / 权限，没改产品代码、规范、正式资源，没自领其他工作"
+  ],
+  "afterWrite": {
+    "snapshot": "协作/看板快照.json + 协作/看板本地视图.json + 协作/全局看板.html 已按读回结果重导（11:52:45）",
+    "ledger": "协作/看板对账.json 补 19 条（824 条），看板对账.py 0 问题",
+    "pendingFile": "协作/看板待同步.json 149 条已写 appliedAt / 应用结果，新建行写线上行",
+    "dispatchQueue": "协作/派活队列.json 三处 看板 local-P056/P057/P006 改成 n83/n84/n79",
+    "globalNow": "协作/全局看板.md「现在」已刷新"
+  },
+  "scheduledTask": "夜班 trig_01MVMaWVataXZUmy6MpMwWjp 仍停用，没有恢复任何定时任务，没有派新开发任务",
+  "failures": "无（ArtifactData / 额度 / 权限均正常）。此前 11:22 的拦截回执已被本文件取代：那次是自动权限判定拦截本地载荷脚本，线上当时一个字段都没写；用户再次贴巡检后放行执行",
+  "minimalUserAction": "无需操作。夜班继续停用，额度恢复后告诉总管（21）再启用"
+}
