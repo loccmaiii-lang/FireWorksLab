@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-16",
+  "engine": "UE 4.24.2 custom fork",
+  "base_revision": "280b3ac5",
+  "production_assets_modified": false,
+  "method": {
+    "native_viewport": [
+      2210,
+      1105
+    ],
+    "capture": "HighResShot 1",
+    "component_freeze_callback": 20,
+    "auto_downsample": 0,
+    "bloom": 0,
+    "motion_blur": 0,
+    "exposure_adaptation": 0,
+    "sample_particle_counts": {
+      "RiseTrail_L_HD": 2,
+      "FanSilver_01_HD": 1,
+      "SilverChry_HD": 1
+    },
+    "not_full_quality_presets": true
+  },
+  "verified": [
+    "Separate translucency 100/50 coarse blur in RiseTrail and FanSilver",
+    "AA 0 at 50 percent does not remove reproduced coarse blur",
+    "RiseTrail transient full-percentage override retains detail at 50 percent; same frozen component 100/50/100"
+  ],
+  "limited": [
+    "SilverChry repeat fluctuates; qualitative only",
+    "Global negative mip bias is diagnostic and not uniformly beneficial",
+    "No abnormal GTX 960 client state or complete show performance validation",
+    "No moving TAA ghosting validation",
+    "Scoped override validated for RiseTrail only"
+  ],
+  "candidate": {
+    "transient_instances": 2,
+    "override_flag": true,
+    "full_percentage_flag": true,
+    "render_after_dof_override": false,
+    "applied_before_play": true,
+    "source_parameter_copy_differences": 0
+  },
+  "restoration": {
+    "asset_hashes_total": 30,
+    "asset_hashes_changed": 0,
+    "source_mi_parameter_differences": 0,
+    "camera": true,
+    "selection": true,
+    "actors": 0,
+    "callback": "None",
+    "running": false,
+    "transient_references_released": true,
+    "cvars": {
+      "r.PostProcessAAQuality": 4,
+      "r.MotionBlurQuality": 2,
+      "r.BloomQuality": 4,
+      "r.MaxAnisotropy": 8,
+      "r.MipMapLODBias": 0,
+      "r.SeparateTranslucency": 1,
+      "r.SeparateTranslucencyAutoDownsample": 0,
+      "r.EyeAdaptationQuality": 2,
+      "r.HighResScreenshotDelay": 4
+    },
+    "separate_translucency_percentage_from_console": "100.0",
+    "dirty_content_before_after": [
+      36,
+      36
+    ],
+    "dirty_maps_before_after": [
+      31,
+      31
+    ],
+    "dirty_package_sets_equal": true
+  }
+}

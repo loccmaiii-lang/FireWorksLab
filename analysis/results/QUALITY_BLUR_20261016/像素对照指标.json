@@ -1,0 +1,144 @@
+{
+  "RiseTrail_L_HD": {
+    "半透明分辨率对照": {
+      "roi": [
+        1083,
+        524,
+        1124,
+        709
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "controlled_static_comparison",
+      "mae0to255": {
+        "full_aa": 0.0,
+        "half_aa": 11.111931443638762,
+        "half_noaa": 11.356361239288068,
+        "full_aa_repeat": 0.917380795429576
+      }
+    },
+    "mip采样对照": {
+      "roi": [
+        1085,
+        524,
+        1125,
+        711
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "controlled_static_comparison",
+      "mae0to255": {
+        "full_default": 0.0,
+        "half_default": 11.029233511586453,
+        "half_force_mip0": 7.842602495543672
+      }
+    },
+    "局部全分辨率覆盖": {
+      "roi": [
+        1085,
+        500,
+        1126,
+        709
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "controlled_static_comparison",
+      "mae0to255": {
+        "full_forced": 0.0,
+        "half_forced": 0.8155366242657642,
+        "full_forced_repeat": 0.8142140273077372
+      }
+    }
+  },
+  "FanSilver_01_HD": {
+    "半透明分辨率对照": {
+      "roi": [
+        1074,
+        531,
+        1133,
+        674
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "controlled_static_comparison",
+      "mae0to255": {
+        "full_aa": 0.0,
+        "half_aa": 8.157085852001106,
+        "half_noaa": 9.04946465963415,
+        "full_aa_repeat": 1.0221247678874799
+      }
+    },
+    "mip采样对照": {
+      "roi": [
+        1074,
+        531,
+        1133,
+        674
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "controlled_static_comparison",
+      "mae0to255": {
+        "full_default": 0.0,
+        "half_default": 8.005175615345108,
+        "half_force_mip0": 8.416538263995891
+      }
+    }
+  },
+  "SilverChry_HD": {
+    "半透明分辨率对照": {
+      "roi": [
+        1042,
+        650,
+        1168,
+        775
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "qualitative_only_repeat_fluctuates",
+      "mae0to255": {
+        "full_aa": 0.0,
+        "half_aa": 21.381481481481483,
+        "half_noaa": 23.67172486772487,
+        "full_aa_repeat": 10.481439153439153
+      }
+    },
+    "mip采样对照": {
+      "roi": [
+        1042,
+        650,
+        1168,
+        775
+      ],
+      "scale": 2,
+      "nativeSize": [
+        2210,
+        1105
+      ],
+      "assessment": "qualitative_only_repeat_fluctuates",
+      "mae0to255": {
+        "full_default": 0.0,
+        "half_default": 23.001269841269842,
+        "half_force_mip0": 26.228761904761903
+      }
+    }
+  }
+}
