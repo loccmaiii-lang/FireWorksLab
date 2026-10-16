@@ -1,0 +1,91 @@
+{
+  "textures": {
+    "T_MW_Grain": {
+      "srgb": true,
+      "size": [
+        64,
+        512
+      ]
+    },
+    "T_MW_Strip": {
+      "srgb": false,
+      "size": [
+        16,
+        1024
+      ]
+    }
+  },
+  "meshes": {
+    "SM_MW_Single_N130_LockZ_Mobile": {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Single_N130_LockZ_Mobile",
+      "max": [
+        31894.48828125,
+        34918.51953125,
+        36197.6328125
+      ],
+      "verts": 1998,
+      "min": [
+        -47826.55078125,
+        -36651.33984375,
+        -35886.8984375
+      ]
+    },
+    "SM_MW_Cross_N400": {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Cross_N400",
+      "max": [
+        36411.03515625,
+        37270.71484375,
+        32197.87890625
+      ],
+      "verts": 21976,
+      "min": [
+        -37120.26171875,
+        -38973.76953125,
+        -47828.26171875
+      ]
+    },
+    "SM_MW_Single_N400_LockZ": {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Single_N400_LockZ",
+      "max": [
+        32197.87890625,
+        36411.07421875,
+        37088.4609375
+      ],
+      "verts": 10988,
+      "min": [
+        -47826.55078125,
+        -37122.80078125,
+        -38784
+      ]
+    },
+    "Axis_Original": {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/Axis_Original",
+      "max": [
+        1000,
+        50,
+        2000
+      ],
+      "verts": 24,
+      "min": [
+        -50,
+        -3000,
+        -50
+      ]
+    },
+    "SM_MW_AxisTest": {
+      "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_AxisTest",
+      "max": [
+        1000,
+        2000,
+        3000
+      ],
+      "verts": 24,
+      "min": [
+        -50,
+        -50,
+        -50
+      ]
+    }
+  },
+  "warnings": []
+}

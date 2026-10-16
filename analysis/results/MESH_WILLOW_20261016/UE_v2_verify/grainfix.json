@@ -1,0 +1,5 @@
+{
+  "hardness": 0.3799999952316284,
+  "param2": 0.08,
+  "formula": "UE smoothstep(0.38,0.62,noise+2*0.08) == web smoothstep(0.22,0.46,noise)"
+}

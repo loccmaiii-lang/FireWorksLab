@@ -1,0 +1,119 @@
+{
+  "files": [
+    {
+      "sha256": "ffd0419ffc618bd930900dc58a04d69c27ccb6fd9319c77afe6538d5b27dc9d9",
+      "bytes": 88497,
+      "name": "MI_Grain.uasset"
+    },
+    {
+      "sha256": "c3e051cb9587c25a29bb6bcf382d4769568449b3f5af536e22e58b12171bd732",
+      "bytes": 88497,
+      "name": "MI_Plain.uasset"
+    },
+    {
+      "sha256": "2943a08fcee42baf70cb1c11a9b5a0104e4a251496813972fde8dec4bbf76701",
+      "bytes": 801028,
+      "name": "PS_Cross.uasset"
+    },
+    {
+      "sha256": "5724976a78e9ca65dffc92dccc9e03a12bd6dda667621732ad275a3c1b78dddb",
+      "bytes": 801032,
+      "name": "PS_CrossR.uasset"
+    },
+    {
+      "sha256": "75a86db4fccae1200a538a713799dd46660d0495ed98bd776b6d4b30a7c68308",
+      "bytes": 801028,
+      "name": "PS_Fixed.uasset"
+    },
+    {
+      "sha256": "1ddfa6a9cb51422b0e1fbb683575981f90114ae768010c09390a6866d224c712",
+      "bytes": 801032,
+      "name": "PS_FixedR.uasset"
+    },
+    {
+      "sha256": "deb191ce67d43b30d3be408293a4d2c4ff13f5773f5697638a960c7a22b1eea8",
+      "bytes": 801028,
+      "name": "PS_Grain.uasset"
+    },
+    {
+      "sha256": "e4484f4cb959e227201fa52ed8e5ae62040b00fd8c301515dfad31739a25c68f",
+      "bytes": 801032,
+      "name": "PS_GrainR.uasset"
+    },
+    {
+      "sha256": "30c44bd7ff21068b16360f9b6c23e8797050521b8dbde6cacba379061ea0fe7f",
+      "bytes": 801024,
+      "name": "PS_Lock.uasset"
+    },
+    {
+      "sha256": "709b0f5eff2dbe126963109a196ce6778c7845c3da8d7a16f50700f09200ff1b",
+      "bytes": 801028,
+      "name": "PS_LockR.uasset"
+    },
+    {
+      "sha256": "2dacfc13401026d9433cd0e124a51ba5652e3de02898cb6f385128ae8b63d689",
+      "bytes": 801032,
+      "name": "PS_Mobile.uasset"
+    },
+    {
+      "sha256": "92ea2a4908c0b2300693fd00599c28f8c2c8a3d6a7be23cf7e34c2cc67829d9b",
+      "bytes": 801036,
+      "name": "PS_MobileR.uasset"
+    }
+  ],
+  "camera": "(<Vector object at 0x000002532F47FA70>, <Rotator object at 0x000002532F47FAB0>)",
+  "tempActors": [],
+  "grainDP1": {
+    "raw": {
+      "_struct": "RawDistributionFloat",
+      "MinValue": 0.07999999821186066,
+      "MaxValue": 0.07999999821186066,
+      "Distribution": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_6",
+        "class": "DistributionFloatConstantCurve",
+        "name": "DistributionFloatConstantCurve_6"
+      },
+      "Table": {
+        "_struct": "DistributionLookupTable",
+        "TimeScale": 0,
+        "TimeBias": 0,
+        "Values": [
+          0.07999999821186066
+        ],
+        "Op": 1,
+        "EntryCount": 1,
+        "EntryStride": 1,
+        "SubEntryStride": 0,
+        "LockFlag": 0
+      }
+    },
+    "distribution": {
+      "ConstantCurve": {
+        "_struct": "InterpCurveFloat",
+        "Points": [
+          {
+            "_struct": "InterpCurvePointFloat",
+            "InVal": 0,
+            "OutVal": 0.07999999821186066,
+            "ArriveTangent": 0,
+            "LeaveTangent": 0,
+            "InterpMode": "CIM_Linear"
+          },
+          {
+            "_struct": "InterpCurvePointFloat",
+            "InVal": 1,
+            "OutVal": 0.07999999821186066,
+            "ArriveTangent": 0,
+            "LeaveTangent": 0,
+            "InterpMode": "CIM_Linear"
+          }
+        ],
+        "bIsLooped": false,
+        "LoopKeyOffset": 0
+      },
+      "bCanBeBaked": true,
+      "bBakedDataSuccesfully": true
+    }
+  }
+}

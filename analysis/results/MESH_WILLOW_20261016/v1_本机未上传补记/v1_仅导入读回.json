@@ -1,0 +1,123 @@
+{
+ "notes": [],
+ "meshes": {
+  "SM_EFX_FireWorks_MeshWillow_AxisTest": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_AxisTest",
+   "max": [
+    1000,
+    50,
+    3000
+   ],
+   "verts": 12,
+   "min": [
+    -50,
+    -2000,
+    -50
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N400_W70": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_W70",
+   "max": [
+    44178.8828125,
+    80338.7578125,
+    46233.390625
+   ],
+   "verts": 75328,
+   "min": [
+    -42806.6796875,
+    -34993.1015625,
+    -44601.171875
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N400_W35": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_W35",
+   "max": [
+    44027.921875,
+    80337.7109375,
+    46058.515625
+   ],
+   "verts": 75332,
+   "min": [
+    -42632.4609375,
+    -34832.03125,
+    -44436.171875
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N200": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N200",
+   "max": [
+    44092.60546875,
+    80338.15625,
+    43806.90625
+   ],
+   "verts": 37722,
+   "min": [
+    -42707.12890625,
+    -34901.05859375,
+    -43638.921875
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N400_E100": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_E100",
+   "max": [
+    44095.60546875,
+    80338.046875,
+    46133.421875
+   ],
+   "verts": 53796,
+   "min": [
+    -42707.26953125,
+    -34736.25,
+    -44507.9609375
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N300": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N300",
+   "max": [
+    44092.60546875,
+    80338.15625,
+    45249.953125
+   ],
+   "verts": 56322,
+   "min": [
+    -42707.12890625,
+    -34901.05859375,
+    -43638.921875
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N400": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400",
+   "max": [
+    44092.60546875,
+    80338.15625,
+    46133.46484375
+   ],
+   "verts": 75324,
+   "min": [
+    -42707.12890625,
+    -34901.05859375,
+    -44506.87890625
+   ]
+  },
+  "SM_EFX_FireWorks_MeshWillow_N400_E025": {
+   "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_E025",
+   "max": [
+    44090.35546875,
+    80337.6875,
+    46133.40234375
+   ],
+   "verts": 107122,
+   "min": [
+    -42706.98828125,
+    -34908.23828125,
+    -44506.41015625
+   ]
+  }
+ },
+ "strip": {
+  "path": "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/T_EFX_FireWorks_MeshWillow_Strip",
+  "srgb": true,
+  "w": 64,
+  "h": 512
+ }
+}

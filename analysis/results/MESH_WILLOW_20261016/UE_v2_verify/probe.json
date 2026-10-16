@@ -1,0 +1,15 @@
+{
+  "engine": "4.24.2-0+++UE4+Release-4.24",
+  "tempActors": [],
+  "enumFacing": [],
+  "classes": {
+    "DistributionFloatConstantCurve": false,
+    "DistributionFloatConstant": false,
+    "RawDistributionFloat": true
+  },
+  "world": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3",
+  "buildMethods": [
+    "get_lod_build_settings",
+    "set_lod_build_settings"
+  ]
+}

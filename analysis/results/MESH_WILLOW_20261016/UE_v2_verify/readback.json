@@ -1,0 +1,6142 @@
+{
+  "PS_CrossR": {
+    "system": {
+      "mode": "EPSUM_RealTime",
+      "fps": 60,
+      "emitters": 13,
+      "lods": 4
+    },
+    "type": {
+      "Mesh": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Cross_N400.SM_MW_Cross_N400",
+        "class": "StaticMesh",
+        "name": "SM_MW_Cross_N400"
+      },
+      "LODSizeScale": 1,
+      "bUseStaticMeshLODs": true,
+      "CastShadows": false,
+      "DoCollisions": false,
+      "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+      "bOverrideMaterial": true,
+      "bOverrideDefaultMotionBlurSettings": false,
+      "bEnableMotionBlur": false,
+      "bAllowDistributionParaForRollPitchYaw": false,
+      "RollPitchYawRange": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "MinValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MaxValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Distribution": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleTypeDataMesh_1.DistributionRollPitchYaw",
+          "class": "DistributionVectorUniform",
+          "name": "DistributionRollPitchYaw"
+        },
+        "Table": {
+          "_struct": "DistributionLookupTable",
+          "TimeScale": 0,
+          "TimeBias": 0,
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "Op": 1,
+          "EntryCount": 1,
+          "EntryStride": 3,
+          "SubEntryStride": 0,
+          "LockFlag": 0
+        }
+      },
+      "AxisLockOption": "EPAL_NONE",
+      "bCameraFacing": false,
+      "CameraFacingUpAxisOption": "CameraFacing_NoneUP",
+      "CameraFacingOption": "XAxisFacing_NoUp",
+      "bApplyParticleRotationAsSpin": false,
+      "bFaceCameraDirectionRatherThanPosition": false,
+      "bCollisionsConsiderPartilceSize": true,
+      "bCanBeInCluster": false,
+      "bSpawnModule": false,
+      "bUpdateModule": false,
+      "bFinalUpdateModule": false,
+      "bUpdateForGPUEmitter": false,
+      "bCurvesAsColor": false,
+      "b3DDrawMode": false,
+      "bSupported3DDrawMode": false,
+      "bEnabled": true,
+      "bEditable": true,
+      "LODDuplicate": true,
+      "bSupportsRandomSeed": false,
+      "bRequiresLoopingNotification": false,
+      "LODValidity": 15,
+      "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 122,
+        "A": 255
+      }
+    },
+    "modules": [
+      {
+        "class": "ParticleModuleLifetime",
+        "p": {
+          "Lifetime": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 16.100000381469727,
+            "MaxValue": 16.100000381469727,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleLifetime_12.DistributionFloatConstant_0",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionFloatConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                16.100000381469727
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 192,
+            "A": 255
+          }
+        },
+        "Lifetime_distribution": {
+          "Constant": 16.100000381469727,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColor",
+        "p": {
+          "StartColor": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleColor_5.DistributionStartColor",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionStartColor"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "StartAlpha": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleColor_5.DistributionStartAlpha",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionStartAlpha"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bClampAlpha": true,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 240,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "StartColor_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "StartAlpha_distribution": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSize",
+        "p": {
+          "StartSize": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleSize_13.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bConsiderCameraDistanceSizeScalar": false,
+          "StartCameraDistance": 1000,
+          "EndCameraDistance": 10000,
+          "StartSizeScalar": 1,
+          "EndSizeScalar": 1,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 129,
+            "A": 255
+          }
+        },
+        "StartSize_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.6000000238418579,
+            "MaxValue": 0.6000000238418579,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleSizeMultiplyLife_12.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0.6000000238418579,
+                0.6000000238418579,
+                0.6000000238418579
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 182,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleParameterDynamic",
+        "p": {
+          "DynamicParams": [
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "UVIncrement",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": -1.2049000263214111,
+                "MaxValue": 0.9940999746322632,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_5",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_5"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 1,
+                  "TimeBias": 0,
+                  "Values": [
+                    0.9940999746322632,
+                    -1.2049000263214111
+                  ],
+                  "Op": 1,
+                  "EntryCount": 2,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "Param2",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1.0199999809265137,
+                "MaxValue": 1.0199999809265137,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_6",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_6"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1.0199999809265137
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "DistortIntensity",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleParameterDynamic_10.DistributionParam3",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam3"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "AlphaMaskUVScale",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleParameterDynamic_10.DistributionParam4",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam4"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            }
+          ],
+          "UpdateFlags": 15,
+          "bUsesVelocity": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "DP0": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 0.9940999746322632,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": -1.2049000263214111,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP1": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP2": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP3": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.5,
+            "MaxValue": 1.5,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 1.5
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleSizeMultiplyLife_13.DistributionVectorConstantCurve_0",
+              "class": "DistributionVectorConstantCurve",
+              "name": "DistributionVectorConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 31,
+              "TimeBias": 0,
+              "Values": [
+                0.5,
+                0.5,
+                0.5,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.9808229804039001,
+                0.9808229804039001,
+                0.9808229804039001,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.123655915260315,
+                1.123655915260315,
+                1.123655915260315,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.213261604309082,
+                1.213261604309082,
+                1.213261604309082,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.267025113105774,
+                1.267025113105774,
+                1.267025113105774,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.356630802154541,
+                1.356630802154541,
+                1.356630802154541,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.446236491203308,
+                1.446236491203308,
+                1.446236491203308,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.5,
+                1.5,
+                1.5
+              ],
+              "Op": 1,
+              "EntryCount": 32,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 228,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveVector",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 0.5,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0.10000000149011612,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 1,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1.5,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleMeshRotation",
+        "p": {
+          "StartRotation": {
+            "_struct": "RawDistributionVector",
+            "MinValue": -1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": -1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleMeshRotation_1.DistributionStartRotation",
+              "class": "DistributionVectorUniform",
+              "name": "DistributionStartRotation"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0,
+                0,
+                -1,
+                0,
+                0,
+                1
+              ],
+              "Op": 2,
+              "EntryCount": 1,
+              "EntryStride": 6,
+              "SubEntryStride": 3,
+              "LockFlag": 0
+            }
+          },
+          "bInheritParent": false,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 148,
+            "G": 255,
+            "R": 0,
+            "A": 255
+          }
+        },
+        "StartRotation_distribution": {
+          "Max": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Min": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false,
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColorScaleOverLife",
+        "p": {
+          "ColorScaleOverLife": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 9,
+            "MaxValue": 9,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_1",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_1"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                9,
+                9,
+                9
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "AlphaScaleOverLife": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 0,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_CrossR.PS_CrossR:ParticleModuleColorScaleOverLife_6.DistributionFloatConstantCurve_0",
+              "class": "DistributionFloatConstantCurve",
+              "name": "DistributionFloatConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 127,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0.846668541431427,
+                0.4233343005180359,
+                0
+              ],
+              "Op": 1,
+              "EntryCount": 128,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bEmitterTime": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 255,
+            "G": 0,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "ColorScaleOverLife_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 9,
+            "Y": 9,
+            "Z": 9
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "AlphaScaleOverLife_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0.9814000129699707,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 0,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      }
+    ]
+  },
+  "PS_GrainR": {
+    "system": {
+      "mode": "EPSUM_RealTime",
+      "fps": 60,
+      "emitters": 13,
+      "lods": 4
+    },
+    "type": {
+      "Mesh": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Cross_N400.SM_MW_Cross_N400",
+        "class": "StaticMesh",
+        "name": "SM_MW_Cross_N400"
+      },
+      "LODSizeScale": 1,
+      "bUseStaticMeshLODs": true,
+      "CastShadows": false,
+      "DoCollisions": false,
+      "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+      "bOverrideMaterial": true,
+      "bOverrideDefaultMotionBlurSettings": false,
+      "bEnableMotionBlur": false,
+      "bAllowDistributionParaForRollPitchYaw": false,
+      "RollPitchYawRange": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "MinValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MaxValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Distribution": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleTypeDataMesh_1.DistributionRollPitchYaw",
+          "class": "DistributionVectorUniform",
+          "name": "DistributionRollPitchYaw"
+        },
+        "Table": {
+          "_struct": "DistributionLookupTable",
+          "TimeScale": 0,
+          "TimeBias": 0,
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "Op": 1,
+          "EntryCount": 1,
+          "EntryStride": 3,
+          "SubEntryStride": 0,
+          "LockFlag": 0
+        }
+      },
+      "AxisLockOption": "EPAL_NONE",
+      "bCameraFacing": false,
+      "CameraFacingUpAxisOption": "CameraFacing_NoneUP",
+      "CameraFacingOption": "XAxisFacing_NoUp",
+      "bApplyParticleRotationAsSpin": false,
+      "bFaceCameraDirectionRatherThanPosition": false,
+      "bCollisionsConsiderPartilceSize": true,
+      "bCanBeInCluster": false,
+      "bSpawnModule": false,
+      "bUpdateModule": false,
+      "bFinalUpdateModule": false,
+      "bUpdateForGPUEmitter": false,
+      "bCurvesAsColor": false,
+      "b3DDrawMode": false,
+      "bSupported3DDrawMode": false,
+      "bEnabled": true,
+      "bEditable": true,
+      "LODDuplicate": true,
+      "bSupportsRandomSeed": false,
+      "bRequiresLoopingNotification": false,
+      "LODValidity": 15,
+      "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 122,
+        "A": 255
+      }
+    },
+    "modules": [
+      {
+        "class": "ParticleModuleLifetime",
+        "p": {
+          "Lifetime": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 16.100000381469727,
+            "MaxValue": 16.100000381469727,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleLifetime_12.DistributionFloatConstant_0",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionFloatConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                16.100000381469727
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 192,
+            "A": 255
+          }
+        },
+        "Lifetime_distribution": {
+          "Constant": 16.100000381469727,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColor",
+        "p": {
+          "StartColor": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleColor_5.DistributionStartColor",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionStartColor"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "StartAlpha": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleColor_5.DistributionStartAlpha",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionStartAlpha"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bClampAlpha": true,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 240,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "StartColor_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "StartAlpha_distribution": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSize",
+        "p": {
+          "StartSize": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleSize_13.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bConsiderCameraDistanceSizeScalar": false,
+          "StartCameraDistance": 1000,
+          "EndCameraDistance": 10000,
+          "StartSizeScalar": 1,
+          "EndSizeScalar": 1,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 129,
+            "A": 255
+          }
+        },
+        "StartSize_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.6000000238418579,
+            "MaxValue": 0.6000000238418579,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleSizeMultiplyLife_12.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0.6000000238418579,
+                0.6000000238418579,
+                0.6000000238418579
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 182,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleParameterDynamic",
+        "p": {
+          "DynamicParams": [
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "UVIncrement",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": -1.2049000263214111,
+                "MaxValue": 0.9940999746322632,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_5",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_5"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 1,
+                  "TimeBias": 0,
+                  "Values": [
+                    0.9940999746322632,
+                    -1.2049000263214111
+                  ],
+                  "Op": 1,
+                  "EntryCount": 2,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "Param2",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 0.6000000238418579,
+                "MaxValue": 0.6000000238418579,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_6",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_6"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    0.6000000238418579
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "DistortIntensity",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleParameterDynamic_10.DistributionParam3",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam3"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "AlphaMaskUVScale",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleParameterDynamic_10.DistributionParam4",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam4"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            }
+          ],
+          "UpdateFlags": 15,
+          "bUsesVelocity": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "DP0": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 0.9940999746322632,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": -1.2049000263214111,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP1": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 0.6000000238418579,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 0.6000000238418579,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP2": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP3": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.5,
+            "MaxValue": 1.5,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 1.5
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleSizeMultiplyLife_13.DistributionVectorConstantCurve_0",
+              "class": "DistributionVectorConstantCurve",
+              "name": "DistributionVectorConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 31,
+              "TimeBias": 0,
+              "Values": [
+                0.5,
+                0.5,
+                0.5,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.9808229804039001,
+                0.9808229804039001,
+                0.9808229804039001,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.123655915260315,
+                1.123655915260315,
+                1.123655915260315,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.213261604309082,
+                1.213261604309082,
+                1.213261604309082,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.267025113105774,
+                1.267025113105774,
+                1.267025113105774,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.356630802154541,
+                1.356630802154541,
+                1.356630802154541,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.446236491203308,
+                1.446236491203308,
+                1.446236491203308,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.5,
+                1.5,
+                1.5
+              ],
+              "Op": 1,
+              "EntryCount": 32,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 228,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveVector",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 0.5,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0.10000000149011612,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 1,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1.5,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleMeshRotation",
+        "p": {
+          "StartRotation": {
+            "_struct": "RawDistributionVector",
+            "MinValue": -1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": -1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleMeshRotation_1.DistributionStartRotation",
+              "class": "DistributionVectorUniform",
+              "name": "DistributionStartRotation"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0,
+                0,
+                -1,
+                0,
+                0,
+                1
+              ],
+              "Op": 2,
+              "EntryCount": 1,
+              "EntryStride": 6,
+              "SubEntryStride": 3,
+              "LockFlag": 0
+            }
+          },
+          "bInheritParent": false,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 148,
+            "G": 255,
+            "R": 0,
+            "A": 255
+          }
+        },
+        "StartRotation_distribution": {
+          "Max": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Min": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false,
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColorScaleOverLife",
+        "p": {
+          "ColorScaleOverLife": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 9,
+            "MaxValue": 9,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_1",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_1"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                9,
+                9,
+                9
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "AlphaScaleOverLife": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 0,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_GrainR.PS_GrainR:ParticleModuleColorScaleOverLife_6.DistributionFloatConstantCurve_0",
+              "class": "DistributionFloatConstantCurve",
+              "name": "DistributionFloatConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 127,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0.846668541431427,
+                0.4233343005180359,
+                0
+              ],
+              "Op": 1,
+              "EntryCount": 128,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bEmitterTime": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 255,
+            "G": 0,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "ColorScaleOverLife_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 9,
+            "Y": 9,
+            "Z": 9
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "AlphaScaleOverLife_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0.9814000129699707,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 0,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      }
+    ]
+  },
+  "PS_LockR": {
+    "system": {
+      "mode": "EPSUM_RealTime",
+      "fps": 60,
+      "emitters": 13,
+      "lods": 4
+    },
+    "type": {
+      "Mesh": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Single_N400_LockZ.SM_MW_Single_N400_LockZ",
+        "class": "StaticMesh",
+        "name": "SM_MW_Single_N400_LockZ"
+      },
+      "LODSizeScale": 1,
+      "bUseStaticMeshLODs": true,
+      "CastShadows": false,
+      "DoCollisions": false,
+      "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+      "bOverrideMaterial": true,
+      "bOverrideDefaultMotionBlurSettings": false,
+      "bEnableMotionBlur": false,
+      "bAllowDistributionParaForRollPitchYaw": false,
+      "RollPitchYawRange": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "MinValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MaxValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Distribution": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleTypeDataMesh_1.DistributionRollPitchYaw",
+          "class": "DistributionVectorUniform",
+          "name": "DistributionRollPitchYaw"
+        },
+        "Table": {
+          "_struct": "DistributionLookupTable",
+          "TimeScale": 0,
+          "TimeBias": 0,
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "Op": 1,
+          "EntryCount": 1,
+          "EntryStride": 3,
+          "SubEntryStride": 0,
+          "LockFlag": 0
+        }
+      },
+      "AxisLockOption": "EPAL_Z",
+      "bCameraFacing": true,
+      "CameraFacingUpAxisOption": "CameraFacing_NoneUP",
+      "CameraFacingOption": "LockedAxis_ZAxisFacing",
+      "bApplyParticleRotationAsSpin": false,
+      "bFaceCameraDirectionRatherThanPosition": false,
+      "bCollisionsConsiderPartilceSize": true,
+      "bCanBeInCluster": false,
+      "bSpawnModule": false,
+      "bUpdateModule": false,
+      "bFinalUpdateModule": false,
+      "bUpdateForGPUEmitter": false,
+      "bCurvesAsColor": false,
+      "b3DDrawMode": false,
+      "bSupported3DDrawMode": false,
+      "bEnabled": true,
+      "bEditable": true,
+      "LODDuplicate": true,
+      "bSupportsRandomSeed": false,
+      "bRequiresLoopingNotification": false,
+      "LODValidity": 15,
+      "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 122,
+        "A": 255
+      }
+    },
+    "modules": [
+      {
+        "class": "ParticleModuleLifetime",
+        "p": {
+          "Lifetime": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 16.100000381469727,
+            "MaxValue": 16.100000381469727,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleLifetime_12.DistributionFloatConstant_0",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionFloatConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                16.100000381469727
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 192,
+            "A": 255
+          }
+        },
+        "Lifetime_distribution": {
+          "Constant": 16.100000381469727,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColor",
+        "p": {
+          "StartColor": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleColor_5.DistributionStartColor",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionStartColor"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "StartAlpha": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleColor_5.DistributionStartAlpha",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionStartAlpha"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bClampAlpha": true,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 240,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "StartColor_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "StartAlpha_distribution": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSize",
+        "p": {
+          "StartSize": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleSize_13.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bConsiderCameraDistanceSizeScalar": false,
+          "StartCameraDistance": 1000,
+          "EndCameraDistance": 10000,
+          "StartSizeScalar": 1,
+          "EndSizeScalar": 1,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 129,
+            "A": 255
+          }
+        },
+        "StartSize_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.6000000238418579,
+            "MaxValue": 0.6000000238418579,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleSizeMultiplyLife_12.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0.6000000238418579,
+                0.6000000238418579,
+                0.6000000238418579
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 182,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleParameterDynamic",
+        "p": {
+          "DynamicParams": [
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "UVIncrement",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": -1.2049000263214111,
+                "MaxValue": 0.9940999746322632,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_5",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_5"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 1,
+                  "TimeBias": 0,
+                  "Values": [
+                    0.9940999746322632,
+                    -1.2049000263214111
+                  ],
+                  "Op": 1,
+                  "EntryCount": 2,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "Param2",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1.0199999809265137,
+                "MaxValue": 1.0199999809265137,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_6",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_6"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1.0199999809265137
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "DistortIntensity",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleParameterDynamic_10.DistributionParam3",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam3"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "AlphaMaskUVScale",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleParameterDynamic_10.DistributionParam4",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam4"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            }
+          ],
+          "UpdateFlags": 15,
+          "bUsesVelocity": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "DP0": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 0.9940999746322632,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": -1.2049000263214111,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP1": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP2": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP3": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.5,
+            "MaxValue": 1.5,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 1.5
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleSizeMultiplyLife_13.DistributionVectorConstantCurve_0",
+              "class": "DistributionVectorConstantCurve",
+              "name": "DistributionVectorConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 31,
+              "TimeBias": 0,
+              "Values": [
+                0.5,
+                0.5,
+                0.5,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.9808229804039001,
+                0.9808229804039001,
+                0.9808229804039001,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.123655915260315,
+                1.123655915260315,
+                1.123655915260315,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.213261604309082,
+                1.213261604309082,
+                1.213261604309082,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.267025113105774,
+                1.267025113105774,
+                1.267025113105774,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.356630802154541,
+                1.356630802154541,
+                1.356630802154541,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.446236491203308,
+                1.446236491203308,
+                1.446236491203308,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.5,
+                1.5,
+                1.5
+              ],
+              "Op": 1,
+              "EntryCount": 32,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 228,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveVector",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 0.5,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0.10000000149011612,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 1,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1.5,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleMeshRotation",
+        "p": {
+          "StartRotation": {
+            "_struct": "RawDistributionVector",
+            "MinValue": -1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": -1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleMeshRotation_1.DistributionStartRotation",
+              "class": "DistributionVectorUniform",
+              "name": "DistributionStartRotation"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0,
+                0,
+                -1,
+                0,
+                0,
+                1
+              ],
+              "Op": 2,
+              "EntryCount": 1,
+              "EntryStride": 6,
+              "SubEntryStride": 3,
+              "LockFlag": 0
+            }
+          },
+          "bInheritParent": false,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 148,
+            "G": 255,
+            "R": 0,
+            "A": 255
+          }
+        },
+        "StartRotation_distribution": {
+          "Max": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Min": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false,
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColorScaleOverLife",
+        "p": {
+          "ColorScaleOverLife": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 9,
+            "MaxValue": 9,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_1",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_1"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                9,
+                9,
+                9
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "AlphaScaleOverLife": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 0,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_LockR.PS_LockR:ParticleModuleColorScaleOverLife_6.DistributionFloatConstantCurve_0",
+              "class": "DistributionFloatConstantCurve",
+              "name": "DistributionFloatConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 127,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0.846668541431427,
+                0.4233343005180359,
+                0
+              ],
+              "Op": 1,
+              "EntryCount": 128,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bEmitterTime": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 255,
+            "G": 0,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "ColorScaleOverLife_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 9,
+            "Y": 9,
+            "Z": 9
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "AlphaScaleOverLife_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0.9814000129699707,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 0,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      }
+    ]
+  },
+  "PS_MobileR": {
+    "system": {
+      "mode": "EPSUM_RealTime",
+      "fps": 60,
+      "emitters": 13,
+      "lods": 4
+    },
+    "type": {
+      "Mesh": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Single_N130_LockZ_Mobile.SM_MW_Single_N130_LockZ_Mobile",
+        "class": "StaticMesh",
+        "name": "SM_MW_Single_N130_LockZ_Mobile"
+      },
+      "LODSizeScale": 1,
+      "bUseStaticMeshLODs": true,
+      "CastShadows": false,
+      "DoCollisions": false,
+      "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+      "bOverrideMaterial": true,
+      "bOverrideDefaultMotionBlurSettings": false,
+      "bEnableMotionBlur": false,
+      "bAllowDistributionParaForRollPitchYaw": false,
+      "RollPitchYawRange": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "MinValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MaxValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Distribution": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleTypeDataMesh_1.DistributionRollPitchYaw",
+          "class": "DistributionVectorUniform",
+          "name": "DistributionRollPitchYaw"
+        },
+        "Table": {
+          "_struct": "DistributionLookupTable",
+          "TimeScale": 0,
+          "TimeBias": 0,
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "Op": 1,
+          "EntryCount": 1,
+          "EntryStride": 3,
+          "SubEntryStride": 0,
+          "LockFlag": 0
+        }
+      },
+      "AxisLockOption": "EPAL_Z",
+      "bCameraFacing": true,
+      "CameraFacingUpAxisOption": "CameraFacing_NoneUP",
+      "CameraFacingOption": "LockedAxis_ZAxisFacing",
+      "bApplyParticleRotationAsSpin": false,
+      "bFaceCameraDirectionRatherThanPosition": false,
+      "bCollisionsConsiderPartilceSize": true,
+      "bCanBeInCluster": false,
+      "bSpawnModule": false,
+      "bUpdateModule": false,
+      "bFinalUpdateModule": false,
+      "bUpdateForGPUEmitter": false,
+      "bCurvesAsColor": false,
+      "b3DDrawMode": false,
+      "bSupported3DDrawMode": false,
+      "bEnabled": true,
+      "bEditable": true,
+      "LODDuplicate": true,
+      "bSupportsRandomSeed": false,
+      "bRequiresLoopingNotification": false,
+      "LODValidity": 15,
+      "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 122,
+        "A": 255
+      }
+    },
+    "modules": [
+      {
+        "class": "ParticleModuleLifetime",
+        "p": {
+          "Lifetime": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 16.100000381469727,
+            "MaxValue": 16.100000381469727,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleLifetime_12.DistributionFloatConstant_0",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionFloatConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                16.100000381469727
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 192,
+            "A": 255
+          }
+        },
+        "Lifetime_distribution": {
+          "Constant": 16.100000381469727,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColor",
+        "p": {
+          "StartColor": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleColor_5.DistributionStartColor",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionStartColor"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "StartAlpha": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleColor_5.DistributionStartAlpha",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionStartAlpha"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bClampAlpha": true,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 240,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "StartColor_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "StartAlpha_distribution": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSize",
+        "p": {
+          "StartSize": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleSize_13.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bConsiderCameraDistanceSizeScalar": false,
+          "StartCameraDistance": 1000,
+          "EndCameraDistance": 10000,
+          "StartSizeScalar": 1,
+          "EndSizeScalar": 1,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 129,
+            "A": 255
+          }
+        },
+        "StartSize_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.6000000238418579,
+            "MaxValue": 0.6000000238418579,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleSizeMultiplyLife_12.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0.6000000238418579,
+                0.6000000238418579,
+                0.6000000238418579
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 182,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleParameterDynamic",
+        "p": {
+          "DynamicParams": [
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "UVIncrement",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": -1.2049000263214111,
+                "MaxValue": 0.9940999746322632,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_5",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_5"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 1,
+                  "TimeBias": 0,
+                  "Values": [
+                    0.9940999746322632,
+                    -1.2049000263214111
+                  ],
+                  "Op": 1,
+                  "EntryCount": 2,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "Param2",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1.0199999809265137,
+                "MaxValue": 1.0199999809265137,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_6",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_6"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1.0199999809265137
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "DistortIntensity",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleParameterDynamic_10.DistributionParam3",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam3"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "AlphaMaskUVScale",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleParameterDynamic_10.DistributionParam4",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam4"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            }
+          ],
+          "UpdateFlags": 15,
+          "bUsesVelocity": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "DP0": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 0.9940999746322632,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": -1.2049000263214111,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP1": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP2": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP3": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.5,
+            "MaxValue": 1.5,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 1.5
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleSizeMultiplyLife_13.DistributionVectorConstantCurve_0",
+              "class": "DistributionVectorConstantCurve",
+              "name": "DistributionVectorConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 31,
+              "TimeBias": 0,
+              "Values": [
+                0.5,
+                0.5,
+                0.5,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.9808229804039001,
+                0.9808229804039001,
+                0.9808229804039001,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.123655915260315,
+                1.123655915260315,
+                1.123655915260315,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.213261604309082,
+                1.213261604309082,
+                1.213261604309082,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.267025113105774,
+                1.267025113105774,
+                1.267025113105774,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.356630802154541,
+                1.356630802154541,
+                1.356630802154541,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.446236491203308,
+                1.446236491203308,
+                1.446236491203308,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.5,
+                1.5,
+                1.5
+              ],
+              "Op": 1,
+              "EntryCount": 32,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 228,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveVector",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 0.5,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0.10000000149011612,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 1,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1.5,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleMeshRotation",
+        "p": {
+          "StartRotation": {
+            "_struct": "RawDistributionVector",
+            "MinValue": -1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": -1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleMeshRotation_1.DistributionStartRotation",
+              "class": "DistributionVectorUniform",
+              "name": "DistributionStartRotation"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0,
+                0,
+                -1,
+                0,
+                0,
+                1
+              ],
+              "Op": 2,
+              "EntryCount": 1,
+              "EntryStride": 6,
+              "SubEntryStride": 3,
+              "LockFlag": 0
+            }
+          },
+          "bInheritParent": false,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 148,
+            "G": 255,
+            "R": 0,
+            "A": 255
+          }
+        },
+        "StartRotation_distribution": {
+          "Max": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Min": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false,
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColorScaleOverLife",
+        "p": {
+          "ColorScaleOverLife": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 9,
+            "MaxValue": 9,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_1",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_1"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                9,
+                9,
+                9
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "AlphaScaleOverLife": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 0,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_MobileR.PS_MobileR:ParticleModuleColorScaleOverLife_6.DistributionFloatConstantCurve_0",
+              "class": "DistributionFloatConstantCurve",
+              "name": "DistributionFloatConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 127,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0.846668541431427,
+                0.4233343005180359,
+                0
+              ],
+              "Op": 1,
+              "EntryCount": 128,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bEmitterTime": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 255,
+            "G": 0,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "ColorScaleOverLife_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 9,
+            "Y": 9,
+            "Z": 9
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "AlphaScaleOverLife_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0.9814000129699707,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 0,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      }
+    ]
+  },
+  "PS_FixedR": {
+    "system": {
+      "mode": "EPSUM_FixedTime",
+      "fps": 10,
+      "emitters": 13,
+      "lods": 4
+    },
+    "type": {
+      "Mesh": {
+        "_type": "object_ref",
+        "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/SM_MW_Cross_N400.SM_MW_Cross_N400",
+        "class": "StaticMesh",
+        "name": "SM_MW_Cross_N400"
+      },
+      "LODSizeScale": 1,
+      "bUseStaticMeshLODs": true,
+      "CastShadows": false,
+      "DoCollisions": false,
+      "MeshAlignment": "PSMA_MeshFaceCameraWithRoll",
+      "bOverrideMaterial": true,
+      "bOverrideDefaultMotionBlurSettings": false,
+      "bEnableMotionBlur": false,
+      "bAllowDistributionParaForRollPitchYaw": false,
+      "RollPitchYawRange": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "MinValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "MaxValueVec": {
+          "_struct": "Vector",
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Distribution": {
+          "_type": "object_ref",
+          "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleTypeDataMesh_1.DistributionRollPitchYaw",
+          "class": "DistributionVectorUniform",
+          "name": "DistributionRollPitchYaw"
+        },
+        "Table": {
+          "_struct": "DistributionLookupTable",
+          "TimeScale": 0,
+          "TimeBias": 0,
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "Op": 1,
+          "EntryCount": 1,
+          "EntryStride": 3,
+          "SubEntryStride": 0,
+          "LockFlag": 0
+        }
+      },
+      "AxisLockOption": "EPAL_NONE",
+      "bCameraFacing": false,
+      "CameraFacingUpAxisOption": "CameraFacing_NoneUP",
+      "CameraFacingOption": "XAxisFacing_NoUp",
+      "bApplyParticleRotationAsSpin": false,
+      "bFaceCameraDirectionRatherThanPosition": false,
+      "bCollisionsConsiderPartilceSize": true,
+      "bCanBeInCluster": false,
+      "bSpawnModule": false,
+      "bUpdateModule": false,
+      "bFinalUpdateModule": false,
+      "bUpdateForGPUEmitter": false,
+      "bCurvesAsColor": false,
+      "b3DDrawMode": false,
+      "bSupported3DDrawMode": false,
+      "bEnabled": true,
+      "bEditable": true,
+      "LODDuplicate": true,
+      "bSupportsRandomSeed": false,
+      "bRequiresLoopingNotification": false,
+      "LODValidity": 15,
+      "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 122,
+        "A": 255
+      }
+    },
+    "modules": [
+      {
+        "class": "ParticleModuleLifetime",
+        "p": {
+          "Lifetime": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 16.100000381469727,
+            "MaxValue": 16.100000381469727,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleLifetime_12.DistributionFloatConstant_0",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionFloatConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                16.100000381469727
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 192,
+            "A": 255
+          }
+        },
+        "Lifetime_distribution": {
+          "Constant": 16.100000381469727,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColor",
+        "p": {
+          "StartColor": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_5.DistributionStartColor",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionStartColor"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "StartAlpha": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColor_5.DistributionStartAlpha",
+              "class": "DistributionFloatConstant",
+              "name": "DistributionStartAlpha"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bClampAlpha": true,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 240,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "StartColor_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "StartAlpha_distribution": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSize",
+        "p": {
+          "StartSize": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSize_13.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bConsiderCameraDistanceSizeScalar": false,
+          "StartCameraDistance": 1000,
+          "EndCameraDistance": 10000,
+          "StartSizeScalar": 1,
+          "EndSizeScalar": 1,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 129,
+            "A": 255
+          }
+        },
+        "StartSize_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.6000000238418579,
+            "MaxValue": 0.6000000238418579,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0.6000000238418579,
+              "Y": 0,
+              "Z": 0
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_12.DistributionVectorConstant_0",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0.6000000238418579,
+                0.6000000238418579,
+                0.6000000238418579
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 182,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 0.6000000238418579,
+            "Y": 0,
+            "Z": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleParameterDynamic",
+        "p": {
+          "DynamicParams": [
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "UVIncrement",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": -1.2049000263214111,
+                "MaxValue": 0.9940999746322632,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_5",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_5"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 1,
+                  "TimeBias": 0,
+                  "Values": [
+                    0.9940999746322632,
+                    -1.2049000263214111
+                  ],
+                  "Op": 1,
+                  "EntryCount": 2,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "Param2",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1.0199999809265137,
+                "MaxValue": 1.0199999809265137,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_10.DistributionFloatConstantCurve_6",
+                  "class": "DistributionFloatConstantCurve",
+                  "name": "DistributionFloatConstantCurve_6"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1.0199999809265137
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "DistortIntensity",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_10.DistributionParam3",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam3"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            },
+            {
+              "_struct": "EmitterDynamicParameter",
+              "ParamName": "AlphaMaskUVScale",
+              "bUseEmitterTime": false,
+              "bSpawnTimeOnly": false,
+              "ValueMethod": "EDPV_UserSet",
+              "bScaleVelocityByParamValue": false,
+              "ParamValue": {
+                "_struct": "RawDistributionFloat",
+                "MinValue": 1,
+                "MaxValue": 1,
+                "Distribution": {
+                  "_type": "object_ref",
+                  "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleParameterDynamic_10.DistributionParam4",
+                  "class": "DistributionFloatConstant",
+                  "name": "DistributionParam4"
+                },
+                "Table": {
+                  "_struct": "DistributionLookupTable",
+                  "TimeScale": 0,
+                  "TimeBias": 0,
+                  "Values": [
+                    1
+                  ],
+                  "Op": 1,
+                  "EntryCount": 1,
+                  "EntryStride": 1,
+                  "SubEntryStride": 0,
+                  "LockFlag": 0
+                }
+              }
+            }
+          ],
+          "UpdateFlags": 15,
+          "bUsesVelocity": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 0,
+            "G": 255,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "DP0": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 0.9940999746322632,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": -1.2049000263214111,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP1": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 1.0199999809265137,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP2": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        },
+        "DP3": {
+          "Constant": 1,
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleSizeMultiplyLife",
+        "p": {
+          "LifeMultiplier": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 0.5,
+            "MaxValue": 1.5,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 1.5
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleSizeMultiplyLife_13.DistributionVectorConstantCurve_0",
+              "class": "DistributionVectorConstantCurve",
+              "name": "DistributionVectorConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 31,
+              "TimeBias": 0,
+              "Values": [
+                0.5,
+                0.5,
+                0.5,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.6612902879714966,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.8225805759429932,
+                0.9808229804039001,
+                0.9808229804039001,
+                0.9808229804039001,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0161290168762207,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0340502262115479,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0519713163375854,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0698925256729126,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.0878136157989502,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.1057347059249878,
+                1.123655915260315,
+                1.123655915260315,
+                1.123655915260315,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1415770053863525,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1594982147216797,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1774194240570068,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.1953405141830444,
+                1.213261604309082,
+                1.213261604309082,
+                1.213261604309082,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2311828136444092,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.2491039037704468,
+                1.267025113105774,
+                1.267025113105774,
+                1.267025113105774,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.2849462032318115,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3028672933578491,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3207883834838867,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.3387097120285034,
+                1.356630802154541,
+                1.356630802154541,
+                1.356630802154541,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3745518922805786,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.3924729824066162,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4103941917419434,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.4283154010772705,
+                1.446236491203308,
+                1.446236491203308,
+                1.446236491203308,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4641575813293457,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.4820789098739624,
+                1.5,
+                1.5,
+                1.5
+              ],
+              "Op": 1,
+              "EntryCount": 32,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "MultiplyX": true,
+          "MultiplyY": true,
+          "MultiplyZ": true,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 228,
+            "G": 0,
+            "R": 255,
+            "A": 255
+          }
+        },
+        "LifeMultiplier_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveVector",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 0.5,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 0.10000000149011612,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointVector",
+                "InVal": 1,
+                "OutVal": {
+                  "_struct": "Vector",
+                  "X": 1.5,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "ArriveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "LeaveTangent": {
+                  "_struct": "Vector",
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_XYZ",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleMeshRotation",
+        "p": {
+          "StartRotation": {
+            "_struct": "RawDistributionVector",
+            "MinValue": -1,
+            "MaxValue": 1,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": -1
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 1
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleMeshRotation_1.DistributionStartRotation",
+              "class": "DistributionVectorUniform",
+              "name": "DistributionStartRotation"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                0,
+                0,
+                -1,
+                0,
+                0,
+                1
+              ],
+              "Op": 2,
+              "EntryCount": 1,
+              "EntryStride": 6,
+              "SubEntryStride": 3,
+              "LockFlag": 0
+            }
+          },
+          "bInheritParent": false,
+          "bSpawnModule": true,
+          "bUpdateModule": false,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": false,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": false,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 148,
+            "G": 255,
+            "R": 0,
+            "A": 255
+          }
+        },
+        "StartRotation_distribution": {
+          "Max": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Min": {
+            "_struct": "Vector",
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "MirrorFlags": "EDVMF_Different",
+          "bUseExtremes": false,
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        }
+      },
+      {
+        "class": "ParticleModuleColorScaleOverLife",
+        "p": {
+          "ColorScaleOverLife": {
+            "_struct": "RawDistributionVector",
+            "MinValue": 9,
+            "MaxValue": 9,
+            "MinValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "MaxValueVec": {
+              "_struct": "Vector",
+              "X": 9,
+              "Y": 9,
+              "Z": 9
+            },
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_1",
+              "class": "DistributionVectorConstant",
+              "name": "DistributionVectorConstant_1"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 0,
+              "TimeBias": 0,
+              "Values": [
+                9,
+                9,
+                9
+              ],
+              "Op": 1,
+              "EntryCount": 1,
+              "EntryStride": 3,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "AlphaScaleOverLife": {
+            "_struct": "RawDistributionFloat",
+            "MinValue": 0,
+            "MaxValue": 1,
+            "Distribution": {
+              "_type": "object_ref",
+              "path": "/Game/Effects_HD/_Sandbox/MW2_Verify_20261016/PS_FixedR.PS_FixedR:ParticleModuleColorScaleOverLife_6.DistributionFloatConstantCurve_0",
+              "class": "DistributionFloatConstantCurve",
+              "name": "DistributionFloatConstantCurve_0"
+            },
+            "Table": {
+              "_struct": "DistributionLookupTable",
+              "TimeScale": 127,
+              "TimeBias": 0,
+              "Values": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0.846668541431427,
+                0.4233343005180359,
+                0
+              ],
+              "Op": 1,
+              "EntryCount": 128,
+              "EntryStride": 1,
+              "SubEntryStride": 0,
+              "LockFlag": 0
+            }
+          },
+          "bEmitterTime": false,
+          "bSpawnModule": true,
+          "bUpdateModule": true,
+          "bFinalUpdateModule": false,
+          "bUpdateForGPUEmitter": false,
+          "bCurvesAsColor": true,
+          "b3DDrawMode": false,
+          "bSupported3DDrawMode": false,
+          "bEnabled": true,
+          "bEditable": true,
+          "LODDuplicate": true,
+          "bSupportsRandomSeed": false,
+          "bRequiresLoopingNotification": false,
+          "LODValidity": 15,
+          "ModuleEditorColor": {
+            "_struct": "Color",
+            "B": 255,
+            "G": 0,
+            "R": 249,
+            "A": 255
+          }
+        },
+        "ColorScaleOverLife_distribution": {
+          "Constant": {
+            "_struct": "Vector",
+            "X": 9,
+            "Y": 9,
+            "Z": 9
+          },
+          "bLockAxes": false,
+          "LockedAxes": "EDVLF_None",
+          "bCanBeBaked": true,
+          "bIsDirty": false,
+          "bBakedDataSuccesfully": true
+        },
+        "AlphaScaleOverLife_distribution": {
+          "ConstantCurve": {
+            "_struct": "InterpCurveFloat",
+            "Points": [
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 0.9814000129699707,
+                "OutVal": 1,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              },
+              {
+                "_struct": "InterpCurvePointFloat",
+                "InVal": 1,
+                "OutVal": 0,
+                "ArriveTangent": 0,
+                "LeaveTangent": 0,
+                "InterpMode": "CIM_Linear"
+              }
+            ],
+            "bIsLooped": false,
+            "LoopKeyOffset": 0
+          },
+          "bCanBeBaked": true,
+          "bBakedDataSuccesfully": true
+        }
+      }
+    ]
+  }
+}
