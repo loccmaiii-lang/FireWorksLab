@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv7lp8ci",
  "name": "金曜菊-B",
- "at": "2026-10-16 22:29",
+ "at": "2026-10-16 22:38",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -388,7 +388,7 @@
      "stages": [
       [
        0,
-       "#ffffff"
+       "#eef2ff"
       ]
      ],
      "xw": 0.08,
@@ -412,17 +412,17 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 6.56,
+     "duration": 7.56,
      "seed": 7,
      "stars": 200,
      "burstR0": 0,
-     "v0": 250,
+     "v0": 300,
      "vt": 20,
-     "grav": 0.25,
+     "grav": 0.15,
      "speedJit": 8,
      "dirJit": 1.5,
      "burn": 2,
-     "burnJit": 10,
+     "burnJit": 30,
      "fade": 0.2,
      "lastFlare": 0,
      "flash": 0,
@@ -445,14 +445,14 @@
      "sparkLife": 2.11,
      "sparkLifeEnd": 1,
      "sparkLifeJit": 30,
-     "sparkSize": 0.45,
-     "sparkSpread": 0,
+     "sparkSize": 0.14,
+     "sparkSpread": 0.73656,
      "sparkInherit": 0.03,
      "sparkDrag": 1.2,
      "sparkGrav": 0.05,
      "T0": 2250,
      "cooling": 0.25,
-     "sparkBright": 1,
+     "sparkBright": 3,
      "twinkle": 0.4,
      "twinkleHz": 0,
      "subDelay": 0.9,
@@ -479,7 +479,7 @@
      "ringFrac": 0.45,
      "text": "祭",
      "waterRefl": 0,
-     "ignDelay": 0.15,
+     "ignDelay": 0.3,
      "ignJit": 11,
      "ignSeed": 91,
      "keepFrac": 1,
@@ -505,8 +505,8 @@
      "tailPinchTail": 0,
      "tailBellyAt": 0.45,
      "headTear": 0,
-     "tailDiffuse": 0.5,
-     "tailDiffuseScale": 43,
+     "tailDiffuse": 0,
+     "tailDiffuseScale": 20,
      "sparkRise": 0,
      "starBright": 0,
      "tailHaze": 0,
@@ -517,8 +517,8 @@
      "cutIn": 0,
      "cutOut": 5.3,
      "preRoll": 1,
-     "preFrom": 0.15,
-     "visTo": 6.2433,
+     "preFrom": 1.15,
+     "visTo": 7.2433,
      "preScale0": 0,
      "subScaleJit": 0,
      "subVt": 0,
@@ -732,7 +732,11 @@
      "clusterDirJit": 0,
      "clusterFan": 90,
      "clusterSweep": 0,
-     "clusterGap": 0
+     "clusterGap": 0,
+     "sparkSpawnHead": 0.97,
+     "sparkRateBy": "m",
+     "sparkPerM": 26.3,
+     "sparkLateWind": 1
     },
     "M": {
      "stages": [
@@ -797,7 +801,7 @@
      "burstR0": 0,
      "v0": 250,
      "vt": 20,
-     "grav": 0.25,
+     "grav": 0.15,
      "speedJit": 8,
      "dirJit": 1.5,
      "burn": 4.3,
@@ -924,8 +928,8 @@
      "headHexRot": 0,
      "sparkStretch": 0,
      "sparkStretchJit": 0,
-     "tailDiffuse": 0.5,
-     "tailDiffuseScale": 43,
+     "tailDiffuse": 0,
+     "tailDiffuseScale": 20,
      "sparkRise": 0,
      "starBright": 0,
      "tailHaze": 0,
@@ -1319,12 +1323,7 @@
    }
   ]
  },
- "links": [
-  [
-   "lp3fh1",
-   "ly5z46"
-  ]
- ],
+ "links": [],
  "ue": {
   "base": "GlitterChry",
   "layers": [
