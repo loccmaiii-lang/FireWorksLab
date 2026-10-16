@@ -1,0 +1,66 @@
+{
+  "status": "用户暂停",
+  "time": "2026-10-16T22:29:18+08:00",
+  "userInstruction": "你先暂停吧，先让画质排查工作",
+  "automation": {
+    "id": "t18-initial-color",
+    "status": "PAUSED"
+  },
+  "UEReleased": {
+    "ownActors": [],
+    "callback": "None",
+    "removed": 1,
+    "globalRestore": "skipped: another UE task resumed and owns newer camera/CVars"
+  },
+  "completedRuns": [
+    {
+      "name": "M_const0",
+      "done": true,
+      "error": null,
+      "shots": 2
+    },
+    {
+      "name": "M_const04",
+      "done": true,
+      "error": null,
+      "shots": 3
+    },
+    {
+      "name": "M_const1",
+      "done": true,
+      "error": null,
+      "shots": 3
+    },
+    {
+      "name": "M_curve_b0_r1",
+      "done": true,
+      "error": null,
+      "shots": 3
+    },
+    {
+      "name": "M_unmodified_baseline",
+      "done": true,
+      "error": null,
+      "shots": 2
+    }
+  ],
+  "imageCount": 13,
+  "sourceFileHashes": [
+    {
+      "asset": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Medium_Yellow_HD.P_EFX_FireWorks_Medium_Yellow_HD",
+      "beforeSHA256": "e4cc8e7b0c996d9e2fb3877d5e99215a1c8ae753a4ba3239140d074f9d9565b5",
+      "afterSHA256": "e4cc8e7b0c996d9e2fb3877d5e99215a1c8ae753a4ba3239140d074f9d9565b5",
+      "unchanged": true
+    },
+    {
+      "asset": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_M.P_EFX_FireWorks_Hero_M",
+      "beforeSHA256": "6b6bd6baad85202639491ebad352fe8448cf5124cebd2b498cd3e4003c800992",
+      "afterSHA256": "6b6bd6baad85202639491ebad352fe8448cf5124cebd2b498cd3e4003c800992",
+      "unchanged": true
+    }
+  ],
+  "runtimeConclusion": "尚未完成。只完成基线、Alpha常量0/0.4/1及曲线Burst设为0的一轮对照；非零出生时刻、RGB和完整Scale链仍未验证，三种候选不可据此批改。",
+  "incident": "22:15首次诊断启动时UE崩溃，Array index out of bounds: -1 from an array of size 1。已查到脚本把Modules/LODDistances的JSON数组传给ImportText后回读为空，修正UE数组格式并增加播放前内容校验后，基线和少量对照运行正常。22:24:53检测到QBL重新使用UE，已让出；不覆盖对方机位/CVar。",
+  "memoryCaveat": "进程重启前后不能宣称原内存完全一致。用户开工前测试配置保存在snapshot.json及PC_Base/M_Base副本；没有回写原资产。",
+  "localEvidence": "同目录完整请求、配置、读回、截图和辅助脚本尚为本机未审核实验资料，保留当前工作树，不自动重跑。"
+}
