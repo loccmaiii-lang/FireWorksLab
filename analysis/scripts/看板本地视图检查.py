@@ -23,8 +23,9 @@ class LocalBoardChecks(unittest.TestCase):
         view = M.project(snapshot, pending, AT, 'test')
         self.assertEqual([snapshot, pending], saved)
         self.assertEqual(view['导出时间'], snapshot['导出时间'])
-        self.assertTrue(set(f'P{x:03}' for x in range(1, 39)) <= set(view['本地视图']['尚未应用']))
-        self.assertIn('local-P005', view['items'])
+        applied = {e['id'] for e in pending['条目'] if e.get('appliedAt')}
+        self.assertTrue(applied.isdisjoint(view['本地视图']['尚未应用']))
+        self.assertNotIn('items/n78', view['items'])
         self.assertEqual(view['items']['n75']['status'], '已做')
         self.assertEqual(view['items']['n74'].get('syncedAt'), snapshot['items']['n74'].get('syncedAt'))
 
@@ -45,6 +46,25 @@ class LocalBoardChecks(unittest.TestCase):
         view = M.project(snap, {'条目':[first,second]}, AT, 'test')
         self.assertEqual(view['items']['online-7']['feedback'], '用户意见')
         self.assertNotIn('local-P001', view['items'])
+
+    def test_qualified_cloud_receipt_keeps_updates_on_the_real_row(self):
+        for coll in M.COLLS:
+            for local_id in ('g17', 'local-P001'):
+                with self.subTest(collection=coll, local_id=local_id):
+                    snap = {'导出时间': AT, coll: {'online-7': {'title': '云端终值', 'feedback': '原用户意见'}}}
+                    first = {'id': 'P001', '时间': AT, '集合': coll, '行': 'new',
+                             '字段': {'id': local_id, 'title': '已应用的旧值'},
+                             'appliedAt': AT, '线上行': f'{coll}/online-7'}
+                    second = {'id': 'P002', '时间': AT, '集合': coll, '行': local_id,
+                              '字段': {'title': '本机新证据'}, 'appliedAt': None}
+                    pending = {'条目': [first, second]}
+                    saved = copy.deepcopy([snap, pending])
+                    view = M.project(snap, pending, AT, 'test')
+                    self.assertEqual(view[coll]['online-7']['title'], '本机新证据')
+                    self.assertEqual(view[coll]['online-7']['feedback'], '原用户意见')
+                    self.assertEqual(set(view[coll]), {'online-7'})
+                    self.assertEqual(view['本地视图']['尚未应用'], ['P002'])
+                    self.assertEqual([snap, pending], saved)
 
     def test_newer_online_field_is_never_overwritten_by_projection(self):
         snap = {'导出时间':AT,'items':{'i01':{'title':'线上用户新标题','recommend':'原推荐','updatedAt':'2026-10-15T23:30:00+08:00'}}}
