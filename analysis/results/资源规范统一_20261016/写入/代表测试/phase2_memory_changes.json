@@ -1,0 +1,60 @@
+{
+ "mi": [
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD.MI_EFX_FireWorks_Crackle_Main_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD.MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD.MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ],
+  [
+   "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   false,
+   1,
+   0.9800000190734863
+  ]
+ ],
+ "crackle": 2,
+ "xs": 1
+}

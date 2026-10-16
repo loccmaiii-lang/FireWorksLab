@@ -1,0 +1,34 @@
+{
+ "world": "/Game/Maps/Login/Login.Login",
+ "dirty_count": 22,
+ "dirty": [
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD",
+  "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD",
+  "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+  "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+  "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+  "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_AxisTest",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N200",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N300",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_E025",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_E100",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_W35",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/SM_EFX_FireWorks_MeshWillow_N400_W70",
+  "/Game/Effects_HD/_Sandbox/MeshWillow_20261016/T_EFX_FireWorks_MeshWillow_Strip"
+ ],
+ "rsu26_actors": [
+  "RSU26_tmp_crackle_after",
+  "RSU26_tmp_kamuro",
+  "RSU26_tmp_rtm",
+  "RSU26_tmp_xs_fcp"
+ ]
+}

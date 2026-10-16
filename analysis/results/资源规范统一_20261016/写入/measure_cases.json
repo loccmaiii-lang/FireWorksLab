@@ -1,0 +1,7058 @@
+[
+{
+"name": "P_EFX_FireWorks_LittleGold_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.69,
+"planWorld": [
+[
+-2640.0,
+2640.0
+],
+[
+-2640.0,
+2640.0
+],
+[
+-2640.0,
+2640.0
+]
+],
+"predUEDyn": [
+[
+-3200.0,
+3200.0
+],
+[
+-3200.0,
+3200.0
+],
+[
+-3200.0,
+3200.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleGold_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.69,
+"planWorld": [
+[
+-5280.0,
+5280.0
+],
+[
+-5280.0,
+5280.0
+],
+[
+-5280.0,
+5280.0
+]
+],
+"predUEDyn": [
+[
+-6400.0,
+6400.0
+],
+[
+-6400.0,
+6400.0
+],
+[
+-6400.0,
+6400.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleSilver_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.5,
+"planWorld": [
+[
+-2256.0,
+2256.0
+],
+[
+-2256.0,
+2256.0
+],
+[
+-2256.0,
+2256.0
+]
+],
+"predUEDyn": [
+[
+-2660.4400390625,
+2660.4400390625
+],
+[
+-2660.4400390625,
+2660.4400390625
+],
+[
+-2660.4400390625,
+2660.4400390625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleSilver_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.5,
+"planWorld": [
+[
+-4512.0,
+4512.0
+],
+[
+-4512.0,
+4512.0
+],
+[
+-4512.0,
+4512.0
+]
+],
+"predUEDyn": [
+[
+-5320.880078125,
+5320.880078125
+],
+[
+-5320.880078125,
+5320.880078125
+],
+[
+-5320.880078125,
+5320.880078125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCrackle_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.1,
+"planWorld": [
+[
+-2120.0,
+2120.0
+],
+[
+-2120.0,
+2120.0
+],
+[
+-2120.0,
+2120.0
+]
+],
+"predUEDyn": [
+[
+-2640.0,
+2640.0
+],
+[
+-2640.0,
+2640.0
+],
+[
+-2640.0,
+2640.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCrackle_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.1,
+"planWorld": [
+[
+-4240.0,
+4240.0
+],
+[
+-4240.0,
+4240.0
+],
+[
+-4240.0,
+4240.0
+]
+],
+"predUEDyn": [
+[
+-5280.0,
+5280.0
+],
+[
+-5280.0,
+5280.0
+],
+[
+-5280.0,
+5280.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCombo_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 3.44,
+"planWorld": [
+[
+-2064.0,
+2064.0
+],
+[
+-2064.0,
+2064.0
+],
+[
+-2064.0,
+2064.0
+]
+],
+"predUEDyn": [
+[
+-2560.0,
+2560.0
+],
+[
+-2560.0,
+2560.0
+],
+[
+-2560.0,
+2560.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCombo_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 3.44,
+"planWorld": [
+[
+-4128.0,
+4128.0
+],
+[
+-4128.0,
+4128.0
+],
+[
+-4128.0,
+4128.0
+]
+],
+"predUEDyn": [
+[
+-5120.0,
+5120.0
+],
+[
+-5120.0,
+5120.0
+],
+[
+-5120.0,
+5120.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-4232.0,
+4232.0
+],
+[
+-640.0,
+9760.0
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-3916.2398437500005,
+13036.239805603032
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-10196.87092903466,
+3210.5456077895806
+],
+[
+-4232.0,
+4232.0
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-11763.521585094968,
+4777.196293072162
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-3210.5456077895806,
+10196.87092903466
+],
+[
+-4232.0,
+4232.0
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-4777.196293072162,
+11763.521585094968
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-3210.5456077895806,
+10196.87092903466
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-4777.196293072162,
+11763.521585094968
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-10196.87092903466,
+3210.5456077895806
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-11763.521585094968,
+4777.196293072162
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-8464.0,
+8464.0
+],
+[
+-1280.0,
+19520.0
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-7832.479687500001,
+26072.479611206065
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-20393.74185806932,
+6421.091215579161
+],
+[
+-8464.0,
+8464.0
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-23527.043170189936,
+9554.392586144324
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-6421.091215579161,
+20393.74185806932
+],
+[
+-8464.0,
+8464.0
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-9554.392586144324,
+23527.043170189936
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-6421.091215579161,
+20393.74185806932
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-9554.392586144324,
+23527.043170189936
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-20393.74185806932,
+6421.091215579161
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-23527.043170189936,
+9554.392586144324
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-8272.0,
+8128.0
+],
+[
+-8200.0,
+8200.0
+],
+[
+-8200.0,
+8200.0
+]
+],
+"predUEDyn": [
+[
+-7802.719689941407,
+7658.239685058594
+],
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7730.4796875,
+7733.0396875381475
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-11598.703540902672,
+11506.142125107812
+],
+[
+-8200.0,
+8200.0
+],
+[
+-11607.578032909809,
+11497.267633100677
+]
+],
+"predUEDyn": [
+[
+-7778.875739796668,
+7684.044709006939
+],
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7785.818739941141,
+7676.786171364178
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-11598.703540902672,
+11506.142125107812
+],
+[
+-8200.0,
+8200.0
+],
+[
+-11497.267633100677,
+11607.578032909809
+]
+],
+"predUEDyn": [
+[
+-7776.914665993061,
+7686.0057828105455
+],
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7675.1406350588595,
+7787.464276246459
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 10.13,
+"planWorld": [
+[
+-8272.0,
+8128.0
+],
+[
+-11552.422833005243,
+11552.422833005243
+],
+[
+-11552.422833005243,
+11552.422833005243
+]
+],
+"predUEDyn": [
+[
+-7802.719689941407,
+7658.239685058594
+],
+[
+-7730.4796875,
+7732.440761303607
+],
+[
+-7730.4796875,
+7732.1252238053185
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 10.13,
+"planWorld": [
+[
+-8272.0,
+8128.0
+],
+[
+-11552.422833005243,
+11552.422833005243
+],
+[
+-11552.422833005243,
+11552.422833005243
+]
+],
+"predUEDyn": [
+[
+-7802.719689941407,
+7658.239685058594
+],
+[
+-7732.440761303607,
+7730.4796875
+],
+[
+-7730.4796875,
+7732.1252238053185
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-16544.0,
+16256.0
+],
+[
+-16400.0,
+16400.0
+],
+[
+-16400.0,
+16400.0
+]
+],
+"predUEDyn": [
+[
+-15605.439379882813,
+15316.479370117188
+],
+[
+-15460.959375,
+15460.959375
+],
+[
+-15460.959375,
+15466.079375076295
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-23197.407081805344,
+23012.284250215624
+],
+[
+-16400.0,
+16400.0
+],
+[
+-23215.156065819618,
+22994.535266201354
+]
+],
+"predUEDyn": [
+[
+-15557.751479593337,
+15368.089418013878
+],
+[
+-15460.959375,
+15460.959375
+],
+[
+-15571.637479882282,
+15353.572342728356
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-23197.407081805344,
+23012.284250215624
+],
+[
+-16400.0,
+16400.0
+],
+[
+-22994.535266201354,
+23215.156065819618
+]
+],
+"predUEDyn": [
+[
+-15553.829331986122,
+15372.011565621091
+],
+[
+-15460.959375,
+15460.959375
+],
+[
+-15350.281270117719,
+15574.928552492918
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 10.13,
+"planWorld": [
+[
+-16544.0,
+16256.0
+],
+[
+-23104.845666010486,
+23104.845666010486
+],
+[
+-23104.845666010486,
+23104.845666010486
+]
+],
+"predUEDyn": [
+[
+-15605.439379882813,
+15316.479370117188
+],
+[
+-15460.959375,
+15464.881522607215
+],
+[
+-15460.959375,
+15464.250447610637
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 10.13,
+"planWorld": [
+[
+-16544.0,
+16256.0
+],
+[
+-23104.845666010486,
+23104.845666010486
+],
+[
+-23104.845666010486,
+23104.845666010486
+]
+],
+"predUEDyn": [
+[
+-15605.439379882813,
+15316.479370117188
+],
+[
+-15464.881522607215,
+15460.959375
+],
+[
+-15460.959375,
+15464.250447610637
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-8136.0,
+8136.0
+],
+[
+-8136.0,
+8136.0
+],
+[
+-8240.0,
+7728.0
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-11149.711448833146,
+11541.926203710063
+],
+[
+-8136.0,
+8136.0
+],
+[
+-11529.10749303309,
+11200.00023687358
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-11541.926203710063,
+11149.711448833146
+],
+[
+-8136.0,
+8136.0
+],
+[
+-11529.10749303309,
+11200.00023687358
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.2,
+"planWorld": [
+[
+-8136.0,
+8136.0
+],
+[
+-11541.926203710063,
+11149.711448833146
+],
+[
+-11529.10749303309,
+11200.00023687358
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.2,
+"planWorld": [
+[
+-8136.0,
+8136.0
+],
+[
+-11149.711448833146,
+11541.926203710063
+],
+[
+-11529.10749303309,
+11200.00023687358
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-16272.0,
+16272.0
+],
+[
+-16272.0,
+16272.0
+],
+[
+-16480.0,
+15456.0
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-22299.422897666293,
+23083.852407420127
+],
+[
+-16272.0,
+16272.0
+],
+[
+-23058.21498606618,
+22400.00047374716
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-23083.852407420127,
+22299.422897666293
+],
+[
+-16272.0,
+16272.0
+],
+[
+-23058.21498606618,
+22400.00047374716
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.2,
+"planWorld": [
+[
+-16272.0,
+16272.0
+],
+[
+-23083.852407420127,
+22299.422897666293
+],
+[
+-23058.21498606618,
+22400.00047374716
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.2,
+"planWorld": [
+[
+-16272.0,
+16272.0
+],
+[
+-22299.422897666293,
+23083.852407420127
+],
+[
+-23058.21498606618,
+22400.00047374716
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-8096.0,
+8096.0
+],
+[
+-8096.0,
+8096.0
+],
+[
+-8208.0,
+7696.0
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-11099.486522265877,
+11491.701277142794
+],
+[
+-8096.0,
+8096.0
+],
+[
+-11477.89651179836,
+11148.789255638852
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-11491.701277142794,
+11099.486522265877
+],
+[
+-8096.0,
+8096.0
+],
+[
+-11477.89651179836,
+11148.789255638852
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.2,
+"planWorld": [
+[
+-8096.0,
+8096.0
+],
+[
+-11491.701277142794,
+11099.486522265877
+],
+[
+-11477.89651179836,
+11148.789255638852
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.2,
+"planWorld": [
+[
+-8096.0,
+8096.0
+],
+[
+-11099.486522265877,
+11491.701277142794
+],
+[
+-11477.89651179836,
+11148.789255638852
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-16192.0,
+16192.0
+],
+[
+-16192.0,
+16192.0
+],
+[
+-16416.0,
+15392.0
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-22198.973044531755,
+22983.40255428559
+],
+[
+-16192.0,
+16192.0
+],
+[
+-22955.79302359672,
+22297.578511277705
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.2,
+"planWorld": [
+[
+-22983.40255428559,
+22198.973044531755
+],
+[
+-16192.0,
+16192.0
+],
+[
+-22955.79302359672,
+22297.578511277705
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.2,
+"planWorld": [
+[
+-16192.0,
+16192.0
+],
+[
+-22983.40255428559,
+22198.973044531755
+],
+[
+-22955.79302359672,
+22297.578511277705
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.2,
+"planWorld": [
+[
+-16192.0,
+16192.0
+],
+[
+-22198.973044531755,
+22983.40255428559
+],
+[
+-22955.79302359672,
+22297.578511277705
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-8024.0,
+8024.0
+],
+[
+-8024.0,
+8024.0
+],
+[
+-8128.0,
+7624.0
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-10998.05061446388,
+11384.137013795846
+],
+[
+-8024.0,
+8024.0
+],
+[
+-11371.318303118871,
+11047.353347836855
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-11384.137013795846,
+10998.05061446388
+],
+[
+-8024.0,
+8024.0
+],
+[
+-11371.318303118871,
+11047.353347836855
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.28,
+"planWorld": [
+[
+-8024.0,
+8024.0
+],
+[
+-11384.137013795846,
+10998.05061446388
+],
+[
+-11371.318303118871,
+11047.353347836855
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.28,
+"planWorld": [
+[
+-8024.0,
+8024.0
+],
+[
+-10998.05061446388,
+11384.137013795846
+],
+[
+-11371.318303118871,
+11047.353347836855
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-16048.0,
+16048.0
+],
+[
+-16048.0,
+16048.0
+],
+[
+-16256.0,
+15248.0
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-21996.10122892776,
+22768.27402759169
+],
+[
+-16048.0,
+16048.0
+],
+[
+-22742.636606237742,
+22094.70669567371
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-22768.27402759169,
+21996.10122892776
+],
+[
+-16048.0,
+16048.0
+],
+[
+-22742.636606237742,
+22094.70669567371
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.28,
+"planWorld": [
+[
+-16048.0,
+16048.0
+],
+[
+-22768.27402759169,
+21996.10122892776
+],
+[
+-22742.636606237742,
+22094.70669567371
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.28,
+"planWorld": [
+[
+-16048.0,
+16048.0
+],
+[
+-21996.10122892776,
+22768.27402759169
+],
+[
+-22742.636606237742,
+22094.70669567371
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-8048.0,
+8048.0
+],
+[
+-8048.0,
+8048.0
+],
+[
+-8160.0,
+7648.0
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-11031.862583731212,
+11424.07733860813
+],
+[
+-8048.0,
+8048.0
+],
+[
+-11410.272573263697,
+11081.165317104187
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-11424.07733860813,
+11031.862583731212
+],
+[
+-8048.0,
+8048.0
+],
+[
+-11410.272573263697,
+11081.165317104187
+]
+],
+"predUEDyn": [
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-7680.0,
+7680.0
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.28,
+"planWorld": [
+[
+-8048.0,
+8048.0
+],
+[
+-11424.07733860813,
+11031.862583731212
+],
+[
+-11410.272573263697,
+11081.165317104187
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.28,
+"planWorld": [
+[
+-8048.0,
+8048.0
+],
+[
+-11031.862583731212,
+11424.07733860813
+],
+[
+-11410.272573263697,
+11081.165317104187
+]
+],
+"predUEDyn": [
+[
+-7680.0,
+7680.0
+],
+[
+-7930.535099832833,
+7930.535099832833
+],
+[
+-8188.800015163422,
+7680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-16096.0,
+16096.0
+],
+[
+-16096.0,
+16096.0
+],
+[
+-16320.0,
+15296.0
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-22063.725167462424,
+22848.15467721626
+],
+[
+-16096.0,
+16096.0
+],
+[
+-22820.545146527395,
+22162.330634208374
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 4.28,
+"planWorld": [
+[
+-22848.15467721626,
+22063.725167462424
+],
+[
+-16096.0,
+16096.0
+],
+[
+-22820.545146527395,
+22162.330634208374
+]
+],
+"predUEDyn": [
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15360.0,
+15360.0
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 4.28,
+"planWorld": [
+[
+-16096.0,
+16096.0
+],
+[
+-22848.15467721626,
+22063.725167462424
+],
+[
+-22820.545146527395,
+22162.330634208374
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 4.28,
+"planWorld": [
+[
+-16096.0,
+16096.0
+],
+[
+-22063.725167462424,
+22848.15467721626
+],
+[
+-22820.545146527395,
+22162.330634208374
+]
+],
+"predUEDyn": [
+[
+-15360.0,
+15360.0
+],
+[
+-15610.535099832834,
+15610.535099832834
+],
+[
+-15868.800015163422,
+15360.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-4232.0,
+4232.0
+],
+[
+-640.0,
+9760.0
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-3916.2398437500005,
+13036.239805603032
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-10196.87092903466,
+3210.5456077895806
+],
+[
+-4232.0,
+4232.0
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-11763.521585094968,
+4777.196293072162
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-3210.5456077895806,
+10196.87092903466
+],
+[
+-4232.0,
+4232.0
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-4777.196293072162,
+11763.521585094968
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-3210.5456077895806,
+10196.87092903466
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-4777.196293072162,
+11763.521585094968
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-10196.87092903466,
+3210.5456077895806
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-11763.521585094968,
+4777.196293072162
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-8464.0,
+8464.0
+],
+[
+-1280.0,
+19520.0
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-7832.479687500001,
+26072.479611206065
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-20393.74185806932,
+6421.091215579161
+],
+[
+-8464.0,
+8464.0
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-23527.043170189936,
+9554.392586144324
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-6421.091215579161,
+20393.74185806932
+],
+[
+-8464.0,
+8464.0
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-9554.392586144324,
+23527.043170189936
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-6421.091215579161,
+20393.74185806932
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-9554.392586144324,
+23527.043170189936
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-20393.74185806932,
+6421.091215579161
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-23527.043170189936,
+9554.392586144324
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-8992.0,
+8992.0
+],
+[
+-8992.0,
+8992.0
+],
+[
+-8608.0,
+10408.0
+]
+],
+"predUEDyn": [
+[
+-8480.0,
+8480.0
+],
+[
+-8480.0,
+8480.0
+],
+[
+-8080.0,
+10160.00001907349
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 0.8,
+"pitch": 50,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-13752.936750283685,
+12374.056752669525
+],
+[
+-8992.0,
+8992.0
+],
+[
+-12421.387376707582,
+13578.405074143353
+]
+],
+"predUEDyn": [
+[
+-9766.954679051023,
+8173.582222752409
+],
+[
+-8480.0,
+8480.0
+],
+[
+-8222.884956125385,
+9559.883196533588
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 0.8,
+"pitch": -50,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-12374.056752669525,
+13752.936750283685
+],
+[
+-8992.0,
+8992.0
+],
+[
+-12421.387376707582,
+13578.405074143353
+]
+],
+"predUEDyn": [
+[
+-8173.582222752409,
+9766.954679051023
+],
+[
+-8480.0,
+8480.0
+],
+[
+-8222.884956125385,
+9559.883196533588
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 50,
+"life": 10.13,
+"planWorld": [
+[
+-8992.0,
+8992.0
+],
+[
+-12374.056752669525,
+13752.936750283685
+],
+[
+-12421.387376707582,
+13578.405074143353
+]
+],
+"predUEDyn": [
+[
+-8480.0,
+8480.0
+],
+[
+-8173.582222752409,
+9766.954679051023
+],
+[
+-8222.884956125385,
+9559.883196533588
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": -50,
+"life": 10.13,
+"planWorld": [
+[
+-8992.0,
+8992.0
+],
+[
+-13752.936750283685,
+12374.056752669525
+],
+[
+-12421.387376707582,
+13578.405074143353
+]
+],
+"predUEDyn": [
+[
+-8480.0,
+8480.0
+],
+[
+-9766.954679051023,
+8173.582222752409
+],
+[
+-8222.884956125385,
+9559.883196533588
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-17984.0,
+17984.0
+],
+[
+-17984.0,
+17984.0
+],
+[
+-17216.0,
+20816.0
+]
+],
+"predUEDyn": [
+[
+-16960.0,
+16960.0
+],
+[
+-16960.0,
+16960.0
+],
+[
+-16160.0,
+20320.00003814698
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 1.6,
+"pitch": 50,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-27505.87350056737,
+24748.11350533905
+],
+[
+-17984.0,
+17984.0
+],
+[
+-24842.774753415164,
+27156.810148286706
+]
+],
+"predUEDyn": [
+[
+-19533.909358102046,
+16347.164445504817
+],
+[
+-16960.0,
+16960.0
+],
+[
+-16445.76991225077,
+19119.766393067177
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 1.6,
+"pitch": -50,
+"roll": 0,
+"life": 10.13,
+"planWorld": [
+[
+-24748.11350533905,
+27505.87350056737
+],
+[
+-17984.0,
+17984.0
+],
+[
+-24842.774753415164,
+27156.810148286706
+]
+],
+"predUEDyn": [
+[
+-16347.164445504817,
+19533.909358102046
+],
+[
+-16960.0,
+16960.0
+],
+[
+-16445.76991225077,
+19119.766393067177
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 50,
+"life": 10.13,
+"planWorld": [
+[
+-17984.0,
+17984.0
+],
+[
+-24748.11350533905,
+27505.87350056737
+],
+[
+-24842.774753415164,
+27156.810148286706
+]
+],
+"predUEDyn": [
+[
+-16960.0,
+16960.0
+],
+[
+-16347.164445504817,
+19533.909358102046
+],
+[
+-16445.76991225077,
+19119.766393067177
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_FanSilver_01_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -50,
+"life": 10.13,
+"planWorld": [
+[
+-17984.0,
+17984.0
+],
+[
+-27505.87350056737,
+24748.11350533905
+],
+[
+-24842.774753415164,
+27156.810148286706
+]
+],
+"predUEDyn": [
+[
+-16960.0,
+16960.0
+],
+[
+-19533.909358102046,
+16347.164445504817
+],
+[
+-16445.76991225077,
+19119.766393067177
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Combo_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 6.2,
+"planWorld": [
+[
+-7968.0,
+7968.0
+],
+[
+-7968.0,
+7968.0
+],
+[
+-7968.0,
+7968.0
+]
+],
+"predUEDyn": [
+[
+-10240.00015258789,
+10240.00015258789
+],
+[
+-10240.00015258789,
+10240.00015258789
+],
+[
+-10240.00015258789,
+10240.00015258789
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Combo_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 6.2,
+"planWorld": [
+[
+-15936.0,
+15936.0
+],
+[
+-15936.0,
+15936.0
+],
+[
+-15936.0,
+15936.0
+]
+],
+"predUEDyn": [
+[
+-20480.00030517578,
+20480.00030517578
+],
+[
+-20480.00030517578,
+20480.00030517578
+],
+[
+-20480.00030517578,
+20480.00030517578
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 8.6,
+"planWorld": [
+[
+-1032.0,
+9840.0
+],
+[
+-6760.0,
+5264.0
+],
+[
+-6712.0,
+968.0
+]
+],
+"predUEDyn": [
+[
+-1097.7272724636546,
+9951.332960854565
+],
+[
+-6787.0353301099,
+5272.708107160306
+],
+[
+-6978.792423070556,
+797.7272724636546
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 8.6,
+"planWorld": [
+[
+-2064.0,
+19680.0
+],
+[
+-13520.0,
+10528.0
+],
+[
+-13424.0,
+1936.0
+]
+],
+"predUEDyn": [
+[
+-2075.454544927309,
+16241.223646352766
+],
+[
+-11178.347437161301,
+8755.423880441953
+],
+[
+-8477.23666245176,
+1595.4545449273091
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_SilverChry_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.7,
+"planWorld": [
+[
+-6712.0,
+6712.0
+],
+[
+-6712.0,
+6712.0
+],
+[
+-6712.0,
+6712.0
+]
+],
+"predUEDyn": [
+[
+-7840.0,
+7840.0
+],
+[
+-7840.0,
+7840.0
+],
+[
+-7840.0,
+7840.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_SilverChry_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.7,
+"planWorld": [
+[
+-13424.0,
+13424.0
+],
+[
+-13424.0,
+13424.0
+],
+[
+-13424.0,
+13424.0
+]
+],
+"predUEDyn": [
+[
+-15680.0,
+15680.0
+],
+[
+-15680.0,
+15680.0
+],
+[
+-15680.0,
+15680.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Crackle_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 5.07,
+"planWorld": [
+[
+-8288.0,
+8288.0
+],
+[
+-8288.0,
+8288.0
+],
+[
+-8288.0,
+8288.0
+]
+],
+"predUEDyn": [
+[
+-10649.567968750001,
+10649.567968750001
+],
+[
+-10649.567968750001,
+10649.567968750001
+],
+[
+-10649.567968750001,
+10649.567968750001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Crackle_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 5.07,
+"planWorld": [
+[
+-16576.0,
+16576.0
+],
+[
+-16576.0,
+16576.0
+],
+[
+-16576.0,
+16576.0
+]
+],
+"predUEDyn": [
+[
+-21299.135937500003,
+21299.135937500003
+],
+[
+-21299.135937500003,
+21299.135937500003
+],
+[
+-21299.135937500003,
+21299.135937500003
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Lime_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 6.33,
+"planWorld": [
+[
+-6544.0,
+6544.0
+],
+[
+-6544.0,
+6544.0
+],
+[
+-6544.0,
+6544.0
+]
+],
+"predUEDyn": [
+[
+-8409.0640625,
+8409.0640625
+],
+[
+-8409.0640625,
+8409.0640625
+],
+[
+-8409.0640625,
+8409.0640625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Lime_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 6.33,
+"planWorld": [
+[
+-13088.0,
+13088.0
+],
+[
+-13088.0,
+13088.0
+],
+[
+-13088.0,
+13088.0
+]
+],
+"predUEDyn": [
+[
+-16818.128125,
+16818.128125
+],
+[
+-16818.128125,
+16818.128125
+],
+[
+-16818.128125,
+16818.128125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Glitter_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 5.8,
+"planWorld": [
+[
+-6232.0,
+6232.0
+],
+[
+-6232.0,
+6232.0
+],
+[
+-6232.0,
+6232.0
+]
+],
+"predUEDyn": [
+[
+-7431.63203125,
+7431.63203125
+],
+[
+-7431.63203125,
+7431.63203125
+],
+[
+-7431.63203125,
+7431.63203125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Glitter_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 5.8,
+"planWorld": [
+[
+-12464.0,
+12464.0
+],
+[
+-12464.0,
+12464.0
+],
+[
+-12464.0,
+12464.0
+]
+],
+"predUEDyn": [
+[
+-14863.2640625,
+14863.2640625
+],
+[
+-14863.2640625,
+14863.2640625
+],
+[
+-14863.2640625,
+14863.2640625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Strobe_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-6536.0,
+6536.0
+],
+[
+-6536.0,
+6536.0
+],
+[
+-6760.0,
+6760.0
+]
+],
+"predUEDyn": [
+[
+-8400.0,
+8400.0
+],
+[
+-8400.0,
+8400.0
+],
+[
+-8600.0,
+8600.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Strobe_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-13072.0,
+13072.0
+],
+[
+-13072.0,
+13072.0
+],
+[
+-13520.0,
+13520.0
+]
+],
+"predUEDyn": [
+[
+-16800.0,
+16800.0
+],
+[
+-16800.0,
+16800.0
+],
+[
+-17120.0,
+17120.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LimeStar_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.63,
+"planWorld": [
+[
+-20264.0,
+20264.0
+],
+[
+-20264.0,
+20264.0
+],
+[
+-20264.0,
+20264.0
+]
+],
+"predUEDyn": [
+[
+-24287.840625,
+24287.840625
+],
+[
+-24287.840625,
+24287.840625
+],
+[
+-24287.840625,
+24287.840625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LimeStar_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.63,
+"planWorld": [
+[
+-40528.0,
+40528.0
+],
+[
+-40528.0,
+40528.0
+],
+[
+-40528.0,
+40528.0
+]
+],
+"predUEDyn": [
+[
+-48575.68125,
+48575.68125
+],
+[
+-48575.68125,
+48575.68125
+],
+[
+-48575.68125,
+48575.68125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldRay_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 10.17,
+"planWorld": [
+[
+-17040.0,
+17040.0
+],
+[
+-17040.0,
+17040.0
+],
+[
+-17040.0,
+17040.0
+]
+],
+"predUEDyn": [
+[
+-21906.0,
+21906.0
+],
+[
+-21906.0,
+21906.0
+],
+[
+-21906.0,
+21906.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldRay_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 10.17,
+"planWorld": [
+[
+-34080.0,
+34080.0
+],
+[
+-34080.0,
+34080.0
+],
+[
+-34080.0,
+34080.0
+]
+],
+"predUEDyn": [
+[
+-43812.0,
+43812.0
+],
+[
+-43812.0,
+43812.0
+],
+[
+-43812.0,
+43812.0
+]
+]
+},
+{
+"name": "P_EFX_FireWork_PrismWheels_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.5,
+"planWorld": [
+[
+-9648.0,
+9648.0
+],
+[
+-9648.0,
+9648.0
+],
+[
+-10920.0,
+9472.0
+]
+],
+"predUEDyn": [
+[
+-9748.799877166748,
+9748.799877166748
+],
+[
+-9748.799877166748,
+9748.799877166748
+],
+[
+-10968.687627053023,
+9748.799877166748
+]
+]
+},
+{
+"name": "P_EFX_FireWork_PrismWheels_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.5,
+"planWorld": [
+[
+-19296.0,
+19296.0
+],
+[
+-19296.0,
+19296.0
+],
+[
+-21840.0,
+18944.0
+]
+],
+"predUEDyn": [
+[
+-19497.599754333496,
+19497.599754333496
+],
+[
+-19497.599754333496,
+19497.599754333496
+],
+[
+-20717.48750421977,
+19497.599754333496
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldSpark_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.0,
+"planWorld": [
+[
+-10088.0,
+10088.0
+],
+[
+-10088.0,
+10088.0
+],
+[
+-10088.0,
+10088.0
+]
+],
+"predUEDyn": [
+[
+-12519.69609375,
+12519.69609375
+],
+[
+-12519.69609375,
+12519.69609375
+],
+[
+-12519.69609375,
+12519.69609375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldSpark_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.0,
+"planWorld": [
+[
+-20176.0,
+20176.0
+],
+[
+-20176.0,
+20176.0
+],
+[
+-20176.0,
+20176.0
+]
+],
+"predUEDyn": [
+[
+-25039.3921875,
+25039.3921875
+],
+[
+-25039.3921875,
+25039.3921875
+],
+[
+-25039.3921875,
+25039.3921875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldCoreLime_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 8.73,
+"planWorld": [
+[
+-10336.0,
+10336.0
+],
+[
+-10336.0,
+10336.0
+],
+[
+-10336.0,
+10336.0
+]
+],
+"predUEDyn": [
+[
+-12920.25625,
+12920.25625
+],
+[
+-12920.25625,
+12920.25625
+],
+[
+-12920.25625,
+12920.25625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldCoreLime_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 8.73,
+"planWorld": [
+[
+-20672.0,
+20672.0
+],
+[
+-20672.0,
+20672.0
+],
+[
+-20672.0,
+20672.0
+]
+],
+"predUEDyn": [
+[
+-25840.5125,
+25840.5125
+],
+[
+-25840.5125,
+25840.5125
+],
+[
+-25840.5125,
+25840.5125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldRayChry_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.63,
+"planWorld": [
+[
+-15136.0,
+15136.0
+],
+[
+-15136.0,
+15136.0
+],
+[
+-15136.0,
+15136.0
+]
+],
+"predUEDyn": [
+[
+-18853.3046875,
+18853.3046875
+],
+[
+-18853.3046875,
+18853.3046875
+],
+[
+-18853.3046875,
+18853.3046875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldRayChry_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.63,
+"planWorld": [
+[
+-30272.0,
+30272.0
+],
+[
+-30272.0,
+30272.0
+],
+[
+-30272.0,
+30272.0
+]
+],
+"predUEDyn": [
+[
+-37706.609375,
+37706.609375
+],
+[
+-37706.609375,
+37706.609375
+],
+[
+-37706.609375,
+37706.609375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LimeCoreDelay_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 6.33,
+"planWorld": [
+[
+-19672.0,
+19672.0
+],
+[
+-19672.0,
+19672.0
+],
+[
+-19672.0,
+19672.0
+]
+],
+"predUEDyn": [
+[
+-24071.440625000003,
+24071.440625000003
+],
+[
+-24071.440625000003,
+24071.440625000003
+],
+[
+-24071.440625000003,
+24071.440625000003
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LimeCoreDelay_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 6.33,
+"planWorld": [
+[
+-39344.0,
+39344.0
+],
+[
+-39344.0,
+39344.0
+],
+[
+-39344.0,
+39344.0
+]
+],
+"predUEDyn": [
+[
+-48142.881250000006,
+48142.881250000006
+],
+[
+-48142.881250000006,
+48142.881250000006
+],
+[
+-48142.881250000006,
+48142.881250000006
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldKamuro_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 10.7,
+"planWorld": [
+[
+-30792.0,
+30792.0
+],
+[
+-30792.0,
+30792.0
+],
+[
+-32152.0,
+30856.0
+]
+],
+"predUEDyn": [
+[
+-33343.44140625,
+33343.44140625
+],
+[
+-33343.44140625,
+33343.44140625
+],
+[
+-34640.65785443634,
+33343.44140625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldKamuro_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 10.7,
+"planWorld": [
+[
+-61584.0,
+61584.0
+],
+[
+-61584.0,
+61584.0
+],
+[
+-64304.0,
+61712.0
+]
+],
+"predUEDyn": [
+[
+-66686.8828125,
+66686.8828125
+],
+[
+-66686.8828125,
+66686.8828125
+],
+[
+-67984.09926068634,
+66686.8828125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_SilverStrobeChry_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 5.56,
+"planWorld": [
+[
+-22456.0,
+22424.0
+],
+[
+-22408.0,
+22408.0
+],
+[
+-23656.0,
+22464.0
+]
+],
+"predUEDyn": [
+[
+-28843.918606215375,
+28815.746180471186
+],
+[
+-28800.0,
+28800.0
+],
+[
+-29993.149327680403,
+28800.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_SilverStrobeChry_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 5.56,
+"planWorld": [
+[
+-44912.0,
+44848.0
+],
+[
+-44816.0,
+44816.0
+],
+[
+-47312.0,
+44928.0
+]
+],
+"predUEDyn": [
+[
+-57698.5208519287,
+57600.0
+],
+[
+-57600.0,
+57600.0
+],
+[
+-58832.31814122037,
+57600.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_L_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 20.0,
+"planWorld": [
+[
+-14936.0,
+14888.0
+],
+[
+-14912.0,
+14912.0
+],
+[
+-4768.0,
+36648.0
+]
+],
+"predUEDyn": [
+[
+-27089.975625610354,
+27038.455624389648
+],
+[
+-27064.215625,
+27064.215625
+],
+[
+-13813.046875,
+41219.23834320269
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_L_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 20.0,
+"planWorld": [
+[
+-29872.0,
+29776.0
+],
+[
+-29824.0,
+29824.0
+],
+[
+-9536.0,
+73296.0
+]
+],
+"predUEDyn": [
+[
+-54179.95125122071,
+54076.911248779295
+],
+[
+-54128.43125,
+54128.43125
+],
+[
+-27626.09375,
+81306.80077819825
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_M_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 13.07,
+"planWorld": [
+[
+-9408.0,
+9312.0
+],
+[
+-9360.0,
+9360.0
+],
+[
+-3712.0,
+23976.0
+]
+],
+"predUEDyn": [
+[
+-17022.015499877933,
+16928.55950012207
+],
+[
+-16975.287500000002,
+16975.287500000002
+],
+[
+-8416.159375000001,
+28046.085700737618
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_M_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 13.07,
+"planWorld": [
+[
+-18816.0,
+18624.0
+],
+[
+-18720.0,
+18720.0
+],
+[
+-7424.0,
+47952.0
+]
+],
+"predUEDyn": [
+[
+-34044.030999755865,
+33857.11900024414
+],
+[
+-33950.575000000004,
+33950.575000000004
+],
+[
+-16832.318750000002,
+51464.072360307764
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 7.8,
+"planWorld": [
+[
+-6608.0,
+6608.0
+],
+[
+-6608.0,
+6608.0
+],
+[
+-3080.0,
+17728.0
+]
+],
+"predUEDyn": [
+[
+-11989.975781250001,
+11989.975781250001
+],
+[
+-11989.975781250001,
+11989.975781250001
+],
+[
+-5925.889174213587,
+21036.247786175285
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_S_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 7.8,
+"planWorld": [
+[
+-13216.0,
+13216.0
+],
+[
+-13216.0,
+13216.0
+],
+[
+-6160.0,
+35456.0
+]
+],
+"predUEDyn": [
+[
+-23979.951562500002,
+23979.951562500002
+],
+[
+-23979.951562500002,
+23979.951562500002
+],
+[
+-11851.778348427173,
+36591.51651008912
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_XS_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 6.26,
+"planWorld": [
+[
+-7224.0,
+7176.0
+],
+[
+-7200.0,
+7200.0
+],
+[
+-7168.0,
+7288.0
+]
+],
+"predUEDyn": [
+[
+-6823.583999633789,
+6776.416000366211
+],
+[
+-6800.0,
+6800.0
+],
+[
+-6800.0,
+6881.748799014283
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_XS_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 6.26,
+"planWorld": [
+[
+-14448.0,
+14352.0
+],
+[
+-14400.0,
+14400.0
+],
+[
+-14336.0,
+14576.0
+]
+],
+"predUEDyn": [
+[
+-13647.167999267578,
+13552.832000732422
+],
+[
+-13600.0,
+13600.0
+],
+[
+-13600.0,
+13763.497598028565
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 0.65,
+"pitch": 0,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-2320.5,
+2320.5
+],
+[
+-2320.5,
+2320.5
+],
+[
+-338.0,
+4368.0
+]
+],
+"predUEDyn": [
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-2222.330322265625,
+6252.129651393001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 0.65,
+"pitch": 25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-3949.083787101921,
+2245.9321922869026
+],
+[
+-2320.5,
+2320.5
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-5073.666817993922,
+3370.6000303542737
+],
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 0.65,
+"pitch": -25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-2245.9321922869026,
+3949.083787101921
+],
+[
+-2320.5,
+2320.5
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-3370.6000303542737,
+5073.666817993922
+],
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 0.65,
+"pitch": 0,
+"roll": 25,
+"life": 5.64,
+"planWorld": [
+[
+-2320.5,
+2320.5
+],
+[
+-2245.9321922869026,
+3949.083787101921
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-3370.6000303542737,
+5073.666817993922
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 0.65,
+"pitch": 0,
+"roll": -25,
+"life": 5.64,
+"planWorld": [
+[
+-2320.5,
+2320.5
+],
+[
+-3949.083787101921,
+2245.9321922869026
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-5073.666817993922,
+3370.6000303542737
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-5712.0,
+5712.0
+],
+[
+-5712.0,
+5712.0
+],
+[
+-832.0,
+10752.0
+]
+],
+"predUEDyn": [
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-5470.351562500001,
+15389.857603428927
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 1.6,
+"pitch": 25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-9720.821629789345,
+5528.448473321606
+],
+[
+-5712.0,
+5712.0
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-12489.0260135235,
+8296.861613179752
+],
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 1.6,
+"pitch": -25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-5528.448473321606,
+9720.821629789345
+],
+[
+-5712.0,
+5712.0
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-8296.861613179752,
+12489.0260135235
+],
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": 25,
+"life": 5.64,
+"planWorld": [
+[
+-5712.0,
+5712.0
+],
+[
+-5528.448473321606,
+9720.821629789345
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-8296.861613179752,
+12489.0260135235
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"system": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"s": 1.6,
+"pitch": 0,
+"roll": -25,
+"life": 5.64,
+"planWorld": [
+[
+-5712.0,
+5712.0
+],
+[
+-9720.821629789345,
+5528.448473321606
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-12489.0260135235,
+8296.861613179752
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleGold_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.98,
+"planWorld": [
+[
+-2672.0,
+2672.0
+],
+[
+-2672.0,
+2672.0
+],
+[
+-2672.0,
+2672.0
+]
+],
+"predUEDyn": [
+[
+-3246.9759765625004,
+3246.9759765625004
+],
+[
+-3246.9759765625004,
+3246.9759765625004
+],
+[
+-3246.9759765625004,
+3246.9759765625004
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleGold_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.98,
+"planWorld": [
+[
+-5344.0,
+5344.0
+],
+[
+-5344.0,
+5344.0
+],
+[
+-5344.0,
+5344.0
+]
+],
+"predUEDyn": [
+[
+-6493.951953125001,
+6493.951953125001
+],
+[
+-6493.951953125001,
+6493.951953125001
+],
+[
+-6493.951953125001,
+6493.951953125001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleSilver_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.5,
+"planWorld": [
+[
+-2256.0,
+2256.0
+],
+[
+-2256.0,
+2256.0
+],
+[
+-2256.0,
+2256.0
+]
+],
+"predUEDyn": [
+[
+-2660.4400390625,
+2660.4400390625
+],
+[
+-2660.4400390625,
+2660.4400390625
+],
+[
+-2660.4400390625,
+2660.4400390625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleSilver_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.5,
+"planWorld": [
+[
+-4512.0,
+4512.0
+],
+[
+-4512.0,
+4512.0
+],
+[
+-4512.0,
+4512.0
+]
+],
+"predUEDyn": [
+[
+-5320.880078125,
+5320.880078125
+],
+[
+-5320.880078125,
+5320.880078125
+],
+[
+-5320.880078125,
+5320.880078125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCrackle_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-2128.0,
+2128.0
+],
+[
+-2128.0,
+2128.0
+],
+[
+-2128.0,
+2128.0
+]
+],
+"predUEDyn": [
+[
+-2655.6000000000004,
+2655.6000000000004
+],
+[
+-2655.6000000000004,
+2655.6000000000004
+],
+[
+-2655.6000000000004,
+2655.6000000000004
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCrackle_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-4256.0,
+4256.0
+],
+[
+-4256.0,
+4256.0
+],
+[
+-4256.0,
+4256.0
+]
+],
+"predUEDyn": [
+[
+-5311.200000000001,
+5311.200000000001
+],
+[
+-5311.200000000001,
+5311.200000000001
+],
+[
+-5311.200000000001,
+5311.200000000001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCombo_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 3.29,
+"planWorld": [
+[
+-2000.0,
+2000.0
+],
+[
+-2000.0,
+2000.0
+],
+[
+-2000.0,
+2000.0
+]
+],
+"predUEDyn": [
+[
+-2484.7439453125003,
+2484.7439453125003
+],
+[
+-2484.7439453125003,
+2484.7439453125003
+],
+[
+-2484.7439453125003,
+2484.7439453125003
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_LittleCombo_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 3.29,
+"planWorld": [
+[
+-4000.0,
+4000.0
+],
+[
+-4000.0,
+4000.0
+],
+[
+-4000.0,
+4000.0
+]
+],
+"predUEDyn": [
+[
+-4969.487890625001,
+4969.487890625001
+],
+[
+-4969.487890625001,
+4969.487890625001
+],
+[
+-4969.487890625001,
+4969.487890625001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-4232.0,
+4232.0
+],
+[
+-640.0,
+9760.0
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-3916.2398437500005,
+13036.239805603032
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 0.8,
+"pitch": 50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-10196.87092903466,
+3210.5456077895806
+],
+[
+-4232.0,
+4232.0
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-11763.521585094968,
+4777.196293072162
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 0.8,
+"pitch": -50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-3210.5456077895806,
+10196.87092903466
+],
+[
+-4232.0,
+4232.0
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-4777.196293072162,
+11763.521585094968
+],
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 50.0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-3210.5456077895806,
+10196.87092903466
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-4777.196293072162,
+11763.521585094968
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 0.8,
+"pitch": 0,
+"roll": -50.0,
+"life": 9.77,
+"planWorld": [
+[
+-4232.0,
+4232.0
+],
+[
+-10196.87092903466,
+3210.5456077895806
+],
+[
+-3653.2841534789004,
+9515.50715382014
+]
+],
+"predUEDyn": [
+[
+-7596.239843750001,
+7596.239843750001
+],
+[
+-11763.521585094968,
+4777.196293072162
+],
+[
+-5230.781440103536,
+11093.004415924375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-8464.0,
+8464.0
+],
+[
+-1280.0,
+19520.0
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-7832.479687500001,
+26072.479611206065
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 1.6,
+"pitch": 50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-20393.74185806932,
+6421.091215579161
+],
+[
+-8464.0,
+8464.0
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-23527.043170189936,
+9554.392586144324
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 1.6,
+"pitch": -50.0,
+"roll": 0,
+"life": 9.77,
+"planWorld": [
+[
+-6421.091215579161,
+20393.74185806932
+],
+[
+-8464.0,
+8464.0
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-9554.392586144324,
+23527.043170189936
+],
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 50.0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-6421.091215579161,
+20393.74185806932
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-9554.392586144324,
+23527.043170189936
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Comet_Layers_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+"s": 1.6,
+"pitch": 0,
+"roll": -50.0,
+"life": 9.77,
+"planWorld": [
+[
+-8464.0,
+8464.0
+],
+[
+-20393.74185806932,
+6421.091215579161
+],
+[
+-7306.568306957801,
+19031.01430764028
+]
+],
+"predUEDyn": [
+[
+-15192.479687500001,
+15192.479687500001
+],
+[
+-23527.043170189936,
+9554.392586144324
+],
+[
+-10461.562880207071,
+22186.00883184875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 10.33,
+"planWorld": [
+[
+-8200.0,
+8200.0
+],
+[
+-8200.0,
+8200.0
+],
+[
+-8200.0,
+8200.0
+]
+],
+"predUEDyn": [
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7730.4796875,
+7733.199687576294
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 0.8,
+"pitch": 50,
+"roll": 0,
+"life": 10.33,
+"planWorld": [
+[
+-11552.422833005243,
+11552.422833005243
+],
+[
+-8200.0,
+8200.0
+],
+[
+-11552.422833005243,
+11552.422833005243
+]
+],
+"predUEDyn": [
+[
+-7732.563328443728,
+7730.4796875
+],
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7730.4796875,
+7732.228069847389
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 0.8,
+"pitch": -50,
+"roll": 0,
+"life": 10.33,
+"planWorld": [
+[
+-11552.422833005243,
+11552.422833005243
+],
+[
+-8200.0,
+8200.0
+],
+[
+-11552.422833005243,
+11552.422833005243
+]
+],
+"predUEDyn": [
+[
+-7730.4796875,
+7732.563328443728
+],
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7730.4796875,
+7732.228069847389
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 50,
+"life": 10.33,
+"planWorld": [
+[
+-8200.0,
+8200.0
+],
+[
+-11552.422833005243,
+11552.422833005243
+],
+[
+-11552.422833005243,
+11552.422833005243
+]
+],
+"predUEDyn": [
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7730.4796875,
+7732.563328443728
+],
+[
+-7730.4796875,
+7732.228069847389
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 0.8,
+"pitch": 0,
+"roll": -50,
+"life": 10.33,
+"planWorld": [
+[
+-8200.0,
+8200.0
+],
+[
+-11552.422833005243,
+11552.422833005243
+],
+[
+-11552.422833005243,
+11552.422833005243
+]
+],
+"predUEDyn": [
+[
+-7730.4796875,
+7730.4796875
+],
+[
+-7732.563328443728,
+7730.4796875
+],
+[
+-7730.4796875,
+7732.228069847389
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 10.33,
+"planWorld": [
+[
+-16400.0,
+16400.0
+],
+[
+-16400.0,
+16400.0
+],
+[
+-16400.0,
+16400.0
+]
+],
+"predUEDyn": [
+[
+-15460.959375,
+15460.959375
+],
+[
+-15460.959375,
+15460.959375
+],
+[
+-15460.959375,
+15466.399375152589
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 1.6,
+"pitch": 50,
+"roll": 0,
+"life": 10.33,
+"planWorld": [
+[
+-23104.845666010486,
+23104.845666010486
+],
+[
+-16400.0,
+16400.0
+],
+[
+-23104.845666010486,
+23104.845666010486
+]
+],
+"predUEDyn": [
+[
+-15465.126656887456,
+15460.959375
+],
+[
+-15460.959375,
+15460.959375
+],
+[
+-15460.959375,
+15464.456139694777
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 1.6,
+"pitch": -50,
+"roll": 0,
+"life": 10.33,
+"planWorld": [
+[
+-23104.845666010486,
+23104.845666010486
+],
+[
+-16400.0,
+16400.0
+],
+[
+-23104.845666010486,
+23104.845666010486
+]
+],
+"predUEDyn": [
+[
+-15460.959375,
+15465.126656887456
+],
+[
+-15460.959375,
+15460.959375
+],
+[
+-15460.959375,
+15464.456139694777
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 50,
+"life": 10.33,
+"planWorld": [
+[
+-16400.0,
+16400.0
+],
+[
+-23104.845666010486,
+23104.845666010486
+],
+[
+-23104.845666010486,
+23104.845666010486
+]
+],
+"predUEDyn": [
+[
+-15460.959375,
+15460.959375
+],
+[
+-15460.959375,
+15465.126656887456
+],
+[
+-15460.959375,
+15464.456139694777
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+"s": 1.6,
+"pitch": 0,
+"roll": -50,
+"life": 10.33,
+"planWorld": [
+[
+-16400.0,
+16400.0
+],
+[
+-23104.845666010486,
+23104.845666010486
+],
+[
+-23104.845666010486,
+23104.845666010486
+]
+],
+"predUEDyn": [
+[
+-15460.959375,
+15460.959375
+],
+[
+-15465.126656887456,
+15460.959375
+],
+[
+-15460.959375,
+15464.456139694777
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_SilverChry_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-6512.0,
+6512.0
+],
+[
+-6512.0,
+6512.0
+],
+[
+-6512.0,
+6512.0
+]
+],
+"predUEDyn": [
+[
+-7601.128125,
+7601.128125
+],
+[
+-7601.128125,
+7601.128125
+],
+[
+-7601.128125,
+7601.128125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_SilverChry_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-13024.0,
+13024.0
+],
+[
+-13024.0,
+13024.0
+],
+[
+-13024.0,
+13024.0
+]
+],
+"predUEDyn": [
+[
+-15202.25625,
+15202.25625
+],
+[
+-15202.25625,
+15202.25625
+],
+[
+-15202.25625,
+15202.25625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Crackle_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 5.07,
+"planWorld": [
+[
+-8288.0,
+8288.0
+],
+[
+-8288.0,
+8288.0
+],
+[
+-8288.0,
+8288.0
+]
+],
+"predUEDyn": [
+[
+-10649.567968750001,
+10649.567968750001
+],
+[
+-10649.567968750001,
+10649.567968750001
+],
+[
+-10649.567968750001,
+10649.567968750001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Crackle_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 5.07,
+"planWorld": [
+[
+-16576.0,
+16576.0
+],
+[
+-16576.0,
+16576.0
+],
+[
+-16576.0,
+16576.0
+]
+],
+"predUEDyn": [
+[
+-21299.135937500003,
+21299.135937500003
+],
+[
+-21299.135937500003,
+21299.135937500003
+],
+[
+-21299.135937500003,
+21299.135937500003
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Glitter_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 6.0,
+"planWorld": [
+[
+-6232.0,
+6232.0
+],
+[
+-6232.0,
+6232.0
+],
+[
+-6232.0,
+6232.0
+]
+],
+"predUEDyn": [
+[
+-7431.63203125,
+7431.63203125
+],
+[
+-7431.63203125,
+7431.63203125
+],
+[
+-7431.63203125,
+7431.63203125
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Glitter_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 6.0,
+"planWorld": [
+[
+-12464.0,
+12464.0
+],
+[
+-12464.0,
+12464.0
+],
+[
+-12464.0,
+12464.0
+]
+],
+"predUEDyn": [
+[
+-14863.2640625,
+14863.2640625
+],
+[
+-14863.2640625,
+14863.2640625
+],
+[
+-14863.2640625,
+14863.2640625
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Strobe_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-6536.0,
+6536.0
+],
+[
+-6536.0,
+6536.0
+],
+[
+-6760.0,
+6760.0
+]
+],
+"predUEDyn": [
+[
+-8400.0,
+8400.0
+],
+[
+-8400.0,
+8400.0
+],
+[
+-8600.0,
+8600.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_Strobe_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 4.6,
+"planWorld": [
+[
+-13072.0,
+13072.0
+],
+[
+-13072.0,
+13072.0
+],
+[
+-13520.0,
+13520.0
+]
+],
+"predUEDyn": [
+[
+-16800.0,
+16800.0
+],
+[
+-16800.0,
+16800.0
+],
+[
+-17120.0,
+17120.0
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldRayChry_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.67,
+"planWorld": [
+[
+-15136.0,
+15136.0
+],
+[
+-15136.0,
+15136.0
+],
+[
+-15136.0,
+15136.0
+]
+],
+"predUEDyn": [
+[
+-18853.3046875,
+18853.3046875
+],
+[
+-18853.3046875,
+18853.3046875
+],
+[
+-18853.3046875,
+18853.3046875
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_GoldRayChry_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.67,
+"planWorld": [
+[
+-30272.0,
+30272.0
+],
+[
+-30272.0,
+30272.0
+],
+[
+-30272.0,
+30272.0
+]
+],
+"predUEDyn": [
+[
+-37706.609375,
+37706.609375
+],
+[
+-37706.609375,
+37706.609375
+],
+[
+-37706.609375,
+37706.609375
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_YonshakuKamuro_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 16.77,
+"planWorld": [
+[
+-17856.0,
+17856.0
+],
+[
+-17856.0,
+17856.0
+],
+[
+-17856.0,
+17856.0
+]
+],
+"predUEDyn": [
+[
+-22947.631250000002,
+22947.631250000002
+],
+[
+-22947.631250000002,
+22947.631250000002
+],
+[
+-22947.631250000002,
+22947.631250000002
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_YonshakuKamuro_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 16.77,
+"planWorld": [
+[
+-35712.0,
+35712.0
+],
+[
+-35712.0,
+35712.0
+],
+[
+-35712.0,
+35712.0
+]
+],
+"predUEDyn": [
+[
+-45895.262500000004,
+45895.262500000004
+],
+[
+-45895.262500000004,
+45895.262500000004
+],
+[
+-45895.262500000004,
+45895.262500000004
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_L_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 20.0,
+"planWorld": [
+[
+-15232.0,
+15128.0
+],
+[
+-15184.0,
+15184.0
+],
+[
+-2192.0,
+28568.0
+]
+],
+"predUEDyn": [
+[
+-27614.05574951172,
+27511.03175048828
+],
+[
+-27562.54375,
+27562.54375
+],
+[
+-14555.6796875,
+40933.17743381348
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_L_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 20.0,
+"planWorld": [
+[
+-30464.0,
+30256.0
+],
+[
+-30368.0,
+30368.0
+],
+[
+-4384.0,
+57136.0
+]
+],
+"predUEDyn": [
+[
+-55228.11149902344,
+55022.06350097656
+],
+[
+-55125.0875,
+55125.0875
+],
+[
+-29111.359375,
+81866.35486762696
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_M_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 14.0,
+"planWorld": [
+[
+-9712.0,
+9616.0
+],
+[
+-9664.0,
+9664.0
+],
+[
+-1392.0,
+18176.0
+]
+],
+"predUEDyn": [
+[
+-17587.92018737793,
+17494.46418762207
+],
+[
+-17541.1921875,
+17541.1921875
+],
+[
+-9259.43984375,
+26044.872537231444
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_M_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 14.0,
+"planWorld": [
+[
+-19424.0,
+19232.0
+],
+[
+-19328.0,
+19328.0
+],
+[
+-2784.0,
+36352.0
+]
+],
+"predUEDyn": [
+[
+-35175.84037475586,
+34988.92837524414
+],
+[
+-35082.384375,
+35082.384375
+],
+[
+-18518.8796875,
+52089.74507446289
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 9.6,
+"planWorld": [
+[
+-6928.0,
+6888.0
+],
+[
+-6904.0,
+6904.0
+],
+[
+-992.0,
+12992.0
+]
+],
+"predUEDyn": [
+[
+-12558.039936828614,
+12513.831938171386
+],
+[
+-12535.9359375,
+12535.9359375
+],
+[
+-6611.528125,
+18611.946954266357
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_S_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 9.6,
+"planWorld": [
+[
+-13856.0,
+13776.0
+],
+[
+-13808.0,
+13808.0
+],
+[
+-1984.0,
+25984.0
+]
+],
+"predUEDyn": [
+[
+-25116.07987365723,
+25027.663876342773
+],
+[
+-25071.871875,
+25071.871875
+],
+[
+-13223.05625,
+37223.893908532715
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_XS_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+"s": 0.8,
+"pitch": 0,
+"roll": 0,
+"life": 6.23,
+"planWorld": [
+[
+-7264.0,
+7216.0
+],
+[
+-7240.0,
+7240.0
+],
+[
+-7200.0,
+7320.0
+]
+],
+"predUEDyn": [
+[
+-6860.32774963379,
+6813.1597503662115
+],
+[
+-6836.743750000001,
+6836.743750000001
+],
+[
+-6836.743750000001,
+6917.576443027368
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_XS_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 6.23,
+"planWorld": [
+[
+-14528.0,
+14432.0
+],
+[
+-14480.0,
+14480.0
+],
+[
+-14400.0,
+14640.0
+]
+],
+"predUEDyn": [
+[
+-13720.65549926758,
+13626.319500732423
+],
+[
+-13673.487500000001,
+13673.487500000001
+],
+[
+-13673.487500000001,
+13835.152886054737
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 0.65,
+"pitch": 0,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-2320.5,
+2320.5
+],
+[
+-2320.5,
+2320.5
+],
+[
+-338.0,
+4368.0
+]
+],
+"predUEDyn": [
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-2222.330322265625,
+6252.129651393001
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 0.65,
+"pitch": 25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-3949.083787101921,
+2245.9321922869026
+],
+[
+-2320.5,
+2320.5
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-5073.666817993922,
+3370.6000303542737
+],
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 0.65,
+"pitch": -25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-2245.9321922869026,
+3949.083787101921
+],
+[
+-2320.5,
+2320.5
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-3370.6000303542737,
+5073.666817993922
+],
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 0.65,
+"pitch": 0,
+"roll": 25,
+"life": 5.64,
+"planWorld": [
+[
+-2320.5,
+2320.5
+],
+[
+-2245.9321922869026,
+3949.083787101921
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-3370.6000303542737,
+5073.666817993922
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 0.65,
+"pitch": 0,
+"roll": -25,
+"life": 5.64,
+"planWorld": [
+[
+-2320.5,
+2320.5
+],
+[
+-3949.083787101921,
+2245.9321922869026
+],
+[
+-1287.0177083876808,
+4939.438090145381
+]
+],
+"predUEDyn": [
+[
+-4211.0833984375,
+4211.0833984375
+],
+[
+-5073.666817993922,
+3370.6000303542737
+],
+[
+-2408.660999009838,
+6060.899511193047
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-5712.0,
+5712.0
+],
+[
+-5712.0,
+5712.0
+],
+[
+-832.0,
+10752.0
+]
+],
+"predUEDyn": [
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-5470.351562500001,
+15389.857603428927
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 1.6,
+"pitch": 25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-9720.821629789345,
+5528.448473321606
+],
+[
+-5712.0,
+5712.0
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-12489.0260135235,
+8296.861613179752
+],
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 1.6,
+"pitch": -25,
+"roll": 0,
+"life": 5.64,
+"planWorld": [
+[
+-5528.448473321606,
+9720.821629789345
+],
+[
+-5712.0,
+5712.0
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-8296.861613179752,
+12489.0260135235
+],
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 1.6,
+"pitch": 0,
+"roll": 25,
+"life": 5.64,
+"planWorld": [
+[
+-5712.0,
+5712.0
+],
+[
+-5528.448473321606,
+9720.821629789345
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-8296.861613179752,
+12489.0260135235
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+},
+{
+"name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+"system": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+"s": 1.6,
+"pitch": 0,
+"roll": -25,
+"life": 5.64,
+"planWorld": [
+[
+-5712.0,
+5712.0
+],
+[
+-9720.821629789345,
+5528.448473321606
+],
+[
+-3168.043589877368,
+12158.616837280937
+]
+],
+"predUEDyn": [
+[
+-10365.743750000001,
+10365.743750000001
+],
+[
+-12489.0260135235,
+8296.861613179752
+],
+[
+-5929.011689870371,
+14919.137258321347
+]
+]
+}
+]

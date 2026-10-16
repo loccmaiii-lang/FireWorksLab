@@ -1,0 +1,943 @@
+{
+ "at": "2026-10-16 05:25:59",
+ "backupDir": "analysis/local/输出/资源规范统一_20261016_备份/（本机，gitignore）",
+ "contentRoot": "E:/loc_ma5/DFMEditor/DFM/Content/",
+ "files": [
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.uasset",
+   "bytes": 366109,
+   "sha256": "e8282104199f7aff9250b22e74d60a4b505cd1f38c2d558a9cd0b21f00e617e5",
+   "mtime": "2026-10-14 22:55:02",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.uasset",
+   "bytes": 345308,
+   "sha256": "079e5f80a25d6aa56a47e02bcb33eab86a0553d322a196e5c0bc68ed06ec59f9",
+   "mtime": "2026-10-14 22:43:27",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.uasset",
+   "bytes": 558486,
+   "sha256": "7780a1ba662aee8d5bb2c333b9a01c3164199164d6afad5b5fe3e6861c538b90",
+   "mtime": "2026-10-14 22:37:43",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.uasset",
+   "bytes": 321767,
+   "sha256": "9a746f617f7d4a522315ba5e2da20a7ceb879908c09b3e4a0b78e4dcde9d7bbe",
+   "mtime": "2026-10-14 22:36:05",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.uasset",
+   "bytes": 248330,
+   "sha256": "7bdd3665ba5044e9b1af1999dcc103a73ae9cfbd6625cdf18f796f0bf2a3ce48",
+   "mtime": "2026-10-14 16:47:14",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.uasset",
+   "bytes": 244377,
+   "sha256": "e3977c56eb4365b8a27f03e4e1e18c4db02c671ac0a37bb0a9be72fa86e4665a",
+   "mtime": "2026-10-14 10:37:06",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.uasset",
+   "bytes": 471533,
+   "sha256": "28261c19f50ba574c3c9d10455139a1f0d4e225973c015a04d646ffa185819ae",
+   "mtime": "2026-09-21 22:32:21",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.uasset",
+   "bytes": 472371,
+   "sha256": "2ad9ec1f12cc4aa0c91b9ebf3606cf6c60514cb9931d82323ab74a5933beace8",
+   "mtime": "2026-09-21 22:32:20",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.uasset",
+   "bytes": 472532,
+   "sha256": "7e0c4ebdd0d5f90bca765ddee0d2da9591bafcf6588fe5dd820eda6ccd1ef1dd",
+   "mtime": "2026-10-06 21:33:47",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.uasset",
+   "bytes": 472430,
+   "sha256": "fbcaef4d549457b8b6717ddcfa26f2b3821851e7db25e2cd718d2eae26c0077e",
+   "mtime": "2026-09-21 22:32:17",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.uasset",
+   "bytes": 298112,
+   "sha256": "81428a87860e3d8c91ceb2a4698b1595751998099a9cd874cf179688c57b6b21",
+   "mtime": "2026-10-16 01:36:13",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.uasset",
+   "bytes": 322180,
+   "sha256": "065a9e374a135d33d4f1cd693c32052ece5f76f30a8476febb96fe5194d9c115",
+   "mtime": "2026-10-16 01:37:13",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.uasset",
+   "bytes": 497561,
+   "sha256": "32d56c62eb8f9a5e563e851c0de3a408ecbe8da77ef7a6c5c2872584967ea63d",
+   "mtime": "2026-10-09 21:09:27",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.uasset",
+   "bytes": 326119,
+   "sha256": "a35a839700b33436d50a4841279ed939372a45497b0fe4e495ae569d077f368b",
+   "mtime": "2026-09-21 22:36:34",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.uasset",
+   "bytes": 452549,
+   "sha256": "e7a8973dcd3072abbb7cc105c9a42d3cd674311f627adde49744a9b342d9dc10",
+   "mtime": "2026-10-14 22:14:22",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.uasset",
+   "bytes": 442973,
+   "sha256": "1806414a516264b44ceb8e796d91a477a1e5ebf3cd579e6d2bc8ae939b4f477c",
+   "mtime": "2026-10-14 23:54:24",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.uasset",
+   "bytes": 493486,
+   "sha256": "7345f59e699aa24d698239570ea301f19699cf5d304138db017e19f1a6a06a6d",
+   "mtime": "2026-10-14 22:49:53",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.uasset",
+   "bytes": 422434,
+   "sha256": "88cba70b5306abcbf3d2a5a5313f75fbf1fbe07025d1f3c59dda7611a95500f4",
+   "mtime": "2026-10-14 22:15:04",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.uasset",
+   "bytes": 366048,
+   "sha256": "d511745092bfa03a5c255e0c58ff9ab8d64efaafb02185806f434cf3917c6a0f",
+   "mtime": "2026-10-14 17:32:15",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.uasset",
+   "bytes": 465614,
+   "sha256": "5c589d3c530377052f79ecebac5f89cf053d63db651b580a1b9c600e3b8f1adb",
+   "mtime": "2026-10-15 00:56:19",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.uasset",
+   "bytes": 640289,
+   "sha256": "f4ecd9c1c5c0d65c129ec568dc4aa045a5e0176d553cc739e51c100603b65f23",
+   "mtime": "2026-10-14 23:28:23",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.uasset",
+   "bytes": 552096,
+   "sha256": "319082f02e84c2dc008955097948825a348ef834b980b1f8282550f6156475ee",
+   "mtime": "2026-10-15 01:08:53",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.uasset",
+   "bytes": 503937,
+   "sha256": "5429a8f010d6a9b3d78e6a91d6b8e4b1c29b55525f40906a9ae1f9cd490f6e60",
+   "mtime": "2026-10-14 23:28:32",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.uasset",
+   "bytes": 550664,
+   "sha256": "3498f247442c8b61d024d202bb85e12532abe1bbd153c39fc4e7fced73536c60",
+   "mtime": "2026-10-15 00:54:15",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.uasset",
+   "bytes": 508495,
+   "sha256": "8f90b49aa4438feea282ccf33a8eaee0a374a84073f1fd0a6a7a3ac3848f39d5",
+   "mtime": "2026-10-14 23:27:14",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.uasset",
+   "bytes": 510323,
+   "sha256": "3b23f44c9f3859825698a7f01923a9efdacf74b747bb61035564304b75fce923",
+   "mtime": "2026-10-15 00:53:44",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.uasset",
+   "bytes": 565096,
+   "sha256": "2a91aa1516454450c4bc6431154067320642d1933f0dcbfbfcd5874b9792975f",
+   "mtime": "2026-10-15 00:55:28",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.uasset",
+   "bytes": 629149,
+   "sha256": "6743321d0d5d1aeed3f1b89834913b9aed173140c473ca7cbe08cd298ab64354",
+   "mtime": "2026-10-15 00:55:03",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.uasset",
+   "bytes": 472949,
+   "sha256": "55098135045c259d4a670e7e16e695713f8e86ad36fb41a4b092d4f329f85934",
+   "mtime": "2026-10-14 22:18:36",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.uasset",
+   "bytes": 436697,
+   "sha256": "7facfb022b21929de3dbb8f26a5c1bccf41eb120f47060630123f9c5ec38edce",
+   "mtime": "2026-10-14 22:18:51",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.uasset",
+   "bytes": 436080,
+   "sha256": "f1dc1bb15bc88115b35c4ea14abadd6be69f5b204490503e36e9e6efb14dfb99",
+   "mtime": "2026-10-14 22:19:48",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.uasset",
+   "bytes": 253040,
+   "sha256": "87229ec2d4e5b9c833604a20eaa19c05c79519f239c6725b41189fba4ef43b3b",
+   "mtime": "2026-10-14 19:14:15",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "file": "Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.uasset",
+   "bytes": 243064,
+   "sha256": "e7bbb141a6680582c8c2ccf30f3fbd9b0251240952854840e81863baacc98291",
+   "mtime": "2026-10-14 20:34:57",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.uasset",
+   "bytes": 21552,
+   "sha256": "fa1abd6c3b6c6327510e6e2e2d2da5497151c28ff8bd1a339b185634feb8198a",
+   "mtime": "2026-10-14 22:53:50",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.uasset",
+   "bytes": 36939,
+   "sha256": "3d1a62c2a073feae7ce7a7e873154e9ea8eb6dd1959f1c5618b1f85ddc5c91f6",
+   "mtime": "2026-10-14 21:54:24",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.uasset",
+   "bytes": 38825,
+   "sha256": "358538868cb3bffbf7fd97d4efa79fd830b5ea04a12e67cb7f16c5d0d29c6828",
+   "mtime": "2026-10-14 22:29:01",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.uasset",
+   "bytes": 21232,
+   "sha256": "28d61344b1503784ddfe0a37cce016356c33ceb73aefc389ace442088de99e56",
+   "mtime": "2026-10-14 22:34:25",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.uasset",
+   "bytes": 210000,
+   "sha256": "b9f45f41241bbbe3f4288616d1d237d5bf4da769671ba6237498ec440ca24215",
+   "mtime": "2026-10-14 15:38:08",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.uasset",
+   "bytes": 246311,
+   "sha256": "3212319aa25186c6a6657aeb6f030087c5e799116aafdf4d02b0547964d126e2",
+   "mtime": "2026-10-14 10:32:55",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.uasset",
+   "bytes": 27081,
+   "sha256": "6ee45be6069d06c2c2586ef984dec7307be5644218339d72b8782806a6900cc1",
+   "mtime": "2026-10-15 00:12:25",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.uasset",
+   "bytes": 41725,
+   "sha256": "260690e62cbf053e08341c30b1e5c5e6190733b7beac99a6b4201ee91b026a7d",
+   "mtime": "2026-10-14 23:55:24",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.uasset",
+   "bytes": 21522,
+   "sha256": "b300646c763157f4c67f7a51dd11bb50dd2e67c67345a38e1138093ca0492dc0",
+   "mtime": "2026-10-14 21:52:03",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.uasset",
+   "bytes": 281277,
+   "sha256": "c346a9b0f47cf62bb00a877b05c8a4bbab9df9d9ea6c52264827195195558d20",
+   "mtime": "2026-10-14 17:34:54",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.uasset",
+   "bytes": 21559,
+   "sha256": "04ab70869173c5d735dc99eba1c7029de6a2d97068314ccd2956e9e297173843",
+   "mtime": "2026-10-14 23:24:50",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.uasset",
+   "bytes": 39334,
+   "sha256": "f2d0e8ce5e48bb8f4ccc8652fa5f8ff9a6f044bee0daeedcc969f8a5dd74229e",
+   "mtime": "2026-10-14 23:49:23",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.uasset",
+   "bytes": 216860,
+   "sha256": "fb5c902504d9cfec5b0a673bca05e03d58db541bb4bd77b437051fb79fe79c7b",
+   "mtime": "2026-10-13 18:54:05",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.uasset",
+   "bytes": 254693,
+   "sha256": "6f0f3e6613c44d7439119be6d6db1b8ea24d49fccf06980c2a7b3f0b51204239",
+   "mtime": "2026-10-13 18:54:08",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.uasset",
+   "bytes": 202256,
+   "sha256": "679fc68bf2621a2d8d505170a1780fea935eb90ef951952aa04e3f7be153f2ed",
+   "mtime": "2026-10-13 18:54:10",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.uasset",
+   "bytes": 29542,
+   "sha256": "d3d49313e79c3dcfaf042f29ec2d575d85a1f0111bc3ebb8b2dcac6204e4d451",
+   "mtime": "2026-10-14 19:04:09",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "file": "Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.uasset",
+   "bytes": 25083,
+   "sha256": "59b4ed1571f83ed2436b970948853f5e4d57c4cb5bc37ca958a81d7d83d47bb9",
+   "mtime": "2026-10-14 20:35:10",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Comet_Layers_L1_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Comet_Layers_L1_Full_01.uasset",
+   "bytes": 87017,
+   "sha256": "5c236a08a863809e7baf3c93aa1b910b96ab38f41316887c888a8fc29178c669",
+   "mtime": "2026-10-14 11:30:38",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Crackle_Main_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Crackle_Main_01.uasset",
+   "bytes": 119013,
+   "sha256": "cbb2fbface80ce71e58935d831668756c3c37ac7b92bf6f96c40f71ea21badca",
+   "mtime": "2026-10-14 23:55:03",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Glitter_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Glitter_01.uasset",
+   "bytes": 92265,
+   "sha256": "65aaa149c40ba5858a367cbd8fd177e35a12c181308024745f1d506b968a97ec",
+   "mtime": "2026-10-14 21:51:55",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_GoldRayChry_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_GoldRayChry_01.uasset",
+   "bytes": 97262,
+   "sha256": "fb9f00825d70e7027529d64aeb27efa71c3e6ef12dc676fb32314dd44aa68b06",
+   "mtime": "2026-10-14 23:24:40",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCombo_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCombo_01.uasset",
+   "bytes": 91641,
+   "sha256": "2dd7e7dc2e478aaef78f42ae51588cd11f4cf6200c025c3c24401277bf82917d",
+   "mtime": "2026-10-14 22:34:17",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCrackle_Main_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleCrackle_Main_01.uasset",
+   "bytes": 96548,
+   "sha256": "3e5ac029cdb3a0fdd10b270ae5b6078574af75d28a9ea66aa0a08531122b953f",
+   "mtime": "2026-10-14 22:28:50",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleGold_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleGold_01.uasset",
+   "bytes": 92431,
+   "sha256": "878bdc768cd11070af1ac2b9145da3b2da8baf6b214c4114b7241704419afa33",
+   "mtime": "2026-10-14 22:53:41",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleSilver_GinKamuro_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_LittleSilver_GinKamuro_01.uasset",
+   "bytes": 93058,
+   "sha256": "06fc6ab3988f006d3fa7951fcc1c0f0667b47bcde7727b135d0e2e9b9f1a3529",
+   "mtime": "2026-10-14 21:54:14",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Full_01.uasset",
+   "bytes": 91069,
+   "sha256": "4a3b007f2a0310ca0b5811629fd0cbec04f9db7367210c73047b3af75386af8a",
+   "mtime": "2026-10-13 14:51:26",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_M_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_M_Full_01.uasset",
+   "bytes": 87152,
+   "sha256": "c2f42ebc2df3e7e56dfefbd25e329caf4e44d7ce4676d184e053beed1e151fa6",
+   "mtime": "2026-10-13 14:30:14",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_S_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_S_Full_01.uasset",
+   "bytes": 87151,
+   "sha256": "203be7987c5d0bfc16b481b3e668347d381dce2403785a4055d6d04314d17e33",
+   "mtime": "2026-10-13 14:34:31",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01.uasset",
+   "bytes": 89864,
+   "sha256": "f3c6d88fbfec0e3861b2e939fec3da69862a19c32702e31644b0367851d97ba2",
+   "mtime": "2026-10-14 20:35:02",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_XS_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_XS_Full_01.uasset",
+   "bytes": 92550,
+   "sha256": "7166ad9608161b383ac4ad94d04680b68f01f6392ee6c9b749ebca3e38ef2ed7",
+   "mtime": "2026-10-14 19:03:59",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Silver3_Layers_S_Full_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Silver3_Layers_S_Full_01.uasset",
+   "bytes": 87089,
+   "sha256": "ca57db3b43484512a2865bcbf6f689e8cf88e8b7d946624c71bf05150066356c",
+   "mtime": "2026-10-14 10:24:12",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_SilverChry_GinKamuro_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_SilverChry_GinKamuro_01.uasset",
+   "bytes": 92282,
+   "sha256": "252292666a8805d16dae26befd9a6722295b096cb99f8073d0919fdb06e3491a",
+   "mtime": "2026-10-14 21:56:53",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_Strobe_Strobe_01.uasset",
+   "bytes": 96109,
+   "sha256": "bc5aae55d9a2f35649ae9cb4f5bb17d728414d5c52f4351d2106bf76419e2295",
+   "mtime": "2026-10-14 17:33:44",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_01",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_01.uasset",
+   "bytes": 93232,
+   "sha256": "eae7820358a7ae5e2486a75c5b1ba0f7b5fe545da06eb46577bd6b43d93be16b",
+   "mtime": "2026-10-14 23:48:37",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_02",
+   "file": "Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_YonshakuKamuro_Main_02.uasset",
+   "bytes": 103321,
+   "sha256": "d2ee2412248b597c5256f8873a3a9caa28e4aa91a0f3b5605f07fe8b12747fde",
+   "mtime": "2026-10-14 23:49:13",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Combo_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Combo_01_HD.uasset",
+   "bytes": 86519,
+   "sha256": "e477f686f3273e0b4a31f1cea49ce9397fa6e0e5cf4c4c070a11385b2d2686f5",
+   "mtime": "2026-10-06 17:36:24",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD.uasset",
+   "bytes": 87201,
+   "sha256": "466e0b78c2b1972c35a7d675f2387d619b3609114734505d8a7ad51e94e4c797",
+   "mtime": "2026-10-14 11:30:09",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD.uasset",
+   "bytes": 119326,
+   "sha256": "57bf51ec227c6e89e53b899de42764406fdd9e206ce68fabf2cd5d7b021b9794",
+   "mtime": "2026-10-14 23:54:19",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Central_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Central_01_HD.uasset",
+   "bytes": 89435,
+   "sha256": "4f1fc6e34845f956dea30b729304b0068a32cbebc82ff2564febc8e82feb1189",
+   "mtime": "2026-09-10 23:54:44",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Middle_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Middle_01_HD.uasset",
+   "bytes": 89426,
+   "sha256": "2ff530083e63d0c5ec04e6abacd2307d836388aa49891dcea876f7595f4ead04",
+   "mtime": "2026-09-10 23:54:44",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterLeft_01_HD.uasset",
+   "bytes": 88892,
+   "sha256": "45ab34f0a0e45789b8be3cfab7de1c55389bc5cd9f1d32a5d838958867dc8c92",
+   "mtime": "2026-09-10 23:54:45",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterRight_01_HD.uasset",
+   "bytes": 89096,
+   "sha256": "1ba247bd59bbac1d7cef930496e5efbcaac542b833c39d273d34af671dfac055",
+   "mtime": "2026-09-10 23:54:45",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Glitter_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Glitter_01_HD.uasset",
+   "bytes": 92294,
+   "sha256": "b8809b199c1da3449e4376dc4aa03c78a4b31af4e6f8268f0fcabb57048d91e1",
+   "mtime": "2026-10-14 21:51:21",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD.uasset",
+   "bytes": 92309,
+   "sha256": "4a04542525485700f459e0c9a29511d2681d01a661a50a435b8d08708b9d0a90",
+   "mtime": "2026-10-09 23:28:16",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD.uasset",
+   "bytes": 92822,
+   "sha256": "2ad2ff40702d81f25e8e54da860c3485336e0d7eb2721a62d2e57f9783abf6c9",
+   "mtime": "2026-10-09 23:27:56",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD.uasset",
+   "bytes": 92233,
+   "sha256": "2555f2b62a6ba9f1d5b537ade34e7b285e0feb96c78a110d8b8f48ae3525ae2d",
+   "mtime": "2026-10-09 23:28:35",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD.uasset",
+   "bytes": 92670,
+   "sha256": "206b47ee50fe92e773543184a6dde735d9fb9adddd003f2857b2928179403c31",
+   "mtime": "2026-10-09 23:28:54",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD.uasset",
+   "bytes": 96709,
+   "sha256": "9ac26169748e26f92b8e9b25fbf30f3e6971b754db49057352e958c4fdaefd26",
+   "mtime": "2026-10-14 23:24:00",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_A_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_A_01_HD.uasset",
+   "bytes": 102777,
+   "sha256": "09b65f4d0b5e0fd6b531c7377e62d57a87e94ec63a5e4b9834314640baae41f0",
+   "mtime": "2026-10-07 19:03:06",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_B_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_B_01_HD.uasset",
+   "bytes": 93722,
+   "sha256": "60e0ba0cf470864642df5bcb0941af281d10c12a5d38599687658ae48e3811da",
+   "mtime": "2026-10-07 19:03:06",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L2_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L2_01_HD.uasset",
+   "bytes": 91354,
+   "sha256": "7f16f7857460bbc2ce60b7de99d52ddebe1563c108dcafef98382e0e68f75546",
+   "mtime": "2026-10-14 23:00:19",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L3_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_L3_01_HD.uasset",
+   "bytes": 91992,
+   "sha256": "cb5cdabc8909712993e05e170e3be9bba695d5981dbed3ca11d94121679fcfa5",
+   "mtime": "2026-10-14 23:00:03",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_Main_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldSpark_Main_01_HD.uasset",
+   "bytes": 92547,
+   "sha256": "8c0d6ef3e453fd3ff69b5a3ca3e8df7dfe3881e3d967cec6e212a3db4e0b0f42",
+   "mtime": "2026-10-14 22:59:47",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD.uasset",
+   "bytes": 89592,
+   "sha256": "6757ee9e98aaccd01737c80389006e9a8fd715fec087bb7a4a77c9b49b01af99",
+   "mtime": "2026-10-07 23:32:20",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD.uasset",
+   "bytes": 100949,
+   "sha256": "2441538ff805adcc3c66c1c456cb61204b5ff3270ea377aa010b097b6eb2dc40",
+   "mtime": "2026-10-07 23:32:30",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD.uasset",
+   "bytes": 93107,
+   "sha256": "4a81181e499d7a487659c741bcbd144a1945d0fa69b316eef7b9659e6e9a7891",
+   "mtime": "2026-10-07 23:31:57",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_01_HD.uasset",
+   "bytes": 92347,
+   "sha256": "b3dd7dfcef550afaa2112805aa7cc0df4af379009a7601586bebf030a5329463",
+   "mtime": "2026-10-07 21:42:29",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_02_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_02_HD.uasset",
+   "bytes": 100133,
+   "sha256": "896b7c7d2425daaae9cfd3ef21c0fb21a029d329287794c7462c85dc8fca87ae",
+   "mtime": "2026-10-07 21:42:11",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Tail_01_HD.uasset",
+   "bytes": 92574,
+   "sha256": "0a7c6942f049c7f7bbdd80176dd783d0ece4472b3acf6e234aeaafde9a6a9165",
+   "mtime": "2026-10-07 21:41:53",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Core_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Core_01_HD.uasset",
+   "bytes": 94104,
+   "sha256": "8f206557bb69adc1df5b29327aed3b505125fa5e682b437d82389a5d472ef2ed",
+   "mtime": "2026-10-14 22:45:09",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_01_HD.uasset",
+   "bytes": 92133,
+   "sha256": "bb3c2c1c789138cbbfb0c9199eff0828d552a8ef456959b0973e37b2b9f65926",
+   "mtime": "2026-10-14 22:45:43",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_02_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Glitter_02_HD.uasset",
+   "bytes": 108097,
+   "sha256": "09d34b2776a40a933c121c9a0ee1d10ce92fb267038f30ec0f3a66a8f6656c8d",
+   "mtime": "2026-10-14 22:46:00",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Lead_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Lime_Lead_01_HD.uasset",
+   "bytes": 94619,
+   "sha256": "0f3c60c79be77510ff8261b9e504570004c9cf4c27e7a1074c60e91d6f24e295",
+   "mtime": "2026-10-14 22:45:26",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCombo_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCombo_01_HD.uasset",
+   "bytes": 91834,
+   "sha256": "5c0acf7f8e28cb5cbd2ca3ce1e68587d0a66ab2521ca2c89187cb21af8b69e90",
+   "mtime": "2026-10-14 22:33:43",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCrackle_Main_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleCrackle_Main_01_HD.uasset",
+   "bytes": 96612,
+   "sha256": "e828e341702e4e2544f27019ab1521fa3209079a11d458b13b8f2502573b5c58",
+   "mtime": "2026-10-14 22:28:11",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleGold_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleGold_01_HD.uasset",
+   "bytes": 92485,
+   "sha256": "0c5c55d13d6c1add3fddf8e83a75cb128a13ad889873df3fd4253bc830b925ab",
+   "mtime": "2026-10-14 22:53:06",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD.uasset",
+   "bytes": 92811,
+   "sha256": "a787ea7b26628f366bc87b4ffda54024cff98ae94b017b6ef7b4f77b8c7ecc4f",
+   "mtime": "2026-10-14 21:53:40",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD.uasset",
+   "bytes": 109873,
+   "sha256": "e65cf7414a0211c7969ee678fd4f9772cc2d383933f84c57bd8e95fccce9fbc2",
+   "mtime": "2026-09-12 17:20:54",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD.uasset",
+   "bytes": 96410,
+   "sha256": "90f3eec6a9ec049ad6e1e3fed3c31fa3175f01fcd6653caa7e4912c5a9090d66",
+   "mtime": "2026-09-12 14:57:58",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD.uasset",
+   "bytes": 97085,
+   "sha256": "70b4ec7a5867e8c3dafd744b7a4c68c8fd4b682d9fc3a428429e3c6ec2691df7",
+   "mtime": "2026-09-12 14:57:56",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD.uasset",
+   "bytes": 97338,
+   "sha256": "62849ba66465b6bd3ab7a6a7e0b12ea57604a362739c45d21a9d24d614fbfff8",
+   "mtime": "2026-09-12 14:59:08",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD.uasset",
+   "bytes": 97633,
+   "sha256": "fa3aad0dbad07788b0aa4a37cac57b53275cd5a83af5704f776646938612b333",
+   "mtime": "2026-09-12 14:59:02",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD.uasset",
+   "bytes": 103470,
+   "sha256": "bce0375cd49cfe52685017a910d93f4a6216a7f714370d31e3f92d3dde96fd4b",
+   "mtime": "2026-09-14 11:30:30",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.uasset",
+   "bytes": 91506,
+   "sha256": "6c56706eeb620d59fef05038b759dc1a942fb0e0ef7e71c7f1c21e6139dfefba",
+   "mtime": "2026-10-13 14:50:24",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.uasset",
+   "bytes": 109855,
+   "sha256": "01ba5f0d21176944909dc3bfef8183297dacc933f8c08ad581d8bb38438cc567",
+   "mtime": "2026-10-13 14:50:26",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD.uasset",
+   "bytes": 87184,
+   "sha256": "4fcbb364accbcbb8b7d079b82592bf4100e968625baced8ba1572f7251e4697e",
+   "mtime": "2026-10-13 14:29:17",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD.uasset",
+   "bytes": 87190,
+   "sha256": "ba08a29aa7884d89a8b029be5dd4e338da4fb4327cc6d6e3e8cb9543674fbbdb",
+   "mtime": "2026-10-13 14:29:18",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD.uasset",
+   "bytes": 87184,
+   "sha256": "ab954aac80c4aa56fdc246c30ea9e3d5ba1d8a8f2bd72800870d07fba3fa8f63",
+   "mtime": "2026-10-13 14:33:36",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD.uasset",
+   "bytes": 87190,
+   "sha256": "1b8245d73d9d5cbd91b2308c69ce6a9c21639ac5a5e2b49385e0a939e0fc58a1",
+   "mtime": "2026-10-13 14:33:37",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD.uasset",
+   "bytes": 89845,
+   "sha256": "54e3489f023348afe02dd97605e4afd5848d3c3ab8efa2d4e394fd74d5f3c6fc",
+   "mtime": "2026-10-14 20:34:49",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD.uasset",
+   "bytes": 92355,
+   "sha256": "3ef8ed4bfed66ed150463dcbeb7daf488f8d624972cbdaa4718ef3940985f860",
+   "mtime": "2026-10-14 19:03:44",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD.uasset",
+   "bytes": 87070,
+   "sha256": "24ceaec98c7f14e3bc07cbcd52f171b820e79c7e3777f909482b38a997b8d93d",
+   "mtime": "2026-10-14 10:23:41",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD.uasset",
+   "bytes": 92641,
+   "sha256": "d5078a049214d04dd5382ff460d456d08510f8c806e842bc5935c623f4901181",
+   "mtime": "2026-10-14 22:07:31",
+   "readonly": true
+  },
+  {
+   "package": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+   "file": "Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Strobe_Strobe_01_HD.uasset",
+   "bytes": 96177,
+   "sha256": "7becc2f65419d92127bad7b858f49444eb93b9b892b52558f52589cba012a3ce",
+   "mtime": "2026-10-14 17:34:34",
+   "readonly": true
+  }
+ ]
+}

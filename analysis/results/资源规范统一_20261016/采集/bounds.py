@@ -299,7 +299,7 @@ class EmitterModel:
                     a = iv_add(iv_mul(tuple(F[i]), v), iv_mul(tuple(G[i]), P['aL'][i]))
                     A.append(iv_add(P['p0'][i], a))
             out.append({'t': t, 'A': A, 'F': [tuple(f) for f in F], 'G': [tuple(g) for g in G],
-                        'V': [tuple(v) for v in V], 'r': rad})
+                        'V': [tuple(v) for v in V], 'r': rad, 'sz': max(SX, SY)})
             if s == n:
                 break
             klo, khi = k_at(tau)
