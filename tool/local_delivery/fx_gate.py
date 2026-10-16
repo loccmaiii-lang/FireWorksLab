@@ -220,8 +220,8 @@ def check(path, root=None, source=None):
     exported = json.loads(export_meta.decode('utf-8-sig')) if export_meta else {}
     if exported.get('format') != 'df.firework-export/1':
         exported = {}
-    metadata = document.get('metadata') or exported
-    resource_name = document.get('name') or exported.get('resourceName', '')
+    metadata = (document.get('metadata') or {}) if meta else exported
+    resource_name = document.get('name', '') if meta else exported.get('resourceName', '')
     if source is None:
         source = metadata.get('sourceKey', '')
     reg_bad, info = check_registry(classes, by_asset, load_registry(root), source, resource_name,

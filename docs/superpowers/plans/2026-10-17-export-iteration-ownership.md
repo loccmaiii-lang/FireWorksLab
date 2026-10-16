@@ -23,11 +23,11 @@
 
 **Interfaces:** `packFinalize(files, options)` 保持原返回值，冲突错误携带结构化指纹；`makeZip(files, job)` 在纯归属冲突时调用现有 `askConfirm`；迭代证据跟 ZIP/回执传递，不写当前编辑器状态。
 
-- [ ] 编写失败检查：跨来源同名未确认仍拒绝、明确确认后可导出、取消不发布；标准错误不能通过确认绕过。
-- [ ] 验证原实现失败：`node tool/local_delivery/test_export_iteration.cjs`。
-- [ ] 实现最小规则：`approved.some(x => x.file === file && x.before === oldSHA && x.after === newSHA && x.sourceKey === oldSource && x.resource === oldName)`；来源相同可直接更新。
-- [ ] 检查图不作资产冲突；授权后历史/来源变化必须重新拒绝；授权不能跨导出复用；Python 入口验证相同旧/新指纹。
-- [ ] 运行新增检查、既有导出快照/命名/失败状态回归、Python gate 回归；用真实旧回执与金曜菊-B存档验证来源判断，不发布包。
+- [x] 编写失败检查：跨来源同名未确认仍拒绝、明确确认后可导出、取消不发布；标准错误不能通过确认绕过。
+- [x] 验证原实现失败：`node tool/local_delivery/test_export_iteration.cjs`。
+- [x] 实现最小规则：`approved.some(x => x.file === file && x.before === oldSHA && x.after === newSHA && x.sourceKey === oldSource && x.resource === oldName)`；来源相同可直接更新。
+- [x] 检查图不作资产冲突；授权后历史/来源变化必须重新拒绝；授权不能跨导出复用；Python 入口验证相同旧/新指纹。
+- [x] 运行新增检查、既有导出快照/命名/失败状态回归、Python gate 回归；用真实旧回执与金曜菊-B存档验证来源判断，不发布包。
 
 ### Task 2: 清楚呈现与发布
 
@@ -35,8 +35,8 @@
 
 **Interfaces:** `beginExport(destination, targetName)` 保存当前导出目标；失败状态明确当前失败名与上一次成功名/修订，旧清单继续不可执行。
 
-- [ ] 失败状态回归同时断言本次 GlitterChry、旧 RiseTrail_Hero 和旧修订，重连不能恢复旧清单执行权限。
-- [ ] 提示只在真实跨来源冲突时出现，使用现有对话框和固定主动作；不自动替用户认领旧资源。
-- [ ] 构建原 F 盘入口：`python -B -X utf8 tool/build.py`，记录静态检查和版本。
+- [x] 失败状态回归同时断言本次 GlitterChry、旧 RiseTrail_Hero 和旧修订，重连不能恢复旧清单执行权限。
+- [x] 提示只在真实跨来源冲突时出现，使用现有对话框和固定主动作；不自动替用户认领旧资源。
+- [x] 构建原 F 盘入口：`python -B -X utf8 tool/build.py`，记录静态检查和版本。
 - [ ] 白名单暂存本轮增量；生成仅含本轮修改的可重建成品；通过推送门禁，保留其他本地工作。
-- [ ] 写明完成与未验证边界：CPU/契约验证不冒充用户实页点击或 UE 实测；释放认领。
+- [x] 写明完成与未验证边界：CPU/契约验证不冒充用户实页点击或 UE 实测；释放认领。

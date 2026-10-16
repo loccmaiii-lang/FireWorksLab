@@ -210,6 +210,9 @@ class Gate(unittest.TestCase):
         exported = package / 'workspace-export.json'
         exported.write_text(json.dumps({'format': 'df.firework-export/1', 'resourceName': 'Same', **metadata}), encoding='utf-8')
         self.assertTrue(fx_gate.check(package, root)['ok'])
+        receipt.write_text(json.dumps({'name': 'Same', 'metadata': {}}), encoding='utf-8')
+        self.assertFalse(fx_gate.check(package, root)['ok'], '存在正式回执时，不用ZIP生产记录补造缺失归属')
+        receipt.unlink()
         exported.unlink()
         metadata.pop('iterationOf')
         receipt.write_text(json.dumps({'name': 'Same', 'metadata': metadata}), encoding='utf-8')
