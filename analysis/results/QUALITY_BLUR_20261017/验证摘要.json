@@ -1119,5 +1119,112 @@
     "comet-fade-scene: stale slot0 and old material",
     "comet-current-fade: screenshot bracket reached empty phase",
     "formal-silver-extra-low: screenshot bracket reached empty phase"
-  ]
+  ],
+  "followup": {
+    "dateUTC": "2026-10-16T21:01:21.870517+00:00",
+    "localActiveGPU": "NVIDIA GeForce RTX 5080",
+    "gpuEvidence": "UE启动日志选择D3D12 adapter 0，名称RTX 5080；WMI同时列出Intel Graphics和RTX 5080",
+    "localRHI": "DX12",
+    "localShaderPath": "SM6",
+    "windowsTargetedRHIs": [
+      "PCD3D_SM6",
+      "PCD3D_SM5"
+    ],
+    "sm5SeparateRunStarted": false,
+    "sm5RunPreflight": {
+      "availablePhysicalKiB": 2143340,
+      "availablePhysicalGiB": 2.044,
+      "reason": "当前物理可用约2GiB，判断第二UE会给现有工作增加内存压力，因此未启动；此判断不是引擎固定最低门槛，也没有关闭或重启现有工作"
+    },
+    "viewportAPI": {
+      "route": "/gpcli/observe/viewport",
+      "result": "not_implemented",
+      "message": "Viewport capture requires render thread access"
+    },
+    "existingRampSearch": {
+      "folders": [
+        "/Game/Effects/Common/Texture/Ramp",
+        "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD"
+      ],
+      "inspectedTextures": 64,
+      "eligibleClampCandidates": 6,
+      "identicalColorRowsFound": false,
+      "comparison": [
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R.T_EFX_FireWorks_RiseTrail_L_R",
+          "size": [
+            256,
+            8
+          ],
+          "whole_rgba_sha256": "e422828b7700e4a0c78ebdef27d80644bf7530c83d13cd27d43b457167d14138",
+          "same_color_rows": true,
+          "is_source": true
+        },
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRampColor_011.T_6DLight_EmissiveRampColor_011",
+          "size": [
+            1024,
+            1024
+          ],
+          "whole_rgba_sha256": "17aab2e03f32bff56ae7e1f3a3b4fda4600cc729782a93206772067f71d201c4",
+          "same_color_rows": false,
+          "is_source": false
+        },
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_04.T_6DLight_EmissiveRamp_04",
+          "size": [
+            1024,
+            16
+          ],
+          "whole_rgba_sha256": "ca157d0144ca2cf6af9466f676bc63178cac871c03dc44130224a2f5e5bd2e23",
+          "same_color_rows": false,
+          "is_source": false
+        },
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_05.T_6DLight_EmissiveRamp_05",
+          "size": [
+            1024,
+            16
+          ],
+          "whole_rgba_sha256": "2075bdded2e05c4633cf31a101b9331869995c8c1ace341b646f8360df148908",
+          "same_color_rows": false,
+          "is_source": false
+        },
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_08.T_6DLight_EmissiveRamp_08",
+          "size": [
+            256,
+            16
+          ],
+          "whole_rgba_sha256": "0dcdbef2e8304b357810874c5fc9b8378a3ab843868f1a84be1bef9d2eb43531",
+          "same_color_rows": false,
+          "is_source": false
+        },
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_Emissive_Ramp_06.T_6DLight_Emissive_Ramp_06",
+          "size": [
+            1024,
+            16
+          ],
+          "whole_rgba_sha256": "187b186bb282d42be0b24bb28baaf38fde80b3bdfdfd79bbb1d0f84a7b4cbbb7",
+          "same_color_rows": false,
+          "is_source": false
+        },
+        {
+          "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_Emissive_Ramp_07.T_6DLight_Emissive_Ramp_07",
+          "size": [
+            1024,
+            16
+          ],
+          "whole_rgba_sha256": "a05c92ab9845dad728d8b04fb610df5e6d97705c0ba2089bcee4b36a1bcf0789",
+          "same_color_rows": false,
+          "is_source": false
+        }
+      ]
+    },
+    "sourceAssetsReadbackPassed": true,
+    "actorCleanupAuditPassed": true,
+    "formalRampChanged": false,
+    "newFormalAssetsCreated": false
+  }
 }
