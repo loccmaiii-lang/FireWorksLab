@@ -26,6 +26,7 @@ import argparse, asyncio, json, os, pathlib, shutil, subprocess, sys, tempfile, 
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'analysis' / 'scripts'))
+from browser_runtime import validation_url, verify_validation_source
 
 SRC_PREFIX = ('tool/src/', 'analysis/命名/')
 BUILD_INPUTS = ('tool/src/', 'analysis/命名/', 'tool/design-system/', '更新记录.md', 'spec/尺寸标定.json', 'tool/build.py')
@@ -370,6 +371,7 @@ def hook_in_temp(a, head_sha):
         print(f'… 工作树里有没提交的相关改动 / 推的不是 HEAD：在临时工作副本 {tmp} 里按 {head_sha[:8]} 跑', flush=True)
         args = [sys.executable, os.path.join(tmp, 'analysis', 'scripts', '合入门禁.py'), '--hook', '--inner', '--base', a.base, '--head', 'HEAD', '--budget', str(a.budget), '--jobs', str(a.jobs)]
         if a.out: args += ['--out', os.path.abspath(a.out)]
+        if a.html: args += ['--html', a.html]
         return subprocess.run(args, cwd=tmp).returncode
     finally:
         sh('git', 'worktree', 'remove', '--force', tmp); shutil.rmtree(tmp, ignore_errors=True); sh('git', 'worktree', 'prune')
@@ -459,9 +461,9 @@ def main():
     src = a.all or any(f.startswith(SRC_PREFIX) for f in files)
     bld = a.all or any(f.startswith(BUILD_INPUTS) for f in files)
     want = lambda k, cond: (k in only) if only else cond
-    html = (pathlib.Path(a.html).resolve() if a.html else ROOT / 'tool' / 'FireworkBaker.html').as_uri() + '?fast'
+    html = validation_url(a.html, ROOT / 'tool' / 'FireworkBaker.html')
     if a.compare:
-        old = pathlib.Path(a.compare).resolve().as_uri() + '?fast'
+        old = validation_url(a.compare)
         ids, rows = run_compare(old, html, [x for x in a.ids.split(',') if x])
         print(f'导出对照：{len(ids)} 个条目 / 模板，{len([r for r in rows if r["kind"] == "变了"])} 个变了，{len([r for r in rows if r["kind"] == "出错"])} 个出错', flush=True)
         for r in rows: print(f'  · {r["id"]} {r["kind"]}：' + json.dumps(r['what'], ensure_ascii=False)[:600], flush=True)
@@ -475,6 +477,9 @@ def main():
         print(('✅' if ok else '❌'), item, why, flush=True)
     if want('体检', not a.inner): put('体检', *check_sync())
     if want('构建', bld): put('构建', *check_build(a.inner))
+    if want('契约', src) or want('导出', src) or want('界面', src):
+        try: verify_validation_source(html, ROOT / 'tool' / 'FireworkBaker.html')
+        except Exception as e: print('❌ 测试入口', e, flush=True); sys.exit(2)
     if want('契约', src) or want('导出', src):
         names = {x for x in a.scn.split(',') if x}
         print('… 产物契约 + 导出 JSON（代表效果逐个打开，拨「输出」里每一行）', flush=True)
@@ -495,7 +500,7 @@ def main():
         put('导出', not jbad, '导出拦截、空壳发射器、寿命 / 大小都过' if not jbad else '；'.join(f'{n}：{j}' for n, j in jbad[:8]))
         report.append({'item': '契约明细', 'data': res})
     if want('界面', src):
-        r = sh(sys.executable, 'analysis/scripts/界面状态检查.py', '--only', ','.join(UI_ITEMS))
+        r = sh(sys.executable, 'analysis/scripts/界面状态检查.py', '--only', ','.join(UI_ITEMS), '--html', html)
         lines = [x for x in r.stdout.splitlines() if x.startswith(('✅', '❌'))]
         bad = [x for x in lines if x.startswith('❌')]
         put('界面', r.returncode == 0 and bool(lines), f'{len(lines) - len(bad)}/{len(lines)} 项过' + ('：' + '；'.join(x[:160] for x in bad) if bad else ''))

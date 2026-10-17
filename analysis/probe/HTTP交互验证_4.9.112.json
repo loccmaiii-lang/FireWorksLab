@@ -1,0 +1,40 @@
+{
+  "8025": {
+    "http": 200,
+    "title": "烟花编排工作台",
+    "body": "DF\n烟花编排工作台\nNewYearFireWorks_v01\n已连接 UE\n重新连接\n工作台 v16.0.42 · locmai\n节目\n保存\n交付\n演出 / 编排片段\nPC\n手游\n高配\n中配\n低配\n编排资源\n495 片段\n编排片段\n交付资源\n模板库\n全部区域\n坝顶\n小平台\n91 种花型\nR03 · 金裂星 · 90m\n坝顶 · 2 片段\nR03 · 银冠菊 · 90m\n坝顶 · 8 片段\nR03 · 爆裂星 · 90m\n坝顶 · 5 片段\nR03 · 小青柠 · 90m\n坝顶 · 4 片段\nR03 · 橙辉星 · 90m\n坝顶 · 12 片段\nR03 · 点灭星 · 90m\n坝顶 · 9 片段\nR03 · 绿牡丹 · 150m\n坝顶 · 3 片段\nR03 · 金锦菊 · 150m\n坝顶 · 2 片段\nR03 · 彩千轮 · 150m\n坝顶 · 2 片段\nR03 · 金曜菊 · 150m\n坝顶 · 3 片段\nR03 · 金蕊柠 · 150m\n坝顶 · 4 片段\nR03 · 金芒菊 · 150m\n坝顶 · 4 片段\nR03 · 多重菊 · 150m\n坝顶 · 6 片段\nR03 · 金垂柳 · 230m\n坝顶 · 0 片段\nR03 · 银彩菊 · 230m\n坝顶 · 6 片段\nR03 · 红彗星·单束\n坝顶 · 2 片段\nR03 · 红彗星·五束齐开\n坝顶 · 2 片段\nR03 · 红彗星·九束左扫\n坝顶 · 31 片段\nR03 · 红彗星·九束右扫\n坝顶 · 33 片段\nR03 · 银星·五束窄扇\n坝顶 · 7 片段\nR03 · 银星·十三束宽扇\n坝顶 · 12 片段\nR03 · 银星·九束展开\n坝顶 · 7 片段\nR03 · 金芒菊 · 230m（大号）\n坝顶 · 15 片段\nR03 · 金蕊柠 · 230m（大号）\n坝顶 · 3 片段\nR03 · 多重菊 · 230m（大号）\n坝顶 · 3 片段\nR03 · 金垂柳 · 280m（主角）\n坝顶 · 0 片段\nB05 · 银冠菊 · 中位 144m（手游）\n坝顶 · 6 片段\nB05 · 辉星 · 中位 144m（手游）\n坝顶 · 8 片段\nR03 · 银冠菊 · 90m·略小×0.92\n坝顶 · 10 片段\nR03 · 点灭星 · 90m·略小×0.92\n坝顶 · 8 片段\nR03 · 金芒菊 · 150m·略小×",
+    "errors": []
+  },
+  "8034": {
+    "url": "http://127.0.0.1:8034/baker?fast",
+    "prompt": "导出同名迭代版本？\n\n本次：金曜菊-B · HTTP独立测试（GlitterChry）。 已有交付：GlitterChry_D150。 1 张同名贴图内容已改变：T_EFX_FireWorks_GlitterChry_Main_4x4_01_HD.png。 若是继续迭代，可保留英文名导出新修订；若是独立效果，请取消并修改英文名。历史修订保留，UE 更新仍需在导入清单中确认并执行。\n\n取消导出\n导出迭代版本",
+    "cancelled": {
+      "ok": false,
+      "error": "已取消同名迭代导出；当前编辑与历史交付均保留。"
+    },
+    "accepted": {
+      "ok": true,
+      "bytes": 1255,
+      "meta": {
+        "format": "df.firework-export/1",
+        "sourceKey": "my:http-regression",
+        "resourceName": "GlitterChry",
+        "iterationOf": {
+          "sourceKey": "my:http-regression",
+          "resourceName": "GlitterChry",
+          "assets": [
+            {
+              "file": "T_EFX_FireWorks_GlitterChry_Main_4x4_01_HD.png",
+              "before": "old-sha",
+              "after": "a9f5cf8a71475f3929e6ab4741f7f89c8157dade0722b3d169be37e5c8a3b64b",
+              "sourceKey": "rv:QA20",
+              "resource": "GlitterChry_D150"
+            }
+          ]
+        }
+      }
+    },
+    "errors": [],
+    "scope": "独立上下文的内存PNG/归属夹具，生产makeZip和askConfirm；归一化packTidy桩。不发布、不写UE或个人存储。"
+  }
+}

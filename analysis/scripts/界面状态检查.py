@@ -105,7 +105,7 @@
 """
 import argparse, asyncio, json, sys, time, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from browser_runtime import launch_async
+from browser_runtime import launch_async, validation_url, verify_validation_source
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HTML = (ROOT / 'tool' / 'FireworkBaker.html').as_uri() + '?fast'
@@ -4126,7 +4126,8 @@ async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
     a = ap.parse_args(); only = set(x for x in a.only.split(',') if x); REAL = a.real
-    if a.html: HTML = pathlib.Path(a.html).resolve().as_uri() + '?fast'
+    HTML = validation_url(a.html, ROOT / 'tool' / 'FireworkBaker.html')
+    verify_validation_source(HTML, ROOT / 'tool' / 'FireworkBaker.html')
     from playwright.async_api import async_playwright
     res = []
     async with async_playwright() as p:
