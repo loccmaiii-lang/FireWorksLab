@@ -11,4 +11,4 @@
 - [x] 认领：状态清单写 UE 写入／播放，T19 改在做，推送（a503bf65）
 - [x] UE：WB19_ 临时 Emitter + 水平侧视 SceneCapture2D 抓帧两轮（Hero_HD / Hero_M / 对照 L_HD），结束销毁，不保存；前后现场逐项相同
 - [x] 量星头高度-时间，写 analysis/results/UE_READBACK_20261017/B09主角_Hero到顶实测.md/.json/.png：Hero_HD 400.4 m @ 7.1 s、Hero_M 400.6–400.9 m；7.37 s 时 399.5/399.7 m，B09 397.92 m 不用改；L_HD 对照 330.4 m @ 7.41 s
-- [ ] T19 卡写完成 / 结果，删 UE 认领，推送
+- [x] T19 卡写完成 / 结果，删 UE 认领，推送（本提交）
