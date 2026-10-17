@@ -1,0 +1,62 @@
+{
+  "physicsStep": 0.0020833333333333333,
+  "values": 62992800,
+  "maxError": 0,
+  "rows": [
+    {
+      "variant": "S1",
+      "layer": 1,
+      "comparisons": 4449600,
+      "pass": true
+    },
+    {
+      "variant": "S1",
+      "layer": 2,
+      "comparisons": 8712000,
+      "pass": true
+    },
+    {
+      "variant": "S1",
+      "layer": 3,
+      "comparisons": 7836000,
+      "pass": true
+    },
+    {
+      "variant": "S2",
+      "layer": 1,
+      "comparisons": 4449600,
+      "pass": true
+    },
+    {
+      "variant": "S2",
+      "layer": 2,
+      "comparisons": 8712000,
+      "pass": true
+    },
+    {
+      "variant": "S2",
+      "layer": 3,
+      "comparisons": 7836000,
+      "pass": true
+    },
+    {
+      "variant": "S3",
+      "layer": 1,
+      "comparisons": 4449600,
+      "pass": true
+    },
+    {
+      "variant": "S3",
+      "layer": 2,
+      "comparisons": 8712000,
+      "pass": true
+    },
+    {
+      "variant": "S3",
+      "layer": 3,
+      "comparisons": 7836000,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

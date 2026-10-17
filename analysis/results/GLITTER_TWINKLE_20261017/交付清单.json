@@ -1,0 +1,49 @@
+{
+ "tool": "4.9.112",
+ "sourceSha256": "4b9ddb4a265fed89c6609ff078a42487fa3a83d1f577d946bf1034db1aa302b3",
+ "preferred": "S1",
+ "items": [
+  {
+   "id": "S1",
+   "name": "金曜菊-B · 疏点游闪（首选）",
+   "myRecipe": "analysis/我的配方/my_fxglitterb_s1/金曜菊-B_疏点游闪（首选）__fxglitterb_s1.json",
+   "recipe": "S1_疏点游闪（首选）.json",
+   "zip": "GlitterChry_S1.zip",
+   "zipBytes": 20555375,
+   "zipSha256": "22e035196f53159745ca131cca9c86b5c84e7b39034904113b6fad38e8884465",
+   "recipeHash": "ded385db18cde5e55ff5a3d9aa7bcb02a739b907288b528785891984beb503af",
+   "pcChecksPassed": true,
+   "mobileArtComplete": false,
+   "ueCandidatePlaybackVerified": false,
+   "userArtAccepted": false
+  },
+  {
+   "id": "S2",
+   "name": "金曜菊-B · 保尾细闪",
+   "myRecipe": "analysis/我的配方/my_fxglitterb_s2/金曜菊-B_保尾细闪__fxglitterb_s2.json",
+   "recipe": "S2_保尾细闪.json",
+   "zip": "GlitterChry_S2.zip",
+   "zipBytes": 23034569,
+   "zipSha256": "7851a94fda73317cbee4de095bfa0dc8fd0bf9cc4950e0f368c8f964f50caf3e",
+   "recipeHash": "1caddaf0c7e9b30ac4abec8c9e9df6d11fbb406bbfd58812ff0f2fc16cd69615",
+   "pcChecksPassed": true,
+   "mobileArtComplete": false,
+   "ueCandidatePlaybackVerified": false,
+   "userArtAccepted": false
+  },
+  {
+   "id": "S3",
+   "name": "金曜菊-B · 稀簇辉闪",
+   "myRecipe": "analysis/我的配方/my_fxglitterb_s3/金曜菊-B_稀簇辉闪__fxglitterb_s3.json",
+   "recipe": "S3_稀簇辉闪.json",
+   "zip": "GlitterChry_S3.zip",
+   "zipBytes": 20180206,
+   "zipSha256": "00426f4f9ba4578aec48bc6928f0618c1f93a20329ee8ebca6e70c7cfc4f53d0",
+   "recipeHash": "adf75b22abd0c7e5a2faf0fe95abfc168273f53158519a8229a477fc596ba8d6",
+   "pcChecksPassed": true,
+   "mobileArtComplete": false,
+   "ueCandidatePlaybackVerified": false,
+   "userArtAccepted": false
+  }
+ ]
+}

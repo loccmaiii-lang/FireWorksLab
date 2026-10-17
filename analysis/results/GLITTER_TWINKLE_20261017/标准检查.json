@@ -1,0 +1,156 @@
+{
+ "std": {
+  "pcCell": 512,
+  "mobileCell": 256,
+  "minFps": 10,
+  "minFpsFade": 7.5,
+  "maxMag": 1.0
+ },
+ "items": [
+  {
+   "id": "S1-L1",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S1-L2",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S1-L3",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S2-L1",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S2-L2",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S2-L3",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S3-L1",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S3-L2",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  },
+  {
+   "id": "S3-L3",
+   "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "passed": true
+  }
+ ],
+ "features": {
+  "实时模拟": [
+   true,
+   ""
+  ],
+  "引擎回放 + 游戏内大小": [
+   true,
+   ""
+  ],
+  "贴图 + 流转动画": [
+   true,
+   "多层：每层在层条目里看"
+  ],
+  "完整参数": [
+   true,
+   "多层：在层条目里调，回到整体会用调过的参数"
+  ],
+  "导出素材包（cascade.json PC + 手机）": [
+   true,
+   ""
+  ],
+  "实拍对照": [
+   true,
+   "无参考（不适用）"
+  ]
+ },
+ "pass": true,
+ "note": "原标准探针逐层检查；素材包实际组合倍率与手机完整性另查，不用单层标准替代组合结果。静态参考另在本任务对照图，未冒充有同秒视频。"
+}

@@ -1,0 +1,1049 @@
+[
+  {
+    "id": "S1-L1",
+    "name": "S1-L1",
+    "type": "kiku",
+    "form": "master",
+    "duration": 3.86,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.6,
+    "sparkSize": 0.45,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 58,
+      "cellW": 512,
+      "cellH": 512,
+      "pages": 1,
+      "pageFrames": [
+        58
+      ],
+      "capacityPerPage": 64
+    },
+    "mobileCell": {
+      "cellW": 256,
+      "cellH": 256
+    },
+    "spriteM": 286.4,
+    "frames30": {
+      "shown": 58,
+      "total": 58,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15.4,
+    "avgFps": 15,
+    "flowerM": 280.5,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 368,
+      "mag": 0.72,
+      "magMobile256": 1.44,
+      "mag512": 0.72,
+      "mag1024": 0.36,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3349,
+        "mag": 6.54
+      },
+      {
+        "dist": 100,
+        "spritePx": 2679,
+        "mag": 5.23
+      },
+      {
+        "dist": 120,
+        "spritePx": 2232,
+        "mag": 4.36
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4595,
+        "mag": 8.97
+      },
+      {
+        "dist": 100,
+        "spritePx": 3676,
+        "mag": 7.18
+      },
+      {
+        "dist": 120,
+        "spritePx": 3063,
+        "mag": 5.98
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 4.63178551197052,
+        "enlarged": 5.60313081741333,
+        "ratio": 1.2097129288332624
+      },
+      "spark": {
+        "size": 0.45,
+        "energy": 2.6051957607269287,
+        "enlarged": 3.1525871753692627,
+        "ratio": 1.2101152715255437
+      }
+    }
+  },
+  {
+    "id": "S1-L2",
+    "name": "S1-L2",
+    "type": "kiku",
+    "form": "master",
+    "duration": 7.56,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.6,
+    "sparkSize": 0.75,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 2,
+      "rows": 2,
+      "chans": 4,
+      "frames": 114,
+      "cellW": 1024,
+      "cellH": 1024,
+      "pages": 8,
+      "pageFrames": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        2
+      ],
+      "capacityPerPage": 16
+    },
+    "mobileCell": {
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 289.9,
+    "frames30": {
+      "shown": 114,
+      "total": 114,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15,
+    "avgFps": 15.1,
+    "flowerM": 279.4,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 374,
+      "mag": 0.36,
+      "magMobile256": 1.46,
+      "mag512": 0.73,
+      "mag1024": 0.36,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3389,
+        "mag": 3.31
+      },
+      {
+        "dist": 100,
+        "spritePx": 2712,
+        "mag": 2.65
+      },
+      {
+        "dist": 120,
+        "spritePx": 2260,
+        "mag": 2.21
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4669,
+        "mag": 4.56
+      },
+      {
+        "dist": 100,
+        "spritePx": 3735,
+        "mag": 3.65
+      },
+      {
+        "dist": 120,
+        "spritePx": 3113,
+        "mag": 3.04
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 18.077500224113464,
+        "enlarged": 21.872321128845215,
+        "ratio": 1.209919560651968
+      },
+      "spark": {
+        "size": 0.75,
+        "energy": 28.2429358959198,
+        "enlarged": 34.1746871471405,
+        "ratio": 1.210026014047557
+      }
+    }
+  },
+  {
+    "id": "S1-L3",
+    "name": "S1-L3",
+    "type": "strobe",
+    "form": "master",
+    "duration": 6.8,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.65,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 2,
+      "rows": 2,
+      "chans": 4,
+      "frames": 102,
+      "cellW": 1024,
+      "cellH": 1024,
+      "pages": 7,
+      "pageFrames": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        6
+      ],
+      "capacityPerPage": 16
+    },
+    "mobileCell": {
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 341.2,
+    "frames30": {
+      "shown": 102,
+      "total": 102,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15,
+    "avgFps": 15,
+    "flowerM": 311.7,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 394,
+      "mag": 0.38,
+      "magMobile256": 1.54,
+      "mag512": 0.77,
+      "mag1024": 0.38,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3990,
+        "mag": 3.9
+      },
+      {
+        "dist": 100,
+        "spritePx": 3192,
+        "mag": 3.12
+      },
+      {
+        "dist": 120,
+        "spritePx": 2660,
+        "mag": 2.6
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4927,
+        "mag": 4.81
+      },
+      {
+        "dist": 100,
+        "spritePx": 3942,
+        "mag": 3.85
+      },
+      {
+        "dist": 120,
+        "spritePx": 3285,
+        "mag": 3.21
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.65,
+        "energy": 75.01030659675598,
+        "enlarged": 90.76305204629898,
+        "ratio": 1.2100077464584615
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 21.766786992549896,
+        "enlarged": 26.30509263277054,
+        "ratio": 1.2084968094636093
+      }
+    }
+  },
+  {
+    "id": "S2-L1",
+    "name": "S2-L1",
+    "type": "kiku",
+    "form": "master",
+    "duration": 3.86,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.6,
+    "sparkSize": 0.45,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 58,
+      "cellW": 512,
+      "cellH": 512,
+      "pages": 1,
+      "pageFrames": [
+        58
+      ],
+      "capacityPerPage": 64
+    },
+    "mobileCell": {
+      "cellW": 256,
+      "cellH": 256
+    },
+    "spriteM": 286.4,
+    "frames30": {
+      "shown": 58,
+      "total": 58,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15.4,
+    "avgFps": 15,
+    "flowerM": 280.5,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 368,
+      "mag": 0.72,
+      "magMobile256": 1.44,
+      "mag512": 0.72,
+      "mag1024": 0.36,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3349,
+        "mag": 6.54
+      },
+      {
+        "dist": 100,
+        "spritePx": 2679,
+        "mag": 5.23
+      },
+      {
+        "dist": 120,
+        "spritePx": 2232,
+        "mag": 4.36
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4595,
+        "mag": 8.97
+      },
+      {
+        "dist": 100,
+        "spritePx": 3676,
+        "mag": 7.18
+      },
+      {
+        "dist": 120,
+        "spritePx": 3063,
+        "mag": 5.98
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 4.63178551197052,
+        "enlarged": 5.60313081741333,
+        "ratio": 1.2097129288332624
+      },
+      "spark": {
+        "size": 0.45,
+        "energy": 2.6051957607269287,
+        "enlarged": 3.1525871753692627,
+        "ratio": 1.2101152715255437
+      }
+    }
+  },
+  {
+    "id": "S2-L2",
+    "name": "S2-L2",
+    "type": "kiku",
+    "form": "master",
+    "duration": 7.56,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.6,
+    "sparkSize": 0.6,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 2,
+      "rows": 2,
+      "chans": 4,
+      "frames": 114,
+      "cellW": 1024,
+      "cellH": 1024,
+      "pages": 8,
+      "pageFrames": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        2
+      ],
+      "capacityPerPage": 16
+    },
+    "mobileCell": {
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 292,
+    "frames30": {
+      "shown": 114,
+      "total": 114,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15,
+    "avgFps": 15.1,
+    "flowerM": 280.9,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 374,
+      "mag": 0.37,
+      "magMobile256": 1.46,
+      "mag512": 0.73,
+      "mag1024": 0.37,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3413,
+        "mag": 3.33
+      },
+      {
+        "dist": 100,
+        "spritePx": 2731,
+        "mag": 2.67
+      },
+      {
+        "dist": 120,
+        "spritePx": 2276,
+        "mag": 2.22
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4678,
+        "mag": 4.57
+      },
+      {
+        "dist": 100,
+        "spritePx": 3742,
+        "mag": 3.65
+      },
+      {
+        "dist": 120,
+        "spritePx": 3118,
+        "mag": 3.05
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 17.82191425561905,
+        "enlarged": 21.56391191482544,
+        "ratio": 1.2099660903725076
+      },
+      "spark": {
+        "size": 0.6,
+        "energy": 17.82191425561905,
+        "enlarged": 21.56391191482544,
+        "ratio": 1.2099660903725076
+      }
+    }
+  },
+  {
+    "id": "S2-L3",
+    "name": "S2-L3",
+    "type": "strobe",
+    "form": "master",
+    "duration": 6.8,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.65,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 2,
+      "rows": 2,
+      "chans": 4,
+      "frames": 102,
+      "cellW": 1024,
+      "cellH": 1024,
+      "pages": 7,
+      "pageFrames": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        6
+      ],
+      "capacityPerPage": 16
+    },
+    "mobileCell": {
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 341.2,
+    "frames30": {
+      "shown": 102,
+      "total": 102,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15,
+    "avgFps": 15,
+    "flowerM": 311.7,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 394,
+      "mag": 0.38,
+      "magMobile256": 1.54,
+      "mag512": 0.77,
+      "mag1024": 0.38,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3990,
+        "mag": 3.9
+      },
+      {
+        "dist": 100,
+        "spritePx": 3192,
+        "mag": 3.12
+      },
+      {
+        "dist": 120,
+        "spritePx": 2660,
+        "mag": 2.6
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4927,
+        "mag": 4.81
+      },
+      {
+        "dist": 100,
+        "spritePx": 3942,
+        "mag": 3.85
+      },
+      {
+        "dist": 120,
+        "spritePx": 3285,
+        "mag": 3.21
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.65,
+        "energy": 75.01030659675598,
+        "enlarged": 90.76305204629898,
+        "ratio": 1.2100077464584615
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 21.766786992549896,
+        "enlarged": 26.30509263277054,
+        "ratio": 1.2084968094636093
+      }
+    }
+  },
+  {
+    "id": "S3-L1",
+    "name": "S3-L1",
+    "type": "kiku",
+    "form": "master",
+    "duration": 3.86,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.6,
+    "sparkSize": 0.45,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 58,
+      "cellW": 512,
+      "cellH": 512,
+      "pages": 1,
+      "pageFrames": [
+        58
+      ],
+      "capacityPerPage": 64
+    },
+    "mobileCell": {
+      "cellW": 256,
+      "cellH": 256
+    },
+    "spriteM": 286.4,
+    "frames30": {
+      "shown": 58,
+      "total": 58,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15.4,
+    "avgFps": 15,
+    "flowerM": 280.5,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 368,
+      "mag": 0.72,
+      "magMobile256": 1.44,
+      "mag512": 0.72,
+      "mag1024": 0.36,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3349,
+        "mag": 6.54
+      },
+      {
+        "dist": 100,
+        "spritePx": 2679,
+        "mag": 5.23
+      },
+      {
+        "dist": 120,
+        "spritePx": 2232,
+        "mag": 4.36
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4595,
+        "mag": 8.97
+      },
+      {
+        "dist": 100,
+        "spritePx": 3676,
+        "mag": 7.18
+      },
+      {
+        "dist": 120,
+        "spritePx": 3063,
+        "mag": 5.98
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 4.63178551197052,
+        "enlarged": 5.60313081741333,
+        "ratio": 1.2097129288332624
+      },
+      "spark": {
+        "size": 0.45,
+        "energy": 2.6051957607269287,
+        "enlarged": 3.1525871753692627,
+        "ratio": 1.2101152715255437
+      }
+    }
+  },
+  {
+    "id": "S3-L2",
+    "name": "S3-L2",
+    "type": "kiku",
+    "form": "master",
+    "duration": 7.56,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.6,
+    "sparkSize": 1.1,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 2,
+      "rows": 2,
+      "chans": 4,
+      "frames": 114,
+      "cellW": 1024,
+      "cellH": 1024,
+      "pages": 8,
+      "pageFrames": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        2
+      ],
+      "capacityPerPage": 16
+    },
+    "mobileCell": {
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 290.9,
+    "frames30": {
+      "shown": 114,
+      "total": 114,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15,
+    "avgFps": 15.1,
+    "flowerM": 280.3,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 374,
+      "mag": 0.36,
+      "magMobile256": 1.46,
+      "mag512": 0.73,
+      "mag1024": 0.36,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3401,
+        "mag": 3.32
+      },
+      {
+        "dist": 100,
+        "spritePx": 2721,
+        "mag": 2.66
+      },
+      {
+        "dist": 120,
+        "spritePx": 2268,
+        "mag": 2.21
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4671,
+        "mag": 4.56
+      },
+      {
+        "dist": 100,
+        "spritePx": 3737,
+        "mag": 3.65
+      },
+      {
+        "dist": 120,
+        "spritePx": 3114,
+        "mag": 3.04
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 17.950359106063843,
+        "enlarged": 21.71797800064087,
+        "ratio": 1.2098910039802089
+      },
+      "spark": {
+        "size": 1.1,
+        "energy": 60.32936096191406,
+        "enlarged": 72.99300903081894,
+        "ratio": 1.209908539838495
+      }
+    }
+  },
+  {
+    "id": "S3-L3",
+    "name": "S3-L3",
+    "type": "strobe",
+    "form": "master",
+    "duration": 6.8,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.65,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 2,
+      "rows": 2,
+      "chans": 4,
+      "frames": 102,
+      "cellW": 1024,
+      "cellH": 1024,
+      "pages": 7,
+      "pageFrames": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        6
+      ],
+      "capacityPerPage": 16
+    },
+    "mobileCell": {
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 341.2,
+    "frames30": {
+      "shown": 102,
+      "total": 102,
+      "ratio": 1,
+      "maxJump": 1
+    },
+    "minFpsActive": 15,
+    "minFpsFade": 15,
+    "avgFps": 15,
+    "flowerM": 311.7,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 394,
+      "mag": 0.38,
+      "magMobile256": 1.54,
+      "mag512": 0.77,
+      "mag1024": 0.38,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 80,
+        "spritePx": 3990,
+        "mag": 3.9
+      },
+      {
+        "dist": 100,
+        "spritePx": 3192,
+        "mag": 3.12
+      },
+      {
+        "dist": 120,
+        "spritePx": 2660,
+        "mag": 2.6
+      }
+    ],
+    "game": [
+      {
+        "dist": 80,
+        "spritePx": 4927,
+        "mag": 4.81
+      },
+      {
+        "dist": 100,
+        "spritePx": 3942,
+        "mag": 3.85
+      },
+      {
+        "dist": 120,
+        "spritePx": 3285,
+        "mag": 3.21
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.65,
+        "energy": 75.01030659675598,
+        "enlarged": 90.76305204629898,
+        "ratio": 1.2100077464584615
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 21.766786992549896,
+        "enlarged": 26.30509263277054,
+        "ratio": 1.2084968094636093
+      }
+    }
+  }
+]

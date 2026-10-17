@@ -1,0 +1,508 @@
+{
+  "nativeDiameter": 311.67533426807074,
+  "exportFlowerDiameter": 32,
+  "scale": 0.1027,
+  "slantAt100": 102.91010640359866,
+  "counts": [
+    {
+      "id": "ORIGINAL",
+      "layers": [
+        {
+          "perNativeMeter": 10.2,
+          "lifeMedianGame": 0.39999999999999997,
+          "lifeSigma": 0.2,
+          "birthsExpected": 141698,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 94916
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 71177
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 27900
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 1649
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 8
+            }
+          ]
+        },
+        {
+          "perNativeMeter": 15,
+          "lifeMedianGame": 1.4066666666666665,
+          "lifeSigma": 0.3,
+          "birthsExpected": 113984,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 8061
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 47012
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 85492
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 97883
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 69283
+            },
+            {
+              "seconds": 2.8,
+              "expectedAlive": 27601
+            },
+            {
+              "seconds": 3.4,
+              "expectedAlive": 7020
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "layers": [
+        {
+          "perNativeMeter": 3,
+          "lifeMedianGame": 0.39999999999999997,
+          "lifeSigma": 0.2,
+          "birthsExpected": 41676,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 27917
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 20934
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 8206
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 485
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 2
+            }
+          ]
+        },
+        {
+          "perNativeMeter": 1,
+          "lifeMedianGame": 0.9,
+          "lifeSigma": 0.4,
+          "birthsExpected": 7599,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 537
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 3114
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 5153
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 4359
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 2119
+            },
+            {
+              "seconds": 2.8,
+              "expectedAlive": 537
+            },
+            {
+              "seconds": 3.4,
+              "expectedAlive": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "layers": [
+        {
+          "perNativeMeter": 4.5,
+          "lifeMedianGame": 0.39999999999999997,
+          "lifeSigma": 0.2,
+          "birthsExpected": 62514,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 41875
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 31402
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 12309
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 727
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 4
+            }
+          ]
+        },
+        {
+          "perNativeMeter": 1.8,
+          "lifeMedianGame": 1.1666666666666667,
+          "lifeSigma": 0.35,
+          "birthsExpected": 13678,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 967
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 5639
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 10025
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 10184
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 6112
+            },
+            {
+              "seconds": 2.8,
+              "expectedAlive": 2018
+            },
+            {
+              "seconds": 3.4,
+              "expectedAlive": 457
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "layers": [
+        {
+          "perNativeMeter": 2,
+          "lifeMedianGame": 0.39999999999999997,
+          "lifeSigma": 0.2,
+          "birthsExpected": 27784,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 18611
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 13956
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 5471
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 323
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 2
+            }
+          ]
+        },
+        {
+          "perNativeMeter": 0.65,
+          "lifeMedianGame": 1.0333333333333334,
+          "lifeSigma": 0.45,
+          "birthsExpected": 4939,
+          "samples": [
+            {
+              "seconds": 0.45,
+              "expectedAlive": 349
+            },
+            {
+              "seconds": 0.8,
+              "expectedAlive": 2027
+            },
+            {
+              "seconds": 1.2,
+              "expectedAlive": 3446
+            },
+            {
+              "seconds": 1.7,
+              "expectedAlive": 3230
+            },
+            {
+              "seconds": 2.2,
+              "expectedAlive": 1875
+            },
+            {
+              "seconds": 2.8,
+              "expectedAlive": 669
+            },
+            {
+              "seconds": 3.4,
+              "expectedAlive": 198
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "optics": [
+    {
+      "horizontalDistance": 80,
+      "slant": 83.60915021694694,
+      "verticalFovAssumed": 45,
+      "screenHeight": 1080,
+      "diameterPixels": 498.95986563144425,
+      "density": [
+        {
+          "id": "S1",
+          "perExportMeter": 9.737098344693282,
+          "nominalSpacingPixels": 1.6013493187609165,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.374473680471281,
+          "nominalBrightSpacingPixels": 4.2762666704522285,
+          "sparkSizePixels": 1.2010119890706872
+        },
+        {
+          "id": "S2",
+          "perExportMeter": 17.526777020447906,
+          "nominalSpacingPixels": 0.8896385104227313,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.3804989540728473,
+          "nominalBrightSpacingPixels": 2.3380839839375964,
+          "sparkSizePixels": 0.9608095912565497
+        },
+        {
+          "id": "S3",
+          "perExportMeter": 6.329113924050633,
+          "nominalSpacingPixels": 2.463614336555256,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.39463569450639685,
+          "nominalBrightSpacingPixels": 6.242755966706712,
+          "sparkSizePixels": 1.7614842506370083
+        }
+      ]
+    },
+    {
+      "horizontalDistance": 80,
+      "slant": 83.60915021694694,
+      "verticalFovAssumed": 60,
+      "screenHeight": 1080,
+      "diameterPixels": 357.97323471329395,
+      "density": [
+        {
+          "id": "S1",
+          "perExportMeter": 9.737098344693282,
+          "nominalSpacingPixels": 1.1488703501579778,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.374473680471281,
+          "nominalBrightSpacingPixels": 3.06796020674165,
+          "sparkSizePixels": 0.8616527626184833
+        },
+        {
+          "id": "S2",
+          "perExportMeter": 17.526777020447906,
+          "nominalSpacingPixels": 0.638261305643321,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.3804989540728473,
+          "nominalBrightSpacingPixels": 1.6774324838777994,
+          "sparkSizePixels": 0.6893222100947866
+        },
+        {
+          "id": "S3",
+          "perExportMeter": 6.329113924050633,
+          "nominalSpacingPixels": 1.7674928463968889,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.39463569450639685,
+          "nominalBrightSpacingPixels": 4.478796193556786,
+          "sparkSizePixels": 1.2637573851737758
+        }
+      ]
+    },
+    {
+      "horizontalDistance": 100,
+      "slant": 102.91010640359866,
+      "verticalFovAssumed": 45,
+      "screenHeight": 1080,
+      "diameterPixels": 405.3791392868317,
+      "density": [
+        {
+          "id": "S1",
+          "perExportMeter": 9.737098344693282,
+          "nominalSpacingPixels": 1.3010136751486754,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.374473680471281,
+          "nominalBrightSpacingPixels": 3.474245969733652,
+          "sparkSizePixels": 0.9757602563615065
+        },
+        {
+          "id": "S2",
+          "perExportMeter": 17.526777020447906,
+          "nominalSpacingPixels": 0.7227853750825974,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.3804989540728473,
+          "nominalBrightSpacingPixels": 1.899572567403743,
+          "sparkSizePixels": 0.7806082050892051
+        },
+        {
+          "id": "S3",
+          "perExportMeter": 6.329113924050633,
+          "nominalSpacingPixels": 2.001559500228731,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.39463569450639685,
+          "nominalBrightSpacingPixels": 5.071917031560578,
+          "sparkSizePixels": 1.431115042663543
+        }
+      ]
+    },
+    {
+      "horizontalDistance": 100,
+      "slant": 102.91010640359866,
+      "verticalFovAssumed": 60,
+      "screenHeight": 1080,
+      "diameterPixels": 290.8347780480342,
+      "density": [
+        {
+          "id": "S1",
+          "perExportMeter": 9.737098344693282,
+          "nominalSpacingPixels": 0.9333978657979097,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.374473680471281,
+          "nominalBrightSpacingPixels": 2.492559329198287,
+          "sparkSizePixels": 0.7000483993484323
+        },
+        {
+          "id": "S2",
+          "perExportMeter": 17.526777020447906,
+          "nominalSpacingPixels": 0.5185543698877276,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.3804989540728473,
+          "nominalBrightSpacingPixels": 1.3628273201204366,
+          "sparkSizePixels": 0.5600387194787458
+        },
+        {
+          "id": "S3",
+          "perExportMeter": 6.329113924050633,
+          "nominalSpacingPixels": 1.4359967166121688,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.39463569450639685,
+          "nominalBrightSpacingPixels": 3.6387907546180975,
+          "sparkSizePixels": 1.0267376523777008
+        }
+      ]
+    },
+    {
+      "horizontalDistance": 120,
+      "slant": 122.43565657111493,
+      "verticalFovAssumed": 45,
+      "screenHeight": 1080,
+      "diameterPixels": 340.7308910339859,
+      "density": [
+        {
+          "id": "S1",
+          "perExportMeter": 9.737098344693282,
+          "nominalSpacingPixels": 1.0935332034121985,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.374473680471281,
+          "nominalBrightSpacingPixels": 2.9201870797327327,
+          "sparkSizePixels": 0.8201499025591489
+        },
+        {
+          "id": "S2",
+          "perExportMeter": 17.526777020447906,
+          "nominalSpacingPixels": 0.6075184463401103,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.3804989540728473,
+          "nominalBrightSpacingPixels": 1.5966363109208432,
+          "sparkSizePixels": 0.6561199220473191
+        },
+        {
+          "id": "S3",
+          "perExportMeter": 6.329113924050633,
+          "nominalSpacingPixels": 1.6823587744803052,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.39463569450639685,
+          "nominalBrightSpacingPixels": 4.26306793303269,
+          "sparkSizePixels": 1.2028865237534185
+        }
+      ]
+    },
+    {
+      "horizontalDistance": 120,
+      "slant": 122.43565657111493,
+      "verticalFovAssumed": 60,
+      "screenHeight": 1080,
+      "diameterPixels": 244.4536076580428,
+      "density": [
+        {
+          "id": "S1",
+          "perExportMeter": 9.737098344693282,
+          "nominalSpacingPixels": 0.7845432970775311,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.374473680471281,
+          "nominalBrightSpacingPixels": 2.0950559091100103,
+          "sparkSizePixels": 0.5884074728081483
+        },
+        {
+          "id": "S2",
+          "perExportMeter": 17.526777020447906,
+          "nominalSpacingPixels": 0.43585738726529505,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.3804989540728473,
+          "nominalBrightSpacingPixels": 1.145489054831539,
+          "sparkSizePixels": 0.47072597824651863
+        },
+        {
+          "id": "S3",
+          "perExportMeter": 6.329113924050633,
+          "nominalSpacingPixels": 1.2069896878115862,
+          "brightThresholdOfPeak": 0.7,
+          "brightDuty": 0.39463569450639685,
+          "nominalBrightSpacingPixels": 3.0584909186212035,
+          "sparkSizePixels": 0.8629976267852844
+        }
+      ]
+    }
+  ],
+  "assumptions": [
+    "原存档24m；本轮已只读追到UE导入修订37c025c83c495be09511，确认32m花径，候选按32m导出",
+    "视角未测，用45/60度两种竖直FOV作敏感性范围，不称游戏实测",
+    "存活数为原核轨迹×生成率积分×对数正态存活概率的期望，不是同时可见点数；未扣投影重叠、冷却、遮蔽、帧停留与阈值",
+    "亮点间距是局部投影到画面平面时的名义间距；有纵深或尾迹横散时分布不同"
+  ]
+}

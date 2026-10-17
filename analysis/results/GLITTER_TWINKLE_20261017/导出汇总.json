@@ -1,0 +1,39 @@
+{
+  "env": {
+    "version": "4.9.112",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "gl": "WebKit WebGL"
+  },
+  "htmlSha256": "596eaa680b6c9144da69a19cc27967e31af8d34ae529e8761fb937fbca455d2f",
+  "rows": [
+    {
+      "id": "ORIGINAL",
+      "name": "金曜菊-B",
+      "zip": "F:\\FireWorksLab\\outputs\\金曜菊B闪烁试配_20261017\\GlitterChry_Baseline.zip",
+      "refreshSaved": true,
+      "recipeHash": "b1e69f826912a5326d16fd1dda1b5a50a6741c4ff6c9d31ea709be43647573c5"
+    },
+    {
+      "id": "S1",
+      "name": "金曜菊-B · 疏点游闪（首选）",
+      "zip": "F:\\FireWorksLab\\outputs\\金曜菊B闪烁试配_20261017\\GlitterChry_S1.zip",
+      "refreshSaved": true,
+      "recipeHash": "ded385db18cde5e55ff5a3d9aa7bcb02a739b907288b528785891984beb503af"
+    },
+    {
+      "id": "S2",
+      "name": "金曜菊-B · 保尾细闪",
+      "zip": "F:\\FireWorksLab\\outputs\\金曜菊B闪烁试配_20261017\\GlitterChry_S2.zip",
+      "refreshSaved": true,
+      "recipeHash": "1caddaf0c7e9b30ac4abec8c9e9df6d11fbb406bbfd58812ff0f2fc16cd69615"
+    },
+    {
+      "id": "S3",
+      "name": "金曜菊-B · 稀簇辉闪",
+      "zip": "F:\\FireWorksLab\\outputs\\金曜菊B闪烁试配_20261017\\GlitterChry_S3.zip",
+      "refreshSaved": true,
+      "recipeHash": "adf75b22abd0c7e5a2faf0fe95abfc168273f53158519a8229a477fc596ba8d6"
+    }
+  ],
+  "errors": []
+}

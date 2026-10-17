@@ -1,0 +1,704 @@
+{
+ "items": [
+  {
+   "id": "ORIGINAL",
+   "pcReplayPass": false,
+   "mobileReplayPass": false,
+   "pcSeqEmitters": 3,
+   "mobileSeqEmitters": 1,
+   "mobilePreservesAllLayers": false,
+   "diagnosticFps10": [
+    {
+     "layer": "L1_Main",
+     "frames": 64,
+     "shown": 15,
+     "ratio": 0.234375
+    },
+    {
+     "layer": "L2_Main",
+     "frames": 64,
+     "shown": 33,
+     "ratio": 0.515625
+    },
+    {
+     "layer": "L3_Main",
+     "frames": 63,
+     "shown": 39,
+     "ratio": 0.6190476190476191
+    }
+   ],
+   "pcSpriteMeters": [
+    19.153299999999998,
+    27.624899999999997,
+    35.0456
+   ],
+   "pcShown": [
+    {
+     "layer": "ORIGINAL · L1_Main",
+     "shown": 44,
+     "frames": 64,
+     "pass_": false,
+     "fails": [
+      "30 fps 只显示 44/64 帧"
+     ]
+    },
+    {
+     "layer": "ORIGINAL · L2_Main",
+     "shown": 58,
+     "frames": 64,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "ORIGINAL · L3_Main",
+     "shown": 62,
+     "frames": 63,
+     "pass_": true,
+     "fails": []
+    }
+   ],
+   "source": {
+    "tool": "烟花母版烘焙器 4.9.112",
+    "combo": true,
+    "layers": [
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "strobe",
+      "form": "master",
+      "renderVer": 40
+     }
+    ],
+    "plan_sig": "24a6403c"
+   },
+   "format": "fwl.cascade/1"
+  },
+  {
+   "id": "S1",
+   "pcReplayPass": true,
+   "mobileReplayPass": true,
+   "pcSeqEmitters": 12,
+   "mobileSeqEmitters": 1,
+   "mobilePreservesAllLayers": false,
+   "diagnosticFps10": [
+    {
+     "layer": "L1_Main",
+     "frames": 35,
+     "shown": 15,
+     "ratio": 0.42857142857142855
+    },
+    {
+     "layer": "L2_MainA",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainB",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainC",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainD",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainE",
+     "frames": 11,
+     "shown": 4,
+     "ratio": 0.36363636363636365
+    },
+    {
+     "layer": "L3_MainA",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainB",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainC",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainD",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainE",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainF",
+     "frames": 8,
+     "shown": 3,
+     "ratio": 0.375
+    }
+   ],
+   "pcSpriteMeters": [
+    21.7009,
+    27.499699999999997,
+    27.499699999999997,
+    27.499699999999997,
+    27.499699999999997,
+    27.499699999999997,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456
+   ],
+   "pcShown": [
+    {
+     "layer": "S1 · L1_Main",
+     "shown": 35,
+     "frames": 35,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L2_MainA",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L2_MainB",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L2_MainC",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L2_MainD",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L2_MainE",
+     "shown": 11,
+     "frames": 11,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L3_MainA",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L3_MainB",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L3_MainC",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L3_MainD",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L3_MainE",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S1 · L3_MainF",
+     "shown": 8,
+     "frames": 8,
+     "pass_": true,
+     "fails": []
+    }
+   ],
+   "source": {
+    "tool": "烟花母版烘焙器 4.9.112",
+    "combo": true,
+    "layers": [
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "strobe",
+      "form": "master",
+      "renderVer": 40
+     }
+    ],
+    "plan_sig": "7ea5910e"
+   },
+   "format": "fwl.cascade/1"
+  },
+  {
+   "id": "S2",
+   "pcReplayPass": true,
+   "mobileReplayPass": true,
+   "pcSeqEmitters": 12,
+   "mobileSeqEmitters": 1,
+   "mobilePreservesAllLayers": false,
+   "diagnosticFps10": [
+    {
+     "layer": "L1_Main",
+     "frames": 35,
+     "shown": 15,
+     "ratio": 0.42857142857142855
+    },
+    {
+     "layer": "L2_MainA",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainB",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainC",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainD",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainE",
+     "frames": 11,
+     "shown": 4,
+     "ratio": 0.36363636363636365
+    },
+    {
+     "layer": "L3_MainA",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainB",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainC",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainD",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainE",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainF",
+     "frames": 8,
+     "shown": 3,
+     "ratio": 0.375
+    }
+   ],
+   "pcSpriteMeters": [
+    21.7009,
+    27.2733,
+    27.2733,
+    27.2733,
+    27.2733,
+    27.2733,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456
+   ],
+   "pcShown": [
+    {
+     "layer": "S2 · L1_Main",
+     "shown": 35,
+     "frames": 35,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L2_MainA",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L2_MainB",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L2_MainC",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L2_MainD",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L2_MainE",
+     "shown": 11,
+     "frames": 11,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L3_MainA",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L3_MainB",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L3_MainC",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L3_MainD",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L3_MainE",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S2 · L3_MainF",
+     "shown": 8,
+     "frames": 8,
+     "pass_": true,
+     "fails": []
+    }
+   ],
+   "source": {
+    "tool": "烟花母版烘焙器 4.9.112",
+    "combo": true,
+    "layers": [
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "strobe",
+      "form": "master",
+      "renderVer": 40
+     }
+    ],
+    "plan_sig": "7ea5910e"
+   },
+   "format": "fwl.cascade/1"
+  },
+  {
+   "id": "S3",
+   "pcReplayPass": true,
+   "mobileReplayPass": true,
+   "pcSeqEmitters": 12,
+   "mobileSeqEmitters": 1,
+   "mobilePreservesAllLayers": false,
+   "diagnosticFps10": [
+    {
+     "layer": "L1_Main",
+     "frames": 35,
+     "shown": 15,
+     "ratio": 0.42857142857142855
+    },
+    {
+     "layer": "L2_MainA",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainB",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainC",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainD",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L2_MainE",
+     "frames": 11,
+     "shown": 4,
+     "ratio": 0.36363636363636365
+    },
+    {
+     "layer": "L3_MainA",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainB",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainC",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainD",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainE",
+     "frames": 16,
+     "shown": 7,
+     "ratio": 0.4375
+    },
+    {
+     "layer": "L3_MainF",
+     "frames": 8,
+     "shown": 3,
+     "ratio": 0.375
+    }
+   ],
+   "pcSpriteMeters": [
+    21.701,
+    27.6572,
+    27.6572,
+    27.6572,
+    27.6572,
+    27.6572,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456,
+    35.0456
+   ],
+   "pcShown": [
+    {
+     "layer": "S3 · L1_Main",
+     "shown": 35,
+     "frames": 35,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L2_MainA",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L2_MainB",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L2_MainC",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L2_MainD",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L2_MainE",
+     "shown": 11,
+     "frames": 11,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L3_MainA",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L3_MainB",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L3_MainC",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L3_MainD",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L3_MainE",
+     "shown": 16,
+     "frames": 16,
+     "pass_": true,
+     "fails": []
+    },
+    {
+     "layer": "S3 · L3_MainF",
+     "shown": 8,
+     "frames": 8,
+     "pass_": true,
+     "fails": []
+    }
+   ],
+   "source": {
+    "tool": "烟花母版烘焙器 4.9.112",
+    "combo": true,
+    "layers": [
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "kiku",
+      "form": "master",
+      "renderVer": 40
+     },
+     {
+      "type": "strobe",
+      "form": "master",
+      "renderVer": 40
+     }
+    ],
+    "plan_sig": "7ea5910e"
+   },
+   "format": "fwl.cascade/1"
+  }
+ ],
+ "standardProbePass": true,
+ "pcPass": true,
+ "mobileArtComplete": false,
+ "note": "手机沿用原存档自动方案，只出第一层，原本就缺金锦尾和点灭星头；不作为本轮闪烁目标已通过。10fps是额外低帧率敏感性检查，不代表UE FixedTime@10的真实显示帧率。未修改母材质/UE资产，也未新增手机表现方案。"
+}

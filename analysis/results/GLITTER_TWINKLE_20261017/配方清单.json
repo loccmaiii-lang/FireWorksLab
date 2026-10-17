@@ -1,0 +1,343 @@
+{
+ "source": "analysis/我的配方/my_fxmv7lp8ci/金曜菊-B__fxmv7lp8ci.json",
+ "sourceSha256": "4b9ddb4a265fed89c6609ff078a42487fa3a83d1f577d946bf1034db1aa302b3",
+ "baselineOverrides": {
+  "sizePick": "cls:d:front:32"
+ },
+ "sizeEvidence": "UE实际导入37c025c83c495be09511/cascade.json：size_spec.target_m=32；用户确认保留烘焙器节奏",
+ "variants": [
+  {
+   "id": "S1",
+   "name": "金曜菊-B · 疏点游闪（首选）",
+   "file": "analysis/results/GLITTER_TWINKLE_20261017/S1_疏点游闪（首选）.json",
+   "myRecipe": "analysis/我的配方/my_fxglitterb_s1/金曜菊-B_疏点游闪（首选）__fxglitterb_s1.json",
+   "system": "GlitterChry_S1",
+   "changes": [
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      null,
+      2
+     ],
+     "sparkPerM": [
+      10.2,
+      3.0
+     ],
+     "zoom": [
+      "on",
+      "off"
+     ]
+    },
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "cols": [
+      4,
+      2
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      null,
+      2
+     ],
+     "rows": [
+      4,
+      2
+     ],
+     "sparkLife": [
+      2.11,
+      1.35
+     ],
+     "sparkLifeJit": [
+      30,
+      40
+     ],
+     "sparkPerM": [
+      15,
+      1.0
+     ],
+     "sparkSize": [
+      0.14,
+      0.75
+     ],
+     "twinkle": [
+      0.4,
+      0.95
+     ],
+     "twinkleHz": [
+      0,
+      1.6
+     ],
+     "zoom": [
+      "on",
+      "off"
+     ]
+    },
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "cols": [
+      4,
+      2
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      0,
+      2
+     ],
+     "rows": [
+      4,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "name": "金曜菊-B · 保尾细闪",
+   "file": "analysis/results/GLITTER_TWINKLE_20261017/S2_保尾细闪.json",
+   "myRecipe": "analysis/我的配方/my_fxglitterb_s2/金曜菊-B_保尾细闪__fxglitterb_s2.json",
+   "system": "GlitterChry_S2",
+   "changes": [
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      null,
+      2
+     ],
+     "sparkPerM": [
+      10.2,
+      4.5
+     ],
+     "zoom": [
+      "on",
+      "off"
+     ]
+    },
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "cols": [
+      4,
+      2
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      null,
+      2
+     ],
+     "rows": [
+      4,
+      2
+     ],
+     "sparkLife": [
+      2.11,
+      1.75
+     ],
+     "sparkLifeJit": [
+      30,
+      35
+     ],
+     "sparkPerM": [
+      15,
+      1.8
+     ],
+     "sparkSize": [
+      0.14,
+      0.6
+     ],
+     "twinkle": [
+      0.4,
+      0.9
+     ],
+     "twinkleHz": [
+      0,
+      1.25
+     ],
+     "zoom": [
+      "on",
+      "off"
+     ]
+    },
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "cols": [
+      4,
+      2
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      0,
+      2
+     ],
+     "rows": [
+      4,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "name": "金曜菊-B · 稀簇辉闪",
+   "file": "analysis/results/GLITTER_TWINKLE_20261017/S3_稀簇辉闪.json",
+   "myRecipe": "analysis/我的配方/my_fxglitterb_s3/金曜菊-B_稀簇辉闪__fxglitterb_s3.json",
+   "system": "GlitterChry_S3",
+   "changes": [
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      null,
+      2
+     ],
+     "sparkPerM": [
+      10.2,
+      2.0
+     ],
+     "zoom": [
+      "on",
+      "off"
+     ]
+    },
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "cols": [
+      4,
+      2
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "glitter": [
+      0,
+      0.8
+     ],
+     "glitterDelay": [
+      1.43,
+      0.38
+     ],
+     "glitterDelayJit": [
+      null,
+      70
+     ],
+     "glitterDim": [
+      null,
+      0.94
+     ],
+     "glitterPeak": [
+      null,
+      2.2
+     ],
+     "glitterW": [
+      null,
+      0.12
+     ],
+     "holdTicks": [
+      null,
+      2
+     ],
+     "rows": [
+      4,
+      2
+     ],
+     "sparkLife": [
+      2.11,
+      1.55
+     ],
+     "sparkLifeJit": [
+      30,
+      45
+     ],
+     "sparkPerM": [
+      15,
+      0.65
+     ],
+     "sparkSize": [
+      0.14,
+      1.1
+     ],
+     "twinkle": [
+      0.4,
+      0.8
+     ],
+     "twinkleHz": [
+      0,
+      1.4
+     ],
+     "zoom": [
+      "on",
+      "off"
+     ]
+    },
+    {
+     "autoGrid": [
+      1,
+      0
+     ],
+     "cols": [
+      4,
+      2
+     ],
+     "frameBudget": [
+      "motion",
+      "fixed"
+     ],
+     "holdTicks": [
+      0,
+      2
+     ],
+     "rows": [
+      4,
+      2
+     ]
+    }
+   ]
+  }
+ ]
+}

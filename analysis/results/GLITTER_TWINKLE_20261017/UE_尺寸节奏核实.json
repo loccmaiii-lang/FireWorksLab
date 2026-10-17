@@ -1,0 +1,73 @@
+{
+ "readOnly": true,
+ "asset": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GlitterChry_HD.P_EFX_FireWorks_GlitterChry_HD",
+ "importRevision": "37c025c83c495be09511",
+ "importedSizeSpec": {
+  "id": "cls:d:front:32",
+  "name": "前台 32 m",
+  "version": 4,
+  "what": "diameter",
+  "target_m": 32,
+  "measured_m": 311.7,
+  "k": 0.1027
+ },
+ "mainEmitters": [
+  {
+   "name": "L1_Main",
+   "enabled": true,
+   "size_m": {
+    "X": 19.153299560546873,
+    "Y": 19.153299560546873
+   },
+   "lifetimeDistributionConstant_s": 1.0640000104904175,
+   "duration_s": 1.5555000305175781,
+   "delay_s": 0
+  },
+  {
+   "name": "L2_Main",
+   "enabled": true,
+   "size_m": {
+    "X": 27.62489990234375,
+    "Y": 27.62489990234375
+   },
+   "lifetimeDistributionConstant_s": 2.666640043258667,
+   "duration_s": 3.3333001136779785,
+   "delay_s": 0.20000000298023224
+  },
+  {
+   "name": "L3_Main",
+   "enabled": true,
+   "size_m": {
+    "X": 35.0456005859375,
+    "Y": 35.0456005859375
+   },
+   "lifetimeDistributionConstant_s": 3.1466400623321533,
+   "duration_s": 3.933300018310547,
+   "delay_s": 0.6000000238418579
+  }
+ ],
+ "actorAndComponentScale": [
+  {
+   "actorScale": [
+    1,
+    1,
+    1
+   ],
+   "componentScale": [
+    1,
+    1,
+    1
+   ]
+  }
+ ],
+ "distanceToEditorCamera_m": [
+  37.02660507441464
+ ],
+ "gameCameraMeasured": false,
+ "timingDecision": "用户明确选择烘焙器金曜菊-B原节奏，层rate=1.5；本轮未改UE",
+ "rawEvidenceSha256": {
+  "asset": "3fbe3595f0d57fbd18899942b3fe415180e2cb38dc5d417befdf8d021ae63143",
+  "scene": "2ae559e02d71da811418067a780137f3aec698507378cfbb7394b3502696d1c4",
+  "importedCascade": "6959971866d1c50e735190420875d6b9d6e61b4f3407c1bb94a62bb1f7272f9b"
+ }
+}
