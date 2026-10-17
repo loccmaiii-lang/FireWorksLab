@@ -66,11 +66,32 @@ const doc = clone(payload.doc);
 // B11（22，用户 10-18 01:18「你直接放大……后面还能切换吗」）：--large-resource CLL=P_EFX_FireWorks_GoldCoreLime_L,MLL=P_EFX_FireWorks_MultiLayerChry_L
 //   大号花型（大号花型.json 的 code）改调 ResourceFX「大型_C / D」（2828 / 2829，和中型 2823 / 2825 现在是同一个粒子）；EffectScale 不变，画面不变，封板后可单独换 / 调。不带开关什么都不动。
 const LARGE_RES = new Map((option('large-resource') || '').split(',').filter(Boolean).map(x => x.split('=')));
+// B11 修订1（22，用户 10-18 01:52「金芒菊大你用银彩菊的ID就可以了，银彩菊现在用的就是金芒菊放大版」）：--pc-large GRL=P_EFX_FireWorks_SilverStrobeChry@230
+//   只给 PC（cue.mobile === false）的指定大号花型换成「已是大号」的 ResourceFX（2827，原生 230 m）：另存 <花型>_PC，球花条目 FXResourceId 换掉、EffectScale = 直径 ÷ 原生直径（230 → 1.0）。
+//   手游替身（mobile 'only'）和共用行（mobile true）不动，仍用原来的中型资源 + 放大（手游表没有 2827）。不带开关什么都不动。
+const PC_LARGE = new Map((option('pc-large') || '').split(',').filter(Boolean).map(x => { const [code, r] = x.split('='), [res, nat] = r.split('@'); return [code, {res, native: Number(nat)}]; }));
 // —— 修订2：同一资源放大升高的大号 / 主角固定子模板（另存新版本，不动原花型） ——
 const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大号花型.json'), 'utf8')).flowers;
+const pcLargeReport = [];
+const DERIVED_ALL = [...DERIVED];
+if (PC_LARGE.size) {
+  const byCode = new Map(JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大号花型.json'), 'utf8')).flowers.map(f => [f.code, f]));
+  for (const c of logic.cues) {
+    const f = byCode.get(c.sp);
+    if (!PC_LARGE.has(c.sp) || c.size !== 'L' || c.mobile !== false) continue;
+    const [b0, k] = c.templateId.split('__K');
+    if (b0 !== f.id) continue;
+    c.templateId = f.id + '_PC' + (k ? '__K' + k : '');
+    pcLargeReport.push(c.id);
+  }
+  for (const [code, o] of PC_LARGE) {
+    const f = byCode.get(code);
+    if (f && logic.cues.some(c => c.templateId.startsWith(f.id + '_PC'))) DERIVED_ALL.push({...f, id: f.id + '_PC', engineId: f.engineId + '_PC', name: f.name + '·PC 用 ' + o.res.replace('P_EFX_FireWorks_', ''), pcRes: o.res, pcNative: o.native});
+  }
+}
 {
   const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s]));
-  for (const f of DERIVED) {
+  for (const f of DERIVED_ALL) {
     const st = tmap.get(f.source), ft = tmap.get(f.frame);
     if (!st || !ft) throw Error('大号花型的来源不存在：' + f.id);
     const ss = smap.get(st.subTemplateRef), fsub = smap.get(ft.subTemplateRef);
@@ -86,6 +107,10 @@ const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大
     burst.native.PositionOffset = {X: 0, Y: round(RS * Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
     burst.native.RotationOffset = {...burst.native.RotationOffset, Roll: roll};
     burst.native.EffectScale = {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)};
+    if (f.pcRes) {   // B11 修订1：PC 的「已是大号」资源——换资源，EffectScale = 直径 ÷ 原生直径
+      burst.native.FXResourceId = f.pcRes; burst.baseTemplateRef = f.pcRes + '|burst';
+      const kk = round(f.diameter / f.pcNative); burst.native.EffectScale = {X: kk, Y: kk, Z: kk};
+    }
     burst.preview = {...burst.preview, diameterM: f.diameter};
     const sub = {...clone(ss), name: f.name, id: f.engineId, engineId: f.engineId, key: f.engineId + '@1', version: 1, entries: [trail, burst], sizeEvidence: clone(fsub.sizeEvidence),
       derivedFrom: {source: ss.key, frame: fsub.key, burstScale: round(k), rule: '同一 ResourceFX，球花 EffectScale 放大、换大号尾缀并升到大号尾缀终点', by: '本机同步（8）2026-10-11，用户 19:54 授权', engineScaleVerified: false}};
@@ -94,7 +119,7 @@ const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大
       rise: ft.rise, life: st.life, recipeDuration: round(ft.rise + st.life), subTemplateRef: sub.key, numericSource: 'derived_same_resource_scaled_20261011', engineSizeVerified: false});
   }
 }
-const DER_SRC = new Map(DERIVED.map(f => [f.id, f.source]));
+const DER_SRC = new Map(DERIVED_ALL.map(f => [f.id, f.source]));
 
 // —— B05（22，用户 10-14 21:44 手游改 6 种）：手游替身用的放大 / 换资源花型（协作/编排B01/手游种类.json derived），只建逻辑方案用到的；
 //    同大号花型的做法（同一资源 EffectScale 放大、挂到 frame 那一档尾缀的终点），可另换资源（resource，按 nativeM 算倍数）。 ——
@@ -485,7 +510,7 @@ if (errors.length) throw Error('校验失败：' + errors.slice(0, 5).join('；'
 
 // —— 三档三表 ——
 const occ = {};   // 每档展开成 (组, 时刻, 槽位, 子模板) 计数，用来查低 ⊂ 中 ⊂ 高
-const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), generatedBy: 'analysis/scripts/编排B01_编译.mjs', trailV2, tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
+const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), pcLarge: PC_LARGE.size ? {rule: [...PC_LARGE].map(([k, v]) => `${k}→${v.res}@${v.native}`), cues: pcLargeReport, templates: DERIVED_ALL.filter(f => f.pcRes).map(f => f.id)} : undefined, generatedBy: 'analysis/scripts/编排B01_编译.mjs', trailV2, tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
 fs.mkdirSync(outDir, {recursive: true});
 const onlyMobile = new Set(state.doc.cues.filter(c => c.mobile === 'only').map(c => c.id));
 for (const tier of ['high', 'medium', 'low']) {

@@ -1,0 +1,488 @@
+{
+ "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B11修订1-白墙奇数点-金芒菊大用2827-一张表.json",
+ "dfshow": "FXtools/节目/NewYearFireWorks_v01/NewYearFireWorks_v01-B11修订1-白墙奇数点-金芒菊大用2827.dfshow",
+ "rowsSource": "协作/ResourceFX_3.0_行名_2026-10-14.json",
+ "readback": "analysis/results/资源规范统一_20261016/复核_20261017/现状_202610170501Z.json",
+ "readAt": "2026-10-17T05:01:10.940Z",
+ "groups": {
+  "P": [
+   {
+    "id": "P_EFX_FireWorks_GoldCrackle",
+    "no": 2812,
+    "row": "跨年烟花3.0_小型_D_金裂星",
+    "n": 5,
+    "pc": "P_EFX_FireWorks_Combo_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverChry",
+    "no": 2814,
+    "row": "跨年烟花3.0_小型_F_银冠菊",
+    "n": 53,
+    "pc": "P_EFX_FireWorks_SilverChry_HD",
+    "mobile": "P_EFX_FireWorks_SilverChry_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_Crackle",
+    "no": 2815,
+    "row": "跨年烟花3.0_小型_G_爆裂星",
+    "n": 7,
+    "pc": "P_EFX_FireWorks_Crackle_HD",
+    "mobile": "P_EFX_FireWorks_Crackle_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_Glitter",
+    "no": 2817,
+    "row": "跨年烟花3.0_小型_I__橙辉星",
+    "n": 52,
+    "pc": "P_EFX_FireWorks_Glitter_HD",
+    "mobile": "P_EFX_FireWorks_Glitter_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_Strobe",
+    "no": 2818,
+    "row": "跨年烟花3.0_小型_J_点灭星",
+    "n": 55,
+    "pc": "P_EFX_FireWorks_Strobe_HD",
+    "mobile": "P_EFX_FireWorks_Strobe_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_GreenPeony",
+    "no": 2819,
+    "row": "跨年烟花3.0_中型_A_绿牡丹",
+    "n": 22,
+    "pc": "P_EFX_FireWorks_LimeStar_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldSpark",
+    "no": 2820,
+    "row": "跨年烟花3.0_中型_B_金锦菊",
+    "n": 14,
+    "pc": "P_EFX_FireWorks_GoldRay_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_PrismWheels",
+    "no": 2821,
+    "row": "跨年烟花3.0_中型_C_彩千轮",
+    "n": 18,
+    "pc": "P_EFX_FireWork_PrismWheels_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldChry",
+    "no": 2822,
+    "row": "跨年烟花3.0_中型_D_金曜菊",
+    "n": 36,
+    "pc": "P_EFX_FireWorks_GoldSpark_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldCoreLime",
+    "no": 2823,
+    "row": "跨年烟花3.0_中型_E_金蕊柠",
+    "n": 18,
+    "pc": "P_EFX_FireWorks_GoldCoreLime_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldRayChry",
+    "no": 2824,
+    "row": "跨年烟花3.0_中型_B_金芒菊",
+    "n": 148,
+    "pc": "P_EFX_FireWorks_GoldRayChry_HD",
+    "mobile": "P_EFX_FireWorks_GoldRayChry_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_MultiLayerChry",
+    "no": 2825,
+    "row": "跨年烟花3.0_中型_F_多重菊",
+    "n": 34,
+    "pc": "P_EFX_FireWorks_LimeCoreDelay_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldKamuro",
+    "no": 2826,
+    "row": "跨年烟花3.0_大型_A_金垂柳",
+    "n": 4,
+    "pc": "P_EFX_FireWorks_GoldKamuro_HD",
+    "mobile": "P_EFX_FireWorks_GoldKamuro_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverStrobeChry",
+    "no": 2827,
+    "row": "跨年烟花3.0_大型_B_银彩菊",
+    "n": 90,
+    "pc": "P_EFX_FireWorks_SilverStrobeChry_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldCoreLime_L",
+    "no": 2828,
+    "row": "跨年烟花3.0_大型_C_金蕊柠",
+    "n": 15,
+    "pc": "P_EFX_FireWorks_GoldCoreLime_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_MultiLayerChry_L",
+    "no": 2829,
+    "row": "跨年烟花3.0_大型_D_多重菊",
+    "n": 15,
+    "pc": "P_EFX_FireWorks_LimeCoreDelay_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_RiseTrail_Hero",
+    "no": 2830,
+    "row": "跨年烟花3.0_超大_尾缀",
+    "n": 4,
+    "pc": "P_EFX_FireWorks_RiseTrail_Hero_HD",
+    "mobile": "P_EFX_FireWorks_RiseTrail_Hero_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Large",
+    "no": 2831,
+    "row": "跨年烟花3.0_大型_尾缀",
+    "n": 226,
+    "pc": "P_EFX_FireWorks_RiseTrail_L_HD",
+    "mobile": "P_EFX_FireWorks_RiseTrail_L_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Medium",
+    "no": 2832,
+    "row": "跨年烟花3.0_中型_尾缀",
+    "n": 268,
+    "pc": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "mobile": "P_EFX_FireWorks_RiseTrail_M_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Small",
+    "no": 2833,
+    "row": "跨年烟花3.0_小型_尾缀",
+    "n": 88,
+    "pc": "P_EFX_FireWorks_RiseTrail_S_HD",
+    "mobile": "P_EFX_FireWorks_RiseTrail_S_M"
+   }
+  ],
+  "B": [
+   {
+    "id": "P_EFX_FireWorks_FanComet_01",
+    "no": 2810,
+    "row": "跨年烟花3.0_小形_B_红彗星",
+    "n": 1909,
+    "pc": "P_EFX_FireWorks_Comet_Layers_HD",
+    "mobile": "P_EFX_FireWorks_Comet_Layers_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_FanSilver_01",
+    "no": 2811,
+    "row": "跨年烟花3.0_小型_C_银星扇",
+    "n": 1328,
+    "pc": "P_EFX_FireWorks_FanSilver_01_HD",
+    "mobile": "P_EFX_FireWorks_Silver3_Layers_S_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_GoldCrackle",
+    "no": 2812,
+    "row": "跨年烟花3.0_小型_D_金裂星",
+    "n": 12,
+    "pc": "P_EFX_FireWorks_Combo_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_SilverChry",
+    "no": 2814,
+    "row": "跨年烟花3.0_小型_F_银冠菊",
+    "n": 50,
+    "pc": "P_EFX_FireWorks_SilverChry_HD",
+    "mobile": "P_EFX_FireWorks_SilverChry_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_Crackle",
+    "no": 2815,
+    "row": "跨年烟花3.0_小型_G_爆裂星",
+    "n": 16,
+    "pc": "P_EFX_FireWorks_Crackle_HD",
+    "mobile": "P_EFX_FireWorks_Crackle_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_Lime",
+    "no": 2816,
+    "row": "跨年烟花3.0_小型_H_小青柠",
+    "n": 32,
+    "pc": "P_EFX_FireWorks_Lime_HD",
+    "mobile": null
+   },
+   {
+    "id": "P_EFX_FireWorks_Glitter",
+    "no": 2817,
+    "row": "跨年烟花3.0_小型_I__橙辉星",
+    "n": 50,
+    "pc": "P_EFX_FireWorks_Glitter_HD",
+    "mobile": "P_EFX_FireWorks_Glitter_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_Strobe",
+    "no": 2818,
+    "row": "跨年烟花3.0_小型_J_点灭星",
+    "n": 16,
+    "pc": "P_EFX_FireWorks_Strobe_HD",
+    "mobile": "P_EFX_FireWorks_Strobe_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_NY_Trail_Small",
+    "no": 2833,
+    "row": "跨年烟花3.0_小型_尾缀",
+    "n": 176,
+    "pc": "P_EFX_FireWorks_RiseTrail_S_HD",
+    "mobile": "P_EFX_FireWorks_RiseTrail_S_M"
+   }
+  ],
+  "F": [
+   {
+    "id": "P_EFX_FireWorks_LittleGold",
+    "no": 2800,
+    "row": "跨年烟花3.0_小号_A_小金花",
+    "n": 174,
+    "pc": "P_EFX_FireWorks_LittleGold_HD",
+    "mobile": "P_EFX_FireWorks_LittleGold_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_LittleSilver",
+    "no": 2801,
+    "row": "跨年烟花3.0_小号_B_小银菊",
+    "n": 74,
+    "pc": "P_EFX_FireWorks_LittleSilver_HD",
+    "mobile": "P_EFX_FireWorks_LittleSilver_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_LittleCrackle",
+    "no": 2802,
+    "row": "跨年烟花3.0_小号_C_短爆裂",
+    "n": 152,
+    "pc": "P_EFX_FireWorks_LittleCrackle_HD",
+    "mobile": "P_EFX_FireWorks_LittleCrackle_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_LittleCombo",
+    "no": 2803,
+    "row": "跨年烟花3.0_小号_D_小分裂",
+    "n": 400,
+    "pc": "P_EFX_FireWorks_LittleCombo_HD",
+    "mobile": "P_EFX_FireWorks_LittleCombo_M"
+   },
+   {
+    "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+    "no": 2835,
+    "row": "跨年烟花3.0_极小_尾缀",
+    "n": 876,
+    "pc": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+    "mobile": "P_EFX_FireWorks_RiseTrail_Tiny_M"
+   }
+  ]
+ },
+ "wrongGroup": [],
+ "unknown": [],
+ "mobileMissing": [],
+ "sameParticle": [
+  {
+   "side": "pc",
+   "particle": "P_EFX_FireWorks_GoldCoreLime_HD",
+   "ids": [
+    "P_EFX_FireWorks_GoldCoreLime",
+    "P_EFX_FireWorks_GoldCoreLime_L"
+   ],
+   "rows": [
+    "跨年烟花3.0_中型_E_金蕊柠",
+    "跨年烟花3.0_大型_C_金蕊柠"
+   ]
+  },
+  {
+   "side": "pc",
+   "particle": "P_EFX_FireWorks_LimeCoreDelay_HD",
+   "ids": [
+    "P_EFX_FireWorks_MultiLayerChry",
+    "P_EFX_FireWorks_MultiLayerChry_L"
+   ],
+   "rows": [
+    "跨年烟花3.0_中型_F_多重菊",
+    "跨年烟花3.0_大型_D_多重菊"
+   ]
+  }
+ ],
+ "names": [
+  {
+   "kind": "父模板",
+   "name": "R03 · 金芒菊 · 230m（大号）·PC 用 SilverStrobeChry",
+   "plays": [
+    "银彩菊"
+   ],
+   "ids": [
+    "P_EFX_FireWorks_SilverStrobeChry"
+   ],
+   "used": true
+  },
+  {
+   "kind": "父模板",
+   "name": "R03 · 金芒菊 · 230m（大号）·PC 用 SilverStrobeChry·略小×0.92",
+   "plays": [
+    "银彩菊"
+   ],
+   "ids": [
+    "P_EFX_FireWorks_SilverStrobeChry"
+   ],
+   "used": true
+  },
+  {
+   "kind": "父模板",
+   "name": "小平台 · 三束银尾 · 小金花簇 28m（甲）",
+   "plays": [
+    "金锦菊"
+   ],
+   "ids": [
+    "P_EFX_FireWorks_GoldSpark",
+    "P_EFX_FireWorks_GoldSpark",
+    "P_EFX_FireWorks_GoldSpark"
+   ],
+   "used": false
+  },
+  {
+   "kind": "父模板",
+   "name": "小平台 · 三束银尾 · 小金花簇 28m（乙）",
+   "plays": [
+    "金锦菊"
+   ],
+   "ids": [
+    "P_EFX_FireWorks_GoldSpark",
+    "P_EFX_FireWorks_GoldSpark",
+    "P_EFX_FireWorks_GoldSpark"
+   ],
+   "used": false
+  },
+  {
+   "kind": "父模板",
+   "name": "小平台 · 双束红彗 · 短爆裂 22m（甲）",
+   "plays": [
+    "爆裂星"
+   ],
+   "ids": [
+    "P_EFX_FireWorks_Crackle",
+    "P_EFX_FireWorks_Crackle"
+   ],
+   "used": false
+  },
+  {
+   "kind": "父模板",
+   "name": "小平台 · 双束红彗 · 短爆裂 22m（乙）",
+   "plays": [
+    "爆裂星"
+   ],
+   "ids": [
+    "P_EFX_FireWorks_Crackle",
+    "P_EFX_FireWorks_Crackle"
+   ],
+   "used": false
+  },
+  {
+   "kind": "片段",
+   "name": "收尾金芒菊大",
+   "plays": [
+    "银彩菊"
+   ],
+   "count": 1
+  },
+  {
+   "kind": "片段",
+   "name": "金芒菊·大",
+   "plays": [
+    "银彩菊"
+   ],
+   "count": 6
+  },
+  {
+   "kind": "片段",
+   "name": "金芒菊·大（P2 P6，和 P4 一样大）",
+   "plays": [
+    "银彩菊"
+   ],
+   "count": 1
+  }
+ ],
+ "mobileUsed": [
+  {
+   "id": "P_EFX_FireWorks_Crackle",
+   "n": 6,
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "particle": "P_EFX_FireWorks_Crackle_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_Glitter",
+   "n": 40,
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "particle": "P_EFX_FireWorks_Glitter_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_GoldKamuro",
+   "n": 4,
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "particle": "P_EFX_FireWorks_GoldKamuro_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_GoldRayChry",
+   "n": 106,
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "particle": "P_EFX_FireWorks_GoldRayChry_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_LittleCombo",
+   "n": 400,
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "particle": "P_EFX_FireWorks_LittleCombo_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Large",
+   "n": 106,
+   "row": "跨年烟花3.0_大型_尾缀",
+   "particle": "P_EFX_FireWorks_RiseTrail_L_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Medium",
+   "n": 50,
+   "row": "跨年烟花3.0_中型_尾缀",
+   "particle": "P_EFX_FireWorks_RiseTrail_M_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Small",
+   "n": 61,
+   "row": "跨年烟花3.0_小型_尾缀",
+   "particle": "P_EFX_FireWorks_RiseTrail_S_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Hero",
+   "n": 4,
+   "row": "跨年烟花3.0_超大_尾缀",
+   "particle": "P_EFX_FireWorks_RiseTrail_Hero_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "n": 476,
+   "row": "跨年烟花3.0_极小_尾缀",
+   "particle": "P_EFX_FireWorks_RiseTrail_Tiny_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_SilverChry",
+   "n": 10,
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "particle": "P_EFX_FireWorks_SilverChry_M"
+  },
+  {
+   "id": "P_EFX_FireWorks_Strobe",
+   "n": 55,
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "particle": "P_EFX_FireWorks_Strobe_M"
+  }
+ ]
+}
