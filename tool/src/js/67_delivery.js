@@ -305,6 +305,7 @@ function deliveryMetadata(b = null, job = null, lb = null, unitHolder = null) {
   const comboPlan = () => { const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null; return { k: sk ? sk.k : 1, keep: false, spec: sk || null, sfx: '' }; };
   const result = job ? structuredClone(job.metadata) : { bakerVersion: VERSION, sourceKey: wbKey(), recipe: wbSnap(), duration: curDuration(), sizePlan: !b && state.tab === 'combo' ? comboPlan() : typeof exportScalePlan === 'function' ? exportScalePlan(state.P) : null };
   if (!job) result.classification = deliveryClassification(result.recipe, result.sizePlan, typeof sizeSpecOf === 'function' ? sizeSpecOf() : null);
+  if (!job && typeof delivImportScopeMeta === 'function') { const scope = delivImportScopeMeta(); if (scope) result.importScope = scope; }     // 4.9.115 导入范围（有导出任务时已在 job.metadata 里）
   result.artifactDuration = b ? bakeTotal(b) : lb ? Math.max(.5, ...lb.map(x => (+x.L.delay || 0) + bakeTotal(x.b) / (+x.L.rate || 1))) : comboContentEnd();
   result.boundsM = b ? { width: b.meta.Ww * (result.sizePlan?.k || 1), height: b.meta.Wh * (result.sizePlan?.k || 1) } : null;
   // Only synchronous rendering sees this temporary view. No global is held across await.

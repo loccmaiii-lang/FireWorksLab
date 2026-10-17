@@ -85,6 +85,10 @@ def check_config(name, j, png):
             bad.append(f'{tag}：配置引用的贴图不在包里：{t["file"]}')
         elif t.get('sha256') and t['sha256'] != got['sha256']:
             bad.append(f'{tag}：{t["file"]} 的内容和配置里记的 sha256 不一致（包被改过）')
+    # 用户 2026-10-18 永远的禁忌：任何贴图都不许要求 NeverStream（常驻、不能流送）；PC / 手机都查
+    for k, t in texs:
+        if any(re.fullmatch(r'never_?stream', kk, re.I) and t[kk] for kk in t):
+            bad.append(f'{tag}：贴图 {k} 要求 NeverStream，项目永远不勾（会常驻、不能流送）')
     der = j.get('derived') or {}
     if der.get('from'):
         stem = TEX_PREFIX + der['from']

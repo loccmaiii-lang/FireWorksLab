@@ -920,6 +920,14 @@ function resetDelivNames(host, subject) {
   syncEnName(); try { renderDeliv(); } catch (e) { delivNameFeedback(host, '已恢复默认名称，但清单刷新失败：' + (e.message || e), true); return true; }
   delivNameFeedback(host, '已恢复默认名称（尺寸派生按自动规则命名）'); return true;
 }
+// 4.9.115 交付清单「导入范围」（用户 10-18「只想修改贴图，或者只想修改PC或者手游的贴图……原有我修改过的参数，需要保留」）：
+//   只是告诉导入器这次替换哪些 UE 资产（写进交付 metadata.importScope），不改产物表、不改导出内容；界面状态，不进配方、不进指纹
+let delivImportScope = 'all';
+function delivImportScopeMeta() {
+  if (delivImportScope === 'all') return null;
+  const platforms = delivImportScope === 'textures-pc' ? ['pc'] : delivImportScope === 'textures-mobile' ? ['mobile'] : ['pc', 'mobile'];
+  return { kind: 'textures', platforms, note: '只换贴图：粒子系统、材质实例不动（保留 UE 里改过的参数）；' + (platforms.length > 1 ? 'PC 和手机都换' : '只换' + (platforms[0] === 'pc' ? ' PC' : '手机') + '，另一个平台不导入') };
+}
 function renderDeliv() {
   const host = $('#delivView'), subject = wbKey(), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
   if (combo) comboMobilePlan(xs).forEach((p, k) => { xs[k].mob = p; });     // 4.9.80 手机「自动」：每层实际出什么
@@ -1007,12 +1015,14 @@ function renderDeliv() {
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '有一层的产物没在产物形态登记表里，导出会被拦'}</small></div><span class="sp"></span>
+    <label class="dv-scope" title="导入器替换哪些（4.9.115，用户 10-18）：只换贴图 = 粒子系统、材质实例都不动，你在 UE 里改过的参数原样保留，贴图自己的 NoMip / Clamp 等设置也保留、只换像素；帧数 / 时长 / 格子改了要用「全部」。只换 PC / 手机：另一个平台那行导入器不勾。导出内容不变（要省掉手机烘焙，在产物表把手机选「不出」）">导入范围<select id="dvScope">${[['all', '全部（贴图 + 材质 + 粒子）'], ['textures', '只换贴图（PC + 手机）'], ['textures-pc', '只换 PC 贴图'], ['textures-mobile', '只换手机贴图']].map(([v, t]) => `<option value="${v}"${delivImportScope === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
     <button class="btn primary" type="button" id="dvExport"${noPackWhy ? ` disabled title="${noPackWhy.replace(/"/g, '&quot;')}"` : ''}>导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
     <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
     ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
+  host.querySelector('#dvScope').addEventListener('change', e => { delivImportScope = e.target.value; });
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
   host.querySelectorAll('[data-prod]').forEach(sel => sel.addEventListener('change', () => setProduct(+sel.dataset.i, sel.dataset.prod, sel.value)));
   host.querySelectorAll('[data-lowview]').forEach(b => b.addEventListener('click', showLowReplay));     // 4.9.33 单帧的引擎回放（用户 10-07 17:26「单帧输出模式我想要个引擎回放」）

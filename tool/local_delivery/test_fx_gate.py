@@ -95,6 +95,10 @@ class Gate(unittest.TestCase):
         self.assertFalse(r['ok'])
         self.assertTrue(any(want in x for x in r['problems']), r['problems'])
 
+    def test_0_never_stream(self):     # 用户 10-18：永远不勾 NeverStream
+        pc = copy.deepcopy(GOOD_PC); k = next(iter(pc['textures'])); pc['textures'][k]['never_stream'] = True
+        self.bad(None, 'NeverStream', pc=pc)
+
     def test_1_mobile_hd_name(self):     # 10-12：手机粒子叫 _Mobile_HD
         m = copy.deepcopy(GOOD_MOBILE); m['name'] = 'RiseTrail_S_Mobile_HD'
         self.bad(m, '带 _HD / _Mobile')

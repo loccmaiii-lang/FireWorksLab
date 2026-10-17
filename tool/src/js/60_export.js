@@ -44,7 +44,7 @@ async function makeZip(files, job = null, rules = null) {     // rules：没有�
     }
   }
   // ZIP 直接交付也保留来源/迭代证据；目录模式的正式回执仍由交付服务生成。
-  if (job) files = [...files, ['workspace-export.json', utf8(JSON.stringify({ format: 'df.firework-export/1', sourceKey: job.key, resourceName: job.system, ...(iterationOf ? { iterationOf } : {}) }, null, 1))]];
+  if (job) files = [...files, ['workspace-export.json', utf8(JSON.stringify({ format: 'df.firework-export/1', sourceKey: job.key, resourceName: job.system, ...(iterationOf ? { iterationOf } : {}), ...(job.metadata && job.metadata.importScope ? { importScope: job.metadata.importScope } : {}) }, null, 1))]];
   if (typeof exportClockMark === 'function') exportClockMark('ZIP 打包');
   const parts = [], central = []; let offset = 0;
   const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
@@ -367,6 +367,7 @@ function captureExportJob(kind = 'single') {
   const nt = combo ? entries.length === 1 ? entries[0].P.type : '' : P.type;
   const naming = packNamesFor(key, lib.effect, combo ? layers.length : 1, combo ? name : typeof delivName === 'function' ? delivName() : name, nt);
   const metadata = { bakerVersion: VERSION, sourceKey: key, recipe, duration: curDuration(), sizePlan: sp };
+  { const scope = typeof delivImportScopeMeta === 'function' ? delivImportScopeMeta() : null; if (scope) metadata.importScope = scope; }     // 4.9.115 交付清单「导入范围」（导入器只替换选中的）
   metadata.classification = deliveryClassification(recipe, sp, typeof sizeSpecOf === 'function' ? sizeSpecOf() : null);
   return freezeExportData(structuredClone({
     kind, key, name, P, M, layers, entries, comboName: state.comboName, platform: state.platform,

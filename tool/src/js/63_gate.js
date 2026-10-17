@@ -35,6 +35,9 @@ function packGateConfig(f, j, dir, png) {
   }
   // 4.9.89（导出排查 H1 / G1）：空壳发射器（出生率 0 又没有 Burst，引擎里什么都不出）不许导出——以前 PC「光点」对尾缀 / 星头不发光的层出这种东西，引擎回放里星头直接消失
   const emptySpawn = e => { if(!e.spawn)return false;const sp=e.spawn,rate=!sp.rate?0:sp.rate.const!=null?+sp.rate.const:1,n=(sp.bursts||[]).reduce((a,q)=>a+(+q[1]||0),0);return !(rate>0)&&!(n>0); };
+  // 4.9.115：用户 10-18 永远的禁忌——任何贴图都不许要求 NeverStream（常驻、不能流送）
+  const neverStream = texs.filter(([, t]) => t && Object.keys(t).some(k => /^never_?stream$/i.test(k) && t[k])).map(([k]) => k);
+  if (neverStream.length) bad.push(`${tag}：贴图 ${neverStream.join('、')} 要求 NeverStream，项目永远不勾（会常驻、不能流送）`);
   const evBad=typeof cascadeEventErrors==='function'?cascadeEventErrors(j):ems.some(e=>(e.modules||[]).some(m=>/^Event/.test(m.m)))?['缺少事件合同校验器']:[];
   bad.push(...evBad.map(s=>tag+'：'+s));
   const sources=new Set();for(const e of ems)if(!emptySpawn(e))for(const m of e.modules||[])if(m.m==='EventGenerator')for(const v of m.Events||[])sources.add(v.Type+':'+v.CustomName);

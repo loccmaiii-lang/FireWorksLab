@@ -112,6 +112,13 @@ t('关掉的发射器不算、不写', () => {
   assert.ok(j.system.fixed_bounds.max[0] < 20000); assert.equal(j.emitters[1].required.uv_flip, undefined); assert.equal(j.emitters[0].required.uv_flip, 'RandomFlipUOnly');
 });
 
+// 4.9.115 用户 10-18 永远的禁忌：导出拦截见到 NeverStream 就拦
+t('导出拦截：贴图要求 NeverStream → 拦下；正常配置不报', () => {
+  const gate = vm.runInContext('packGateConfig', ctx), ok = cfg([plane()]), bad = structuredClone(ok); bad.textures.seq.never_stream = true;
+  assert.equal(gate('cascade.json', ok, '', {}).filter(x => /NeverStream/.test(x)).length, 0);
+  assert.ok(gate('cascade.json', bad, '', {}).some(x => /NeverStream/.test(x)));
+});
+
 // ---- 出包接线：packFinalize 之后每份配置都有四项（旧导入器不认的地方没动：scalars、format）----
 const finalize = async (files, o) => vm.runInContext('packFinalize', ctx)(files, { noThrow: true, known: null, sourceKey: '', ...o });
 const dec = new TextDecoder(), enc = new TextEncoder();
