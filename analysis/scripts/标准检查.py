@@ -5,6 +5,7 @@
   python3 analysis/scripts/标准检查.py JM4 HK9 type40:kiku ...   # 只查这几个（结果并进上一次的完整结果）
   选项：--all（迭代区全部非历史条目）  --no-write（不写 tool/data/standard.js）
   --ui-state-only：只跑离线界面状态回归（需Node；不启动浏览器、不改条目结果）
+  --director-preview-only：只跑导演预览模拟平台/画质恢复回归（离线，不连接UE）
 
 查什么（都在导出口径上量，不看实时模拟）：
   条目 6 样东西（标准第 1 节）：实时模拟 / 引擎回放 + 游戏内大小 / 贴图 + 流转 / 完整参数 / 导出素材包 / 实拍对照（有参考时）
@@ -126,6 +127,7 @@ if __name__ == '__main__':
     ap.add_argument('targets', nargs='*')
     ap.add_argument('--no-write', action='store_true')
     ap.add_argument('--ui-state-only', action='store_true', help='只跑离线界面状态回归，不启动浏览器')
+    ap.add_argument('--director-preview-only', action='store_true', help='只跑导演预览恢复回归，不连接UE')
     ap.add_argument('--startup-only', action='store_true', help='只跑显卡程序按需初始化回归，不启动浏览器')
     ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
     ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
@@ -133,6 +135,8 @@ if __name__ == '__main__':
     ap.add_argument('--spark-scales-only', action='store_true', help='分层粒子图整体倍率模型与真实入口/导出检查（需Node Playwright）')
     ap.add_argument('--event-instances-only', action='store_true', help='CPU事件合同与导出门禁回归，不连接UE')
     a = ap.parse_args()
+    if a.director_preview_only:
+        raise SystemExit(subprocess.call(['node', str(HERE / '编排导演恢复检查.mjs')]))
     if a.event_instances_only:
         for check in ('cascade_events_test.cjs','event_instances_check.cjs'):
             rc=subprocess.call(['node',str(HERE/check)])

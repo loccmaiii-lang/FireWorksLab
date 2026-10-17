@@ -6,7 +6,8 @@
     "camera": true,
     "seed": true,
     "stopped": true,
-    "cvars": true
+    "cvars": true,
+    "simulation": false
   },
   "camera": {
     "function": "GetLevelViewportCameraInfo",
@@ -22,5 +23,6 @@
     "r.ScreenPercentage": 100,
     "r.SeparateTranslucencyScreenPercentage": 0,
     "r.MaxAnisotropy": 8
-  }
+  },
+  "补正": "以上原读回只证明配置/属性/机位/CVar一致，实际模拟平台漏检且Mobile残留；不再称完全恢复。用户反馈后已明确恢复PC/极高，见PC_极高恢复核对.json。"
 }

@@ -23,15 +23,18 @@
   "captureCount": 180,
   "thumbnailsExist": true,
   "formalFullRunsEndAt218": true,
-  "allRestoresPassed": true,
+  "allRestoresPassed": false,
   "finalSceneChecks": {
     "config": true,
     "debug": true,
     "camera": true,
     "seed": true,
     "stopped": true,
-    "cvars": true
+    "cvars": true,
+    "simulation": false
   },
   "staticResourceCheck": "本轮已执行编排B05.py --verify候选，旧快照missing=[]；不是本日完整资源重扫。",
-  "productionWorkbenchChanged": false
+  "productionWorkbenchChanged": false,
+  "allPropertyRestoresPassed": true,
+  "restorationCorrection": "原180张采样的旧runnerSha256保持；全恢复结论撤回，漏了缓存模拟平台。后续恢复检查见PC_极高恢复核对.json，当前PC/极高与扇形实放已确认。"
 }

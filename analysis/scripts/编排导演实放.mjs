@@ -18,10 +18,11 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const cfg=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
 if(!/^[A-Za-z0-9_-]+$/.test(cfg.label))throw Error('label 只能含字母、数字、横线');
 if(!['PC','Mobile'].includes(cfg.platform))throw Error('未支持的平台');
-if(!['EQuality_High','EQuality_Medium','EQuality_Low','EQuality_VeryLow'].includes(cfg.quality))throw Error('未支持的导演档位');
+if(!['EQuality_VeryHigh','EQuality_High','EQuality_Medium','EQuality_Low','EQuality_VeryLow'].includes(cfg.quality))throw Error('未支持的导演档位');
 if(!Number.isFinite(cfg.start)||!Array.isArray(cfg.moments)||!cfg.moments.length||cfg.moments.some((v,i,a)=>!Number.isFinite(v)||v<cfg.start||(i&&v<=a[i-1])))throw Error('时刻必须递增且不早于起点');
 const out=path.resolve(cfg.out),shotDir=path.join(out,'shots',cfg.label);
 const runPath=path.join(out,cfg.label+'.json');
+const logFile=cfg.logFile?path.resolve(cfg.logFile):null;
 if(fs.existsSync(runPath)||fs.existsSync(shotDir))throw Error('已有运行证据，不覆盖');
 fs.mkdirSync(shotDir,{recursive:true});
 const report={format:'df.director-visual-run/1',sourceHead:cfg.sourceHead,label:cfg.label,platform:cfg.platform,quality:cfg.quality,start:cfg.start,requestedMoments:cfg.moments,requests:[],events:[],started:false};
@@ -60,13 +61,31 @@ const get=async()=>(await request('/object/get',{path:target,properties:['Defaul
 const clock=async()=>Number((await call(KSL,'GetGameTimeInSeconds',{WorldContextObject:WORLD})).return_value);
 const foreign=v=>Object.fromEntries(Object.entries(v).filter(([k])=>!KEYS.includes(k)));
 const arrays=v=>Object.fromEntries(KEYS.map(k=>[k,v[k]]));
-let before=null,camBefore=null,camDuring=null,wanted=null,playing=false,installed=false,cameraChanged=false;
+async function waitLog(offset,required){
+ const deadline=Date.now()+2000;
+ do{
+  const size=fs.statSync(logFile).size;
+  if(size<offset)throw Error('UE日志已轮转，无法核对实际模拟状态');
+  const fd=fs.openSync(logFile,'r'),buf=Buffer.alloc(size-offset);
+  try{fs.readSync(fd,buf,0,buf.length,offset);}finally{fs.closeSync(fd);}
+  const log=buf.toString('utf8');
+  if(required.every(s=>log.includes(s)))return log;
+  await sleep(80);
+ }while(Date.now()<deadline);
+ throw Error('缺少实际模拟平台/画质恢复回执');
+}
+let before=null,camBefore=null,camDuring=null,wanted=null,playing=false,installed=false,cameraChanged=false,simulationTouched=false;
 try{
  const refs=await request('/object/search',{class:'DFMShowDirector',limit:100});
  const inst=(refs.objects||[]).filter(o=>o.path.includes(':')&&!o.path.includes('Default__'));
  if(inst.length!==1)throw Error('关卡导演不唯一');target=inst[0].path;report.director=target;
  before=await get();camBefore=await camera();report.before={properties:before,camera:camBefore};
  if(before.bShowActive)throw Error('导演已有播放，停止本次操作');
+ // None 只表示不再次写平台，不能读出/清除编辑器已经缓存的模拟平台。
+ // 不猜恢复值；现场先明确平台，才允许临时切换并在结束时重新应用。
+ if(!['PC','Mobile','Gamepad'].includes(before.DebugPlatform))throw Error('原平台为 None，无法可靠恢复实际模拟平台；先明确现场平台');
+ if(!logFile||!fs.statSync(logFile).isFile())throw Error('必须提供可读UE日志以核对实际模拟状态');
+ if(!Number.isFinite(before.DefaultConfig.TotalDuration)||before.DefaultConfig.TotalDuration<0)throw Error('导演总时长无效，不能安全执行尾声恢复');
  if(cfg.expectedBefore){const b=JSON.parse(fs.readFileSync(cfg.expectedBefore,'utf8'));if(!same(before.DefaultConfig,b.instance.properties.DefaultConfig)||!same(camBefore,b.camera))throw Error('现场配置或机位与本轮备份不同，停止');}
  if(cfg.diagnosticPitch!==undefined){
   if(!Number.isFinite(cfg.diagnosticPitch)||Math.abs(cfg.diagnosticPitch)>89)throw Error('诊断仰角无效');
@@ -85,11 +104,10 @@ try{
  await request('/object/set',{path:target,properties:{DebugPlatform:cfg.platform,DebugQualityLevel:cfg.quality,DebugPreviewStartTime:cfg.start}});
  current=await get();
  if(current.DebugPlatform!==cfg.platform||current.DebugQualityLevel!==cfg.quality||!same(current.DebugPreviewStartTime,cfg.start))throw Error('调试字段读回不一致');
- const logFile=cfg.logFile?path.resolve(cfg.logFile):null;
  const logOffset=logFile?fs.statSync(logFile).size:null;
  report.callBeforeClock=await clock();report.callWall=new Date().toISOString();
  // 从调用前即视为可能已播放；请求超时也走现场核对，绝不自动重放。
- playing=true;report.play=await call(target,'DebugPreviewShow');report.started=true;
+ playing=true;simulationTouched=true;report.play=await call(target,'DebugPreviewShow');report.started=true;
  const t0=Date.now();report.callAfterClock=await clock();report.callAfterWall=new Date(t0).toISOString();
  const initial=await request('/object/get',{path:target,properties:['bShowActive','ShowStartServerTime']});report.initialActive=initial.properties;
  // 编辑器 DebugPreviewShow 使用独立 FTicker，bShowActive 只反映运行时演出。
@@ -145,8 +163,28 @@ finally{
     if(camDuring&&!same(now,camDuring))throw Error('诊断机位在测试中被改变，不覆盖它');
     await call(ELL,'SetLevelViewportCameraInfo',{CameraLocation:camBefore.out_CameraLocation,CameraRotation:camBefore.out_CameraRotation});
    }
+   if(simulationTouched){
+    // 恢复属性不足以恢复 FShowDirectorUtils 的实际平台/画质。
+    // 用原设置从尾声后短开再停，使导演自身重新应用；不从头重播。
+    const restore=report.simulationRestore={platform:before.DebugPlatform,quality:before.DebugQualityLevel};
+    const offset=fs.statSync(logFile).size;
+    try{
+     await request('/object/set',{path:target,properties:{DebugPreviewStartTime:before.DefaultConfig.TotalDuration+1}});
+     restore.preview=await call(target,'DebugPreviewShow');
+    }finally{
+     try{restore.stop=await call(target,'DebugStopShow');}
+     finally{await request('/object/set',{path:target,properties:Object.fromEntries(DEBUG.map(k=>[k,before[k]]))});}
+    }
+    const platform={Mobile:1,PC:2,Gamepad:3}[before.DebugPlatform];
+    const quality={EQuality_VeryLow:0,EQuality_Low:1,EQuality_Medium:2,EQuality_High:3,EQuality_VeryHigh:4}[before.DebugQualityLevel];
+    if(quality===undefined)throw Error('未支持原画质的实际恢复核对');
+    const log=await waitLog(offset,[`模拟平台已设置: ${platform}`,`模拟画质已设置: ${quality}`]);
+    restore.receipt=log.split(/\r?\n/).filter(s=>s.includes('ShowDirectorTool:')).map(s=>s.slice(s.indexOf('ShowDirectorTool:')));
+    restore.verified=restore.preview.called===true&&restore.stop.called===true;
+    if(!restore.verified)throw Error('实际模拟状态恢复调用未成功');
+   }
    const after=await get(),camAfter=await camera();report.after={properties:after,camera:camAfter};
-   report.restored={config:same(after.DefaultConfig,before.DefaultConfig),debug:DEBUG.every(k=>same(after[k],before[k])),camera:same(camAfter,camBefore),stopped:after.bShowActive===false,seed:same(after.RandomSeed,before.RandomSeed)};
+   report.restored={config:same(after.DefaultConfig,before.DefaultConfig),debug:DEBUG.every(k=>same(after[k],before[k])),camera:same(camAfter,camBefore),stopped:after.bShowActive===false,seed:same(after.RandomSeed,before.RandomSeed),simulation:!simulationTouched||report.simulationRestore?.verified===true};
    if(Object.values(report.restored).some(v=>!v))throw Error('现场恢复读回不完全一致');
   }catch(e){report.restoreError=e.stack||e.message;process.exitCode=1;console.error('恢复检查失败：'+e.message);}
  }

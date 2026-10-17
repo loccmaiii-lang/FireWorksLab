@@ -1,0 +1,92 @@
+{
+  "at": "2026-10-17T06:47:58.758Z",
+  "原因": "原三表与Debug字段已恢复，但最后Mobile模拟平台仍生效；None预览仅重写画质，没有清掉平台。原恢复检查遗漏实际模拟状态。",
+  "依据": {
+    "原三表与当前逐项一致": true,
+    "最后Mobile平台日志": "2026.10.17-13.58.47 模拟平台已设置: 1",
+    "用户以None开播日志": "2026.10.17-14.44.06 只有模拟画质已设置: 3，无新平台设置"
+  },
+  "恢复设置": {
+    "DebugPlatform": "PC",
+    "DebugQualityLevel": "EQuality_VeryHigh",
+    "DebugPreviewStartTime": 0
+  },
+  "实际生效日志": [
+    "ShowDirectorTool: 模拟平台已设置: 2",
+    "ShowDirectorTool: 模拟画质已设置: 4",
+    "ShowDirectorTool: 从 15.0 秒开始预览（已跳过之前的特效）",
+    "ShowDirectorTool: 编辑器预览已开始（本地时间累加模式）"
+  ],
+  "活动银星扇组件数": 18,
+  "活动银星扇资源": [
+    "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD"
+  ],
+  "本次恢复检查": {
+    "config": true,
+    "overrides": true,
+    "seed": true,
+    "camera": true,
+    "cvars": true,
+    "readyPC": true,
+    "readyVeryHigh": true,
+    "startZero": true,
+    "stopCalled": true,
+    "fanPlayed": true,
+    "shotExists": true
+  },
+  "尾声真实入口检查": {
+    "label": "PC_VERYHIGH_CLEANUP",
+    "restored": {
+      "config": true,
+      "debug": true,
+      "camera": true,
+      "stopped": true,
+      "seed": true,
+      "simulation": true
+    },
+    "simulationRestore": {
+      "platform": "PC",
+      "quality": "EQuality_VeryHigh",
+      "preview": {
+        "function": "DebugPreviewShow",
+        "called": true
+      },
+      "stop": {
+        "function": "DebugStopShow",
+        "called": true
+      },
+      "receipt": [
+        "ShowDirectorTool: 模拟平台已设置: 2",
+        "ShowDirectorTool: 模拟画质已设置: 4",
+        "ShowDirectorTool: 从 215.4 秒开始预览（已跳过之前的特效）",
+        "ShowDirectorTool: 已自动开启 Viewport Realtime 模式",
+        "ShowDirectorTool: 编辑器预览已开始（本地时间累加模式）",
+        "ShowDirectorTool: 预览已停止"
+      ],
+      "verified": true
+    }
+  },
+  "保留用户新机位": {
+    "function": "GetLevelViewportCameraInfo",
+    "called": true,
+    "out_CameraLocation": "(X=371183.343750,Y=-768376.625000,Z=-16609.375000)",
+    "out_CameraRotation": "(Pitch=39.757900,Yaw=-85.862007,Roll=0.000000)",
+    "return_value": "True"
+  },
+  "保留本轮CVar": {
+    "sg.EffectsQuality": 3,
+    "sg.TextureQuality": 3,
+    "sg.PostProcessQuality": 3,
+    "r.ScreenPercentage": 100,
+    "r.SeparateTranslucencyScreenPercentage": 0,
+    "r.MaxAnisotropy": 16
+  },
+  "扇形原截图SHA256": "5981d67d0c29cc083047b4e83773016b3b81cae74327aa79046d9fa705dea71b",
+  "修复后采样脚本SHA256": "124a04ca380b3723de999995749145c02043f8c4f9d292d955d48cf1a3560c4a",
+  "离线回归": {
+    "修复前": "4项失败，属性读回通过但实际平台仍Mobile",
+    "修复后": "正常结束、预览已生效后返回失败、恢复回执丢失、初始None零写入拒绝，4项通过"
+  },
+  "保护": "未重写三表、未保存UE资产或关卡、未动资源/P4、未改CVar；恢复后没有再次切Mobile。",
+  "本机完整证据": "analysis/local/B09_DIRECTOR_20261017/RESTORE_FOLLOWUP/"
+}
