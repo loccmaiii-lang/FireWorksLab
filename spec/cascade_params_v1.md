@@ -136,6 +136,18 @@
 
 导出拦截（烘焙器）和导入前拦截（`tool/local_delivery/fx_gate.py`）都按规范查这些字段，不合规范不出包 / 不导入。
 
+### 1.3 资源规范四项（烘焙器 4.9.113 起，用户 2026-10-16 01:38；`tool/src/js/62_resource_rules.js`）⚪ 导入器待本机实现
+
+所有导出出包前补上，导入器按这些字段写；「更新」已有资产时也照包重写，不回到默认（旧导入器「更新」会清材质覆盖、把盒写回 ±100000、不写翻转）。旧导入器忽略这些字段（`FacingCameraPosition` 它已经支持）。
+
+| 字段 | 在哪 | 含义 → UE |
+| --- | --- | --- |
+| `system.fixed_bounds` | 顶层 `system` | `{ min: [x, y, z], max: [x, y, z] }`，组件本地 cm → 粒子系统 `bUseFixedRelativeBoundingBox = true`、`FixedRelativeBoundingBox`。算法：每个发射器寿命内位置包络（出生位置 + 初速 + 加速度 + 线性阻力，或 Velocity/Life Absolute 积分；事件子粒子从母粒子范围出发、继承速度）+ 面片角点到粒子的最远距离（Pivot、Size By Life；锁 Z 轴时 Z 按面片高、水平按宽）；重力等加速度世界固定，按组件缩放 0.65 / 1.6 两端换到本地；每边外扩 10 %、10 cm 向外取整。没写 = 有不认识的移动模块（原因见 `resource_rules.fixed_bounds`），导入器按原来的 ±100000。导演倾斜（扇 ±50°）没算进去 |
+| `required.screen_alignment` | 每个发射器 | 方形大序列（`flipbook_rgba`、CPU、原 Rectangle、没有 `OrientationAxisLock`、出生大小和 Size By Life 全程 X = Y）写 `FacingCameraPosition`；横竖不同的仍 `Rectangle`（26 D1 实测：FCP 只用 X 尺寸，长条会被压短） |
+| `required.uv_flip` | 每个发射器 | `None` / `RandomFlipUOnly` → Required › Rendering › UV Flipping Mode。序列 / 单束：系统里只有它一张、其余只有原地单颗闪光，且配方左右对称 → `RandomFlipUOnly`；同一系统多张序列（拆层 / 尾缀接力）、序列 + 光点 / 粒子、事件生成 / 接收、配方左右不对称（文字、扇 / 扫射、风、侧向初速、倾斜、尾缀侧倾、燃尽后气流、粒子图、镜像层）、不知道配方 → `None`。圆点类（soft_dot / glow）→ `RandomFlipUOnly` |
+| `materials[k].emissive_dissolve` | 序列 / 单束材质（`flipbook_rgba`、`beam_flipbook`） | `0.98` → 材质实例标量参数（项目里叫 EmissiveDissolve，由本地配置按角色对应）。避开 Ramp 末格黑（渲染基础问题 I1）。不放进 `scalars`：旧导入器对不认识的数值参数直接拒收 |
+| `resource_rules` | 顶层 | 规则版本 `fwl.resource-rules/1`、余量 / 缩放 / 取整、改成 FCP 的发射器、翻转 None 的原因、写了 0.98 的材质（只给人和检查看，导入器不用） |
+
 ## 4. 发射器字段
 
 | 字段 | Cascade 对应 | 状态 |

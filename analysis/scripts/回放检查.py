@@ -122,10 +122,10 @@ class Pack:
 
     def offset(self, u):
         """面片中心相对爆点（发射器原点）的偏移（cm，x 右、y 上）：InitialLocation 的 X / Z + Pivot Offset（4.3 固定取景用 Pivot 对齐爆点）。
-        只算面向相机的面片（Rectangle）；速度对齐的尾缀面片沿弹道走，这里不模拟运动，照旧摆在中心"""
+        只算面向相机的面片（Rectangle / FacingCameraPosition）；速度对齐的尾缀面片沿弹道走，这里不模拟运动，照旧摆在中心"""
         vo = self.mods.get('VelocityOverLife')
         absolute = bool(vo and vo.get('Absolute'))
-        if self.e['required'].get('screen_alignment', 'Rectangle') != 'Rectangle' and not absolute: return 0.0, 0.0
+        if self.e['required'].get('screen_alignment', 'Rectangle') not in ('Rectangle', 'FacingCameraPosition') and not absolute: return 0.0, 0.0     # 4.9.113 方形大序列导出成 FacingCameraPosition，摆位和 Rectangle 一样
         loc = self.mods.get('InitialLocation'); x, z = 0.0, 0.0
         if loc: c = np.asarray(curve(loc['StartLocation'], 0), float); x, z = float(c[0]), float(c[2])
         pv = self.e['required'].get('pivot_offset')

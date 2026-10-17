@@ -1,6 +1,7 @@
 // =====================================================================
 //  4.9.69 导出拦截 + 贴图 SHA256（用户 10-12 19:44「有一个导出和导入拦截，不符合规范就不要导入」；规范 spec/烟花特效资产规范.md v1 §2 / §3 / §6）
-//  所有导出都经过 makeZip → 这里：① 每张 textures[k] 写 "sha256"（PNG 文件内容），导入拦截靠它跨会话去重；② 按规范查，任何一条不满足就抛错，不出包。
+//  所有导出都经过 makeZip → 这里：① 每张 textures[k] 写 "sha256"（PNG 文件内容），导入拦截靠它跨会话去重；② 按规范查，任何一条不满足就抛错，不出包；
+//  ③ 4.9.113 资源规范统一四项（固定包围盒 / 方形大序列 FacingCameraPosition / UV 翻转 / EmissiveDissolve 0.98）在这里补上（62_resource_rules.js，o.recipes = 这次导出的配方）。
 //  手机配置（cascade_mobile*.json）：
 //    名字不带 _HD / _Mobile，档位 tier ∈ H / M、名字以 _<档位> 结尾；发射器 ≤ 3（_M）/ ≤ 6（_H，用户待定）；没有 GPU；每个发射器写 max_alive 且 ≤ 50；
 //    同一时刻最多 1 张大序列（烟花中低配 1 张大序列帧、尾缀 1 层 overdraw）；引用的贴图名不带 _HD；所有贴图 ≤ 1024（用户 10-12 22:01「严格遵守，直接拦下」）。
@@ -103,11 +104,12 @@ function packGateIteration(png, known, sourceKey, resourceName, iterationOf) {
 async function packFinalize(files, o = {}) {
   const dec = new TextDecoder(), png = {};
   for (const [f, d] of files) if (/\.png$/i.test(f)) { const u = await gateBytes(d); png[f] = { sha256: await sha256Hex(u), size: pngSize(u) }; }
-  const out = [], bad = [], resourceNames = new Set(), assets = {};
+  const out = [], bad = [], resourceNames = new Set(), assets = {}, rulesText = {};
   for (const [f, d] of files) {
     if (!FWL_CFG_RE.test(f)) { out.push([f, d]); continue; }
     const j = JSON.parse(dec.decode(await gateBytes(d))), dir = f.includes('/') ? f.slice(0, f.lastIndexOf('/') + 1) : '';
     if (/_mobile/.test(f) && !(j.emitters || []).length) continue;     // 手机全部「不出」
+    if (typeof fwlApplyResourceRules === 'function') { fwlApplyResourceRules(j, { recipes: o.recipes }); (rulesText[dir] = rulesText[dir] || []).push(fwlRulesText(f, j)); }     // 4.9.113 四项规则（先补再查拦截）
     const resourceName = j.naming?.system || j.naming?.base || String(j.name || '').replace(/_(?:M|H)$/, '');
     if (resourceName) resourceNames.add(resourceName);
     for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file && png[dir + t.file]) {
@@ -116,6 +118,9 @@ async function packFinalize(files, o = {}) {
     bad.push(...packGateConfig(f, j, dir, png));
     out.push([f, utf8(JSON.stringify(j, null, 1))]);
   }
+  // 4.9.113：人看的「Cascade 参数」说明是规则之前写的，末尾补一段最终四项（以 cascade.json 为准）
+  for (let i = 0; i < out.length; i++) { const [f, d] = out[i], dir = f.includes('/') ? f.slice(0, f.lastIndexOf('/') + 1) : '';
+    if (/_Cascade参数\.txt$/.test(f) && rulesText[dir]) out[i] = [f, utf8(dec.decode(await gateBytes(d)) + '\n\n' + rulesText[dir].join('\n'))]; }
   let known = o.known, sk = o.sourceKey;
   try { if (known === undefined && typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.knownTextures) known = DeliveryWorkspace.knownTextures(); } catch (e) { known = null; }
   try { if (sk === undefined && typeof wbKey === 'function') sk = wbKey(); } catch (e) { sk = ''; }

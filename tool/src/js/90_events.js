@@ -135,7 +135,7 @@ window.__fw = {
     // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名；4.9.69 派生资源（非默认尺寸档）系统名区分、贴图沿用原效果
     if (namingApplies(b) && opt.naming !== false) { const nm = packNamesFor(efJ ? 'ef:' + efJ.key : 'rv:' + (opt.entry || name), efJ, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: packSysName(nm.base, P.type, spJ.spec, nm.system), spec: spJ.spec && spJ.spec.id }); }
     files = scaleCascadeFiles(files, spJ.k, spJ.keep, spJ.spec);     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）；4.9.51 配了尺寸标定按标定
-    const zip = await makeZip(files); disposeBake(b);
+    const zip = await makeZip(files, null, { recipes: [{ P }] }); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },
   replicaPM, renderStills, measure, metricsOf,
@@ -152,7 +152,7 @@ window.__fw = {
     // 4.9.106 G4：V5 也按命名规范换名（导出拦截查贴图名，以前这里出 T_<内部名>_Loop，会被拦）
     let out = files; { const ef = typeof EFFS === 'function' ? EFFS().find(e => e.key === key) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + name, ef, 1, name, P.type, null);
       out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: packSysName(nm.base, P.type, null, nm.system) }); }
-    const u8 = new Uint8Array(await (await makeZip(out)).arrayBuffer()); disposeBake(b);
+    const u8 = new Uint8Array(await (await makeZip(out, null, { recipes: [{ P }] })).arrayBuffer()); disposeBake(b);
     let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
     return btoa(s);
   },

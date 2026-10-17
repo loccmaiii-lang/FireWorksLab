@@ -1,3 +1,15 @@
+## 4.9.113 · 资源规范统一四项规则进导出（资源规范统一第三步的导出一半）
+
+- 用户 10-16 01:38 四项（EmissiveDissolve 0.98 / 按实际范围的固定包围盒 / 大序列 Facing Camera Position / UV 翻转）以前只在 UE 里手改过一次（26 第 2 步 115 包），新导出、导入器「更新」都会回到默认。现在所有导出出包前（makeZip → packFinalize，新文件 `62_resource_rules.js`）给 cascade.json / cascade_mobile.json 补上：
+  - `system.fixed_bounds`（组件本地 cm）：每个发射器寿命内的位置包络（出生位置、初速、重力 / 加速度、阻力，或 Velocity/Life 直接积分；事件子粒子从母粒子范围出发）+ 面片角点到粒子的最远距离（Pivot、Size By Life、锁 Z 轴）；重力不跟组件缩放，按缩放 0.65–1.6 两端换到本地；每边外扩 10 %、10 cm 向外取整。遇到不认识的移动模块就不写（导入器照旧 ±1000 m）。
+  - 方形大序列（序列材质、CPU、Rectangle、没锁轴、全程 X = Y）`required.screen_alignment` 改 `FacingCameraPosition`；横竖不同的保持 Rectangle（26 D1 实测 FCP 只认 X）。
+  - `required.uv_flip`：系统里只有一张序列（加原地闪光）且配方左右对称 → `RandomFlipUOnly`；同一系统多张序列 / 序列 + 光点粒子 / 事件 / 文字、扇、风、倾斜、侧倾、镜像层、粒子图 → `None`；圆点类 `RandomFlipUOnly`。不知道配方（没有导出任务）按 None。
+  - 序列 / 单束材质 `materials[k].emissive_dissolve: 0.98`（不放进 `scalars`：现在的私有导入器会拒收不认识的数值参数）。
+  - 包里的「Cascade 参数.txt」末尾补一段最终四项。顶层 `resource_rules` 记规则版本、FCP 名单、None 原因。
+- 不变：模拟、贴图像素、帧计划指纹（plan_sig）、OUTPUT_VER、默认值、右栏参数（不新增参数）。已导出的包不过期；旧导入器忽略新字段，只有 FCP 会被它写进 UE（导入器早已支持）。
+- 导入器那一半（按新字段写盒 / 翻转 / 0.98、「更新」不改回）在本机私有导入器，按 26 原任务先列改动给用户、点头再改；没改之前，新导入的盒仍是 ±1000 m、翻转和 0.98 要手设。
+- 检查：`analysis/scripts/resource_rules_check.mjs`（15 项：单元用例、packFinalize 接线、仓库 + 本机 389 份真实包全部算得出合法的盒）；`回放检查.py` 把 FacingCameraPosition 当 Rectangle 摆位。未经 UE 验证：新盒是否包住（show Bounds 实放）、FCP 方形面片画面（26 已实放 12 个同类）。
+
 ## 4.9.112 · 同名导出迭代与失败目标提示
 
 - 修复 GlitterChry 与旧 GlitterChry_D150 的跨来源同名更新只有报错、没有可继续路径的问题。不同来源同名不同内容不再仅按交付名猜测归属；现有应用对话框显示本次和旧交付，可明确选择“导出迭代版本”或取消。手动英文名保持，不加尺寸或 02 后缀。

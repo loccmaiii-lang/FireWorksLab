@@ -24,13 +24,13 @@ async function encodePNG(rgba, w, h) {
   return new Blob([new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', idat), chunk('IEND', new Uint8Array(0))]);
 }
 const utf8 = s => new TextEncoder().encode(s);
-async function makeZip(files, job = null) {
+async function makeZip(files, job = null, rules = null) {     // rules：没有导出任务时（本机任务接口）传 { recipes: [{ P }] }，给 4.9.113 四项规则判断左右对称
   if (typeof exportClockMark === 'function') exportClockMark('整理 Ramp / Cutout');
   { const r = await packTidy(files); files = r.files; packTidyLast = r.report; }     // 4.9.38 Ramp / Cutout 去重、几乎不省的 Cutout 不出
   if (typeof exportClockMark === 'function') exportClockMark('拦截 + sha256');
   let iterationOf = null;
   if (files.some(([f]) => FWL_CFG_RE.test(f))) {
-    const options = { ...(job ? { sourceKey: job.key, resourceName: job.system } : {}), onIteration: proof => { iterationOf = proof; } };
+    const options = { ...(job ? { sourceKey: job.key, resourceName: job.system } : {}), recipes: job ? fwlJobRecipes(job) : rules && rules.recipes, onIteration: proof => { iterationOf = proof; } };
     try { files = await packFinalize(files, options); }
     catch (e) {
       if (!job || !e.onlyOwnership || !e.iterationOf?.assets.length || typeof askConfirm !== 'function') throw e;
