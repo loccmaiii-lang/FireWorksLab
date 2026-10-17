@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "problems": [],
+  "info": [],
+  "configs": [
+    "cascade.json",
+    "cascade_mobile.json"
+  ],
+  "textures": {
+    "T_EFX_FireWorks_RocketTail_Soft": {
+      "sha256": "6bb4ac1af0cd40112253834d1848a07ed7fe47e02ae794ea407253524427803e",
+      "size": [
+        2048,
+        2048
+      ],
+      "class": "flipbook"
+    },
+    "T_EFX_FireWorks_RocketTail_Soft_Cutout": {
+      "sha256": "4cd0254282894c24b3279fd4ec3680872caa50b3a7b76af0351e338803c419e6",
+      "size": [
+        512,
+        512
+      ],
+      "class": "cutout"
+    },
+    "T_EFX_FireWorks_RocketTail_Soft_Ramp": {
+      "sha256": "3b96d0225c271b187ff62874015ef0f107aae1b0acc3a71edf3f876bc53a9f42",
+      "size": [
+        256,
+        8
+      ],
+      "class": "ramp"
+    },
+    "T_EFX_FireWorks_RocketTail_Soft_Mobile": {
+      "sha256": "e89263f31136473577cbfbe40f49e40cbf07a9c0934320b1a280b7728cb19b9d",
+      "size": [
+        1024,
+        1024
+      ],
+      "class": "flipbook"
+    },
+    "T_EFX_FireWorks_RocketTail_Soft_Mobile_Cutout": {
+      "sha256": "b5141f2b65d66711a1c72535a7f496a25176fdfe26958eb96d3f419ae347462c",
+      "size": [
+        512,
+        512
+      ],
+      "class": "cutout"
+    }
+  },
+  "source": "",
+  "resourceName": ""
+}

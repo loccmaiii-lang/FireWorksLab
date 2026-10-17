@@ -1,0 +1,15 @@
+{
+  "effect": "rocket_soft",
+  "entry": "SGRS1",
+  "ver": "9d67fc02·graph4.9.97+loop4.9.106",
+  "version": "4.9.115",
+  "time": "2026-10-18 03:17:10",
+  "dir": "analysis/local/输出/窜天猴柔光暗底_20261018",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_RocketTail_Soft",
+      "replica": "SGRS1",
+      "sha256": "000840abd3618895ce673b676b8777f3a8eeffa351140ee34a79dfa053a3d02f"
+    }
+  ]
+}

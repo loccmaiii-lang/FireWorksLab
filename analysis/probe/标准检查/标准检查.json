@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-18 01:46",
+ "generated": "2026-10-18 03:17",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -18929,6 +18929,77 @@
    ],
    "pass": true,
    "seconds": 0.0
+  },
+  "SGRS1": {
+   "id": "SGRS1",
+   "name": "窜天猴尾焰 · 柔光暗底",
+   "kind": "preset",
+   "renderVer": 40,
+   "ver": "9d67fc02·graph4.9.97+loop4.9.106",
+   "checks": [
+    [
+     "实时模拟",
+     true,
+     ""
+    ],
+    [
+     "引擎回放 + 游戏内大小",
+     true,
+     ""
+    ],
+    [
+     "贴图 + 流转动画",
+     true,
+     ""
+    ],
+    [
+     "完整参数",
+     true,
+     ""
+    ],
+    [
+     "导出素材包（cascade.json PC + 手机）",
+     true,
+     ""
+    ],
+    [
+     "实拍对照",
+     true,
+     "无参考（不适用）"
+    ],
+    [
+     "单格 ≥ PC 下限",
+     true,
+     "单格 512 px"
+    ],
+    [
+     "手机单格 ≥ 下限",
+     true,
+     ""
+    ],
+    [
+     "屏幕放大 ≤ 1",
+     true,
+     "放大 0.703125"
+    ],
+    [
+     "30fps 显示帧 ≥ 90%",
+     true,
+     "64/64"
+    ],
+    [
+     "燃烧段有效帧率 ≥ 下限",
+     true,
+     "30 fps"
+    ],
+    [
+     "尺寸参数有效",
+     true,
+     ""
+    ]
+   ],
+   "pass": true,
+   "seconds": 1.5
   }
  }
 }

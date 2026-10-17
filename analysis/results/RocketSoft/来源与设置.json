@@ -1,0 +1,24 @@
+{
+  "source": "analysis\\我的配方\\my_fxmv96inysff36h\\正式资产-窜天猴尾焰__fxmv96inysff36h.json",
+  "sourceSHA256": "d9f8de5cc7de212e866650c7f4ae2b6d28b3ed70ff14902f337005ecfe65bc11",
+  "sourceName": "正式资产-窜天猴尾焰",
+  "sourceUE": {
+    "base": "RocketTail",
+    "layers": [
+      ""
+    ],
+    "system": "RocketTail",
+    "tiered": false,
+    "custom": true
+  },
+  "sigmaM": 0.16,
+  "energyFraction": 0.12,
+  "phase": "same birth/seed/period/shutter",
+  "bounds": [
+    -7,
+    7,
+    -18,
+    2
+  ],
+  "newEnglishName": "RocketTail_Soft"
+}

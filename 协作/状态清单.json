@@ -670,7 +670,7 @@
     "跨年秀（22） → 本机同步（8） · 灯光落地两件（UE 侧，10-18 01:45 排队，不急但周二全量前要有结论）": "① 只读核对 Night 导演 light_A：RequiredPointCount（编排实放 10-17 读到 4）、Entries（只有 SlotIndex 0 一条，播 Seq_NewYear_TestShowTemplate_2）、LocalTimeOffset（10-17 读到 0.25，交接文档和灯光模型按 0）；场景序列点 NewYear_ShowSequence_light1 的 DirectorId（读到旧的 NewYear，Bindings Light/Slot0）。日志报 SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0（analysis/results/B09_DIRECTOR_20261017/灯光绑定证据.json）。② 判断新灯光流程（工作台「同时写入灯光」写序列四盏灯键）是不是靠 light_A 播这个序列；我的推断（未验）：需要「一个 DirectorId=NewYear_Night 的序列点 + RequiredPointCount 改 1」或补满 4 个点。③ 偏移：若 LocalTimeOffset 确为 0.25，灯会比烟花晚 0.25 s；二选一：UE 里改 0（不动模型，我倾向），或灯光模型 rig.sequence.timeOffsetS 改 −0.25（tool/fwlight/config.json 的 time_offset_s 与 src/light-rig.mjs 一起改，tests/light-curve.test.mjs 对拍）。改 UE 遵守「UE 单写」：登记、由用户点、做完删；我（22）云端不写 UE、没改灯光模型。云端试算见 analysis/results/LIGHT_B11_20261018/（B11 SkyLight 峰值 6.923、无警告、最亮一帧 181.17 s）。做完在这里写结果。",
     "窜天猴柔光暗底（Codex） · 2026-10-18": {
       "负责": "窜天猴与仙女棒（Codex）",
-      "状态": "负责：复制用户主体存档并制作独立暗色虚化层；数据任务，不认领tool/src",
+      "状态": "制作及AI自检完成，SGRS1待用户验收；数据范围收尾提交中，未占用tool/src",
       "范围": "新配方/原理/结果脚本、条目与生成数据、必要构建；保留用户原件与粒子版，不改UE、材质或他方fx_gate修复",
       "来源": "analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json",
       "验收": "原运动/相位/取景一致；柔散而非锐利重复、叠加不抢主体；PC/手机实包、原生保存刷新与标准通过；不把浏览器当UE实测"
@@ -2638,6 +2638,35 @@
         "仍有差异": "局部预设气流近似；分叉寿命非严格距离倍率，极短寿命重力弯曲弱；景深固化到贴图。",
         "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
       }
+    },
+    {
+      "key": "rocket_soft",
+      "名": "窜天猴尾焰 · 柔光暗底",
+      "英文名": "RocketTail_Soft",
+      "负责": "窜天猴与仙女棒（Codex）",
+      "阶段": "待验收",
+      "主条目": "SGRS1",
+      "工作版": "SGRS1",
+      "进度": {
+        "计算": true,
+        "素材导出": true,
+        "AI自检": true,
+        "用户验收": false
+      },
+      "缺": [
+        "用户审美验收；UE三层实播、Bloom、实际压缩和GPU扰动配合未经验证"
+      ],
+      "下一步": "待审SGRS1：独立暖色柔光暗底，保留用户主体轨迹/相位/面片，实际亮度贡献约6%；主体和粒子版原文件不动。PC/手机实包、标准、保存刷新与三周期回放通过。报告analysis/results/RocketSoft/看法.md；用户与UE待验。",
+      "交付说明": {
+        "解决了什么": "用户主体复制的独立柔光暗底，空间软核与面积能量补偿；同取景/轨迹/相位。",
+        "素材在哪": "analysis/results/RocketSoft；本机analysis/local/输出/窜天猴柔光暗底_20261018",
+        "仍有差异": "加法柔光不能遮光或代表黑烟；三层最终UE合成未实播。",
+        "未经 UE 验证": "Bloom叠加、实际压缩/米数与GPU扰动层配合。"
+      },
+      "待验收版": "SGRS1",
+      "导出任务": [
+        "SGRS1E1"
+      ]
     }
   ],
   "冻结": "2026-10-01 17:30 起：烘焙器 4.0 已交付，效果任务已恢复。定时接续已改成云端夜班，10-13 23:05 用户批准恢复（协作/接续.md）。tool/src 同一时间只由一方改，认领写在「共享文件」。（历史：2026-09-30 23:29 进入 4.0 冻结；10-01 一度由 GPT-6 负责，后改由对话框2 完成。）"
