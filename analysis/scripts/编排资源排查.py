@@ -4,7 +4,7 @@
 查一张导演表 + 同版 .dfshow：
 1. 按组（P / B 坝顶、F 小平台）列每个 FXResourceId 和 ResourceFX 行名（2800–2835，用户 10-14 截图转录）；
    规则：F 组只许「小号」（2800–2805，Little* / *_Layers_S）和 Tiny / XS 尾缀；P / B 组不许「小号」。
-2. 手游（PlatformFlags 含 2）用到的 ResourceId 都要在手游 ResourceFX 表里（读回 10-16 04:06）。
+2. 手游（PlatformFlags 含 2）用到的 ResourceId 都要在手游 ResourceFX 表里（读回 10-17 13:01）。
 3. 每个 ResourceId 在 PC / 手游表里指向哪个粒子；两行指向同一个粒子的列出来（例：超大_尾缀 和 大型_尾缀）。
 4. 工作台里看到的名字（父模板名、片段名）和它实际放的花对不上的。
 
@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 ROWS = ROOT / '协作/ResourceFX_3.0_行名_2026-10-14.json'
-READ = ROOT / 'analysis/results/资源规范统一_20261016/采集/resourcefx_30.json'
+READ = ROOT / 'analysis/results/资源规范统一_20261016/复核_20261017/现状_202610170501Z.json'   # 10-17 13:01 HK（本机 resourcefx 回读）；旧：采集/resourcefx_30.json（10-16 04:06，2830 还指 330 m 粒子）
 # 旧叫法（不是 ResourceFX 行名）→ 现在的行名花名
 LEGACY = {'金芯柠': '金蕊柠', '金蕊青柠星': '金蕊柠', '辉星': '橙辉星', '小金花簇': '小金花', '分裂星': '小分裂'}
 
@@ -44,8 +44,10 @@ def main():
     a = ap.parse_args()
     R = rows()
     rb = json.loads(READ.read_text(encoding='utf-8'))
-    pc = {x['ResourceId']: x for x in rb['pc']}
-    mob = {x['ResourceId']: x for x in rb['mobile']}
+    rb_rows = rb.get('rows') or rb                  # 新格式 rows.pc / rows.mobile；旧格式 pc / mobile
+    rb.setdefault('readAt', rb.get('at'))
+    pc = {x['ResourceId']: x for x in rb_rows['pc']}
+    mob = {x['ResourceId']: x for x in rb_rows['mobile']}
     m = json.loads(Path(a.table).read_text(encoding='utf-8'))
     subs = {s['TemplateName']: s for s in m['EffectSubTemplates']}
     tpls = {t['TemplateName']: t for t in m['EffectTemplates']}

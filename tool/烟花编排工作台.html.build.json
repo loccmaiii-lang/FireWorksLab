@@ -2,8 +2,8 @@
   "format": "df.offline-build/1",
   "time": "2026-10-15T17:10:16.359Z",
   "html": "烟花编排工作台.html",
-  "bytes": 10928669,
-  "sha256": "dd5843533f0388238eff81fff5bc21188d5014f4286cd8042a0e38e09e98b6f8",
+  "bytes": 10921890,
+  "sha256": "7884470e996e33babbf10f2c7db14bdb57f1e69bc8092008b309913d48f85d1c",
   "programmeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "originalProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "musicIncluded": false,
@@ -12,11 +12,11 @@
   "embeddedMusicSha256": null,
   "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
   "cloudLatest": {
-    "version": "16.0.44",
-    "name": "B09-主角400-手游金垂柳-名字更正",
-    "programmeSha256": "241e4120ba31f157b1f08fd6af6b17448b41e18d05e1be2a1ceeb3cd4d600065",
-    "cues": 495,
-    "events": 1580,
+    "version": "16.0.45",
+    "name": "B10-垂柳实测重排-去埋住下托",
+    "programmeSha256": "7ae4248e262461fca2b533d98caba6432d572ef0dcc9c835701c8ea9326d1e1f",
+    "cues": 492,
+    "events": 1570,
     "musicEmbedded": true,
     "musicSha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613"
   },
@@ -31,7 +31,7 @@
     "public/data/subtemplate-source.json": "63e41141c8c1686a13597728586398bd3fcc8ed32be1e87409f2189d249be718",
     "public/data/size-spec.json": "68da8838657b79247c7662d8a1ce830ee9aade22ae6e915e6f25f658137d22dc",
     "public/data/resource-catalogue.json": "d70182642319e8f95affa6b537a1db61cf3ceeb51bf7e593504c1d76867686ae",
-    "public/data/cloud-latest.json": "ccf4560bdcc258d660cbb2805ffe83469a8508c5cbe32d03bf41a05093efdc15",
+    "public/data/cloud-latest.json": "3c1104c4a6315dddabc139bd66141e6c9cfc0545ba25bd756e361909c401c4e1",
     "src/main.jsx": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8",
     "src/df-theme.css": "ea86e34475aa4f65ce6fe3bf1a784c3f6d0e331fc2e4d61fbe1602f08bebd08b",
     "src/material-theme.css": "fa93d65d6a3cf3f1ae3ac299a6d3a30b9237c97979ea3788825a21abeefc52a6",
@@ -154,6 +154,25 @@
       "previousVersion": "16.0.43",
       "previousHtmlSha256": "1044b0b465ea9917986784793fb1f8be7562fa3ba40cb52d013a3fb940b14c19",
       "productCommit": "fb314e3d9c64a0d2152f6d8b48fb52774477853a",
+      "sourceCheck": {
+        "byHash": 92,
+        "byGitOnly": []
+      },
+      "environment": {
+        "platform": "linux",
+        "python": "3.13.15"
+      }
+    },
+    {
+      "time": "2026-10-17T16:44:49Z",
+      "key": "cloud-latest",
+      "version": "16.0.45",
+      "name": "B10-垂柳实测重排-去埋住下托",
+      "programmeSha256": "7ae4248e262461fca2b533d98caba6432d572ef0dcc9c835701c8ea9326d1e1f",
+      "appVersion": "16.0.42",
+      "previousVersion": "16.0.44",
+      "previousHtmlSha256": "dd5843533f0388238eff81fff5bc21188d5014f4286cd8042a0e38e09e98b6f8",
+      "productCommit": "9a6b9892a22c137d4b6bf8f69d1183acc3d946e4",
       "sourceCheck": {
         "byHash": 92,
         "byGitOnly": []
