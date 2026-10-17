@@ -1,0 +1,76 @@
+{
+ "name": "NearLow",
+ "folder": "F:/FireWorksLab/analysis/local/QUALITY_REVIEW_20261017/ue/near-low",
+ "camera": [
+  [
+   374000,
+   -778000,
+   0
+  ],
+  [
+   30,
+   -90,
+   0
+  ]
+ ],
+ "fov": 90,
+ "w": 1920,
+ "h": 1080,
+ "warm": 20,
+ "items": [
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    368000,
+    -805150,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.QBL17_MI_40"
+    ],
+    [
+     1,
+     "/Engine/Transient.QBL17_MI_41"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    374000,
+    -805150,
+    -3400
+   ],
+   "materials": []
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    380000,
+    -805150,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.WB17_MI_2"
+    ],
+    [
+     1,
+     "/Engine/Transient.WB17_MI_3"
+    ]
+   ]
+  }
+ ],
+ "times": [
+  3.0,
+  4.5,
+  6.0,
+  6.8,
+  7.5,
+  9.0
+ ],
+ "end": 10
+}
