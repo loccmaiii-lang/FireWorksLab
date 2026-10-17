@@ -1,0 +1,122 @@
+[
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_0_EmissiveRampTex_Before.WBQ5_0_EmissiveRampTex_Before",
+    "source": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Comet_Layers_L1_R.T_EFX_FireWorks_Comet_Layers_L1_R",
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "rgbaSha256": "17092d8c931ef5df4b12e70a66bad492071d7adf523e04bd6a4680ce2c1f42c7"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_0_EmissiveRampTex_After.WBQ5_0_EmissiveRampTex_After",
+    "source": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Comet_Layers_L1_R.T_EFX_FireWorks_Comet_Layers_L1_R",
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "rgbaSha256": "17092d8c931ef5df4b12e70a66bad492071d7adf523e04bd6a4680ce2c1f42c7"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_0_MainTex_Before.WBQ5_0_MainTex_Before",
+    "source": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD.T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "rgbaSha256": "43291221039af6303060aec35235dea4165dae61bafbe89c504969075ec98b12"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_0_MainTex_After.WBQ5_0_MainTex_After",
+    "source": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD.T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "rgbaSha256": "43291221039af6303060aec35235dea4165dae61bafbe89c504969075ec98b12"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_1_EmissiveRampTex_Before.WBQ5_1_EmissiveRampTex_Before",
+    "source": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Silver3_S_R.T_EFX_FireWorks_Silver3_S_R",
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "rgbaSha256": "461e1d83a0df0dd7255b9cd4165aa5ca8245fc02ca2b846812c9fe28d0edd2f4"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_1_EmissiveRampTex_After.WBQ5_1_EmissiveRampTex_After",
+    "source": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Silver3_S_R.T_EFX_FireWorks_Silver3_S_R",
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "rgbaSha256": "461e1d83a0df0dd7255b9cd4165aa5ca8245fc02ca2b846812c9fe28d0edd2f4"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_1_MainTex_Before.WBQ5_1_MainTex_Before",
+    "source": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "rgbaSha256": "7371287c73e0f610b8a4b554c421e8a08056d4dbedaf3649b54f57634e3fe2d0"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_1_MainTex_After.WBQ5_1_MainTex_After",
+    "source": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "rgbaSha256": "7371287c73e0f610b8a4b554c421e8a08056d4dbedaf3649b54f57634e3fe2d0"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_2_EmissiveRampTex_Before.WBQ5_2_EmissiveRampTex_Before",
+    "source": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleSilver_GinKamuro_R.T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "rgbaSha256": "47ca3bc657f4cbe21d4ac8874370f506688d433dbb071e99e67b0406adcb97d8"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_2_EmissiveRampTex_After.WBQ5_2_EmissiveRampTex_After",
+    "source": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleSilver_GinKamuro_R.T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "rgbaSha256": "47ca3bc657f4cbe21d4ac8874370f506688d433dbb071e99e67b0406adcb97d8"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_2_MainTex_Before.WBQ5_2_MainTex_Before",
+    "source": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD.T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD",
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "rgbaSha256": "b9d2901e43e3bb30fe8299d6b8ea248efcaa65a0d4fb13df59e4fd59b725dcd6"
+  },
+  {
+    "candidate": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017/WBQ5_2_MainTex_After.WBQ5_2_MainTex_After",
+    "source": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD.T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD",
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "rgbaSha256": "b9d2901e43e3bb30fe8299d6b8ea248efcaa65a0d4fb13df59e4fd59b725dcd6"
+  }
+]

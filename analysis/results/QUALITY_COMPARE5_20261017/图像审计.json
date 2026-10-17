@@ -1,0 +1,222 @@
+{
+  "1": {
+    "half_before": {
+      "energyProxy": 700091,
+      "brightPixels": 3398
+    },
+    "half_current": {
+      "energyProxy": 898863,
+      "brightPixels": 4087
+    },
+    "half_after": {
+      "energyProxy": 793979,
+      "brightPixels": 3342
+    },
+    "half_after_repeat": {
+      "energyProxy": 794309,
+      "brightPixels": 3339
+    },
+    "half_reference": {
+      "energyProxy": 2782882,
+      "brightPixels": 12492
+    },
+    "full_before": {
+      "energyProxy": 661114,
+      "brightPixels": 2958
+    },
+    "full_after": {
+      "energyProxy": 696086,
+      "brightPixels": 2889
+    },
+    "half_before_repeat": {
+      "energyProxy": 761082,
+      "brightPixels": 3400
+    },
+    "afterRepeatMAE": 0.09152158101399739,
+    "age": 1.155517578125,
+    "output": "01_Comet_Layers_HD_亮段_同屏对比.png",
+    "sourceMIHash": "b7a0d28f",
+    "cropBox": [
+      448,
+      285,
+      576,
+      413
+    ]
+  },
+  "2": {
+    "half_before": {
+      "energyProxy": 264330,
+      "brightPixels": 869
+    },
+    "half_current": {
+      "energyProxy": 293570,
+      "brightPixels": 875
+    },
+    "half_after": {
+      "energyProxy": 270074,
+      "brightPixels": 675
+    },
+    "half_after_repeat": {
+      "energyProxy": 270816,
+      "brightPixels": 678
+    },
+    "half_reference": {
+      "energyProxy": 2754880,
+      "brightPixels": 12374
+    },
+    "full_before": {
+      "energyProxy": 264199,
+      "brightPixels": 877
+    },
+    "full_after": {
+      "energyProxy": 269828,
+      "brightPixels": 678
+    },
+    "half_before_repeat": {
+      "energyProxy": 264521,
+      "brightPixels": 866
+    },
+    "afterRepeatMAE": 0.11995601654052734,
+    "age": 2.47119140625,
+    "output": "02_Comet_Layers_HD_主头已灭_同屏对比.png",
+    "sourceMIHash": "b7a0d28f",
+    "cropBox": [
+      448,
+      224,
+      576,
+      352
+    ]
+  },
+  "3": {
+    "half_before": {
+      "energyProxy": 606118,
+      "brightPixels": 2853
+    },
+    "half_current": {
+      "energyProxy": 760441,
+      "brightPixels": 3320
+    },
+    "half_after": {
+      "energyProxy": 594382,
+      "brightPixels": 2424
+    },
+    "half_after_repeat": {
+      "energyProxy": 594383,
+      "brightPixels": 2424
+    },
+    "half_reference": {
+      "energyProxy": 2757186,
+      "brightPixels": 12389
+    },
+    "full_before": {
+      "energyProxy": 534594,
+      "brightPixels": 2499
+    },
+    "full_after": {
+      "energyProxy": 522168,
+      "brightPixels": 2048
+    },
+    "half_before_repeat": {
+      "energyProxy": 605885,
+      "brightPixels": 2866
+    },
+    "afterRepeatMAE": 2.288818359375e-05,
+    "age": 1.469970703125,
+    "output": "03_FanSilver_01_HD_银束消散段_同屏对比.png",
+    "sourceMIHash": "1024d11e",
+    "cropBox": [
+      448,
+      206,
+      576,
+      334
+    ]
+  },
+  "4": {
+    "half_before": {
+      "energyProxy": 12314649,
+      "brightPixels": 69523
+    },
+    "half_current": {
+      "energyProxy": 12314005,
+      "brightPixels": 69505
+    },
+    "half_after": {
+      "energyProxy": 7594105,
+      "brightPixels": 41480
+    },
+    "half_after_repeat": {
+      "energyProxy": 7593565,
+      "brightPixels": 41493
+    },
+    "half_reference": {
+      "energyProxy": 2758851,
+      "brightPixels": 12416
+    },
+    "full_before": {
+      "energyProxy": 8457312,
+      "brightPixels": 48833
+    },
+    "full_after": {
+      "energyProxy": 7591687,
+      "brightPixels": 41500
+    },
+    "half_before_repeat": {
+      "energyProxy": 12314693,
+      "brightPixels": 69523
+    },
+    "afterRepeatMAE": 0.23136583964029947,
+    "age": 0.903076171875,
+    "output": "04_SilverChry_HD_展开亮段_同屏对比.png",
+    "sourceMIHash": "e5762387",
+    "cropBox": [
+      448,
+      330,
+      576,
+      458
+    ]
+  },
+  "5": {
+    "half_before": {
+      "energyProxy": 533390,
+      "brightPixels": 5791
+    },
+    "half_current": {
+      "energyProxy": 532550,
+      "brightPixels": 5774
+    },
+    "half_after": {
+      "energyProxy": 345662,
+      "brightPixels": 2232
+    },
+    "half_after_repeat": {
+      "energyProxy": 345960,
+      "brightPixels": 2218
+    },
+    "half_reference": {
+      "energyProxy": 2752316,
+      "brightPixels": 12348
+    },
+    "full_before": {
+      "energyProxy": 432276,
+      "brightPixels": 3937
+    },
+    "full_after": {
+      "energyProxy": 346263,
+      "brightPixels": 2220
+    },
+    "half_before_repeat": {
+      "energyProxy": 533399,
+      "brightPixels": 5791
+    },
+    "afterRepeatMAE": 0.12002849578857422,
+    "age": 2.17236328125,
+    "output": "05_SilverChry_HD_散落消散段_同屏对比.png",
+    "sourceMIHash": "e5762387",
+    "cropBox": [
+      439,
+      243,
+      567,
+      371
+    ]
+  }
+}

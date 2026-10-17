@@ -1,0 +1,22 @@
+{
+  "review_status": "AI已逐图审看；用户尚未查看或通过",
+  "output_directory": "F:/FireWorksLab/outputs/画质五图_20261017",
+  "output_count": 5,
+  "temporary_asset_root": "/Game/Effects_HD/_Sandbox/QualityCompare5_20261017",
+  "temporary_asset_count": 19,
+  "manifest": "F:/FireWorksLab/analysis/local/QUALITY_COMPARE5_20261017/review-manifest.json",
+  "cleanup_gate": "仅在用户明确查看完毕后，按清单销毁本轮临时资产及用户要求删除的图/实验文件；原资源及上午Rise_L副本不删",
+  "original_materials_unchanged": 3,
+  "original_files_hash_unchanged": 14,
+  "source_texture_pixel_variants_identical": 12,
+  "formal_rollout_executed": false,
+  "p4_submitted": false,
+  "ue_pid": 160256,
+  "crash": false,
+  "actors_restored": 4003,
+  "own_actors_remaining": 0,
+  "cvar_value_differences": [],
+  "camera_restored": true,
+  "map_dirty_note": "FXLookDevLevel临时Actor增删新增脏标记；未保存/未重载清理。原有内容脏包不变",
+  "limitations": ["固定MQL4进行采样隔离，不是完整低配客户端", "冻结静图不能证明运动无闪烁", "GTX960与整场GPU性能未测", "同组件CPU状态一致，GPU点层可能仍受渲染时序变化影响，未计算精确改善百分比"]
+}
