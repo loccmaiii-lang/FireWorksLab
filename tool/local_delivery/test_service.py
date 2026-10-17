@@ -12,6 +12,13 @@ from test_store import pack
 
 
 class ServiceTests(unittest.TestCase):
+    def test_health_identifies_page_root_without_exposing_session(self):
+        _, data = self.request('/api/health')
+        health = json.loads(data)
+        self.assertEqual(health['format'], 'df.local-delivery/1')
+        self.assertEqual(Path(health['toolRoot']), Path(self.tmp.name).resolve())
+        self.assertNotIn('token', health)
+
     def test_directory_transport_is_a_non_visual_same_origin_endpoint(self):
         with urllib.request.urlopen(self.base + '/directory-transport') as response:
             html = response.read().decode()

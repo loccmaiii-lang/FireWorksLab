@@ -27,7 +27,34 @@
 
 未配置时原特效工作台使用上述D盘路径，编排开发版始终从当前仓库的 tool/workbench 启动，Node从PATH获取。建议省略 devPath，避免换仓库后仍指向旧目录。8034的配置沿用`delivery-launcher.json`；不替换原资源根或重新生成私有导入组件。重启电脑后再双击启动；关闭入口网页不停止服务。日志在`~/.fireworkslab/local-http-tools.log`、`choreography-dev.log`及原交付服务配置旁。替换原工作台HTML后刷新固定HTTP地址即可，无需另建版本文件夹。
 
-## HTTP与file
+## AI 测试前预检
+
+项目默认入口 `AGENTS.md → CLAUDE.md` 的开工第5条要求每次本机网页测试先运行本节。不要依赖旧对话记忆或等用户提醒启动服务。老对话接续时重新读取该条和本节。
+
+在**准备测试的 worktree 根目录**执行（Python 3.10+，不安装软件）：
+
+```powershell
+python -X utf8 tool/local_http/preflight.py --tool baker --start
+python -X utf8 tool/local_http/preflight.py --tool workbench --start
+python -X utf8 tool/local_http/preflight.py --tool both --start
+```
+
+按范围只选一条：烘焙器／交付服务用 `baker`；编排界面用 `workbench`；编排读取烘焙器资源或双工具联调用 `both`。仅探测时去掉 `--start`；最终离线成品经HTTP检查时加 `--release` 并打开 `http://127.0.0.1:8025/release/`。不启动无关的8036入口，不重构成品，不自动导入资源或访问UE。旧的“启动全部工具”仍用于人工需要三个工具的场景。
+
+| 服务 | 启动实现／目录 | 预检 |
+| --- | --- | --- |
+| 8025 编排开发页 | 复用 `launcher.ensure_dev`；当前 `tool/workbench`，已有Node执行 `node_modules/vite/bin/vite.js --host 127.0.0.1 --port 8025 --strictPort`（等价 `npm run dev`） | `/__fwl_health` 的格式与绝对根目录 + `/` 页面标记；`--release` 再逐字节核对 `/release/` |
+| 8034 烘焙器及资源交付 | 复用 `launcher.ensure_baker` → `local_delivery/launcher.ensure_service`，当前 `tool/local_delivery/service.py`，固定监听127.0.0.1 | `/api/health` 的格式与 `toolRoot` + `/baker` 与当前 `tool/FireworkBaker.html` SHA256一致 |
+
+预检先检查监听；正确服务重复调用只复用，未监听才调用已有隐藏启动器。配置缺失、权限拒绝、超时、HTTP错误或不匹配均报错，不能当作“服务没启动”反复拉起。启动不执行 `prepare`、不生成私有页面、不改用户浏览器草稿。编排启动目录强制使用当前worktree，不沿用本机配置里可能陈旧的 `devPath`；已有服务来自另一worktree时明确停止该项测试，保留服务，不自动切换或换端口。
+
+旧8034进程可能尚无 `toolRoot`，旧Vite进程可能无健康接口：不能只凭“端口能连”或页面标题认定正确；由服务负责人正常重启对应服务后再预检，不擅自关闭他人进程。不同worktree即使页面暂时同字节也不能混验。健康接口只公开loopback测试所需根目录，不返回配置或会话令牌。
+
+浏览器只使用预检通过的固定HTTP地址。浏览器工具拒绝访问时停止对应操作并报告，不用代理、换端口、转发或重试 `file://` 绕过。HTTP与file来源下个人存储独立；此流程不搬迁草稿，也不把HTTP验证说成file浏览器已验收。文件发布仍按既有离线流程。
+
+`python -X utf8 -m unittest discover -s tool/local_http -p "test_*.py" -v`，以及 `node tool/workbench/server/test-local-health.mjs` 覆盖复用、按需启动、冲突、旧服务、错误worktree、过期页面及权限拒绝。
+
+## HTTP与file（存储与交付边界）
 
 file直接读取磁盘；HTTP通过本机服务送出同一HTML。127.0.0.1只指当前电脑，无需联网，也不是公开部署；把这个链接发给别人不会打开你的工具。发给别人仍用现有离线HTML/ZIP。
 

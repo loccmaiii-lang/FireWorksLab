@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import {releasePreviewPlugin} from './server/release-preview.mjs';
 import {demoMusicPlugin} from './server/demo-music.mjs';
+import {localHealthPlugin} from './server/local-health.mjs';
 
 export default defineConfig({
   build: {
@@ -24,5 +25,5 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
-  plugins: [releasePreviewPlugin(),demoMusicPlugin(),react(),directorReadPlugin()],
+  plugins: [localHealthPlugin(),releasePreviewPlugin(),demoMusicPlugin(),react(),directorReadPlugin()],
 });

@@ -70,7 +70,7 @@ class Handler(BaseHTTPRequestHandler):
         path = unquote(urlsplit(self.path).path)
         try:
             if path == '/api/health':
-                return self.send(200, {'format': 'df.local-delivery/1', 'importerAvailable': bool(self.server.importer and self.server.importer.is_file())})
+                return self.send(200, {'format': 'df.local-delivery/1', 'toolRoot': str(self.server.tool_root), 'importerAvailable': bool(self.server.importer and self.server.importer.is_file())})
             if path == '/api/session':
                 if self.headers.get('Origin') and self.headers['Origin'] != self.origin():
                     return self.send(403, {'error': '会话仅供本工作区'})
