@@ -1,0 +1,16 @@
+{
+ "deployed": true,
+ "entry": "analysis/原理/条目_金曜菊B闪烁试配.json",
+ "effect": "glitterb_twinkle_trial",
+ "variants": [
+  "GLB-S1",
+  "GLB-S2",
+  "GLB-S3"
+ ],
+ "backup": "F:\\FireWorksLab\\outputs\\金曜菊B闪烁试配_20261017\\预览接入备份\\20261017_225029",
+ "preservedPreviousEntries": 279,
+ "preservedPreviousEffects": 32,
+ "protectedFiles": 68,
+ "incrementalGeneratedOverlay": false,
+ "note": "只发布本任务生成条目；未操作被策略阻止的file页面、用户浏览器存储或UE。"
+}

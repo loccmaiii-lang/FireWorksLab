@@ -1,0 +1,109 @@
+{
+  "rows": [
+    {
+      "id": "GLB-S1",
+      "parametersIdentical": true,
+      "size": {
+        "id": "F_SILVER",
+        "name": "前台·小银菊",
+        "version": 4,
+        "what": "diameter",
+        "target": 32,
+        "measured": 311.7,
+        "k": 0.1027,
+        "tk": 1,
+        "picked": false,
+        "system_tag": "",
+        "warn": ""
+      },
+      "names": {
+        "base": "GlitterChry_S1",
+        "layers": [
+          "Lead",
+          "Gold",
+          "Head"
+        ],
+        "system": "",
+        "tiered": true,
+        "custom": false
+      },
+      "rate": [
+        1.5,
+        1.5,
+        1.5
+      ],
+      "version": "4.9.112"
+    },
+    {
+      "id": "GLB-S2",
+      "parametersIdentical": true,
+      "size": {
+        "id": "F_SILVER",
+        "name": "前台·小银菊",
+        "version": 4,
+        "what": "diameter",
+        "target": 32,
+        "measured": 311.7,
+        "k": 0.1027,
+        "tk": 1,
+        "picked": false,
+        "system_tag": "",
+        "warn": ""
+      },
+      "names": {
+        "base": "GlitterChry_S2",
+        "layers": [
+          "Lead",
+          "Gold",
+          "Head"
+        ],
+        "system": "",
+        "tiered": true,
+        "custom": false
+      },
+      "rate": [
+        1.5,
+        1.5,
+        1.5
+      ],
+      "version": "4.9.112"
+    },
+    {
+      "id": "GLB-S3",
+      "parametersIdentical": true,
+      "size": {
+        "id": "F_SILVER",
+        "name": "前台·小银菊",
+        "version": 4,
+        "what": "diameter",
+        "target": 32,
+        "measured": 311.7,
+        "k": 0.1027,
+        "tk": 1,
+        "picked": false,
+        "system_tag": "",
+        "warn": ""
+      },
+      "names": {
+        "base": "GlitterChry_S3",
+        "layers": [
+          "Lead",
+          "Gold",
+          "Head"
+        ],
+        "system": "",
+        "tiered": true,
+        "custom": false
+      },
+      "rate": [
+        1.5,
+        1.5,
+        1.5
+      ],
+      "version": "4.9.112"
+    }
+  ],
+  "refreshButtons": 3,
+  "errors": [],
+  "passed": true
+}
