@@ -1,6 +1,1996 @@
 // 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。
 var FW_REVIEW = [
 {
+"id": "SGS1",
+"task": "SGS1",
+"kind": "preset",
+"date": "2026-10-18",
+"name": "仙女棒 · 13层全形态",
+"note": "4.9.114运动修订，原SGS1快照在归档；不是物理标定。镜头开关按资源保存，景深烘入贴图；未经UE实播。",
+"look": [
+"正常速度看短慢点与快长丝交替，保留不等间隔爆发。",
+"整体调整与分叉调整都默认1；分叉寿命延长飞行，分叉角度另调。",
+"焦内细芯、散焦光斑与一级/延迟/二级分叉保留。"
+],
+"opinion": null,
+"tags": "仙女棒 窜天猴 火星 分叉 分层 循环",
+"doc": null,
+"imagesTitle": null,
+"principle": true,
+"base": "sparkgraph",
+"p": {
+"renderVer": 40,
+"exposure": 1,
+"exposureLock": 0,
+"exposureTarget": 0.96,
+"coreProfile": 0,
+"haloFrac": 0.22,
+"haloR": 3,
+"haloShape": 0,
+"haloBeta": 2.2,
+"sparkShape": 0,
+"sparkShapeIrr": 0.6,
+"sparkShapeSpin": 0.5,
+"sparkBrightJit": 0,
+"previewBloom": 0,
+"trimTail": 1,
+"mods": [],
+"duration": 2.1333333333333333,
+"seed": 7,
+"stars": 150,
+"burstR0": 0,
+"v0": 150,
+"vt": 18,
+"grav": 1,
+"speedJit": 3,
+"dirJit": 1.5,
+"burn": 2.5,
+"burnJit": 12,
+"fade": 0.2,
+"lastFlare": 0.35,
+"flash": 1,
+"flashSize": 1,
+"outPC": "seq",
+"outMobile": "seq",
+"dotSize": 1,
+"dotBright": 1,
+"exportScale": 1,
+"exportScaleRise": "scale",
+"lowPick": "frame",
+"lowAt": 0,
+"lowSize": 1024,
+"lowJit": 0.3,
+"lowMaps": "DCA",
+"lowSuffix": "",
+"unitVariants": 1,
+"unitRandom": 0,
+"endMode": "natural",
+"coolMode": 1,
+"headSize": 0.001,
+"headBright": 1,
+"flicker": 0.25,
+"headHaloOwn": 0,
+"headHaloFrac": 0.22,
+"headHaloR": 3,
+"sparkRate": 1600,
+"sparkRateBy": "sec",
+"sparkPerM": 5,
+"sparkSpawnR": 0,
+"sparkSpawnHead": 0,
+"sparkJet": 0,
+"sparkJetCone": 0,
+"sparkRateEnd": 1,
+"sparkStop": 0,
+"sparkStart": 0,
+"sparkRamp": 0,
+"sparkRampJit": 30,
+"sparkLife": 1.6,
+"sparkLifeEnd": 1,
+"sparkLifeJit": 45,
+"sparkSize": 0.001,
+"sparkSpread": 2.5,
+"sparkInherit": 0.2,
+"sparkDrag": 1.1,
+"sparkQ": 0,
+"sparkGrav": 1,
+"T0": 2150,
+"cooling": 0.5,
+"sparkBright": 1,
+"twinkle": 0.6,
+"twinkleHz": 0,
+"subDelay": 0.9,
+"subJit": 10,
+"subStars": 36,
+"subSpeed": 40,
+"subBurn": 0.9,
+"subTail": 0,
+"carrierTail": 30,
+"subPattern": "sphere",
+"spin": 14,
+"chaos": 0.8,
+"beeSpeed": 28,
+"shellNo": 0,
+"wind": 0,
+"turb": 0,
+"turbScale": 60,
+"massLoss": 0,
+"shellVx": 0,
+"shellVy": 0,
+"shellSpin": 0,
+"pattern": "sphere",
+"tilt": 0,
+"ringFrac": 0.45,
+"text": "祭",
+"waterRefl": 0,
+"clusterLayout": "cube",
+"clusterN": 8,
+"clusterCone": 8,
+"clusterRoll": 0,
+"clusterYaw": 0,
+"clusterStarsJit": 0,
+"clusterDirJit": 0,
+"clusterFan": 90,
+"clusterSweep": 0,
+"clusterGap": 0,
+"ignDelay": 0,
+"ignJit": 10,
+"ignSeed": 0,
+"keepFrac": 1,
+"afterBurn": 0,
+"afterJit": 15,
+"headDim": 1,
+"headDimUntil": 0,
+"emberFrac": 0,
+"emberLife": 3,
+"emberBright": 0.1,
+"emberFollow": 0,
+"emberSize": 1,
+"emberAll": 0,
+"emberEnd": 0,
+"carrierHead": 0.4,
+"subKeep": -1,
+"subSpeedJit": -1,
+"trimLead": 1,
+"tailJit": 0,
+"tailShoulder": 0,
+"tailWidth": 1,
+"tailPinchHead": 0,
+"tailPinchTail": 0,
+"tailBellyAt": 0.45,
+"headTear": 0,
+"headSizeJit": 0,
+"headStretch": 0,
+"headStretchJit": 0,
+"headKnots": 0,
+"headLumpy": 0,
+"headDouble": 0,
+"headHex": 0,
+"headHexRot": 0,
+"sparkStretch": 0,
+"sparkStretchJit": 0,
+"tailDiffuse": 0,
+"tailDiffuseScale": 20,
+"sparkRise": 0,
+"starBright": 0,
+"tailHaze": 0,
+"tailHazeR": 6,
+"frameCount": 24,
+"outPack": "grid",
+"outCell": 0,
+"cutIn": 0,
+"cutOut": 0,
+"preRoll": 1,
+"preFrom": -1,
+"visTo": 0,
+"preScale0": 0,
+"subScaleJit": 0,
+"subVt": 0,
+"subGrav": -1,
+"subFlash": -1,
+"strobeHz": 0,
+"strobeDuty": 0.35,
+"strobeStart": 0.4,
+"glitter": 0,
+"glitterDelay": 0.25,
+"crackle": 0,
+"crackleDelay": 0.3,
+"crackleR": 3.5,
+"crackleV": 0,
+"branch": 0,
+"branchAt": 0.45,
+"flutter": 0,
+"flutterHz": 0.7,
+"riseH": 250,
+"vtShell": 55,
+"riseStyle": "gold",
+"wobble": 0,
+"wobbleHz": 1.6,
+"kobanaN": 4,
+"bunpoN": 3,
+"trV": 43.5,
+"trFps": 30,
+"trInh": 0.1,
+"trDrag": 3,
+"trGrav": 0.3,
+"trCool": 1,
+"trFRate": 2600,
+"trFLife": 0.6,
+"trFSpread": 0.45,
+"trFSize": 0.1,
+"trFBright": 0.03,
+"trMRate": 600,
+"trMLife": 0.75,
+"trMSpread": 0.8,
+"trMSize": 0.14,
+"trMBright": 0.05,
+"trCRate": 60,
+"trCLife": 0.9,
+"trCSpread": 1.2,
+"trCSize": 0.18,
+"trCBright": 0.12,
+"trWRate": 0,
+"trWLife": 0.12,
+"trWSpread": 14,
+"trWSize": 0.06,
+"trWBright": 0.06,
+"trHeadSize": 0.26,
+"trHeadBright": 1.2,
+"trHeadExpo": 1,
+"trHalo": 3,
+"trHaloBright": 0.15,
+"trTwist": 0.35,
+"trTwistN": 5,
+"trWiggle": 0.08,
+"trTwistLag": 0.35,
+"trFollow": 0,
+"trBright": 1.6,
+"trExport4K": 1,
+"trIgnite": 0,
+"trPhys": 0,
+"rtH": 265,
+"rtT": 5,
+"rtVb": 16,
+"rtLean": 0,
+"rtD": 0.14,
+"rtBurstD": 190,
+"rtSpin": 2,
+"rtSpinPh": 0,
+"rtFling": 3,
+"rtJet": 27,
+"rtCone": 2.5,
+"rtPulse": 0.2,
+"rtPulseHz": 6,
+"rtHeadSize": 0.55,
+"rtHeadI": 3,
+"rtHeadFl": 0.8,
+"rtHeadFlI": 0.6,
+"rtARate": 10000,
+"rtALife": 0.7,
+"rtALsig": 0.35,
+"rtAJet": 33,
+"rtAKd": 14,
+"rtACone": 0.6,
+"rtASize": 0.22,
+"rtAI": 0.5,
+"rtAWarm": 1.2,
+"rtFRate": 2500,
+"rtFLife": 0.9,
+"rtFJit": 40,
+"rtFSize": 0.25,
+"rtFI": 2.6,
+"rtFKd": 5,
+"rtMRate": 900,
+"rtMLife": 1.5,
+"rtMJit": 35,
+"rtMSize": 0.38,
+"rtMI": 4,
+"rtMKd": 3.6,
+"rtCRate": 180,
+"rtCLife": 2.4,
+"rtCJit": 30,
+"rtCSize": 0.55,
+"rtCI": 6,
+"rtCKd": 2.4,
+"rtFdT": 0,
+"rtMdT": 0,
+"rtCdT": 0,
+"rtSizeJit": 25,
+"rtKdJit": 20,
+"rtConeSoft": 0,
+"rtStreakT": 0,
+"rtStreakMax": 6,
+"rtFStreak": 1,
+"rtMStreak": 1,
+"rtCStreak": 1,
+"rtTurb": 0,
+"rtTurbL": 30,
+"rtTurbS": 0,
+"rtT0": 2450,
+"rtTb": 2150,
+"rtTc": 0.35,
+"rtTend": 1450,
+"rtTw": 0.3,
+"rtShrink": 0.5,
+"rtETex": 0,
+"rtTailAfterBurn": 0,
+"rtLateWind": 0,
+"rtLateScale": 1.5,
+"rtLateFade": 0.4,
+"rtERate": 10,
+"rtELife": 3,
+"rtESize": 0.8,
+"rtEI": 4,
+"rtEKd": 1,
+"rtSmoke": 0.003,
+"rtSmokeRate": 25,
+"rtSmokeLife": 3.5,
+"rtSmokeSize": 2.5,
+"rtSmokeGrow": 4,
+"rtBright": 1,
+"rtDotGain": 1,
+"rtMobile": 0.2,
+"rtDissolve": 1,
+"rtFadeFps": 0,
+"rtFTex": 0,
+"rtTexI": 10,
+"rtGlow": 0,
+"rtGlowSize": 4,
+"rtPopRate": 0,
+"rtPopI": 20,
+"rtPopSize": 0.5,
+"rtPopAt": 0.85,
+"rtLaunch": 0,
+"rtLaunchSize": 8,
+"rtLaunchN": 0,
+"rtLaunchV": 30,
+"rtLaunchCone": 20,
+"rtLaunchI": 8,
+"rtGrid": 0,
+"rtMobileTex": 0.5,
+"rtBall": 0,
+"rtVt": 0,
+"rtLoopSize": 0,
+"rtLoopMin": 0.25,
+"rtGpuSafe": 0,
+"rtMTex": 0,
+"rtTexCal": 0,
+"rtGpuMax": 0,
+"rtFar": 0,
+"rtNearA0": 0.6,
+"rtNearA1": 1,
+"rtGpuF": 150,
+"rtGpuM": 200,
+"rtGpuC": 300,
+"rtGpuTw": 0.8,
+"rtGpuDisp": 0,
+"rtGpuGain": 1,
+"rtNearExpo": 1,
+"rtFarVz": 0.5,
+"loopT": 2.1333333333333333,
+"nozzles": 1,
+"fanAngle": 0,
+"spacing": 0,
+"shotRate": 3,
+"shotSpeed": 70,
+"cometBurn": 1.4,
+"burstStars": 0,
+"wheelR": 3,
+"jetSpeed": 26,
+"jetCone": 11,
+"jetDir": 90,
+"groundH": 0,
+"shutter": 0,
+"fpsFloor": 24,
+"frameBudget": "motion",
+"pageTarget": 1,
+"holdTicks": 0,
+"maxHold": 4,
+"maxHoldBurn": 3,
+"fpsBurst": 30,
+"burstSec": 0.5,
+"fpsActive": 15,
+"fpsFade": 10,
+"fadeAt": 0,
+"maxPages": 0,
+"fitPages": 1,
+"qSS": 2,
+"qHz": 300,
+"qMaxSub": 16,
+"texW": 2048,
+"texH": 2048,
+"cols": 4,
+"rows": 4,
+"chans": 4,
+"outMode": "combined",
+"encGamma": 1,
+"frameMode": "auto",
+"zoom": "off",
+"engine": "gpu",
+"form": "loop",
+"unitElev": 0,
+"unitFlip": 0,
+"cellPad": 2,
+"autoGrid": 0,
+"crackleDelayJit": 70,
+"crackleRIn": 0.14285714285714285,
+"crackleFollow": 0.3,
+"crackleLife": 0.07,
+"crackleTau": 0.012,
+"crackleBright": 2.2,
+"crackleBrightJit": 40,
+"crackleSize": 0.5,
+"crackleSizeJit": 30,
+"strobeOn": 1.6,
+"strobeOff": 0.03,
+"strobeHzJit": 15,
+"glitterDelayJit": 50,
+"glitterW": 0.03,
+"glitterPeak": 6,
+"glitterDim": 0.85,
+"branchLife": 0.16,
+"branchLifeJit": 40,
+"branchV": 4,
+"branchVJit": 40,
+"branchInh": 0.5,
+"branchKd": 1.5,
+"branchT": 1.08,
+"branchBright": 1.8,
+"branchFade": 2,
+"branchSize": 0.7,
+"flashR": -1,
+"flashTau": 0.035,
+"flashLife": 0.25,
+"subSize": -1,
+"subBright": -1,
+"subFlashR": -1,
+"sparkInhJit": 70,
+"T0Jit": 120,
+"emberLifeJit": 0.2,
+"emberDecay": 2,
+"emberFadeAt": 0.75,
+"x1Event": "death",
+"x1T": 1,
+"x1Kind": "dot",
+"x1N": 8,
+"x1Rate": 20,
+"x1Prob": 1,
+"x1Delay": 0,
+"x1DelayJit": 0,
+"x1Spark": 0,
+"x1R": 0,
+"x1V": 8,
+"x1VJit": 30,
+"x1Inh": 0.3,
+"x1Grav": 1,
+"x1Drag": 1.5,
+"x1Life": 0.5,
+"x1LifeJit": 20,
+"x1Size": 0.6,
+"x1SizeJit": 20,
+"x1SizeCurve": "",
+"x1Bright": 1,
+"x1BrightJit": 20,
+"x1BrightCurve": "0:1, 0.7:1, 1:0",
+"x1Flick": 0,
+"x1FlickHz": 8,
+"x2Event": "death",
+"x2T": 1,
+"x2Kind": "dot",
+"x2N": 8,
+"x2Rate": 20,
+"x2Prob": 1,
+"x2Delay": 0,
+"x2DelayJit": 0,
+"x2Spark": 0,
+"x2R": 0,
+"x2V": 8,
+"x2VJit": 30,
+"x2Inh": 0.3,
+"x2Grav": 1,
+"x2Drag": 1.5,
+"x2Life": 0.5,
+"x2LifeJit": 20,
+"x2Size": 0.6,
+"x2SizeJit": 20,
+"x2SizeCurve": "",
+"x2Bright": 1,
+"x2BrightJit": 20,
+"x2BrightCurve": "0:1, 0.7:1, 1:0",
+"x2Flick": 0,
+"x2FlickHz": 8,
+"x1On": 0,
+"x2On": 0,
+"starSizeCurve": "",
+"starBrightCurve": "",
+"sparkSizeCurve": "",
+"sparkBrightCurve": "",
+"emberBrightCurve": "",
+"branchBrightCurve": "",
+"crackleSizeCurve": "",
+"crackleBrightCurve": "",
+"flashBrightCurve": "",
+"subSizeCurve": "",
+"subBrightCurve": "",
+"emberSizeCurve": "",
+"branchSizeCurve": "",
+"flashSizeCurve": "",
+"rtFSizeCurve": "",
+"rtFBrightCurve": "",
+"rtMSizeCurve": "",
+"rtMBrightCurve": "",
+"rtCSizeCurve": "",
+"rtCBrightCurve": "",
+"rtESizeCurve": "",
+"rtEBrightCurve": "",
+"rtPopSizeCurve": "",
+"rtPopBrightCurve": "",
+"rtSmokeSizeCurve": "",
+"rtSmokeBrightCurve": "",
+"rtLaunchSizeCurve": "",
+"rtLaunchBrightCurve": "",
+"rtLaunchSparkSizeCurve": "",
+"rtLaunchSparkBrightCurve": "",
+"rtGlowSizeCurve": "",
+"rtGlowBrightCurve": "",
+"adjTailLen": 1,
+"adjSparkSize": 1,
+"adjSpread": 1,
+"adjHeadSize": 1,
+"adjSparkBright": 1,
+"adjTwinkle": 1,
+"tempo": 1,
+"sparkGraph": {
+"name": "仙女棒 · 快慢火星与轻气流",
+"period": 2.1333333333333333,
+"bounds": [
+-0.5,
+0.5,
+-0.65,
+0.35
+],
+"bursts": [
+[
+0.24,
+0.025
+],
+[
+0.89,
+0.035
+],
+[
+1.73,
+0.022
+]
+],
+"emitters": [
+{
+"id": "e01",
+"name": "01｜燃烧核心",
+"parent": null,
+"seed": 501937,
+"enabled": true,
+"count": 14933,
+"speed": [
+0.02,
+0.18,
+1.4
+],
+"life": [
+0.015,
+0.065,
+1.4
+],
+"size": [
+0.3,
+1.8,
+1.5
+],
+"power": [
+0.2,
+2.5,
+1.4
+],
+"width": 0.00022000000171829015,
+"gain": 43.2,
+"drag": 1.7000000476837158,
+"gravity": [
+0.0,
+0.0,
+-0.18400000035762787
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.013000000268220901,
+"clusterSize": 128,
+"clusterProbability": 0.75,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.699999988079071
+],
+[
+0.20000000298023224,
+1.0
+],
+[
+0.6000000238418579,
+0.7200000286102295
+],
+[
+1.0,
+0.07999999821186066
+]
+],
+"brightCurve": [
+[
+0.0,
+0.5
+],
+[
+0.20000000298023224,
+1.0
+],
+[
+0.6499999761581421,
+0.6000000238418579
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 0
+},
+{
+"id": "e02",
+"name": "02｜细长暗丝",
+"parent": null,
+"seed": 503244,
+"enabled": true,
+"count": 12800,
+"speed": [
+0.2,
+3.6399999999999997,
+2.3
+],
+"life": [
+0.05,
+0.19,
+1.4
+],
+"size": [
+0.35,
+1.3,
+1.6
+],
+"power": [
+0.06,
+3.0,
+2.0
+],
+"width": 7.500000356230885e-05,
+"gain": 3072.0,
+"drag": 8,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.004999999888241291,
+"clusterSize": 34,
+"clusterProbability": 0.44999998807907104,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.00044999999227002263,
+"noiseHz": 17.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.25
+],
+[
+0.15000000596046448,
+1.0
+],
+[
+0.5,
+0.8500000238418579
+],
+[
+0.800000011920929,
+0.30000001192092896
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 1
+},
+{
+"id": "e03",
+"name": "03｜中等金丝",
+"parent": null,
+"seed": 504551,
+"enabled": true,
+"count": 960,
+"speed": [
+0.45,
+2.8600000000000003,
+1.6
+],
+"life": [
+0.07,
+0.23,
+1.4
+],
+"size": [
+0.45,
+1.5,
+1.6
+],
+"power": [
+0.12,
+2.5,
+1.7
+],
+"width": 0.00016999999934341758,
+"gain": 1920.0,
+"drag": 5,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.004999999888241291,
+"clusterSize": 14,
+"clusterProbability": 0.3499999940395355,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0008999999845400453,
+"noiseHz": 12.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.25
+],
+[
+0.15000000596046448,
+1.0
+],
+[
+0.5,
+0.8500000238418579
+],
+[
+0.800000011920929,
+0.30000001192092896
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 1
+},
+{
+"id": "e04",
+"name": "04｜粗亮短火星",
+"parent": null,
+"seed": 505858,
+"enabled": true,
+"count": 149,
+"speed": [
+0.65,
+1.8,
+1.2
+],
+"life": [
+0.12,
+0.28,
+1.4
+],
+"size": [
+0.5,
+1.8,
+1.7
+],
+"power": [
+0.12,
+3.0,
+1.8
+],
+"width": 0.002199999988079071,
+"gain": 72.0,
+"drag": 2.4,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.0006500000017695129,
+"clusterSize": 4,
+"clusterProbability": 0.20000000298023224,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.0
+],
+[
+0.30000001192092896,
+1.0
+],
+[
+0.6499999761581421,
+0.6499999761581421
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 0.2
+},
+{
+"id": "e05",
+"name": "05｜分裂母粒",
+"parent": null,
+"seed": 507165,
+"enabled": true,
+"count": 907,
+"speed": [
+0.45,
+2.9899999999999998,
+1.8
+],
+"life": [
+0.08,
+0.28,
+1.2
+],
+"size": [
+0.6,
+2.2,
+1.5
+],
+"power": [
+0.35,
+2.0,
+1.6
+],
+"width": 0.00011999999696854502,
+"gain": 1920.0,
+"drag": 4,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.004999999888241291,
+"clusterSize": 11,
+"clusterProbability": 0.25,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0005000000237487257,
+"noiseHz": 13.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.25
+],
+[
+0.15000000596046448,
+1.0
+],
+[
+0.5,
+0.8500000238418579
+],
+[
+0.800000011920929,
+0.30000001192092896
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 1
+},
+{
+"id": "e06",
+"name": "06｜一级分叉",
+"parent": "e05",
+"seed": 508472,
+"enabled": true,
+"count": 0,
+"speed": [
+0.12,
+2.08,
+2.2
+],
+"life": [
+0.024,
+0.08,
+1.2
+],
+"size": [
+0.3,
+1.65,
+1.7
+],
+"power": [
+0.3,
+3,
+1.7
+],
+"width": 7.999999797903001e-05,
+"gain": 8063.999999999998,
+"drag": 11,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.0006500000017695129,
+"clusterSize": 1,
+"clusterProbability": 0.75,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 16,
+"event": 0.6499999761581421,
+"delay": 0.0,
+"inherit": 0.2,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.25
+],
+[
+0.15000000596046448,
+0.8999999761581421
+],
+[
+0.5,
+0.6000000238418579
+],
+[
+0.800000011920929,
+0.25
+],
+[
+1.0,
+0.019999999552965164
+]
+],
+"brightCurve": [
+[
+0.0,
+0.8999999761581421
+],
+[
+0.18000000715255737,
+1.0
+],
+[
+0.550000011920929,
+0.6499999761581421
+],
+[
+0.800000011920929,
+0.20000000298023224
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0,
+"fieldCoupling": 1
+},
+{
+"id": "e07",
+"name": "07｜延迟分叉",
+"parent": "e05",
+"seed": 509779,
+"enabled": true,
+"count": 0,
+"speed": [
+0.15,
+1.9500000000000002,
+1.8
+],
+"life": [
+0.02,
+0.065,
+1.2
+],
+"size": [
+0.3,
+1.65,
+1.7
+],
+"power": [
+0.3,
+3,
+1.7
+],
+"width": 7.500000356230885e-05,
+"gain": 7200.0,
+"drag": 13,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.0006500000017695129,
+"clusterSize": 1,
+"clusterProbability": 0.75,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 9,
+"event": 0.8999999761581421,
+"delay": 0.0,
+"inherit": 0.2,
+"probability": 0.3400000035762787,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.25
+],
+[
+0.15000000596046448,
+0.8999999761581421
+],
+[
+0.5,
+0.6000000238418579
+],
+[
+0.800000011920929,
+0.25
+],
+[
+1.0,
+0.019999999552965164
+]
+],
+"brightCurve": [
+[
+0.0,
+0.8999999761581421
+],
+[
+0.18000000715255737,
+1.0
+],
+[
+0.550000011920929,
+0.6499999761581421
+],
+[
+0.800000011920929,
+0.20000000298023224
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0,
+"fieldCoupling": 1
+},
+{
+"id": "e08",
+"name": "08｜二级碎火星",
+"parent": "e06",
+"seed": 511086,
+"enabled": true,
+"count": 0,
+"speed": [
+0.05,
+0.65,
+1.8
+],
+"life": [
+0.012,
+0.032,
+1.2
+],
+"size": [
+0.3,
+1.65,
+1.7
+],
+"power": [
+0.08,
+3.0,
+1.7
+],
+"width": 7.000000186963007e-05,
+"gain": 5760.0,
+"drag": 20,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.0006500000017695129,
+"clusterSize": 1,
+"clusterProbability": 0.75,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.7799999713897705,
+"delay": 0.0,
+"inherit": 0.35,
+"probability": 0.25,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.25
+],
+[
+0.15000000596046448,
+0.8999999761581421
+],
+[
+0.5,
+0.6000000238418579
+],
+[
+0.800000011920929,
+0.25
+],
+[
+1.0,
+0.019999999552965164
+]
+],
+"brightCurve": [
+[
+0.0,
+0.8999999761581421
+],
+[
+0.18000000715255737,
+1.0
+],
+[
+0.550000011920929,
+0.6499999761581421
+],
+[
+0.800000011920929,
+0.20000000298023224
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0,
+"fieldCoupling": 1
+},
+{
+"id": "e09",
+"name": "09｜不规则粗碎片",
+"parent": null,
+"seed": 512393,
+"enabled": true,
+"count": 213,
+"speed": [
+0.55,
+1.6,
+1.2
+],
+"life": [
+0.12,
+0.3,
+1.2
+],
+"size": [
+0.5,
+1.7,
+1.8
+],
+"power": [
+0.1,
+2.5,
+1.8
+],
+"width": 0.002400000113993883,
+"gain": 4.800000000000001,
+"drag": 2.2,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "fragment",
+"history": 0,
+"taper": 0.15000000596046448,
+"aspect": 6.0,
+"spin": 25.0,
+"twist": 80.0,
+"extent": 0.00016500000492669642,
+"clusterSize": 2,
+"clusterProbability": 0.75,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.0
+],
+[
+0.30000001192092896,
+1.0
+],
+[
+0.699999988079071,
+0.6499999761581421
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 0.2
+},
+{
+"id": "e10",
+"name": "10｜暗红余烬",
+"parent": null,
+"seed": 513700,
+"enabled": true,
+"count": 555,
+"speed": [
+0.025,
+0.55,
+1.8
+],
+"life": [
+0.03,
+0.12,
+1.2
+],
+"size": [
+0.4,
+1.7,
+1.5
+],
+"power": [
+0.15,
+1.2,
+1.6
+],
+"width": 0.0002300000051036477,
+"gain": 36.0,
+"drag": 6,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "sphere",
+"direction": [
+0.0,
+1.0,
+0.0
+],
+"cone": 30.0,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.0006500000017695129,
+"clusterSize": 8,
+"clusterProbability": 0.75,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.6000000238418579
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.2800000011920929,
+0.3799999952316284
+],
+[
+0.5,
+0.09000000357627869
+],
+[
+0.699999988079071,
+0.017999999225139618
+],
+[
+0.8799999952316284,
+0.0010000000474974513
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 1
+},
+{
+"id": "e11",
+"name": "11｜圆形余烬",
+"parent": null,
+"seed": 602303,
+"enabled": true,
+"count": 139,
+"speed": [
+0.4,
+1.3,
+1.2
+],
+"life": [
+0.18,
+0.36,
+1.2
+],
+"size": [
+0.5,
+1.5,
+1.8
+],
+"power": [
+0.1,
+2.5,
+1.8
+],
+"width": 0.007000000216066837,
+"gain": 2.0,
+"drag": 3.2,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "cone",
+"direction": [
+0.0,
+-1.0,
+0.0
+],
+"cone": 70.0,
+"shape": "point",
+"history": 0,
+"taper": 0.15000000596046448,
+"aspect": 1.0,
+"spin": 90.0,
+"twist": 60.0,
+"extent": 0.0010000000474974513,
+"clusterSize": 3,
+"clusterProbability": 0.20000000298023224,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.0
+],
+[
+0.3499999940395355,
+0.6000000238418579
+],
+[
+0.699999988079071,
+1.0
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 0.2
+},
+{
+"id": "e12",
+"name": "12｜近远景粗火星",
+"parent": null,
+"seed": 602273,
+"enabled": true,
+"count": 299,
+"speed": [
+0.6,
+2.4,
+1.8
+],
+"life": [
+0.12,
+0.3,
+1.2
+],
+"size": [
+0.5,
+1.8,
+2
+],
+"power": [
+0.1,
+2.5,
+1.8
+],
+"width": 0.003800000064074993,
+"gain": 43.2,
+"drag": 2.8,
+"gravity": [
+0,
+0,
+-2.5
+],
+"directionMode": "cone",
+"direction": [
+0.0,
+-1.0,
+0.0
+],
+"cone": 70.0,
+"shape": "line",
+"history": 0.01600000075995922,
+"taper": 0.25,
+"aspect": 1.0,
+"spin": 0.0,
+"twist": 0.0,
+"extent": 0.0010000000474974513,
+"clusterSize": 3,
+"clusterProbability": 0.20000000298023224,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.3499999940395355
+],
+[
+0.07999999821186066,
+1.0
+],
+[
+0.5,
+0.800000011920929
+],
+[
+0.800000011920929,
+0.46000000834465027
+],
+[
+1.0,
+0.10000000149011612
+]
+],
+"brightCurve": [
+[
+0.0,
+0.0
+],
+[
+0.30000001192092896,
+1.0
+],
+[
+0.6499999761581421,
+0.75
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 0.2
+},
+{
+"id": "e13",
+"name": "13｜燃烧头炽热点",
+"parent": null,
+"seed": 731529,
+"enabled": true,
+"count": 5333,
+"speed": [
+0.01,
+0.12,
+1.4
+],
+"life": [
+0.04,
+0.1,
+1.2
+],
+"size": [
+0.35,
+2.2,
+1.6
+],
+"power": [
+0.2,
+2.5,
+1.4
+],
+"width": 0.0031999999191612005,
+"gain": 1.4000000000000001,
+"drag": 1.7000000476837158,
+"gravity": [
+0.0,
+0.0,
+-0.18400000035762787
+],
+"directionMode": "cone",
+"direction": [
+0.0,
+0.0,
+1.0
+],
+"cone": 0,
+"shape": "fragment",
+"history": 0,
+"taper": 0.15000000596046448,
+"aspect": 1.7999999523162842,
+"spin": 10.0,
+"twist": 20.0,
+"extent": 0.023000000044703484,
+"clusterSize": 24,
+"clusterProbability": 0.800000011920929,
+"clusterWidth": 0.014999999664723873,
+"clusterDirection": 0.15000000596046448,
+"children": 1,
+"event": 0.5,
+"delay": 0.0,
+"inherit": 1.0,
+"probability": 1.0,
+"noise": 0.0,
+"noiseHz": 30.0,
+"sizeCurve": [
+[
+0.0,
+0.699999988079071
+],
+[
+0.20000000298023224,
+1.0
+],
+[
+0.6000000238418579,
+0.7200000286102295
+],
+[
+1.0,
+0.07999999821186066
+]
+],
+"brightCurve": [
+[
+0.0,
+0.5
+],
+[
+0.20000000298023224,
+1.0
+],
+[
+0.6499999761581421,
+0.6000000238418579
+],
+[
+1.0,
+0.0
+]
+],
+"burstShare": 0.17,
+"fieldCoupling": 0
+}
+],
+"presetKey": "sparkler",
+"fieldEnabled": 1,
+"fieldResponse": 12,
+"fieldStart": 0.002,
+"fieldRamp": 0.025,
+"fieldAxisX": 0,
+"fieldAxisY": 0,
+"fieldAxisZ": 1,
+"fieldWindX": 0.04,
+"fieldWindY": 0,
+"fieldWindZ": 0.3,
+"fieldConverge": 0,
+"fieldTurbulence": 0.3,
+"fieldScale": 0.16,
+"fieldCycles": 1,
+"fieldSeed": 29,
+"scaleCone": 1,
+"scaleCount": 1,
+"scaleWidth": 1,
+"scaleLife": 1,
+"scaleGain": 1,
+"scaleSpeed": 1,
+"scaleGravity": 1,
+"branchLife": 1,
+"branchAngle": 1,
+"branchCount": 1,
+"branchWidth": 1,
+"branchSpeed": 1,
+"branchGravity": 1
+},
+"type": "sparkgraph",
+"graphSolo": null,
+"cameraMotion": 1,
+"cameraShutter": 0.03333333333333333,
+"cameraPhase": "end",
+"cameraQuality": "high",
+"cameraDof": 1,
+"cameraDistance": 1,
+"cameraFocus": 1,
+"cameraAperture": 0.018,
+"cameraBlades": 0
+},
+"m": {
+"stages": [
+[
+0,
+"#ffffff"
+]
+],
+"xw": 0.08,
+"ramp0": "#120100",
+"ramp1": "#b34104",
+"ramp2": "#ffc064",
+"ramp3": "#fff6dd",
+"headInt": 1,
+"tailInt": 1
+},
+"ver": "b6ca8de3"
+},
+{
 "id": "GLB-S1-L1",
 "task": "GLB-S1-L1",
 "kind": "preset",
@@ -13922,1954 +15912,6 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "ver": "609bae26"
-},
-{
-"id": "SGS1",
-"task": "SGS1",
-"kind": "preset",
-"date": "2026-10-14",
-"name": "仙女棒 · 13层全形态",
-"note": "镜头设置烘入贴图，不随UE相机重算；两开关按资源保存，旧资产默认关闭。",
-"look": [
-"快火星自动拉长、慢火星变短。",
-"焦内细芯与焦外散焦光斑，短促爆发和分叉仍完整。"
-],
-"opinion": null,
-"tags": "仙女棒 窜天猴 火星 分叉 分层 循环",
-"doc": null,
-"imagesTitle": null,
-"principle": true,
-"base": "sparkgraph",
-"p": {
-"renderVer": 40,
-"exposure": 1,
-"exposureLock": 0,
-"exposureTarget": 0.96,
-"coreProfile": 0,
-"haloFrac": 0.22,
-"haloR": 3,
-"haloShape": 0,
-"haloBeta": 2.2,
-"sparkShape": 0,
-"sparkShapeIrr": 0.6,
-"sparkShapeSpin": 0.5,
-"sparkBrightJit": 0,
-"previewBloom": 0,
-"trimTail": 1,
-"mods": [],
-"duration": 2.1333333333333333,
-"seed": 7,
-"stars": 150,
-"burstR0": 0,
-"v0": 150,
-"vt": 18,
-"grav": 1,
-"speedJit": 3,
-"dirJit": 1.5,
-"burn": 2.5,
-"burnJit": 12,
-"fade": 0.2,
-"lastFlare": 0.35,
-"flash": 1,
-"flashSize": 1,
-"outPC": "seq",
-"outMobile": "seq",
-"dotSize": 1,
-"dotBright": 1,
-"exportScale": 1,
-"exportScaleRise": "scale",
-"lowPick": "frame",
-"lowAt": 0,
-"lowSize": 1024,
-"lowJit": 0.3,
-"lowMaps": "DCA",
-"lowSuffix": "",
-"unitVariants": 1,
-"unitRandom": 0,
-"endMode": "natural",
-"coolMode": 1,
-"headSize": 0.001,
-"headBright": 1,
-"flicker": 0.25,
-"headHaloOwn": 0,
-"headHaloFrac": 0.22,
-"headHaloR": 3,
-"sparkRate": 1600,
-"sparkRateBy": "sec",
-"sparkPerM": 5,
-"sparkSpawnR": 0,
-"sparkSpawnHead": 0,
-"sparkJet": 0,
-"sparkJetCone": 0,
-"sparkRateEnd": 1,
-"sparkStop": 0,
-"sparkStart": 0,
-"sparkRamp": 0,
-"sparkRampJit": 30,
-"sparkLife": 1.6,
-"sparkLifeEnd": 1,
-"sparkLifeJit": 45,
-"sparkSize": 0.001,
-"sparkSpread": 2.5,
-"sparkInherit": 0.2,
-"sparkDrag": 1.1,
-"sparkQ": 0,
-"sparkGrav": 1,
-"T0": 2150,
-"cooling": 0.5,
-"sparkBright": 1,
-"twinkle": 0.6,
-"twinkleHz": 0,
-"subDelay": 0.9,
-"subJit": 10,
-"subStars": 36,
-"subSpeed": 40,
-"subBurn": 0.9,
-"subTail": 0,
-"carrierTail": 30,
-"subPattern": "sphere",
-"spin": 14,
-"chaos": 0.8,
-"beeSpeed": 28,
-"shellNo": 0,
-"wind": 0,
-"turb": 0,
-"turbScale": 60,
-"massLoss": 0,
-"shellVx": 0,
-"shellVy": 0,
-"shellSpin": 0,
-"pattern": "sphere",
-"tilt": 0,
-"ringFrac": 0.45,
-"text": "祭",
-"waterRefl": 0,
-"clusterLayout": "cube",
-"clusterN": 8,
-"clusterCone": 8,
-"clusterRoll": 0,
-"clusterYaw": 0,
-"clusterStarsJit": 0,
-"clusterDirJit": 0,
-"clusterFan": 90,
-"clusterSweep": 0,
-"clusterGap": 0,
-"ignDelay": 0,
-"ignJit": 10,
-"ignSeed": 0,
-"keepFrac": 1,
-"afterBurn": 0,
-"afterJit": 15,
-"headDim": 1,
-"headDimUntil": 0,
-"emberFrac": 0,
-"emberLife": 3,
-"emberBright": 0.1,
-"emberFollow": 0,
-"emberSize": 1,
-"emberAll": 0,
-"emberEnd": 0,
-"carrierHead": 0.4,
-"subKeep": -1,
-"subSpeedJit": -1,
-"trimLead": 1,
-"tailJit": 0,
-"tailShoulder": 0,
-"tailWidth": 1,
-"tailPinchHead": 0,
-"tailPinchTail": 0,
-"tailBellyAt": 0.45,
-"headTear": 0,
-"headSizeJit": 0,
-"headStretch": 0,
-"headStretchJit": 0,
-"headKnots": 0,
-"headLumpy": 0,
-"headDouble": 0,
-"headHex": 0,
-"headHexRot": 0,
-"sparkStretch": 0,
-"sparkStretchJit": 0,
-"tailDiffuse": 0,
-"tailDiffuseScale": 20,
-"sparkRise": 0,
-"starBright": 0,
-"tailHaze": 0,
-"tailHazeR": 6,
-"frameCount": 24,
-"outPack": "grid",
-"outCell": 0,
-"cutIn": 0,
-"cutOut": 0,
-"preRoll": 1,
-"preFrom": -1,
-"visTo": 0,
-"preScale0": 0,
-"subScaleJit": 0,
-"subVt": 0,
-"subGrav": -1,
-"subFlash": -1,
-"strobeHz": 0,
-"strobeDuty": 0.35,
-"strobeStart": 0.4,
-"glitter": 0,
-"glitterDelay": 0.25,
-"crackle": 0,
-"crackleDelay": 0.3,
-"crackleR": 3.5,
-"crackleV": 0,
-"branch": 0,
-"branchAt": 0.45,
-"flutter": 0,
-"flutterHz": 0.7,
-"riseH": 250,
-"vtShell": 55,
-"riseStyle": "gold",
-"wobble": 0,
-"wobbleHz": 1.6,
-"kobanaN": 4,
-"bunpoN": 3,
-"trV": 43.5,
-"trFps": 30,
-"trInh": 0.1,
-"trDrag": 3,
-"trGrav": 0.3,
-"trCool": 1,
-"trFRate": 2600,
-"trFLife": 0.6,
-"trFSpread": 0.45,
-"trFSize": 0.1,
-"trFBright": 0.03,
-"trMRate": 600,
-"trMLife": 0.75,
-"trMSpread": 0.8,
-"trMSize": 0.14,
-"trMBright": 0.05,
-"trCRate": 60,
-"trCLife": 0.9,
-"trCSpread": 1.2,
-"trCSize": 0.18,
-"trCBright": 0.12,
-"trWRate": 0,
-"trWLife": 0.12,
-"trWSpread": 14,
-"trWSize": 0.06,
-"trWBright": 0.06,
-"trHeadSize": 0.26,
-"trHeadBright": 1.2,
-"trHeadExpo": 1,
-"trHalo": 3,
-"trHaloBright": 0.15,
-"trTwist": 0.35,
-"trTwistN": 5,
-"trWiggle": 0.08,
-"trTwistLag": 0.35,
-"trFollow": 0,
-"trBright": 1.6,
-"trExport4K": 1,
-"trIgnite": 0,
-"trPhys": 0,
-"rtH": 265,
-"rtT": 5,
-"rtVb": 16,
-"rtLean": 0,
-"rtD": 0.14,
-"rtBurstD": 190,
-"rtSpin": 2,
-"rtSpinPh": 0,
-"rtFling": 3,
-"rtJet": 27,
-"rtCone": 2.5,
-"rtPulse": 0.2,
-"rtPulseHz": 6,
-"rtHeadSize": 0.55,
-"rtHeadI": 3,
-"rtHeadFl": 0.8,
-"rtHeadFlI": 0.6,
-"rtARate": 10000,
-"rtALife": 0.7,
-"rtALsig": 0.35,
-"rtAJet": 33,
-"rtAKd": 14,
-"rtACone": 0.6,
-"rtASize": 0.22,
-"rtAI": 0.5,
-"rtAWarm": 1.2,
-"rtFRate": 2500,
-"rtFLife": 0.9,
-"rtFJit": 40,
-"rtFSize": 0.25,
-"rtFI": 2.6,
-"rtFKd": 5,
-"rtMRate": 900,
-"rtMLife": 1.5,
-"rtMJit": 35,
-"rtMSize": 0.38,
-"rtMI": 4,
-"rtMKd": 3.6,
-"rtCRate": 180,
-"rtCLife": 2.4,
-"rtCJit": 30,
-"rtCSize": 0.55,
-"rtCI": 6,
-"rtCKd": 2.4,
-"rtFdT": 0,
-"rtMdT": 0,
-"rtCdT": 0,
-"rtSizeJit": 25,
-"rtKdJit": 20,
-"rtConeSoft": 0,
-"rtStreakT": 0,
-"rtStreakMax": 6,
-"rtFStreak": 1,
-"rtMStreak": 1,
-"rtCStreak": 1,
-"rtTurb": 0,
-"rtTurbL": 30,
-"rtTurbS": 0,
-"rtT0": 2450,
-"rtTb": 2150,
-"rtTc": 0.35,
-"rtTend": 1450,
-"rtTw": 0.3,
-"rtShrink": 0.5,
-"rtETex": 0,
-"rtTailAfterBurn": 0,
-"rtLateWind": 0,
-"rtLateScale": 1.5,
-"rtLateFade": 0.4,
-"rtERate": 10,
-"rtELife": 3,
-"rtESize": 0.8,
-"rtEI": 4,
-"rtEKd": 1,
-"rtSmoke": 0.003,
-"rtSmokeRate": 25,
-"rtSmokeLife": 3.5,
-"rtSmokeSize": 2.5,
-"rtSmokeGrow": 4,
-"rtBright": 1,
-"rtDotGain": 1,
-"rtMobile": 0.2,
-"rtDissolve": 1,
-"rtFadeFps": 0,
-"rtFTex": 0,
-"rtTexI": 10,
-"rtGlow": 0,
-"rtGlowSize": 4,
-"rtPopRate": 0,
-"rtPopI": 20,
-"rtPopSize": 0.5,
-"rtPopAt": 0.85,
-"rtLaunch": 0,
-"rtLaunchSize": 8,
-"rtLaunchN": 0,
-"rtLaunchV": 30,
-"rtLaunchCone": 20,
-"rtLaunchI": 8,
-"rtGrid": 0,
-"rtMobileTex": 0.5,
-"rtBall": 0,
-"rtVt": 0,
-"rtLoopSize": 0,
-"rtLoopMin": 0.25,
-"rtGpuSafe": 0,
-"rtMTex": 0,
-"rtTexCal": 0,
-"rtGpuMax": 0,
-"rtFar": 0,
-"rtNearA0": 0.6,
-"rtNearA1": 1,
-"rtGpuF": 150,
-"rtGpuM": 200,
-"rtGpuC": 300,
-"rtGpuTw": 0.8,
-"rtGpuDisp": 0,
-"rtGpuGain": 1,
-"rtNearExpo": 1,
-"rtFarVz": 0.5,
-"loopT": 2.1333333333333333,
-"nozzles": 1,
-"fanAngle": 0,
-"spacing": 0,
-"shotRate": 3,
-"shotSpeed": 70,
-"cometBurn": 1.4,
-"burstStars": 0,
-"wheelR": 3,
-"jetSpeed": 26,
-"jetCone": 11,
-"jetDir": 90,
-"groundH": 0,
-"shutter": 0,
-"fpsFloor": 24,
-"frameBudget": "motion",
-"pageTarget": 1,
-"holdTicks": 0,
-"maxHold": 4,
-"maxHoldBurn": 3,
-"fpsBurst": 30,
-"burstSec": 0.5,
-"fpsActive": 15,
-"fpsFade": 10,
-"fadeAt": 0,
-"maxPages": 0,
-"fitPages": 1,
-"qSS": 2,
-"qHz": 300,
-"qMaxSub": 16,
-"texW": 2048,
-"texH": 2048,
-"cols": 4,
-"rows": 4,
-"chans": 4,
-"outMode": "combined",
-"encGamma": 1,
-"frameMode": "auto",
-"zoom": "off",
-"engine": "gpu",
-"form": "loop",
-"unitElev": 0,
-"unitFlip": 0,
-"cellPad": 2,
-"autoGrid": 0,
-"crackleDelayJit": 70,
-"crackleRIn": 0.14285714285714285,
-"crackleFollow": 0.3,
-"crackleLife": 0.07,
-"crackleTau": 0.012,
-"crackleBright": 2.2,
-"crackleBrightJit": 40,
-"crackleSize": 0.5,
-"crackleSizeJit": 30,
-"strobeOn": 1.6,
-"strobeOff": 0.03,
-"strobeHzJit": 15,
-"glitterDelayJit": 50,
-"glitterW": 0.03,
-"glitterPeak": 6,
-"glitterDim": 0.85,
-"branchLife": 0.16,
-"branchLifeJit": 40,
-"branchV": 4,
-"branchVJit": 40,
-"branchInh": 0.5,
-"branchKd": 1.5,
-"branchT": 1.08,
-"branchBright": 1.8,
-"branchFade": 2,
-"branchSize": 0.7,
-"flashR": -1,
-"flashTau": 0.035,
-"flashLife": 0.25,
-"subSize": -1,
-"subBright": -1,
-"subFlashR": -1,
-"sparkInhJit": 70,
-"T0Jit": 120,
-"emberLifeJit": 0.2,
-"emberDecay": 2,
-"emberFadeAt": 0.75,
-"x1Event": "death",
-"x1T": 1,
-"x1Kind": "dot",
-"x1N": 8,
-"x1Rate": 20,
-"x1Prob": 1,
-"x1Delay": 0,
-"x1DelayJit": 0,
-"x1Spark": 0,
-"x1R": 0,
-"x1V": 8,
-"x1VJit": 30,
-"x1Inh": 0.3,
-"x1Grav": 1,
-"x1Drag": 1.5,
-"x1Life": 0.5,
-"x1LifeJit": 20,
-"x1Size": 0.6,
-"x1SizeJit": 20,
-"x1SizeCurve": "",
-"x1Bright": 1,
-"x1BrightJit": 20,
-"x1BrightCurve": "0:1, 0.7:1, 1:0",
-"x1Flick": 0,
-"x1FlickHz": 8,
-"x2Event": "death",
-"x2T": 1,
-"x2Kind": "dot",
-"x2N": 8,
-"x2Rate": 20,
-"x2Prob": 1,
-"x2Delay": 0,
-"x2DelayJit": 0,
-"x2Spark": 0,
-"x2R": 0,
-"x2V": 8,
-"x2VJit": 30,
-"x2Inh": 0.3,
-"x2Grav": 1,
-"x2Drag": 1.5,
-"x2Life": 0.5,
-"x2LifeJit": 20,
-"x2Size": 0.6,
-"x2SizeJit": 20,
-"x2SizeCurve": "",
-"x2Bright": 1,
-"x2BrightJit": 20,
-"x2BrightCurve": "0:1, 0.7:1, 1:0",
-"x2Flick": 0,
-"x2FlickHz": 8,
-"x1On": 0,
-"x2On": 0,
-"starSizeCurve": "",
-"starBrightCurve": "",
-"sparkSizeCurve": "",
-"sparkBrightCurve": "",
-"emberBrightCurve": "",
-"branchBrightCurve": "",
-"crackleSizeCurve": "",
-"crackleBrightCurve": "",
-"flashBrightCurve": "",
-"subSizeCurve": "",
-"subBrightCurve": "",
-"emberSizeCurve": "",
-"branchSizeCurve": "",
-"flashSizeCurve": "",
-"rtFSizeCurve": "",
-"rtFBrightCurve": "",
-"rtMSizeCurve": "",
-"rtMBrightCurve": "",
-"rtCSizeCurve": "",
-"rtCBrightCurve": "",
-"rtESizeCurve": "",
-"rtEBrightCurve": "",
-"rtPopSizeCurve": "",
-"rtPopBrightCurve": "",
-"rtSmokeSizeCurve": "",
-"rtSmokeBrightCurve": "",
-"rtLaunchSizeCurve": "",
-"rtLaunchBrightCurve": "",
-"rtLaunchSparkSizeCurve": "",
-"rtLaunchSparkBrightCurve": "",
-"rtGlowSizeCurve": "",
-"rtGlowBrightCurve": "",
-"adjTailLen": 1,
-"adjSparkSize": 1,
-"adjSpread": 1,
-"adjHeadSize": 1,
-"adjSparkBright": 1,
-"adjTwinkle": 1,
-"tempo": 1,
-"sparkGraph": {
-"name": "仙女棒 · 全形态",
-"period": 2.1333333333333333,
-"bounds": [
--0.36,
-0.36,
--0.36,
-0.36
-],
-"bursts": [
-[
-0.24,
-0.025
-],
-[
-0.89,
-0.035
-],
-[
-1.73,
-0.022
-]
-],
-"emitters": [
-{
-"id": "e01",
-"name": "01｜燃烧核心",
-"parent": null,
-"seed": 501937,
-"enabled": true,
-"count": 14933,
-"speed": [
-0.02,
-0.18,
-1.4
-],
-"life": [
-0.015,
-0.065,
-1.4
-],
-"size": [
-0.3,
-1.8,
-1.5
-],
-"power": [
-0.2,
-2.5,
-1.4
-],
-"width": 0.00022000000171829015,
-"gain": 43.2,
-"drag": 1.7000000476837158,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.013000000268220901,
-"clusterSize": 128,
-"clusterProbability": 0.75,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.699999988079071
-],
-[
-0.20000000298023224,
-1.0
-],
-[
-0.6000000238418579,
-0.7200000286102295
-],
-[
-1.0,
-0.07999999821186066
-]
-],
-"brightCurve": [
-[
-0.0,
-0.5
-],
-[
-0.20000000298023224,
-1.0
-],
-[
-0.6499999761581421,
-0.6000000238418579
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e02",
-"name": "02｜细长暗丝",
-"parent": null,
-"seed": 503244,
-"enabled": true,
-"count": 12800,
-"speed": [
-0.4,
-1.8,
-1.0
-],
-"life": [
-0.045,
-0.16,
-1.2
-],
-"size": [
-0.35,
-1.3,
-1.6
-],
-"power": [
-0.06,
-3.0,
-2.0
-],
-"width": 7.500000356230885e-05,
-"gain": 3072.0,
-"drag": 1.7000000476837158,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.004999999888241291,
-"clusterSize": 34,
-"clusterProbability": 0.44999998807907104,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.00044999999227002263,
-"noiseHz": 17.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.25
-],
-[
-0.15000000596046448,
-1.0
-],
-[
-0.5,
-0.8500000238418579
-],
-[
-0.800000011920929,
-0.30000001192092896
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e03",
-"name": "03｜中等金丝",
-"parent": null,
-"seed": 504551,
-"enabled": true,
-"count": 960,
-"speed": [
-0.6,
-1.65,
-1.0
-],
-"life": [
-0.07,
-0.2,
-1.4
-],
-"size": [
-0.45,
-1.5,
-1.6
-],
-"power": [
-0.12,
-2.5,
-1.7
-],
-"width": 0.00016999999934341758,
-"gain": 1920.0,
-"drag": 1.7000000476837158,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.004999999888241291,
-"clusterSize": 14,
-"clusterProbability": 0.3499999940395355,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0008999999845400453,
-"noiseHz": 12.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.25
-],
-[
-0.15000000596046448,
-1.0
-],
-[
-0.5,
-0.8500000238418579
-],
-[
-0.800000011920929,
-0.30000001192092896
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e04",
-"name": "04｜粗亮短火星",
-"parent": null,
-"seed": 505858,
-"enabled": true,
-"count": 149,
-"speed": [
-0.65,
-1.5,
-1
-],
-"life": [
-0.15,
-0.35,
-1.4
-],
-"size": [
-0.5,
-1.8,
-1.7
-],
-"power": [
-0.12,
-3.0,
-1.8
-],
-"width": 0.002199999988079071,
-"gain": 72.0,
-"drag": 1.7000000476837158,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.0006500000017695129,
-"clusterSize": 4,
-"clusterProbability": 0.20000000298023224,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.0
-],
-[
-0.30000001192092896,
-1.0
-],
-[
-0.6499999761581421,
-0.6499999761581421
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e05",
-"name": "05｜分裂母粒",
-"parent": null,
-"seed": 507165,
-"enabled": true,
-"count": 907,
-"speed": [
-0.6,
-1.65,
-1.0
-],
-"life": [
-0.08,
-0.28,
-1.2
-],
-"size": [
-0.6,
-2.2,
-1.5
-],
-"power": [
-0.35,
-2.0,
-1.6
-],
-"width": 0.00011999999696854502,
-"gain": 1920.0,
-"drag": 1.0,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.004999999888241291,
-"clusterSize": 11,
-"clusterProbability": 0.25,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0005000000237487257,
-"noiseHz": 13.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.25
-],
-[
-0.15000000596046448,
-1.0
-],
-[
-0.5,
-0.8500000238418579
-],
-[
-0.800000011920929,
-0.30000001192092896
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e06",
-"name": "06｜一级分叉",
-"parent": "e05",
-"seed": 508472,
-"enabled": true,
-"count": 0,
-"speed": [
-0.27,
-1.275,
-1.5
-],
-"life": [
-0.018,
-0.06,
-1.2
-],
-"size": [
-0.3,
-1.65,
-1.7
-],
-"power": [
-0.3,
-3,
-1.7
-],
-"width": 7.999999797903001e-05,
-"gain": 8063.999999999998,
-"drag": 10.0,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.0006500000017695129,
-"clusterSize": 1,
-"clusterProbability": 0.75,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 16,
-"event": 0.6499999761581421,
-"delay": 0.0,
-"inherit": 0.07999999821186066,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.25
-],
-[
-0.15000000596046448,
-0.8999999761581421
-],
-[
-0.5,
-0.6000000238418579
-],
-[
-0.800000011920929,
-0.25
-],
-[
-1.0,
-0.019999999552965164
-]
-],
-"brightCurve": [
-[
-0.0,
-0.8999999761581421
-],
-[
-0.18000000715255737,
-1.0
-],
-[
-0.550000011920929,
-0.6499999761581421
-],
-[
-0.800000011920929,
-0.20000000298023224
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0
-},
-{
-"id": "e07",
-"name": "07｜延迟分叉",
-"parent": "e05",
-"seed": 509779,
-"enabled": true,
-"count": 0,
-"speed": [
-0.33,
-1.275,
-1.1
-],
-"life": [
-0.018,
-0.05,
-1.2
-],
-"size": [
-0.3,
-1.65,
-1.7
-],
-"power": [
-0.3,
-3,
-1.7
-],
-"width": 7.500000356230885e-05,
-"gain": 7200.0,
-"drag": 12.0,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.0006500000017695129,
-"clusterSize": 1,
-"clusterProbability": 0.75,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 9,
-"event": 0.8999999761581421,
-"delay": 0.0,
-"inherit": 0.07999999821186066,
-"probability": 0.3400000035762787,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.25
-],
-[
-0.15000000596046448,
-0.8999999761581421
-],
-[
-0.5,
-0.6000000238418579
-],
-[
-0.800000011920929,
-0.25
-],
-[
-1.0,
-0.019999999552965164
-]
-],
-"brightCurve": [
-[
-0.0,
-0.8999999761581421
-],
-[
-0.18000000715255737,
-1.0
-],
-[
-0.550000011920929,
-0.6499999761581421
-],
-[
-0.800000011920929,
-0.20000000298023224
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0
-},
-{
-"id": "e08",
-"name": "08｜二级碎火星",
-"parent": "e06",
-"seed": 511086,
-"enabled": true,
-"count": 0,
-"speed": [
-0.08,
-0.35,
-1
-],
-"life": [
-0.01,
-0.025,
-1.2
-],
-"size": [
-0.3,
-1.65,
-1.7
-],
-"power": [
-0.08,
-3.0,
-1.7
-],
-"width": 7.000000186963007e-05,
-"gain": 5760.0,
-"drag": 18.0,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.0006500000017695129,
-"clusterSize": 1,
-"clusterProbability": 0.75,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.7799999713897705,
-"delay": 0.0,
-"inherit": 0.07999999821186066,
-"probability": 0.25,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.25
-],
-[
-0.15000000596046448,
-0.8999999761581421
-],
-[
-0.5,
-0.6000000238418579
-],
-[
-0.800000011920929,
-0.25
-],
-[
-1.0,
-0.019999999552965164
-]
-],
-"brightCurve": [
-[
-0.0,
-0.8999999761581421
-],
-[
-0.18000000715255737,
-1.0
-],
-[
-0.550000011920929,
-0.6499999761581421
-],
-[
-0.800000011920929,
-0.20000000298023224
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0
-},
-{
-"id": "e09",
-"name": "09｜不规则粗碎片",
-"parent": null,
-"seed": 512393,
-"enabled": true,
-"count": 213,
-"speed": [
-0.7,
-1.4,
-1
-],
-"life": [
-0.12,
-0.4,
-1.2
-],
-"size": [
-0.5,
-1.7,
-1.8
-],
-"power": [
-0.1,
-2.5,
-1.8
-],
-"width": 0.002400000113993883,
-"gain": 4.800000000000001,
-"drag": 1.7000000476837158,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "fragment",
-"history": 0,
-"taper": 0.15000000596046448,
-"aspect": 6.0,
-"spin": 25.0,
-"twist": 80.0,
-"extent": 0.00016500000492669642,
-"clusterSize": 2,
-"clusterProbability": 0.75,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.0
-],
-[
-0.30000001192092896,
-1.0
-],
-[
-0.699999988079071,
-0.6499999761581421
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e10",
-"name": "10｜暗红余烬",
-"parent": null,
-"seed": 513700,
-"enabled": true,
-"count": 555,
-"speed": [
-0.032,
-0.64,
-1
-],
-"life": [
-0.02,
-0.095,
-1.2
-],
-"size": [
-0.4,
-1.7,
-1.5
-],
-"power": [
-0.15,
-1.2,
-1.6
-],
-"width": 0.0002300000051036477,
-"gain": 36.0,
-"drag": 2.5,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "sphere",
-"direction": [
-0.0,
-1.0,
-0.0
-],
-"cone": 30.0,
-"shape": "line",
-"history": 0.03333333333333333,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.0006500000017695129,
-"clusterSize": 8,
-"clusterProbability": 0.75,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.6000000238418579
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.2800000011920929,
-0.3799999952316284
-],
-[
-0.5,
-0.09000000357627869
-],
-[
-0.699999988079071,
-0.017999999225139618
-],
-[
-0.8799999952316284,
-0.0010000000474974513
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e11",
-"name": "11｜圆形余烬",
-"parent": null,
-"seed": 602303,
-"enabled": true,
-"count": 139,
-"speed": [
-0.6,
-1.5,
-1
-],
-"life": [
-0.2,
-0.5,
-1
-],
-"size": [
-0.5,
-1.5,
-1.8
-],
-"power": [
-0.1,
-2.5,
-1.8
-],
-"width": 0.007000000216066837,
-"gain": 2.0,
-"drag": 1.7999999523162842,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "cone",
-"direction": [
-0.0,
--1.0,
-0.0
-],
-"cone": 70.0,
-"shape": "point",
-"history": 0,
-"taper": 0.15000000596046448,
-"aspect": 1.0,
-"spin": 90.0,
-"twist": 60.0,
-"extent": 0.0010000000474974513,
-"clusterSize": 3,
-"clusterProbability": 0.20000000298023224,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.0
-],
-[
-0.3499999940395355,
-0.6000000238418579
-],
-[
-0.699999988079071,
-1.0
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e12",
-"name": "12｜近远景粗火星",
-"parent": null,
-"seed": 602273,
-"enabled": true,
-"count": 299,
-"speed": [
-0.8,
-1.8,
-1
-],
-"life": [
-0.15,
-0.34,
-1
-],
-"size": [
-0.5,
-1.8,
-2
-],
-"power": [
-0.1,
-2.5,
-1.8
-],
-"width": 0.003800000064074993,
-"gain": 43.2,
-"drag": 1.7999999523162842,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "cone",
-"direction": [
-0.0,
--1.0,
-0.0
-],
-"cone": 70.0,
-"shape": "line",
-"history": 0.01600000075995922,
-"taper": 0.25,
-"aspect": 1.0,
-"spin": 0.0,
-"twist": 0.0,
-"extent": 0.0010000000474974513,
-"clusterSize": 3,
-"clusterProbability": 0.20000000298023224,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.3499999940395355
-],
-[
-0.07999999821186066,
-1.0
-],
-[
-0.5,
-0.800000011920929
-],
-[
-0.800000011920929,
-0.46000000834465027
-],
-[
-1.0,
-0.10000000149011612
-]
-],
-"brightCurve": [
-[
-0.0,
-0.0
-],
-[
-0.30000001192092896,
-1.0
-],
-[
-0.6499999761581421,
-0.75
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-},
-{
-"id": "e13",
-"name": "13｜燃烧头炽热点",
-"parent": null,
-"seed": 731529,
-"enabled": true,
-"count": 5333,
-"speed": [
-0.01,
-0.12,
-1.4
-],
-"life": [
-0.04,
-0.1,
-1.2
-],
-"size": [
-0.35,
-2.2,
-1.6
-],
-"power": [
-0.2,
-2.5,
-1.4
-],
-"width": 0.0031999999191612005,
-"gain": 1.4000000000000001,
-"drag": 1.7000000476837158,
-"gravity": [
-0.0,
-0.0,
--0.18400000035762787
-],
-"directionMode": "cone",
-"direction": [
-0.0,
-0.0,
-1.0
-],
-"cone": 0,
-"shape": "fragment",
-"history": 0,
-"taper": 0.15000000596046448,
-"aspect": 1.7999999523162842,
-"spin": 10.0,
-"twist": 20.0,
-"extent": 0.023000000044703484,
-"clusterSize": 24,
-"clusterProbability": 0.800000011920929,
-"clusterWidth": 0.014999999664723873,
-"clusterDirection": 0.15000000596046448,
-"children": 1,
-"event": 0.5,
-"delay": 0.0,
-"inherit": 1.0,
-"probability": 1.0,
-"noise": 0.0,
-"noiseHz": 30.0,
-"sizeCurve": [
-[
-0.0,
-0.699999988079071
-],
-[
-0.20000000298023224,
-1.0
-],
-[
-0.6000000238418579,
-0.7200000286102295
-],
-[
-1.0,
-0.07999999821186066
-]
-],
-"brightCurve": [
-[
-0.0,
-0.5
-],
-[
-0.20000000298023224,
-1.0
-],
-[
-0.6499999761581421,
-0.6000000238418579
-],
-[
-1.0,
-0.0
-]
-],
-"burstShare": 0.17
-}
-],
-"presetKey": "sparkler"
-},
-"type": "sparkgraph",
-"graphSolo": null,
-"cameraMotion": 1,
-"cameraShutter": 0.03333333333333333,
-"cameraPhase": "end",
-"cameraQuality": "high",
-"cameraDof": 1,
-"cameraDistance": 1,
-"cameraFocus": 1,
-"cameraAperture": 0.018,
-"cameraBlades": 0
-},
-"m": {
-"stages": [
-[
-0,
-"#ffffff"
-]
-],
-"xw": 0.08,
-"ramp0": "#120100",
-"ramp1": "#b34104",
-"ramp2": "#ffc064",
-"ramp3": "#fff6dd",
-"headInt": 1,
-"tailInt": 1
-},
-"ver": "7b78d809"
 },
 {
 "id": "CS3C-T",
@@ -59323,18 +59365,18 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "【导出（23）2026-10-15 烘焙器 4.9.106】产物形态登记表：分层粒子图（地面循环）贴图名改成 T_EFX_FireWorks_<英文名>_…、交付清单产物表手机能选「序列 / 不出」、包内文件列全；画面不变。用户 20:53 的「正式资产-窜天猴尾焰-粒子」（RocketDot）要重新导出一次（旧修订 dc97b485 名字错、手机包 Ramp 资产名被导入器拒收）。本机重导 NFE-SGR1-G106 / NFE-SGS1-G106 + 全程回放 NFR-SG-G106 + 标准检查 NFS-SG-G106 已排。 ｜ 4.9.105增加分层粒子图/整体调整五项倍率，缺省1保持原样；用户可在自己的存档上调。报告analysis/results/SparkScales/看法.md；本轮用户已正面评价全局气流，新倍率待试用。此前记录：【导出（23）2026-10-14 烘焙器 4.9.97】用户 13:12「全部要修」：镜头核 σ 下限 0.28 → 0.55 像素（亚像素火星不再逐帧闪、快速质量不成串珠、总光量不变）→ 画面最细火星更柔；镜头关改走镜头的核（关 / 开光量 1 ± 2 %）。已排本机重导 NFE-SGR1-G97 / NFE-SGS1-G97 + 全程回放 NFR-SG-G97 + 标准检查 NFS-SG-G97，结果回来了（2026-10-15）：回放检查 / 全程回放 / 标准检查都过，导出 = 实时，没闪、没串珠、没拉伸；看法 analysis/results/NFR-SG-G97/看法.md。等你看（最细火星比 4.9.84 柔一点）。 ｜ 审看4.9.84可选快门与景深：右栏镜头成像可独立关闭；实包回放见SparkGraph；旧画法用户已指出不符，本版待审美验收。4.9.87（导出（23））起参数在统一右栏：「分层粒子图」+ 每层一个发射器标签，镜头成像在「输出」里；独立面板 / 浏览器键保存 / JSON 区去掉（画面不变）。会改画面的镜头 / 粒子图修正（开关亮度差、亚像素起伏、横竖不等比）等用户点头。",
+"下一步": "4.9.114待审SGS1：快慢分布/减速与上方弱气流，减弱上一试配的下坠主导，13形态与爆发时刻保持。右栏分层粒子图→整体调整7项/分叉调整6项，全部默认1。分叉寿命影响飞行距离，分叉角度独立；自身初速与母粒继承分别算。报告analysis/results/SparklerControls/看法.md；原候选归档，用户存档不改，UE和用户艺术验收未做。",
 "待验收版": "SGS1",
 "导出任务": [
-"SGS1E1"
+"SGS1E114"
 ],
 "交付说明": {
-"解决了什么": "可选曝光积分、真实深度景深、圆/六边形散焦；快速预览/高质量输出，13层与非均匀爆发保留。",
-"素材在哪": "analysis/results/SparkGraph/（本机ZIP及实包回放），解包目录analysis/local/SparkGraph/",
-"仍有差异": "有限光圈核近似，景深固化到贴图；非V05逐像素复制，未含弹体弹道。",
+"解决了什么": "整体/分叉控制与统一命名接入，快慢分布拉开、按层减速及弱上方气流；保留13形态和短促爆发。",
+"素材在哪": "analysis/results/SparklerControls；本机analysis/local/输出/仙女棒控制与运动_20261018",
+"仍有差异": "局部预设气流近似；分叉寿命非严格距离倍率，极短寿命重力弯曲弱；景深固化到贴图。",
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
-"ver": "7b78d809",
+"ver": "b6ca8de3",
 "jobs": [
 {
 "id": "NFE-SGS1-G106",
@@ -59350,6 +59392,24 @@ var FW_EFFECTS = [
 }
 ],
 "exports": [
+{
+"job": "SGS1E114",
+"entry": "SGS1",
+"ver": "b6ca8de3·graph4.9.97+loop4.9.106",
+"time": null,
+"packages": [
+{
+"name": "EFX_FireWorks_Sparkler_Motion_Test",
+"replica": "SGS1",
+"sha256": "4e29501827379bbd67f17965fd16664b320063b2a3cda10028fb9b97a2f6f7a5"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
 {
 "job": "NFE-SGS1-G97",
 "entry": "SGS1",
@@ -59380,40 +59440,7 @@ var FW_EFFECTS = [
 "passed": true,
 "fails": []
 },
-"stale": false
-},
-{
-"job": "SGS1E1",
-"entry": "SGS1",
-"ver": "7b78d809·graph4.9.97+loop4.9.83",
-"time": "2026-10-15 14:59",
-"packages": [
-{
-"name": "sparkler",
-"replica": "SGS1",
-"files": [
-"cascade.json",
-"cascade_mobile.json",
-"Sparkler_Graph.json",
-"Sparkler_Graph_Cascade参数.txt",
-"Sparkler_Graph_Mobile.json",
-"Sparkler_Graph_曲线.csv",
-"T_Sparkler_Graph.png",
-"T_Sparkler_Graph_Cutout.png",
-"T_Sparkler_Graph_FrameTest.png",
-"T_Sparkler_Graph_Mobile.png",
-"T_Sparkler_Graph_Mobile_Cutout.png",
-"T_Sparkler_Graph_Mobile_FrameTest.png",
-"T_Sparkler_Graph_Ramp.png"
-],
-"sha256": "080c95369ffbb6b99c0e8795b553d8acf5b9e85eafa86fe9c5bfd7e5b08399ba"
-}
-],
-"check": {
-"passed": true,
-"fails": []
-},
-"stale": false
+"stale": true
 },
 {
 "job": "NFE-SGS1-G106",
@@ -59444,7 +59471,7 @@ var FW_EFFECTS = [
 "passed": true,
 "fails": []
 },
-"stale": false
+"stale": true
 }
 ],
 "thumb": null,

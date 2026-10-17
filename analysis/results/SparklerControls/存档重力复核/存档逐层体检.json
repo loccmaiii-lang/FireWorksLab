@@ -1,0 +1,87 @@
+{
+ "ver": "4.9.114",
+ "keys": [
+  "exposure",
+  "sparkGraph.branchGravity"
+ ],
+ "rows": [
+  {
+   "name": "正式资产-窜天猴尾焰",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "exposure",
+     "sec": "光点与曝光（4.0）",
+     "label": "贴图曝光",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 1.6,
+     "max": 82,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchGravity",
+     "sec": "分层粒子图",
+     "label": "分叉重力",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 2,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.104"
+  },
+  {
+   "name": "正式资产-窜天猴尾焰-粒子",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "exposure",
+     "sec": "光点与曝光（4.0）",
+     "label": "贴图曝光",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 1.6,
+     "max": 82,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchGravity",
+     "sec": "分层粒子图",
+     "label": "分叉重力",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.105"
+  }
+ ]
+}

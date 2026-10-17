@@ -1,0 +1,252 @@
+{
+  "version": "4.9.114",
+  "rows": [
+    {
+      "index": 0,
+      "count": 57261,
+      "stats": [
+        {
+          "id": "e01",
+          "name": "01｜燃烧核心",
+          "count": 14933,
+          "speedMedian": 0.08134976285698292,
+          "speedP10": 0.0272088211266622,
+          "speedP90": 0.15932413398369275,
+          "forwardRetentionMedian": 0.9701960315623366
+        },
+        {
+          "id": "e02",
+          "name": "02｜细长暗丝",
+          "count": 12800,
+          "speedMedian": 1.1138011215720325,
+          "speedP10": 0.5596433156635612,
+          "speedP90": 1.7122379603795705,
+          "forwardRetentionMedian": 0.891295978956493
+        },
+        {
+          "id": "e03",
+          "name": "03｜中等金丝",
+          "count": 960,
+          "speedMedian": 1.1768056015251203,
+          "speedP10": 0.7072014229022897,
+          "speedP90": 1.5610607359092679,
+          "forwardRetentionMedian": 0.8667393308610521
+        },
+        {
+          "id": "e04",
+          "name": "04｜粗亮短火星",
+          "count": 149,
+          "speedMedian": 1.0660885056247935,
+          "speedP10": 0.758407855918631,
+          "speedP90": 1.4387949661235324,
+          "forwardRetentionMedian": 0.7591837787030263
+        },
+        {
+          "id": "e05",
+          "name": "05｜分裂母粒",
+          "count": 907,
+          "speedMedian": 1.1779175348114221,
+          "speedP10": 0.7005457124090753,
+          "speedP90": 1.559311151958536,
+          "forwardRetentionMedian": 0.8977559590030821
+        },
+        {
+          "id": "e06",
+          "name": "06｜一级分叉",
+          "count": 14512,
+          "speedMedian": 0.6296811423760195,
+          "speedP10": 0.3214386783853521,
+          "speedP90": 1.1353877067266553,
+          "forwardRetentionMedian": 0.7658996865666731
+        },
+        {
+          "id": "e07",
+          "name": "07｜延迟分叉",
+          "count": 2824,
+          "speedMedian": 0.7539445897063046,
+          "speedP10": 0.40301346149069445,
+          "speedP90": 1.168147832275097,
+          "forwardRetentionMedian": 0.7551104610110453
+        },
+        {
+          "id": "e08",
+          "name": "08｜二级碎火星",
+          "count": 3637,
+          "speedMedian": 0.20961458931892854,
+          "speedP10": 0.1109474366317624,
+          "speedP90": 0.3179105049423186,
+          "forwardRetentionMedian": 0.8133816715053944
+        },
+        {
+          "id": "e09",
+          "name": "09｜不规则粗碎片",
+          "count": 213,
+          "speedMedian": 1.0467998821986837,
+          "speedP10": 0.7936309783486649,
+          "speedP90": 1.3403918313561007,
+          "forwardRetentionMedian": 0.7451661943079174
+        },
+        {
+          "id": "e10",
+          "name": "10｜暗红余烬",
+          "count": 555,
+          "speedMedian": 0.3269098626449705,
+          "speedP10": 0.08293095964938402,
+          "speedP90": 0.5736755484193564,
+          "forwardRetentionMedian": 0.9158124638805208
+        },
+        {
+          "id": "e11",
+          "name": "11｜圆形余烬",
+          "count": 139,
+          "speedMedian": 1.0613023975398392,
+          "speedP10": 0.7342574406182394,
+          "speedP90": 1.4170056094648316,
+          "forwardRetentionMedian": 0.6483489792178418
+        },
+        {
+          "id": "e12",
+          "name": "12｜近远景粗火星",
+          "count": 299,
+          "speedMedian": 1.3139318925794214,
+          "speedP10": 0.9130945691838861,
+          "speedP90": 1.7056431720964613,
+          "forwardRetentionMedian": 0.7396491271581692
+        },
+        {
+          "id": "e13",
+          "name": "13｜燃烧头炽热点",
+          "count": 5333,
+          "speedMedian": 0.049444920739664174,
+          "speedP10": 0.013318016563285242,
+          "speedP90": 0.10379322877528177,
+          "forwardRetentionMedian": 0.7496601464681188
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "count": 57261,
+      "stats": [
+        {
+          "id": "e01",
+          "name": "01｜燃烧核心",
+          "count": 14933,
+          "speedMedian": 0.08134976285698292,
+          "speedP10": 0.0272088211266622,
+          "speedP90": 0.15932413398369275,
+          "forwardRetentionMedian": 0.9701960315623366
+        },
+        {
+          "id": "e02",
+          "name": "02｜细长暗丝",
+          "count": 12800,
+          "speedMedian": 0.9306200402412916,
+          "speedP10": 0.22331903963368743,
+          "speedP90": 3.1641005591124225,
+          "forwardRetentionMedian": 0.5518493010751806
+        },
+        {
+          "id": "e03",
+          "name": "03｜中等金丝",
+          "count": 960,
+          "speedMedian": 1.3741901062099948,
+          "speedP10": 0.5125799257943597,
+          "speedP90": 2.541777558160501,
+          "forwardRetentionMedian": 0.6127290589597304
+        },
+        {
+          "id": "e04",
+          "name": "04｜粗亮短火星",
+          "count": 149,
+          "speedMedian": 1.1379979435570349,
+          "speedP10": 0.7471556441609172,
+          "speedP90": 1.7013615399503017,
+          "forwardRetentionMedian": 0.715287498338154
+        },
+        {
+          "id": "e05",
+          "name": "05｜分裂母粒",
+          "count": 907,
+          "speedMedian": 1.3170647836559932,
+          "speedP10": 0.48723465878923045,
+          "speedP90": 2.6088380598432006,
+          "forwardRetentionMedian": 0.6021345505117328
+        },
+        {
+          "id": "e06",
+          "name": "06｜一级分叉",
+          "count": 14512,
+          "speedMedian": 0.5925338935120831,
+          "speedP10": 0.17950868733496272,
+          "speedP90": 1.7159831477906686,
+          "forwardRetentionMedian": 0.6693021820840761
+        },
+        {
+          "id": "e07",
+          "name": "07｜延迟分叉",
+          "count": 2824,
+          "speedMedian": 0.6356619693795892,
+          "speedP10": 0.22243176377794674,
+          "speedP90": 1.653602380661406,
+          "forwardRetentionMedian": 0.6770951479568604
+        },
+        {
+          "id": "e08",
+          "name": "08｜二级碎火星",
+          "count": 3637,
+          "speedMedian": 0.2758952125360088,
+          "speedP10": 0.09397407826945196,
+          "speedP90": 0.5765000014929632,
+          "forwardRetentionMedian": 0.7546991285357721
+        },
+        {
+          "id": "e09",
+          "name": "09｜不规则粗碎片",
+          "count": 213,
+          "speedMedian": 1.002029086022899,
+          "speedP10": 0.6439236852872156,
+          "speedP90": 1.493640541866213,
+          "forwardRetentionMedian": 0.7357909765900221
+        },
+        {
+          "id": "e10",
+          "name": "10｜暗红余烬",
+          "count": 555,
+          "speedMedian": 0.1677491710881565,
+          "speedP10": 0.031049231534456694,
+          "speedP90": 0.4514454428794932,
+          "forwardRetentionMedian": 0.7504737817865685
+        },
+        {
+          "id": "e11",
+          "name": "11｜圆形余烬",
+          "count": 139,
+          "speedMedian": 0.8035843827345724,
+          "speedP10": 0.49176509842424904,
+          "speedP90": 1.2013487136862764,
+          "forwardRetentionMedian": 0.5646617236312861
+        },
+        {
+          "id": "e12",
+          "name": "12｜近远景粗火星",
+          "count": 299,
+          "speedMedian": 1.1431284212834214,
+          "speedP10": 0.6356014475010857,
+          "speedP90": 2.1058971662734813,
+          "forwardRetentionMedian": 0.6634204973656874
+        },
+        {
+          "id": "e13",
+          "name": "13｜燃烧头炽热点",
+          "count": 5333,
+          "speedMedian": 0.049444920739664174,
+          "speedP10": 0.013318016563285242,
+          "speedP90": 0.10379322877528177,
+          "forwardRetentionMedian": 0.7496601464681188
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

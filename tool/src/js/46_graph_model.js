@@ -1,15 +1,19 @@
 /* 通用周期粒子图：秒、米；固定随机流。亲子出生使用同一条解析轨迹。 */
 const SparkGraph = (() => {
   // 整体倍率只生成有效层副本，保留配方原值；数量只乘根层，避免子孙逐级复乘。
-  const scaleNames={scaleCone:'半锥角倍率',scaleCount:'粒子数量倍率',scaleWidth:'粒子直径倍率',scaleLife:'粒子寿命倍率',scaleGain:'粒子亮度倍率'};
+  const scaleNames={scaleCone:'喷射半锥角',scaleCount:'粒子数量',scaleWidth:'粒子大小',scaleLife:'粒子寿命',scaleGain:'粒子亮度',scaleSpeed:'初速',scaleGravity:'重力',
+    branchLife:'分叉寿命',branchAngle:'分叉角度',branchCount:'分叉数量',branchWidth:'分叉大小',branchSpeed:'分叉初速',branchGravity:'分叉重力'};
   const parameterDefault=k=>k.startsWith('sparkGraph.')&&Object.hasOwn(scaleNames,k.slice(11))?1:undefined;
   const scaleOf=(r,k)=>r[k]??1;
   function scaledEmitter(r,e){
     if(Object.keys(scaleNames).every(k=>scaleOf(r,k)===1))return e;
+    const child=!!e.parent,first=child&&!r.emitters.find(p=>p.id===e.parent).parent,
+      life=scaleOf(r,'scaleLife')*(child?scaleOf(r,'branchLife'):1),speed=scaleOf(r,'scaleSpeed')*(child?scaleOf(r,'branchSpeed'):1),gravity=scaleOf(r,'scaleGravity')*(child?scaleOf(r,'branchGravity'):1);
     return {...e,count:e.parent?e.count:Math.round(e.count*scaleOf(r,'scaleCount')),
+      children:first?Math.round(e.children*scaleOf(r,'branchCount')):e.children,
       cone:e.directionMode==='cone'?e.cone*scaleOf(r,'scaleCone'):e.cone,
-      life:[e.life[0]*scaleOf(r,'scaleLife'),e.life[1]*scaleOf(r,'scaleLife'),e.life[2]],
-      width:e.width*scaleOf(r,'scaleWidth'),gain:e.gain*scaleOf(r,'scaleGain')};
+      life:[e.life[0]*life,e.life[1]*life,e.life[2]],speed:[e.speed[0]*speed,e.speed[1]*speed,e.speed[2]],gravity:e.gravity.map(x=>x*gravity),
+      width:e.width*scaleOf(r,'scaleWidth')*(child?scaleOf(r,'branchWidth'):1),gain:e.gain*scaleOf(r,'scaleGain')};
   }
   const TAU = Math.PI * 2, mod = (a,b) => ((a%b)+b)%b;
   const hash = (seed,id,tag) => { let x = (seed ^ Math.imul(id+1,374761393) ^ Math.imul(tag+1,668265263))|0; x=Math.imul(x^(x>>>13),1274126177); return ((x^(x>>>16))>>>0)/4294967296; };
@@ -21,6 +25,14 @@ const SparkGraph = (() => {
     const d=norm(e.direction), u=norm(cross(d,Math.abs(d[2])<.9?[0,0,1]:[0,1,0])), v=cross(d,u);
     const c=1-h(tag)*(1-Math.cos(e.cone*Math.PI/180)), s=Math.sqrt(1-c*c);
     return d.map((x,i)=>c*x+s*(u[i]*Math.cos(a)+v[i]*Math.sin(a)));
+  }
+  // 只调整子粒自己的散射方向；1不计算，保留旧方向逐位一致。继承速度随后独立相加。
+  function branchDirection(v,velocity,e,factor){
+    if(factor===1)return v;
+    const axis=norm(Math.hypot(...velocity)>1e-12?velocity:e.direction),dot=Math.max(-1,Math.min(1,v.reduce((s,x,i)=>s+x*axis[i],0))),theta=Math.min(Math.PI,Math.acos(dot)*factor);
+    let tangent=v.map((x,i)=>x-dot*axis[i]);
+    if(Math.hypot(...tangent)<1e-12)tangent=cross(axis,Math.abs(axis[2])<.9?[0,0,1]:[0,1,0]);
+    tangent=norm(tangent);return axis.map((x,i)=>x*Math.cos(theta)+tangent[i]*Math.sin(theta));
   }
   function dist(d,h) {return d[0]+(d[1]-d[0])*Math.pow(h,d[2]||1);}
   function curve(keys,u) {
@@ -40,7 +52,7 @@ const SparkGraph = (() => {
   }
   function validate(r) {
     if(!r||!(r.period>0&&Number.isFinite(r.period)))throw Error('循环周期必须大于0');
-    for(const [k,name] of Object.entries(scaleNames)){const v=scaleOf(r,k);if(!Number.isFinite(v)||v<0||(k==='scaleLife'&&v===0))throw Error(name+'须为'+(k==='scaleLife'?'正':'非负')+'有限数');}
+    for(const [k,name] of Object.entries(scaleNames)){const v=scaleOf(r,k),life=k==='scaleLife'||k==='branchLife';if(!Number.isFinite(v)||v<0||(life&&v===0))throw Error(name+'须为'+(life?'正':'非负')+'有限数');}
     if(!Array.isArray(r.emitters)||!r.emitters.length)throw Error('至少需要一个粒子层');
     if(!Array.isArray(r.bounds)||r.bounds.length!==4||!r.bounds.every(Number.isFinite)||r.bounds[0]>=r.bounds[1]||r.bounds[2]>=r.bounds[3])throw Error('取景范围无效');
     if(!Array.isArray(r.bursts)||r.bursts.some(b=>!Array.isArray(b)||b.length!==2||!b.every(Number.isFinite)||b[1]<0))throw Error('爆发时刻或宽度无效');
@@ -50,9 +62,13 @@ const SparkGraph = (() => {
       for(const d of [e.speed,e.life,e.size,e.power])if(!Array.isArray(d)||d.length!==3||!d.every(Number.isFinite)||d[0]<0||d[1]<d[0]||d[2]<=0)throw Error(e.name+'：随机范围无效');
       if(e.life[1]>=r.period)throw Error(e.name+'：寿命上限须小于循环周期');
       if(e.life[0]<=0)throw Error(e.name+'：寿命下限须大于0');
-      if(e.life[1]*scaleOf(r,'scaleLife')>=r.period)throw Error(e.name+'：整体倍率后的寿命上限须小于循环周期，请减小寿命倍率或增加周期');
-      if(e.directionMode==='cone'&&e.cone*scaleOf(r,'scaleCone')>180)throw Error(e.name+'：整体倍率后的半锥角超过180°，请减小半锥角倍率');
-      if(!Number.isFinite(e.width*scaleOf(r,'scaleWidth'))||!Number.isFinite(e.gain*scaleOf(r,'scaleGain')))throw Error(e.name+'：整体直径或亮度倍率过大');
+      const effective=scaledEmitter(r,e);
+      if(!Number.isFinite(effective.count)||!Number.isFinite(effective.children))throw Error(e.name+'：调整后的粒子数量过大');
+      if(effective.life[1]>=r.period||!Number.isFinite(effective.life[1]))throw Error(e.name+'：调整后的寿命上限须小于循环周期，请减小寿命或增加周期');
+      if(!effective.speed.every(Number.isFinite))throw Error(e.name+'：调整后的初速过大');
+      if(!effective.gravity.every(Number.isFinite))throw Error(e.name+'：调整后的重力过大');
+      if(e.directionMode==='cone'&&e.cone*scaleOf(r,'scaleCone')>180)throw Error(e.name+'：调整后的喷射半锥角超过180°，请减小喷射半锥角');
+      if(!Number.isFinite(effective.width)||!Number.isFinite(effective.gain))throw Error(e.name+'：调整后的大小或亮度过大');
       for(const k of ['drag','count','children','width','gain','history','extent','delay','inherit','noise','noiseHz','clusterWidth'])if(!Number.isFinite(e[k])||e[k]<0)throw Error(e.name+'：'+k+'须为非负有限数');
       for(const k of ['event','probability','clusterProbability','clusterDirection','burstShare','taper'])if(!Number.isFinite(e[k])||e[k]<0||e[k]>1)throw Error(e.name+'：'+k+'须在0到1之间');
       if(!Number.isInteger(e.seed)||!Number.isInteger(e.count)||!Number.isInteger(e.children)||!Number.isInteger(e.clusterSize)||e.clusterSize<1)throw Error(e.name+'：种子和数量须为整数');
@@ -69,7 +85,7 @@ const SparkGraph = (() => {
       if(count>200000||all.length+count>500000)throw Error(e.name+'：超过每层20万／全图50万周期粒子的编辑上限');
       for(let id=0;id<count;id++){
         let birth,p=[0,0,0],v=direction(e,id),parent=null,eventAge=0;
-        if(parents){parent=parents[Math.floor(id/Math.round(e.children))];if(h(id,2)>e.probability)continue;eventAge=parent.life*e.event+e.delay;const s=sample(parent,eventAge);birth=parent.birth+eventAge;p=s.p;v=v.map((x,i)=>x*dist(e.speed,h(id,3))+s.v[i]*e.inherit);}
+        if(parents){parent=parents[Math.floor(id/Math.round(e.children))];if(h(id,2)>e.probability)continue;eventAge=parent.life*e.event+e.delay;const s=sample(parent,eventAge);birth=parent.birth+eventAge;p=s.p;v=branchDirection(v,s.v,e,scaleOf(r,'branchAngle')).map((x,i)=>x*dist(e.speed,h(id,3))+s.v[i]*e.inherit);}
         else {
           const cluster=Math.floor(id/Math.max(1,e.clusterSize)), selected=h(cluster,101)<e.clusterProbability;
           birth=selected?h(cluster,102)*r.period+(h(id,103)*2-1)*e.clusterWidth:h(id,104)*r.period;
@@ -194,7 +210,7 @@ const graphLayerItems = (() => {
     num('cone', '喷射半锥角', '°', 0, 180, 1, '初速', cone),
     ...vec('direction', '喷射轴', ['X', 'Y（纵深）', 'Z（竖直）'], '', -1, 1, .01, '初速', cone),
     num('drag', '线性阻力', '1/s', 0, 30, .1, '阻力重力'),
-    num('fieldCoupling', '随流倍率（0 不受全局气流）', '×', 0, 4, .05, '阻力重力', P => !!P.sparkGraph.fieldEnabled),
+    num('fieldCoupling', '随风强度', '×', 0, 4, .05, '阻力重力', P => !!P.sparkGraph.fieldEnabled),
     ...vec('gravity', '加速度', ['横向', '纵深', '竖直'], 'm/s²', -20, 20, .01, '阻力重力'),
     num('noise', '位移扰动', 'm/s', 0, .1, .0001, '阻力重力'),
     num('noiseHz', '扰动频率', 'Hz', 0, 60, .1, '阻力重力'),
@@ -214,11 +230,21 @@ const graphLayerItems = (() => {
 })();
 SCHEMA.push(
   {sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'整体倍率默认1；各层原值保留。数量只改母粒批次，分叉结构不变；寿命会影响按母粒寿命触发的分叉时刻。',items:[
-    ['sparkGraph.scaleCone','半锥角倍率','×',0,3,.05],
-    ['sparkGraph.scaleCount','粒子数量倍率','×',0,4,.05],
-    ['sparkGraph.scaleWidth','粒子直径倍率','×',0,4,.05],
-    ['sparkGraph.scaleLife','粒子寿命倍率','×',.05,4,.05],
-    ['sparkGraph.scaleGain','粒子亮度倍率','×',0,4,.05]
+    ['sparkGraph.scaleCone','喷射半锥角','×',0,3,.05],
+    ['sparkGraph.scaleCount','粒子数量','×',0,4,.05],
+    ['sparkGraph.scaleWidth','粒子大小','×',0,4,.05],
+    ['sparkGraph.scaleLife','粒子寿命','×',.05,4,.05],
+    ['sparkGraph.scaleGain','粒子亮度','×',0,4,.05],
+    ['sparkGraph.scaleSpeed','初速','×',0,4,.05],
+    ['sparkGraph.scaleGravity','重力','×',0,4,.05]
+  ]},
+  {sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'分叉寿命影响飞行距离；角度只改自身散射，不改继承速度。数量只乘一级，二级随母粒数量变化；大小、初速、寿命、重力作用于全部子代。',items:[
+    ['sparkGraph.branchLife','分叉寿命','×',.05,4,.05],
+    ['sparkGraph.branchAngle','分叉角度','×',0,3,.05],
+    ['sparkGraph.branchCount','分叉数量','×',0,4,.05],
+    ['sparkGraph.branchWidth','分叉大小','×',0,4,.05],
+    ['sparkGraph.branchSpeed','分叉初速','×',0,4,.05],
+    ['sparkGraph.branchGravity','分叉重力','×',0,4,.05]
   ]},
   { sec: '分层粒子图', graphOnly: true, show: P => !!P.sparkGraph, hint: '整张粒子图共用：循环周期、取景范围、偶发爆发时刻、导出时是否跟着喷口轴转。', items: [
     ['sparkGraph.period', '循环周期（粒子寿命上限要比它短）', 's', .2, 6, .01],
@@ -263,7 +289,7 @@ function secItems(sec, P) {
 // 全局气流参数（由spark_flow_register.py登记）
 SCHEMA.push({sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'全局气流作用于当前图全部层；先扩散再渐入。定向风、轴向收束和涡流可叠加。',items:[
 {sel:'sparkGraph.fieldEnabled',label:'全局气流',io:{get:v=>v,set:v=>+v},options:[[0,'关闭'],[1,'开启']]} ,
-["sparkGraph.fieldResponse", "随流响应率", "1/s", 0, 100, 0.5,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldResponse", "随风响应", "1/s", 0, 100, 0.5,P=>!!P.sparkGraph.fieldEnabled],
 ["sparkGraph.fieldStart", "开始影响距离", "m", 0, 20, 0.05,P=>!!P.sparkGraph.fieldEnabled],
 ["sparkGraph.fieldRamp", "渐入长度", "m", 0.001, 20, 0.05,P=>!!P.sparkGraph.fieldEnabled],
 ["sparkGraph.fieldAxisX", "气流轴 · X", "1", -1, 1, 0.01,P=>!!P.sparkGraph.fieldEnabled],
@@ -272,9 +298,9 @@ SCHEMA.push({sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'�
 ["sparkGraph.fieldWindX", "定向风 · X", "m/s", -100, 100, 0.1,P=>!!P.sparkGraph.fieldEnabled],
 ["sparkGraph.fieldWindY", "定向风 · Y（纵深）", "m/s", -100, 100, 0.1,P=>!!P.sparkGraph.fieldEnabled],
 ["sparkGraph.fieldWindZ", "定向风 · Z（竖直）", "m/s", -100, 100, 0.1,P=>!!P.sparkGraph.fieldEnabled],
-["sparkGraph.fieldConverge", "轴向收束率", "1/s", 0, 30, 0.1,P=>!!P.sparkGraph.fieldEnabled],
-["sparkGraph.fieldTurbulence", "涡流扰动速度", "m/s", 0, 50, 0.1,P=>!!P.sparkGraph.fieldEnabled],
-["sparkGraph.fieldScale", "涡流空间尺度", "m", 0.01, 30, 0.05,P=>!!P.sparkGraph.fieldEnabled],
-["sparkGraph.fieldCycles", "每循环演化次数", "1", 0, 10, 1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldConverge", "收束强度", "1/s", 0, 30, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldTurbulence", "扰动强度", "m/s", 0, 50, 0.1,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldScale", "扰动尺寸", "m", 0.01, 30, 0.05,P=>!!P.sparkGraph.fieldEnabled],
+["sparkGraph.fieldCycles", "扰动变化次数", "1", 0, 10, 1,P=>!!P.sparkGraph.fieldEnabled],
 ["sparkGraph.fieldSeed", "气流随机种子", "1", 0, 999999, 1,P=>!!P.sparkGraph.fieldEnabled]
 ]});

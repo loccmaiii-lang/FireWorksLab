@@ -1,0 +1,14 @@
+{
+  "effect": "sparkler_graph",
+  "entry": "SGS1",
+  "ver": "b6ca8de3·graph4.9.97+loop4.9.106",
+  "version": "4.9.114",
+  "dir": "analysis/local/输出/仙女棒控制与运动_20261018",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_Sparkler_Motion_Test",
+      "replica": "SGS1",
+      "sha256": "4e29501827379bbd67f17965fd16664b320063b2a3cda10028fb9b97a2f6f7a5"
+    }
+  ]
+}

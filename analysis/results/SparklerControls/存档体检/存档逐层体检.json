@@ -1,0 +1,262 @@
+{
+ "ver": "4.9.114",
+ "keys": [
+  "exposure",
+  "sparkGraph.scaleSpeed",
+  "sparkGraph.scaleGravity",
+  "sparkGraph.branchLife",
+  "sparkGraph.branchAngle",
+  "sparkGraph.branchCount",
+  "sparkGraph.branchWidth",
+  "sparkGraph.branchSpeed",
+  "sparkGraph.branchGravity"
+ ],
+ "rows": [
+  {
+   "name": "正式资产-窜天猴尾焰",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "exposure",
+     "sec": "光点与曝光（4.0）",
+     "label": "贴图曝光",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 1.6,
+     "max": 82,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleSpeed",
+     "sec": "分层粒子图",
+     "label": "初速",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 211,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleGravity",
+     "sec": "分层粒子图",
+     "label": "重力",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 48,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchLife",
+     "sec": "分层粒子图",
+     "label": "分叉寿命",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 153,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchAngle",
+     "sec": "分层粒子图",
+     "label": "分叉角度",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 78,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchCount",
+     "sec": "分层粒子图",
+     "label": "分叉数量",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 157,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchWidth",
+     "sec": "分层粒子图",
+     "label": "分叉大小",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 162,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchSpeed",
+     "sec": "分层粒子图",
+     "label": "分叉初速",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 97,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchGravity",
+     "sec": "分层粒子图",
+     "label": "分叉重力",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 2,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.104"
+  },
+  {
+   "name": "正式资产-窜天猴尾焰-粒子",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "exposure",
+     "sec": "光点与曝光（4.0）",
+     "label": "贴图曝光",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 1.6,
+     "max": 82,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleSpeed",
+     "sec": "分层粒子图",
+     "label": "初速",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 186,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.scaleGravity",
+     "sec": "分层粒子图",
+     "label": "重力",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 2,
+     "max": 64,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "sparkGraph.branchLife",
+     "sec": "分层粒子图",
+     "label": "分叉寿命",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    },
+    {
+     "key": "sparkGraph.branchAngle",
+     "sec": "分层粒子图",
+     "label": "分叉角度",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    },
+    {
+     "key": "sparkGraph.branchCount",
+     "sec": "分层粒子图",
+     "label": "分叉数量",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    },
+    {
+     "key": "sparkGraph.branchWidth",
+     "sec": "分层粒子图",
+     "label": "分叉大小",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    },
+    {
+     "key": "sparkGraph.branchSpeed",
+     "sec": "分层粒子图",
+     "label": "分叉初速",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    },
+    {
+     "key": "sparkGraph.branchGravity",
+     "sec": "分层粒子图",
+     "label": "分叉重力",
+     "vis": true,
+     "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+     "from": 1,
+     "to": 2,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率"
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.105"
+  }
+ ]
+}

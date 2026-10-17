@@ -1,13 +1,13 @@
 // 从只读工坊V05生成；实际口径与来源见spark_graph_prepare.py。
 const GRAPH_PRESETS={
   "sparkler": {
-    "name": "仙女棒 · 全形态",
+    "name": "仙女棒 · 快慢火星与轻气流",
     "period": 2.1333333333333333,
     "bounds": [
-      -0.36,
-      0.36,
-      -0.36,
-      0.36
+      -0.5,
+      0.5,
+      -0.65,
+      0.35
     ],
     "bursts": [
       [
@@ -52,7 +52,7 @@ const GRAPH_PRESETS={
           1.4
         ],
         "width": 0.00022000000171829015,
-        "gain": 1.8,
+        "gain": 43.2,
         "drag": 1.7000000476837158,
         "gravity": [
           0.0,
@@ -120,7 +120,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 0
       },
       {
         "id": "e02",
@@ -130,14 +131,14 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 12800,
         "speed": [
-          0.4,
-          1.8,
-          1.0
+          0.2,
+          3.6399999999999997,
+          2.3
         ],
         "life": [
-          0.045,
-          0.16,
-          1.2
+          0.05,
+          0.19,
+          1.4
         ],
         "size": [
           0.35,
@@ -150,12 +151,12 @@ const GRAPH_PRESETS={
           2.0
         ],
         "width": 7.500000356230885e-05,
-        "gain": 16.0,
-        "drag": 1.7000000476837158,
+        "gain": 3072.0,
+        "drag": 8,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -226,7 +227,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 1
       },
       {
         "id": "e03",
@@ -236,13 +238,13 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 960,
         "speed": [
-          0.6,
-          1.65,
-          1.0
+          0.45,
+          2.8600000000000003,
+          1.6
         ],
         "life": [
           0.07,
-          0.2,
+          0.23,
           1.4
         ],
         "size": [
@@ -256,12 +258,12 @@ const GRAPH_PRESETS={
           1.7
         ],
         "width": 0.00016999999934341758,
-        "gain": 10.0,
-        "drag": 1.7000000476837158,
+        "gain": 1920.0,
+        "drag": 5,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -332,7 +334,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 1
       },
       {
         "id": "e04",
@@ -343,12 +346,12 @@ const GRAPH_PRESETS={
         "count": 149,
         "speed": [
           0.65,
-          1.5,
-          1
+          1.8,
+          1.2
         ],
         "life": [
-          0.15,
-          0.35,
+          0.12,
+          0.28,
           1.4
         ],
         "size": [
@@ -362,12 +365,12 @@ const GRAPH_PRESETS={
           1.8
         ],
         "width": 0.002199999988079071,
-        "gain": 3.0,
-        "drag": 1.7000000476837158,
+        "gain": 72.0,
+        "drag": 2.4,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -434,7 +437,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 0.2
       },
       {
         "id": "e05",
@@ -444,9 +448,9 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 907,
         "speed": [
-          0.6,
-          1.65,
-          1.0
+          0.45,
+          2.9899999999999998,
+          1.8
         ],
         "life": [
           0.08,
@@ -464,12 +468,12 @@ const GRAPH_PRESETS={
           1.6
         ],
         "width": 0.00011999999696854502,
-        "gain": 10.0,
-        "drag": 1.0,
+        "gain": 1920.0,
+        "drag": 4,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -540,7 +544,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 1
       },
       {
         "id": "e06",
@@ -550,13 +555,13 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 0,
         "speed": [
-          0.27,
-          1.275,
-          1.5
+          0.12,
+          2.08,
+          2.2
         ],
         "life": [
-          0.018,
-          0.06,
+          0.024,
+          0.08,
           1.2
         ],
         "size": [
@@ -570,12 +575,12 @@ const GRAPH_PRESETS={
           1.7
         ],
         "width": 7.999999797903001e-05,
-        "gain": 41.99999999999999,
-        "drag": 10.0,
+        "gain": 8063.999999999998,
+        "drag": 11,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -598,7 +603,7 @@ const GRAPH_PRESETS={
         "children": 16,
         "event": 0.6499999761581421,
         "delay": 0.0,
-        "inherit": 0.07999999821186066,
+        "inherit": 0.2,
         "probability": 1.0,
         "noise": 0.0,
         "noiseHz": 30.0,
@@ -646,7 +651,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0
+        "burstShare": 0,
+        "fieldCoupling": 1
       },
       {
         "id": "e07",
@@ -656,13 +662,13 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 0,
         "speed": [
-          0.33,
-          1.275,
-          1.1
+          0.15,
+          1.9500000000000002,
+          1.8
         ],
         "life": [
-          0.018,
-          0.05,
+          0.02,
+          0.065,
           1.2
         ],
         "size": [
@@ -676,12 +682,12 @@ const GRAPH_PRESETS={
           1.7
         ],
         "width": 7.500000356230885e-05,
-        "gain": 37.5,
-        "drag": 12.0,
+        "gain": 7200.0,
+        "drag": 13,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -704,7 +710,7 @@ const GRAPH_PRESETS={
         "children": 9,
         "event": 0.8999999761581421,
         "delay": 0.0,
-        "inherit": 0.07999999821186066,
+        "inherit": 0.2,
         "probability": 0.3400000035762787,
         "noise": 0.0,
         "noiseHz": 30.0,
@@ -752,7 +758,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0
+        "burstShare": 0,
+        "fieldCoupling": 1
       },
       {
         "id": "e08",
@@ -762,13 +769,13 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 0,
         "speed": [
-          0.08,
-          0.35,
-          1
+          0.05,
+          0.65,
+          1.8
         ],
         "life": [
-          0.01,
-          0.025,
+          0.012,
+          0.032,
           1.2
         ],
         "size": [
@@ -782,12 +789,12 @@ const GRAPH_PRESETS={
           1.7
         ],
         "width": 7.000000186963007e-05,
-        "gain": 30.0,
-        "drag": 18.0,
+        "gain": 5760.0,
+        "drag": 20,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -810,7 +817,7 @@ const GRAPH_PRESETS={
         "children": 1,
         "event": 0.7799999713897705,
         "delay": 0.0,
-        "inherit": 0.07999999821186066,
+        "inherit": 0.35,
         "probability": 0.25,
         "noise": 0.0,
         "noiseHz": 30.0,
@@ -858,7 +865,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0
+        "burstShare": 0,
+        "fieldCoupling": 1
       },
       {
         "id": "e09",
@@ -868,13 +876,13 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 213,
         "speed": [
-          0.7,
-          1.4,
-          1
+          0.55,
+          1.6,
+          1.2
         ],
         "life": [
           0.12,
-          0.4,
+          0.3,
           1.2
         ],
         "size": [
@@ -888,12 +896,12 @@ const GRAPH_PRESETS={
           1.8
         ],
         "width": 0.002400000113993883,
-        "gain": 1.6,
-        "drag": 1.7000000476837158,
+        "gain": 4.800000000000001,
+        "drag": 2.2,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -960,7 +968,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 0.2
       },
       {
         "id": "e10",
@@ -970,13 +979,13 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 555,
         "speed": [
-          0.032,
-          0.64,
-          1
+          0.025,
+          0.55,
+          1.8
         ],
         "life": [
-          0.02,
-          0.095,
+          0.03,
+          0.12,
           1.2
         ],
         "size": [
@@ -990,12 +999,12 @@ const GRAPH_PRESETS={
           1.6
         ],
         "width": 0.0002300000051036477,
-        "gain": 1.5,
-        "drag": 2.5,
+        "gain": 36.0,
+        "drag": 6,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "sphere",
         "direction": [
@@ -1074,7 +1083,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 1
       },
       {
         "id": "e11",
@@ -1084,14 +1094,14 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 139,
         "speed": [
-          0.6,
-          1.5,
-          1
+          0.4,
+          1.3,
+          1.2
         ],
         "life": [
-          0.2,
-          0.5,
-          1
+          0.18,
+          0.36,
+          1.2
         ],
         "size": [
           0.5,
@@ -1104,12 +1114,12 @@ const GRAPH_PRESETS={
           1.8
         ],
         "width": 0.007000000216066837,
-        "gain": 1.0,
-        "drag": 1.7999999523162842,
+        "gain": 2.0,
+        "drag": 3.2,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "cone",
         "direction": [
@@ -1176,7 +1186,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 0.2
       },
       {
         "id": "e12",
@@ -1186,14 +1197,14 @@ const GRAPH_PRESETS={
         "enabled": true,
         "count": 299,
         "speed": [
-          0.8,
-          1.8,
-          1
+          0.6,
+          2.4,
+          1.8
         ],
         "life": [
-          0.15,
-          0.34,
-          1
+          0.12,
+          0.3,
+          1.2
         ],
         "size": [
           0.5,
@@ -1206,12 +1217,12 @@ const GRAPH_PRESETS={
           1.8
         ],
         "width": 0.003800000064074993,
-        "gain": 1.8,
-        "drag": 1.7999999523162842,
+        "gain": 43.2,
+        "drag": 2.8,
         "gravity": [
-          0.0,
-          0.0,
-          -0.18400000035762787
+          0,
+          0,
+          -2.5
         ],
         "directionMode": "cone",
         "direction": [
@@ -1278,7 +1289,8 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 0.2
       },
       {
         "id": "e13",
@@ -1376,10 +1388,39 @@ const GRAPH_PRESETS={
             0.0
           ]
         ],
-        "burstShare": 0.17
+        "burstShare": 0.17,
+        "fieldCoupling": 0
       }
     ],
-    "presetKey": "sparkler"
+    "presetKey": "sparkler",
+    "fieldEnabled": 1,
+    "fieldResponse": 12,
+    "fieldStart": 0.002,
+    "fieldRamp": 0.025,
+    "fieldAxisX": 0,
+    "fieldAxisY": 0,
+    "fieldAxisZ": 1,
+    "fieldWindX": 0.04,
+    "fieldWindY": 0,
+    "fieldWindZ": 0.3,
+    "fieldConverge": 0,
+    "fieldTurbulence": 0.3,
+    "fieldScale": 0.16,
+    "fieldCycles": 1,
+    "fieldSeed": 29,
+    "scaleCone": 1,
+    "scaleCount": 1,
+    "scaleWidth": 1,
+    "scaleLife": 1,
+    "scaleGain": 1,
+    "scaleSpeed": 1,
+    "scaleGravity": 1,
+    "branchLife": 1,
+    "branchAngle": 1,
+    "branchCount": 1,
+    "branchWidth": 1,
+    "branchSpeed": 1,
+    "branchGravity": 1
   },
   "rocket": {
     "name": "窜天猴 · 短促喷射尾焰",

@@ -54,9 +54,30 @@ const RT_LIVE_KEYS = ['rtGpuTw', 'rtGpuDisp', 'rtGpuGain', 'rtDotGain',
   'rtSmoke', 'rtSmokeRate', 'rtSmokeLife', 'rtSmokeSize', 'rtSmokeGrow', 'rtSmokeSizeCurve', 'rtSmokeBrightCurve'];
 // 4.9.89（导出排查 A4）：纯星头 = 一颗粒子沿弹道走（PC 单帧小面片、手机软圆点），没有序列帧
 const RT_HEAD_INERT = ['zoom', 'frameBudget', 'holdTicks', 'maxHold', 'maxHoldBurn', 'rtGrid', 'outMode', 'rtLoopMin', 'rtLoopSize', 'rtMobileTex', 'shutter'];
+// 按亲子链判断有没有来源；隐藏层仍能生成子粒，不能据 enabled 把控制误判为无效。
+function graphSources43(P,ignoreBranchCount=false){
+  const g=P.sparkGraph;if(!g)return [];
+  const alive=new Map(),sources=g.emitters.filter(e=>{
+    const parent=e.parent&&g.emitters.find(p=>p.id===e.parent),factor=parent&&!parent.parent&&!ignoreBranchCount?(g.branchCount??1):1;
+    const on=parent?alive.get(parent.id)&&Math.round(e.children*factor)>0&&e.probability>0:Math.round(e.count*(g.scaleCount??1))>0;
+    alive.set(e.id,!!on);return on;
+  });
+  const visible=new Set(sources.filter(e=>e.enabled!==false).map(e=>e.id));
+  for(let i=sources.length-1;i>=0;i--){const e=sources[i];if(visible.has(e.id)&&e.parent)visible.add(e.parent);}
+  return sources.filter(e=>visible.has(e.id));
+}
+const GRAPH_BRANCH_KEYS=['branchLife','branchAngle','branchCount','branchWidth','branchSpeed','branchGravity'].map(k=>'sparkGraph.'+k);
 const INERT = [
-  [['sparkGraph.scaleCone','sparkGraph.scaleWidth','sparkGraph.scaleLife','sparkGraph.scaleGain'], P => !!P.sparkGraph && !P.sparkGraph.emitters.some(e=>!e.parent&&Math.round(e.count*(P.sparkGraph.scaleCount??1))>0), '整体数量与根层数量相乘后为0，没有粒子；先增加粒子数量倍率或根层每周期粒子数'],
-  [['sparkGraph.scaleCone'], P => !!P.sparkGraph && !P.sparkGraph.emitters.some(e=>e.directionMode==='cone'&&e.cone>0&&e.speed[1]>0), '当前图没有非零半锥角的锥形运动层；球形散射不受半锥角倍率影响'],
+  [['sparkGraph.scaleCone','sparkGraph.scaleWidth','sparkGraph.scaleLife','sparkGraph.scaleGain','sparkGraph.scaleSpeed','sparkGraph.scaleGravity',...GRAPH_BRANCH_KEYS], P => !!P.sparkGraph && !graphSources43(P).some(e=>!e.parent), '整体数量与根层数量相乘后为0，没有粒子；先增加粒子数量或根层每周期粒子数'],
+  [['sparkGraph.scaleCone'], P => !!P.sparkGraph && (!(P.sparkGraph.scaleSpeed??1)||!graphSources43(P).some(e=>e.directionMode==='cone'&&e.cone>0&&e.speed[1]>0&&(!e.parent||(P.sparkGraph.branchSpeed??1)>0))), '当前没有能运动的锥形层；球形散射不受喷射半锥角影响，初速为0时角度也不起作用'],
+  [['sparkGraph.scaleSpeed'], P => !!P.sparkGraph && !graphSources43(P).some(e=>e.speed[1]>0), '各有效层的初速都为0；先增加层内初速'],
+  [['sparkGraph.scaleGravity'], P => !!P.sparkGraph && !graphSources43(P).some(e=>e.gravity.some(v=>v!==0)), '各有效层的加速度都为0；先设置层内加速度'],
+  [GRAPH_BRANCH_KEYS, P => !!P.sparkGraph && !graphSources43(P,true).some(e=>e.parent), '当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率'],
+  [GRAPH_BRANCH_KEYS.filter(k=>k!=='sparkGraph.branchCount'), P => !!P.sparkGraph && !graphSources43(P).some(e=>e.parent), '分叉数量与一级子粒数相乘后为0；先增加分叉数量'],
+  [['sparkGraph.branchSpeed','sparkGraph.branchAngle'], P => !!P.sparkGraph && (!(P.sparkGraph.scaleSpeed??1)||!graphSources43(P).some(e=>e.parent&&e.speed[1]>0)), '分叉自身初速为0；速度继承仍可带着它飞，但这两项不调整继承速度'],
+  [['sparkGraph.branchAngle'], P => !!P.sparkGraph && !(P.sparkGraph.branchSpeed??1), '分叉初速为0，没有自身散射方向；先增加分叉初速'],
+  [['sparkGraph.branchGravity'], P => !!P.sparkGraph && (!(P.sparkGraph.scaleGravity??1)||!graphSources43(P).some(e=>e.parent&&e.gravity.some(v=>v!==0))), '整体重力为0或子层加速度都为0；先增加整体重力或子层加速度'],
+  [['sparkGraph.branchWidth'], P => !!P.sparkGraph && (!(P.sparkGraph.scaleWidth??1)||!graphSources43(P).some(e=>e.parent&&e.enabled!==false&&e.width>0)), '整体粒子大小为0或可见子层直径为0；先增加整体粒子大小或子层粒子直径'],
   [['coreProfile'], P => isTrail(P), 'V5尾缀沿用已通过的高斯核；本选项不改变它和开花闪光'],
   [['exposureTarget'], P => isTrail(P) || isPhys(P) || isEmit(P), '这类产物目前不使用「建议曝光」；可直接调贴图曝光'],
   [['ignJit', 'ignSeed'], P => !(+P.ignDelay > 0) && !isCarrierType(P), '「点火延迟」是 0 时不起作用（随机的是点火延迟的长短）'],

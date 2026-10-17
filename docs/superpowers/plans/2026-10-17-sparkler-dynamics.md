@@ -1,6 +1,6 @@
 # 仙女棒动力学与分叉控制 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 仙女棒出现快抛慢落与轻气流，并统一控制整体和各代分叉。
 
@@ -28,9 +28,11 @@ Files: `analysis/scripts/sparkler_motion_prepare.py`、`sparkler_motion_probe.cj
 
 Files: `46_graph_model.js`、`10_types.js`、`71_panel43.js`、命名表和参数变更记录。
 
-- [ ] 新增整体初速/重力；分叉寿命/角度/数量/大小/初速/重力。含义按本轮原理文档。
-- [ ] 分叉角从原方向相对母粒速度旋转，1快速返回原方向；零母粒速度取配置轴。一级数量改变时，二级只随父数量变化。
-- [ ] 纯模型默认1逐位一致、无源参数写入、亲子接续、独立控制及无子粒失效测试。
-- [ ] 统一面板保存/撤销/刷新、PC手机包、标准与变更回归；升版本和记录，才合入并释放。
+- [x] 新增整体初速/重力；分叉寿命/角度/数量/大小/初速/重力。含义按本轮原理文档。
+- [x] 分叉角从原方向相对母粒速度旋转，1快速返回原方向；零母粒速度取配置轴。一级数量改变时，二级只随父数量变化。
+- [x] 纯模型默认1逐位一致、无源参数写入、亲子接续、独立控制及无子粒失效测试。
+- [x] 统一面板保存/撤销/刷新、PC手机包、标准与变更回归；升版本和记录，才合入并释放。
 
 当前执行在本会话内，不委派子代理。Task2本轮执行；名称用既有参数词，先修正用户反馈的重力主导，再同版本验证。
+
+本轮4.9.114接线、命名、运动修订与实际入口/导出自检已完成；报告SparklerControls/看法.md。最终门禁与推送单独记录，不代表用户或UE已验收。

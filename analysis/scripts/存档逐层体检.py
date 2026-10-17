@@ -88,8 +88,10 @@ def main():
             P = l.get('P') or {}
             layers.append(dict(name=d.get('name'), saved=d.get('tool'), li=i + 1, title=(l.get('L') or {}).get('title') or '', type=l.get('type') or P.get('type'), P=P, M=l.get('M')))
     import compare
-    if a.html:
-        import pathlib; compare.TOOL = pathlib.Path(a.html).resolve().as_uri() + '?fast'
+    import pathlib
+    from browser_runtime import validation_url, verify_validation_source
+    target=pathlib.Path(a.html).resolve() if a.html else pathlib.Path(ROOT)/'tool/FireworkBaker.html'
+    compare.TOOL=validation_url(a.html,default=target.as_uri());verify_validation_source(compare.TOOL,target)
     try:
         from job_lock import ProcessLock, gpu_lock_path
         lock = ProcessLock(gpu_lock_path(ROOT))

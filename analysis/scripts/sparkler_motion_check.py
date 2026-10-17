@@ -1,9 +1,9 @@
 """只检查本轮候选实际包，不修改旧候选或正式库。"""
 from pathlib import Path
-import zipfile,json,sys,importlib,shutil,hashlib
+import zipfile,json,sys,importlib,shutil,hashlib,os
 import numpy as np
 from PIL import Image
-R=Path(__file__).resolve().parents[2];O=R/'analysis/results/SparklerMotion';B=R/'analysis/local/SparklerMotion/pack';B.mkdir(parents=True,exist_ok=True)
+R=Path(__file__).resolve().parents[2];O=R/os.environ.get('SPARKLER_RESULT_DIR','analysis/results/SparklerMotion');B=R/'analysis/local'/O.name/'pack';B.mkdir(parents=True,exist_ok=True)
 sys.path.insert(0,str(R/'analysis/scripts'));rc=importlib.import_module('回放检查')
 with zipfile.ZipFile(O/'候选素材包.zip') as z:z.extractall(B)
 report={}

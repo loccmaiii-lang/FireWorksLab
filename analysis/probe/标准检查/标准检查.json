@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-16 23:03",
+ "generated": "2026-10-18 01:46",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -89,7 +89,8 @@
    "id": "JM4",
    "name": "金芒菊 · Zoom 版（JM3 参数，准备进正式库）",
    "kind": "preset",
-   "renderVer": 37,
+   "renderVer": 40,
+   "ver": "6d31bdf2·master4.9.31·size4-P_MG-150-210",
    "checks": [
     [
      "实时模拟",
@@ -123,32 +124,41 @@
     ],
     [
      "单格 ≥ PC 下限",
-     false,
-     "单格 256 px"
+     true,
+     "单格 512 px"
+    ],
+    [
+     "手机单格 ≥ 下限",
+     true,
+     ""
     ],
     [
      "屏幕放大 ≤ 1",
-     false,
-     "放大 1.67"
+     true,
+     "放大 0.75"
     ],
     [
      "30fps 显示帧 ≥ 90%",
-     false,
-     "137/256"
+     true,
+     "64/64"
     ],
     [
      "燃烧段有效帧率 ≥ 下限",
      true,
-     "30 fps"
+     "13.3 fps"
+    ],
+    [
+     "淡出段有效帧率 ≥ 下限",
+     true,
+     "8.3 fps"
     ],
     [
      "尺寸参数有效",
-     false,
+     true,
      ""
     ]
    ],
-   "note": "3.7 渲染（还没迁移到 4.0），画质项预计不过",
-   "pass": false,
+   "pass": true,
    "seconds": 0.1
   },
   "TV6M": {
@@ -1248,7 +1258,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.0
+   "seconds": 0.1
   },
   "type40:kamuro": {
    "id": "type40:kamuro",
@@ -18467,14 +18477,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 2.4
+   "seconds": 1.9
   },
   "SGS1": {
    "id": "SGS1",
    "name": "仙女棒 · 13层全形态",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "7b78d809·graph4.9.97+loop4.9.106",
+   "ver": "b6ca8de3·graph4.9.97+loop4.9.106",
    "checks": [
     [
      "实时模拟",
@@ -18538,7 +18548,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.9
+   "seconds": 1.1
   },
   "PRISM3-A": {
    "id": "PRISM3-A",

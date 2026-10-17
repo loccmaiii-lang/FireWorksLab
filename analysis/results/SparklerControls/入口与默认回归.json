@@ -1,0 +1,149 @@
+{
+  "defaultFrames": 24,
+  "baselineFrames": 21,
+  "source": "analysis\\我的配方\\my_fxmv9h8webs6bnz\\正式资产-窜天猴尾焰-粒子__fxmv9h8webs6bnz.json",
+  "sourceSHA": "74a817b97cbc37bb2cfe3961ef942de6343860b10c7c62b6713d7e49563fe65f",
+  "effective": [
+    {
+      "key": "scaleCone",
+      "value": 0.6,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "scaleCount",
+      "value": 1.6,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "scaleWidth",
+      "value": 1.6,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "scaleLife",
+      "value": 1.3,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "scaleGain",
+      "value": 1.6,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "scaleSpeed",
+      "value": 1.6,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "scaleGravity",
+      "value": 1.6,
+      "inert": "",
+      "changed": true
+    },
+    {
+      "key": "branchLife",
+      "value": 1.3,
+      "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+      "changed": false
+    },
+    {
+      "key": "branchAngle",
+      "value": 0.6,
+      "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+      "changed": false
+    },
+    {
+      "key": "branchCount",
+      "value": 1.6,
+      "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+      "changed": false
+    },
+    {
+      "key": "branchWidth",
+      "value": 1.6,
+      "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+      "changed": false
+    },
+    {
+      "key": "branchSpeed",
+      "value": 1.6,
+      "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+      "changed": false
+    },
+    {
+      "key": "branchGravity",
+      "value": 1.6,
+      "inert": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+      "changed": false
+    }
+  ],
+  "errors": [],
+  "branchCandidate": [
+    {
+      "key": "branchLife",
+      "value": 1.5,
+      "changed": true,
+      "inert": ""
+    },
+    {
+      "key": "branchAngle",
+      "value": 0.5,
+      "changed": true,
+      "inert": ""
+    },
+    {
+      "key": "branchCount",
+      "value": 1.5,
+      "changed": true,
+      "inert": ""
+    },
+    {
+      "key": "branchWidth",
+      "value": 1.5,
+      "changed": true,
+      "inert": ""
+    },
+    {
+      "key": "branchSpeed",
+      "value": 1.5,
+      "changed": true,
+      "inert": ""
+    },
+    {
+      "key": "branchGravity",
+      "value": 1.5,
+      "changed": true,
+      "inert": ""
+    }
+  ],
+  "inert": {
+    "zero": "分叉数量与一级子粒数相乘后为0；先增加分叉数量",
+    "restore": "",
+    "none": "当前没有可见分叉；先显示子层，并检查母粒数量、每母粒子粒数和子粒发生概率",
+    "speed": "各有效层的初速都为0；先增加层内初速"
+  },
+  "ui": {
+    "edit": true,
+    "undoRedo": true,
+    "reset": true,
+    "saveReload": true,
+    "labels": [
+      "初速",
+      "重力",
+      "分叉寿命",
+      "分叉角度",
+      "分叉数量",
+      "分叉大小",
+      "分叉初速",
+      "分叉重力"
+    ]
+  },
+  "version": "4.9.114",
+  "pass": true
+}

@@ -1,6 +1,6 @@
 // 在本机预检通过的HTTP正式入口运行参数副本；不写共享源码或用户配方。
 const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{chromium}=require('playwright');
-const root=path.resolve(__dirname,'../..'),out=path.join(root,'analysis/results/SparklerMotion');
+const root=path.resolve(__dirname,'../..'),out=path.resolve(root,process.env.SPARKLER_RESULT_DIR||'analysis/results/SparklerMotion');
 const inputs=['基线参数.json','候选参数.json'].map(n=>JSON.parse(fs.readFileSync(path.join(out,n),'utf8')));
 (async()=>{const b=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});try{
  const p=await b.newPage({viewport:{width:1500,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript('window.requestAnimationFrame=()=>0');

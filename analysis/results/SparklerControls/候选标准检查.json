@@ -1,0 +1,12 @@
+{
+  "version": "4.9.114",
+  "checks": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+  },
+  "pass": true
+}
