@@ -30,7 +30,7 @@
     "comet&silver3.0（xx）": "2026-10-14 10:23",
     "本机同步（8）": "2026-10-16 01:20",
     "彩千轮3（Codex）": "2026-10-16 22:38",
-    "窜天猴与仙女棒（Codex）": "2026-10-18 01:58"
+    "窜天猴与仙女棒（Codex）": "2026-10-18 02:52"
   },
   "阶段含义": {
     "制作中": "AI 在做，用户不用看",
@@ -666,7 +666,14 @@
     "跨年秀（22） · B10（垂柳去埋住的下托 ×0.85、寿命 14.5 s）与工作台 16.0.45（完成并释放，10-18 01:30，待用户过目）": "完成并释放（执行结束；AI 自检过；UE 里没放过；用户未验）。负责：对话框22，2026-10-18 00:50 开工。用户 10-18 00:23：Hero 尾缀已换上（2830 现指 RiseTrail_Hero_HD / _M，T19 实测星头到顶 400.4 m @ 7.1 s，B09 开花点不变）；垂柳实测 14–14.5 s、网格宽 400–440 m；垂柳出现时和同刻大型重叠；下周二全量测试后只能改资源。范围：analysis/scripts/编排B10.py（新，只在 B09 逻辑方案上改）、编排B01_动画.py（--b10）、协作/编排B01/逻辑方案_B10.json / 体检_B10.json / B10动画.html、FXtools/节目/NewYearFireWorks_v01/*B10*、云端最新 16.0.45、协作/编排B10.md、analysis/scripts/垂柳重叠.py（新）。不动：UE / ResourceFX / 烘焙器 / P4；别人的文件。结果：协作/编排B10.md（垂柳按实测 ×0.852、寿命 14.5 s；去掉埋在垂柳里的下托；PC 被盖住过半 3→0、手游 4→0）；周二前请编排实放按该文末提示词在 UE 里放 B10 的 105–123 s、168–190 s。",
     "跨年秀（22） · B11（垂柳回 ×0.998、白墙第二轮错开、大号金蕊柠 / 多重菊调 2828 / 2829）与工作台 16.0.46（完成并释放，10-18 01:45，待用户过目）": "完成并释放（执行结束；AI 自检过；UE 里没放过；用户未验）。负责：对话框22。用户 10-18 01:18：「可以错开；金垂柳大小改回来；图片是最新的序号；你直接放大……后面还能切换吗？；上一轮的问题记得记录并且梳理周二前的优先级；灯光你可以一起修吗；从现在开始没有授权的改动就不要改了」。范围：analysis/scripts/编排B11.py（新）、编排B01_编译.mjs（加默认关闭的 --large-resource）、编排B01_动画.py（--b11）、协作/编排B01/逻辑方案_B11.json / 体检_B11.json / B11动画.html、FXtools/节目/NewYearFireWorks_v01/*B11*、云端最新 16.0.46、协作/编排B11.md、analysis/results/LIGHT_B11_20261018/ 与 WORKBENCH_B11_0130/、宪章 v2.14。不动：UE / ResourceFX / 烘焙器 / P4；灯光模型；别人的文件。结果：协作/编排B11.md（以 B08 修订7 为标定 PC 每档 −6、手游每档 −10；封板后能切换什么；周二前优先级）。",
     "跨年秀（22） · B11 修订1（白墙第二轮 PC 奇数点、PC 金芒菊·大用 2827）与工作台 16.0.47（完成并释放，10-18 02:00，待用户下周一过目）": "完成并释放（执行结束；AI 自检过；UE 里没放过；用户未验）。负责：对话框22。用户 10-18 01:52：「白墙第二轮……第一轮P2/P4/P6，第二轮P1/P3/P5/P7这样错开；金芒菊大你用银彩菊的ID就可以了……我没额度了，你直接把我上面说的做了，提交B11修订版，下周一再说」。范围：analysis/scripts/编排B11r1.py（新）、编排B01_编译.mjs（加默认关闭的 --pc-large）、编排B01_动画.py（--b11r1）、协作/编排B01/ 逻辑方案/体检/动画 B11r1、FXtools B11修订1 文件、工作台 16.0.47。手游替身仍 P0 / P8 与 2824（宪章 §8、手游表无 2827）。下一步：下周一用户看；UE 灯光两件仍排在本机同步（8）。",
-    "跨年秀（22） → 本机同步（8） · 灯光落地两件（UE 侧，10-18 01:45 排队，不急但周二全量前要有结论）": "① 只读核对 Night 导演 light_A：RequiredPointCount（编排实放 10-17 读到 4）、Entries（只有 SlotIndex 0 一条，播 Seq_NewYear_TestShowTemplate_2）、LocalTimeOffset（10-17 读到 0.25，交接文档和灯光模型按 0）；场景序列点 NewYear_ShowSequence_light1 的 DirectorId（读到旧的 NewYear，Bindings Light/Slot0）。日志报 SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0（analysis/results/B09_DIRECTOR_20261017/灯光绑定证据.json）。② 判断新灯光流程（工作台「同时写入灯光」写序列四盏灯键）是不是靠 light_A 播这个序列；我的推断（未验）：需要「一个 DirectorId=NewYear_Night 的序列点 + RequiredPointCount 改 1」或补满 4 个点。③ 偏移：若 LocalTimeOffset 确为 0.25，灯会比烟花晚 0.25 s；二选一：UE 里改 0（不动模型，我倾向），或灯光模型 rig.sequence.timeOffsetS 改 −0.25（tool/fwlight/config.json 的 time_offset_s 与 src/light-rig.mjs 一起改，tests/light-curve.test.mjs 对拍）。改 UE 遵守「UE 单写」：登记、由用户点、做完删；我（22）云端不写 UE、没改灯光模型。云端试算见 analysis/results/LIGHT_B11_20261018/（B11 SkyLight 峰值 6.923、无警告、最亮一帧 181.17 s）。做完在这里写结果。"
+    "跨年秀（22） → 本机同步（8） · 灯光落地两件（UE 侧，10-18 01:45 排队，不急但周二全量前要有结论）": "① 只读核对 Night 导演 light_A：RequiredPointCount（编排实放 10-17 读到 4）、Entries（只有 SlotIndex 0 一条，播 Seq_NewYear_TestShowTemplate_2）、LocalTimeOffset（10-17 读到 0.25，交接文档和灯光模型按 0）；场景序列点 NewYear_ShowSequence_light1 的 DirectorId（读到旧的 NewYear，Bindings Light/Slot0）。日志报 SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0（analysis/results/B09_DIRECTOR_20261017/灯光绑定证据.json）。② 判断新灯光流程（工作台「同时写入灯光」写序列四盏灯键）是不是靠 light_A 播这个序列；我的推断（未验）：需要「一个 DirectorId=NewYear_Night 的序列点 + RequiredPointCount 改 1」或补满 4 个点。③ 偏移：若 LocalTimeOffset 确为 0.25，灯会比烟花晚 0.25 s；二选一：UE 里改 0（不动模型，我倾向），或灯光模型 rig.sequence.timeOffsetS 改 −0.25（tool/fwlight/config.json 的 time_offset_s 与 src/light-rig.mjs 一起改，tests/light-curve.test.mjs 对拍）。改 UE 遵守「UE 单写」：登记、由用户点、做完删；我（22）云端不写 UE、没改灯光模型。云端试算见 analysis/results/LIGHT_B11_20261018/（B11 SkyLight 峰值 6.923、无警告、最亮一帧 181.17 s）。做完在这里写结果。",
+    "窜天猴柔光暗底（Codex） · 2026-10-18": {
+      "负责": "窜天猴与仙女棒（Codex）",
+      "状态": "负责：复制用户主体存档并制作独立暗色虚化层；数据任务，不认领tool/src",
+      "范围": "新配方/原理/结果脚本、条目与生成数据、必要构建；保留用户原件与粒子版，不改UE、材质或他方fx_gate修复",
+      "来源": "analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json",
+      "验收": "原运动/相位/取景一致；柔散而非锐利重复、叠加不抢主体；PC/手机实包、原生保存刷新与标准通过；不把浏览器当UE实测"
+    }
   },
   "effects": [
     {
