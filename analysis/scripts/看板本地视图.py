@@ -54,7 +54,8 @@ def project(snapshot, pending, at, head):
     view['说明'] = '本地派生视图：在线快照叠加尚未应用的清单；在线基线保留在看板快照.json。'
     touched, added, closed, active, conflicts = set(), [], [], [], []
     imported_events = []
-    row_map = {pending_row_id(e): e['线上行'] for e in pending.get('条目', [])
+    # 云端回执兼容“items/n78”和旧裸行号；映射仍只在本集合内查找。
+    row_map = {pending_row_id(e): e['线上行'].removeprefix(e['集合'] + '/') for e in pending.get('条目', [])
                if e['行'] == 'new' and e.get('线上行')}
     for entry in pending.get('条目', []):
         if entry.get('反馈事件'):

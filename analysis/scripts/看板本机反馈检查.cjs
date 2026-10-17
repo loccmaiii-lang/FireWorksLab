@@ -96,7 +96,8 @@ async function checkPage() {
   assert.equal(api.canManage(), false);
   assert.ok(page.elements.get('#banner').innerHTML.includes('尚未应用到云端'));
   assert.ok(page.elements.get('#focus').innerHTML.includes('需要优先接续'));
-  assert.ok(api.state.rows.items.some(row=>row._id==='local-P005'));
+  const mappedId = JSON.parse(snapshot)['本地视图']?.['行映射']?.['local-P005'] || 'local-P005';
+  assert.ok(api.state.rows.items.some(row=>row._id===mappedId));
   const decision = api.state.rows.items.find(row=>row._id==='i09');
   await api.markDone(decision, {answer:'测试决定（只在隔离内存）'}, 'test');
   assert.equal(decision.status, '已做');
@@ -129,6 +130,6 @@ async function checkPage() {
   assert.equal(online.ctx.__boardCheck.state.offline, false);
   await online.ctx.__boardCheck.write('items','i09',{feedback:'test-online'});
   assert.equal(sent.length, 1, '在线路径仍写原数据库');
-  console.log('整页隔离接线：本地优先区/原38条及增量投影、勾选作答/资源反馈、刷新草稿、重复导出、存储失败只读、在线写入路径通过；未做真实浏览器视觉验收');
+  console.log('整页隔离接线：本地优先区/在线已应用行及本机增量投影、勾选作答/资源反馈、刷新草稿、重复导出、存储失败只读、在线写入路径通过；未做真实浏览器视觉验收');
 }
 checkPage().catch(error=>{console.error(error);process.exitCode=1;});
