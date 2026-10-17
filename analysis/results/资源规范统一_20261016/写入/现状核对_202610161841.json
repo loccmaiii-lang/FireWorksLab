@@ -1,0 +1,1772 @@
+{
+ "at": "2026-10-16T18:41:56.443Z",
+ "systems": [
+  {
+   "name": "P_EFX_FireWorks_LittleGold_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -7320,
+    -7320,
+    -7320,
+    7320,
+    7320,
+    7320
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleSilver_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -6220,
+    -6220,
+    -6220,
+    6220,
+    6220,
+    6220
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleCrackle_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -5870,
+    -5870,
+    -5870,
+    5870,
+    5870,
+    5870
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleCombo_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -6120,
+    -6120,
+    -6120,
+    6120,
+    6120,
+    6120
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -26310,
+    -26310,
+    -21570,
+    26310,
+    26310,
+    31210
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -36370,
+    -36280,
+    -36270,
+    36190,
+    36280,
+    36280
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -33460,
+    -30340,
+    -33460,
+    33460,
+    30340,
+    33460
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -33130,
+    -33000,
+    -33130,
+    33130,
+    33000,
+    33130
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -31770,
+    -33620,
+    -33620,
+    31770,
+    33620,
+    33620
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -34340,
+    -34400,
+    -34400,
+    34340,
+    34400,
+    34400
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Comet_Layers_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -26410,
+    -26400,
+    -21640,
+    26410,
+    26400,
+    31390
+   ],
+   "emitterCount": 5,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_FanSilver_01_HD",
+   "saved": false,
+   "fixed": true,
+   "box": [
+    -26410,
+    -26400,
+    -21640,
+    26410,
+    26400,
+    31390
+   ],
+   "emitterCount": 2,
+   "emitters": []
+  },
+  {
+   "name": "P_EFX_FireWorks_Combo_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -23820,
+    -23820,
+    -23820,
+    23820,
+    23820,
+    23820
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Comet_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -2440,
+    -9060,
+    -8460,
+    12440,
+    7190,
+    2290
+   ],
+   "emitterCount": 4,
+   "emitters": [
+    {
+     "emitter": "Glow_B",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_B",
+     "lod": 1,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_B",
+     "lod": 2,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_B",
+     "lod": 3,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_C",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_C",
+     "lod": 1,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_C",
+     "lod": 2,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Glow_C",
+     "lod": 3,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_SilverChry_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -18530,
+    -18530,
+    -18530,
+    18530,
+    18530,
+    18530
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Crackle_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -24560,
+    -24560,
+    -24560,
+    24560,
+    24560,
+    24560
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Lime_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -20670,
+    -20670,
+    -20670,
+    20670,
+    20670,
+    20670
+   ],
+   "emitterCount": 4,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Glitter_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -18270,
+    -18270,
+    -18270,
+    18270,
+    18270,
+    18270
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Strobe_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -20490,
+    -20490,
+    -20570,
+    20490,
+    20490,
+    20400
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LimeStar_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -59700,
+    -59700,
+    -59700,
+    59700,
+    59700,
+    59700
+   ],
+   "emitterCount": 4,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldRay_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -49120,
+    -49120,
+    -49120,
+    49120,
+    49120,
+    49120
+   ],
+   "emitterCount": 2,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWork_PrismWheels_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -15000,
+    -15000,
+    -15000,
+    15000,
+    15000,
+    15000
+   ],
+   "emitterCount": 8,
+   "emitters": [
+    {
+     "emitter": "Initial Igniton",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Initial Igniton",
+     "lod": 1,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Initial Igniton",
+     "lod": 2,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Initial Igniton",
+     "lod": 3,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldSpark_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -30780,
+    -30780,
+    -30780,
+    30780,
+    30780,
+    30780
+   ],
+   "emitterCount": 3,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldCoreLime_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -31760,
+    -31760,
+    -31760,
+    31760,
+    31760,
+    31760
+   ],
+   "emitterCount": 4,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldRayChry_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -44900,
+    -44900,
+    -44900,
+    44900,
+    44900,
+    44900
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LimeCoreDelay_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -59170,
+    -59170,
+    -59170,
+    59170,
+    59170,
+    59170
+   ],
+   "emitterCount": 4,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldKamuro_HD",
+   "saved": false,
+   "fixed": true,
+   "box": [
+    -25000,
+    -25000,
+    -25000,
+    25000,
+    25000,
+    25000
+   ],
+   "emitterCount": 2,
+   "emitters": []
+  },
+  {
+   "name": "P_EFX_FireWorks_SilverStrobeChry_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -69100,
+    -69100,
+    -69100,
+    69100,
+    69100,
+    69100
+   ],
+   "emitterCount": 4,
+   "emitters": [
+    {
+     "emitter": "Glow_B",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_L_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -66560,
+    -66520,
+    -49980,
+    66490,
+    66520,
+    83510
+   ],
+   "emitterCount": 2,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_M_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -41790,
+    -41730,
+    -31040,
+    41670,
+    41730,
+    52630
+   ],
+   "emitterCount": 2,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_S_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -29470,
+    -29470,
+    -21730,
+    29470,
+    29470,
+    37210
+   ],
+   "emitterCount": 2,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_XS_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -20620,
+    -20590,
+    -20550,
+    20560,
+    20590,
+    20630
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -18440,
+    -18440,
+    -15380,
+    18440,
+    18440,
+    21500
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleGold_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -7990,
+    -7990,
+    -7990,
+    7990,
+    7990,
+    7990
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleSilver_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -6210,
+    -6210,
+    -6210,
+    6210,
+    6210,
+    6210
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleCrackle_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -6530,
+    -6530,
+    -6530,
+    6530,
+    6530,
+    6530
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_LittleCombo_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -6110,
+    -6110,
+    -6110,
+    6110,
+    6110,
+    6110
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Comet_Layers_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -26310,
+    -26310,
+    -21630,
+    26310,
+    26310,
+    31210
+   ],
+   "emitterCount": 2,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -36280,
+    -36280,
+    -36270,
+    36280,
+    36280,
+    36280
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_SilverChry_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -17790,
+    -17790,
+    -17790,
+    17790,
+    17790,
+    17790
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Crackle_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -24560,
+    -24560,
+    -24560,
+    24560,
+    24560,
+    24560
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_Flash",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Square",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Glitter_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -18270,
+    -18270,
+    -18270,
+    18270,
+    18270,
+    18270
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_Strobe_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -20380,
+    -20380,
+    -20400,
+    20380,
+    20380,
+    20370
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_GoldRayChry_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -46340,
+    -46340,
+    -46340,
+    46340,
+    46340,
+    46340
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "Main",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_YonshakuKamuro_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -56410,
+    -56410,
+    -56410,
+    56410,
+    56410,
+    56410
+   ],
+   "emitterCount": 2,
+   "emitters": [
+    {
+     "emitter": "L1_MainA",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "None"
+     },
+     "match": true
+    },
+    {
+     "emitter": "L1_MainB",
+     "lod": 0,
+     "want": {
+      "ScreenAlignment": "PSA_FacingCameraPosition"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_FacingCameraPosition",
+      "UVFlippingMode": "None"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_L_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -67810,
+    -67750,
+    -51510,
+    67680,
+    67750,
+    84430
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_M_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -43180,
+    -43120,
+    -32780,
+    43060,
+    43120,
+    53680
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_S_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -30840,
+    -30820,
+    -23410,
+    30790,
+    30820,
+    38220
+   ],
+   "emitterCount": 1,
+   "emitters": [],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_XS_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -20960,
+    -20930,
+    -20890,
+    20900,
+    20930,
+    20970
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "saved": true,
+   "fixed": true,
+   "box": [
+    -18440,
+    -18440,
+    -15380,
+    18440,
+    18440,
+    21500
+   ],
+   "emitterCount": 1,
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "lod": 0,
+     "want": {
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "now": {
+      "ScreenAlignment": "PSA_Rectangle",
+      "UVFlippingMode": "RandomFlipUOnly"
+     },
+     "match": true
+    }
+   ],
+   "boundsMatch": true
+  }
+ ],
+ "materials": [
+  {
+   "name": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Crackle_Main_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Glitter_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldRayChry_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleCombo_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleCrackle_Main_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleGold_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_L_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_M_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_S_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_XS_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_SilverChry_GinKamuro_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Strobe_Strobe_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_YonshakuKamuro_Main_01",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_YonshakuKamuro_Main_02",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Combo_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Crackle_Main_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_FanGold_Central_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_FanGold_Middle_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Glitter_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldRay_A_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldRay_B_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldSpark_L2_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldSpark_L3_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_GoldSpark_Main_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LimeStar_Head_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LimeStar_Head_02_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Lime_Core_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Lime_Glitter_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Lime_Glitter_02_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Lime_Lead_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleCombo_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleCrackle_Main_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleGold_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  },
+  {
+   "name": "MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+   "override": [
+    0.9800000190734863
+   ],
+   "match": true
+  }
+ ]
+}
