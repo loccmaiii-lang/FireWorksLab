@@ -1,0 +1,4322 @@
+{
+ "format": "df.t19-hero-apex-ue/1",
+ "measuredAt": "2026-10-17T12:10~12:20+08:00",
+ "executor": "WorkBuddy（本机）接续 T19",
+ "question": "2830 当前指的 RiseTrail_Hero_HD / _M 可见星头到顶多高、几秒；B09 开花点 397.92 m @ 7.37 s 对不对得上",
+ "method": {
+  "actors": "WB19_ 前缀临时 Emitter×3 + SceneCapture2D×1，Transient RT；结束销毁",
+  "placement": "发射点 Z=200000 cm（离地形约 2 km），三根横向间隔 120 m",
+  "camera": [
+   [
+    370000,
+    -580000,
+    222500
+   ],
+   [
+    0,
+    -90,
+    0
+   ]
+  ],
+  "hfovDeg": 11.421186274999286,
+  "rt": [
+   1600,
+   2000
+  ],
+  "depthCm": 200000,
+  "cmPerPxAtTrailPlane": 25,
+  "showFlagsOff": [
+   "TemporalAA",
+   "AntiAliasing",
+   "MotionBlur",
+   "Bloom",
+   "EyeAdaptation",
+   "Fog",
+   "AtmosphericFog",
+   "VolumetricFog",
+   "LensFlares",
+   "DepthOfField"
+  ],
+  "geometry": "相机 pitch 0 水平看 -Y；尾缀 OrientationAxisLock=EPAL_ROTATE_Z（只绕世界 Z 转），竖直线上各点深度都等于 D，像素→高度精确线性：h=(camZ−baseZ)+(H/2−row−0.5)×s",
+  "head": "减去激活前背景帧；每根取 ±80 px 列带的逐行最大亮度；top50 / top10 = 从上往下第一行 ≥ 该帧该根最大亮度 50% / 10%（亮核上沿 / 光晕上沿）",
+  "time": "编辑器世界时钟，自 Activate 起；粒子系统 FixedTime 10 FPS → 时刻分辨率约 ±0.1 s；抓帧间隔约 0.1 s（导出 PNG 拖慢帧率，实际时刻按每张记录）"
+ },
+ "summary": {
+  "Hero_HD": {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Hero_HD.P_EFX_FireWorks_RiseTrail_Hero_HD",
+   "runs": [
+    {
+     "run": "runA",
+     "apexTop50M": 400.38,
+     "apexAgeS": 7.1172,
+     "apexTop10M": 400.62,
+     "within1mFromS": 6.9102,
+     "within1mToS": 7.7227,
+     "at7_37": {
+      "top50": 399.49,
+      "top10": 399.62
+     }
+    },
+    {
+     "run": "runB",
+     "apexTop50M": 400.38,
+     "apexAgeS": 7.0898,
+     "apexTop10M": 400.62,
+     "within1mFromS": 6.9766,
+     "within1mToS": 7.7461,
+     "at7_37": {
+      "top50": 399.49,
+      "top10": 399.62
+     }
+    }
+   ]
+  },
+  "Hero_M": {
+   "source": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_M.P_EFX_FireWorks_RiseTrail_Hero_M",
+   "runs": [
+    {
+     "run": "runA",
+     "apexTop50M": 400.88,
+     "apexAgeS": 7.1172,
+     "apexTop10M": 401.12,
+     "within1mFromS": 6.9102,
+     "within1mToS": 7.3164,
+     "at7_37": {
+      "top50": 399.74,
+      "top10": 399.99
+     }
+    },
+    {
+     "run": "runB",
+     "apexTop50M": 400.62,
+     "apexAgeS": 7.0898,
+     "apexTop10M": 400.62,
+     "within1mFromS": 6.9766,
+     "within1mToS": 7.418,
+     "at7_37": {
+      "top50": 399.74,
+      "top10": 399.99
+     }
+    }
+   ]
+  },
+  "L_HD": {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "runs": [
+    {
+     "run": "runA",
+     "apexTop50M": 330.38,
+     "apexAgeS": 7.4141,
+     "apexTop10M": 330.38,
+     "within1mFromS": 7.4141,
+     "within1mToS": 8.1211,
+     "at7_37": {
+      "top50": 328.68,
+      "top10": 328.68
+     }
+    },
+    {
+     "run": "runB",
+     "apexTop50M": 330.38,
+     "apexAgeS": 7.418,
+     "apexTop10M": 330.38,
+     "within1mFromS": 7.418,
+     "within1mToS": 8.1719,
+     "at7_37": {
+      "top50": 328.49,
+      "top10": 328.49
+     }
+    }
+   ]
+  }
+ },
+ "rows": {
+  "runA": {
+   "Hero_HD": [
+    {
+     "age": 0.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 11.06820011138916,
+     "visible": true,
+     "peak": 67.38,
+     "top50": 96.38,
+     "top25": 96.38,
+     "top10": 96.38,
+     "bottom10": 5.38,
+     "colCenterPx": 314
+    },
+    {
+     "age": 1.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 14.000000953674316,
+     "visible": true,
+     "peak": 147.62,
+     "top50": 149.38,
+     "top25": 149.38,
+     "top10": 149.38,
+     "bottom10": 5.38,
+     "colCenterPx": 311
+    },
+    {
+     "age": 1.5,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 16.0,
+     "visible": true,
+     "peak": 193.62,
+     "top50": 193.88,
+     "top25": 193.88,
+     "top10": 194.12,
+     "bottom10": 30.12,
+     "colCenterPx": 290
+    },
+    {
+     "age": 2.0195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 19.0,
+     "visible": true,
+     "peak": 231.88,
+     "top50": 232.12,
+     "top25": 232.38,
+     "top10": 232.38,
+     "bottom10": 32.12,
+     "colCenterPx": 305
+    },
+    {
+     "age": 2.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 22.0,
+     "visible": true,
+     "peak": 263.38,
+     "top50": 264.88,
+     "top25": 265.12,
+     "top10": 265.12,
+     "bottom10": 41.12,
+     "colCenterPx": 304
+    },
+    {
+     "age": 3.0039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 25.0,
+     "visible": true,
+     "peak": 292.88,
+     "top50": 293.12,
+     "top25": 293.12,
+     "top10": 293.38,
+     "bottom10": 43.88,
+     "colCenterPx": 297
+    },
+    {
+     "age": 3.5039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 28.212600708007812,
+     "visible": true,
+     "peak": 316.62,
+     "top50": 317.38,
+     "top25": 317.38,
+     "top10": 317.38,
+     "bottom10": 70.62,
+     "colCenterPx": 293
+    },
+    {
+     "age": 4.0,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 32.0,
+     "visible": true,
+     "peak": 337.12,
+     "top50": 337.88,
+     "top25": 337.88,
+     "top10": 337.88,
+     "bottom10": 106.88,
+     "colCenterPx": 297
+    },
+    {
+     "age": 4.5273,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 35.21260070800781,
+     "visible": true,
+     "peak": 354.12,
+     "top50": 355.38,
+     "top25": 355.38,
+     "top10": 355.38,
+     "bottom10": 153.12,
+     "colCenterPx": 294
+    },
+    {
+     "age": 5.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 39.21259689331055,
+     "visible": true,
+     "peak": 366.88,
+     "top50": 369.38,
+     "top25": 369.38,
+     "top10": 369.38,
+     "bottom10": 187.38,
+     "colCenterPx": 290
+    },
+    {
+     "age": 5.5234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 43.21260070800781,
+     "visible": true,
+     "peak": 379.12,
+     "top50": 380.88,
+     "top25": 380.88,
+     "top10": 380.88,
+     "bottom10": 221.38,
+     "colCenterPx": 305
+    },
+    {
+     "age": 6.0,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 47.21259689331055,
+     "visible": true,
+     "peak": 388.88,
+     "top50": 389.88,
+     "top25": 389.88,
+     "top10": 389.88,
+     "bottom10": 252.62,
+     "colCenterPx": 297
+    },
+    {
+     "age": 6.2031,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 51.21260070800781,
+     "visible": true,
+     "peak": 391.38,
+     "top50": 392.62,
+     "top25": 392.62,
+     "top10": 392.62,
+     "bottom10": 268.62,
+     "colCenterPx": 294
+    },
+    {
+     "age": 6.4258,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 55.21260070800781,
+     "visible": true,
+     "peak": 394.38,
+     "top50": 395.12,
+     "top25": 395.12,
+     "top10": 395.12,
+     "bottom10": 280.12,
+     "colCenterPx": 286
+    },
+    {
+     "age": 6.6133,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 60.21260070800781,
+     "visible": true,
+     "peak": 393.62,
+     "top50": 397.12,
+     "top25": 397.12,
+     "top10": 397.12,
+     "bottom10": 280.38,
+     "colCenterPx": 305
+    },
+    {
+     "age": 6.8047,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 64.21260070800781,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 292.62,
+     "colCenterPx": 286
+    },
+    {
+     "age": 6.9102,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 68.42520141601562,
+     "visible": true,
+     "peak": 388.88,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 297.12,
+     "colCenterPx": 304
+    },
+    {
+     "age": 7.0117,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 73.21260070800781,
+     "visible": true,
+     "peak": 399.12,
+     "top50": 400.12,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 302.12,
+     "colCenterPx": 299
+    },
+    {
+     "age": 7.1172,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 78.21259307861328,
+     "visible": true,
+     "peak": 399.62,
+     "top50": 400.38,
+     "top25": 400.62,
+     "top10": 400.62,
+     "bottom10": 302.12,
+     "colCenterPx": 294
+    },
+    {
+     "age": 7.2188,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 83.0,
+     "visible": true,
+     "peak": 398.38,
+     "top50": 400.12,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 302.62,
+     "colCenterPx": 316
+    },
+    {
+     "age": 7.3164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 87.28479766845703,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.62,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 317.62,
+     "colCenterPx": 308
+    },
+    {
+     "age": 7.4141,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 92.21260070800781,
+     "visible": true,
+     "peak": 398.88,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 318.62,
+     "colCenterPx": 301
+    },
+    {
+     "age": 7.5234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 97.21260070800781,
+     "visible": true,
+     "peak": 398.12,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 322.12,
+     "colCenterPx": 312
+    },
+    {
+     "age": 7.625,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 101.35299682617188,
+     "visible": true,
+     "peak": 386.88,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 324.12,
+     "colCenterPx": 298
+    },
+    {
+     "age": 7.7227,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 106.21260070800781,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 323.62,
+     "colCenterPx": 294
+    },
+    {
+     "age": 7.8203,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 111.21259307861328,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.12,
+     "top25": 399.38,
+     "top10": 399.38,
+     "bottom10": 328.12,
+     "colCenterPx": 304
+    },
+    {
+     "age": 7.9219,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 115.49739837646484,
+     "visible": true,
+     "peak": 391.12,
+     "top50": 399.12,
+     "top25": 399.12,
+     "top10": 399.38,
+     "bottom10": 328.62,
+     "colCenterPx": 306
+    },
+    {
+     "age": 8.0195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 120.28479766845703,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 399.12,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 330.88,
+     "colCenterPx": 308
+    },
+    {
+     "age": 8.1211,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 125.21260070800781,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 337.62,
+     "colCenterPx": 305
+    },
+    {
+     "age": 8.2227,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 129.49740600585938,
+     "visible": true,
+     "peak": 397.62,
+     "top50": 398.62,
+     "top25": 398.88,
+     "top10": 399.12,
+     "bottom10": 339.38,
+     "colCenterPx": 299
+    },
+    {
+     "age": 8.3242,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 134.2126007080078,
+     "visible": true,
+     "peak": 396.38,
+     "top50": 398.62,
+     "top25": 398.88,
+     "top10": 398.88,
+     "bottom10": 344.12,
+     "colCenterPx": 298
+    },
+    {
+     "age": 8.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 138.49740600585938,
+     "visible": true,
+     "peak": 388.12,
+     "top50": 398.62,
+     "top25": 398.62,
+     "top10": 398.88,
+     "bottom10": 343.12,
+     "colCenterPx": 307
+    },
+    {
+     "age": 8.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 143.2126007080078,
+     "visible": true,
+     "peak": 386.88,
+     "top50": 398.12,
+     "top25": 398.62,
+     "top10": 398.88,
+     "bottom10": 342.88,
+     "colCenterPx": 308
+    },
+    {
+     "age": 8.625,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 147.42520141601562,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 397.88,
+     "top25": 398.38,
+     "top10": 398.62,
+     "bottom10": 348.62,
+     "colCenterPx": 319
+    },
+    {
+     "age": 8.7305,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 151.4973907470703,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 397.38,
+     "top25": 397.88,
+     "top10": 398.38,
+     "bottom10": 350.62,
+     "colCenterPx": 309
+    },
+    {
+     "age": 8.832,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 155.49740600585938,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 396.12,
+     "top25": 397.12,
+     "top10": 397.38,
+     "bottom10": 350.62,
+     "colCenterPx": 296
+    },
+    {
+     "age": 8.9258,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 159.49740600585938,
+     "visible": true,
+     "peak": 382.38,
+     "top50": 393.12,
+     "top25": 393.38,
+     "top10": 397.12,
+     "bottom10": 350.62,
+     "colCenterPx": 320
+    },
+    {
+     "age": 9.0273,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 163.49740600585938,
+     "visible": true,
+     "peak": 391.38,
+     "top50": 393.12,
+     "top25": 393.38,
+     "top10": 393.38,
+     "bottom10": 353.88,
+     "colCenterPx": 304
+    },
+    {
+     "age": 9.1211,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 167.49740600585938,
+     "visible": true,
+     "peak": 392.62,
+     "top50": 392.88,
+     "top25": 392.88,
+     "top10": 392.88,
+     "bottom10": 356.12,
+     "colCenterPx": 319
+    },
+    {
+     "age": 9.2227,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 171.4252166748047,
+     "visible": true,
+     "peak": 391.88,
+     "top50": 392.62,
+     "top25": 392.88,
+     "top10": 392.88,
+     "bottom10": 355.12,
+     "colCenterPx": 310
+    },
+    {
+     "age": 9.8086,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 174.42520141601562,
+     "visible": true,
+     "peak": 383.62,
+     "top50": 383.88,
+     "top25": 384.38,
+     "top10": 384.38,
+     "bottom10": 360.12,
+     "colCenterPx": 303
+    },
+    {
+     "age": 10.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 175.34500122070312,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 379.12,
+     "top25": 379.38,
+     "top10": 379.38,
+     "bottom10": 362.12,
+     "colCenterPx": 316
+    },
+    {
+     "age": 11.0195,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 107.13459777832031,
+     "visible": true,
+     "peak": 377.12,
+     "top50": 377.12,
+     "top25": 377.12,
+     "top10": 377.38,
+     "bottom10": 360.12,
+     "colCenterPx": 323
+    }
+   ],
+   "Hero_M": [
+    {
+     "age": 0.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 11.06820011138916,
+     "visible": true,
+     "peak": 96.38,
+     "top50": 96.38,
+     "top25": 96.62,
+     "top10": 96.62,
+     "bottom10": 5.38,
+     "colCenterPx": 791
+    },
+    {
+     "age": 1.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 14.000000953674316,
+     "visible": true,
+     "peak": 147.62,
+     "top50": 149.88,
+     "top25": 149.88,
+     "top10": 149.88,
+     "bottom10": 24.88,
+     "colCenterPx": 792
+    },
+    {
+     "age": 1.5,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 16.0,
+     "visible": true,
+     "peak": 193.62,
+     "top50": 194.12,
+     "top25": 194.38,
+     "top10": 211.62,
+     "bottom10": 32.62,
+     "colCenterPx": 790
+    },
+    {
+     "age": 2.0195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 19.0,
+     "visible": true,
+     "peak": 231.38,
+     "top50": 232.62,
+     "top25": 232.62,
+     "top10": 232.88,
+     "bottom10": 47.38,
+     "colCenterPx": 789
+    },
+    {
+     "age": 2.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 22.0,
+     "visible": true,
+     "peak": 264.12,
+     "top50": 265.38,
+     "top25": 265.88,
+     "top10": 265.88,
+     "bottom10": 45.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 3.0039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 25.0,
+     "visible": true,
+     "peak": 292.88,
+     "top50": 293.38,
+     "top25": 293.38,
+     "top10": 293.38,
+     "bottom10": 45.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 3.5039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 28.212600708007812,
+     "visible": true,
+     "peak": 316.88,
+     "top50": 317.38,
+     "top25": 317.38,
+     "top10": 317.38,
+     "bottom10": 85.12,
+     "colCenterPx": 787
+    },
+    {
+     "age": 4.0,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 32.0,
+     "visible": true,
+     "peak": 337.12,
+     "top50": 337.88,
+     "top25": 337.88,
+     "top10": 338.38,
+     "bottom10": 127.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 4.5273,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 35.21260070800781,
+     "visible": true,
+     "peak": 354.62,
+     "top50": 355.38,
+     "top25": 355.38,
+     "top10": 355.38,
+     "bottom10": 163.62,
+     "colCenterPx": 784
+    },
+    {
+     "age": 5.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 39.21259689331055,
+     "visible": true,
+     "peak": 367.88,
+     "top50": 369.38,
+     "top25": 369.38,
+     "top10": 369.62,
+     "bottom10": 206.38,
+     "colCenterPx": 789
+    },
+    {
+     "age": 5.5234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 43.21260070800781,
+     "visible": true,
+     "peak": 379.88,
+     "top50": 381.12,
+     "top25": 381.38,
+     "top10": 381.38,
+     "bottom10": 210.62,
+     "colCenterPx": 789
+    },
+    {
+     "age": 6.0,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 47.21259689331055,
+     "visible": true,
+     "peak": 389.12,
+     "top50": 389.62,
+     "top25": 389.88,
+     "top10": 390.12,
+     "bottom10": 210.88,
+     "colCenterPx": 787
+    },
+    {
+     "age": 6.2031,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 51.21260070800781,
+     "visible": true,
+     "peak": 392.38,
+     "top50": 392.88,
+     "top25": 392.88,
+     "top10": 393.12,
+     "bottom10": 210.88,
+     "colCenterPx": 785
+    },
+    {
+     "age": 6.4258,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 55.21260070800781,
+     "visible": true,
+     "peak": 394.88,
+     "top50": 395.38,
+     "top25": 395.62,
+     "top10": 395.62,
+     "bottom10": 210.88,
+     "colCenterPx": 781
+    },
+    {
+     "age": 6.6133,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 60.21260070800781,
+     "visible": true,
+     "peak": 393.88,
+     "top50": 397.38,
+     "top25": 397.38,
+     "top10": 397.62,
+     "bottom10": 210.62,
+     "colCenterPx": 786
+    },
+    {
+     "age": 6.8047,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 64.21260070800781,
+     "visible": true,
+     "peak": 398.12,
+     "top50": 399.12,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 210.62,
+     "colCenterPx": 784
+    },
+    {
+     "age": 6.9102,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 68.42520141601562,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 399.88,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 210.88,
+     "colCenterPx": 787
+    },
+    {
+     "age": 7.0117,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 73.28480529785156,
+     "visible": true,
+     "peak": 391.62,
+     "top50": 399.88,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 210.62,
+     "colCenterPx": 796
+    },
+    {
+     "age": 7.1172,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 78.21259307861328,
+     "visible": true,
+     "peak": 399.38,
+     "top50": 400.88,
+     "top25": 401.12,
+     "top10": 401.12,
+     "bottom10": 210.62,
+     "colCenterPx": 784
+    },
+    {
+     "age": 7.2188,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 83.0,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 400.12,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 210.88,
+     "colCenterPx": 793
+    },
+    {
+     "age": 7.3164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 87.28479766845703,
+     "visible": true,
+     "peak": 398.38,
+     "top50": 399.88,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 210.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 7.4141,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 92.21260070800781,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.62,
+     "top25": 399.88,
+     "top10": 399.88,
+     "bottom10": 210.62,
+     "colCenterPx": 782
+    },
+    {
+     "age": 7.5234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 97.21260070800781,
+     "visible": true,
+     "peak": 397.12,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 210.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 7.625,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 101.35299682617188,
+     "visible": true,
+     "peak": 368.12,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 210.88,
+     "colCenterPx": 784
+    },
+    {
+     "age": 7.7227,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 106.21260070800781,
+     "visible": true,
+     "peak": 398.88,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 210.62,
+     "colCenterPx": 779
+    },
+    {
+     "age": 7.8203,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 111.21259307861328,
+     "visible": true,
+     "peak": 398.12,
+     "top50": 399.38,
+     "top25": 399.38,
+     "top10": 399.62,
+     "bottom10": 210.62,
+     "colCenterPx": 785
+    },
+    {
+     "age": 7.9219,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 116.0,
+     "visible": true,
+     "peak": 397.62,
+     "top50": 399.38,
+     "top25": 399.38,
+     "top10": 399.62,
+     "bottom10": 210.88,
+     "colCenterPx": 796
+    },
+    {
+     "age": 8.0195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 120.28479766845703,
+     "visible": true,
+     "peak": 397.62,
+     "top50": 399.12,
+     "top25": 399.38,
+     "top10": 399.38,
+     "bottom10": 210.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 8.1211,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 125.21260070800781,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.38,
+     "bottom10": 210.62,
+     "colCenterPx": 787
+    },
+    {
+     "age": 8.2227,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 129.49740600585938,
+     "visible": true,
+     "peak": 397.12,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 210.62,
+     "colCenterPx": 790
+    },
+    {
+     "age": 8.3242,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 134.2126007080078,
+     "visible": true,
+     "peak": 390.88,
+     "top50": 398.62,
+     "top25": 398.88,
+     "top10": 398.88,
+     "bottom10": 210.88,
+     "colCenterPx": 794
+    },
+    {
+     "age": 8.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 138.49740600585938,
+     "visible": true,
+     "peak": 384.38,
+     "top50": 398.38,
+     "top25": 398.62,
+     "top10": 398.62,
+     "bottom10": 210.62,
+     "colCenterPx": 795
+    },
+    {
+     "age": 8.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 143.2126007080078,
+     "visible": true,
+     "peak": 382.62,
+     "top50": 398.12,
+     "top25": 398.38,
+     "top10": 398.62,
+     "bottom10": 210.88,
+     "colCenterPx": 793
+    },
+    {
+     "age": 8.625,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 147.2847900390625,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 397.62,
+     "top25": 398.12,
+     "top10": 398.38,
+     "bottom10": 210.88,
+     "colCenterPx": 796
+    },
+    {
+     "age": 8.7305,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 151.4973907470703,
+     "visible": true,
+     "peak": 395.88,
+     "top50": 397.12,
+     "top25": 397.62,
+     "top10": 398.12,
+     "bottom10": 210.88,
+     "colCenterPx": 798
+    },
+    {
+     "age": 8.832,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 155.49740600585938,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 396.12,
+     "top25": 397.12,
+     "top10": 397.38,
+     "bottom10": 210.62,
+     "colCenterPx": 798
+    },
+    {
+     "age": 8.9258,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 159.49740600585938,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 392.12,
+     "top25": 392.88,
+     "top10": 396.88,
+     "bottom10": 210.88,
+     "colCenterPx": 795
+    },
+    {
+     "age": 9.0273,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 163.49740600585938,
+     "visible": true,
+     "peak": 392.12,
+     "top50": 392.12,
+     "top25": 392.38,
+     "top10": 392.88,
+     "bottom10": 210.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 9.1211,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 167.49740600585938,
+     "visible": true,
+     "peak": 391.38,
+     "top50": 391.38,
+     "top25": 391.88,
+     "top10": 392.88,
+     "bottom10": 210.62,
+     "colCenterPx": 809
+    },
+    {
+     "age": 9.2227,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 170.7100067138672,
+     "visible": true,
+     "peak": 388.88,
+     "top50": 388.88,
+     "top25": 391.38,
+     "top10": 392.12,
+     "bottom10": 210.62,
+     "colCenterPx": 796
+    },
+    {
+     "age": 9.8086,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 171.4853973388672,
+     "visible": true,
+     "peak": 383.38,
+     "top50": 383.88,
+     "top25": 383.88,
+     "top10": 383.88,
+     "bottom10": 210.88,
+     "colCenterPx": 803
+    },
+    {
+     "age": 10.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 121.2969970703125,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 378.88,
+     "top25": 378.88,
+     "top10": 379.12,
+     "bottom10": 210.62,
+     "colCenterPx": 817
+    },
+    {
+     "age": 11.0195,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 33.86600112915039,
+     "visible": true,
+     "peak": 211.12,
+     "top50": 211.38,
+     "top25": 211.88,
+     "top10": 361.12,
+     "bottom10": 210.12,
+     "colCenterPx": 815
+    }
+   ],
+   "L_HD": [
+    {
+     "age": 0.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 11.06820011138916,
+     "visible": true,
+     "peak": 56.38,
+     "top50": 78.38,
+     "top25": 78.38,
+     "top10": 78.38,
+     "bottom10": 14.88,
+     "colCenterPx": 1271
+    },
+    {
+     "age": 1.0156,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 14.000000953674316,
+     "visible": true,
+     "peak": 119.88,
+     "top50": 121.62,
+     "top25": 121.62,
+     "top10": 121.62,
+     "bottom10": 7.12,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 1.5,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 16.0,
+     "visible": true,
+     "peak": 156.62,
+     "top50": 156.88,
+     "top25": 156.88,
+     "top10": 156.88,
+     "bottom10": 18.62,
+     "colCenterPx": 1266
+    },
+    {
+     "age": 2.0195,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 19.0,
+     "visible": true,
+     "peak": 189.38,
+     "top50": 189.62,
+     "top25": 189.62,
+     "top10": 189.62,
+     "bottom10": 25.12,
+     "colCenterPx": 1271
+    },
+    {
+     "age": 2.5195,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 22.0,
+     "visible": true,
+     "peak": 215.88,
+     "top50": 216.38,
+     "top25": 216.38,
+     "top10": 216.38,
+     "bottom10": 43.88,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 3.0039,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 25.0,
+     "visible": true,
+     "peak": 238.62,
+     "top50": 238.88,
+     "top25": 238.88,
+     "top10": 238.88,
+     "bottom10": 42.62,
+     "colCenterPx": 1271
+    },
+    {
+     "age": 3.5039,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 28.212600708007812,
+     "visible": true,
+     "peak": 258.38,
+     "top50": 258.62,
+     "top25": 258.62,
+     "top10": 258.62,
+     "bottom10": 41.38,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 4.0,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 32.0,
+     "visible": true,
+     "peak": 274.88,
+     "top50": 275.38,
+     "top25": 275.62,
+     "top10": 275.62,
+     "bottom10": 70.88,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 4.5273,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 35.21260070800781,
+     "visible": true,
+     "peak": 290.12,
+     "top50": 290.38,
+     "top25": 290.38,
+     "top10": 290.38,
+     "bottom10": 121.88,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 5.0156,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 39.21259689331055,
+     "visible": true,
+     "peak": 301.12,
+     "top50": 301.88,
+     "top25": 301.88,
+     "top10": 301.88,
+     "bottom10": 158.38,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 5.5234,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 43.21260070800781,
+     "visible": true,
+     "peak": 308.88,
+     "top50": 311.38,
+     "top25": 311.38,
+     "top10": 311.38,
+     "bottom10": 193.62,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 6.0,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 47.21259689331055,
+     "visible": true,
+     "peak": 317.12,
+     "top50": 318.12,
+     "top25": 318.12,
+     "top10": 318.12,
+     "bottom10": 199.88,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 6.2031,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 51.21260070800781,
+     "visible": true,
+     "peak": 320.38,
+     "top50": 320.62,
+     "top25": 320.62,
+     "top10": 320.62,
+     "bottom10": 208.38,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 6.4258,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 55.2848014831543,
+     "visible": true,
+     "peak": 322.38,
+     "top50": 322.62,
+     "top25": 322.62,
+     "top10": 322.62,
+     "bottom10": 225.12,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 6.6133,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 60.21260070800781,
+     "visible": true,
+     "peak": 318.88,
+     "top50": 324.12,
+     "top25": 324.38,
+     "top10": 324.38,
+     "bottom10": 228.38,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 6.8047,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 64.28479766845703,
+     "visible": true,
+     "peak": 324.88,
+     "top50": 325.62,
+     "top25": 325.62,
+     "top10": 325.62,
+     "bottom10": 233.88,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 6.9102,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 69.0,
+     "visible": true,
+     "peak": 324.62,
+     "top50": 326.12,
+     "top25": 326.12,
+     "top10": 326.12,
+     "bottom10": 237.12,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 7.0117,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 73.28480529785156,
+     "visible": true,
+     "peak": 325.88,
+     "top50": 326.62,
+     "top25": 326.62,
+     "top10": 326.62,
+     "bottom10": 246.88,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 7.1172,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 78.21259307861328,
+     "visible": true,
+     "peak": 326.62,
+     "top50": 326.88,
+     "top25": 326.88,
+     "top10": 326.88,
+     "bottom10": 247.12,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 7.2188,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 83.0,
+     "visible": true,
+     "peak": 326.88,
+     "top50": 327.12,
+     "top25": 327.12,
+     "top10": 327.12,
+     "bottom10": 257.62,
+     "colCenterPx": 1277
+    },
+    {
+     "age": 7.3164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 87.28479766845703,
+     "visible": true,
+     "peak": 326.38,
+     "top50": 326.62,
+     "top25": 326.62,
+     "top10": 326.62,
+     "bottom10": 257.12,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 7.4141,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 92.21260070800781,
+     "visible": true,
+     "peak": 329.62,
+     "top50": 330.38,
+     "top25": 330.38,
+     "top10": 330.38,
+     "bottom10": 256.38,
+     "colCenterPx": 1272
+    },
+    {
+     "age": 7.5234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 97.21260070800781,
+     "visible": true,
+     "peak": 328.12,
+     "top50": 329.88,
+     "top25": 329.88,
+     "top10": 329.88,
+     "bottom10": 261.88,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 7.625,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 101.28479766845703,
+     "visible": true,
+     "peak": 328.38,
+     "top50": 329.62,
+     "top25": 329.62,
+     "top10": 329.88,
+     "bottom10": 261.88,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 7.7227,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 106.21260070800781,
+     "visible": true,
+     "peak": 328.62,
+     "top50": 329.62,
+     "top25": 329.62,
+     "top10": 329.62,
+     "bottom10": 268.62,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 7.8203,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 111.21259307861328,
+     "visible": true,
+     "peak": 328.88,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.62,
+     "bottom10": 273.88,
+     "colCenterPx": 1272
+    },
+    {
+     "age": 7.9219,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 116.0,
+     "visible": true,
+     "peak": 327.38,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.62,
+     "bottom10": 277.12,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 8.0195,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 120.28479766845703,
+     "visible": true,
+     "peak": 328.88,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 277.12,
+     "colCenterPx": 1271
+    },
+    {
+     "age": 8.1211,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 125.21260070800781,
+     "visible": true,
+     "peak": 328.88,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 277.38,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 8.2227,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 129.49740600585938,
+     "visible": true,
+     "peak": 328.38,
+     "top50": 329.12,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 277.12,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 8.3242,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 134.2126007080078,
+     "visible": true,
+     "peak": 328.38,
+     "top50": 329.12,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 276.62,
+     "colCenterPx": 1271
+    },
+    {
+     "age": 8.418,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 138.49740600585938,
+     "visible": true,
+     "peak": 326.62,
+     "top50": 329.12,
+     "top25": 329.12,
+     "top10": 329.38,
+     "bottom10": 278.62,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 8.5195,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 143.2126007080078,
+     "visible": true,
+     "peak": 328.12,
+     "top50": 328.88,
+     "top25": 329.12,
+     "top10": 329.12,
+     "bottom10": 278.62,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 8.625,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 146.49740600585938,
+     "visible": true,
+     "peak": 327.12,
+     "top50": 328.88,
+     "top25": 328.88,
+     "top10": 329.12,
+     "bottom10": 285.38,
+     "colCenterPx": 1280
+    },
+    {
+     "age": 8.7305,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 151.35299682617188,
+     "visible": true,
+     "peak": 321.88,
+     "top50": 328.62,
+     "top25": 328.88,
+     "top10": 328.88,
+     "bottom10": 288.12,
+     "colCenterPx": 1280
+    },
+    {
+     "age": 8.832,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 155.35301208496094,
+     "visible": true,
+     "peak": 327.12,
+     "top50": 328.38,
+     "top25": 328.62,
+     "top10": 328.88,
+     "bottom10": 287.88,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 8.9258,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 159.42520141601562,
+     "visible": true,
+     "peak": 327.12,
+     "top50": 328.38,
+     "top25": 328.62,
+     "top10": 328.62,
+     "bottom10": 288.12,
+     "colCenterPx": 1277
+    },
+    {
+     "age": 9.0273,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 163.42520141601562,
+     "visible": true,
+     "peak": 327.88,
+     "top50": 327.88,
+     "top25": 328.38,
+     "top10": 328.62,
+     "bottom10": 291.38,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 9.1211,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 167.28079223632812,
+     "visible": true,
+     "peak": 323.38,
+     "top50": 323.38,
+     "top25": 328.12,
+     "top10": 328.38,
+     "bottom10": 290.88,
+     "colCenterPx": 1279
+    },
+    {
+     "age": 9.2227,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 170.49740600585938,
+     "visible": true,
+     "peak": 323.38,
+     "top50": 323.38,
+     "top25": 323.62,
+     "top10": 323.62,
+     "bottom10": 296.88,
+     "colCenterPx": 1279
+    },
+    {
+     "age": 9.8086,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 173.3489990234375,
+     "visible": true,
+     "peak": 318.38,
+     "top50": 318.62,
+     "top25": 318.62,
+     "top10": 318.88,
+     "bottom10": 300.12,
+     "colCenterPx": 1269
+    },
+    {
+     "age": 10.418,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 171.3892059326172,
+     "visible": true,
+     "peak": 316.12,
+     "top50": 316.88,
+     "top25": 316.88,
+     "top10": 316.88,
+     "bottom10": 301.62,
+     "colCenterPx": 1293
+    },
+    {
+     "age": 11.0195,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 84.98820495605469,
+     "visible": true,
+     "peak": 314.88,
+     "top50": 314.88,
+     "top25": 315.12,
+     "top10": 315.12,
+     "bottom10": 310.12,
+     "colCenterPx": 1294
+    }
+   ]
+  },
+  "runB": {
+   "Hero_HD": [
+    {
+     "age": 0.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 11.06820011138916,
+     "visible": true,
+     "peak": 67.38,
+     "top50": 92.38,
+     "top25": 92.62,
+     "top10": 92.62,
+     "bottom10": 5.62,
+     "colCenterPx": 307
+    },
+    {
+     "age": 1.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 14.000000953674316,
+     "visible": true,
+     "peak": 144.88,
+     "top50": 145.88,
+     "top25": 146.12,
+     "top10": 146.12,
+     "bottom10": 5.38,
+     "colCenterPx": 312
+    },
+    {
+     "age": 1.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 16.0,
+     "visible": true,
+     "peak": 190.38,
+     "top50": 191.12,
+     "top25": 191.38,
+     "top10": 191.38,
+     "bottom10": 27.62,
+     "colCenterPx": 300
+    },
+    {
+     "age": 2.0234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 19.0,
+     "visible": true,
+     "peak": 228.62,
+     "top50": 229.88,
+     "top25": 229.88,
+     "top10": 229.88,
+     "bottom10": 31.62,
+     "colCenterPx": 303
+    },
+    {
+     "age": 2.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 22.0,
+     "visible": true,
+     "peak": 262.12,
+     "top50": 262.88,
+     "top25": 262.88,
+     "top10": 263.12,
+     "bottom10": 41.62,
+     "colCenterPx": 304
+    },
+    {
+     "age": 3.0117,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 25.0,
+     "visible": true,
+     "peak": 290.62,
+     "top50": 291.38,
+     "top25": 291.38,
+     "top10": 291.38,
+     "bottom10": 44.38,
+     "colCenterPx": 304
+    },
+    {
+     "age": 3.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 28.212600708007812,
+     "visible": true,
+     "peak": 315.12,
+     "top50": 315.88,
+     "top25": 315.88,
+     "top10": 315.88,
+     "bottom10": 70.62,
+     "colCenterPx": 293
+    },
+    {
+     "age": 4.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 32.0,
+     "visible": true,
+     "peak": 335.62,
+     "top50": 336.88,
+     "top25": 336.88,
+     "top10": 336.88,
+     "bottom10": 107.12,
+     "colCenterPx": 305
+    },
+    {
+     "age": 4.5,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 35.21260070800781,
+     "visible": true,
+     "peak": 353.62,
+     "top50": 353.88,
+     "top25": 354.12,
+     "top10": 354.12,
+     "bottom10": 152.62,
+     "colCenterPx": 286
+    },
+    {
+     "age": 5.0273,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 39.21259689331055,
+     "visible": true,
+     "peak": 368.12,
+     "top50": 368.38,
+     "top25": 368.62,
+     "top10": 368.62,
+     "bottom10": 187.12,
+     "colCenterPx": 290
+    },
+    {
+     "age": 5.5039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 43.21260070800781,
+     "visible": true,
+     "peak": 378.62,
+     "top50": 380.38,
+     "top25": 380.38,
+     "top10": 380.38,
+     "bottom10": 221.62,
+     "colCenterPx": 308
+    },
+    {
+     "age": 6.0039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 47.21259689331055,
+     "visible": true,
+     "peak": 387.88,
+     "top50": 389.12,
+     "top25": 389.12,
+     "top10": 389.38,
+     "bottom10": 252.62,
+     "colCenterPx": 300
+    },
+    {
+     "age": 6.2266,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 51.21260070800781,
+     "visible": true,
+     "peak": 391.38,
+     "top50": 392.12,
+     "top25": 392.12,
+     "top10": 392.12,
+     "bottom10": 268.62,
+     "colCenterPx": 290
+    },
+    {
+     "age": 6.4258,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 55.21260070800781,
+     "visible": true,
+     "peak": 394.12,
+     "top50": 394.62,
+     "top25": 394.62,
+     "top10": 394.62,
+     "bottom10": 275.38,
+     "colCenterPx": 286
+    },
+    {
+     "age": 6.6172,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 60.21260070800781,
+     "visible": true,
+     "peak": 393.88,
+     "top50": 396.88,
+     "top25": 396.88,
+     "top10": 397.12,
+     "bottom10": 280.62,
+     "colCenterPx": 301
+    },
+    {
+     "age": 6.8281,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 64.21260070800781,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 398.62,
+     "top25": 398.62,
+     "top10": 398.62,
+     "bottom10": 296.12,
+     "colCenterPx": 294
+    },
+    {
+     "age": 6.9766,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 68.42520141601562,
+     "visible": true,
+     "peak": 387.38,
+     "top50": 399.62,
+     "top25": 399.62,
+     "top10": 399.88,
+     "bottom10": 296.88,
+     "colCenterPx": 306
+    },
+    {
+     "age": 7.0898,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 73.21260070800781,
+     "visible": true,
+     "peak": 399.62,
+     "top50": 400.38,
+     "top25": 400.62,
+     "top10": 400.62,
+     "bottom10": 301.62,
+     "colCenterPx": 294
+    },
+    {
+     "age": 7.2109,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 78.21259307861328,
+     "visible": true,
+     "peak": 399.38,
+     "top50": 400.12,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 311.38,
+     "colCenterPx": 298
+    },
+    {
+     "age": 7.3164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 83.0,
+     "visible": true,
+     "peak": 398.38,
+     "top50": 399.62,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 315.88,
+     "colCenterPx": 316
+    },
+    {
+     "age": 7.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 87.28479766845703,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 318.62,
+     "colCenterPx": 301
+    },
+    {
+     "age": 7.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 92.21260070800781,
+     "visible": true,
+     "peak": 398.88,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 322.12,
+     "colCenterPx": 298
+    },
+    {
+     "age": 7.6367,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 97.21260070800781,
+     "visible": true,
+     "peak": 398.12,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 324.12,
+     "colCenterPx": 312
+    },
+    {
+     "age": 7.7461,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 101.4251937866211,
+     "visible": true,
+     "peak": 389.62,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 323.62,
+     "colCenterPx": 334
+    },
+    {
+     "age": 7.8477,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 106.21260070800781,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.12,
+     "top25": 399.38,
+     "top10": 399.38,
+     "bottom10": 328.12,
+     "colCenterPx": 294
+    },
+    {
+     "age": 7.9609,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 111.21259307861328,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.12,
+     "top25": 399.12,
+     "top10": 399.38,
+     "bottom10": 328.62,
+     "colCenterPx": 302
+    },
+    {
+     "age": 8.0664,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 115.49739837646484,
+     "visible": true,
+     "peak": 393.38,
+     "top50": 399.12,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 330.88,
+     "colCenterPx": 302
+    },
+    {
+     "age": 8.1719,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 120.28479766845703,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 337.62,
+     "colCenterPx": 300
+    },
+    {
+     "age": 8.2773,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 125.21260070800781,
+     "visible": true,
+     "peak": 397.62,
+     "top50": 398.62,
+     "top25": 398.88,
+     "top10": 399.12,
+     "bottom10": 339.38,
+     "colCenterPx": 299
+    },
+    {
+     "age": 8.3828,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 129.49740600585938,
+     "visible": true,
+     "peak": 396.88,
+     "top50": 398.62,
+     "top25": 398.88,
+     "top10": 398.88,
+     "bottom10": 344.12,
+     "colCenterPx": 302
+    },
+    {
+     "age": 8.4844,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 134.2126007080078,
+     "visible": true,
+     "peak": 389.38,
+     "top50": 398.62,
+     "top25": 398.62,
+     "top10": 398.88,
+     "bottom10": 343.12,
+     "colCenterPx": 308
+    },
+    {
+     "age": 8.5742,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 138.49740600585938,
+     "visible": true,
+     "peak": 385.38,
+     "top50": 398.12,
+     "top25": 398.62,
+     "top10": 398.88,
+     "bottom10": 343.12,
+     "colCenterPx": 301
+    },
+    {
+     "age": 8.6836,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 143.2126007080078,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 397.88,
+     "top25": 398.38,
+     "top10": 398.62,
+     "bottom10": 348.62,
+     "colCenterPx": 301
+    },
+    {
+     "age": 8.793,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 147.2847900390625,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 397.38,
+     "top25": 397.88,
+     "top10": 398.38,
+     "bottom10": 350.62,
+     "colCenterPx": 304
+    },
+    {
+     "age": 8.9023,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 151.4973907470703,
+     "visible": true,
+     "peak": 382.12,
+     "top50": 393.12,
+     "top25": 393.12,
+     "top10": 396.88,
+     "bottom10": 350.62,
+     "colCenterPx": 316
+    },
+    {
+     "age": 9.0117,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 155.49740600585938,
+     "visible": true,
+     "peak": 389.38,
+     "top50": 392.88,
+     "top25": 393.38,
+     "top10": 393.38,
+     "bottom10": 353.12,
+     "colCenterPx": 304
+    },
+    {
+     "age": 9.1367,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 159.49740600585938,
+     "visible": true,
+     "peak": 392.62,
+     "top50": 392.88,
+     "top25": 392.88,
+     "top10": 392.88,
+     "bottom10": 356.12,
+     "colCenterPx": 301
+    },
+    {
+     "age": 9.2617,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 163.42520141601562,
+     "visible": true,
+     "peak": 391.88,
+     "top50": 392.62,
+     "top25": 392.88,
+     "top10": 392.88,
+     "bottom10": 355.12,
+     "colCenterPx": 310
+    },
+    {
+     "age": 9.3828,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 167.49740600585938,
+     "visible": true,
+     "peak": 390.38,
+     "top50": 390.38,
+     "top25": 392.38,
+     "top10": 392.38,
+     "bottom10": 354.12,
+     "colCenterPx": 304
+    },
+    {
+     "age": 9.4922,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 171.4252166748047,
+     "visible": true,
+     "peak": 388.38,
+     "top50": 388.38,
+     "top25": 389.62,
+     "top10": 391.62,
+     "bottom10": 353.62,
+     "colCenterPx": 323
+    },
+    {
+     "age": 9.8164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 174.42520141601562,
+     "visible": true,
+     "peak": 383.62,
+     "top50": 383.88,
+     "top25": 384.38,
+     "top10": 384.38,
+     "bottom10": 360.12,
+     "colCenterPx": 303
+    },
+    {
+     "age": 10.4023,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 175.5615997314453,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 378.88,
+     "top25": 379.38,
+     "top10": 379.38,
+     "bottom10": 362.12,
+     "colCenterPx": 316
+    },
+    {
+     "age": 11.0078,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 107.84980010986328,
+     "visible": true,
+     "peak": 377.12,
+     "top50": 377.12,
+     "top25": 377.12,
+     "top10": 377.38,
+     "bottom10": 360.12,
+     "colCenterPx": 323
+    }
+   ],
+   "Hero_M": [
+    {
+     "age": 0.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 11.06820011138916,
+     "visible": true,
+     "peak": 87.88,
+     "top50": 92.38,
+     "top25": 92.62,
+     "top10": 92.62,
+     "bottom10": 5.38,
+     "colCenterPx": 794
+    },
+    {
+     "age": 1.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 14.000000953674316,
+     "visible": true,
+     "peak": 144.62,
+     "top50": 146.38,
+     "top25": 146.38,
+     "top10": 146.38,
+     "bottom10": 11.62,
+     "colCenterPx": 792
+    },
+    {
+     "age": 1.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 16.0,
+     "visible": true,
+     "peak": 191.12,
+     "top50": 191.62,
+     "top25": 191.62,
+     "top10": 191.62,
+     "bottom10": 32.38,
+     "colCenterPx": 790
+    },
+    {
+     "age": 2.0234,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 19.0,
+     "visible": true,
+     "peak": 229.62,
+     "top50": 230.38,
+     "top25": 230.38,
+     "top10": 230.38,
+     "bottom10": 41.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 2.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 22.0,
+     "visible": true,
+     "peak": 262.12,
+     "top50": 263.12,
+     "top25": 263.38,
+     "top10": 263.38,
+     "bottom10": 45.88,
+     "colCenterPx": 790
+    },
+    {
+     "age": 3.0117,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 25.0,
+     "visible": true,
+     "peak": 290.88,
+     "top50": 291.88,
+     "top25": 291.88,
+     "top10": 291.88,
+     "bottom10": 45.88,
+     "colCenterPx": 787
+    },
+    {
+     "age": 3.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 28.212600708007812,
+     "visible": true,
+     "peak": 315.38,
+     "top50": 315.88,
+     "top25": 315.88,
+     "top10": 315.88,
+     "bottom10": 71.12,
+     "colCenterPx": 785
+    },
+    {
+     "age": 4.0156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 32.0,
+     "visible": true,
+     "peak": 335.38,
+     "top50": 336.88,
+     "top25": 336.88,
+     "top10": 337.12,
+     "bottom10": 107.38,
+     "colCenterPx": 791
+    },
+    {
+     "age": 4.5,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 35.21260070800781,
+     "visible": true,
+     "peak": 353.62,
+     "top50": 354.38,
+     "top25": 354.38,
+     "top10": 354.88,
+     "bottom10": 163.12,
+     "colCenterPx": 785
+    },
+    {
+     "age": 5.0273,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 39.21259689331055,
+     "visible": true,
+     "peak": 368.12,
+     "top50": 368.62,
+     "top25": 368.88,
+     "top10": 368.88,
+     "bottom10": 206.62,
+     "colCenterPx": 787
+    },
+    {
+     "age": 5.5039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 43.21260070800781,
+     "visible": true,
+     "peak": 379.62,
+     "top50": 380.38,
+     "top25": 380.38,
+     "top10": 380.38,
+     "bottom10": 211.12,
+     "colCenterPx": 783
+    },
+    {
+     "age": 6.0039,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 47.21259689331055,
+     "visible": true,
+     "peak": 388.62,
+     "top50": 389.62,
+     "top25": 389.62,
+     "top10": 389.88,
+     "bottom10": 211.12,
+     "colCenterPx": 787
+    },
+    {
+     "age": 6.2266,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 51.21260070800781,
+     "visible": true,
+     "peak": 391.62,
+     "top50": 392.12,
+     "top25": 392.38,
+     "top10": 392.38,
+     "bottom10": 211.12,
+     "colCenterPx": 784
+    },
+    {
+     "age": 6.4258,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 55.21260070800781,
+     "visible": true,
+     "peak": 394.12,
+     "top50": 394.88,
+     "top25": 394.88,
+     "top10": 395.12,
+     "bottom10": 211.12,
+     "colCenterPx": 776
+    },
+    {
+     "age": 6.6172,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 60.21260070800781,
+     "visible": true,
+     "peak": 393.38,
+     "top50": 397.12,
+     "top25": 397.38,
+     "top10": 397.38,
+     "bottom10": 211.12,
+     "colCenterPx": 790
+    },
+    {
+     "age": 6.8281,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 64.21260070800781,
+     "visible": true,
+     "peak": 397.88,
+     "top50": 398.88,
+     "top25": 398.88,
+     "top10": 399.12,
+     "bottom10": 211.12,
+     "colCenterPx": 782
+    },
+    {
+     "age": 6.9766,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 68.42520141601562,
+     "visible": true,
+     "peak": 369.62,
+     "top50": 399.88,
+     "top25": 399.88,
+     "top10": 400.12,
+     "bottom10": 211.12,
+     "colCenterPx": 792
+    },
+    {
+     "age": 7.0898,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 73.28480529785156,
+     "visible": true,
+     "peak": 391.62,
+     "top50": 400.62,
+     "top25": 400.62,
+     "top10": 400.62,
+     "bottom10": 211.12,
+     "colCenterPx": 803
+    },
+    {
+     "age": 7.2109,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 78.21259307861328,
+     "visible": true,
+     "peak": 399.38,
+     "top50": 400.12,
+     "top25": 400.12,
+     "top10": 400.12,
+     "bottom10": 211.12,
+     "colCenterPx": 782
+    },
+    {
+     "age": 7.3164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 83.0,
+     "visible": true,
+     "peak": 398.12,
+     "top50": 399.88,
+     "top25": 399.88,
+     "top10": 400.12,
+     "bottom10": 211.12,
+     "colCenterPx": 793
+    },
+    {
+     "age": 7.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 87.28479766845703,
+     "visible": true,
+     "peak": 398.38,
+     "top50": 399.62,
+     "top25": 399.62,
+     "top10": 399.88,
+     "bottom10": 211.12,
+     "colCenterPx": 787
+    },
+    {
+     "age": 7.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 92.21260070800781,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 211.12,
+     "colCenterPx": 781
+    },
+    {
+     "age": 7.6367,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 97.21260070800781,
+     "visible": true,
+     "peak": 397.12,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 211.12,
+     "colCenterPx": 790
+    },
+    {
+     "age": 7.7461,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 101.35299682617188,
+     "visible": true,
+     "peak": 383.88,
+     "top50": 399.38,
+     "top25": 399.62,
+     "top10": 399.62,
+     "bottom10": 211.12,
+     "colCenterPx": 794
+    },
+    {
+     "age": 7.8477,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 106.21260070800781,
+     "visible": true,
+     "peak": 398.62,
+     "top50": 399.38,
+     "top25": 399.38,
+     "top10": 399.62,
+     "bottom10": 211.12,
+     "colCenterPx": 781
+    },
+    {
+     "age": 7.9609,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 111.21259307861328,
+     "visible": true,
+     "peak": 398.12,
+     "top50": 399.38,
+     "top25": 399.38,
+     "top10": 399.62,
+     "bottom10": 211.12,
+     "colCenterPx": 784
+    },
+    {
+     "age": 8.0664,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 116.0,
+     "visible": true,
+     "peak": 396.62,
+     "top50": 399.12,
+     "top25": 399.38,
+     "top10": 399.38,
+     "bottom10": 211.12,
+     "colCenterPx": 800
+    },
+    {
+     "age": 8.1719,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 120.28479766845703,
+     "visible": true,
+     "peak": 397.62,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 211.12,
+     "colCenterPx": 788
+    },
+    {
+     "age": 8.2773,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 125.21260070800781,
+     "visible": true,
+     "peak": 397.38,
+     "top50": 398.88,
+     "top25": 399.12,
+     "top10": 399.12,
+     "bottom10": 211.12,
+     "colCenterPx": 780
+    },
+    {
+     "age": 8.3828,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 129.49740600585938,
+     "visible": true,
+     "peak": 388.38,
+     "top50": 398.62,
+     "top25": 398.88,
+     "top10": 398.88,
+     "bottom10": 211.12,
+     "colCenterPx": 783
+    },
+    {
+     "age": 8.4844,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 134.2126007080078,
+     "visible": true,
+     "peak": 385.88,
+     "top50": 398.38,
+     "top25": 398.62,
+     "top10": 398.62,
+     "bottom10": 211.12,
+     "colCenterPx": 798
+    },
+    {
+     "age": 8.5742,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 138.49740600585938,
+     "visible": true,
+     "peak": 384.12,
+     "top50": 398.12,
+     "top25": 398.38,
+     "top10": 398.62,
+     "bottom10": 211.12,
+     "colCenterPx": 798
+    },
+    {
+     "age": 8.6836,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 143.2126007080078,
+     "visible": true,
+     "peak": 396.12,
+     "top50": 397.62,
+     "top25": 398.12,
+     "top10": 398.38,
+     "bottom10": 211.12,
+     "colCenterPx": 803
+    },
+    {
+     "age": 8.793,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 147.42520141601562,
+     "visible": true,
+     "peak": 395.88,
+     "top50": 397.12,
+     "top25": 397.62,
+     "top10": 398.12,
+     "bottom10": 211.12,
+     "colCenterPx": 804
+    },
+    {
+     "age": 8.9023,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 151.4973907470703,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 392.12,
+     "top25": 392.88,
+     "top10": 396.88,
+     "bottom10": 211.12,
+     "colCenterPx": 803
+    },
+    {
+     "age": 9.0117,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 155.42520141601562,
+     "visible": true,
+     "peak": 392.12,
+     "top50": 392.12,
+     "top25": 392.38,
+     "top10": 392.88,
+     "bottom10": 211.12,
+     "colCenterPx": 782
+    },
+    {
+     "age": 9.1367,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 159.49740600585938,
+     "visible": true,
+     "peak": 391.12,
+     "top50": 391.38,
+     "top25": 391.88,
+     "top10": 392.88,
+     "bottom10": 211.12,
+     "colCenterPx": 803
+    },
+    {
+     "age": 9.2617,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 163.49740600585938,
+     "visible": true,
+     "peak": 388.88,
+     "top50": 388.88,
+     "top25": 391.38,
+     "top10": 392.12,
+     "bottom10": 211.12,
+     "colCenterPx": 801
+    },
+    {
+     "age": 9.3828,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 167.42520141601562,
+     "visible": true,
+     "peak": 376.62,
+     "top50": 386.12,
+     "top25": 389.12,
+     "top10": 389.12,
+     "bottom10": 211.12,
+     "colCenterPx": 803
+    },
+    {
+     "age": 9.4922,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 170.5655975341797,
+     "visible": true,
+     "peak": 376.62,
+     "top50": 386.12,
+     "top25": 388.12,
+     "top10": 388.12,
+     "bottom10": 211.12,
+     "colCenterPx": 801
+    },
+    {
+     "age": 9.8164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 172.27281188964844,
+     "visible": true,
+     "peak": 383.38,
+     "top50": 383.88,
+     "top25": 383.88,
+     "top10": 383.88,
+     "bottom10": 211.12,
+     "colCenterPx": 796
+    },
+    {
+     "age": 10.4023,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 118.0792007446289,
+     "visible": true,
+     "peak": 378.88,
+     "top50": 378.88,
+     "top25": 378.88,
+     "top10": 379.12,
+     "bottom10": 210.62,
+     "colCenterPx": 795
+    },
+    {
+     "age": 11.0078,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 28.150798797607422,
+     "visible": true,
+     "peak": 211.12,
+     "top50": 211.38,
+     "top25": 211.62,
+     "top10": 361.12,
+     "bottom10": 210.12,
+     "colCenterPx": 815
+    }
+   ],
+   "L_HD": [
+    {
+     "age": 0.5156,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 11.06820011138916,
+     "visible": true,
+     "peak": 58.62,
+     "top50": 74.88,
+     "top25": 74.88,
+     "top10": 74.88,
+     "bottom10": 15.62,
+     "colCenterPx": 1277
+    },
+    {
+     "age": 1.0156,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 14.000000953674316,
+     "visible": true,
+     "peak": 116.12,
+     "top50": 118.62,
+     "top25": 118.62,
+     "top10": 118.62,
+     "bottom10": 7.12,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 1.5156,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 16.0,
+     "visible": true,
+     "peak": 155.38,
+     "top50": 155.62,
+     "top25": 155.62,
+     "top10": 155.62,
+     "bottom10": 18.38,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 2.0234,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 19.0,
+     "visible": true,
+     "peak": 187.62,
+     "top50": 187.88,
+     "top25": 187.88,
+     "top10": 187.88,
+     "bottom10": 25.12,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 2.5195,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 22.0,
+     "visible": true,
+     "peak": 214.38,
+     "top50": 214.62,
+     "top25": 214.62,
+     "top10": 214.62,
+     "bottom10": 43.88,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 3.0117,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 25.0,
+     "visible": true,
+     "peak": 237.12,
+     "top50": 237.62,
+     "top25": 237.62,
+     "top10": 237.62,
+     "bottom10": 42.12,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 3.5156,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 28.212600708007812,
+     "visible": true,
+     "peak": 257.62,
+     "top50": 257.88,
+     "top25": 257.88,
+     "top10": 257.88,
+     "bottom10": 41.38,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 4.0156,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 32.0,
+     "visible": true,
+     "peak": 274.12,
+     "top50": 274.88,
+     "top25": 274.88,
+     "top10": 274.88,
+     "bottom10": 70.62,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 4.5,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 35.21260070800781,
+     "visible": true,
+     "peak": 288.62,
+     "top50": 288.88,
+     "top25": 288.88,
+     "top10": 288.88,
+     "bottom10": 122.12,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 5.0273,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 39.21259689331055,
+     "visible": true,
+     "peak": 296.12,
+     "top50": 301.38,
+     "top25": 301.38,
+     "top10": 301.38,
+     "bottom10": 158.38,
+     "colCenterPx": 1268
+    },
+    {
+     "age": 5.5039,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 43.21260070800781,
+     "visible": true,
+     "peak": 309.12,
+     "top50": 310.38,
+     "top25": 310.38,
+     "top10": 310.38,
+     "bottom10": 187.12,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 6.0039,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 47.21259689331055,
+     "visible": true,
+     "peak": 317.12,
+     "top50": 317.88,
+     "top25": 317.88,
+     "top10": 317.88,
+     "bottom10": 199.88,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 6.2266,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 51.21260070800781,
+     "visible": true,
+     "peak": 319.88,
+     "top50": 320.38,
+     "top25": 320.38,
+     "top10": 320.38,
+     "bottom10": 208.38,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 6.4258,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 55.2848014831543,
+     "visible": true,
+     "peak": 321.88,
+     "top50": 322.38,
+     "top25": 322.38,
+     "top10": 322.38,
+     "bottom10": 225.12,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 6.6172,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 60.21260070800781,
+     "visible": true,
+     "peak": 320.38,
+     "top50": 323.88,
+     "top25": 323.88,
+     "top10": 323.88,
+     "bottom10": 228.38,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 6.8281,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 64.28479766845703,
+     "visible": true,
+     "peak": 324.88,
+     "top50": 325.38,
+     "top25": 325.38,
+     "top10": 325.38,
+     "bottom10": 237.62,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 6.9766,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 69.0,
+     "visible": true,
+     "peak": 324.62,
+     "top50": 326.12,
+     "top25": 326.12,
+     "top10": 326.12,
+     "bottom10": 247.62,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 7.0898,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 73.28480529785156,
+     "visible": true,
+     "peak": 325.88,
+     "top50": 326.62,
+     "top25": 326.62,
+     "top10": 326.62,
+     "bottom10": 246.88,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 7.2109,
+     "count": [
+      3,
+      3,
+      0
+     ],
+     "max": 78.21259307861328,
+     "visible": true,
+     "peak": 326.62,
+     "top50": 327.12,
+     "top25": 327.12,
+     "top10": 327.12,
+     "bottom10": 257.62,
+     "colCenterPx": 1275
+    },
+    {
+     "age": 7.3164,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 83.0,
+     "visible": true,
+     "peak": 326.12,
+     "top50": 326.38,
+     "top25": 326.38,
+     "top10": 326.38,
+     "bottom10": 256.88,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 7.418,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 87.28479766845703,
+     "visible": true,
+     "peak": 329.12,
+     "top50": 330.38,
+     "top25": 330.38,
+     "top10": 330.38,
+     "bottom10": 256.62,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 7.5195,
+     "count": [
+      2,
+      2,
+      0
+     ],
+     "max": 92.21260070800781,
+     "visible": true,
+     "peak": 329.38,
+     "top50": 329.88,
+     "top25": 329.88,
+     "top10": 329.88,
+     "bottom10": 261.88,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 7.6367,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 97.21260070800781,
+     "visible": true,
+     "peak": 328.12,
+     "top50": 329.62,
+     "top25": 329.62,
+     "top10": 329.88,
+     "bottom10": 261.88,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 7.7461,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 101.28479766845703,
+     "visible": true,
+     "peak": 328.38,
+     "top50": 329.38,
+     "top25": 329.62,
+     "top10": 329.62,
+     "bottom10": 271.12,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 7.8477,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 106.21260070800781,
+     "visible": true,
+     "peak": 328.62,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.62,
+     "bottom10": 273.88,
+     "colCenterPx": 1270
+    },
+    {
+     "age": 7.9609,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 111.21259307861328,
+     "visible": true,
+     "peak": 328.88,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 277.12,
+     "colCenterPx": 1270
+    },
+    {
+     "age": 8.0664,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 116.0,
+     "visible": true,
+     "peak": 326.38,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 277.38,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 8.1719,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 120.28479766845703,
+     "visible": true,
+     "peak": 327.88,
+     "top50": 329.38,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 277.12,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 8.2773,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 125.21260070800781,
+     "visible": true,
+     "peak": 328.38,
+     "top50": 329.12,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 276.62,
+     "colCenterPx": 1271
+    },
+    {
+     "age": 8.3828,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 129.49740600585938,
+     "visible": true,
+     "peak": 328.38,
+     "top50": 329.12,
+     "top25": 329.38,
+     "top10": 329.38,
+     "bottom10": 279.12,
+     "colCenterPx": 1276
+    },
+    {
+     "age": 8.4844,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 134.2126007080078,
+     "visible": true,
+     "peak": 328.12,
+     "top50": 328.88,
+     "top25": 329.12,
+     "top10": 329.12,
+     "bottom10": 278.62,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 8.5742,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 138.49740600585938,
+     "visible": true,
+     "peak": 327.12,
+     "top50": 328.88,
+     "top25": 328.88,
+     "top10": 329.12,
+     "bottom10": 285.38,
+     "colCenterPx": 1278
+    },
+    {
+     "age": 8.6836,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 142.42520141601562,
+     "visible": true,
+     "peak": 317.88,
+     "top50": 328.62,
+     "top25": 328.88,
+     "top10": 328.88,
+     "bottom10": 288.12,
+     "colCenterPx": 1274
+    },
+    {
+     "age": 8.793,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 146.99600219726562,
+     "visible": true,
+     "peak": 327.12,
+     "top50": 328.62,
+     "top25": 328.88,
+     "top10": 328.88,
+     "bottom10": 288.62,
+     "colCenterPx": 1282
+    },
+    {
+     "age": 8.9023,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 151.35299682617188,
+     "visible": true,
+     "peak": 327.12,
+     "top50": 328.38,
+     "top25": 328.62,
+     "top10": 328.62,
+     "bottom10": 288.12,
+     "colCenterPx": 1273
+    },
+    {
+     "age": 9.0117,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 155.42520141601562,
+     "visible": true,
+     "peak": 327.88,
+     "top50": 327.88,
+     "top25": 328.38,
+     "top10": 328.62,
+     "bottom10": 291.12,
+     "colCenterPx": 1282
+    },
+    {
+     "age": 9.1367,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 159.2808074951172,
+     "visible": true,
+     "peak": 323.38,
+     "top50": 323.38,
+     "top25": 328.12,
+     "top10": 328.12,
+     "bottom10": 290.88,
+     "colCenterPx": 1277
+    },
+    {
+     "age": 9.2617,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 163.49740600585938,
+     "visible": true,
+     "peak": 323.38,
+     "top50": 323.38,
+     "top25": 323.62,
+     "top10": 323.62,
+     "bottom10": 296.38,
+     "colCenterPx": 1279
+    },
+    {
+     "age": 9.3828,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 166.34898376464844,
+     "visible": true,
+     "peak": 320.88,
+     "top50": 322.38,
+     "top25": 323.38,
+     "top10": 323.62,
+     "bottom10": 297.62,
+     "colCenterPx": 1279
+    },
+    {
+     "age": 9.4922,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 170.493408203125,
+     "visible": true,
+     "peak": 321.62,
+     "top50": 321.62,
+     "top25": 321.62,
+     "top10": 322.88,
+     "bottom10": 299.38,
+     "colCenterPx": 1269
+    },
+    {
+     "age": 9.8164,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 173.5655975341797,
+     "visible": true,
+     "peak": 318.38,
+     "top50": 318.62,
+     "top25": 318.62,
+     "top10": 318.62,
+     "bottom10": 299.62,
+     "colCenterPx": 1283
+    },
+    {
+     "age": 10.4023,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 176.34498596191406,
+     "visible": true,
+     "peak": 316.62,
+     "top50": 316.88,
+     "top25": 317.12,
+     "top10": 317.12,
+     "bottom10": 300.62,
+     "colCenterPx": 1293
+    },
+    {
+     "age": 11.0078,
+     "count": [
+      1,
+      1,
+      0
+     ],
+     "max": 84.27299499511719,
+     "visible": true,
+     "peak": 314.88,
+     "top50": 314.88,
+     "top25": 314.88,
+     "top10": 315.12,
+     "bottom10": 310.12,
+     "colCenterPx": 1294
+    }
+   ]
+  }
+ },
+ "safety": {
+  "saved": "无（资产/地图/蓝图/P4 均未保存）",
+  "directorResourceFXcvar": "未碰",
+  "profileGPU": "未用",
+  "before": {
+   "actorCount": 34753,
+   "dirtyContent": 5,
+   "dirtyMaps": 29,
+   "camera": [
+    [
+     375478.40625,
+     -756768,
+     -15684.154296875
+    ],
+    [
+     6.780168056488037,
+     -810.0579223632812,
+     0
+    ]
+   ],
+   "selected": 0
+  },
+  "after": {
+   "actorCount": 34753,
+   "dirtyContent": 5,
+   "dirtyMaps": 29,
+   "camera": [
+    [
+     375478.40625,
+     -756768,
+     -15684.154296875
+    ],
+    [
+     6.780168056488037,
+     -810.0579223632812,
+     0
+    ]
+   ],
+   "selected": 0,
+   "wbActors": []
+  },
+  "identical": true
+ }
+}

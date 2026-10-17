@@ -8,7 +8,7 @@
 
 - [x] 读 CLAUDE.md / 协作/标准.md / 状态清单 / 派活队列 / 看板快照 + 本地视图 + 待同步，列出要 UE 测试标定的未完成项
 - [x] 选优先级最高、可做的一条：派活优先1 里 T10（B05/B08修订7，已被 B09 取代）、T18（用户 22:29 明确暂停）不做；T19 只差「Hero 可见到顶高度/时间」，且总管 03:00 已排定「画质释放 UE 后先 T19」
-- [ ] 认领：状态清单写 UE 写入／播放，T19 改在做，推送
-- [ ] UE：WB19_ 临时 Emitter + 正交侧视 SceneCapture2D 抓帧（Hero_HD / Hero_M / 对照 L_HD），结束销毁，不保存
-- [ ] 量星头高度-时间，写 analysis/results/UE_READBACK_20261017/B09主角_Hero到顶实测.md/.json
+- [x] 认领：状态清单写 UE 写入／播放，T19 改在做，推送（a503bf65）
+- [x] UE：WB19_ 临时 Emitter + 水平侧视 SceneCapture2D 抓帧两轮（Hero_HD / Hero_M / 对照 L_HD），结束销毁，不保存；前后现场逐项相同
+- [x] 量星头高度-时间，写 analysis/results/UE_READBACK_20261017/B09主角_Hero到顶实测.md/.json/.png：Hero_HD 400.4 m @ 7.1 s、Hero_M 400.6–400.9 m；7.37 s 时 399.5/399.7 m，B09 397.92 m 不用改；L_HD 对照 330.4 m @ 7.41 s
 - [ ] T19 卡写完成 / 结果，删 UE 认领，推送
