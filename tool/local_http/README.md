@@ -29,9 +29,11 @@
 
 ## AI 测试前预检
 
-项目默认入口 `AGENTS.md → CLAUDE.md` 的开工第5条要求每次本机网页测试先运行本节。不要依赖旧对话记忆或等用户提醒启动服务。老对话接续时重新读取该条和本节。
+项目默认入口 `AGENTS.md → CLAUDE.md` 的开工第5条要求每次**用户本机（LOCMAI-PC1）**网页测试先运行本节。以下预检命令及8025／8034固定端口只适用于用户本机，不作为云端开工或测试门槛。不要依赖旧对话记忆或等用户提醒启动服务。老对话接续时重新读取该条和本节。
 
-在**准备测试的 worktree 根目录**执行（Python 3.10+，不安装软件）：
+**云端测试边界：**云端的localhost属于云端自身，不能指向LOCMAI-PC1，不要求访问用户本机端口。云端浏览器具备 `file://` 能力且页面不依赖HTTP时可继续用file，不一概禁止；模块请求、API或跨源等确需HTTP时，在云端自身已授权环境采用项目支持的运行方式，不新建隧道、不扩大网络权限。无论file或HTTP，实际浏览器拒绝都停止对应操作，不能用另一协议／代理／端口绕过。确认测试的是所在环境对应worktree的源码及成品版本，不能用本机页面冒充云端验证。
+
+在**用户本机准备测试的 worktree 根目录**执行（Python 3.10+，不安装软件）：
 
 ```powershell
 python -X utf8 tool/local_http/preflight.py --tool baker --start
@@ -50,7 +52,7 @@ python -X utf8 tool/local_http/preflight.py --tool both --start
 
 旧8034进程可能尚无 `toolRoot`，旧Vite进程可能无健康接口：不能只凭“端口能连”或页面标题认定正确；由服务负责人正常重启对应服务后再预检，不擅自关闭他人进程。不同worktree即使页面暂时同字节也不能混验。健康接口只公开loopback测试所需根目录，不返回配置或会话令牌。
 
-浏览器只使用预检通过的固定HTTP地址。浏览器工具拒绝访问时停止对应操作并报告，不用代理、换端口、转发或重试 `file://` 绕过。HTTP与file来源下个人存储独立；此流程不搬迁草稿，也不把HTTP验证说成file浏览器已验收。文件发布仍按既有离线流程。
+用户本机浏览器测试使用预检通过的固定HTTP地址。浏览器工具拒绝访问时停止对应操作并报告，不用代理、换端口、转发或重试 `file://` 绕过；云端按上面的环境边界选择协议。HTTP与file来源下个人存储独立；此流程不搬迁草稿，也不把HTTP验证说成file浏览器已验收。文件发布仍按既有离线流程。
 
 `python -X utf8 -m unittest discover -s tool/local_http -p "test_*.py" -v`，以及 `node tool/workbench/server/test-local-health.mjs` 覆盖复用、按需启动、冲突、旧服务、错误worktree、过期页面及权限拒绝。
 
