@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-17T05:59:45.519Z",
+  "checks": {
+    "config": true,
+    "debug": true,
+    "camera": true,
+    "seed": true,
+    "stopped": true,
+    "cvars": true
+  },
+  "camera": {
+    "function": "GetLevelViewportCameraInfo",
+    "called": true,
+    "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+    "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+    "return_value": "True"
+  },
+  "cvars": {
+    "sg.EffectsQuality": 3,
+    "sg.TextureQuality": 3,
+    "sg.PostProcessQuality": 3,
+    "r.ScreenPercentage": 100,
+    "r.SeparateTranslucencyScreenPercentage": 0,
+    "r.MaxAnisotropy": 8
+  }
+}

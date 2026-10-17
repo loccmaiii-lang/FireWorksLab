@@ -1,0 +1,37 @@
+{
+  "candidateExactDiff": [
+    {
+      "path": "/EffectSubTemplates/71/Entries/1/EffectScale/X",
+      "before": 0.998261,
+      "after": 0.85
+    },
+    {
+      "path": "/EffectSubTemplates/71/Entries/1/EffectScale/Y",
+      "before": 0.998261,
+      "after": 0.85
+    },
+    {
+      "path": "/EffectSubTemplates/71/Entries/1/EffectScale/Z",
+      "before": 0.998261,
+      "after": 0.85
+    }
+  ],
+  "sourceSha256": "be3888b1c33c48bcc23c1c82d5ce0cdc432676802d638dd0e2878055262cad4b",
+  "candidateSha256": "a40336d635fcc4f3ebe31e047c71584fcfda89f7308615408a7fa74a248ec5ff",
+  "runnerSha256": "276f2fe1a4809edfb9e21eabf4565c5048d89567ce6b01f701b36ac56373f6a7",
+  "sourceMatchesCaptureIndex": true,
+  "captureCount": 180,
+  "thumbnailsExist": true,
+  "formalFullRunsEndAt218": true,
+  "allRestoresPassed": true,
+  "finalSceneChecks": {
+    "config": true,
+    "debug": true,
+    "camera": true,
+    "seed": true,
+    "stopped": true,
+    "cvars": true
+  },
+  "staticResourceCheck": "本轮已执行编排B05.py --verify候选，旧快照missing=[]；不是本日完整资源重扫。",
+  "productionWorkbenchChanged": false
+}

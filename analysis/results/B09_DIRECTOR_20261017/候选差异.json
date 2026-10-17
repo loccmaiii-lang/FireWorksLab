@@ -1,0 +1,19 @@
+{
+  "source": "FXtools\\节目\\NewYearFireWorks_v01\\导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+  "changes": [
+    {
+      "template": "GoldKamuro",
+      "before": {
+        "X": 0.998261,
+        "Y": 0.998261,
+        "Z": 0.998261
+      },
+      "after": {
+        "X": 0.85,
+        "Y": 0.85,
+        "Z": 0.85
+      }
+    }
+  ],
+  "status": "仅内存视觉试验，不是正式发布编排"
+}

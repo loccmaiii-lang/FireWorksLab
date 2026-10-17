@@ -1,0 +1,3200 @@
+{
+  "format": "df.director-visual-evidence/1",
+  "programme": "B09 / 云端编排16.0.44",
+  "source": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+  "sourceSha256": "be3888b1c33c48bcc23c1c82d5ce0cdc432676802d638dd0e2878055262cad4b",
+  "clockNote": "showTimeRange为截图命令前后世界时钟区间，呈现可另差一帧；首轮B09_PC_HIGH_B为墙钟预走查，已用实读时钟重新标注，正式整场使用LOOKUP两轮。",
+  "mobileNote": "Mobile为导演筛选。补测实读主角/尾缀仍选HD资源，不作为_M/RHI/真机验证。",
+  "runs": [
+    {
+      "label": "B09_PC_HIGH_B",
+      "platform": "PC",
+      "quality": "EQuality_High",
+      "start": 0,
+      "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:39:58.004Z",
+      "callAfterWall": "2026-10-17T05:39:58.028Z",
+      "callBeforeClock": 46268.0625,
+      "callAfterClock": 46268.101562,
+      "finished": "2026-10-17T05:43:33.789Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": null,
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 0.5,
+          "commandEngineTimeRange": [
+            0.5117189999946277,
+            0.59375
+          ],
+          "wallShowTime": 0.533,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0000.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0000.5.png",
+          "rawPngSha256": "8618d1f0fe6c379f3f23972f56cd187acc0ec23cd866809aa40233ab437ec203",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 5,
+          "commandEngineTimeRange": [
+            4.996093999994628,
+            5.082030999998096
+          ],
+          "wallShowTime": 5.027,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0005.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0005.0.png",
+          "rawPngSha256": "6fd90b281fbe91bf400140b3f8a17aa56947a47508bda2d1abe2a250f86007b6",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 10,
+          "commandEngineTimeRange": [
+            9.992187999996531,
+            10.074219000001904
+          ],
+          "wallShowTime": 10.018,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0010.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0010.0.png",
+          "rawPngSha256": "6a0083da9026de252318abbdfa15c27002f3acf2a5250c2e3a0c389d5d729a6b",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 16.6,
+          "commandEngineTimeRange": [
+            16.589843999994628,
+            16.675780999998096
+          ],
+          "wallShowTime": 16.616,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0016.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0016.6.png",
+          "rawPngSha256": "f9f76882ef5bc89d6ea077e9852e6c16abce78934a4e6cb20efc34bb143e6961",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 18,
+          "commandEngineTimeRange": [
+            17.988281999998435,
+            18.078125
+          ],
+          "wallShowTime": 18.018,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0018.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0018.0.png",
+          "rawPngSha256": "50e0fc8165fa008690c459cd404507a4c104ede5e1874ef5fa6ea39d23394079",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 20,
+          "commandEngineTimeRange": [
+            19.99218799999653,
+            20.082030999998096
+          ],
+          "wallShowTime": 20.021,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0020.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0020.0.png",
+          "rawPngSha256": "15c9085ab8f6fa06838b34d6189985246f7509ba8fa540298867fe0e639f9e2a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 23.9,
+          "commandEngineTimeRange": [
+            23.88281299999653,
+            23.96875
+          ],
+          "wallShowTime": 23.912,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0023.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0023.9.png",
+          "rawPngSha256": "01167a0a258b1102a226a572269dbfc8cc1a39a301003023ed4173647f6c3f0d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 28,
+          "commandEngineTimeRange": [
+            27.97656299999653,
+            28.066405999998096
+          ],
+          "wallShowTime": 28.01,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0028.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0028.0.png",
+          "rawPngSha256": "a388b2c8d783f449d9f3fdca3b58f089f1de0bf169a19105b9b878e0f233bf90",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 34,
+          "commandEngineTimeRange": [
+            34.0,
+            34.08593799999653
+          ],
+          "wallShowTime": 34.032,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0034.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0034.0.png",
+          "rawPngSha256": "3956357a3627e1782f47e748123a7ffbc7c74075ddf4cf9b5ceb7c76e8cc57a3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 43.5,
+          "commandEngineTimeRange": [
+            43.488281999998435,
+            43.574219000001904
+          ],
+          "wallShowTime": 43.52,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0043.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0043.5.png",
+          "rawPngSha256": "6e22886bcfcc7a2f53f622e6257c537caa2140d5eb1ffe7054e79cc6c6f40069",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 50,
+          "commandEngineTimeRange": [
+            49.99218799999653,
+            50.078125
+          ],
+          "wallShowTime": 50.023,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0050.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0050.0.png",
+          "rawPngSha256": "b83d927b932c5f9b2c92a63f2c45b339653bf54249170636806eea7d370c2444",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 56.5,
+          "commandEngineTimeRange": [
+            56.48046899999463,
+            56.566405999998096
+          ],
+          "wallShowTime": 56.511,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0056.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0056.5.png",
+          "rawPngSha256": "40da3d861b059a717ff40704ca06c25d3c12f490950adf0cc3fabef8bcc4049c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 64.5,
+          "commandEngineTimeRange": [
+            64.49609399999463,
+            64.578125
+          ],
+          "wallShowTime": 64.526,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0064.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0064.5.png",
+          "rawPngSha256": "48281926962eadb8a444697a89f1d6698b1eb13fad2f28fc8ab2e462d00dcc7e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 65.3,
+          "commandEngineTimeRange": [
+            65.26562599999306,
+            65.35156200000347
+          ],
+          "wallShowTime": 65.311,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0065.3.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0065.3.png",
+          "rawPngSha256": "fd22627da3df71553612ef31c5353460855f631b5afa23c95d8204c5002b2e2f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 70,
+          "commandEngineTimeRange": [
+            68.92187599999306,
+            69.00781200000347
+          ],
+          "wallShowTime": 70.013,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0070.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0070.0.png",
+          "rawPngSha256": "fbd2f9bb59b17e3b32b35882b31a340ba3ca366d9377a525510e2e4b6068bb3c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 80,
+          "commandEngineTimeRange": [
+            78.92968799999653,
+            79.0195309999981
+          ],
+          "wallShowTime": 80.023,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0080.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0080.0.png",
+          "rawPngSha256": "bd8cd46ba2134e1d11db15894c3d4f16ba650c4e0835e7cf2841381d1345533d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 90,
+          "commandEngineTimeRange": [
+            88.92968799999653,
+            89.015625
+          ],
+          "wallShowTime": 90.02,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0090.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0090.0.png",
+          "rawPngSha256": "d010108f3a3266b6b58f833f7b7de21fda5d10c3589f829a4dfd67b044a589bb",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 100,
+          "commandEngineTimeRange": [
+            98.89843799999653,
+            98.9882809999981
+          ],
+          "wallShowTime": 100.014,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0100.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0100.0.png",
+          "rawPngSha256": "b38d2634ef94c0e2314c977d4c65902f209593524278c2a8661e6d512ac16c09",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 105,
+          "commandEngineTimeRange": [
+            103.91015699999843,
+            104.00781200000347
+          ],
+          "wallShowTime": 105.029,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0105.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0105.0.png",
+          "rawPngSha256": "2cb5869b625b5335653469b5b1f3f8af9332b52b1aeb2c930459861fd8c18990",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 107.9,
+          "commandEngineTimeRange": [
+            106.77343799999653,
+            106.859375
+          ],
+          "wallShowTime": 107.928,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0107.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0107.9.png",
+          "rawPngSha256": "5ecb38fb23fbdc63bc490dd64eff939dc204294fdb32ef8a4965c34f14e89e1b",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 108.5,
+          "commandEngineTimeRange": [
+            107.36718799999653,
+            107.44531200000347
+          ],
+          "wallShowTime": 108.518,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0108.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0108.5.png",
+          "rawPngSha256": "750826626ab75262b60eb7ef736e9b3e5ec9fc91baf4e25f46e56ff2a590d7b6",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 110,
+          "commandEngineTimeRange": [
+            107.82421899999463,
+            107.9101559999981
+          ],
+          "wallShowTime": 110.021,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0110.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0110.0.png",
+          "rawPngSha256": "a0de777169f4bb9c5f288490163c9224a5b0d3caa52d27f6c05e89f517bbdc12",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 112,
+          "commandEngineTimeRange": [
+            109.82421899999463,
+            109.91406200000347
+          ],
+          "wallShowTime": 112.029,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0112.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0112.0.png",
+          "rawPngSha256": "547480bdf979142132e25f08e0663f4121c6fc2b90e938b3ec18e0d83163c279",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 116.5,
+          "commandEngineTimeRange": [
+            114.30859399999463,
+            114.3945309999981
+          ],
+          "wallShowTime": 116.512,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0116.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0116.5.png",
+          "rawPngSha256": "ffe6dd5f06f0ff4dfddbfae5b2c3e5ac40f47d017eac971465b9d0ca9bf040bf",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 120,
+          "commandEngineTimeRange": [
+            117.80468799999653,
+            117.8945309999981
+          ],
+          "wallShowTime": 120.023,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0120.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0120.0.png",
+          "rawPngSha256": "f94448586dc91fd8e34054f82546bc58dfde98d88f5acb245a03c975e4d2a20f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 123,
+          "commandEngineTimeRange": [
+            120.80859399999463,
+            120.89843799999653
+          ],
+          "wallShowTime": 123.026,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0123.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0123.0.png",
+          "rawPngSha256": "df28be50b2be8227193e24de52f386a7e670a40d0544384445a3fe8e0e6b57bc",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 129.7,
+          "commandEngineTimeRange": [
+            127.49218799999653,
+            127.5820309999981
+          ],
+          "wallShowTime": 129.725,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0129.7.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0129.7.png",
+          "rawPngSha256": "c21bd5728e8fc52b10802cfec0c09f299457616dc87cab08bb61b7f32b318762",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 132.6,
+          "commandEngineTimeRange": [
+            130.38281299999653,
+            130.4726559999981
+          ],
+          "wallShowTime": 132.616,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0132.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0132.6.png",
+          "rawPngSha256": "ed93ff435544058ace7052e4a60dc0d5fac2985c8c285cc808cde463d3746548",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 140,
+          "commandEngineTimeRange": [
+            137.78515699999843,
+            137.8710940000019
+          ],
+          "wallShowTime": 140.017,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0140.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0140.0.png",
+          "rawPngSha256": "af97f2a3ee0ef43467d213c6d225bc60f07ffd525d1670300cb88c05d7e3bfef",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 150,
+          "commandEngineTimeRange": [
+            147.78515699999843,
+            147.8710940000019
+          ],
+          "wallShowTime": 150.018,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0150.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0150.0.png",
+          "rawPngSha256": "58566283ae9a2f2071c708da9f9d5f3b9bc4609fe1869a5d0fada46938400c4f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 158.5,
+          "commandEngineTimeRange": [
+            156.30078199999843,
+            156.3867190000019
+          ],
+          "wallShowTime": 158.532,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0158.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0158.5.png",
+          "rawPngSha256": "7343ea26ffb5f30f2afdea51b3a6733112c97773f363fea11661dbcaa5f558ec",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 165,
+          "commandEngineTimeRange": [
+            162.78125,
+            162.8710940000019
+          ],
+          "wallShowTime": 165.014,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0165.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0165.0.png",
+          "rawPngSha256": "ff6a7ae03ae0966fc8413e43a002a57476ea85b98716a414d5c5228c86dddcf3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 168,
+          "commandEngineTimeRange": [
+            165.79687599999306,
+            165.88281200000347
+          ],
+          "wallShowTime": 168.031,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0168.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0168.0.png",
+          "rawPngSha256": "1dc370de90a8e8c30327b60368e23a5fd21f4fceb9f8cb92a6fbafc9d63fe7fa",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 170.9,
+          "commandEngineTimeRange": [
+            168.6875,
+            168.78125
+          ],
+          "wallShowTime": 170.925,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0170.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0170.9.png",
+          "rawPngSha256": "468ca6dbd08de90f8f065459c826e989a62b6f7d159114502830b5c5d360aaaf",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            169.25390699999843,
+            169.36718799999653
+          ],
+          "wallShowTime": 171.515,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0171.5.png",
+          "rawPngSha256": "7e7165a7bd0d3f691c8d37e561a6c1d993b556eafe564cfc44db12cac8a10823",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 174,
+          "commandEngineTimeRange": [
+            170.73828199999843,
+            170.828125
+          ],
+          "wallShowTime": 174.02,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0174.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0174.0.png",
+          "rawPngSha256": "1445dd642443cb3ff78102e60d898362431538c45d4f82197a6f376eeb27cc98",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 176,
+          "commandEngineTimeRange": [
+            172.74218799999653,
+            172.8242190000019
+          ],
+          "wallShowTime": 176.023,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0176.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0176.0.png",
+          "rawPngSha256": "bcf2117f048dd033b6a29d44c145fc30ee593897135e85a4354438745049b9c1",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 179,
+          "commandEngineTimeRange": [
+            175.71484399999463,
+            175.80468799999653
+          ],
+          "wallShowTime": 179.011,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0179.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0179.0.png",
+          "rawPngSha256": "9fecefda206336cc99f8c606d722ff61ec0d41df225d8bb6801ebdface405fc5",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 182.6,
+          "commandEngineTimeRange": [
+            179.32421899999463,
+            179.41406200000347
+          ],
+          "wallShowTime": 182.617,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0182.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0182.6.png",
+          "rawPngSha256": "827cf8699709ff83474f4434db81536602a0d999961c528f41661fd2e7db97f1",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 184.5,
+          "commandEngineTimeRange": [
+            181.22265699999843,
+            181.3125
+          ],
+          "wallShowTime": 184.518,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0184.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0184.5.png",
+          "rawPngSha256": "bd80d14a53f7ca1e48c0e8c3795bd838bbcb4f1da5286076a28001bf67f62b15",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            182.71093799999653,
+            182.80468799999653
+          ],
+          "wallShowTime": 186.018,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0186.0.png",
+          "rawPngSha256": "aeb7465df180ad17e941eced9d8b1a873e7fc4205f90bf5cb7d224bbaf223c25",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 189,
+          "commandEngineTimeRange": [
+            185.70703199999843,
+            185.8007809999981
+          ],
+          "wallShowTime": 189.034,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0189.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0189.0.png",
+          "rawPngSha256": "0a540cb6579476bfa8dfcf122889f2cca2dfe9ce6e252bad1cf0826916bf7c35",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 192.8,
+          "commandEngineTimeRange": [
+            189.49218799999653,
+            189.578125
+          ],
+          "wallShowTime": 192.828,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0192.8.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0192.8.png",
+          "rawPngSha256": "290a1dac7c7f7ae924c12b8c1bc7fd63c36848bcc17cda8922dde5c277d818cd",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 195.5,
+          "commandEngineTimeRange": [
+            192.18359399999463,
+            192.2695309999981
+          ],
+          "wallShowTime": 195.515,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0195.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0195.5.png",
+          "rawPngSha256": "a2826d60d6d3c754f2ef3d9503de0df211a3bfa3c9943e233b657caa1d9ee0f1",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 198,
+          "commandEngineTimeRange": [
+            194.69921899999463,
+            194.7851559999981
+          ],
+          "wallShowTime": 198.029,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0198.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0198.0.png",
+          "rawPngSha256": "05d31432643dd0554295211d61701bab71779ec1b3ae5a8bd2d9f9c6fb230c8d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 202,
+          "commandEngineTimeRange": [
+            198.69531299999653,
+            198.7851559999981
+          ],
+          "wallShowTime": 202.028,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0202.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0202.0.png",
+          "rawPngSha256": "eb7ae0f4139633a88441cb8cc2e48ba678c5696b3ff8d65bbcd8dbeeba506c37",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 210,
+          "commandEngineTimeRange": [
+            206.70312599999306,
+            206.7851559999981
+          ],
+          "wallShowTime": 210.033,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0210.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0210.0.png",
+          "rawPngSha256": "a125d5a790511b5bf659d379b17a888d936b99fdd9ed36d4f5894c61bec7ccc6",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 214.5,
+          "commandEngineTimeRange": [
+            211.1875,
+            211.2695309999981
+          ],
+          "wallShowTime": 214.517,
+          "thumbnail": "缩略图/B09_PC_HIGH_B_0214.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_B\\B09_PC_HIGH_B_0214.5.png",
+          "rawPngSha256": "2ffc0b81ff3905fbb301d8c43576d7e762583559be5447d24a0158cff88c3671",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_PC_HIGH_LOOKUP",
+      "platform": "PC",
+      "quality": "EQuality_High",
+      "start": 0,
+      "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:43:44.557Z",
+      "callAfterWall": "2026-10-17T05:43:44.577Z",
+      "callBeforeClock": 46491.296875,
+      "callAfterClock": 46491.332031,
+      "finished": "2026-10-17T05:47:27.190Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=22.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 0.5,
+          "commandEngineTimeRange": [
+            0.515625,
+            0.5898440000019036
+          ],
+          "wallShowTime": 0.535,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0000.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0000.5.png",
+          "rawPngSha256": "07332111a411cf47c73b67a8a7b78b7d53cdfdecceac83e0f7aa93301e10e0d5",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 5,
+          "commandEngineTimeRange": [
+            5.085938000003807,
+            5.164062999996531
+          ],
+          "wallShowTime": 5.108,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0005.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0005.0.png",
+          "rawPngSha256": "532e5e5de7242ec00fdb2100526b35d34e0e67622d2a178545a4e7a7469e1854",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 10,
+          "commandEngineTimeRange": [
+            10.082031000005372,
+            10.15625
+          ],
+          "wallShowTime": 10.101,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0010.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0010.0.png",
+          "rawPngSha256": "6cb15027b022ca053f1ed94e66435bc44320435d8436153a0e22fb000f12d087",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 16.6,
+          "commandEngineTimeRange": [
+            16.691406999998435,
+            16.765625
+          ],
+          "wallShowTime": 16.712,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0016.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0016.6.png",
+          "rawPngSha256": "76cc1d9920b09c1d7eb70820b6148d0bdff5dc866dcda2ab62cf5cacbf5d55d9",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 18,
+          "commandEngineTimeRange": [
+            18.09375,
+            18.171875
+          ],
+          "wallShowTime": 18.115,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0018.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0018.0.png",
+          "rawPngSha256": "2aa8a07b11e92c64b7e6fc70fed86d4cf7b4fece21ae9a9e922c942d13d2545c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 20,
+          "commandEngineTimeRange": [
+            20.082031000005372,
+            20.160155999998096
+          ],
+          "wallShowTime": 20.104,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0020.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0020.0.png",
+          "rawPngSha256": "7245890a1b879a606aed728a2809bd9eb507eefba8f241b27e7edca244a90f16",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 23.9,
+          "commandEngineTimeRange": [
+            24.011719000001904,
+            24.089844000001904
+          ],
+          "wallShowTime": 24.036,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0023.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0023.9.png",
+          "rawPngSha256": "c2b579919356034cef19fec16f91de1e3b4ce31ae70bf3908346bf194e75f9d8",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 28,
+          "commandEngineTimeRange": [
+            28.09375,
+            28.167969000001904
+          ],
+          "wallShowTime": 28.115,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0028.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0028.0.png",
+          "rawPngSha256": "161d83db3b7342b3b95d003c6a157cb8985dba3d7d87e824eb755b10b3ba2b44",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 34,
+          "commandEngineTimeRange": [
+            34.09375,
+            34.171875
+          ],
+          "wallShowTime": 34.116,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0034.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0034.0.png",
+          "rawPngSha256": "af3e737e021ff33c310f0ec5623bfc37cfaef16e1d81c9abc9e47fafde0eaad7",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 43.5,
+          "commandEngineTimeRange": [
+            43.589844000001904,
+            43.667969000001904
+          ],
+          "wallShowTime": 43.611,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0043.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0043.5.png",
+          "rawPngSha256": "ac702b2c248395818210ee4ba647fbacf6c8a7ecc0e170cfff0a2c879cc2d74e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 50,
+          "commandEngineTimeRange": [
+            50.09375,
+            50.167969000001904
+          ],
+          "wallShowTime": 50.133,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0050.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0050.0.png",
+          "rawPngSha256": "d75658306d85cfcb054f77d382c080cc3ccd881a806602d4c319a2a33685698c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 56.5,
+          "commandEngineTimeRange": [
+            56.578125,
+            56.652344000001904
+          ],
+          "wallShowTime": 56.617,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0056.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0056.5.png",
+          "rawPngSha256": "1721fc3478d78f67387507b54535f3d24f168af0e840db11e5c7d51aa02e8ac3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 64.5,
+          "commandEngineTimeRange": [
+            64.609375,
+            64.6835940000019
+          ],
+          "wallShowTime": 64.648,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0064.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0064.5.png",
+          "rawPngSha256": "78322086069553822556730f9aeee17c146e44a4705bc1999905f81293bee8db",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 65.3,
+          "commandEngineTimeRange": [
+            65.375,
+            65.4492190000019
+          ],
+          "wallShowTime": 65.411,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0065.3.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0065.3.png",
+          "rawPngSha256": "c135dcbf010d86d554fed43f131c74ea25f42f7dba643428af0705b7a80b4f70",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 70,
+          "commandEngineTimeRange": [
+            70.01953100000537,
+            70.0976559999981
+          ],
+          "wallShowTime": 71.106,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0070.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0070.0.png",
+          "rawPngSha256": "ed6ea1999711762917c13702659da2298dd1521805c6aadc082850f7bd273d35",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 80,
+          "commandEngineTimeRange": [
+            80.08593800000381,
+            80.16406299999653
+          ],
+          "wallShowTime": 81.173,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0080.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0080.0.png",
+          "rawPngSha256": "65b24e4b5264776ce16ed746ca189b46bad284dd44970be05698e070ac7f4d31",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 90,
+          "commandEngineTimeRange": [
+            90.078125,
+            90.15625
+          ],
+          "wallShowTime": 91.164,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0090.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0090.0.png",
+          "rawPngSha256": "8aee2437599ca9126a118b16abd4d2181003af6fd33e77a2cfeeca23d669fdf8",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 100,
+          "commandEngineTimeRange": [
+            100.0898440000019,
+            100.171875
+          ],
+          "wallShowTime": 101.182,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0100.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0100.0.png",
+          "rawPngSha256": "4effcc874c999709e8bcf09ff9bdd464db4dba032f898c16a556fc594c3e831e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 105,
+          "commandEngineTimeRange": [
+            105.09765699999843,
+            105.171875
+          ],
+          "wallShowTime": 106.183,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0105.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0105.0.png",
+          "rawPngSha256": "f3f70631e49a77640f8bfcfd16afce13112a584f1e6111458cca8ea3390a677c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 107.9,
+          "commandEngineTimeRange": [
+            107.984375,
+            108.0585940000019
+          ],
+          "wallShowTime": 109.072,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0107.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0107.9.png",
+          "rawPngSha256": "3391d5e7a9363d2c77d45b4556e4c599898de6ff8fd982600b7c6e35898a6f46",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 108.5,
+          "commandEngineTimeRange": [
+            108.5898440000019,
+            108.66406299999653
+          ],
+          "wallShowTime": 109.685,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0108.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0108.5.png",
+          "rawPngSha256": "2aa7400bea5d6fcd886424ef86e913954599a0a096e99b4ed8a781d109e7ee43",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 110,
+          "commandEngineTimeRange": [
+            110.00781300000381,
+            110.0898440000019
+          ],
+          "wallShowTime": 112.151,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0110.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0110.0.png",
+          "rawPngSha256": "26f66f41d4a20b674a30a9ed1ce26e66b1d73c6f4c5bc1afe02c4a07bbb78209",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 112,
+          "commandEngineTimeRange": [
+            112.08593800000381,
+            112.16406299999653
+          ],
+          "wallShowTime": 114.227,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0112.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0112.0.png",
+          "rawPngSha256": "ea767e725c897339fe1128e03a2385d1e6a0971b7193e0ea5395bebfcc52061a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 116.5,
+          "commandEngineTimeRange": [
+            116.59765699999843,
+            116.6757809999981
+          ],
+          "wallShowTime": 118.739,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0116.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0116.5.png",
+          "rawPngSha256": "6a4a501bc15373001a3c6ba6c45d9841b8ccb0194a3df6007a4c47bb697caf0d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 120,
+          "commandEngineTimeRange": [
+            120.10156300000381,
+            120.1875
+          ],
+          "wallShowTime": 122.278,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0120.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0120.0.png",
+          "rawPngSha256": "bff2047be1865b9b1459bf97671d9ae50b1d750cb5bb18da84497f61ec3a0f49",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 123,
+          "commandEngineTimeRange": [
+            123.08203100000537,
+            123.1601559999981
+          ],
+          "wallShowTime": 125.257,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0123.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0123.0.png",
+          "rawPngSha256": "28e79f70d78485ecbad632b809e485c3a66fa1ca7f91b07aee636aa446588545",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 129.7,
+          "commandEngineTimeRange": [
+            129.80078100000537,
+            129.8789059999981
+          ],
+          "wallShowTime": 131.973,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0129.7.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0129.7.png",
+          "rawPngSha256": "279cb1492932a13f39fc613e3d206e40f93a645ce3fc2f87257762e133177dec",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 132.6,
+          "commandEngineTimeRange": [
+            132.6953130000038,
+            132.77343700000347
+          ],
+          "wallShowTime": 134.867,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0132.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0132.6.png",
+          "rawPngSha256": "7d5a20c0c24449f9b3b9a2189437356a1faaea4fc69d87f097e6edc46af1be03",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 140,
+          "commandEngineTimeRange": [
+            140.09375,
+            140.171875
+          ],
+          "wallShowTime": 142.295,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0140.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0140.0.png",
+          "rawPngSha256": "5618d578563e560e434f9d30f6adfbf383850ef60aedc69c0a540be7ac468740",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 150,
+          "commandEngineTimeRange": [
+            150.09765699999843,
+            150.1757809999981
+          ],
+          "wallShowTime": 152.315,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0150.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0150.0.png",
+          "rawPngSha256": "9a86dc833ca30254af5c9b08c64779262b56a52f9dfddc1c5fc85ad2273a1f5a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 158.5,
+          "commandEngineTimeRange": [
+            158.5742190000019,
+            158.6523440000019
+          ],
+          "wallShowTime": 160.791,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0158.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0158.5.png",
+          "rawPngSha256": "1a3889488ad70998ab19eed99163901277362739e2542b202342518ab3cf172c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 165,
+          "commandEngineTimeRange": [
+            165.08203100000537,
+            165.1601559999981
+          ],
+          "wallShowTime": 167.298,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0165.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0165.0.png",
+          "rawPngSha256": "b9b8f6a8c8b3e1ff64bbbb5e1fd248e43243422e634495000dcd3d1cdd214543",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 168,
+          "commandEngineTimeRange": [
+            168.109375,
+            168.1875
+          ],
+          "wallShowTime": 170.327,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0168.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0168.0.png",
+          "rawPngSha256": "88fe02facbf7410edcaa67a02971bcec41ceefc241a0c6060c44d0f17f322d0a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 170.9,
+          "commandEngineTimeRange": [
+            170.9921880000038,
+            171.07031299999653
+          ],
+          "wallShowTime": 173.211,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0170.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0170.9.png",
+          "rawPngSha256": "372c5d620982cdf6541005ed847e25c2baf070de5d401367fc7deedbc8e39d2f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            171.609375,
+            171.6875
+          ],
+          "wallShowTime": 173.827,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0171.5.png",
+          "rawPngSha256": "eb9281f559895a43a06d8845a7086397f60a21146da337945224d8f1caa58181",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 174,
+          "commandEngineTimeRange": [
+            174.0078130000038,
+            174.0898440000019
+          ],
+          "wallShowTime": 177.279,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0174.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0174.0.png",
+          "rawPngSha256": "8d93742425a056d66e352c955650851f9ef76b7ce125593cdc467dae41e01de3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 176,
+          "commandEngineTimeRange": [
+            176.078125,
+            176.15625
+          ],
+          "wallShowTime": 179.365,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0176.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0176.0.png",
+          "rawPngSha256": "038968a71e9579a15b5a275b65adf9fe6ab92914acd71a0fdbeee0c77889b176",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 179,
+          "commandEngineTimeRange": [
+            179.0898440000019,
+            179.16406299999653
+          ],
+          "wallShowTime": 182.376,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0179.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0179.0.png",
+          "rawPngSha256": "104e104edbdb648f99de462f4ff5e348d14e24e21a267e2ffe7d48f9baf918a8",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 182.6,
+          "commandEngineTimeRange": [
+            182.6875,
+            182.765625
+          ],
+          "wallShowTime": 185.976,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0182.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0182.6.png",
+          "rawPngSha256": "85080c562dc2061922e4adf335b4c4e9defee4df0de2a359ba7bb77bf40db495",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 184.5,
+          "commandEngineTimeRange": [
+            184.5898440000019,
+            184.671875
+          ],
+          "wallShowTime": 187.884,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0184.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0184.5.png",
+          "rawPngSha256": "5a35450b2c7aca5d3207d1a48a781d3b05361943920efe2c633f19848386513f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            186.1054690000019,
+            186.1835940000019
+          ],
+          "wallShowTime": 189.395,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0186.0.png",
+          "rawPngSha256": "74ba85f56fe2efd1324b7a60065c54dc0cc8d675683f041b659ee475d1bee302",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 189,
+          "commandEngineTimeRange": [
+            189.0898440000019,
+            189.171875
+          ],
+          "wallShowTime": 192.396,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0189.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0189.0.png",
+          "rawPngSha256": "22f6231a9ed18413d94730b29e67031279f5a08da713545bfbc1367361a471fe",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 192.8,
+          "commandEngineTimeRange": [
+            192.8710940000019,
+            192.9570309999981
+          ],
+          "wallShowTime": 196.192,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0192.8.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0192.8.png",
+          "rawPngSha256": "3480d5474b4c756cb90b16d1b19fec9846af179eb90a88ef8afe804c58efdd08",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 195.5,
+          "commandEngineTimeRange": [
+            195.59765699999843,
+            195.671875
+          ],
+          "wallShowTime": 198.915,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0195.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0195.5.png",
+          "rawPngSha256": "7b6a81af440e64521e0ab31413a47c61a5eba772396c08cf9f712da1d876d2a8",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 198,
+          "commandEngineTimeRange": [
+            198.0742190000019,
+            198.15625
+          ],
+          "wallShowTime": 201.398,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0198.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0198.0.png",
+          "rawPngSha256": "756fa86bcdc40f6870673a344b95c8e64d0cffdd52b0ee2f5004ceefa6b89018",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 202,
+          "commandEngineTimeRange": [
+            202.0898440000019,
+            202.16406299999653
+          ],
+          "wallShowTime": 205.409,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0202.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0202.0.png",
+          "rawPngSha256": "86818a73a77ef13c09916e4695c3088b9e9d7af0c93df6cc8315cf457c5ee7a2",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 210,
+          "commandEngineTimeRange": [
+            210.09375,
+            210.1679690000019
+          ],
+          "wallShowTime": 213.413,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0210.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0210.0.png",
+          "rawPngSha256": "2d225e940c77b97270719bf95550827fd8523834a1c6c189e200b2ccda63780f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 214.5,
+          "commandEngineTimeRange": [
+            214.5742190000019,
+            214.6523440000019
+          ],
+          "wallShowTime": 217.894,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0214.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0214.5.png",
+          "rawPngSha256": "7244e6fc814f587de5ffdf9dda90a988d570dbc6ee001d740ad28fa2d938e09e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 218,
+          "commandEngineTimeRange": [
+            218.09765699999843,
+            218.171875
+          ],
+          "wallShowTime": 221.416,
+          "thumbnail": "缩略图/B09_PC_HIGH_LOOKUP_0218.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_HIGH_LOOKUP\\B09_PC_HIGH_LOOKUP_0218.0.png",
+          "rawPngSha256": "9020db24d831116de6eb3828e105a3865ebaad2f5c7c7752480e8686c9b3f3a7",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_PC_LOW_LOOKUP",
+      "platform": "PC",
+      "quality": "EQuality_Low",
+      "start": 0,
+      "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:47:44.292Z",
+      "callAfterWall": "2026-10-17T05:47:44.320Z",
+      "callBeforeClock": 46727.734375,
+      "callAfterClock": 46727.777344,
+      "finished": "2026-10-17T05:51:24.757Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=22.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 0.5,
+          "commandEngineTimeRange": [
+            0.5039059999980964,
+            0.5859370000034687
+          ],
+          "wallShowTime": 0.527,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0000.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0000.5.png",
+          "rawPngSha256": "61ec2f25ba8f29e4a2cbc4e7b8ce6ca71bdb7947df4e88193cc5f93305f27315",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 5,
+          "commandEngineTimeRange": [
+            5.085936999996193,
+            5.167969000001904
+          ],
+          "wallShowTime": 5.107,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0005.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0005.0.png",
+          "rawPngSha256": "7500b257df1f5eec24f6b09b92dbecae24860fa8cd1b2420d7e8bc85106b84f2",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 10,
+          "commandEngineTimeRange": [
+            10.097655999998096,
+            10.183594000001904
+          ],
+          "wallShowTime": 10.121,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0010.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0010.0.png",
+          "rawPngSha256": "fe266d73924a88fa7bdc8a62a0b0b0ba83713532a5b976aed3fc84d587bda0ac",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 16.6,
+          "commandEngineTimeRange": [
+            16.699218000001565,
+            16.785155999998096
+          ],
+          "wallShowTime": 16.721,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0016.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0016.6.png",
+          "rawPngSha256": "a018c8a30ae7f7e6764ff234d38bb1ec1d3149dc3b860b19fa43ca3147a72289",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 18,
+          "commandEngineTimeRange": [
+            18.09375,
+            18.17968700000347
+          ],
+          "wallShowTime": 18.117,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0018.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0018.0.png",
+          "rawPngSha256": "3acff22d990da4d2ebfc4b5777bb3e80e282fb65f1178d32d2037e4818b3cc5c",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 23.9,
+          "commandEngineTimeRange": [
+            23.992186999996193,
+            24.074219000001904
+          ],
+          "wallShowTime": 24.015,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0023.9.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0023.9.png",
+          "rawPngSha256": "69c2214f07a7740729543a580ea6d0b8f6d02cc230e8f7ae3c00e265b5ff136d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 28,
+          "commandEngineTimeRange": [
+            28.082030999998096,
+            28.16406299999653
+          ],
+          "wallShowTime": 28.101,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0028.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0028.0.png",
+          "rawPngSha256": "a3f59d3a283055ad7b12cd54cd65267478f6eef7c594b973214ef12556654f8d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 43.5,
+          "commandEngineTimeRange": [
+            43.57031199999619,
+            43.652344000001904
+          ],
+          "wallShowTime": 43.589,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0043.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0043.5.png",
+          "rawPngSha256": "10f3a268116daa7015a95ecaf19fd25c99472e109e137c11da9bc90056233806",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 56.5,
+          "commandEngineTimeRange": [
+            56.59375,
+            56.67968700000347
+          ],
+          "wallShowTime": 56.614,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0056.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0056.5.png",
+          "rawPngSha256": "32b8930cbe625ff07e9af0df072f8980d51ae43dcb7ef53ec152a002c8cbd3eb",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 64.5,
+          "commandEngineTimeRange": [
+            64.57421800000157,
+            64.65625
+          ],
+          "wallShowTime": 64.594,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0064.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0064.5.png",
+          "rawPngSha256": "817024c7ce7bfee79f961221949ed607dbc9a64414e4f1595abc5d6b9dd7020a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 65.3,
+          "commandEngineTimeRange": [
+            65.375,
+            65.46093700000347
+          ],
+          "wallShowTime": 65.399,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0065.3.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0065.3.png",
+          "rawPngSha256": "19be565b0e6f83ed612d18330eadc82e662425567036e349ee19f186871304b3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 80,
+          "commandEngineTimeRange": [
+            80.01171800000157,
+            80.0976559999981
+          ],
+          "wallShowTime": 81.073,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0080.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0080.0.png",
+          "rawPngSha256": "69b9cfd5d454d6dbb70db0e148591a3b3ff34887871bc3a7cf4a9994fea6cbf4",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 100,
+          "commandEngineTimeRange": [
+            100.09375,
+            100.1757809999981
+          ],
+          "wallShowTime": 101.153,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0100.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0100.0.png",
+          "rawPngSha256": "78adcb90c40b284289b866fb16b653777e426fa1eddf53ba833102a07ec91247",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 108.5,
+          "commandEngineTimeRange": [
+            108.58593699999619,
+            108.6679690000019
+          ],
+          "wallShowTime": 109.649,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0108.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0108.5.png",
+          "rawPngSha256": "c596d9d5089f0402cabd8171e106cf3713d47c43e43cbbf1e01dc6234f0b8af5",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 110,
+          "commandEngineTimeRange": [
+            110.078125,
+            110.16406299999653
+          ],
+          "wallShowTime": 111.141,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0110.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0110.0.png",
+          "rawPngSha256": "e21e93164a45fb2926aa0aabd700e69995880447e48795664f1d8191a8f55371",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 112,
+          "commandEngineTimeRange": [
+            112.09375,
+            112.1757809999981
+          ],
+          "wallShowTime": 113.155,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0112.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0112.0.png",
+          "rawPngSha256": "7a6dad8b77eb7814b6b7b3e8af8d0c860bf97d2ddd275f7d60e505049a2ac617",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 116.5,
+          "commandEngineTimeRange": [
+            116.5820309999981,
+            116.6679690000019
+          ],
+          "wallShowTime": 117.647,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0116.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0116.5.png",
+          "rawPngSha256": "76dc3d20b77505039d89bd6c7625cff552040d865c2e262adab1a6644476c200",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 120,
+          "commandEngineTimeRange": [
+            120.07421800000157,
+            120.15625
+          ],
+          "wallShowTime": 121.159,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0120.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0120.0.png",
+          "rawPngSha256": "aef515ed1731fcbb4a3863ce2263612a5088911b3cb84805f8fe1786432eb83d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 132.6,
+          "commandEngineTimeRange": [
+            132.6796869999962,
+            132.7617190000019
+          ],
+          "wallShowTime": 133.765,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0132.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0132.6.png",
+          "rawPngSha256": "7705dd7ec14fafb06cb882da80c4faaebb8e564681d2435d16d068f651e900a2",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 158.5,
+          "commandEngineTimeRange": [
+            158.5,
+            158.58593700000347
+          ],
+          "wallShowTime": 159.587,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0158.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0158.5.png",
+          "rawPngSha256": "a2f58b844e18e4c54a8e02611e2e205c9e80ac949be439bba9ad0a0752420498",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 165,
+          "commandEngineTimeRange": [
+            165.078125,
+            165.1601559999981
+          ],
+          "wallShowTime": 166.162,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0165.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0165.0.png",
+          "rawPngSha256": "9c7721d16329ab84a5db9c6ad14e3313a6f6d838358f341d7b5bfad0a4098b76",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            171.58984399999463,
+            171.6757809999981
+          ],
+          "wallShowTime": 172.677,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0171.5.png",
+          "rawPngSha256": "d67b3ea17d6855122a03245764703f205cf6be1066c5bd01dd345752f07a595f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 174,
+          "commandEngineTimeRange": [
+            174.0820309999981,
+            174.1679690000019
+          ],
+          "wallShowTime": 175.182,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0174.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0174.0.png",
+          "rawPngSha256": "cfcc5a72afab433c18731d999bf738d562c987c58c06353f4457144b0f85ebb6",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 176,
+          "commandEngineTimeRange": [
+            176.0859369999962,
+            176.1679690000019
+          ],
+          "wallShowTime": 177.188,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0176.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0176.0.png",
+          "rawPngSha256": "78a85307110d9b0543b7ac2c583979bc6c449af948e92c1dd00f204cdb8a25b4",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 179,
+          "commandEngineTimeRange": [
+            179.0820309999981,
+            179.16406299999653
+          ],
+          "wallShowTime": 180.183,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0179.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0179.0.png",
+          "rawPngSha256": "4830a16e8c95668069c3a5dd8ad989b46d6bcc1376a49e39700664ed875aae08",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 182.6,
+          "commandEngineTimeRange": [
+            182.6796869999962,
+            182.765625
+          ],
+          "wallShowTime": 183.781,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0182.6.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0182.6.png",
+          "rawPngSha256": "1862dfbacee2bcf3bd88b8fd2be612ee1611ee237d38cd0baa894ad37774c0a9",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            186.0976559999981,
+            186.21093700000347
+          ],
+          "wallShowTime": 187.222,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0186.0.png",
+          "rawPngSha256": "2da45c9c5b9993297a3aee59bebbfd44752d93502c1ef2a343256d5fa8a0db5a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 189,
+          "commandEngineTimeRange": [
+            189.0976559999981,
+            189.1835940000019
+          ],
+          "wallShowTime": 190.224,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0189.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0189.0.png",
+          "rawPngSha256": "4429fe01a7826a07cdc62f945aa2239f7e3d0daad3f76ccda3384b5782717992",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 195.5,
+          "commandEngineTimeRange": [
+            195.59375,
+            195.67968700000347
+          ],
+          "wallShowTime": 196.72,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0195.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0195.5.png",
+          "rawPngSha256": "8fd5fa5cf3dda6ad8dcfcd6f4e9192a0cb1af5bc5ff191d50ffa290261f7c1cb",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 198,
+          "commandEngineTimeRange": [
+            198.0859369999962,
+            198.171875
+          ],
+          "wallShowTime": 199.212,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0198.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0198.0.png",
+          "rawPngSha256": "8c0dd4072277cef6660d4509c3d3244f2fdb24164ab3ea2a3b64d58a5bfbaadc",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 202,
+          "commandEngineTimeRange": [
+            202.07421800000157,
+            202.1601559999981
+          ],
+          "wallShowTime": 203.201,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0202.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0202.0.png",
+          "rawPngSha256": "ba6315224f560f0e5b8bf1898f11f45ddc4601c64c2dda2a744d227ab350bf3a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 210,
+          "commandEngineTimeRange": [
+            210.0820309999981,
+            210.1679690000019
+          ],
+          "wallShowTime": 211.208,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0210.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0210.0.png",
+          "rawPngSha256": "e6179b18f102f59397241bc57844c999d1c74e19a102ffdb45b7672dc06803e3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 218,
+          "commandEngineTimeRange": [
+            218.0820309999981,
+            218.1601559999981
+          ],
+          "wallShowTime": 219.203,
+          "thumbnail": "缩略图/B09_PC_LOW_LOOKUP_0218.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_PC_LOW_LOOKUP\\B09_PC_LOW_LOOKUP_0218.0.png",
+          "rawPngSha256": "281bb401f85fab7efa19e15076c6e4c582e762f67a4213da2baff5aabc3af43d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_HERO_ORIGINAL_A",
+      "platform": "PC",
+      "quality": "EQuality_High",
+      "start": 155,
+      "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:52:04.983Z",
+      "callAfterWall": "2026-10-17T05:52:05.008Z",
+      "callBeforeClock": 46987.320312,
+      "callAfterClock": 46987.359375,
+      "finished": "2026-10-17T05:52:41.385Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=30.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 168,
+          "commandEngineTimeRange": [
+            168.0039059999981,
+            168.07421899999463
+          ],
+          "wallShowTime": 168.017,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0168.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0168.0.png",
+          "rawPngSha256": "536b8b03a1b730edb4558d3718cb1e9b76b92f6177b55a7058615d17f1008d13",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            171.57031299999653,
+            171.64843799999653
+          ],
+          "wallShowTime": 171.587,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0171.5.png",
+          "rawPngSha256": "0ae913b83f913f1ddbbf2c19fb946e3c447077202117330afd1281a49e85fbaa",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 173,
+          "commandEngineTimeRange": [
+            173.0585940000019,
+            173.13671899999463
+          ],
+          "wallShowTime": 173.077,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0173.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0173.0.png",
+          "rawPngSha256": "2c1c449461afcffc936e0e45916b02a52767c1523de6dd05c2ce1db7b878eeda",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 175,
+          "commandEngineTimeRange": [
+            175.03906299999653,
+            175.14453199999843
+          ],
+          "wallShowTime": 175.087,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0175.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0175.0.png",
+          "rawPngSha256": "e7213043fd510c47d23e1bd902fabcfee2fb445ba13f8f5ed5465046a158c6b4",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 178,
+          "commandEngineTimeRange": [
+            178.0585940000019,
+            178.14062599999306
+          ],
+          "wallShowTime": 178.097,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0178.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0178.0.png",
+          "rawPngSha256": "e1b2840fef15def0ab6f5b59d50091539257986a4127a712c33bfaa506ac6e67",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 181,
+          "commandEngineTimeRange": [
+            181.0898440000019,
+            181.16406299999653
+          ],
+          "wallShowTime": 181.163,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0181.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0181.0.png",
+          "rawPngSha256": "a94818d1bbcfef67ea5094df3974861ac2f42858e5d11e866f9c5c9ee71e5131",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 184,
+          "commandEngineTimeRange": [
+            184.0898440000019,
+            184.16406299999653
+          ],
+          "wallShowTime": 184.163,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0184.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0184.0.png",
+          "rawPngSha256": "61a0f1efed4d6f328870faf1cd804c82f4f822d7ad2795127329477f47b217c3",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            186.0664059999981,
+            186.14062599999306
+          ],
+          "wallShowTime": 186.14,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0186.0.png",
+          "rawPngSha256": "d4df0e53a125a843e56d091f2e1b2b8b50413e0f43b92dd61821713909794453",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 190,
+          "commandEngineTimeRange": [
+            190.09375,
+            190.16796899999463
+          ],
+          "wallShowTime": 190.166,
+          "thumbnail": "缩略图/B09_HERO_ORIGINAL_A_0190.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_ORIGINAL_A\\B09_HERO_ORIGINAL_A_0190.0.png",
+          "rawPngSha256": "350cf3ed202cdf9389bf47901fb329fb42219e5df0c5ad2e190c19553812880b",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_HERO_SCALE085",
+      "platform": "PC",
+      "quality": "EQuality_High",
+      "start": 155,
+      "table": "analysis/results/B09_DIRECTOR_20261017/候选_仅主角缩放0.85_一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:52:48.364Z",
+      "callAfterWall": "2026-10-17T05:52:48.387Z",
+      "callBeforeClock": 47030.644531,
+      "callAfterClock": 47030.683594,
+      "finished": "2026-10-17T05:53:24.951Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=30.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 168,
+          "commandEngineTimeRange": [
+            168.0234369999962,
+            168.09765699999843
+          ],
+          "wallShowTime": 168.041,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0168.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0168.0.png",
+          "rawPngSha256": "0656b4a40df19d2fb714b1c8081f9b4c5975e7da17fb95393a712e619fb352a1",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            171.578125,
+            171.65625
+          ],
+          "wallShowTime": 171.598,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0171.5.png",
+          "rawPngSha256": "426ed5e0bcc9ea1ccd36b49ae9732626b7aec3a6efd771be62fcd65e373ffd78",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 173,
+          "commandEngineTimeRange": [
+            173.0625,
+            173.140625
+          ],
+          "wallShowTime": 173.084,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0173.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0173.0.png",
+          "rawPngSha256": "0b16156e9726f2a266e36b321df064c91b494eb933eaa5edfbfbb1e8b2e7a189",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 175,
+          "commandEngineTimeRange": [
+            175.0625,
+            175.1640630000038
+          ],
+          "wallShowTime": 175.109,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0175.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0175.0.png",
+          "rawPngSha256": "da57bd84525b8ad99c0a831bd3735386e1e86794badd8bc7222536cd9c0ae20a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 178,
+          "commandEngineTimeRange": [
+            178.046875,
+            178.125
+          ],
+          "wallShowTime": 178.066,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0178.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0178.0.png",
+          "rawPngSha256": "703c893838a997d9914027637c6adef1003c5392840989121addf13a4a0c1927",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 181,
+          "commandEngineTimeRange": [
+            181.0976559999981,
+            181.1796880000038
+          ],
+          "wallShowTime": 181.12,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0181.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0181.0.png",
+          "rawPngSha256": "23d0b2ef4fd1f3ea87e843e51cd55500334f89883be46b4362ac6c65dce8fc54",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 184,
+          "commandEngineTimeRange": [
+            184.0976559999981,
+            184.17578100000537
+          ],
+          "wallShowTime": 184.119,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0184.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0184.0.png",
+          "rawPngSha256": "11e390e98a665afa6b47ece5a3ee5dc7eb1932a0893081b4ba0bcc214d993d66",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            186.05859399999463,
+            186.1367190000019
+          ],
+          "wallShowTime": 186.081,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0186.0.png",
+          "rawPngSha256": "1c2e006c71383aa8ef1350ae819302c62ddf57259c5c383e5d622771f1615adb",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 190,
+          "commandEngineTimeRange": [
+            190.08984399999463,
+            190.1640630000038
+          ],
+          "wallShowTime": 190.11,
+          "thumbnail": "缩略图/B09_HERO_SCALE085_0190.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_SCALE085\\B09_HERO_SCALE085_0190.0.png",
+          "rawPngSha256": "e758dde5f88e10ef0a631ae31e972e602e576709fe1d26364ea179a079917fdf",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_HERO_MOBILE_MEDIUM",
+      "platform": "Mobile",
+      "quality": "EQuality_Medium",
+      "start": 155,
+      "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:53:56.424Z",
+      "callAfterWall": "2026-10-17T05:53:56.447Z",
+      "callBeforeClock": 47098.707031,
+      "callAfterClock": 47098.742188,
+      "finished": "2026-10-17T05:54:32.750Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=30.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 168,
+          "commandEngineTimeRange": [
+            168.01562400000694,
+            168.0859380000038
+          ],
+          "wallShowTime": 168.03,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0168.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0168.0.png",
+          "rawPngSha256": "a0b5887b870746473f2575a7dffd1422a1258c186f7a36f6f672c45a4b031caa",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            171.5625,
+            171.6328130000038
+          ],
+          "wallShowTime": 171.577,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0171.5.png",
+          "rawPngSha256": "d6f0cd5def932cbe44ee3058e030dbbeca368ab41d42b1fbd63d364facbb96ed",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 173,
+          "commandEngineTimeRange": [
+            173.07812400000694,
+            173.1484380000038
+          ],
+          "wallShowTime": 173.094,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0173.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0173.0.png",
+          "rawPngSha256": "06045e7c1ddf3780b7bb2c39b4652e2afb8c473119ac3542c58a83eca5623dd9",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 175,
+          "commandEngineTimeRange": [
+            175.08203100000537,
+            175.1523440000019
+          ],
+          "wallShowTime": 175.099,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0175.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0175.0.png",
+          "rawPngSha256": "b38fc13bbe6e62db55cbafab73572b23df9dac4e4ab51e50c98bb5e6d56c241f",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 178,
+          "commandEngineTimeRange": [
+            178.06640600000537,
+            178.140625
+          ],
+          "wallShowTime": 178.086,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0178.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0178.0.png",
+          "rawPngSha256": "8d47bbd5601478a05b6801c0c619c0a0b8e34a63880d400e9795c21e4d037c22",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 181,
+          "commandEngineTimeRange": [
+            181.0625,
+            181.1367190000019
+          ],
+          "wallShowTime": 181.07999999999998,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0181.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0181.0.png",
+          "rawPngSha256": "2e00fb61534014c142c269ebe1b71e697927e2a87a1dfc4b8460281b1b955c6e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 184,
+          "commandEngineTimeRange": [
+            184.05859300000157,
+            184.1328130000038
+          ],
+          "wallShowTime": 184.078,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0184.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0184.0.png",
+          "rawPngSha256": "cbb0eb37e457b9a9f64713fbae6ec87795f50829eebf892d6baeb7f3d74db95a",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            186.05468700000347,
+            186.125
+          ],
+          "wallShowTime": 186.072,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0186.0.png",
+          "rawPngSha256": "ff9497a12294fc5cacf90dc93699ddc3313622b6f63b73ca06638b06b23d68bb",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 190,
+          "commandEngineTimeRange": [
+            190.06640600000537,
+            190.1367190000019
+          ],
+          "wallShowTime": 190.084,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_MEDIUM_0190.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_MEDIUM\\B09_HERO_MOBILE_MEDIUM_0190.0.png",
+          "rawPngSha256": "1964eb01a8599a035325c795070476a80b0ae74af434881cc0d6e377eb82622d",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_HERO_MOBILE_SCALE085",
+      "platform": "Mobile",
+      "quality": "EQuality_Medium",
+      "start": 155,
+      "table": "analysis/results/B09_DIRECTOR_20261017/候选_仅主角缩放0.85_一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:54:57.571Z",
+      "callAfterWall": "2026-10-17T05:54:57.591Z",
+      "callBeforeClock": 47159.851562,
+      "callAfterClock": 47159.886719,
+      "finished": "2026-10-17T05:55:34.137Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=30.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 168,
+          "commandEngineTimeRange": [
+            167.9882809999981,
+            168.05859399999463
+          ],
+          "wallShowTime": 168.006,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0168.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0168.0.png",
+          "rawPngSha256": "76ae40188fb620421c3784223d6bfd4b49b8fedcc2c4a8c3ed18fd2e5418df5e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 171.5,
+          "commandEngineTimeRange": [
+            171.5703119999962,
+            171.64062599999306
+          ],
+          "wallShowTime": 171.586,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0171.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0171.5.png",
+          "rawPngSha256": "e74ec1cae5646b9160a5fc20c72a60a7b9be9d88d8c8403622120708303c4526",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 173,
+          "commandEngineTimeRange": [
+            173.0703119999962,
+            173.14062599999306
+          ],
+          "wallShowTime": 173.087,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0173.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0173.0.png",
+          "rawPngSha256": "237bd6ab6739921935cbb62ce48a9644c09f30d218eb3d2940f44be0d25872e1",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 175,
+          "commandEngineTimeRange": [
+            175.07421899999463,
+            175.14062599999306
+          ],
+          "wallShowTime": 175.09,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0175.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0175.0.png",
+          "rawPngSha256": "13aa1944a86914bfe0a81c4cf51d1420a6c147ece0a4dfbce16af34691287a57",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 178,
+          "commandEngineTimeRange": [
+            178.0703119999962,
+            178.13671899999463
+          ],
+          "wallShowTime": 178.086,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0178.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0178.0.png",
+          "rawPngSha256": "fc791cffe8c811768bff4f7bf3fee5953663be6296749469876e107026d38aba",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 181,
+          "commandEngineTimeRange": [
+            181.0664059999981,
+            181.13671899999463
+          ],
+          "wallShowTime": 181.085,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0181.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0181.0.png",
+          "rawPngSha256": "e888a4e7563254e18e42eed43ca707e4c8b5ecfc7f51f9a321213d1ebebe2b02",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 184,
+          "commandEngineTimeRange": [
+            184.0625,
+            184.12890699999843
+          ],
+          "wallShowTime": 184.079,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0184.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0184.0.png",
+          "rawPngSha256": "d12a8ab5d16986efe9f478a980fdafc150efba611fb62ac5ab7f99c9dfbe4f14",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 186,
+          "commandEngineTimeRange": [
+            186.0703119999962,
+            186.14062599999306
+          ],
+          "wallShowTime": 186.086,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0186.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0186.0.png",
+          "rawPngSha256": "8ff59b158fba7550b96a329280d974944c395afd684d8a109fa22d3fd9988f20",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 190,
+          "commandEngineTimeRange": [
+            190.07421899999463,
+            190.14843799999653
+          ],
+          "wallShowTime": 190.096,
+          "thumbnail": "缩略图/B09_HERO_MOBILE_SCALE085_0190.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_HERO_MOBILE_SCALE085\\B09_HERO_MOBILE_SCALE085_0190.0.png",
+          "rawPngSha256": "fc1e64c41965c4991fb2e08e94a8c39ccd01651aa0342b92e535697d372843c1",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_SINGLE_ORIGINAL",
+      "platform": "PC",
+      "quality": "EQuality_High",
+      "start": 93,
+      "table": "FXtools/节目/NewYearFireWorks_v01/导演表-B09-主角400-手游金垂柳-名字更正-一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:55:46.679Z",
+      "callAfterWall": "2026-10-17T05:55:46.703Z",
+      "callBeforeClock": 47208.960938,
+      "callAfterClock": 47209,
+      "finished": "2026-10-17T05:56:18.036Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=30.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 105,
+          "commandEngineTimeRange": [
+            105.00781200000347,
+            105.07812400000694
+          ],
+          "wallShowTime": 105.023,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0105.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0105.0.png",
+          "rawPngSha256": "6073c9c3e93173cf4312909a447430670a8ab95776c06c9187e27cba44299715",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 108.5,
+          "commandEngineTimeRange": [
+            108.5664059999981,
+            108.64453100000537
+          ],
+          "wallShowTime": 108.592,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0108.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0108.5.png",
+          "rawPngSha256": "c304c455edfdf747c98c5ebf9c21182dfd4f2e37045a6c91509b83dcf7ae24d0",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 110,
+          "commandEngineTimeRange": [
+            110.07031200000347,
+            110.14453100000537
+          ],
+          "wallShowTime": 110.09100000000001,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0110.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0110.0.png",
+          "rawPngSha256": "dfd2f8d2b80a79473bee5b5f831d5d902d0a65f3b3d3194d6fbd9bb86caa5e92",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 112,
+          "commandEngineTimeRange": [
+            112.0585940000019,
+            112.16406200000347
+          ],
+          "wallShowTime": 112.106,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0112.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0112.0.png",
+          "rawPngSha256": "df084b138fa030c4b45ea5e6b15c4a4ddbc504fe2a9b3348f4e5474258fadab4",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 116.5,
+          "commandEngineTimeRange": [
+            116.5820309999981,
+            116.66015600000537
+          ],
+          "wallShowTime": 116.60300000000001,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0116.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0116.5.png",
+          "rawPngSha256": "21620db0bd46eeac5928281f203de106571a0b8ec1cd34d215e1cfdff580bc56",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 120,
+          "commandEngineTimeRange": [
+            120.0742190000019,
+            120.14843700000347
+          ],
+          "wallShowTime": 120.094,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0120.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0120.0.png",
+          "rawPngSha256": "e879fc62da3af428275dd4d13462edcfd307646da4fed58a315f5b7e6ea7665e",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 123,
+          "commandEngineTimeRange": [
+            123.08593799999653,
+            123.16796800000157
+          ],
+          "wallShowTime": 123.112,
+          "thumbnail": "缩略图/B09_SINGLE_ORIGINAL_0123.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_ORIGINAL\\B09_SINGLE_ORIGINAL_0123.0.png",
+          "rawPngSha256": "134c4355afa8e8a91bebcb0663376a86d91323bf665f9e9942cee7edac553a70",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B09_SINGLE_SCALE085",
+      "platform": "PC",
+      "quality": "EQuality_High",
+      "start": 93,
+      "table": "analysis/results/B09_DIRECTOR_20261017/候选_仅主角缩放0.85_一张表.json",
+      "sourceHead": "547e6913",
+      "callWall": "2026-10-17T05:56:43.211Z",
+      "callAfterWall": "2026-10-17T05:56:43.231Z",
+      "callBeforeClock": 47265.488281,
+      "callAfterClock": 47265.527344,
+      "finished": "2026-10-17T05:57:14.763Z",
+      "before": {
+        "camera": {
+          "function": "GetLevelViewportCameraInfo",
+          "called": true,
+          "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+          "out_CameraRotation": "(Pitch=4.180194,Yaw=-802.658264,Roll=0.000000)",
+          "return_value": "True"
+        },
+        "debug": {
+          "DebugPlatform": "None",
+          "DebugQualityLevel": "EQuality_High",
+          "DebugPreviewStartTime": 0,
+          "RandomSeed": 0
+        }
+      },
+      "diagnosticCamera": {
+        "function": "GetLevelViewportCameraInfo",
+        "called": true,
+        "out_CameraLocation": "(X=366268.843750,Y=-754650.750000,Z=-15286.675781)",
+        "out_CameraRotation": "(Pitch=30.000000,Yaw=-802.658264,Roll=0.000000)",
+        "return_value": "True"
+      },
+      "cvars": {
+        "sg.EffectsQuality": 3,
+        "sg.TextureQuality": 3,
+        "sg.PostProcessQuality": 3,
+        "r.ScreenPercentage": 100,
+        "r.SeparateTranslucencyScreenPercentage": 0,
+        "r.MaxAnisotropy": 8
+      },
+      "restored": {
+        "config": true,
+        "debug": true,
+        "camera": true,
+        "stopped": true,
+        "seed": true
+      },
+      "pointWarnings": [
+        "ValidatePoints() ADFMShowDirector::ValidatePoints SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0"
+      ],
+      "events": [
+        {
+          "targetTime": 105,
+          "commandEngineTimeRange": [
+            105.015625,
+            105.0898440000019
+          ],
+          "wallShowTime": 105.033,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0105.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0105.0.png",
+          "rawPngSha256": "26f2d77a5c602756a19d8ae8c62908ac5d96b0a8cdbf2dc11600c6538b2a1558",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 108.5,
+          "commandEngineTimeRange": [
+            108.57031199999619,
+            108.64453100000537
+          ],
+          "wallShowTime": 108.589,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0108.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0108.5.png",
+          "rawPngSha256": "60e21b1d273ab0fe5108fbe39c5b9e1641275ad037abcde3331242690ca49218",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 110,
+          "commandEngineTimeRange": [
+            110.07421800000157,
+            110.14843800000381
+          ],
+          "wallShowTime": 110.094,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0110.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0110.0.png",
+          "rawPngSha256": "d81eaa07141a4d6e83ce142e6cda658839d0eb00cc18c513cfb9d1950e0b9a05",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 112,
+          "commandEngineTimeRange": [
+            112.0625,
+            112.1679690000019
+          ],
+          "wallShowTime": 112.111,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0112.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0112.0.png",
+          "rawPngSha256": "4b1a6b256c903d2d003f0138f55692628d7e9d2bc88df1c1b92cd74a3fc52d60",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 116.5,
+          "commandEngineTimeRange": [
+            116.60156199999619,
+            116.67968800000381
+          ],
+          "wallShowTime": 116.62,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0116.5.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0116.5.png",
+          "rawPngSha256": "f2e9e917a34029a4663251d32bee92407c791c9d9c6ff33f3285e99bc98842de",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 120,
+          "commandEngineTimeRange": [
+            120.0820309999981,
+            120.16015699999843
+          ],
+          "wallShowTime": 120.102,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0120.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0120.0.png",
+          "rawPngSha256": "31e3bd0891236998c562fcbdf0926a33ed54de3a1bde527c3d2d3ec3e55b8604",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        },
+        {
+          "targetTime": 123,
+          "commandEngineTimeRange": [
+            123.07031199999619,
+            123.14843800000381
+          ],
+          "wallShowTime": 123.09,
+          "thumbnail": "缩略图/B09_SINGLE_SCALE085_0123.0.jpg",
+          "rawPngLocal": "F:\\FireWorksLab\\analysis\\local\\B09_DIRECTOR_20261017\\shots\\B09_SINGLE_SCALE085\\B09_SINGLE_SCALE085_0123.0.png",
+          "rawPngSha256": "67140ac996c12f11538e5457a8c1341092c225fd04e687561f638c01607bbe78",
+          "rawSize": [
+            1993,
+            1153
+          ]
+        }
+      ]
+    }
+  ],
+  "coreCaptureCount": 180
+}

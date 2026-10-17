@@ -1,0 +1,69 @@
+{
+  "directorId": "NewYear_Night",
+  "sequenceTemplates": [
+    {
+      "_struct": "ShowSequenceTemplate",
+      "TemplateName": "light_A",
+      "RequiredPointCount": 4,
+      "Entries": [
+        {
+          "_struct": "ShowSequenceTemplateEntry",
+          "SeqActorClass": "/Game/BluePrints/ShowDirector/Sequence/BP_ShowSequenceNetSyncActor.BP_ShowSequenceNetSyncActor_C",
+          "LevelSequencePath": {
+            "_struct": "SoftObjectPath",
+            "AssetPathName": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/Seq_NewYear_TestShowTemplate_2.Seq_NewYear_TestShowTemplate_2",
+            "SubPathString": ""
+          },
+          "Duration": 0,
+          "LocalTimeOffset": 0.25,
+          "SlotIndex": 0,
+          "WarmUpLeadTime": 20,
+          "bDestroyAfterStop": true,
+          "DestroyDelay": 10
+        }
+      ]
+    }
+  ],
+  "sequenceScheduleGroups": [
+    {
+      "_struct": "ShowScheduleGroup",
+      "GroupName": "Light",
+      "Slots": [
+        {
+          "_struct": "ShowScheduleSlot",
+          "StartTime": 0,
+          "TemplateName": "light_A",
+          "Filter": {
+            "_struct": "ShowFilterCondition",
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    }
+  ],
+  "scenePoints": {
+    "DFMShowSequencePoint": [
+      {
+        "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_ShowSequence_light1",
+        "class": "/Game/BluePrints/ShowDirector/Point/BP_ShowSequencePoint.BP_ShowSequencePoint_C",
+        "name": "NewYear_ShowSequence_light1",
+        "properties": {
+          "PointId": "light1",
+          "DirectorId": "NewYear",
+          "Bindings": [
+            {
+              "_struct": "ShowPointBinding",
+              "GroupName": "Light",
+              "SlotIndex": 0
+            }
+          ]
+        }
+      }
+    ],
+    "DFMShowLightPoint": []
+  },
+  "warning": "SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0",
+  "matchingPoints": [],
+  "conclusion": "本轮不能认定新版灯光联动生效；未修改任何灯光/序列/绑定。"
+}

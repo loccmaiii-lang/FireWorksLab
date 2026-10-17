@@ -1,0 +1,164 @@
+{
+  "method": "无AttachParent的场景根组件RelativeLocation；单位cm；EncHandler.bEncrypted=0。K2_GetActorLocation全0无效，不使用。",
+  "points": [
+    {
+      "pointId": "P0",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P0",
+      "location": {
+        "X": 401961.75,
+        "Y": -784978,
+        "Z": -3400.95556640625
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": -219.02117919921875,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P1",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P1",
+      "location": {
+        "X": 396541.34375,
+        "Y": -791666.6875,
+        "Z": -3400.95556640625
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": 123.43896484375,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P2",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P2",
+      "location": {
+        "X": 387785.3125,
+        "Y": -797932.0625,
+        "Z": -3400.95556640625
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": -233.5047149658203,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P3",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P3",
+      "location": {
+        "X": 378483.4375,
+        "Y": -802753.25,
+        "Z": -3400.962890625
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": -249.93490600585938,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P4",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P4",
+      "location": {
+        "X": 371995.21875,
+        "Y": -805151.0625,
+        "Z": -3400.962890625
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": -250.93389892578125,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P5",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P5",
+      "location": {
+        "X": 364805.40625,
+        "Y": -808027.875,
+        "Z": -3400.95947265625
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": 111.49224090576172,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P6",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P6",
+      "location": {
+        "X": 355148.28125,
+        "Y": -809832.75,
+        "Z": -3400.95751953125
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": 95.61616516113281,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P7",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P7",
+      "location": {
+        "X": 345764.5625,
+        "Y": -810646.875,
+        "Z": -3400.95751953125
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": 81.38675689697266,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    },
+    {
+      "pointId": "P8",
+      "actor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.NewYear_Night_ShowEffect_P8",
+      "location": {
+        "X": 340579.90625,
+        "Y": -809862.9375,
+        "Z": -3400.95751953125
+      },
+      "rotation": {
+        "_struct": "Rotator",
+        "Pitch": 0,
+        "Yaw": 81.38672637939453,
+        "Roll": 0
+      },
+      "attachedTo": null,
+      "encrypted": 0
+    }
+  ],
+  "distancesMetres": {
+    "P0-P4": 361.2402864834135,
+    "P4-P8": 317.66706242358686,
+    "P0-P8": 662.3436310955457
+  },
+  "captureFileWrittenAt": "2026-10-17T13:45:20+08:00"
+}

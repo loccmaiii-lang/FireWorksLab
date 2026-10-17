@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-17T05:59:05.261Z",
+  "run": "B09_MOBILE_RESOURCE_PROBE2",
+  "DebugPlatform": "Mobile",
+  "DebugQualityLevel": "EQuality_Medium",
+  "activePlayComponents": [
+    {
+      "active": true,
+      "component": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:FXResourceContainerComponent_43286",
+      "template": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD"
+    },
+    {
+      "active": true,
+      "component": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:FXResourceContainerComponent_43285",
+      "template": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD"
+    },
+    {
+      "active": true,
+      "component": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:FXResourceContainerComponent_43281",
+      "template": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD"
+    },
+    {
+      "active": true,
+      "component": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:FXResourceContainerComponent_43265",
+      "template": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Hero_HD.P_EFX_FireWorks_RiseTrail_Hero_HD"
+    },
+    {
+      "active": true,
+      "component": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:FXResourceContainerComponent_43264",
+      "template": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Hero_HD.P_EFX_FireWorks_RiseTrail_Hero_HD"
+    },
+    {
+      "active": true,
+      "component": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:FXResourceContainerComponent_43260",
+      "template": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Hero_HD.P_EFX_FireWorks_RiseTrail_Hero_HD"
+    }
+  ],
+  "excluded": "排除CascadeParticleSystemComponent及不活动的用户场景对象/旧缓存。",
+  "conclusion": "本次三个GoldKamuro和三个Hero尾缀实际仍为HD路径；仅Mobile筛选通过，不是_M资产验证。"
+}
