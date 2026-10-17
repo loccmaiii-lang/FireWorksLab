@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-17T12:30:08.158Z",
+  "sourcePS": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GlitterChry_HD.P_EFX_FireWorks_GlitterChry_HD",
+  "sourcePSFieldsSame": true,
+  "sourceMaterialsChanged": [],
+  "sourceModulesChanged": [],
+  "sourceDiskChanged": [],
+  "sourceFiles": 19,
+  "restore": {
+    "own": [],
+    "selected": [],
+    "dirtyMaps": [
+      "/Game/Maps/FXLookDevLevel/FXLookDevLevel",
+      "/Game/Maps/FXLookDevLevel/LightMapBakeLevel/HotelCore_01_Reflection_HD"
+    ],
+    "dirtyContent": [
+      "/Game/Environment/SequencerTOD/Iris/Iris_Main/Iris_TOD_Base"
+    ],
+    "camera": [
+      [
+        3449.545654296875,
+        -2637.026611328125,
+        1707.8118896484375
+      ],
+      [
+        -1.79998779296875,
+        407.7410583496094,
+        0
+      ]
+    ],
+    "actors": 4003
+  },
+  "actorDelta": 0,
+  "cvarDiff": [],
+  "newDirtyMaps": [],
+  "newDirtyContent": [],
+  "temporaryAssets": [
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_1_EmissiveRampTex.uasset",
+      "sha256": "10c255dfff70d199ddb0f31304b631a7a1e42ad56895d5a0d7bcc5bc7fa6f428"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_1_MainTex.uasset",
+      "sha256": "817442db24099ed04c159a747a1e3577f99f27a6c827f52227ff790f24c646bc"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_3_EmissiveRampTex.uasset",
+      "sha256": "142c19d0e9cdbc6244c301bb6e21fb1e7665b9fdb7cd88293d5d8ac66bc5a7e4"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_3_MainTex.uasset",
+      "sha256": "c1990cefcc06ef92c1fbe5eb31be2b52dcffc64baf5c5f8db930720810ced6ba"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_4_EmissiveRampTex.uasset",
+      "sha256": "386212fe9bc951824722157f2cd682f1415c0156904754eaedb95624299b2e3d"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_4_MainTex.uasset",
+      "sha256": "2f254a4a5222d9cb45b2c38da493f3edab42f9bdeb0f77ed584e416a2fa35c00"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_MI_1.uasset",
+      "sha256": "4a7595b46c4c85d369b76dc874a50e20adae7bbe9cd9f6b9f8e20f80e85e71b7"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_MI_1_SamplingOnly.uasset",
+      "sha256": "0054cdf4473f8e840ad94bf5c997612e4c78c4188b979956634956922ba18633"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_MI_3.uasset",
+      "sha256": "8ec7202759e7a12544e7e7fd5846ae9efaf224293f015d1afcd723b83d4f8f6a"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_MI_3_SamplingOnly.uasset",
+      "sha256": "e41ab2e42bd610e6e004b37173256665c77a483076f187018535172a234988a9"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_MI_4.uasset",
+      "sha256": "2334142fa5b508f3e0c119c68092273f114c6c3e80d7e3b0ccb9c914747863a5"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_MI_4_SamplingOnly.uasset",
+      "sha256": "1c4c5032af098622dc9bf74864dcf2899b60b2d3542d14069078f6fce9c236fa"
+    },
+    {
+      "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/_Sandbox/GlitterAB_20261017/WBGL_PS_Candidate.uasset",
+      "sha256": "4dc46959fb919544b2f1d75026440c601dc92f751c1083e87404bef0dee8bf76"
+    }
+  ],
+  "outputs": [
+    "F:/FireWorksLab/outputs/GlitterChry对比_20261017/01_低档压力_展开_同屏与局部.png",
+    "F:/FireWorksLab/outputs/GlitterChry对比_20261017/02_低档压力_消散_同屏与局部.png",
+    "F:/FireWorksLab/outputs/GlitterChry对比_20261017/03_高档采样_展开_同屏与局部.png"
+  ],
+  "cleanup": "Review-only sandbox. Retain until user finished; never delete source GlitterChry or previous Rise/5-image temporary resources here."
+}

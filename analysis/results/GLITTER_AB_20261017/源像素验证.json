@@ -1,0 +1,56 @@
+[
+  {
+    "i": 0,
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "sha256": "14020c182e51649ab36e3dd879b915d2112e62ae2b30749cc8c491fa55812c21"
+  },
+  {
+    "i": 1,
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "sha256": "b8f78ce6940e1843f7fb9d8559fa516b7d074d04f11545d9016c20062af7fc7e"
+  },
+  {
+    "i": 2,
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "sha256": "ef95ff0c586148355ed297eca1ebc667850dc72acf478406b08a6ff2e58cd105"
+  },
+  {
+    "i": 3,
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "sha256": "933c6ed74366f476840bc41d5f13631b391e0a7cc94e3e5918870b1b861290e2"
+  },
+  {
+    "i": 4,
+    "size": [
+      256,
+      8
+    ],
+    "equal": true,
+    "sha256": "aa164081b2a73aa0ad62390a1be0a96113fcff5828dbea5aa8c759ffb5e75b38"
+  },
+  {
+    "i": 5,
+    "size": [
+      2048,
+      2048
+    ],
+    "equal": true,
+    "sha256": "6f02894ccedfb3b1369eb96cde2fb0b0c3e8f837f7ebbc0ee84b0f530518a2d6"
+  }
+]
