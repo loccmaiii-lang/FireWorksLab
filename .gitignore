@@ -19,3 +19,7 @@ tool/local_delivery/runtime/
 
 # 编排B01 脚本的 R04 点位缓存（生成物）
 analysis/music/.base_cache_B01.json
+
+# 本机 TClaude 启动器（个人工具，不入库）
+TClaude.bat
+TClaude-Login.bat
