@@ -670,7 +670,7 @@
     "跨年秀（22） → 本机同步（8） · 灯光落地两件（UE 侧，10-18 01:45 排队，不急但周二全量前要有结论）": "① 只读核对 Night 导演 light_A：RequiredPointCount（编排实放 10-17 读到 4）、Entries（只有 SlotIndex 0 一条，播 Seq_NewYear_TestShowTemplate_2）、LocalTimeOffset（10-17 读到 0.25，交接文档和灯光模型按 0）；场景序列点 NewYear_ShowSequence_light1 的 DirectorId（读到旧的 NewYear，Bindings Light/Slot0）。日志报 SequencePoint insufficient! DirectorId=NewYear_Night GroupName=Light Required=4 Actual=0（analysis/results/B09_DIRECTOR_20261017/灯光绑定证据.json）。② 判断新灯光流程（工作台「同时写入灯光」写序列四盏灯键）是不是靠 light_A 播这个序列；我的推断（未验）：需要「一个 DirectorId=NewYear_Night 的序列点 + RequiredPointCount 改 1」或补满 4 个点。③ 偏移：若 LocalTimeOffset 确为 0.25，灯会比烟花晚 0.25 s；二选一：UE 里改 0（不动模型，我倾向），或灯光模型 rig.sequence.timeOffsetS 改 −0.25（tool/fwlight/config.json 的 time_offset_s 与 src/light-rig.mjs 一起改，tests/light-curve.test.mjs 对拍）。改 UE 遵守「UE 单写」：登记、由用户点、做完删；我（22）云端不写 UE、没改灯光模型。云端试算见 analysis/results/LIGHT_B11_20261018/（B11 SkyLight 峰值 6.923、无警告、最亮一帧 181.17 s）。做完在这里写结果。",
     "窜天猴柔光暗底（Codex） · 2026-10-18": {
       "负责": "窜天猴与仙女棒（Codex）",
-      "状态": "制作及AI自检完成，SGRS1待用户验收；数据范围收尾提交中，未占用tool/src",
+      "状态": "已完成并释放专属数据范围：SGRS1待用户验收；实现cc1cce6a已推送，普通门禁4秒通过；全程未占用tool/src或写UE",
       "范围": "新配方/原理/结果脚本、条目与生成数据、必要构建；保留用户原件与粒子版，不改UE、材质或他方fx_gate修复",
       "来源": "analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json",
       "验收": "原运动/相位/取景一致；柔散而非锐利重复、叠加不抢主体；PC/手机实包、原生保存刷新与标准通过；不把浏览器当UE实测"
