@@ -34,7 +34,8 @@ B03 = '--b03' in sys.argv             # B03（22，10-13 16:28）：合并音频
 B04 = '--b04' in sys.argv             # B04（22，10-14 01:27）：B03 修订2 + 坝顶低层 Tiny + 小平台前台小花 XS + 扇 3.0，输出 B04动画.html（可切 B03 修订2 对比）
 B05 = '--b05' in sys.argv             # B05（22，10-14 22:22）：B04 + ResourceFX 新命名 + 手游 6 种，输出 B05动画.html（可切 B04 对比）
 B06 = '--b06' in sys.argv             # B06（22，10-15 01:04）：低层回 150 m、扇重排（不叠、跟拍、不重复）、P2 / P4 / P6 三朵等大，输出 B06动画.html（可切 B05 对比）
-B10 = '--b10' in sys.argv             # B10（22，10-18 00:23）：垂柳按 UE 实测重排——去掉埋在垂柳里的下托、×0.852、寿命 14.5 s，输出 B10动画.html（可切 B09 对比）
+B11 = '--b11' in sys.argv             # B11（22，10-18 01:18）：B10 上垂柳大小退回 ×0.998、白墙第二轮错开（P0 / P8）、大号金蕊柠 / 多重菊改调 2828 / 2829，输出 B11动画.html（可切 B10 对比）
+B10 = '--b10' in sys.argv or B11     # B10（22，10-18 00:23）：垂柳按 UE 实测重排——去掉埋在垂柳里的下托、×0.852、寿命 14.5 s，输出 B10动画.html（可切 B09 对比）
 B09 = '--b09' in sys.argv or B10      # B09（22，10-17 00:47）：主角金垂柳 400 m、P0 / P4 / P8、下面补银彩菊、手游金垂柳、名字按 ResourceFX，输出 B09动画.html（可切 B08 修订7 对比）
 B08 = '--b08' in sys.argv or B09      # B08（22，10-15 22:02）：低配限峰、小平台降高放大、同时同高两层、种类大小、时间错开，输出 B08动画.html（可切 B07 修订1 对比）
 B07 = '--b07' in sys.argv or B08     # B07（22，10-15 11:14）：尾缀从地上出来、档位隔点、小平台加密、方向 / 大小 / 颜色，输出 B07动画.html（可切 B06 对比）
@@ -42,7 +43,7 @@ B4P = B04 or B05 or B06 or B07 or DAY  # B04 起的小平台前台小花 / 新�
 if B05 or B06 or B07 or DAY:
     b01.register_b05_mobile()
 B02 = DAY or B03 or B4P or R1M or '--b02' in sys.argv
-SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B10', 'B10', 'B10') if B10 else ('_B09', 'B09', 'B09') if B09 else ('_B08', 'B08', 'B08') if B08 else ('_B07', 'B07', 'B07') if B07 else ('_B06', 'B06', 'B06') if B06 else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+SFX, TABLE, NAME = ('_Day', 'Day', 'Day') if DAY else ('_B11', 'B11', 'B11') if B11 else ('_B10', 'B10', 'B10') if B10 else ('_B09', 'B09', 'B09') if B09 else ('_B08', 'B08', 'B08') if B08 else ('_B07', 'B07', 'B07') if B07 else ('_B06', 'B06', 'B06') if B06 else ('_B05', 'B05', 'B05') if B05 else ('_B04', 'B04', 'B04') if B04 else ('_B03r2m', 'B03r2m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
@@ -76,6 +77,8 @@ if B10:
     _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B10-垂柳实测重排-去埋住下托编排检查.json'
     b01.TPL['R03_GoldKamuro_H280']['life'] = 14.5                 # T19：末粒子上界 14.5 s（系统周期 16.1 s）
     b01.TPL['R03_GoldKamuro_H280']['diameter'] = 414.6            # × sizeK 0.70 = 290 m：花盘 340 m（×0.998，编排实放 175 s 同机位截图换算）× 0.852 ÷ 0.998（推断）
+if B11:
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B11-垂柳回0.998-白墙错开-大号接2828与2829编排检查.json'
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -226,6 +229,21 @@ def risks_b10():
         f"三朵垂柳之间（真实点位 P0–P4 361 m、P4–P8 318 m，不是设计表的 375 m）：花盘空隙 P0–P4 {g9['P0P4']['gapM']:.0f} → {g['P0P4']['gapM']:.0f} m、P4–P8 {g9['P4P8']['gapM']:.0f} → {g['P4P8']['gapM']:.0f} m（负 = 贴边）；垂柳往后会下垂变宽（开花后约 7 s 起像一道金帘），那一段三朵会连起来，这是下垂的样子，不是挤。",
         f"还剩的重叠：PC 重叠体检 {o9['pcIncidents']} → {ov['pcIncidents']} 处、手游每档 {max(v['incidents'] for v in o9['mobile'].values())} → {max(v['incidents'] for v in ov['mobile'].values())} 处（同一把尺子，垂柳花盘按实测）；和垂柳有关的还有 {ov['heroIncidents']} 处：116 s 那排银彩菊（开花后 +8.5 s）和 181 s 那排金蕊柠·大（+10 s）开在已经变暗的垂柳尾巴前面。开花后 0–5 s 还有 {wo['B10']['pc']['edge']} 处压边（盖住 20–50 %，主要是 P2 / P6 的银彩菊、P3 / P5 的多重菊贴着花盘边）。",
         f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}（比 B09 每档少 4 / 6 发）；扇、小平台、低配限峰都照 B09。新网格垂柳的开销没人量过，105–122.5 s 和 168–185.8 s 要先测。没在 UE 里放过。",
+    ]
+
+
+def risks_b11():
+    ob, ov, wo, wr = COMPILE.get('oneTable', {}), CHECK['overlap'], CHECK['willowOverlap'], CHECK['wallRounds']
+    o10 = CHECK['overlapB10SameRuler']
+    g = {x['a'] + x['b']: x for x in wo['B11']['willowGap']}
+    r2 = wr['PC']['round2']
+    return [
+        "B11 = B10 上只改你 10-18 01:18 授权的三处（别的一个没动）：① 垂柳大小改回 ×0.998（B09 的值；寿命 14.5 s、去掉埋在垂柳里的下托保持 B10）；② 白墙第二轮（200.6 s）错开第一轮（197.3 s）；③ 大号金蕊柠 / 多重菊改调 ResourceFX 2828 / 2829。",
+        f"垂柳 ×0.998 的代价（按真实点位 + 原机位量，花盘 340 m 是从 175 s 截图换算的推断）：P4–P8 两朵垂柳花盘重叠 {abs(g['P4P8']['gapM']):.0f} m（×0.852 时留缝 16 m）；开花后 0–5 s 被垂柳盖住过半的大花 PC {wo['B10']['pc']['buried']} → {wo['B11']['pc']['buried']}（174.7 s 那排银彩菊 P6 被 P8 垂柳盖约 51 %，P6–P8 只隔 146 m）、压边 {wo['B10']['pc']['edge']} → {wo['B11']['pc']['edge']}；手游不变（被盖住 {wo['B11']['mobile']['buried']}、压边 {wo['B11']['mobile']['edge']}）。",
+        f"白墙两轮：原来都是 P2 / P4 / P6、只隔 3.3 s，第一轮 {wr['PC']['round1End']:.1f} s 才结束，第二轮在同一位置同一高度又开（同点覆盖 100 %）。改成 P0 / P8（两端）：对第一轮的覆盖 P0 {int(r2[0]['maxCoveredByRound1'] * 100)} %、P8 {int(r2[1]['maxCoveredByRound1'] * 100)} %；3 朵 → 2 朵；PC 和手游一样（手机 M / L 只放偶数点，所以没用奇数点）。第二轮到 205.2 s 才结束，和 204.7 s 收尾那排同点（P0 / P8）还会叠约 0.5 s 的尾巴，没动。",
+        "大号金蕊柠 / 多重菊（PC，14 个时刻）改调 2828 大型_C_金蕊柠 / 2829 大型_D_多重菊：缩放不变（×1.41 / ×1.53）、现在和 2823 / 2825 是同一个粒子，画面不变；封板后可以单独换 / 调大型，不牵连中型。金芒菊·大没有「大型」ID，照旧 2824 放大。",
+        f"重叠体检：PC {o10['pcIncidents']} → {ov['pcIncidents']} 处、手游每档 {max(v['incidents'] for v in o10['mobile'].values())} → {max(v['incidents'] for v in ov['mobile'].values())} 处（和 B10 同一把尺子；这个体检不量白墙同点连开，那一项看上一条）。",
+        f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')}，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')}；以 B08 修订7 为标定：PC 每档 −6、手游每档 −10（含尾缀）；扇、小平台、GPU 峰值不变。没在 UE 里放过。",
     ]
 
 
@@ -443,16 +461,18 @@ def main():
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
     native = b01.REL_H
     data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b10() if B10 else risks_b09() if B09 else risks_b08() if B08 else risks_b07() if B07 else risks_b06() if B06 else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
+                species=species, cues=cues, events=events, risks=risks_day() if DAY else risks_b11() if B11 else risks_b10() if B10 else risks_b09() if B09 else risks_b08() if B08 else risks_b07() if B07 else risks_b06() if B06 else risks_b05() if B05 else risks_b04() if B04 else risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
     if B02:
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
     if B07:                           # B07 / B06 一页对比（B08：B08 / B07 修订1）；大号数字跟 VO
-        old = json.loads((OUT / ('逻辑方案_B09.json' if B10 else '逻辑方案_B08.json' if B09 else '逻辑方案_B07.json' if B08 else '逻辑方案_B06.json')).read_text(encoding='utf-8'))
+        old = json.loads((OUT / ('逻辑方案_B10.json' if B11 else '逻辑方案_B09.json' if B10 else '逻辑方案_B08.json' if B09 else '逻辑方案_B07.json' if B08 else '逻辑方案_B06.json')).read_text(encoding='utf-8'))
         oc, oe, _, osecs, oanch = build(old)
         au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
-        data['variants'] = ([dict(label='B10', note='垂柳按实测重排 · ×0.852 · 去掉埋在垂柳里的下托 · 寿命 14.5 s', cues=cues, events=events, sections=secs, anchors=anchors),
+        data['variants'] = ([dict(label='B11', note='垂柳回 ×0.998 · 去下托 · 白墙第二轮错开（P0 / P8）· 大号金蕊柠 / 多重菊改调 2828 / 2829', cues=cues, events=events, sections=secs, anchors=anchors),
+                             dict(label='B10', note='垂柳 ×0.852 · 去掉埋在垂柳里的下托 · 寿命 14.5 s', cues=oc, events=oe, sections=osecs, anchors=oanch)] if B11 else
+                            [dict(label='B10', note='垂柳按实测重排 · ×0.852 · 去掉埋在垂柳里的下托 · 寿命 14.5 s', cues=cues, events=events, sections=secs, anchors=anchors),
                              dict(label='B09', note='垂柳 ×0.998 · 下面补银彩菊 · 寿命 14 s', cues=oc, events=oe, sections=osecs, anchors=oanch)] if B10 else
                             [dict(label='B09', note='主角金垂柳 400 m · P0 / P4 / P8 · 下面补银彩菊 · 手游金垂柳 · 名字按 ResourceFX', cues=cues, events=events, sections=secs, anchors=anchors),
                              dict(label='B08修订7', note='主角 330 m · P2 / P4 / P6 · 手游金芒菊替身', cues=oc, events=oe, sections=osecs, anchors=oanch)] if B09 else

@@ -2,8 +2,8 @@
   "format": "df.offline-build/1",
   "time": "2026-10-15T17:10:16.359Z",
   "html": "烟花编排工作台.html",
-  "bytes": 10921890,
-  "sha256": "7884470e996e33babbf10f2c7db14bdb57f1e69bc8092008b309913d48f85d1c",
+  "bytes": 10924010,
+  "sha256": "59d7d5d1128a94cfeaeb078776dd835361ed12f893de63c68251fc929f181ab9",
   "programmeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "originalProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "musicIncluded": false,
@@ -12,11 +12,11 @@
   "embeddedMusicSha256": null,
   "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
   "cloudLatest": {
-    "version": "16.0.45",
-    "name": "B10-垂柳实测重排-去埋住下托",
-    "programmeSha256": "7ae4248e262461fca2b533d98caba6432d572ef0dcc9c835701c8ea9326d1e1f",
+    "version": "16.0.46",
+    "name": "B11-垂柳回0.998-白墙错开-大号接2828与2829",
+    "programmeSha256": "aca191b07a3e296136c74368fb7d9079dcb7507cf161c1e766fcbcf18a078080",
     "cues": 492,
-    "events": 1570,
+    "events": 1568,
     "musicEmbedded": true,
     "musicSha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613"
   },
@@ -31,7 +31,7 @@
     "public/data/subtemplate-source.json": "63e41141c8c1686a13597728586398bd3fcc8ed32be1e87409f2189d249be718",
     "public/data/size-spec.json": "68da8838657b79247c7662d8a1ce830ee9aade22ae6e915e6f25f658137d22dc",
     "public/data/resource-catalogue.json": "d70182642319e8f95affa6b537a1db61cf3ceeb51bf7e593504c1d76867686ae",
-    "public/data/cloud-latest.json": "3c1104c4a6315dddabc139bd66141e6c9cfc0545ba25bd756e361909c401c4e1",
+    "public/data/cloud-latest.json": "46d40a279cd1cd76b1a6151d43ab36e6356422bd92ef91c4ba06dd0436425304",
     "src/main.jsx": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8",
     "src/df-theme.css": "ea86e34475aa4f65ce6fe3bf1a784c3f6d0e331fc2e4d61fbe1602f08bebd08b",
     "src/material-theme.css": "fa93d65d6a3cf3f1ae3ac299a6d3a30b9237c97979ea3788825a21abeefc52a6",
@@ -173,6 +173,25 @@
       "previousVersion": "16.0.44",
       "previousHtmlSha256": "dd5843533f0388238eff81fff5bc21188d5014f4286cd8042a0e38e09e98b6f8",
       "productCommit": "9a6b9892a22c137d4b6bf8f69d1183acc3d946e4",
+      "sourceCheck": {
+        "byHash": 92,
+        "byGitOnly": []
+      },
+      "environment": {
+        "platform": "linux",
+        "python": "3.13.15"
+      }
+    },
+    {
+      "time": "2026-10-17T17:26:43Z",
+      "key": "cloud-latest",
+      "version": "16.0.46",
+      "name": "B11-垂柳回0.998-白墙错开-大号接2828与2829",
+      "programmeSha256": "aca191b07a3e296136c74368fb7d9079dcb7507cf161c1e766fcbcf18a078080",
+      "appVersion": "16.0.42",
+      "previousVersion": "16.0.45",
+      "previousHtmlSha256": "7884470e996e33babbf10f2c7db14bdb57f1e69bc8092008b309913d48f85d1c",
+      "productCommit": "4c5ba1893cb7d00376eb4711345943334fab7984",
       "sourceCheck": {
         "byHash": 92,
         "byGitOnly": []

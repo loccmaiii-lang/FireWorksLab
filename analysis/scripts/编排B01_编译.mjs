@@ -63,6 +63,9 @@ const logic = JSON.parse(fs.readFileSync(LOGIC, 'utf8'));
 const payload = clone(base.payload);
 const doc = clone(payload.doc);
 
+// B11（22，用户 10-18 01:18「你直接放大……后面还能切换吗」）：--large-resource CLL=P_EFX_FireWorks_GoldCoreLime_L,MLL=P_EFX_FireWorks_MultiLayerChry_L
+//   大号花型（大号花型.json 的 code）改调 ResourceFX「大型_C / D」（2828 / 2829，和中型 2823 / 2825 现在是同一个粒子）；EffectScale 不变，画面不变，封板后可单独换 / 调。不带开关什么都不动。
+const LARGE_RES = new Map((option('large-resource') || '').split(',').filter(Boolean).map(x => x.split('=')));
 // —— 修订2：同一资源放大升高的大号 / 主角固定子模板（另存新版本，不动原花型） ——
 const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大号花型.json'), 'utf8')).flowers;
 {
@@ -78,6 +81,7 @@ const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大
     trail.native.RotationOffset = {...trail.native.RotationOffset, Roll: roll};
     const burst = clone(sb);      // 原花的同一个资源，放大、升到大号尾缀的终点
     const k = f.diameter / st.diameter;
+    if (LARGE_RES.has(f.code)) { const lid = LARGE_RES.get(f.code); burst.native.FXResourceId = lid; burst.baseTemplateRef = lid + '|burst'; }   // B11：大号改调 ResourceFX 的「大型」ID（缩放不变）
     burst.native.LocalTimeOffset = fb.native.LocalTimeOffset;
     burst.native.PositionOffset = {X: 0, Y: round(RS * Math.sin(a) * E * 100), Z: round(Math.cos(a) * E * 100 + hOff * 100)};
     burst.native.RotationOffset = {...burst.native.RotationOffset, Roll: roll};
@@ -445,6 +449,13 @@ if (resourceMapInput) {
     const id0 = r.id, id = ren[id0] || id0;
     if (id !== id0) { r.id = id; if (r.key) r.key = r.key.replace(id0 + '|', id + '|'); }
     const row = rows.get(id); if (row) r.resourceSource = {...(r.resourceSource || {}), table: rb.tables.pc, rowName: row._row_name, particle: row.FxSP, readAt: rb.readAt};
+  }
+  for (const lid of new Set(LARGE_RES.values())) {   // B11：库里没有「大型」行的基础资源，按对应中型行复制一条
+    if ((doc.baseResourceLibrary || []).some(r => r.id === lid)) continue;
+    const src0 = (doc.baseResourceLibrary || []).find(r => r.id === lid.replace(/_L$/, '')), row = rows.get(lid);
+    if (!src0 || !row) throw Error('--large-resource：找不到 ' + lid + ' 对应的库资源或 ResourceFX 行');
+    doc.baseResourceLibrary.push({...clone(src0), id: lid, key: lid + '|burst', name: lid, label: row._row_name, sizeClass: 'large', native: {...clone(src0.native), FXResourceId: lid},
+      preview: {...(src0.preview || {}), diameterM: 230}, resourceSource: {...(src0.resourceSource || {}), table: rb.tables.pc, rowName: row._row_name, particle: row.FxSP, readAt: rb.readAt}});
   }
   resourceMap = {file: resourceMapInput, readback: rm.readback, readAt: rb.readAt, rows, renamed, metadataSynced: meta.size};
 }
