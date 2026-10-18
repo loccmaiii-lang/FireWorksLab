@@ -1,0 +1,1492 @@
+{
+  "version": "4.9.117",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "manual": {
+    "begin": 0,
+    "captured": 0,
+    "rebaked": 0,
+    "warning": "手机序列冲突：第 1、2、3 层的序列存在重叠时段，手游同一时刻只允许 1 张大序列。请调整产物表的手机列；选择「自动」会按规则省略冲突层，也可明确选「不出」。保留全部层需要另外制作合成方案，不能直接放宽规范。",
+    "tableVisible": true,
+    "focus": "mobile",
+    "blocked": true,
+    "unchanged": true
+  },
+  "pcEmitters": 3,
+  "mobileEmitters": 3,
+  "problems": [
+    "cascade_mobile.json：同一时刻有 3 张大序列（L1_Main + L2_Main + L3_Main）；手游中低配只能 1 张（规范 §6）：交付清单产物表把第 2、3 层的手机改成「自动」或「不出」"
+  ],
+  "pcTextureHashes": {
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png": "90d83ba716d4ffaa9f750f6f396eba3396e7e7fe32e462fc8f9718d6304a0960",
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png": "19825a35b85dd196359cf3b8c886af0bd1a24adcbcb1f3be19d0dc4f7439887c",
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png": "641fc83a64c86e0eda9f370364bed5475cf2f4c39b4ed448c5b816c895a65360",
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png": "31e81308f9985dab2faaea5d397ccd0a49d73d23f1817df5550316254b9f0fe6",
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png": "abbef9900f8e6abfa9f61823bcd82dc013f533407b9163ccf9165b88b11c91d0",
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png": "1e767a2381698273955c443a3bc6a5d57649a95fb788a3f97554080e8bb24f3a",
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png": "44603e37b1691a5a175bd29790b903f0ed5a859b9d20196de18967f614f977ad",
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png": "f1a691d2389136140ca3d3f233f89610fb2999a7e900814bdd752f4df220ff24",
+    "T_EFX_FireWorks_GlitterChry_Test_Head_R.png": "7466c14cb80e5f756b3426c8ca0df3eaaf0e95fa3d62c5bfc9f2ff110286616f"
+  },
+  "pcPixels": {
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaScanlineSHA256": "e7991744e03f91d5ae99a435fb4759586451db69b380a497e21b19b7671682ee"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "rgbaScanlineSHA256": "8ec47b2cf721db200d14b1dcec93e47d073d14cedccba6180e6b972cda86830c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png": {
+      "width": 256,
+      "height": 8,
+      "rgbaScanlineSHA256": "c470c13024044a3e444f1c840558441ef44a1b0cf546f4af5864441c6403be8c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaScanlineSHA256": "46f3af9ed923ba8690a4c1e495f7688c0655830f4b4a85c1c63c8cc1bbb3e2e7"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "rgbaScanlineSHA256": "e078aea7d1450bfc3d09e059435cd315be3c2438d86af6cd950bb5f4b81fed71"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png": {
+      "width": 256,
+      "height": 8,
+      "rgbaScanlineSHA256": "c5e4386502de358e16a82efe212d0120cc6c13af487b49726234bfd1ab727545"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaScanlineSHA256": "160c8ac02dd4dfb13953f9bf425005548e3a35e38ca6e9006b7c5adef007eaa0"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "rgbaScanlineSHA256": "e40a9600c92b9a91885699ecee05a94f9aa269f9b57df92a29716a7708dc5418"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_R.png": {
+      "width": 256,
+      "height": 8,
+      "rgbaScanlineSHA256": "b0eec82ae25cab4a96a5d327dbf71bf47f505cec40b48bde33880365d70e0620"
+    }
+  },
+  "pcVisiblePixels": {
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "frames": 64,
+      "SHA256": "8505e8dbf8a679530eff45b240ebef80d7d3f9bee350344a0908ba5c8dea2334"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "frames": null,
+      "SHA256": "8ec47b2cf721db200d14b1dcec93e47d073d14cedccba6180e6b972cda86830c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png": {
+      "width": 256,
+      "height": 8,
+      "frames": null,
+      "SHA256": "c470c13024044a3e444f1c840558441ef44a1b0cf546f4af5864441c6403be8c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "frames": 64,
+      "SHA256": "3bf8ef41d9c79395fa2781d5e4eaad6e0d7867a27c831a87e888b41479048bd4"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "frames": null,
+      "SHA256": "e078aea7d1450bfc3d09e059435cd315be3c2438d86af6cd950bb5f4b81fed71"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png": {
+      "width": 256,
+      "height": 8,
+      "frames": null,
+      "SHA256": "c5e4386502de358e16a82efe212d0120cc6c13af487b49726234bfd1ab727545"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "frames": 63,
+      "SHA256": "f4c104a89d5deac73d026c498b352b0a9a06bf4ba4ee0ea5c40fdb2716a8f07c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "frames": null,
+      "SHA256": "e40a9600c92b9a91885699ecee05a94f9aa269f9b57df92a29716a7708dc5418"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_R.png": {
+      "width": 256,
+      "height": 8,
+      "frames": null,
+      "SHA256": "b0eec82ae25cab4a96a5d327dbf71bf47f505cec40b48bde33880365d70e0620"
+    }
+  },
+  "valid": {
+    "auto": [
+      {
+        "kind": "seq",
+        "auto": true,
+        "why": ""
+      },
+      {
+        "kind": "off",
+        "auto": true,
+        "why": "和第 1 层同时播，手游同一时刻只能 1 张大序列"
+      },
+      {
+        "kind": "off",
+        "auto": true,
+        "why": "和第 1 层同时播，手游同一时刻只能 1 张大序列"
+      }
+    ],
+    "zipBytes": 12628804,
+    "pc": {
+      "format": "fwl.cascade/1",
+      "name": "GlitterChry_Test",
+      "platform": "pc",
+      "source": {
+        "tool": "烟花母版烘焙器 4.9.117",
+        "combo": true,
+        "layers": [
+          {
+            "type": "kiku",
+            "form": "master",
+            "renderVer": 40
+          },
+          {
+            "type": "kiku",
+            "form": "master",
+            "renderVer": 40
+          },
+          {
+            "type": "strobe",
+            "form": "master",
+            "renderVer": 40
+          }
+        ],
+        "plan_sig": "24a6403c"
+      },
+      "textures": {
+        "L1_seq": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png",
+          "class": "flipbook",
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD"
+        },
+        "L1_cutout": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png",
+          "class": "cutout",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C"
+        },
+        "L1_ramp": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png",
+          "class": "ramp",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Lead_R"
+        },
+        "L2_seq": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png",
+          "class": "flipbook",
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD"
+        },
+        "L2_cutout": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png",
+          "class": "cutout",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C"
+        },
+        "L2_ramp": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png",
+          "class": "ramp",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Gold_R"
+        },
+        "L3_seq": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png",
+          "class": "flipbook",
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 63,
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD"
+        },
+        "L3_cutout": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png",
+          "class": "cutout",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C"
+        },
+        "L3_ramp": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Head_R.png",
+          "class": "ramp",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Head_R"
+        }
+      },
+      "materials": {
+        "L1_main": {
+          "role": "flipbook_rgba",
+          "textures": {
+            "main": "L1_seq",
+            "ramp": "L1_ramp"
+          },
+          "scalars": {
+            "rows": 4,
+            "cols": 4
+          }
+        },
+        "L2_main": {
+          "role": "flipbook_rgba",
+          "textures": {
+            "main": "L2_seq",
+            "ramp": "L2_ramp"
+          },
+          "scalars": {
+            "rows": 4,
+            "cols": 4
+          }
+        },
+        "L3_main": {
+          "role": "flipbook_rgba",
+          "textures": {
+            "main": "L3_seq",
+            "ramp": "L3_ramp"
+          },
+          "scalars": {
+            "rows": 4,
+            "cols": 4
+          }
+        }
+      },
+      "emitters": [
+        {
+          "name": "L1_Main",
+          "material": "L1_main",
+          "gpu": false,
+          "required": {
+            "screen_alignment": "Rectangle",
+            "duration_s": 1.5555,
+            "loops": 1,
+            "delay_s": 0,
+            "cutout": "L1_cutout",
+            "max_draw_count": 1
+          },
+          "spawn": {
+            "rate": {
+              "const": 0
+            },
+            "bursts": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          "modules": [
+            {
+              "m": "Lifetime",
+              "Lifetime": {
+                "const": 1.5555
+              }
+            },
+            {
+              "m": "InitialSize",
+              "StartSize": {
+                "const": [
+                  1436.03,
+                  1436.03,
+                  1
+                ]
+              }
+            },
+            {
+              "m": "InitialLocation",
+              "StartLocation": {
+                "const": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "m": "SizeByLife",
+              "LifeMultiplier": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      0.7478,
+                      0.7478,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0427,
+                    [
+                      0.7478,
+                      0.7478,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0429,
+                    [
+                      0.6054,
+                      0.6054,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0713,
+                    [
+                      0.6054,
+                      0.6054,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0714,
+                    [
+                      0.3996,
+                      0.3996,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0999,
+                    [
+                      0.3996,
+                      0.3996,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1,
+                    [
+                      0.4783,
+                      0.4783,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1284,
+                    [
+                      0.4783,
+                      0.4783,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1286,
+                    [
+                      0.5449,
+                      0.5449,
+                      1
+                    ]
+                  ],
+                  [
+                    0.157,
+                    [
+                      0.5449,
+                      0.5449,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1571,
+                    [
+                      0.6286,
+                      0.6286,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1998,
+                    [
+                      0.6286,
+                      0.6286,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2,
+                    [
+                      0.6989,
+                      0.6989,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2427,
+                    [
+                      0.6989,
+                      0.6989,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2429,
+                    [
+                      0.7604,
+                      0.7604,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2856,
+                    [
+                      0.7604,
+                      0.7604,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2857,
+                    [
+                      0.8332,
+                      0.8332,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3427,
+                    [
+                      0.8332,
+                      0.8332,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3429,
+                    [
+                      0.8913,
+                      0.8913,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3999,
+                    [
+                      0.8913,
+                      0.8913,
+                      1
+                    ]
+                  ],
+                  [
+                    0.4,
+                    [
+                      0.9439,
+                      0.9439,
+                      1
+                    ]
+                  ],
+                  [
+                    0.457,
+                    [
+                      0.9439,
+                      0.9439,
+                      1
+                    ]
+                  ],
+                  [
+                    0.4571,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "MultiplyX": true,
+              "MultiplyY": true,
+              "MultiplyZ": false
+            },
+            {
+              "m": "DynamicParameter",
+              "params": {
+                "frame": {
+                  "curve": [
+                    [
+                      0,
+                      0.01
+                    ],
+                    [
+                      0.8143,
+                      57.01
+                    ],
+                    [
+                      0.9857,
+                      63.01
+                    ],
+                    [
+                      1,
+                      63.99
+                    ]
+                  ]
+                }
+              }
+            },
+            {
+              "m": "ColorOverLife",
+              "ColorOverLife": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "AlphaOverLife": {
+                "const": 1
+              }
+            },
+            {
+              "m": "ColorScaleOverLife",
+              "ColorScaleOverLife": {
+                "const": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "AlphaScaleOverLife": {
+                "const": 1
+              },
+              "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+            }
+          ],
+          "layer": 1
+        },
+        {
+          "name": "L2_Main",
+          "material": "L2_main",
+          "gpu": false,
+          "required": {
+            "screen_alignment": "Rectangle",
+            "duration_s": 3.3333,
+            "loops": 1,
+            "delay_s": 0.2,
+            "cutout": "L2_cutout",
+            "max_draw_count": 1
+          },
+          "spawn": {
+            "rate": {
+              "const": 0
+            },
+            "bursts": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          "modules": [
+            {
+              "m": "Lifetime",
+              "Lifetime": {
+                "const": 3.3333
+              }
+            },
+            {
+              "m": "InitialSize",
+              "StartSize": {
+                "const": [
+                  2071.19,
+                  2071.19,
+                  1
+                ]
+              }
+            },
+            {
+              "m": "InitialLocation",
+              "StartLocation": {
+                "const": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "m": "SizeByLife",
+              "LifeMultiplier": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      0.402,
+                      0.402,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0198,
+                    [
+                      0.402,
+                      0.402,
+                      1
+                    ]
+                  ],
+                  [
+                    0.02,
+                    [
+                      0.4688,
+                      0.4688,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0332,
+                    [
+                      0.4688,
+                      0.4688,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0333,
+                    [
+                      0.5035,
+                      0.5035,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0465,
+                    [
+                      0.5035,
+                      0.5035,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0467,
+                    [
+                      0.5539,
+                      0.5539,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0665,
+                    [
+                      0.5539,
+                      0.5539,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0667,
+                    [
+                      0.6165,
+                      0.6165,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0932,
+                    [
+                      0.6165,
+                      0.6165,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0933,
+                    [
+                      0.6628,
+                      0.6628,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1265,
+                    [
+                      0.6628,
+                      0.6628,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1267,
+                    [
+                      0.7349,
+                      0.7349,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1798,
+                    [
+                      0.7349,
+                      0.7349,
+                      1
+                    ]
+                  ],
+                  [
+                    0.18,
+                    [
+                      0.7969,
+                      0.7969,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2398,
+                    [
+                      0.7969,
+                      0.7969,
+                      1
+                    ]
+                  ],
+                  [
+                    0.24,
+                    [
+                      0.8689,
+                      0.8689,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3199,
+                    [
+                      0.8689,
+                      0.8689,
+                      1
+                    ]
+                  ],
+                  [
+                    0.32,
+                    [
+                      0.9358,
+                      0.9358,
+                      1
+                    ]
+                  ],
+                  [
+                    0.4199,
+                    [
+                      0.9358,
+                      0.9358,
+                      1
+                    ]
+                  ],
+                  [
+                    0.42,
+                    [
+                      0.9908,
+                      0.9908,
+                      1
+                    ]
+                  ],
+                  [
+                    0.7799,
+                    [
+                      0.9908,
+                      0.9908,
+                      1
+                    ]
+                  ],
+                  [
+                    0.78,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "MultiplyX": true,
+              "MultiplyY": true,
+              "MultiplyZ": false
+            },
+            {
+              "m": "DynamicParameter",
+              "params": {
+                "frame": {
+                  "curve": [
+                    [
+                      0,
+                      0.01
+                    ],
+                    [
+                      0.1133,
+                      17.01
+                    ],
+                    [
+                      0.22,
+                      25.01
+                    ],
+                    [
+                      0.98,
+                      63.01
+                    ],
+                    [
+                      1,
+                      63.99
+                    ]
+                  ]
+                }
+              }
+            },
+            {
+              "m": "ColorOverLife",
+              "ColorOverLife": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      0.855,
+                      0.8879,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      0.855,
+                      0.8879,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "AlphaOverLife": {
+                "const": 1
+              }
+            },
+            {
+              "m": "ColorScaleOverLife",
+              "ColorScaleOverLife": {
+                "const": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "AlphaScaleOverLife": {
+                "const": 1
+              },
+              "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+            }
+          ],
+          "layer": 2
+        },
+        {
+          "name": "L3_Main",
+          "material": "L3_main",
+          "gpu": false,
+          "required": {
+            "screen_alignment": "Rectangle",
+            "duration_s": 3.9333,
+            "loops": 1,
+            "delay_s": 0.6,
+            "cutout": "L3_cutout",
+            "max_draw_count": 1,
+            "pivot_offset": [
+              -0.5,
+              -0.4657
+            ]
+          },
+          "spawn": {
+            "rate": {
+              "const": 0
+            },
+            "bursts": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          "modules": [
+            {
+              "m": "Lifetime",
+              "Lifetime": {
+                "const": 3.9333
+              }
+            },
+            {
+              "m": "InitialSize",
+              "StartSize": {
+                "const": [
+                  2627.56,
+                  2627.56,
+                  1
+                ]
+              }
+            },
+            {
+              "m": "InitialLocation",
+              "StartLocation": {
+                "const": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "m": "DynamicParameter",
+              "params": {
+                "frame": {
+                  "curve": [
+                    [
+                      0,
+                      0.01
+                    ],
+                    [
+                      0.113,
+                      10.01
+                    ],
+                    [
+                      0.9944,
+                      62.01
+                    ],
+                    [
+                      1,
+                      62.99
+                    ]
+                  ]
+                }
+              }
+            },
+            {
+              "m": "ColorOverLife",
+              "ColorOverLife": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      0.0467,
+                      0.15,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      0.0467,
+                      0.15,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "AlphaOverLife": {
+                "const": 1
+              }
+            },
+            {
+              "m": "ColorScaleOverLife",
+              "ColorScaleOverLife": {
+                "const": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "AlphaScaleOverLife": {
+                "const": 1
+              },
+              "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+            }
+          ],
+          "notes": [
+            "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -11.7 m），仰视时也对得上；未经 UE 验证"
+          ],
+          "layer": 3
+        }
+      ],
+      "system": {
+        "preview_distance_cm": 3416,
+        "preview_warmup_s": 1.2
+      },
+      "notes": [
+        "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。",
+        "按尺寸标定 v4「前台 24 m」：花径 24 m（原样 311.7 m）→ 所有长度 × 0.077，时间 / 帧号 / 贴图不变（用户 10-09 00:27「只改大小，其他都不变」）；spec/尺寸标定.json"
+      ],
+      "naming": {
+        "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+        "base": "GlitterChry_Test",
+        "layers": [
+          "Lead",
+          "Gold",
+          "Head"
+        ],
+        "asset_names": "textures[].asset",
+        "prefix_included": true
+      },
+      "export_scale": 0.077,
+      "size_spec": {
+        "id": "cls:d:front:24",
+        "name": "前台 24 m",
+        "version": 4,
+        "what": "diameter",
+        "target_m": 24,
+        "measured_m": 311.7,
+        "k": 0.077
+      }
+    },
+    "mobile": {
+      "format": "fwl.cascade/1",
+      "name": "GlitterChry_Test_M",
+      "platform": "mobile",
+      "source": {
+        "tool": "烟花母版烘焙器 4.9.117",
+        "combo": true,
+        "layers": [
+          {
+            "type": "kiku",
+            "form": "master",
+            "renderVer": 40
+          }
+        ],
+        "plan_sig": "2a1853e3"
+      },
+      "textures": {
+        "L1_seq": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01.png",
+          "class": "flipbook",
+          "cols": 4,
+          "rows": 4,
+          "channels": 4,
+          "frames": 64,
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01"
+        },
+        "L1_cutout": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png",
+          "class": "cutout",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C"
+        },
+        "L1_ramp": {
+          "file": "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png",
+          "class": "ramp",
+          "asset": "T_EFX_FireWorks_GlitterChry_Test_Lead_R"
+        }
+      },
+      "materials": {
+        "L1_main": {
+          "role": "flipbook_rgba",
+          "textures": {
+            "main": "L1_seq",
+            "ramp": "L1_ramp"
+          },
+          "scalars": {
+            "rows": 4,
+            "cols": 4
+          }
+        }
+      },
+      "emitters": [
+        {
+          "name": "L1_Main",
+          "material": "L1_main",
+          "gpu": false,
+          "required": {
+            "screen_alignment": "Rectangle",
+            "duration_s": 1.5555,
+            "loops": 1,
+            "delay_s": 0,
+            "cutout": "L1_cutout",
+            "max_draw_count": 1
+          },
+          "spawn": {
+            "rate": {
+              "const": 0
+            },
+            "bursts": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          "modules": [
+            {
+              "m": "Lifetime",
+              "Lifetime": {
+                "const": 1.5555
+              }
+            },
+            {
+              "m": "InitialSize",
+              "StartSize": {
+                "const": [
+                  1436.03,
+                  1436.03,
+                  1
+                ]
+              }
+            },
+            {
+              "m": "InitialLocation",
+              "StartLocation": {
+                "const": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "m": "SizeByLife",
+              "LifeMultiplier": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      0.7478,
+                      0.7478,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0427,
+                    [
+                      0.7478,
+                      0.7478,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0429,
+                    [
+                      0.6054,
+                      0.6054,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0713,
+                    [
+                      0.6054,
+                      0.6054,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0714,
+                    [
+                      0.3996,
+                      0.3996,
+                      1
+                    ]
+                  ],
+                  [
+                    0.0999,
+                    [
+                      0.3996,
+                      0.3996,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1,
+                    [
+                      0.4783,
+                      0.4783,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1284,
+                    [
+                      0.4783,
+                      0.4783,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1286,
+                    [
+                      0.5449,
+                      0.5449,
+                      1
+                    ]
+                  ],
+                  [
+                    0.157,
+                    [
+                      0.5449,
+                      0.5449,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1571,
+                    [
+                      0.6286,
+                      0.6286,
+                      1
+                    ]
+                  ],
+                  [
+                    0.1998,
+                    [
+                      0.6286,
+                      0.6286,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2,
+                    [
+                      0.6989,
+                      0.6989,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2427,
+                    [
+                      0.6989,
+                      0.6989,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2429,
+                    [
+                      0.7604,
+                      0.7604,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2856,
+                    [
+                      0.7604,
+                      0.7604,
+                      1
+                    ]
+                  ],
+                  [
+                    0.2857,
+                    [
+                      0.8332,
+                      0.8332,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3427,
+                    [
+                      0.8332,
+                      0.8332,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3429,
+                    [
+                      0.8913,
+                      0.8913,
+                      1
+                    ]
+                  ],
+                  [
+                    0.3999,
+                    [
+                      0.8913,
+                      0.8913,
+                      1
+                    ]
+                  ],
+                  [
+                    0.4,
+                    [
+                      0.9439,
+                      0.9439,
+                      1
+                    ]
+                  ],
+                  [
+                    0.457,
+                    [
+                      0.9439,
+                      0.9439,
+                      1
+                    ]
+                  ],
+                  [
+                    0.4571,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "MultiplyX": true,
+              "MultiplyY": true,
+              "MultiplyZ": false
+            },
+            {
+              "m": "DynamicParameter",
+              "params": {
+                "frame": {
+                  "curve": [
+                    [
+                      0,
+                      0.01
+                    ],
+                    [
+                      0.8143,
+                      57.01
+                    ],
+                    [
+                      0.9857,
+                      63.01
+                    ],
+                    [
+                      1,
+                      63.99
+                    ]
+                  ]
+                }
+              }
+            },
+            {
+              "m": "ColorOverLife",
+              "ColorOverLife": {
+                "curve": [
+                  [
+                    0,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ],
+                  [
+                    1,
+                    [
+                      1,
+                      1,
+                      1
+                    ]
+                  ]
+                ]
+              },
+              "AlphaOverLife": {
+                "const": 1
+              }
+            },
+            {
+              "m": "ColorScaleOverLife",
+              "ColorScaleOverLife": {
+                "const": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "AlphaScaleOverLife": {
+                "const": 1
+              },
+              "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+            }
+          ],
+          "layer": 1,
+          "max_alive": 1
+        }
+      ],
+      "system": {
+        "preview_distance_cm": 2310,
+        "preview_warmup_s": 1.2
+      },
+      "notes": [
+        "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。",
+        "按尺寸标定 v4「前台 24 m」：花径 24 m（原样 311.7 m）→ 所有长度 × 0.077，时间 / 帧号 / 贴图不变（用户 10-09 00:27「只改大小，其他都不变」）；spec/尺寸标定.json"
+      ],
+      "tier": "M",
+      "naming": {
+        "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+        "base": "GlitterChry_Test",
+        "layers": [
+          "Lead",
+          "Gold",
+          "Head"
+        ],
+        "asset_names": "textures[].asset",
+        "prefix_included": true
+      },
+      "export_scale": 0.077,
+      "size_spec": {
+        "id": "cls:d:front:24",
+        "name": "前台 24 m",
+        "version": 4,
+        "what": "diameter",
+        "target_m": 24,
+        "measured_m": 311.7,
+        "k": 0.077
+      }
+    },
+    "warning": "",
+    "blocked": false,
+    "savedId": "fxmobilepreflighttest",
+    "savedOut": [
+      null,
+      null,
+      null
+    ]
+  },
+  "source": "预检通过的F盘8034实际117成品",
+  "pngEncodingDiffs": [],
+  "unusedAtlasDiffs": [],
+  "savedRefresh": true,
+  "pageErrors": [],
+  "pass": true
+}

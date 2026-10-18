@@ -1,0 +1,258 @@
+{
+  "pass": true,
+  "baseline": "1777af13",
+  "changedJS": [
+    "10_types.js",
+    "67_fwlcombo.js",
+    "70_ui.js",
+    "79_workbench.js"
+  ],
+  "protectedJS": [
+    {
+      "file": "00_util.js",
+      "sha256": "6e075fa58fc947dba49f1f0dafca65511b35e02a0797abf41764499c641c845b"
+    },
+    {
+      "file": "05_quality.js",
+      "sha256": "8572b9f9920e429c0da23c62160bbb204187ebbb34a057f42aa694dfd4d71281"
+    },
+    {
+      "file": "12_tempo.js",
+      "sha256": "1fb0a50b29d2688b0a247bf4ae962bcb8c9e2aa987ba41abf05af2e9e3b0c6e3"
+    },
+    {
+      "file": "14_pending.js",
+      "sha256": "8b263d8d2755ee165f561fb8efda42b21688d8af469ecd90d6d85cf51b636439"
+    },
+    {
+      "file": "15_replica.js",
+      "sha256": "975fc4220334ab0b4b3d290f493f683bbf035d8ecbf1873d307d5c6af7202b1f"
+    },
+    {
+      "file": "16_thumbs.js",
+      "sha256": "3746658149ea99529d4a35baab29e28954fc0e0162e732e21a5860595852e16c"
+    },
+    {
+      "file": "17_cloudrecipes.js",
+      "sha256": "cb568e83886e5648f6569ff2a26c0ed2c9cfe17de6b0ce8e98e060679285c963"
+    },
+    {
+      "file": "17_graph_presets.js",
+      "sha256": "5f3444df92c5d716c246dbf091acebf0b46fabea485fca5a67ad1924a9c7da52"
+    },
+    {
+      "file": "18_multitypes.js",
+      "sha256": "bd9d4a8b89c5d2939932c85a910e8b4e0d21b191f670ac143560706de86141f9"
+    },
+    {
+      "file": "19_spark_late.js",
+      "sha256": "05b2ef3aada9e5179e79a71928b3f4f486ae6785f54d0741efe354334d966595"
+    },
+    {
+      "file": "19_thumbsvg.js",
+      "sha256": "1b1067b29bdb3c72472816c564f482784fce064881703e8693982f920626e292"
+    },
+    {
+      "file": "20_sim.js",
+      "sha256": "6a05d43933e32960984d90bafa8795e450ba58b40bc623da00c8dcef3a5dd776"
+    },
+    {
+      "file": "30_plan.js",
+      "sha256": "20a4697d48286258c0d4454cd6a14dca503f1ce5186345ce358963ea1106392f"
+    },
+    {
+      "file": "31_plan40.js",
+      "sha256": "5a7f5c48e1c48442141a9b098e2086e123d9c44769ee59528b28f678522e2a55"
+    },
+    {
+      "file": "39_programs.js",
+      "sha256": "762670107e0af810354aeb04883898e296dd57ff6aeb2e3b83afd0c3f604d4c1"
+    },
+    {
+      "file": "40_gl.js",
+      "sha256": "563790da945466d726c791fa11c2cc83499eb3941b1ab342bfee058081f594fc"
+    },
+    {
+      "file": "41_particles40.js",
+      "sha256": "597d8531ee4c76c4a2eb666a342076d00a843a9adb5f5c1ce3f476d323e9daae"
+    },
+    {
+      "file": "42_trail.js",
+      "sha256": "ee92951a29978188888778a13671caeefedc95050f72c17103a5496d224062d1"
+    },
+    {
+      "file": "43_phystrail.js",
+      "sha256": "7e260e44e84a6a04b9c128159d2d49fef015e6a1eb3f8f638f18372a13b1f42d"
+    },
+    {
+      "file": "44_physrecipes.js",
+      "sha256": "3f5c8d4c36202c01abac0249f457cb1aa72ca673ad95fa4dcf05d625888a260a"
+    },
+    {
+      "file": "45_physbody.js",
+      "sha256": "20fcdcd75e01c9f03f41b9b6b30b0be15b3ff0e29ce56e3999203ae7675c1e86"
+    },
+    {
+      "file": "45_spark_flow.js",
+      "sha256": "b19b7561bd1651682a90cba666eb804b43c06c8ca93dd2ae8a6748df67072575"
+    },
+    {
+      "file": "46_camera.js",
+      "sha256": "a689908727dec7b96d12d23557175b754ee0412f9d91f37a0a3bbaab2e65b8f4"
+    },
+    {
+      "file": "46_camera_render.js",
+      "sha256": "946588eb2bee31195502c39e8200fdc31cdd0e468c84c19b496dbe6e3f48875a"
+    },
+    {
+      "file": "46_emitset.js",
+      "sha256": "202ff829990ec4e11b2848fad5fcf91200fa383e291f028a386c5d24128e26b7"
+    },
+    {
+      "file": "46_graph_model.js",
+      "sha256": "385421f0908843c00acacb221a13c3b2e1a3e5718118ae7ba4e53a3bd3490b1f"
+    },
+    {
+      "file": "46_graph_render.js",
+      "sha256": "b443a237e8bd458f1af54999b5b863dc7618614e23a11991ddf15ddacfd2cce4"
+    },
+    {
+      "file": "47_risetail.js",
+      "sha256": "fd1725c895e4aaff7889f6ca56dae3354bc8540a0257f57535ea8e22f724d62f"
+    },
+    {
+      "file": "48_render40.js",
+      "sha256": "c62ed95a53251d8566740bbab65304e7191b4302c820a4ee27de56db9450adfa"
+    },
+    {
+      "file": "49_playback.js",
+      "sha256": "b28b0453179760b0bd8db33c465a2d51761916b8d48dbb4b6e888975e3ffa2e5"
+    },
+    {
+      "file": "50_bake.js",
+      "sha256": "e4452ccf9fdbb3ab9be1543f1585a9ef2be407dabe07366720e76d8c328599d9"
+    },
+    {
+      "file": "60_export.js",
+      "sha256": "34141cae3ae52b9451325e3fe36c9c7c084951832dc8247e32f9f5bd09018b80"
+    },
+    {
+      "file": "61_naming.js",
+      "sha256": "6297933cfb81cd32997ac9fc86348baabfcf6321b7236f9fc641243f01b83ae9"
+    },
+    {
+      "file": "62_resource_rules.js",
+      "sha256": "ba3b54889bfcee32b6ff217292593d45f1ff6819cc647239413aef99f4a9f8ef"
+    },
+    {
+      "file": "63_gate.js",
+      "sha256": "7b8e634f3d0a2604b31d2c8d829c32a87f35301005fa655a66b995c73b01d4e3"
+    },
+    {
+      "file": "65_cascade.js",
+      "sha256": "0d05b27607f784f4db01290e5473c27547105647f00a7ae749bb5b11189538eb"
+    },
+    {
+      "file": "66_fwlcascade.js",
+      "sha256": "93778454b2c4686f80b96640bb07b74f4b3b0394c47207f96bee6a13e7c7d23e"
+    },
+    {
+      "file": "67_delivery.js",
+      "sha256": "a91d81d7672eeb27a72a2501b36d288965e1bb66ef264e8a46bc942a2ca877fc"
+    },
+    {
+      "file": "67_event_instances.js",
+      "sha256": "7d025a3ca85b0f689a0eae1d974ebc8c241a42bc81b9f7f07a951ae015a0fe74"
+    },
+    {
+      "file": "68_keys.js",
+      "sha256": "1579a98d05d7e49a3f035339b8783f6a61c3b4820dea3749b1a0676cba38d4ae"
+    },
+    {
+      "file": "68_lowframe.js",
+      "sha256": "035d19b997e0060c8f99c18fba5ce9dd006df33553f93fbf497883bbf93292d6"
+    },
+    {
+      "file": "69_icons.js",
+      "sha256": "c523ec82c5e287751420e064deeaaa6be46c55ec642cfcea602058277029d954"
+    },
+    {
+      "file": "71_panel43.js",
+      "sha256": "a4ea5867335480bad2b734b593bf0b76dd9677d2259dd78d1db90373b835404a"
+    },
+    {
+      "file": "72_picker.js",
+      "sha256": "d6fdcb6c74adca8fe2bafe541caee9e57734e7e157fafc0b832da7f9b21fd6c7"
+    },
+    {
+      "file": "75_iter.js",
+      "sha256": "d6d0678a2a26f803346e579fd3ab9fbaf02f7e1b834b480ee2de405836dd33d0"
+    },
+    {
+      "file": "77_assets.js",
+      "sha256": "11abd143c016d63695b3e104a22169147388ce8b59526bcaf1cfcaccee1626fb"
+    },
+    {
+      "file": "78_updates.js",
+      "sha256": "2ed7aee21344a7230ac563d54672700ca9db2b79d5c5872b228615a0d999374e"
+    },
+    {
+      "file": "79_assetops.js",
+      "sha256": "d650eef167904118634913e625d4fadec2f1a03f34940f86d1cc5fa0d6d78595"
+    },
+    {
+      "file": "79_curves.js",
+      "sha256": "385551772a71ba73297ffdf993406a87c88ef6f09bd03b50afa8e980bfce7d1e"
+    },
+    {
+      "file": "79_event_panel.js",
+      "sha256": "eda4c5d894f992dea2d41472ade1d28ec1fba14a65ca5bcdb4e978fcd5fd9bb5"
+    },
+    {
+      "file": "79_graph_editor.js",
+      "sha256": "3b48b175cd0ec9b8ce068b79943a8ee163807bb04f494d1f54cf50bbab18d4c7"
+    },
+    {
+      "file": "79_library.js",
+      "sha256": "1f14fcb19a7bd932c1e2964b377e04600dac697ba91b4c8060752f2b61c1d70f"
+    },
+    {
+      "file": "79_myfx.js",
+      "sha256": "f42c54660d07d70e0228a4465ac5ca7c9a5fb22ce5ba16950aaa491b8e8edb98"
+    },
+    {
+      "file": "79_repo.js",
+      "sha256": "d5de1b249c7911c6d012a77c196d8ea49d39a1173a173d10be9df93bc7dc8dfb"
+    },
+    {
+      "file": "79_undo.js",
+      "sha256": "9b9251fe724e2f64b8962a20b32aa285bfb9826c22e3e774efb630ff7259af43"
+    },
+    {
+      "file": "80_render.js",
+      "sha256": "49e0d01bb3ac8ffd50d35ac1f6659ca60f0c8c85fb372378371ae41e8f1fd354"
+    },
+    {
+      "file": "81_event_render.js",
+      "sha256": "200404cda54b16eff4d2d88b6fb5864d04d4dbbad147cfd804ffed744e17d3b1"
+    },
+    {
+      "file": "82_showcase.js",
+      "sha256": "44ce11a724cee46d6467ccffb7fdf024127e718da667fccb0d190e6a7b686589"
+    },
+    {
+      "file": "85_stills.js",
+      "sha256": "9310b29884ef4d0c5a4de5eca98334189790f3b7bc582eba6ddfbd4bac0dc133"
+    },
+    {
+      "file": "90_events.js",
+      "sha256": "15d3001821c647e3534eb405b3ccd20c3180778a5695baea3999ceaa61e8963d"
+    }
+  ],
+  "sourceRecipeSHA256": "4b9ddb4a265fed89c6609ff078a42487fa3a83d1f577d946bf1034db1aa302b3",
+  "sourceRecipeUnchanged": true,
+  "pcNineTextureBytesIdentical": true,
+  "pcAllReferencedFramesIdentical": true,
+  "original_manual_choice_unchanged": true,
+  "candidateUEWritten": false
+}

@@ -1,0 +1,137 @@
+{
+  "version": "4.9.116",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "manual": {
+    "begin": 1,
+    "captured": 1,
+    "rebaked": 0,
+    "warning": "",
+    "tableVisible": false,
+    "focus": null,
+    "blocked": false,
+    "unchanged": true
+  },
+  "pcEmitters": 3,
+  "mobileEmitters": 3,
+  "problems": [
+    "cascade_mobile.json：同一时刻有 3 张大序列（L1_Main + L2_Main + L3_Main）；手游中低配只能 1 张（规范 §6）：交付清单产物表把第 2、3 层的手机改成「自动」或「不出」"
+  ],
+  "pcTextureHashes": {
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png": "90d83ba716d4ffaa9f750f6f396eba3396e7e7fe32e462fc8f9718d6304a0960",
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png": "19825a35b85dd196359cf3b8c886af0bd1a24adcbcb1f3be19d0dc4f7439887c",
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png": "641fc83a64c86e0eda9f370364bed5475cf2f4c39b4ed448c5b816c895a65360",
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png": "31e81308f9985dab2faaea5d397ccd0a49d73d23f1817df5550316254b9f0fe6",
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png": "abbef9900f8e6abfa9f61823bcd82dc013f533407b9163ccf9165b88b11c91d0",
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png": "1e767a2381698273955c443a3bc6a5d57649a95fb788a3f97554080e8bb24f3a",
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png": "44603e37b1691a5a175bd29790b903f0ed5a859b9d20196de18967f614f977ad",
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png": "f1a691d2389136140ca3d3f233f89610fb2999a7e900814bdd752f4df220ff24",
+    "T_EFX_FireWorks_GlitterChry_Test_Head_R.png": "7466c14cb80e5f756b3426c8ca0df3eaaf0e95fa3d62c5bfc9f2ff110286616f"
+  },
+  "pcPixels": {
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaScanlineSHA256": "e7991744e03f91d5ae99a435fb4759586451db69b380a497e21b19b7671682ee"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "rgbaScanlineSHA256": "8ec47b2cf721db200d14b1dcec93e47d073d14cedccba6180e6b972cda86830c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png": {
+      "width": 256,
+      "height": 8,
+      "rgbaScanlineSHA256": "c470c13024044a3e444f1c840558441ef44a1b0cf546f4af5864441c6403be8c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaScanlineSHA256": "46f3af9ed923ba8690a4c1e495f7688c0655830f4b4a85c1c63c8cc1bbb3e2e7"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "rgbaScanlineSHA256": "e078aea7d1450bfc3d09e059435cd315be3c2438d86af6cd950bb5f4b81fed71"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png": {
+      "width": 256,
+      "height": 8,
+      "rgbaScanlineSHA256": "c5e4386502de358e16a82efe212d0120cc6c13af487b49726234bfd1ab727545"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaScanlineSHA256": "160c8ac02dd4dfb13953f9bf425005548e3a35e38ca6e9006b7c5adef007eaa0"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "rgbaScanlineSHA256": "e40a9600c92b9a91885699ecee05a94f9aa269f9b57df92a29716a7708dc5418"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_R.png": {
+      "width": 256,
+      "height": 8,
+      "rgbaScanlineSHA256": "b0eec82ae25cab4a96a5d327dbf71bf47f505cec40b48bde33880365d70e0620"
+    }
+  },
+  "pcVisiblePixels": {
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "frames": 64,
+      "SHA256": "8505e8dbf8a679530eff45b240ebef80d7d3f9bee350344a0908ba5c8dea2334"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "frames": null,
+      "SHA256": "8ec47b2cf721db200d14b1dcec93e47d073d14cedccba6180e6b972cda86830c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Lead_R.png": {
+      "width": 256,
+      "height": 8,
+      "frames": null,
+      "SHA256": "c470c13024044a3e444f1c840558441ef44a1b0cf546f4af5864441c6403be8c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "frames": 64,
+      "SHA256": "3bf8ef41d9c79395fa2781d5e4eaad6e0d7867a27c831a87e888b41479048bd4"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "frames": null,
+      "SHA256": "e078aea7d1450bfc3d09e059435cd315be3c2438d86af6cd950bb5f4b81fed71"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Gold_R.png": {
+      "width": 256,
+      "height": 8,
+      "frames": null,
+      "SHA256": "c5e4386502de358e16a82efe212d0120cc6c13af487b49726234bfd1ab727545"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_HD.png": {
+      "width": 2048,
+      "height": 2048,
+      "frames": 63,
+      "SHA256": "f4c104a89d5deac73d026c498b352b0a9a06bf4ba4ee0ea5c40fdb2716a8f07c"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_4x4_01_C.png": {
+      "width": 512,
+      "height": 512,
+      "frames": null,
+      "SHA256": "e40a9600c92b9a91885699ecee05a94f9aa269f9b57df92a29716a7708dc5418"
+    },
+    "T_EFX_FireWorks_GlitterChry_Test_Head_R.png": {
+      "width": 256,
+      "height": 8,
+      "frames": null,
+      "SHA256": "b0eec82ae25cab4a96a5d327dbf71bf47f505cec40b48bde33880365d70e0620"
+    }
+  },
+  "valid": null,
+  "source": "本仓库1777af13成品（116），隔离页受控HTTP响应",
+  "pageErrors": [],
+  "pass": true
+}

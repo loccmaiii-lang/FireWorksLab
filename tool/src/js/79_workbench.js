@@ -1011,7 +1011,7 @@ function renderDeliv() {
   }
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
-  const prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || '';     // 4.9.106 G4：登记表里不能出包的产物，按钮变灰写原因
+  const prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '');     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '有一层的产物没在产物形态登记表里，导出会被拦'}</small></div><span class="sp"></span>
@@ -1158,7 +1158,9 @@ function prodTableHTML(xs, combo) {
     return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
       <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', combo ? OUT_MOBILE_UI : OUT_MOBILE, mobV)}<small>${x.mob && x.mob.auto && x.mob.kind !== 'off' ? mobileAutoText(x.mob) + ' · ' : ''}${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）
   });
+  const mobileWhy = combo ? comboMobileConflictText(xs) : '';
   return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th title="引擎回放画的是这一列">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
+    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}
     <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图流转」「引擎回放」按 PC 列看（PC 单束就看单束那张、单帧就看单帧）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
 }
 // 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：产物表单帧格子里「在引擎回放里看」；

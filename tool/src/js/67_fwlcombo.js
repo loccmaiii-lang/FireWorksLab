@@ -79,6 +79,23 @@ function comboMobilePlan(xs) {
   });
   return out;
 }
+// 4.9.117：手动手机序列的可确定冲突提前提示；不改选择、不拿PC分页数当手机发射器数。
+// 缺失/过期缓存和其他产物交给原有导出重烘及最终规范检查，不用旧画面误拦新配方。
+function comboMobileConflicts(xs) {
+  const plan = comboMobilePlan(xs), used = [], hit = new Set();
+  (xs || []).forEach((x, i) => {
+    if (plan[i].kind !== 'seq' || !x.b || !x.b.meta || !['master', 'segments'].includes(x.b.form)
+      || (x.e && typeof layerStale === 'function' && layerStale(x.e))) return;
+    const wins = layerMobileUse(x.L, x.b, 'seq').wins;
+    for (const q of used) if (q.wins.some(([a0, a1]) => wins.some(([b0, b1]) => Math.min(a1, b1) - Math.max(a0, b0) > 1e-3))) { hit.add(q.i); hit.add(i); }
+    used.push({ i, wins });
+  });
+  return [...hit].sort((a, b) => a - b);
+}
+function comboMobileConflictText(xs) {
+  const hit = comboMobileConflicts(xs);
+  return hit.length ? `手机序列冲突：第 ${hit.map(i => i + 1).join('、')} 层的序列存在重叠时段，手游同一时刻只允许 1 张大序列。请调整产物表的手机列；选择「自动」会按规则省略冲突层，也可明确选「不出」。保留全部层需要另外制作合成方案，不能直接放宽规范。` : '';
+}
 // 现在这个组合（state.layers）第 i 层手机实际出什么（交付清单 / 层页头显示用）
 function comboMobileNow(i) {
   if (typeof state === 'undefined' || !state.layers) return null;

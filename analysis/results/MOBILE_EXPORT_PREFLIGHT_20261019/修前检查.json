@@ -1,0 +1,70 @@
+{
+  "pass": false,
+  "rows": [
+    {
+      "name": "手动三层序列定位全部冲突层",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "说明具体层和自动省层取舍",
+      "pass": false,
+      "error": "comboMobileConflictText is not defined"
+    },
+    {
+      "name": "冲突提前阻止，不进入资源交付、不捕获任务、不重烘",
+      "pass": false,
+      "error": "Expected values to be strictly equal:\n\n1 !== 0\n"
+    },
+    {
+      "name": "自动维持既有按层序取舍",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "旧存档未标手动的seq仍按自动",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "只选一层手机不冲突，其他层明确off保持",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "手动/自动混合仍能指出实际冲突",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "不重叠的前后接力允许导出",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "1ms内四舍五入接缝不误判",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "缺失/过期缓存不提前拒绝",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "一层PC分页多不能冒充实际手机发射器数",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "单帧/尾缀交给原有最终门禁，不按普通序列误判",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    },
+    {
+      "name": "空输入允许，读取不改L/P/M或烘焙缓存",
+      "pass": false,
+      "error": "comboMobileConflicts is not defined"
+    }
+  ]
+}

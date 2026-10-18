@@ -1312,6 +1312,14 @@ function buildComboPanel() {
   if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。</p>';
 }
 async function exportCombo() {
+  if (!busyJob.on) {
+    const xs = curLayerBakes(), why = comboMobileConflictText(xs);
+    if (why) {
+      toggleDeliv(true); flash(why, true, 12000);
+      $('#delivView').querySelector(`[data-prod="mobile"][data-i="${comboMobileConflicts(xs)[0]}"]`)?.focus();
+      return;
+    }
+  }
   if (!busyCan(true)) return;
   try {
     const job = captureExportJob('combo'), name = job.name;

@@ -1,0 +1,2594 @@
+[
+ {
+  "item": "体检",
+  "pass": true,
+  "why": "工作副本 F:\\FireWorksLab · 分支 main · HEAD a38e93bb · origin/main a38e93bb；ℹ skip-worktree 文件 1 个（本机刻意不跟踪的改动）：vidio/找到属于你的那黄金60秒点燃你的新春烟花 烟花的浪漫 烟花像极了爱情 愿在烟火的绚烂中闪耀 烟花是中式浪漫天；✅ 本机自动同步：最近一次成功 2026-10-19T00:41:47；之后连续跳过 / 失败 4 次；⚠ 已跟踪文件有本地改动 8 个（本机自动同步会因此跳过）：nalysis/scripts/标准检查.py；tool/CHANGELOG.md；tool/FireworkBaker.html；tool/src/js/10_types.js；tool/src/js/67_fwlcombo.js；结论：可以干活（⚠ 只是提醒）"
+ },
+ {
+  "item": "构建",
+  "pass": true,
+  "why": "构建通过（工作树里有没提交的源码改动，成品按工作树生成）"
+ },
+ {
+  "item": "契约",
+  "pass": true,
+  "why": "18 个代表效果、195 行"
+ },
+ {
+  "item": "导出",
+  "pass": true,
+  "why": "导出拦截、空壳发射器、寿命 / 大小都过"
+ },
+ {
+  "item": "契约明细",
+  "data": [
+   {
+    "rows": [
+     {
+      "key": "exportScale",
+      "sec": "导出缩放",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.8✓ 0.5✓",
+      "log": []
+     },
+     {
+      "key": "outPC",
+      "sec": "导出方案",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "unit✓ dots✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "outMobile",
+      "sec": "导出方案",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [
+       "unit → 导出拦截：cascade_mobile.json：同时活着的粒子超过 50：L1_Unit 150（手机单束每颗星一个粒子：这一层手机改序列 / 单帧 / 不出）"
+      ],
+      "vals": "unit✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓ lean✓ count✓ tiers✓ full✓",
+      "log": []
+     },
+     {
+      "key": "outPack",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "grid",
+      "bad": "",
+      "note": "代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "fit·",
+      "log": []
+     },
+     {
+      "key": "outCell",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [
+       "2048 → 导出拦截：cascade_mobile.json：发射器 13 个，超过 _M 上限 3（规范 §6；交付清单产物表里把多余的层改成「不出」）"
+      ],
+      "vals": "512· 2048✓",
+      "log": []
+     },
+     {
+      "key": "pageTarget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8✓ 2✓",
+      "log": []
+     },
+     {
+      "key": "maxHoldBurn",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 4·",
+      "log": []
+     },
+     {
+      "key": "maxHold",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 5✓",
+      "log": []
+     },
+     {
+      "key": "burstSec",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 0·",
+      "log": []
+     },
+     {
+      "key": "fadeAt",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20✓ 2·",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.6,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureTarget",
+      "skip": "只给「建议曝光」按钮用，不进烘焙"
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 11040,
+    "forms": [
+     "master"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "空中大面片·单层",
+    "sec": 13.3,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓ lean✓ count✓ tiers✓ full✓",
+      "log": []
+     },
+     {
+      "key": "outPack",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "grid",
+      "bad": "",
+      "note": "代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "fit·",
+      "log": []
+     },
+     {
+      "key": "pageTarget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8✓ 2✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 3667,
+    "forms": [
+     "segments"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "空中大面片·分段",
+    "sec": 36.0,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "exportScale",
+      "sec": "导出缩放",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.8✓ 0.5✓",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.6,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.3476,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureTarget",
+      "skip": "只给「建议曝光」按钮用，不进烘焙"
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 1655,
+    "forms": [
+     "loop"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "地面循环·单层",
+    "sec": 2.7,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "cameraShutter",
+      "sec": "镜头成像",
+      "cur": 0.03333333333333333,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cameraPhase",
+      "sec": "镜头成像",
+      "cur": "end",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "start·",
+      "log": []
+     },
+     {
+      "key": "cameraDof",
+      "sec": "镜头成像",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "cameraDistance",
+      "sec": "镜头成像",
+      "cur": 38,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "100·",
+      "log": []
+     },
+     {
+      "key": "cameraFocus",
+      "sec": "镜头成像",
+      "cur": 38,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "100·",
+      "log": []
+     },
+     {
+      "key": "cameraAperture",
+      "sec": "镜头成像",
+      "cur": 0.6839999999999999,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cameraBlades",
+      "sec": "镜头成像",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "6·",
+      "log": []
+     },
+     {
+      "key": "cameraQuality",
+      "sec": "镜头成像",
+      "cur": "high",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "reference·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 11303,
+    "forms": [
+     "loop"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "分层粒子图·单层",
+    "sec": 12.9,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "rtBurstD",
+      "skip": "游戏内大小预览的比例（不进导出）"
+     },
+     {
+      "key": "rtFullFx",
+      "sec": "尾缀 · 引擎里加的效果",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "rtGrid",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": -1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0✓ 3✓",
+      "log": []
+     },
+     {
+      "key": "rtMobileTex",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1· 0.25✓",
+      "log": []
+     },
+     {
+      "key": "rtBright",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 2.4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "10✓ 0.1✓",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "exportScale",
+      "sec": "导出缩放",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.8✓ 0.5✓",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "outMode",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "combined",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "split✓",
+      "log": []
+     },
+     {
+      "key": "zoom",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "off",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "anchor✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓",
+      "log": []
+     },
+     {
+      "key": "maxHoldBurn",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 3,
+      "bad": "",
+      "note": "代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "2· 4·",
+      "log": []
+     },
+     {
+      "key": "maxHold",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 5✓",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.04,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "full",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 5470,
+    "forms": [
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "合成一张·单层",
+    "sec": 6.7,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "holdTicks",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1✓ 2✓ 3✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 819,
+    "forms": [
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "合成一张·固定机位",
+    "sec": 32.0,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "rtBurstD",
+      "skip": "游戏内大小预览的比例（不进导出）"
+     },
+     {
+      "key": "rtLoopMin",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.15,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1✓ 0.05✓",
+      "log": []
+     },
+     {
+      "key": "rtGrid",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "-1· 3✓",
+      "log": []
+     },
+     {
+      "key": "rtMobileTex",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1· 0.25✓",
+      "log": []
+     },
+     {
+      "key": "rtBright",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "10✓ 0.1✓",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.45,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.04,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "prod.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "full✓",
+      "log": []
+     },
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "full✓ off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 4171,
+    "forms": [
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "近段+远段+粒子·单层",
+    "sec": 5.4,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "trFollow",
+      "sec": "尾缀序列 · 形态",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "trBright",
+      "sec": "尾缀序列 · 引擎",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "5·",
+      "log": []
+     },
+     {
+      "key": "trExport4K",
+      "sec": "尾缀序列 · 引擎",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "exportScale",
+      "sec": "导出缩放",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.8✓ 0.5✓",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.000976819,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 2068,
+    "forms": [
+     "trail"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "V5 尾缀·单层",
+    "sec": 3.1,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓ lean✓ count✓ tiers✓ full✓",
+      "log": []
+     },
+     {
+      "key": "outPack",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "grid",
+      "bad": "",
+      "note": "代表效果上不起作用（帧数正好装满一张时，「按帧数选最小贴图」和「固定」一样）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "fit·",
+      "log": []
+     },
+     {
+      "key": "outCell",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "512· 2048✓",
+      "log": []
+     },
+     {
+      "key": "pageTarget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8✓ 2·",
+      "log": []
+     },
+     {
+      "key": "maxHoldBurn",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 4·",
+      "log": []
+     },
+     {
+      "key": "maxHold",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 5·",
+      "log": []
+     },
+     {
+      "key": "burstSec",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 0·",
+      "log": []
+     },
+     {
+      "key": "fadeAt",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "代表效果上不起作用（自动定的淡出起点正好一样时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "20· 2·",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 0.6,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 1.3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureTarget",
+      "skip": "只给「建议曝光」按钮用，不进烘焙"
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.22,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "unit✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [
+       "frame → 导出拦截：cascade_mobile.json：同一时刻有 2 张大序列（L1_Main + L2_Frame）；手游中低配只能 1 张（规范 §6）：交付清单产物表把第 2 层的手机改成「自动」或「不出」"
+      ],
+      "vals": "seq✓ frame✓ off✗",
+      "log": [
+       "手机序列冲突：第 1、2 层的序列存在重叠时段，手游同一时刻只允许 1 张大序列。请调整产物表的手机列；选择「自动」会按规则省略冲突层，也可明确选「不出」。保留全部层需要另外制作合成方案，不能直接放宽规范。"
+      ]
+     }
+    ],
+    "json": [],
+    "ms": 17701,
+    "forms": [
+     "master",
+     "master"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "空中大面片·多层",
+    "sec": 49.0,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "rtBurstD",
+      "skip": "游戏内大小预览的比例（不进导出）"
+     },
+     {
+      "key": "rtFullFx",
+      "sec": "尾缀 · 引擎里加的效果",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "rtGrid",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": -1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0✓ 3✓",
+      "log": []
+     },
+     {
+      "key": "rtMobileTex",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1· 0.25✓",
+      "log": []
+     },
+     {
+      "key": "rtBright",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "10✓ 0.1✓",
+      "log": []
+     },
+     {
+      "key": "shutter",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 0.5,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "zoom",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "off",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "anchor✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓",
+      "log": []
+     },
+     {
+      "key": "maxHoldBurn",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 3,
+      "bad": "",
+      "note": "代表效果上不起作用（燃烧段本来就不用停那么久时不变）：只进了烘焙参数：帧计划、取景和 cascade.json 都没变",
+      "warn": [],
+      "vals": "2· 4·",
+      "log": []
+     },
+     {
+      "key": "maxHold",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 4,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2✓ 5✓",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.35,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.04,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "seq✗ off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 6345,
+    "forms": [
+     "emitset",
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "合成一张·多层",
+    "sec": 37.4,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "rtBurstD",
+      "skip": "游戏内大小预览的比例（不进导出）"
+     },
+     {
+      "key": "rtBright",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "10✓ 0.1✓",
+      "log": []
+     },
+     {
+      "key": "cellPad",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "coreProfile",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "exposure",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.35,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "20·",
+      "log": []
+     },
+     {
+      "key": "exposureLock",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1·",
+      "log": []
+     },
+     {
+      "key": "haloFrac",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0.04,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.85·",
+      "log": []
+     },
+     {
+      "key": "haloR",
+      "sec": "光点与曝光（4.0）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "haloShape",
+      "sec": "光点与曝光（4.0）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "2·",
+      "log": []
+     },
+     {
+      "key": "previewBloom",
+      "skip": "预览设置（引擎里没有）"
+     },
+     {
+      "key": "qSS",
+      "sec": "画质（烘焙采样）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "qHz",
+      "sec": "画质（烘焙采样）",
+      "cur": 300,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "1920·",
+      "log": []
+     },
+     {
+      "key": "qMaxSub",
+      "sec": "画质（烘焙采样）",
+      "cur": 16,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "128·",
+      "log": []
+     },
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "dots✓ off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "seq✗ off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 3364,
+    "forms": [
+     "emitset",
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "纯星头·多层",
+    "sec": 35.6,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "rtBright",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": 3,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "10✓ 0.1✓",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "cutOut",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "prod.pc",
+      "sec": "产物表",
+      "cur": "full",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "dots✓",
+      "log": []
+     },
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "full",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 1159,
+    "forms": [
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "纯星头·单层",
+    "sec": 2.3,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "outPC",
+      "sec": "导出方案",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "unit✓ dots✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "outMobile",
+      "sec": "导出方案",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [
+       "unit → 导出拦截：cascade_mobile.json：同时活着的粒子超过 50：L1_Unit 70（手机单束每颗星一个粒子：这一层手机改序列 / 单帧 / 不出）"
+      ],
+      "vals": "unit✓ frame✓ off✓",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0.2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 3709,
+    "forms": [
+     "master"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "空中大面片·入点前闪光",
+    "sec": 4.9,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "rtGrid",
+      "sec": "尾缀 · 引擎与导出",
+      "cur": -1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0✓ 3✓",
+      "log": []
+     },
+     {
+      "key": "cutIn",
+      "sec": "入点与出点（导出）",
+      "cur": 0,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0.5✓ 1.2✓",
+      "log": []
+     },
+     {
+      "key": "zoom",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "off",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "anchor✓",
+      "log": []
+     },
+     {
+      "key": "frameBudget",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": "motion",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "fixed✓",
+      "log": []
+     },
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "seq✗ off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 1471,
+    "forms": [
+     "emitset"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "合成一张·一层的我的效果",
+    "sec": 2.6,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "cellPad",
+      "sec": "输出：帧数 · 格子 · 贴图（导出）",
+      "cur": 2,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "8·",
+      "log": []
+     },
+     {
+      "key": "cameraMotion",
+      "sec": "镜头成像",
+      "cur": 1,
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "0·",
+      "log": []
+     },
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "seq✗ off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 4310,
+    "forms": [
+     "loop"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "分层粒子图·一层的我的效果",
+    "sec": 5.7,
+    "pageErrors": []
+   },
+   {
+    "rows": [],
+    "json": [],
+    "ms": 52,
+    "forms": [
+     "riseLoop"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "上升星头循环·单层",
+    "sec": 1.1,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "prod.mobile",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 554,
+    "forms": [
+     "unit"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "单元序列·单层",
+    "sec": 31.6,
+    "pageErrors": []
+   },
+   {
+    "rows": [
+     {
+      "key": "L.out.pc",
+      "sec": "产物表",
+      "cur": "seq",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "off✓",
+      "log": []
+     },
+     {
+      "key": "L.out.mobile",
+      "sec": "产物表",
+      "cur": "auto",
+      "bad": "",
+      "note": "",
+      "warn": [],
+      "vals": "seq✗ off✓",
+      "log": []
+     }
+    ],
+    "json": [],
+    "ms": 660,
+    "forms": [
+     "loop"
+    ],
+    "registry": [
+     "master",
+     "segments",
+     "unit",
+     "emitset",
+     "trail",
+     "riseLoop",
+     "loop"
+    ],
+    "formNames": [
+     "emitset",
+     "trail",
+     "master",
+     "segments",
+     "unit",
+     "riseLoop",
+     "loop"
+    ],
+    "name": "地面循环·多层",
+    "sec": 31.9,
+    "pageErrors": []
+   }
+  ]
+ },
+ {
+  "item": "界面",
+  "pass": true,
+  "why": "8/8 项过"
+ }
+]

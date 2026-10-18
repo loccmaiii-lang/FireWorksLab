@@ -136,7 +136,10 @@ if __name__ == '__main__':
     ap.add_argument('--burst-flow-only', action='store_true', help='爆后气流起效时刻、确定性、火花与不支持输出检查（正式HTTP入口）')
     ap.add_argument('--spark-scales-only', action='store_true', help='分层粒子图整体倍率模型与真实入口/导出检查（需Node Playwright）')
     ap.add_argument('--event-instances-only', action='store_true', help='CPU事件合同与导出门禁回归，不连接UE')
+    ap.add_argument('--mobile-export-only', action='store_true', help='手机手动序列冲突提前定位与导出入口回归，不连接UE')
     a = ap.parse_args()
+    if a.mobile_export_only:
+        raise SystemExit(subprocess.call(['node', str(HERE / 'mobile_export_preflight_check.cjs')]))
     if a.burst_flow_only:
         import os, playwright
         env = dict(os.environ, FW_PLAYWRIGHT=str(pathlib.Path(playwright.__file__).parent / 'driver' / 'package'))
