@@ -1,0 +1,750 @@
+{
+ "备份目录": "analysis/local/输出/TEX_SPEC_20261018_备份/",
+ "条目": [
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCombo_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCombo_R.uasset",
+   "sha256": "0020ed04bb66808476fa6ba1e44f8e6301bda1cc999df20eaba276e43371da58"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleGold_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleGold_4x4_01_HD.uasset",
+   "sha256": "098fd409930e9afe37cb2933ad14a48e8f4ee6ecbafae30f11f1471f8e2ff75f"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleSilver_GinKamuro_R.uasset",
+   "sha256": "753f7acd9169fbee07731a69f953d1699bcf1b23c47c89fe20f552c6ede1c4ca"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_HD.uasset",
+   "sha256": "01e724eefb30778833d8555ab6fe3100f498982f2f102e2bc6ff25dcb5479de3"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCrackle_Main_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCrackle_Main_R.uasset",
+   "sha256": "a16e2b0ed21100e8c24646d6386fc1e255352b299a9bf45c2bede5beb9013849"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_HD.uasset",
+   "sha256": "b759e9efc826701fddda7352563fde4a96e1b1ac601ce6fb148e5d30726a6688"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCombo_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCombo_4x4_01_HD.uasset",
+   "sha256": "c6154de8abda7385acd04d3349bae005ccb2b61f1c060630e97f513aa5b026b0"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Comet_Layers_L1_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Comet_Layers_L1_R.uasset",
+   "sha256": "c84255d75b80514f4d05bc0114098a8ec14a0a30c3a7676d0a14fccff17b47ac"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_HD.uasset",
+   "sha256": "dea5b24b288ed4aa8bde2453cd2f439af83e4347bfad776e1a094833411f8514"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Silver3_S_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Silver3_S_R.uasset",
+   "sha256": "0a3a7e718667a64a21081b5896d1c94bd6db01b9d947100c5febf2cf36fce71c"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.uasset",
+   "sha256": "c182c541a2418fe66692bfbdb412e05c27eeeca6ef06a462189bc9fbf9a7833c"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01.uasset",
+   "sha256": "d09f8c3309de6558af44c9ebea0dd4402b9b8f7a5efc61ef18bfb0768f217cf6"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterLeft_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterLeft_01.uasset",
+   "sha256": "ad62539175ae1d2ce12ec63e9f8305170af77371dcba8caea9f857a50c37368f"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterRight_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterRight_01.uasset",
+   "sha256": "3090131442580e0209c0928deccf75560e346acb28038ad1de2f893d73aee563"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD.uasset",
+   "sha256": "edb116b1ad7bc1c65cbdf08c72df9936781eb6d94107128cc3219e887f4ae28c"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Combo_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Combo_R.uasset",
+   "sha256": "d59578e8b08f646a4dc9d48b46b665ce95d12309130379ab920efe0da9df5b08"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01.uasset",
+   "sha256": "857b1a41466a48dd479524dc5eca5fc4f63a63c6799d91308ec015d65fb3db8d"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD.uasset",
+   "sha256": "7b6ad6d37ed1ff65efe7bff6b63c2969b133e8fe6ba2863fe0f68854f297ecf4"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Crackle_Main_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Crackle_Main_4x4_01_HD.uasset",
+   "sha256": "125ba65bea28df74ab86afa473cf1c21b698d01da1d262f2ccfe63dae41b390a"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Lime_Core_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Lime_Core_R.uasset",
+   "sha256": "4fa5a60e9ba7a269452be26cd6128ab49bfc25227e6c5a207be590a2e4335312"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Core_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Core_4x4_01_HD.uasset",
+   "sha256": "cdf9d96056ff2a5eaa99c968db4bd3615d9f0885f40fb158e096894df9fa3982"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Lead_2x2_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Lead_2x2_01_HD.uasset",
+   "sha256": "28922be200c5556a44a8c3669bebc105f3c6a236aca9d318f351215c830ce18c"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_01_HD.uasset",
+   "sha256": "bf1fb6242bd9ab08dc54ebaba688ed45467888b04a01aefd40985208687f8d7b"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_02_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_02_HD.uasset",
+   "sha256": "35604cc2fd83d9a3d70ad198b63187eb39e9fbbc40f8fe07ca86ff9e6c1c3dee"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Glitter_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Glitter_R.uasset",
+   "sha256": "b2f6a9fe3658826dae85e948ca79032c03a77b6e05b4dc24eecdc791e1442b09"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Glitter_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Glitter_4x4_01_HD.uasset",
+   "sha256": "1466529ae3aea89415e58452e7315d247cb7b15f703e3b04f5b11f7e707081f8"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_RedCore_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_RedCore_R.uasset",
+   "sha256": "2872fd7509197bdc431ad42db83b761fe578cd3f434de10913406db77348afed"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Strobe_Strobe_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Strobe_Strobe_4x4_01_HD.uasset",
+   "sha256": "bc663d89b27cd530008a14fffdd7783301b1933358624394b578ed6c23f05f84"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Tail_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Tail_R.uasset",
+   "sha256": "555adef0ee505bf528ffd94f9c0a6551abbef608dd20feb7fdf052689373a9c2"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.uasset",
+   "sha256": "19d2684fc2b2eab479c2075a93d97c43e91eb87df402e3a25f1a86ff645363c9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Head_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Head_R.uasset",
+   "sha256": "7e7331d3ec2e1339599edb5e07ce56fb26043d8053395e37413e9060bfc975b8"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.uasset",
+   "sha256": "4ed01f551a105c8996836000d4072cf3abf889c95250a8a44f3d9539559deaff"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_02_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_02_HD.uasset",
+   "sha256": "8d0251abc68e512e63e282b2bd7fe9a2d5186c51a26dbd0b7214a6039ff62065"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_A_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_A_R.uasset",
+   "sha256": "67a9747823b398607749188143cc9f4c26a809bd320f9becb45b7d6e419d8e5e"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_A_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_A_4x4_01_HD.uasset",
+   "sha256": "33bfc988d72ef27b37e77be3ee5da9d3082fa22d4ce014776af49212a1acef1e"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_B_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_B_R.uasset",
+   "sha256": "d35be6afa7a9c3272259bf43a262cd7011ce99abcbb69440b0dc4c68002ce1e4"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_B_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_B_4x4_01_HD.uasset",
+   "sha256": "63688feb36dbe9f53271c2b7a50e896cc7b9bc6c161b1835317c747044ed304b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M.uasset",
+   "sha256": "3ac8c5ab40de29f44ce0e35d3e441bedaf10ddee7163a22765074696eb966b61"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02D",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02D.uasset",
+   "sha256": "65ed98a810297b3b5a018cfde7dd61dfd3adc27b7179e02c621382f0968c7f43"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02.uasset",
+   "sha256": "2e349fd8ab4b14bf500bdef741d243a31fa7b2c84b793ed9bc863907db0a130f"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01D",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01D.uasset",
+   "sha256": "ab54d913c922508ab02f3ae39b17da40bc2a059aec927a7bfeb445938a7a5257"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01.uasset",
+   "sha256": "799937565b638f01994b5260aa57e7c1ce3301f1e2e16f5d32c468f5e8c96b93"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_Main_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_Main_4x4_01_HD.uasset",
+   "sha256": "418db460afecca4331f6fea0914a84f0237358bcca594767df202ac9d8027eef"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Strobe_Strobe_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Strobe_Strobe_R.uasset",
+   "sha256": "7a7db2d90e7d068dbee1d48bd23fe46e915423304a416a36b681eeee1951557b"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L2_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L2_4x4_01_HD.uasset",
+   "sha256": "1158ca9a474c606515242160242f839cc79fc200862e769cca43428d817eaa77"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L3_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L3_4x4_01_HD.uasset",
+   "sha256": "38af167d8bfc8c9cfe0024e854ff6b744b85ce5ee5d98850ea417ea55bcd2b05"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LeadTail_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LeadTail_R.uasset",
+   "sha256": "db0bb7ef6b6d97e0a952ffa2a4f2152bbb63485c6ea017c35e38447f7fb4087a"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD.uasset",
+   "sha256": "20bfd9a17d07ffbfb3328d24667ac85922aabc76f65978e7440416449ed73140"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LimeStar_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LimeStar_R.uasset",
+   "sha256": "47ec956969c5bc49d2b1e134eda04c7ee06cfdf4daeef90e0b354e57036922f4"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD.uasset",
+   "sha256": "e786348bf1122c48f28ca028b946d2241f2a8654953a628abefddfbd955571ce"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_GoldCore_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_GoldCore_R.uasset",
+   "sha256": "2adf494f33b5c51a390265554c86047468d3e844bc0249a6f749a5789b3646f3"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD.uasset",
+   "sha256": "6ccbb09be6db29a93ba57d1b90146065be27bc9601b44fd5246fd34c967e8f8a"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD.uasset",
+   "sha256": "9096d871f6fcc9f43c9add8de51b76ef7ea9295a3cf92514a8d349455f050775"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRayChry_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRayChry_R.uasset",
+   "sha256": "ad897eb35499c724894adeeea3032543abded7a0dcab469a3f227beaa9b3c4ec"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.uasset",
+   "sha256": "a40fbf136f1ba3a23ccc4696aacb198722b7c7e0728a683e93a67521bba937ec"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Lead_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Lead_R.uasset",
+   "sha256": "30480882f9302e870968edaee5cd09d4950d042ccc48004ec3420d9c36c3c8c1"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD.uasset",
+   "sha256": "c12209b45eb8a37656751d830115e3e88b729ee96e7da742d89e276c4cca5b3d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Glitter_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Glitter_R.uasset",
+   "sha256": "007cd6563cb7dad8f0b6df4970213e30f0c61604c4d612fae047e27f50a6170e"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD.uasset",
+   "sha256": "61a6b6f565f63d2adf4ea248a74504416700852de353ee1aacba2fe47bc87217"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD.uasset",
+   "sha256": "4275c66b57fa9c612f76662bd4f8dd8ef4a41fd6301dacc7404a2c8b196dcab7"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Hero_FlowFixed",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Hero_FlowFixed.uasset",
+   "sha256": "98e7d123419802e2871903ec4dc655324802d629ad74ed138c016a8d5256ddd8"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D.uasset",
+   "sha256": "22f8f4933d61ee88b5aa899f78896f35671804284dab75c9e227d6732a8e39d9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01.uasset",
+   "sha256": "70d9fa382ee31ab40dae46713342679d497eb8d6204890b02a99e8806e809c74"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_04",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_04.uasset",
+   "sha256": "dafc3999885ca5b19a8e6f3eb53356476ab22888fa852a4bd43fd55f31d89144"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01.uasset",
+   "sha256": "2515f40343d11b6cd18894b2d4e349c4be0887099f5f8082ab6912b490fc16ef"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R.uasset",
+   "sha256": "ce87e28df8140fe4ca5e56de8024c0f3efdf3cc734fd30fc5c0ce68778edd12c"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_HD.uasset",
+   "sha256": "d4fe512c888e0e963011178924caf4732fe3fd243471a5317d7895703da4e961"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.uasset",
+   "sha256": "05428a058ab5034dd0ca2ec6a552be71e797a750eace031430c324f36ac927f7"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD.uasset",
+   "sha256": "9d76eb1e6893a9114b1f5e176f086ae4a8a39f38b300d87703161ae4a8350ad6"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD.uasset",
+   "sha256": "5fb060e55c110c4a067a2acc84e68449f7e0edd2ae35c545a0309c944800f93c"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD.uasset",
+   "sha256": "fa2bcaf6122d6916aa20a3ff3f3549ce1dded6024d9caeef7bbbf62468b59dcf"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD.uasset",
+   "sha256": "6c8828173f40d7525fe47c5f916bbca6cfa02ff728d3c0dd465442d59e98d2a4"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD.uasset",
+   "sha256": "f9eb3c683c96b23a17db8bd4725eea07748cc1b1d06b39ac529f235251dac07f"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_HD.uasset",
+   "sha256": "ba94331f85491b161e7aff645e9874a7dd4a916a65b25674cd077345f91e3019"
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_HD",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_HD.uasset",
+   "sha256": "856c902decadd9b07922055bb47dcefe35ec4fface1f40a2ac66ab0091b5320c"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05D",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05D.uasset",
+   "sha256": "d34233fc2fa84eabf3bf178f5c361c4d2596d0d7f7fe0df2c64b63f6a03e57c6"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05.uasset",
+   "sha256": "ade3f0e3c6868b2f7970ed69180fa3954370cd8d73a2d2b7fae2ea0a29ba21ea"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D.uasset",
+   "sha256": "4ac56caeeca3ed46c74747b0dc2eddcaf5dc23a045921ceb74b10bb39643e13b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05.uasset",
+   "sha256": "1e97ecfa8508a6f297b0619df8c376a5250e46c6b6258cb1fc8d7841814bde91"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RocketTail_R",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RocketTail_R.uasset",
+   "sha256": "cb4e45f602571f6541bfe4e0d4f9ac905c2095f590530d68cc7745132ed18b8b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01.uasset",
+   "sha256": "f35acbcc978138b071afec03113fea4e7a11a0b7635aeed555975c2d00f5d997"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01.uasset",
+   "sha256": "9f362cb92e0a853e5b714deac86178a6284eecb6b431538852f7d528962fb820"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02.uasset",
+   "sha256": "9e71b40372c328e53e78dd51d2ccdd3360dfc403ca46716382d8b7a48809adb8"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_02",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_02.uasset",
+   "sha256": "1f491437cc5df8eae9a33abddc1af4ac91aa57736687866ad4aabca2bae3dce5"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_4x2_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_4x2_01.uasset",
+   "sha256": "d5a51682f017d2eaef9f49e38b3050890facebc8d5861151478aefc6536cb9e8"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Sparkler_07",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Sparkler_07.uasset",
+   "sha256": "266e9d5c88e1be380828e2151addc6987017a65e1a675a6b157146ffedf7713b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01.uasset",
+   "sha256": "c2050fd90f16a488ad83b1e5d11f6eaa8923cc7a7c89c670e3a3880ff78cb0a0"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01.uasset",
+   "sha256": "029af61588ebb53e1f4ec790502d1dd01accbfa25ecc32f964ee96a8387c45a3"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01.uasset",
+   "sha256": "8a2bdbc2feb67af6be75457e9ff3bfda14f670c1f05720f9cd7790e7e22c8996"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01.uasset",
+   "sha256": "54847976487b6a4de51bda39b7a8368cc6983d9c6c67ebaa1c5c3a295dc274da"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01.uasset",
+   "sha256": "4e28b77cc8d8a40f025dfa3ca7871abec33ff1b9e1229ade2079c1d5837c1e7b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01.uasset",
+   "sha256": "cd5274c2c1eb693bb8a83135463dde3a272ef63aaff28ea97f4e57a2424a87c9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01.uasset",
+   "sha256": "a0fdf405c019108df8a3ae4a9264b25cf272e68352b84cff4bfcb3d6035565d2"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01.uasset",
+   "sha256": "047f8ea669763295114462a4a33fc2f7a8697cfc0d9eed946ba017355f9a9012"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01.uasset",
+   "sha256": "99069720d07f5c5c6ad48d5cad986192b50d994871a2ed054ba50ab1e78ff21c"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01.uasset",
+   "sha256": "882185171696c81a9efe39654374e084ea837e1524adfefe28541e84afcd99f4"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01.uasset",
+   "sha256": "042102387779d74e7d728d54fdaea8de665b28c22378457d1578bb6bc7373491"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01.uasset",
+   "sha256": "faf22ab44c127294a1112ba3f4630adcfc1b3b8e9812d61dd8889737bd123c4f"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01.uasset",
+   "sha256": "20f9134fe2ce959c6eed061864a9f08360d1f155ba6d9cfaca540aa74578d9a9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01.uasset",
+   "sha256": "0e0f4356ec5d108c41b398eec5d848bbcf0270bb290c7334be9995d462877b87"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.uasset",
+   "sha256": "ba3fa3f6b27d33f43e5b255cdb475bfe768eafc5b8f1325efe870e8a25a52e3b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01.uasset",
+   "sha256": "d2c5d7810e2e2b924de124076e0f9274f6522adb6b239832ea538ecce1980eac"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01.uasset",
+   "sha256": "a1a802532534e9863849c268bc4d398a48a1f0905e17e828df3ee310b55859f9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01_C.uasset",
+   "sha256": "2a2ab1affe283f7e988b7d9b13f898feac2dbee26437766e145163a4bf24584a"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_C.uasset",
+   "sha256": "01d6391a5f6b0e8a621b1aa0ba69a243ca4440559bb0affc647be5823999186d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_C.uasset",
+   "sha256": "4818d54415b416667d4401edf232d0e1acba7a0988b58af703a23d52026acf52"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01_C.uasset",
+   "sha256": "1d13311bb7fc99bc3549e89b12058e276c8a2731475f2ad93607cd88cb91e20d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_C.uasset",
+   "sha256": "59887f9070eb7d6f56df604ce40706bbe066d835a15334d2b2870e1915a37c14"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C.uasset",
+   "sha256": "817b05d8438f63f560a5c266bf94ae110b1a6befee32bfa9fec80a6e7eb9586a"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_C.uasset",
+   "sha256": "17e17cbee504a943770b5c5863c8873ba991a03f52adb2684fa7a41ab52c9adf"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01_C.uasset",
+   "sha256": "d6d32b7fecdc5f5d45333ffac189bd0537e2b4a116993a19561430620fe27034"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_C.uasset",
+   "sha256": "8c7eeb1ec3aca13c7dd60021a671de9df5e80d9256439c627ac4522fb15235ac"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01_C.uasset",
+   "sha256": "3312d43ab30d5284eab0457ba19aef604722e375d9e3c26e939acb9159106ed1"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Core_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Core_4x4_01_C.uasset",
+   "sha256": "7931314315f2b4330852dda471059466f9cd02e6d0f2bb606a22e474c574051c"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Lead_2x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Lead_2x2_01_C.uasset",
+   "sha256": "a5dea8be1cd2a5bb0d9695631cf9ca5424f01c7c2998f65c85c97a4beddddaf9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Glitter_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Glitter_4x4_01_C.uasset",
+   "sha256": "25be9e4294de55df3ee9559ae65a2dd31860b4640dda9bd8ade461622ae009de"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Glitter_4x4_02_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Glitter_4x4_02_C.uasset",
+   "sha256": "1c998bfd3efe55d87ada591789754204bac68e6bfe5b1d71787eac41e4aa5f67"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01_C.uasset",
+   "sha256": "7be962bca36d41e22880804c34b298447f08c0d3a0d294f3f7ca36f0cc91f77e"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01_C.uasset",
+   "sha256": "0b6081c0fd9f788ca8495d2337dc3436879e57316f7367b209b90709babde1aa"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Tail_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Tail_4x4_01_C.uasset",
+   "sha256": "39c22019175484f931f7e805209f358ccb7961909de298ddfc29a5420c05705f"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Head_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Head_4x4_01_C.uasset",
+   "sha256": "b24a32b45a65c70430897d4a050d8f625d30efbc0bfa39287fa9a5ffbc553ca7"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Head_4x4_02_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Head_4x4_02_C.uasset",
+   "sha256": "fda4e521ad033cb405d42f64e6551418c6776548e9a77c3434474e0be0d0045b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRay_A_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRay_A_4x4_01_C.uasset",
+   "sha256": "7189152e14f39462b05cbf55675ec47d9ac4cb9e6478c90d6d9e4a14afece2c4"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRay_B_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRay_B_4x4_01_C.uasset",
+   "sha256": "cc1add6aa869feabe8f9e3e0e2a25f1a32a70353c9e7add9c8035b919cb7017d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_Main_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_Main_4x4_01_C.uasset",
+   "sha256": "b68611c11fcddbe9733e3b2b617ff8ba74eee449a2b6fb27abca9f1b604ca161"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_L2_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_L2_4x4_01_C.uasset",
+   "sha256": "fd65d8c5e5586847dbc1a0daba6f37b346ec183d891a761252c34d019172b726"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_L3_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_L3_4x4_01_C.uasset",
+   "sha256": "5074f1f116e647228d0df8afab584337e5e5b8d85f7b3710a0c65936d9881ffb"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_C.uasset",
+   "sha256": "d5be91e603bb013d4d88208bc2d93185f5567f9e205e444b0822ece780b913bf"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_C.uasset",
+   "sha256": "2a23c5f4f15b82f0c2f16a5b0a27245c03f928e18df63dc23fcbea040ba4d73a"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_C.uasset",
+   "sha256": "3831f12d42b4c6c3f0393d1bc396963fb6092550e7a51a4f1b34be7e01559972"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_C.uasset",
+   "sha256": "1cddaff0f00822a8e0a230c461e24e0d308bf5ee0177d60cc7750932faed3336"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01_C.uasset",
+   "sha256": "01ef5eca312479142f5f6e108848c904640b80e4717c7c60297bf8a4286a4530"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_C.uasset",
+   "sha256": "a9a691c83a5075b7f1e8792ae4590296ed1530518b96c79ea3acd6a12c37c809"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_C.uasset",
+   "sha256": "8a0b274eb805bb72ef0881e39879e99376f1416907bbce05ff07d880976a254d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_C.uasset",
+   "sha256": "1a63361457cc6bd2cc1367d6c5881bc15f8b5accd38f91e0f269954ede54bdaf"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_8x8_03C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_8x8_03C.uasset",
+   "sha256": "34091713dc6a9303c4b2611b12ccf51718fe728318a6d5b0858ec6124da1f8a9"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_C.uasset",
+   "sha256": "0af23a3481dd7dcb27bb05c3541568095a3852467ff00dbe2c53461daf31f150"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_C.uasset",
+   "sha256": "acea237b3178f8a7cc771cc8c899aa51043460309629ecb1b68b07e2b50b90a5"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_C.uasset",
+   "sha256": "03eb4145d638073a55555a52181e4124d6c290bf2b148aad1dc7c36dda2ec273"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_C.uasset",
+   "sha256": "9c744e9326c022626cc36adca80567854ed0d0a0ab26870d5c31ec5bab3d98fc"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_C.uasset",
+   "sha256": "37686e98a6003018678bd07d37ed7058df56da31f7cd1a738ecd007913779a5d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_C.uasset",
+   "sha256": "aeb065f72e4a2a6d50d6fa678e52b0620914b6f91232f0d818597dce47fe0a0d"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_C.uasset",
+   "sha256": "1c448ab47edf02c307c29f3463e257d355381571db20ae05c05fcee42a888429"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_C.uasset",
+   "sha256": "950f377ec28818de1f31ac85df32941fb01a5cab7ebe5e1253b233009dafd998"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_C.uasset",
+   "sha256": "948008a3a45af65f62bd413a222a4669c12238f10d30a2da80527b2479a8fdc8"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01C.uasset",
+   "sha256": "f6d56397c5a3d4460b177b8e41f7a61d130429e040ed5cf68664a85c2e9f8226"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C.uasset",
+   "sha256": "69310aae9259b9da5a83fb6fb8b7076ee31d173992bfd442a1c0c358996703e4"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01_C.uasset",
+   "sha256": "13ee5be4763c125d4f7678e64b3a668789965d8668f3d06797ff193ea9b5e56b"
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C",
+   "file": "E:/loc_ma5/DFMEditor/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C.uasset",
+   "sha256": "8b8b99702d974b62445750e6d23062b556c611bceb6ac28fab5934036b07a8ac"
+  }
+ ]
+}

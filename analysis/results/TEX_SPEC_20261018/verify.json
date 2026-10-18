@@ -1,0 +1,2840 @@
+{
+ "at": "2026-10-18T06:19:06.383Z",
+ "total": 149,
+ "ok": 149,
+ "diskChanged": 149,
+ "bad": [],
+ "rows": [
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCombo_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleGold_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCrackle_Main_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCombo_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Comet_Layers_L1_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Silver3_S_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterLeft_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterRight_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Combo_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Crackle_Main_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Lime_Core_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Core_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Lead_2x2_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_02_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Glitter_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Glitter_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_RedCore_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Strobe_Strobe_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Tail_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Head_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_02_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_A_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_A_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_B_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_B_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 256,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02D",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 256,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01D",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 256,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_Main_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Strobe_Strobe_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L2_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L3_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LeadTail_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LimeStar_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_GoldCore_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRayChry_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Lead_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Glitter_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Hero_FlowFixed",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Bilinear",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_VectorDisplacementmap",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 256,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_04",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_HD",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05D",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 512,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RocketTail_R",
+   "ramp": true,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Clamp",
+    "AddressY": "TA_Clamp",
+    "MipGenSettings": "TMGS_NoMipmaps",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_02",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_4x2_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 0,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": true
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Sparkler_07",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 2048,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 512,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Core_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Lead_2x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Glitter_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Lime_Glitter_4x4_02_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Tail_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Head_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeStar_Head_4x4_02_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRay_A_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRay_B_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_Main_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_L2_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_L3_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_8x8_03C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 512,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C",
+   "ramp": false,
+   "ok": true,
+   "now": {
+    "NeverStream": false,
+    "LODGroup": "TEXTUREGROUP_Project03",
+    "AddressX": "TA_Wrap",
+    "AddressY": "TA_Wrap",
+    "MipGenSettings": "TMGS_FromTextureGroup",
+    "Filter": "TF_Default",
+    "MaxTextureSize": 1024,
+    "CompressionSettings": "TC_BC7",
+    "SRGB": false
+   },
+   "changedOther": [],
+   "diskChanged": true,
+   "writable": true
+  }
+ ]
+}

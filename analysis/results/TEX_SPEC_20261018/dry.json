@@ -1,0 +1,22 @@
+{
+ "sc": {
+  "available": true,
+  "enabled": true
+ },
+ "sample": {
+  "AddressX": "<TextureAddress.TA_WRAP: 0>",
+  "AddressY": "<TextureAddress.TA_WRAP: 0>",
+  "LODGroup": "<TextureGroup.TEXTUREGROUP_EFFECTS: 13>",
+  "NeverStream": false,
+  "MipGenSettings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>"
+ },
+ "enums": [
+  "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+  "<TextureAddress.TA_CLAMP: 1>",
+  "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ ],
+ "dirty": [
+  "/Game/Environment/SequencerTOD/Iris/Iris_Main/Iris_TOD_Base"
+ ],
+ "dirtyTargets": []
+}
