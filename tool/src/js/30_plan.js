@@ -78,7 +78,8 @@ function measureRun(P) {
     // 只在燃尽以后给相应时刻加气流余量；不能为了末段风把未燃尽的前段取景一起撑大。
     const lateSpeed = familyOf(P.type) === 'aerial' ? Math.max(0, +P.sparkLateWind || 0) : 0;
     const firstBurn = lateSpeed > 0 ? s.all.reduce((m, st) => Math.min(m, st.birth + (st.vis != null ? st.vis : st.burn)), Infinity) : Infinity;
-    const lateAt = t => lateSpeed * Math.min(Le, Math.max(0, t - firstBurn));
+    const burstSpeed = burstFlowActive(P) ? burstFlowValue(P, 'burstFlowWind') : 0;
+    const lateAt = t => lateSpeed * Math.min(Le, Math.max(0, t - firstBurn)) + burstSpeed * Math.min(Le, Math.max(0, t - burstFlowValue(P, 'burstFlowStart')));
     const lateMax = lateAt(P.duration);
     const drop = g / k * drift, air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air + lateMax; x1 += spread + air + lateMax; y1 += spread + P.turb * drift + lateMax; y0 -= drop + spread + P.turb * drift + lateMax;

@@ -1,3 +1,16 @@
+// 爆后扰动沿用末段气流，区别仅是触发时刻与主星也受力；默认关闭，不改旧配方。
+const burstFlowValue = (P, key) => P[key] == null || P[key] === '' ? BASE[key] : +P[key];
+const burstFlowActive = P => !!P && !P.sparkGraph && familyOf(P.type) === 'aerial' && +P.burstFlowOn === 1 && burstFlowValue(P, 'burstFlowWind') > 0;
+function burstFlowAir(P, x, y, t) {
+  if (!burstFlowActive(P)) return [0, 0];
+  return sparkLateAir({ sparkLateWind: burstFlowValue(P, 'burstFlowWind'), sparkLateScale: burstFlowValue(P, 'burstFlowScale'), sparkLateFade: burstFlowValue(P, 'burstFlowFade') }, x, y, t, Math.max(0, burstFlowValue(P, 'burstFlowStart')));
+}
+function sparkMotionStart(P, burn) {
+  return Math.min(+P.sparkLateWind > 0 ? burn : Infinity, burstFlowActive(P) ? Math.max(0, burstFlowValue(P, 'burstFlowStart')) : Infinity);
+}
+function burstFlowOutputReason(P, kind) {
+  return burstFlowActive(P) && ['unit', 'dots'].includes(kind) ? '爆后扰动需要保留各束的空间轨迹；请改用序列、单帧或不出，或关闭爆后扰动。' : '';
+}
 // 4.9.85：普通火花/余烬的燃尽后受力。出生、寿命、主星和基础冷却保持原样。
 function sparkLateGate(P, t, burn) {
   const x = Math.max(0, Math.min(1, (t - burn) / Math.max(.05, +P.sparkLateFade || .4)));
@@ -16,6 +29,7 @@ function sparkLateAir(P, x, y, t, burn) {
 // 场在预测中点求值；线性阻力+重力与平方阻力采用Strang拆分。调用者将跨燃尽的一步拆开。
 function sparkLateStep(P, p0, v0, U0, g, k, c, t, h, burn) {
   const a = sparkLateAir(P, p0[0] + v0[0] * h * .5, p0[1] + v0[1] * h * .5, t + h * .5, burn);
+  if (burstFlowActive(P)) { const b = burstFlowAir(P, p0[0] + v0[0] * h * .5, p0[1] + v0[1] * h * .5, t + h * .5); a[0] += b[0]; a[1] += b[1]; }
   const U = [U0[0] + a[0], U0[1] + a[1], U0[2]], p = p0.slice(), v = v0.slice();
   if (!(c > 0)) {
     const e = Math.exp(-k * h), s = k > 1e-4 ? (1 - e) / k : h;
@@ -72,5 +86,20 @@ function sparkLateSource(source) {
     '    if(lateBr){ vec3 vb; lateMotionK(pc,vc*uBrInh+dv,U,g,uK*uBrKd,tb+ts,a2,parentBurn,p,vb); } else if(uCq>0.){ vec3 vb; motQ(pc,vc*uBrInh+dv,U,g,uK*uBrKd,uCq,a2,p,vb); } else p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);');
   for (const c of ['uCvEmB', 'uCvEmS', 'uCvSpB', 'uCvSpS'])
     put(`max(0.,CV(${c},${c}N,clamp(age/life,0.,1.)))`, `mix(1.,max(0.,CV(${c},${c}N,curveAge)),curveGate)`);
+  return source;
+}
+
+// 只在新开关启用时编译；原普通/燃尽后着色器的源码逐字保留。
+function sparkBurstSource(source) {
+  const put = (old, next) => { if (!source.includes(old)) throw Error('爆后气流缺少着色器接入点：' + old); source = source.replace(old, next); };
+  put('uniform float uLateWind, uLateScale, uLateFade, uLateCurves;', `uniform float uLateWind, uLateScale, uLateFade, uLateCurves;
+uniform float uBurstWind, uBurstScale, uBurstStart, uBurstFade;
+vec3 burstAir(vec3 p,float t){float L=max(.2,uBurstScale),ph=t*uBurstWind/L,a=uBurstWind*smoothstep(0.,max(.05,uBurstFade),t-uBurstStart);
+  return vec3(a*sin(p.y/L+1.3*ph+1.7),.35*a*sin(p.x/L-.9*ph+2.3),0.);}`);
+  put('  return vec3(a*sin(p.y/L+1.3*ph+1.7),.35*a*sin(p.x/L-.9*ph+2.3),0.);}\nvoid lateStep',
+    '  return vec3(a*sin(p.y/L+1.3*ph+1.7),.35*a*sin(p.x/L-.9*ph+2.3),0.)+burstAir(p,t);}\nvoid lateStep');
+  put('float pre=clamp(burn-born,0.,age);', 'float pre=clamp(min(uLateWind>0. ? burn : 1e9,uBurstStart)-born,0.,age);');
+  put('bool lateOn=c==0 && uLateWind>0. && uT>parentBurn;', 'bool lateOn=c==0 && ((uLateWind>0. && uT>parentBurn)||uT>uBurstStart);');
+  put('bool lateBr=uLateWind>0. && uT>parentBurn;', 'bool lateBr=(uLateWind>0. && uT>parentBurn)||uT>uBurstStart;');
   return source;
 }

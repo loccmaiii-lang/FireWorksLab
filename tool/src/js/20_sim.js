@@ -457,15 +457,16 @@ class Sim {
     }
     this.events.push([this.t + P.crackleDelay, 'crackle']);
   }
-  air(x, y, t) {
+  air(x, y, t, burst = true) {
     let u = this.P.wind, v = 0;
     if (this.tm) { const q = turbVel(this.tm, x, y, t); u += q[0]; v += q[1]; }
+    if (burst && burstFlowActive(this.P)) { const q = burstFlowAir(this.P, x, y, t); u += q[0]; v += q[1]; }
     return [u, v];
   }
   step(h) {
     if (this.ex.length) this.exStep();
     const P = this.P, rng0 = this.rng, gy = -G * P.grav, st = this.stars, sp = this.sp;
-    const bee = P.type === 'hachi', sq = Math.sqrt(h), windy = P.wind !== 0 || !!this.tm, water = P.waterRefl > 0;
+    const bee = P.type === 'hachi', sq = Math.sqrt(h), windy = P.wind !== 0 || !!this.tm || burstFlowActive(P), water = P.waterRefl > 0;
     const spawnOn = this.fam === 'aerial' && (+P.sparkSpawnR > 0 || +P.sparkSpawnHead > 0 || +P.sparkJet > 0), hsS = spawnOn ? headShapeOf(P) : null;     // 火花发射器补全（缺省 false）
     const cpuJ = sparkCpuJit(P);
     let dead = 0;
@@ -518,7 +519,7 @@ class Sim {
         const perM = P.sparkRateBy === 'm' && this.fam === 'aerial' && s.kind !== 5, k = rng.poisson((perM ? sparkPerMOf(P, s) * Math.hypot(s.vx, s.vy, s.vz) * (+P.sparkRamp > 0 && s.kind !== 5 ? sparkRampAt(P, s.id, s.age - s.ign - (P.sparkStart > 0 ? P.sparkStart : 0)) : 1) : s.rate * fr) * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (cpuJ.ia + cpuJ.ib * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
-          const [aX, aY] = windy ? this.air(px, py, this.t) : [0, 0];
+          const [aX, aY] = windy ? this.air(px, py, this.t, false) : [0, 0];     // 爆后场在火花运动时求值，不能在出生处再计一次
           // 普通空中星：随发射阶段改变新火花的寿命；已有火花仍按各自出生时确定的寿命冷却。
           const le = s.kind === 5 || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd;
           const lj = s.kind === 5 || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100;
@@ -569,8 +570,9 @@ class Sim {
       age[i] += h;
       if (age[i] >= life[i]) { sp.kill(i); continue; }
       const k = i * 3;
-      if (this.fam === 'aerial' && +P.sparkLateWind > 0 && this.t + h > sp.pd[i]) {
-        const pre = Math.max(0, Math.min(h, sp.pd[i] - this.t));
+      const flowStart = sparkMotionStart(P, sp.pd[i]);
+      if (this.fam === 'aerial' && this.t + h > flowStart) {
+        const pre = Math.max(0, Math.min(h, flowStart - this.t));
         let pp = Array.from(p.subarray(k, k + 3)), v = Array.from(vv.subarray(k, k + 3));
         const U = [air[i * 2], air[i * 2 + 1], 0], g = [0, g2, 0];
         if (pre > 0) { for (let j = 0; j < 3; j++) v[j] += (-d * (v[j] - U[j]) + g[j]) * pre;

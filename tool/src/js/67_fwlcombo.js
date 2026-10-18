@@ -193,6 +193,7 @@ function dotVisRun(P, sub) {
 function dotsCount(P) { return +P.headBright > 0 ? Math.round((+P.stars || 0) * (P.keepFrac != null ? clamp(+P.keepFrac, 0, 1) : 1)) : 0; }
 // L.dotSize：光点直径 × 炭头大小（默认 1）；L.dotBright：光点亮度倍数（默认 1）——层页头「导出方案」选光点时可调（XD2：以前 × 1.7 偏大）
 function dotsES(L, P, M, fm) {
+  const flowWhy = burstFlowOutputReason(P, 'dots'); if (flowWhy) throw Error(flowWhy);
   P = fxP(P);     // 4.9.21 整体调整（星头大小）
   const v = dotVis(P), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, seed = ((+P.seed || 1) * 31 + 7) | 0;
   const rl = [M.ramp2, M.ramp3].filter(Boolean).map(hexToLin), rc = rl.length ? [0, 1, 2].map(j => rl.reduce((a, c) => a + c[j], 0) / rl.length) : [1, 1, 1];
@@ -486,6 +487,7 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
     const mplan = comboMobilePlan(lb), pcE = [], mbE = [], nmE = [];
     for (let i = 0; i < lb.length; i++) {
       const { L, b, e } = lb[i], ln = comboLayerName(name, i), mn = comboLayerName(name + '_Mobile', i), M = comboLayerM(L), o = layerOut(L, e), uOK = unitAllowed(b.P);   // 4.2.12：每层的导出方案
+      for (const k of [o.pc, o.mobile]) { const why = burstFlowOutputReason(b.P, k); if (why) throw Error(why); }
       if (b.P.pattern === 'half' && (o.pc === 'unit' || o.mobile === 'unit')) throw Error(unitBlockReason(b.P));
       const pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mk = mplan[i] ? mplan[i].kind : o.mobile, mbK = mk === 'unit' && !uOK ? 'seq' : mk;     // 单束不适用的花型（千轮、分裂、蜂、非球形图案）按序列出；4.9.80 手机「自动」按 comboMobilePlan
       const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]), pg = (a, w) => p => onProg && onProg(0.4 + (a + w * (i + p) / lb.length));
@@ -538,6 +540,7 @@ function singleDotsTables(P, M, b) { const h = state.exportUnitHolder || singleD
 async function singleSchemeFiles(name, b, M, onProg, holder = null) {
   const P = holder ? b.P : withScheme(b.P || state.P), o = singleOut(P), L = singleLayer(P, M), files = [], own = [], ln = comboLayerName(name, 0), mn = name + '_Mobile';
   try {
+    for (const k of [o.pc, o.mobile]) { const why = burstFlowOutputReason(P, k); if (why) throw Error(why); }
     if (P.pattern === 'half' && (o.pc === 'unit' || o.mobile === 'unit')) throw Error(unitBlockReason(P));
     const uOK = unitAllowed(P), pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mbK = o.mobile === 'unit' && !uOK ? 'seq' : o.mobile;
     const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);

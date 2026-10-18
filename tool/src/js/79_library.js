@@ -108,6 +108,7 @@ function entryVer(e) {
     if (isEmit(P) && emitFullOut(P) && OUTPUT_VER.fullfx && (rtFxOn(P) || (+P.rtETex === 1 && +P.rtTailAfterBurn === 1))) fams.add('fullfx' + OUTPUT_VER.fullfx);     // 4.9.102 V5
     if (OUTPUT_VER.flashint && familyOf(P.type) === 'aerial' && !P.sparkGraph && (+P.crackle > 0 || +P.glitter > 0 || (['senrin', 'crossette'].includes(P.type) && +P.subStars > 0 && +(+P.subFlash >= 0 ? P.subFlash : P.flash * 0.3) > 0))) fams.add('flashint' + OUTPUT_VER.flashint);     // 4.9.103 B8（子花闪光只有千轮 / 分裂有）
     if (OUTPUT_VER.unitember && +P.emberFrac > 0 && !(+P.branch > 0) && [(outs[i] || {}).pc || P.outPC, (outs[i] || {}).mobile || P.outMobile].includes('unit')) fams.add('unitember' + OUTPUT_VER.unitember);     // 4.9.103 B3
+    if (burstFlowActive(P)) fams.add('burstflow' + OUTPUT_VER.burstflow);
     if (OUTPUT_VER.anchor && P.zoom === 'anchor' && !isEmit(P)) fams.add('anchor' + OUTPUT_VER.anchor);     // 4.9.103 A18
     if (P.sparkGraph && OUTPUT_VER.graph) fams.add('graph' + OUTPUT_VER.graph); } } catch (err) { } });     // 4.9.97 V1 / V2   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
   let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, ''); if (sp) ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期

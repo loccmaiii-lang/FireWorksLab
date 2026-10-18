@@ -138,6 +138,7 @@ function fwlAsymReason(P, L) {
   if (L && L.mirror) return '这一层水平镜像';
   if (!P || typeof P !== 'object') return '';
   if (P.pattern === 'text') return '文字';
+  if (burstFlowActive(P)) return '爆后空间气流';
   if (P.type === 'fan' || P.type === 'barrage' || (P.pattern === 'cluster' && P.clusterLayout === 'fan')) return '扇 / 扫射';
   for (const [k, why] of [['wind', '风'], ['shellVx', '侧向初速'], ['tilt', '倾斜'], ['rtLean', '尾缀侧倾'], ['sparkLateWind', '燃尽后气流'], ['rtLateWind', '燃尽后气流'], ['clusterSweep', '簇依次出膛']])
     if (+P[k]) return why;

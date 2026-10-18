@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "version": "4.9.116",
+  "preStartMaxM": 0,
+  "postStartMaxM": 0.8540497372604157,
+  "deterministic": true,
+  "particlesBeforeBurn": true,
+  "continuous": true,
+  "unsupportedBlocked": true,
+  "tempo": true,
+  "gpuBeforeSame": true,
+  "gpuAfterChanged": true,
+  "errors": []
+}

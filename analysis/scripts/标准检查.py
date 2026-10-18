@@ -133,9 +133,14 @@ if __name__ == '__main__':
     ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
     ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
     ap.add_argument('--spark-flow-only', action='store_true', help='全局气流模型、关闭像素回归和统一右栏保存检查（需Node Playwright）')
+    ap.add_argument('--burst-flow-only', action='store_true', help='爆后气流起效时刻、确定性、火花与不支持输出检查（正式HTTP入口）')
     ap.add_argument('--spark-scales-only', action='store_true', help='分层粒子图整体倍率模型与真实入口/导出检查（需Node Playwright）')
     ap.add_argument('--event-instances-only', action='store_true', help='CPU事件合同与导出门禁回归，不连接UE')
     a = ap.parse_args()
+    if a.burst_flow_only:
+        import os, playwright
+        env = dict(os.environ, FW_PLAYWRIGHT=str(pathlib.Path(playwright.__file__).parent / 'driver' / 'package'))
+        raise SystemExit(subprocess.call(['node', str(HERE / 'gold_ray_flow_check.cjs')], env=env))
     if a.director_preview_only:
         raise SystemExit(subprocess.call(['node', str(HERE / '编排导演恢复检查.mjs')]))
     if a.event_instances_only:

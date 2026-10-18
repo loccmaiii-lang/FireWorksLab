@@ -1,0 +1,30 @@
+/* 隔离浏览器，走真实统一入口、控件、文件导入、保存刷新及连续回放。 */
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{chromium}=require(process.env.FW_PLAYWRIGHT||'playwright');
+const R=path.resolve(__dirname,'../..'),O=path.join(R,'analysis/results/GoldRayBurst'),candidate=JSON.parse(fs.readFileSync(path.join(O,'候选参数.json'),'utf8'));
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});try{const p=await b.newPage({viewport:{width:1600,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('http://127.0.0.1:8034/baker?fast');await p.waitForFunction(()=>window.__fw);
+ await p.evaluate(()=>{openReview(entryById('JMB1'));state.playing=false;});await p.waitForFunction(()=>state.P?.burstFlowOn===1&&wbIdle()&&!!undo.last,null,{timeout:180000});
+ console.log('候选原生入口已打开');
+ const mark=()=>p.evaluate(()=>{for(const [row,it]of panelRows){const k=Array.isArray(it)?it[0]:it.sel;if(k?.startsWith('burstFlow'))row.dataset.flow=k;}});
+ await p.evaluate(()=>{setAutoBake(false);clearTimeout(bakeTimer);});await p.locator('#params .etabs [data-e="效果"]').click();await p.locator('#params summary').filter({hasText:/^环境/}).evaluate(e=>e.parentElement.open=true);await mark();
+ const sw=p.locator('[data-flow="burstFlowOn"] select');await sw.selectOption('0');assert.equal(await p.evaluate(()=>state.P.burstFlowOn),0);
+ assert(await p.locator('[data-flow="burstFlowWind"]').evaluate(e=>e.classList.contains('inert')&&e.title.includes('关闭')));
+ await sw.selectOption('1');assert.equal(await p.evaluate(()=>state.P.burstFlowOn),1);
+ const wind=p.locator('[data-flow="burstFlowWind"] input[type="number"]');await wind.fill('1.8');await wind.press('Tab');await p.waitForTimeout(250);assert.equal(await p.evaluate(()=>state.P.burstFlowWind),1.8);
+ await p.evaluate(()=>undoStep(-1));assert.equal(await p.evaluate(()=>state.P.burstFlowWind),candidate.P.burstFlowWind);await p.evaluate(()=>undoStep(1));assert.equal(await p.evaluate(()=>state.P.burstFlowWind),1.8);
+ await p.locator('#abSave').click();await p.locator('#saveNameInput').fill('金芒菊爆后扰动自动检查');await p.locator('#saveNameSubmit').click();await p.waitForFunction(()=>lib.my?.name==='金芒菊爆后扰动自动检查');const id=await p.evaluate(()=>lib.my.id);
+ await p.reload();await p.waitForFunction(()=>window.__fw);await p.evaluate(async id=>{setAutoBake(false);await openMyEffect(id);state.playing=false;},id);assert.equal(await p.evaluate(()=>state.P.burstFlowWind),1.8);assert.equal(await p.evaluate(()=>state.P.burstFlowOn),1);
+ console.log('总开关/灰显/编辑/撤销重做/保存刷新通过');
+ // 空中条目保存为“我的效果”时是单层组合；单层文件须在对应单层AI入口导入，这是现有形态约束。
+ await p.evaluate(async()=>{await openEffect(EFFS().find(e=>e.key==='jinmangju_burst'));state.playing=false;});await p.waitForFunction(()=>state.tab!=='combo'&&wbIdle(),null,{timeout:120000});
+ await p.locator('#abFile').setInputFiles(path.join(O,'金芒菊_小起势.recipe.json'));await p.waitForFunction(()=>wb.src.kind==='mine'&&wbList().some(x=>x.id===wb.src.id&&x.name.includes('（导入）')),null,{timeout:15000});
+ await p.evaluate(()=>{state.playing=false;bakeNow({quiet:true});});
+ await p.waitForFunction(()=>wbIdle()&&!!state.bake&&!state.dirty,null,{timeout:60000}).catch(async e=>{const s=await p.evaluate(()=>({dirty:state.dirty,baking:state.baking,failedGen:state.failedGen,gen:state.gen,bakeError:state.bakeError,busy:document.querySelector('#busy').hidden,tab:state.tab,stillBusy:state.stillBusy,status:document.querySelector('#stats').textContent}));console.error('导入后状态',JSON.stringify(s));await p.screenshot({path:path.join(O,'导入等待诊断.png')});throw e;});
+ const actual=await p.evaluate(()=>({P:state.P,M:state.M,parts:bakeParts(state.bake).map(b=>({frames:b.meta.L.F,cell:b.cw,t0:b.meta.t0})),out:OUT_SIG()}));for(const k of ['burstR0','v0','burn','stars','burstFlowOn','burstFlowStart','burstFlowFade','burstFlowWind','burstFlowScale','pageTarget','cellPad'])assert.equal(actual.P[k],candidate.P[k],k);
+ console.log('原生配方文件导入并完成新参数烘焙');
+ assert(actual.out.includes('burstflow4.9.116'));assert.equal(actual.parts.length,2);
+ await p.evaluate(()=>{state.autoBake=false;clearTimeout(bakeTimer);setViewSeg('export');state.disp='fit';state.t=1.1;state.playing=false;});await p.waitForTimeout(300);await p.screenshot({path:path.join(O,'统一入口-PC回放.png')});
+ await p.evaluate(()=>{state.platform='mobile';state.t=2.3;});await p.waitForTimeout(300);await p.screenshot({path:path.join(O,'统一入口-手机回放.png')});
+ await p.evaluate(()=>{state.platform='pc';state.playing=true;state.rate=1;});const ticks=[];for(let i=0;i<36;i++){await p.waitForTimeout(500);ticks.push(await p.evaluate(()=>state.t));}const wraps=ticks.filter((v,i)=>i&&v<ticks[i-1]).length;assert(wraps>=2);
+ await p.evaluate(()=>{state.playing=false;state.t=1.1;});assert.deepEqual(errors,[]);
+ fs.writeFileSync(path.join(O,'统一入口检查.json'),JSON.stringify({pass:true,version:await p.evaluate(()=>VERSION),entry:true,masterSwitch:true,disabledReasons:true,edit:true,undoRedo:true,saveReload:true,nativeRecipeImport:true,parts:actual.parts,outSignature:actual.out,wraps,ticks,errors},null,2));console.log('真实统一入口：总开关/灰显/编辑/撤销重做/保存刷新/原生配方导入/PC手机回放/'+wraps+'次循环通过');
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});

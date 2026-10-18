@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-18 03:17",
+ "generated": "2026-10-18 18:43",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -19000,6 +19000,82 @@
    ],
    "pass": true,
    "seconds": 1.5
+  },
+  "JMB1": {
+   "id": "JMB1",
+   "name": "金芒菊 · 小起势与轻扰动",
+   "kind": "preset",
+   "renderVer": 40,
+   "ver": "3135e4c9·burstflow4.9.116+master4.9.31",
+   "checks": [
+    [
+     "实时模拟",
+     true,
+     ""
+    ],
+    [
+     "引擎回放 + 游戏内大小",
+     true,
+     ""
+    ],
+    [
+     "贴图 + 流转动画",
+     true,
+     ""
+    ],
+    [
+     "完整参数",
+     true,
+     ""
+    ],
+    [
+     "导出素材包（cascade.json PC + 手机）",
+     true,
+     ""
+    ],
+    [
+     "实拍对照",
+     true,
+     "有参考视频"
+    ],
+    [
+     "单格 ≥ PC 下限",
+     true,
+     "单格 512 px"
+    ],
+    [
+     "手机单格 ≥ 下限",
+     true,
+     ""
+    ],
+    [
+     "屏幕放大 ≤ 1",
+     true,
+     "放大 0.79"
+    ],
+    [
+     "30fps 显示帧 ≥ 90%",
+     true,
+     "113/113"
+    ],
+    [
+     "燃烧段有效帧率 ≥ 下限",
+     true,
+     "22.5 fps"
+    ],
+    [
+     "淡出段有效帧率 ≥ 下限",
+     true,
+     "15 fps"
+    ],
+    [
+     "尺寸参数有效",
+     true,
+     ""
+    ]
+   ],
+   "pass": true,
+   "seconds": 0.2
   }
  }
 }

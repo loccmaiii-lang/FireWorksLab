@@ -613,6 +613,7 @@ function bakeKind(P) {
   return 'master';
 }
 function unitBlockReason(P) {
+  const flowWhy = burstFlowOutputReason(P, 'unit'); if (flowWhy) return flowWhy;
   if (P?.pattern === 'half') return '半球单束暂不支持，无法保证上半球方向；请改用序列。';
   if (!P || familyOf(P.type) !== 'aerial' || ['senrin', 'crossette', 'hachi'].includes(P.type) || P.pattern !== 'sphere')
     return '这种花型或图案暂不支持单束，请改用序列。';

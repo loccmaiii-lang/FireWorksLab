@@ -1,0 +1,15 @@
+{
+  "effect": "jinmangju_burst",
+  "entry": "JMB1",
+  "ver": "3135e4c9·burstflow4.9.116+master4.9.31",
+  "version": "4.9.116",
+  "time": "2026-10-18 18:41:42",
+  "dir": "analysis/local/输出/金芒菊小起势_20261018",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_GoldRay_Burst",
+      "replica": "JMB1",
+      "sha256": "2a1447e3d20c53f106d6c8cac2661d73e3e53027e0cbcb5965736f6c94468ad1"
+    }
+  ]
+}

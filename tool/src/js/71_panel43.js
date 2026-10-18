@@ -68,6 +68,9 @@ function graphSources43(P,ignoreBranchCount=false){
 }
 const GRAPH_BRANCH_KEYS=['branchLife','branchAngle','branchCount','branchWidth','branchSpeed','branchGravity'].map(k=>'sparkGraph.'+k);
 const INERT = [
+  [['burstFlowStart', 'burstFlowFade', 'burstFlowWind', 'burstFlowScale'], P => +P.burstFlowOn !== 1, '爆后扰动已关闭'],
+  [['burstFlowStart', 'burstFlowFade', 'burstFlowScale'], P => +P.burstFlowOn === 1 && !(burstFlowValue(P, 'burstFlowWind') > 0), '气流速度是0，爆后扰动没有位移'],
+  [['burstFlowFade', 'burstFlowWind', 'burstFlowScale'], P => +P.burstFlowOn === 1 && burstFlowValue(P, 'burstFlowStart') >= +P.duration, '开始时间不早于序列结束，没有可见扰动'],
   [['sparkGraph.scaleCone','sparkGraph.scaleWidth','sparkGraph.scaleLife','sparkGraph.scaleGain','sparkGraph.scaleSpeed','sparkGraph.scaleGravity',...GRAPH_BRANCH_KEYS], P => !!P.sparkGraph && !graphSources43(P).some(e=>!e.parent), '整体数量与根层数量相乘后为0，没有粒子；先增加粒子数量或根层每周期粒子数'],
   [['sparkGraph.scaleCone'], P => !!P.sparkGraph && (!(P.sparkGraph.scaleSpeed??1)||!graphSources43(P).some(e=>e.directionMode==='cone'&&e.cone>0&&e.speed[1]>0&&(!e.parent||(P.sparkGraph.branchSpeed??1)>0))), '当前没有能运动的锥形层；球形散射不受喷射半锥角影响，初速为0时角度也不起作用'],
   [['sparkGraph.scaleSpeed'], P => !!P.sparkGraph && !graphSources43(P).some(e=>e.speed[1]>0), '各有效层的初速都为0；先增加层内初速'],

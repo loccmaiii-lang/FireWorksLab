@@ -1,0 +1,245 @@
+{
+  "pass": true,
+  "version": "4.9.116",
+  "baseline": "98686170",
+  "sameDefaultShaders": true,
+  "pixelFrames": 18,
+  "cases": [
+    {
+      "id": "type:kiku",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "type:botan",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "type:kamuro",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "type:senrin",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "type:strobe",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "type:crackle",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "JM4-40",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QA20-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QA20-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QC12-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QC12-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QC12-3",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QD14-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QD14-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QD14-3",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QN12-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "QN12-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "PRISM3-A",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "PRISM3-B",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "PRISM3-C",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "PRISM3-D",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "HK10-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "HK10-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "HN2-O",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "HN2-G",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "JMG10",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYFL-O",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYCR-O",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYJA-O-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYJA-O-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYJM-O",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYJC-O-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYJC-O-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYHK-O-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "MYHK-O-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "TP-JMG10-T75",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "TP-MYJA-O-T75-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "TP-MYJA-O-T75-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "TP-MYHK-O-T75-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "TP-MYHK-O-T75-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "FG7",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "JQ7-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "JQ7-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "JQ7-3",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "JQ7-4",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "FC10R-1",
+      "trajectorySame": true,
+      "boundsSame": true
+    },
+    {
+      "id": "FC10R-2",
+      "trajectorySame": true,
+      "boundsSame": true
+    }
+  ],
+  "errors": []
+}

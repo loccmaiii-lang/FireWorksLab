@@ -1,0 +1,87 @@
+{
+ "ver": "4.9.116",
+ "keys": [
+  "burstFlowOn",
+  "burstFlowStart",
+  "burstFlowFade",
+  "burstFlowWind",
+  "burstFlowScale"
+ ],
+ "rows": [
+  {
+   "name": "金芒菊 · 我的",
+   "li": 1,
+   "title": "金芒菊",
+   "type": "kiku",
+   "res": [
+    {
+     "key": "burstFlowOn",
+     "sec": "物理扰动",
+     "label": "爆后扰动",
+     "vis": true,
+     "inert": "",
+     "from": 0,
+     "to": 1,
+     "max": 238,
+     "verdict": "生效",
+     "why": ""
+    },
+    {
+     "key": "burstFlowStart",
+     "sec": "物理扰动",
+     "label": "扰动开始时间（开花后）",
+     "vis": true,
+     "inert": "爆后扰动已关闭",
+     "from": 0.4,
+     "to": 0.8,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "爆后扰动已关闭"
+    },
+    {
+     "key": "burstFlowFade",
+     "sec": "物理扰动",
+     "label": "扰动渐入时间",
+     "vis": true,
+     "inert": "爆后扰动已关闭",
+     "from": 0.3,
+     "to": 0.6,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "爆后扰动已关闭"
+    },
+    {
+     "key": "burstFlowWind",
+     "sec": "物理扰动",
+     "label": "扰动气流速度",
+     "vis": true,
+     "inert": "爆后扰动已关闭",
+     "from": 1.2,
+     "to": 2.4,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "爆后扰动已关闭"
+    },
+    {
+     "key": "burstFlowScale",
+     "sec": "物理扰动",
+     "label": "扰动尺度",
+     "vis": true,
+     "inert": "爆后扰动已关闭",
+     "from": 8,
+     "to": 16,
+     "max": 0,
+     "verdict": "写了原因",
+     "why": "爆后扰动已关闭"
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.94,
+    2.014,
+    3.135
+   ],
+   "saved": "4.5.3"
+  }
+ ]
+}

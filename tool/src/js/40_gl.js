@@ -285,6 +285,7 @@ void main(){
   emitPt(q,I,size);
 }`;
 const VS_SPK_LATE = sparkLateSource(VS_SPK);
+const VS_SPK_BURST = sparkBurstSource(VS_SPK_LATE);
 // 循环发射器（地面类与上升星头循环）：火花按周期性编号生成，t 与 t+周期 的画面完全相同。
 // 模式 0 固定喷口（喷口位置、方向来自纹理）；1 转轮；2 彗星（扇形/连发，彗星自己也发火花）；3 随体坐标里的尾迹（上升星头）
 const VS_EMIT = `#version 300 es
@@ -523,7 +524,7 @@ function setAirUniforms(pr, P) {
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   const P = tr.P, modern = true, str = familyOf(P.type) === 'aerial' && +P.sparkStretch > 0, se = sparkEff(P);     // 4.9.50 火花拉长
-  const poly = sparkPolyOn(P), pr = familyOf(P.type) === 'aerial' && (+P.sparkLateWind > 0 || +P.sparkTailAfterBurn === 1) ? lateSparkProgram40(str, poly) : poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);     // 4.9.57 火花多边形 / 亮度随机（缺省不进）；4.9.59 不再只限礼花
+  const burst = burstFlowActive(P), poly = sparkPolyOn(P), pr = familyOf(P.type) === 'aerial' && (burst || +P.sparkLateWind > 0 || +P.sparkTailAfterBurn === 1) ? lateSparkProgram40(str, poly, burst) : poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);
   if (poly) setSparkPolyUniforms(pr, P);
   if (str) { gl.uniform1f(pr.u.uSpkStr, +P.sparkStretch); gl.uniform1f(pr.u.uSpkStrJ, Math.max(0, +P.sparkStretchJit || 0)); }
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
@@ -547,6 +548,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
     gl.uniform1f(pr.u.uLateScale, Math.max(.2, +P.sparkLateScale || 1.5));
     gl.uniform1f(pr.u.uLateFade, Math.max(.05, +P.sparkLateFade || .4));
     gl.uniform1f(pr.u.uLateCurves, air && +P.sparkTailAfterBurn === 1 ? 1 : 0); }
+  if (burst) { gl.uniform1f(pr.u.uBurstWind, burstFlowValue(P, 'burstFlowWind')); gl.uniform1f(pr.u.uBurstScale, burstFlowValue(P, 'burstFlowScale')); gl.uniform1f(pr.u.uBurstStart, Math.max(0, burstFlowValue(P, 'burstFlowStart'))); gl.uniform1f(pr.u.uBurstFade, Math.max(.05, burstFlowValue(P, 'burstFlowFade'))); }
   if (pr.u.uCq) gl.uniform1f(pr.u.uCq, sparkCqOf(P));     // 4.9.71 火花平方阻力（缺省 0）
   if (pr.u.uCoolAbs) gl.uniform1f(pr.u.uCoolAbs, familyOf(P.type) === 'aerial' ? 1 : 0);     // 5.0（4.7.0）：空中类只有「按实际年龄冷却」一种
   gl.uniform1f(pr.u.uTwk, P.twinkle); if (pr.u.uTwHz) gl.uniform1f(pr.u.uTwHz, +P.twinkleHz > 0 ? +P.twinkleHz : 0); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);

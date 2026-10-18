@@ -261,10 +261,10 @@ function drawParticleBatch(n, modern) {
 
 // 普通火花末段功能变体；继续复用同一亮核/多边形/光晕/拉长组合，不新增渲染模型。
 const lateSparkPrograms40 = {};
-function lateSparkProgram40(stretch, poly) {
+function lateSparkProgram40(stretch, poly, burst = false) {
   const g = particleQuality.coreProfile ? 1 : 0, hs = particleQuality.haloFrac > 0 ? particleQuality.haloShape : 0;
-  const key = [stretch, poly, g, hs].join('_'); if (lateSparkPrograms40[key]) return lateSparkPrograms40[key];
-  let vs = point40GpuSource(VS_SPK_LATE).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);'), fs = POINT40_FS;
+  const key = [stretch, poly, g, hs, burst].join('_'); if (lateSparkPrograms40[key]) return lateSparkPrograms40[key];
+  let vs = point40GpuSource(burst ? VS_SPK_BURST : VS_SPK_LATE).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);'), fs = POINT40_FS;
   if (poly) vs = polyVS40(vs); if (stretch) vs = spkStretchVS40(vs);
   if (g) { vs = gradientSource40(vs); fs = gradientSource40(fs); }
   if (hs === 1) { vs = moffatVS40(vs); fs = moffatFS40(fs); } else if (hs === 2) { vs = multiVS40(vs); fs = multiFS40(fs); }
