@@ -1,0 +1,459 @@
+{
+ "at": "2026-10-18T10:04:46.528Z",
+ "rule": "MainTex / BaseTex、非共享、尚未 NoMip",
+ "targets": [
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleGold_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCombo_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterLeft_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterRight_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Crackle_Main_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Core_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Lead_2x2_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_02_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Glitter_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Strobe_Strobe_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_02_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_A_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_B_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_Main_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L2_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L3_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_HD",
+   "pc": true,
+   "size": "2048x2048",
+   "mb": 4
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+   "pc": false,
+   "size": "2048x1024",
+   "mb": 0.89
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_02",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_4x2_01",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Sparkler_07",
+   "pc": false,
+   "size": "2048x2048",
+   "mb": 1.78
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "pc": false,
+   "size": "1024x1024",
+   "mb": 0.44
+  }
+ ],
+ "skipped": {
+  "shared": [
+   "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+   "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+   "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_24",
+   "/Game/Effects/Common/Texture/Trail/T_EFX_SmokeTrail_01",
+   "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_07",
+   "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_02",
+   "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62",
+   "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_22",
+   "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_09",
+   "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_15",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Star_01",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Star_02",
+   "/Game/Effects_HD/Common_HD/Texture_HD/Explosion_HD/Pyro_HD/M_EFX_Dust_Loop_08x08_SA_01_HD",
+   "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_03",
+   "/Game/Effects/Common/Texture/Glow/T_EFX_Cust_Glow_04"
+  ],
+  "aux": [
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M (AlphaMaskTex)",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02D (NoiseMap)",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01D (NoiseMap)",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D (Dissolve)",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05D (NoiseMap)",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D (NoiseMap)"
+  ],
+  "alreadyNoMip": [
+   "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD",
+   "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Hero_FlowFixed",
+   "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+   "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD"
+  ]
+ }
+}

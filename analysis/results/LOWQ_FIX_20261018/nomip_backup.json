@@ -1,0 +1,352 @@
+[
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleGold_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LittleGold_4x4_01_HD.uasset",
+  "sha256": "ee7fcde85cf1dbd3059676c4d6be8082de1f3d34d99aea8779fbab0ad0e78fcc"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_HD.uasset",
+  "sha256": "f1598b2772a41beaae995dcb962e32070b9dd7406bb235ee2faf34059df7a535"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LittleCrackle_Main_4x4_01_HD.uasset",
+  "sha256": "8af43962409a2481821b6e88a9bf5b40354b947c8238112c47bf11384a7bdd81"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LittleCombo_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LittleCombo_4x4_01_HD.uasset",
+  "sha256": "5ca0585c738dfbf688e8083c2b312126e0f054d15caeab0534394d5ddf51b34c"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Comet_Layers_L1_Full_16x1_01_HD.uasset",
+  "sha256": "bd91c23f4fbcaa8491bbf264a51bcf8f23823cf1fce8e86e527aa9e3705e297a"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_HD.uasset",
+  "sha256": "0a9217491e0d54a6753bf79628334025f3fabed115f067a7592fa28f85da756b"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_FanGold_Middle_01.uasset",
+  "sha256": "52006463a81aa02708ae95181b463cfe7bb59e606b07e291ed031299bfbd365e"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterLeft_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_FanGold_OuterLeft_01.uasset",
+  "sha256": "0db577bcec189dc32dff7462422c9864efd7b710218143def8d16a824064cdb7"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterRight_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_FanGold_OuterRight_01.uasset",
+  "sha256": "d41049062bd3b256d528a35cf8ab7c4062a9a0418909d010aeecd9863ddf2113"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_HD.uasset",
+  "sha256": "3ae2911dad1ad30ce7d3afd366346aa84b717c4a128f09bf8231f05814716b26"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Combo_4x4_01.uasset",
+  "sha256": "fa9092940559d6c54322fb6e8ad1598a3f01891036dd61847211f7331d1209d3"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_HD.uasset",
+  "sha256": "0bf6b951a0300f1da3bd640e47244fc01ffd69b5fb4d64b6efdb3cbc14748873"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Crackle_Main_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Crackle_Main_4x4_01_HD.uasset",
+  "sha256": "c54509226aacf269bb62e5bd2ca2c0a86f786b809d3bbd4b234c68adebc25836"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Core_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Lime_Core_4x4_01_HD.uasset",
+  "sha256": "e9e36bfea0f66a20e65c95f14bcc01dfef1da8666ccdb151bcb036bac9100c72"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Lead_2x2_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Lime_Lead_2x2_01_HD.uasset",
+  "sha256": "08f67130921a73e259dc1ace3d172e0aa307c8502e09746decc9ff6f8f000395"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Lime_Glitter_4x4_01_HD.uasset",
+  "sha256": "6b499c8a59736c89cf157d87e29dc3bc1b0446710292ebc11343ed64041cce43"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Lime_Glitter_4x4_02_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Lime_Glitter_4x4_02_HD.uasset",
+  "sha256": "4aae7ebb4dce67e9e9c47b344b336852a6fed7a83c0669bdf4ffa4c135144c8c"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Glitter_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Glitter_4x4_01_HD.uasset",
+  "sha256": "b48a937d808383ab0003b7f7dd5039d3836f55482b40c7c508122bafbc842b09"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Strobe_Strobe_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_Strobe_Strobe_4x4_01_HD.uasset",
+  "sha256": "e35697f91fecbd8448f1824e79466c803a2df2341555545c95de0d3f323b0c39"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.uasset",
+  "sha256": "972fa4a5655c1782e6e60b7af160064f1aeec9a975c433e67fe7da067cb9719f"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.uasset",
+  "sha256": "4221a03aa979b0af39321eb155c9f0f54e4613c18d8776e94b397d672178845f"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_02_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LimeStar_Head_4x4_02_HD.uasset",
+  "sha256": "1ff895ce84a7843fbcc5de2a5142b1b54a2766e357acdb8f2739650df75944c8"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_A_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldRay_A_4x4_01_HD.uasset",
+  "sha256": "db5d7f71d1afb8c224c1b44d98a408fafaf192ecd5cefa2185248674a4983c1a"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_B_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldRay_B_4x4_01_HD.uasset",
+  "sha256": "46994fbc288cf6052ef2086e71b6ebc689ba92d145fe6c1c7677ecb38b67f1d0"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_PrismWheels_2x2_02.uasset",
+  "sha256": "ee570f26140fbd5cd6d704f2fa92863a0f55e52c3d2d230f446df16bbaa85492"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_PrismWheels_2x2_01.uasset",
+  "sha256": "9e6f9f38d28e6c8002f19918021377f3b64b11b17b2a746afd1d6a78ff261301"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_Main_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldSpark_Main_4x4_01_HD.uasset",
+  "sha256": "6c4d185f5eeaa811bb7e8f0fb86d39cec962e420a454706bf68b3c2b487a2c6a"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L2_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldSpark_L2_4x4_01_HD.uasset",
+  "sha256": "56dd793c62821a4626c2445cc970ee5211a55f397d20ddbe16cd973445dd41a4"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldSpark_L3_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldSpark_L3_4x4_01_HD.uasset",
+  "sha256": "df6fc4feb9b4d1d606b9041389d0336e950f0c5b861ee4b84878e987049f41a3"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD.uasset",
+  "sha256": "5fe1be4668322a6c3962b82092e95621f436d74ff76c1268f57058615f6663fe"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD.uasset",
+  "sha256": "92cdaf664a2d827fb2438cccaa2a5fc5f149810f6a772c7b93e73d520d5af84d"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD.uasset",
+  "sha256": "c8b10ef4b684c71329db7c28e7c0e99f7f045bbfb2f593932abd92aa69abdf5d"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD.uasset",
+  "sha256": "3d4319adae4ad8dae0faf124bdf5de6494cc2d28fff42d669ab921d0ecae99ee"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD.uasset",
+  "sha256": "e130800e7acef69f3cac3690d569ffa96051cbb72a81c407ec9035f562244f0b"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD.uasset",
+  "sha256": "d4307d0b9ae0c9f2afc88946b9904b6b9b1de524b9567d0b26e127928dcd3d4a"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD.uasset",
+  "sha256": "e7e4f18b04c2eb56daa8557516affec5e50b2ba6a76f8c77c978ef84f04cacc0"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_GoldSpark_2x2_01.uasset",
+  "sha256": "fd690f3f1c49e9ba68292cd7394f2b1f1cf617682590c61942e7ab5423f824b9"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_GoldSpark_4x4_01.uasset",
+  "sha256": "c73f7f9226058954b3f12708c2b1071222a57900e8cc45111fd43df7a7cadbc7"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_HD.uasset",
+  "sha256": "7a8e29ee29603db0785f63cd2132ea01111bdef2d2b88fb85389465220e5bf0f"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD.uasset",
+  "sha256": "2d9362869c377de3d20698a183d9e1f016f2b323fcd742b035e0b12df6041ad5"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD.uasset",
+  "sha256": "03dd21582d33e6b36f6d3645754e1992a19ed327336a896db4a8bab588ddaed6"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD.uasset",
+  "sha256": "95c90934de0b7d9a00c522f6783e2c2e2717108af827bb4645aaf781d0109e21"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD.uasset",
+  "sha256": "d5879eb06115024662ca76ffe3dc2e83e799918d3414b17238ae914a9bbaa181"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_HD.uasset",
+  "sha256": "72a1a30115e60f839414e7881e0c43a5339e34ebb83db92e2f3220ad1204c515"
+ },
+ {
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_HD",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects_HD__Common_HD__Texture_HD__FireWorks_HD__T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_HD.uasset",
+  "sha256": "722db09019de2d2876c3225cbfeb49497d727a36ca6ac9a0fe5f5b016798c28c"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Main_05.uasset",
+  "sha256": "a4b9ff66ba3b0f123610846e3486528a14eb363e337f674088b060ccc9b308b6"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Head_05.uasset",
+  "sha256": "c32a7b04539a2f2a6c2bc54964fc659498182f6cd787b6364f075af471e6180e"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RocketTail_4x4_01.uasset",
+  "sha256": "99df58784c23d759101492fc52f13919dc23849fbbbc33e28126fff70f4c9058"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Spark__T_EFX_Sparks_Sparkler_4x4_01.uasset",
+  "sha256": "d776f9ba1e18b62bdd5a03d3ce43c726dfe0d8d34fe77b044efbe1629a117176"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Spark__T_EFX_Sparks_Streak_8x1_02.uasset",
+  "sha256": "5b4859b8eac1ddde42564ae424447e078e065cedc93c02193bcda83cf2946c8d"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_02",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Spark__T_EFX_Sparks_Sparkler_4x4_02.uasset",
+  "sha256": "27b809977152900048021b97a411aa861215160f35db49b92cecf7aea695bd6f"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_4x2_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Spark__T_EFX_Sparks_Streak_4x2_01.uasset",
+  "sha256": "99feb2c85619aa1f2a203979b46ee6ccfe6406bc4089fa8eade41ff30cb0721a"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Sparkler_07",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWokr_Sparkler_07.uasset",
+  "sha256": "fe9e60c5c21faa2869f8ff9a3b34a42e25293d6090d1f76ce0ef8ef9ef81cc72"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_LittleGold_4x4_01.uasset",
+  "sha256": "542c0b1f15a4cd3b08a0bb845decdc126be15f8653aae328c22ceed5860a66b8"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01.uasset",
+  "sha256": "22d66f4547482f6debf7819eefc5523f73cf0fa78873720a76c8e855b4d0fe46"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_LittleCrackle_Main_4x4_01.uasset",
+  "sha256": "8f5c49f4f6411106038a4af4c4ac105152e4fd68199857f62ebeb2a6fa002fce"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_LittleCombo_4x4_01.uasset",
+  "sha256": "31997a8126b0e589fc20ac11aa11ff1182af0408e4ee94d4a4a06582ddb9d984"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01.uasset",
+  "sha256": "fa7304c62c17b0f83f4b96b6eab892bff5c3b21209d71e3b22390fb6ac2b7537"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01.uasset",
+  "sha256": "517e10d654e4f12cb1054a2ac277dc858377ec753e79433706c03d7ad63ef7e3"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01.uasset",
+  "sha256": "cd8ce6d4b6c4c46d92fe83584d100cefb997e89de61c801b3b3d2bd731a72261"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Crackle_Main_4x4_01.uasset",
+  "sha256": "4a0b19dbc0b2183b4a8c1edf169d3fad9789e3ebe99f0d36470bf1d85d2de5f6"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Glitter_4x4_01.uasset",
+  "sha256": "1abb1d6958f1e07670cfb3df6e5c783cf3d13f776d7f28c112a72e972772d857"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_Strobe_Strobe_4x4_01.uasset",
+  "sha256": "6758d795fee6bbebb269406896e5dfde3dc91a9d6b4990d5a994f1f57f3d50c2"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_GoldRayChry_4x4_01.uasset",
+  "sha256": "be30306a35245542758e3c10843cc97b367ebfea62ed805c860d2a386d4a1c00"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01.uasset",
+  "sha256": "6aff82aa969b71857c9997b0f587fa9560f7e4af6e20436a52e49e5b8befb309"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RiseTrail_L_Full_32x2_01.uasset",
+  "sha256": "808dd30d2aecac0bb64e17ebb3560166aed3427a25640fb978cd06d8eabbd3c3"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RiseTrail_M_Full_32x2_01.uasset",
+  "sha256": "6d072f984aff5f8f7933f8635616dccdfdc1b9bd7610616f4cca667eef59353f"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.uasset",
+  "sha256": "a0f123598edf38feabaeb72680abbf0ce1ceff65e58a9566ac34f947c874ace6"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01.uasset",
+  "sha256": "a44b94c7973ed84dfee9e1d486d1c6bed392397e93b69e7500381a4caf117075"
+ },
+ {
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+  "backup": "F:/FireWorksLab/analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/Effects__Common__Texture__Fireworks__T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01.uasset",
+  "sha256": "609cdef549e9cb3a1aea99e2a005006adac787c886b626672fa4338b880c205b"
+ }
+]
