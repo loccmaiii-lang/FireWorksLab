@@ -5,11 +5,19 @@ __pycache__/
 Thumbs.db
 tool/node_modules/
 
-# 本地任务的大文件（贴图、视频），不上传
-analysis/local/输出/
+# 本地任务的大文件（贴图、视频）与本机沙盒实验产物，仅保留本机执行器核心白名单
+analysis/local/*
+!analysis/local/install_monitor.ps1
+!analysis/local/job_lock.py
+!analysis/local/requirements.txt
+!analysis/local/run_jobs.py
+!analysis/local/run_monitor.ps1
+!analysis/local/test_watch_jobs.py
+!analysis/local/watch_jobs.py
+!analysis/local/使用说明.md
+!analysis/local/跑任务.bat
+!analysis/local/跑任务_并行.bat
 analysis/results/*/_claim.json
-analysis/local/monitor_state/
-analysis/local/WORKSPACE_DELIVERY/
 
 # 烘焙器「保存」顺便写进仓库文件夹的待上传副本（后台脚本挪进 analysis/我的配方/ 再推，4.2.4）
 analysis/我的配方/_待上传/
@@ -23,3 +31,22 @@ analysis/music/.base_cache_B01.json
 # 本机 TClaude 启动器（个人工具，不入库）
 TClaude.bat
 TClaude-Login.bat
+
+# 本机大型实验目录、临时抓包与个人笔记（保留在硬盘原地，不入库；FXtools/节目/NewYearFireWorks_v01/ 保持可见）
+outputs/
+experiments/ultra-baker-3.6/
+experiments/参数交互稿/*.log
+MyTepelate/
+vidio/videoplayback*.webm
+tool/.prism3r2-before.html
+FXtools/*.lnk
+local_notes_ue_interface.md
+点灭星_Cascade参数.txt
+对话记录/Claude网页备份_*.md
+analysis/probe/回归_自检_本机/
+analysis/probe/工作台8025_推送核对_*.json
+analysis/results/MESH_WILLOW_20261016/
+analysis/results/MOBILE_INITCOLOR_20261016/
+analysis/results/PRISM3_20261016/
+analysis/results/SparkGraph/
+analysis/results/UI16/整页交互草稿_2026-10-04/
