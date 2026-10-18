@@ -282,3 +282,18 @@ LogContentStreaming:   Retention Priority:  201326593
 LogContentStreaming:   Boost factor:        710.0
 LogContentStreaming:   Mip bias [Budget]:   0 [0]
 LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T09:47:11.514Z after-nomip3
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD.T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000

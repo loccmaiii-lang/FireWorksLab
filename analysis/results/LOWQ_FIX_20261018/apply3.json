@@ -1,0 +1,35 @@
+[
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+  "before": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "checkout": true,
+  "size": [
+   2048,
+   2048
+  ]
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD",
+  "before": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "checkout": true,
+  "size": [
+   2048,
+   2048
+  ]
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+  "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD",
+  "before": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "checkout": true,
+  "size": [
+   2048,
+   2048
+  ]
+ }
+]
