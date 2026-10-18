@@ -1,0 +1,68 @@
+{
+ "B11r1": {
+  "events": 1145,
+  "peakAtS": 181.17,
+  "sMax": 8.10639337859418,
+  "errors": [],
+  "warnings": [],
+  "lights": [
+   {
+    "light": "SpotLight2",
+    "peak": 1800,
+    "iKeys": 1607,
+    "cKeys": 1006
+   },
+   {
+    "light": "SpotLight",
+    "peak": 1800,
+    "iKeys": 1607,
+    "cKeys": 1006
+   },
+   {
+    "light": "SpotLight3",
+    "peak": 1800,
+    "iKeys": 1607,
+    "cKeys": 1006
+   },
+   {
+    "light": "SkyLight",
+    "peak": 6.923,
+    "iKeys": 1607,
+    "cKeys": 1006
+   }
+  ]
+ },
+ "B11r2": {
+  "events": 1145,
+  "peakAtS": 181.17,
+  "sMax": 8.10639337859418,
+  "errors": [],
+  "warnings": [],
+  "lights": [
+   {
+    "light": "SpotLight2",
+    "peak": 1800,
+    "iKeys": 1607,
+    "cKeys": 1006
+   },
+   {
+    "light": "SpotLight",
+    "peak": 1800,
+    "iKeys": 1607,
+    "cKeys": 1006
+   },
+   {
+    "light": "SpotLight3",
+    "peak": 1800,
+    "iKeys": 1607,
+    "cKeys": 1006
+   },
+   {
+    "light": "SkyLight",
+    "peak": 6.923,
+    "iKeys": 1607,
+    "cKeys": 1006
+   }
+  ]
+ }
+}

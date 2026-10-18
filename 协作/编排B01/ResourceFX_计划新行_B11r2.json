@@ -1,0 +1,3888 @@
+{
+ "format": "df.resourcefx-30-rows/1+planned",
+ "readAt": "2026-10-16T04:06:12+0800",
+ "tables": {
+  "pc": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+  "mobile": "/Game/DataTables/Resource/ResourceFXTable"
+ },
+ "method": "/datatable/rows 分页（offset/limit），只读",
+ "pages": [
+  {
+   "side": "pc",
+   "offset": 0,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 5,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 20,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 25,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 40,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 55,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 60,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 65,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 80,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 85,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 90,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 95,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 110,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 125,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 130,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 135,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 150,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 165,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 180,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 185,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 200,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 205,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 220,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 235,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 250,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 255,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 270,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 285,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 300,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 301,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 316,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 321,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 336,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 351,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 356,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 371,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 376,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 381,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 386,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 401,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 416,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 431,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 446,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 461,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 462,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 477,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 492,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 507,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 512,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 527,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 542,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 557,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 562,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 567,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 582,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 597,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 612,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 627,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 642,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 657,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 658,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 673,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 688,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 693,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 708,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 723,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 738,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 739,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 754,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 769,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 784,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 799,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 814,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 829,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 844,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 849,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 854,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 859,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 874,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 875,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 880,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 895,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 910,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 925,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 940,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 955,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 970,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 971,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 986,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1001,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1016,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1031,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1046,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1061,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1066,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1081,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1096,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1101,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1116,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1131,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1146,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1161,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1176,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1191,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1206,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1221,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1236,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1241,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 1242,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1257,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1272,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1287,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1292,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1307,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1322,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1337,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1342,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1347,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1362,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1377,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1392,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1407,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1422,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1427,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1442,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1447,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1452,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1468,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1473,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1478,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1493,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 1494,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1509,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1514,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1519,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1534,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1549,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1564,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1579,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1594,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1609,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1624,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1629,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1644,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1659,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1674,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1689,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1694,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1709,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1724,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1739,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1754,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1769,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1784,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1799,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1814,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1819,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1824,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1839,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1854,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1869,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1874,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1889,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1904,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1909,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1924,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1929,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1944,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 1949,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1964,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1979,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 1994,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2009,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2014,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2029,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2044,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2059,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2074,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2089,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2104,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2119,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2124,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2139,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2154,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2169,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2170,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2172,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2187,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2202,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2217,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2233,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2248,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2263,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2264,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2279,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2294,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2309,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2314,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2319,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2334,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2349,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2364,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2369,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2384,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2389,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2404,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2409,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2414,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2419,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2434,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2450,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2465,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2480,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2495,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2496,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2501,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2516,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2531,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2546,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2561,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2576,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2582,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2598,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2603,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2608,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2609,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2624,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2629,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2630,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2645,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2650,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2665,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2670,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2686,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2701,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2716,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2721,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2726,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2741,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2756,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2771,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2786,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2801,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2816,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2831,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2836,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2841,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2856,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2871,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2872,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2887,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2892,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2897,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2912,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2917,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2918,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2933,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 2938,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2953,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2968,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2983,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "pc",
+   "offset": 2984,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 2999,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 3014,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 3029,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 3034,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 3049,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 3064,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 3079,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "pc",
+   "offset": 3084,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "pc",
+   "offset": 3099,
+   "limit": 15,
+   "n": 7
+  },
+  {
+   "side": "mobile",
+   "offset": 0,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 15,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 30,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 45,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 50,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 65,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 80,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 81,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 96,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 111,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 126,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 141,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 146,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 151,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 166,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 171,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 176,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 191,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 196,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 211,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 226,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 231,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 246,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 261,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 276,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 291,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 296,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 311,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 326,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 341,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 346,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 361,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 366,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 381,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 386,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 401,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 416,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 431,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 446,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 461,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 476,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 491,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 506,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 521,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 536,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 551,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 556,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 561,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 576,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 592,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 597,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 602,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 617,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 622,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 637,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 652,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 667,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 672,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 687,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 692,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 707,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 722,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 737,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 742,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 757,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 772,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 787,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 792,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 797,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 812,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 827,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 832,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 837,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 852,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 867,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 882,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 887,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 902,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 917,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 932,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 947,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 952,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 967,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 972,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 977,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 992,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1007,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1023,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1038,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1053,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1068,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1083,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1098,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1099,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1114,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1129,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1130,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1145,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1150,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1165,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1166,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1171,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1186,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1201,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1216,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1231,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1246,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1247,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1262,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1277,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1292,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1307,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1312,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1327,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1342,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1357,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1372,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1387,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1388,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1403,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1408,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1423,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1428,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1443,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1458,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1473,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1488,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1493,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1498,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1513,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1528,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1543,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1558,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1573,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1588,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1593,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1608,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1623,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1638,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1653,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1658,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1663,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1678,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1693,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1708,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1709,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1724,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1729,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1734,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1749,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1764,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1779,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1794,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1799,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1804,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1809,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1810,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1815,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1830,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1845,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1850,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1865,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1880,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1895,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 1896,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1911,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1916,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 1921,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1936,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1951,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1966,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1981,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 1996,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2011,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 2012,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2017,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 2018,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2033,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2048,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2063,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2078,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2093,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2108,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2123,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2138,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2154,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2169,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2184,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2199,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2214,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2229,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2244,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2259,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 2260,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2275,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2290,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 2291,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2306,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2321,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2336,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2341,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2356,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2371,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2386,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2401,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2406,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2421,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2436,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2451,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2456,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2471,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2486,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2501,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2516,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2531,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2546,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 2547,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2562,
+   "limit": 1,
+   "n": 1
+  },
+  {
+   "side": "mobile",
+   "offset": 2563,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2578,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2583,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2598,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2613,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2628,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2643,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2658,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2673,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2689,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2704,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2709,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2724,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2729,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2735,
+   "limit": 5,
+   "n": 5
+  },
+  {
+   "side": "mobile",
+   "offset": 2740,
+   "limit": 15,
+   "n": 15
+  },
+  {
+   "side": "mobile",
+   "offset": 2755,
+   "limit": 15,
+   "n": 7
+  }
+ ],
+ "errors": [
+  {
+   "side": "pc",
+   "offset": 1467,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "pc",
+   "offset": 2171,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "pc",
+   "offset": 2232,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "pc",
+   "offset": 2449,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "pc",
+   "offset": 2581,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "pc",
+   "offset": 2597,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "pc",
+   "offset": 2685,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "mobile",
+   "offset": 591,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "mobile",
+   "offset": 1022,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "mobile",
+   "offset": 2153,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "mobile",
+   "offset": 2688,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  },
+  {
+   "side": "mobile",
+   "offset": 2734,
+   "error": "<urlopen error [WinError 10053] 你的主机中的软件中止了一个已建立的连接。>"
+  }
+ ],
+ "pcTotal": 3106,
+ "pcRead": 3099,
+ "pc": [
+  {
+   "_row_name": "跨年烟花3.0_小号_A_小金花",
+   "RowDescription": "跨年烟花3.0_小号_A_小金花",
+   "ResourceId": "P_EFX_FireWorks_LittleGold",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_B_小银菊",
+   "RowDescription": "跨年烟花3.0_小号_B_小银菊",
+   "ResourceId": "P_EFX_FireWorks_LittleSilver",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_C_短爆裂",
+   "RowDescription": "跨年烟花3.0_小号_C_短爆裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCrackle",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_D_小分裂",
+   "RowDescription": "跨年烟花3.0_小号_D_小分裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCombo",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_A_短彗星",
+   "RowDescription": "跨年烟花3.0_小号_A_短彗星",
+   "ResourceId": "P_EFX_FireWorks_Comet_Layers_S",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_B_短银尾",
+   "RowDescription": "跨年烟花3.0_小号_B_短银尾",
+   "ResourceId": "P_EFX_FireWorks_Silver_Layers_S",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_A_金锦冠_中心",
+   "RowDescription": "跨年烟花3.0_小型_A_金锦冠_中心",
+   "ResourceId": "P_EFX_FireWorks_FanGold_Central_01",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_A_金锦冠_中间",
+   "RowDescription": "跨年烟花3.0_小型_A_金锦冠_中间",
+   "ResourceId": "P_EFX_FireWorks_FanGold_Middle_01",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_A_金锦冠_外左",
+   "RowDescription": "跨年烟花3.0_小型_A_金锦冠_外左",
+   "ResourceId": "P_EFX_FireWorks_FanGold_OuterLeft",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_A_金锦冠_外右",
+   "RowDescription": "跨年烟花3.0_小型_A_金锦冠_外右",
+   "ResourceId": "P_EFX_FireWorks_FanGold_OuterRight",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_B_红彗星",
+   "RowDescription": "跨年烟花3.0_小型_B_红彗星",
+   "ResourceId": "P_EFX_FireWorks_FanComet_01",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_C_银星扇",
+   "RowDescription": "跨年烟花3.0_小型_C_银星扇",
+   "ResourceId": "P_EFX_FireWorks_FanSilver_01",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_D_金裂星",
+   "RowDescription": "跨年烟花3.0_小型_D_金裂星",
+   "ResourceId": "P_EFX_FireWorks_GoldCrackle",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_E_小彗星",
+   "RowDescription": "跨年烟花3.0_小型_E_小彗星",
+   "ResourceId": "P_EFX_FireWorks_Comet",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_F_银冠菊",
+   "RowDescription": "跨年烟花3.0_小型_F_银冠菊",
+   "ResourceId": "P_EFX_FireWorks_SilverChry",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_G_爆裂星",
+   "RowDescription": "跨年烟花3.0_小型_G_爆裂星",
+   "ResourceId": "P_EFX_FireWorks_Crackle",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_H_小青柠",
+   "RowDescription": "跨年烟花3.0_小型_H_小青柠",
+   "ResourceId": "P_EFX_FireWorks_Lime",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_I__橙辉星",
+   "RowDescription": "跨年烟花3.0_小型_I__橙辉星",
+   "ResourceId": "P_EFX_FireWorks_Glitter",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_J_点灭星",
+   "RowDescription": "跨年烟花3.0_小型_J_点灭星",
+   "ResourceId": "P_EFX_FireWorks_Strobe",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_A_绿牡丹",
+   "RowDescription": "跨年烟花3.0_中型_A_绿牡丹",
+   "ResourceId": "P_EFX_FireWorks_GreenPeony",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_B_金锦菊",
+   "RowDescription": "跨年烟花3.0_中型_B_金锦菊",
+   "ResourceId": "P_EFX_FireWorks_GoldSpark",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_C_彩千轮",
+   "RowDescription": "跨年烟花3.0_中型_C_彩千轮",
+   "ResourceId": "P_EFX_FireWorks_PrismWheels",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_D_金曜菊",
+   "RowDescription": "跨年烟花3.0_中型_D_金曜菊",
+   "ResourceId": "P_EFX_FireWorks_GoldChry",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_E_金蕊柠",
+   "RowDescription": "跨年烟花3.0_中型_E_金蕊柠",
+   "ResourceId": "P_EFX_FireWorks_GoldCoreLime",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_B_金芒菊",
+   "RowDescription": "跨年烟花3.0_中型_B_金芒菊",
+   "ResourceId": "P_EFX_FireWorks_GoldRayChry",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_F_多重菊",
+   "RowDescription": "跨年烟花3.0_中型_F_多重菊",
+   "ResourceId": "P_EFX_FireWorks_MultiLayerChry",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_A_金垂柳",
+   "RowDescription": "跨年烟花3.0_大型_A_金垂柳",
+   "ResourceId": "P_EFX_FireWorks_GoldKamuro",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_B_银彩菊",
+   "RowDescription": "跨年烟花3.0_大型_B_银彩菊",
+   "ResourceId": "P_EFX_FireWorks_SilverStrobeChry",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_C_金蕊柠",
+   "RowDescription": "跨年烟花3.0_大型_C_金蕊柠",
+   "ResourceId": "P_EFX_FireWorks_GoldCoreLime_L",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_D_多重菊",
+   "RowDescription": "跨年烟花3.0_大型_D_多重菊",
+   "ResourceId": "P_EFX_FireWorks_MultiLayerChry_L",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_超大_尾缀",
+   "RowDescription": "跨年烟花3.0_超大_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_尾缀",
+   "RowDescription": "跨年烟花3.0_大型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_尾缀",
+   "RowDescription": "跨年烟花3.0_中型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_尾缀",
+   "RowDescription": "跨年烟花3.0_小型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_低位_尾缀",
+   "RowDescription": "跨年烟花3.0_低位_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_XS",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_极小_尾缀",
+   "RowDescription": "跨年烟花3.0_小型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+   "RowDescription": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+   "ResourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Boom",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD.P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "GAMEMODE",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+   "RowDescription": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+   "ResourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Trail",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD.P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "GAMEMODE",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_窜天猴sku_拖尾烟雾",
+   "RowDescription": "跨年烟花3.0_窜天猴sku_拖尾烟雾",
+   "ResourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Smoke",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD.P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "GAMEMODE",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_窜天猴sku_点火引线",
+   "RowDescription": "跨年烟花3.0_窜天猴sku_点火引线",
+   "ResourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Fuse",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD.P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=0.400000,Y=0.400000,Z=0.400000)",
+   "FXType": "GAMEMODE",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_窜天猴sku_喷射焰火",
+   "RowDescription": "跨年烟花3.0_窜天猴sku_喷射焰火",
+   "ResourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "GAMEMODE",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_窜天猴sku_二次加速",
+   "RowDescription": "跨年烟花3.0_窜天猴sku_二次加速",
+   "ResourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "GAMEMODE",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_E_银彩菊",
+   "RowDescription": "跨年烟花3.0_大型_E_银彩菊",
+   "ResourceId": "P_EFX_FireWorks_SilverStrobeChry_B",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_B_HD.P_EFX_FireWorks_SilverStrobeChry_B_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True",
+   "planned": false,
+   "plannedHow": "复制 大型_B_银彩菊 的粒子 SilverStrobeChry_HD，内容不改",
+   "readback": "2026-10-18T22:59:20.732612+08:00 UE 只读读回逐字段一致（analysis/local/N18_22_新大型行只读_20261018_215919/读回_用户改完后.json）"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_F_金芒菊",
+   "RowDescription": "跨年烟花3.0_大型_F_金芒菊",
+   "ResourceId": "P_EFX_FireWorks_GoldRayChry_L",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_L_HD.P_EFX_FireWorks_GoldRayChry_L_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True",
+   "planned": false,
+   "plannedHow": "复制 中型_B_金芒菊 的粒子 GoldRayChry_HD（原生 150 m，编排放大 1.41 / 1.53）+ 入芯",
+   "readback": "2026-10-18T22:59:20.732612+08:00 UE 只读读回逐字段一致（analysis/local/N18_22_新大型行只读_20261018_215919/读回_用户改完后.json）"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_G_银白菊",
+   "RowDescription": "跨年烟花3.0_大型_G_银白菊",
+   "ResourceId": "P_EFX_FireWorks_SilverWhiteChry",
+   "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverWhiteChry_HD.P_EFX_FireWorks_SilverWhiteChry_HD",
+   "FxSP_Low": "None",
+   "FxSP_High": "None",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True",
+   "planned": false,
+   "plannedHow": "复制 大型_B_银彩菊 的粒子 SilverStrobeChry_HD，内容不改",
+   "readback": "2026-10-18T22:59:20.732612+08:00 UE 只读读回逐字段一致（analysis/local/N18_22_新大型行只读_20261018_215919/读回_用户改完后.json）"
+  }
+ ],
+ "mobileTotal": 2762,
+ "mobileRead": 2757,
+ "mobile": [
+  {
+   "_row_name": "跨年烟花3.0_小号_A_小金花",
+   "RowDescription": "跨年烟花3.0_小号_A_小金花",
+   "ResourceId": "P_EFX_FireWorks_LittleGold",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_B_小银菊",
+   "RowDescription": "跨年烟花3.0_小号_B_小银菊",
+   "ResourceId": "P_EFX_FireWorks_LittleSilver",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_C_短爆裂",
+   "RowDescription": "跨年烟花3.0_小号_C_短爆裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCrackle",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小号_D_小分裂",
+   "RowDescription": "跨年烟花3.0_小号_D_小分裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCombo",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_B_红彗星",
+   "RowDescription": "跨年烟花3.0_小型_B_红彗星",
+   "ResourceId": "P_EFX_FireWorks_FanComet_01",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_C_银星扇",
+   "RowDescription": "跨年烟花3.0_小型_C_银星扇",
+   "ResourceId": "P_EFX_FireWorks_FanSilver_01",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_F_银冠菊",
+   "RowDescription": "跨年烟花3.0_小型_F_银冠菊",
+   "ResourceId": "P_EFX_FireWorks_SilverChry",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_G_爆裂星",
+   "RowDescription": "跨年烟花3.0_小型_G_爆裂星",
+   "ResourceId": "P_EFX_FireWorks_Crackle",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_I__橙辉星",
+   "RowDescription": "跨年烟花3.0_小型_I__橙辉星",
+   "ResourceId": "P_EFX_FireWorks_Glitter",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_J_点灭星",
+   "RowDescription": "跨年烟花3.0_小型_J_点灭星",
+   "ResourceId": "P_EFX_FireWorks_Strobe",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_B_金芒菊",
+   "RowDescription": "跨年烟花3.0_中型_B_金芒菊",
+   "ResourceId": "P_EFX_FireWorks_GoldRayChry",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_A_金垂柳",
+   "RowDescription": "跨年烟花3.0_大型_A_金垂柳",
+   "ResourceId": "P_EFX_FireWorks_GoldKamuro",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_超大_尾缀",
+   "RowDescription": "跨年烟花3.0_超大_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_大型_尾缀",
+   "RowDescription": "跨年烟花3.0_大型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_中型_尾缀",
+   "RowDescription": "跨年烟花3.0_中型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_小型_尾缀",
+   "RowDescription": "跨年烟花3.0_小型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_低位_尾缀",
+   "RowDescription": "跨年烟花3.0_低位_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_XS",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  },
+  {
+   "_row_name": "跨年烟花3.0_极小_尾缀",
+   "RowDescription": "跨年烟花3.0_极小_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "bLimitByMaxInstanceNum": "True"
+  }
+ ],
+ "plannedNote": "跨年秀（22）-本机 2026-10-18 22:xx：B11 修订2 用。= 资源规范统一（26）10-16 04:06 读回原样 + 3 行【计划中、未读回】的新 PC 行。10-18 22:00 只读读回时这 3 行已建好，但 ResourceId 都照抄成 P_EFX_FireWorks_SilverStrobeChry（重复），要用户改成下面的 ResourceId、FxSP 指向各自副本后，再只读读回替换本文件。 ｜ 10-18 22:59 用户改完后只读读回：三行 _row_name / ResourceId / FxSP / EffectScale 等与计划逐字段一致，planned 改 false。",
+ "plannedRows": [
+  "P_EFX_FireWorks_SilverStrobeChry_B",
+  "P_EFX_FireWorks_GoldRayChry_L",
+  "P_EFX_FireWorks_SilverWhiteChry"
+ ]
+}

@@ -121,6 +121,48 @@ if (PC_LARGE.size) {
 }
 const DER_SRC = new Map(DERIVED_ALL.map(f => [f.id, f.source]));
 
+// B11 修订2（22，用户 10-18 22:05「选拆行，2个银彩菊花，1个新的金芒菊」）：--cue-resource "<ResourceId>[:显示名]=<cue>+<cue>…;<ResourceId>=…"
+//   只给 PC（cue.mobile === false）的指定片段换 ResourceFX 行：花型另存 <原花型>_R_<名>（__K 大小版本照常从它派生），球花条目只换 FXResourceId，缩放 / 尾缀 / 时刻不变
+//   （新行和原行原生大小相同）。基础库缺这一行就照原资源复制一条。不带开关什么都不动。
+const CUE_RES = new Map((option('cue-resource') || '').split(';').filter(Boolean).map(x => { const [head, list] = x.split('='), [res, label] = head.split(':'); return [res, {label: label || res.replace('P_EFX_FireWorks_', ''), ids: list.split('+').filter(Boolean)}]; }));
+const cueResReport = [];
+const ensureBaseResource = (id, srcId, why) => {
+  if ((doc.baseResourceLibrary || []).some(r => r.id === id)) return;
+  const src0 = (doc.baseResourceLibrary || []).find(r => r.id === srcId);
+  if (!src0) throw Error(why + '：基础库没有可复制的 ' + srcId);
+  doc.baseResourceLibrary.push({...clone(src0), id, key: id + '|burst', name: id, label: id, native: {...clone(src0.native), FXResourceId: id}, copiedFrom: srcId});
+};
+if (CUE_RES.size) {
+  const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s])), byId = new Map(logic.cues.map(c => [c.id, c]));
+  for (const [res, {label, ids}] of CUE_RES) {
+    const short = res.replace('P_EFX_FireWorks_', ''), made = new Set();
+    for (const id of ids) {
+      const c = byId.get(id);
+      if (!c) throw Error('--cue-resource：没有片段 ' + id);
+      if (c.mobile !== false) throw Error('--cue-resource 只给 PC 片段：' + id);
+      const [base, k] = c.templateId.split('__K'), bt = tmap.get(base);
+      if (!bt) throw Error('--cue-resource：花型不存在 ' + base);
+      const nid = base + '_R_' + short;
+      if (!made.has(nid) && !tmap.has(nid)) {
+        const bs = smap.get(bt.subTemplateRef), sub = clone(bs), engine = (bs.engineId || bs.id) + '_' + short;
+        const bursts = sub.entries.filter(e => e.role === 'burst');
+        if (!bursts.length) throw Error('--cue-resource：花型没有球花条目 ' + base);
+        for (const e of bursts) { ensureBaseResource(res, e.native.FXResourceId, '--cue-resource'); e.native.FXResourceId = res; e.baseTemplateRef = res + '|burst'; }
+        Object.assign(sub, {name: (bs.name || '') + '·' + label, id: engine, engineId: engine, key: engine + '@1', version: 1,
+          derivedFrom: {...(bs.derivedFrom || {}), resourceOf: bs.key, resource: res, rule: '同一花型只换 ResourceFX 行（原生大小相同，缩放 / 尾缀 / 时刻不变）', by: '跨年秀（22）2026-10-18，用户 22:05'}});
+        doc.subTemplateLibrary.push(sub); smap.set(sub.key, sub);
+        const t = {...clone(bt), id: nid, name: bt.name + '·' + label, subTemplateRef: sub.key};
+        doc.templateLibrary.push(t); tmap.set(nid, t);
+        DER_SRC.set(nid, DER_SRC.get(base) || base);
+        made.add(nid);
+      }
+      c.templateId = nid + (k ? '__K' + k : '');
+      cueResReport.push({cue: id, resource: res, template: c.templateId});
+    }
+  }
+}
+for (const [, o] of PC_LARGE) ensureBaseResource(o.res, o.res.replace(/_L$/, ''), '--pc-large');   // B11 修订2：PC 大号换到新行（GoldRayChry_L）时基础库照中型复制一条；已有（2827）不动
+
 // —— B05（22，用户 10-14 21:44 手游改 6 种）：手游替身用的放大 / 换资源花型（协作/编排B01/手游种类.json derived），只建逻辑方案用到的；
 //    同大号花型的做法（同一资源 EffectScale 放大、挂到 frame 那一档尾缀的终点），可另换资源（resource，按 nativeM 算倍数）。 ——
 const MOBF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/手游种类.json'), 'utf8'));
@@ -510,7 +552,7 @@ if (errors.length) throw Error('校验失败：' + errors.slice(0, 5).join('；'
 
 // —— 三档三表 ——
 const occ = {};   // 每档展开成 (组, 时刻, 槽位, 子模板) 计数，用来查低 ⊂ 中 ⊂ 高
-const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), pcLarge: PC_LARGE.size ? {rule: [...PC_LARGE].map(([k, v]) => `${k}→${v.res}@${v.native}`), cues: pcLargeReport, templates: DERIVED_ALL.filter(f => f.pcRes).map(f => f.id)} : undefined, generatedBy: 'analysis/scripts/编排B01_编译.mjs', trailV2, tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
+const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), pcLarge: PC_LARGE.size ? {rule: [...PC_LARGE].map(([k, v]) => `${k}→${v.res}@${v.native}`), cues: pcLargeReport, templates: DERIVED_ALL.filter(f => f.pcRes).map(f => f.id)} : undefined, cueResource: CUE_RES.size ? {rule: [...CUE_RES].map(([r, o]) => `${r}（${o.label}）←${o.ids.join('+')}`), cues: cueResReport} : undefined, generatedBy: 'analysis/scripts/编排B01_编译.mjs', trailV2, tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
 fs.mkdirSync(outDir, {recursive: true});
 const onlyMobile = new Set(state.doc.cues.filter(c => c.mobile === 'only').map(c => c.id));
 for (const tier of ['high', 'medium', 'low']) {
