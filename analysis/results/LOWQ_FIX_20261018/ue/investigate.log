@@ -1,0 +1,284 @@
+
+## 2026-10-18T07:05:26.117Z before
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:08:33.401Z copies
+Cmd: InvestigateTexture FWL18_TX_LLoop_Mip
+LogContentStreaming: Texture: Texture2D /Engine/FWL18_TMP/FWL18_TX_LLoop_Mip.FWL18_TX_LLoop_Mip
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 64x64 [7]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326736
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture FWL18_TX_LLoop_NoMip
+Cmd: InvestigateTexture FWL18_TX_Gold_Mip
+LogContentStreaming: Texture: Texture2D /Engine/FWL18_TMP/FWL18_TX_Gold_Mip.FWL18_TX_Gold_Mip
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 64x64 [7]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326784
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture FWL18_TX_Gold_NoMip1k
+
+## 2026-10-18T07:11:31.443Z pre-rise-cold
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=350911.875 Y=-773901.188 Z=-14480.486) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:12:30.677Z post-rise-cold
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326799
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326795
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:14:02.040Z mid-rise-warm-3s
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 2048x2048 [12]
+LogContentStreaming:   Wanted size [Mips]:  2048x2048 [12]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  939524096
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_2.ParticleSystemComponent0
+LogContentStreaming:     Size=126795208.000000, BoundIndex=1100
+LogContentStreaming:     Origin=(X=370965.000 Y=-805150.000 Z=13365.000), BoxExtent=(X=66525.000 Y=66520.000 Z=66745.000), TexelSize=115348.953125
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_1.ParticleSystemComponent0
+LogContentStreaming:     Size=126795208.000000, BoundIndex=1101
+LogContentStreaming:     Origin=(X=364965.000 Y=-805150.000 Z=13365.000), BoxExtent=(X=66525.000 Y=66520.000 Z=66745.000), TexelSize=115348.953125
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_0.ParticleSystemComponent0
+LogContentStreaming:     Size=126795208.000000, BoundIndex=1099
+LogContentStreaming:     Origin=(X=358965.000 Y=-805150.000 Z=13365.000), BoxExtent=(X=66525.000 Y=66520.000 Z=66745.000), TexelSize=115348.953125
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 2048x2048 [12]
+LogContentStreaming:   Wanted size [Mips]:  2048x2048 [12]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  939524096
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_5.ParticleSystemComponent0
+LogContentStreaming:     Size=79517472.000000, BoundIndex=1098
+LogContentStreaming:     Origin=(X=388940.000 Y=-805150.000 Z=7395.000), BoxExtent=(X=41730.000 Y=41730.000 Z=41835.000), TexelSize=72339.148438
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_4.ParticleSystemComponent0
+LogContentStreaming:     Size=79517472.000000, BoundIndex=1097
+LogContentStreaming:     Origin=(X=382940.000 Y=-805150.000 Z=7395.000), BoxExtent=(X=41730.000 Y=41730.000 Z=41835.000), TexelSize=72339.148438
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_3.ParticleSystemComponent0
+LogContentStreaming:     Size=79517472.000000, BoundIndex=1096
+LogContentStreaming:     Origin=(X=376940.000 Y=-805150.000 Z=7395.000), BoxExtent=(X=41730.000 Y=41730.000 Z=41835.000), TexelSize=72339.148438
+
+## 2026-10-18T07:14:05.788Z mid-rise-warm-6s
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 2048x2048 [12]
+LogContentStreaming:   Wanted size [Mips]:  2048x2048 [12]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  939524096
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_2.ParticleSystemComponent0
+LogContentStreaming:     Size=126795208.000000, BoundIndex=1100
+LogContentStreaming:     Origin=(X=370965.000 Y=-805150.000 Z=13365.000), BoxExtent=(X=66525.000 Y=66520.000 Z=66745.000), TexelSize=115348.953125
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_1.ParticleSystemComponent0
+LogContentStreaming:     Size=126795208.000000, BoundIndex=1101
+LogContentStreaming:     Origin=(X=364965.000 Y=-805150.000 Z=13365.000), BoxExtent=(X=66525.000 Y=66520.000 Z=66745.000), TexelSize=115348.953125
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_rise_warm_0.ParticleSystemComponent0
+LogContentStreaming:     Size=126795208.000000, BoundIndex=1099
+LogContentStreaming:     Origin=(X=358965.000 Y=-805150.000 Z=13365.000), BoxExtent=(X=66525.000 Y=66520.000 Z=66745.000), TexelSize=115348.953125
+
+## 2026-10-18T07:14:40.598Z pre-gold-cold
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:14:42.521Z mid-gold-cold-early
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_gold_cold_2.ParticleSystemComponent0
+LogContentStreaming:     Size=2436.503174, BoundIndex=1098
+LogContentStreaming:     Origin=(X=400000.000 Y=-858000.000 Z=30000.000), BoxExtent=(X=44900.000 Y=44900.000 Z=44900.000), TexelSize=77769.078125
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_gold_cold_1.ParticleSystemComponent0
+LogContentStreaming:     Size=2436.503174, BoundIndex=1096
+LogContentStreaming:     Origin=(X=374000.000 Y=-858000.000 Z=30000.000), BoxExtent=(X=44900.000 Y=44900.000 Z=44900.000), TexelSize=77769.078125
+LogContentStreaming:   DynamicReference= ParticleSystemComponent /Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3:PersistentLevel.FWL18_gold_cold_0.ParticleSystemComponent0
+LogContentStreaming:     Size=2436.503174, BoundIndex=1097
+LogContentStreaming:     Origin=(X=348000.000 Y=-858000.000 Z=30000.000), BoxExtent=(X=44900.000 Y=44900.000 Z=44900.000), TexelSize=77769.078125
+
+## 2026-10-18T07:17:19.800Z pre-gold-cold2
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326810
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:17:55.064Z pre-gold-hot
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326844
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:19:10.672Z pre
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326779
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:19:59.099Z pre
+Cmd: InvestigateTexture T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRayChry_4x4_01_HD.T_EFX_FireWorks_GoldRayChry_4x4_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326806
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+
+## 2026-10-18T07:20:40.044Z pre
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000
+Cmd: InvestigateTexture T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming: Texture: Texture2D /Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD.T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD
+LogContentStreaming:   LOD group:   TEXTUREGROUP_Project03
+LogContentStreaming:   Current size [Mips]: 128x128 [8]
+LogContentStreaming:   Wanted size [Mips]:  64x64 [7]
+LogContentStreaming:   Allowed mips:        7-12
+LogContentStreaming:   LoadOrder Priority:  0
+LogContentStreaming:   Retention Priority:  201326593
+LogContentStreaming:   Boost factor:        710.0
+LogContentStreaming:   Mip bias [Budget]:   0 [0]
+LogContentStreaming:   View0: Position=(X=374000.000 Y=-778000.000 Z=0.000) ScreenSize=2199.000000 MaxEffectiveScreenSize=0.000000 Boost=1.000000

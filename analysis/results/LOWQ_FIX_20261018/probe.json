@@ -1,0 +1,3193 @@
+{
+ "P_EFX_FireWorks_RiseTrail_L_HD": {
+  "system": {
+   "Emitters": [
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_20",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_20"
+    },
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_21",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_21"
+    }
+   ],
+   "UpdateTime_FPS": 10,
+   "bUseFixedRelativeBoundingBox": true
+  },
+  "emitters": [
+   {
+    "name": "RiseLoop",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD"
+     },
+     "ScreenAlignment": "PSA_Velocity",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 7.365099906921387,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_C.T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleLifetime_20",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleLifetime_20.DistributionFloatConstant_8",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionFloatConstant_8"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 163,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleSize_20",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 11971.599609375,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 888.4500122070312,
+         "Y": 11971.599609375,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 888.4500122070312,
+         "Y": 11971.599609375,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleSize_20.DistributionVectorConstant_21",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_21"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 253,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleVelocity",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocity_32",
+      "p": {
+       "StartVelocity": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 12626.7900390625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 12626.7900390625
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 12626.7900390625
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocity_32.DistributionVectorConstant_22",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_22"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "StartVelocityRadial": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocity_32.DistributionStartVelocityRadial",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionStartVelocityRadial"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          0
+         ],
+         "Op": 1,
+         "EntryCount": 1,
+         "EntryStride": 1,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 105,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleVelocityOverLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocityOverLifetime_4",
+      "p": {
+       "VelOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 12626.7900390625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 321.9599914550781
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 12626.7900390625
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocityOverLifetime_4.DistributionVelOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionVelOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "Absolute": true,
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 232,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSizeMultiplyLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleSizeMultiplyLife_18",
+      "p": {
+       "LifeMultiplier": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0.014100000262260437,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 0.014100000262260437,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 0.82669997215271,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleSizeMultiplyLife_18.DistributionVectorConstantCurve_19",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionVectorConstantCurve_19"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "MultiplyX": false,
+       "MultiplyY": true,
+       "MultiplyZ": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 66,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorOverLife_20",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 9.375,
+        "MaxValue": 9.375,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 9.375,
+         "Y": 9.375,
+         "Z": 9.375
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 9.375,
+         "Y": 9.375,
+         "Z": 9.375
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorOverLife_20.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorOverLife_20.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 185,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_20",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_20.DistributionVectorConstant_23",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_23"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_20.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 250,
+        "R": 0,
+        "A": 255
+       }
+      }
+     }
+    ]
+   },
+   {
+    "name": "TrailFar",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD.MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_RiseTrail_L_Far_01_HD"
+     },
+     "ScreenAlignment": "PSA_Rectangle",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 10.5,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_C.T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleLifetime_21",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleLifetime_21.DistributionFloatConstant_12",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionFloatConstant_12"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 185,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleLocation"
+     },
+     {
+      "cls": "ParticleModuleVelocity",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocity_33",
+      "p": {
+       "StartVelocity": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 40.2400016784668,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 40.2400016784668
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 40.2400016784668
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocity_33.DistributionVectorConstant_25",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_25"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "StartVelocityRadial": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleVelocity_33.DistributionStartVelocityRadial",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionStartVelocityRadial"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          0
+         ],
+         "Op": 1,
+         "EntryCount": 1,
+         "EntryStride": 1,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 182,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleSize_21",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 33830.26953125,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1875.0999755859375,
+         "Y": 33830.26953125,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1875.0999755859375,
+         "Y": 33830.26953125,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleSize_21.DistributionVectorConstant_26",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_26"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 202,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleOrientationAxisLock"
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorOverLife_21",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 6,
+        "MaxValue": 6,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 6,
+         "Y": 6,
+         "Z": 6
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 6,
+         "Y": 6,
+         "Z": 6
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorOverLife_21.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorOverLife_21.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 146,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_21",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_21.DistributionVectorConstant_27",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_27"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_21.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 99,
+        "A": 255
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "P_EFX_FireWorks_RiseTrail_M_HD": {
+  "system": {
+   "Emitters": [
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_0",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_0"
+    },
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_1",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_1"
+    }
+   ],
+   "UpdateTime_FPS": 10,
+   "bUseFixedRelativeBoundingBox": true
+  },
+  "emitters": [
+   {
+    "name": "RiseLoop",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD"
+     },
+     "ScreenAlignment": "PSA_Velocity",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 4.377200126647949,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_C.T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleLifetime_0",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleLifetime_0.DistributionFloatConstant_0",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionFloatConstant_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 239,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleSize_0",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 12701.7900390625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 710.5599975585938,
+         "Y": 12701.7900390625,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 710.5599975585938,
+         "Y": 12701.7900390625,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleSize_0.DistributionVectorConstant_0",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 145,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleVelocity",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocity_0",
+      "p": {
+       "StartVelocity": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 13690.91015625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 13690.91015625
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 13690.91015625
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocity_0.DistributionVectorConstant_1",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_1"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "StartVelocityRadial": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocity_0.DistributionStartVelocityRadial",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionStartVelocityRadial"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          0
+         ],
+         "Op": 1,
+         "EntryCount": 1,
+         "EntryStride": 1,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 213,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleVelocityOverLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocityOverLifetime_0",
+      "p": {
+       "VelOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 13690.91015625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 1268
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 13690.91015625
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocityOverLifetime_0.DistributionVelOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionVelOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "Absolute": true,
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 245,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSizeMultiplyLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleSizeMultiplyLife_0",
+      "p": {
+       "LifeMultiplier": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0.010300000198185444,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 0.010300000198185444,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 0.6757000088691711,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleSizeMultiplyLife_0.DistributionVectorConstantCurve_0",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionVectorConstantCurve_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "MultiplyX": false,
+       "MultiplyY": true,
+       "MultiplyZ": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 226,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorOverLife_0",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 9.375,
+        "MaxValue": 9.375,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 9.375,
+         "Y": 9.375,
+         "Z": 9.375
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 9.375,
+         "Y": 9.375,
+         "Z": 9.375
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorOverLife_0.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorOverLife_0.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 79,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_0",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_2"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 232,
+        "A": 255
+       }
+      }
+     }
+    ]
+   },
+   {
+    "name": "TrailFar",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD.MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_RiseTrail_M_Far_01_HD"
+     },
+     "ScreenAlignment": "PSA_Rectangle",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 6.23330020904541,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_C.T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleLifetime_1",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleLifetime_1.DistributionFloatConstant_4",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionFloatConstant_4"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 169,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleLocation"
+     },
+     {
+      "cls": "ParticleModuleVelocity",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocity_1",
+      "p": {
+       "StartVelocity": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 39.630001068115234,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 39.630001068115234
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 39.630001068115234
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocity_1.DistributionVectorConstant_4",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_4"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "StartVelocityRadial": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleVelocity_1.DistributionStartVelocityRadial",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionStartVelocityRadial"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          0
+         ],
+         "Op": 1,
+         "EntryCount": 1,
+         "EntryStride": 1,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 211,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleSize_1",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 21219.109375,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1276.47998046875,
+         "Y": 21219.109375,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1276.47998046875,
+         "Y": 21219.109375,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleSize_1.DistributionVectorConstant_5",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_5"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 162,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleOrientationAxisLock"
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorOverLife_1",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 6,
+        "MaxValue": 6,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 6,
+         "Y": 6,
+         "Z": 6
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 6,
+         "Y": 6,
+         "Z": 6
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorOverLife_1.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorOverLife_1.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 210,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_1",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_6",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_6"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 133,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "P_EFX_FireWorks_RiseTrail_S_HD": {
+  "system": {
+   "Emitters": [
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_0",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_0"
+    },
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_1",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_1"
+    }
+   ],
+   "UpdateTime_FPS": 10,
+   "bUseFixedRelativeBoundingBox": true
+  },
+  "emitters": [
+   {
+    "name": "RiseLoop",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD.MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD"
+     },
+     "ScreenAlignment": "PSA_Velocity",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 2.954400062561035,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_C.T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_0",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_0.DistributionFloatConstant_0",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionFloatConstant_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 42,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_0",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 12194.9296875,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 375.9599914550781,
+         "Y": 12194.9296875,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 375.9599914550781,
+         "Y": 12194.9296875,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_0.DistributionVectorConstant_0",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 200,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleVelocity",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_0",
+      "p": {
+       "StartVelocity": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 13038.91015625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 13038.91015625
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 13038.91015625
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_0.DistributionVectorConstant_1",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_1"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "StartVelocityRadial": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_0.DistributionStartVelocityRadial",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionStartVelocityRadial"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          0
+         ],
+         "Op": 1,
+         "EntryCount": 1,
+         "EntryStride": 1,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 139,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleVelocityOverLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocityOverLifetime_0",
+      "p": {
+       "VelOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 13038.91015625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 1894.800048828125
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 13038.91015625
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocityOverLifetime_0.DistributionVelOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionVelOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "Absolute": true,
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 165,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSizeMultiplyLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_0",
+      "p": {
+       "LifeMultiplier": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0.008700000122189522,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 0.008700000122189522,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 0.6100000143051147,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSizeMultiplyLife_0.DistributionVectorConstantCurve_0",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionVectorConstantCurve_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "MultiplyX": false,
+       "MultiplyY": true,
+       "MultiplyZ": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 235,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorOverLife_0",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 6.25,
+        "MaxValue": 6.25,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 6.25,
+         "Y": 6.25,
+         "Z": 6.25
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 6.25,
+         "Y": 6.25,
+         "Z": 6.25
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorOverLife_0.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorOverLife_0.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 197,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_0",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_2"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 249,
+        "A": 255
+       }
+      }
+     }
+    ]
+   },
+   {
+    "name": "TrailFar",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD.MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_RiseTrail_S_Far_01_HD"
+     },
+     "ScreenAlignment": "PSA_Rectangle",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 3.5999999046325684,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_C.T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_1",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_1.DistributionFloatConstant_4",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionFloatConstant_4"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 153,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleLocation"
+     },
+     {
+      "cls": "ParticleModuleVelocity",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_1",
+      "p": {
+       "StartVelocity": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 0,
+        "MaxValue": 39.47999954223633,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 39.47999954223633
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 0,
+         "Y": 0,
+         "Z": 39.47999954223633
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_1.DistributionVectorConstant_4",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_4"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "StartVelocityRadial": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleVelocity_1.DistributionStartVelocityRadial",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionStartVelocityRadial"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          0
+         ],
+         "Op": 1,
+         "EntryCount": 1,
+         "EntryStride": 1,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bInWorldSpace": false,
+       "bApplyOwnerScale": false,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 166,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_1",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 14987.4697265625,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 632.22998046875,
+         "Y": 14987.4697265625,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 632.22998046875,
+         "Y": 14987.4697265625,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleSize_1.DistributionVectorConstant_5",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_5"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 251,
+        "R": 255,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleOrientationAxisLock"
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorOverLife_1",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 4,
+        "MaxValue": 4,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 4,
+         "Y": 4,
+         "Z": 4
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 4,
+         "Y": 4,
+         "Z": 4
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorOverLife_1.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorOverLife_1.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 55,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_11",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1,
+        "MaxValue": 1,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1,
+         "Y": 1,
+         "Z": 1
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_11.DistributionVectorConstant_6",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_6"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_11.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 255,
+        "G": 0,
+        "R": 229,
+        "A": 255
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "P_EFX_FireWorks_GoldRayChry_HD": {
+  "system": {
+   "Emitters": [
+    {
+     "_type": "object_ref",
+     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleSpriteEmitter_0",
+     "class": "ParticleSpriteEmitter",
+     "name": "ParticleSpriteEmitter_0"
+    }
+   ],
+   "UpdateTime_FPS": 10,
+   "bUseFixedRelativeBoundingBox": true
+  },
+  "emitters": [
+   {
+    "name": "Main",
+    "required": {
+     "Material": {
+      "_type": "object_ref",
+      "path": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD.MI_EFX_FireWorks_GoldRayChry_01_HD",
+      "class": "MaterialInstanceConstant",
+      "name": "MI_EFX_FireWorks_GoldRayChry_01_HD"
+     },
+     "ScreenAlignment": "PSA_FacingCameraPosition",
+     "SubImages_Horizontal": 1,
+     "SubImages_Vertical": 1,
+     "InterpolationMethod": "PSUVIM_None",
+     "EmitterDuration": 4.8333001136779785,
+     "EmitterLoops": 1,
+     "CutoutTexture": {
+      "_type": "object_ref",
+      "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01_C.T_EFX_FireWorks_GoldRayChry_4x4_01_C",
+      "class": "Texture2D",
+      "name": "T_EFX_FireWorks_GoldRayChry_4x4_01_C"
+     },
+     "BoundingMode": "BVC_EightVertices",
+     "OpacitySourceMode": "OSM_Alpha"
+    },
+    "modules": [
+     {
+      "cls": "ParticleModuleLifetime",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleLifetime_0",
+      "p": {
+       "Lifetime": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 4.5,
+        "MaxValue": 4.800000190734863,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleLifetime_0.DistributionFloatUniform_0",
+         "class": "DistributionFloatUniform",
+         "name": "DistributionFloatUniform_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          4.5,
+          4.800000190734863
+         ],
+         "Op": 2,
+         "EntryCount": 1,
+         "EntryStride": 2,
+         "SubEntryStride": 1,
+         "LockFlag": 0
+        }
+       },
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 239,
+        "G": 255,
+        "R": 0,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleSize",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleSize_0",
+      "p": {
+       "StartSize": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 22500,
+        "MaxValue": 23566.630859375,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 22500,
+         "Y": 0,
+         "Z": 0
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 23566.630859375,
+         "Y": 0,
+         "Z": 0
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleSize_0.DistributionVectorUniform_0",
+         "class": "DistributionVectorUniform",
+         "name": "DistributionVectorUniform_0"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [
+          22500,
+          22500,
+          22500,
+          23566.630859375,
+          23566.630859375,
+          23566.630859375
+         ],
+         "Op": 2,
+         "EntryCount": 1,
+         "EntryStride": 6,
+         "SubEntryStride": 3,
+         "LockFlag": 4
+        }
+       },
+       "bConsiderCameraDistanceSizeScalar": false,
+       "StartCameraDistance": 1000,
+       "EndCameraDistance": 10000,
+       "StartSizeScalar": 1,
+       "EndSizeScalar": 1,
+       "bSpawnModule": true,
+       "bUpdateModule": false,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": false,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 188,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModuleLocation"
+     },
+     {
+      "cls": "ParticleModuleParameterDynamic"
+     },
+     {
+      "cls": "ParticleModuleColorOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleColorOverLife_0",
+      "p": {
+       "ColorOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 1.3418999910354614,
+        "MaxValue": 1.875,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 1.875,
+         "Y": 1.6339000463485718,
+         "Z": 1.3418999910354614
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 1.875,
+         "Y": 1.6339000463485718,
+         "Z": 1.3418999910354614
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleColorOverLife_0.DistributionColorOverLife",
+         "class": "DistributionVectorConstantCurve",
+         "name": "DistributionColorOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleColorOverLife_0.DistributionAlphaOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bClampAlpha": true,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 0,
+        "G": 255,
+        "R": 157,
+        "A": 255
+       }
+      }
+     },
+     {
+      "cls": "ParticleModulePivotOffset"
+     },
+     {
+      "cls": "ParticleModuleColorScaleOverLife",
+      "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleColorScaleOverLife_0",
+      "p": {
+       "ColorScaleOverLife": {
+        "_struct": "RawDistributionVector",
+        "MinValue": 5,
+        "MaxValue": 5,
+        "MinValueVec": {
+         "_struct": "Vector",
+         "X": 5,
+         "Y": 5,
+         "Z": 5
+        },
+        "MaxValueVec": {
+         "_struct": "Vector",
+         "X": 5,
+         "Y": 5,
+         "Z": 5
+        },
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+         "class": "DistributionVectorConstant",
+         "name": "DistributionVectorConstant_2"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "AlphaScaleOverLife": {
+        "_struct": "RawDistributionFloat",
+        "MinValue": 0,
+        "MaxValue": 0,
+        "Distribution": {
+         "_type": "object_ref",
+         "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+         "class": "DistributionFloatConstant",
+         "name": "DistributionAlphaScaleOverLife"
+        },
+        "Table": {
+         "_struct": "DistributionLookupTable",
+         "TimeScale": 0,
+         "TimeBias": 0,
+         "Values": [],
+         "Op": 0,
+         "EntryCount": 0,
+         "EntryStride": 0,
+         "SubEntryStride": 0,
+         "LockFlag": 0
+        }
+       },
+       "bEmitterTime": false,
+       "bSpawnModule": true,
+       "bUpdateModule": true,
+       "bFinalUpdateModule": false,
+       "bUpdateForGPUEmitter": false,
+       "bCurvesAsColor": true,
+       "b3DDrawMode": false,
+       "bSupported3DDrawMode": false,
+       "bEnabled": true,
+       "bEditable": true,
+       "LODDuplicate": true,
+       "bSupportsRandomSeed": false,
+       "bRequiresLoopingNotification": false,
+       "LODValidity": 1,
+       "ModuleEditorColor": {
+        "_struct": "Color",
+        "B": 61,
+        "G": 0,
+        "R": 255,
+        "A": 255
+       }
+      }
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,206 @@
+{
+ "at": "2026-10-18T07:06:57.617Z",
+ "textures": [
+  {
+   "set": "LLoop",
+   "variant": "Mip",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 2048,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_LLoop_Mip",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_LLoop_Mip.FWL18_TX_LLoop_Mip",
+   "mip": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+   "size": [
+    2048,
+    2048
+   ]
+  },
+  {
+   "set": "LLoop",
+   "variant": "NoMip",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 2048,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_LLoop_NoMip",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_LLoop_NoMip.FWL18_TX_LLoop_NoMip",
+   "mip": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+   "size": [
+    2048,
+    2048
+   ]
+  },
+  {
+   "set": "LLoop",
+   "variant": "NoMip1k",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 1024,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_LLoop_NoMip1k",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_LLoop_NoMip1k.FWL18_TX_LLoop_NoMip1k",
+   "mip": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+   "size": [
+    1024,
+    1024
+   ]
+  },
+  {
+   "set": "MLoop",
+   "variant": "Mip",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 2048,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_MLoop_Mip",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_MLoop_Mip.FWL18_TX_MLoop_Mip",
+   "mip": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+   "size": [
+    2048,
+    2048
+   ]
+  },
+  {
+   "set": "MLoop",
+   "variant": "NoMip",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 2048,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_MLoop_NoMip",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_MLoop_NoMip.FWL18_TX_MLoop_NoMip",
+   "mip": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+   "size": [
+    2048,
+    2048
+   ]
+  },
+  {
+   "set": "MLoop",
+   "variant": "NoMip1k",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 1024,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_MLoop_NoMip1k",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_MLoop_NoMip1k.FWL18_TX_MLoop_NoMip1k",
+   "mip": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+   "size": [
+    1024,
+    1024
+   ]
+  },
+  {
+   "set": "Gold",
+   "variant": "Mip",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 2048,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_Gold_Mip",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_Gold_Mip.FWL18_TX_Gold_Mip",
+   "mip": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+   "size": [
+    2048,
+    2048
+   ]
+  },
+  {
+   "set": "Gold",
+   "variant": "NoMip",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 2048,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_Gold_NoMip",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_Gold_NoMip.FWL18_TX_Gold_NoMip",
+   "mip": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+   "size": [
+    2048,
+    2048
+   ]
+  },
+  {
+   "set": "Gold",
+   "variant": "NoMip1k",
+   "group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+   "max": 1024,
+   "never": false,
+   "mi": "/Engine/Transient.FWL18_MI_Gold_NoMip1k",
+   "tex": "/Engine/FWL18_TMP/FWL18_TX_Gold_NoMip1k.FWL18_TX_Gold_NoMip1k",
+   "mip": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+   "size": [
+    1024,
+    1024
+   ]
+  }
+ ],
+ "mis": [
+  {
+   "set": "LLoop",
+   "variant": "Mip",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_LLoop_Mip",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_LLoop_Mip.FWL18_TX_LLoop_Mip",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "LLoop",
+   "variant": "NoMip",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_LLoop_NoMip",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_LLoop_NoMip.FWL18_TX_LLoop_NoMip",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "LLoop",
+   "variant": "NoMip1k",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_LLoop_NoMip1k",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_LLoop_NoMip1k.FWL18_TX_LLoop_NoMip1k",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "MLoop",
+   "variant": "Mip",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_MLoop_Mip",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_MLoop_Mip.FWL18_TX_MLoop_Mip",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "MLoop",
+   "variant": "NoMip",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_MLoop_NoMip",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_MLoop_NoMip.FWL18_TX_MLoop_NoMip",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "MLoop",
+   "variant": "NoMip1k",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_MLoop_NoMip1k",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_MLoop_NoMip1k.FWL18_TX_MLoop_NoMip1k",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "Gold",
+   "variant": "Mip",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_Gold_Mip",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_Gold_Mip.FWL18_TX_Gold_Mip",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "Gold",
+   "variant": "NoMip",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_Gold_NoMip",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_Gold_NoMip.FWL18_TX_Gold_NoMip",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  },
+  {
+   "set": "Gold",
+   "variant": "NoMip1k",
+   "src": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRayChry_01_HD",
+   "mi": "/Engine/Transient.FWL18_MI_Gold_NoMip1k",
+   "main": "/Engine/FWL18_TMP/FWL18_TX_Gold_NoMip1k.FWL18_TX_Gold_NoMip1k",
+   "parent": "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit.M_EFX_FlipBookSuperPack_FireBase_Unlit"
+  }
+ ],
+ "engineDiskTmp": true
+}

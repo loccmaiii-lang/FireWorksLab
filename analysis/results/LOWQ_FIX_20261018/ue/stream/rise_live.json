@@ -1,0 +1,92 @@
+[
+ {
+  "file": "t00100",
+  "age": 0.1016,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "128/64",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "128/64"
+ },
+ {
+  "file": "t00200",
+  "age": 0.2109,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "128/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "128/2048"
+ },
+ {
+  "file": "t00300",
+  "age": 0.3086,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "128/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "128/2048"
+ },
+ {
+  "file": "t00500",
+  "age": 0.5078,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t00800",
+  "age": 0.8164,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t01000",
+  "age": 1.0039,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t01500",
+  "age": 1.5,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t02500",
+  "age": 2.5078,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t03200",
+  "age": 3.2109,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t03800",
+  "age": 3.8047,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t04300",
+  "age": 4.3164,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t05000",
+  "age": 5.0039,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t06000",
+  "age": 6.0117,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t06800",
+  "age": 6.8008,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "2048/2048"
+ },
+ {
+  "file": "t07300",
+  "age": 7.3047,
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD": "2048/2048",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD": "128/64"
+ }
+]

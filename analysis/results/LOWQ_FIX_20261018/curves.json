@@ -1,0 +1,1057 @@
+{
+ "P_EFX_FireWorks_RiseTrail_L_HD:RiseLoop": {
+  "duration": 7.365099906921387,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 0,
+   "MaxValue": 0,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleLifetime_20.DistributionFloatConstant_8",
+    "class": "DistributionFloatConstant",
+    "name": "DistributionFloatConstant_8"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [],
+    "Op": 0,
+    "EntryCount": 0,
+    "EntryStride": 0,
+    "SubEntryStride": 0,
+    "LockFlag": 0
+   }
+  },
+  "sizeLife": {
+   "ConstantCurve": {
+    "_struct": "InterpCurveVector",
+    "Points": [
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.014100000262260437,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.015599999576807022,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.12049999833106995,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.04690000042319298,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.3449000120162964,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.07810000330209732,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.550000011920929,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.12219999730587006,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.8111000061035156,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.125,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.82669997215271,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.20309999585151672,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.6764000058174133,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.28130000829696655,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.5593000054359436,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.375,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.4510999917984009,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.5,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.3402999937534332,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.6718999743461609,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.22390000522136688,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.7968999743461609,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.15399999916553497,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 1,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.15000000596046448,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     }
+    ],
+    "bIsLooped": false,
+    "LoopKeyOffset": 0
+   },
+   "bLockAxes": false,
+   "LockedAxes": "EDVLF_None",
+   "bCanBeBaked": false,
+   "bIsDirty": false,
+   "bBakedDataSuccesfully": false
+  }
+ },
+ "P_EFX_FireWorks_RiseTrail_L_HD:TrailFar": {
+  "duration": 10.5,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 0,
+   "MaxValue": 0,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleLifetime_21.DistributionFloatConstant_12",
+    "class": "DistributionFloatConstant",
+    "name": "DistributionFloatConstant_12"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [],
+    "Op": 0,
+    "EntryCount": 0,
+    "EntryStride": 0,
+    "SubEntryStride": 0,
+    "LockFlag": 0
+   }
+  }
+ },
+ "P_EFX_FireWorks_RiseTrail_M_HD:RiseLoop": {
+  "duration": 4.377200126647949,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 0,
+   "MaxValue": 0,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleLifetime_0.DistributionFloatConstant_0",
+    "class": "DistributionFloatConstant",
+    "name": "DistributionFloatConstant_0"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [],
+    "Op": 0,
+    "EntryCount": 0,
+    "EntryStride": 0,
+    "SubEntryStride": 0,
+    "LockFlag": 0
+   }
+  },
+  "sizeLife": {
+   "ConstantCurve": {
+    "_struct": "InterpCurveVector",
+    "Points": [
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.010300000198185444,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.0625,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.2662999927997589,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.10939999669790268,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.4318000078201294,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.1598999947309494,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.5863000154495239,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.1875,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.6620000004768372,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.19990000128746033,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.6757000088691711,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.2599000036716461,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.5710999965667725,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.3280999958515167,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.48159998655319214,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.4219000041484833,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.3901999890804291,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.5468999743461609,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.3021000027656555,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.7188000082969666,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.21559999883174896,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.8906000256538391,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.15080000460147858,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 1,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.15000000596046448,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     }
+    ],
+    "bIsLooped": false,
+    "LoopKeyOffset": 0
+   },
+   "bLockAxes": false,
+   "LockedAxes": "EDVLF_None",
+   "bCanBeBaked": false,
+   "bIsDirty": false,
+   "bBakedDataSuccesfully": false
+  }
+ },
+ "P_EFX_FireWorks_RiseTrail_M_HD:TrailFar": {
+  "duration": 6.23330020904541,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 0,
+   "MaxValue": 0,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleLifetime_1.DistributionFloatConstant_4",
+    "class": "DistributionFloatConstant",
+    "name": "DistributionFloatConstant_4"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [],
+    "Op": 0,
+    "EntryCount": 0,
+    "EntryStride": 0,
+    "SubEntryStride": 0,
+    "LockFlag": 0
+   }
+  }
+ },
+ "P_EFX_FireWorks_RiseTrail_S_HD:RiseLoop": {
+  "duration": 2.954400062561035,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 0,
+   "MaxValue": 0,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_0.DistributionFloatConstant_0",
+    "class": "DistributionFloatConstant",
+    "name": "DistributionFloatConstant_0"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [],
+    "Op": 0,
+    "EntryCount": 0,
+    "EntryStride": 0,
+    "SubEntryStride": 0,
+    "LockFlag": 0
+   }
+  },
+  "sizeLife": {
+   "ConstantCurve": {
+    "_struct": "InterpCurveVector",
+    "Points": [
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.008700000122189522,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.07810000330209732,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.22020000219345093,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.15230000019073486,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.3874000012874603,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.23440000414848328,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.5397999882698059,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.2791999876499176,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.6100000143051147,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.3594000041484833,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.5088000297546387,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.4569999873638153,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.4189999997615814,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.5938000082969666,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.32910001277923584,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 0.7656000256538391,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.24950000643730164,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     },
+     {
+      "_struct": "InterpCurvePointVector",
+      "InVal": 1,
+      "OutVal": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 0.17249999940395355,
+       "Z": 1
+      },
+      "ArriveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "LeaveTangent": {
+       "_struct": "Vector",
+       "X": 0,
+       "Y": 0,
+       "Z": 0
+      },
+      "InterpMode": "CIM_Linear"
+     }
+    ],
+    "bIsLooped": false,
+    "LoopKeyOffset": 0
+   },
+   "bLockAxes": false,
+   "LockedAxes": "EDVLF_None",
+   "bCanBeBaked": false,
+   "bIsDirty": false,
+   "bBakedDataSuccesfully": false
+  }
+ },
+ "P_EFX_FireWorks_RiseTrail_S_HD:TrailFar": {
+  "duration": 3.5999999046325684,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 0,
+   "MaxValue": 0,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleLifetime_1.DistributionFloatConstant_4",
+    "class": "DistributionFloatConstant",
+    "name": "DistributionFloatConstant_4"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [],
+    "Op": 0,
+    "EntryCount": 0,
+    "EntryStride": 0,
+    "SubEntryStride": 0,
+    "LockFlag": 0
+   }
+  }
+ },
+ "P_EFX_FireWorks_GoldRayChry_HD:Main": {
+  "duration": 4.8333001136779785,
+  "loops": 1,
+  "life": {
+   "_struct": "RawDistributionFloat",
+   "MinValue": 4.5,
+   "MaxValue": 4.800000190734863,
+   "Distribution": {
+    "_type": "object_ref",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD:ParticleModuleLifetime_0.DistributionFloatUniform_0",
+    "class": "DistributionFloatUniform",
+    "name": "DistributionFloatUniform_0"
+   },
+   "Table": {
+    "_struct": "DistributionLookupTable",
+    "TimeScale": 0,
+    "TimeBias": 0,
+    "Values": [
+     4.5,
+     4.800000190734863
+    ],
+    "Op": 2,
+    "EntryCount": 1,
+    "EntryStride": 2,
+    "SubEntryStride": 1,
+    "LockFlag": 0
+   }
+  }
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "name": "rise_far",
+ "folder": "F:/FireWorksLab/analysis/local/LOWQ_FIX_20261018/rise_far",
+ "camera": [
+  [
+   374000,
+   -778000,
+   0
+  ],
+  [
+   18,
+   -90,
+   0
+  ]
+ ],
+ "fov": 90,
+ "w": 1920,
+ "h": 1080,
+ "warm": 20,
+ "items": [
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    329000,
+    -858000,
+    -3400
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    347000,
+    -858000,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_LLoop_NoMip"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    365000,
+    -858000,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_LLoop_NoMip1k"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "location": [
+    383000,
+    -858000,
+    -3400
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "location": [
+    401000,
+    -858000,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_MLoop_NoMip"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "location": [
+    419000,
+    -858000,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_MLoop_NoMip1k"
+    ]
+   ]
+  }
+ ],
+ "times": [
+  3.8,
+  3.85,
+  3.9,
+  3.95,
+  5,
+  5.05,
+  5.1,
+  5.15,
+  6.8
+ ],
+ "end": 7.6,
+ "investigate": [
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD"
+ ],
+ "spawnLate": true
+}

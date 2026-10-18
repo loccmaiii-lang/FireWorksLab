@@ -1,0 +1,117 @@
+{
+ "name": "rise_live",
+ "folder": "F:/FireWorksLab/analysis/local/LOWQ_FIX_20261018/rise_live",
+ "camera": [
+  [
+   374000,
+   -778000,
+   0
+  ],
+  [
+   30,
+   -90,
+   0
+  ]
+ ],
+ "fov": 90,
+ "w": 1920,
+ "h": 1080,
+ "warm": 20,
+ "items": [
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    359000,
+    -805150,
+    -3400
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    365000,
+    -805150,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_LLoop_NoMip"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "location": [
+    371000,
+    -805150,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_LLoop_NoMip1k"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "location": [
+    377000,
+    -805150,
+    -3400
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "location": [
+    383000,
+    -805150,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_MLoop_NoMip"
+    ]
+   ]
+  },
+  {
+   "source": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "location": [
+    389000,
+    -805150,
+    -3400
+   ],
+   "materials": [
+    [
+     0,
+     "/Engine/Transient.FWL18_MI_MLoop_NoMip1k"
+    ]
+   ]
+  }
+ ],
+ "times": [
+  0.1,
+  0.2,
+  0.3,
+  0.5,
+  0.8,
+  1,
+  1.5,
+  2.5,
+  3.2,
+  3.8,
+  4.3,
+  5,
+  6,
+  6.8,
+  7.3
+ ],
+ "end": 7.6,
+ "investigate": [
+  "T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+  "T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD"
+ ],
+ "spawnLate": true
+}
