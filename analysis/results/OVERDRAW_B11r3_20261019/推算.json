@@ -1,0 +1,586 @@
+{
+ "method": "overdraw 推算（烟花编排（22）-本机，2026-10-19）：按封板导演表 + T22 读回的面片大小 / 寿命 + 用户机位，算每个时刻画面上半透明面片叠了几层。\n\n不是 UE 的 Shader Complexity 实测（编辑器视口不吃控制台 viewmode，见 看法.md）。做法：\n- 机位：overdraw 实测那次读回的视口位置 / 朝向；视场角按编辑器默认水平 90°（没读到，推断）；画面 2199×1140（实测截图尺寸）。\n- 点位：P0–P8 用 B09 实放读回的世界坐标；B 点取相邻两个 P 点的中点；F 点按设计坐标放在 P4 的局部坐标里（沿 P3→P5、朝相机），比 P 低 100 m（设计值）。\n- 每朵花的每个发射器：LOD0 开着的，在 [开花 + 延迟, 开花 + 延迟 + 寿命] 内算一张正方形、朝相机的面片，边长 = 读回面片（已含表 EffectScale）× 导演缩放；Zoom 取景按最大面片算（偏大）。尾缀（*Trail*）不算。\n- 栅格 440×228，统计每格叠几层；同时给每一刻「面片面积之和 ÷ 画面面积」。",
+ "camera": {
+  "locationM": [
+   3480.8,
+   -7696.2,
+   -151.3
+  ],
+  "pitchDeg": 34.6,
+  "yawDeg": -775.26,
+  "fovDeg": "90（推断）"
+ },
+ "pointFitMaxErrM": 110.7,
+ "tiers": {
+  "高": {
+   "planes": 14268,
+   "maxLayers": 13,
+   "maxAreaFrac": 4.7,
+   "topByLayers": [
+    {
+     "t": 165.5,
+     "bigLayers": 13,
+     "pctGe4": 47.76,
+     "areaFrac": 4.7,
+     "planes": 160
+    },
+    {
+     "t": 165.6,
+     "bigLayers": 13,
+     "pctGe4": 47.76,
+     "areaFrac": 4.7,
+     "planes": 156
+    },
+    {
+     "t": 165.7,
+     "bigLayers": 13,
+     "pctGe4": 47.76,
+     "areaFrac": 4.7,
+     "planes": 154
+    },
+    {
+     "t": 165.4,
+     "bigLayers": 13,
+     "pctGe4": 47.34,
+     "areaFrac": 4.66,
+     "planes": 160
+    },
+    {
+     "t": 165.3,
+     "bigLayers": 13,
+     "pctGe4": 47.1,
+     "areaFrac": 4.62,
+     "planes": 161
+    },
+    {
+     "t": 165.8,
+     "bigLayers": 13,
+     "pctGe4": 46.07,
+     "areaFrac": 4.46,
+     "planes": 151
+    },
+    {
+     "t": 165.9,
+     "bigLayers": 13,
+     "pctGe4": 46.07,
+     "areaFrac": 4.46,
+     "planes": 149
+    },
+    {
+     "t": 166.0,
+     "bigLayers": 13,
+     "pctGe4": 46.07,
+     "areaFrac": 4.46,
+     "planes": 146
+    },
+    {
+     "t": 166.1,
+     "bigLayers": 13,
+     "pctGe4": 44.5,
+     "areaFrac": 4.32,
+     "planes": 144
+    },
+    {
+     "t": 166.2,
+     "bigLayers": 13,
+     "pctGe4": 42.39,
+     "areaFrac": 3.95,
+     "planes": 90
+    },
+    {
+     "t": 166.3,
+     "bigLayers": 13,
+     "pctGe4": 42.39,
+     "areaFrac": 3.95,
+     "planes": 89
+    },
+    {
+     "t": 166.4,
+     "bigLayers": 13,
+     "pctGe4": 42.39,
+     "areaFrac": 3.95,
+     "planes": 90
+    }
+   ],
+   "topByArea": [
+    {
+     "t": 165.5,
+     "bigLayers": 13,
+     "pctGe4": 47.76,
+     "areaFrac": 4.7,
+     "planes": 160
+    },
+    {
+     "t": 165.6,
+     "bigLayers": 13,
+     "pctGe4": 47.76,
+     "areaFrac": 4.7,
+     "planes": 156
+    },
+    {
+     "t": 165.7,
+     "bigLayers": 13,
+     "pctGe4": 47.76,
+     "areaFrac": 4.7,
+     "planes": 154
+    },
+    {
+     "t": 165.4,
+     "bigLayers": 13,
+     "pctGe4": 47.34,
+     "areaFrac": 4.66,
+     "planes": 160
+    },
+    {
+     "t": 165.3,
+     "bigLayers": 13,
+     "pctGe4": 47.1,
+     "areaFrac": 4.62,
+     "planes": 161
+    },
+    {
+     "t": 165.8,
+     "bigLayers": 13,
+     "pctGe4": 46.07,
+     "areaFrac": 4.46,
+     "planes": 151
+    },
+    {
+     "t": 165.9,
+     "bigLayers": 13,
+     "pctGe4": 46.07,
+     "areaFrac": 4.46,
+     "planes": 149
+    },
+    {
+     "t": 166.0,
+     "bigLayers": 13,
+     "pctGe4": 46.07,
+     "areaFrac": 4.46,
+     "planes": 146
+    },
+    {
+     "t": 166.1,
+     "bigLayers": 13,
+     "pctGe4": 44.5,
+     "areaFrac": 4.32,
+     "planes": 144
+    },
+    {
+     "t": 165.2,
+     "bigLayers": 12,
+     "pctGe4": 44.99,
+     "areaFrac": 4.29,
+     "planes": 159
+    },
+    {
+     "t": 165.1,
+     "bigLayers": 11,
+     "pctGe4": 43.89,
+     "areaFrac": 4.03,
+     "planes": 159
+    },
+    {
+     "t": 123.2,
+     "bigLayers": 12,
+     "pctGe4": 45.96,
+     "areaFrac": 3.98,
+     "planes": 178
+    }
+   ],
+   "atMeasured": [
+    {
+     "t": 3,
+     "bigLayers": 0,
+     "areaFrac": 0.0
+    },
+    {
+     "t": 10.5,
+     "bigLayers": 2,
+     "areaFrac": 0.09
+    },
+    {
+     "t": 16.6,
+     "bigLayers": 6,
+     "areaFrac": 0.87
+    },
+    {
+     "t": 28.9,
+     "bigLayers": 4,
+     "areaFrac": 1.2
+    },
+    {
+     "t": 43.9,
+     "bigLayers": 5,
+     "areaFrac": 1.07
+    },
+    {
+     "t": 54.7,
+     "bigLayers": 4,
+     "areaFrac": 1.61
+    },
+    {
+     "t": 61.3,
+     "bigLayers": 10,
+     "areaFrac": 3.23
+    }
+   ]
+  },
+  "中": {
+   "planes": 9685,
+   "maxLayers": 11,
+   "maxAreaFrac": 4.18,
+   "topByLayers": [
+    {
+     "t": 165.5,
+     "bigLayers": 11,
+     "pctGe4": 46.03,
+     "areaFrac": 4.18,
+     "planes": 100
+    },
+    {
+     "t": 165.6,
+     "bigLayers": 11,
+     "pctGe4": 46.03,
+     "areaFrac": 4.18,
+     "planes": 96
+    },
+    {
+     "t": 165.7,
+     "bigLayers": 11,
+     "pctGe4": 46.03,
+     "areaFrac": 4.18,
+     "planes": 94
+    },
+    {
+     "t": 165.3,
+     "bigLayers": 11,
+     "pctGe4": 45.16,
+     "areaFrac": 4.14,
+     "planes": 103
+    },
+    {
+     "t": 165.4,
+     "bigLayers": 11,
+     "pctGe4": 45.16,
+     "areaFrac": 4.14,
+     "planes": 100
+    },
+    {
+     "t": 165.8,
+     "bigLayers": 11,
+     "pctGe4": 43.82,
+     "areaFrac": 3.94,
+     "planes": 91
+    },
+    {
+     "t": 165.9,
+     "bigLayers": 11,
+     "pctGe4": 43.82,
+     "areaFrac": 3.94,
+     "planes": 89
+    },
+    {
+     "t": 166.0,
+     "bigLayers": 11,
+     "pctGe4": 43.82,
+     "areaFrac": 3.94,
+     "planes": 86
+    },
+    {
+     "t": 166.1,
+     "bigLayers": 11,
+     "pctGe4": 41.72,
+     "areaFrac": 3.79,
+     "planes": 84
+    },
+    {
+     "t": 166.4,
+     "bigLayers": 11,
+     "pctGe4": 38.02,
+     "areaFrac": 3.49,
+     "planes": 56
+    },
+    {
+     "t": 166.2,
+     "bigLayers": 11,
+     "pctGe4": 38.02,
+     "areaFrac": 3.48,
+     "planes": 56
+    },
+    {
+     "t": 166.3,
+     "bigLayers": 11,
+     "pctGe4": 38.02,
+     "areaFrac": 3.48,
+     "planes": 55
+    }
+   ],
+   "topByArea": [
+    {
+     "t": 165.5,
+     "bigLayers": 11,
+     "pctGe4": 46.03,
+     "areaFrac": 4.18,
+     "planes": 100
+    },
+    {
+     "t": 165.6,
+     "bigLayers": 11,
+     "pctGe4": 46.03,
+     "areaFrac": 4.18,
+     "planes": 96
+    },
+    {
+     "t": 165.7,
+     "bigLayers": 11,
+     "pctGe4": 46.03,
+     "areaFrac": 4.18,
+     "planes": 94
+    },
+    {
+     "t": 165.3,
+     "bigLayers": 11,
+     "pctGe4": 45.16,
+     "areaFrac": 4.14,
+     "planes": 103
+    },
+    {
+     "t": 165.4,
+     "bigLayers": 11,
+     "pctGe4": 45.16,
+     "areaFrac": 4.14,
+     "planes": 100
+    },
+    {
+     "t": 165.8,
+     "bigLayers": 11,
+     "pctGe4": 43.82,
+     "areaFrac": 3.94,
+     "planes": 91
+    },
+    {
+     "t": 165.9,
+     "bigLayers": 11,
+     "pctGe4": 43.82,
+     "areaFrac": 3.94,
+     "planes": 89
+    },
+    {
+     "t": 166.0,
+     "bigLayers": 11,
+     "pctGe4": 43.82,
+     "areaFrac": 3.94,
+     "planes": 86
+    },
+    {
+     "t": 165.2,
+     "bigLayers": 10,
+     "pctGe4": 42.58,
+     "areaFrac": 3.81,
+     "planes": 101
+    },
+    {
+     "t": 166.1,
+     "bigLayers": 11,
+     "pctGe4": 41.72,
+     "areaFrac": 3.79,
+     "planes": 84
+    },
+    {
+     "t": 165.1,
+     "bigLayers": 10,
+     "pctGe4": 41.2,
+     "areaFrac": 3.58,
+     "planes": 103
+    },
+    {
+     "t": 165.0,
+     "bigLayers": 9,
+     "pctGe4": 41.2,
+     "areaFrac": 3.5,
+     "planes": 107
+    }
+   ],
+   "atMeasured": null
+  },
+  "低": {
+   "planes": 1415,
+   "maxLayers": 10,
+   "maxAreaFrac": 2.65,
+   "topByLayers": [
+    {
+     "t": 194.7,
+     "bigLayers": 10,
+     "pctGe4": 35.16,
+     "areaFrac": 2.51,
+     "planes": 33
+    },
+    {
+     "t": 194.8,
+     "bigLayers": 10,
+     "pctGe4": 35.16,
+     "areaFrac": 2.51,
+     "planes": 33
+    },
+    {
+     "t": 194.5,
+     "bigLayers": 10,
+     "pctGe4": 31.04,
+     "areaFrac": 2.44,
+     "planes": 32
+    },
+    {
+     "t": 194.6,
+     "bigLayers": 10,
+     "pctGe4": 31.04,
+     "areaFrac": 2.44,
+     "planes": 32
+    },
+    {
+     "t": 194.4,
+     "bigLayers": 10,
+     "pctGe4": 31.55,
+     "areaFrac": 2.37,
+     "planes": 34
+    },
+    {
+     "t": 194.3,
+     "bigLayers": 10,
+     "pctGe4": 26.95,
+     "areaFrac": 1.95,
+     "planes": 26
+    },
+    {
+     "t": 194.9,
+     "bigLayers": 9,
+     "pctGe4": 34.51,
+     "areaFrac": 2.41,
+     "planes": 31
+    },
+    {
+     "t": 195.0,
+     "bigLayers": 9,
+     "pctGe4": 34.51,
+     "areaFrac": 2.41,
+     "planes": 31
+    },
+    {
+     "t": 195.1,
+     "bigLayers": 9,
+     "pctGe4": 30.37,
+     "areaFrac": 2.3,
+     "planes": 29
+    },
+    {
+     "t": 195.2,
+     "bigLayers": 9,
+     "pctGe4": 30.37,
+     "areaFrac": 2.3,
+     "planes": 29
+    },
+    {
+     "t": 195.3,
+     "bigLayers": 9,
+     "pctGe4": 30.37,
+     "areaFrac": 2.3,
+     "planes": 29
+    },
+    {
+     "t": 195.4,
+     "bigLayers": 9,
+     "pctGe4": 30.37,
+     "areaFrac": 2.3,
+     "planes": 29
+    }
+   ],
+   "topByArea": [
+    {
+     "t": 58.7,
+     "bigLayers": 8,
+     "pctGe4": 33.47,
+     "areaFrac": 2.65,
+     "planes": 25
+    },
+    {
+     "t": 58.8,
+     "bigLayers": 8,
+     "pctGe4": 33.47,
+     "areaFrac": 2.65,
+     "planes": 25
+    },
+    {
+     "t": 58.9,
+     "bigLayers": 8,
+     "pctGe4": 33.47,
+     "areaFrac": 2.65,
+     "planes": 27
+    },
+    {
+     "t": 59.0,
+     "bigLayers": 8,
+     "pctGe4": 33.47,
+     "areaFrac": 2.65,
+     "planes": 27
+    },
+    {
+     "t": 165.3,
+     "bigLayers": 6,
+     "pctGe4": 33.34,
+     "areaFrac": 2.64,
+     "planes": 18
+    },
+    {
+     "t": 165.4,
+     "bigLayers": 6,
+     "pctGe4": 33.34,
+     "areaFrac": 2.64,
+     "planes": 18
+    },
+    {
+     "t": 165.5,
+     "bigLayers": 6,
+     "pctGe4": 33.34,
+     "areaFrac": 2.64,
+     "planes": 18
+    },
+    {
+     "t": 165.6,
+     "bigLayers": 6,
+     "pctGe4": 33.34,
+     "areaFrac": 2.64,
+     "planes": 17
+    },
+    {
+     "t": 165.7,
+     "bigLayers": 6,
+     "pctGe4": 33.34,
+     "areaFrac": 2.64,
+     "planes": 17
+    },
+    {
+     "t": 59.1,
+     "bigLayers": 8,
+     "pctGe4": 35.42,
+     "areaFrac": 2.6,
+     "planes": 26
+    },
+    {
+     "t": 194.7,
+     "bigLayers": 10,
+     "pctGe4": 35.16,
+     "areaFrac": 2.51,
+     "planes": 33
+    },
+    {
+     "t": 194.8,
+     "bigLayers": 10,
+     "pctGe4": 35.16,
+     "areaFrac": 2.51,
+     "planes": 33
+    }
+   ],
+   "atMeasured": null
+  }
+ }
+}

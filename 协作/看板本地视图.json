@@ -2895,6 +2895,57 @@
    ],
    "_localAt": "2026-10-19T01:33:49+08:00",
    "updatedAt": "2026-10-19T01:33:49+08:00"
+  },
+  "local-P268": {
+   "kind": "你要做",
+   "title": "UE 编辑器 10-19 02:13 崩溃（22 跑 overdraw 时 ProfileGPU + HighResShot 触发）：重开后看一眼有没有没保存的改动",
+   "when": "周四以后",
+   "area": "性能测试",
+   "status": "没做",
+   "owner": "你",
+   "pri": 1,
+   "recommend": "重开 UE；确认今晚改的粒子 / 表都在（22 崩溃前 02:00 读回：大型 B/E/F/G 四行、金锦菊 / 金曜菊回到 B09 指向、中型金芒菊两段、大型金芒菊芯 + 光晕都在）；导演三表就是 B11修订3。",
+   "detail": "断言：(CmdContext->CommandListHandle == nullptr) || IsHeapSet(GlobalSamplerHeap)，D3D12DescriptorCache.cpp:988，RHIThread。22 没保存任何资产 / 关卡，没换三表；导演调试字段（PC / High / 起点 0）与 r.ProfileGPU.ShowUI 0 只在内存。推断原因：ProfileGPU 抓帧和 HighResShot 撞在一起；以后两者至少隔 1 s 或分开跑。",
+   "source": "analysis/results/OVERDRAW_B11r3_20261019/看法.md；运行/UE崩溃_日志摘录.txt",
+   "_localPending": [
+    "P268"
+   ],
+   "_localAt": "2026-10-19T02:22:30+08:00",
+   "updatedAt": "2026-10-19T02:22:30+08:00"
+  },
+  "local-P269": {
+   "kind": "AI 欠你",
+   "title": "overdraw 证据（B11修订3）：实测 7 个时刻 + 整场三档推算；Shader Complexity 截图和中 / 低配实测还欠",
+   "when": "周四以后",
+   "area": "性能测试",
+   "status": "在做",
+   "owner": "跨年秀（22）",
+   "pri": 2,
+   "recommend": "要 Shader Complexity 图：你把视口 View Mode 切到 Shader Complexity 后告诉 22，按 shaderComplexity 开关只截图（不再发 ProfileGPU）；中 / 低配 ProfileGPU 改成单独一轮、和截图隔开。",
+   "detail": "实测（RTX 5080 编辑器视口，相对值）：烟花那段 Translucency_AfterDOF 从 3 s 的 0.08 ms 到 61.3 s 的 0.50 ms。推算峰值：PC 高 165.5 s 面积和 4.70（最多叠 13 层），PC 中 165.7 s 4.18，PC 低 58.7 s 2.65、194.4 s 叠 10 层；粗拟合 ms ≈ 0.08 + 0.13 × 面积和。多重菊·大的两层 301 m 闪光面片是 162–166 s 那一峰的主因。",
+   "source": "analysis/results/OVERDRAW_B11r3_20261019/",
+   "_localPending": [
+    "P269"
+   ],
+   "_localAt": "2026-10-19T02:22:30+08:00",
+   "updatedAt": "2026-10-19T02:22:30+08:00"
+  },
+  "local-P270": {
+   "kind": "你要定",
+   "title": "银彩菊老 GoldSpark 那套：共享 Ramp T_6DLight_EmissiveRamp_01 是 NeverStream=True、三个材质实例 EmissiveDissolve=1",
+   "when": "周四以后",
+   "area": "资源规范",
+   "status": "没做",
+   "owner": "你（定）；本机同步（8）（改）",
+   "pri": 2,
+   "recommend": "共享贴图按规范只列出来问：要么给这三行换一张烟花自己的 Ramp（Clamp + NoMip、不勾 NeverStream），要么确认别的项目也在用就不动；EmissiveDissolve 要不要改 0.98 你定（之前修黑块定的是 0.98）。",
+   "detail": "T20 精简版只读读回（10-19 02:0x）：大型_B / E 银彩菊、大型_G 银白菊 用的 MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01/02/03_HD（03 是你新建给银白菊的）EmissiveDissolve = 1；Ramp T_6DLight_EmissiveRamp_01 NeverStream=True、AddressY Wrap、Mip 跟贴图组。其余烟花贴图都合规范。",
+   "source": "analysis/results/COLOR_BASELINE_20261019/规范体检.md",
+   "_localPending": [
+    "P270"
+   ],
+   "_localAt": "2026-10-19T02:22:30+08:00",
+   "updatedAt": "2026-10-19T02:22:30+08:00"
   }
  },
  "resources": {
@@ -5180,8 +5231,8 @@
  },
  "本地视图": {
   "格式": "df.board-local-view/1",
-  "生成时间": "2026-10-19T01:33:50+08:00",
-  "仓库HEAD": "694f8a275f05d5a92d326dcd21269cb44cfe2047",
+  "生成时间": "2026-10-19T02:22:30+08:00",
+  "仓库HEAD": "672ae50b528217205ab1ead7d8692efb195688f7",
   "在线快照时间": "2026-10-16T11:52:45+08:00",
   "尚未应用": [
    "P150",
@@ -5301,7 +5352,10 @@
    "P264",
    "P265",
    "P266",
-   "P267"
+   "P267",
+   "P268",
+   "P269",
+   "P270"
   ],
   "冲突待看": [],
   "新增行": [
@@ -5322,13 +5376,16 @@
    "local-P216",
    "rep-local-20261018-1851",
    "local-P264",
-   "local-P266"
+   "local-P266",
+   "local-P268",
+   "local-P269",
+   "local-P270"
   ],
   "关闭行": [
    "local-P151",
    "n68"
   ],
-  "变动行数": 63,
+  "变动行数": 66,
   "反馈已入Git": [],
   "行映射": {
    "local-P005": "n78",
