@@ -12,11 +12,16 @@
 --local 只读本地派生视图；在线基线看板快照.json不被离线巡检改写。
 另列「用户勾了我做好了、还没同步给负责对话框」的行（等同步），总管同步后在看板写 syncedAt / syncedTo。
 
-查四件事：
+查四件事（对账表）+ 一组「分组规则」：
   1. 对话记录/*.md 里每个没打勾的「- [ ]」都在对账表里（按 文件 + 文字指纹 对）
   2. 对账表里「已在看板 / 已补进看板」的行号都在快照里
   3. 对账表里「已做完 / 被取代」都写了依据
   4. 快照里每条没关的行都有来源
+  5. 分组规则（看板按 现在 / 下一步 / 之后 / 搁置 分组，meta/board 管上限和复核天数）：
+     没关的行都有合法的 lane；紧急(pri 0)≤上限且写了 urgentWhy；先处理(pri 1)≤上限；现在≤上限；
+     现在 / 下一步里没有过了复核日的行；标题、下一步、推荐、在等、卡着里不写「今晚 / 明天 / 周三前」这类相对时间词；
+     里程碑没过期；meta.patrolAt 跟快照导出时间对得上（说明这次巡检盖过章）。
+     之后 / 搁置里过了复核日的行只列「待复核」，不算问题——那是给用户逐条确认的。
 
 文字指纹：去掉行首「- [ ]」、去掉所有空白、取前 120 个字，sha1 前 12 位。
 文字改了指纹就变 —— 那条会作为「新的未打勾」报出来，复核一下再补进对账表。
@@ -33,15 +38,58 @@ ROOT = Path(__file__).resolve().parents[2]
 LEDGER = ROOT / "协作" / "看板对账.json"
 SNAPSHOT = ROOT / "协作" / "看板快照.json"
 PAGE = ROOT / "协作" / "全局看板.html"
+BOARD_MD = ROOT / "协作" / "全局看板.md"
+MD_START, MD_END = "<!-- BOARD-LANES:START", "<!-- BOARD-LANES:END -->"
 SNAP_RE = re.compile(r'(<script type="application/json" id="snap">)(.*?)(</script>)', re.S)
 COLLS = ("items", "resources", "dialogs", "reports")
 DIALOGS = ROOT / "对话记录"
 
+LANES = ("现在", "下一步", "之后", "搁置")
+LEGACY_LANE = {"周三前必须": "下一步", "周四以后": "之后", "暂不建议": "搁置"}
+DEF_META = {"caps": {"urgent": 1, "focus": 3, "now": 5},
+            "reviewDays": {"现在": 1, "下一步": 3, "之后": 7, "搁置": 30},
+            "stale": {"warnHours": 24, "badHours": 72}}
+# 这些词写进标题 / 下一步 / 推荐 / 在等 / 卡着，过几天就读不懂了；要写绝对日期（10-19）。detail 和 source 是记录，不管。
+RELATIVE = re.compile(r"今晚|今早|今天|明天|明晚|明早|昨晚|昨天|本周|这周|下周|周三前|周四以后|周四前")
+RELATIVE_FIELDS = ("title", "next", "recommend", "waitsOn", "blocks")
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}")
 BOX = re.compile(r"^\s*[-*]\s*\[ \]\s*")
 ON_BOARD = {"已在看板", "已补进看板"}
 CLOSED_OK = {"已做完", "被取代"}
 RESULTS = ON_BOARD | CLOSED_OK
 OPEN_STATUS = {"没做", "在做"}
+
+
+def lane_of(r):
+    """lane 优先；没写 lane 的旧行 / 旧待同步条目按旧 when 兜底（周三前必须→下一步，周四以后→之后，暂不建议→搁置）。"""
+    if r.get("lane") in LANES:
+        return r["lane"]
+    return LEGACY_LANE.get(r.get("when"), "之后")
+
+
+def pri_of(r):
+    p = str(r.get("pri", "")).strip()
+    return int(p) if p.isdigit() else 9
+
+
+def meta_of(snap):
+    m = (snap.get("meta") or {}).get("board") or {}
+    out = {k: {**DEF_META[k], **(m.get(k) or {})} for k in DEF_META}
+    out["patrolAt"] = m.get("patrolAt", "")
+    ms = m.get("milestone")
+    out["milestone"] = ms if isinstance(ms, dict) and ms.get("date") else None
+    return out
+
+
+def review_date(r, meta, tz=None):
+    """复核日（YYYY-MM-DD）：行上有 reviewBy 用它；没有就 核实时间（或更新时间）+ 该分组复核天数。从没核实过 = 0000-00-00（算过期）。"""
+    from datetime import timedelta
+    if DATE_RE.match(str(r.get("reviewBy") or "")):
+        return str(r["reviewBy"])[:10]
+    t = _t(r.get("confirmedAt") or r.get("updatedAt"))
+    if not t:
+        return "0000-00-00"
+    return (t + timedelta(days=meta["reviewDays"].get(lane_of(r), 7))).date().isoformat()
 
 
 def fingerprint(text: str) -> str:
@@ -81,13 +129,20 @@ def main():
                           for f in sorted((src / coll).glob("*.json"))}
             if not snap[coll] and coll != "reports":
                 sys.exit(f"{src / coll} 是空的，快照没写")
+        # meta/board：分组上限、复核天数、巡检时间、里程碑。导出目录没有 meta 时保留旧快照里的（不凭空造）。
+        if (src / "meta").is_dir() and any((src / "meta").glob("*.json")):
+            snap["meta"] = {f.stem: json.loads(f.read_text(encoding="utf-8")) for f in sorted((src / "meta").glob("*.json"))}
+        elif old.get("meta"):
+            snap["meta"] = old["meta"]
         SNAPSHOT.write_text(json.dumps(snap, ensure_ascii=False, indent=1), encoding="utf-8")
         page = PAGE.read_text(encoding="utf-8")
         if len(SNAP_RE.findall(page)) != 1:
             sys.exit(f"{PAGE} 里找不到唯一的 snap 块，离线副本没写")
         blob = json.dumps(snap, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
         PAGE.write_text(SNAP_RE.sub(lambda m: m.group(1) + blob + m.group(3), page), encoding="utf-8")
-        print("快照已重写（并嵌进 协作/全局看板.html）：" + "、".join(f"{c} {len(snap[c])}" for c in COLLS))
+        print("快照已重写（并嵌进 协作/全局看板.html）：" + "、".join(f"{c} {len(snap[c])}" for c in COLLS)
+              + ("、meta " + "/".join(snap["meta"]) if snap.get("meta") else "、meta 无"))
+        print(refresh_markdown(snap))
         # 在线基线独立保存，HTML继续叠加尚未应用的本机修改，避免反馈恢复前看板退回旧版。
         from 看板本地视图 import build as build_local
         head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -141,16 +196,17 @@ def main():
     open_items = [r for r in items.values() if r.get("status") in OPEN_STATUS]
     by = {}
     for r in open_items:
-        by[(r.get("when"), r.get("kind"))] = by.get((r.get("when"), r.get("kind")), 0) + 1
+        by[(lane_of(r), r.get("kind"))] = by.get((lane_of(r), r.get("kind")), 0) + 1
     gone = [e for e in entries if e.get("checkbox") and (e["checkbox"]["file"], e["checkbox"]["hash"]) not in now]
     closed_refs = [e for e in entries if e.get("result") in ON_BOARD and e.get("board") in items
                    and items[e["board"]].get("status") not in OPEN_STATUS]
 
     print(f"对账表 {len(entries)} 条（快照 {snap.get('导出时间', '?')}）；对话记录里没打勾 {len(now)} 个")
     print(f"看板 items {len(items)} 行，没关 {len(open_items)} 行：")
-    for w in ("周三前必须", "周四以后", "暂不建议"):
+    for w in LANES:
         parts = [f"{k} {by.get((w, k), 0)}" for k in ("你要做", "你要定", "AI 欠你")]
         print(f"  {w}：" + "，".join(parts))
+    lane_problems(snap, open_items, problems, daily=a.daily)
     waiting = [(k, r) for k, r in sorted(items.items())
                if r.get("kind") in ("你要做", "你要定") and r.get("status") == "已做" and r.get("doneAt") and not r.get("syncedAt")]
     print(f"用户勾了「我做好了」、还没同步给负责对话框：{len(waiting)} 条" + ("（总管要同步）" if waiting else ""))
@@ -202,6 +258,115 @@ def main():
     return 0
 
 
+def lane_problems(snap, open_items, problems, daily=False):
+    """分组规则检查。参考日期 = 快照导出时间（先重导快照再跑）。"""
+    meta, ref = meta_of(snap), _t(snap.get("导出时间"))
+    today = ref.date().isoformat() if ref else ""
+    caps = meta["caps"]
+    items = snap.get("items", {})
+    key = {id(r): k for k, r in items.items()}
+    for r in open_items:
+        k = key.get(id(r), "?")
+        t = (r.get("title") or "")[:50]
+        if r.get("lane") not in LANES:
+            problems.append(f"[没分组] {k} {t}：lane={r.get('lane')!r}（旧 when={r.get('when')!r}）；总管要给它定 现在 / 下一步 / 之后 / 搁置")
+        for fld in RELATIVE_FIELDS:
+            m = RELATIVE.search(str(r.get(fld) or ""))
+            if m:
+                problems.append(f"[相对时间词] {k}.{fld} 里有「{m.group(0)}」；改成绝对日期（如 10-19）")
+        if r.get("due") and not DATE_RE.match(str(r["due"])):
+            problems.append(f"[到期日格式] {k} due={r['due']!r}；要 YYYY-MM-DD")
+        if pri_of(r) == 0 and not (r.get("urgentWhy") or "").strip():
+            problems.append(f"[紧急没写原因] {k} {t}：pri 0 要写 urgentWhy")
+        lane = lane_of(r)
+        if today and lane in ("现在", "下一步") and review_date(r, meta) <= today:
+            problems.append(f"[过了复核日] {k} {t}（{lane}，复核日 {review_date(r, meta)}）；总管核实后写 confirmedAt / reviewBy，或降级")
+    n_urgent = sum(1 for r in open_items if pri_of(r) == 0)
+    n_focus = sum(1 for r in open_items if pri_of(r) == 1 and lane_of(r) == "现在")
+    n_now = sum(1 for r in open_items if lane_of(r) == "现在")
+    for label, n, cap in (("紧急(pri 0)", n_urgent, caps["urgent"]), ("先处理(pri 1)", n_focus, caps["focus"]), ("现在", n_now, caps["now"])):
+        if n > cap:
+            problems.append(f"[{label}超上限] {n} 条，上限 {cap}；降级几条")
+    print(f"  紧急 {n_urgent}/{caps['urgent']}，先处理 {n_focus}/{caps['focus']}，现在 {n_now}/{caps['now']}")
+    ms = meta["milestone"]
+    if ms:
+        if today and str(ms["date"])[:10] < today:
+            problems.append(f"[里程碑过期] {ms.get('name', '')} {ms['date']}；改成下一个节点，或从 meta/board 删掉 milestone")
+        else:
+            print(f"  里程碑：{ms.get('name', '')} {ms['date']}")
+    else:
+        print("  里程碑：无（meta/board 没写 milestone，页面顶部不显示倒计时）")
+    pa, rt = _t(meta["patrolAt"]), ref
+    if not pa:
+        problems.append("[巡检时间没盖] meta/board.patrolAt 缺或读不懂；每次巡检收口时写成这次巡检时间")
+    elif rt and abs((rt - pa).total_seconds()) > 3 * 3600:
+        problems.append(f"[巡检时间没更新] meta/board.patrolAt={meta['patrolAt']} 跟快照导出 {snap.get('导出时间')} 差超过 3 小时；收口时更新 patrolAt 再重导")
+    stale = [(k, r) for k, r in sorted(items.items()) if r.get("status") in OPEN_STATUS and today
+             and lane_of(r) in ("之后", "搁置") and review_date(r, meta) <= today]
+    print(f"  待复核（之后 / 搁置里过了复核日，不算问题，给用户逐条确认）：{len(stale)}")
+    if daily:
+        for k, r in sorted(stale, key=lambda x: review_date(x[1], meta))[:12]:
+            print(f"    [待复核] {k} {(r.get('title') or '')[:46]}（{lane_of(r)}，复核日 {review_date(r, meta)}）")
+        if len(stale) > 12:
+            print(f"    …另有 {len(stale) - 12} 条")
+
+
+def lanes_markdown(snap):
+    """给读不到在线看板的对话框看的清单：没关的行按 紧急 / 现在 / 下一步 / 之后 / 搁置 排，每行带复核日。从快照生成，不手写。"""
+    meta, ref = meta_of(snap), _t(snap.get("导出时间"))
+    today = ref.date().isoformat() if ref else ""
+    items = snap.get("items", {})
+    opens = [(k, r) for k, r in items.items() if r.get("status") in OPEN_STATUS]
+    def order(kr):
+        r = kr[1]
+        return (pri_of(r), str(r.get("due") or "9999"), r.get("order") or 0)
+    def line(k, r):
+        tags = []
+        if pri_of(r) == 1 and lane_of(r) == "现在":
+            tags.append("先处理")
+        if DATE_RE.match(str(r.get("due") or "")):
+            tags.append("到期 " + str(r["due"])[5:10])
+        if r.get("waitsOn"):
+            tags.append("在等：" + str(r["waitsOn"]))
+        rd = review_date(r, meta)
+        if today and rd <= today:
+            tags.append("待复核" + ("" if rd < "1" else f"，复核日 {rd[5:]}"))
+        owner = f"（{r['owner']}）" if r.get("owner") else ""
+        return f"- `{k}` {r.get('title', '')}{owner}" + (f" · {'；'.join(tags)}" if tags else "")
+    n = {w: sum(1 for _, r in opens if lane_of(r) == w) for w in LANES}
+    n_stale = sum(1 for _, r in opens if today and review_date(r, meta) <= today)
+    ms = meta["milestone"]
+    out = [f"{MD_START}（脚本从快照生成，别手改；每次 --snapshot-from 重写）-->",
+           f"快照 {snap.get('导出时间', '')} · 没关 {len(opens)} 行：" + " / ".join(f"{w} {n[w]}" for w in LANES)
+           + f" · 紧急 {sum(1 for _, r in opens if pri_of(r) == 0)} · 待复核 {n_stale}（过了复核日没人确认的，别当成现在要做的）· 里程碑："
+           + (f"{ms.get('name', '')} {ms['date']}" if ms else "无")]
+    urgent = sorted((kr for kr in opens if pri_of(kr[1]) == 0), key=order)
+    if urgent:
+        out += ["", "## 紧急（pri 0）"] + [line(k, r) + f" — 原因：{r.get('urgentWhy', '')}" for k, r in urgent]
+    for w in LANES:
+        rows = [kr for kr in opens if lane_of(kr[1]) == w and pri_of(kr[1]) != 0]
+        if not rows:
+            continue
+        out += ["", f"## {w}（{len(rows)}）"]
+        for kind in ("你要做", "你要定", "AI 欠你"):
+            sub = sorted((kr for kr in rows if kr[1].get("kind") == kind), key=order)
+            if sub:
+                out += ["", f"### {kind}（{len(sub)}）"] + [line(k, r) for k, r in sub]
+    out += ["", MD_END]
+    return "\n".join(out)
+
+
+def refresh_markdown(snap):
+    if not BOARD_MD.exists():
+        return "全局看板.md 不存在，没刷新"
+    md = BOARD_MD.read_text(encoding="utf-8")
+    i, j = md.find(MD_START), md.find(MD_END)
+    if i < 0 or j < i:
+        return "全局看板.md 里没有 BOARD-LANES 标记，没刷新清单"
+    BOARD_MD.write_text(md[:i] + lanes_markdown(snap) + md[j + len(MD_END):], encoding="utf-8")
+    return "已刷新 全局看板.md 的分组清单"
+
+
 ASK = re.compile(r"问用户|等用户|等你|要你定|请你|你定|批不批")
 
 
@@ -233,10 +398,10 @@ def daily_report(snap, entries, now, items):
         h = age_h(r.get("syncedAt") or r.get("updatedAt"))
         print(f"  [待下一步{' · 超过 24 小时' if h and h > 24 else ''}] {k} {r.get('title', '')[:40]} → {r.get('syncedTo') or r.get('owner', '')}｜{r['next'][:60]}")
     stale = [(k, r) for k, r in sorted(items.items()) if r.get("kind") == "AI 欠你" and r.get("status") in OPEN_STATUS
-             and r.get("when") != "暂不建议" and (age_h(r.get("updatedAt")) or 0) > 48]
+             and lane_of(r) != "搁置" and (age_h(r.get("updatedAt")) or 0) > 48]
     print(f"AI 欠你、48 小时没动：{len(stale)}——查负责对话框记录；没人做就排队或派活")
     for k, r in stale[:20]:
-        print(f"  [停了] {k} {r.get('title', '')[:50]} → {r.get('owner', '')}（{r.get('when')}）")
+        print(f"  [停了] {k} {r.get('title', '')[:50]} → {r.get('owner', '')}（{lane_of(r)}）")
     if len(stale) > 20:
         print(f"  …另有 {len(stale) - 20} 条")
     led = {(e["checkbox"]["file"], e["checkbox"]["hash"]): e for e in entries if e.get("checkbox")}
