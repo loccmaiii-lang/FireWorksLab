@@ -1,0 +1,58 @@
+{
+  "format": "df.import-err87-check/1",
+  "readAt": "2026-10-19T20:21:43.799811+08:00",
+  "source": {
+    "sha256": "05ba5ac0dc480ee36a5c138f4a89563cfe85338b25b65f3a26039231f0035e71",
+    "size": 834518,
+    "mtime": "2026-10-19T20:20:35.468561+08:00",
+    "markers": {
+      "--proofs-stdin": 1,
+      "资产写入完成，待交付登记": 1,
+      "deliveryRegistrationOnly": 6,
+      "补写交付登记": 2
+    }
+  },
+  "runtime": {
+    "sha256": "0dc3497b0cb48af78de64a3eb24ea450779e8aecf8e80ee8e75e9d5ea4cd33fb",
+    "size": 844377,
+    "mtime": "2026-10-19T20:20:35.487635+08:00",
+    "markers": {
+      "--proofs-stdin": 1,
+      "资产写入完成，待交付登记": 1,
+      "deliveryRegistrationOnly": 6,
+      "补写交付登记": 2
+    },
+    "exactPreparedCopy": true,
+    "has229Before": true,
+    "beforeMtime": "2026-10-19T20:10:45.440164+08:00"
+  },
+  "ueLog": [
+    {
+      "time": "2026.10.19-19.39.27:448",
+      "commandLength": 36605,
+      "oldProofsArgument": true,
+      "stdinArgument": false,
+      "packagePlatform": "pc",
+      "nearbyError87": true
+    }
+  ],
+  "verdict": "A: 19:39执行的是旧--proofs代码；当时磁盘副本没有快照，当前副本已是新版，不能声称新版stdin仍复现87",
+  "entry": "浏览器库存显示file:///F:/FireWorksLab/tool/FireworkBaker.html；实际页面内容读取被协议策略拒绝，未绕过",
+  "http": {
+    "source": "8034/importer与D源已核对",
+    "runtime": "F文件副本已同步，未读取file页面存档"
+  },
+  "otherCopies": [
+    {
+      "name": "df-fx-workbench_v2_locmai.html",
+      "oldProofsCall": 0,
+      "newStdinCall": 0
+    },
+    {
+      "name": "烟花编排工作台.html",
+      "oldProofsCall": 0,
+      "newStdinCall": 0
+    }
+  ],
+  "realUERequests": 0
+}
