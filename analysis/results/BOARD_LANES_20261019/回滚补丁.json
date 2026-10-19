@@ -1,0 +1,1071 @@
+{
+ "说明": "ArtifactData 回滚补丁：items / dialogs 每行一条 update（字段值 {\"__delete__\":true} 表示删掉这个字段）；meta/board 和 reports/rep-20261019-board-upgrade 是新建的，回滚时删除整个文档。页面回滚 = 把在线看板重新发布成上一个版本（版本 12），或用 git 里 e65a3dae 的 协作/全局看板.html。",
+ "items": {
+  "i09": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i15": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "不进。B03 里本来就是 0 发；整面扇 FC6O 周四以后再看",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-15T00:50:00+08:00"
+  },
+  "i16": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i17": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i20": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i21": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i24": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "旧7重做+3重导在B11r1均已有对应PC引用；它们是艺术/品质欠项，不能当10个资源缺失。今晚逐项“本轮换入/保留旧版/本轮舍弃”，无须全库重出。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00",
+   "waitsOn": "只对本轮选中项等实包/入库；其它美术迭代不拖明天烟花秀全量"
+  },
+  "i25": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i26": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四以后",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "i27": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四以后；Material调研 暂停到那时",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "i29": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四以后",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "i30": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i31": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i32": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四以后",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "i33": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i34": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i35": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i36": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四以后一起问",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "i37": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "旧7重做+3重导在B11r1均已有对应PC引用；它们是艺术/品质欠项，不能当10个资源缺失。今晚逐项“本轮换入/保留旧版/本轮舍弃”，无须全库重出。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00",
+   "waitsOn": "只对本轮选中项等实包/入库；其它美术迭代不拖明天烟花秀全量"
+  },
+  "i38": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i39": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i40": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i42": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i43": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i44": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i45": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四以后，别和导出（23）这周抢 tool/src",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "i46": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四测性能时顺手记 GPU 峰值",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T22:40:00+08:00"
+  },
+  "i48": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "i54": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n09": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "批。周三多个对话框要往 UE 导资源，这两条现在只在本机 AI 的记忆里",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-15T00:50:00+08:00"
+  },
+  "n100": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n11": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "复制状态行就行；这周重导多，提速省你时间",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "n12": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n13": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n14": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "W14 是版面问题，不属导出；周四以后排给界面那边",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "n15": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n16": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n17": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n18": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四测完再定要不要做；现在超了只会按比例自动降",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "n19": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n20": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n21": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n22": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n24": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "next": "并入明天n79同版QA检查真实GPU截断/实例限制；没有证据就不改512、不新派扩大池。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n25": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "周四测",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T22:40:00+08:00"
+  },
+  "n26": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "明天真手游核12个在用ID：大型106次同金芒菊、小平台统一小分裂",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n27": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n28": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n29": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n30": {
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "和 Night 新音频（周三那条）一起说",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-13T21:40:00+08:00"
+  },
+  "n32": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n34": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n35": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n36": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n37": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n38": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "今晚只核大型B/C/D真实尺寸与倍率；150/230导出不能混用",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n40": {
+   "confirmNote": {
+    "__delete__": true
+   },
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n41": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n42": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n43": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n44": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n45": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n46": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n47": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n57": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n66": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n67": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n69": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n72": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n76": {
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n77": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "今晚只收明天全量必需版本；额外加量/新层/Day不进本轮",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n79": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "今晚收B11r1同版候选，明天10-19烟花秀全量；实际手机/灯光/NoMip成本必测",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n80": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "next": "明天先完成实际终版再做独立玩法验收；不能仅凭SGRS1实包或旧静帧关闭本项。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "窜天猴明天完成：沿用旧G106检查，补本轮PC/M终版和真实三层UE证据",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n85": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "明天以这批正式设置为性能基线；今晚只核最终包是否真的包含同批设置，低/高档外观和目标机显存/帧时间留实测；不再沿旧建议重开全场全分辨率。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "PC/手游非共享主序列NoMip已落地；今晚定稿读回，明天测低档与显存",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n87": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n88": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "彩千轮3.0已有4.9.111 PC包及AI检查；如本轮换，今晚定并在明天最终轮前导入、Bounds/材质/事件与实际性能验证；否则明确沿现有2821，不在冻结后补换新结构。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n89": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "当前金垂柳PC/M已实读/实放，盒用户自己做；随机角明确不进测试。金曜菊B新mesh/三闪烁方案若要进本轮，必须今晚选完并在最终轮前真实替换验证；否则沿现有2822，移后续版本。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n90": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "due": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "pri": 1,
+   "priLegacy": {
+    "__delete__": true
+   },
+   "recommend": "今晚只收必需资源、B11r1导演三表/灯光/画质及P4/包身份；明天同版测烟花秀与窜天猴实际玩法。未采用新效果留在后续版本，不在本轮冻结后追补。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "10-19（周一）最终轮全量：今晚烟花秀优先，结束后冻结性能相关新增",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n91": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "next": "今晚不抢烟花秀收口窗口；复用现有主体/粒子/SGRS1及新导入范围功能。若全项目资源明天最终轮前必须定，窜天猴须先交终版再测；赶不上则该更新不进此轮，不能测试后偷补。",
+   "recommend": "明天集中完成同一候选PC/M全部本轮要保留的层、GPU扰动、贴图页/分辨率与回放；真实组合一起测，不能先测主体再冻结后补暗底/GPU。与秀并发关系未核，按实际玩法和已定并发验证。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "明天10-19完成窜天猴PC/手游：用户制作，终版三层与GPU一起入性能验收",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n92": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "今晚收Night灯光实绑与偏移，明天全量包含实际灯光",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n93": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "due": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "next": "今晚：B/C/D及新金芒菊是否采用、彩千轮3.0/金曜菊B是否替换，逐项确定；明天：用户完成窜天猴PC/M最终三层系统与其独立玩法验证，正式候选之后不得补进未测的新资源。若交付晚于封版，只能剔除该更新或把最终测试放在交付之后。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "今晚先定封版资源清单：明天10-19全量；在用终版全入包后才测",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n95": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "recommend": "今晚不改大小：B09 性能就是按现在大小测的。以后重导这几行（大型_B/E_银彩菊、大型_G_银白菊、大型_F_金芒菊）按「今晚封板的大小」对齐：面片面积和层数不超过今晚（性能），你又说不要比今晚小（观感）→ 等于保持今晚大小；要缩小的话只会更省，但要先看构图。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "title": "大号 / 中号菊的尺寸数据错了：银彩菊系和金芒菊实际比编排按的大约三成（今晚按现在大小封板）",
+   "titleLegacy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00"
+  },
+  "n96": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n97": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "pri": 1,
+   "priLegacy": {
+    "__delete__": true
+   },
+   "recommend": "重开 UE；确认今晚改的粒子 / 表都在（22 崩溃前 02:00 读回：大型 B/E/F/G 四行、金锦菊 / 金曜菊回到 B09 指向、中型金芒菊两段、大型金芒菊芯 + 光晕都在）；导演三表就是 B11修订3。",
+   "reviewBy": {
+    "__delete__": true
+   },
+   "updatedAt": "2026-10-19T10:32:54+08:00",
+   "urgentWhy": {
+    "__delete__": true
+   }
+  },
+  "n98": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  },
+  "n99": {
+   "confirmedAt": {
+    "__delete__": true
+   },
+   "lane": {
+    "__delete__": true
+   },
+   "reviewBy": {
+    "__delete__": true
+   }
+  }
+ },
+ "dialogs": {
+  "g01": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g02": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g03": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g04": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g05": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g06": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g07": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g08": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g09": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g10": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g11": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g12": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g13": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g14": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g16": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g17": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g18": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g19": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g20": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g21": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g22": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  },
+  "g23": {
+   "lastRecordAt": {
+    "__delete__": true
+   }
+  }
+ },
+ "删除文档": [
+  [
+   "meta",
+   "board"
+  ],
+  [
+   "reports",
+   "rep-20261019-board-upgrade"
+  ]
+ ]
+}
