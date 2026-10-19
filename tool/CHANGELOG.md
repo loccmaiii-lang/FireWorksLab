@@ -1,3 +1,13 @@
+## 4.9.119 · 文件入口的导入器副本不再悄悄停在旧版（仙女棒手机包 Error 87，导出（23），用户 10-19 19:45）
+
+- 原因：文件入口（file:// 打开烘焙器）的交付页加载本机副本 `tool/local_delivery/runtime/importer.html`，它只在 `启动烘焙器.cmd` / `tool/build.py` 时由 `prepare_local.py` 生成，`启动全部工具.cmd` 写明不生成。导入器（5）10-19 12:06 把 Error 87 的修复（独立交付 2.29，证明改走 stdin）部署到源文件、只核了 8034 入口，副本还是 2.28；用户 19:39 的日志仍是 2.28 的「导入完成 → 导入中止」（2.29 改成「资产写入完成，待交付登记」）。
+- `prepare_local.py`：副本带来源戳（源文件 sha256 / 大小 / 修改时间，`window.__DF_IMPORTER_SOURCE` + 旁注 `importer.source.json`）；`runtime_state()` 判断新旧，`ensure_runtime()` 旧了（或没有戳）按现在的源文件重新生成。
+- `service.py`：`/api/session` 发现副本旧了就重新生成，回报 `importerSource`；`/delivery-host`（HTTP 入口）带同一份戳；会话 / 健康检查回报 `serviceCodeStale`（git pull 更新了服务代码、旧进程还在跑）。`delivery-host.js`：会话回报这份页面实际加载的戳 `loadedImporter`。
+- `67_delivery.js`：文件入口两个戳不一致 → 重载交付页一次；还不一致、或副本没有戳又核对不了 → 拦下导入（交付页不显示、检查按钮不可点），写清「双击 tool/启动烘焙器.cmd 后点重试，或用 8034 打开烘焙器」；重试会重载。修了一个端到端才测出的竞态：启动时 init 已在连接，打开交付页的连接不等它、拿旧会话去问刚重载还没连上的新页（「请先连接本机交付服务」）——现在先等进行中的连接。
+- 两个启动入口都会重新生成副本（`local_http/launcher.py` 以前刻意不调 prepare）；复用的 8034 服务跑旧代码时启动器打印提示。
+- 合入门禁加「交付」一项：动了 `tool/local_delivery`、`tool/local_http` 或 `67_delivery.js` 时跑两处全部 `test_*.cjs` / `test_*.py`。这些检查以前不进门禁，`test_export_iteration` / `test_export_snapshot` / `test_unit_directions` 三个早已跟不上源码坏了，列 ⚠ 不拦。
+- 检查：新 `test_importer_freshness.py`（6）/ `.cjs`（8，先在旧代码上不过）；`test_delivery_host.cjs` 加戳；`test_baker_handoff` / `test_accept_timeout` 夹具补戳；Chromium 文件入口 + 真 8034 服务 + 假导入器端到端 4/4（旧副本 → 自动换成新版并重载，交付页显示新版）。没改私有导入器、UE、导出产物；画面不变。
+
 ## 4.9.118 · 分层粒子图固定取景与喷口锚点
 
 - 窜天猴/仙女棒已有的四边取景移到「输出→取景」，左/右/下/上边界独立数值和滑杆，原存档键保留。以前左右会用较大半边强制对称，较小一边调整无效；现在按实际矩形，喷口通过Pivot保持原位。

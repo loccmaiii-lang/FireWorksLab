@@ -89,14 +89,27 @@ const DeliveryWorkspace = (() => {
     if(retry||!node('deliveryFrame').getAttribute('src'))node('deliveryFrame').src=(localUI?new URL('local_delivery/runtime/importer.html',location.href).href:hostOrigin+'/delivery-host')+(retry?'?retry='+Date.now():'')+'#'+channel;
     return promise;
   }
+  const stampText=x=>x?(x.file||'导入器')+' · '+String(x.mtime||'').replace('T',' ')+' · '+String(x.sha256||'').slice(0,8):'未知';
+  const staleImporter=s=>localUI&&!!s?.importerSource?.sha256&&s.loadedImporter?.sha256!==s.importerSource.sha256;
+  const staleText=s=>(s.staleImporter==='nostamp'?'交付页的导入器副本没有版本戳（4.9.119 以前生成的，10-19 仙女棒 Error 87 就是这份副本旧了），确认不了是不是最新，已拦下导入。'
+      :'交付页加载的导入器是旧版本（'+stampText(s.loadedImporter)+'），本机最新是 '+stampText(s.importerSource)+'：照这样导入会跑修复前的代码，已拦下导入。')
+    +'请双击 tool/启动烘焙器.cmd（会重新生成本机副本 tool/local_delivery/runtime/importer.html）后点「重试」，或用 http://127.0.0.1:8034/baker 打开烘焙器。';
   async function connect(retry=false){
+    if(connecting)return connecting;     // 4.9.119：先等正在进行的连接——旧副本重载交付页期间 session 已有值，先判它会让别的调用拿旧会话去问还没连上的新页
     if(session&&!retry&&!session.directoryError)return session;
-    if(connecting)return connecting;
     connecting=(async()=>{
+      if(retry&&session?.staleImporter)hostReady=false;     // 4.9.119 上次是旧副本：重试时一定重载交付页（用户可能已经重新生成了副本）
       await waitForHost(retry);session=await rpc('session',{},15000);
+      // 4.9.119（用户 10-19 19:45 仙女棒手机包 Error 87「gpt……好像修错地方了」）：文件入口的交付页是本机副本 runtime/importer.html，
+      //   导入器修复只部署到源文件时副本还是旧的。服务回报现源文件的戳（旧副本它已重新生成），交付页回报自己加载的戳：不一致 → 重载一次；
+      //   还不一致 → 不让导入（会跑修复前的代码），写清怎么修。HTTP 入口服务现读源文件，戳总一致
+      if(staleImporter(session)){hostReady=false;await waitForHost(true);session=await rpc('session',{},15000);if(!staleImporter(session))session.freshNote='交付页的导入器已更新到本机最新版（'+stampText(session.importerSource)+'）。';}
+      if(staleImporter(session)){session.staleImporter=true;session.importerAvailable=false;}
+      else if(localUI&&!session.importerSource&&!session.loadedImporter){session.staleImporter='nostamp';session.importerAvailable=false;}     // 4.9.119 以前生成的副本没有戳、旧服务也不回报：确认不了，按旧的拦
       node('deliveryRoot').value=session.outputRoot||'';node('deliveryFrame').hidden=!session.importerAvailable;
-      node('deliveryImporterMissing').hidden=session.importerAvailable;node('deliveryLoading').hidden=true;node('deliveryRetry').hidden=true;
-      updateRootControls();
+      node('deliveryImporterMissing').hidden=session.importerAvailable||!!session.staleImporter;node('deliveryLoading').hidden=true;node('deliveryRetry').hidden=!session.staleImporter;
+      updateRootControls();if(session.staleImporter)message(staleText(session),true);
+      if(session.serviceCodeStale)session.freshNote=(session.freshNote?session.freshNote+'\n':'')+'本机交付服务（8034）还在跑更新前的代码：服务端的修复要重启服务才生效（重启电脑，或在任务管理器结束后台的 python service.py，再双击 tool/启动烘焙器.cmd）。';     // 4.9.119
       return session;
     })();try{return await connecting;}finally{connecting=null;}
   }
@@ -158,7 +171,8 @@ const DeliveryWorkspace = (() => {
       else if(last)await sendToImporter();
       else if(importerCurrent)message('已恢复当前素材。核对清单后确认导入。');
       if(!last&&!importerCurrent)message(session.outputRoot?'选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。');
-      prepared=true;
+      if(session.staleImporter)message(staleText(session),true);else if(session.freshNote)message(session.freshNote+'\n'+node('deliveryStatus').textContent,node('deliveryStatus').dataset.error==='true');     // 4.9.119
+      prepared=!session.staleImporter;
     })();try{return await preparing;}finally{preparing=null;}
   }
   async function open(){

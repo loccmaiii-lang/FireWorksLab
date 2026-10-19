@@ -1,4 +1,5 @@
 // Isolated same-document contracts; no browser, disk resources or UE writes.
+const STAMP={sha256:'c'.repeat(64),mtime:'2026-10-19T12:01:00',file:'importer.html'};     // 4.9.119 交付页回报的导入器来源戳（和服务回报的一致 = 副本是新的）
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const {randomUUID}=require('node:crypto');
 const source=fs.readFileSync(require('node:path').join(__dirname,'../src/js/67_delivery.js'),'utf8');
@@ -8,7 +9,7 @@ function fixture({protocol='file:',motion=false,reduced=false,offline=false,dire
   const origin='http://127.0.0.1:8034';
   const emit=(data,source=frame,from=protocol==='file:'?'null':origin)=>listeners.message?.({data,source,origin:from});
   const frame={postMessage(request,target){calls.push({command:request.command,target,payload:request.payload});if(failure)return;
-    const value=({session:{outputRoot:'trusted-root',importerAvailable:true},resources:{resources:resourceReceipts},publish:receipt,accept:{queued},'focus.restore':{}})[request.command]||{};
+    const value=({session:{outputRoot:'trusted-root',importerAvailable:true,importerSource:STAMP,loadedImporter:STAMP},resources:{resources:resourceReceipts},publish:receipt,accept:{queued},'focus.restore':{}})[request.command]||{};
     if(request.command==='publish')queueMicrotask(()=>emit({type:'workspace-host-resources',channel:request.channel,resources:[receipt]}));
     queueMicrotask(()=>emit({type:'workspace-host-response',channel:request.channel,id:request.id,ok:!((directoryOffline&&request.command==='resources')||(acceptFailure&&request.command==='accept')),error:'检查服务不可用',value}));}};
   function node(id){if(!nodes.has(id))nodes.set(id,{id,hidden:false,inert:false,disabled:false,value:'original-value',dataset:{},listeners:{},attrs:{},classList:{toggle(){}},

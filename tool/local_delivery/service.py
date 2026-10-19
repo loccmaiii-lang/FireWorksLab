@@ -8,6 +8,21 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
 from store import Store
+from prepare_local import ensure_runtime, source_stamp, stamp_script
+import hashlib
+
+CODE_FILES = ('service.py', 'store.py', 'prepare_local.py', 'layout.py', 'fx_gate.py', 'delivery-host.js', 'directory-transport.js')
+
+
+def code_signature():
+    """4.9.119：服务自己的代码指纹。代码 git pull 更新以后、旧进程还在跑时，会话里报 serviceCodeStale，烘焙器提示重启"""
+    h = hashlib.sha256(); here = Path(__file__).resolve().parent
+    for name in CODE_FILES:
+        try:
+            h.update(name.encode() + b'\0' + (here / name).read_bytes())
+        except OSError:
+            h.update(name.encode() + b'\0-')
+    return h.hexdigest()
 
 
 class Server(ThreadingHTTPServer):
@@ -20,6 +35,7 @@ class Server(ThreadingHTTPServer):
         self.token = secrets.token_urlsafe(32)
         self.read_origins = set(read_origins)
         self.picker_lock = threading.Lock()
+        self.code_sig = code_signature()     # 4.9.119
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -70,11 +86,20 @@ class Handler(BaseHTTPRequestHandler):
         path = unquote(urlsplit(self.path).path)
         try:
             if path == '/api/health':
-                return self.send(200, {'format': 'df.local-delivery/1', 'toolRoot': str(self.server.tool_root), 'importerAvailable': bool(self.server.importer and self.server.importer.is_file())})
+                return self.send(200, {'format': 'df.local-delivery/1', 'toolRoot': str(self.server.tool_root), 'importerAvailable': bool(self.server.importer and self.server.importer.is_file()), 'serviceCodeStale': code_signature() != self.server.code_sig})
             if path == '/api/session':
                 if self.headers.get('Origin') and self.headers['Origin'] != self.origin():
                     return self.send(403, {'error': '会话仅供本工作区'})
-                return self.send(200, {'token': self.server.token, **self.server.store.settings(), 'importerAvailable': bool(self.server.importer and self.server.importer.is_file())})
+                fresh = {}
+                if self.server.importer and self.server.importer.is_file():
+                    # 4.9.119：文件入口加载的本机副本旧了（导入器只部署了源文件）→ 这里按现在的源文件重新生成，并回报来源戳，
+                    #   烘焙器拿它和交付页实际加载的戳比，不一致就重载交付页（用户 10-19 仙女棒 Error 87：跑的是 12:06 修复前的副本）
+                    try:
+                        r = ensure_runtime(self.server.tool_root, self.server.importer)
+                        fresh = {'importerSource': r['source'], 'importerRuntimeRefreshed': r['refreshed']}
+                    except Exception as e:
+                        fresh = {'importerRuntimeError': str(e)[:300]}
+                return self.send(200, {'token': self.server.token, **self.server.store.settings(), 'importerAvailable': bool(self.server.importer and self.server.importer.is_file()), 'serviceCodeStale': code_signature() != self.server.code_sig, **fresh})
             if path == '/api/output-root':
                 return self.send(200, self.server.store.settings())
             if path == '/api/resources':
@@ -108,7 +133,7 @@ class Handler(BaseHTTPRequestHandler):
                         html = html.replace(anchor, "window.postMessage({type:'" + kind + "'")
                     if html.count('</body>') != 1:
                         raise ValueError('独立导入入口无效')
-                    return self.send(200, html.replace('</body>', '<script src="/delivery-host.js"></script></body>'), 'text/html; charset=utf-8')
+                    return self.send(200, html.replace('</body>', stamp_script(source_stamp(self.server.importer)) + '<script src="/delivery-host.js"></script></body>'), 'text/html; charset=utf-8')     # 4.9.119 同一份来源戳（HTTP 入口现读源文件，戳总是一致）
                 return self.send(200, p.read_bytes(), 'text/html; charset=utf-8' if name.endswith('.html') else 'application/javascript; charset=utf-8')
             if path in ('/', '/baker'):
                 p = self.server.tool_root / 'FireworkBaker.html'

@@ -61,13 +61,18 @@ def ensure_process(port, ready, command, cwd, logfile):
 
 def ensure_baker(tool_root):
     directory = tool_root / 'local_delivery'
-    # 复用现有启动器，不调用prepare或重新生成私有文件页面。
+    # 复用现有启动器。4.9.119（导出（23），用户 10-19 仙女棒 Error 87）：以前这里刻意不调 prepare，文件入口的本机导入器副本
+    #   runtime/importer.html 就一直停在旧版（导入器修复只部署了源文件）。现在和 启动烘焙器.cmd 一样先按源文件重新生成副本（只写 gitignore 的 runtime/）。
     sys.path.insert(0, str(directory))
     try:
         spec = importlib.util.spec_from_file_location('df_delivery_launcher', directory / 'launcher.py')
         launcher = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(launcher)
         config, importer = launcher.resolve_options(launcher.DEFAULT_SETUP, None, None)
+        try:
+            launcher.prepare(tool_root, importer, launcher.DEFAULT_SETUP)
+        except Exception as e:     # 副本生成失败不挡其它工具启动；烘焙器交付页会按戳拦下旧副本并写原因
+            print('⚠ 本机导入器副本没能重新生成：' + str(e)[:200], flush=True)
         if not launcher.probe(8034) and port_busy(8034):
             raise RuntimeError('8034被其他服务占用；不会关闭现有进程。')
         return launcher.ensure_service(config, importer, 8034)

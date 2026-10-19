@@ -14,6 +14,12 @@ python tool/local_delivery/fx_gate.py <同一修订> --root D:\ProjectTextures\F
 
 退出码 0 通过、1 拦下、2 读包错误；`--json` 给脚本用。规则和烘焙器导出拦截（`tool/src/js/63_gate.js`）同一套，外加 sha256 核对和共享登记（撞名、内容相同的序列图换名）。导入后读回 UE（LOD、发射器数、GPU、引用越界、两表一致、资源发射器数.json）要连 UE，在本机写，不在这里。检查：`python -m unittest test_fx_gate`。
 
+## 导入器副本的新旧（4.9.119）
+
+文件入口加载的 `runtime/importer.html` 是源文件（`delivery-launcher.json` 的 `importerPath`）的副本。副本带来源戳（源文件 sha256 / 修改时间，`runtime/importer.source.json`）。
+8034 服务在每次会话时比对，旧了就按源文件重新生成；烘焙器比对交付页实际加载的戳，不一致重载一次，还不一致（或副本没有戳、服务又是旧进程）就拦下导入并写原因。
+**更新私有导入器以后**：双击 `tool/启动烘焙器.cmd`（或 `启动全部工具.cmd`）一次即可；只部署源文件、不重新生成副本，文件入口会拦下而不是悄悄跑旧版。服务代码本身更新后要重启 8034 服务才生效（启动器会提示 `serviceCodeStale`）。
+
 ## 启动与使用
 
 需要 Python 3.10+；选择目录按钮需要 Python 的 tkinter。服务只监听 `127.0.0.1:8034`，没有额外 Python 包依赖。

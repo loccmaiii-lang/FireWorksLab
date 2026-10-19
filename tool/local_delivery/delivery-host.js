@@ -40,7 +40,8 @@
       if(session.importerAvailable){importer();
         if(typeof FwImporter!=='undefined'){const current=FwImporter.deliveryView();view={busy:!!current.busy,current:current.current||null};}}
       post({type:'workspace-host-state',...view});
-      const {token,...publicSession}=session;return publicSession;
+      // 4.9.119：回报这份交付页实际加载的导入器来源戳（本机副本由 prepare_local.py 打的），烘焙器和服务回报的现源文件比
+      const {token,...publicSession}=session;return{...publicSession,loadedImporter:window.__DF_IMPORTER_SOURCE||null};
     }
     if(!session)throw Error('请先连接本机交付服务');
     if(name==='resources')return refresh();

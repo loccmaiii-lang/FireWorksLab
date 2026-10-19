@@ -1,4 +1,5 @@
 // N23-20261016-01: real delivery controller, fake time/RPC. No browser/UE/GPU.
+const STAMP={sha256:'c'.repeat(64),mtime:'2026-10-19T12:01:00',file:'importer.html'};     // 4.9.119 交付页回报的导入器来源戳（和服务回报的一致 = 副本是新的）
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const {randomUUID}=require('node:crypto');
 const source=fs.readFileSync(__dirname+'/../src/js/67_delivery.js','utf8');
@@ -14,7 +15,7 @@ function fixture({delay=45000,business='',queryError='',silent=false}={}){
  const frame={postMessage(q){calls.push(q);const reply=(ok,value,error)=>emit({type:'workspace-host-response',channel:q.channel,id:q.id,ok,value,error});
   if(q.command==='accept'){accepts++;if(silent)return;const wait=typeof delay==='function'?delay(q.payload.deliveryId):delay;set(()=>reply(!business,{queued:false},business),wait);return;}
   if(q.command==='resources'){reads++;queueMicrotask(()=>reply(!queryError,{resources:[A,B]},queryError));return;}
-  const value=q.command==='session'?{outputRoot:'root',importerAvailable:true}:q.command==='publish'?A:{};
+  const value=q.command==='session'?{outputRoot:'root',importerAvailable:true,importerSource:STAMP,loadedImporter:STAMP}:q.command==='publish'?A:{};
   queueMicrotask(()=>{if(q.command==='publish')emit({type:'workspace-host-resources',channel:q.channel,resources:[A,B]});reply(true,value)});
  }};
  function node(id){if(!nodes.has(id))nodes.set(id,{id,hidden:false,inert:false,disabled:false,value:'',dataset:{},attrs:{},listeners:{},children:[],textContent:'',

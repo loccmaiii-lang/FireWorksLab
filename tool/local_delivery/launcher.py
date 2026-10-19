@@ -40,6 +40,8 @@ def ensure_service(config, importer, port, timeout=10):
     if status:
         if importer and not status.get('importerAvailable'):
             raise RuntimeError('已有服务未配置导入器，请关闭该服务后重新运行启动入口。')
+        if status.get('serviceCodeStale'):     # 4.9.119：复用的旧进程跑的是更新前的服务代码（不替用户关进程）
+            print('⚠ 8034 本机交付服务还在跑更新前的代码：服务端修复要重启它才生效（重启电脑，或在任务管理器结束后台 python service.py 后重新运行本入口）。', flush=True)
         return url
     if importer and not Path(importer).is_file():
         raise ValueError('本机独立导入器文件不存在，请核对本机启动配置。')

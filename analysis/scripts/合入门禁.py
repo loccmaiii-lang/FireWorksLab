@@ -20,6 +20,8 @@
         烘焙换成「只记帧计划、不画」（bakeFrames 桩）、取景测量的显卡渲染换成空画：只查接线，不查画面。
   导出  和契约同一批代表：导出拦截（规范 v1）不报错、没有空壳发射器（出生率 0 又没有 Burst）、每个发射器写了寿命和大小。
   界面  动了 tool/src 时：界面状态检查.py 的 N3、W7、W37、R10、R11、X1（再加门禁登记的新项）。
+  交付  动了 tool/local_delivery、tool/local_http 或 67_delivery.js 时：两处的全部 test_*.cjs / test_*.py（4.9.119，导出（23）：
+        用户 10-19「导入的问题反反复复」——这些检查以前不进门禁，三个已经跟不上源码坏了没人发现；已知坏的列 ⚠，不拦）。
 没做（后续）：动了渲染代码时的小图真烘光量对照（方案 G1 第 3 条）。
 """
 import argparse, asyncio, json, os, pathlib, shutil, subprocess, sys, tempfile, time
@@ -357,6 +359,32 @@ def changed_files(base, head='HEAD', committed_only=False):
     return sorted(files)
 
 
+DELIVERY_PREFIX = ('tool/local_delivery/', 'tool/local_http/', 'tool/src/js/67_delivery.js')
+# 4.9.119 时已经坏了的交付检查（沙盒没跟上源码里新加的函数，和本版无关）：照跑，不过只记 ⚠；修好了自然算过
+DELIVERY_KNOWN_BROKEN = {'test_export_iteration.cjs': '沙盒缺 fwlJobRecipes（62_resource_rules.js）', 'test_export_snapshot.cjs': '沙盒缺 comboMobileConflictText（67_fwlcombo.js）',
+                         'test_unit_directions.cjs': '沙盒缺 burstFlowOutputReason（19_spark_late.js）'}
+
+
+def check_delivery():
+    bad, warn, ok = [], [], 0
+    if shutil.which('node'):
+        for t in sorted((ROOT / 'tool' / 'local_delivery').glob('test_*.cjs')):
+            try: r = sh('node', str(t), timeout=300)
+            except subprocess.TimeoutExpired: r = None
+            if r is not None and r.returncode == 0: ok += 1; continue
+            last = '超时' if r is None else next((x for x in reversed((r.stderr + r.stdout).strip().splitlines()) if x.strip() and not x.startswith('    at ')), '退出码 ' + str(r.returncode))
+            (warn if t.name in DELIVERY_KNOWN_BROKEN else bad).append(f'{t.name}：{DELIVERY_KNOWN_BROKEN.get(t.name, last[:160])}')
+    else: warn.append('没有 node：交付页 JS 检查没跑')
+    for d in ('tool/local_delivery', 'tool/local_http'):
+        r = sh(sys.executable, '-m', 'unittest', 'discover', '-s', d, '-p', 'test_*.py', timeout=600)
+        out = r.stderr + r.stdout
+        if r.returncode == 0: ok += 1; continue
+        errs = [x for x in out.splitlines() if x.startswith(('ERROR:', 'FAIL:'))]
+        if errs and "No module named 'tkinter'" in out and len(errs) == out.count("No module named 'tkinter'"): warn.append(f'{d}：{len(errs)} 项要 tkinter（选目录窗口），这台机器没有'); ok += 1; continue
+        bad.append(f'{d}：' + '；'.join(x[:120] for x in errs[:4]) if errs else f'{d}：退出码 {r.returncode}')
+    return not bad, f'{ok} 组过' + (f'；❌ ' + '；'.join(bad[:6]) if bad else '') + (f'；⚠ ' + '；'.join(warn) if warn else '')
+
+
 HOOK_PATHS = (*BUILD_INPUTS, *BUILD_OUTPUTS, 'analysis/scripts/')     # 钩子在原地跑的前提：这些文件和要推的提交一致
 
 
@@ -499,6 +527,7 @@ def main():
                 if miss_scn: jbad.append(('产物形态登记表', '这几种产物没有代表效果（合入门禁.py SCENARIOS 加一行）：' + '、'.join(miss_scn)))
         put('导出', not jbad, '导出拦截、空壳发射器、寿命 / 大小都过' if not jbad else '；'.join(f'{n}：{j}' for n, j in jbad[:8]))
         report.append({'item': '契约明细', 'data': res})
+    if want('交付', a.all or any(f.startswith(DELIVERY_PREFIX) for f in files)): put('交付', *check_delivery())
     if want('界面', src):
         r = sh(sys.executable, 'analysis/scripts/界面状态检查.py', '--only', ','.join(UI_ITEMS), '--html', html)
         lines = [x for x in r.stdout.splitlines() if x.startswith(('✅', '❌'))]
