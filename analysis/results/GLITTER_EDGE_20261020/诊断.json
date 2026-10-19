@@ -1,0 +1,210 @@
+{
+  "scope": "保存的S1导出包第0帧诊断；没有读取当前个人草稿，不是新配方或UE验证",
+  "versionSource": "4.9.112 pack / 4.9.120 renderer checked",
+  "packSha256": "22e035196f53159745ca131cca9c86b5c84e7b39034904113b6fad38e8884465",
+  "main": "T_EFX_FireWorks_GlitterChry_S1_Lead_4x4_01_HD.png",
+  "pngSha256": "852cd531db361d9d3c048e08a07a9e4aa5ceb4b03fbb3e955259631704c46e74",
+  "grid": [
+    4,
+    4,
+    4
+  ],
+  "cell": [
+    512,
+    512
+  ],
+  "frame0Max": 244,
+  "cellBorderMax": 0,
+  "radialSample": {
+    "center": [
+      256,
+      256
+    ],
+    "rows": [
+      {
+        "gray8": 0,
+        "radiusFrom": 167,
+        "radiusTo": 255,
+        "pixels": 89
+      },
+      {
+        "gray8": 1,
+        "radiusFrom": 155,
+        "radiusTo": 166,
+        "pixels": 12
+      },
+      {
+        "gray8": 2,
+        "radiusFrom": 149,
+        "radiusTo": 154,
+        "pixels": 6
+      },
+      {
+        "gray8": 3,
+        "radiusFrom": 144,
+        "radiusTo": 148,
+        "pixels": 5
+      },
+      {
+        "gray8": 4,
+        "radiusFrom": 141,
+        "radiusTo": 143,
+        "pixels": 3
+      },
+      {
+        "gray8": 5,
+        "radiusFrom": 138,
+        "radiusTo": 140,
+        "pixels": 3
+      },
+      {
+        "gray8": 6,
+        "radiusFrom": 136,
+        "radiusTo": 137,
+        "pixels": 2
+      },
+      {
+        "gray8": 7,
+        "radiusFrom": 134,
+        "radiusTo": 135,
+        "pixels": 2
+      }
+    ]
+  },
+  "rampOriginal": {
+    "stages": [
+      [
+        0,
+        "#ffffff"
+      ]
+    ],
+    "xw": 0.08,
+    "ramp0": "#ff5423",
+    "ramp1": "#ff721f",
+    "ramp2": "#ff7a14",
+    "ramp3": "#ff8e12",
+    "headInt": 1,
+    "tailInt": 1
+  },
+  "comparison": [
+    {
+      "gray8": 0,
+      "originalLinearRGB": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "blackEndpointLinearRGB": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "gray8": 1,
+      "originalLinearRGB": [
+        0.00392156862745098,
+        0.0003517501558254798,
+        6.575209290735805e-05
+      ],
+      "blackEndpointLinearRGB": [
+        5.1262334999359224e-05,
+        8.625882362665167e-06,
+        7.024007713592047e-07
+      ]
+    },
+    {
+      "gray8": 2,
+      "originalLinearRGB": [
+        0.00784313725490196,
+        0.0007116626916487982,
+        0.00013118581670482527
+      ],
+      "blackEndpointLinearRGB": [
+        0.0002050493399974369,
+        3.4503529450660666e-05,
+        2.809603085436819e-06
+      ]
+    },
+    {
+      "gray8": 4,
+      "originalLinearRGB": [
+        0.01568627450980392,
+        0.0014559749032889507,
+        0.00026109815697008724
+      ],
+      "blackEndpointLinearRGB": [
+        0.0008201973599897476,
+        0.00013801411780264266,
+        1.1238412341747276e-05
+      ]
+    },
+    {
+      "gray8": 8,
+      "originalLinearRGB": [
+        0.03137254901960784,
+        0.0030425478865433184,
+        0.0005171024081819212
+      ],
+      "blackEndpointLinearRGB": [
+        0.0032807894399589903,
+        0.0005520564712105707,
+        4.49536493669891e-05
+      ]
+    },
+    {
+      "gray8": 32,
+      "originalLinearRGB": [
+        0.12549019607843137,
+        0.015304545465343277,
+        0.0019461558945296053
+      ],
+      "blackEndpointLinearRGB": [
+        0.052492631039343846,
+        0.00883290353936913,
+        0.0007192583898718257
+      ]
+    },
+    {
+      "gray8": 76,
+      "originalLinearRGB": [
+        0.2980392156862745,
+        0.04999579483657635,
+        0.004089807097770342
+      ],
+      "blackEndpointLinearRGB": [
+        0.29609124695629885,
+        0.049823096526754006,
+        0.004057066855370767
+      ]
+    },
+    {
+      "gray8": 128,
+      "originalLinearRGB": [
+        0.5019607843137255,
+        0.09209637963365534,
+        0.004935341758179039
+      ],
+      "blackEndpointLinearRGB": [
+        0.5019607843137255,
+        0.09209637963365534,
+        0.004935341758179039
+      ]
+    },
+    {
+      "gray8": 244,
+      "originalLinearRGB": [
+        0.9568627450980393,
+        0.24988053301335336,
+        0.005899535336871754
+      ],
+      "blackEndpointLinearRGB": [
+        0.9568627450980393,
+        0.24988053301335336,
+        0.005899535336871754
+      ]
+    }
+  ],
+  "tradeoff": "把Ramp0改黑只改善暗部级差，同时会降低该层所有低灰度内容，不能当作保持原外观的完整修复；未写入任何配方。",
+  "finding": "首圈1级灰度连续12像素、2级6像素，格边全0，支持低灰度量化色带而非格边裁切。开花闪光为独立高斯，coreProfile/haloShape不作用于该闪光。"
+}

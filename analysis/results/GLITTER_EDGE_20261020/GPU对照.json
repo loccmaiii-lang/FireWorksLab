@@ -1,0 +1,13 @@
+{
+  "version": "4.9.120",
+  "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "sourceUnchanged": true,
+  "diagnosticRecenter": true,
+  "changedInIsolatedPageOnly": {
+    "ramp0": [
+      "#ff5423",
+      "#000000"
+    ]
+  },
+  "note": "真实8034成品的GPU回放着色器，复用原导出PNG；只比较暗端颜色，未重新烘包、未改当前用户页面或存档、未经UE实测。"
+}
