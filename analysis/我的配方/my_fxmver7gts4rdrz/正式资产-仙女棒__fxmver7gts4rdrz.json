@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmver7gts4rdrz",
  "name": "正式资产-仙女棒",
- "at": "2026-10-19 12:28",
+ "at": "2026-10-19 19:18",
  "base": "我的效果",
  "from": {
   "key": "ef:sparkler_graph",
@@ -15,10 +15,32 @@
  },
  "snap": {
   "kind": "combo",
+  "name": "正式资产-仙女棒",
   "layers": [
    {
     "id": null,
     "type": "sparkgraph",
+    "L": {
+     "scale": 1,
+     "delay": 0,
+     "rate": 1,
+     "mirror": false,
+     "stages": [
+      [
+       0,
+       "#ffffff"
+      ]
+     ],
+     "xw": 0.08,
+     "ramp0": "#120100",
+     "ramp1": "#b34104",
+     "ramp2": "#ffc064",
+     "ramp3": "#fff6dd",
+     "headInt": 1,
+     "tailInt": 1,
+     "title": "仙女棒 · 全形态",
+     "lid": "l16l4s"
+    },
     "P": {
      "renderVer": 40,
      "exposure": 1,
@@ -798,7 +820,7 @@
         "count": 960,
         "speed": [
          0.45,
-         2.8600000000000003,
+         6,
          1.6
         ],
         "life": [
@@ -902,7 +924,7 @@
         "parent": null,
         "seed": 505858,
         "enabled": true,
-        "count": 149,
+        "count": 50,
         "speed": [
          0.65,
          1.8,
@@ -1005,7 +1027,7 @@
         "parent": null,
         "seed": 507165,
         "enabled": true,
-        "count": 907,
+        "count": 1200,
         "speed": [
          0.45,
          2.9899999999999998,
@@ -1899,7 +1921,7 @@
         "aspect": 1.7999999523162842,
         "spin": 10,
         "twist": 20,
-        "extent": 0.023000000044703484,
+        "extent": 0.012,
         "clusterSize": 24,
         "clusterProbability": 0.800000011920929,
         "clusterWidth": 0.014999999664723873,
@@ -1998,18 +2020,9 @@
      "ramp3": "#fff6dd",
      "headInt": 1,
      "tailInt": 1
-    },
-    "L": {
-     "title": "仙女棒 · 全形态",
-     "lid": "l16l4s",
-     "scale": 1,
-     "delay": 0,
-     "rate": 1,
-     "mirror": false
     }
    }
-  ],
-  "name": "正式资产-仙女棒"
+  ]
  },
  "links": [],
  "ue": {
@@ -2019,7 +2032,7 @@
   ],
   "system": "",
   "tiered": false,
-  "custom": false
+  "custom": true
  },
  "sizeSource": {
   "key": "sparkler_graph",
