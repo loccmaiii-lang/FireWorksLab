@@ -1,7 +1,7 @@
 {
   "格式": "df.dispatch-queue/1",
   "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-19T08:12:53+08:00 烟花编排（22）-本机：用户重开 UE 后补跑 T20 剩余（全部 3.0 行 + 磁盘核）。",
+  "更新": "2026-10-19T20:10:00+08:00 导出（23）：加 T23（仙女棒手机包 Error 87：核实跑的是哪一版导入器、文件入口副本是不是旧的，确认后重新生成副本）",
   "dot 怎么派": [
     "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
     "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
@@ -827,6 +827,36 @@
       "完成": "2026-10-19T02:22:30+08:00",
       "提交": "",
       "结果": "烟花编排（22）-本机 只读读回（2612 次、0 错误，UE 崩溃前完成）：analysis/results/COLOR_BASELINE_20261019/ 标定.json / 标定.md / 色板.png / 看法.md。PC 30、手游 12 个 ResourceId，40 个粒子全是 1 级 LOD。缺：仓库里没有大多数 Ramp / 主图源 PNG，Ramp 取色与按主图推算花径多为「未测」，色板没乘 Ramp 颜色（看法.md 写明）；UE 开着时可只读导出 Ramp 补。"
+    },
+    {
+      "编号": "T23",
+      "看板": "",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 0,
+      "前置": [],
+      "要 UE": "不要（只读 UE 日志文件，不发 UE 请求）",
+      "标题": "只读核实仙女棒手机包 Error 87：19:39 跑的是哪一版导入器；文件入口的导入器副本是不是旧的；核实后按 启动烘焙器.cmd 同样的方式重新生成副本",
+      "为什么": "用户 10-19 19:45：仙女棒（SkyRocketSparkler / Sparkler_Graph）导入仍报 UE Python WindowsError [Error 87]，导入器（5）12:06 已部署独立交付 2.29（证明改 stdin）。19:39 截图日志措辞还是 2.28 的「导入完成 → 导入中止」（2.29 改成「资产写入完成，待交付登记」）。导出（23）推断：用户从文件入口打开烘焙器，交付页加载的是 tool/local_delivery/runtime/importer.html 副本，它只在 启动烘焙器.cmd / tool/build.py 时重新生成（启动全部工具.cmd 不生成），12:06 以后没人重新生成 → 还是 2.28。要证据。",
+      "只许改": [
+        "analysis/results/IMPORT_ERR87_20261019/核实.md（新建）",
+        "analysis/results/IMPORT_ERR87_20261019/核实.json（新建）",
+        "tool/local_delivery/runtime/importer.html（gitignore 的本机副本：只许用第 4 步那条命令重新生成，不许手改）"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T23，按该文件「Codex 共同规则」执行；这条不发任何 UE 请求，只读文件。先读 analysis/probe/导入收尾修复_2.29.md、tool/local_delivery/prepare_local.py、tool/src/js/67_delivery.js 第 83–90 行（文件入口加载 local_delivery/runtime/importer.html，HTTP 入口加载 8034 /delivery-host）。\n\n1. 两份导入器：读 %USERPROFILE%/.fireworkslab/delivery-launcher.json 的 importerPath（应是 D:/FXTools/DFWorkbench/df-fireworks-delivery_locmai.html）。记这个源文件的 sha256、大小、修改时间；记用户工作副本（F:/FireWorksLab，或用户实际打开烘焙器的那份仓库）里 tool/local_delivery/runtime/importer.html 的修改时间、大小。副本是源文件加了两段注入脚本，所以不能直接比 sha：在副本里找源文件里才有的 2.29 标志（例如 proofs-stdin、资产写入完成，待交付登记、deliveryRegistrationOnly、补写交付登记），两份各数一遍，写有 / 没有。\n2. UE 日志（只读文件）：工程 Saved/Logs 下 10-19 当天的日志（含 DeltaForce*.log 及备份），找 19:3x 和 11:31 的「Error 87」前后：UE Python 执行的那段代码（<string> 第 6 行附近）、subprocess 启动的命令——命令里有没有 --proofs（旧）还是 --proofs-stdin（新），命令长度（字符数）。原样摘关键几行（去掉凭据和用户名，证明正文不用贴，只写长度）。\n3. 用户当时从哪个入口打开：看浏览器历史不行就不看；能从 8034 交付服务日志（delivery-server.log）里 19:3x 有没有 /delivery-host 或 /importer 请求判断（有 → HTTP 入口；没有、但有 /directory-transport → 文件入口）。\n4. 如果第 1 步确认副本里没有 2.29 标志：在用户工作副本根目录运行 python -X utf8 tool/local_delivery/launcher.py --no-browser（和双击 启动烘焙器.cmd --no-browser 一样：重新生成副本、复用已在跑的 8034，不开浏览器、不导入），再数一遍副本里的 2.29 标志，应为有。\n5. 原工作台 D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html、tool/烟花编排工作台.html 里有没有同样会把累计记录塞进命令行的 --proofs 调用（只数、只写结论；私有代码不复制进仓库）。\n6. 判定（一句）：A 19:39 跑的是旧副本（2.28），重新生成后就是 2.29；B 19:39 跑的已经是 2.29、命令也是 --proofs-stdin，还是 Error 87（写出那条命令和长度，这就是另一个原因）；C 证据不够（写缺什么）。\n7. 输出 analysis/results/IMPORT_ERR87_20261019/核实.json（{format:'df.import-err87-check/1', readAt, importerSource:{path,sha256,size,mtime,has229}, runtimeCopy:{path,size,mtime,has229Before,has229After}, ueLog:[...], entry, otherCopies:[...], verdict, why}）和 核实.md（第一句写判定；最后一段「给导出（23）」）。\n\n禁止：点检查 / 导入 / 补写登记、发 UE 请求、改私有导入器、改 tool/src、手改副本、把私有代码或凭据写进仓库。",
+      "做完的标准": [
+        "两份导入器的 2.29 标志有 / 没有写清，副本修改时间写清",
+        "UE 日志 11:31、19:3x 两次 Error 87 的启动命令是 --proofs 还是 --proofs-stdin、长度多少",
+        "判定 A / B / C 之一，写依据",
+        "若是 A：副本已重新生成、复数确认有 2.29 标志",
+        "已提交推送，本条写完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
     }
   ],
   "夜班怎么取": [
