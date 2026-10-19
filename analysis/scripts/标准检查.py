@@ -138,7 +138,13 @@ if __name__ == '__main__':
     ap.add_argument('--spark-scales-only', action='store_true', help='分层粒子图整体倍率模型与真实入口/导出检查（需Node Playwright）')
     ap.add_argument('--event-instances-only', action='store_true', help='CPU事件合同与导出门禁回归，不连接UE')
     ap.add_argument('--mobile-export-only', action='store_true', help='手机手动序列冲突提前定位与导出入口回归，不连接UE')
+    ap.add_argument('--delivery-recovery-only', action='store_true', help='导出失败可见恢复、旧服务兼容与单文档导航回归，不连接UE')
     a = ap.parse_args()
+    if a.delivery_recovery_only:
+        for name in ('test_export_failure_state.cjs', 'test_importer_freshness.cjs', 'test_baker_handoff.cjs'):
+            rc = subprocess.call(['node', str(ROOT / 'tool/local_delivery' / name)])
+            if rc: raise SystemExit(rc)
+        raise SystemExit(0)
     if a.graph_framing_only:
         raise SystemExit(subprocess.call(['node', str(HERE / 'graph_framing_contract.cjs')]))
     if a.mobile_export_only:

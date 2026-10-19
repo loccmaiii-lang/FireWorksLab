@@ -1,5 +1,16 @@
 const assert=require('node:assert/strict');const {fixture}=require('./test_baker_handoff.cjs');
 (async()=>{
+ const cold=fixture();await cold.api.beginExport('directory','SkyRocketSparkler');cold.api.exportFailed(Error('连接失败测试'));cold.api.finishExport();
+ await cold.api.open();
+ assert.equal(cold.node('deliveryStatus').dataset.error,'true','首次导出失败后再进入不能把错误隐藏');
+ assert.match(cold.node('deliveryStatus').textContent,/连接失败测试/);
+ assert.equal(cold.node('deliveryBlocked').hidden,false);
+ assert.equal(cold.node('deliveryFrame').inert,true);
+ const offline=fixture({offline:true});
+ await offline.api.beginExport('directory','Offline').catch(e=>offline.api.exportFailed(e));offline.api.finishExport();
+ assert.equal(offline.node('deliveryLoading').hidden,true,'连接失败后不能让加载层挡住恢复面板');
+ assert.equal(offline.node('deliveryBlocked').hidden,false);
+ assert.equal(offline.node('deliveryRetry').hidden,false,'连接未建立时必须直接给重试入口');
  const f=fixture();await f.api.publish(new Blob(['ZIP']),'Test',{});
  f.receipt.name='RiseTrail_Hero';
  await f.api.beginExport('directory','GlitterChry');f.api.exportFailed(Error('名称冲突'));f.api.finishExport();
@@ -7,14 +18,28 @@ const assert=require('node:assert/strict');const {fixture}=require('./test_baker
  assert.match(f.node('deliveryTitle').textContent,/GlitterChry.*未导出/,'失败标题必须是本次目标，不是旧Hero');
  assert.match(f.node('deliveryContext').textContent,/上次成功.*RiseTrail_Hero.*12345678/,'旧资源只显示为上一次成功记录');
  assert.equal(f.node('deliveryFrame').inert,true,'失败旧清单不能误确认或执行');
+ const accepts=f.calls.filter(x=>x.command==='accept').length;
+ await f.api.open();
+ assert.equal(f.node('deliveryStatus').dataset.error,'true','重新进入不能把阻断原因变成隐藏的普通提示');
+ assert.match(f.node('deliveryStatus').textContent,/名称冲突/,'重新进入必须保留真正的错误');
+ assert.equal(f.node('deliveryBlocked').hidden,false,'失败后必须出现恢复面板，不能留下空白');
+ assert.equal(f.calls.filter(x=>x.command==='accept').length,accepts,'失败后重新进入不能自动接入旧修订');
+ await f.node('deliveryRetry').listeners.click();
+ assert.match(f.node('deliveryStatus').textContent,/名称冲突/,'连接重试成功不能抹去导出失败');
+ f.node('deliveryHistory').listeners.click();
+ assert.equal(f.node('deliveryOptions').open,true,'可以明确打开已有交付，仍由用户选择修订');
+ assert.equal(f.node('deliveryFrame').inert,true,'查看历史不能提前解除旧清单门禁');
+
  f.state({busy:false,current:{deliveryId:'known',name:'Test',platform:'pc'}});
  assert.equal(f.node('deliveryFrame').inert,true,'回执刷新不能解除失败门禁');
  assert.match(f.node('deliveryTitle').textContent,/GlitterChry.*未导出/,'旧回执刷新不能盖回旧标题');
  f.recover();assert.equal(f.node('deliveryFrame').hidden,true,'子页面重连不能显示失败后的旧清单');
  await f.api.publish(new Blob(['NEW']),'Test',{});
  assert.equal(f.node('deliveryFrame').inert,false,'本次新交付成功后恢复操作');
+ assert.equal(f.node('deliveryBlocked').hidden,true);
+ assert.equal(f.node('deliveryStatus').dataset.error,'false','新交付成功后清除过期失败提示');
  const receipt=(id,sha)=>({deliveryId:id,name:'Same',revisionId:id,directory:'F:/fixture',files:[{path:'PC/T_Same.png',sha256:sha}],packages:[],thumbnail:{status:'missing'}});
  const latest=fixture({resourceReceipts:[receipt('old','old-sha'),receipt('new','new-sha')]});await latest.api.open();
  assert.equal(latest.api.knownTextures().get('T_Same.png').sha256,'new-sha','同名资源读取最新修订，不能读取最早快照');
- console.log('6 导出失败旧清单隔离、成功恢复与最新指纹检查通过。');
+ console.log('导出失败隔离、冷启动/重新进入/重连、可见恢复与最新指纹检查通过。');
 })().catch(e=>{console.error(e);process.exitCode=1;});

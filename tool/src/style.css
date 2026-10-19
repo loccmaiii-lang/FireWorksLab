@@ -1805,6 +1805,9 @@ header.top .gpu::before{content:none}
 
 .delivery-status-bar{display:flex;align-items:center;min-width:0;border-bottom:1px solid var(--fw-color-divider)}
 .delivery-status-bar .delivery-status{flex:1;min-width:0;border-bottom:0}.delivery-status-bar #deliveryRetry{margin-right:12px;flex-shrink:0}
+.delivery-status-bar .delivery-status[data-error=true]{max-height:min(20vh,120px);overflow:auto;white-space:pre-wrap}
+.delivery-blocked{display:flex;flex-direction:column;align-self:flex-start;width:min(680px,calc(100% - 48px));max-height:calc(100% - 48px);margin:24px;padding:20px;background:var(--fw-color-surface-low);border:1px solid var(--fw-color-outline);border-radius:var(--fw-radius-panel)}
+.delivery-blocked[hidden]{display:none}.delivery-blocked h2{margin-bottom:12px;flex-shrink:0}.delivery-blocked p{min-height:0;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.6}.delivery-recovery{display:flex;flex-wrap:wrap;flex-shrink:0;gap:8px;margin-top:20px}
 
 /* Keep the existing export progress/cancel visible in the destination workspace. */
 #deliveryWorkspace>#busy.busy{position:absolute;inset:0;z-index:5;border-radius:0;background:rgba(6,12,16,.88)}

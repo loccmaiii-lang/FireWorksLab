@@ -6,17 +6,21 @@ const DeliveryWorkspace = (() => {
   let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null,queuedDelivery=null,exportFailedState=false;     // 4.9.69 queuedDelivery：导出了、但导入器还在处理别的（排队中）
   const channel=crypto.randomUUID(),requests=new Map(),acceptChecks=new Map();
   let acceptCheck=null,selectionEpoch=0;
-  let exportName='',exportPrevious=null;
+  let exportName='',exportPrevious=null,exportFailure='';
   const hostOrigin=location.protocol==='file:'?'http://127.0.0.1:8034':location.origin;
   const node=id=>document.getElementById(id);
-  const message=(text,error=false)=>{const n=node('deliveryStatus');n.textContent=text;n.dataset.error=String(error);};
+  // 导出失败会阻断旧清单；连接、导航的普通提示不能把原因变成不可见。
+  const message=(text,error=false)=>{const n=node('deliveryStatus');n.textContent=exportFailedState&&exportFailure?exportFailure:text;n.dataset.error=String(error||exportFailedState);};
   const destination=()=>node('deliveryDestination').value;
   const importLabel=state=>({ready:'检查通过，待确认',conflict:'检查冲突，需处理',error:'检查失败',done:'导入已报告完成',partial:'部分完成',checking:'检查中',queued:'待检查',pending:'待检查',importing:'导入中',stopped:'已停止',saved:'UE 已报告保存'}[state]||'状态待核对');
   function updateRootControls(){
     for(const id of ['deliveryPick','deliverySaveRoot','deliveryDestination','deliveryRoot'])node(id).disabled=importerBusy||busyDelivery||!!exportHome;
     node('deliveryCheck').disabled=importerBusy||exportFailedState||!last||!session?.importerAvailable;
     const blocked=exportFailedState&&!importerBusy;node('deliveryFrame').inert=blocked;
-    if(session)node('deliveryFrame').hidden=blocked||!session.importerAvailable;
+    if(blocked||session)node('deliveryFrame').hidden=blocked||!session.importerAvailable;
+    node('deliveryBlocked').hidden=!blocked;
+    node('deliveryBlockedReason').textContent=exportFailure;
+    node('deliveryHistory').disabled=importerBusy||busyDelivery||!!exportHome;
   }
   function rpc(command,payload={},timeout=10000,watch=null){
     return new Promise((resolve,reject)=>{
@@ -103,7 +107,8 @@ const DeliveryWorkspace = (() => {
       // 4.9.119（用户 10-19 19:45 仙女棒手机包 Error 87「gpt……好像修错地方了」）：文件入口的交付页是本机副本 runtime/importer.html，
       //   导入器修复只部署到源文件时副本还是旧的。服务回报现源文件的戳（旧副本它已重新生成），交付页回报自己加载的戳：不一致 → 重载一次；
       //   还不一致 → 不让导入（会跑修复前的代码），写清怎么修。HTTP 入口服务现读源文件，戳总一致
-      if(staleImporter(session)){hostReady=false;await waitForHost(true);session=await rpc('session',{},15000);if(!staleImporter(session))session.freshNote='交付页的导入器已更新到本机最新版（'+stampText(session.importerSource)+'）。';}
+      // 旧服务不回报来源戳时，旧内存页也可能无戳；先读一次已部署的新副本，再决定是否拦下。
+      if(localUI&&(staleImporter(session)||(!importerBusy&&!session.loadedImporter?.sha256))){hostReady=false;await waitForHost(true);session=await rpc('session',{},15000);if(!staleImporter(session)&&session.loadedImporter?.sha256)session.freshNote=session.importerSource?'交付页的导入器已更新到本机最新版（'+stampText(session.importerSource)+'）。':'交付页已重新加载本机导入器（'+stampText(session.loadedImporter)+'）。';}
       if(staleImporter(session)){session.staleImporter=true;session.importerAvailable=false;}
       else if(localUI&&!session.importerSource&&!session.loadedImporter){session.staleImporter='nostamp';session.importerAvailable=false;}     // 4.9.119 以前生成的副本没有戳、旧服务也不回报：确认不了，按旧的拦
       node('deliveryRoot').value=session.outputRoot||'';node('deliveryFrame').hidden=!session.importerAvailable;
@@ -148,14 +153,18 @@ const DeliveryWorkspace = (() => {
   }
   function exportFailed(error){
     stopAcceptObservation();
-    if(!exportHome)return;exportFailedState=true;updateRootControls();
+    if(!exportHome)return;exportFailedState=true;node('deliveryLoading').hidden=true;
+    if(!hostReady||!session||session.directoryError||session.staleImporter)node('deliveryRetry').hidden=false;
+    exportFailure=(exportName?'「'+exportName+'」':'')+'本次未导出；'+(exportPrevious?'上次成功为「'+exportPrevious.name+'」，旧修订 '+exportPrevious.revisionId.slice(0,8)+'。':'当前没有新的成功修订。')+'旧清单已停止确认与执行。请修正后重新导出，或在历史中明确选择要查看的修订。\n'+error.message;
+    updateRootControls();
     presentExportFailure();
-    message((exportName?'「'+exportName+'」':'')+'本次未导出；'+(exportPrevious?'上次成功为「'+exportPrevious.name+'」，旧修订 '+exportPrevious.revisionId.slice(0,8)+'。':'当前没有新的成功修订。')+'旧清单已停止确认与执行。请修正后重新导出，或在历史中明确选择要查看的修订。\n'+error.message,true);
+    message(exportFailure,true);
   }
   function presentExportFailure(){
     node('deliveryTitle').textContent=(exportName||'本次导出')+' · 本次未导出';
     node('deliveryContext').textContent=exportPrevious?'上次成功：「'+exportPrevious.name+'」 · 修订 '+exportPrevious.revisionId.slice(0,8):'尚无本次成功交付';
     node('deliveryThumbnail').hidden=true;node('deliveryThumbnailMissing').hidden=true;
+    message(exportFailure,true);
   }
   function finishExport(){
     if(exportHome){exportHome.parent?.insertBefore(node('busy'),exportHome.next);exportHome=null;}
@@ -164,7 +173,8 @@ const DeliveryWorkspace = (() => {
   async function prepare(){
     if(prepared)return;if(preparing)return preparing;
     preparing=(async()=>{
-      await connect();if(session.directoryError)throw Error(session.directoryError);await refresh();
+      await connect();if(exportFailedState){presentExportFailure();return;}
+      if(session.directoryError)throw Error(session.directoryError);await refresh();
       const remembered=!last&&resources.find(r=>r.deliveryId===importerCurrent?.deliveryId);
       if(remembered&&!importerBusy)await select(remembered);
       else if(!last&&!importerCurrent&&resources.length)await select(resources[resources.length-1]);
@@ -177,7 +187,7 @@ const DeliveryWorkspace = (() => {
   }
   async function open(){
     show(true);if(!prepared)message('正在恢复资源与导入工作区…');
-    try{await prepare();if(active&&session.importerAvailable)await rpc('focus.restore');}catch(e){connectionError(e);}
+    try{await prepare();if(active&&!exportFailedState&&session.importerAvailable)await rpc('focus.restore');}catch(e){connectionError(e);}
   }
   async function refresh(){if(acceptCheck?.waiting&&currentCheck(acceptCheck))return readAcceptStatus(acceptCheck);resources=(await rpc('resources')).resources;if(importerCurrent)presentCurrent();render();}
   function render() {
@@ -205,12 +215,14 @@ const DeliveryWorkspace = (() => {
     node('deliveryCheck').disabled = importerBusy || exportFailedState || !session?.importerAvailable;
   }
   async function select(receipt) {
+    await connect();
+    if(!session.importerAvailable)throw Error(session.staleImporter?staleText(session):'本机导入工作区尚未就绪，请先重试连接。');
     stopAcceptObservation();const epoch=++selectionEpoch;
     const previous=last;desiredDeliveryId=receipt.deliveryId;last=receipt;
     const result=await sendToImporter();
     if(epoch!==selectionEpoch||result?.stale)return result;
     if(result?.queued||result?.failed){desiredDeliveryId='';last=previous;presentCurrent();render();}
-    else {exportFailedState=false;updateRootControls();presentReceipt(receipt);}
+    else {const recovered=exportFailedState;exportFailedState=false;exportFailure='';updateRootControls();presentReceipt(receipt);if(recovered)message('已接入所选修订。核对名称与处理方式后确认导入。');}
   }
   function presentCurrent() {
     if(exportFailedState){presentExportFailure();return;}
@@ -278,6 +290,8 @@ const DeliveryWorkspace = (() => {
     node('deliveryWorkspace').addEventListener('keydown',e=>e.stopPropagation());
     document.querySelector('.delivery-nav').addEventListener('keydown',e=>{if(active)e.stopPropagation();});
     node('deliveryOpen').addEventListener('click',open);node('deliveryMake').addEventListener('click',()=>show(false));
+    node('deliveryReturn').addEventListener('click',()=>show(false));
+    node('deliveryHistory').addEventListener('click',()=>{node('deliveryOptions').open=true;node('deliveryRefresh').focus({preventScroll:true});refresh().catch(connectionError);});
     node('deliveryRetry').addEventListener('click',async()=>{
       const button=node('deliveryRetry');button.disabled=true;message('正在重新连接本机交付服务…');
       try{await connect(true);if(!prepared)await prepare();else message('本机交付服务已连接，当前清单与操作记录保留。');}

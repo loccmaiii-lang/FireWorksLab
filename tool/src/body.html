@@ -18,7 +18,7 @@
       </div></details>
     </div>
     <div class="delivery-status-bar"><p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite">首次使用请选择资源导出目录。</p><button id="deliveryRetry" class="btn ghost" type="button" hidden>重试连接</button></div>
-    <div class="delivery-content"><p id="deliveryLoading" role="status">正在准备导入工作区…</p><p id="deliveryImporterMissing" hidden>本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
+    <div class="delivery-content"><p id="deliveryLoading" role="status">正在准备导入工作区…</p><p id="deliveryImporterMissing" hidden>本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><div id="deliveryBlocked" class="delivery-blocked" hidden><h2>本次未导出，导入尚未开始</h2><p id="deliveryBlockedReason"></p><div class="delivery-recovery"><button id="deliveryReturn" class="btn primary" type="button">返回效果制作</button><button id="deliveryHistory" class="btn ghost" type="button">查看已有交付</button></div></div><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
   </section>
   <main id="main">
     <aside class="side" id="side" aria-label="库">

@@ -50,5 +50,10 @@ function fixture({protocol='file:',loaded=[OLD,NEW],service=NEW,slow=0}={}){
   f=fixture({loaded:[OLD,NEW],slow:30});for(let i=0;i<100&&!f.calls.some(x=>x.resp==='session'&&x.page===1);i++)await new Promise(r=>setTimeout(r,5));await new Promise(r=>setTimeout(r,5));await f.api.open();
   const seq=f.calls.filter(x=>x.page===2||x.resp).map(x=>x.command?'req:'+x.command+'@'+x.page:'resp:'+x.resp+'@'+x.page);
   const iReq=seq.indexOf('req:resources@2'),iSess=seq.indexOf('resp:session@2');assert(iSess>=0&&iReq>iSess,'新页回会话以前就问了资源：'+seq.join(' '));console.log('PASS concurrent connect waits for the reload');
-  console.log('8 importer freshness contracts passed.');
+  // 9 旧服务不能回报戳，但磁盘副本已更新：第一次旧页面无戳，仍须自动重载一次读取新副本。
+  f=fixture({loaded:[null,NEW],service:null});await f.api.open();
+  assert.equal(f.loads(),2,'无戳的旧内存页面也须尝试刷新副本，不能只叫用户反复重试');
+  assert.equal(f.node('deliveryFrame').hidden,false);assert.notEqual(f.node('deliveryStatus').dataset.error,'true');
+  console.log('PASS an unstamped loaded page recovers against an old service after one reload');
+  console.log('9 importer freshness contracts passed.');
 })().catch(e=>{console.error(e);process.exitCode=1});

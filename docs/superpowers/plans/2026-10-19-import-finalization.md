@@ -63,7 +63,7 @@
 **Goal:** 导出/连接失败后仍有可见原因与恢复入口，不把旧修订当本次导入。
 **Architecture:** 保留既有iframe和目录协议；错误状态与当前修订单独保存，导航/刷新不能覆盖阻断原因。阻断页明确返回制作、查看已有交付、重试连接；仅明确选择已有修订才恢复该清单。
 
-- [ ] 在tool/local_delivery/test_baker_handoff.cjs或邻近检查补失败再进入/重试/历史显式选择合同，先确认119失败。
-- [ ] 67_delivery.js保存exportFailure；阻断状态统一呈现，不被prepare/连接消息覆盖。body.html与style.css只补可见恢复面板，沿用现有token。
-- [ ] HTTP8034隔离Chrome读取当前成品与真实私有导入器，模拟目录/UE响应，检查画面、错误原因、恢复与PC/手机入口；不访问file或用户存档。
+- [x] 在tool/local_delivery/test_baker_handoff.cjs或邻近检查补失败再进入/重试/历史显式选择合同，先确认119失败。
+- [x] 67_delivery.js保存exportFailure；阻断状态统一呈现，不被prepare/连接消息覆盖。body.html与style.css只补可见恢复面板，沿用现有token。
+- [x] HTTP8034隔离Chrome读取当前成品与真实私有导入器，模拟目录/UE响应，检查画面、错误原因、恢复与PC/手机入口；不访问file或用户存档。
 - [ ] 版本4.9.120、CHANGELOG、build；正常合入门禁与白名单提交推送，不提交他方改动。
