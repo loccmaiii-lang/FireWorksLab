@@ -1,11 +1,11 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmv9h8webs6bnz",
- "tool": "4.9.105",
+ "tool": "4.9.119",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmv9h8webs6bnz",
  "name": "正式资产-窜天猴尾焰-粒子",
- "at": "2026-10-15 21:29",
+ "at": "2026-10-19 23:31",
  "base": "我的效果",
  "from": {
   "key": "ef:rocket_graph",
@@ -1966,7 +1966,11 @@
       "scaleLife": 1.5,
       "scaleCount": 0.6,
       "scaleGain": 1,
-      "scaleWidth": 0.7
+      "scaleWidth": 0.7,
+      "fieldTurbulence": 35,
+      "fieldWindY": -1,
+      "fieldWindX": 1,
+      "fieldCycles": 5
      },
      "type": "sparkgraph",
      "graphSolo": null
