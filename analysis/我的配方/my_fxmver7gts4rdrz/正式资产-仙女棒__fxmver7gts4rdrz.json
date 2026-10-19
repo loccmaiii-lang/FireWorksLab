@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmver7gts4rdrz",
  "name": "正式资产-仙女棒",
- "at": "2026-10-19 19:29",
+ "at": "2026-10-19 19:35",
  "base": "我的效果",
  "from": {
   "key": "ef:sparkler_graph",
@@ -712,8 +712,8 @@
         "enabled": true,
         "count": 12800,
         "speed": [
-         0.2,
-         3.6399999999999997,
+         0.8,
+         4.64,
          2.3
         ],
         "life": [
@@ -1455,7 +1455,7 @@
         "parent": null,
         "seed": 512393,
         "enabled": true,
-        "count": 213,
+        "count": 500,
         "speed": [
          0.55,
          1.6,
@@ -1497,7 +1497,7 @@
         "aspect": 6,
         "spin": 25,
         "twist": 80,
-        "extent": 0.00016500000492669642,
+        "extent": 0.1,
         "clusterSize": 2,
         "clusterProbability": 0.75,
         "clusterWidth": 0.014999999664723873,
@@ -2026,11 +2026,11 @@
  },
  "links": [],
  "ue": {
-  "base": "Sparkler_Graph",
+  "base": "SkyRocketSparkler",
   "layers": [
-   ""
+   "Sparkler"
   ],
-  "system": "",
+  "system": "SkyRocketSparkler",
   "tiered": false,
   "custom": true
  },
