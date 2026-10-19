@@ -42,6 +42,9 @@ function makeGraphRenderer(P){const graph=SparkGraph.build(P.sparkGraph);graphIn
  gl.uniform4fv(pr.u.uView,view);gl.uniform2f(pr.u.uResolution,ppm*view[2]*2,(PPMY||ppm)*view[3]*2);gl.uniform1f(pr.u.uW,w);gl.uniform4fv(pr.u.uChan,[1,0,0,0]);gl.drawArraysInstanced(gl.TRIANGLES,0,6,g.data.length/11);return g.data.length/11;},dispose(){}
 };}
 function graphPlan(P){const b=P.sparkGraph.bounds,pl=loopPlan(P,b,P.sparkGraph.period),F=pl.L.F;
+ // 四边是实际固定矩形；横向偏心通过Pivot锚回喷口，不再取较大一侧强制对称。
+ // 保留loopPlan供其它循环效果使用，对称旧范围的计算顺序和像素不变。
+ pl.cx=(b[0]+b[1])/2;pl.HX=(b[1]-b[0])/2*1.02;pl.Ww=2*pl.HX;pl.ppm=pl.L.cellW/pl.Ww;pl.px=(pl.HX-pl.cx)/pl.Ww;
  // 帧号略过整数边界，避免30fps时浮点误差重复/跳帧；末帧保留平台，不越过F。
  pl.keys=F>1?[[0,.02],[(F-1)/F,F-1+.02],[1,F-.01]]:[[0,0],[1,0]];pl.frameTiming='loop-tick-start';return pl;}
 async function bakeGraph(P,scale,onProg){const R=makeGraphRenderer(P);try{const b=await bakeFrames(P,scale,onProg,graphPlan(P),R);b.P=P;b.form='loop';b.meta.ground=true;return b;}finally{R.dispose();}}

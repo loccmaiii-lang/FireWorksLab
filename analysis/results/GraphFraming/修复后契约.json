@@ -1,0 +1,353 @@
+{
+  "format": "fwl.graph-framing-contract/1",
+  "at": "2026-10-19T01:55:22.505Z",
+  "mode": "fixed",
+  "url": "http://127.0.0.1:8034/baker?fast",
+  "contractPass": true,
+  "expectationPass": true,
+  "preflight": {
+    "code": 0,
+    "stdout": "复用 http://127.0.0.1:8034/baker · 根目录 F:\\FireWorksLab\\tool",
+    "stderr": ""
+  },
+  "gitHead": "cd525fb0b98fdbfd8d1cd8072261f81b172e518c",
+  "documentSHA256": "e8fad4ebb13e315f7d9eb1c7405dc26bdd2683c9e797878773270194d8520231",
+  "result": {
+    "version": "4.9.118",
+    "checks": [
+      {
+        "id": "asymmetric-plan",
+        "pass": true,
+        "evidence": {
+          "width": 8.16,
+          "height": 5.1,
+          "center": [
+            2,
+            -1.5
+          ],
+          "rectangle": [
+            -2.08,
+            6.08,
+            -4.05,
+            1.0499999999999998
+          ]
+        }
+      },
+      {
+        "id": "edge-left",
+        "pass": true,
+        "evidence": {
+          "bounds": [
+            -1.75,
+            6,
+            -4,
+            1
+          ],
+          "center": [
+            2.125,
+            -1.5
+          ],
+          "rectangle": [
+            -1.8275000000000001,
+            6.077500000000001,
+            -4.05,
+            1.0499999999999998
+          ]
+        }
+      },
+      {
+        "id": "edge-right",
+        "pass": true,
+        "evidence": {
+          "bounds": [
+            -2,
+            6.25,
+            -4,
+            1
+          ],
+          "center": [
+            2.125,
+            -1.5
+          ],
+          "rectangle": [
+            -2.0825000000000005,
+            6.3325000000000005,
+            -4.05,
+            1.0499999999999998
+          ]
+        }
+      },
+      {
+        "id": "edge-bottom",
+        "pass": true,
+        "evidence": {
+          "bounds": [
+            -2,
+            6,
+            -3.75,
+            1
+          ],
+          "center": [
+            2,
+            -1.375
+          ],
+          "rectangle": [
+            -2.08,
+            6.08,
+            -3.7975,
+            1.0474999999999999
+          ]
+        }
+      },
+      {
+        "id": "edge-top",
+        "pass": true,
+        "evidence": {
+          "bounds": [
+            -2,
+            6,
+            -4,
+            1.25
+          ],
+          "center": [
+            2,
+            -1.375
+          ],
+          "rectangle": [
+            -2.08,
+            6.08,
+            -4.0525,
+            1.3025000000000002
+          ]
+        }
+      },
+      {
+        "id": "symmetric-compatibility",
+        "pass": true,
+        "evidence": {
+          "center": [
+            0,
+            -8
+          ],
+          "width": 14.280000000000001,
+          "height": 20.4,
+          "fields": 25
+        }
+      },
+      {
+        "id": "live-and-engine-plan",
+        "pass": true,
+        "evidence": {
+          "liveView": [
+            2,
+            -1.5,
+            4.08,
+            2.55
+          ],
+          "engineRectangle": [
+            -2.08,
+            -4.05,
+            6.08,
+            1.0499999999999998
+          ]
+        }
+      },
+      {
+        "id": "actual-bake-view",
+        "pass": true,
+        "evidence": {
+          "pixelProbe": "16x16, one frame, instrumented draw",
+          "views": [
+            [
+              2,
+              -1.5,
+              4.08,
+              2.55
+            ]
+          ]
+        }
+      },
+      {
+        "id": "cascade-nozzle-reconstruction",
+        "pass": true,
+        "evidence": {
+          "pivot": [
+            -0.2549,
+            -0.2059
+          ],
+          "sizeCm": [
+            816,
+            510,
+            1
+          ],
+          "locationCm": [
+            0,
+            0,
+            0
+          ],
+          "reconstructedCenterM": [
+            2.000016,
+            -1.49991
+          ],
+          "loops": 0,
+          "localSpace": true
+        }
+      },
+      {
+        "id": "cascade-manual-panel-pivot",
+        "pass": true,
+        "evidence": [
+          {
+            "bounds": [
+              -4,
+              4,
+              -2,
+              2
+            ],
+            "internalPivot": [
+              -0.5,
+              -0.5
+            ],
+            "wantedPanel": [
+              0,
+              0
+            ],
+            "masterPanel": [
+              0,
+              0
+            ],
+            "loopPanel": [
+              0,
+              0
+            ]
+          },
+          {
+            "bounds": [
+              -4,
+              4,
+              -4,
+              1
+            ],
+            "internalPivot": [
+              -0.5,
+              -0.2059
+            ],
+            "wantedPanel": [
+              0,
+              0.29410000000000003
+            ],
+            "masterPanel": [
+              0,
+              0.294118
+            ],
+            "loopPanel": [
+              0,
+              0.294118
+            ]
+          },
+          {
+            "bounds": [
+              -2,
+              6,
+              -4,
+              1
+            ],
+            "internalPivot": [
+              -0.2549,
+              -0.2059
+            ],
+            "wantedPanel": [
+              0.24509999999999998,
+              0.29410000000000003
+            ],
+            "masterPanel": [
+              0.245098,
+              0.294118
+            ],
+            "loopPanel": [
+              0.245098,
+              0.294118
+            ]
+          }
+        ]
+      },
+      {
+        "id": "signature-size",
+        "pass": true,
+        "evidence": {
+          "before": "dd0579a3",
+          "after": "74de814c"
+        }
+      },
+      {
+        "id": "signature-location",
+        "pass": true,
+        "evidence": {
+          "before": "dd0579a3",
+          "after": "ab815f94"
+        }
+      },
+      {
+        "id": "signature-pivot",
+        "pass": true,
+        "evidence": {
+          "before": "dd0579a3",
+          "after": "94a3ece6"
+        }
+      },
+      {
+        "id": "signature-color-pixels-neutral",
+        "pass": true,
+        "evidence": {
+          "signature": "dd0579a3"
+        }
+      },
+      {
+        "id": "ui-edge-0",
+        "pass": true,
+        "evidence": {
+          "key": "sparkGraph.bounds.0",
+          "label": "左边界",
+          "emitter": "输出",
+          "module": "取景"
+        }
+      },
+      {
+        "id": "ui-edge-1",
+        "pass": true,
+        "evidence": {
+          "key": "sparkGraph.bounds.1",
+          "label": "右边界",
+          "emitter": "输出",
+          "module": "取景"
+        }
+      },
+      {
+        "id": "ui-edge-2",
+        "pass": true,
+        "evidence": {
+          "key": "sparkGraph.bounds.2",
+          "label": "下边界",
+          "emitter": "输出",
+          "module": "取景"
+        }
+      },
+      {
+        "id": "ui-edge-3",
+        "pass": true,
+        "evidence": {
+          "key": "sparkGraph.bounds.3",
+          "label": "上边界",
+          "emitter": "输出",
+          "module": "取景"
+        }
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "pass": 18,
+      "fail": []
+    }
+  },
+  "pageErrors": []
+}

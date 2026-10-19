@@ -1,0 +1,233 @@
+{
+  "effects": {
+    "SGR1": {
+      "changedKeys": [
+        "P.sparkGraph.bounds"
+      ],
+      "oldBounds": [
+        -7,
+        7,
+        -18,
+        2
+      ],
+      "newBounds": [
+        -5.36,
+        5.75,
+        -18,
+        0.85
+      ],
+      "quadAreaReduction": 0.25205892857142853,
+      "platforms": {
+        "PC": {
+          "frames": 64,
+          "cellPx": [
+            512,
+            512
+          ],
+          "sizeM": [
+            11.332,
+            19.227
+          ],
+          "centerM": [
+            0.19491039999999996,
+            -8.575242000000001
+          ],
+          "pivotJSON": [
+            -0.4828,
+            -0.054
+          ],
+          "pivotPanel": [
+            0.0172,
+            0.446
+          ],
+          "centerErrorM": 0.00024200000000185184,
+          "pass": true
+        },
+        "手机": {
+          "frames": 64,
+          "cellPx": [
+            256,
+            256
+          ],
+          "sizeM": [
+            11.332,
+            19.227
+          ],
+          "centerM": [
+            0.19491039999999996,
+            -8.575242000000001
+          ],
+          "pivotJSON": [
+            -0.4828,
+            -0.054
+          ],
+          "pivotPanel": [
+            0.0172,
+            0.446
+          ],
+          "centerErrorM": 0.00024200000000185184,
+          "pass": true
+        }
+      }
+    },
+    "SGS1": {
+      "changedKeys": [
+        "P.sparkGraph.bounds"
+      ],
+      "oldBounds": [
+        -0.5,
+        0.5,
+        -0.65,
+        0.35
+      ],
+      "newBounds": [
+        -0.47,
+        0.46,
+        -0.5,
+        0.29
+      ],
+      "quadAreaReduction": 0.2653,
+      "platforms": {
+        "PC": {
+          "frames": 64,
+          "cellPx": [
+            512,
+            512
+          ],
+          "sizeM": [
+            0.9490000000000001,
+            0.8059999999999999
+          ],
+          "centerM": [
+            -0.005029699999999974,
+            -0.10502180000000001
+          ],
+          "pivotJSON": [
+            -0.5053,
+            -0.3697
+          ],
+          "pivotPanel": [
+            -0.0053,
+            0.1303
+          ],
+          "centerErrorM": 2.969999999999709e-05,
+          "pass": true
+        },
+        "手机": {
+          "frames": 64,
+          "cellPx": [
+            256,
+            256
+          ],
+          "sizeM": [
+            0.9490000000000001,
+            0.8059999999999999
+          ],
+          "centerM": [
+            -0.005029699999999974,
+            -0.10502180000000001
+          ],
+          "pivotJSON": [
+            -0.5053,
+            -0.3697
+          ],
+          "pivotPanel": [
+            -0.0053,
+            0.1303
+          ],
+          "centerErrorM": 2.969999999999709e-05,
+          "pass": true
+        }
+      }
+    },
+    "SGRS1": {
+      "changedKeys": [
+        "P.sparkGraph.bounds"
+      ],
+      "oldBounds": [
+        -7,
+        7,
+        -18,
+        2
+      ],
+      "newBounds": [
+        -3.74,
+        3.85,
+        -15.89,
+        1.33
+      ],
+      "quadAreaReduction": 0.533215,
+      "platforms": {
+        "PC": {
+          "frames": 64,
+          "cellPx": [
+            512,
+            512
+          ],
+          "sizeM": [
+            7.742000000000001,
+            17.564
+          ],
+          "centerM": [
+            0.05496819999999997,
+            -7.280277999999999
+          ],
+          "pivotJSON": [
+            -0.4929,
+            -0.0855
+          ],
+          "pivotPanel": [
+            0.0071,
+            0.4145
+          ],
+          "centerErrorM": 0.00027799999999889025,
+          "pass": true
+        },
+        "手机": {
+          "frames": 64,
+          "cellPx": [
+            256,
+            256
+          ],
+          "sizeM": [
+            7.742000000000001,
+            17.564
+          ],
+          "centerM": [
+            0.05496819999999997,
+            -7.280277999999999
+          ],
+          "pivotJSON": [
+            -0.4929,
+            -0.0855
+          ],
+          "pivotPanel": [
+            0.0071,
+            0.4145
+          ],
+          "centerErrorM": 0.00027799999999889025,
+          "pass": true
+        }
+      }
+    }
+  },
+  "userOriginals": [
+    {
+      "file": "analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json",
+      "sha256": "d9f8de5cc7de212e866650c7f4ae2b6d28b3ed70ff14902f337005ecfe65bc11",
+      "unchanged": true
+    },
+    {
+      "file": "analysis/我的配方/my_fxmv9h8webs6bnz/正式资产-窜天猴尾焰-粒子__fxmv9h8webs6bnz.json",
+      "sha256": "74a817b97cbc37bb2cfe3961ef942de6343860b10c7c62b6713d7e49563fe65f",
+      "unchanged": true
+    },
+    {
+      "file": "analysis/我的配方/my_fxrockettailsoft20261018/正式资产-窜天猴尾焰-柔光暗底__fxrockettailsoft20261018.json",
+      "sha256": "e302796ce08e4688dd734e704cd645bdaad024694990d47a234030e62e269576",
+      "unchanged": true
+    }
+  ],
+  "UE实播": false,
+  "note": "面片面积减少不等于纹理内存减少或实测GPU收益；固定格子与帧数不变。"
+}

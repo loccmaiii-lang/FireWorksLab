@@ -1,0 +1,27 @@
+{
+  "effect": "sparkler_graph",
+  "entry": "SGS1",
+  "ver": "c6f38fb9·graph4.9.118+loop4.9.106",
+  "version": "4.9.118",
+  "time": "2026-10-19T09:57:09",
+  "dir": "analysis/local/输出/取景修复_20261019/Sparkler_Graph",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_Sparkler_Graph",
+      "replica": "SGS1",
+      "sha256": "e1e833828be92d7770cc6e2935e3af5bfb9d4e546b389f1f60cbaddd0a54fc1d"
+    }
+  ],
+  "platforms": [
+    "PC",
+    "手机"
+  ],
+  "params": "analysis/results/GraphFraming/SGS1/candidate/导出核对.json",
+  "bounds": [
+    -0.47,
+    0.46,
+    -0.5,
+    0.29
+  ],
+  "UE实播": false
+}

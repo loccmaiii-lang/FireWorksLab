@@ -6,7 +6,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-18",
 "name": "仙女棒 · 13层全形态",
-"note": "4.9.114运动修订，原SGS1快照在归档；不是物理标定。镜头开关按资源保存，景深烘入贴图；未经UE实播。",
+"note": "4.9.114运动修订，原SGS1快照在归档；不是物理标定。镜头开关按资源保存，景深烘入贴图；未经UE实播。 4.9.118：仅收紧整周期固定取景，四边在输出→取景；运动/快门/颜色不改，喷口锚点同步；取景改变须完整更新发射器，UE未实播。",
 "look": [
 "正常速度看短慢点与快长丝交替，保留不等间隔爆发。",
 "整体调整与分叉调整都默认1；分叉寿命延长飞行，分叉角度另调。",
@@ -15,8 +15,18 @@ var FW_REVIEW = [
 "opinion": null,
 "tags": "仙女棒 窜天猴 火星 分叉 分层 循环",
 "doc": null,
-"imagesTitle": null,
+"imagesTitle": "固定取景收紧前后；上排物理大小一致，下排观察单格利用率",
 "principle": true,
+"images": [
+[
+"../analysis/results/GraphFraming/SGS1-PC-前后对照.jpg",
+"PC：同米制范围与单格利用率（4.9.118实包）"
+],
+[
+"../analysis/results/GraphFraming/SGS1-手机-前后对照.jpg",
+"手机：同米制范围与单格利用率（4.9.118实包）"
+]
+],
 "base": "sparkgraph",
 "p": {
 "renderVer": 40,
@@ -543,10 +553,10 @@ var FW_REVIEW = [
 "name": "仙女棒 · 快慢火星与轻气流",
 "period": 2.1333333333333333,
 "bounds": [
+-0.47,
+0.46,
 -0.5,
-0.5,
--0.65,
-0.35
+0.29
 ],
 "bursts": [
 [
@@ -1988,7 +1998,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "b6ca8de3"
+"ver": "c6f38fb9"
 },
 {
 "id": "SGRS1",
@@ -1996,7 +2006,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-18",
 "name": "窜天猴尾焰 · 柔光暗底",
-"note": "光晕散射近似；暗底为低能量加法，不遮光。来源正式资产-窜天猴尾焰；PC/手机及叠加内部核对，UE三层未实播。",
+"note": "光晕散射近似；暗底为低能量加法，不遮光。来源正式资产-窜天猴尾焰；PC/手机及叠加内部核对，UE三层未实播。 4.9.118：仅收紧整周期固定取景，四边在输出→取景；运动/快门/颜色不改，喷口锚点同步；取景改变须完整更新发射器，UE未实播。",
 "look": [
 "柔层单独看只有暖色软光，主体叠加后保留亮芯与细丝。",
 "与主体共用起播时刻、播放速率、位置和轴锁；不要分别随机循环相位。",
@@ -2005,12 +2015,16 @@ var FW_REVIEW = [
 "opinion": null,
 "tags": "窜天猴 尾焰 柔光 暗底 虚化 分层",
 "doc": null,
-"imagesTitle": "同相位、同面片尺寸的叠加对照",
+"imagesTitle": "固定取景收紧前后；上排物理大小一致，下排观察单格利用率",
 "principle": true,
 "images": [
 [
-"../analysis/results/RocketSoft/PC-叠加对照.png",
-"主体 / 柔光暗底 / 两层叠加（真实PC素材包）"
+"../analysis/results/GraphFraming/SGRS1-PC-前后对照.jpg",
+"PC：同米制范围与单格利用率（4.9.118实包）"
+],
+[
+"../analysis/results/GraphFraming/SGRS1-手机-前后对照.jpg",
+"手机：同米制范围与单格利用率（4.9.118实包）"
 ]
 ],
 "base": "sparkgraph",
@@ -2553,10 +2567,10 @@ var FW_REVIEW = [
 "name": "窜天猴尾焰 · 柔光暗底",
 "period": 2.1333333333333333,
 "bounds": [
--7,
-7,
--18,
-2
+-3.74,
+3.85,
+-15.89,
+1.33
 ],
 "bursts": [
 [
@@ -3955,7 +3969,7 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbSim": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDxmiiirEFFFFABRRRQAUUUUAFFFKqljgDNACUUrKVOCMUlABRRRQAUUUUAFFFFABRRRQAtFFFABRRRQAUUUUAFFFFABW74PtY7rV4kmAKdwawq6LwY/l6hvI6CsMS2qUrG+HSdVXGeNLaK11d0gUBeoxWBXReMmE2oFxXO0Ya7pRuGIVqrCiiitzAKKKKACiiigAooooAWiiigAooooAKKKKACiiigArf8NuIS7nqeBWD3AFamm7srg45rGurwsb0Hadx2tuzSMzdzxWSw4DDvWzq0TPD5hI4NY2TjFFD4NAr/ABiUUUVsYBRRRQAUUUUAFFFFABRS0UAJRS0UAJRS0UAJRS0qAFgD60AIOtbFsoWBcHnGay3UCTA6VsQW2613+YAVH3SeTWFZqyOiindkdySbJ8gkk8e1ZO3dtA78VfunYKFwcVQ3EEe1VSVkTVabEZSrEHtTae53MW9abWpixKKWigBKKWigBKKWigAopaKAEopaKAEopaKAEpaKKAHfeIJ9a1oWzMFPAK1mwIX+VQCSatruEgO4AjgH0rGprob09NR18jhQCPpVRkiEJYsfM9K05HJzGxEhxnPes+9i2sCqkcfNU030KqLqU6KUjmiug5hKKWigBKKWigBKKWigAooopgFFFFABRRRQAUUUUAOVipyDirKsWVSTzmqlPDHipauVGVizJI8LB1Iqs8jyHLMTQ7bjyaaetKMUhylcSiiirICiiigAooooAKKKKACilooASilooASilooASilooABQaKc4XPyE496QDTSUtFMBKKWigBKKWigBKKWigBKKWigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAWiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAopaKAEopaKAEopaKAEopaKAEopaKAEopaKAEopaKAEopaKAEopaKAEopaKAP/2Q==",
-"ver": "9d67fc02"
+"ver": "fd0bcba9"
 },
 {
 "id": "JMBV-A",
@@ -18260,7 +18274,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-14",
 "name": "窜天猴尾焰 · 分层短促喷射",
-"note": "镜头设置烘入贴图，不随UE相机重算；两开关按资源保存，旧资产默认关闭。",
+"note": "镜头设置烘入贴图，不随UE相机重算；两开关按资源保存，旧资产默认关闭。 4.9.118：仅收紧整周期固定取景，四边在输出→取景；运动/快门/颜色不改，喷口锚点同步；取景改变须完整更新发射器，UE未实播。",
 "look": [
 "近喷口保留锥形扩散，中段向轴线收束，再随连续气流向下弯动。",
 "13层形态、亲子分叉与短促爆发保留；场与镜头成像均可关闭。"
@@ -18268,8 +18282,18 @@ var FW_REVIEW = [
 "opinion": null,
 "tags": "仙女棒 窜天猴 火星 分叉 分层 循环",
 "doc": null,
-"imagesTitle": null,
+"imagesTitle": "固定取景收紧前后；上排物理大小一致，下排观察单格利用率",
 "principle": true,
+"images": [
+[
+"../analysis/results/GraphFraming/SGR1-PC-前后对照.jpg",
+"PC：同米制范围与单格利用率（4.9.118实包）"
+],
+[
+"../analysis/results/GraphFraming/SGR1-手机-前后对照.jpg",
+"手机：同米制范围与单格利用率（4.9.118实包）"
+]
+],
 "base": "sparkgraph",
 "p": {
 "renderVer": 40,
@@ -18796,10 +18820,10 @@ var FW_REVIEW = [
 "name": "窜天猴 · 短促喷射尾焰",
 "period": 2.1333333333333333,
 "bounds": [
--7,
-7,
+-5.36,
+5.75,
 -18,
-2
+0.85
 ],
 "bursts": [
 [
@@ -20229,7 +20253,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "609bae26"
+"ver": "79964198"
 },
 {
 "id": "CS3C-T",
@@ -63538,18 +63562,18 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "【导出（23）2026-10-15 烘焙器 4.9.106】产物形态登记表：分层粒子图（地面循环）贴图名改成 T_EFX_FireWorks_<英文名>_…、交付清单产物表手机能选「序列 / 不出」、包内文件列全；画面不变。用户 20:53 的「正式资产-窜天猴尾焰-粒子」（RocketDot）要重新导出一次（旧修订 dc97b485 名字错、手机包 Ramp 资产名被导入器拒收）。本机重导 NFE-SGR1-G106 / NFE-SGS1-G106 + 全程回放 NFR-SG-G106 + 标准检查 NFS-SG-G106 已排。 ｜ 4.9.105增加分层粒子图/整体调整五项倍率，缺省1保持原样；用户可在自己的存档上调。报告analysis/results/SparkScales/看法.md；本轮用户已正面评价全局气流，新倍率待试用。此前记录：4.9.104全局气流：审看SGR1先扩后收与下吹扰动。统一右栏分层粒子图/全局气流，每层阻力重力/随流倍率。PC/手机与保存/回归检查通过，报告analysis/results/SparkFlow/看法.md；UE及用户审美待验收。此前4.9.97镜头修复保留。",
+"下一步": "4.9.118待审固定取景：输出→取景四边独立可调；现候选只改bounds，原运动/形态/节奏/曝光不动。尾焰/仙女棒/柔层面片面积减少25.2%/26.5%/53.3%；各64帧、PC512/手机256不变。原用户存档未覆盖，取景改变后完整更新UE尺寸与Pivot，不能只换贴图；各层按各自尺寸与Pivot对齐同一喷口和相位。报告analysis/results/GraphFraming/看法.md；用户与UE实播未验收。",
 "待验收版": "SGR1",
 "导出任务": [
-"SGR1E1"
+"SGR1E118"
 ],
 "交付说明": {
-"解决了什么": "锥形初速后渐入全局定向风/收束/涡流，有限惯性响应；亲子与快门同轨迹，原13层及不均匀爆发保留。",
-"素材在哪": "analysis/results/SparkGraph/（本机ZIP及实包回放），解包目录analysis/local/SparkGraph/",
+"解决了什么": "锥形初速后渐入全局定向风/收束/涡流，有限惯性响应；亲子与快门同轨迹，原13层及不均匀爆发保留。 4.9.118修复四边控制并收紧固定取景，尺寸与喷口Pivot同步。",
+"素材在哪": "analysis/results/SGR1E118；本机analysis/local/输出/取景修复_20261019",
 "仍有差异": "引导式气流近似，非真实可压缩燃烧流场；尾端离散火星，非连续亮焰；场随喷口局部坐标。",
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
-"ver": "609bae26",
+"ver": "79964198",
 "jobs": [
 {
 "id": "NFE-SGR1-G106",
@@ -63598,40 +63622,6 @@ var FW_EFFECTS = [
 "stale": true
 },
 {
-"job": "SGR1E1",
-"entry": "SGR1",
-"ver": "609bae26·graph4.9.97+loop4.9.83",
-"time": "2026-10-15 14:59",
-"packages": [
-{
-"name": "rocket",
-"replica": "SGR1",
-"files": [
-"cascade.json",
-"cascade_mobile.json",
-"RocketTail_Graph.json",
-"RocketTail_Graph_Cascade参数.txt",
-"RocketTail_Graph_Mobile.json",
-"RocketTail_Graph_曲线.csv",
-"T_RocketTail_Graph.png",
-"T_RocketTail_Graph_Cutout.png",
-"T_RocketTail_Graph_FrameTest.png",
-"T_RocketTail_Graph_Mobile.png",
-"T_RocketTail_Graph_Mobile_Cutout.png",
-"T_RocketTail_Graph_Mobile_FrameTest.png",
-"T_RocketTail_Graph_Mobile_Ramp.png",
-"T_RocketTail_Graph_Ramp.png"
-],
-"sha256": "100e15940af0ea6f57b3efc8257e158ee0846099b07dd800cfd88efac4e5e303"
-}
-],
-"check": {
-"passed": true,
-"fails": []
-},
-"stale": false
-},
-{
 "job": "NFE-SGR1-G106",
 "entry": "SGR1",
 "ver": "609bae26·graph4.9.97+loop4.9.106",
@@ -63654,6 +63644,24 @@ var FW_EFFECTS = [
 "cascade_mobile.json",
 "命名对照.txt"
 ]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "SGR1E118",
+"entry": "SGR1",
+"ver": "79964198·graph4.9.118+loop4.9.106",
+"time": "2026-10-19T09:57:09",
+"packages": [
+{
+"name": "EFX_FireWorks_RocketTail_Graph",
+"replica": "SGR1",
+"sha256": "d4c3df2ec2881a9f17f0bad032e46c8004ef5f8aa6d50397b3da026403308175"
 }
 ],
 "check": {
@@ -63683,18 +63691,18 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "4.9.114待审SGS1：快慢分布/减速与上方弱气流，减弱上一试配的下坠主导，13形态与爆发时刻保持。右栏分层粒子图→整体调整7项/分叉调整6项，全部默认1。分叉寿命影响飞行距离，分叉角度独立；自身初速与母粒继承分别算。报告analysis/results/SparklerControls/看法.md；原候选归档，用户存档不改，UE和用户艺术验收未做。",
+"下一步": "4.9.118待审固定取景：输出→取景四边独立可调；现候选只改bounds，原运动/形态/节奏/曝光不动。尾焰/仙女棒/柔层面片面积减少25.2%/26.5%/53.3%；各64帧、PC512/手机256不变。原用户存档未覆盖，取景改变后完整更新UE尺寸与Pivot，不能只换贴图；各层按各自尺寸与Pivot对齐同一喷口和相位。报告analysis/results/GraphFraming/看法.md；用户与UE实播未验收。",
 "待验收版": "SGS1",
 "导出任务": [
-"SGS1E114"
+"SGS1E118"
 ],
 "交付说明": {
-"解决了什么": "整体/分叉控制与统一命名接入，快慢分布拉开、按层减速及弱上方气流；保留13形态和短促爆发。",
-"素材在哪": "analysis/results/SparklerControls；本机analysis/local/输出/仙女棒控制与运动_20261018",
+"解决了什么": "整体/分叉控制与统一命名接入，快慢分布拉开、按层减速及弱上方气流；保留13形态和短促爆发。 4.9.118修复四边控制并收紧固定取景，尺寸与喷口Pivot同步。",
+"素材在哪": "analysis/results/SGS1E118；本机analysis/local/输出/取景修复_20261019",
 "仍有差异": "局部预设气流近似；分叉寿命非严格距离倍率，极短寿命重力弯曲弱；景深固化到贴图。",
 "未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
 },
-"ver": "b6ca8de3",
+"ver": "c6f38fb9",
 "jobs": [
 {
 "id": "NFE-SGS1-G106",
@@ -63710,24 +63718,6 @@ var FW_EFFECTS = [
 }
 ],
 "exports": [
-{
-"job": "SGS1E114",
-"entry": "SGS1",
-"ver": "b6ca8de3·graph4.9.97+loop4.9.106",
-"time": null,
-"packages": [
-{
-"name": "EFX_FireWorks_Sparkler_Motion_Test",
-"replica": "SGS1",
-"sha256": "4e29501827379bbd67f17965fd16664b320063b2a3cda10028fb9b97a2f6f7a5"
-}
-],
-"check": {
-"passed": true,
-"fails": []
-},
-"stale": false
-},
 {
 "job": "NFE-SGS1-G97",
 "entry": "SGS1",
@@ -63790,6 +63780,24 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": true
+},
+{
+"job": "SGS1E118",
+"entry": "SGS1",
+"ver": "c6f38fb9·graph4.9.118+loop4.9.106",
+"time": "2026-10-19T09:57:09",
+"packages": [
+{
+"name": "EFX_FireWorks_Sparkler_Graph",
+"replica": "SGS1",
+"sha256": "e1e833828be92d7770cc6e2935e3af5bfb9d4e546b389f1f60cbaddd0a54fc1d"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
 }
 ],
 "thumb": null,
@@ -63812,30 +63820,30 @@ var FW_EFFECTS = [
 "缺": [
 "用户审美验收；UE三层实播、Bloom、实际压缩和GPU扰动配合未经验证"
 ],
-"下一步": "待审SGRS1：独立暖色柔光暗底，保留用户主体轨迹/相位/面片，实际亮度贡献约6%；主体和粒子版原文件不动。PC/手机实包、标准、保存刷新与三周期回放通过。报告analysis/results/RocketSoft/看法.md；用户与UE待验。",
+"下一步": "4.9.118待审固定取景：输出→取景四边独立可调；现候选只改bounds，原运动/形态/节奏/曝光不动。尾焰/仙女棒/柔层面片面积减少25.2%/26.5%/53.3%；各64帧、PC512/手机256不变。原用户存档未覆盖，取景改变后完整更新UE尺寸与Pivot，不能只换贴图；各层按各自尺寸与Pivot对齐同一喷口和相位。报告analysis/results/GraphFraming/看法.md；用户与UE实播未验收。",
 "交付说明": {
-"解决了什么": "用户主体复制的独立柔光暗底，空间软核与面积能量补偿；同取景/轨迹/相位。",
-"素材在哪": "analysis/results/RocketSoft；本机analysis/local/输出/窜天猴柔光暗底_20261018",
+"解决了什么": "用户主体复制的独立柔光暗底，空间软核与面积能量补偿；同轨迹/相位，各自取景用Pivot对齐。 4.9.118修复四边控制并收紧固定取景，尺寸与喷口Pivot同步。",
+"素材在哪": "analysis/results/SGRS1E118；本机analysis/local/输出/取景修复_20261019",
 "仍有差异": "加法柔光不能遮光或代表黑烟；三层最终UE合成未实播。",
 "未经 UE 验证": "Bloom叠加、实际压缩/米数与GPU扰动层配合。"
 },
 "待验收版": "SGRS1",
 "导出任务": [
-"SGRS1E1"
+"SGRS1E118"
 ],
-"ver": "9d67fc02",
+"ver": "fd0bcba9",
 "jobs": [],
 "exports": [
 {
-"job": "SGRS1E1",
+"job": "SGRS1E118",
 "entry": "SGRS1",
-"ver": "9d67fc02·graph4.9.97+loop4.9.106",
-"time": "2026-10-18 03:17:10",
+"ver": "fd0bcba9·graph4.9.118+loop4.9.106",
+"time": "2026-10-19T09:57:09",
 "packages": [
 {
 "name": "EFX_FireWorks_RocketTail_Soft",
 "replica": "SGRS1",
-"sha256": "000840abd3618895ce673b676b8777f3a8eeffa351140ee34a79dfa053a3d02f"
+"sha256": "4c956f675e96ede38c27e69fd144c5708083fe325f829da4268fbaa03707b0a3"
 }
 ],
 "check": {

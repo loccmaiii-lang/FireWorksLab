@@ -1,0 +1,15 @@
+{
+  "version": "4.9.118（分批修复前）",
+  "command": "node analysis/scripts/graph_framing_export.cjs --candidate",
+  "input": "收紧取景参数.json / SGR1",
+  "bounds": [
+    -3.69,
+    4.08,
+    -18,
+    0.85
+  ],
+  "pass": false,
+  "observedError": "镜头采样量过大：请缩短曝光或使用快速质量",
+  "location": "SparkGraph.cameraGeometry；out.length/12+n > 1500000",
+  "resolution": "分批上传原采样，保持cameraQuality和cameraShutter，不改配方"
+}

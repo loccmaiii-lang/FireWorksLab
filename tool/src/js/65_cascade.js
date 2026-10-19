@@ -93,16 +93,19 @@ ${keyLines(m.sizeKeysY)}
 }
 function masterEmitter(s, M, label) {
   const m = s.meta, b = s;
+  const pivot = Math.abs(+m.cy || 0) > 1e-4 || Math.abs(+m.cx || 0) > 1e-4;
+  // JSON用内部偏移（中心-.5），Cascade独立PivotOffset模块的面板中心为0。
+  const pivotText = `(${fx((m.cx || 0) / m.Ww, 4)}, ${fx(-m.cy / m.Wh, 4)})`;
   return `【Cascade 发射器${label || ''}】
 Required：Screen Alignment = Rectangle（面向相机，X、Y 尺寸分开生效；不要用 Square——Square 只认 X，Y 方向会按错的比例缩放，画面变形、抖动）；Emitter Duration = ${fx(m.duration)} s；Emitter Loops = 1${m.t0 ? `；Emitter Delay = ${fx(m.t0)} s（接在上一段之后）` : ''}
 ${CURVE_NOTE}
 Spawn：Rate = 0；Burst：Count = 1，Time = 0
 Lifetime：${fx(m.duration)} s（常量）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.tight ? '最大尺寸，横竖分开' : m.zoom ? '开花最大时的尺寸' : '常量'}）
-${m.tight ? tightLines(m) : m.zoom ? `${m.anchor && Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（随开花放大 · 锚在爆点：面片最大时中心比爆点高 ${cm(m.cy)} cm，Size By Life 绕爆点放大；未经 UE 验证）` : 'Initial Location：0（爆点就是精灵中心）'}
+${m.tight ? tightLines(m) : m.zoom ? `${m.anchor && pivot ? `Initial Location：0；独立 Pivot Offset 模块 → Pivot Offset = ${pivotText}（面板值；随开花放大 · 锚在爆点：面片最大时中心偏移X ${cm(m.cx || 0)} cm、Z ${cm(m.cy)} cm，Size By Life 绕爆点放大；未经 UE 验证）` : 'Initial Location：0（爆点就是精灵中心）'}
 Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
   相对时间    倍数
-${keyLines(m.sizeKeys)}` : Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（爆点在贴图里的位置：面片中心比爆点高 ${cm(m.cy)} cm；面片总是面向相机，用 Pivot 对齐仰视时也不错位；未经 UE 验证）` : `Initial Location：0（爆点就是精灵中心）`}
+${keyLines(m.sizeKeys)}` : pivot ? `Initial Location：0；独立 Pivot Offset 模块 → Pivot Offset = ${pivotText}（面板值；喷口/爆点在贴图里的位置：面片中心偏移X ${cm(m.cx || 0)} cm、Z ${cm(m.cy)} cm；用Pivot对齐，不移动粒子发射点；未经 UE 验证）` : `Initial Location：0（爆点就是精灵中心）`}
 Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Use Emitter Time 不勾选；曲线插值 Linear
   相对时间    帧号
 ${keyLines(fwlFrameKeys(m.keys, m.L.F))}
@@ -118,7 +121,7 @@ ${pasteSection([
     ['Initial Velocity → Start Velocity → Distribution Vector Constant → Constant', ueVec(m.path.vx * 100, 0, m.path.vy * 100)],
     ['Const Acceleration → Acceleration', ueVec(m.path.ax * 100, 0, -m.path.ay * 100)]]
    : m.zoom ? [['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeys.map(([u, v]) => [u, [v, v, 1]]))]]
-   : Math.abs(+m.cy || 0) > 1e-4 ? [['Required → Pivot Offset', `(X=${ue6(-0.5)},Y=${ue6(-0.5 - m.cy / m.Wh)})`]] : []),
+   : pivot ? [['独立 Pivot Offset 模块 → Pivot Offset（面板值；JSON内部值需各加0.5）', `(X=${ue6((m.cx || 0) / m.Ww)},Y=${ue6(-m.cy / m.Wh)})`]] : []),
   ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
   ['Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, m.duration, m.t0 || 0).map(([u, c]) => [u, c.map(x => x * intOr1(M.headInt))]))]
 ])}【帧与流畅度${label || ''}】
@@ -256,16 +259,24 @@ ${pasteSection([
 }
 function loopEmitter(b, M) {
   const m = b.meta, P = b.P;
+  const pivot = Math.abs(+m.cy || 0) > 1e-4 || Math.abs(+m.cx || 0) > 1e-4;
   return `【Cascade 发射器（地面循环）】
-Required：Screen Alignment = Square；Emitter Duration = ${fx(m.duration, 3)} s；Emitter Loops = 0（无限循环）
+Required：Screen Alignment = Rectangle；Use Local Space 勾选；Emitter Duration = ${fx(m.duration, 3)} s；Emitter Loops = 0（无限循环）
 Spawn：Rate = 0；Burst：Count = 1，Time = 0（每个循环一发，上一发结束时下一发正好接上）
 Lifetime：${fx(m.duration, 3)} s（常量，必须等于循环周期）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm
-Initial Location：Z = ${cm(m.cy)} cm（精灵中心离地高度；发射器放在地面喷口处）
-Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Linear
+Initial Location：0（发射器放在喷口处；面片中心偏移通过Pivot对齐）
+${pivot ? `独立 Pivot Offset 模块 → Pivot Offset（面板值）= (${fx((m.cx || 0) / m.Ww, 4)}, ${fx(-m.cy / m.Wh, 4)})；面片中心相对喷口X ${cm(m.cx || 0)} cm、Z ${cm(m.cy)} cm\n` : ''}${P.sparkGraph && P.sparkGraph.followAxis ? 'Orientation Axis Lock：EPAL_ROTATE_Z（跟随喷口朝向；未经UE实播）\n' : ''}Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Use Emitter Time 不勾选；Linear
 ${keyLines(fwlFrameKeys(m.keys, m.L.F))}
-  ${m.L.F} 帧均匀分布，第 ${m.L.F} 帧就是下一循环的第 0 帧，所以首尾无缝。
+  ${m.L.F} 帧按上述曲线播放，末值小于总帧数；下一周期从第0帧重新播放。循环切换是否可见仍需连续审看。
 ${colorSection(M, m.duration, 0, !!b.tail)}
+${pasteSection([
+  ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
+  ['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, 0)],
+  ...(pivot ? [['独立 Pivot Offset 模块 → Pivot Offset（面板值；JSON内部值需各加0.5）', `(X=${ue6((m.cx || 0) / m.Ww)},Y=${ue6(-m.cy / m.Wh)})`]] : []),
+  ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))]
+])}
+取景改变后，完整更新 Initial Size 与独立 Pivot Offset 模块；只换贴图会造成大小或位置错位。按各层自己的面片尺寸与Pivot对齐同一喷口，不要求三层使用相同尺寸；未经UE验证。
 Light（可选）：常量亮度，按项目曝光设
 ${m.check && m.check.seam != null ? `接缝校验：首尾变化量是相邻帧平均变化量的 ${fx(m.check.seam, 2)} 倍（≈1 表示无缝）\n` : ''}`;
 }

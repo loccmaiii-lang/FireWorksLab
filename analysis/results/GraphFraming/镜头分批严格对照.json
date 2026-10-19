@@ -1,0 +1,72 @@
+{
+  "htmlSHA256": "f91d4e77b0ca4426e72f7713bdcbbf790d2ecda21b8856a23ef2d9240dffdae5",
+  "scope": "实际当前SGS1/SGR1/SGRS1，512px和原质量，.89秒；测试参照仅移除旧内存上限，以同样全量样本单批绘制，不改生产。",
+  "complete": true,
+  "pass": true,
+  "rows": [
+    {
+      "id": "SGS1",
+      "version": "4.9.118",
+      "bounds": [
+        -0.5,
+        0.5,
+        -0.65,
+        0.35
+      ],
+      "at": 0.89,
+      "px": 512,
+      "samples": 115413,
+      "batches": [
+        115413
+      ],
+      "geometryMaxDiff": 0,
+      "geometryCountSame": true,
+      "maxPixel": 0,
+      "changedChannels": 0,
+      "pass": true
+    },
+    {
+      "id": "SGR1",
+      "version": "4.9.118",
+      "bounds": [
+        -7,
+        7,
+        -18,
+        2
+      ],
+      "at": 0.89,
+      "px": 512,
+      "samples": 390919,
+      "batches": [
+        390919
+      ],
+      "geometryMaxDiff": 0,
+      "geometryCountSame": true,
+      "maxPixel": 0,
+      "changedChannels": 0,
+      "pass": true
+    },
+    {
+      "id": "SGRS1",
+      "version": "4.9.118",
+      "bounds": [
+        -7,
+        7,
+        -18,
+        2
+      ],
+      "at": 0.89,
+      "px": 512,
+      "samples": 170388,
+      "batches": [
+        170388
+      ],
+      "geometryMaxDiff": 0,
+      "geometryCountSame": true,
+      "maxPixel": 0,
+      "changedChannels": 0,
+      "pass": true
+    }
+  ],
+  "errors": []
+}

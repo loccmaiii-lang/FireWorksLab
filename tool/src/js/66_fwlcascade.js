@@ -28,7 +28,7 @@ function fwlMaster(name, b, M, mobile) {
     // 面片总是面向相机，挪 InitialLocation Z 在仰视时爆点会偏 cy(1 − cosθ)，多层 cy 不同就错位。
     // 4.9.21（用户 10-06 21:51）：入点前放大也一律绕爆点（以前缺省绕面片中心：面片中心在爆点下面，花小时整朵偏下、放大时往上走）
     // 4.9.81 带锚点的 Zoom（m.anchor）：Pivot Offset 同固定取景（爆点在粒子位置），Size By Life 绕它放大——面片中心在爆点上方 cy × 大小，和烘焙每帧的取景一样
-    const pivot = (!m.zoom || m.anchor) && Math.abs(+m.cy || 0) > 1e-4;
+    const pivot = (!m.zoom || m.anchor) && (Math.abs(+m.cy || 0) > 1e-4 || Math.abs(+m.cx || 0) > 1e-4);
     const mods = [
       { m: 'Lifetime', Lifetime: { const: r4(life) } },
       { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * 100), 1] } },
@@ -43,11 +43,11 @@ function fwlMaster(name, b, M, mobile) {
     emitters.push({
       name: seg ? 'Main' + seg : 'Main', material: mk, gpu: false,
       required: { screen_alignment: 'Rectangle', duration_s: r4(life), loops: 1, delay_s: r4(pre ? pre.from : m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1,
-        ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - m.cy / m.Wh)] } : {}) },
+        ...(pivot ? { pivot_offset: [r4(-0.5 + (m.cx || 0) / m.Ww), r4(-0.5 - m.cy / m.Wh)] } : {}) },
       spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods,
       ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（绕爆点${pivot ? '：Pivot Offset 和没设入点时同一个，烟花实播对齐未经 UE 验证' : '：爆点就在面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] }
         : m.anchor ? { notes: [`随开花放大 · 锚在爆点（4.9.81）：Pivot Offset 把爆点放在粒子位置（面片最大时中心比爆点高 ${r1(m.cy)} m），Size By Life 绕爆点放大（${m.sizeKeys.length} 个点、和换帧同一刻换大小），爆点在面片里的位置不变；未经 UE 验证`] }
-        : pivot ? { notes: ['固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 ' + r1(m.cy) + ' m），仰视时也对得上；未经 UE 验证'] } : {})
+        : pivot ? { notes: ['固定取景：Pivot Offset把喷口/爆点放在粒子位置（面片中心相对原点X ' + r1(m.cx || 0) + ' m、Z ' + r1(m.cy) + ' m）；取景改变须完整更新发射器尺寸和Pivot，不能只换贴图；未经UE验证'] } : {})
     });
     if (s.tail) { const e0 = emitters[emitters.length - 1];
       emitters.push({ ...e0, name: e0.name + 'Tail', material: mk + 'Tail',
@@ -108,10 +108,10 @@ function fwlTrail(name, b, M, mobile) {
       'pivot_offset 是 Required 里的 Pivot Offset（星头在贴图里的位置），spec 里还没实测过这个字段'] };
 }
 
-// 4.3（渲染基础问题 D7）：「帧计划指纹」= 各发射器里决定「哪一刻播哪一帧、面片多大」的数（Lifetime、帧号曲线、Size By Life、Duration、Delay）的哈希。
-// 只重新导入贴图之前比一下：指纹变了，说明这些数也变了，只换贴图会错帧，要按新的 cascade.json 改粒子（或用本地的合入对比）
+// 帧计划指纹同时保护时间、真实尺寸和锚点；只换像素不能改变发射器的空间映射。
+// 4.9.118补InitialSize/InitialLocation/Pivot，旧签名首次比较可能要求完整更新。
 function fwlPlanSig(emitters) {
-  const pick = e => [e.name, e.required && [e.required.duration_s, e.required.delay_s], (e.modules || []).filter(m => ['Lifetime', 'DynamicParameter', 'SizeByLife'].includes(m.m))];
+  const pick = e => [e.name, e.required && [e.required.duration_s, e.required.delay_s, e.required.pivot_offset || [-0.5, -0.5]], (e.modules || []).filter(m => ['Lifetime', 'DynamicParameter', 'SizeByLife', 'InitialSize', 'InitialLocation'].includes(m.m))];
   const s = JSON.stringify((emitters || []).map(pick)); let h = 0x811c9dc5;
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
   return h.toString(16).padStart(8, '0');

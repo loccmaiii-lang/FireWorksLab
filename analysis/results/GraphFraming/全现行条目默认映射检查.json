@@ -1,0 +1,778 @@
+{
+  "version": "4.9.118",
+  "entries": [
+    {
+      "effect": "jinmangju",
+      "stage": "待验收",
+      "entry": "JM4-40",
+      "layers": [
+        "JM4-40"
+      ]
+    },
+    {
+      "effect": "trail_v5",
+      "stage": "已通过",
+      "entry": "rep:V5M",
+      "layers": [
+        "V5M"
+      ]
+    },
+    {
+      "effect": "trail_phys",
+      "stage": "已通过",
+      "entry": "RT6M",
+      "layers": [
+        "RT6M"
+      ]
+    },
+    {
+      "effect": "qiuxing_a",
+      "stage": "待验收",
+      "entry": "QA20",
+      "layers": [
+        "QA20-1",
+        "QA20-2"
+      ]
+    },
+    {
+      "effect": "qiuxing_c",
+      "stage": "待验收",
+      "entry": "QC12",
+      "layers": [
+        "QC12-1",
+        "QC12-2",
+        "QC12-3"
+      ]
+    },
+    {
+      "effect": "qiuxing_d",
+      "stage": "待验收",
+      "entry": "QD14",
+      "layers": [
+        "QD14-1",
+        "QD14-2",
+        "QD14-3"
+      ]
+    },
+    {
+      "effect": "qingning",
+      "stage": "待验收",
+      "entry": "QN12",
+      "layers": [
+        "QN12-1",
+        "QN12-2"
+      ]
+    },
+    {
+      "effect": "wancai",
+      "stage": "待验收",
+      "entry": "PRISM3",
+      "layers": [
+        "PRISM3-A",
+        "PRISM3-B",
+        "PRISM3-C",
+        "PRISM3-D"
+      ]
+    },
+    {
+      "effect": "hongchao",
+      "stage": "待验收",
+      "entry": "HK10",
+      "layers": [
+        "HK10-1",
+        "HK10-2"
+      ]
+    },
+    {
+      "effect": "hiki_nishiki",
+      "stage": "待验收",
+      "entry": "HN2",
+      "layers": [
+        "HN2-O",
+        "HN2-G"
+      ]
+    },
+    {
+      "effect": "jinmangju_sizes",
+      "stage": "待验收",
+      "entry": "JMG10",
+      "layers": [
+        "JMG10"
+      ]
+    },
+    {
+      "effect": "myv_fxmuux2arh",
+      "stage": "待验收",
+      "entry": "MYFL-O",
+      "layers": [
+        "MYFL-O"
+      ]
+    },
+    {
+      "effect": "myv_fxmuuzfeg7",
+      "stage": "待验收",
+      "entry": "MYCR-O",
+      "layers": [
+        "MYCR-O"
+      ]
+    },
+    {
+      "effect": "myv_fxmuv6vhrq",
+      "stage": "待验收",
+      "entry": "MYJA-O",
+      "layers": [
+        "MYJA-O-1",
+        "MYJA-O-2"
+      ]
+    },
+    {
+      "effect": "myv_fxmuv7n3ih",
+      "stage": "待验收",
+      "entry": "MYJM-O",
+      "layers": [
+        "MYJM-O"
+      ]
+    },
+    {
+      "effect": "myv_fxmuw5v7bh",
+      "stage": "待验收",
+      "entry": "MYJC-O",
+      "layers": [
+        "MYJC-O-1",
+        "MYJC-O-2"
+      ]
+    },
+    {
+      "effect": "myv_fxmuwols5x",
+      "stage": "待验收",
+      "entry": "MYHK-O",
+      "layers": [
+        "MYHK-O-1",
+        "MYHK-O-2"
+      ]
+    },
+    {
+      "effect": "tempo_jmg10",
+      "stage": "待验收",
+      "entry": "TP-JMG10-T75",
+      "layers": [
+        "TP-JMG10-T75"
+      ]
+    },
+    {
+      "effect": "tempo_myja",
+      "stage": "待验收",
+      "entry": "TP-MYJA-O-T75",
+      "layers": [
+        "TP-MYJA-O-T75-1",
+        "TP-MYJA-O-T75-2"
+      ]
+    },
+    {
+      "effect": "tempo_myhk",
+      "stage": "待验收",
+      "entry": "TP-MYHK-O-T75",
+      "layers": [
+        "TP-MYHK-O-T75-1",
+        "TP-MYHK-O-T75-2"
+      ]
+    },
+    {
+      "effect": "fan_gold",
+      "stage": "待验收",
+      "entry": "FG7",
+      "layers": [
+        "FG7"
+      ]
+    },
+    {
+      "effect": "jinrui_ning",
+      "stage": "待验收",
+      "entry": "JQ7",
+      "layers": [
+        "JQ7-1",
+        "JQ7-2",
+        "JQ7-3",
+        "JQ7-4"
+      ]
+    },
+    {
+      "effect": "fan_comet",
+      "stage": "待验收",
+      "entry": "FC10R",
+      "layers": [
+        "FC10R-1",
+        "FC10R-2"
+      ]
+    },
+    {
+      "effect": "comet3_rt6",
+      "stage": "已通过",
+      "entry": "CS3C",
+      "layers": [
+        "CS3C-T",
+        "CS3C-H"
+      ]
+    },
+    {
+      "effect": "silver3_rt6",
+      "stage": "已通过",
+      "entry": "CS3S",
+      "layers": [
+        "CS3S"
+      ]
+    },
+    {
+      "effect": "comet3_layers",
+      "stage": "待验收",
+      "entry": "CSLRC",
+      "layers": [
+        "CSLRC-T",
+        "CSLRC-H"
+      ]
+    },
+    {
+      "effect": "silver3_layers",
+      "stage": "待验收",
+      "entry": "CSLRS",
+      "layers": [
+        "CSLRS"
+      ]
+    },
+    {
+      "effect": "rocket_graph",
+      "stage": "待验收",
+      "entry": "SGR1",
+      "layers": [
+        "SGR1"
+      ]
+    },
+    {
+      "effect": "sparkler_graph",
+      "stage": "待验收",
+      "entry": "SGS1",
+      "layers": [
+        "SGS1"
+      ]
+    },
+    {
+      "effect": "rocket_soft",
+      "stage": "待验收",
+      "entry": "SGRS1",
+      "layers": [
+        "SGRS1"
+      ]
+    },
+    {
+      "effect": "jinmangju_burst",
+      "stage": "待验收",
+      "entry": "JMB1",
+      "layers": [
+        "JMB1"
+      ]
+    },
+    {
+      "effect": "jinmangju_lilac",
+      "stage": "待验收",
+      "entry": "JMBV-A",
+      "layers": [
+        "JMBV-A"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "JM4-40",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "V5M",
+      "type": "trailM",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "RT6M",
+      "type": "tailM",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QA20-1",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QA20-2",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QC12-1",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QC12-2",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QC12-3",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QD14-1",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QD14-2",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QD14-3",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QN12-1",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "QN12-2",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "PRISM3-A",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "PRISM3-B",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "PRISM3-C",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "PRISM3-D",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "HK10-1",
+      "type": "kamuro",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "HK10-2",
+      "type": "strobe",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "HN2-O",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "HN2-G",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JMG10",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYFL-O",
+      "type": "crossette",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYCR-O",
+      "type": "crackle",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYJA-O-1",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYJA-O-2",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYJM-O",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYJC-O-1",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYJC-O-2",
+      "type": "strobe",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYHK-O-1",
+      "type": "kamuro",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "MYHK-O-2",
+      "type": "strobe",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "TP-JMG10-T75",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "TP-MYJA-O-T75-1",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "TP-MYJA-O-T75-2",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "TP-MYHK-O-T75-1",
+      "type": "kamuro",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "TP-MYHK-O-T75-2",
+      "type": "strobe",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "FG7",
+      "type": "kamuro",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JQ7-1",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JQ7-2",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JQ7-3",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JQ7-4",
+      "type": "botan",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "FC10R-1",
+      "type": "kamuro",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "FC10R-2",
+      "type": "kamuro",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "CS3C-T",
+      "type": "tailS",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "CS3C-H",
+      "type": "tailS",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "CS3S",
+      "type": "tailS",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "CSLRC-T",
+      "type": "tailS",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "CSLRC-H",
+      "type": "tailS",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "CSLRS",
+      "type": "tailS",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "SGR1",
+      "type": "sparkgraph",
+      "graph": true,
+      "graphPlanSame": true,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 1,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "SGS1",
+      "type": "sparkgraph",
+      "graph": true,
+      "graphPlanSame": true,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 1,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "SGRS1",
+      "type": "sparkgraph",
+      "graph": true,
+      "graphPlanSame": true,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 1,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JMB1",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    },
+    {
+      "id": "JMBV-A",
+      "type": "kiku",
+      "graph": false,
+      "graphPlanSame": null,
+      "defaultMappingMaxDiff": 0,
+      "planFormsChecked": 5,
+      "sampleTimesPerForm": 65
+    }
+  ],
+  "missing": [],
+  "pass": true,
+  "unchangedNonGraphPlanSources": {
+    "tool/src/js/30_plan.js": true,
+    "tool/src/js/31_plan40.js": true
+  },
+  "scope": "所有现行待验收/已通过条目及组合层；粒子图实际计划；其余计划函数源码等同与固定/Zoom/独立横竖/路径的默认cx映射数学核对，不是全量真实取景重测。"
+}

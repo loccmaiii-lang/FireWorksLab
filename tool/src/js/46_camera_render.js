@@ -40,8 +40,9 @@ function drawCameraItems(data,P,view,ppm,weight){
  gl.uniform1f(pr.u.uFloor,CAMERA_SIG_FLOOR*Math.max(1,ppm/(PPMY||ppm)));gl.uniform1i(pr.u.uBlades,+P.cameraBlades||0);gl.drawArraysInstanced(gl.TRIANGLES,0,6,data.length/12);return data.length/12;
 }
 function drawCameraGraph(graph,P,time,view,ppm,weight,only){
- cameraGraphInit();const settings=LIVE_VIEW?{...P,cameraQuality:'fast'}:P,g=SparkGraph.cameraGeometry(graph,time,settings,Math.max(ppm,PPMY||ppm),only);
- return drawCameraItems(g.data,P,view,ppm,weight);
+ cameraGraphInit();let drawn=0;const settings=LIVE_VIEW?{...P,cameraQuality:'fast'}:P;
+ const batch=data=>{drawn+=drawCameraItems(data,P,view,ppm,weight);};
+ const g=SparkGraph.cameraGeometry(graph,time,settings,Math.max(ppm,PPMY||ppm),only,batch);batch(g.data);return drawn;
 }
 // 4.9.97（导出排查 V1 / V3）：镜头「关」= 同一个核、不积分、不散焦（flatGeometry）
 function drawFlatGraph(graph,P,time,view,ppm,weight,only){cameraGraphInit();return drawCameraItems(SparkGraph.flatGeometry(graph,time,ppm,only).data,P,view,ppm,weight);}

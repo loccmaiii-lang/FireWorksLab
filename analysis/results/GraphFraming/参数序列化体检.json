@@ -1,0 +1,66 @@
+{
+  "version": "4.9.118",
+  "rows": [
+    {
+      "id": "template:kiku",
+      "specials": []
+    },
+    {
+      "id": "template:botan",
+      "specials": []
+    },
+    {
+      "id": "template:kamuro",
+      "specials": []
+    },
+    {
+      "id": "template:senrin",
+      "specials": []
+    },
+    {
+      "id": "template:strobe",
+      "specials": []
+    },
+    {
+      "id": "template:crackle",
+      "specials": []
+    },
+    {
+      "id": "SGS1",
+      "specials": []
+    },
+    {
+      "id": "SGR1",
+      "specials": []
+    },
+    {
+      "id": "SGRS1",
+      "specials": []
+    },
+    {
+      "id": "JM4-40",
+      "specials": []
+    },
+    {
+      "id": "QA20-1",
+      "specials": []
+    },
+    {
+      "id": "HK10-1",
+      "specials": []
+    },
+    {
+      "id": "JQ7-1",
+      "specials": []
+    },
+    {
+      "id": "FC10R-1",
+      "specials": []
+    },
+    {
+      "id": "JMB1",
+      "specials": []
+    }
+  ],
+  "pass": true
+}

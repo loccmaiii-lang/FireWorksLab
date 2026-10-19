@@ -1,0 +1,137 @@
+{
+  "format": "fwl.graph-framing-contract/1",
+  "at": "2026-10-19T01:36:31.734Z",
+  "mode": "expect-before",
+  "url": "http://127.0.0.1:8034/baker?fast",
+  "contractPass": false,
+  "expectationPass": true,
+  "preflight": {
+    "code": 0,
+    "stdout": "复用 http://127.0.0.1:8034/baker · 根目录 F:\\FireWorksLab\\tool",
+    "stderr": ""
+  },
+  "gitHead": "cd525fb0b98fdbfd8d1cd8072261f81b172e518c",
+  "documentSHA256": "e09ea55eb6b598b9e8d263737e033d81c92ea4ed6b098d3adcf00a6ca601a7c3",
+  "result": {
+    "version": "4.9.117",
+    "checks": [
+      {
+        "id": "asymmetric-plan",
+        "pass": false,
+        "error": "左右范围的真实宽度: 12.24 ≠ 8.16"
+      },
+      {
+        "id": "edge-left",
+        "pass": false,
+        "error": "边界调整后的宽度: 12.24 ≠ 7.905"
+      },
+      {
+        "id": "edge-right",
+        "pass": false,
+        "error": "边界调整后的宽度: 12.75 ≠ 8.415000000000001"
+      },
+      {
+        "id": "edge-bottom",
+        "pass": false,
+        "error": "边界调整后的宽度: 12.24 ≠ 8.16"
+      },
+      {
+        "id": "edge-top",
+        "pass": false,
+        "error": "边界调整后的宽度: 12.24 ≠ 8.16"
+      },
+      {
+        "id": "symmetric-compatibility",
+        "pass": true,
+        "evidence": {
+          "center": [
+            0,
+            -8
+          ],
+          "width": 14.280000000000001,
+          "height": 20.4,
+          "fields": 25
+        }
+      },
+      {
+        "id": "live-and-engine-plan",
+        "pass": false,
+        "error": "实时渲染计划中心 X: 0 ≠ 2"
+      },
+      {
+        "id": "actual-bake-view",
+        "pass": false,
+        "error": "烘焙绘制中心 X: 0 ≠ 2"
+      },
+      {
+        "id": "cascade-nozzle-reconstruction",
+        "pass": false,
+        "error": "Cascade 横向面片中心: 0 ≠ 2"
+      },
+      {
+        "id": "signature-size",
+        "pass": false,
+        "error": "尺寸/位置/Pivot 变化未改变帧计划指纹"
+      },
+      {
+        "id": "signature-location",
+        "pass": false,
+        "error": "尺寸/位置/Pivot 变化未改变帧计划指纹"
+      },
+      {
+        "id": "signature-pivot",
+        "pass": false,
+        "error": "尺寸/位置/Pivot 变化未改变帧计划指纹"
+      },
+      {
+        "id": "signature-color-pixels-neutral",
+        "pass": true,
+        "evidence": {
+          "signature": "d79d855d"
+        }
+      },
+      {
+        "id": "ui-edge-0",
+        "pass": false,
+        "error": "边界参数未归输出：分层粒子图"
+      },
+      {
+        "id": "ui-edge-1",
+        "pass": false,
+        "error": "边界参数未归输出：分层粒子图"
+      },
+      {
+        "id": "ui-edge-2",
+        "pass": false,
+        "error": "边界参数未归输出：分层粒子图"
+      },
+      {
+        "id": "ui-edge-3",
+        "pass": false,
+        "error": "边界参数未归输出：分层粒子图"
+      }
+    ],
+    "summary": {
+      "total": 17,
+      "pass": 2,
+      "fail": [
+        "asymmetric-plan",
+        "edge-left",
+        "edge-right",
+        "edge-bottom",
+        "edge-top",
+        "live-and-engine-plan",
+        "actual-bake-view",
+        "cascade-nozzle-reconstruction",
+        "signature-size",
+        "signature-location",
+        "signature-pivot",
+        "ui-edge-0",
+        "ui-edge-1",
+        "ui-edge-2",
+        "ui-edge-3"
+      ]
+    }
+  },
+  "pageErrors": []
+}

@@ -1,0 +1,82 @@
+{
+  "htmlSHA256": "f91d4e77b0ca4426e72f7713bdcbbf790d2ecda21b8856a23ef2d9240dffdae5",
+  "forcedThreshold": 75000,
+  "scope": "实际当前SGS1/SGR1/SGRS1，512px和原质量，.89秒；测试参照仅移除旧内存上限，以同样全量样本单批绘制，不改生产。 为覆盖多次draw分支，仅在测试页将批次上限设75000，样本、曝光权重与顺序不变。",
+  "complete": true,
+  "pass": true,
+  "rows": [
+    {
+      "id": "SGS1",
+      "version": "4.9.118",
+      "bounds": [
+        -0.47,
+        0.46,
+        -0.5,
+        0.29
+      ],
+      "at": 0.89,
+      "px": 512,
+      "samples": 136698,
+      "batches": [
+        74922,
+        61776
+      ],
+      "geometryMaxDiff": 0,
+      "geometryCountSame": true,
+      "maxPixel": 0,
+      "changedChannels": 0,
+      "pass": true
+    },
+    {
+      "id": "SGR1",
+      "version": "4.9.118",
+      "bounds": [
+        -5.36,
+        5.75,
+        -18,
+        0.85
+      ],
+      "at": 0.89,
+      "px": 512,
+      "samples": 486690,
+      "batches": [
+        74624,
+        74613,
+        74818,
+        74796,
+        74877,
+        74983,
+        37979
+      ],
+      "geometryMaxDiff": 0,
+      "geometryCountSame": true,
+      "maxPixel": 0,
+      "changedChannels": 0,
+      "pass": true
+    },
+    {
+      "id": "SGRS1",
+      "version": "4.9.118",
+      "bounds": [
+        -3.74,
+        3.85,
+        -15.89,
+        1.33
+      ],
+      "at": 0.89,
+      "px": 512,
+      "samples": 193700,
+      "batches": [
+        74984,
+        74946,
+        43770
+      ],
+      "geometryMaxDiff": 0,
+      "geometryCountSame": true,
+      "maxPixel": 0,
+      "changedChannels": 0,
+      "pass": true
+    }
+  ],
+  "errors": []
+}

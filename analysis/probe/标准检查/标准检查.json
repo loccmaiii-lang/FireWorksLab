@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-18 22:29",
- "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "generated": "2026-10-19 09:50",
+ "renderer": "ANGLE (Intel, Intel(R) Graphics (0x00007D67) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
   "mobileCell": 256,
@@ -18413,7 +18413,7 @@
    "name": "窜天猴尾焰 · 分层短促喷射",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "609bae26·graph4.9.97+loop4.9.106",
+   "ver": "79964198·graph4.9.118+loop4.9.106",
    "checks": [
     [
      "实时模拟",
@@ -18477,14 +18477,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 1.9
+   "seconds": 2.1
   },
   "SGS1": {
    "id": "SGS1",
    "name": "仙女棒 · 13层全形态",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "b6ca8de3·graph4.9.97+loop4.9.106",
+   "ver": "c6f38fb9·graph4.9.118+loop4.9.106",
    "checks": [
     [
      "实时模拟",
@@ -18548,7 +18548,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 1.1
+   "seconds": 1.0
   },
   "PRISM3-A": {
    "id": "PRISM3-A",
@@ -18935,7 +18935,7 @@
    "name": "窜天猴尾焰 · 柔光暗底",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "9d67fc02·graph4.9.97+loop4.9.106",
+   "ver": "fd0bcba9·graph4.9.118+loop4.9.106",
    "checks": [
     [
      "实时模拟",
@@ -18999,7 +18999,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 1.5
+   "seconds": 2.3
   },
   "JMB1": {
    "id": "JMB1",

@@ -1,6 +1,6 @@
 # 分层粒子图固定取景修复 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 让窜天猴和仙女棒能在输出中直接调整固定取景，减少留白，同时保持运动、米制尺寸及喷口锚点正确。
 
@@ -21,11 +21,12 @@
 
 **Interfaces:** 输入完整P/M，沿用bounds数组；输出计划cx/HX/Ww/px与现有cy/HY/Wh/py；世界重建 `x=cx+(u-.5)*Ww`，Cascade `pivotX=-.5+cx/Ww`、`pivotY=-.5-cy/Wh`，InitialLocation保持0。
 
-- [ ] 建失败回归：`[-2,6,-4,1]`应是8.16m宽、cx=2，不是12.24m宽；两边独立调整真实生效；默认对称框计划/像素保持。
-- [ ] 四边归到统一「输出→取景」，保留键、数值/滑杆、还原/撤销/保存；说明全周期固定取景、不是改变运动或整体缩放。
-- [ ] graphPlan只对SparkGraph按`cx=(左+右)/2`与`HX=(右-左)*.51`计算。centerAt按`[(cx||0)*sx,cy*sy]`；缺省cx=0不变，普通loopPlan不动。
-- [ ] fwlMaster Pivot同时认cx/cy；补实际手填/诊断X字段。核对只换图的计划签名守卫，将影响尺寸/Pivot的取景变化确实识别为需要更新发射器参数，不放宽旧守卫。
-- [ ] 版本118、参数变更记录/交互宪章/CHANGELOG与构建；针对缺省、非对称、组合、保存刷新、两平台配置通过。
+- [x] 建失败回归：`[-2,6,-4,1]`应是8.16m宽、cx=2，不是12.24m宽；两边独立调整真实生效；默认对称框计划/像素保持。
+- [x] 四边归到统一「输出→取景」，保留键、数值/滑杆、还原/撤销/保存；说明全周期固定取景、不是改变运动或整体缩放。
+- [x] graphPlan只对SparkGraph按`cx=(左+右)/2`与`HX=(右-左)*.51`计算。centerAt按`[(cx||0)*sx,cy*sy]`；缺省cx=0不变，普通loopPlan不动。
+- [x] fwlMaster Pivot同时认cx/cy；补实际手填/诊断X字段。核对只换图的计划签名守卫，将影响尺寸/Pivot的取景变化确实识别为需要更新发射器参数，不放宽旧守卫。
+- [x] 关联修复：实际收紧导出触发镜头150万样本单批上限，cameraGeometry提供批次回调，drawCameraGraph顺序上传相同样本；不改积分质量、曝光或权重，保留单粒极端保护。
+- [x] 版本118、参数变更记录/交互宪章/CHANGELOG与构建；针对缺省、非对称、组合、保存刷新、两平台配置通过。
 
 ### Task 2: 核对更紧候选与交付
 
@@ -33,10 +34,12 @@
 
 **Interfaces:** 已修复的同一P/M→实际RGBA素材包与cascade.json；测完整64帧低亮和标准阈值的二维包围范围，记录米制面积/两方向利用率与像素密度，既有裁切/过曝规则不变。
 
-- [ ] 对照用户主尾焰、粒子版、柔层及SGS1；从整段像素并集确定可收范围，不删除弱火星/柔光，不按三张静帧猜边界。
-- [ ] SGR1/SGS1仅调整可证明安全的边界；如果某方向已经需要所有空间就保留，不为减少黑底裁掉有效火星。用户存档原文件SHA保持。
-- [ ] 原始/收紧各实际PC/手机包与世界比例对照；运动抽样一致；喷口/轨迹按各自尺寸和Pivot还原对齐，不强制三层使用同尺寸。
-- [ ] 真实统一入口打开、改四边、撤销、保存刷新、导出及连续三周期；标准/实包回放通过。UE实播明确未验。
+- [x] 对照用户主尾焰、粒子版、柔层及SGS1；从整段像素并集确定可收范围，不删除弱火星/柔光，不按三张静帧猜边界。
+- [x] SGR1/SGS1仅调整可证明安全的边界；如果某方向已经需要所有空间就保留，不为减少黑底裁掉有效火星。用户存档原文件SHA保持。
+- [x] 原始/收紧各实际PC/手机包与世界比例对照；运动抽样一致；喷口/轨迹按各自尺寸和Pivot还原对齐，不强制三层使用同尺寸。
+- [x] 真实统一入口打开、改四边、撤销、保存刷新、导出及连续三周期；标准/实包回放通过。UE实播明确未验。
 - [ ] 必要默认/六模板/已通过和当前候选回归、正常合入门禁；白名单提交推送、记录结果并释放源码。
 
 执行在当前授权内继续；只读审查与专属测试可并行，生产源码不委派多人同时编辑。
+
+核对结果：18项取景契约通过；当前32条54层缺省映射通过；软件六模板+三图+JM4严格0差，硬件重复绘制约1灰阶差异与其失败报告保留。整段64帧测量限三个候选，用户三存档只作关键帧/参数/SHA对照。SGR1初拟约48%收紧因标准过曝2.57%未通过，保留曝光并退到25.2%；SGS1/SGRS1为26.5%/53.3%。实际六包与标准均过、UI原生/另存刷新/撤销/三周期/真实下载通过，门禁18代表199行及界面8/8通过。UE与用户未验收。

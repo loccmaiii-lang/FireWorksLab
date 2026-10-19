@@ -701,11 +701,11 @@ function sizeAt(m, age) { return m.zoom ? evalKeys(m.sizeKeys, clamp(age / m.dur
 // 紧凑取景：面片中心沿拟合曲线移动（Cascade：Initial Velocity + Drag + Const Acceleration）
 function pathXY(p, t) { const e = Math.exp(-p.k * t), f1 = (1 - e) / p.k, f2 = (t - f1) / p.k; return [p.x0 + p.vx * f1 + p.ax * f2, p.y0 + p.vy * f1 - p.ay * f2]; }
 // 某一时刻面片中心（相对爆点，米）
-function centerAt(m, age) { if (m.path) return pathXY(m.path, clamp(age, 0, m.duration)); const s = sizeXY(m, age); return [0, m.cy * s[1]]; }
+function centerAt(m, age) { if (m.path) return pathXY(m.path, clamp(age, 0, m.duration)); const s = sizeXY(m, age); return [(m.cx || 0) * s[0], m.cy * s[1]]; }
 // 横竖分别缩放（单元序列、紧凑取景）：返回 [横向倍数, 纵向倍数]
 function sizeXY(m, age) { if (m.aniso) { const u = clamp(age / m.duration, 0, 1); return [evalKeys(m.sizeKeysX, u), evalKeys(m.sizeKeysY, u)]; } const s = sizeAt(m, age); return [s, s]; }
-function bakeView(m, sc = 1) { return [0, m.cy, m.HX * sc, m.HY * sc]; }
-function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h, h]; }
+function bakeView(m, sc = 1) { return [m.cx || 0, m.cy, m.HX * sc, m.HY * sc]; }
+function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [m.cx || 0, m.cy, h, h]; }
 
 // 合并输出时星头 / 火花两路的亮度倍数（只给尾缀 / 物理的定帧用：85_stills.js 按画面自动曝光后再乘回）
 function combGain(P) { return [P.headBright == null ? 1 : P.headBright, P.sparkBright == null ? 1 : P.sparkBright]; }

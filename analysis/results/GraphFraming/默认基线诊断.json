@@ -1,0 +1,747 @@
+{
+  "baselineHTML": "e09ea55eb6b598b9e8d263737e033d81c92ea4ed6b098d3adcf00a6ca601a7c3",
+  "currentHTML": "4771bab5d88bafdd3ce6e5d88fcfed35ecef5e6a998cc778517bf481e02c65bb",
+  "complete": true,
+  "pass": false,
+  "rows": [
+    {
+      "id": "template:kiku",
+      "at": 1.54,
+      "version": "4.9.118",
+      "pngSHA": [
+        "2429a29521cfa4a06677423b667392a9467fb116ab0abdc2ae1f821a86867ddb",
+        "b00cd6519097edb1bebc74320d12a98195bda75d10455f85fab16a9cc9f0fac9",
+        "ddbc5f3ee407113692494833bf3cd7d50637eaf7d5da44398a97c468563e364a",
+        "1985d22cd4719cbd1b33472ded03b4bb23bb8796b479cfe6070c0b9bed6bf376"
+      ],
+      "pixelSHA": [
+        "ed4db26f078b8074ca96f276a80d606152fce0fe14ab8144de538e65cffa28c5",
+        "948f1e4d3af6d21abe88956f91684abd4d3a918198a126a723232ba0401b24cf",
+        "037f543a0c2b009634772372e3424e2e195d916253ac82c2619c28fd71bb80e0",
+        "e556e9068dacde71efb9b21257e5ccb880598154bc5e1e6cfe0986b74564dc1d"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 79,
+        "changedChannels": 81,
+        "totalPixels": 65536,
+        "sumAbs": 81
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 69,
+        "changedChannels": 71,
+        "totalPixels": 65536,
+        "sumAbs": 71
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 82,
+        "changedChannels": 86,
+        "totalPixels": 65536,
+        "sumAbs": 86
+      }
+    },
+    {
+      "id": "template:botan",
+      "at": 1.102,
+      "version": "4.9.118",
+      "pngSHA": [
+        "e3efa2e00b066837e9259f35634dc4ed0177107cd268873fe2eb2cc9eb8d80d3",
+        "e3efa2e00b066837e9259f35634dc4ed0177107cd268873fe2eb2cc9eb8d80d3",
+        "e3efa2e00b066837e9259f35634dc4ed0177107cd268873fe2eb2cc9eb8d80d3",
+        "e3efa2e00b066837e9259f35634dc4ed0177107cd268873fe2eb2cc9eb8d80d3"
+      ],
+      "pixelSHA": [
+        "1b0ec2689c7b84784161375368fe140e49920b1f34371f2d4207818aec0288d4",
+        "1b0ec2689c7b84784161375368fe140e49920b1f34371f2d4207818aec0288d4",
+        "1b0ec2689c7b84784161375368fe140e49920b1f34371f2d4207818aec0288d4",
+        "1b0ec2689c7b84784161375368fe140e49920b1f34371f2d4207818aec0288d4"
+      ],
+      "repeat": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "jsonRoundTrip": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "oldVsNew": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      }
+    },
+    {
+      "id": "template:kamuro",
+      "at": 2.38,
+      "version": "4.9.118",
+      "pngSHA": [
+        "538b498328f46e08d4dc436b6557d6ccf20414e56c8f961ebfe1b4afce708389",
+        "ba559eb06d18f2c7ce9fcb7829e2fe841a58375a710ff643dfb6f314567e185d",
+        "c3399529231c34bf7ff349f73a2d4879c7ed89a55dd32b05e1a45b340a4594d0",
+        "00e71474fa45712f133551ddf684fb965cd909058a68f860265e0990601c135e"
+      ],
+      "pixelSHA": [
+        "077602064ae53ca67fdd56425bd3ccc43696549d2a9b0d86d9f79e47690f537c",
+        "209271573e59376fd42b1bce24fea1ff1e0c7128c82e3e9bd6f2e458922383a4",
+        "9614329df31a728716930abb0b31adc62e9cf6299f6479e027f12bfda8b79edf",
+        "4e9b908232897e924fa16c35611eccf6683c714ff9546f5f50cbbe88b9c8ecf8"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 94,
+        "changedChannels": 98,
+        "totalPixels": 65536,
+        "sumAbs": 98
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 89,
+        "changedChannels": 97,
+        "totalPixels": 65536,
+        "sumAbs": 97
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 95,
+        "changedChannels": 99,
+        "totalPixels": 65536,
+        "sumAbs": 99
+      }
+    },
+    {
+      "id": "template:senrin",
+      "at": 1.12,
+      "version": "4.9.118",
+      "pngSHA": [
+        "44c8e25f798534061432fc2f20e440fc87fc5082004f6357fb39799b36522e97",
+        "e62c63268afb328b810b99e2bdd447e33abe7397259fe0b242ea03b25eab2390",
+        "e8775c46ed1b4f4823bac6e7a322d8d82c3860aef3112b27b0f59de2e3ab342b",
+        "6b4602a5b16f74b15b7d038d7755107ccba964f1370ca3e40f1b281dcbd81970"
+      ],
+      "pixelSHA": [
+        "f9b0eb9979fba8e9976dab7d6e172a8b35de750212f2fef5e8ba7ef6e192d701",
+        "1f0d4661d50701ea63526106e446c37ea92dc4fc59f0ae8eb91eb1bb21f03136",
+        "bba30d27891263c480438d6403f58e86442718d6372135a8ebe540127b6fee64",
+        "e58d97984ba5f95807d86d630d9d4e23b9c0869eb387ae6ab6fb749df5fc5cdb"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 35,
+        "changedChannels": 36,
+        "totalPixels": 65536,
+        "sumAbs": 36
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 32,
+        "changedChannels": 35,
+        "totalPixels": 65536,
+        "sumAbs": 35
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 38,
+        "changedChannels": 38,
+        "totalPixels": 65536,
+        "sumAbs": 38
+      }
+    },
+    {
+      "id": "template:strobe",
+      "at": 1.557,
+      "version": "4.9.118",
+      "pngSHA": [
+        "b38067bd5c55b68f9b5bb343cf0737fba05d077fc6974910be636cec5c1e53b2",
+        "b38067bd5c55b68f9b5bb343cf0737fba05d077fc6974910be636cec5c1e53b2",
+        "b38067bd5c55b68f9b5bb343cf0737fba05d077fc6974910be636cec5c1e53b2",
+        "b38067bd5c55b68f9b5bb343cf0737fba05d077fc6974910be636cec5c1e53b2"
+      ],
+      "pixelSHA": [
+        "4fed73245a351262d0b00d2c612299596e7209129b5bf0b71b2ae49809f54534",
+        "4fed73245a351262d0b00d2c612299596e7209129b5bf0b71b2ae49809f54534",
+        "4fed73245a351262d0b00d2c612299596e7209129b5bf0b71b2ae49809f54534",
+        "4fed73245a351262d0b00d2c612299596e7209129b5bf0b71b2ae49809f54534"
+      ],
+      "repeat": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "jsonRoundTrip": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "oldVsNew": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      }
+    },
+    {
+      "id": "template:crackle",
+      "at": 1.802,
+      "version": "4.9.118",
+      "pngSHA": [
+        "1ff3d2c99ceaca081f64bbb115471884cda293f70648a49dd29357fb6a2d3890",
+        "8d99a26248aad2154a2eae92067adb5cb23dda4448b20e5a5992d4e41b94ce18",
+        "5537bd9274eb82a91edcb797ecbcef30c5dbaa1a58e027a0f69851be443e30a8",
+        "b2e0d92daad9a593d250d7bec678135453011e0ff63b595a3c89cdbfd5555699"
+      ],
+      "pixelSHA": [
+        "d8dd880aa1435ca21c04bdb85214f4b9c17951cd5786f5d5d387138fb33abd74",
+        "968e17edf8b21d825babdca2cb4e5b01c7480bb9a0e75405c3a49fa2a07bd403",
+        "60bde56c91d7cb093544738e6ca7bd26a26d9933045c1f708a794e3bd3d3b5ec",
+        "e829d4cf55c88990d5e77b728fa7c8325e131bc00ae5b23555d0be8295f820e7"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 2,
+        "changedChannels": 2,
+        "totalPixels": 65536,
+        "sumAbs": 2
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 5,
+        "changedChannels": 5,
+        "totalPixels": 65536,
+        "sumAbs": 5
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 5,
+        "changedChannels": 6,
+        "totalPixels": 65536,
+        "sumAbs": 6
+      }
+    },
+    {
+      "id": "entry:SGS1",
+      "at": 0.89,
+      "version": "4.9.118",
+      "pngSHA": [
+        "8976e5623e0095863ad1e2aef7d40800f14a7ec71cec5eebdfa7d0a96bc11acc",
+        "dbc4e98b0bdbaa91545452f452113f68353696d52c55e8c2f627e29639b20f2f",
+        "6121513f1f04a18bfb5d36bbfdd1268546f5eafdb683e9728b4d6b2567b6f979",
+        "25709df281e9d7500376f680969e88b8714a394ad0d7e0c43c9d446b8d4f4ddb"
+      ],
+      "pixelSHA": [
+        "ea4e4488fda213547f708a15e2b0c13049047fd565a70708af3786fd83f40c48",
+        "8d7bb79fd82f21931f9d717ca9751fb2407c5ee57165d6e59e3c5f6c8ec34bfb",
+        "8f1e17b6c23127e457eb2dd29658fa2272de920169a9657934378399e0c64d3b",
+        "5b353ce4152044fbe873247f15ce1d50dcb452ac22f209a7d9e27fc0e2df5623"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 269,
+        "changedChannels": 285,
+        "totalPixels": 262144,
+        "sumAbs": 285
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 262,
+        "changedChannels": 278,
+        "totalPixels": 262144,
+        "sumAbs": 278
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 275,
+        "changedChannels": 291,
+        "totalPixels": 262144,
+        "sumAbs": 291
+      }
+    },
+    {
+      "id": "entry:SGR1",
+      "at": 0.89,
+      "version": "4.9.118",
+      "pngSHA": [
+        "fde12a892db03da2bfa27c5c640f82cdbbeedb649a1a3c71bf9f97815205d0ae",
+        "bad8a10e48af37f6046add26c9dbb73b23b51b515ebf356932543bd379f208f4",
+        "c9ee5f130b2436d56ef9b0c99bce234c7762f9798b596e4b091d01b9629eb2f2",
+        "a985becb842dd70771048cad76bab503bdba403b33cc40019b7b654fe5614318"
+      ],
+      "pixelSHA": [
+        "7e12542ca0c78baf8c15ba18131290cc7917cd158343bda4e4dea29d3fa6bbc2",
+        "5f6fc86d31dfa7d6f63d4834a0853f46465f8825eaa19fd53df938d7e4c2151d",
+        "8d03fe73632b0bccfe9bcb0bb512517d094dbd47a991051834f27ae527c16e73",
+        "f348ea68965b674eb8fbd4e1f9aee0dee8487ff8bd3d80b547cb6541364c3716"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 419,
+        "changedChannels": 435,
+        "totalPixels": 262144,
+        "sumAbs": 435
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 438,
+        "changedChannels": 459,
+        "totalPixels": 262144,
+        "sumAbs": 459
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 417,
+        "changedChannels": 434,
+        "totalPixels": 262144,
+        "sumAbs": 434
+      }
+    },
+    {
+      "id": "entry:SGRS1",
+      "at": 0.89,
+      "version": "4.9.118",
+      "pngSHA": [
+        "c1b9022e97c2241063ec081b2d1fbaec6b1225ecef7239699254ee7b9fa112a7",
+        "f08a18ad16867327a95dea4f522788ed7fecd843f200db364659446775ac42d1",
+        "1380ba69b83c80418f895df456251c163b419dcd1d98aee3e4af8ec370aef12a",
+        "b01cde9e956b8b288bdae0d6cb2576cb54a48fe856dc7dccad26e5c419e7468e"
+      ],
+      "pixelSHA": [
+        "01e4055209bf24ca158d1faddaa688f6d40f52bb435f4e0b6452f8927583c1fb",
+        "4db6e640357deee7ed4e32768a4184297b972f5e32eae7af6489a62e70c28cb0",
+        "a24fe954f35b41a019f47fe590facf2481b81679b8ed8987791f248a47be032e",
+        "2ed67180e926af048d3f02efd7b47721104317c781d830d995859dda0d74e211"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 9,
+        "changedChannels": 9,
+        "totalPixels": 262144,
+        "sumAbs": 9
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 11,
+        "changedChannels": 11,
+        "totalPixels": 262144,
+        "sumAbs": 11
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 9,
+        "changedChannels": 9,
+        "totalPixels": 262144,
+        "sumAbs": 9
+      }
+    },
+    {
+      "id": "representative:JM4-40:JM4-40",
+      "at": 3.85,
+      "version": "4.9.118",
+      "pngSHA": [
+        "38ec605317559483359cacad48b3b51c1ee2193830769f91c1708313116c7326",
+        "3bf208a693320db8f762a15a1fb3de4837bc9b07532bc0f68d053c8840ec3961",
+        "995afebb6fee333685f877208d126b46e649e7bd352b870edac5c41811619f61",
+        "aa9053b1b3e36138cff361c87a7d8461a2d819d79bf7a37815917a896b0dfb54"
+      ],
+      "pixelSHA": [
+        "82c8b2e2b9898a44bcb653f8831e09f0b018983f1b6a07ba5d867a45d490a8b0",
+        "8de2ec4cff5856360a2b2129502affeca93d3b4c064b2ea379a98592ffc9408f",
+        "a4265398cad8643ccaec127ffc0dac7591c052318be1e068b9e6ef435fcd7c45",
+        "d3bb15375f52a956fb4edc3432bb921bc65fe4ec49074e4c5580c03f53a9d475"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 6,
+        "changedChannels": 6,
+        "totalPixels": 65536,
+        "sumAbs": 6
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 4,
+        "changedChannels": 4,
+        "totalPixels": 65536,
+        "sumAbs": 4
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 5,
+        "changedChannels": 5,
+        "totalPixels": 65536,
+        "sumAbs": 5
+      }
+    },
+    {
+      "id": "representative:QA20:QA20-1",
+      "at": 2.8,
+      "version": "4.9.118",
+      "pngSHA": [
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651"
+      ],
+      "pixelSHA": [
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979"
+      ],
+      "repeat": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "jsonRoundTrip": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "oldVsNew": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      }
+    },
+    {
+      "id": "representative:HK10:HK10-1",
+      "at": 12.915,
+      "version": "4.9.118",
+      "pngSHA": [
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651"
+      ],
+      "pixelSHA": [
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979"
+      ],
+      "repeat": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "jsonRoundTrip": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "oldVsNew": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      }
+    },
+    {
+      "id": "representative:JQ7:JQ7-1",
+      "at": 1.232,
+      "version": "4.9.118",
+      "pngSHA": [
+        "6ee34ce31984e3e8db0702fb3c76bd3dca377a23d52a531c9d023bfe675c7dab",
+        "7abc925c7880c948f5ecbeea279802be329db354e29523a58bd68aea26b34d04",
+        "94b48fd8ab9a0d9039ea4fd5191d215b6c440e6e0a55de8908301a33de59642a",
+        "abfa3d54455441d1b75e611c31518c29c424fb9ca1862a5861cb5541da391620"
+      ],
+      "pixelSHA": [
+        "8508b7f566fa88f6f0930a64c7cebe30cb3bd09778a1e53b3505ef04f91a31f9",
+        "b63e42ff124e3b166551efe165bf72c7999765c000e6a0ddcef77a7f57f17ff8",
+        "f37ed7e8b1bc6d9a5a1a7b9dd4b958708a7c7431f71edcbafc6f395d57efa88f",
+        "178ac89c74cf738049949688b9f0141ace7428954379adc854e10b0241a2e449"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 11,
+        "changedChannels": 11,
+        "totalPixels": 65536,
+        "sumAbs": 11
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 10,
+        "changedChannels": 10,
+        "totalPixels": 65536,
+        "sumAbs": 10
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 13,
+        "changedChannels": 13,
+        "totalPixels": 65536,
+        "sumAbs": 13
+      }
+    },
+    {
+      "id": "representative:FC10R:FC10R-1",
+      "at": 2.8,
+      "version": "4.9.118",
+      "pngSHA": [
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651",
+        "ab1afd1d1529bca3c024591d89d1f0257630bc658e0c7c882a92cd0149fb1651"
+      ],
+      "pixelSHA": [
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979",
+        "171475f96f9b509f8114f2b79231cd922ff89bf8520834903021d34410da4979"
+      ],
+      "repeat": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "jsonRoundTrip": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      },
+      "oldVsNew": {
+        "same": true,
+        "max": 0,
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "totalPixels": 65536,
+        "sumAbs": 0
+      }
+    },
+    {
+      "id": "representative:JMB1:JMB1",
+      "at": 3.85,
+      "version": "4.9.118",
+      "pngSHA": [
+        "e107c14a8b54fd50f9215d4e25b88a10c73bac532feb7038fd03c494d7807cc9",
+        "1ad90fa461dddf3b6b81dbea839cc6730d55a87955aa9e38abed6348970263e1",
+        "45f1e8a0793995d769ac9996adbf2f05d1d03f601755133b0040fd6595a36925",
+        "39257cb7fd9c05ea4b87522430a4c2fddec49673dd15ed844354b68867b0e242"
+      ],
+      "pixelSHA": [
+        "6c14f978d62799fe754095929978d50c4fc3ce2fa60d70cd539236dd3d9bab3d",
+        "23142b87db03238a756b032c4de039e89e583d31798ba863686bffe77644f738",
+        "4136968b0fe0db6abf32c8d2e8cd13822e0fc5385be1c470c4d8a9b936e48b89",
+        "6fdc2cee51b106576b2da09bd1a43bd8a0a22d2ad1060d2a402b29c5e18bad5c"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 7,
+        "changedChannels": 7,
+        "totalPixels": 65536,
+        "sumAbs": 7
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 7,
+        "changedChannels": 7,
+        "totalPixels": 65536,
+        "sumAbs": 7
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 4,
+        "changedChannels": 4,
+        "totalPixels": 65536,
+        "sumAbs": 4
+      }
+    },
+    {
+      "id": "saved:rocket-main",
+      "at": 0.89,
+      "version": "4.9.118",
+      "pngSHA": [
+        "3366fbd0c7453066eae0649b18ec1db6f13243edf0d86e7eb3cc8f1ab4964399",
+        "539cbb0def647c87082417e70ea182a407e79960ff8370448ad1856d3d225f17",
+        "46bb16923e221e044e1e3eca42d394873f6f0421ff7645434ea0abc1407bbca0",
+        "14171c86b8a15257a68ddbe4c3e0e7781a7b9ad7a36ee119a37ce0b0835797a2"
+      ],
+      "pixelSHA": [
+        "d9b54a276368106b886eb959fa57bacf45a513fa6e2f89055e36531780a08c07",
+        "1921b87284cb8a5e9d77297ea6fd069973b162b5a20ca1b9d951e4493af8a298",
+        "f1e0bde07aa8e62abe3f9a70b44ab534e1a10b59a6abeb63d88248913166737f",
+        "3f4ca08331903615ada9ea4e4ecc5320ddb7f04c138c9da0dabba66cca413718"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 538,
+        "changedChannels": 555,
+        "totalPixels": 262144,
+        "sumAbs": 555
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 554,
+        "changedChannels": 577,
+        "totalPixels": 262144,
+        "sumAbs": 577
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 540,
+        "changedChannels": 560,
+        "totalPixels": 262144,
+        "sumAbs": 560
+      }
+    },
+    {
+      "id": "saved:rocket-particles",
+      "at": 0.89,
+      "version": "4.9.118",
+      "pngSHA": [
+        "8011f8ee05eb6a5f8a678d3a2565077428b4687e34d2911fc2538ee4d64c28ec",
+        "4886713a3455c380f14b6fc6477086fcaa622a1e646f17821aa26c27cd8b1835",
+        "b580a3d2957dc03e28a3c544d3a324dec09adb195a30ec69d6fe9cf6c3001995",
+        "10b55bf30df8f58dc7d393192c8e3514f7074c2d5aec584e638c1a98635f8701"
+      ],
+      "pixelSHA": [
+        "3239487a8376e0a51cf05cc8793476dcf7dd132cd0dcb917a2bb369b6d0b43e0",
+        "ea0341b728a49b95a90796db33442e567856901ca2778889ffb3d77f7b4cafad",
+        "124ea51a9377cdd527b0b108363a2349f9025b0cbc2dba4774cfe8ea4b284f4d",
+        "9bdd29a5ed2c1164a6046943b7dbde03fa91a6a266e87ece210166a8874758c2"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 91,
+        "changedChannels": 92,
+        "totalPixels": 262144,
+        "sumAbs": 92
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 98,
+        "changedChannels": 100,
+        "totalPixels": 262144,
+        "sumAbs": 100
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 88,
+        "changedChannels": 89,
+        "totalPixels": 262144,
+        "sumAbs": 89
+      }
+    },
+    {
+      "id": "saved:rocket-soft",
+      "at": 0.89,
+      "version": "4.9.118",
+      "pngSHA": [
+        "e8605d940677d03be74b5675297ecb80b8cb093158e269abe13bfbd1268f9648",
+        "cda6acae3698648a55e6fc41aa7e4e7204440fb1f9be4c4a4e3eb964d9133ce7",
+        "9caa9e0f15842e1e00fb73b5b2641772c6b5c5548d0df84a7a1e369394fee6a2",
+        "a495ee97762db78ba001f68bf78535b1c0c3f777d819a021a1b1b1595f7a2e8f"
+      ],
+      "pixelSHA": [
+        "e72d90b0cfb5825b243c5b4c093697a67957ffee71450ecb6f3b3ecc15381b5b",
+        "ffa584b54f2f48d07830a08b99b616181aee5e5e3da1b47b7f76cdc4c322e517",
+        "e9652ef9347b51f9386c7e2b3ab7013c713824bfff52e3c1e746f7138a5f584e",
+        "fc1dda1e6ab79478f5055c20086120c5c4443e4f3fc64268ea3dcd6e3ca12ad9"
+      ],
+      "repeat": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 10,
+        "changedChannels": 10,
+        "totalPixels": 262144,
+        "sumAbs": 10
+      },
+      "jsonRoundTrip": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 12,
+        "changedChannels": 12,
+        "totalPixels": 262144,
+        "sumAbs": 12
+      },
+      "oldVsNew": {
+        "same": false,
+        "max": 1,
+        "changedPixels": 9,
+        "changedChannels": 9,
+        "totalPixels": 262144,
+        "sumAbs": 9
+      }
+    }
+  ],
+  "errors": []
+}

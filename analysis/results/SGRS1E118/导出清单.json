@@ -1,0 +1,27 @@
+{
+  "effect": "rocket_soft",
+  "entry": "SGRS1",
+  "ver": "fd0bcba9·graph4.9.118+loop4.9.106",
+  "version": "4.9.118",
+  "time": "2026-10-19T09:57:09",
+  "dir": "analysis/local/输出/取景修复_20261019/RocketTail_Soft",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_RocketTail_Soft",
+      "replica": "SGRS1",
+      "sha256": "4c956f675e96ede38c27e69fd144c5708083fe325f829da4268fbaa03707b0a3"
+    }
+  ],
+  "platforms": [
+    "PC",
+    "手机"
+  ],
+  "params": "analysis/results/GraphFraming/SGRS1/candidate/导出核对.json",
+  "bounds": [
+    -3.74,
+    3.85,
+    -15.89,
+    1.33
+  ],
+  "UE实播": false
+}

@@ -139,7 +139,7 @@ const SparkGraph = (() => {
     }return{data:new Float32Array(out),counts};
   }
   // 曝光窗口内逐粒积分。每项额外保存真实Y深度计算出的散焦半径；不重复画历史拖尾。
-  function cameraGeometry(graph,time,P,ppm,only=null){
+  function cameraGeometry(graph,time,P,ppm,only=null,onBatch=null){
     const c=CameraImaging.validate(P),[a,b]=CameraImaging.window(c,time),width=b-a,r=graph.recipe,out=[],counts={},quality=CameraImaging.quality(c);
     for(const q of graph.all){const e=q.e;if(e.enabled===false||(only&&e.id!==only))continue;
       const first=Math.floor((a-q.birth-q.life)/r.period)+1,last=Math.floor((b-q.birth)/r.period);
@@ -150,7 +150,13 @@ const SparkGraph = (() => {
         const speed=Math.max(...[s0,sm,s1].map(s=>Math.hypot(s.v[0],s.v[2]))),rad=q.width*.5*Math.max(curve(e.sizeCurve,mid/q.life),.01)*ppm;
         const step=Math.max(quality.step,Math.min(3,rad*.4)),rotation=Math.abs(e.spin)*Math.PI/180*span*rad*Math.max(1,e.aspect);
         const n=width?Math.max(1,Math.ceil(speed*span*ppm/step),Math.ceil(span*quality.hz),Math.ceil(rotation/step)):1;
-        if(n>8192||out.length/12+n>1500000)throw Error('镜头采样量过大：请缩短曝光或使用快速质量');
+        if(n>8192)throw Error('单颗粒子镜头采样量过大：请扩大取景或缩短曝光');
+        // 收紧取景会提高所需采样密度；分批上传相同样本，不降质量或改变曝光权重。
+        // 直接取整份geometry的旧调用仍保留内存上限，渲染器提供回调才允许继续。
+        if(out.length/12+n>1500000){
+          if(!onBatch)throw Error('镜头采样量过大：请缩短曝光或使用快速质量');
+          onBatch(new Float32Array(out));out.length=0;
+        }
         const weight=width?span/width/n:1;counts[e.id]=(counts[e.id]||0)+1;
         for(let j=0;j<n;j++){
           const age=age0+(j+.5)*span/n,u=age/q.life,fade=Math.min(1,age/.002)*Math.min(1,(q.life-age)/.008),I=q.power*curve(e.brightCurve,u)*fade*weight;if(I<=0)continue;
@@ -248,8 +254,8 @@ SCHEMA.push(
   ]},
   { sec: '分层粒子图', graphOnly: true, show: P => !!P.sparkGraph, hint: '整张粒子图共用：循环周期、取景范围、偶发爆发时刻、导出时是否跟着喷口轴转。', items: [
     ['sparkGraph.period', '循环周期（粒子寿命上限要比它短）', 's', .2, 6, .01],
-    ['sparkGraph.bounds.0', '取景 · 左', 'm', -50, 0, .01], ['sparkGraph.bounds.1', '取景 · 右', 'm', 0, 50, .01],
-    ['sparkGraph.bounds.2', '取景 · 下', 'm', -50, 0, .01], ['sparkGraph.bounds.3', '取景 · 上', 'm', 0, 50, .01],
+    ['sparkGraph.bounds.0', '左边界', 'm', -50, 0, .01], ['sparkGraph.bounds.1', '右边界', 'm', 0, 50, .01],
+    ['sparkGraph.bounds.2', '下边界', 'm', -50, 0, .01], ['sparkGraph.bounds.3', '上边界', 'm', 0, 50, .01],
     { text: 'sparkGraph.bursts', label: '爆发（时刻:半宽，秒）', io: GRAPH_IO.bursts },
     { sel: 'sparkGraph.followAxis', label: '导出时跟随喷口轴（Orientation Axis Lock）', io: GRAPH_IO.bool, options: [['1', '跟随'], ['0', '不跟随']] }
   ] },

@@ -1,0 +1,27 @@
+{
+  "effect": "rocket_graph",
+  "entry": "SGR1",
+  "ver": "79964198·graph4.9.118+loop4.9.106",
+  "version": "4.9.118",
+  "time": "2026-10-19T09:57:09",
+  "dir": "analysis/local/输出/取景修复_20261019/RocketTail_Graph",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_RocketTail_Graph",
+      "replica": "SGR1",
+      "sha256": "d4c3df2ec2881a9f17f0bad032e46c8004ef5f8aa6d50397b3da026403308175"
+    }
+  ],
+  "platforms": [
+    "PC",
+    "手机"
+  ],
+  "params": "analysis/results/GraphFraming/SGR1/candidate/导出核对.json",
+  "bounds": [
+    -5.36,
+    5.75,
+    -18,
+    0.85
+  ],
+  "UE实播": false
+}

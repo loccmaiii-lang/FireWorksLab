@@ -1,0 +1,48 @@
+{
+  "pass": false,
+  "phase": "SGR1：原生单层配方导入与实际烘焙回放",
+  "rows": [
+    {
+      "id": "SGR1",
+      "recipe": "analysis\\results\\GraphFraming\\SGR1\\candidate\\RocketTail_Graph.recipe.json",
+      "recipeSHA256": "2abecbe835735b64580510afa3da28779cfa95152c6153db7a6ef55017550d8f",
+      "candidateOpened": true,
+      "fourBoundsVisible": true,
+      "bounds": [
+        -5.36,
+        5.75,
+        -18,
+        0.85
+      ],
+      "edit": true,
+      "undo": true,
+      "redo": true,
+      "saveAsNew": true,
+      "saveReload": true,
+      "tempId": "fxmveluqcf9xdc6",
+      "editedRight": 5.85
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "sourceSHA256": {
+    "analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json": "d9f8de5cc7de212e866650c7f4ae2b6d28b3ed70ff14902f337005ecfe65bc11",
+    "analysis/我的配方/my_fxmv9h8webs6bnz/正式资产-窜天猴尾焰-粒子__fxmv9h8webs6bnz.json": "74a817b97cbc37bb2cfe3961ef942de6343860b10c7c62b6713d7e49563fe65f",
+    "analysis/我的配方/my_fxrockettailsoft20261018/正式资产-窜天猴尾焰-柔光暗底__fxrockettailsoft20261018.json": "e302796ce08e4688dd734e704cd645bdaad024694990d47a234030e62e269576"
+  },
+  "version": "4.9.118",
+  "failure": {
+    "message": "page.waitForFunction: Timeout 30000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 30000ms exceeded.\n    at main (F:\\FireWorksLab\\analysis\\scripts\\graph_framing_ui.cjs:48:15)"
+  },
+  "pageState": {
+    "status": "",
+    "view": "live",
+    "baking": false,
+    "dirty": false,
+    "phase": "烘焙你的层：分层火星 · 我的 1"
+  },
+  "browserClosed": true
+}
