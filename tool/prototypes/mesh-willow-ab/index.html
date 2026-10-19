@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>网格垂柳 A/B</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* 布局：上面一行看法设置，中间 A | B 两块同步播放的游戏画面（窄屏上下叠），下面时间轴和 B 的参数。夜空观察器，固定深色。 */
+:root{
+  --bg:#06080c; --panel:#0e131b; --line:#222c3a; --fg:#dfe5ee; --mute:#8592a5;
+  --a:#9fb2c8; --b:#e3b964; --b-ink:#1d1406; --ok:#8fcaa6; --warn:#e8a65f;
+  --f-ui: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --f-num: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  color-scheme: dark;
+}
+html,body{height:auto}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.55 var(--f-ui)}
+.wrap{max-width:1500px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:14px 28px;display:flex;flex-direction:column;gap:12px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+h1{font-size:17px;font-weight:650;margin:0;letter-spacing:.01em;text-wrap:balance}
+.sub{color:var(--mute);font-size:12.5px;min-width:0}
+.bar{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:8px 10px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.grp{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lab{font-size:11px;color:var(--mute);letter-spacing:.06em}
+button{background:#151c28;color:var(--fg);border:1px solid #334157;border-radius:6px;padding:3px 10px;cursor:pointer;font:inherit;font-size:12px;line-height:1.5}
+button:hover{border-color:#52668a}
+button.on{background:var(--b);color:var(--b-ink);border-color:var(--b)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--b);outline-offset:1px}
+input[type=range]{accent-color:var(--b);width:130px}
+input[type=checkbox]{accent-color:var(--b)}
+.num{font:500 12px var(--f-num);font-variant-numeric:tabular-nums}
+#stage{position:relative;width:100%;height:min(72vh, 680px);min-height:360px;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#010204}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:pixelated;touch-action:none}
+.tag{position:absolute;top:8px;font-size:12px;padding:2px 8px;border-radius:999px;background:rgba(6,8,12,.72);border:1px solid currentColor;pointer-events:none}
+#tagA{left:8px;color:var(--a)} #tagB{color:var(--b)}
+.foot{position:absolute;bottom:8px;font-size:11.5px;color:var(--mute);background:rgba(6,8,12,.72);padding:3px 8px;border-radius:6px;pointer-events:none;max-width:46%}
+#footA{left:8px}
+#tbig{position:absolute;right:10px;top:8px;font:600 15px var(--f-num);color:var(--fg);pointer-events:none;text-shadow:0 0 6px #000}
+.trans{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.trans input[type=range]{flex:1 1 260px;width:auto;min-width:160px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.card h2{font-size:13.5px;margin:0 0 8px;font-weight:650}
+.card h2 .k{color:var(--b)}
+.sl{display:grid;grid-template-columns:118px minmax(0,1fr) 62px;align-items:center;gap:8px;margin:5px 0}
+.sl span{color:var(--mute);font-size:12px}
+.sl input{width:100%}
+.sl b{font:500 12px var(--f-num);text-align:right;font-variant-numeric:tabular-nums}
+.derived{margin-top:8px;padding:8px 10px;border-radius:6px;background:#0a0f16;border:1px solid var(--line);font-size:12px;color:var(--fg);white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;font-size:12px}
+td,th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:500;font-size:11.5px}
+td.v{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:normal;overflow-wrap:anywhere;min-width:12em}
+td.d{color:var(--mute);min-width:10em}
+table{table-layout:auto}
+.tw{overflow-x:auto}
+ul{margin:4px 0 0;padding-left:18px} li{margin:2px 0}
+.note{color:var(--mute);font-size:12px}
+#copy{margin-top:8px}
+#err{display:none;place-items:center;position:absolute;inset:0;color:var(--warn);font-size:14px;text-align:center;padding:20px}
+@media (max-width:820px){ .cols{grid-template-columns:minmax(0,1fr)} #stage{height:min(130vh, 900px)} .foot{max-width:92%} .sl{grid-template-columns:96px minmax(0,1fr) 56px} }
+@media (prefers-reduced-motion: reduce){ *{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>网格垂柳 A/B · 颗粒与闪烁</h1>
+    <div class="sub"><b style="color:var(--a)">A 现状</b>（正式资产复刻，颗粒关）对 <b style="color:var(--b)">B 首选</b>（零开销：只改材质实例和粒子参数 + 重做条带内容）· 725 m 游戏机位、1:1 游戏像素（1080p）、按引擎 30 fps 取时间</div>
+  </header>
+
+  <div class="bar" role="group" aria-label="看法设置">
+    <div class="grp"><span class="lab">竖向视角</span>
+      <button id="fov60" class="on" title="推断：从 B09 实放截图估的，没实测">60°（推断）</button>
+      <button id="fovStd" title="项目标准 2.1：1000 m 时 700 m ≈ 屏高 1/3">项目标准 92.8°</button></div>
+    <div class="grp"><span class="lab">距离</span><input id="dist" type="range" min="600" max="900" step="5" value="725" aria-label="相机到垂柳中心的距离"><span id="distV" class="num"></span></div>
+    <div class="grp"><span class="lab">像素</span>
+      <button data-px="1" class="on">1:1</button><button data-px="2">×2</button><button data-px="3">×3</button></div>
+    <div class="grp"><span class="lab">网格</span>
+      <button id="nPC" class="on">PC 400 束</button><button id="nM">手游 130 束</button></div>
+    <label class="grp"><input id="bloom" type="checkbox" checked> <span>泛光</span></label>
+  </div>
+
+  <div id="stage">
+    <canvas id="c" aria-label="A 和 B 两块同步播放的网格垂柳画面"></canvas>
+    <span class="tag" id="tagA">A 现状 · 正式资产复刻</span>
+    <span class="tag" id="tagB">B 首选 · 零开销</span>
+    <div class="foot" id="footA"></div>
+    <div class="foot" id="footB"></div>
+    <div id="tbig"></div>
+    <div id="err">这个浏览器不支持 WebGL2，看不了预览。</div>
+  </div>
+
+  <div class="trans" role="group" aria-label="时间">
+    <button id="play">▶ 播放</button>
+    <input id="time" type="range" min="0" max="14.25" step="0.0333" value="9" aria-label="开花后时间">
+    <span class="num" id="timeV"></span>
+    <span class="grp"><button data-t="3">3 s</button><button data-t="6">6 s</button><button data-t="9">9 s</button><button data-t="12">12 s</button></span>
+    <span class="grp"><button id="stepB" title="后退一帧（1/30 s）">‹ 帧</button><button id="stepF" title="前进一帧（1/30 s）">帧 ›</button></span>
+    <span class="grp"><span class="lab">速度</span><button data-sp="1" class="on">×1</button><button data-sp="0.5">×0.5</button><button data-sp="0.25">×0.25</button></span>
+  </div>
+
+  <div class="cols">
+    <section class="card" aria-labelledby="hB">
+      <h2 id="hB"><span class="k">B</span> 的可调量</h2>
+      <div class="grp" style="margin-bottom:6px"><span class="lab">预设</span><button id="prPhys" class="on">物理估计</button><button id="prBoost">加强颗粒（更像升空尾缀，非物理）</button></div>
+      <div class="sl"><span>颗粒开始</span><input id="tOn" type="range" min="0" max="12" step="0.5" value="7.5" aria-label="颗粒开始出现的时间（秒）"><b id="tOnV"></b></div>
+      <div class="sl"><span>渐出用时</span><input id="ramp" type="range" min="1" max="5" step="0.5" value="3" aria-label="颗粒从无到满强度用的时间"><b id="rampV"></b></div>
+      <div class="sl"><span>颗粒软硬</span><input id="hard" type="range" min="0" max="0.48" step="0.01" value="0.35" aria-label="hardness"><b id="hardV"></b></div>
+      <div class="sl"><span>末段清空</span><input id="p2end" type="range" min="-0.25" max="0.05" step="0.01" value="-0.06" aria-label="Param2 末段值"><b id="p2endV"></b></div>
+      <div class="sl"><span>尾巴延长亮度</span><input id="gain" type="range" min="0" max="8" step="0.5" value="2" aria-label="A 淡完以后那段暗光的亮度倍数"><b id="gainV"></b></div>
+      <div class="sl"><span>白热段保护</span><input id="kci" type="range" min="1" max="4" step="0.5" value="1" aria-label="ColorIntensity"><b id="kciV"></b></div>
+      <label class="grp" style="margin:6px 0"><input id="comp" type="checkbox" checked> <span>颗粒出来时补亮度（Color Scale Over Life 曲线）</span></label>
+      <div class="sl"><span>闪烁频率</span><input id="twHz" type="range" min="0" max="8" step="0.5" value="4" aria-label="闪烁频率"><b id="twHzV"></b></div>
+      <div class="sl"><span>颗粒屏上大小</span><input id="dotPx" type="range" min="1" max="5" step="0.25" value="2" aria-label="颗粒在屏上的像素"><b id="dotPxV"></b></div>
+      <div class="derived" id="derived"></div>
+      <p class="note">颗粒什么时候出来由 Param2 曲线管（整个粒子一个值）：物理预设按 HK10-1 存活率，年龄 7–9.5 s 以后才断成点，所以 7.5 s 才开始渐出。「白热段保护」就是 ColorIntensity：大于 1 时白热段透明度顶满、颗粒打不进去，颗粒提早出来时（加强预设）用。「尾巴延长亮度」是 A 淡完之后接的那段暗光的倍数，溶解阶段的亮点靠它。改这两项会重算 B 的条带。</p>
+    </section>
+
+    <section class="card" aria-labelledby="hUE">
+      <h2 id="hUE">B 的数值（照着进 UE 沙盒副本）</h2>
+      <div class="tw"><table id="ueTab"></table></div>
+      <button id="copy">复制这张表</button>
+      <h2 style="margin-top:14px">这页模拟了什么、没模拟什么</h2>
+      <ul class="note">
+        <li>A 的网格、条带、动态参数、颜色倍数、寿命、缩放都按正式资产读回复刻（`B09主角读数.md`、`COLOR_BASELINE_20261019/标定.json`）；400 束 ε 0.78 = 10,988 顶点、手游 130 束 ε 3 = 1,998，和 UE 读数一致。</li>
+        <li>材质按 UE 采集的 Soft 母材质节点算：透明度 = saturate(主图 A × ColorIntensity × 粒子 Alpha × 溶解遮罩)，溶解 = smoothstep(h, 1−h, 噪声 + 2·Param2)，噪声 UV 固定在轨迹上、可横移；混合是 Translucent（母材质 BlendMode 读回）。</li>
+        <li>做 A/B 时发现：研究文档里「靠 ColorIntensity 顶满透明度、按年龄断点」只对亮的白热段成立。暗的段要么被提亮好几倍，要么得把亮度挪进颜色、透明度留高——Translucent 下这会变成挡住后面烟花的暗纱。所以 B 的亮度仍放在透明度里，颗粒出现的时间改由 Param2 曲线按时间管。</li>
+        <li>B 的噪声图是<b>程序生成的替身</b>（256²，暗底 + 亮点）。UE 里候选的 `T_EFX_FireWorks_GoldSpark_2x2_01D` 长什么样没看过，不合适就要新做一张小图（算新增）。</li>
+        <li>没模拟：TAA、UE 的曝光 / 泛光 / 色调映射（这里两边用同一套近似，只能比 A 和 B 的差别）、半透明排序、真机。竖向视角 60° 是推断，要用实机截图量。</li>
+        <li>断点时间按 HK10-1 配方的火花寿命估（普通 55 % · 2.03 s · σ 0.45；余烬 45 % · 6.48 s · σ 0.2）。正式网格的轨迹来自 v2 近似模拟，不是烘焙器。正式资产寿命 14.25 s、DP0 按 16.1 s 设计，所以整朵播放比轨迹快约 13 %，A、B 都照这个复刻。</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script id="mw-core">
+/* 核心（无 DOM）：模拟、分段、建网格、条带 / 颗粒贴图。UE 导出脚本也直接读这一段，保证预览和资产同一份算法。 */
+(function (root) {
+'use strict';
+function rng(seed) { let s = seed >>> 0; return () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function gauss(R) { let u = 0; while (u < 1e-9) u = R(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * R()); }
+const DT = 1 / 60, SUB = 4;
+/* 二次阻力 c = 9.8 / vt²，重力 9.8 × 倍率单独加 */
+function simulate(r) {
+  const R = rng(r.seed), N = Math.round(r.N), g = 9.8 * r.gm, c = 9.8 / (r.vt * r.vt), h = DT / SUB, stars = [];
+  for (let i = 0; i < N; i++) {
+    const y = 1 - 2 * (i + 0.5) / N, rr = Math.sqrt(Math.max(0, 1 - y * y)), ph = i * Math.PI * (3 - Math.sqrt(5));
+    const d = [rr * Math.cos(ph), y, rr * Math.sin(ph)];
+    const v = r.v0 * Math.max(0.2, 1 + r.spd / 100 * gauss(R));
+    const be = Math.max(0.5, r.burn * (1 + r.burnJit / 100 * gauss(R)));
+    let vx = d[0] * v, vy = d[1] * v, vz = d[2] * v, x = 0, yy = 0, z = 0;
+    const step = hh => { const sp = Math.hypot(vx, vy, vz); vx -= c * sp * vx * hh; vy += (-c * sp * vy - g) * hh; vz -= c * sp * vz * hh; x += vx * hh; yy += vy * hh; z += vz * hh; };
+    const nS = Math.floor(be / DT), rem = be - nS * DT, n = nS + 1 + (rem > 1e-4 ? 1 : 0);
+    const pts = new Float32Array(n * 3), times = new Float32Array(n);
+    let k = 1;
+    for (let s = 1; s <= nS; s++) { for (let q = 0; q < SUB; q++) step(h); pts[k * 3] = x; pts[k * 3 + 1] = yy; pts[k * 3 + 2] = z; times[k] = s * DT; k++; }
+    if (rem > 1e-4) { const m = Math.max(1, Math.ceil(rem / h)); for (let q = 0; q < m; q++) step(rem / m); pts[k * 3] = x; pts[k * 3 + 1] = yy; pts[k * 3 + 2] = z; times[k] = be; k++; }
+    stars.push({ dir: d, pts, times, n, be });
+  }
+  return stars;
+}
+function fromTracks(J) {
+  if (!J || !Array.isArray(J.stars) || !(J.dt > 0)) throw Error('不是 fwl.star-tracks/1：缺 dt 或 stars');
+  return J.stars.map((s, i) => {
+    const p = s.p, n = Math.floor(p.length / 3); if (n < 3) throw Error(`第 ${i} 颗星点太少`);
+    const pts = new Float32Array(p.slice(0, n * 3)), times = new Float32Array(n);
+    for (let k = 0; k < n; k++) times[k] = k * J.dt;
+    if (s.be > 0) times[n - 1] = Math.max(times[n - 2] + 1e-3, s.be);
+    let d = [0, 1, 0];
+    for (let k = 1; k < n; k++) { const L = Math.hypot(pts[k * 3], pts[k * 3 + 1], pts[k * 3 + 2]); if (L > 1) { d = [pts[k * 3] / L, pts[k * 3 + 1] / L, pts[k * 3 + 2] / L]; break; } }
+    return { dir: d, pts, times, n, be: times[n - 1] };
+  });
+}
+/* 按初速方向做最远点排序：130 ⊂ 200 ⊂ 300 ⊂ 400 */
+function fpsOrder(stars) {
+  const n = stars.length, used = new Uint8Array(n), md = new Float64Array(n).fill(1e9), order = [];
+  let cur = 0, bestY = -2; stars.forEach((s, i) => { if (s.dir[1] > bestY) { bestY = s.dir[1]; cur = i; } });
+  for (let it = 0; it < n && cur >= 0; it++) {
+    order.push(cur); used[cur] = 1; const a = stars[cur].dir; let best = -1, bd = -1;
+    for (let j = 0; j < n; j++) { if (used[j]) continue; const b = stars[j].dir, dd = (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2; if (dd < md[j]) md[j] = dd; if (md[j] > bd) { bd = md[j]; best = j; } }
+    cur = best;
+  }
+  return order;
+}
+/* 分段：段内按时间线性插值，星头位置误差 ≤ ε（开花 0.6 s 内 ×4） */
+function segment(st, E) {
+  const { pts, times, n } = st, keep = [0];
+  const err = (i, j, k) => { const u = (times[k] - times[i]) / (times[j] - times[i]); let s = 0; for (let a = 0; a < 3; a++) { const e = pts[i * 3 + a] + (pts[j * 3 + a] - pts[i * 3 + a]) * u - pts[k * 3 + a]; s += e * e; } return Math.sqrt(s); };
+  const fits = (i, j) => { for (let k = i + 1; k < j; k++) if (err(i, j, k) > (times[k] < 0.6 ? 4 * E : E)) return false; return true; };
+  let i = 0; while (i < n - 1) { let j = i + 1; while (j + 1 < n && fits(i, j + 1)) j++; keep.push(j); i = j; }
+  const late = [], early = [];
+  for (let s = 0; s < keep.length - 1; s++) for (let k = keep[s] + 1; k < keep[s + 1]; k++) (times[k] < 0.6 ? early : late).push(err(keep[s], keep[s + 1], k));
+  return { keep, late, early };
+}
+const norm = a => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const VIEW_D = [0, 0, 1];   // 单片的正面方向（锁轴时它转向相机）
+const U_SLOTS = 64;         // 每束 U 取 [s, s+1]，s = 序号 mod 64：条带贴图 U 向 Wrap 不受影响，噪声 U = U × ku 每束错开
+/* mode: 'cross' 十字；'lock' / 'single' 单片（宽度 = T × VIEW_D）。顶点 = [x, y, z, U, τ]，单位米、y 朝上 */
+function buildMesh(stars, order, mode, W, E) {
+  const verts = [], idx = [], strandEnd = [], vertEnd = [], segCounts = [], lateErr = [], earlyErr = [];
+  for (let oi = 0; oi < order.length; oi++) {
+    const si = order[oi], st = stars[si], { keep, late, early } = segment(st, E);
+    segCounts.push(keep.length - 1); lateErr.push(...late); earlyErr.push(...early);
+    let hd = [st.dir[0], 0, st.dir[2]]; if (Math.hypot(hd[0], hd[2]) < 0.05) hd = [Math.cos(si), 0, Math.sin(si)];
+    const nPlane = norm([-hd[2], 0, hd[0]]); // 运动平面的法线：星只受阻力和重力，整条轨迹都在这个竖直平面里
+    const P = [], T = [], tau = [];
+    for (const k of keep) {
+      const a = Math.max(0, k - 1), b = Math.min(st.n - 1, k + 1);
+      const t = k === 0 ? st.dir : norm([st.pts[b * 3] - st.pts[a * 3], st.pts[b * 3 + 1] - st.pts[a * 3 + 1], st.pts[b * 3 + 2] - st.pts[a * 3 + 2]]);
+      P.push([st.pts[k * 3], st.pts[k * 3 + 1], st.pts[k * 3 + 2]]); T.push(t); tau.push(st.times[k]);
+    }
+    const ribbons = mode === 'cross'
+      ? [T.map(() => nPlane), T.map(t => norm(cross(t, nPlane)))]
+      : [T.map(t => { let w = cross(t, VIEW_D); if (Math.hypot(w[0], w[1], w[2]) < 0.1) w = cross(t, [0, 1, 0]); return norm(w); })];
+    const s0 = oi % U_SLOTS;
+    for (const ws of ribbons) {
+      const base = verts.length / 5;
+      for (let m = 0; m < P.length; m++) {
+        const p = P[m], w = ws[m], hw = W / 2;
+        verts.push(p[0] - w[0] * hw, p[1] - w[1] * hw, p[2] - w[2] * hw, s0, tau[m]);
+        verts.push(p[0] + w[0] * hw, p[1] + w[1] * hw, p[2] + w[2] * hw, s0 + 1, tau[m]);
+      }
+      for (let m = 0; m < P.length - 1; m++) { const a = base + m * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+    }
+    strandEnd.push(idx.length); vertEnd.push(verts.length / 5);
+  }
+  return { verts: new Float32Array(verts), idx: new Uint32Array(idx), strandEnd, vertEnd, segCounts, lateErr, earlyErr, ribbons: mode === 'cross' ? 2 : 1 };
+}
+/* 条带贴图：U = 横向（粗细随年龄），V = 年龄。新：16×1024 不用 mip；旧（对照）：照 v1 的 64×512、星头在 0.75、开 mip */
+const RAMP = [[0, [0, 0, 0]], [0.33, [0x7a, 0x5a, 0x3a]], [0.66, [0xf4, 0xdc, 0xc0]], [1, [255, 255, 255]]];
+function ramp(x) { for (let i = 1; i < RAMP.length; i++) if (x <= RAMP[i][0]) { const [x0, c0] = RAMP[i - 1], [x1, c1] = RAMP[i], u = (x - x0) / (x1 - x0); return c0.map((c, k) => c + (c1[k] - c) * u); } return RAMP[RAMP.length - 1][1]; }
+const smooth = (a, b, x) => { const u = Math.max(0, Math.min(1, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+function buildStrip(tr, legacy) {
+  const TW = legacy ? 64 : 16, TH = legacy ? 512 : 1024;
+  const Amax = tr.tail + 0.25, H = legacy ? 0.75 : 1 - 6 / TH, S = Amax / (H - 4 / TH), data = new Uint8Array(TW * TH * 4);
+  for (let r = 0; r < TH; r++) {
+    const v = (r + 0.5) / TH, age = (H - v) * S; let b = 0;
+    if (r >= 2 && r < TH - 2 && age > -0.02 && age < Amax) {
+      const head = Math.exp(-((age / 0.045) ** 2));
+      const hot = age > 0 ? 1 - smooth(0.6 * tr.hot, 1.25 * tr.hot, age) : 0;        // 白热段：先平后收
+      const em = age > 0 ? tr.ember * Math.pow(Math.max(0, 1 - age / tr.tail), 0.8) * smooth(0, 0.15, age) : 0; // 余烬：慢慢暗到尾长
+      b = Math.max(0.3 * head + 0.75 * hot, em) + 0.25 * head;
+    }
+    // 粗细：星头晕 0.24 → 白热段 0.19 → 余烬 0.12（占带宽的 σ）
+    const hotness = age > 0 ? 1 - smooth(0.6 * tr.hot, 1.25 * tr.hot, age) : 1;
+    const sig = 0.12 + 0.07 * hotness + 0.05 * Math.exp(-((Math.max(0, age) / 0.06) ** 2));
+    const e0 = Math.exp(-0.25 / (2 * sig * sig));
+    const col = ramp(Math.min(1, 0.25 + 0.75 * Math.sqrt(Math.min(1, b)))), a = Math.min(1, b);
+    for (let c = 0; c < TW; c++) {
+      const u = (c + 0.5) / TW, lat = Math.max(0, (Math.exp(-((u - 0.5) ** 2) / (2 * sig * sig)) - e0) / (1 - e0));
+      const o = (r * TW + c) * 4; data[o] = col[0]; data[o + 1] = col[1]; data[o + 2] = col[2]; data[o + 3] = Math.round(255 * a * lat);
+    }
+  }
+  return { data, H, S, Amax, TW, TH };
+}
+/* 颗粒（溶解噪声）：64×512 可平铺，底 0.3 + 软圆点。只放 R，GBA 同值方便看 */
+const GW = 64, GH = 512, G_BASE = 0.3, KU = 0.2734, G_SEC = 1.6; // 一个噪声周期 = 星头经过的 1.6 s
+function buildGrain(seed) {
+  const R = rng(seed || 11), f = new Float32Array(GW * GH).fill(0);
+  for (let i = 0; i < 520; i++) {
+    const cx = R() * GW, cy = R() * GH, sg = 0.9 + R() * 1.1, pk = 0.55 + 0.45 * R(), rad = Math.ceil(sg * 3);
+    for (let dy = -rad; dy <= rad; dy++) for (let dx = -rad; dx <= rad; dx++) {
+      const x = ((Math.floor(cx) + dx) % GW + GW) % GW, y = ((Math.floor(cy) + dy) % GH + GH) % GH;
+      const ddx = Math.floor(cx) + dx + 0.5 - cx, ddy = Math.floor(cy) + dy + 0.5 - cy;
+      f[y * GW + x] = Math.max(f[y * GW + x], pk * Math.exp(-(ddx * ddx + ddy * ddy) / (2 * sg * sg)));
+    }
+  }
+  const data = new Uint8Array(GW * GH * 4);
+  for (let i = 0; i < GW * GH; i++) { const v = Math.round(255 * (G_BASE + (1 - G_BASE) * f[i])); data[i * 4] = data[i * 4 + 1] = data[i * 4 + 2] = v; data[i * 4 + 3] = 255; }
+  return { data, GW, GH };
+}
+root.MWCore = { rng, gauss, simulate, fromTracks, fpsOrder, segment, buildMesh, buildStrip, buildGrain, DT, VIEW_D, U_SLOTS, KU, G_SEC, GW, GH, G_BASE };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<script id="ab-core">
+/* B 方案的核心（无 DOM）：HK10-1 存活率、噪声替身、按存活率重做的条带。Node 也能直接载入这一段出 UE 贴图。 */
+(function (root) {
+'use strict';
+const C = root.MWCore;
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); };
+function erf(x) { const s = Math.sign(x); x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+const Phi = z => 0.5 * (1 + erf(z / Math.SQRT2));
+/* HK10-1（analysis/迭代/条目.json）：普通火花 55 %，寿命 2.03125 s，对数正态 σ 0.45；余烬 45 %，6.48 s，σ 0.2（tool/src/js/20_sim.js 的寿命公式） */
+function survival(a) { if (a <= 0) return 1; return 0.55 * (1 - Phi(Math.log(a / 2.03125) / 0.45)) + 0.45 * (1 - Phi(Math.log(a / 6.48) / 0.2)); }
+/* 屏上一个颗粒格里至少还有一颗活火花的概率（泊松） */
+const lit = (a, ncell) => a <= 0 ? 1 : 1 - Math.exp(-ncell * survival(a));
+/* UE 母材质 SmoothStep（h 先 clamp 到 0…0.5） */
+function ueSmooth(h, x) { h = clamp(h, 0, 0.499); return smooth(h, 1 - h, x); }
+/* 噪声替身：256² 可平铺。暗底 0.44 ± 0.03（低频起伏）+ 亮点（峰 0.75–1.0，σ 1.0–1.6 texel） */
+const NW = 256;
+function buildNoise(seed) {
+  const R = C.rng(seed || 23), v = new Float32Array(NW * NW), T = 2 * Math.PI / NW;
+  const p = [R() * 6.28, R() * 6.28, R() * 6.28];
+  for (let y = 0; y < NW; y++) for (let x = 0; x < NW; x++)
+    v[y * NW + x] = 0.44 + 0.03 * (0.6 * Math.sin(2 * T * x + p[0]) * Math.cos(3 * T * y + p[1]) + 0.4 * Math.sin(T * (x + y) + p[2]));
+  for (let i = 0; i < 1100; i++) {
+    const cx = R() * NW, cy = R() * NW, sg = 1.0 + 0.6 * R(), pk = 0.75 + 0.25 * R(), rad = Math.ceil(sg * 3);
+    for (let dy = -rad; dy <= rad; dy++) for (let dx = -rad; dx <= rad; dx++) {
+      const X = Math.floor(cx) + dx, Y = Math.floor(cy) + dy, x = ((X % NW) + NW) % NW, y = ((Y % NW) + NW) % NW;
+      const ex = X + 0.5 - cx, ey = Y + 0.5 - cy, k = y * NW + x, base = v[k];
+      v[k] = Math.max(base, base + (pk - base) * Math.exp(-(ex * ex + ey * ey) / (2 * sg * sg)));
+    }
+  }
+  const data = new Uint8Array(NW * NW * 4);
+  for (let i = 0; i < NW * NW; i++) { const q = Math.round(255 * clamp(v[i], 0, 1)); data[i * 4] = data[i * 4 + 1] = data[i * 4 + 2] = q; data[i * 4 + 3] = 255; v[i] = q / 255; }
+  return { data, vals: v, NW, dotTexel: 3 };
+}
+/* 条带配色：和 v2 同一条 Ramp；RGB 先在线性里乘亮度再写回 sRGB 8 位（贴图 sRGB 关、线性存，预览按 sRGB 解码等价） */
+const RAMP = [[0, [0, 0, 0]], [0.33, [0x7a, 0x5a, 0x3a]], [0.66, [0xf4, 0xdc, 0xc0]], [1, [255, 255, 255]]];
+function ramp(x) { for (let i = 1; i < RAMP.length; i++) if (x <= RAMP[i][0]) { const [x0, c0] = RAMP[i - 1], [x1, c1] = RAMP[i], u = (x - x0) / (x1 - x0); return c0.map((c, k) => c + (c1[k] - c) * u); } return RAMP[RAMP.length - 1][1]; }
+const toLin = c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+const toSrgb8 = l => { l = clamp(l, 0, 1); return Math.round(255 * (l <= 0.0031308 ? 12.92 * l : 1.055 * Math.pow(l, 1 / 2.4) - 0.055)); };
+/* B 条带。o = { S0, k, r, K, tr: {hot, tail, ember}, gain }
+   年龄轴：行 v 的年龄（网格时间单位 τ）= (H − v) × S0 / k；真实秒 = τ / r（正式资产寿命 14.25 s 用的是 16.1 s 的 DP0 曲线，播放快 r = 16.1 / 14.25 倍）
+   颜色、亮度：和 A 同一条公式（亮度放在 A 通道，RGB 只管颜色——母材质是 Translucent，暗处透明度必须跟着暗，否则会挡住后面的烟花）
+   A 在约 6 s（年龄）淡完；B 从那里接一条按 HK10-1 存活率衰减的暗光（× gain），让溶解阶段的亮点有东西可亮
+   K = ColorIntensity：A 通道先 ÷ K，白热段再 × K（透明度顶到 1，颗粒在白热段打不出洞）；K = 1 就是不改 ColorIntensity */
+function buildStrip(o) {
+  const TW = 16, TH = 1024, H = 1 - 6 / TH, SB = o.S0 / o.k, data = new Uint8Array(TW * TH * 4), tr = o.tr, K = Math.max(1, o.K);
+  const bAof = aT => {
+    if (aT <= -0.035 || aT >= tr.tail + 0.25) return 0;
+    const head = Math.exp(-((aT / 0.045) ** 2)), hot = aT > 0 ? 1 - smooth(0.6 * tr.hot, 1.25 * tr.hot, aT) : 0;
+    const em = aT > 0 ? tr.ember * Math.pow(Math.max(0, 1 - aT / tr.tail), 0.8) * smooth(0, 0.15, aT) : 0;
+    return Math.max(0.3 * head + 0.75 * hot, em) + 0.25 * head;
+  };
+  const aJ = 6.0, bJ = bAof(aJ * o.r), sJ = survival(aJ), rows = [];
+  for (let r = 0; r < TH; r++) {
+    const v = (r + 0.5) / TH, aT = (H - v) * SB, aR = aT / o.r;
+    let a = 0, b = 0, lat0 = 0;
+    if (r >= 2 && r < TH - 2 && aT > -0.035) {
+      const bTail = aR > aJ ? bJ * survival(aR) / sJ : 0;
+      b = Math.max(bAof(aT), o.gain * bTail);
+      const hotness = aT > 0 ? 1 - smooth(0.6 * tr.hot, 1.25 * tr.hot, aT) : 1;
+      a = Math.min(1, Math.min(1, b) * (1 + (K - 1) * hotness)) / K;
+      lat0 = smooth(-0.035, -0.005, aT);             // 星头前沿软过渡
+    }
+    const hotness = aT > 0 ? 1 - smooth(0.6 * tr.hot, 1.25 * tr.hot, aT) : 1;
+    let sig = 0.12 + 0.07 * hotness + 0.05 * Math.exp(-((Math.max(0, aT) / 0.06) ** 2));
+    if (aT < 0) sig *= Math.sqrt(Math.max(0.04, 1 - (aT / 0.035) ** 2));   // 圆头：前沿收窄
+    const e0 = Math.exp(-0.25 / (2 * sig * sig));
+    const col = ramp(Math.min(1, 0.25 + 0.75 * Math.sqrt(Math.min(1, b))));
+    for (let c = 0; c < TW; c++) {
+      const u = (c + 0.5) / TW, lat = Math.max(0, (Math.exp(-((u - 0.5) ** 2) / (2 * sig * sig)) - e0) / (1 - e0));
+      const q = (r * TW + c) * 4; data[q] = Math.round(col[0]); data[q + 1] = Math.round(col[1]); data[q + 2] = Math.round(col[2]); data[q + 3] = Math.round(255 * a * lat * lat0);
+    }
+    rows.push({ aR, b, a });
+  }
+  return { data, TW, TH, H, S: SB, rows, maxAge: (H - 4 / TH) * SB / o.r };
+}
+/* 尾巴的暗光降到 th 以下的年龄（秒）：B 的溶解亮点大约能撑到这里 */
+function tailEnd(gain, th) { const sJ = survival(6.0); let a = 6.0; while (a < 20 && 0.0138 * gain * survival(a) / sJ > th) a += 0.05; return a; }
+root.ABCore = { survival, lit, ueSmooth, buildNoise, buildStrip, tailEnd, NW };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+
+<script>
+(() => {
+'use strict';
+const C = window.MWCore, AB = window.ABCore;
+const $ = id => document.getElementById(id);
+const cv = $('c');
+const gl = cv.getContext('webgl2', { antialias: false, premultipliedAlpha: false, preserveDrawingBuffer: true });
+if (!gl) { $('err').style.display = 'grid'; return; }
+const hasF = !!gl.getExtension('EXT_color_buffer_float');
+const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw Error(gl.getShaderInfoLog(s)); return s; };
+const prog = (vs, fs) => { const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw Error(gl.getProgramInfoLog(p)); return p; };
+
+/* ---------- 正式资产（B09主角读数.md、COLOR_BASELINE_20261019/标定.json） ---------- */
+const PROD = { L: 14.25, scale: 0.5, dp0: [0.9941, -1.2049], p2: 1.02, cs: [10, 4.188829, 1.278419], alphaKnee: 0.9814, ci: 1, h: 0 };
+const L0 = 16.1;                        // DP0 曲线原来按 16.1 s 设计；现在寿命 14.25 s → 播放快 r 倍
+const R_T = L0 / PROD.L;
+const CAM_EL = -45.5 * Math.PI / 180;   // B09 实际点位 + 原机位：P4 主角垂柳中心仰角约 45.5°（相机在下面）
+const V_TAU = 31.2 * PROD.scale;        // 下垂段星头速度（燃烧 70 % 处中位，本地 31.2 m/τ × 缩放）
+const P2_HI = 0.5, P2_END_T = 14;       // Param2 ≥ 0.5：遮罩全开、没有颗粒（A 用的是 1.02）；14 s 到末段值
+
+/* ---------- 材质：照 M_EFX_DissolveOutline_Soft 的节点（BLEND_Translucent、Unlit） ----------
+   主图 = MainTex(UV0 × UVParam + DP0 × (0,1))；m4 = 主图 × ColorIntensity（ColorPower 1）
+   遮罩 = SmoothStep(h, 1−h, Noise(UV0 × NoiseUVParam.xy + Time × NoiseUVParam.zw).r + DissolveOffset + 2·(Param2 + Progress))
+   不透明度 = saturate(m4.A × 粒子 Alpha × 遮罩)；自发光 = m4.RGB × Color Scale Over Life；半透明混合 */
+const pMesh = prog(`#version 300 es
+layout(location=0) in vec3 aPos; layout(location=1) in float aU; layout(location=2) in float aTau;
+uniform mat4 uVP; uniform float uS0, uYaw, uScale; out vec2 vUV;
+void main(){ float c=cos(uYaw), s=sin(uYaw); vec3 p=vec3(c*aPos.x+s*aPos.z, aPos.y, -s*aPos.x+c*aPos.z)*uScale; vUV=vec2(aU, aTau/uS0); gl_Position=uVP*vec4(p,1.); }`,
+`#version 300 es
+precision highp float; in vec2 vUV;
+uniform sampler2D uTex, uNoise; uniform float uUVy, uDP0, uCI, uH, uP2, uPA, uTime; uniform vec3 uCS; uniform vec4 uNUV; out vec4 o;
+void main(){
+  vec4 m4 = texture(uTex, vec2(vUV.x, vUV.y*uUVy + uDP0)) * uCI;
+  float n = texture(uNoise, vUV*uNUV.xy + uTime*uNUV.zw).r;
+  float h = clamp(uH, 0., .499);
+  float mask = smoothstep(h, 1.-h, n + 2.*uP2);
+  o = vec4(m4.rgb*uCS, clamp(m4.a*uPA*mask, 0., 1.)); }`);
+const quadVS = `#version 300 es
+layout(location=0) in vec2 aP; out vec2 vT; void main(){ vT=aP*.5+.5; gl_Position=vec4(aP,0.,1.); }`;
+const pBlur = prog(quadVS, `#version 300 es
+precision highp float; in vec2 vT; uniform sampler2D uS; uniform vec2 uD; out vec4 o;
+void main(){ vec3 c=vec3(0.); float w[5]=float[5](.227,.194,.121,.054,.016); c+=texture(uS,vT).rgb*w[0];
+ for(int i=1;i<5;i++){ c+=texture(uS,vT+uD*float(i)).rgb*w[i]; c+=texture(uS,vT-uD*float(i)).rgb*w[i]; } o=vec4(c,1.); }`);
+const pTone = prog(quadVS, `#version 300 es
+precision highp float; in vec2 vT; uniform sampler2D uS, uB; uniform float uBloom; out vec4 o;
+vec3 aces(vec3 x){ return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.); }
+void main(){ vec3 c=texture(uS,vT).rgb + uBloom*texture(uB,vT).rgb; c=aces(c*.6); o=vec4(pow(c,vec3(1./2.2)),1.); }`);
+const U = (p, n) => gl.getUniformLocation(p, n);
+const quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+const qvao = gl.createVertexArray(); gl.bindVertexArray(qvao); gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+/* ---------- 网格：和正式资产同一份（v2 近似模拟，seed 7，单片锁 Z） ---------- */
+const stars = C.simulate({ N: 400, v0: 345, vt: 34, gm: 1, burn: 7.3, burnJit: 6, spd: 20, seed: 7 });
+const order = C.fpsOrder(stars);
+function meshVAO(mesh, n) {
+  const vao = gl.createVertexArray(), vb = gl.createBuffer(), ib = gl.createBuffer();
+  gl.bindVertexArray(vao); gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, mesh.verts, gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 20, 0);
+  gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 20, 12);
+  gl.enableVertexAttribArray(2); gl.vertexAttribPointer(2, 1, gl.FLOAT, false, 20, 16);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.idx, gl.STATIC_DRAW);
+  gl.bindVertexArray(null);
+  return { vao, count: mesh.strandEnd[n - 1], verts: mesh.vertEnd[n - 1], tris: mesh.strandEnd[n - 1] / 3, n };
+}
+const MESH = { pc: meshVAO(C.buildMesh(stars, order, 'single', 4, 0.78), 400), m: meshVAO(C.buildMesh(stars, order, 'single', 4, 3), 130) };
+
+/* ---------- 贴图 ---------- */
+function upTex(t, w, h, data, srgb, mip, wrapT) {
+  gl.bindTexture(gl.TEXTURE_2D, t); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+  gl.texImage2D(gl.TEXTURE_2D, 0, srgb ? gl.SRGB8_ALPHA8 : gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, data);
+  if (mip) { gl.generateMipmap(gl.TEXTURE_2D); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); }
+  else { gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAX_LEVEL, 0); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); }
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, wrapT);
+}
+const TR = { hot: 2, tail: 7, ember: 0.22 };
+const stripA = C.buildStrip(TR, false);      // 正式主图 = v2 条带：16×1024、NoMip、Bilinear、U Wrap / V Clamp
+const S0 = stripA.S;
+const texA = gl.createTexture(), texB = gl.createTexture(), texN = gl.createTexture();
+upTex(texA, stripA.TW, stripA.TH, stripA.data, true, false, gl.CLAMP_TO_EDGE);
+const noise = AB.buildNoise(23);
+upTex(texN, noise.NW, noise.NW, noise.data, false, true, gl.REPEAT);      // 辅助图：有 mip、Wrap（候选 GoldSpark_2x2_01D 是 Wrap）
+
+/* ---------- 状态与 B 的参数 ---------- */
+const PRESET = {
+  phys: { kci: 1, tOn: 7.5, ramp: 3, hard: 0.35, p2end: -0.06, gain: 2, twHz: 4, dotPx: 2 },
+  boost: { kci: 2, tOn: 2.5, ramp: 2.5, hard: 0.3, p2end: -0.1, gain: 4, twHz: 5, dotPx: 2.5 },
+};
+const st = { t: 9, play: false, speed: 1, fov: 'f60', px: 1, mesh: 'pc', stripB: null, k: 0.56, preset: 'phys' };
+const num = id => +$(id).value;
+const fovRad = () => st.fov === 'f60' ? Math.PI / 3 : 2 * Math.atan(1.05);
+const ppm = () => 1080 / (2 * num('dist') * Math.tan(fovRad() / 2));
+function bParams() {
+  const dotM = num('dotPx') / ppm(), dTau = dotM / V_TAU;              // 颗粒沿轨迹的长度（米）→ 网格时间
+  const y = S0 * (noise.dotTexel / noise.NW) / dTau, z = num('twHz') * noise.dotTexel / noise.NW;
+  const tOn = num('tOn'), tFull = Math.min(P2_END_T - 0.5, tOn + num('ramp'));
+  return { K: num('kci'), h: num('hard'), tOn, tFull, p2end: num('p2end'), nuv: [0.03, y, z, 0], dotM };
+}
+function p2At(t, bp) {
+  if (t <= bp.tOn) return P2_HI;
+  if (t <= bp.tFull) return P2_HI + (0 - P2_HI) * (t - bp.tOn) / (bp.tFull - bp.tOn);
+  if (t <= P2_END_T) return 0 + (bp.p2end - 0) * (t - bp.tFull) / (P2_END_T - bp.tFull);
+  return bp.p2end;
+}
+function rebuildB() {
+  const maxAgeWant = 11.5;                                              // B 的条带盖到 11.5 s（年龄），溶解段才放得下
+  st.k = +(S0 / (maxAgeWant * R_T / (1 - 10 / 1024))).toFixed(4);
+  st.stripB = AB.buildStrip({ S0, k: st.k, r: R_T, K: num('kci'), tr: TR, gain: num('gain') });
+  upTex(texB, st.stripB.TW, st.stripB.TH, st.stripB.data, true, false, gl.CLAMP_TO_EDGE);
+  sync();
+}
+const csB = () => PROD.cs.map(c => c / num('kci'));
+/* 颗粒出来时整体会变暗（洞把光吃掉）：用 Color Scale Over Life 曲线按遮罩平均值补回（每 0.01 的 Param2 缓存一次） */
+const mCache = new Map();
+function mBar(p2, h) { const key = Math.round(p2 * 100) + '|' + Math.round(h * 100); if (mCache.has(key)) return mCache.get(key); let s = 0; for (const n of noise.vals) s += AB.ueSmooth(h, n + 2 * p2); const m = s / noise.vals.length; mCache.set(key, m); return m; }
+const compAt = (t, bp) => $('comp').checked ? Math.min(4, 1 / Math.max(0.25, mBar(p2At(t, bp), bp.h))) : 1;
+const dp0EndB = () => +(PROD.dp0[0] - st.k * (PROD.dp0[0] - PROD.dp0[1])).toFixed(4);
+const fx = (v, d) => (+v).toFixed(d);
+const tq = () => Math.floor(st.t * 30 + 1e-6) / 30;     // 引擎 30 fps
+
+function csKeys(bp) { const ts = [0, bp.tOn, bp.tFull, P2_END_T, PROD.L]; return ts.map(t => [t, csB().map(c => c * compAt(t, bp))]); }
+function sync() {
+  $('distV').textContent = num('dist') + ' m';
+  $('kciV').textContent = fx(num('kci'), 1); $('tOnV').textContent = fx(num('tOn'), 1) + ' s'; $('rampV').textContent = fx(num('ramp'), 1) + ' s';
+  $('hardV').textContent = fx(num('hard'), 2); $('p2endV').textContent = fx(num('p2end'), 2); $('gainV').textContent = '×' + fx(num('gain'), 1);
+  $('twHzV').textContent = fx(num('twHz'), 1) + ' Hz'; $('dotPxV').textContent = fx(num('dotPx'), 2) + ' px';
+  $('timeV').textContent = tq().toFixed(2) + ' s'; $('time').value = st.t;
+  const bp = bParams(), M = MESH[st.mesh], tEnd = AB.tailEnd(num('gain'), 0.002);
+  $('derived').textContent =
+    `每米 ${ppm().toFixed(2)} px（${num('dist')} m，竖向视角 ${(fovRad() * 180 / Math.PI).toFixed(1)}°，1080p）\n` +
+    `颗粒沿轨迹约 ${bp.dotM.toFixed(2)} m ≈ ${fx(num('dotPx'), 2)} px（下垂段；开花头一秒星快，颗粒会拉成短线）\n` +
+    `颗粒：${bp.tOn.toFixed(1)} s 前没有，${bp.tOn.toFixed(1)}–${bp.tFull.toFixed(1)} s 渐出，14 s 前清空到 Param2 ${fx(bp.p2end, 2)}\n` +
+    `闪烁 ${fx(num('twHz'), 1)} Hz（引擎 30 fps，> 7 Hz 会糊成噪点）；只在有颗粒的时候看得见\n` +
+    `尾巴暗光延到约 ${tEnd.toFixed(1)} s（年龄）；A 约 6.4 s 就淡完\n` +
+    `${M.n} 束 · ${M.verts.toLocaleString()} 顶点 · ${M.tris.toLocaleString()} 三角（A、B 同一个网格）`;
+  $('footA').textContent = `颗粒关（Param2 1.02 · hardness 0）· 尾巴约 6.4 s（年龄）整条淡完`;
+  $('footB').textContent = `${st.preset === 'boost' ? '加强颗粒（非物理）' : st.preset === 'phys' ? '物理估计' : '自调'} · 颗粒 ${bp.tOn.toFixed(1)}–${bp.tFull.toFixed(1)} s 渐出 · 闪烁 ${fx(num('twHz'), 1)} Hz · 尾巴到约 ${tEnd.toFixed(1)} s`;
+  const K = bp.K, n4 = v => fx(v, 4), rel = t => fx(t / PROD.L, 4);
+  const rows = [
+    ['材质实例（先复制一份到沙盒）', '', ''],
+    ['MainTex', '新条带，同名同尺寸 16×1024', 'NoMip、Bilinear、U Wrap / V Clamp、sRGB 关、DistantVFX、不勾 NeverStream'],
+    ['UVParam', `(1, ${n4(st.k)}, 0, 0)`, '拉长年龄轴到约 11.5 s'],
+    ['ColorIntensity', fx(K, 2), K === 1 ? '不变（原 1）' : '原 1；白热段透明度顶满，颗粒打不进去'],
+    ['hardness', fx(bp.h, 2), '原 0'],
+    ['NoiseMap', 'T_EFX_FireWorks_GoldSpark_2x2_01D', '候选，先在 UE 看是否像暗底亮点；不行再做新图（新增）'],
+    ['NoiseChannel', '(1, 0, 0, 0)', '不变'],
+    ['NoiseUVParam', `(${n4(bp.nuv[0])}, ${n4(bp.nuv[1])}, ${n4(bp.nuv[2])}, 0)`, 'y、z 按替身噪声颗粒宽 3 texel 算；换图要重算'],
+    ['粒子系统 · 网格发射器（PC / 手游各一）', '', ''],
+    ['DP0 UVIncrement', `(0, ${PROD.dp0[0]}) → (1, ${dp0EndB()})`, `原 (1, ${PROD.dp0[1]})`],
+    ['DP1 Param2', [[0, P2_HI], [bp.tOn, P2_HI], [bp.tFull, 0], [P2_END_T, bp.p2end], [PROD.L, bp.p2end]].map(([t, v]) => `${rel(t)} → ${fx(v, 2)}`).join('<br>'), '相对寿命 → 值；原恒 1.02'],
+    ['Color Scale Over Life', $('comp').checked ? csKeys(bp).map(([t, c]) => `${rel(t)} → (${c.map(v => fx(v, 3)).join(', ')})`).join('<br>') : `(${csB().map(n4).join(', ')})`, ($('comp').checked ? '颗粒渐出时按遮罩平均值补亮度（曲线，Alpha 曲线不变）' : 'Alpha 曲线不变') + (K === 1 ? '' : `；基数为原值 ÷ ${fx(K, 2)}`)],
+    ['其余', '不变', 'Lifetime 14–14.5、Initial Size 0.5–0.55、锁 Z、网格、发射器数'],
+  ];
+  $('ueTab').innerHTML = '<tr><th>参数</th><th>B 的值</th><th>说明</th></tr>' + rows.map(r => r[1] === '' ? `<tr><th colspan="3" style="color:var(--b)">${r[0]}</th></tr>` : `<tr><td>${r[0]}</td><td class="v">${r[1]}</td><td class="d">${r[2]}</td></tr>`).join('');
+  for (const b of document.querySelectorAll('[data-px]')) b.classList.toggle('on', +b.dataset.px === st.px);
+  for (const b of document.querySelectorAll('[data-sp]')) b.classList.toggle('on', +b.dataset.sp === st.speed);
+  $('fov60').classList.toggle('on', st.fov === 'f60'); $('fovStd').classList.toggle('on', st.fov === 'std');
+  $('nPC').classList.toggle('on', st.mesh === 'pc'); $('nM').classList.toggle('on', st.mesh === 'm');
+  $('prPhys').classList.toggle('on', st.preset === 'phys'); $('prBoost').classList.toggle('on', st.preset === 'boost');
+}
+
+/* ---------- 控件 ---------- */
+$('fov60').onclick = () => { st.fov = 'f60'; sync(); };
+$('fovStd').onclick = () => { st.fov = 'std'; sync(); };
+$('nPC').onclick = () => { st.mesh = 'pc'; sync(); };
+$('nM').onclick = () => { st.mesh = 'm'; sync(); };
+for (const b of document.querySelectorAll('[data-px]')) b.onclick = () => { st.px = +b.dataset.px; W = 0; sync(); };
+for (const b of document.querySelectorAll('[data-sp]')) b.onclick = () => { st.speed = +b.dataset.sp; sync(); };
+for (const b of document.querySelectorAll('[data-t]')) b.onclick = () => { st.t = +b.dataset.t; sync(); };
+$('play').onclick = () => { st.play = !st.play; if (st.play && st.t >= PROD.L - 0.05) st.t = 0; $('play').textContent = st.play ? '❚❚ 暂停' : '▶ 播放'; };
+$('stepF').onclick = () => { st.play = false; $('play').textContent = '▶ 播放'; st.t = Math.min(PROD.L, tq() + 1 / 30 + 1e-4); sync(); };
+$('stepB').onclick = () => { st.play = false; $('play').textContent = '▶ 播放'; st.t = Math.max(0, tq() - 1 / 30 + 1e-4); sync(); };
+$('time').addEventListener('input', () => { st.t = num('time'); sync(); });
+const custom = () => { st.preset = 'custom'; };
+for (const id of ['dist']) $(id).addEventListener('input', sync);
+$('comp').addEventListener('change', sync);
+for (const id of ['tOn', 'ramp', 'hard', 'p2end', 'twHz', 'dotPx']) $(id).addEventListener('input', () => { custom(); sync(); });
+for (const id of ['kci', 'gain']) { $(id).addEventListener('input', () => { custom(); sync(); }); $(id).addEventListener('change', rebuildB); }
+function applyPreset(key) { for (const [k, v] of Object.entries(PRESET[key])) $(k).value = v; st.preset = key; rebuildB(); }
+$('prPhys').onclick = () => applyPreset('phys');
+$('prBoost').onclick = () => applyPreset('boost');
+$('copy').onclick = () => {
+  const txt = [...$('ueTab').rows].map(r => [...r.cells].map(c => c.innerText.replace(/\n/g, '；')).join('\t')).join('\n');
+  const done = () => { $('copy').textContent = '已复制'; setTimeout(() => { $('copy').textContent = '复制这张表'; }, 1500); };
+  try { navigator.clipboard.writeText(txt).then(done, selectTab); } catch (e) { selectTab(); }
+};
+function selectTab() { const r = document.createRange(); r.selectNode($('ueTab')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $('copy').textContent = '已选中，按 Ctrl+C 复制'; }
+
+/* ---------- 渲染：两块各自一套离屏（不让泛光串到对面） ---------- */
+let W = 0, H = 0, layout = null;
+const mkRT = (w, h, nearest) => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, hasF ? gl.RGBA16F : gl.RGBA8, w, h, 0, gl.RGBA, hasF ? gl.HALF_FLOAT : gl.UNSIGNED_BYTE, null);
+  const f = nearest ? gl.NEAREST : gl.LINEAR; gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, f); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, f);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  const fb = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fb); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0); return { t, f: fb, w, h }; };
+function resize() {
+  const cw = cv.clientWidth, ch = cv.clientHeight, w = Math.max(2, Math.round(cw / st.px)), h = Math.max(2, Math.round(ch / st.px));
+  if (w === W && h === H && layout) return;
+  W = cv.width = w; H = cv.height = h;
+  const stacked = cw < 820, gap = 2;
+  const pw = stacked ? W : Math.floor((W - gap) / 2), ph = stacked ? Math.floor((H - gap) / 2) : H;
+  const panels = [{ x: 0, y: stacked ? H - ph : 0 }, { x: stacked ? 0 : W - pw, y: 0 }];
+  layout = panels.map(p => ({ ...p, w: pw, h: ph, main: mkRT(pw, ph, true), a: mkRT(pw >> 2 || 1, ph >> 2 || 1), b: mkRT(pw >> 2 || 1, ph >> 2 || 1) }));
+  const sx = cw / W, sy = ch / H, PA = layout[0], PB = layout[1];
+  const put = (id, P, top) => { const e = $(id); e.style.left = (P.x * sx + 8) + 'px'; if (top) e.style.top = ((H - P.y - P.h) * sy + 8) + 'px'; else e.style.bottom = (P.y * sy + 8) + 'px'; };
+  put('tagA', PA, true); put('tagB', PB, true); put('footA', PA, false); put('footB', PB, false);
+}
+const persp = (fy, a, n, f) => { const t = 1 / Math.tan(fy / 2); return [t / a, 0, 0, 0, 0, t, 0, 0, 0, 0, (f + n) / (n - f), -1, 0, 0, 2 * f * n / (n - f), 0]; };
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const nrm = a => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+const crs = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const look = (e, c, u) => { const z = nrm(sub3(e, c)), x = nrm(crs(u, z)), y = crs(z, x); return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot3(x, e), -dot3(y, e), -dot3(z, e), 1]; };
+const mul = (a, b) => { const o = new Array(16).fill(0); for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) for (let k = 0; k < 4; k++) o[j * 4 + i] += a[k * 4 + i] * b[j * 4 + k]; return o; };
+
+function drawPanel(P, side) {
+  const t = tq(), u = t / PROD.L, d = num('dist');
+  const eye = [0, d * Math.sin(CAM_EL), d * Math.cos(CAM_EL)];
+  const fe = 2 * Math.atan(Math.tan(fovRad() / 2) * P.h / 1080);       // 1:1 游戏像素：这一块就是 1080p 画面里的一个窗口
+  const vp = mul(persp(fe, P.w / P.h, 10, 6000), look(eye, [0, 0, 0], [0, 1, 0]));
+  gl.bindFramebuffer(gl.FRAMEBUFFER, P.main.f); gl.viewport(0, 0, P.w, P.h); gl.clearColor(0.004, 0.006, 0.012, 1); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  const pa = u <= PROD.alphaKnee ? 1 : Math.max(0, 1 - (u - PROD.alphaKnee) / (1 - PROD.alphaKnee));
+  gl.useProgram(pMesh);
+  gl.uniformMatrix4fv(U(pMesh, 'uVP'), false, vp); gl.uniform1f(U(pMesh, 'uS0'), S0); gl.uniform1f(U(pMesh, 'uYaw'), Math.atan2(eye[0], eye[2])); gl.uniform1f(U(pMesh, 'uScale'), PROD.scale);
+  gl.uniform1f(U(pMesh, 'uPA'), pa); gl.uniform1f(U(pMesh, 'uTime'), t);
+  if (side === 'A') {
+    gl.uniform1f(U(pMesh, 'uUVy'), 1); gl.uniform1f(U(pMesh, 'uDP0'), PROD.dp0[0] + (PROD.dp0[1] - PROD.dp0[0]) * u);
+    gl.uniform1f(U(pMesh, 'uCI'), PROD.ci); gl.uniform1f(U(pMesh, 'uH'), PROD.h); gl.uniform1f(U(pMesh, 'uP2'), PROD.p2);
+    gl.uniform3f(U(pMesh, 'uCS'), ...PROD.cs); gl.uniform4f(U(pMesh, 'uNUV'), 1, 1, 0, 0);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texA);
+  } else {
+    const bp = bParams(), cm = compAt(t, bp), cb = csB().map(c => c * cm);
+    gl.uniform1f(U(pMesh, 'uUVy'), st.k); gl.uniform1f(U(pMesh, 'uDP0'), PROD.dp0[0] + (dp0EndB() - PROD.dp0[0]) * u);
+    gl.uniform1f(U(pMesh, 'uCI'), bp.K); gl.uniform1f(U(pMesh, 'uH'), bp.h); gl.uniform1f(U(pMesh, 'uP2'), p2At(t, bp));
+    gl.uniform3f(U(pMesh, 'uCS'), cb[0], cb[1], cb[2]); gl.uniform4f(U(pMesh, 'uNUV'), ...bp.nuv);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texB);
+  }
+  gl.uniform1i(U(pMesh, 'uTex'), 0);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texN); gl.uniform1i(U(pMesh, 'uNoise'), 1);
+  const M = MESH[st.mesh]; gl.bindVertexArray(M.vao); gl.drawElements(gl.TRIANGLES, M.count, gl.UNSIGNED_INT, 0);
+  gl.disable(gl.BLEND); gl.bindVertexArray(qvao);
+  const bloom = $('bloom').checked;
+  const pass = (p, src, dst, x, y, w, h) => { gl.bindFramebuffer(gl.FRAMEBUFFER, dst); gl.viewport(x, y, w, h); gl.useProgram(p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, src); gl.uniform1i(U(p, 'uS'), 0); };
+  if (bloom) {
+    pass(pBlur, P.main.t, P.a.f, 0, 0, P.a.w, P.a.h); gl.uniform2f(U(pBlur, 'uD'), 2 / P.w, 0); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    pass(pBlur, P.a.t, P.b.f, 0, 0, P.b.w, P.b.h); gl.uniform2f(U(pBlur, 'uD'), 0, 2 / P.h); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+  pass(pTone, P.main.t, null, P.x, P.y, P.w, P.h); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, P.b.t); gl.uniform1i(U(pTone, 'uB'), 1); gl.uniform1f(U(pTone, 'uBloom'), bloom ? 0.45 : 0);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+}
+function draw() {
+  resize();
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, W, H); gl.clearColor(0.13, 0.17, 0.23, 1); gl.clear(gl.COLOR_BUFFER_BIT);
+  drawPanel(layout[0], 'A'); drawPanel(layout[1], 'B');
+  $('tbig').textContent = '+' + tq().toFixed(2) + ' s';
+}
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (st.play) { st.t += dt * st.speed; if (st.t > PROD.L) st.t = 0; $('time').value = st.t; $('timeV').textContent = tq().toFixed(2) + ' s'; }
+  draw(); requestAnimationFrame(frame);
+}
+
+/* ---------- 启动；截图自检用 ?t=9&fov=60|std&px=1&n=400|130&dist=725&preset=phys|boost&ui=0 ---------- */
+const q = new URLSearchParams(location.search);
+if (q.get('preset') === 'boost') { for (const [k, v] of Object.entries(PRESET.boost)) $(k).value = v; st.preset = 'boost'; }
+for (const k of ['dist', 'kci', 'tOn', 'ramp', 'hard', 'p2end', 'gain', 'twHz', 'dotPx']) if (q.get(k) != null) { $(k).value = q.get(k); if (k !== 'dist') st.preset = 'custom'; }
+if (q.get('fov') === 'std') st.fov = 'std';
+if (q.get('px')) st.px = Math.max(1, Math.min(3, +q.get('px')));
+if (q.get('n') === '130') st.mesh = 'm';
+if (q.get('bloom') === '0') $('bloom').checked = false;
+if (q.get('t') != null) st.t = +q.get('t');
+rebuildB();
+requestAnimationFrame(frame);
+window.addEventListener('resize', () => { W = 0; });
+window.__ready = () => !!st.stripB;
+window.__render = t => { st.t = t; sync(); W = 0; draw(); gl.finish(); return true; };
+window.__ab = { st, AB, stripA, get stripB() { return st.stripB; }, MESH, p2At, bParams };
+})();
+</script>
+</body>
+</html>
