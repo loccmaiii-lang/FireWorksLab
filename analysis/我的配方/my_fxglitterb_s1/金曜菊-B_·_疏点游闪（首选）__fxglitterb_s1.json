@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxglitterb_s1",
  "name": "金曜菊-B · 疏点游闪（首选）",
- "at": "2026-10-20 00:32",
+ "at": "2026-10-20 00:42",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -786,10 +786,7 @@
      "headInt": 1,
      "tailInt": 1,
      "title": "点灭星",
-     "lid": "ly5z46",
-     "out": {
-      "pc": "frame"
-     }
+     "lid": "ly5z46"
     },
     "P": {
      "renderVer": 40,
