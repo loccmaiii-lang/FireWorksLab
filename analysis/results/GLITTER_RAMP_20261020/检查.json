@@ -1,0 +1,244 @@
+{
+  "sourceZipSHA256": "22e035196f53159745ca131cca9c86b5c84e7b39034904113b6fad38e8884465",
+  "sourceRamp": "T_EFX_FireWorks_GlitterChry_S1_Lead_R.png",
+  "sourceRampSHA256": "641fc83a64c86e0eda9f370364bed5475cf2f4c39b4ed448c5b816c895a65360",
+  "file": "T_EFX_FireWorks_GlitterChry_S1_Lead_SoftToe_R.png",
+  "sha256": "f3032966bd22576fe33126dee4965584e835dabb8d0e018e8f20a7ce3baa03e8",
+  "size": [
+    256,
+    8
+  ],
+  "mode": "RGBA8 / sRGB",
+  "alphaAll255": true,
+  "lastColumnBlack": true,
+  "firstUnchangedColumn": 8,
+  "changedColumns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "curve": "x<8: C_linear *= smootherstep(x/8); x>=8与原PNG逐像素相同；第255列黑护栏保留",
+  "materialSampleCodesUnchangedFrom": 9,
+  "tailLinearEnergyRetained": {
+    "softToe": 0.8951885726422096,
+    "blackEndpoint": 0.40305974379217635
+  },
+  "measurementScope": "旧S1橙引线实际35帧，排除前3帧开花闪光，按现有灰度查色表和线性亮度积分；不是当前个人草稿、BC7或UE实测。",
+  "frames": [
+    {
+      "frame": 0,
+      "original": 7475.837935050421,
+      "softToe": 7423.180867994795,
+      "blackEndpoint": 6948.231305841638
+    },
+    {
+      "frame": 1,
+      "original": 1880.2738670006488,
+      "softToe": 1827.618488185308,
+      "blackEndpoint": 1352.6186222890267
+    },
+    {
+      "frame": 2,
+      "original": 301.1822253978206,
+      "softToe": 248.66006341597102,
+      "blackEndpoint": 60.427251691161786
+    },
+    {
+      "frame": 3,
+      "original": 140.00845726092183,
+      "softToe": 124.98457063955405,
+      "blackEndpoint": 45.427219910372486
+    },
+    {
+      "frame": 4,
+      "original": 257.43953799607516,
+      "softToe": 237.2681867992937,
+      "blackEndpoint": 102.8647651471502
+    },
+    {
+      "frame": 5,
+      "original": 365.9876199598974,
+      "softToe": 340.80029230486036,
+      "blackEndpoint": 157.61318720461725
+    },
+    {
+      "frame": 6,
+      "original": 456.6588475987171,
+      "softToe": 426.27643505492404,
+      "blackEndpoint": 201.04483301597728
+    },
+    {
+      "frame": 7,
+      "original": 534.4971915933356,
+      "softToe": 498.9975812998108,
+      "blackEndpoint": 238.96150673778743
+    },
+    {
+      "frame": 8,
+      "original": 595.360599778681,
+      "softToe": 554.7441184138703,
+      "blackEndpoint": 265.90059711997736
+    },
+    {
+      "frame": 9,
+      "original": 641.0823041327714,
+      "softToe": 595.4044144362006,
+      "blackEndpoint": 283.7355183201921
+    },
+    {
+      "frame": 10,
+      "original": 661.6189898203646,
+      "softToe": 610.7357273117829,
+      "blackEndpoint": 285.7148088866941
+    },
+    {
+      "frame": 11,
+      "original": 661.6142725519842,
+      "softToe": 605.4193261592679,
+      "blackEndpoint": 277.55713949443674
+    },
+    {
+      "frame": 12,
+      "original": 646.4162685762798,
+      "softToe": 585.6097115056648,
+      "blackEndpoint": 263.4051811760055
+    },
+    {
+      "frame": 13,
+      "original": 628.7478779763069,
+      "softToe": 564.3233809566785,
+      "blackEndpoint": 251.54642198064013
+    },
+    {
+      "frame": 14,
+      "original": 604.6432478422121,
+      "softToe": 538.5989727154613,
+      "blackEndpoint": 240.01169324189834
+    },
+    {
+      "frame": 15,
+      "original": 588.1558657256669,
+      "softToe": 522.2776084035747,
+      "blackEndpoint": 234.7583113576821
+    },
+    {
+      "frame": 16,
+      "original": 569.076762583946,
+      "softToe": 503.8408233965513,
+      "blackEndpoint": 227.23566965131863
+    },
+    {
+      "frame": 17,
+      "original": 555.0971737105699,
+      "softToe": 490.89086379677644,
+      "blackEndpoint": 222.43520323698834
+    },
+    {
+      "frame": 18,
+      "original": 540.108493144292,
+      "softToe": 477.2488770746518,
+      "blackEndpoint": 217.53994743148354
+    },
+    {
+      "frame": 19,
+      "original": 510.41369767034695,
+      "softToe": 450.8492166453775,
+      "blackEndpoint": 208.07312809478532
+    },
+    {
+      "frame": 20,
+      "original": 467.75950986541545,
+      "softToe": 411.87518990916726,
+      "blackEndpoint": 190.61746422823802
+    },
+    {
+      "frame": 21,
+      "original": 422.6360593094862,
+      "softToe": 371.1855268763582,
+      "blackEndpoint": 171.19857721349658
+    },
+    {
+      "frame": 22,
+      "original": 373.2081114982242,
+      "softToe": 326.1452435403022,
+      "blackEndpoint": 147.45647316489087
+    },
+    {
+      "frame": 23,
+      "original": 325.4718470977508,
+      "softToe": 282.95628206879894,
+      "blackEndpoint": 125.87449396925106
+    },
+    {
+      "frame": 24,
+      "original": 277.41133708971427,
+      "softToe": 239.5314914908804,
+      "blackEndpoint": 102.89443199574819
+    },
+    {
+      "frame": 25,
+      "original": 233.28357228654465,
+      "softToe": 200.02100964283312,
+      "blackEndpoint": 82.56991568396595
+    },
+    {
+      "frame": 26,
+      "original": 194.33446843044908,
+      "softToe": 165.23674701646172,
+      "blackEndpoint": 65.90625360202733
+    },
+    {
+      "frame": 27,
+      "original": 157.3603731441738,
+      "softToe": 132.246027919675,
+      "blackEndpoint": 49.546872395380205
+    },
+    {
+      "frame": 28,
+      "original": 127.70328356741584,
+      "softToe": 106.03620923949624,
+      "blackEndpoint": 39.50320581312897
+    },
+    {
+      "frame": 29,
+      "original": 101.00459206126432,
+      "softToe": 82.80810565132333,
+      "blackEndpoint": 28.31676256838902
+    },
+    {
+      "frame": 30,
+      "original": 77.35226523850827,
+      "softToe": 61.943806582918626,
+      "blackEndpoint": 20.638681251758996
+    },
+    {
+      "frame": 31,
+      "original": 57.58152223502799,
+      "softToe": 44.882736499045635,
+      "blackEndpoint": 14.192464885519318
+    },
+    {
+      "frame": 32,
+      "original": 37.707426419631204,
+      "softToe": 27.80425420774217,
+      "blackEndpoint": 7.411621775585479
+    },
+    {
+      "frame": 33,
+      "original": 27.090422996709027,
+      "softToe": 19.278870768559884,
+      "blackEndpoint": 5.3299242161468605
+    },
+    {
+      "frame": 34,
+      "original": 18.174925374811124,
+      "softToe": 12.24511911236728,
+      "blackEndpoint": 2.993778887025756
+    }
+  ]
+}

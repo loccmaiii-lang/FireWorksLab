@@ -1,0 +1,7 @@
+{
+  "version": "4.9.120",
+  "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "diagnosticRecenter": true,
+  "source": "旧S1实际主序列PNG+实际回放着色器，以sRGB纹理查真实Ramp；不代表UE/BC7验证",
+  "errors": []
+}

@@ -50,11 +50,12 @@
     "金曜菊闪烁（Codex） · 橙引线柔边Ramp": {
       "负责": "金曜菊闪烁（Codex）",
       "日期": "2026-10-20",
-      "状态": "在做：只出独立Ramp及对照，不占用tool/src或UE",
+      "状态": "完成并释放：独立Ramp及GPU对照已出，不占用tool/src或UE；待用户替换审看",
       "授权": "用户：你可以输出一张没那么影响的ramp图给我吗",
-      "范围": "analysis/results/GLITTER_RAMP_20261020内独立256×8 Ramp、生成记录与GPU回放对照；原渐变只柔化最暗约5%，其余逐像素保留",
+      "范围": "analysis/results/GLITTER_RAMP_20261020内独立256×8 Ramp、生成记录与GPU回放对照；最终只柔化最暗8列约3%，第8–255列逐像素保留",
       "保护": "不改用户配方、烘焙器/导入器源码、主序列、速度寿命、贴图规范或UE；保留overdraw及其他数据",
-      "完成标准": "输出一张可替换PNG；尺寸/sRGB/Alpha/末列黑护栏/未修改段逐字节验证，原PNG实际GPU回放及暗尾影响对比；只提交本任务文件"
+      "完成标准": "输出一张可替换PNG；尺寸/sRGB/Alpha/末列黑护栏/未修改段逐字节验证，原PNG实际GPU回放及暗尾影响对比；只提交本任务文件",
+      "结果": "T_EFX_FireWorks_GlitterChry_S1_Lead_SoftToe_R.png，原S1暗尾样本积分保留89.52%（整暗端改黑40.31%）；实际GPU 0秒/0.8秒对比审看，无pageerror/GLerror。未改配方/默认/主序列/源码或UE，未宣称UE与BC7验证。使用说明说明四点渐变重导无法保持该独立窄曲线。"
     },
     "本机同步检测（Claude Code） · PC + 手游主序列全部 NoMip 已写 + 交付入口默认 NoMip（完成并释放 UE；待用户测试与 P4 提交）": "负责：本机同步检测（本机 Claude Code），2026-10-18 16:4x 开工。用户 10-18 原话「PC手游主序列都改nomip吧，交付入口默认写nomip，我刚刚测试了三张，没有方头了，并且金芒菊偶尔有偶尔没有，大多数时候都没有」。UE 写入：ResourceFX 3.0 行（PC + 手游）用到、只被烟花引用的主序列贴图（材质参数 MainTex / BaseTex），字段只改 MipGenSettings → NoMipmaps；先备份 uasset、P4 迁出、改、读回、存；不提交 P4。不动：共享贴图（别的项目也在用，列出来）、噪声 / 遮罩 / 溶解等辅助贴图、Ramp、Cutout、粒子、材质。交付入口（私有 D:/FXTools/DFWorkbench，不进仓库）：主序列导入一律写 NoMip。别的对话框这段时间请别写 UE。 【完成并释放 UE（10-18 17:2x）】70 张（PC 37、手游 33；3.0 行用到、只被烟花引用、MainTex / BaseTex、原来有 mip）MipGenSettings → NoMipmaps：备份（哈希核过，analysis/local/输出/LOWQ_FIX_20261018_备份/全部主序列/）→ P4 迁出 → 改 → 读回 → 保存；独立重读 70 / 70 只变这一个字段、磁盘已变、已迁出可写。没提交 P4。连同 16:2x 的 3 张，3.0 行非共享主序列全部 NoMip（PC 常驻约 160 MB、手游约 34 MB）。没改：共享 15 张、辅助图 6 张（遮罩 / 噪声 / 溶解）、Ramp、Cutout。交付入口：flipbook 新建 / 更新同名都写 NoMip，新检查 2 项先失败后通过（resource-rules 32 / 32），全套 52 项退出码与改前基线相同；8034 /importer 已是新成品。证据 analysis/results/LOWQ_FIX_20261018/nomip_*.json。金芒菊主图 PC / 手游各只有一张；同组「金锦菊」GoldRay_A / B 这次一起改了。",
     "本机同步检测（Claude Code） · 3 张主图 NoMip 已写（完成并释放 UE；待用户测试与 P4 提交）": "负责：本机同步检测（本机 Claude Code），2026-10-18 16:0x 开工。用户 10-18 原话「同意迁入以上三张图修改，迁入后我再测试表现是否正常」。UE 写入只限 3 张：/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD、…RiseTrail_M_Loop_16x1_01_HD、…GoldRayChry_4x4_01_HD；字段只改 MipGenSettings → NoMipmaps。先备份 uasset、P4 迁出、改、读回、存；不提交 P4（用户测完自己提交）。另做只读统计（3.0 行主序列的尺寸 / 格式，估显存）。不动粒子、材质、别的贴图。别的对话框这段时间请别写 UE。 【完成并释放 UE（10-18 16:2x）】3 张 _HD 主图（RiseTrail_L_Loop_16x1 / RiseTrail_M_Loop_16x1 / GoldRayChry_4x4）MipGenSettings → NoMipmaps：备份（哈希核过）→ P4 迁出 → 改 → 读回 → 保存；独立重读只变这一个字段、磁盘已变、已迁出可写，InvestigateTexture 已不在流送列表（一直全分辨率）。没提交 P4。备份 analysis/local/输出/LOWQ_FIX_20261018_备份/；证据 analysis/results/LOWQ_FIX_20261018/apply3-*.json。只读统计 stats.json：PC 3.0 主序列 42 张（共享 2），全 NoMip 常驻约 161 MB，10-18 前 NeverStream 时约 213 MB。",
