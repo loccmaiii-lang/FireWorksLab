@@ -77,7 +77,10 @@
 - [x] 网格垂柳UEv3 19:36 已释放 UE；手游编辑器（`-inifeature=Mobile`，FXLookDevLevel）在线；状态清单认领 UE。
 - [ ] 设计对照：同机位、同一时刻，LiteHDR 0 / 1 × 现值 / 候选，参照 PC `_HD`（用户认可的样子）。
 - [ ] 出方案：`_H`（不开 LiteHDR）调亮；`_M`（开 LiteHDR）颜色倍增 ≤ 3、亮度走 alpha。
-- [ ] 复制 `_H`、改表（第 1 步脚本已备好 `dup_h.mjs`，dry 先跑）。
+- [x] 复制 `_H`、改表（`analysis/local/20261022_LiteHDR_批量修正/dup_h.mjs`）：18 个 3.0 效果 `_M` → `_H`（保存、P4 标记添加），手游表 18 行 FxSP_High 改指 `_H`（迁出、保存）；verify：`_H` 与 `_M` 发射器 / 材质一致，表这 18 行其它字段没动。没提交 P4。
+  - `SkyRocketSparkler_H` 早就有、表没用它，这次没动，留着给用户定。窜天猴 sku 另外 4 行本来就分了 `_L` / `_H`，没复制。
+  - `LittleCombo_M` 内存里有用户复现时的改动（ColorScaleOverLife 1→10、AlphaOverLife 1→5，没保存）：没动用户的 `_M`；复制出的 `_H` 把这两个值写回磁盘原值（1 / 1）。
+  - 发现：GPUECli `/datatable/row/update` 每改一行就自动保存一次表（每次约 2.6 s）。
 - [ ] 按方案批量改 `_H` / `_M`：dry / 备份 / 写入 / 读回 / 对照截图。
 
 材质核对（10-15 快照）：烟花父材质 Emissive = (AddColor + MultiColor × 贴图) × 粒子颜色 RGB，Opacity = 粒子 alpha × Alpha × 溶解 / 深度渐隐，混合 Translucent。LiteHDR 在混合前压缩颜色（`c/(1+c)` 一类），半透明混合在压缩值上做，亮色一被 alpha 混就被压灰 → 用户说的「倍增 ≤ 3、亮度走 alpha」和着色器一致（推断，待对照截图证实）。
