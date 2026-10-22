@@ -1,0 +1,444 @@
+{
+  "date": "2026-10-22",
+  "engine": "UE 4.24.2 desktop sandbox",
+  "singleActivation52s": {
+    "samples": 2805,
+    "wallRange": [
+      0.0186,
+      52.0059
+    ],
+    "clock": "Windows Python 2.7 time.clock; monotonic wall clock, not ParticleAge",
+    "activationCallsInTestScript": {
+      "Mobile": 1,
+      "PC": 1
+    },
+    "automaticResetsInTest": 0,
+    "lateSamples20To52s": 1730,
+    "lateMaxCounts": {
+      "PC": 0,
+      "Mobile": 0
+    },
+    "firstPermanentZeroWall": {
+      "PC": 14.0532,
+      "Mobile": 14.3547
+    },
+    "templateSets": {
+      "PC": [
+        "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+      ],
+      "Mobile": [
+        "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M"
+      ]
+    },
+    "checkpoints": [
+      {
+        "wantedWall": 4,
+        "actual": {
+          "wall": 4.0048,
+          "templates": {
+            "Mobile": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M",
+            "PC": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+          },
+          "slate": 4.0071,
+          "counts": {
+            "Mobile": 1,
+            "PC": 609
+          }
+        }
+      },
+      {
+        "wantedWall": 9,
+        "actual": {
+          "wall": 9.0007,
+          "templates": {
+            "Mobile": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M",
+            "PC": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+          },
+          "slate": 8.9911,
+          "counts": {
+            "Mobile": 1,
+            "PC": 737
+          }
+        }
+      },
+      {
+        "wantedWall": 16.5,
+        "actual": {
+          "wall": 16.5066,
+          "templates": {
+            "Mobile": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M",
+            "PC": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+          },
+          "slate": 16.4936,
+          "counts": {
+            "Mobile": 0,
+            "PC": 0
+          }
+        }
+      },
+      {
+        "wantedWall": 20,
+        "actual": {
+          "wall": 20.0173,
+          "templates": {
+            "Mobile": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M",
+            "PC": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+          },
+          "slate": 20.0041,
+          "counts": {
+            "Mobile": 0,
+            "PC": 0
+          }
+        }
+      },
+      {
+        "wantedWall": 33,
+        "actual": {
+          "wall": 33.0004,
+          "templates": {
+            "Mobile": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M",
+            "PC": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+          },
+          "slate": 32.9897,
+          "counts": {
+            "Mobile": 0,
+            "PC": 0
+          }
+        }
+      },
+      {
+        "wantedWall": 49.5,
+        "actual": {
+          "wall": 49.5051,
+          "templates": {
+            "Mobile": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_M.PS_MW_B_M",
+            "PC": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/PS_MW_B_HD.PS_MW_B_HD"
+          },
+          "slate": 49.4929,
+          "counts": {
+            "Mobile": 0,
+            "PC": 0
+          }
+        }
+      }
+    ]
+  },
+  "finalSelectionCallback38s": {
+    "samples": 2085,
+    "last": {
+      "wall": 38.0133,
+      "elapsed": 38.9941726103425,
+      "pc": 0,
+      "error": null,
+      "active": "PC",
+      "cycles": 0
+    },
+    "automaticCyclesMax": 0,
+    "pcMaxAfter20s": 0,
+    "sourceSha256": "c9e519ea7519ba8b0ef7fca6286abaf419f1b00e2e0a28103676a88a25bc1275",
+    "behavior": "Only a new single selection can activate once; no elapsed-time reset; multiselection cannot cycle resets"
+  },
+  "assetReadback": {
+    "PS_MW_B_HD": {
+      "method": "EPSUM_RealTime",
+      "emitters": [
+        {
+          "name": "Particle Emitter",
+          "lods": [
+            {
+              "enabled": true,
+              "requiredEnabled": true,
+              "loops": 1,
+              "duration": 15,
+              "delay": 0,
+              "rateRange": [
+                0,
+                0
+              ],
+              "bursts": [
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 1,
+                  "CountLow": -1,
+                  "Time": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "L2_Dots",
+          "lods": [
+            {
+              "enabled": true,
+              "requiredEnabled": true,
+              "loops": 1,
+              "duration": 2,
+              "delay": 7,
+              "rateRange": [
+                30,
+                30
+              ],
+              "bursts": [
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 5,
+                  "CountLow": -1,
+                  "Time": 0.15000000596046448
+                },
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 23,
+                  "CountLow": -1,
+                  "Time": 0.2750000059604645
+                },
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 22,
+                  "CountLow": -1,
+                  "Time": 0.5249999761581421
+                },
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 23,
+                  "CountLow": -1,
+                  "Time": 0.875
+                },
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 23,
+                  "CountLow": -1,
+                  "Time": 1.149999976158142
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "L3_Sparkle",
+          "lods": [
+            {
+              "enabled": true,
+              "requiredEnabled": true,
+              "loops": 1,
+              "duration": 10,
+              "delay": 1,
+              "rateRange": [
+                600,
+                600
+              ],
+              "bursts": [
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 0,
+                  "CountLow": -1,
+                  "Time": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "PS_MW_B_M": {
+      "method": "EPSUM_RealTime",
+      "emitters": [
+        {
+          "name": "Particle Emitter",
+          "lods": [
+            {
+              "enabled": true,
+              "requiredEnabled": true,
+              "loops": 1,
+              "duration": 16.100000381469727,
+              "delay": 0,
+              "rateRange": [
+                0,
+                0
+              ],
+              "bursts": [
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 1,
+                  "CountLow": -1,
+                  "Time": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "PS_MW_B_L3_CopySeed": {
+      "method": "EPSUM_FixedTime",
+      "emitters": [
+        {
+          "name": "Particle Emitter",
+          "lods": [
+            {
+              "enabled": true,
+              "requiredEnabled": true,
+              "loops": 1,
+              "duration": 16.100000381469727,
+              "delay": 0,
+              "rateRange": [
+                0,
+                0
+              ],
+              "bursts": [
+                {
+                  "_struct": "ParticleBurst",
+                  "Count": 1,
+                  "CountLow": -1,
+                  "Time": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "finalReadbackBeforeSelectionCallback": {
+    "mi": {
+      "scalars": {
+        "UseParticleSubUV": 0,
+        "ColorPower": 2,
+        "ColorIntensity": 16,
+        "hardness": 0.30000001192092896
+      },
+      "textures": {
+        "NoiseMap": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/T_MW_SparkNoise.T_MW_SparkNoise",
+        "MainTex": "/Game/Effects_HD/_Sandbox/MWAB_V3_20261022/T_MW_StripB.T_MW_StripB"
+      }
+    },
+    "mesh": {
+      "SM_MW_B_Mobile": {
+        "verts": 1998,
+        "fullPrecisionUV": true
+      },
+      "SM_MW_B_PC": {
+        "verts": 10988,
+        "fullPrecisionUV": true
+      }
+    },
+    "sourceHashes": {
+      "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD": "84d170700ebf11fa5a07eefa5b940b5282b4cd51551cebec43e2bb0d3e11aaf1",
+      "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Hero_FlowFixed_01": "62964c5b449ceb536895b6570fc94b78d2c5bc581dee98adb68da84a5d5767ea",
+      "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_M": "bf703d19d692a3ab31599b445101751778010cb6272fb5f0e79710283676768d"
+    },
+    "texture": {
+      "T_MW_StripB": {
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+        "filter": "<TextureFilter.TF_BILINEAR: 1>",
+        "compression_settings": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+        "srgb": "False",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+        "never_stream": "False",
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_CLAMP: 1>"
+      },
+      "T_MW_SparkNoise": {
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "compression_settings": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "srgb": "False",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_PROJECT03: 44>",
+        "never_stream": "False",
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>"
+      }
+    },
+    "world": "/Game/Maps/Dam_Iris_Long3/Dam_Iris_Long3.Dam_Iris_Long3",
+    "preview": {
+      "testHandleRemoved": true,
+      "testRunning": false,
+      "oldAutoLoopRunning": false,
+      "oldHandleRemoved": true,
+      "actorLabels": {
+        "Mobile": "MWAB3_B_Mobile_v3",
+        "PC": "MWAB3_B_PC_v3",
+        "A": "MWAB3_A_Original"
+      }
+    }
+  },
+  "gpuL3Alpha": {
+    "min": 0.0,
+    "max": 0.9742222215615067,
+    "samples": 128
+  },
+  "sandboxSaves": {
+    "files": [
+      {
+        "sha256": "830fb90a8e8a676fd80d166644f96a0a39793dad36fef417514b42e3d6795a88",
+        "bytes": 531739,
+        "name": "SM_MW_B_PC"
+      },
+      {
+        "sha256": "069389c256ce181a2e85c554c4bc667cf1cb3d8fed8de929ac94edaf9113add8",
+        "bytes": 177819,
+        "name": "SM_MW_B_Mobile"
+      },
+      {
+        "sha256": "4bc58024b348571463a4376640dd3d9d4719f7f9851d8311355ce40f53f253e3",
+        "bytes": 34543,
+        "name": "T_MW_StripB"
+      },
+      {
+        "sha256": "7c1412f11d5c3232427eec97a543ff174f5aa8f7de13f185435d0ce5d10b4c83",
+        "bytes": 157569,
+        "name": "T_MW_SparkNoise"
+      },
+      {
+        "sha256": "690343cb1220f2a4de0afeea880d22a943d45067718234a5f7884326b4fe6a55",
+        "bytes": 91372,
+        "name": "MI_MW_B"
+      },
+      {
+        "sha256": "f499e7b8800b8d1c95350f9c16b236f45b249aee8f4fee4c84a60121282afc88",
+        "bytes": 699263,
+        "name": "PS_MW_B_HD"
+      },
+      {
+        "sha256": "a1a275d3ded9e260fc94d4d389f6a0deff2b3a8dbf2f55331752740514b4ba69",
+        "bytes": 626459,
+        "name": "PS_MW_B_M"
+      },
+      {
+        "sha256": "eaf344f826901d858afe4d442391ea25b6bd168a5c5842d172e1153722d9c252",
+        "bytes": 623666,
+        "name": "PS_MW_B_L3_CopySeed"
+      }
+    ],
+    "saved": {
+      "PS_MW_B_M": true,
+      "SM_MW_B_PC": true,
+      "PS_MW_B_HD": true,
+      "T_MW_SparkNoise": true,
+      "PS_MW_B_L3_CopySeed": true,
+      "MI_MW_B": true,
+      "SM_MW_B_Mobile": true,
+      "T_MW_StripB": true
+    }
+  },
+  "sourceDiskUnchanged": {
+    "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD": true,
+    "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Hero_FlowFixed_01": true,
+    "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_M": true
+  },
+  "sourceInputHashes": {
+    "analysis/results/WILLOW_SPARK_AB_20261019/UE测试包_v3/T_MW_SparkNoise.png": "a3467f842fe9bf4a587e39363369421798f5bdf807c0e5e2b9ecdf60e0a5fad2",
+    "analysis/results/WILLOW_SPARK_AB_20261019/UE测试包_v3/T_MW_StripB.png": "7442179cebde0703b7121c21835fcbcd991d2fd2ce9c1fd4a5931e3480e9cb34",
+    "analysis/results/WILLOW_SPARK_AB_20261019/UE测试包_v3/params.json": "75bdbc3f96a48b1b64529ac030f6d353d61b6eee1b4f913196d78fcd730cbcad",
+    "analysis/results/WILLOW_SPARK_AB_20261019/UE测试包_v2/SM_MW_B_Mobile.obj": "c4245d92d34316f60d305a598e244d411ba63a8ae57b62a867d5fd0e521e6be2",
+    "analysis/results/WILLOW_SPARK_AB_20261019/UE测试包_v2/SM_MW_B_PC.obj": "dbc9e601d2e3a0a517316950442af42abd410b90d7a72f5a2aede44c0b5c187c"
+  },
+  "scope": {
+    "uassetsUploaded": false,
+    "originalMapSaved": false,
+    "p4Submitted": false,
+    "mobileDeviceTested": false,
+    "fullQualityTiersTested": false,
+    "gpuPerformanceTested": false
+  }
+}
