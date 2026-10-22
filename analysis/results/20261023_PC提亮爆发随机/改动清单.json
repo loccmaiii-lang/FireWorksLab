@@ -1,0 +1,423 @@
+{
+ "说明": "PC 3.0 烟花本轮改动（只改粒子）。提亮 = 该层总倍增倍数（含回调）；爆发 = t=0 ×2、0.2 s 内线性回到 ×1；颜色随机 = 出生定色 ×[0.95,1.05] 逐通道；大小随机 = ±5%（锁 XY）。add = 恒定 COL 换成出生定色；fold = COL 曲线原样搬进新 CSOL 再加出生定色；initial = 原有出生定色改成范围。",
+ "PC": {
+  "LittleGold_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "add",
+     "大小随机": "widen",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "LittleSilver_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": "widen",
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "LittleCrackle_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": "widen",
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "LittleCombo_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "add",
+     "大小随机": "widen",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "Combo_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "fold",
+     "大小随机": "widen",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "SilverChry_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": "widen",
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "Crackle_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": 10,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": "replace",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "Glitter_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "add",
+     "大小随机": "replace",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "SilverStrobeChry_HD": {
+   "改动": [
+    {
+     "层": "Particle Emitter",
+     "提亮": 3,
+     "爆发": null,
+     "颜色随机": "initial",
+     "大小随机": "widen",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "SilverStrobeChry_B_HD": {
+   "改动": [
+    {
+     "层": "Particle Emitter",
+     "提亮": 3,
+     "爆发": null,
+     "颜色随机": "initial",
+     "大小随机": "widen",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "SilverWhiteChry_HD": {
+   "改动": [
+    {
+     "层": "Particle Emitter",
+     "提亮": 3,
+     "爆发": null,
+     "颜色随机": "initial",
+     "大小随机": "widen",
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "Lime_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "fold",
+     "大小随机": null,
+     "CSOL": "edit"
+    },
+    {
+     "层": "L2_Main",
+     "提亮": 10,
+     "爆发": null,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    },
+    {
+     "层": "L3_MainA",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    },
+    {
+     "层": "L3_MainB",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "LimeStar_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "GoldRay_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": 10,
+     "爆发": true,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": "new"
+    },
+    {
+     "层": "L2_Main",
+     "提亮": 10,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": "new"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "GoldSpark_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": "new"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "GoldCoreLime_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": 3.0,
+     "爆发": true,
+     "颜色随机": "fold",
+     "大小随机": null,
+     "CSOL": "enable"
+    },
+    {
+     "层": "L2_Main",
+     "提亮": 10,
+     "爆发": null,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    },
+    {
+     "层": "L3_Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "GoldRayChry_HD": {
+   "改动": [
+    {
+     "层": "MainA",
+     "提亮": 3.5,
+     "爆发": true,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    },
+    {
+     "层": "MainB",
+     "提亮": 3.5,
+     "爆发": null,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "edit"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "LimeCoreDelay_HD": {
+   "改动": [
+    {
+     "层": "L2_Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": null
+    },
+    {
+     "层": "L3_MainA",
+     "提亮": null,
+     "爆发": true,
+     "颜色随机": null,
+     "大小随机": null,
+     "CSOL": "new"
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "GlitterChry_HD": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "提亮": 5,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": "edit"
+    },
+    {
+     "层": "L2_Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "GoldRayChry_L_HD": {
+   "改动": [
+    {
+     "层": "Main",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "Comet_Layers_S_HD": {
+   "改动": [
+    {
+     "层": "L1_TrailFull",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  },
+  "Silver_Layers_S_HD": {
+   "改动": [
+    {
+     "层": "TrailFull",
+     "提亮": null,
+     "爆发": null,
+     "颜色随机": "add",
+     "大小随机": null,
+     "CSOL": null
+    }
+   ],
+   "跳过": [],
+   "读回": "ok"
+  }
+ },
+ "手游_H": {
+  "LittleGold_H": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "爆发": true
+    }
+   ],
+   "读回": "ok"
+  },
+  "LittleCombo_H": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "爆发": true
+    }
+   ],
+   "读回": "ok"
+  },
+  "Glitter_H": {
+   "改动": [
+    {
+     "层": "L1_Main",
+     "爆发": true
+    }
+   ],
+   "读回": "ok"
+  },
+  "GoldRayChry_H": {
+   "改动": [
+    {
+     "层": "Main",
+     "爆发": true
+    }
+   ],
+   "读回": "ok"
+  }
+ }
+}

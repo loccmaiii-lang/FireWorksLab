@@ -170,9 +170,54 @@
 拆解（按优先级）：
 - [x] A 金垂柳 v3：沙盒资产按位置表改名搬到正确目录，不覆盖正式资产（粒子起临时名 `_V3`），明天合入。→ 7 个资产已搬（P4 标记 add，未提交）；`PS_MW_B_L3_CopySeed` 留在沙盒。
 - [x] B 规范走查（只读，PC + 手游 3.0 全部粒子）：significance / bDisableWhenInsignficant / InsignificantReaction / MaxSignificanceLevel / SecondsBeforeInactive / 包围盒 / LOD / 发射器预算 / GPU / 贴图（NeverStream、DistantVFX、主序列 NoMip、Ramp Clamp+NoMip、手游 ≤1024、手游链无 Effects_HD）/ 表行。→ `audit_findings.json`（本机）：105 个发射器勾了 bDisableWhenInsignficant，30 个发射器重要度 Medium，贴图 4 张不合规，手游 2 张 2048 图没限尺寸，SkyRocketSprint_M 4 个发射器。
-- [ ] C 补漏（规范明确的直接补；有取舍的列出来）。
-- [ ] D PC 提亮 + 爆发 + 随机（方案 v2，只改粒子）；`_H` 同步 PC。
+- [x] C 补漏（规范明确的直接补；有取舍的列出来）。→ 48 包 108 发射器 bDisableWhenInsignficant→false；共享贴图 6 张、窜天猴 sku 表行 5 处、SkyRocketSprint_M 4 发射器只列不改（见下方清单）。
+- [x] D PC 提亮 + 爆发 + 随机（方案 v2，只改粒子）；`_H` 同步 PC。→ PC 22 包、_H 4 包，见 `analysis/results/20261023_PC提亮爆发随机/看法.md`。
 - [x] E 彗星硬切排查（导演 / 表 MaxInstanceNum / significance / SecondsBeforeInactive / 包围盒），能找到就找。→ **找到**：资源表 `MaxInstanceNum 10` + `bLimitByMaxInstanceNum True`，FX 管理器把最早的同 ID 实例强制停掉；10-21 夜场 PIE 日志「will be deactivated beacause of FXLimit: MaxInstanceNum (10)」红彗星 ≥511 次；夜场 PC 高配彗星同时在场 144、银星扇 158。没改表（要你定），见 `analysis/results/20261023_彗星硬切排查/看法.md`。
-- [ ] F 最终走查 + 清单（做了 / 漏了 / 没做）。
+- [x] F 最终走查 + 清单（做了 / 漏了 / 没做）。→ 复查 94 个粒子：剩下的只有下方「没改」清单里的项。
 
 已核实（引擎 DLL 属性说明原文）：`bDisableWhenInsignficant`「When true, emitters deemed insignificant will have their tick and render disabled Instantly. When false they will simple stop spawning new particles.」→ 勾上才会立即硬切，不勾只停生成；用户说法相反，记为误区。另有系统级 `InsignificantReaction`（Auto / Complete / DisableTick / DisableTickAndKill）、`InsignificanceDelay`、`MaxSignificanceLevel`，以及 `SecondsBeforeInactive`。
+
+进度（通宵）：
+- C 补漏第一批：48 个包、108 个发射器 `bDisableWhenInsignficant` → false（PC `_HD` + 手游 `_M/_H/_L`，含金垂柳 V3_M），逐包迁出、保存、读回通过；备份在 `analysis/local/20261022_LiteHDR_批量修正/备份/sig/`。主序列重要度本来都是 Critical；Medium 的 30 个都是 Glow / Flash / 火花辅助层，保留不动。共享的 `P_Destructible_Empty` 没碰。
+- 贴图 6 张（`T_6DLight_RGBAFireRamp_08`、`T_6DLight_EmissiveRamp_02` 勾 NeverStream、`T_EFX_FireWokr_Star_01/02`、手游 2048 的 `T_EFX_Sparks_Sparkler_4x4_01`、`T_EFX_Sparks_Streak_8x1_02`）都被音乐节 / 圣诞 / 手势等别的效果共用 → 按规则只列出、不改，等你定。
+
+### ⚠ 02:29 编辑器崩溃（我造成的）
+
+- 经过：我写取景预览脚本时 import 了 `frame.mjs`，它的「直接运行才执行」判断用的是 `endsWith('frame.mjs')`，预览脚本名 `_preview_frame.mjs` 也以它结尾，于是意外启动了一轮 36 次的手游取景拍摄；拍到第 5 次时 PC 编辑器崩溃（D3D12RHI `D3D12DescriptorCache.cpp:988` 断言，RHIThread）。
+- 影响：**白天编排地图里没保存的改动丢了**（`MA5_FireworkOnDam_Day.umap` 磁盘版是 10-17 的，这次会话没保存过；自动保存里没有包）。
+- 能找回的：我 01:52 把白天导演完整配置只读备份成了 `director_dump_2026-10-22T17-52-37-868Z.json`；逐条比对后，它和你工作台导出的 `FXtools/节目/NewYearFireWorks_Day/导演表-Day调试版-NPC试放-一张表.json`（10-22 22:01）只差 0.001 的小数取整 → **重新导入这张表再保存，导演配置就回来了**。导演以外（比如点位 actor 位置）如果在 UE 里手动改过，我的备份没覆盖，需要你确认。
+- 已改：三个脚本的主程序判断都改成精确匹配文件名；按你的授权，用 `RunEditor_HD.cmd` 重启了编辑器。
+
+D 进度（PC，`analysis/local/20261022_LiteHDR_批量修正/pc_fx.mjs` + `pc_pol.mjs`）：
+- 做法：逐包 dry → 备份（`备份/pc_fx/`）→ 迁出 → 改 → **读回：按「基础色 × 全部启用的 CSOL」算每层有效颜色曲线，要求 改后 = 改前 × 提亮 × 爆发(t)（加随机的层在 ×[0.95, 1.05] 内）、其余层一点不变** → 才保存。
+- 读回拦下一处：小青柠 Lime 的 4 层共用一个 CSOL 模块，给 L1 改爆发曲线会连带 L2 / L3（L3B 接力那一刻也会闪）。没保存；改成「共用模块不动，给本层另加一个系数模块」，修好后重新读回通过才保存。金曜菊 GoldSpark、多重菊 LimeCoreDelay 同样有共用 CSOL，按新规则处理。
+- 改前测量（0.3T，背景已减）：用参照（你调过的）的帧平均亮度中位数约 17.8，0.5–2 倍区间是 8.9–35.6；改前低于区间的只有爆裂星 4.8、金锦菊 5.1、窜天猴爆炸 3.0。小青柠、金蕊柠、金芒菊、银彩菊这几个的单像素亮度其实不低，按倍增数字算出来的「没提亮」高估了 → 改后量出来超了就回调。
+
+- 回调（看图后）：小青柠 L3 ×10 发白丢绿 → 退回 ×1；金蕊柠 L3 退回 ×1、L1 ×10→×3；金芒菊 ×5→×3.5（偏灰）。回调同样读回通过才保存。
+- `_H`：只给小金花 / 小分裂 / 橙辉星 / 金芒菊加爆发。爆裂星 `_H` CSOL 20、金芒菊 `_H` 10 是你 10-22 之后自己调的（我当时设 1），保留没乘；和 PC 新值（10 / 3.5）不一致，要你定谁跟谁。
+- 复查（94 个粒子重读）：bDisableWhenInsignficant 只剩共享的 `P_Destructible_Empty`。
+
+### 收工清单（10-23 03:2x）
+
+做了：
+1. 彗星硬切：找到原因（资源表同 ID 上限 10，FX 管理器强停最早的），没改表 → `analysis/results/20261023_彗星硬切排查/看法.md`。
+2. 规范补漏：48 包 108 发射器 bDisableWhenInsignficant → false。
+3. PC 提亮 / 爆发 / 颜色大小随机 22 包；手游 `_H` 爆发 4 包 → `analysis/results/20261023_PC提亮爆发随机/看法.md`。
+4. 金垂柳 v3：7 个资产改名搬目录（P4 add，未覆盖正式资产）。
+
+要你做 / 定：
+1. **白天编排地图要重新导入**：02:29 编辑器崩溃（我造成的），没保存的白天改动丢了。导演配置等于 `FXtools/节目/NewYearFireWorks_Day/导演表-Day调试版-NPC试放-一张表.json`，重新导入后保存；点位如果在 UE 里手动挪过，要再看一下。
+2. 彗星：资源表 3.0 用量大的几行，改 `bLimitByMaxInstanceNum = False` 或抬高 `MaxInstanceNum`（夜场彗星同时 144 个、银星扇 158 个）。
+3. 爆裂星 / 金芒菊：PC 和 `_H` 两边亮度不一致，谁跟谁。
+4. 大金芒菊原有的两层各自大小随机：去不去。
+5. P4：92 个文件迁出 / 新增未提交（清单在 `analysis/local/20261022_LiteHDR_批量修正/p4_opened_0315.txt`）；沙盒 `PS_MW_B_L3_CopySeed` 也是 add 状态（不是我加的）。
+
+没改（共享的，按规则只列出）：
+- 贴图：`T_6DLight_RGBAFireRamp_08`、`T_6DLight_EmissiveRamp_02`（勾了 NeverStream、组不对、不是 Clamp+NoMip）；`T_EFX_FireWokr_Star_01/02`（组不对、不是 NoMip）；手游 2048 的 `T_EFX_Sparks_Sparkler_4x4_01`、`T_EFX_Sparks_Streak_8x1_02`（没限最大尺寸 1024）。都被音乐节 / 圣诞 / 手势等效果共用，只有窜天猴 sku 用到。
+- 表：窜天猴 sku 5 行的 Low 指 `_L` 或 `P_Destructible_Empty`、引线 High 指 `_M`（规范是 Low=`_M`、不做 `_L`）。
+- `P_EFX_FireWorks_SkyRocketSprint_M` 有 4 个发射器（规范 ≤ 3）。
+- 30 个 Medium 重要度的发射器，都是 Glow / Flash / 火花辅助层，保留。
+
+没做：
+- 金垂柳 v3 的合入和随机（明天）；小彗星（不在编排里）。
+- 没开 PIE：游戏里的最终效果、彗星改表后的表现，都还没在 PIE 里验证。
