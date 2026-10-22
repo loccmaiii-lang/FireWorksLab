@@ -1188,5 +1188,80 @@
     "本机挪动": "outputs/ 两个小目录 3.9 MB → analysis/local/20261017_outputs_旧备份/",
     "本机新增备份": "analysis/local/归档_旧副本_20261022/ 223 MB（MW2_AUDIT 副本删掉后这份才算省出来）",
     "review_js": "搬前搬后逐字节相同；本次没有提交 tool/data/review.js 和 协作/状态清单.md"
+  },
+  "F_用户追加删除": {
+    "提交": null,
+    "用户原话": "你刚刚列出来的40M以上的都删掉，点灭星还有空文件夹也删掉；T18留着，后面还要继续做",
+    "整目录删除": [
+      {
+        "路径": "analysis/local/B09_DIRECTOR_20261017",
+        "大小": 876046569
+      },
+      {
+        "路径": "analysis/local/MOBILE_TEST_20261011",
+        "大小": 857675529
+      },
+      {
+        "路径": "analysis/local/QUALITY_BLUR_20261016",
+        "大小": 483713697
+      },
+      {
+        "路径": "analysis/local/_worktree_scratch_backup_20261018",
+        "大小": 334483716
+      },
+      {
+        "路径": "analysis/local/QUALITY_COMPARE5_20261017",
+        "大小": 253007489
+      },
+      {
+        "路径": "analysis/local/GLITTER_AB_20261017",
+        "大小": 124449710
+      },
+      {
+        "路径": "analysis/local/N19_22_overdraw",
+        "大小": 61499391
+      },
+      {
+        "路径": "analysis/local/LOWQ_FIX_20261018",
+        "大小": 57330203
+      },
+      {
+        "路径": "analysis/local/WORKSPACE_DELIVERY",
+        "大小": 44030804
+      },
+      {
+        "路径": "analysis/local/SYNC_CHECK_20261017",
+        "大小": 40602882
+      }
+    ],
+    "部分删除": [
+      {
+        "路径": "analysis/local/QUALITY_BLUR_20261017",
+        "删": 187837223,
+        "留": "formal-fix/saved.json（analysis/scripts/ue_画质复核/wb_ramp_copy.mjs 要读）"
+      },
+      {
+        "路径": "analysis/local/SparkGraph",
+        "删": 11499814,
+        "留": "runtime/（110 MB，Playwright 1.63 Python 环境：prism3_build / prism3_revision / prism3_r2_audit / prism3_ui_check / spark_graph_browser 把它加进 sys.path）、baseline-4.9.83.html（spark_camera_regression.cjs 读）；rocket / sparkler / baseline.html / baseline-4.9.103.html 是脚本会重新生成的输出"
+      }
+    ],
+    "另存": {
+      "路径": "analysis/local/归档_UE临时资产清理清单_20261022/",
+      "内容": "GLITTER_AB / QUALITY_COMPARE5 的 review-manifest.json、QUALITY_BLUR_20261016 各次 cleanup.json、B09_DIRECTOR 清理配置，共 11 个文件 4.5 MB"
+    },
+    "副本": {
+      "路径": "analysis/local/MW2_AUDIT_20261016",
+      "动作": "git worktree remove --force（用户批准），分支 audit/jinwillow4-ue-20261016 保留；原始文件备份仍在 analysis/local/归档_旧副本_20261022/MW2_AUDIT_20261016/（212 MB）"
+    },
+    "根目录": [
+      "点灭星_Cascade参数.txt（10 KB，09-27 的 1.x 点灭星手工参数）",
+      "MyTepelate/（空）"
+    ],
+    "不动": {
+      "路径": "C:/Users/locmai/.codex/worktrees/t17-initcolor-2-0/FireWorksLab",
+      "理由": "用户：T18 留着，后面还要继续做"
+    },
+    "结果": "analysis/local 约 4.4 GB → 1.1 GB"
   }
 }
