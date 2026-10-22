@@ -1091,7 +1091,7 @@
     ]
   },
   "C_协作目录": {
-    "提交": null,
+    "提交": "df181693",
     "搬动": "无（旧文件原地不动）",
     "新建": [
       "协作/方案/README.md",
@@ -1100,5 +1100,81 @@
     ],
     "仓库梳理": "一屏目录下加「协作/ 顶层旧文件分类」：94 项（规则宪章 9、看板派活 14、方案研究 25、编排 37、提示词 3、其他 6），每行 文件 + 一句话 + 还在用 / 历史 / 参考；脚本核对 协作/ 顶层跟踪项全部列到（新建的 提示词/ 在说明里）",
     "引用检查": "没有移动文件，不涉及引用"
+  },
+  "D_本机过程证据与副本": {
+    "提交": null,
+    "过程证据删除": [
+      {
+        "路径": "analysis/local/CHOREO24",
+        "大小": 310170,
+        "理由": "到期（最新文件 10-07，超过 14 天）",
+        "引用检查": "只有 对话记录/对话框24.md 提到（历史记录）；脚本 0 处"
+      },
+      {
+        "路径": "analysis/local/CHOREO24_DENSE",
+        "大小": 543949,
+        "理由": "到期（10-07）",
+        "引用检查": "0 处"
+      },
+      {
+        "路径": "analysis/local/CHOREO24_RESTORE",
+        "大小": 3040870,
+        "理由": "到期（10-07）",
+        "引用检查": "0 处"
+      },
+      {
+        "路径": "analysis/local/UI_4.3.3",
+        "大小": 8388608,
+        "理由": "到期（10-04）",
+        "引用检查": "0 处"
+      },
+      {
+        "路径": "analysis/local/__pycache__",
+        "大小": 77209,
+        "理由": "Python 缓存",
+        "引用检查": "—"
+      }
+    ],
+    "过程证据删除合计": "约 11.8 MB（本机清理.py --apply 打印的数；不进 Git）",
+    "到期但没删": [
+      {
+        "路径": "analysis/local/POINT17_IMPL",
+        "大小": 6710886,
+        "理由": "被脚本写死路径：analysis/scripts/point_profile_regression.py 读 baseline/FireworkBaker.html、point_profile_delivery.py 写 export/"
+      }
+    ],
+    "本机清理改动": "analysis/scripts/本机清理.py 加 _script_used()：被跟踪脚本写死 analysis/local/<目录> 的，到期也标「问负责人」不删（现有 17 个：DZ_UP_20261013、GoldRayBurst、GraphFraming、LOWQ_FIX_20261018、MESH_WILLOW_20261016、MESH_WILLOW_READ_20261016、MOBILE_TEST_20261011、N19_22_封板基线、POINT17_IMPL、QUALITY_BLUR_20261017、QUALITY_REVIEW_20261017、RSU26_tmp、RocketSoft、SparkGraph、SparkScales、UE_HEIGHT_20261013、WORKBENCH_ROUNDTRIP）",
+    "副本": [
+      {
+        "路径": "C:/Users/locmai/.codex/worktrees/ultra-upload/FireWorksLab",
+        "分支": "codex/ultra-threejs @ 9e36de50（保留）",
+        "动作": "git worktree remove",
+        "独有内容": "2 个提交不在 origin/main 但在 origin/codex/ultra-threejs；忽略的 outputs/ + 日志 21 个文件 17.3 MB",
+        "备份": "analysis/local/归档_旧副本_20261022/ultra-upload/（codex-ultra-threejs.bundle verify 通过；文件 sha256 一致；node_modules 23 MB 没备份，可 npm ci 重装）",
+        "省空间": "约 0.4 GB（检出 387 MB + node_modules 23 MB，减去备份 17 MB）"
+      },
+      {
+        "路径": "F:/FireWorksLab/analysis/local/MW2_AUDIT_20261016",
+        "分支": "audit/jinwillow4-ue-20261016 @ c6e5e687（已在 origin/main）",
+        "动作": "已备份，没删：git worktree remove 要 --force，本次权限没放行",
+        "独有内容": "没跟踪的 259 个文件 211.8 MB（QUALITY_REPEAT_1725 排查证据，含 交接.md 提到但从没进 Git 的 排查结论与修复.md）",
+        "备份": "analysis/local/归档_旧副本_20261022/MW2_AUDIT_20261016/（sha256 一致）",
+        "省空间": "用户点头后 remove 可省约 253 MB"
+      },
+      {
+        "路径": "C:/Users/locmai/.codex/worktrees/t17-initcolor-2-0/FireWorksLab",
+        "分支": "codex/t17-initcolor-2-0 @ 7a1b4cdb（已在 origin/main）",
+        "动作": "不动",
+        "独有内容": "没跟踪的 analysis/results/INITCOLOR_SANDBOX_20261016/ 50 个文件 9.5 MB",
+        "理由": "派活 T18 用户 10-16 22:29 暂停、等恢复，任务记录写明原始材料保留在这个工作树；约 3.4 GB"
+      },
+      {
+        "路径": "C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab",
+        "动作": "不动",
+        "理由": "本机显卡后台在用"
+      }
+    ],
+    "stash": "9 条 stash 都不属于这三个分支（stash 是全库共用，删副本不影响）",
+    "其他": "C:/Users/locmai/.codex/worktrees/ 下另有约 40 个空文件夹（0 MB，Codex 自己的占位），不是本仓库登记的副本，没动"
   }
 }

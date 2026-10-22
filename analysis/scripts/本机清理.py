@@ -8,7 +8,8 @@
   1. analysis/local/ 下一级目录：日期先从目录名取（YYYYMMDD / YYYY-MM-DD），取不到用目录里最新文件的修改时间；
      超过 --days（默认 14）天 = 「到期」。被 .md 报告提到的标「有报告引用」，到期一样可删（原图只在本机，报告里的小图和结论在 Git）。
   2. 永不自动删（「保留」/「问负责人」）：输出/（交付素材与 UE 资产备份）、monitor_state/（本机显卡后台在用）、归档_*、恢复点、
-     含 .git 的（git worktree，用 git worktree remove）、名字含「保留」或里面有 保留.txt 的、_tmp 以外以 _ 开头的。
+     含 .git 的（git worktree，用 git worktree remove）、名字含「保留」或里面有 保留.txt 的、_tmp 以外以 _ 开头的、
+     被跟踪脚本写死路径（analysis/local/<目录>）的。
   3. analysis/local/_tmp/ 里超过 1 天的文件；analysis/local/__pycache__ 直接可删。
   4. 根目录 outputs/（没跟踪，别的 AI 的本机备份）、系统 TEMP 下 fwl* / fwlab-* 目录（超过 7 天）、git worktree 副本：只列，不删。
 
@@ -96,6 +97,24 @@ def _referenced(names):
     return {line.strip()[len('local/'):] for line in r.stdout.splitlines() if line.strip().startswith('local/')}
 
 
+def _script_used(names):
+    """被跟踪脚本写死路径（analysis/local/<目录>）的目录 → {目录: 第一个脚本}。这类到期也不删（10-22 目录整理：
+    POINT17_IMPL 被 point_profile_regression.py 当基准读，按到期删了脚本就坏）。"""
+    if not names:
+        return {}
+    args = ['git', '-C', ROOT, 'grep', '-o', '-F']
+    for n in names:
+        args += ['-e', 'local/' + n]
+    r = subprocess.run(args + ['--', '*.py', '*.mjs', '*.cjs', '*.js', '*.ps1', '*.cmd', '*.bat', '*.sh', ':!归档'],
+                       capture_output=True, text=True, encoding='utf-8', errors='replace')
+    out = {}
+    for line in r.stdout.splitlines():
+        f, _, m = line.rpartition(':')
+        n = m.strip()[len('local/'):]
+        if n in names: out.setdefault(n, f)
+    return out
+
+
 def scan_local(days=DAYS, sizes=True, refs=True, now=None):
     """analysis/local 一级目录分类。sizes=False 时只给到期目录算大小（同步体检用，要快）。"""
     now = now or datetime.datetime.now()
@@ -130,6 +149,10 @@ def scan_local(days=DAYS, sizes=True, refs=True, now=None):
             size, newest, files = _walk(path)
         rows.append(dict(cat=cat, path=os.path.relpath(path, ROOT).replace('\\', '/'), name=name,
                          date=d.strftime('%Y-%m-%d') if d else '', size=size, files=files, reason=reason, ref=False))
+    used = _script_used([r['name'] for r in rows if r['cat'] in ('到期', '未到期')])
+    for r in rows:
+        if r['name'] in used:
+            r['cat'], r['reason'] = '问负责人', f'被脚本写死路径（{used[r["name"]]}），到期也不删；脚本不用了再删'
     if refs:
         hit = _referenced([r['name'] for r in rows if r['cat'] in ('到期', '未到期') and len(r['name']) >= 6])
         for r in rows:
