@@ -359,6 +359,40 @@ def changed_files(base, head='HEAD', committed_only=False):
     return sorted(files)
 
 
+# 10-22 目录整理（方案_协作提效与目录梳理 2.1）：过程截图不进 Git。一次新增很多图、或单个文件很大时只提醒（不拦），提交说明里写理由
+BULK_IMAGES, BULK_MB = 20, 20
+IMAGE_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp', '.tga', '.exr', '.tif', '.tiff')
+
+
+def bulk_warnings(base, head='HEAD', committed_only=False):
+    """新增图片（改名 / 搬家不算）超过 BULK_IMAGES 张、新增或改动的单个文件超过 BULK_MB MB → 提醒行"""
+    r = sh('git', 'diff', '--raw', '--no-abbrev', '-z', '--find-renames', '--diff-filter=AM', f'{base}...{head}')
+    if r.returncode: return []
+    ent = r.stdout.split('\0'); rows = []
+    for i in range(0, len(ent) - 1, 2):
+        meta = ent[i].split()
+        if len(meta) >= 5: rows.append((meta[3], meta[4], ent[i + 1]))           # (新 blob, 状态, 路径)
+    if not committed_only:
+        st = sh('git', 'diff', '--cached', '--name-only', '-z', '--find-renames', '--diff-filter=A').stdout
+        rows += [('', 'A', p) for p in st.split('\0') if p and p not in {x[2] for x in rows}]
+    out = []
+    imgs = [p for _, s, p in rows if s == 'A' and p.lower().endswith(IMAGE_EXT)]
+    if len(imgs) > BULK_IMAGES:
+        top = {}
+        for p in imgs: top[os.path.dirname(p)] = top.get(os.path.dirname(p), 0) + 1
+        out.append(f'新增 {len(imgs)} 张图片（超过 {BULK_IMAGES}）：' + '、'.join(f'{d}（{n}）' for d, n in sorted(top.items(), key=lambda x: -x[1])[:4])
+                   + '。过程截图放 analysis/local/，交付只留 1–3 张关键图；确要进 Git 请在提交说明写理由')
+    shas = [b for b, _, _ in rows if b and set(b) != {'0'}]
+    if shas:
+        cs = subprocess.run(['git', 'cat-file', '--batch-check=%(objectname) %(objectsize)'], cwd=ROOT, input='\n'.join(shas) + '\n',
+                            capture_output=True, text=True, encoding='utf-8', errors='replace').stdout.split()
+        size = {cs[i]: int(cs[i + 1]) for i in range(0, len(cs) - 1, 2) if cs[i + 1].isdigit()}
+        big = [(p, size[b]) for b, _, p in rows if size.get(b, 0) > BULK_MB * 1024 * 1024]
+        if big:
+            out.append(f'单个文件超过 {BULK_MB} MB：' + '、'.join(f'{p}（{s / 1048576:.0f} MB）' for p, s in big[:6]) + '。确要进 Git 请在提交说明写理由')
+    return out
+
+
 DELIVERY_PREFIX = ('tool/local_delivery/', 'tool/local_http/', 'tool/src/js/67_delivery.js')
 # 4.9.119 时已经坏了的交付检查（沙盒没跟上源码里新加的函数，和本版无关）：照跑，不过只记 ⚠；修好了自然算过
 DELIVERY_KNOWN_BROKEN = {'test_export_iteration.cjs': '沙盒缺 fwlJobRecipes（62_resource_rules.js）', 'test_export_snapshot.cjs': '沙盒缺 comboMobileConflictText（67_fwlcombo.js）',
@@ -499,6 +533,8 @@ def main():
         sys.exit(0)
     print(f'合入门禁{"（推送前）" if a.hook else ""}：改动 {len(files)} 个文件（相对 {a.base}{"" if a.hook else "，含没提交的"}）' + ('，动了烘焙器源码' if src else ''), flush=True)
     report, ok_all, T = [], True, time.time()
+    for w in bulk_warnings(a.base, a.head, committed_only=a.hook):      # --hook 走临时工作副本时外层先退出，只在里面这次打印
+        print('⚠ 提醒（不拦）', w, flush=True); report.append({'item': '提醒', 'pass': True, 'why': w})
     def put(item, ok, why):
         nonlocal ok_all
         ok_all &= bool(ok); report.append({'item': item, 'pass': bool(ok), 'why': why})
