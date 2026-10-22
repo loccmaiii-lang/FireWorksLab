@@ -1178,8 +1178,15 @@
     "其他": "C:/Users/locmai/.codex/worktrees/ 下另有约 40 个空文件夹（0 MB，Codex 自己的占位），不是本仓库登记的副本，没动"
   },
   "E_合入门禁提醒": {
-    "提交": null,
+    "提交": "4c148229",
     "改动": "analysis/scripts/合入门禁.py 加 bulk_warnings()：要推的提交里新增图片（改名 / 搬家不算）超过 20 张、或新增 / 改动的单个文件超过 20 MB，打一行「⚠ 提醒（不拦）」，不影响能不能推",
     "验证": "5f34cf7c...cada7479（B 类 1774 个改名）无提醒；HEAD~150...HEAD 提示新增 383 张图（B09_DIRECTOR 缩略图 180 等）；阈值临时调到 5 MB 能列出 8 MB 的 dfshow；单次约 0.07 s"
+  },
+  "合计": {
+    "Git里搬动": "根目录 2 项进 docs/（31 KB）；76 个结果目录 + 60 个任务单进 归档/（188 MB / 1774 个文件，仓库体积不变，只是换位置）",
+    "本机删除": "过程证据 4 个目录 + __pycache__ 约 11.8 MB；ultra-upload 副本约 0.4 GB（备份留 17 MB）",
+    "本机挪动": "outputs/ 两个小目录 3.9 MB → analysis/local/20261017_outputs_旧备份/",
+    "本机新增备份": "analysis/local/归档_旧副本_20261022/ 223 MB（MW2_AUDIT 副本删掉后这份才算省出来）",
+    "review_js": "搬前搬后逐字节相同；本次没有提交 tool/data/review.js 和 协作/状态清单.md"
   }
 }
