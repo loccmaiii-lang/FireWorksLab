@@ -1252,7 +1252,7 @@
     },
     "副本": {
       "路径": "analysis/local/MW2_AUDIT_20261016",
-      "动作": "git worktree remove --force（用户批准），分支 audit/jinwillow4-ue-20261016 保留；原始文件备份仍在 analysis/local/归档_旧副本_20261022/MW2_AUDIT_20261016/（212 MB）"
+      "动作": "git worktree remove --force（用户批准），分支 audit/jinwillow4-ue-20261016 保留；16:5x 用户「一起删掉吧」，analysis/local/归档_旧副本_20261022/MW2_AUDIT_20261016/ 备份（203 MB）也删了"
     },
     "根目录": [
       "点灭星_Cascade参数.txt（10 KB，09-27 的 1.x 点灭星手工参数）",
@@ -1262,6 +1262,6 @@
       "路径": "C:/Users/locmai/.codex/worktrees/t17-initcolor-2-0/FireWorksLab",
       "理由": "用户：T18 留着，后面还要继续做"
     },
-    "结果": "analysis/local 约 4.4 GB → 1.1 GB"
+    "结果": "analysis/local 约 4.4 GB → 0.92 GB；本对话框今天在本机共腾出约 4 GB"
   }
 }
