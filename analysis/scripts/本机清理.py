@@ -10,13 +10,16 @@
   2. 永不自动删（「保留」/「问负责人」）：输出/（交付素材与 UE 资产备份）、monitor_state/（本机显卡后台在用）、归档_*、恢复点、
      含 .git 的（git worktree，用 git worktree remove）、名字含「保留」或里面有 保留.txt 的、_tmp 以外以 _ 开头的、
      被跟踪脚本写死路径（analysis/local/<目录>）的。
-  3. analysis/local/_tmp/ 里超过 1 天的文件；analysis/local/__pycache__ 直接可删。
+  3. analysis/local/_tmp/ 里超过 1 天的文件；analysis/local/__pycache__ 直接可删；显卡后台 monitor_state/batch-*.log 超过 3 天可删
+     （显卡后台的结果会提交进 Git，本机只剩这些日志和 输出/ 素材包）。
   4. 根目录 outputs/（没跟踪，别的 AI 的本机备份）、系统 TEMP 下 fwl* / fwlab-* 目录（超过 7 天）、git worktree 副本：只列，不删。
 
 用法：
   python -X utf8 analysis/scripts/本机清理.py              # 只列
   python -X utf8 analysis/scripts/本机清理.py --days 7     # 换期限
-  python -X utf8 analysis/scripts/本机清理.py --apply      # 删「到期」、_tmp 超期文件、__pycache__（删前打印清单，删后核对）
+  python -X utf8 analysis/scripts/本机清理.py --apply      # 删「到期」、_tmp 超期文件、__pycache__、超期批次日志（删前打印清单，删后核对）
+自动：Windows 计划任务「FireWorksLab 本机清理」每 3 天跑一次 --apply（用户 10-22），输出追加到 analysis/local/本机清理.log；
+  安装 / 重装：powershell -ExecutionPolicy Bypass -File analysis/scripts/本机清理_定时任务.ps1
 同步体检.py 调 scan_local(sizes=False) 只数到期目录，不算全部大小（要快）。
 """
 import argparse
@@ -32,6 +35,7 @@ import tempfile
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 LOCAL = os.path.join(ROOT, 'analysis', 'local')
 DAYS = 14
+GPU_LOG_DAYS = 3
 KEEP = {'输出': '交付素材包与 UE 资产修改前备份（P4 提交 / 用户验收前别删）',
         'monitor_state': '本机显卡后台（GPU Queue）在用的状态和日志',
         '恢复点': '旧恢复点备份'}
@@ -178,6 +182,25 @@ def scan_tmp(now=None):
     return out
 
 
+def scan_gpu_logs(days=GPU_LOG_DAYS, now=None):
+    """显卡后台每批的日志 monitor_state/batch-*.log：超过 days 天可删（用户 10-22「显卡后台用的测试，3天自动清理一次」）。
+    launcher.log / monitor.log 不动（同步体检要读最近的自动同步记录）；结果本身已提交进 Git，这里没有。"""
+    now = now or datetime.datetime.now()
+    p = os.path.join(LOCAL, 'monitor_state')
+    out = []
+    if not os.path.isdir(p):
+        return out
+    for e in os.scandir(p):
+        if not (e.name.startswith('batch-') and e.name.endswith('.log')) or not e.is_file():
+            continue
+        st = e.stat()
+        if now.timestamp() - st.st_mtime > days * 86400:
+            out.append(dict(cat='可删', path=os.path.relpath(e.path, ROOT).replace('\\', '/'), name=e.name, isdir=False,
+                            date=datetime.datetime.fromtimestamp(st.st_mtime).strftime('%Y-%m-%d'), size=st.st_size,
+                            reason=f'显卡后台批次日志超过 {days} 天'))
+    return out
+
+
 def scan_outputs():
     p = os.path.join(ROOT, 'outputs')
     if not os.path.isdir(p):
@@ -253,10 +276,14 @@ def _rm(path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--days', type=int, default=DAYS, help='过程证据保留天数（默认 14）')
-    ap.add_argument('--apply', action='store_true', help='真的删：到期目录、_tmp 超期文件、__pycache__')
+    ap.add_argument('--apply', action='store_true', help='真的删：到期目录、_tmp 超期文件、__pycache__、超期显卡后台批次日志')
+    ap.add_argument('--log', help='输出追加到这个文件（计划任务用 pythonw 跑，没有控制台）')
     a = ap.parse_args()
+    if a.log:
+        sys.stdout = sys.stderr = open(a.log, 'a', encoding='utf-8')
+        print('\n' + '=' * 60)
     local = scan_local(a.days)
-    tmp = scan_tmp()
+    tmp = scan_tmp() + scan_gpu_logs()
     other = scan_outputs() + scan_temp()
     wts = worktrees()
     print(f'# 本机清理（{"删除" if a.apply else "只列"}）· {datetime.datetime.now():%Y-%m-%d %H:%M} · 过程证据留 {a.days} 天\n')
