@@ -232,7 +232,7 @@ def delivery_targets(explicit, setup):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--deploy-only', action='store_true', help='Git拉取后校验并同步已有离线包，不重建')
+    parser.add_argument('--deploy-only', action='store_true', help='Git拉取后校验成品、现场打ZIP并同步到固定入口，不重建HTML')
     parser.add_argument('--no-deploy', action='store_true', help='只生成仓库产物，用于云端/隔离验证')
     parser.add_argument('--delivery-dir', type=Path, help='显式指定固定离线文件所在目录')
     parser.add_argument('--data-only', action='store_true',
@@ -270,6 +270,10 @@ def main(argv=None):
             make_zip(stage, FILES, ZIP)
             publish_files(stage, TOOL, FILES + [ZIP])
     verify_artifact(TOOL / HTML, SOURCE)
+    # 10-22（目录整理，用户批）：ZIP 不进 Git（只是三个已提交文件的打包，每版约 10 MB、压不动）。
+    # 只同步时按刚核对过的成品现场重打；完整构建 / 只换编排已在临时目录打好放进 tool/。
+    if args.deploy_only:
+        make_zip(TOOL, FILES, ZIP)
     # 即使只同步，也核对ZIP中HTML与当前产物相同，避免旧包混入。
     with zipfile.ZipFile(TOOL / ZIP) as bundle:
         for name in FILES:

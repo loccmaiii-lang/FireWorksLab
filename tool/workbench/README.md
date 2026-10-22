@@ -31,7 +31,7 @@ npm run dev
 tool/烟花编排工作台.html
 tool/烟花编排工作台.html.build.json
 tool/烟花编排工作台_使用说明.html
-tool/烟花编排工作台-离线包.zip
+tool/烟花编排工作台-离线包.zip   ← 10-22 起不进 Git：三个文件的打包，`release.py` 生成，「更新离线工作台」（--deploy-only）现场重打
 ```
 
 默认更新工作区 `FXtools/烟花编排工作台`。本机可在 `~/.fireworkslab/workbench-release.json` 配置 `deliveryDir`，例如用户目前使用的历史目录：

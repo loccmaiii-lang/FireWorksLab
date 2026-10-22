@@ -1,6 +1,7 @@
 // 发布「云端最新编排」（用户 2026-10-11：每更新一次就是一个版本，拉取后刷新即最新编排）。
 // 用法（tool/workbench 下）：npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 一句说明] [--version 16.0.9] [--also <节目.dfshow>::<编排名> ...]
 // --also：同一版本里一起存的对比版本（如 D1 / D3 密度），只存进 FXtools/节目/云端最新/ 和版本记录，刷新不自动载入，要在「节目 → 打开节目」里选。
+//   主编排本身 10-22 起不再存进 云端最新/（cloud-latest.json 的 Git 历史就是存档，取：python -X utf8 tool/workbench/取云端旧版本.py <版本>）。
 // 不给 --version 就在「工具版本 WORKBENCH_VERSION 与上一份云端编排版本」里较大的那个上末位 +1。之后照常 npm run release（云端加 -- --no-deploy），源码、成品与编排一起提交。
 // --keep-music（22，用户 10-13 17:06「b03默认音频请用最新带vo的」）：节目自带的音频不是仓库原曲（music.wav）时，原字节随这版编排一起发，
 //   刷新后默认就放这份音频（工具只认「仓库原曲」和「节目内嵌」两种来源）。是仓库原曲时拒绝，照旧去掉。会让成品 HTML 大一份音频。
@@ -54,10 +55,10 @@ const latest={format:CLOUD_FORMAT,version,name,note,publishedAt:new Date().toISO
  musicSha256,musicTitle:state.doc.meta.musicTitle||music?.name||'',cues:state.doc.cues.length,events:state.doc.events.length,
  publishMode:dataOnly?'data-only':'with-app',appVersion:dataOnly?current:version,...(keepMusic?{musicEmbedded:true,musicName:music.name}:{}),project};
 validateCloudLatest(latest);
-const archiveDir=path.join(root,'FXtools/节目/云端最新'),archive=`${version}-${name}.dfshow`;
+// 10-22（目录整理，用户批）：主编排不再另存 FXtools/节目/云端最新/<版本>-<名>.dfshow——cloud-latest.json 随版本提交，
+// 它的 Git 历史就是逐字节存档（programmeSha256 核对），要旧版本用 python -X utf8 tool/workbench/取云端旧版本.py <版本>。--also 对比版照旧存这里。
+const archiveDir=path.join(root,'FXtools/节目/云端最新');
 await fs.mkdir(archiveDir,{recursive:true});
-try{await fs.access(path.join(archiveDir,archive));throw Error(`版本 ${version} 已发布过，版本号不能复用`)}catch(e){if(e.code!=='ENOENT')throw e}
-await fs.writeFile(path.join(archiveDir,archive),text);
 const extras=[];
 for(const x of also){
  const raw=await fs.readFile(x.file,'utf8'),p=JSON.parse(raw);if(p.format!=='df.workbench-project/1')throw Error('需要完整节目文件：'+x.file);
@@ -71,4 +72,4 @@ if(!dataOnly)await fs.writeFile(connectionFile,connection.replace(`export const 
 const index=path.join(archiveDir,'版本记录.md');let log;try{log=await fs.readFile(index,'utf8')}catch{log='# 云端最新编排 · 版本记录\n\n拉取后刷新编排工作台会自动载入最新一行（载入前备份当前节目）。这里的文件不带音乐，音乐按 sha256 对应《汪洋与浩渺》。\n\n| 版本 | 编排 | 片段 / 播放 | 来源 | 说明 |\n| --- | --- | --- | --- | --- |\n'}
 const mode=(keepMusic?`（带音频 ${music.name}）`:'')+(dataOnly?`（只换编排，工具 ${current}）`:'');
 if(!skipIndex)await fs.writeFile(index,log+`| ${version} | ${name} | ${latest.cues} / ${latest.events} | \`${latest.source}\` | ${(note+mode).replaceAll('|','｜')} |\n`+extras.map(x=>`| ${version} | ${x.label}（对比版，手动打开） | ${x.cues} / ${x.events} | \`${x.source}\` | 刷新不自动载入；节目 → 打开节目 → 选 \`${x.archive}\` |\n`).join(''));
-console.log(JSON.stringify({version,name,archive:'FXtools/节目/云端最新/'+archive,extras,cues:latest.cues,events:latest.events,programmeSha256,bytes:Buffer.byteLength(text),appVersion:latest.appVersion,next:dataOnly?'python release.py --data-only'+(process.env.CI?' --no-deploy':''):'npm run release'+(process.env.CI?' -- --no-deploy':'')}));
+console.log(JSON.stringify({version,name,archive:null,history:`python -X utf8 tool/workbench/取云端旧版本.py ${version}`,extras,cues:latest.cues,events:latest.events,programmeSha256,bytes:Buffer.byteLength(text),appVersion:latest.appVersion,next:dataOnly?'python release.py --data-only'+(process.env.CI?' --no-deploy':''):'npm run release'+(process.env.CI?' -- --no-deploy':'')}));

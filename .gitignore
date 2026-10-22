@@ -24,6 +24,8 @@ analysis/我的配方/_待上传/
 
 # Private native importer deployed beside the local baker; never publish.
 tool/local_delivery/runtime/
+# 编排工作台离线包：只是 tool/ 下三个已提交文件的打包，「更新离线工作台」现场打（目录整理，用户 10-22）
+tool/烟花编排工作台-离线包.zip
 
 # 编排B01 脚本的 R04 点位缓存（生成物）
 analysis/music/.base_cache_B01.json
