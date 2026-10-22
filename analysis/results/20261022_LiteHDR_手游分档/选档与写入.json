@@ -1,0 +1,1073 @@
+{
+ "format": "fwl.litehdr-tune/1",
+ "at": "2026-10-22",
+ "plan": {
+  "LittleGold": {
+   "h": "c3a4",
+   "m": "c3a6"
+  },
+  "LittleSilver": {
+   "h": "c2a4",
+   "m": "c1.5a8"
+  },
+  "LittleCrackle": {
+   "h": "c3a4",
+   "m": "c3a8"
+  },
+  "LittleCombo": {
+   "h": "c3a4",
+   "m": "c3a6"
+  },
+  "Comet_Layers": {
+   "h": "c2a4",
+   "m": "c3a4"
+  },
+  "Silver3_Layers_S": {
+   "h": "c2a4",
+   "m": "c1a4"
+  },
+  "SilverChry": {
+   "h": "c1a2",
+   "m": "c3a8"
+  },
+  "Crackle": {
+   "h": "c3a4",
+   "m": "c3a8"
+  },
+  "Glitter": {
+   "h": "c3a4",
+   "m": "c3a8"
+  },
+  "Strobe": {
+   "h": "cur",
+   "m": "c3a8"
+  },
+  "GoldRayChry": {
+   "h": "c3a4",
+   "m": "c1.5a6"
+  },
+  "GoldKamuro": {
+   "h": "c1a2",
+   "m": "c3a8"
+  },
+  "RiseTrail_Hero": {
+   "h": "c2a4",
+   "m": "c3a6"
+  },
+  "RiseTrail_L": {
+   "h": "c3a4",
+   "m": "c1.5a8"
+  },
+  "RiseTrail_M": {
+   "h": "c1a4",
+   "m": "c2a8"
+  },
+  "RiseTrail_S": {
+   "h": "c3a4",
+   "m": "c1.5a8"
+  },
+  "RiseTrail_XS": {
+   "h": "c1a4",
+   "m": "c2a8"
+  },
+  "RiseTrail_Tiny": {
+   "h": "c3a4",
+   "m": "c3a8"
+  },
+  "_notes": {
+   "GoldKamuro": "_H 原总倍增 10 保持；alpha ×4 偏白，改 ×2（看图）",
+   "Strobe": "随机色种子 + 闪烁，打分不可靠，看 3 次重复拍：_H 原 ×100 不暗，保持；_M c3a8 在 LiteHDR 下亮且有粉 / 黄色"
+  }
+ },
+ "writes": [
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M",
+   "variant": "c3a6",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 6
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_H",
+   "variant": "c2a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      2,
+      2,
+      2
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M",
+   "variant": "c1.5a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1.5,
+      1.5,
+      1.5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M",
+   "variant": "c3a6",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 6
+    },
+    {
+     "object": "ParticleModuleColorOverLife_0.DistributionAlphaOverLife",
+     "before": 1,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_H",
+   "variant": "c2a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_5.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_5.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_9.DistributionVectorConstant_7",
+     "before": [
+      50,
+      50,
+      50
+     ],
+     "after": [
+      50,
+      50,
+      50
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_9.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_5.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_5.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_9.DistributionVectorConstant_7",
+     "before": [
+      50,
+      50,
+      50
+     ],
+     "after": [
+      0.06,
+      0.06,
+      0.06
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_9.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_H",
+   "variant": "c2a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1.9913610219955444,
+      4.054629802703857,
+      5
+     ],
+     "after": [
+      1.9914,
+      4.0546,
+      5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M",
+   "variant": "c1a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1.9913610219955444,
+      4.054629802703857,
+      5
+     ],
+     "after": [
+      0.4978,
+      1.0137,
+      1.25
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_H",
+   "variant": "c1a2",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      10,
+      10,
+      10
+     ],
+     "after": [
+      10,
+      10,
+      10
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 2
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      10,
+      10,
+      10
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_2",
+     "before": [
+      100,
+      100,
+      100
+     ],
+     "after": [
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1.6,
+      1.6,
+      1.6
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M",
+   "variant": "c1.5a6",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1.5,
+      1.5,
+      1.5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 6
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_H",
+   "variant": "c1a2",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_7.DistributionVectorConstant_1",
+     "before": [
+      10,
+      4.188828945159912,
+      1.278419017791748
+     ],
+     "after": [
+      10,
+      4.1888,
+      1.2784
+     ]
+    },
+    {
+     "object": "ParticleModuleColor_2.DistributionStartAlpha",
+     "before": 1,
+     "after": 2
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_7.DistributionVectorConstant_1",
+     "before": [
+      10,
+      4.188828945159912,
+      1.278419017791748
+     ],
+     "after": [
+      3,
+      1.2566,
+      0.3835
+     ]
+    },
+    {
+     "object": "ParticleModuleColor_2.DistributionStartAlpha",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_H",
+   "variant": "c2a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_M",
+   "variant": "c3a6",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 6
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_6",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M",
+   "variant": "c1.5a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_6",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_H",
+   "variant": "c1a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M",
+   "variant": "c2a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M",
+   "variant": "c1.5a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_H",
+   "variant": "c1a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M",
+   "variant": "c2a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_H",
+   "variant": "c3a4",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 4
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "variant": "c3a8",
+   "knobs": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      0.75,
+      0.75,
+      0.75
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 8
+    }
+   ]
+  }
+ ]
+}

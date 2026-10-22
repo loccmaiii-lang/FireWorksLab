@@ -32,7 +32,7 @@
     "彩千轮3（Codex）": "2026-10-16 22:38",
     "窜天猴与仙女棒（Codex）": "2026-10-19 10:10",
     "金芒菊新效果（Codex）": "2026-10-18 18:53:29",
-    "LiteHDR（Claude Code）": "2026-10-22 21:40",
+    "LiteHDR（Claude Code）": "2026-10-22 23:05",
     "网格垂柳UEv3（Codex）": "2026-10-22 19:33"
   },
   "阶段含义": {
@@ -253,11 +253,12 @@
     "LiteHDR（Claude Code） · 3.0 手游 _M / _H 分档与 LiteHDR 调色": {
       "负责": "LiteHDR（Claude Code）",
       "日期": "2026-10-22",
-      "状态": "进行中，UE 单写占用（手游编辑器 FXLookDevLevel）：别的对话框这段时间请别读写 UE。",
+      "状态": "完成并释放 UE（10-22 23:05）：已写 UE、未提交 P4，待用户真机验收",
       "范围": "/Game/Effects/Props/FireWorks 下 3.0 手游粒子 _M / _H（窜天猴 sku 含 _L）的颜色 / alpha 模块；手游 ResourceFXTable 3.0 行 FxSP_High；FXLookDevLevel 临时测试对象（前缀 FWLHDR_，不存图）",
       "记录": "对话记录/对话框LiteHDR.md",
       "授权": "用户 10-22：只改 3.0 烟花；复制 _M→_H、FxSP_High 改指 _H；用户 19:3x：_H / _M 都要调亮，颜色倍增 ≤ 3、亮度走 alpha，先设计对照再出方案执行",
-      "保护": "不改材质实例 / 母材质 / 贴图 / PC 资产；不提交 P4；改前备份 uasset"
+      "保护": "不改材质实例 / 母材质 / 贴图 / PC 资产；不提交 P4；改前备份 uasset",
+      "结果": "复制 18 个 3.0 _H、手游表 FxSP_High 改指 _H；35 包 ColorScaleOverLife / alpha 写入并读回一致（_M 颜色 ≤ 3 + alpha ×4–8，_H 提亮）。看法 analysis/results/20261022_LiteHDR_手游分档/看法.md。未做：窜天猴 sku 5 行；无真机验证。"
     }
   },
   "effects": [
