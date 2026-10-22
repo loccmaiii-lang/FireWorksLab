@@ -71,8 +71,8 @@ ul{margin:4px 0 0;padding-left:18px} li{margin:2px 0}
 <body>
 <div class="wrap">
   <header>
-    <h1>网格垂柳 A/B · 第 2 版</h1>
-    <div class="sub"><b style="color:var(--a)">A 现状</b>（正式资产复刻，含实机金色 GPU 粒子）对 <b style="color:var(--b)">B 第 2 版</b>（泪滴头 + 亮肩、每束随机、尾巴颗粒和闪烁、PC 加 GPU 亮点）· 游戏机位 · 1:1 游戏像素 · 按引擎 30 fps 取时间</div>
+    <h1>网格垂柳 A/B · 第 3 版</h1>
+    <div class="sub"><b style="color:var(--a)">A 现状</b>（正式资产复刻，含实机金色 GPU 粒子）对 <b style="color:var(--b)">B 第 3 版</b>（星头后按火星尾缀连续过渡、每束随机、尾巴颗粒渐稀和闪烁、PC 加 GPU 亮点；可切回第 2 版对比）· 游戏机位 · 1:1 游戏像素 · 按引擎 30 fps 取时间</div>
   </header>
 
   <div class="bar" role="group" aria-label="看法设置">
@@ -96,7 +96,7 @@ ul{margin:4px 0 0;padding-left:18px} li{margin:2px 0}
   <div id="stage">
     <canvas id="c" aria-label="A 和 B 两块同步播放的网格垂柳画面"></canvas>
     <span class="tag" id="tagA">A 现状 · 正式资产复刻</span>
-    <span class="tag" id="tagB">B 第 2 版</span>
+    <span class="tag" id="tagB">B 第 3 版</span>
     <div class="foot" id="footA"></div>
     <div class="foot" id="footB"></div>
     <div id="tbig"></div>
@@ -115,20 +115,21 @@ ul{margin:4px 0 0;padding-left:18px} li{margin:2px 0}
   <div class="cols">
     <section class="card" aria-labelledby="hB">
       <h2 id="hB"><span class="k">B</span> 改了什么（逐项关掉就能看出这一项的作用）</h2>
-      <label class="feat"><input id="fTear" type="checkbox" checked><span><b>泪滴头 + 亮肩</b></span>
-        <small>星头是一颗圆球，后面跟一段白亮的「肩」，再收成细的金色尾。A 是平头 + 一长段白热。做法：重画条带贴图。<span class="cost">开销不变</span></small></label>
+      <label class="feat"><input id="fTear" type="checkbox" checked><span><b>星头 + 尾巴重画</b></span>
+        <small>A 是平头 + 一长段一样亮的白热段。<b>第 3 版（默认）</b>照升空尾缀的火花模型：圆头后面是火花从星头连续喷出、各自冷却熄灭的亮度——白热段约 0.3 s 内连续变暗，再接金色火星和余烬，没有台阶；颗粒跟着亮度渐稀。<b>第 2 版</b>是泪滴头 + 平的亮肩，肩后 0.4 s 内掉到尾巴、颗粒一刀切开（你说太硬）。做法：重画条带 + 噪声图 + MI 数值。<span class="cost">开销不变</span></small></label>
+      <div class="sl"><span>星头样式</span><span class="grp"><button data-style="v3" class="on">第 3 版 · 火星尾缀</button><button data-style="v2">第 2 版 · 泪滴 + 亮肩</button></span><b></b></div>
       <label class="feat"><input id="fRand" type="checkbox" checked><span><b>每束随机</b></span>
         <small>头大小、亮肩长短、尾巴亮度和长度：条带里横排 8 种，网格每束随机选一种；宽细每束 ±35 %。做法：条带 + 网格重导（顶点数不变）。<span class="cost">开销不变</span></small></label>
       <label class="feat"><input id="fLong" type="checkbox" checked><span><b>垂帘挂更久</b></span>
         <small>A 的尾巴约 6.4 s 就淡完，上半截先断光；B 把条带的年龄轴拉到约 11.5 s，后段按火花存活率慢慢暗掉。做法：条带 + UVParam.y + DP0 终值。<span class="cost">开销不变</span></small></label>
       <label class="feat"><input id="fGrain" type="checkbox" checked><span><b>尾巴颗粒</b></span>
-        <small>尾巴变成一串串亮点，头和亮肩保持光滑。做法：新噪声图 + 溶解参数，ColorIntensity 保护头肩。<span class="cost">开销不变（多一张 256² 小图）</span></small></label>
+        <small>尾巴变成一串串亮点。第 3 版：越靠近星头越实、越往后越稀（条带 A 按噪声分布反算，平均亮度不变）；第 2 版：头肩顶满、后面一刀切开。做法：新噪声图 + 溶解参数 + ColorIntensity。<span class="cost">开销不变（多一张 256² 小图）</span></small></label>
       <label class="feat"><input id="fTw" type="checkbox" checked><span><b>闪烁</b></span>
         <small>颗粒各自一明一暗。做法：噪声横向慢慢平移（NoiseUVParam.z），每束取的噪声段不同，各闪各的。<span class="cost">开销不变</span></small></label>
       <label class="feat"><input id="fL3" type="checkbox" checked><span><b>GPU 亮点（只 PC）</b></span>
         <small>在垂柳里加一层小金点，一闪一闪，跟着星头外扩和下坠。做法：复制实机的 L2_Dots 改出一个新 GPU 发射器，材质不变（MI_EFX_Spark_16）。<span class="cost w">PC 加开销（默认每秒 600 颗、同时约 435 颗、1.5–2.5 m 的小点，你说 PC 够）</span></small></label>
       <div class="sl"><span>随机程度</span><input id="amt" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="随机程度"><b id="amtV"></b></div>
-      <div class="sl"><span>亮肩长度</span><input id="shL" type="range" min="0.2" max="1.4" step="0.05" value="0.55" aria-label="亮肩长度"><b id="shLV"></b></div>
+      <div class="sl"><span>白热段 / 亮肩</span><input id="shL" type="range" min="0.2" max="1.4" step="0.05" value="0.55" aria-label="亮肩长度"><b id="shLV"></b></div>
       <div class="sl"><span>颗粒软硬</span><input id="hard" type="range" min="0" max="0.45" step="0.01" value="0.3" aria-label="hardness"><b id="hardV"></b></div>
       <div class="sl"><span>颗粒屏上大小</span><input id="dotPx" type="range" min="1" max="5" step="0.25" value="1.75" aria-label="颗粒在屏上的像素"><b id="dotPxV"></b></div>
       <div class="sl"><span>闪烁频率</span><input id="twHz" type="range" min="0.5" max="8" step="0.5" value="4" aria-label="闪烁频率"><b id="twHzV"></b></div>
@@ -313,10 +314,11 @@ const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a
    底 0.40，沿 U（每束取的那一段）有低频起伏 → 各束亮度不同；沿轨迹也有起伏 → 一束里有亮有暗
    小亮点 2400 颗（σ 0.6–1.0 texel）+ 中亮点 260 颗（σ 1.2–1.6）：尾巴里一串串火花 */
 const NW = 256;
-function buildNoise(seed) {
+function buildNoise(seed, opt) {
+  const O = Object.assign({ bg: 0.40, amp: 1, pk0: 0.72, pk1: 0.85, n0: 2400, n1: 260 }, opt || {});
   const R = C.rng(seed || 31), v = new Float32Array(NW * NW), T = 2 * Math.PI / NW, p = [R() * 6.28, R() * 6.28, R() * 6.28, R() * 6.28];
   for (let y = 0; y < NW; y++) for (let x = 0; x < NW; x++)
-    v[y * NW + x] = 0.40 + 0.05 * Math.sin(3 * T * x + p[0]) + 0.02 * Math.sin(7 * T * x + p[3]) + 0.03 * Math.sin(2 * T * y + p[1]) * Math.cos(5 * T * x + p[2]);
+    v[y * NW + x] = O.bg + O.amp * (0.05 * Math.sin(3 * T * x + p[0]) + 0.02 * Math.sin(7 * T * x + p[3]) + 0.03 * Math.sin(2 * T * y + p[1]) * Math.cos(5 * T * x + p[2]));
   const dot = (n, s0, s1, k0) => { for (let i = 0; i < n; i++) {
     const cx = R() * NW, cy = R() * NW, sg = s0 + (s1 - s0) * R(), pk = k0 + (1 - k0) * R(), rad = Math.ceil(sg * 3);
     for (let dy = -rad; dy <= rad; dy++) for (let dx = -rad; dx <= rad; dx++) {
@@ -324,10 +326,18 @@ function buildNoise(seed) {
       const ex = X + 0.5 - cx, ey = Y + 0.5 - cy, k = y * NW + x, base = v[k];
       v[k] = Math.max(base, base + (pk - base) * Math.exp(-(ex * ex + ey * ey) / (2 * sg * sg)));
     } } };
-  dot(2400, 0.6, 1.0, 0.72); dot(260, 1.2, 1.6, 0.85);
+  dot(O.n0, 0.6, 1.0, O.pk0); dot(O.n1, 1.2, 1.6, O.pk1);
   const data = new Uint8Array(NW * NW * 4);
   for (let i = 0; i < NW * NW; i++) { const q = Math.round(255 * clamp(v[i], 0, 1)); data[i * 4] = data[i * 4 + 1] = data[i * 4 + 2] = q; data[i * 4 + 3] = 255; v[i] = q / 255; }
   return { data, vals: v, NW, dotTexel: 2 };
+}
+/* 第 3 版颗粒：透明度 = saturate(K × A × 遮罩)。给定 K、噪声和 hardness，平均透明度 F(x = K·A) = 平均 min(1, x·遮罩) 只和 x 有关；
+   条带 A 写成 F⁻¹(想要的亮度) / K → 亮的地方（星头、白热段）满、暗下去时先在噪声暗处开洞、越暗越只剩亮点 → 颗粒随年龄渐稀、平均亮度不变 */
+function densityMap(noise, h, K) {
+  const N = 256, m = Array.from(noise.vals, n => ueSmooth(h, n)), F = new Float64Array(N + 1);
+  for (let i = 0; i <= N; i++) { const x = K * i / N; let s = 0; for (const q of m) s += Math.min(1, x * q); F[i] = s / m.length; }
+  return { K, Fmax: F[N], F: x => F[Math.max(0, Math.min(N, Math.round(x / K * N)))],
+    inv: t => { if (t <= 0) return 0; if (t >= F[N]) return K; let lo = 0, hi = N; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (F[mid] < t) lo = mid; else hi = mid; } return K * (lo + (t - F[lo]) / ((F[hi] - F[lo]) || 1)) / N; } };
 }
 function maskMean(noise, h, p2) { let s = 0; for (const n of noise.vals) s += ueSmooth(h, n + 2 * p2); return s / noise.vals.length; }
 
@@ -416,6 +426,53 @@ function buildStrip(o) {
   return { data, TW, TH, H, S: SB, nv, maxAge: (H - 4 / TH) * SB / o.r };
 }
 
+/* ---------- 第 3 版条带：照升空尾缀（tool/src/js/42_trail.js）的火花模型 ----------
+   火花从星头连续喷出，各自寿命对数正态、温度随年龄线性下降（亮度 = glowOf(T)，三次方）、最后 30 % 收掉 → 某个年龄处的亮度 = 三类火花的平均亮度叠加：
+   白热细火花（星头后面的白亮段，寿命约 0.4 s）、金色火星（HK10-1 普通 2.03 s）、橙色余烬（HK10-1 余烬 6.48 s）。
+   曲线处处连续、一直往下走，没有平台和台阶；宽度随年龄略变宽（火花散开），看起来变细是因为边上暗下去了 */
+const glowK = T => { const g = (T - 900) / 1150; return g > 0 ? g * g * g : 0; };
+const POP_Z = Array.from({ length: 24 }, (_, i) => -2.2 + 4.4 * (i + 0.5) / 24), POP_W = POP_Z.reduce((s, z) => s + Math.exp(-z * z / 2), 0);
+function popCurve(aR, L, sig, T0, cool) {
+  if (aR <= 0) return 1;
+  const g0 = glowK(T0); let s = 0;
+  for (const z of POP_Z) { const x = aR / (L * Math.exp(sig * z)); if (x < 1) s += Math.exp(-z * z / 2) * glowK(T0 * (1 - cool * x)) / g0 * Math.pow(Math.min(1, (1 - x) / 0.3), 1.5); }
+  return s / POP_W;
+}
+/* 三类火花：[初温 K, 冷却（尾缀的 0.46 / 0.42 / 0.34 × 正式尾缀 trCool 0.463）, 寿命 σ] */
+const SPARK = { F: [2520, 0.213, 0.3], M: [2260, 0.194, 0.45], C: [2090, 0.157, 0.2] };
+function sparkBody(aR, P, o) {
+  const LF = 0.42 * P.sh * o.shoulder / 0.55, emb = o.tr.ember / 0.22;
+  return 0.72 * P.shb * popCurve(aR, LF, SPARK.F[2], SPARK.F[0], SPARK.F[1])
+       + 0.22 * P.tb * popCurve(aR, 2.03 * P.tl, SPARK.M[2], SPARK.M[0], SPARK.M[1])
+       + 0.24 * emb * P.tb * popCurve(aR, 6.48 * P.tl, SPARK.C[2], SPARK.C[0], SPARK.C[1]);
+}
+/* 第 3 版的固定值（页面和 UE 导出脚本共用）：噪声底低而平（0.37 ± 0.01 → 遮罩约 0.1，亮点对点间 10 倍）、亮点峰值 0.5–1 分散（越暗越只剩最亮的点）；
+   ColorIntensity 16 让星头仍能顶满；ColorPower 2 → 条带 RGBA 存 √值，暗尾巴的 8 位精度够用 */
+const V3 = { noise: { bg: 0.37, amp: 0.2, pk0: 0.5, pk1: 0.6, n0: 3000, n1: 300 }, K: 16, cp: 2, hard: 0.3 };
+/* o = { S0, k, r, K, dmap（颗粒开着时 densityMap，关着 null）, tr, shoulder, feat: { rand }, vars } */
+function buildStripV3(o) {
+  const nv = o.feat.rand ? NV : 1, CW = 16, TW = nv * CW, TH = 1024, H = 1 - 16 / TH, SB = o.S0 / o.k, data = new Uint8Array(TW * TH * 4);
+  const ageMax = (H - 2.5 / TH) * SB;                                      // 再老就到贴图边：最后 0.9 τ 收到 0，不硬切
+  const lat = (u, sg) => { const e0 = Math.exp(-0.25 / (2 * sg * sg)); return Math.max(0, (Math.exp(-((u - 0.5) ** 2) / (2 * sg * sg)) - e0) / (1 - e0)); };
+  const prof = [];
+  for (let j = 0; j < nv; j++) {
+    const P = o.feat.rand ? o.vars[j] : NEUTRAL, sHu = 0.27 * P.hs, sHt = sHu * 4 / 31.2;   // 星头：横向 σ（占带宽）；沿轨迹 σ（τ）= 同样米数 ÷ 星速 31.2 m/τ → 圆的
+    for (let r = 2; r < TH - 2; r++) {
+      const v = (r + 0.5) / TH, aT = (H - v) * SB, aR = Math.max(0, aT) / o.r, q0 = r * TW + j * CW;
+      const body = (1 - smooth(ageMax - 0.9, ageMax, aT)) * smooth(-0.05, -0.005, aT) * sparkBody(aR, P, o);   // 尾巴从星头里面就开始（藏在圆头光里），中线上不会在头后面凹一下
+      const sB = (0.12 + 0.035 * Math.min(3, aR)) * P.tw, hA = 1.1 * P.hb * Math.exp(-0.5 * (aT / sHt) ** 2);
+      const peak = 1 - (1 - Math.min(1, hA)) * (1 - Math.min(1, body)), col = ramp(Math.min(1, 0.25 + 0.75 * Math.sqrt(peak)));
+      if (j === 0) prof.push([aT, peak]);
+      for (let c = 0; c < CW; c++) {
+        const u = (c + 0.5) / CW, t = 1 - (1 - Math.min(1, hA * lat(u, sHu))) * (1 - Math.min(1, body * lat(u, sB)));
+        const a = o.dmap ? o.dmap.inv(Math.min(t, o.dmap.Fmax)) / o.K : t, q = (q0 + c) * 4;
+        data[q] = Math.round(col[0]); data[q + 1] = Math.round(col[1]); data[q + 2] = Math.round(col[2]); data[q + 3] = Math.round(255 * Math.min(1, a));
+      }
+    }
+  }
+  return { data, TW, TH, H, S: SB, nv, maxAge: ageMax / o.r, prof };
+}
+
 /* ---------- GPU 粒子（按 Cascade 规则逐颗算；坐标 y 朝上，米） ---------- */
 /* 实机 L2_Dots（B09主角读数：延迟 7 s、2 s、Rate 30/s + 5 组 Burst、寿命 1.175–1.95 s、大小 4.8–6 m、球内半径 160–165 m、
    Velocity = 偏移 × 0.1–0.2、初速 (0.024, 0.004, −10.34) m/s、加速度 −20 m/s²、Drag 1、Alpha 一闪一闪） */
@@ -465,7 +522,7 @@ function headEnvelope(stars, scale, rT) {
 }
 /* 噪声 U：每束约 4.1 texel 宽；33 是奇数，64 个 U 槽落在不同列 */
 const noiseU = useRand => (33 / 256) * (useRand ? 1 : 1 / NV);
-root.ABCore = { L3_SPEC, noiseU, survival, ueSmooth, buildNoise, maskMean, variants, beamTraits, buildMeshB, buildStrip, gpuL2, gpuL3, gpuPos, headEnvelope, curve, L2_ALPHA, L3_ALPHA, NW, NV };
+root.ABCore = { V3, buildStripV3, densityMap, popCurve, sparkBody, SPARK, L3_SPEC, noiseU, survival, ueSmooth, buildNoise, maskMean, variants, beamTraits, buildMeshB, buildStrip, gpuL2, gpuL3, gpuPos, headEnvelope, curve, L2_ALPHA, L3_ALPHA, NW, NV };
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
 
@@ -486,7 +543,9 @@ const PROD = { L: 14.25, scale: 0.5, dp0: [0.9941, -1.2049], p2: 1.02, cs: [10, 
 const R_T = 16.1 / PROD.L;              // DP0 曲线按 16.1 s 设计、寿命 14.25 s → 整朵播放快 r 倍
 const CAM_EL = -45.5 * Math.PI / 180;   // B09 实际点位 + 原机位：仰角约 45.5°（相机在下面）
 const V_TAU = 31.2 * PROD.scale;        // 下垂段星头速度（本地 31.2 m/τ × 缩放）
-const P2_END_T = 14, K_GRAIN = 5;       // 颗粒开着时 ColorIntensity 5：头和亮肩透明度顶满、打不进洞
+const P2_END_T = 14, K_GRAIN = { v2: 5, v3: AB.V3.K };   // 颗粒开着时的 ColorIntensity：第 2 版靠它把头肩顶满；第 3 版按亮度渐稀（densityMap）
+const CP_V3 = AB.V3.cp;                        // 第 3 版 ColorPower 2：条带存 √值，暗尾巴的 8 位精度翻倍（母材质 Power 作用在 RGBA 上）
+const HARD_DEF = { v2: 0.3, v3: AB.V3.hard };
 
 /* ---------- 材质：照 M_EFX_DissolveOutline_Soft 的节点（Translucent、Unlit） ---------- */
 const pMesh = prog(`#version 300 es
@@ -495,9 +554,9 @@ uniform mat4 uVP; uniform float uS0, uYaw, uScale; out vec2 vUV;
 void main(){ float c=cos(uYaw), s=sin(uYaw); vec3 p=vec3(c*aPos.x+s*aPos.z, aPos.y, -s*aPos.x+c*aPos.z)*uScale; vUV=vec2(aU, aTau/uS0); gl_Position=uVP*vec4(p,1.); }`,
 `#version 300 es
 precision highp float; in vec2 vUV;
-uniform sampler2D uTex, uNoise; uniform float uUVy, uDP0, uCI, uH, uP2, uPA, uTime; uniform vec3 uCS; uniform vec4 uNUV; out vec4 o;
+uniform sampler2D uTex, uNoise; uniform float uUVy, uDP0, uCI, uCP, uH, uP2, uPA, uTime; uniform vec3 uCS; uniform vec4 uNUV; out vec4 o;
 void main(){
-  vec4 m4 = texture(uTex, vec2(vUV.x, vUV.y*uUVy + uDP0)) * uCI;
+  vec4 m4 = pow(texture(uTex, vec2(vUV.x, vUV.y*uUVy + uDP0)), vec4(uCP)) * uCI;
   float n = texture(uNoise, vUV*uNUV.xy + uTime*uNUV.zw).r;
   float h = clamp(uH, 0., .499);
   float mask = smoothstep(h, 1.-h, n + 2.*uP2);
@@ -564,10 +623,16 @@ function upTex(t, w, h, data, srgb, mip, wrapT) {
 const TR = { hot: 2, tail: 7, ember: 0.22 };
 const stripA = C.buildStrip(TR, false);
 const S0 = stripA.S;
-const texA = gl.createTexture(), texB = gl.createTexture(), texN = gl.createTexture();
+const texA = gl.createTexture(), texB = gl.createTexture(), texN = gl.createTexture(), texN3 = gl.createTexture();
 upTex(texA, stripA.TW, stripA.TH, stripA.data, true, false, gl.CLAMP_TO_EDGE);
 const noise = AB.buildNoise(31);
 upTex(texN, noise.NW, noise.NW, noise.data, false, true, gl.REPEAT);
+/* 第 3 版噪声：底低而平（0.37 ± 0.01 → 遮罩约 0.1，亮点对底 10 倍；ColorIntensity 16 时星头仍能顶满）、亮点峰值 0.5–1 分散（越暗越只剩最亮的点 → 渐稀）、点多一些 */
+const NOISE3 = AB.V3.noise;
+const noise3 = AB.buildNoise(31, NOISE3);
+upTex(texN3, noise3.NW, noise3.NW, noise3.data, false, true, gl.REPEAT);
+const toLin = c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+let dmapCache = null;
 const VARS_SEED = 77;
 
 /* ---------- GPU 粒子 ---------- */
@@ -578,25 +643,39 @@ const L3_WIN = { t0: 1.0, t1: 11.0 };
 function rebuildL3() { L3 = AB.gpuL3(13, { rate: num('l3rate'), t0: L3_WIN.t0, t1: L3_WIN.t1 }, env); }
 
 /* ---------- 状态 ---------- */
-const st = { t: 4, play: false, speed: 1, fov: 'f60', px: 1, res: 1080, mesh: 'pc', aim: 'c', stripB: null, k: 0.558, mComp: 1 };
+const st = { t: 4, play: false, speed: 1, fov: 'f60', px: 1, res: 1080, mesh: 'pc', aim: 'c', style: 'v3', stripB: null, k: 0.558, mComp: 1 };
 const num = id => +$(id).value;
 const on = id => $(id).checked;
 const fovRad = () => st.fov === 'f60' ? Math.PI / 3 : 2 * Math.atan(1.05);
 const ppm = () => st.res / (2 * num('dist') * Math.tan(fovRad() / 2));
 const tq = () => Math.floor(st.t * 30 + 1e-6) / 30;     // 引擎 30 fps
+const useV3 = () => st.style === 'v3' && on('fTear');
 function bParams() {
-  const grain = on('fGrain'), K = grain ? K_GRAIN : 1;
+  const v3 = useV3(), grain = on('fGrain'), K = grain ? K_GRAIN[v3 ? 'v3' : 'v2'] : 1;
   const dotM = num('dotPx') / ppm(), dTau = dotM / V_TAU;
   const y = S0 * (noise.dotTexel / noise.NW) / dTau, z = on('fTw') ? num('twHz') * noise.dotTexel / noise.NW : 0;
-  return { grain, K, h: num('hard'), nuv: [AB.noiseU(on('fRand')), y, z, 0], dotM };
+  return { v3, grain, K, cp: v3 ? CP_V3 : 1, h: num('hard'), nuv: [AB.noiseU(on('fRand')), y, z, 0], dotM };
 }
 const p2At = (t, bp) => !bp.grain ? 0.5 : t <= 12 ? 0 : t >= P2_END_T ? -0.06 : -0.06 * (t - 12) / (P2_END_T - 12);
 function rebuildStripB() {
   st.k = on('fLong') ? +(S0 / (11.5 * R_T / (1 - 10 / 1024))).toFixed(4) : 1;   // 关 = 正式条带的年龄轴
   const bp = bParams();
-  st.mComp = bp.grain ? AB.maskMean(noise, bp.h, 0) : 1;     // 颗粒挖掉的平均比例，尾巴按它补亮
-  st.stripB = AB.buildStrip({ S0, k: st.k, r: R_T, K: bp.K, mComp: st.mComp, gain: on('fLong') ? 2 : 0, tr: TR, shoulder: num('shL'), feat: { tear: on('fTear'), rand: on('fRand') }, vars: AB.variants(VARS_SEED, num('amt')) });
-  upTex(texB, st.stripB.TW, st.stripB.TH, st.stripB.data, true, false, gl.CLAMP_TO_EDGE);
+  if (bp.v3) {
+    const key = bp.h + '/' + bp.K;
+    if (bp.grain && (!dmapCache || dmapCache.key !== key)) dmapCache = { key, d: AB.densityMap(noise3, bp.h, bp.K) };
+    st.mComp = 1;
+    st.stripB = AB.buildStripV3({ S0, k: st.k, r: R_T, K: bp.K, dmap: bp.grain ? dmapCache.d : null, tr: TR, shoulder: num('shL'), feat: { rand: on('fRand') }, vars: AB.variants(VARS_SEED, num('amt')) });
+    // 和 UE 一样：RGB 写线性值、RGBA 都存 1/ColorPower 次方，材质里 pow 回来
+    const d = st.stripB.data, e = new Uint8Array(d.length), ic = 1 / CP_V3;
+    for (let i = 0; i < d.length; i += 4) { for (let c = 0; c < 3; c++) e[i + c] = Math.round(255 * Math.pow(toLin(d[i + c]), ic)); e[i + 3] = Math.round(255 * Math.pow(d[i + 3] / 255, ic)); }
+    st.stripB.enc = e; st.stripB.cp = CP_V3;
+    upTex(texB, st.stripB.TW, st.stripB.TH, e, false, false, gl.CLAMP_TO_EDGE);
+  } else {
+    st.mComp = bp.grain ? AB.maskMean(noise, bp.h, 0) : 1;     // 颗粒挖掉的平均比例，尾巴按它补亮
+    st.stripB = AB.buildStrip({ S0, k: st.k, r: R_T, K: bp.K, mComp: st.mComp, gain: on('fLong') ? 2 : 0, tr: TR, shoulder: num('shL'), feat: { tear: on('fTear'), rand: on('fRand') }, vars: AB.variants(VARS_SEED, num('amt')) });
+    st.stripB.cp = 1;
+    upTex(texB, st.stripB.TW, st.stripB.TH, st.stripB.data, true, false, gl.CLAMP_TO_EDGE);
+  }
 }
 const csB = () => PROD.cs.map(c => c / bParams().K);
 const dp0StartB = () => +st.stripB.H.toFixed(4);     // 星头所在行（泪滴头开着时前面多留 10 行）
@@ -605,12 +684,12 @@ const fx = (v, d) => (+v).toFixed(d);
 
 function sync() {
   $('distV').textContent = num('dist') + ' m';
-  $('amtV').textContent = fx(num('amt'), 2); $('shLV').textContent = fx(num('shL'), 2) + ' s'; $('hardV').textContent = fx(num('hard'), 2);
+  $('amtV').textContent = fx(num('amt'), 2); $('shLV').textContent = useV3() ? fx(0.42 * num('shL') / 0.55, 2) + ' s' : fx(num('shL'), 2) + ' τ'; $('hardV').textContent = fx(num('hard'), 2);
   $('dotPxV').textContent = fx(num('dotPx'), 2) + ' px'; $('twHzV').textContent = fx(num('twHz'), 1) + ' Hz'; $('l3rateV').textContent = num('l3rate');
   $('gpuIV').textContent = '×' + fx(num('gpuI'), 2);
   $('timeV').textContent = tq().toFixed(2) + ' s'; $('time').value = st.t;
   const bp = bParams(), MA = MESH_A[st.mesh], pc = st.mesh === 'pc';
-  const feats = [['fTear', '泪滴头'], ['fRand', '随机'], ['fLong', '挂更久'], ['fGrain', '颗粒'], ['fTw', '闪烁'], ['fL3', 'GPU 亮点']].filter(([id]) => on(id) && (id !== 'fL3' || pc)).map(f => f[1]);
+  const feats = [['fTear', bp.v3 ? '火星尾缀头' : '泪滴头'], ['fRand', '随机'], ['fLong', '挂更久'], ['fGrain', '颗粒'], ['fTw', '闪烁'], ['fL3', 'GPU 亮点']].filter(([id]) => on(id) && (id !== 'fL3' || pc)).map(f => f[1]);
   $('derived').textContent =
     `每米 ${ppm().toFixed(2)} px（${num('dist')} m，竖向视角 ${(fovRad() * 180 / Math.PI).toFixed(1)}°，${st.res}p）；带子约 ${(2 * ppm()).toFixed(1)} px 宽\n` +
     `颗粒沿轨迹约 ${bp.dotM.toFixed(2)} m ≈ ${fx(num('dotPx'), 2)} px；闪烁 ${on('fTw') ? fx(num('twHz'), 1) + ' Hz' : '关'}\n` +
@@ -626,11 +705,12 @@ function sync() {
   const zKeys = kt.map(t => `${fx(t - L3_WIN.t0, 0)} s: ${Math.round(e(t).cy * 100)} cm`);
   const rows = [
     ['材质实例（复制正式 MI 到沙盒）', '', ''],
-    ['MainTex', `T_MW_StripB（${st.stripB.TW}×${st.stripB.TH}${st.stripB.nv > 1 ? `，${st.stripB.nv} 个变体横排` : ''}）`, 'NoMip、Bilinear、U Wrap / V Clamp、sRGB 关、DistantVFX、不勾 NeverStream'],
+    ['MainTex', `T_MW_StripB（${st.stripB.TW}×${st.stripB.TH}${st.stripB.nv > 1 ? `，${st.stripB.nv} 个变体横排` : ''}）`, 'NoMip、Bilinear、U Wrap / V Clamp、sRGB 关、DistantVFX、不勾 NeverStream' + (bp.v3 ? '；RGBA 存的是 √值' : '')],
+    ...(bp.v3 ? [['ColorPower', '2', '原 1；条带存 √值，暗尾巴精度翻倍']] : []),
     ['UVParam', st.k === 1 ? '不变' : `(1, ${n4(st.k)}, 0, 0)`, st.k === 1 ? '' : '年龄轴拉到约 11.5 s；原 (1, 1, 0, 0)'],
-    ['ColorIntensity', fx(K, 2), K > 1 ? '头和亮肩透明度顶满，颗粒打不进去；原 1' : '不变'],
+    ['ColorIntensity', fx(K, 2), K > 1 ? (bp.v3 ? '亮处顶满、越暗颗粒越稀（条带 A 按噪声分布反算）；原 1' : '头和亮肩透明度顶满，颗粒打不进去；原 1') : '不变'],
     ['hardness', fx(bp.h, 2), '原 0'],
-    ['NoiseMap', 'T_MW_SparkNoise（256²）', '新小图：sRGB 关、有 mip、Wrap、DistantVFX'],
+    ['NoiseMap', 'T_MW_SparkNoise（256²）', '新小图：sRGB 关、有 mip、Wrap、DistantVFX' + (bp.v3 ? '（第 3 版内容：底更平、亮点峰值分散）' : '')],
     ['NoiseUVParam', `(${n4(bp.nuv[0])}, ${n4(bp.nuv[1])}, ${n4(bp.nuv[2])}, 0)`, 'x：每束取一段噪声；y：颗粒沿轨迹的大小；z：闪烁'],
     ['网格', '', ''],
     ['PC / 手游网格', on('fRand') ? 'SM_MW_B_PC / SM_MW_B_Mobile（重导）' : '不变', on('fRand') ? '顶点数不变（10,988 / 1,998），只改每束宽细和 U' : ''],
@@ -658,6 +738,8 @@ function sync() {
   for (const b of document.querySelectorAll('[data-sp]')) b.classList.toggle('on', +b.dataset.sp === st.speed);
   $('fov60').classList.toggle('on', st.fov === 'f60'); $('fovStd').classList.toggle('on', st.fov === 'std');
   $('nPC').classList.toggle('on', pc); $('nM').classList.toggle('on', !pc);
+  for (const b of document.querySelectorAll('[data-style]')) b.classList.toggle('on', b.dataset.style === st.style);
+  $('tagB').textContent = st.style === 'v3' ? 'B 第 3 版' : 'B · 第 2 版样式';
   $('aimC').classList.toggle('on', st.aim === 'c'); $('aimE').classList.toggle('on', st.aim === 'e');
 }
 
@@ -668,6 +750,7 @@ $('nPC').onclick = () => { st.mesh = 'pc'; sync(); };
 $('nM').onclick = () => { st.mesh = 'm'; sync(); };
 $('dGame').onclick = () => { $('dist').value = 725; st.aim = 'c'; sync(); };
 $('dNear').onclick = () => { $('dist').value = 300; st.aim = 'e'; sync(); };
+for (const b of document.querySelectorAll('[data-style]')) b.onclick = () => { st.style = b.dataset.style; $('hard').value = HARD_DEF[st.style]; rebuildStripB(); sync(); };
 $('aimC').onclick = () => { st.aim = 'c'; sync(); };
 $('aimE').onclick = () => { st.aim = 'e'; sync(); };
 for (const b of document.querySelectorAll('[data-px]')) b.onclick = () => { st.px = +b.dataset.px; W = 0; sync(); };
@@ -738,18 +821,18 @@ function drawPanel(P, side) {
   let M;
   if (side === 'A') {
     gl.uniform1f(U(pMesh, 'uUVy'), 1); gl.uniform1f(U(pMesh, 'uDP0'), PROD.dp0[0] + (PROD.dp0[1] - PROD.dp0[0]) * u);
-    gl.uniform1f(U(pMesh, 'uCI'), 1); gl.uniform1f(U(pMesh, 'uH'), 0); gl.uniform1f(U(pMesh, 'uP2'), PROD.p2);
+    gl.uniform1f(U(pMesh, 'uCI'), 1); gl.uniform1f(U(pMesh, 'uCP'), 1); gl.uniform1f(U(pMesh, 'uH'), 0); gl.uniform1f(U(pMesh, 'uP2'), PROD.p2);
     gl.uniform3f(U(pMesh, 'uCS'), ...PROD.cs); gl.uniform4f(U(pMesh, 'uNUV'), 1, 1, 0, 0);
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texA); M = MESH_A[st.mesh];
   } else {
     const bp = bParams(), cb = csB();
     gl.uniform1f(U(pMesh, 'uUVy'), st.k); gl.uniform1f(U(pMesh, 'uDP0'), dp0StartB() + (dp0EndB() - dp0StartB()) * u);
-    gl.uniform1f(U(pMesh, 'uCI'), bp.K); gl.uniform1f(U(pMesh, 'uH'), bp.h); gl.uniform1f(U(pMesh, 'uP2'), p2At(t, bp));
+    gl.uniform1f(U(pMesh, 'uCI'), bp.K); gl.uniform1f(U(pMesh, 'uCP'), st.stripB.cp || 1); gl.uniform1f(U(pMesh, 'uH'), bp.h); gl.uniform1f(U(pMesh, 'uP2'), p2At(t, bp));
     gl.uniform3f(U(pMesh, 'uCS'), cb[0], cb[1], cb[2]); gl.uniform4f(U(pMesh, 'uNUV'), ...bp.nuv);
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texB); M = MESH_B[st.mesh];
   }
   gl.uniform1i(U(pMesh, 'uTex'), 0);
-  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texN); gl.uniform1i(U(pMesh, 'uNoise'), 1);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, side === 'B' && useV3() ? texN3 : texN); gl.uniform1i(U(pMesh, 'uNoise'), 1);
   gl.bindVertexArray(M.vao); gl.drawElements(gl.TRIANGLES, M.count, gl.UNSIGNED_INT, 0);
   // GPU 精灵（手游没有 GPU 粒子）
   const pxK = P.h / (2 * Math.tan(fe / 2)), gi = num('gpuI');
@@ -786,6 +869,8 @@ if (q.get('res')) st.res = +q.get('res') || 1080;
 if (q.get('px')) st.px = Math.max(1, Math.min(3, +q.get('px')));
 if (q.get('n') === '130') st.mesh = 'm';
 if (q.get('aim') === 'e') st.aim = 'e';
+if (q.get('style') === 'v2') st.style = 'v2';
+if (q.get('hard') == null) $('hard').value = HARD_DEF[st.style];
 if (q.get('bloom') === '0') $('bloom').checked = false;
 for (const f of (q.get('off') || '').split(',')) { const id = { tear: 'fTear', rand: 'fRand', long: 'fLong', grain: 'fGrain', tw: 'fTw', l3: 'fL3', l2: 'gpuL2' }[f]; if (id) $(id).checked = false; }
 if (q.get('t') != null) st.t = +q.get('t');

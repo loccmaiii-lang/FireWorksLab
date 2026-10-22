@@ -1,0 +1,298 @@
+{
+ "说明": "网格垂柳 B 第 3 版（研究总览 2026-10-22）：星头后按升空尾缀的火花冷却连续过渡、颗粒按亮度渐稀。和预览页默认值一致；页面改了滑杆就用同样的值重跑本脚本。未经 UE 实测。",
+ "样式": "v3",
+ "页面设置": {
+  "amt": 0.8,
+  "shL": 0.55,
+  "hard": 0.3,
+  "dotPx": 1.75,
+  "twHz": 4,
+  "l3rate": 600,
+  "dist": 725,
+  "fov": 60,
+  "res": 1080
+ },
+ "推导": {
+  "每米像素": 1.2901,
+  "颗粒沿轨迹_m": 1.3565,
+  "遮罩平均": 1,
+  "寿命_s": 14.25,
+  "播放快于轨迹": 1.1298
+ },
+ "贴图": {
+  "T_MW_StripB": {
+   "尺寸": "128x1024",
+   "变体": 8,
+   "设置": "sRGB 关；Compression VectorDisplacementmap；NoMipmaps；Filter Bilinear；X Wrap / Y Clamp；Texture Group DistantVFX；不勾 Never Stream"
+  },
+  "T_MW_SparkNoise": {
+   "尺寸": "256x256",
+   "设置": "sRGB 关；Compression Default（或 Grayscale）；开 mip（From Texture Group）；X / Y Wrap；Texture Group DistantVFX；不勾 Never Stream"
+  }
+ },
+ "材质实例_复制自_MI_EFX_Fireworks_Hero_FlowFixed_01": {
+  "MainTex": "T_MW_StripB",
+  "ColorPower": 2,
+  "UVParam": [
+   1,
+   0.558,
+   0,
+   0
+  ],
+  "ColorIntensity": 16,
+  "hardness": 0.3,
+  "NoiseMap": "T_MW_SparkNoise",
+  "NoiseUVParam": [
+   0.1289,
+   0.6578,
+   0.0313,
+   0
+  ],
+  "其余": "不变（DissolveOffset 0、Progress 0、NoiseChannel R、AlphaChannel A、UVIncrementChannel G、OutlineWidth 0）"
+ },
+ "网格发射器": {
+  "Mesh": {
+   "PC": "SM_MW_B_PC",
+   "手游": "SM_MW_B_Mobile"
+  },
+  "DP0_UVIncrement": [
+   [
+    0,
+    0.9844
+   ],
+   [
+    1,
+    -0.2427
+   ]
+  ],
+  "DP1_Param2": [
+   [
+    0,
+    0
+   ],
+   [
+    0.8421,
+    0
+   ],
+   [
+    0.9825,
+    -0.06
+   ],
+   [
+    1,
+    -0.06
+   ]
+  ],
+  "ColorScaleOverLife": [
+   0.625,
+   0.2618,
+   0.0799
+  ],
+  "其余": "不变（Lifetime 14–14.5、Initial Size 0.5–0.55、Alpha 曲线、锁 Z、Mesh Rotation）"
+ },
+ "L3_Sparkle_只PC": {
+  "做法": "复制 L2_Dots，改名 L3_Sparkle",
+  "材质": "MI_EFX_Spark_16_NoCameraDepthFade（不变）",
+  "Required": {
+   "EmitterDelay": 1,
+   "EmitterDuration": 10,
+   "EmitterLoops": 1
+  },
+  "Spawn": {
+   "Rate": 600,
+   "Burst": "删掉"
+  },
+  "Lifetime": [
+   0.45,
+   1
+  ],
+  "InitialSize_cm": [
+   150,
+   250
+  ],
+  "SphereLocation": {
+   "SurfaceOnly": true,
+   "Velocity": true,
+   "VelocityScale": [
+    0.03,
+    0.06
+   ],
+   "StartRadius_UniformCurve_发射器秒_cm": [
+    [
+     0,
+     4612,
+     8386
+    ],
+    [
+     1,
+     6447,
+     11723
+    ],
+    [
+     2,
+     7594,
+     13807
+    ],
+    [
+     3,
+     8403,
+     15279
+    ],
+    [
+     4,
+     8987,
+     16340
+    ],
+    [
+     5,
+     9413,
+     17114
+    ],
+    [
+     6,
+     9556,
+     17374
+    ],
+    [
+     7,
+     9561,
+     17383
+    ],
+    [
+     8,
+     9561,
+     17383
+    ],
+    [
+     9,
+     9561,
+     17383
+    ],
+    [
+     10,
+     9561,
+     17383
+    ]
+   ],
+   "StartLocation_Z_Curve_发射器秒_cm": [
+    [
+     0,
+     -200
+    ],
+    [
+     1,
+     -694
+    ],
+    [
+     2,
+     -1469
+    ],
+    [
+     3,
+     -2513
+    ],
+    [
+     4,
+     -3784
+    ],
+    [
+     5,
+     -5255
+    ],
+    [
+     6,
+     -5989
+    ],
+    [
+     7,
+     -6019
+    ],
+    [
+     8,
+     -6019
+    ],
+    [
+     9,
+     -6019
+    ],
+    [
+     10,
+     -6019
+    ]
+   ]
+  },
+  "InitialVelocity_cm_s": {
+   "min": [
+    0,
+    0,
+    -1000
+   ],
+   "max": [
+    0,
+    0,
+    -400
+   ]
+  },
+  "ConstAcceleration_cm_s2": [
+   0,
+   0,
+   -300
+  ],
+  "Drag": 1,
+  "ColorOverLife": {
+   "颜色": "照 L2_Dots",
+   "Alpha": [
+    [
+     0,
+     0
+    ],
+    [
+     0.06,
+     1
+    ],
+    [
+     0.18,
+     0.12
+    ],
+    [
+     0.3,
+     0.95
+    ],
+    [
+     0.42,
+     0.1
+    ],
+    [
+     0.56,
+     0.9
+    ],
+    [
+     0.7,
+     0.08
+    ],
+    [
+     0.84,
+     0.7
+    ],
+    [
+     1,
+     0
+    ]
+   ]
+  },
+  "同时活着约": 435
+ },
+ "网格": [
+  {
+   "文件": "../UE测试包_v2/SM_MW_B_PC.obj",
+   "顶点": 10988,
+   "三角": 10188,
+   "说明": "和第 2 版同一个网格，不用重导"
+  },
+  {
+   "文件": "../UE测试包_v2/SM_MW_B_Mobile.obj",
+   "顶点": 1998,
+   "三角": 1738
+  }
+ ]
+}
