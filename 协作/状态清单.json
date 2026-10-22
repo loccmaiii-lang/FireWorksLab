@@ -253,12 +253,12 @@
     "LiteHDR（Claude Code） · 3.0 手游 _M / _H 分档与 LiteHDR 调色": {
       "负责": "LiteHDR（Claude Code）",
       "日期": "2026-10-22",
-      "状态": "完成并释放 UE（10-23 00:23）：第二轮已写、未提交 P4，待用户真机验收",
+      "状态": "已释放 UE（10-23 01:10）：手游随机已改 ±5%（36 包已迁出未提交）；PC 随机只读检查完、方案待用户批",
       "范围": "/Game/Effects/Props/FireWorks 下 3.0 手游粒子 _M / _H（窜天猴 sku 含 _L）的颜色 / alpha 模块；手游 ResourceFXTable 3.0 行 FxSP_High；FXLookDevLevel 临时测试对象（前缀 FWLHDR_，不存图）",
       "记录": "对话记录/对话框LiteHDR.md",
       "授权": "用户 10-22：只改 3.0 烟花；复制 _M→_H、FxSP_High 改指 _H；用户 19:3x：_H / _M 都要调亮，颜色倍增 ≤ 3、亮度走 alpha，先设计对照再出方案执行；用户 23:1x：3.0 手游 _H/_M 加颜色 / 大小随机 ±8%（加出生定色模块）；_H 自发光照 PC",
       "保护": "不改材质实例 / 母材质 / 贴图 / PC 资产；不提交 P4；改前备份 uasset",
-      "结果": "第一轮：18 个 _H、表 FxSP_High 改指 _H、35 包 LiteHDR 调色（用户已提交）。第二轮：_H 自发光照 PC（17 包）、36 包 ±8% 颜色 / 大小随机（主发射器加 Initial Color），读回一致、已迁出未提交。看法 analysis/results/20261022_LiteHDR_手游分档/看法.md。未做：PC 随机、窜天猴 sku。"
+      "结果": "第一轮：18 个 _H、表 FxSP_High 改指 _H、35 包 LiteHDR 调色（用户已提交）。第二轮：_H 自发光照 PC（17 包）、36 包 ±8% 颜色 / 大小随机（主发射器加 Initial Color），读回一致、已迁出未提交。看法 analysis/results/20261022_LiteHDR_手游分档/看法.md。未做：PC 随机、窜天猴 sku。 10-23：手游随机 ±8%→±5%；PC 方案 协作/方案/PC烟花随机_2026-10-23.md（未改 PC）。"
     }
   },
   "effects": [

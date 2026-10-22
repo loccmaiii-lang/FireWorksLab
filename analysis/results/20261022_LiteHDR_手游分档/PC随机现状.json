@@ -1,0 +1,5477 @@
+[
+ {
+  "asset": "P_EFX_FireWorks_LittleGold_HD",
+  "rows": [
+   "小号_A_小金花"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_LittleGold_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      3700,
+      0,
+      0
+     ],
+     "max": [
+      4000,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 3.9,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      20,
+      20,
+      20
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_LittleSilver_HD",
+  "rows": [
+   "小号_B_小银菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      3300,
+      0,
+      0
+     ],
+     "max": [
+      3600,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 4.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       0.855,
+       0.888,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      30,
+      30,
+      30
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L1_Flash",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      123.4,
+      123.4,
+      1019
+     ],
+     "max": [
+      123.4,
+      123.4,
+      1019
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 0.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       2.478,
+       2.774,
+       4
+      ],
+      "n": 10
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 10
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_LittleCrackle_HD",
+  "rows": [
+   "小号_C_短爆裂"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_LittleCrackle_Main_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      3300,
+      0,
+      0
+     ],
+     "max": [
+      2900,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 6.5,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      50
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L1_Flash",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      760.85,
+      760.85,
+      4372.7
+     ],
+     "max": [
+      760.85,
+      760.85,
+      4372.7
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 0.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       4,
+       3.978,
+       3.945
+      ],
+      "n": 14
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 14
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_LittleCombo_HD",
+  "rows": [
+   "小号_D_小分裂"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_LittleCombo_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      3200,
+      0,
+      0
+     ],
+     "max": [
+      2800,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 6.7,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      50
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Comet_Layers_S_HD",
+  "rows": [
+   "小号_A_短彗星"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_TrailFull",
+    "mat": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      1453.7,
+      9495.3,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       3,
+       3,
+       3
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "OrientationAxisLock",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "Velocity"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Silver_Layers_S_HD",
+  "rows": [
+   "小号_B_短银尾"
+  ],
+  "emitters": [
+   {
+    "emitter": "TrailFull",
+    "mat": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      1231,
+      9663.1,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       2.4,
+       2.4,
+       2.4
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      2.953,
+      4.497,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "OrientationAxisLock",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Combo_HD",
+  "rows": [
+   "小型_D_金裂星"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_Combo_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      14500,
+      0,
+      0
+     ],
+     "max": [
+      16000,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 4.9,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       30,
+       30,
+       30
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Comet_HD",
+  "rows": [
+   "小型_E_小彗星"
+  ],
+  "emitters": [
+   {
+    "emitter": "Trail",
+    "mat": "MI_EFX_Throw_Trail_33_HD",
+    "align": "PSA_Square",
+    "type": "Ribbon",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.10000000149011612,
+    "bursts": 0,
+    "size": {
+     "t": "常量",
+     "v": [
+      100,
+      0,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       2,
+       2,
+       2
+      ]
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      20,
+      10.138,
+      4.006
+     ],
+     "n": 3
+    },
+    "mods": [
+     "Acceleration",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Size",
+     "SizeMultiplyLife",
+     "SpawnPerUnit",
+     "TrailSource"
+    ]
+   },
+   {
+    "emitter": "Trail",
+    "mat": "MI_EFX_Throw_Trail_33_HD",
+    "align": "PSA_Square",
+    "type": "Ribbon",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.10000000149011612,
+    "bursts": 0,
+    "size": {
+     "t": "常量",
+     "v": [
+      100,
+      0,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       2,
+       2,
+       2
+      ]
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      20,
+      10.138,
+      4.006
+     ],
+     "n": 3
+    },
+    "mods": [
+     "Acceleration",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Size",
+     "SizeMultiplyLife",
+     "SpawnPerUnit",
+     "TrailSource"
+    ]
+   },
+   {
+    "emitter": "Glow_B",
+    "mat": "MI_EFX_Glow_26",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      800,
+      50,
+      1
+     ],
+     "max": [
+      1000,
+      50,
+      1
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 11.1,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       10,
+       4.691,
+       3.49
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 13
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "Acceleration",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Light",
+     "Location",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   },
+   {
+    "emitter": "Glow_C",
+    "mat": "MI_EFX_Glow_26",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      800,
+      50,
+      1
+     ],
+     "max": [
+      1000,
+      50,
+      1
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 11.1,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       10,
+       4.691,
+       3.49
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 13
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "Acceleration",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Light",
+     "Location",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_SilverChry_HD",
+  "rows": [
+   "小型_F_银冠菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      9200,
+      0,
+      0
+     ],
+     "max": [
+      9800,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 3.2,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       0.855,
+       0.888,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      10,
+      10
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L1_Flash",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      340.75,
+      340.75,
+      1019
+     ],
+     "max": [
+      340.75,
+      340.75,
+      1019
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 0.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       2.478,
+       2.774,
+       4
+      ],
+      "n": 10
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 10
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Crackle_HD",
+  "rows": [
+   "小型_G_爆裂星"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_Crackle_Main_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.20000000298023224,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      13311.96,
+      13311.96,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L1_Flash",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      2419.34,
+      2419.34,
+      3370.5
+     ],
+     "max": [
+      2419.34,
+      2419.34,
+      3370.5
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 0.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       4,
+       3.978,
+       3.945
+      ],
+      "n": 13
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 13
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Lime_HD",
+  "rows": [
+   "小型_H_小青柠"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_Lime_Core_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      3810.2,
+      3810.2,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       4,
+       2.776,
+       1.566
+      ],
+      "n": 6
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L2_Main",
+    "mat": "MI_EFX_FireWorks_Lime_Lead_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      3991.93,
+      3991.93,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       0.195,
+       0.023
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L3_MainA",
+    "mat": "MI_EFX_FireWorks_Lime_Glitter_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      10511.33,
+      10511.33,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       1.351,
+       1.152,
+       1.4
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L3_MainB",
+    "mat": "MI_EFX_FireWorks_Lime_Glitter_02_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 2.1333000659942627,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      10511.33,
+      10511.33,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       1.4,
+       1.231,
+       0.941
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Glitter_HD",
+  "rows": [
+   "小型_I__橙辉星"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_Glitter_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      9289.54,
+      9289.54,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_Strobe_HD",
+  "rows": [
+   "小型_J_点灭星"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      9500,
+      0,
+      0
+     ],
+     "max": [
+      10500,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 5.0,
+    "color": {
+     "how": "Initial Color_Seeded",
+     "color": {
+      "t": "范围",
+      "min": [
+       1,
+       0.428,
+       0
+      ],
+      "max": [
+       0.015,
+       0,
+       1
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      100,
+      100,
+      100
+     ]
+    },
+    "mods": [
+     "ColorScaleOverLife",
+     "Color_Seeded",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_LimeStar_HD",
+  "rows": [
+   "中型_A_绿牡丹"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      19555.9,
+      19555.9,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       0.434,
+       0.051
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      30,
+      30,
+      30
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L2_MainA",
+    "mat": "MI_EFX_FireWorks_LimeStar_Head_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      30359.801,
+      30359.801,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       5,
+       2.635,
+       0.257
+      ],
+      "n": 8
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L2_MainB",
+    "mat": "MI_EFX_FireWorks_LimeStar_Head_02_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 3.5,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      30359.801,
+      30359.801,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       2.888,
+       2.697,
+       2.397
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L3_Dots",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.02500000037252903,
+    "bursts": 500,
+    "size": {
+     "t": "范围",
+     "min": [
+      85,
+      85,
+      85
+     ],
+     "max": [
+      115,
+      115,
+      115
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 15.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       4,
+       1.406,
+       0.123
+      ],
+      "n": 8
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 8
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      100,
+      100,
+      100
+     ]
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GoldRay_HD",
+  "rows": [
+   "中型_B_金锦菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_GoldRay_A_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      27382.5,
+      27382.5,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L2_Main",
+    "mat": "MI_EFX_FireWorks_GoldRay_B_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.4332999885082245,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      25606.801,
+      25606.801,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWork_PrismWheels_HD",
+  "rows": [
+   "中型_C_彩千轮"
+  ],
+  "emitters": [
+   {
+    "emitter": "Dark_Groud",
+    "mat": "MI_EFX_FireWorks_PrismWheels_02_HD",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     2,
+     2
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      10,
+      0,
+      0
+     ],
+     "max": [
+      7,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 17.6,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      4,
+      3.8,
+      3.6
+     ],
+     "n": 6
+    },
+    "mods": [
+     "AccelerationConstant",
+     "Color",
+     "ColorScaleOverLife",
+     "EventReceiverSpawn",
+     "Lifetime",
+     "LocationEmitter",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Light_Groud",
+    "mat": "MI_EFX_FireWorks_PrismWheels_01_HD",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     2,
+     2
+    ],
+    "delay": 0,
+    "bursts": 10,
+    "size": {
+     "t": "范围",
+     "min": [
+      11.5,
+      0,
+      0
+     ],
+     "max": [
+      8.5,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 15.0,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      4,
+      3.8,
+      3.6
+     ],
+     "n": 4
+    },
+    "mods": [
+     "AccelerationConstant",
+     "Color",
+     "ColorScaleOverLife",
+     "EventGenerator",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Main",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 30,
+    "size": {
+     "t": "范围",
+     "min": [
+      3,
+      0,
+      0
+     ],
+     "max": [
+      5,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 25.0,
+    "color": {
+     "how": "ColorOverLife + Initial",
+     "color": {
+      "t": "常量",
+      "v": [
+       20,
+       10.626,
+       0.301
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "Color",
+     "ColorOverLife",
+     "EventGenerator",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Dark",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 40,
+    "size": {
+     "t": "范围",
+     "min": [
+      3,
+      0,
+      0
+     ],
+     "max": [
+      5,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 25.0,
+    "color": {
+     "how": "ColorOverLife + Initial",
+     "color": {
+      "t": "常量",
+      "v": [
+       20,
+       10.626,
+       0.301
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "Color",
+     "ColorOverLife",
+     "EventGenerator",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Light_Groud",
+    "mat": "MI_EFX_FireWorks_PrismWheels_01_HD",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     2,
+     2
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      11.5,
+      0,
+      0
+     ],
+     "max": [
+      8.5,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 15.0,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       5,
+       5,
+       5
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      4,
+      3.8,
+      3.6
+     ],
+     "n": 4
+    },
+    "mods": [
+     "AccelerationConstant",
+     "Color",
+     "ColorScaleOverLife",
+     "EventReceiverSpawn",
+     "Lifetime",
+     "LocationEmitter",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Sparks Cloud",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.019999999552965164,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      50,
+      30,
+      30
+     ],
+     "max": [
+      150,
+      35,
+      30
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 50.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       80,
+       23.294,
+       1.777
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": {
+     "t": "范围",
+     "min": [
+      5,
+      5,
+      5
+     ],
+     "max": [
+      1,
+      1,
+      1
+     ],
+     "lock": null
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "EventReceiverSpawn",
+     "Lifetime",
+     "LocationEmitter",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife",
+     "VectorFieldLocal"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GoldSpark_HD",
+  "rows": [
+   "中型_D_金曜菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_GoldSpark_Main_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      12912.53,
+      12912.53,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       0.456,
+       0.102
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      10,
+      10
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L2_Main",
+    "mat": "MI_EFX_FireWorks_GoldSpark_L2_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      15649.62,
+      15649.62,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife + Initial",
+     "color": {
+      "t": "曲线",
+      "v": [
+       0.855,
+       0.888,
+       1
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      10,
+      10
+     ]
+    },
+    "mods": [
+     "Color",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L3_Main",
+    "mat": "MI_EFX_FireWorks_GoldSpark_L3_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      10080.39,
+      10080.39,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       0.855,
+       0.888,
+       1
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      10,
+      10
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GoldCoreLime_HD",
+  "rows": [
+   "中型_E_金蕊柠",
+   "大型_C_金蕊柠"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      8925.71,
+      8925.71,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       1.6,
+       0.231,
+       0.023
+      ],
+      "n": 6
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L2_Main",
+    "mat": "MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      16150.32,
+      16150.32,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       1.9,
+       1.305,
+       0.668
+      ],
+      "n": 10
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L3_Main",
+    "mat": "MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.06669999659061432,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      6835.98,
+      6835.98,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       2.4,
+       2.294,
+       2.091
+      ],
+      "n": 8
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L4_Main",
+    "mat": "MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.06669999659061432,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      6995.4,
+      6995.4,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       6.5,
+       5.664,
+       4.1
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      10,
+      10
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GoldRayChry_HD",
+  "rows": [
+   "中型_B_金芒菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "MainA",
+    "mat": "MI_EFX_FireWorks_GoldRay_Burst_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      22382.699,
+      22382.699,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1.875,
+       1.634,
+       1.342
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "MainB",
+    "mat": "MI_EFX_FireWorks_GoldRay_Burst_02_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 2.266700029373169,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      22382.699,
+      22382.699,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1.875,
+       1.634,
+       1.342
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_LimeCoreDelay_HD",
+  "rows": [
+   "中型_F_多重菊",
+   "大型_D_多重菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "L1_Dots",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.125,
+    "bursts": 420,
+    "size": {
+     "t": "范围",
+     "min": [
+      114.8,
+      114.8,
+      114.8
+     ],
+     "max": [
+      155.3,
+      155.3,
+      155.3
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 15.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       4,
+       2.797,
+       1.653
+      ],
+      "n": 22
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 22
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      20,
+      20,
+      20
+     ]
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   },
+   {
+    "emitter": "L2_Main",
+    "mat": "MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      12632.7,
+      12632.7,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       0.195,
+       0.023
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L3_MainA",
+    "mat": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      30089.301,
+      30089.301,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       1.351,
+       1.152,
+       1.4
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L3_MainB",
+    "mat": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 2.1333000659942627,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      30089.301,
+      30089.301,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       1.4,
+       1.231,
+       0.941
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GoldKamuro_HD",
+  "rows": [
+   "大型_A_金垂柳"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_Fireworks_Hero_FlowFixed_01",
+    "align": "PSA_Square",
+    "type": "Mesh",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      0.5,
+      0,
+      0
+     ],
+     "max": [
+      0.55,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 4.8,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      4.189,
+      1.278
+     ]
+    },
+    "mods": [
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "MeshRotation",
+     "ParameterDynamic",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L2_Dots",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 7,
+    "bursts": 96,
+    "size": {
+     "t": "范围",
+     "min": [
+      480,
+      47.22,
+      289
+     ],
+     "max": [
+      600,
+      63.89,
+      391
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 11.1,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       4,
+       0.274,
+       0.423
+      ],
+      "n": 45
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 45
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      50
+     ]
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "LocationPrimitiveSphere",
+     "Size",
+     "Velocity"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_SilverStrobeChry_HD",
+  "rows": [
+   "大型_B_银彩菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      2200,
+      0,
+      0
+     ],
+     "max": [
+      2400,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 4.3,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       10,
+       10
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1.283,
+      1.332,
+      1.5
+     ],
+     "n": 2
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   },
+   {
+    "emitter": "Glow_B",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.30000001192092896,
+    "bursts": 2,
+    "size": {
+     "t": "常量",
+     "v": [
+      2000,
+      600,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       3,
+       1.287,
+       0.245
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Flash",
+    "mat": "MI_EFX_Glow_16",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      5000,
+      1000,
+      200
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       4.96,
+       2.38
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_SilverStrobeChry_B_HD",
+  "rows": [
+   "大型_E_银彩菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      2200,
+      0,
+      0
+     ],
+     "max": [
+      2400,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 4.3,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       10,
+       10
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1.283,
+      1.332,
+      1.5
+     ],
+     "n": 2
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   },
+   {
+    "emitter": "Glow_B",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.30000001192092896,
+    "bursts": 2,
+    "size": {
+     "t": "常量",
+     "v": [
+      2000,
+      600,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       3,
+       1.287,
+       0.245
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Flash",
+    "mat": "MI_EFX_Glow_16",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      5000,
+      1000,
+      200
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       4.96,
+       2.38
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GoldRayChry_L_HD",
+  "rows": [
+   "大型_F_金芒菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "Main",
+    "mat": "MI_EFX_FireWorks_GoldRayChry_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      22500,
+      0,
+      0
+     ],
+     "max": [
+      23566.631,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 2.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1.875,
+       1.634,
+       1.342
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      5,
+      5,
+      5
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      9500,
+      0,
+      0
+     ],
+     "max": [
+      10500,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 5.0,
+    "color": {
+     "how": "Initial Color_Seeded",
+     "color": {
+      "t": "范围",
+      "min": [
+       1,
+       0.428,
+       0
+      ],
+      "max": [
+       0.015,
+       0,
+       1
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      100,
+      100,
+      100
+     ]
+    },
+    "mods": [
+     "ColorScaleOverLife",
+     "Color_Seeded",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Glow_B",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.30000001192092896,
+    "bursts": 2,
+    "size": {
+     "t": "常量",
+     "v": [
+      2000,
+      600,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       3,
+       1.287,
+       0.245
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_SilverWhiteChry_HD",
+  "rows": [
+   "大型_G_银白菊"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_03_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      2200,
+      0,
+      0
+     ],
+     "max": [
+      2400,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 4.3,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       10,
+       10
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1.283,
+      1.332,
+      1.5
+     ],
+     "n": 2
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "Velocity"
+    ]
+   },
+   {
+    "emitter": "Glow_B",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.30000001192092896,
+    "bursts": 2,
+    "size": {
+     "t": "常量",
+     "v": [
+      2000,
+      600,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       3,
+       1.287,
+       0.245
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Flash",
+    "mat": "MI_EFX_Glow_16",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      5000,
+      1000,
+      200
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       4.96,
+       2.38
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_GlitterChry_HD",
+  "rows": [
+   "窜天猴sku_烟花爆炸"
+  ],
+  "emitters": [
+   {
+    "emitter": "explose_v1_Shadow",
+    "mat": "MI_EFX_6DLight_Sub_Loop_17_HD",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     8,
+     8
+    ],
+    "delay": 0.03500000014901161,
+    "bursts": 3,
+    "size": {
+     "t": "范围",
+     "min": [
+      185,
+      0,
+      0
+     ],
+     "max": [
+      330,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size_Seeded"
+    },
+    "sizeSpread%": 28.2,
+    "color": {
+     "how": "Initial Color_Seeded",
+     "color": {
+      "t": "常量",
+      "v": [
+       0.441,
+       0.441,
+       0.441
+      ]
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 2.5,
+      "max": 3.5
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ],
+     "n": 2
+    },
+    "mods": [
+     "AccelerationDrag",
+     "ColorScaleOverLife",
+     "Color_Seeded",
+     "Lifetime_Seeded",
+     "Location",
+     "LocationPrimitiveSphere_Seeded",
+     "Location_Seeded",
+     "ParameterDynamic",
+     "Rotation_Seeded",
+     "SizeMultiplyLife",
+     "Size_Seeded",
+     "SubUV",
+     "WindDirectionalSource"
+    ]
+   },
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_GlitterChry_Lead_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      2222.87,
+      2222.87,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      10,
+      10,
+      10
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Initial Igniton",
+    "mat": "MI_EFX_Glow_01_Depth_03",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      400,
+      510,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       15,
+       5.544,
+       1.396
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "ParameterDynamic",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Flash",
+    "mat": "MI_EFX_Glow_16",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      1000,
+      1000,
+      200
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       4.96,
+       2.38
+      ],
+      "n": 1
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L2_Main",
+    "mat": "MI_EFX_FireWorks_GlitterChry_Gold_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.22220000624656677,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      2771.79,
+      2771.79,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       0.855,
+       0.888,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      15,
+      15,
+      15
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L3_Main",
+    "mat": "MI_EFX_FireWorks_GlitterChry_Head_01_HD",
+    "align": "PSA_FacingCameraPosition",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.6000000238418579,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      3504.56,
+      3504.56,
+      1
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "Initial Color_Seeded",
+     "color": {
+      "t": "范围",
+      "min": [
+       0.1,
+       0.116,
+       1
+      ],
+      "max": [
+       0.433,
+       0.297,
+       1
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      15,
+      15,
+      15
+     ]
+    },
+    "mods": [
+     "ColorScaleOverLife",
+     "Color_Seeded",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Sphere_Particle",
+    "mat": "MI_EFX_Glow_21_Add",
+    "align": "PSA_Square",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0.6000000238418579,
+    "bursts": 80,
+    "size": {
+     "t": "范围",
+     "min": [
+      5,
+      25,
+      25
+     ],
+     "max": [
+      15,
+      25,
+      25
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 50.0,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       0.672,
+       0.683,
+       1
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      34,
+      12,
+      1
+     ],
+     "n": 24
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Particle Emitter",
+    "mat": "M_EFX_Explosion_Glow_01",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      18,
+      0,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       15,
+       4.072,
+       0
+      ],
+      "n": 4
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "Light",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+  "rows": [
+   "窜天猴sku_拖尾烟雾"
+  ],
+  "emitters": [
+   {
+    "emitter": "Sparks_loop",
+    "mat": "MI_EFX_Sparks_Streak_8x1_02",
+    "align": "PSA_Velocity",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      0.2,
+      0.8,
+      0
+     ],
+     "max": [
+      0.4,
+      1.6,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 33.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       50,
+       18.858,
+       3.987
+      ],
+      "max": [
+       100,
+       0,
+       0
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 4
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "Lifetime",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife",
+     "SizeScaleBySpeed",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Spark_Star_B",
+    "mat": "MI_EFX_Sparkler_02",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0.30000001192092896,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      20,
+      20,
+      25
+     ],
+     "max": [
+      80,
+      80,
+      25
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 60.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       50,
+       35.539,
+       0.6
+      ],
+      "max": [
+       100,
+       0,
+       0
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 0.5,
+      "max": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "ColorOverLife",
+     "Lifetime",
+     "Location",
+     "Rotation",
+     "Size",
+     "SubUV",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Spark_Star_A",
+    "mat": "MI_EFX_Sparkler_03",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0.30000001192092896,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      20,
+      20,
+      25
+     ],
+     "max": [
+      80,
+      80,
+      25
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 60.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       50,
+       35.539,
+       0.6
+      ],
+      "max": [
+       100,
+       0,
+       0
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 0.5,
+      "max": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "ColorOverLife",
+     "Lifetime",
+     "Location",
+     "Rotation",
+     "Size",
+     "SubUV",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Sparks_loop",
+    "mat": "MI_EFX_Spark_15",
+    "align": "PSA_Velocity",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      2,
+      1,
+      0
+     ],
+     "max": [
+      4,
+      2,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 33.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       50,
+       18.858,
+       3.987
+      ],
+      "max": [
+       100,
+       0,
+       0
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 4
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      50
+     ]
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Size",
+     "SizeMultiplyLife",
+     "SizeScaleBySpeed",
+     "VectorFieldLocal",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Sparks_main",
+    "mat": "MI_EFX_Sparks_Sparkler_4x4_01",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      20,
+      0,
+      0
+     ],
+     "max": [
+      60,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 50.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       2.943,
+       0.115
+      ]
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 0.5,
+      "max": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      50
+     ]
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife",
+     "SpawnPerUnit",
+     "SubUV",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Trail_L1",
+    "mat": "MI_EFX__FireWork_Skyrocket_Smoke_HD",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     8,
+     8
+    ],
+    "delay": 0.029999999329447746,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      40,
+      0,
+      0
+     ],
+     "max": [
+      80,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 33.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       50,
+       28.051,
+       14.073
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 4
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "Acceleration",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "Lifetime",
+     "LocationEmitter",
+     "ParameterDynamic",
+     "Rotation",
+     "RotationRate",
+     "Size",
+     "SizeMultiplyLife",
+     "SpawnPerUnit",
+     "SubUV",
+     "WindDirectionalSource"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_FireWorks_SkyRocketSparkler_HD",
+  "rows": [
+   "窜天猴sku_点火引线"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "WorldGridMaterial",
+    "align": "PSA_Square",
+    "type": "Mesh",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      0.5,
+      0.5,
+      0.5
+     ],
+     "max": [
+      0.5,
+      0.5,
+      0.5
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 0.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       3,
+       0.912,
+       0.022
+      ],
+      "max": [
+       5,
+       2.718,
+       0.426
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": {
+     "t": "实例参数"
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "MeshMaterial",
+     "ParameterDynamic",
+     "Size"
+    ]
+   },
+   {
+    "emitter": "Lens",
+    "mat": "MI_EFX_Glow_01",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      50,
+      0,
+      0
+     ],
+     "max": [
+      150,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 50.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1.5,
+       0.598,
+       0
+      ]
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "L1_Main",
+    "mat": "MI_EFX_FireWorks_SkyRocketSparkler_Sparkler_01_HD",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      24,
+      0,
+      0
+     ],
+     "max": [
+      27.9,
+      83,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 7.5,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       4,
+       4,
+       4
+      ],
+      "max": [
+       2,
+       1.833,
+       1.618
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      2,
+      2,
+      2
+     ]
+    },
+    "mods": [
+     "CameraOffset",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Location",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Streak",
+    "mat": "MI_EFX_Sparks_Streak_8x1_02",
+    "align": "PSA_Velocity",
+    "type": "Gpu",
+    "sub": [
+     8,
+     1
+    ],
+    "delay": 0,
+    "bursts": 60,
+    "size": {
+     "t": "范围",
+     "min": [
+      0.2,
+      0.8,
+      0
+     ],
+     "max": [
+      0.4,
+      1.6,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 33.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       2.943,
+       0.115
+      ]
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 0.5,
+      "max": 1
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      1,
+      1,
+      1
+     ],
+     "n": 2
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife",
+     "SizeScaleBySpeed",
+     "SpawnPerUnit",
+     "SubUV",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Sparks_main",
+    "mat": "MI_EFX_Sparks_Sparkler_4x4_01",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      10,
+      0,
+      0
+     ],
+     "max": [
+      80,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 77.8,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       6.658,
+       2.296
+      ]
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 0.5,
+      "max": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "CameraOffset",
+     "ColorOverLife",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife",
+     "SpawnPerUnit",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Particle Emitter",
+    "mat": "M_EFX_Explosion_Glow_01",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      36,
+      0,
+      0
+     ],
+     "max": [
+      42,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 7.7,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       5,
+       2.124,
+       0.212
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Light",
+     "Location",
+     "Size",
+     "SubUV"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+  "rows": [
+   "窜天猴sku_喷射焰火"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_Sparkler_RGBA_3x3_01_HD",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      40,
+      40,
+      0
+     ],
+     "max": [
+      50,
+      50,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 11.1,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       3,
+       1.733,
+       0.614
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      1,
+      1,
+      1
+     ]
+    },
+    "mods": [
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "OrientationAxisLock",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife"
+    ]
+   },
+   {
+    "emitter": "Sparks_main",
+    "mat": "MI_EFX_Sparks_Sparkler_4x4_01",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0,
+    "bursts": 0,
+    "size": {
+     "t": "范围",
+     "min": [
+      30,
+      0,
+      0
+     ],
+     "max": [
+      100,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 53.8,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       10,
+       2.943,
+       0.115
+      ]
+     },
+     "alpha": {
+      "t": "范围",
+      "min": 0.5,
+      "max": 1
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "ColorOverLife",
+     "Lifetime",
+     "LocationPrimitiveSphere",
+     "Rotation",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV",
+     "VelocityCone"
+    ]
+   }
+  ]
+ },
+ {
+  "asset": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+  "rows": [
+   "窜天猴sku_二次加速"
+  ],
+  "emitters": [
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_Glow_43",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       3,
+       1.094,
+       0.14
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 3
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "ParameterDynamic",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Tou_Sparks_B",
+    "mat": "MI_EFX_Spark_16_NoCameraDepthFade",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      50,
+      25,
+      25
+     ],
+     "max": [
+      50,
+      25,
+      25
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 0.0,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Size",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Trail_B",
+    "mat": "MI_EFX_Sparks_Flicker_8x8_01",
+    "align": "PSA_Velocity",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 45,
+    "size": {
+     "t": "范围",
+     "min": [
+      4,
+      6,
+      25
+     ],
+     "max": [
+      6,
+      12,
+      25
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 20.0,
+    "color": {
+     "how": "ColorOverLife + Initial",
+     "color": {
+      "t": "曲线",
+      "v": [
+       50,
+       20.999,
+       4.35
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "CollisionGPU",
+     "Color",
+     "ColorOverLife",
+     "Lifetime",
+     "LocationEmitter",
+     "LocationPrimitiveSphere",
+     "Size",
+     "SizeMultiplyLife",
+     "VectorFieldLocal",
+     "WindDirectionalSource"
+    ]
+   },
+   {
+    "emitter": "Sparks_loop",
+    "mat": "MI_EFX_Spark_15",
+    "align": "PSA_Velocity",
+    "type": "Gpu",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 30,
+    "size": {
+     "t": "范围",
+     "min": [
+      4,
+      2,
+      0
+     ],
+     "max": [
+      8,
+      4,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 33.3,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "范围",
+      "min": [
+       50,
+       18.858,
+       3.987
+      ],
+      "max": [
+       100,
+       0,
+       0
+      ],
+      "lock": null
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 4
+     }
+    },
+    "colorScale": {
+     "t": "常量",
+     "v": [
+      50,
+      50,
+      50
+     ]
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "CollisionGPU",
+     "ColorOverLife",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "Size",
+     "SizeMultiplyLife",
+     "SizeScaleBySpeed",
+     "VectorFieldLocal",
+     "VelocityCone",
+     "WindDirectionalSource"
+    ]
+   },
+   {
+    "emitter": "QD1",
+    "mat": "MI_EFX_Sparks_Streak_8x1_02",
+    "align": "PSA_Velocity",
+    "type": "Sprite",
+    "sub": [
+     8,
+     1
+    ],
+    "delay": 0,
+    "bursts": 15,
+    "size": {
+     "t": "范围",
+     "min": [
+      0.5,
+      5,
+      0
+     ],
+     "max": [
+      1,
+      10,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 33.3,
+    "color": {
+     "how": "Initial Color",
+     "color": {
+      "t": "常量",
+      "v": [
+       1,
+       1,
+       1
+      ]
+     },
+     "alpha": {
+      "t": "常量",
+      "v": 1
+     }
+    },
+    "colorScale": {
+     "t": "曲线",
+     "v": [
+      500,
+      231.728,
+      71.845
+     ],
+     "n": 2
+    },
+    "mods": [
+     "AccelerationConstant",
+     "AccelerationDrag",
+     "Color",
+     "ColorScaleOverLife",
+     "Lifetime",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife",
+     "SizeScaleBySpeed",
+     "SubUV",
+     "VelocityCone"
+    ]
+   },
+   {
+    "emitter": "Particle Emitter",
+    "mat": "MI_EFX_Spark_03_dissolve1",
+    "align": "PSA_Rectangle",
+    "type": "Sprite",
+    "sub": [
+     1,
+     1
+    ],
+    "delay": 0,
+    "bursts": 3,
+    "size": {
+     "t": "常量",
+     "v": [
+      50,
+      100,
+      0
+     ],
+     "module": "Size"
+    },
+    "sizeSpread%": null,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       10,
+       1.294,
+       0
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "OrientationAxisLock",
+     "ParameterDynamic",
+     "PivotOffset",
+     "Size",
+     "SizeMultiplyLife",
+     "SubUV"
+    ]
+   },
+   {
+    "emitter": "Particle Emitter",
+    "mat": "M_EFX_Explosion_Glow_01",
+    "align": "PSA_Square",
+    "type": "Sprite",
+    "sub": [
+     4,
+     4
+    ],
+    "delay": 0,
+    "bursts": 1,
+    "size": {
+     "t": "范围",
+     "min": [
+      36,
+      0,
+      0
+     ],
+     "max": [
+      42,
+      0,
+      0
+     ],
+     "lock": null,
+     "module": "Size"
+    },
+    "sizeSpread%": 7.7,
+    "color": {
+     "how": "ColorOverLife",
+     "color": {
+      "t": "曲线",
+      "v": [
+       5,
+       2.124,
+       0.212
+      ],
+      "n": 2
+     },
+     "alpha": {
+      "t": "曲线",
+      "n": 2
+     }
+    },
+    "colorScale": null,
+    "mods": [
+     "ColorOverLife",
+     "Lifetime",
+     "Light",
+     "Size",
+     "SubUV"
+    ]
+   }
+  ]
+ }
+]
