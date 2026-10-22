@@ -1,0 +1,234 @@
+{
+ "by": "跨年秀（22）2026-10-22",
+ "user": "「OK，现在的day不改编排，只把位置修复」（10-22 21:48）",
+ "input": "FXtools/节目/NewYearFireWorks_Day/NewYearFireWorks_Day-Day调试版-NPC试放.dfshow",
+ "projectVersion": [
+  12,
+  13
+ ],
+ "fixedSubTemplates": 28,
+ "movedM": {
+  "min": 1.474475,
+  "max": 16.61695
+ },
+ "fixed": [
+  {
+   "sub": "NYR03_GoldCrackle@1",
+   "roll": -0.545184,
+   "yWasCm": 142.793712,
+   "yNowCm": -142.793712,
+   "movedM": 2.855874
+  },
+  {
+   "sub": "NYR03_SilverChry@1",
+   "roll": 1.776514,
+   "yWasCm": -465.234144,
+   "yNowCm": 465.234144,
+   "movedM": 9.304683
+  },
+  {
+   "sub": "NYR03_Crackle@1",
+   "roll": -0.281473,
+   "yWasCm": 73.723769,
+   "yNowCm": -73.723769,
+   "movedM": 1.474475
+  },
+  {
+   "sub": "NYR03_Lime@1",
+   "roll": 0.878468,
+   "yWasCm": -230.081376,
+   "yNowCm": 230.081376,
+   "movedM": 4.601628
+  },
+  {
+   "sub": "NYR03_OrangeGlitter@1",
+   "roll": 1.698771,
+   "yWasCm": -444.880881,
+   "yNowCm": 444.880881,
+   "movedM": 8.897618
+  },
+  {
+   "sub": "NYR03_Strobe@1",
+   "roll": -1.877422,
+   "yWasCm": 491.650764,
+   "yNowCm": -491.650764,
+   "movedM": 9.833015
+  },
+  {
+   "sub": "NYR03_GreenPeony@1",
+   "roll": -1.814506,
+   "yWasCm": 665.292763,
+   "yNowCm": -665.292763,
+   "movedM": 13.305855
+  },
+  {
+   "sub": "NYR03_GoldSpark@1",
+   "roll": 0.322043,
+   "yWasCm": -118.096918,
+   "yNowCm": 118.096918,
+   "movedM": 2.361938
+  },
+  {
+   "sub": "NYR03_PrismWheels@1",
+   "roll": 0.4582,
+   "yWasCm": -168.026369,
+   "yNowCm": 168.026369,
+   "movedM": 3.360527
+  },
+  {
+   "sub": "NYR03_GoldChry@1",
+   "roll": -1.383405,
+   "yWasCm": 507.264103,
+   "yNowCm": -507.264103,
+   "movedM": 10.145282
+  },
+  {
+   "sub": "NYR03_GoldCoreLime@1",
+   "roll": 0.588842,
+   "yWasCm": -215.932554,
+   "yNowCm": 215.932554,
+   "movedM": 4.318651
+  },
+  {
+   "sub": "NYR03_GoldRayChry@1",
+   "roll": 0.608838,
+   "yWasCm": -223.264958,
+   "yNowCm": 223.264958,
+   "movedM": 4.465299
+  },
+  {
+   "sub": "NYR03_MultiLayerChry@1",
+   "roll": -1.441914,
+   "yWasCm": 528.713626,
+   "yNowCm": -528.713626,
+   "movedM": 10.574273
+  },
+  {
+   "sub": "NYR03_GoldKamuro@1",
+   "roll": -0.382872,
+   "yWasCm": 220.63691,
+   "yNowCm": -220.63691,
+   "movedM": 4.412738
+  },
+  {
+   "sub": "NYR03_SilverStrobeChry@1",
+   "roll": -0.643888,
+   "yWasCm": 371.047049,
+   "yNowCm": -371.047049,
+   "movedM": 7.420941
+  },
+  {
+   "sub": "NYR03_GoldRayChry_L230@1",
+   "roll": 0.608838,
+   "yWasCm": -350.84991,
+   "yNowCm": 350.84991,
+   "movedM": 7.016998
+  },
+  {
+   "sub": "NYR03_GoldCoreLime_L230@1",
+   "roll": 0.588842,
+   "yWasCm": -339.327397,
+   "yNowCm": 339.327397,
+   "movedM": 6.786548
+  },
+  {
+   "sub": "NYR03_MultiLayerChry_L230@1",
+   "roll": -1.441914,
+   "yWasCm": 830.847481,
+   "yNowCm": -830.847481,
+   "movedM": 16.61695
+  },
+  {
+   "sub": "NYR03_GoldKamuro_H280@1",
+   "roll": -0.382872,
+   "yWasCm": 220.63691,
+   "yNowCm": -220.63691,
+   "movedM": 4.412738
+  },
+  {
+   "sub": "NYB05_Glitter_M144@1",
+   "roll": 1.698771,
+   "yWasCm": -622.87112,
+   "yNowCm": 622.87112,
+   "movedM": 12.457422
+  },
+  {
+   "sub": "NYR03_SilverChry_K092@1",
+   "roll": 1.776514,
+   "yWasCm": -465.234144,
+   "yNowCm": 465.234144,
+   "movedM": 9.304683
+  },
+  {
+   "sub": "NYR03_Strobe_K092@1",
+   "roll": -1.877422,
+   "yWasCm": 491.650764,
+   "yNowCm": -491.650764,
+   "movedM": 9.833015
+  },
+  {
+   "sub": "NYR03_SilverChry_K108@1",
+   "roll": 1.776514,
+   "yWasCm": -465.234144,
+   "yNowCm": 465.234144,
+   "movedM": 9.304683
+  },
+  {
+   "sub": "NYR03_Strobe_K108@1",
+   "roll": -1.877422,
+   "yWasCm": 491.650764,
+   "yNowCm": -491.650764,
+   "movedM": 9.833015
+  },
+  {
+   "sub": "NYB04_XS1_SC_a@1",
+   "roll": -4.6,
+   "yWasCm": 497.393729,
+   "yNowCm": -497.393729,
+   "movedM": 9.947875
+  },
+  {
+   "sub": "NYB04_XS1_SC_a_M@1",
+   "roll": -4.6,
+   "yWasCm": 497.393729,
+   "yNowCm": -497.393729,
+   "movedM": 9.947875
+  },
+  {
+   "sub": "NYB02_BeamS1_SC_a@1",
+   "roll": -4.6,
+   "yWasCm": 310.16934,
+   "yNowCm": -310.16934,
+   "movedM": 6.203387
+  },
+  {
+   "sub": "NYB02_BeamS1_SC_b@1",
+   "roll": 5.8,
+   "yWasCm": -357.335067,
+   "yNowCm": 357.335067,
+   "movedM": 7.146701
+  }
+ ],
+ "tables": {
+  "三表-Day调试版-NPC试放-high.json": {
+   "events": 166,
+   "yChanged": 35,
+   "otherDiffs": 0
+  },
+  "三表-Day调试版-NPC试放-medium.json": {
+   "events": 162,
+   "yChanged": 33,
+   "otherDiffs": 0
+  },
+  "三表-Day调试版-NPC试放-low.json": {
+   "events": 144,
+   "yChanged": 29,
+   "otherDiffs": 0
+  },
+  "导演表-Day调试版-NPC试放-一张表.json": {
+   "events": 228,
+   "yChanged": 66,
+   "otherDiffs": 0
+  }
+ }
+}

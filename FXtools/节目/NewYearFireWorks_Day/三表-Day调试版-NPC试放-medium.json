@@ -527,7 +527,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
+            "Y": 465.234144,
             "Z": 14831.327095
           },
           "RotationOffset": {
@@ -600,7 +600,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -444.880881,
+            "Y": 444.880881,
             "Z": 15168.26275
           },
           "RotationOffset": {
@@ -673,7 +673,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
+            "Y": 465.234144,
             "Z": 14831.327095
           },
           "RotationOffset": {
@@ -746,7 +746,7 @@
           "LocalTimeOffset": 1.6875,
           "PositionOffset": {
             "X": 0,
-            "Y": 497.393729,
+            "Y": -497.393729,
             "Z": 6182.022604
           },
           "RotationOffset": {
@@ -994,7 +994,7 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -223.264958,
+            "Y": 223.264958,
             "Z": 20941.726219
           },
           "RotationOffset": {
@@ -1519,7 +1519,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -444.880881,
+            "Y": 444.880881,
             "Z": 16168.26275
           },
           "RotationOffset": {
@@ -1592,7 +1592,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
+            "Y": 465.234144,
             "Z": 16831.327095
           },
           "RotationOffset": {
@@ -1665,7 +1665,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -444.880881,
+            "Y": 444.880881,
             "Z": 17168.26275
           },
           "RotationOffset": {
@@ -1738,7 +1738,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 73.723769,
+            "Y": -73.723769,
             "Z": 17761.448713
           },
           "RotationOffset": {
@@ -1811,7 +1811,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 73.723769,
+            "Y": -73.723769,
             "Z": 15761.448713
           },
           "RotationOffset": {
@@ -1884,7 +1884,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
+            "Y": 465.234144,
             "Z": 15831.327095
           },
           "RotationOffset": {
@@ -1957,7 +1957,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 73.723769,
+            "Y": -73.723769,
             "Z": 16761.448713
           },
           "RotationOffset": {
@@ -2030,7 +2030,7 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -465.234144,
+            "Y": 465.234144,
             "Z": 17831.327095
           },
           "RotationOffset": {
