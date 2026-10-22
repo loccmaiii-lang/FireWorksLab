@@ -1157,7 +1157,7 @@
         "路径": "F:/FireWorksLab/analysis/local/MW2_AUDIT_20261016",
         "分支": "audit/jinwillow4-ue-20261016 @ c6e5e687（已在 origin/main）",
         "动作": "已备份，没删：git worktree remove 要 --force，本次权限没放行",
-        "独有内容": "没跟踪的 259 个文件 211.8 MB（QUALITY_REPEAT_1725 排查证据，含 交接.md 提到但从没进 Git 的 排查结论与修复.md）",
+        "独有内容": "没跟踪的 259 个文件 211.8 MB：QUALITY_REPEAT_1725 / UE_v2_verify 的原始对比截图、日志、读回（过程证据）。更正：排查结论与修复.md、2 张关键图、关键 json 共 24 个文件早已在 Git（a7c5c2b1、280b3ac5），之前说「从没进 Git」是错的",
         "备份": "analysis/local/归档_旧副本_20261022/MW2_AUDIT_20261016/（sha256 一致）",
         "省空间": "用户点头后 remove 可省约 253 MB"
       },
