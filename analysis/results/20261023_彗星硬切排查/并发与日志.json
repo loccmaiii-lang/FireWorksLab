@@ -1,0 +1,324 @@
+{
+ "note": "寿命按发射器 延迟+max(时长, 粒子寿命) 估算（下限）；同一 ResourceId 同时在场数",
+ "night_B11r3_PC_high": [
+  {
+   "id": "P_EFX_FireWorks_FanSilver_01",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "plays": 1328,
+   "lifeS": 6.93,
+   "peakAlive": 158,
+   "atS": 53.3,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": true
+  },
+  {
+   "id": "P_EFX_FireWorks_FanComet_01",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "plays": 1909,
+   "lifeS": 3.78,
+   "peakAlive": 144,
+   "atS": 99.54,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": true
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "plays": 476,
+   "lifeS": 2.82,
+   "peakAlive": 37,
+   "atS": 74.34,
+   "MaxInstanceNum": 20,
+   "bLimitByMaxInstanceNum": "True",
+   "over": true
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Medium",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "plays": 218,
+   "lifeS": 6.83,
+   "peakAlive": 18,
+   "atS": 24.6,
+   "MaxInstanceNum": 20,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Small",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "plays": 203,
+   "lifeS": 4.2,
+   "peakAlive": 17,
+   "atS": 21.0,
+   "MaxInstanceNum": 20,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_SilverChry",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "plays": 93,
+   "lifeS": 3.2,
+   "peakAlive": 9,
+   "atS": 24.477,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_GoldRayChry",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "plays": 42,
+   "lifeS": 4.73,
+   "peakAlive": 9,
+   "atS": 16.577,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_Glitter",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "plays": 62,
+   "lifeS": 3,
+   "peakAlive": 8,
+   "atS": 29.754,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_Crackle",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "plays": 17,
+   "lifeS": 2.63,
+   "peakAlive": 8,
+   "atS": 58.854,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_Strobe",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "plays": 16,
+   "lifeS": 2.4,
+   "peakAlive": 8,
+   "atS": 23.954,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_LittleSilver",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "plays": 74,
+   "lifeS": 3,
+   "peakAlive": 7,
+   "atS": 26.188,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  }
+ ],
+ "day_director_PC_unsaved_20261023": [
+  {
+   "id": "P_EFX_FireWorks_FanSilver_01",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "plays": 65,
+   "lifeS": 6.93,
+   "peakAlive": 35,
+   "atS": 25.1,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": true
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Small",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "plays": 58,
+   "lifeS": 4.2,
+   "peakAlive": 20,
+   "atS": 18.4,
+   "MaxInstanceNum": 20,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_FanComet_01",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "plays": 19,
+   "lifeS": 3.78,
+   "peakAlive": 10,
+   "atS": 23.5,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_SilverChry",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "plays": 20,
+   "lifeS": 3.2,
+   "peakAlive": 9,
+   "atS": 21.354,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_Strobe",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "plays": 27,
+   "lifeS": 2.4,
+   "peakAlive": 9,
+   "atS": 21.354,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "plays": 18,
+   "lifeS": 2.82,
+   "peakAlive": 8,
+   "atS": 31.25,
+   "MaxInstanceNum": 20,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_Glitter",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "plays": 8,
+   "lifeS": 3,
+   "peakAlive": 3,
+   "atS": 16.354,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_LittleCombo",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "plays": 3,
+   "lifeS": 1.8,
+   "peakAlive": 3,
+   "atS": 20.987,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_LittleSilver",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "plays": 3,
+   "lifeS": 3,
+   "peakAlive": 3,
+   "atS": 20.987,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Medium",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "plays": 2,
+   "lifeS": 6.83,
+   "peakAlive": 2,
+   "atS": 23.5,
+   "MaxInstanceNum": 20,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_Crackle",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "plays": 4,
+   "lifeS": 2.63,
+   "peakAlive": 2,
+   "atS": 29.554,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  },
+  {
+   "id": "P_EFX_FireWorks_GoldRayChry",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "plays": 1,
+   "lifeS": 4.73,
+   "peakAlive": 1,
+   "atS": 27.877,
+   "MaxInstanceNum": 10,
+   "bLimitByMaxInstanceNum": "True",
+   "over": false
+  }
+ ],
+ "logKills_unique": [
+  {
+   "session": "2026.10.20 00h",
+   "id": "P_Bullet_Point_1P_Base_AK",
+   "limit": "MaxInstanceNum (10)",
+   "n": 1
+  },
+  {
+   "session": "2026.10.20 10h",
+   "id": "P_Bullet_Point_1P_Base_AK",
+   "limit": "MaxInstanceNum (10)",
+   "n": 8
+  },
+  {
+   "session": "2026.10.20 23h",
+   "id": "Impact_Generic_Med",
+   "limit": "MaxInstanceNum (10)",
+   "n": 2
+  },
+  {
+   "session": "2026.10.21 11h",
+   "id": "P_EFX_FireWorks_FanComet_01",
+   "limit": "MaxInstanceNum (10)",
+   "n": 511
+  },
+  {
+   "session": "2026.10.21 11h",
+   "id": "P_EFX_FireWorks_FanSilver_01",
+   "limit": "MaxInstanceNum (10)",
+   "n": 85
+  },
+  {
+   "session": "2026.10.21 11h",
+   "id": "P_EFX_FireWorks_GreenPeony",
+   "limit": "MaxInstanceNum (10)",
+   "n": 2
+  },
+  {
+   "session": "2026.10.21 11h",
+   "id": "P_EFX_FireWorks_LittleCrackle",
+   "limit": "MaxInstanceNum (10)",
+   "n": 6
+  },
+  {
+   "session": "2026.10.21 11h",
+   "id": "P_EFX_FireWorks_LittleGold",
+   "limit": "MaxInstanceNum (10)",
+   "n": 2
+  },
+  {
+   "session": "2026.10.21 11h",
+   "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "limit": "MaxInstanceNum (20)",
+   "n": 9
+  },
+  {
+   "session": "2026.10.22 15h",
+   "id": "P_Bullet_Point_1P_Base_AK",
+   "limit": "MaxInstanceNum (10)",
+   "n": 1
+  }
+ ],
+ "logLine": "LogGPVfx: <FXResource> UFXResourceContainerComponent::AddParticle() Component Inst: …, fx resource id: P_EFX_FireWorks_FanComet_01, HandleIndex: 647, will be deactivated beacause of FXLimit: MaxInstanceNum (10).",
+ "pieSession": "2026-10-21 11:17–11:21 PIE，BP_NewYearFireworks_ShowDirector_Night_2，NetMode=Client Platform=PC Quality=High"
+}

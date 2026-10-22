@@ -168,11 +168,11 @@
 > 金垂柳先不要覆盖，先处理好命名和目录放着，明天再处理，你先处理PC和手游的粒子效果，目标要到交付水准，同时你帮我再看看还有哪些规范设置是漏设置了的，譬如每个主序列的significance的重要度有没有勾选Dissblewheninsignficant,不勾选可能会被裁切掉；交付之前全部走查一遍还有没有其它规范需要设置的，漏了就帮我补上；弄完了之后，就帮我找一个bug，我的comet效果，在播放编排的时候，有一段大量播放的时候，会没播完就硬切掉了；但是有时是在PIE才好复现，你可以尝试帮我看看是不是导演或者还是我的文件设置问题，如果能找到原因就找，找不到就先放着，引擎崩了你自己重启；明早我要看到所有手游PC粒子设置好，有漏了或者没做的内容记得与我补充说明
 
 拆解（按优先级）：
-- [ ] A 金垂柳 v3：沙盒资产按位置表改名搬到正确目录，不覆盖正式资产（粒子起临时名 `_V3`），明天合入。
-- [ ] B 规范走查（只读，PC + 手游 3.0 全部粒子）：significance / bDisableWhenInsignficant / InsignificantReaction / MaxSignificanceLevel / SecondsBeforeInactive / 包围盒 / LOD / 发射器预算 / GPU / 贴图（NeverStream、DistantVFX、主序列 NoMip、Ramp Clamp+NoMip、手游 ≤1024、手游链无 Effects_HD）/ 表行。
+- [x] A 金垂柳 v3：沙盒资产按位置表改名搬到正确目录，不覆盖正式资产（粒子起临时名 `_V3`），明天合入。→ 7 个资产已搬（P4 标记 add，未提交）；`PS_MW_B_L3_CopySeed` 留在沙盒。
+- [x] B 规范走查（只读，PC + 手游 3.0 全部粒子）：significance / bDisableWhenInsignficant / InsignificantReaction / MaxSignificanceLevel / SecondsBeforeInactive / 包围盒 / LOD / 发射器预算 / GPU / 贴图（NeverStream、DistantVFX、主序列 NoMip、Ramp Clamp+NoMip、手游 ≤1024、手游链无 Effects_HD）/ 表行。→ `audit_findings.json`（本机）：105 个发射器勾了 bDisableWhenInsignficant，30 个发射器重要度 Medium，贴图 4 张不合规，手游 2 张 2048 图没限尺寸，SkyRocketSprint_M 4 个发射器。
 - [ ] C 补漏（规范明确的直接补；有取舍的列出来）。
 - [ ] D PC 提亮 + 爆发 + 随机（方案 v2，只改粒子）；`_H` 同步 PC。
-- [ ] E 彗星硬切排查（导演 / 表 MaxInstanceNum / significance / SecondsBeforeInactive / 包围盒），能找到就找。
+- [x] E 彗星硬切排查（导演 / 表 MaxInstanceNum / significance / SecondsBeforeInactive / 包围盒），能找到就找。→ **找到**：资源表 `MaxInstanceNum 10` + `bLimitByMaxInstanceNum True`，FX 管理器把最早的同 ID 实例强制停掉；10-21 夜场 PIE 日志「will be deactivated beacause of FXLimit: MaxInstanceNum (10)」红彗星 ≥511 次；夜场 PC 高配彗星同时在场 144、银星扇 158。没改表（要你定），见 `analysis/results/20261023_彗星硬切排查/看法.md`。
 - [ ] F 最终走查 + 清单（做了 / 漏了 / 没做）。
 
 已核实（引擎 DLL 属性说明原文）：`bDisableWhenInsignficant`「When true, emitters deemed insignificant will have their tick and render disabled Instantly. When false they will simple stop spawning new particles.」→ 勾上才会立即硬切，不勾只停生成；用户说法相反，记为误区。另有系统级 `InsignificantReaction`（Auto / Complete / DisableTick / DisableTickAndKill）、`InsignificanceDelay`、`MaxSignificanceLevel`，以及 `SecondsBeforeInactive`。
