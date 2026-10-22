@@ -75,7 +75,13 @@
 拆解：
 
 - [x] 网格垂柳UEv3 19:36 已释放 UE；手游编辑器（`-inifeature=Mobile`，FXLookDevLevel）在线；状态清单认领 UE。
-- [ ] 设计对照：同机位、同一时刻，LiteHDR 0 / 1 × 现值 / 候选，参照 PC `_HD`（用户认可的样子）。
+- [x] 设计对照（脚本 `analysis/local/20261022_LiteHDR_批量修正/`：`hdr_ue.py` UE 侧、`grid.mjs` 网格、`analyze.py` 打分）：
+  - 每个效果在 FXLookDevLevel 高空同一点（300 m）放 `_H` / `_M`，正后方临时黑挡板（`FWLHDR_` 前缀，不存图）模拟夜空，机位按取景截图自动算（占画面约 70%，仰 12°）；同机位、同时刻（0.15T、0.4T）。
+  - `_H` 在 LiteHDR 0 下拍 现值 + c{1,2,3}×a{1,2,4}；`_M` 在 LiteHDR 1 下拍 现值 + c{1,1.5,2,3}×a{2,4,6,8}。c = 每个发射器颜色总倍增目标 min(现总倍增×c, 3)（只改 ColorScaleOverLife 的 RGB），a = alpha 倍数（AlphaScaleOverLife；金垂柳用 StartAlpha）。只改内存，跑完还原磁盘原值。
+  - 打分：减背景后烟花像素的亮度 E、饱和度 S、发白比例 W、色相；`_H` 取「S ≥ 现值 90%、W ≤ 现值 +5%」里最亮的，`_M` 取跟选中 `_H` 最像的。
+  - PC `_HD` 在手游编辑器里不渲染，没法当参照；FXLookDevLevel 是白天，故用黑挡板。
+  - 踩坑（都已绕开）：`FX.FreezeParticleSimulation` 是切换命令、参数无效（已不用，确认现在不冻结）；同一会话里截图间隔太近（< 0.8 s）后编辑器世界不再 tick 粒子、新摆的也不渲染——改成一个会话一张截图；改值后重建资产会让常驻发射器提前开播——改成每轮现摆。
+  - LittleCombo 试跑：`_H` 现值 E 2.9 → c3a4 E 10.7、S 0.50 → 0.55；`_M` 现值在 LiteHDR 下 E 0.83、W 0.82（又暗又白），提 c 往黄白偏、提 a 保得住橙色——和用户经验一致。
 - [ ] 出方案：`_H`（不开 LiteHDR）调亮；`_M`（开 LiteHDR）颜色倍增 ≤ 3、亮度走 alpha。
 - [x] 复制 `_H`、改表（`analysis/local/20261022_LiteHDR_批量修正/dup_h.mjs`）：18 个 3.0 效果 `_M` → `_H`（保存、P4 标记添加），手游表 18 行 FxSP_High 改指 `_H`（迁出、保存）；verify：`_H` 与 `_M` 发射器 / 材质一致，表这 18 行其它字段没动。没提交 P4。
   - `SkyRocketSparkler_H` 早就有、表没用它，这次没动，留着给用户定。窜天猴 sku 另外 4 行本来就分了 `_L` / `_H`，没复制。
