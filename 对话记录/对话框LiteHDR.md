@@ -104,3 +104,20 @@
 - 风险：alpha 提高后半透明更遮挡后面的东西——白天天空下点灭星 `_M` 亮点外有暗边；烟花前后叠加没测。
 
 材质核对（10-15 快照）：烟花父材质 Emissive = (AddColor + MultiColor × 贴图) × 粒子颜色 RGB，Opacity = 粒子 alpha × Alpha × 溶解 / 深度渐隐，混合 Translucent。LiteHDR 在混合前压缩颜色（`c/(1+c)` 一类），半透明混合在压缩值上做，亮色一被 alpha 混就被压灰 → 用户说的「倍增 ≤ 3、亮度走 alpha」和着色器一致（推断，待对照截图证实）。
+
+## 2026-10-22 23:1x · 颜色 / 大小随机；_H 自发光照 PC
+
+用户原话：
+
+> 我还想对所有的效果做一定的颜色与大小随机，现在烟花播放的时候，都太统一了了，随机不要太大，但要有
+
+用户选：3.0 手游 _H/_M；加出生定色模块；大小 ±8%、颜色 ±8%。
+
+> 你现在的所有_H的alpha都x4了，但是_H的自发光可以和PC（我PC的大小与颜色随机也没做好）一直的设置的，具体你可以看看这个案例的_H与_M“ParticleSystem'/Game/Commerical/CharAppear/Storm_hc/Effect/Particle/Inspect/P_EFX_Storm_hc_Inspect_01_One_Start_v03_H.P_EFX_Storm_hc_Inspect_01_One_Start_v03_H'”
+
+- [x] 读案例（只读）：`_H` 用和 PC 一样的高倍增（ColorScale 曲线到 122、光效层 100），alpha 不放大；`_M` 另一套（饱和底色 × 较低 ColorScale × 0.5、`_LHDR` 材质实例 AddColor 0.35、删光效 / 闪光层）。
+- [x] 读 PC `_HD`（只读，`analysis/local/20261022_LiteHDR_批量修正/pc.json`）：PC 颜色倍增 ×1–×100、alpha 全 1；PC / 手游材质实例 EmissiveIntensity 相同（5 / 10）→ `_H` 照抄 PC 粒子值即自发光一致。PC 部分已有大小随机（范围参差），没有颜色随机。
+- [x] 发现：上一轮写的 35 包已不在迁出状态、磁盘 = 我保存的版本 → 判断用户已提交 P4；这轮写之前要重新迁出。
+- [ ] `_H` 颜色倍增 / alpha 改成 PC 值（去掉 alpha ×4）；`_M` 保持 LiteHDR 调的值。
+- [ ] 两档加随机：方形开花主发射器出生大小 ±8%（锁宽高同比例）；主发射器加 Initial Color（原色 × U[0.92,1.08] 逐通道）接管恒定的 ColorOverLife；金垂柳改现有 Initial Color、大小加宽到 ±8%；点灭星大小加宽到 ±8%。尾缀 / 红彗星 / 银星扇不加大小随机；闪光层、星头不动。
+- [ ] 保存后重拍：同一档拍 3 次看随机，`_H` 新值 vs 现值。
