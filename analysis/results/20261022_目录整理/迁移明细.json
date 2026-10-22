@@ -1,0 +1,89 @@
+{
+  "说明": "目录整理第 2 阶段（2026-10-22，本机 Claude Code）迁移明细。每类一个提交；大小单位字节。提示词 协作/提示词/目录整理第2阶段_2026-10-22.md。",
+  "A_根目录散东西": {
+    "提交": null,
+    "条目": [
+      {
+        "原路径": "design-qa.md",
+        "新路径": "docs/design-qa.md",
+        "大小": 5002,
+        "跟踪": true,
+        "动作": "git mv",
+        "理由": "根目录散文件：烘焙器 4.3.7 参数分组定位 QA 报告（对话框16，10-04）",
+        "引用检查": "脚本 0 处（同步体检.py 根目录白名单里有名字，已同步去掉）；文档：tool/CHANGELOG.md 1528/1541 两行已改成 docs/design-qa.md、仓库梳理.md 已改；对话记录/对话框16.md、docs/superpowers/plans/* 是历史记录不改；其余 design-qa.md 指 experiments/参数交互稿/、协作/设计稿/ 下同名文件，不相关"
+      },
+      {
+        "原路径": "research/python/",
+        "新路径": "docs/research/python/",
+        "大小": 25985,
+        "跟踪": true,
+        "动作": "git mv",
+        "理由": "根目录杂目录：1.x 最早的 Python 离线渲染实验（kiku_recon / kiku_render / kiku_timemap）",
+        "引用检查": "外部脚本 0 处（三个文件互相 import，靠 __file__ 定位同目录，一起挪不受影响；输出写 cwd 相对路径）；文档：仓库梳理.md 已改；同步体检.py 白名单去掉 research"
+      },
+      {
+        "原路径": "samples/",
+        "新路径": null,
+        "大小": 4829841,
+        "跟踪": true,
+        "动作": "不动",
+        "理由": "被脚本引用",
+        "引用检查": "analysis/scripts/rise_trail.py:314、rise_trail_video.py:251、rise_trail_compare.py:10 把 ROOT/samples 当默认输出目录；挪走会被这三个脚本重新建出来"
+      },
+      {
+        "原路径": "outputs/GlitterChry对比_20261017/",
+        "新路径": "analysis/local/20261017_outputs_旧备份/GlitterChry对比_20261017/",
+        "大小": 1286554,
+        "跟踪": false,
+        "动作": "mv（本机，不进 Git）",
+        "理由": "WorkBuddy 10-17 GlitterChry 清晰度 3 张同屏图（过程证据）",
+        "引用检查": "脚本 0 处；协作/状态清单.json 共享文件「GlitterChry清晰度（WorkBuddy）」文字写的是旧位置（状态清单不动，新位置写在 说明.txt 和 outputs/搬走说明.txt）；逐文件 sha256 前后一致"
+      },
+      {
+        "原路径": "outputs/画质五图_20261017/",
+        "新路径": "analysis/local/20261017_outputs_旧备份/画质五图_20261017/",
+        "大小": 2697238,
+        "跟踪": false,
+        "动作": "mv（本机，不进 Git）",
+        "理由": "WorkBuddy 10-17 画质复核五图（过程证据）",
+        "引用检查": "脚本 0 处；协作/状态清单.json 共享文件「画质复核五图（WorkBuddy）」文字写的是旧位置（同上）；逐文件 sha256 前后一致"
+      },
+      {
+        "原路径": "outputs/金曜菊B闪烁试配_20261017/",
+        "新路径": null,
+        "大小": 89540582,
+        "跟踪": false,
+        "动作": "不动",
+        "理由": "被脚本引用",
+        "引用检查": "analysis/scripts/金曜菊B闪烁试配/check.py:9、deliver.py:7、deploy_preview.py:20、verify.mjs:13 写死 F:/FireWorksLab/outputs/金曜菊B闪烁试配_20261017"
+      }
+    ],
+    "用户未跟踪文件（不动）": [
+      {
+        "路径": "TClaude.bat",
+        "大小": 826,
+        "处理": "不动，问用户"
+      },
+      {
+        "路径": "local_notes_ue_interface.md",
+        "大小": 4111,
+        "处理": "不动，问用户"
+      },
+      {
+        "路径": "点灭星_Cascade参数.txt",
+        "大小": 10549,
+        "处理": "不动，问用户"
+      },
+      {
+        "路径": "MyTepelate/",
+        "大小": 0,
+        "处理": "不动，问用户"
+      },
+      {
+        "路径": ".workbuddy/",
+        "大小": null,
+        "处理": "不动，问用户"
+      }
+    ]
+  }
+}

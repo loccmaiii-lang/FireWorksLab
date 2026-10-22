@@ -27,9 +27,9 @@ def git(*a, check=False):
     return r.stdout.strip()
 
 
-# 根目录白名单（2026-10-22 现状）：跟踪的 + 已知本机未跟踪的。新加根目录项先想清楚放哪（见 仓库梳理.md），确需放根目录再加到这里。
+# 根目录白名单（2026-10-22 现状；design-qa.md、research/ 已挪进 docs/）：跟踪的 + 已知本机未跟踪的。新加根目录项先想清楚放哪（见 仓库梳理.md），确需放根目录再加到这里。
 ROOT_OK = {'.claude', '.git', '.gitattributes', '.githooks', '.github', '.gitignore', 'AGENTS.md', 'CLAUDE.md', 'FXtools', 'README.md',
-           'analysis', 'design-qa.md', 'docs', 'experiments', 'research', 'samples', 'spec', 'tool', 'vidio', '交接.md', '仓库梳理.md',
+           'analysis', 'docs', 'experiments', 'samples', 'spec', 'tool', 'vidio', '交接.md', '仓库梳理.md',
            '协作', '对话记录', '归档', '更新记录.md',
            'TClaude.bat', 'local_notes_ue_interface.md', '点灭星_Cascade参数.txt', 'outputs', 'MyTepelate', '.workbuddy', 'node_modules',
            '.vscode', '.idea', 'Thumbs.db', 'desktop.ini'}
