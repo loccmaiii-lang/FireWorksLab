@@ -31,3 +31,25 @@
 先核对目标烟花 `_M` / `_H` 的实际资产、材质实例共享关系和运行路径，再以同机位、同一爆开时刻的 LiteHDR 开 / 关对照测试亮度及颜色。优先验证降低自发光是否能恢复颜色层次，再调整颜色曲线 / Ramp；需独立改值时避免修改共享实例或共享 Ramp 而串改另一档。保留可共用的灰度运动贴图，不凭两张截图增加贴图或层数。
 
 本轮没有修改 UE、P4、烘焙器、导入器、正式效果、默认值或规范；未做 LiteHDR 实机修复与验收。记录提交号见本文件 Git 历史。
+
+## 2026-10-22 18:20 · 批量修正开了 LiteHDR 的资产
+
+用户原话：
+
+> /F:/FireWorksLab/对话记录/对话框LiteHDR.md  这里面有记录，我的目标是让你批量帮我把开了litehdr的资产修正
+
+完成标准：查清哪些手游烟花资产跑在 LiteHDR 档、LiteHDR 发白的机制和可用的修正路线；范围和路线经用户定后，按 dry → 备份 → 写入 → 读回的护栏批量改 UE，记录改了什么、哪些未经实机验证。
+
+- [x] 开工：同步体检、开工包；UE 桥 17780 在线（`Dam_Iris_Long3`，非 PIE）。
+- [x] 只读查引擎着色器：LiteHDR 机制（见下）。
+- [x] 只读列手游 ResourceFX 表烟花行（53 行）与 `/Game/Effects/Props/FireWorks` 资产（137 个）。
+- [ ] 只读爬 `_M` / `_H` / `_L` 粒子颜色模块与材质实例参数，统计亮度来源。
+- [ ] 向用户确认范围与路线。
+- [ ] 按确认的路线批量修正（dry / 备份 / 写入 / 读回）。
+
+### 已核实（只读，本机引擎 `E:/loc_ma5/DFMEditor/Engine/Shaders`）
+
+- `Mobile/J3BasePassOutColorCompose.ush` 第 56 行：每次绘制输出先压成 `c·k.x / (1 + c·k.z)`（`HDRLiteAdjustment`）。加色混合在压缩后的值上相加；`MobileLiteHDRTonemap.usf` 的 `DecodeHDRSceneColor` 是 `1/(1/saturate(C) − 1)`，叠加和到 1 就解成无穷大 → 三通道全满 → 白。单张面片颜色不丢，**多张加色叠加**才发白；越亮、叠得越多越早发白。
+- 门槛 `Common.ush` `IsLiteHDRShaderStage()`：ES3.1 且材质质量档 ≤ 3。控制台变量（Renderer.dll 字符串）：`r.Mobile.OnePassLiteHDR`、`r.HDRLite.Adjustment(Inside/Outside)`、`r.LiteHDRWhenPossible`。项目 Config 未见改这些值。
+- 引擎有材质节点 `LiteHDR Shader Stage Switch`（`IsLiteHDRShaderStage() ? A : B`）和 `LiteHDREnableColorAdjust`；通用父材质 `M_EFX_MainTex` 用法：静态开关 `AdjustLiteHDR` 打开后，LiteHDR 下改用 `MultiColor_LiteHDR`。烟花父材质 `M_EFX_FlipBookSuperPack_FireBase_Unlit`（10-15 快照）没有这套，只有 `MultiColor` / `AddColor` / `EmissiveIntensity` / `EmissiveRampTex`。
+- 手游表现状（10-22 读）：**3.0 烟花各行 FxSP / FxSP_Low / FxSP_High 三格都指同一个 `_M`**（窜天猴 sku 几行例外，有 `_L` / `_H`）；2.0 各行是 `_M` / `_L` / `_H` 三份。所以 3.0 现在没有能单独调的 `_H`，直接改 `_M` 高端机也跟着变。
