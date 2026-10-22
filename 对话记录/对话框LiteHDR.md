@@ -63,3 +63,21 @@
 - 爬到 `P_EFX_FireWorks_SkyRocketSparkler_L` 时，`/object/get` 读 `…:ParticleModuleSize_2.DistributionVectorUniform_0` 触发 UE 断言 `Assertion failed: RequiredModule`（`ParticleComponents.cpp:1796`），调用栈经 GPUECli HTTP。报告：`DFM/Saved/Crashes/UE4CC-Windows-0C88A2CC43B279D8E175E3AD469D4370_0000`。18:39 起有新的 UE 进程，桥 17780 已恢复。这次只是读取，没有写入或保存；但崩溃前编辑器里没保存的东西可能丢了。
 - 更正（18:5x）：`对话记录/对话框网格垂柳UEv3.md` 记载它当时正在脚本重建新 Emitter 的 L3，先写了 LODLevels、新 LOD 还没挂 Required，触发同一断言；我的 `/object/get` 在排队（耗时 53.6 s 后断开）。所以崩溃大概率不是我的读取引起的。但对方 18:28 已登记 UE 单写占用，我仍并发读 UE，不妥：以后别人占用 UE 时我不发任何请求。
 - 已爬到的结果（过程证据 `analysis/local/20261022_LiteHDR_批量修正/summary.json`）：3.0 `_M` 颜色曲线峰值 1–6，ColorScaleOverLife 峰值 1–50（红彗星 50、橙辉菊 30、金垂柳 / 银冠菊 10）；2.0 的 `_M` / `_L` 颜色峰值 300–3000，ColorScale 50–2000。没爬到的：窜天猴 sku 的 Sparkler_M / Sprint / Tail / Smoke、点灭星 Strobe_M、2.0 拖尾、Real、MusicFest、Operation。
+
+## 2026-10-22 19:3x · 用户已切手游编辑器，改方案
+
+用户原话：
+
+> 要开专门的手游编辑器，这个是命令：r.Mobile.OnePassLiteHDR 0/1
+
+> 我切到了手游编辑器，平且用P_EFX_FireWorks_LittleCombo_M开了r.Mobile.OnePassLiteHDR 1复现了效果，现在就是开着得效果，同时以往得经验是，color倍增不能超过3，亮度只能通过alpha，现在不开litehdr，所有效果都偏暗，因为现在默认都没有倍增与scalecolor都为1，比较暗淡所以要_H/_M都需要调亮，你设计比对一下，然后重新设计一套修改方案执行
+
+拆解：
+
+- [x] 网格垂柳UEv3 19:36 已释放 UE；手游编辑器（`-inifeature=Mobile`，FXLookDevLevel）在线；状态清单认领 UE。
+- [ ] 设计对照：同机位、同一时刻，LiteHDR 0 / 1 × 现值 / 候选，参照 PC `_HD`（用户认可的样子）。
+- [ ] 出方案：`_H`（不开 LiteHDR）调亮；`_M`（开 LiteHDR）颜色倍增 ≤ 3、亮度走 alpha。
+- [ ] 复制 `_H`、改表（第 1 步脚本已备好 `dup_h.mjs`，dry 先跑）。
+- [ ] 按方案批量改 `_H` / `_M`：dry / 备份 / 写入 / 读回 / 对照截图。
+
+材质核对（10-15 快照）：烟花父材质 Emissive = (AddColor + MultiColor × 贴图) × 粒子颜色 RGB，Opacity = 粒子 alpha × Alpha × 溶解 / 深度渐隐，混合 Translucent。LiteHDR 在混合前压缩颜色（`c/(1+c)` 一类），半透明混合在压缩值上做，亮色一被 alpha 混就被压灰 → 用户说的「倍增 ≤ 3、亮度走 alpha」和着色器一致（推断，待对照截图证实）。
