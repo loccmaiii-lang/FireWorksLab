@@ -104,7 +104,7 @@ try{
  }
  report.cvars={};
  report.profileShowUI=Number((await call(KSL,'GetConsoleVariableIntValue',{VariableName:'r.ProfileGPU.ShowUI'})).return_value);
- viewTouched=true;await con('r.ProfileGPU.ShowUI 0');
+ if(cfg.profileGPU!==false){viewTouched=true;await con('r.ProfileGPU.ShowUI 0');}
  for(const [name,type] of [['sg.EffectsQuality','Int'],['sg.TextureQuality','Int'],['sg.PostProcessQuality','Int'],['r.ScreenPercentage','Float'],['r.SeparateTranslucencyScreenPercentage','Float'],['r.MaxAnisotropy','Int']])report.cvars[name]=Number((await call(KSL,'GetConsoleVariable'+type+'Value',{VariableName:name})).return_value);
  wanted=cfg.table?JSON.parse(fs.readFileSync(path.resolve(ROOT,cfg.table),'utf8')):before.DefaultConfig;
  if(!KEYS.every(k=>Array.isArray(wanted[k])))throw Error('节目三表不完整');
@@ -147,9 +147,10 @@ try{
   }
   const wallBefore=Date.now();
   const base=path.join(shotDir,`${cfg.label}_${moment.toFixed(1).padStart(6,'0')}`).replaceAll('\\','/');
-  const shot=base+'_lit.png',shotSC=base+'_sc.png';
+  const shot=base+(cfg.shotSuffix||'_lit')+'.png',shotSC=base+'_sc.png';
   // 先 ProfileGPU（Lit 下的一帧，结果只进日志），再 Lit 截图，再 Shader Complexity 截图，最后切回 Lit。
-  const p0=logSize();await con('ProfileGPU');const worldProfile=await clock();
+  // 10-19 08:xx：cfg.profileGPU===false 时只截图（02:13 ProfileGPU 紧接 HighResShot 触发过 D3D12 断言崩溃）。
+  const p0=logSize();if(cfg.profileGPU!==false)await con('ProfileGPU');const worldProfile=await clock();
   await con('HighResShot 1 filename='+shot);
   // 10-19 实测：编辑器视口不吃控制台的 viewmode / ShowFlag.ShaderComplexity（截图仍是 Lit）。cfg.shaderComplexity=true 时只在用户手动把视口切到 Shader Complexity 后用：此时不再发 viewmode，只多截一张。
   if(cfg.shaderComplexity)await con('HighResShot 1 filename='+shotSC);
