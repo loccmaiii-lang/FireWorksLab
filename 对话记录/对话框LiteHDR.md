@@ -43,7 +43,7 @@
 - [x] 开工：同步体检、开工包；UE 桥 17780 在线（`Dam_Iris_Long3`，非 PIE）。
 - [x] 只读查引擎着色器：LiteHDR 机制（见下）。
 - [x] 只读列手游 ResourceFX 表烟花行（53 行）与 `/Game/Effects/Props/FireWorks` 资产（137 个）。
-- [ ] 只读爬 `_M` / `_H` / `_L` 粒子颜色模块与材质实例参数，统计亮度来源。
+- [x] 只读爬 `_M` / `_H` / `_L` 粒子颜色模块（爬到 81 / 129 个时 UE 崩溃，见下；材质实例参数未读）。
 - [ ] 向用户确认范围与路线。
 - [ ] 按确认的路线批量修正（dry / 备份 / 写入 / 读回）。
 
@@ -53,3 +53,9 @@
 - 门槛 `Common.ush` `IsLiteHDRShaderStage()`：ES3.1 且材质质量档 ≤ 3。控制台变量（Renderer.dll 字符串）：`r.Mobile.OnePassLiteHDR`、`r.HDRLite.Adjustment(Inside/Outside)`、`r.LiteHDRWhenPossible`。项目 Config 未见改这些值。
 - 引擎有材质节点 `LiteHDR Shader Stage Switch`（`IsLiteHDRShaderStage() ? A : B`）和 `LiteHDREnableColorAdjust`；通用父材质 `M_EFX_MainTex` 用法：静态开关 `AdjustLiteHDR` 打开后，LiteHDR 下改用 `MultiColor_LiteHDR`。烟花父材质 `M_EFX_FlipBookSuperPack_FireBase_Unlit`（10-15 快照）没有这套，只有 `MultiColor` / `AddColor` / `EmissiveIntensity` / `EmissiveRampTex`。
 - 手游表现状（10-22 读）：**3.0 烟花各行 FxSP / FxSP_Low / FxSP_High 三格都指同一个 `_M`**（窜天猴 sku 几行例外，有 `_L` / `_H`）；2.0 各行是 `_M` / `_L` / `_H` 三份。所以 3.0 现在没有能单独调的 `_H`，直接改 `_M` 高端机也跟着变。
+
+### 18:35 UE 崩溃（我的只读爬取引起）
+
+- 爬到 `P_EFX_FireWorks_SkyRocketSparkler_L` 时，`/object/get` 读 `…:ParticleModuleSize_2.DistributionVectorUniform_0` 触发 UE 断言 `Assertion failed: RequiredModule`（`ParticleComponents.cpp:1796`），调用栈经 GPUECli HTTP。报告：`DFM/Saved/Crashes/UE4CC-Windows-0C88A2CC43B279D8E175E3AD469D4370_0000`。18:39 起有新的 UE 进程，桥 17780 已恢复。这次只是读取，没有写入或保存；但崩溃前编辑器里没保存的东西可能丢了。
+- 以后不在这个资产上逐对象爬取；要读的话只读颜色模块，并且先读上层对象确认 `RequiredModule` 不为空。
+- 已爬到的结果（过程证据 `analysis/local/20261022_LiteHDR_批量修正/summary.json`）：3.0 `_M` 颜色曲线峰值 1–6，ColorScaleOverLife 峰值 1–50（红彗星 50、橙辉菊 30、金垂柳 / 银冠菊 10）；2.0 的 `_M` / `_L` 颜色峰值 300–3000，ColorScale 50–2000。没爬到的：窜天猴 sku 的 Sparkler_M / Sprint / Tail / Smoke、点灭星 Strobe_M、2.0 拖尾、Real、MusicFest、Operation。
