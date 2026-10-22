@@ -160,3 +160,19 @@
 - [x] 方案 v2 `协作/方案/PC烟花随机_2026-10-23.md`：提亮 / 爆发只改粒子 ColorScaleOverLife；按实测亮度对齐你调过的同类；爆发只加在没有闪光层的主体层（t=0 ×2、0.2 s 内回到 ×1，起点值）；随机按约束；金垂柳等 v3 合入后再做。指出：Bloom / 曝光决定 PC 体量、要在 Night 编排里验收；已有闪光层的不叠爆发。
 - [x] 金垂柳 v3 合入位置表 `协作/方案/金垂柳v3合入位置_2026-10-23.md`（只读梳理）：粒子沿用正式名替换内容；网格 / 材质实例 / 贴图起新名放进 `Effects/Common/...`；`SM_EFX_FireWork_Hero_PC` 还被四尺金垂柳用、不能覆盖；手游网格 1998 顶点超规范例外（1180），要用户点头。
 - [ ] 等用户批 PC 方案 v2、切 PC 编辑器；大型金芒菊现有多层大小随机去不去，待用户定。
+
+## 2026-10-23 01:3x · 交付水准（通宵）
+
+用户原话：
+
+> 金垂柳先不要覆盖，先处理好命名和目录放着，明天再处理，你先处理PC和手游的粒子效果，目标要到交付水准，同时你帮我再看看还有哪些规范设置是漏设置了的，譬如每个主序列的significance的重要度有没有勾选Dissblewheninsignficant,不勾选可能会被裁切掉；交付之前全部走查一遍还有没有其它规范需要设置的，漏了就帮我补上；弄完了之后，就帮我找一个bug，我的comet效果，在播放编排的时候，有一段大量播放的时候，会没播完就硬切掉了；但是有时是在PIE才好复现，你可以尝试帮我看看是不是导演或者还是我的文件设置问题，如果能找到原因就找，找不到就先放着，引擎崩了你自己重启；明早我要看到所有手游PC粒子设置好，有漏了或者没做的内容记得与我补充说明
+
+拆解（按优先级）：
+- [ ] A 金垂柳 v3：沙盒资产按位置表改名搬到正确目录，不覆盖正式资产（粒子起临时名 `_V3`），明天合入。
+- [ ] B 规范走查（只读，PC + 手游 3.0 全部粒子）：significance / bDisableWhenInsignficant / InsignificantReaction / MaxSignificanceLevel / SecondsBeforeInactive / 包围盒 / LOD / 发射器预算 / GPU / 贴图（NeverStream、DistantVFX、主序列 NoMip、Ramp Clamp+NoMip、手游 ≤1024、手游链无 Effects_HD）/ 表行。
+- [ ] C 补漏（规范明确的直接补；有取舍的列出来）。
+- [ ] D PC 提亮 + 爆发 + 随机（方案 v2，只改粒子）；`_H` 同步 PC。
+- [ ] E 彗星硬切排查（导演 / 表 MaxInstanceNum / significance / SecondsBeforeInactive / 包围盒），能找到就找。
+- [ ] F 最终走查 + 清单（做了 / 漏了 / 没做）。
+
+已核实（引擎 DLL 属性说明原文）：`bDisableWhenInsignficant`「When true, emitters deemed insignificant will have their tick and render disabled Instantly. When false they will simple stop spawning new particles.」→ 勾上才会立即硬切，不勾只停生成；用户说法相反，记为误区。另有系统级 `InsignificantReaction`（Auto / Complete / DisableTick / DisableTickAndKill）、`InsignificanceDelay`、`MaxSignificanceLevel`，以及 `SecondsBeforeInactive`。
