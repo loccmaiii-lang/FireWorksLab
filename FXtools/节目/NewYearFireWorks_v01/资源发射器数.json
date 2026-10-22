@@ -7778,12 +7778,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -7811,12 +7812,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -7844,12 +7846,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -7886,12 +7889,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -7938,12 +7942,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -7990,12 +7995,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8051,12 +8057,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8103,12 +8110,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8155,12 +8163,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8216,12 +8225,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8249,12 +8259,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8282,12 +8293,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -8324,12 +8336,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8357,12 +8370,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8390,12 +8404,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -8432,12 +8447,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 10,
+      "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8465,12 +8481,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 10,
+      "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8498,12 +8515,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 10,
+      "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -8540,12 +8558,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8573,12 +8592,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8606,12 +8626,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 8,
+      "modules": 9,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -8648,12 +8669,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8700,12 +8722,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8752,12 +8775,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      },
      {
       "name": "L1_Flash",
@@ -8813,12 +8837,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8846,12 +8871,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -8879,12 +8905,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9029,12 +9056,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9062,12 +9090,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9095,12 +9124,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 7,
+      "modules": 8,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9302,12 +9332,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9335,12 +9366,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9368,12 +9400,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9410,12 +9443,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9443,12 +9477,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9476,12 +9511,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9518,12 +9554,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9551,12 +9588,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9584,12 +9622,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9626,12 +9665,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9659,12 +9699,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9692,12 +9733,13 @@
        1
       ],
       "peakActiveLOD0": 3,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9734,12 +9776,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 10,
+      "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9767,12 +9810,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 10,
+      "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9800,12 +9844,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 10,
+      "modules": 11,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -9842,12 +9887,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9875,12 +9921,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ]
    },
@@ -9908,12 +9955,13 @@
        1
       ],
       "peakActiveLOD0": 2,
-      "modules": 9,
+      "modules": 10,
       "detailMode": "DM_Low",
       "detailBitmask": 7,
       "qualitySpawnScale": 1,
       "significance": "Critical",
-      "lodLevels": 1
+      "lodLevels": 1,
+      "_rand1023": "10-23 加 Initial Color（ColorOverLife 停用保留）"
      }
     ],
     "note": "10-22 LiteHDR：由当时的 _M 原样复制（dup_verify 读回发射器 / 材质一致），计数沿用 _M；peakActiveLOD0Sum 是 _M 的历史值"
@@ -10330,5 +10378,10 @@
   "at": "2026-10-22",
   "by": "LiteHDR（Claude Code）",
   "what": "手游表 18 行 3.0 FxSP_High 由 _M 改指新复制的 _H（18 行在本表里）；_H 与 _M 发射器 / 材质读回一致，LOD 1、GPU 0 不变。之后 _H / _M 只改了 ColorScaleOverLife 与 alpha 常量，不影响计数。证据 analysis/local/20261022_LiteHDR_批量修正/dup_verify.json、tune_verify.json"
+ },
+ "changesVs20261023": {
+  "at": "2026-10-23",
+  "by": "LiteHDR（Claude Code）",
+  "what": "3.0 手游 _H / _M 颜色 / 大小随机：主发射器加 Initial Color（ColorOverLife 停用保留在列表里），modules +1（本表 48 处）；发射器数、LOD、GPU 不变。证据 analysis/results/20261022_LiteHDR_手游分档/随机与照PC.json"
  }
 }

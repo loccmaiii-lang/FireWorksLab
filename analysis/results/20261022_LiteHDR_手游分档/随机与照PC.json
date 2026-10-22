@@ -1,0 +1,1459 @@
+{
+ "format": "fwl.litehdr-random/1",
+ "at": "2026-10-23",
+ "range": 0.08,
+ "h_equals_pc": [
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      3,
+      3,
+      3
+     ],
+     "after": [
+      20,
+      20,
+      20
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      2,
+      2,
+      2
+     ],
+     "after": [
+      30,
+      30,
+      30
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      3,
+      3,
+      3
+     ],
+     "after": [
+      50,
+      50,
+      50
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      50,
+      50,
+      50
+     ],
+     "after": [
+      50,
+      50,
+      50
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_5.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_5.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_9.DistributionVectorConstant_7",
+     "before": [
+      50,
+      50,
+      50
+     ],
+     "after": [
+      50,
+      50,
+      50
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_9.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1.9913610219955444,
+      4.054629802703857,
+      5
+     ],
+     "after": [
+      2.953449010848999,
+      4.4971089363098145,
+      5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      10,
+      10,
+      10
+     ],
+     "after": [
+      10,
+      10,
+      10
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 2,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      3,
+      3,
+      3
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_4",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      3,
+      3,
+      3
+     ],
+     "after": [
+      5,
+      5,
+      5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_2",
+     "before": [
+      100,
+      100,
+      100
+     ],
+     "after": [
+      100,
+      100,
+      100
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 1,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_2",
+     "before": [
+      1.6,
+      1.6,
+      1.6
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_7.DistributionVectorConstant_1",
+     "before": [
+      10,
+      4.188828945159912,
+      1.278419017791748
+     ],
+     "after": [
+      10,
+      4.188828945159912,
+      1.278419017791748
+     ]
+    },
+    {
+     "object": "ParticleModuleColor_2.DistributionStartAlpha",
+     "before": 2,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_6",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_1.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      5,
+      5,
+      5
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_H",
+   "sets": [
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_3",
+     "before": [
+      1,
+      1,
+      1
+     ],
+     "after": [
+      1,
+      1,
+      1
+     ]
+    },
+    {
+     "object": "ParticleModuleColorScaleOverLife_0.DistributionAlphaScaleOverLife",
+     "before": 4,
+     "after": 1
+    }
+   ]
+  }
+ ],
+ "random": [
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      0.8550000190734863,
+      0.8878999948501587,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    },
+    {
+     "emitter": "L1_Flash",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstantCurve / FloatConstantCurve）",
+      "大小：L1_Flash 不动"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      0.8550000190734863,
+      0.8878999948501587,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    },
+    {
+     "emitter": "L1_Flash",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstantCurve / FloatConstantCurve）",
+      "大小：L1_Flash 不动"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    },
+    {
+     "emitter": "L1_Flash",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstantCurve / FloatConstantCurve）",
+      "大小：L1_Flash 不动"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    },
+    {
+     "emitter": "L1_Flash",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstantCurve / FloatConstantCurve）",
+      "大小：L1_Flash 不动"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M",
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "color": "add",
+     "baseColor": [
+      3,
+      3,
+      3
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    },
+    {
+     "emitter": "L2_RiseHead",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstant / FloatConstantCurve）",
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_H",
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "color": "add",
+     "baseColor": [
+      3,
+      3,
+      3
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    },
+    {
+     "emitter": "L2_RiseHead",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstant / FloatConstantCurve）",
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      2.4000000953674316,
+      2.4000000953674316,
+      2.4000000953674316
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_H",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      2.4000000953674316,
+      2.4000000953674316,
+      2.4000000953674316
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      0.8550000190734863,
+      0.8878999948501587,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      0.8550000190734863,
+      0.8878999948501587,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    },
+    {
+     "emitter": "L1_Flash",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstantCurve / FloatConstantCurve）",
+      "大小：L1_Flash 不动"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    },
+    {
+     "emitter": "L1_Flash",
+     "color": null,
+     "baseColor": null,
+     "size": null,
+     "skip": [
+      "颜色：ColorOverLife 不是恒定（VectorConstantCurve / FloatConstantCurve）",
+      "大小：L1_Flash 不动"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": "add",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": null,
+     "baseColor": null,
+     "size": "widen",
+     "skip": [
+      "颜色：本来就是随机调色板（Color_Seeded）"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_H",
+   "emitters": [
+    {
+     "emitter": "L1_Main",
+     "color": null,
+     "baseColor": null,
+     "size": "widen",
+     "skip": [
+      "颜色：本来就是随机调色板（Color_Seeded）"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M",
+   "emitters": [
+    {
+     "emitter": "Main",
+     "color": "add",
+     "baseColor": [
+      1.875,
+      1.6339000463485718,
+      1.3418999910354614
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_H",
+   "emitters": [
+    {
+     "emitter": "Main",
+     "color": "add",
+     "baseColor": [
+      1.875,
+      1.6339000463485718,
+      1.3418999910354614
+     ],
+     "size": "replace",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_M",
+   "emitters": [
+    {
+     "emitter": "Particle Emitter",
+     "color": "initial",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "widen",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_H",
+   "emitters": [
+    {
+     "emitter": "Particle Emitter",
+     "color": "initial",
+     "baseColor": [
+      1,
+      1,
+      1
+     ],
+     "size": "widen",
+     "skip": []
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_M",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      6,
+      6,
+      6
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_H",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      6,
+      6,
+      6
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      6,
+      6,
+      6
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_H",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      6,
+      6,
+      6
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      6,
+      6,
+      6
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_H",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      6,
+      6,
+      6
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      4,
+      4,
+      4
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_H",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      4,
+      4,
+      4
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M",
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "color": "add",
+     "baseColor": [
+      4,
+      4,
+      4
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_H",
+   "emitters": [
+    {
+     "emitter": "L1_TrailFull",
+     "color": "add",
+     "baseColor": [
+      4,
+      4,
+      4
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      4,
+      4,
+      4
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  },
+  {
+   "package": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_H",
+   "emitters": [
+    {
+     "emitter": "TrailFull",
+     "color": "add",
+     "baseColor": [
+      4,
+      4,
+      4
+     ],
+     "size": null,
+     "skip": [
+      "大小：长条 / 要和开花或星头对齐，不加"
+     ]
+    }
+   ]
+  }
+ ],
+ "measuredSpread3shots": {
+  "LittleGold_H": {
+   "size%": 1.0,
+   "bright%": 3.1,
+   "R": 1.3,
+   "G": 2.5,
+   "B": 1.0,
+   "n": 3
+  },
+  "LittleGold_M": {
+   "size%": 5.9,
+   "bright%": 14.6,
+   "R": 2.1,
+   "G": 2.8,
+   "B": 3.2,
+   "n": 3
+  },
+  "LittleSilver_H": {
+   "size%": 11.2,
+   "bright%": 23.3,
+   "R": 0.5,
+   "G": 1.6,
+   "B": 1.0,
+   "n": 3
+  },
+  "LittleSilver_M": {
+   "size%": 7.2,
+   "bright%": 12.4,
+   "R": 3.5,
+   "G": 5.8,
+   "B": 3.0,
+   "n": 3
+  },
+  "LittleCrackle_H": {
+   "size%": 10.1,
+   "bright%": 21.2,
+   "R": 1.6,
+   "G": 1.5,
+   "B": 1.4,
+   "n": 3
+  },
+  "LittleCrackle_M": {
+   "size%": 3.6,
+   "bright%": 4.4,
+   "R": 1.6,
+   "G": 2.0,
+   "B": 3.1,
+   "n": 3
+  },
+  "LittleCombo_H": {
+   "size%": 13.6,
+   "bright%": 18.5,
+   "R": 0.6,
+   "G": 0.2,
+   "B": 1.8,
+   "n": 3
+  },
+  "LittleCombo_M": {
+   "size%": 14.4,
+   "bright%": 10.4,
+   "R": 2.4,
+   "G": 3.3,
+   "B": 3.1,
+   "n": 3
+  },
+  "Comet_Layers_H": {
+   "size%": 2.6,
+   "bright%": 3.6,
+   "R": 1.0,
+   "G": 1.2,
+   "B": 1.5,
+   "n": 3
+  },
+  "Comet_Layers_M": {
+   "size%": 0.0,
+   "bright%": 1.3,
+   "R": 1.3,
+   "G": 1.3,
+   "B": 6.7,
+   "n": 3
+  },
+  "Silver3_Layers_S_H": {
+   "size%": 7.1,
+   "bright%": 2.1,
+   "R": 1.3,
+   "G": 3.6,
+   "B": 2.9,
+   "n": 3
+  },
+  "Silver3_Layers_S_M": {
+   "size%": 0.1,
+   "bright%": 2.5,
+   "R": 1.8,
+   "G": 2.9,
+   "B": 1.6,
+   "n": 3
+  },
+  "SilverChry_H": {
+   "size%": 11.5,
+   "bright%": 22.1,
+   "R": 2.0,
+   "G": 0.5,
+   "B": 1.7,
+   "n": 3
+  },
+  "SilverChry_M": {
+   "size%": 11.5,
+   "bright%": 21.7,
+   "R": 2.3,
+   "G": 1.1,
+   "B": 0.9,
+   "n": 3
+  },
+  "Crackle_H": {
+   "n": 0
+  },
+  "Crackle_M": {
+   "n": 0
+  },
+  "Glitter_H": {
+   "size%": 3.3,
+   "bright%": 9.9,
+   "R": 2.9,
+   "G": 4.4,
+   "B": 2.1,
+   "n": 3
+  },
+  "Glitter_M": {
+   "size%": 7.2,
+   "bright%": 13.6,
+   "R": 0.9,
+   "G": 3.5,
+   "B": 7.2,
+   "n": 3
+  },
+  "Strobe_H": {
+   "size%": 13.4,
+   "bright%": 24.0,
+   "R": 42.4,
+   "G": 11.4,
+   "B": 57.3,
+   "n": 3
+  },
+  "Strobe_M": {
+   "size%": 5.2,
+   "bright%": 54.6,
+   "R": 44.4,
+   "G": 33.9,
+   "B": 17.4,
+   "n": 3
+  },
+  "GoldRayChry_H": {
+   "size%": 5.3,
+   "bright%": 10.3,
+   "R": 3.8,
+   "G": 3.2,
+   "B": 3.9,
+   "n": 3
+  },
+  "GoldRayChry_M": {
+   "size%": 9.4,
+   "bright%": 18.6,
+   "R": 1.3,
+   "G": 1.2,
+   "B": 3.8,
+   "n": 3
+  },
+  "GoldKamuro_H": {
+   "size%": 20.4,
+   "bright%": 17.4,
+   "R": 3.7,
+   "G": 4.5,
+   "B": 7.5,
+   "n": 3
+  },
+  "GoldKamuro_M": {
+   "size%": 3.8,
+   "bright%": 4.9,
+   "R": 2.3,
+   "G": 3.8,
+   "B": 1.6,
+   "n": 3
+  },
+  "RiseTrail_Hero_H": {
+   "size%": 0.0,
+   "bright%": 1.2,
+   "R": 0.3,
+   "G": 1.4,
+   "B": 1.7,
+   "n": 3
+  },
+  "RiseTrail_Hero_M": {
+   "size%": 0.4,
+   "bright%": 1.8,
+   "R": 1.9,
+   "G": 1.7,
+   "B": 1.7,
+   "n": 3
+  },
+  "RiseTrail_L_H": {
+   "size%": 5.8,
+   "bright%": 1.6,
+   "R": 2.4,
+   "G": 1.9,
+   "B": 3.0,
+   "n": 3
+  },
+  "RiseTrail_L_M": {
+   "size%": 4.3,
+   "bright%": 0.7,
+   "R": 0.5,
+   "G": 1.2,
+   "B": 2.7,
+   "n": 3
+  },
+  "RiseTrail_M_H": {
+   "size%": 2.1,
+   "bright%": 2.2,
+   "R": 0.8,
+   "G": 0.9,
+   "B": 0.6,
+   "n": 3
+  },
+  "RiseTrail_M_M": {
+   "size%": 0.2,
+   "bright%": 0.2,
+   "R": 0.8,
+   "G": 2.0,
+   "B": 2.3,
+   "n": 3
+  },
+  "RiseTrail_S_H": {
+   "size%": 13.6,
+   "bright%": 0.9,
+   "R": 1.7,
+   "G": 1.3,
+   "B": 1.4,
+   "n": 3
+  },
+  "RiseTrail_S_M": {
+   "size%": 6.2,
+   "bright%": 1.2,
+   "R": 1.0,
+   "G": 0.9,
+   "B": 1.8,
+   "n": 3
+  },
+  "RiseTrail_XS_H": {
+   "size%": 1.0,
+   "bright%": 2.3,
+   "R": 0.8,
+   "G": 0.9,
+   "B": 0.8,
+   "n": 3
+  },
+  "RiseTrail_XS_M": {
+   "size%": 5.8,
+   "bright%": 1.0,
+   "R": 0.8,
+   "G": 0.7,
+   "B": 0.8,
+   "n": 3
+  },
+  "RiseTrail_Tiny_H": {
+   "size%": 4.3,
+   "bright%": 2.5,
+   "R": 0.7,
+   "G": 0.2,
+   "B": 1.1,
+   "n": 3
+  },
+  "RiseTrail_Tiny_M": {
+   "size%": 3.7,
+   "bright%": 2.5,
+   "R": 1.0,
+   "G": 1.6,
+   "B": 1.3,
+   "n": 3
+  }
+ }
+}
