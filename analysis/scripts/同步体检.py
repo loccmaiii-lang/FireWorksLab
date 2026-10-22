@@ -11,6 +11,8 @@
   5. 生成文件 tool/FireworkBaker.html 是否落后于 更新记录.md（成品里嵌了待办，改了没重建会弄脏别人的工作树）
   6. 排队等合并的远端分支（状态清单里写着要合、但还没进 main 的）
   7. 推送前的合入门禁钩子（.githooks/pre-push，导出排查 G2）有没有在这个工作副本启用
+  8. 本机卫生（2026-10-22 烟花编排（22）-本机，用户批协作提效方案；只提醒、不影响结论）：analysis/local 过程证据到期（14 天）、
+     没删的 git worktree 副本（最后提交超过 24 小时）、.git 松散对象超过 2 GiB、根目录出现白名单外的新文件 / 目录
 """
 import os, re, subprocess, sys, json, datetime
 
@@ -23,6 +25,48 @@ def git(*a, check=False):
     r = subprocess.run(['git', '-C', ROOT, *a], capture_output=True, text=True, encoding='utf-8', errors='replace')
     if check and r.returncode: raise RuntimeError(r.stderr.strip())
     return r.stdout.strip()
+
+
+# 根目录白名单（2026-10-22 现状）：跟踪的 + 已知本机未跟踪的。新加根目录项先想清楚放哪（见 仓库梳理.md），确需放根目录再加到这里。
+ROOT_OK = {'.claude', '.git', '.gitattributes', '.githooks', '.github', '.gitignore', 'AGENTS.md', 'CLAUDE.md', 'FXtools', 'README.md',
+           'analysis', 'design-qa.md', 'docs', 'experiments', 'research', 'samples', 'spec', 'tool', 'vidio', '交接.md', '仓库梳理.md',
+           '协作', '对话记录', '归档', '更新记录.md',
+           'TClaude.bat', 'local_notes_ue_interface.md', '点灭星_Cascade参数.txt', 'outputs', 'MyTepelate', '.workbuddy', 'node_modules',
+           '.vscode', '.idea', 'Thumbs.db', 'desktop.ini'}
+LONG_LIVED = ('gpu-monitor',)      # 长期在用的副本（本机显卡后台，交接.md 第 4 节），不提醒
+
+
+def housekeeping():
+    """第 8 项：只往 warn 里加提醒；任何一步出错只记一条，不影响结论。"""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import importlib
+        clean = importlib.import_module('本机清理')
+        rows = clean.scan_local(sizes=False, refs=False)
+        due = [r for r in rows if r['cat'] in ('到期', '可删')]
+        if due:
+            mb = sum(r['size'] or 0 for r in due) / 1e6
+            warn.append(f'analysis/local 有 {len(due)} 个过程证据到期（超过 14 天，约 {mb:.0f} MB）：python -X utf8 analysis/scripts/本机清理.py 看清单，确认后加 --apply')
+        stale = [w for w in clean.worktrees() if not any(k in w['path'] for k in LONG_LIVED)
+                 and os.path.normcase(os.path.abspath(w['path'])) != os.path.normcase(ROOT)
+                 and (w['missing'] or not w['when'] or (datetime.datetime.now() - w['when']).total_seconds() > 86400)]
+        if stale:
+            warn.append(f'有 {len(stale)} 个 git worktree 副本最后提交超过 24 小时（做完要 git worktree remove）：' + '；'.join(f"{w['path']}（{w['branch']}，{w['date']}）" for w in stale[:4]))
+    except Exception as e:
+        warn.append('本机卫生检查出错（不影响结论）：' + str(e)[:100])
+    try:
+        kv = dict(l.split(': ', 1) for l in git('count-objects', '-v').splitlines() if ': ' in l)
+        loose = int(kv.get('size', 0)) * 1024 + int(kv.get('size-garbage', 0)) * 1024
+        if loose > 2 * 1024 ** 3:
+            warn.append(f'.git 松散对象 + 残留 {loose / 1024 ** 3:.1f} GiB（> 2 GiB）：没有其他 git 在跑时执行一次 git gc（不丢提交）')
+    except Exception as e:
+        warn.append('读 git count-objects 出错：' + str(e)[:80])
+    try:
+        extra = sorted(n for n in os.listdir(ROOT) if n not in ROOT_OK)
+        if extra:
+            warn.append('根目录有白名单外的新文件 / 目录：' + '、'.join(extra[:8]) + '（按 仓库梳理.md 放进对应目录；确需放根目录再加进 同步体检.py 的 ROOT_OK）')
+    except OSError as e:
+        warn.append('读根目录出错：' + str(e)[:80])
 
 
 def main():
@@ -39,7 +83,7 @@ def main():
     if behind: (bad if behind >= 5 else warn).append(f'落后 origin/main {behind} 个提交' + ('（≥5，先同步再干活）' if behind >= 5 else ''))
     if ahead: warn.append(f'领先 origin/main {ahead} 个提交（没推）：' + git('log', '--format=%h %s', 'origin/main..HEAD')[:300])
 
-    dirty = [l for l in git('status', '--porcelain', '--untracked-files=no').splitlines() if l.strip()]
+    dirty = [l for l in subprocess.run(['git', 'status', '--porcelain', '--untracked-files=no'], cwd=ROOT, capture_output=True, text=True, encoding='utf-8', errors='replace').stdout.splitlines() if l.strip()]   # 不 strip：porcelain 第一行开头的空格是状态位（10-22 修：以前显示成「nalysis」）
     if dirty: warn.append(f'已跟踪文件有本地改动 {len(dirty)} 个（本机自动同步会因此跳过）：' + '；'.join(l[3:][:70] for l in dirty[:5]))
     skipped = [l for l in git('ls-files', '-v').splitlines() if l[:1] in ('S', 's')]
     if skipped: print(f'ℹ skip-worktree 文件 {len(skipped)} 个（本机刻意不跟踪的改动）：' + '；'.join(l[2:][:60] for l in skipped[:3]))
@@ -79,6 +123,7 @@ def main():
         if hp not in ('.githooks', os.path.join(ROOT, '.githooks').replace('\\', '/')):
             warn.append('推送前的合入门禁钩子没启用（' + (f'core.hooksPath = {hp}' if hp else '没设 core.hooksPath') + '）：在这个工作副本跑一次 git config core.hooksPath .githooks')
 
+    housekeeping()
     for w in warn: print('⚠ ' + w)
     for b in bad: print('❌ ' + b)
     print('结论：' + ('先处理 ❌ 再干活' if bad else '可以干活（⚠ 只是提醒）'))
