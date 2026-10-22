@@ -58,8 +58,8 @@
 - 引擎有材质节点 `LiteHDR Shader Stage Switch`（`IsLiteHDRShaderStage() ? A : B`）和 `LiteHDREnableColorAdjust`；通用父材质 `M_EFX_MainTex` 用法：静态开关 `AdjustLiteHDR` 打开后，LiteHDR 下改用 `MultiColor_LiteHDR`。烟花父材质 `M_EFX_FlipBookSuperPack_FireBase_Unlit`（10-15 快照）没有这套，只有 `MultiColor` / `AddColor` / `EmissiveIntensity` / `EmissiveRampTex`。
 - 手游表现状（10-22 读）：**3.0 烟花各行 FxSP / FxSP_Low / FxSP_High 三格都指同一个 `_M`**（窜天猴 sku 几行例外，有 `_L` / `_H`）；2.0 各行是 `_M` / `_L` / `_H` 三份。所以 3.0 现在没有能单独调的 `_H`，直接改 `_M` 高端机也跟着变。
 
-### 18:35 UE 崩溃（我的只读爬取引起）
+### 18:35 UE 崩溃（更正：大概率是网格垂柳UEv3 的写入触发）
 
 - 爬到 `P_EFX_FireWorks_SkyRocketSparkler_L` 时，`/object/get` 读 `…:ParticleModuleSize_2.DistributionVectorUniform_0` 触发 UE 断言 `Assertion failed: RequiredModule`（`ParticleComponents.cpp:1796`），调用栈经 GPUECli HTTP。报告：`DFM/Saved/Crashes/UE4CC-Windows-0C88A2CC43B279D8E175E3AD469D4370_0000`。18:39 起有新的 UE 进程，桥 17780 已恢复。这次只是读取，没有写入或保存；但崩溃前编辑器里没保存的东西可能丢了。
-- 以后不在这个资产上逐对象爬取；要读的话只读颜色模块，并且先读上层对象确认 `RequiredModule` 不为空。
+- 更正（18:5x）：`对话记录/对话框网格垂柳UEv3.md` 记载它当时正在脚本重建新 Emitter 的 L3，先写了 LODLevels、新 LOD 还没挂 Required，触发同一断言；我的 `/object/get` 在排队（耗时 53.6 s 后断开）。所以崩溃大概率不是我的读取引起的。但对方 18:28 已登记 UE 单写占用，我仍并发读 UE，不妥：以后别人占用 UE 时我不发任何请求。
 - 已爬到的结果（过程证据 `analysis/local/20261022_LiteHDR_批量修正/summary.json`）：3.0 `_M` 颜色曲线峰值 1–6，ColorScaleOverLife 峰值 1–50（红彗星 50、橙辉菊 30、金垂柳 / 银冠菊 10）；2.0 的 `_M` / `_L` 颜色峰值 300–3000，ColorScale 50–2000。没爬到的：窜天猴 sku 的 Sparkler_M / Sprint / Tail / Smoke、点灭星 Strobe_M、2.0 拖尾、Real、MusicFest、Operation。
