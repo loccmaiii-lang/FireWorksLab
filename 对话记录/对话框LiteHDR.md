@@ -332,6 +332,6 @@ D 进度（PC，`analysis/local/20261022_LiteHDR_批量修正/pc_fx.mjs` + `pc_p
 > 循环的效果应该很少，是哪9个循环的？绝大多数应该都是一次性的？你筛选一下数量给我，看看你的筛查的正不正确然后再重新调整一次activataautomatic的设置，并且按照正确的设置方式，写到导入规则中
 
 拆解：
-- [ ] 1 按现场两张资源表的 3.0 行重新取粒子，逐发射器读 EmitterLoops / 时长 / 生成方式，列出循环的是哪些、数量，人工核对对不对。
-- [ ] 2 按「一次性 ActivateAutomatic、循环 Automatic」改 LODMethod（编辑器里有未保存改动的跳过）；备份 → 迁出 → 改 → 读回 → 保存。
-- [ ] 3 写进导入规则：规范 + 导入器（导入 / 交付时自动写对的 LODMethod）+ 检查。
+- [x] 1 按现场两张资源表的 3.0 行重新取粒子，逐发射器读 EmitterLoops / 时长 / 生成方式，列出循环的是哪些、数量，人工核对对不对。→ 92 个粒子：循环 9 个（全是窜天猴 sku 拖尾尾缀 / 拖尾烟雾 / 点火引线：PC SkyRocketTail_HD、Skyrocket_Smoke_HD、SkyRocketSparkler_HD；手游 SkyRocketTail_M/H/L、Smoke_M/H、SkyRocketSparkler_M），一次性 83 个。上午的数量对，只是没列名字。
+- [x] 2 按「一次性 ActivateAutomatic、循环 Automatic」改 LODMethod（编辑器里有未保存改动的跳过）；备份 → 迁出 → 改 → 读回 → 保存。→ 60 个包已改（58 → ActivateAutomatic，2 → Automatic），逐包读回保存；跳过 Smoke_H（用户在改）、P_Destructible_Empty（共享）。19:29 起编辑器 P4 连接断了（SSL），后面的迁出改用命令行 `p4 edit` + `p4 lock`（同一工作区）。另外把上午跳过的 Glitter_HD L1_Main 勾补上了；GoldKamuro_V3_HD 仍在用户编辑中，没碰。
+- [x] 3 写进导入规则：规范 + 导入器（导入 / 交付时自动写对的 LODMethod）+ 检查。→ 私有导入器 v2.30（`fireworks-system-policy.js` 按包写 + 读回，40 项离线检查通过；交付入口 + 烘焙器文件入口副本已重建，df-fx-workbench_v2 原字节不变）；`spec/cascade_params_v1.md` §1.4、`spec/烟花特效资产规范.md` §6.1；检查脚本判断方法相同。

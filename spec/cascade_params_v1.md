@@ -148,6 +148,14 @@
 | `materials[k].emissive_dissolve` | 序列 / 单束材质（`flipbook_rgba`、`beam_flipbook`） | `0.98` → 材质实例标量参数（项目里叫 EmissiveDissolve，由本地配置按角色对应）。避开 Ramp 末格黑（渲染基础问题 I1）。不放进 `scalars`：旧导入器对不认识的数值参数直接拒收 |
 | `resource_rules` | 顶层 | 规则版本 `fwl.resource-rules/1`、余量 / 缩放 / 取整、改成 FCP 的发射器、翻转 None 的原因、写了 0.98 的材质（只给人和检查看，导入器不用） |
 
+### 1.4 粒子系统 LODMethod（用户 2026-10-23；私有导入器 v2.30）🟡 离线模拟检查通过，未经 UE 实导
+
+包里不另加字段，导入器按发射器的 `required.loops` 自己判断。新建、「更新」都照写，并且读回：
+- 有启用的发射器 `loops = 0`（无限循环）→ `PARTICLESYSTEMLODMETHOD_Automatic`（定期按距离重算档位）。
+- 否则（全部一次性，`loops ≥ 1`）→ `PARTICLESYSTEMLODMETHOD_ActivateAutomatic`（激活时按距离定一次档，之后不变）。
+
+只有一档 LOD（导入器只建 LOD0）时两者没有实际区别，规则只是为了统一。手调过的老资产用 `node analysis/scripts/重要度LOD检查.mjs` 查，见 `spec/烟花特效资产规范.md` §6.1。
+
 ## 4. 发射器字段
 
 | 字段 | Cascade 对应 | 状态 |

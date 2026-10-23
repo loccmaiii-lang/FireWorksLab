@@ -1,0 +1,443 @@
+{
+ "说明": "10-23 下午按现场两张资源表的 3.0 行取粒子（92 个），逐发射器读 EmitterLoops：有启用的发射器 = 0（无限循环）算循环。LODMethod 按用户规则改：一次性 ActivateAutomatic、循环 Automatic。",
+ "循环": [
+  {
+   "粒子": "P_EFX_FireWorks_SkyRocketTail_HD",
+   "表": "PC",
+   "行": [
+    "窜天猴sku_拖尾尾缀"
+   ],
+   "循环层": [
+    "Main",
+    "Lens",
+    "Particle Emitter",
+    "Sparks_main",
+    "Sparks_loop",
+    "L1_Main",
+    "L1_Main",
+    "Particle Emitter"
+   ],
+   "LOD档数": 4
+  },
+  {
+   "粒子": "P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+   "表": "PC",
+   "行": [
+    "窜天猴sku_拖尾烟雾"
+   ],
+   "循环层": [
+    "Sparks_loop",
+    "Spark_Star_B",
+    "Spark_Star_A",
+    "Sparks_loop",
+    "Sparks_main",
+    "Trail_L1"
+   ],
+   "LOD档数": 4
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SkyRocketSparkler_HD",
+   "表": "PC",
+   "行": [
+    "窜天猴sku_点火引线"
+   ],
+   "循环层": [
+    "Particle Emitter",
+    "Lens",
+    "L1_Main",
+    "Streak",
+    "Sparks_main",
+    "Particle Emitter"
+   ],
+   "LOD档数": 4
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SkyRocketTail_M",
+   "表": "手游",
+   "行": [
+    "窜天猴sku_拖尾尾缀"
+   ],
+   "循环层": [
+    "Sparks_loop",
+    "L1_Main",
+    "Dot"
+   ],
+   "LOD档数": 1
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SkyRocketTail_H",
+   "表": "手游",
+   "行": [
+    "窜天猴sku_拖尾尾缀"
+   ],
+   "循环层": [
+    "Main",
+    "Lens",
+    "Light-right",
+    "Sparks_loop",
+    "L1_Main",
+    "Dot"
+   ],
+   "LOD档数": 1
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SkyRocketTail_L",
+   "表": "手游",
+   "行": [
+    "窜天猴sku_拖尾尾缀"
+   ],
+   "循环层": [
+    "L1_Main"
+   ],
+   "LOD档数": 1
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Smoke_M",
+   "表": "手游",
+   "行": [
+    "窜天猴sku_拖尾烟雾"
+   ],
+   "循环层": [
+    "Spark_Star_B",
+    "Trail_B"
+   ],
+   "LOD档数": 1
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Smoke_H",
+   "表": "手游",
+   "行": [
+    "窜天猴sku_拖尾烟雾"
+   ],
+   "循环层": [
+    "Sparks_loop",
+    "Spark_Star_B",
+    "Spark_Star_A",
+    "Trail_B"
+   ],
+   "LOD档数": 1
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SkyRocketSparkler_M",
+   "表": "手游",
+   "行": [
+    "窜天猴sku_点火引线"
+   ],
+   "循环层": [
+    "L1_Main",
+    "Streak",
+    "Sparks_main"
+   ],
+   "LOD档数": 1
+  }
+ ],
+ "一次性数量": 83,
+ "改了": [
+  {
+   "粒子": "P_EFX_FireWorks_LittleGold_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleSilver_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleCrackle_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleCombo_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Comet_Layers_S_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Silver_Layers_S_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_FanGold_Central_01_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SilverChry_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Crackle_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Lime_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Glitter_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LimeStar_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldRay_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldSpark_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldCoreLime_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldRayChry_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LimeCoreDelay_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SilverStrobeChry_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SilverStrobeChry_B_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldRayChry_L_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SilverWhiteChry_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_XS_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+   "原": "ActivateAutomatic",
+   "现": "Automatic"
+  },
+  {
+   "粒子": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleGold_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleGold_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleSilver_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleSilver_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleCrackle_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleCrackle_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleCombo_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_LittleCombo_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Silver3_Layers_S_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Silver3_Layers_S_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SilverChry_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_SilverChry_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Crackle_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Crackle_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Glitter_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Glitter_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Strobe_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Strobe_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldRayChry_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_GoldRayChry_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_L_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_L_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_M_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_M_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_S_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_S_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_XS_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_XS_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_RiseTrail_Tiny_H",
+   "原": "Automatic",
+   "现": "ActivateAutomatic"
+  },
+  {
+   "粒子": "P_EFX_FireWorks_Smoke_M",
+   "原": "ActivateAutomatic",
+   "现": "Automatic"
+  }
+ ],
+ "跳过": [
+  {
+   "粒子": "P_EFX_FireWorks_Smoke_H",
+   "原因": "编辑器里有未保存改动"
+  }
+ ]
+}

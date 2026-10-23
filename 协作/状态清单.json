@@ -263,7 +263,7 @@
     "LiteHDR（Claude Code） · 私有导入器 v2.30：LODMethod 按循环 / 一次性": {
       "负责": "LiteHDR（Claude Code）",
       "日期": "2026-10-23",
-      "状态": "进行中：认领私有导入器源码（导入器（5）上一轮已释放）",
+      "状态": "完成并释放：私有导入器 v2.30 已构建（交付入口 + 烘焙器文件入口副本），40 项离线检查通过；未经 UE 实导",
       "范围": "D:/FXTools/DFWorkbench/workbench 的 fireworks-system-policy.js、fireworks-import.js（两处调用）、check-import-system-policy.cjs；build-delivery.py 重建 df-fireworks-delivery_locmai.html + tool/local_delivery/runtime 副本",
       "授权": "用户 10-23 下午：「按照正确的设置方式，写到导入规则中」（一次性 ActivateAutomatic、循环 Automatic）",
       "保护": "只改 LODMethod 一项；其它导入规则、df-fx-workbench_v2 原字节不动；不写 UE",
