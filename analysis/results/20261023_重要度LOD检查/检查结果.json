@@ -1,0 +1,4407 @@
+{
+ "format": "df.significance-lod-check/1",
+ "readAt": "2026-10-23T15:00:40+08:00",
+ "source": "GPUECli 只读（/object/get）",
+ "rule": "spec/烟花特效资产规范.md §6.1",
+ "rows": [
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleGold_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleGold_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleSilver_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleCrackle_Main_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleCrackle_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleCombo_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleCombo_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+   "row": "跨年烟花3.0_小号_A_短彗星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_Comet_Layers_L1_Full_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Comet_Layers_S_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+   "row": "跨年烟花3.0_小号_B_短银尾",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Silver_Layers_S_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+   "row": "跨年烟花3.0_小型_A_金锦冠_中心",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Central_L",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_FanGold_Central_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_FanGold_Central_01_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "row": "跨年烟花3.0_小型_A_金锦冠_中间",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Medium_L",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_FanGold_Middle_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_FanGold_Middle_01_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "row": "跨年烟花3.0_小型_A_金锦冠_外左",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Out_L",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_FanGold_OuterLeft_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "row": "跨年烟花3.0_小型_A_金锦冠_外右",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Out_R",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_FanGold_OuterRight_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "errors": [
+    "LODDistances [0,0,0,0] 不是从 0 严格递增（全 0 = 游戏里永远用最后一档，编辑器预览看不出来）"
+   ],
+   "warns": [],
+   "infos": [
+    "Dot_A：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Dot_A：LOD2 关（LOD0 开）",
+    "Dot_A：LOD3 关（LOD0 开）",
+    "Dot_B：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Dot_B：LOD3 关（LOD0 开）",
+    "Dot_C：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Dot_C：LOD2 关（LOD0 开）",
+    "Dot_C：LOD3 关（LOD0 开）"
+   ],
+   "emitters": [
+    {
+     "name": "Dot_A",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dot_B",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dot_C",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Comet3_GoldTail_Full_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L2_RiseHead",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Comet_Layers_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "errors": [
+    "LODDistances [0,0,0,0] 不是从 0 严格递增（全 0 = 游戏里永远用最后一档，编辑器预览看不出来）"
+   ],
+   "warns": [],
+   "infos": [
+    "Dot_A：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Dot_A：LOD3 关（LOD0 开）"
+   ],
+   "emitters": [
+    {
+     "name": "Dot_A",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_FanSilver_01_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+   "row": "跨年烟花3.0_小型_D_金裂星",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_Combo_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Combo_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+   "row": "跨年烟花3.0_小型_E_小彗星",
+   "errors": [
+    "LODDistances [0,0,0,0] 不是从 0 严格递增（全 0 = 游戏里永远用最后一档，编辑器预览看不出来）"
+   ],
+   "warns": [],
+   "infos": [
+    "Glow_B：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Glow_C：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Trail",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Throw_Trail_33_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Trail",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Throw_Trail_33_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Glow_B",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_26",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Glow_C",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_26",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Comet_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_SilverChry_GinKamuro_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SilverChry_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Crackle_Main_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Crackle_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+   "row": "跨年烟花3.0_小型_H_小青柠",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Lime_Core_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Lime_Lead_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_MainA",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Lime_Glitter_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_MainB",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Lime_Glitter_02_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Lime_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Glitter_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Glitter_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_Strobe_Strobe_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Strobe_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+   "row": "跨年烟花3.0_中型_A_绿牡丹",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L3_Dots：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_MainA",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LimeStar_Head_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_MainB",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LimeStar_Head_02_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_Dots",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LimeStar_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+   "row": "跨年烟花3.0_中型_B_金锦菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldRay_A_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldRay_B_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldRay_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+   "row": "跨年烟花3.0_中型_C_彩千轮",
+   "errors": [
+    "没有启用的 Critical 发射器（全部不重要时系统会按 InsignificantReaction 结束）"
+   ],
+   "warns": [
+    "Dark_Groud：未分类（材质 MI_EFX_FireWorks_PrismWheels_02_HD）是 Medium + 勾，确认它是辅助层",
+    "Main：未分类（材质 MI_EFX_Glow_01_Depth_03）是 Medium + 勾，确认它是辅助层",
+    "Dark：未分类（材质 MI_EFX_Glow_01_Depth_03）是 Medium + 勾，确认它是辅助层",
+    "LODDistances [0,2500,5000,7500]：最后一档从 75 m 起，节目里多在 100 m 外看，基本都是最后一档"
+   ],
+   "infos": [
+    "Dark_Groud：LOD1 关（LOD0 开）",
+    "Dark_Groud：LOD2 关（LOD0 开）",
+    "Dark_Groud：LOD3 关（LOD0 开）",
+    "Light_Groud：LOD1 关（LOD0 开）",
+    "Light_Groud：LOD2 关（LOD0 开）",
+    "Light_Groud：LOD3 关（LOD0 开）"
+   ],
+   "emitters": [
+    {
+     "name": "Dark_Groud",
+     "enabled": false,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dark_Groud",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_PrismWheels_02_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Light_Groud",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_PrismWheels_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Main",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Glow_01_Depth_03",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dark",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Glow_01_Depth_03",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Light_Groud",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_PrismWheels_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks Cloud",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Initial Igniton",
+     "enabled": false,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWork_PrismWheels_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+   "row": "跨年烟花3.0_中型_D_金曜菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldSpark_Main_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldSpark_L2_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldSpark_L3_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldSpark_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+   "row": "跨年烟花3.0_大型_C_金蕊柠",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L4_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldCoreLime_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Main",
+     "enabled": false,
+     "lodInfo": []
+    },
+    {
+     "name": "MainA",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldRay_Burst_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "MainB",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldRay_Burst_02_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldRayChry_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+   "row": "跨年烟花3.0_大型_D_多重菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Dots：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Dots",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_MainA",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_MainB",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LimeCoreDelay_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L2_Dots：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Fireworks_Hero_FlowFixed_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Dots",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldKamuro_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+   "row": "跨年烟花3.0_大型_B_银彩菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "enabled": false,
+     "lodInfo": []
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Glow_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_01_Depth_03",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Flash",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_16",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SilverStrobeChry_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "row": "跨年烟花3.0_大型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "RiseLoop",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "TrailFar",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_L_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "RiseLoop",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "TrailFar",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_M_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "RiseLoop",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "TrailFar",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_S_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+   "row": "跨年烟花3.0_低位_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_XS_Full_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_XS_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_Tiny_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD.P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD",
+   "row": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+   "errors": [],
+   "warns": [
+    "Second_Explode_01：未分类（材质 MI_EFX_Fireworks_10）是 Medium，确认它是辅助层",
+    "Head：未分类（材质 MI_EFX_Fireworks_11）是 Medium，确认它是辅助层",
+    "LODDistances [0,2500,5000,7500]：最后一档从 75 m 起，节目里多在 100 m 外看，基本都是最后一档",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic"
+   ],
+   "infos": [
+    "Light Impulse：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Light Impulse：LOD2 关（LOD0 开）",
+    "Light Impulse：LOD3 关（LOD0 开）"
+   ],
+   "emitters": [
+    {
+     "name": "Glow_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_01_Depth_03",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Second_Explode_01",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Fireworks_10",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Head",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Fireworks_11",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sphere_Particle",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Glow_21_Add",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Flash",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_16",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SparksTou_A",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Spark_09",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks Cloud",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Light Impulse",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD.P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD",
+   "row": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+   "errors": [],
+   "warns": [
+    "huoxing02：未分类（材质 MI_EFX_Sparks_Flicker_8x8_03）是 Medium + 勾，确认它是辅助层"
+   ],
+   "infos": [
+    "Sparkler_Main：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Spark_Star_A：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_main：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_RGBA_3x3_01_HD",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparkler_Main",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_66",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "huoxing02",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Flicker_8x8_03",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Spark_Star_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_02",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Spark_Star_A",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_03",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_4x2_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_L1",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_SmokeSub_8x8_DepthFade_04_HD",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD.P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+   "row": "跨年烟花3.0_窜天猴sku_拖尾烟雾",
+   "errors": [],
+   "warns": [
+    "LODDistances [0,6000,8000,12000]：最后一档从 120 m 起，节目里多在 100 m 外看，基本都是最后一档",
+    "LODMethod = ActivateAutomatic，循环特效建议 Automatic"
+   ],
+   "infos": [
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：LOD3 关（LOD0 开）",
+    "Spark_Star_A：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Spark_Star_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Spark_Star_A",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_03",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        13,
+        13
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        13,
+        13
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        13,
+        13
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Trail_L1",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX__FireWork_Skyrocket_Smoke_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        13,
+        13
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        13,
+        13
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        13,
+        13
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+    "looping": true,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     6000,
+     8000,
+     12000
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD.P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD",
+   "row": "跨年烟花3.0_窜天猴sku_点火引线",
+   "errors": [],
+   "warns": [
+    "LODDistances [0,2500,5000,7500]：最后一档从 75 m 起，节目里多在 100 m 外看，基本都是最后一档"
+   ],
+   "infos": [
+    "Sparks_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Streak：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：LOD3 关（LOD0 开）",
+    "Sparks_main：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_main：LOD2 关（LOD0 开）",
+    "Sparks_main：LOD3 关（LOD0 开）",
+    "Light Impulse：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Light Impulse：LOD2 关（LOD0 开）",
+    "Light Impulse：LOD3 关（LOD0 开）"
+   ],
+   "emitters": [
+    {
+     "name": "Sparks_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Streak",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_4x2_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Light Impulse",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD",
+    "looping": true,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+   "row": "跨年烟花3.0_窜天猴sku_喷射焰火",
+   "errors": [],
+   "warns": [
+    "LODDistances [0,6000,8000,12000]：最后一档从 120 m 起，节目里多在 100 m 外看，基本都是最后一档",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic"
+   ],
+   "infos": [
+    "Sparks_main：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_RGBA_3x3_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     6000,
+     8000,
+     12000
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+   "row": "跨年烟花3.0_窜天猴sku_二次加速",
+   "errors": [],
+   "warns": [
+    "LODDistances [0,2500,5000,7500]：最后一档从 75 m 起，节目里多在 100 m 外看，基本都是最后一档",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic"
+   ],
+   "infos": [
+    "Tou_Sparks_B：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_43",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Tou_Sparks_B",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        4,
+        4
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        4,
+        4
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        4,
+        4
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Flicker_8x8_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "QD1",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        11,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_03_dissolve1",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "M_EFX_Explosion_Glow_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     2500,
+     5000,
+     7500
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleGold_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleGold_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_H.P_EFX_FireWorks_LittleGold_H",
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleGold_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleGold_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleSilver_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_H.P_EFX_FireWorks_LittleSilver_H",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleSilver_GinKamuro_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleSilver_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleCrackle_Main_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleCrackle_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_H.P_EFX_FireWorks_LittleCrackle_H",
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleCrackle_Main_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleCrackle_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleCombo_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleCombo_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_H.P_EFX_FireWorks_LittleCombo_H",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_LittleCombo_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_LittleCombo_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Comet3_GoldTail_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_RiseHead",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Comet_Layers_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_H.P_EFX_FireWorks_Comet_Layers_H",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Comet3_GoldTail_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_RiseHead",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Comet_Layers_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Silver3_Layers_S_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_H.P_EFX_FireWorks_Silver3_Layers_S_H",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Silver3_Layers_S_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Silver3_Layers_S_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_SilverChry_GinKamuro_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SilverChry_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_H.P_EFX_FireWorks_SilverChry_H",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_SilverChry_GinKamuro_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SilverChry_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Crackle_Main_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Crackle_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_H.P_EFX_FireWorks_Crackle_H",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "L1_Flash：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Crackle_Main_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Flash",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Crackle_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Glitter_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Glitter_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_H.P_EFX_FireWorks_Glitter_H",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_Glitter_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Glitter_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_Strobe_Strobe_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Strobe_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_H.P_EFX_FireWorks_Strobe_H",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_Strobe_Strobe_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Strobe_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GoldRayChry_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldRayChry_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_H.P_EFX_FireWorks_GoldRayChry_H",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GoldRayChry_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldRayChry_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_MainA",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_YonshakuKamuro_Main_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_MainB",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_YonshakuKamuro_Main_02",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_YonshakuKamuro_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_H.P_EFX_FireWorks_GoldKamuro_H",
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Fireworks_Hero_FlowFixed_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldKamuro_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "row": "跨年烟花3.0_大型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_L_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_L_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_H.P_EFX_FireWorks_RiseTrail_Hero_H",
+   "row": "跨年烟花3.0_超大_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_Hero_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_Hero_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_H.P_EFX_FireWorks_RiseTrail_L_H",
+   "row": "跨年烟花3.0_大型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_L_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_L_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_M_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_M_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_H.P_EFX_FireWorks_RiseTrail_M_H",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_M_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_M_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_S_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_S_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_H.P_EFX_FireWorks_RiseTrail_S_H",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RiseTrail_S_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_S_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "row": "跨年烟花3.0_低位_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_XS_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_XS_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_H.P_EFX_FireWorks_RiseTrail_XS_H",
+   "row": "跨年烟花3.0_低位_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_XS_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_XS_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_H.P_EFX_FireWorks_RiseTrail_Tiny_H",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = Automatic，一次性特效建议 ActivateAutomatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "TrailFull",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RiseTrail_Tiny_Full_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_RiseTrail_Tiny_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  }
+ ]
+}

@@ -1,0 +1,1513 @@
+{
+ "format": "df.significance-lod-check/1",
+ "readAt": "2026-10-23T15:02:22+08:00",
+ "source": "GPUECli 只读（/object/get）",
+ "rule": "spec/烟花特效资产规范.md §6.1",
+ "rows": [
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GlitterChry_HD.P_EFX_FireWorks_GlitterChry_HD",
+   "errors": [],
+   "warns": [
+    "LODDistances [0,5000,8000,12000]：最后一档从 120 m 起，节目里多在 100 m 外看，基本都是最后一档"
+   ],
+   "infos": [
+    "explose_v1_Shadow：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "explose_v1_Shadow：LOD2 关（LOD0 开）",
+    "explose_v1_Shadow：LOD3 关（LOD0 开）",
+    "Initial Igniton：LOD3 关（LOD0 开）",
+    "Flash：LOD3 关（LOD0 开）",
+    "Particle Emitter：LOD2 关（LOD0 开）",
+    "Particle Emitter：LOD3 关（LOD0 开）"
+   ],
+   "emitters": [
+    {
+     "name": "explose_v1_Shadow",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_6DLight_Sub_Loop_17_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        15,
+        15
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        15,
+        15
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        15,
+        15
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Lead_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Initial Igniton",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_01_Depth_03",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Flash",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_16",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Gold_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L3_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_GlitterChry_Head_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sphere_Particle",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Glow_21_Add",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "M_EFX_Explosion_Glow_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        8,
+        8
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GlitterChry_HD",
+    "looping": false,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     5000,
+     8000,
+     12000
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SkyRocketTail_HD.P_EFX_FireWorks_SkyRocketTail_HD",
+   "errors": [],
+   "warns": [
+    "Particle Emitter：未分类（材质 WorldGridMaterial）是 Medium，确认它是辅助层",
+    "LODDistances [0,6000,8000,12000]：最后一档从 120 m 起，节目里多在 100 m 外看，基本都是最后一档"
+   ],
+   "infos": [
+    "Lens：LOD3 关（LOD0 开）",
+    "Particle Emitter：LOD2 关（LOD0 开）",
+    "Particle Emitter：LOD3 关（LOD0 开）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketTail_Soft_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Lens",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        4,
+        4
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        4,
+        4
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        4,
+        4
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Medium",
+     "disable": false,
+     "material": "WorldGridMaterial",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        7,
+        7
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketTail_L1_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketDot_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        10,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "M_EFX_Explosion_Glow_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketTail_HD",
+    "looping": true,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     6000,
+     8000,
+     12000
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "PC",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SkyRocketSparkler_HD.P_EFX_FireWorks_SkyRocketSparkler_HD",
+   "errors": [],
+   "warns": [
+    "LODDistances [0,5000,8000,12000]：最后一档从 120 m 起，节目里多在 100 m 外看，基本都是最后一档"
+   ],
+   "infos": [
+    "Particle Emitter：LOD3 关（LOD0 开）",
+    "Lens：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Streak：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "WorldGridMaterial",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": false,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Lens",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        5,
+        5
+       ]
+      }
+     ]
+    },
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_SkyRocketSparkler_Sparkler_01_HD",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Streak",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "M_EFX_Explosion_Glow_01",
+     "lods": 4,
+     "lodInfo": [
+      {
+       "i": 1,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      },
+      {
+       "i": 2,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      },
+      {
+       "i": 3,
+       "enabled": true,
+       "sameModules": true,
+       "count": [
+        6,
+        6
+       ]
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketSparkler_HD",
+    "looping": true,
+    "lods": 4,
+    "LODDistances": [
+     0,
+     5000,
+     8000,
+     12000
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_M.P_EFX_FireWorks_GlitterChry_M",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Gold_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Head_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GlitterChry_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_H.P_EFX_FireWorks_GlitterChry_H",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Lead_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Flash",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_16",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Glow_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": false,
+     "material": "MI_EFX_Glow_01_Depth_03",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Gold_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L3_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Head_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GlitterChry_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_L.P_EFX_FireWorks_GlitterChry_L",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L2_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_GlitterChry_Gold_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GlitterChry_L",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketTail_M.P_EFX_FireWorks_SkyRocketTail_M",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketTail_L1_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Dot",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketDot_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketTail_M",
+    "looping": true,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketTail_H.P_EFX_FireWorks_SkyRocketTail_H",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Lens：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_FireWorks_RocketTail_Soft_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Lens",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": false,
+     "material": "MI_EFX_Glow_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Light-right",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Glow_01_DepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketTail_L1_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Dot",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketDot_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketTail_H",
+    "looping": true,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketTail_L.P_EFX_FireWorks_SkyRocketTail_L",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_RocketTail_L1_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketTail_L",
+    "looping": true,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Smoke_M.P_EFX_FireWorks_Smoke_M",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "LODMethod = ActivateAutomatic，循环特效建议 Automatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Spark_Star_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_02",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Smoke_M",
+    "looping": true,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Smoke_H.P_EFX_FireWorks_Smoke_H",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Sparks_loop：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "Spark_Star_A：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）",
+    "LODMethod = ActivateAutomatic，循环特效建议 Automatic（只有 1 档 LOD，没有实际区别）"
+   ],
+   "emitters": [
+    {
+     "name": "Sparks_loop",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_15",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Spark_Star_B",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_02",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Spark_Star_A",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparkler_03",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_Smoke_H",
+    "looping": true,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSparkler_M.P_EFX_FireWorks_SkyRocketSparkler_M",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Streak：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "L1_Main",
+     "kind": "主体",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_FireWorks_SkyRocketSparkler_Sparkler_01",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Streak",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Sparks_main",
+     "kind": "辅助",
+     "sig": "Medium",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Sparkler_4x4_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketSparkler_M",
+    "looping": true,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "Automatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSprint_M.P_EFX_FireWorks_SkyRocketSprint_M",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Tou_Sparks_B：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_43",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Tou_Sparks_B",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketSprint_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSprint_H.P_EFX_FireWorks_SkyRocketSprint_H",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Tou_Sparks_B：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_43",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Tou_Sparks_B",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketSprint_H",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSprint_L.P_EFX_FireWorks_SkyRocketSprint_L",
+   "errors": [],
+   "warns": [],
+   "infos": [
+    "Tou_Sparks_B：辅助层是 Critical（永远不会被省掉；想省性能改 Medium）"
+   ],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Glow_43",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Tou_Sparks_B",
+     "kind": "辅助",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Spark_16_NoCameraDepthFade",
+     "lods": 1,
+     "lodInfo": []
+    },
+    {
+     "name": "Trail_B",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Sparks_Streak_8x1_02",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_SkyRocketSprint_L",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  },
+  {
+   "plat": "手游",
+   "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_M.P_EFX_FireWorks_GoldKamuro_M",
+   "errors": [],
+   "warns": [],
+   "infos": [],
+   "emitters": [
+    {
+     "name": "Particle Emitter",
+     "kind": "未分类",
+     "sig": "Critical",
+     "disable": true,
+     "material": "MI_EFX_Fireworks_Hero_FlowFixed_01",
+     "lods": 1,
+     "lodInfo": []
+    }
+   ],
+   "summary": {
+    "name": "P_EFX_FireWorks_GoldKamuro_M",
+    "looping": false,
+    "lods": 1,
+    "LODDistances": [
+     0
+    ],
+    "LODMethod": "ActivateAutomatic"
+   }
+  }
+ ]
+}

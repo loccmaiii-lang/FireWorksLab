@@ -276,3 +276,14 @@ D 进度（PC，`analysis/local/20261022_LiteHDR_批量修正/pc_fx.mjs` + `pc_p
 > 所以结论是，辅助层要硬切消失的，就medium+勾，不想硬切就medium+不勾？因为是critical，所以勾不勾都不会被切掉，所以勾选勾不勾都没有意义，我的裂解正确吗
 
 - [x] 确认理解正确；补充两个前提：Medium 只有在游戏把重要度降到它之下时才会被处理（3.0 行 bUpdateSignificance = False，节目里大概不会触发）；Critical 不被切的前提是系统 MaxSignificanceLevel 没被调低（10-23 走查 94 个系统都是 Critical）。改回用户原做法仍等用户点头。
+
+## 2026-10-23 上午 · 改回重要度勾选、加重要度检测规范、看 LODMethod
+
+用户原话：
+
+> 帮我改回去，并且后面帮我加个重要度检测的规范，按正确的重要度设置，同时帮我看看LodMethod，我现在一次性爆炸的效果都选Activate aoutomatic,循环效果用aotomatic，正不正确？
+
+拆解：
+- [x] 1 改回：27 个只因这个勾迁出的包在 P4 撤销（先核对磁盘 = 我保存时的哈希，确认没有别人的改动）；21 个混合包把我改过的发射器 bDisableWhenInsignficant 改回 True；撤销 Login.umap。→ 25 个先卸载、再 P4 撤销，磁盘回到改前（哈希核对）；Smoke_M / Smoke_H 用户已经自己撤销过（磁盘 = 改前；Smoke_H 正在编辑器里改，内存里的勾也都是原样），没碰。21 个混合包把勾改回、读回、保存。Login.umap 用 `p4 revert -a` 撤销并解锁。P4 打开数 94 → 66。顺带发现并修好我自己的一个错：窜天猴爆炸 PC（GlitterChry_HD，4 档 LOD）的颜色随机模块只加在 LOD0，50 m 外就没了 → 已按 Cascade 的做法共享进 4 档，LODValidity = 15，已保存。
+- [x] 2 规范：资产规范加「重要度」一节（主体层 Critical、辅助层 Medium + 勾 / 不勾的含义、系统 MaxSignificanceLevel = Critical、每个系统至少一个 Critical），加检测脚本并跑一遍。→ `spec/烟花特效资产规范.md` §6.1 + `analysis/scripts/重要度LOD检查.mjs`；结果 `analysis/results/20261023_重要度LOD检查/看法.md`：❌ 红彗星 / 银星扇 / 小彗星 PC LOD 距离全 0（游戏永远用最后一档，红彗星三个点层、银星扇 Dot_A 会消失；推断未实测），彩千轮没有 Critical 层 + 节目里落在 LOD3。都没改，等用户定。
+- [x] 3 LODMethod：讲清三种的区别，读 3.0 全部粒子现状，对照用户的做法列出不一致的。→ 用户做法正确；只有多档 LOD 时才有区别，3.0 绝大多数只有 1 档。
