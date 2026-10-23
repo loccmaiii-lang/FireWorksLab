@@ -316,3 +316,11 @@ D 进度（PC，`analysis/local/20261022_LiteHDR_批量修正/pc_fx.mjs` + `pc_p
 拆解：
 - [x] 1 3.0 全部粒子（PC + 手游，不含共享的 P_Destructible_Empty）里 bDisableWhenInsignficant 没勾的发射器全部勾上；编辑器里有用户未保存改动的包跳过并列出；备份 → 迁出 → 改 → 读回 → 保存。→ 54 个包、99 个发射器勾上（Critical 84、Medium 15），逐包读回、保存；备份 `备份/sig_tick/`。跳过 2 个编辑器里有未保存改动的包：Glitter_HD（L1_Main）、GoldKamuro_V3_HD（3 个），要用户保存后自己勾或叫我。复查 212 个发射器只剩这 4 个没勾。P4 打开 78 个。
 - [x] 2 红彗星 / 银星扇：按用户决定不删 LOD、不加点层，保持现状（游戏里继续用现在这档）。→ 没动 LOD。
+
+## 2026-10-23 中午 · 用户没看到 LODMethod 的回答
+
+用户原话：
+
+> 同时帮我看看LodMethod，我现在一次性爆炸的效果都选Activate aoutomatic,循环效果用aotomatic，正不正确？ 这个问题你回答给我了嘛？我没看到
+
+- [x] 上一轮回复第 3 节回答过；这次单独再答一遍（结论：做法正确；只有多档 LOD 时才有区别；结果在 `analysis/results/20261023_重要度LOD检查/看法.md`）。
