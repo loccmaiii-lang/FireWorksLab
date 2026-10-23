@@ -259,6 +259,15 @@
       "授权": "用户 10-22：只改 3.0 烟花；复制 _M→_H、FxSP_High 改指 _H；用户 19:3x：_H / _M 都要调亮，颜色倍增 ≤ 3、亮度走 alpha，先设计对照再出方案执行；用户 23:1x：3.0 手游 _H/_M 加颜色 / 大小随机 ±8%（加出生定色模块）；_H 自发光照 PC；用户 10-23 01:3x：PC + 手游粒子做到交付水准、规范漏的补上、金垂柳 v3 只改名搬目录、查彗星硬切、引擎崩了自行重启",
       "保护": "不改材质实例 / 母材质 / 贴图；共享贴图、共享表只列不改；不提交 P4；改前备份 uasset",
       "结果": "第一轮：18 个 _H、表 FxSP_High 改指 _H、35 包 LiteHDR 调色（用户已提交）。第二轮：_H 自发光照 PC（17 包）、36 包 ±8% 颜色 / 大小随机（主发射器加 Initial Color），读回一致、已迁出未提交。看法 analysis/results/20261022_LiteHDR_手游分档/看法.md。未做：PC 随机、窜天猴 sku。 10-23：手游随机 ±8%→±5%；PC 方案 协作/方案/PC烟花随机_2026-10-23.md（未改 PC）。 10-23 通宵：PC 22 包提亮 / 爆发 / 随机（读回 + 截图测量，analysis/results/20261023_PC提亮爆发随机/看法.md）；_H 4 包同步爆发；48 包 108 发射器 bDisableWhenInsignficant→false；金垂柳 v3 7 个资产改名搬目录（P4 add）；彗星硬切原因 = 资源表同 ID 上限 10（analysis/results/20261023_彗星硬切排查/看法.md，没改表）。P4 共 92 个文件已迁出 / 新增未提交。 10-23 早：PC 爆裂星 / 金芒菊对齐用户 _H（20 / 10）；独立星群 3 层加 ±5% 大小；上限建议表给用户（夜场红彗星 / 银星扇要 260）。"
+    },
+    "LiteHDR（Claude Code） · 私有导入器 v2.30：LODMethod 按循环 / 一次性": {
+      "负责": "LiteHDR（Claude Code）",
+      "日期": "2026-10-23",
+      "状态": "进行中：认领私有导入器源码（导入器（5）上一轮已释放）",
+      "范围": "D:/FXTools/DFWorkbench/workbench 的 fireworks-system-policy.js、fireworks-import.js（两处调用）、check-import-system-policy.cjs；build-delivery.py 重建 df-fireworks-delivery_locmai.html + tool/local_delivery/runtime 副本",
+      "授权": "用户 10-23 下午：「按照正确的设置方式，写到导入规则中」（一次性 ActivateAutomatic、循环 Automatic）",
+      "保护": "只改 LODMethod 一项；其它导入规则、df-fx-workbench_v2 原字节不动；不写 UE",
+      "记录": "对话记录/对话框LiteHDR.md"
     }
   },
   "effects": [
