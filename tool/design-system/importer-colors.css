@@ -1,0 +1,72 @@
+/* 原特效工作台的颜色适配；数值由同目录 tokens.json 注入，保留原有排版与业务状态。 */
+:root {
+  --md-surface:var(--fw-color-surface);
+  --md-surface-lowest:var(--fw-color-surface-low);
+  --md-surface-low:var(--fw-color-surface-low);
+  --md-surface-container:var(--fw-color-surface-container);
+  --md-surface-high:var(--fw-color-surface-high);
+  --md-surface-highest:var(--fw-color-surface-high);
+  --md-on-surface:var(--fw-color-on-surface);
+  --md-on-surface-variant:var(--fw-color-on-surface-muted);
+  --md-primary:var(--fw-color-primary);
+  --md-on-primary:var(--fw-color-on-primary);
+  --md-primary-container:var(--fw-color-primary-container);
+  --md-on-primary-container:var(--fw-color-on-primary-container);
+  --md-secondary-container:var(--fw-color-primary-container);
+  --md-on-secondary-container:var(--fw-color-on-primary-container);
+  --md-outline:var(--fw-color-outline);
+  --md-outline-variant:var(--fw-color-divider);
+  --md-error:var(--fw-color-error);
+  --md-error-container:var(--fw-color-error-container);
+  --md-warning:var(--fw-color-warning);
+  --md-warning-container:var(--fw-color-warning-container);
+  --bg:var(--md-surface);--card:var(--md-surface-container);--input:var(--md-surface-low);
+  --text:var(--md-on-surface);--muted:var(--md-on-surface-variant);--border:var(--md-outline-variant);
+  --accent:var(--md-primary);--accent-hover:var(--fw-color-focus);
+  --danger:var(--md-error);--warn:var(--md-warning);--ok:var(--fw-color-success);
+}
+.sidebar .tab.active{border-color:var(--md-primary)}
+.fw-item.inspect,.fw-filters button.active{background:var(--md-primary-container)}
+.chip:has(input:checked),.usage code{background:var(--md-primary-container);color:var(--md-on-primary-container);border-color:var(--md-primary)}
+.wb-flow li.is-done .wb-flow-index,.wb-table-tab[aria-selected=true]{background:var(--md-primary-container);color:var(--md-on-primary-container);border-color:var(--md-primary)}
+.fw-steps li.active span,.wb-flow li[aria-current=step] .wb-flow-index,.wb-platform[aria-pressed=true],.btn.ghost.wb-review-primary{color:var(--md-on-primary)}
+#resfx-plan .wb-resource-selected{background:var(--md-primary-container)}
+.badge.on,.badge.ok,.badge.connected,.fw-tag.ready{background:var(--fw-color-success-container);color:var(--fw-color-success)}
+.badge.off{background:var(--md-error-container);color:var(--md-error)}
+.badge.checking,.user-tag .ver{background:var(--md-surface-high);color:var(--md-on-surface-variant)}
+.parent-input.auto-ok{background:var(--fw-color-success-container)!important;border-color:var(--fw-color-success)}
+.parent-input.manual-warn{background:var(--md-warning-container)!important;border-color:var(--md-warning)}
+.dir-suggest,.fw-note,#panel-show .df-export-warning{background:var(--md-warning-container);color:var(--md-warning);border-color:var(--md-warning)}
+.fw-asset-warning{border-color:var(--md-warning)}
+.fw-note.error,.fw-status.error,.tokenmap-del:hover{background:var(--md-error-container);color:var(--md-error)}
+.execution-card{border-color:var(--fw-color-success)}
+.btn.ghost:hover:not(:disabled),.btn.wb-secondary:hover:not(:disabled){background:var(--md-surface-high)}
+button:disabled,.btn:disabled,.df-button:disabled{color:var(--md-on-surface-variant)!important}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline-color:var(--fw-color-focus)}
+.logcard #log{background:var(--md-surface-low);color:var(--md-on-surface)}
+.logcard #log .ok{color:var(--fw-color-success)}
+.logcard #log .err{color:var(--md-error)}
+.logcard #log .warn{color:var(--md-warning)}
+
+/* 旧编排/配表分区只适配界面控件；不覆盖烟花画布与示意图的数据颜色。 */
+.sp-root{color:var(--md-on-surface)}
+.sp-switch,.sp-tabs,.sp-list,.sp-form-divider,.sp-root details,.sp-import-row,.sp-root :is(th,td){border-color:var(--md-outline-variant)}
+.sp-switch button,.sp-root button{background:var(--md-surface-container);border-color:var(--md-outline-variant);color:var(--md-on-surface)}
+.sp-switch button[aria-pressed=true],.sp-list button[aria-pressed=true]{background:var(--md-primary-container);color:var(--md-on-primary-container);border-color:var(--md-primary)}
+.sp-switch button span,.sp-switch-note,.sp-root label,.sp-eyebrow,.sp-root p,.sp-list small,.sp-empty,.sp-timebar span,.sp-legend,.sp-stat span,.sp-output-select span,.sp-import-row small{color:var(--md-on-surface-variant)}
+.sp-root button:hover:not(:disabled){border-color:var(--md-outline);background:var(--md-surface-high)}
+.sp-root .sp-primary{background:var(--md-primary);border-color:var(--md-primary);color:var(--md-on-primary)}
+.sp-root .sp-primary:hover:not(:disabled){background:var(--fw-color-focus);border-color:var(--fw-color-focus)}
+.sp-root :is(input,select,textarea){background:var(--md-surface-low);border-color:var(--md-outline);color:var(--md-on-surface)}
+.sp-root input[type=checkbox],.sp-root input[type=range]{accent-color:var(--md-primary)}
+.sp-root :is(button,input,select,textarea):focus-visible{outline-color:var(--fw-color-focus)}
+.sp-project-bar,.sp-root th,.sp-stat,.sp-dialog-sheet{background:var(--md-surface-container)}
+.sp-tabs button[aria-pressed=true],.sp-timebar output{color:var(--md-primary)}
+.sp-root summary,.sp-root td,.sp-stat strong{color:var(--md-on-surface)}
+.sp-root th{color:var(--md-on-surface-variant)}
+.sp-root .sp-danger,.sp-error{color:var(--md-error)}
+.sp-warning,.sp-prefire{color:var(--md-warning)!important}
+.sp-good{color:var(--fw-color-success)}
+.sp-badge{background:var(--fw-color-success-container);color:var(--fw-color-success);border-color:var(--md-outline-variant)}
+.sp-stat,.sp-dialog-sheet{border-color:var(--md-outline-variant)}
+.sp-notice,.sp-root .sp-bridge{background:var(--md-primary-container);color:var(--md-on-primary-container);border-color:var(--md-primary)}
