@@ -65778,11 +65778,43 @@ var FW_EFFECTS = [
 {
 "id": "NFE-GRS1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
-"exports": [],
+"exports": [
+{
+"job": "NFE-GRS1",
+"entry": "GRS1",
+"ver": "88693b43·graph4.9.118+loop4.9.106",
+"time": "2026-10-25 12:12",
+"packages": [
+{
+"name": "Grinder_Steel_M_01",
+"replica": "GRS1",
+"files": [
+"Grinder_Steel_M_01.json",
+"Grinder_Steel_M_01_Cascade参数.txt",
+"Grinder_Steel_M_01_Mobile.json",
+"Grinder_Steel_M_01_曲线.csv",
+"T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01.png",
+"T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01_C.png",
+"T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01_HD.png",
+"T_EFX_FireWorks_Grinder_Steel_M_01_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+}
+],
 "thumb": null,
 "thumbSim": null
 }
