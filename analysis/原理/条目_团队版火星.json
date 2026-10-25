@@ -1,0 +1,166 @@
+{
+ "说明": "团队版 T5 复杂火星模板（团队版（云端），2026-10-25 起）：按 analysis/原理/<模板>.md 的物理推导建；不改已有条目、正式库、默认值。英文名按「类别_形态或材质_尺寸_序号」（前缀 T_EFX_FireWorks_ 由系统加）。",
+ "entries": [
+  {
+   "id": "EXC1-B",
+   "date": "2026-10-25",
+   "name": "爆炸分簇火星 · 大火团（4 mm）",
+   "base": "kamuro",
+   "tags": "团队版 爆炸 分簇 扇面 锦冠 火团 Explosion_Cluster",
+   "p": {
+    "seed": 11,
+    "pattern": "cluster",
+    "clusterLayout": "fan",
+    "clusterN": 6,
+    "clusterFan": 140,
+    "clusterCone": 5,
+    "clusterStarsJit": 40,
+    "clusterDirJit": 8,
+    "clusterGap": 0.5,
+    "clusterSweep": 0,
+    "stars": 60,
+    "v0": 55,
+    "speedJit": 20,
+    "vt": 12.6,
+    "grav": 1,
+    "massLoss": 0.75,
+    "burn": 2.5,
+    "burnJit": 25,
+    "fade": 0.3,
+    "lastFlare": 0,
+    "headSize": 0.15,
+    "headBright": 1.0,
+    "sparkRate": 300,
+    "sparkLife": 1.0,
+    "sparkLifeJit": 40,
+    "sparkDrag": 8.2,
+    "sparkQ": 1.19,
+    "sparkInherit": 0.9,
+    "sparkInhJit": 20,
+    "sparkSpread": 2,
+    "sparkGrav": 1,
+    "T0": 2300,
+    "cooling": 0.2,
+    "sparkSize": 0.1,
+    "emberFrac": 0,
+    "flash": 1.5,
+    "flashR": 3,
+    "flashTau": 0.05,
+    "flashLife": 0.3,
+    "duration": 4.5,
+    "exposure": 3.0,
+    "renderVer": 40
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ffd9a0"
+     ]
+    ],
+    "ramp0": "#000000",
+    "ramp1": "#8a3a10",
+    "ramp2": "#ffc979",
+    "ramp3": "#fff6e8"
+   },
+   "note": "L1：4 mm 燃烧团，平方阻力 vt 12.6 m/s、燃烧变轻 0.75、每颗拖锦冠火花尾（火花两项阻力：线性 8.2 /s + 平方 1.19 /m，慢慢垂下成帘）；带开花闪光。手机只出这一层。团队版 T5（云端，2026-10-25）：按 analysis/原理/爆炸分簇火星.md 第 3 节的推导值建；两层同一批簇（同种子 11：簇方向、每簇星数比例一致），大团冲高约 24 m、飞约 33 m，小团约 11 m 就灭。调整只有曝光（模板 4 → 3，1.0 s 最亮时不顶白）和星头亮度（火团在尾里看得出），其余照推导；火花阻力 8.2 /s 超出滑杆 0–8 照填。未经 UE 验证。"
+  },
+  {
+   "id": "EXC1-S",
+   "date": "2026-10-25",
+   "name": "爆炸分簇火星 · 小火团（1.5 mm）",
+   "base": "kamuro",
+   "tags": "团队版 爆炸 分簇 扇面 锦冠 火团 Explosion_Cluster",
+   "p": {
+    "seed": 11,
+    "pattern": "cluster",
+    "clusterLayout": "fan",
+    "clusterN": 6,
+    "clusterFan": 140,
+    "clusterCone": 5,
+    "clusterStarsJit": 40,
+    "clusterDirJit": 8,
+    "clusterGap": 0.5,
+    "clusterSweep": 0,
+    "stars": 90,
+    "v0": 55,
+    "speedJit": 20,
+    "vt": 7.3,
+    "grav": 1,
+    "massLoss": 0.75,
+    "burn": 1.0,
+    "burnJit": 25,
+    "fade": 0.3,
+    "lastFlare": 0,
+    "headSize": 0.15,
+    "headBright": 0.6,
+    "sparkRate": 40,
+    "sparkLife": 1.0,
+    "sparkLifeJit": 40,
+    "sparkDrag": 8.2,
+    "sparkQ": 1.19,
+    "sparkInherit": 0.9,
+    "sparkInhJit": 20,
+    "sparkSpread": 2,
+    "sparkGrav": 1,
+    "T0": 2300,
+    "cooling": 0.2,
+    "sparkSize": 0.1,
+    "emberFrac": 0,
+    "flash": 0,
+    "duration": 4.5,
+    "exposure": 3.0,
+    "renderVer": 40
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ffd9a0"
+     ]
+    ],
+    "ramp0": "#000000",
+    "ramp1": "#8a3a10",
+    "ramp2": "#ffc979",
+    "ramp3": "#fff6e8"
+   },
+   "note": "L2：1.5 mm 小团，vt 7.3 m/s、燃烧 1 s、火花 40 /s，飞得近、早灭、尾短；和 L1 同一套簇。只出 PC。团队版 T5（云端，2026-10-25）：按 analysis/原理/爆炸分簇火星.md 第 3 节的推导值建；两层同一批簇（同种子 11：簇方向、每簇星数比例一致），大团冲高约 24 m、飞约 33 m，小团约 11 m 就灭。调整只有曝光（模板 4 → 3，1.0 s 最亮时不顶白）和星头亮度（火团在尾里看得出），其余照推导；火花阻力 8.2 /s 超出滑杆 0–8 照填。未经 UE 验证。"
+  }
+ ],
+ "combos": [
+  {
+   "id": "EXC1",
+   "date": "2026-10-25",
+   "name": "爆炸分簇火星 · 锦冠扇面分簇（Explosion_Cluster_M_01）",
+   "layers": [
+    {
+     "m": "rep:EXC1-B",
+     "scale": 1,
+     "delay": 0
+    },
+    {
+     "m": "rep:EXC1-S",
+     "scale": 1,
+     "delay": 0,
+     "out": {
+      "pc": "seq",
+      "mobile": "off",
+      "mobileManual": true
+     }
+    }
+   ],
+   "layerNames": [
+    "大火团",
+    "小火团"
+   ],
+   "tags": "团队版 爆炸 分簇 扇面 锦冠 Explosion_Cluster EXC1",
+   "note": "爆炸把燃烧团抛成 6 束（扇面 140°、每束半角 5°、每束数量 ±40%、方向 ±8°），束内前快后慢拉成一串；火团走平方阻力弧线先冲后坠，火花几乎立刻停住、以约 1 m/s 慢慢垂下。一次性，固定取景，Pivot 在爆点。团队版 T5（云端，2026-10-25）：按 analysis/原理/爆炸分簇火星.md 第 3 节的推导值建；两层同一批簇（同种子 11：簇方向、每簇星数比例一致），大团冲高约 24 m、飞约 33 m，小团约 11 m 就灭。调整只有曝光（模板 4 → 3，1.0 s 最亮时不顶白）和星头亮度（火团在尾里看得出），其余照推导；火花阻力 8.2 /s 超出滑杆 0–8 照填。未经 UE 验证。",
+   "look": [
+    "0–0.5 s：闪光后 6 束近平行的火团飞出，束和束之间分得开",
+    "1–2 s：火团减速成弧、尾巴挂在空中往下垂成帘（像锦冠），大小两档同一束里自然分层",
+    "2.5–4 s：大团下坠熄灭、尾巴慢慢散",
+    "引擎回放 + 游戏内大小：束够不够清楚、两层叠起来有没有顶白；手机只剩大团时还像不像"
+   ]
+  }
+ ]
+}

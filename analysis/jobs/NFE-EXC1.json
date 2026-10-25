@@ -1,0 +1,9 @@
+{
+ "id": "NFE-EXC1",
+ "type": "export",
+ "effect": "explosion_cluster",
+ "entry": "EXC1",
+ "name": "Explosion_Cluster_M_01",
+ "priority": 1,
+ "note": "团队版（云端）T5 · 烘焙器 4.9.123：爆炸分簇火星（礼花锦冠 + 扇面 6 簇，一次性、固定取景）两层组合导出一个包——PC 大火团 + 小火团两个发射器，手机只出大火团（小火团层手机「不出」）。导出后自动跑回放检查；云端软件渲染跑不动全量，交本机。用户的重导优先（priority 1）。"
+}
