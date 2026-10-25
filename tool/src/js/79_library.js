@@ -187,7 +187,7 @@ function dropEffectEdits(ef) {
 // 4.9.101 打开代次（用户 10-14「来来回回反复出现」的根因）：页面一打开会自动开「新」的待验收候选（组合，要烘好几秒），
 //   烘完前点别的，旧任务晚回还会 setReview(旧条目)、装层、换面包屑 —— wbKey 变成 rv:旧条目，名字 / 尺寸 / 缩略图都记到别人名下。
 //   每次打开 +1；异步打开每个 await 之后核对，过期就停，不再发布身份和画面。
-function libOpenBegin() { const g = lib.openGen = (lib.openGen || 0) + 1; return () => g === lib.openGen; }
+function libOpenBegin() { if (typeof openLater !== 'undefined') { openLater.want = false; openLater.n = 0; } const g = lib.openGen = (lib.openGen || 0) + 1; return () => g === lib.openGen; }     // 4.9.123 每次打开重新问「稍后烘焙」
 function libOpenAlive() { const g = lib.openGen || 0; return () => g === (lib.openGen || 0); }     // 不开新一代：同一个对象里换版本
 function beforeOpen(nextEf) {
   if (typeof libOpenBegin === 'function') libOpenBegin();

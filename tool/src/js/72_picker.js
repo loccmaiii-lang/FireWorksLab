@@ -18,7 +18,7 @@ const TYPE_META = {
   wheel: ['旋转的火轮', '循环 地面 旋转'], fan: ['扇形连射的彗星', '循环 地面 扇形 连发'],
   barrage: ['一发接一发往上打，末端开小花', '循环 地面 连发'], shikake: ['发光的文字或图案', '循环 地面 文字'],
   sgSparkler: ['13 层分层粒子图：快慢火星、分叉、余烬和轻气流（照 SGS1）', '粒子图 仙女棒 火星 分层 循环 sparkler'], sgRocket: ['13 层分层粒子图：短促喷射的尾焰（照 SGR1）', '粒子图 窜天猴 尾焰 火星 分层 循环 rocket'],
-  sgBlank: ['只有一层粒子的分层粒子图，从零搭', '粒子图 空白 从零 新建 分层 火星 blank']
+  sgBlank: ['只有一层粒子：右栏「粒子层 N ▾」里加层 / 加子粒 / 复制，从零搭', '粒子图 空白 从零 新建 分层 火星 blank']
 };
 const PK_CATS = [['all', '全部'], ['mytpl', '我的模板'], ['myfxl', '我的效果的层'], ['fx', '现有效果的层'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g]), ['多层模板', '多层模板']];     // 4.5.5 多层花型模板（18_multitypes.js）
 const pk = { cat: 'all', q: '', fav: new Set(), recent: [], mode: 'open', onPick: null };

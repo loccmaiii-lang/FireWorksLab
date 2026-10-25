@@ -26,6 +26,7 @@ const KEYMAP = [
   { id: 'redo', label: 'Ctrl+Shift+Z / Ctrl+Y', what: '重做', where: '全局', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && ((e.shiftKey && e.key.toLowerCase() === 'z') || e.key.toLowerCase() === 'y') },
   { id: 'esc', label: 'Esc', what: '关掉最上面的一样：参数说明 → 花型库 → 更新记录 → 打开的菜单 → 抽屉式的栏；都没有时切精简布局', where: '全局', guard: 'none', test: e => e.key === 'Escape' },
   { id: 'keys', label: '?', what: '看这张快捷键表', where: '全局', guard: 'typing', test: e => !e.ctrlKey && !e.metaKey && !e.altKey && e.key === '?' },
+  { id: 'tree', label: 'Ctrl+/', what: '粒子层结构：打开 / 关掉（有分层粒子图的效果；4.9.123）', where: '右栏', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && (e.key === '/' || e.code === 'Slash') },
   { id: 'help', label: 'F1', what: '参数说明：打开光标所在参数的说明（固定在右栏底部）；开着时再按一次关掉', where: '右栏', guard: 'none', test: e => e.key === 'F1' && !e.ctrlKey && !e.metaKey && !e.altKey },     // 4.9.8（对话框23）
 ];
 function plain(e) { return !e.ctrlKey && !e.metaKey && !e.altKey; }     // 和以前一样：按着 Shift 也算（R / F / V / L / P、方向键）

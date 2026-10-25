@@ -94,7 +94,7 @@ function setAutoBake(on) {
 }
 // 现在打开的是什么：换了东西（打开别的效果 / 模板 / 切单层 ↔ 多层）一定要烘
 function bakeSubject() { return [typeof lib !== 'undefined' ? lib.key : '', state.repId || '', state.P && state.P.type, state.tab].join('|'); }
-const layerStale = e => !!(e && e.bake && (e.pRev || 0) !== (e.bakeRev || 0));
+const layerStale = e => !!(e && ((e.later && !e.bake) || (e.bake && (e.pRev || 0) !== (e.bakeRev || 0))));     // 4.9.123：点了「稍后烘焙」、还没有贴图的层也算（按 B 烘）
 function bakeStale() {
   if (state.tab === 'combo') return state.layers.some(L => layerStale(layerEntryOf(L)));
   return !!(state.bake && state.dirty && state.failedGen !== state.gen);
@@ -949,8 +949,11 @@ function scopeLayerName() {
 function scopeSync() {
   const sc = document.querySelector('#params .pscope'); if (!sc) return;
   const q = pview.q || '', emit = q ? `搜索「${q}」` : pview.changed ? '改过的参数' : pview.tabNow === '全部' ? '全部发射器' : pview.tabNow || '';
-  const path = sc.querySelector('.ps-path'), ln = scopeLayerName(), title = `现在改的是：${ln} › ${emit}`;
-  if (path.title !== title) { path.replaceChildren(); for (const [cls, text] of [['ps-layer', ln], ['ps-sep', '›'], ['ps-emit', emit]]) { const part = document.createElement('span'); part.className = cls; part.textContent = text; path.appendChild(part); } path.title = title; }
+  const chain = !q && !pview.changed && typeof sgPathParts === 'function' ? sgPathParts(pview.tabNow) : null;     // 4.9.123（团队版 ②）粒子层：效果 › 层 › 母粒 › 这一层
+  const path = sc.querySelector('.ps-path'), ln = scopeLayerName(), title = `现在改的是：${ln} › ${chain ? chain.map(x => x.name).join(' › ') : emit}`;
+  if (path.title !== title) { path.replaceChildren(); const parts = chain ? [['ps-layer', ln], ...chain.flatMap((x, i) => [['ps-sep', '›'], [i < chain.length - 1 ? 'ps-anc' : 'ps-emit', x.name, x.tab]])] : [['ps-layer', ln], ['ps-sep', '›'], ['ps-emit', emit]];
+    for (const [cls, text, tab] of parts) { const part = document.createElement(tab && cls === 'ps-anc' ? 'button' : 'span'); part.className = cls; part.textContent = text; if (part.tagName === 'BUTTON') { part.type = 'button'; part.title = `改母粒「${text}」`; part.addEventListener('click', () => selectEmitTab(tab)); } path.appendChild(part); } path.title = title; }
+  if (typeof sgTreeButton === 'function') sgTreeButton(sc);
   // 4.9.14：多层里这一层的独看 / 静音（只影响观察，和图层管理那两个按钮是同一个开关）
   const lay = state.tab === 'combo' && state.comboSel >= 0 && state.layerView, pv = sc.querySelector('.ps-view');
   // 4.9.87 分层粒子图：选着某一层时「独看」= 实时模拟只画这一层（以前是粒子图面板里的「只看这一层」；导出仍含全部启用层），没有「静音」
@@ -1104,7 +1107,7 @@ function inspectorCurveHTML(keys) {
 function inspectorNavSync(bar) {
   if (!bar) return;
   const bs = [...bar.querySelectorAll('[data-e]')], names = bs.filter(b => !b.hidden).map(b => b.dataset.e);
-  const nav = inspectorNavItems(names, pview.tabNow), more = bar.querySelector('.emit-more');
+  const nav = (typeof sgNavNames === 'function' && sgNavNames(names, pview.tabNow)) || inspectorNavItems(names, pview.tabNow), more = bar.querySelector('.emit-more');     // 4.9.123 粒子层不挤进「4 个 + 更多 N」
   const focusTab = nav.shown.includes(pview.tabNow) ? pview.tabNow : nav.shown[0];
   bs.forEach(b => { b.classList.toggle('nav-overflow', !nav.shown.includes(b.dataset.e)); b.tabIndex = b.dataset.e === focusTab ? 0 : -1; });
   if (!more) return;
@@ -1200,6 +1203,30 @@ function libByType(t) {
   if (t.startsWith('rep:')) return state.lib.find(e => e.rep === t.slice(4));
   return state.lib.find(e => e.name === defaultLibName(t)) || state.lib.find(e => e.type === t);
 }
+// 4.9.123（团队版 T3 ⑥，用户 10-25 00:00「全批准」）：打开 / 新建多层效果时每层都先烘一张母版，期间画面被进度条挡着、不能先看。
+//   进度条下面多一个「稍后烘焙」：点了 = 这次打开不再等（正在烘的那一层停下，后面的层不烘）；实时模拟照常看、照常调，
+//   引擎回放 / 贴图写「这一层还没烘好」，按 B、改这一层的参数或导出时再烘（导出本来就按导出参数重新烘）。不点就和以前一样。
+const openLater = { want: false, n: 0 };
+const BAKE_LATER = new Error('稍后烘焙');
+function laterButton(on) {
+  const b = $('#busy'); if (!b) return; let x = b.querySelector('.busy-later');
+  if (on && !x) { x = document.createElement('button'); x.type = 'button'; x.className = 'btn mini busy-later'; x.title = '先打开，不等这些层烘完：实时模拟照常看、照常调；要看引擎回放 / 贴图时按 B（导出会自己烘）';
+    x.addEventListener('click', () => { openLater.want = true; x.disabled = true; x.textContent = '先打开…'; }); b.appendChild(x); }
+  if (x && (x.hidden !== !on || on)) { x.hidden = !on; if (on && !openLater.want) { x.disabled = false; x.textContent = '稍后烘焙'; } }
+}
+// 打开时烘一层：点过「稍后烘焙」就不烘、返回 null（这一层先没有贴图，标 later）
+async function bakeOrLater(run) {
+  if (openLater.want) { openLater.n++; return null; }
+  laterButton(true);
+  try { return await run(p => { if (openLater.want) throw BAKE_LATER; return p; }); }
+  catch (e) { if (e === BAKE_LATER) { openLater.n++; return null; } throw e; }
+}
+// 点过「稍后烘焙」、还没烘的层（自动烘焙开着也不会自己烘：等 B / 改参数 / 导出）
+const laterWaiting = () => state.tab === 'combo' && (state.layers || []).some(L => { const e = layerEntryOf(L); return e && e.later && !e.bake; });
+function laterDone() {
+  laterButton(false); const n = openLater.n; openLater.n = 0;
+  if (n) setTimeout(() => flash(`先打开了：${n} 层还没烘（实时模拟照常；要看引擎回放 / 贴图按 B，导出会自己烘）`, false, 9000), 60);
+}
 // 组合里用到但还没烘焙的母版（实拍复刻层）现烘
 async function ensureLibEntries(keys, mats) {     // 4.9.102 mats：key → 组合里第一层用它时存的颜色（rtFxMatP）
   // 单独调过的层：参数变了就丢掉旧烘焙，按调过的参数重烘
@@ -1213,14 +1240,14 @@ async function ensureLibEntries(keys, mats) {     // 4.9.102 mats：key → 组�
     const k = need[i];
     if (k.startsWith('rep:')) {
       const id = k.slice(4), r = REPLICA_BY_ID[id], ed = state.layerEdits && state.layerEdits[id], { P, M } = ed ? { P: migrate37(ed.P), M: ed.M } : replicaPM(id);
-      const b = await bake(rtFxMatP(libP(P, true), M, mats && mats.get(k)), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
-      state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b, editSig: ed ? JSON.stringify([ed.P, ed.M]) : undefined });
+      const b = await bakeOrLater(chk => bake(rtFxMatP(libP(P, true), M, mats && mats.get(k)), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + chk(p)) / need.length)));     // 4.9.123 稍后烘焙
+      state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b, editSig: ed ? JSON.stringify([ed.P, ed.M]) : undefined, ...(b ? {} : { later: true, failedRev: -1 }) });
     } else {
-      const d = defaultsFor(k), b = await bake(rtFxMatP(libP(d.P), d.M, mats && mats.get(k)), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + p) / need.length));
-      state.lib.push({ name: defaultLibName(k), type: k, P: d.P, M: d.M, bake: b });
+      const d = defaultsFor(k), b = await bakeOrLater(chk => bake(rtFxMatP(libP(d.P), d.M, mats && mats.get(k)), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + chk(p)) / need.length)));
+      state.lib.push({ name: defaultLibName(k), type: k, P: d.P, M: d.M, bake: b, ...(b ? {} : { later: true, failedRev: -1 }) });
     }
   }
-  busy(false);
+  busy(false); laterButton(false);
 }
 function newLayer(entry, o = {}) {
   const M = entry.M;
@@ -1239,8 +1266,8 @@ function layerEntryFor(e, used) { return used.has(e) || state.layers.some(L => L
 async function libOwn(src, over) {
   const t = src.type || src.P.type, base = (TYPE_NAMES[t] || t).replace(/（.*）/, '') + ' · 我的'; let n = 1; while (state.lib.some(x => x.name === `${base} ${n}`)) n++;
   const P = migrate37(structuredClone(src.P)), M = structuredClone(src.M || defaultsFor(t).M);
-  const b = await bake(rtFxMatP(libP(P, true), M, over), 1, p => busy(true, `烘焙你的层：${base} ${n}`, p)); busy(false);
-  const e = { name: `${base} ${n}`, type: t, P, M, bake: b, own: true }; state.lib.push(e); return e;
+  const b = await bakeOrLater(chk => bake(rtFxMatP(libP(P, true), M, over), 1, p => busy(true, `烘焙你的层：${base} ${n}`, chk(p)))); busy(false); laterButton(false);     // 4.9.123 稍后烘焙
+  const e = { name: `${base} ${n}`, type: t, P, M, bake: b, own: true, ...(b ? {} : { later: true, failedRev: -1 }) }; state.lib.push(e); return e;
 }
 // 4.9.101 alive：打开代次（79_library.js libOpenBegin）。烘焙期间换了对象 → 不装层、不发布，这次自己烘的层释放（共用母版缓存留着）；返回 false
 async function applyCombo(c, alive = () => true) {
@@ -1264,6 +1291,7 @@ async function applyCombo(c, alive = () => true) {
   if(state.platform==='mobile')await ensureComboMobile();
   if (!alive()) return false;
   if (typeof buildLayerCard === 'function') buildLayerCard();
+  laterDone();     // 4.9.123 点过「稍后烘焙」：说一声哪几层还没烘
   return true;
 }
 // 4.9.36（用户 10-07 20:37「两层效果都设置了序列时长……模板默认是3.17秒，那它就一直显示3.17秒？不应该我改了7秒，时间轴也会延长到7秒吗」）：

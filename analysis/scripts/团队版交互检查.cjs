@@ -3,6 +3,8 @@
 //   ④ 「我的效果」导出全部 / 导入：同一份记录来回一致、重复导入不重复加、同编号不同内容另加一份、⋯配方文件（fwl.recipe/1）直接新增、我的模板一起带
 //   ⑤ 新建效果填英文名：字符集和导出拦截同一条、建议名不重名、对话框桩只回中文名时用建议名、MyFx 导出前拦下
 //   ⑥ 运行时标题、页面上没有「烘培」错字
+//   ② 粒子层加 / 复制 / 删 / 改母粒（4.9.123）：图始终成立、母粒在子粒前、删连子粒、改母粒不成环、从空白粒子图搭出仙女棒
+//   ⑥ 稍后烘焙（4.9.123）：不点照旧、点了停下且后面的不烘、层算「贴图旧了」、每次打开重新问
 //   ① 花型模板「粒子图」分组（4.9.122）：三个模板在分组里、仙女棒 / 尾焰和 SGS1 / SGR1 逐键一样且不读 review.js、↺ 还原回自己的图
 // 用法：node analysis/scripts/团队版交互检查.cjs（标准检查.py --ui-state-only 里也跑）
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict'), path = require('node:path');
@@ -184,6 +186,54 @@ ctx.mySrc = key => { const type = String(key).replace(/^(rv|rep|type):/, ''); re
     assert.equal(of({ type: 'sparkgraph', sparkGraph: { presetKey: 'sparkler' } }), GP.sparkler); assert.equal(of({ type: 'sparkgraph', sparkGraph: { presetKey: 'rocket' } }), GP.rocket);
     assert.equal(of({ type: 'sparkgraph', sparkGraph: { presetKey: 'nope' } }), null); assert.equal(of({ type: 'kiku' }), null);
     assert(src('79_assetops.js').includes('graphTemplateOf(P)) || GRAPH_PRESETS[P.sparkGraph.presetKey] || GRAPH_PRESETS.rocket'), '还原的老路径保留');
+  });
+  // ---------------- ② 粒子层加 / 复制 / 删 / 改母粒（4.9.123）----------------
+  vm.runInContext(src('79_graph_tree.js'), G, { filename: '79_graph_tree.js' });
+  const GTr = vm.runInContext('GraphTree', G), ok = g => { SG.validate(g); const seen = new Set(); for (const e of g.emitters) { assert(!e.parent || seen.has(e.parent), e.id + ' 的母粒要在前面'); seen.add(e.id); } return g; };
+  await check('② 加粒子层 / 加子粒 / 复制：新编号不重、种子换一个、子粒挂在母粒那一支后面，图都成立', () => {
+    const g = structuredClone(GT.sgSparkler.graph), n0 = g.emitters.length;
+    const a = GTr.add(g, null); ok(g); assert.equal(a.parent, null); assert.equal(g.emitters.at(-1), a); assert(!GT.sgSparkler.graph.emitters.some(e => e.id === a.id));
+    const c = GTr.add(g, 'e05'); ok(g); assert.equal(c.parent, 'e05'); assert.equal(c.count, 0); assert(c.children >= 1);
+    const br = GTr.subtree(g, 'e05').map(e => e.id); assert.deepEqual(br.slice(0, 1), ['e05']); assert(br.includes(c.id) && br.includes('e08'), '子粒、孙粒都算这一支');
+    assert.equal(g.emitters.at(-1), c, '新子粒加在最后（母粒在前面）');
+    const d = GTr.dup(g, 'e03'); ok(g); const o = g.emitters.find(e => e.id === 'e03');
+    assert.notEqual(d.seed, o.seed); assert.notEqual(d.id, o.id); assert.equal(d.parent, o.parent); assert.equal(d.count, o.count); assert.match(d.name, /中等金丝 副本$/);
+    assert.equal(new Set(g.emitters.map(e => e.id)).size, n0 + 3); assert.equal(new Set(g.emitters.map(e => e.seed)).size, n0 + 3);
+  });
+  await check('② 删：连子粒一起删、至少留一层；改母粒：整支挪过去、不能挂到自己的子孙上', () => {
+    const g = structuredClone(GT.sgSparkler.graph);
+    const gone = GTr.remove(g, 'e05').map(e => e.id); ok(g); assert.deepEqual(plain(gone.sort()), ['e05', 'e06', 'e07', 'e08']); assert(!g.emitters.some(e => gone.includes(e.id) || gone.includes(e.parent)));
+    const b = structuredClone(GT.sgBlank.graph); assert.throws(() => GTr.remove(b, 'e01'), /至少/);
+    const h = structuredClone(GT.sgSparkler.graph);
+    assert.throws(() => GTr.reparent(h, 'e05', 'e08'), /子粒/); assert.throws(() => GTr.reparent(h, 'e05', 'e05'), /子粒/);
+    assert.equal(GTr.parentChoices(h, 'e05').some(e => ['e05', 'e06', 'e07', 'e08'].includes(e.id)), false);
+    assert(GTr.reparent(h, 'e06', 'e02')); ok(h); assert.equal(h.emitters.find(e => e.id === 'e06').parent, 'e02'); assert.equal(h.emitters.find(e => e.id === 'e08').parent, 'e06', '孙粒跟着走');
+    assert(GTr.reparent(h, 'e06', null)); ok(h); assert.equal(h.emitters.find(e => e.id === 'e06').parent, null);
+    assert(GTr.reparent(h, 'e01', 'e03')); ok(h); assert(h.emitters.find(e => e.id === 'e01').children >= 1);
+    assert.equal(GTr.reparent(h, 'e01', 'e03'), false, '没变不算改');
+  });
+  await check('② 从空白粒子图零起步搭出仙女棒：加 / 加子粒得到同一棵 13 层树，填上参数后和仙女棒模板逐键一样', () => {
+    const want = GT.sgSparkler.graph, g = structuredClone(GT.sgBlank.graph);
+    // 按仙女棒的树一层一层加：根用「＋ 粒子层」，子粒用「＋ 子粒」（母粒按仙女棒里的母粒）
+    for (const e of want.emitters.slice(1)) GTr.add(g, e.parent);
+    ok(g); assert.deepEqual(plain(g.emitters.map(e => [e.id, e.parent])), plain(want.emitters.map(e => [e.id, e.parent])), '树的形状');
+    // 再像在右栏里一样逐项填值（每层每个字段、整张图的字段），结果就是仙女棒
+    for (const [i, e] of want.emitters.entries()) for (const [k, v] of Object.entries(e)) g.emitters[i][k] = structuredClone(v);
+    for (const [k, v] of Object.entries(want)) if (k !== 'emitters') g[k] = structuredClone(v);
+    ok(g); assert.deepEqual(plain(g), plain(want));
+  });
+  // ---------------- ⑥ 打开 / 新建多层效果「稍后烘焙」（4.9.123）----------------
+  await check('⑥ 稍后烘焙：不点照旧烘；点了正在烘的停下、后面的不烘、层标 later 算「贴图旧了」（按 B 烘）；每次打开重新问', async () => {
+    const btn = { hidden: true, disabled: false, textContent: '', addEventListener(k, f) { this.click = f; } }, busyEl = { hidden: false, querySelector: () => btn._in ? btn : null, appendChild(x) { x._in = true; } };
+    const L = vm.createContext({ console, Error, Promise, setTimeout, $: id => id === '#busy' ? busyEl : null, document: { createElement: () => btn }, flash() { } });
+    vm.runInContext(line('70_ui.js', /^const openLater = .*$/m) + '\n' + line('70_ui.js', /^const BAKE_LATER = .*$/m) + '\n' + fn('70_ui.js', 'laterButton') + '\n' + fn('70_ui.js', 'bakeOrLater') + '\n' + line('70_ui.js', /^const layerStale = .*$/m) + '\nthis.ol = openLater; this.stale = layerStale;', L);
+    let runs = 0; const job = chk => { runs++; return Promise.resolve(chk(1) && 'B'); };
+    assert.equal(await L.bakeOrLater(job), 'B'); assert.equal(runs, 1); assert.equal(btn.hidden, false, '烘的时候按钮露出来');
+    const slow = async chk => { runs++; btn.click(); chk(.5); return 'B'; };     // 烘到一半点了「稍后烘焙」
+    assert.equal(await L.bakeOrLater(slow), null); assert.equal(await L.bakeOrLater(job), null, '后面的层不烘'); assert.equal(runs, 2); assert.equal(L.ol.n, 2);
+    assert.equal(L.stale({ later: true, bake: null }), true); assert.equal(L.stale({ later: true, bake: {}, pRev: 1, bakeRev: 1 }), false); assert.equal(L.stale({ bake: null }), false, '没点过的层照旧');
+    assert.match(src('79_library.js'), /function libOpenBegin\(\) \{ if \(typeof openLater !== 'undefined'\) \{ openLater\.want = false;/, '每次打开重新问');
+    assert.match(src('79_workbench.js'), /return e && \(e\.bake \|\| e\.later\);/, '稍后烘焙的层不挡导出按钮');
   });
   console.log(`团队版交互：${checks.length}/${checks.length + failures.length} 通过`); for (const s of failures) console.error('FAIL ' + s); if (failures.length) process.exitCode = 1;
 })();

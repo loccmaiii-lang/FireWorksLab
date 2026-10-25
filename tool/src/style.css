@@ -1826,3 +1826,36 @@ header.top .gpu::before{content:none}
 .reconnect-dialog .reconnect-detail{color:var(--warn);white-space:pre-wrap;overflow-wrap:anywhere}
 .reconnect-dialog .reconnect-detail:empty{display:none}
 .lg>summary .lg-io{order:2}
+/* 4.9.123（团队版 T3 ②）粒子层：路径条（母粒可点）+「粒子层 N ▾」+ 结构弹层（整棵树、母子缩进；复制 / 加子粒 / 删 / 改母粒） */
+.pscope .ps-path:has(.ps-anc) .ps-layer{flex:0 1 auto;min-width:3.2em}
+.pscope .ps-path:has(.ps-anc) .ps-emit{flex:0 1 auto;min-width:3em}
+.pscope .ps-anc{flex:0 3 auto;min-width:1.6em;max-width:30%;overflow:hidden;text-overflow:ellipsis;font:inherit;font-weight:500;color:var(--dim);background:none;border:0;padding:0;cursor:pointer;border-bottom:1px dotted var(--line2)}
+.pscope .ps-anc:hover{color:var(--text)}
+.pscope .ps-anc:focus-visible,.pscope .ps-tree:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.pscope .ps-path{cursor:default}
+.pscope .ps-tree{flex:none;min-height:30px;padding:3px 10px;border:1px solid var(--line2);border-radius:4px;background:var(--low);color:var(--dim);font:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.pscope .ps-tree:hover,.pscope .ps-tree[aria-expanded=true]{color:var(--text);border-color:var(--acc)}
+.pscope .ps-tree[hidden]{display:none}
+.pscope .sg-pop{position:absolute;left:var(--pad);right:var(--pad);top:calc(100% - 4px);z-index:8;display:flex;flex-direction:column;max-height:min(66vh,580px);background:var(--panel);border:1px solid var(--line2);border-radius:6px;box-shadow:0 10px 28px rgba(0,0,0,.45);padding:10px 12px}
+.pscope .sg-pop[hidden]{display:none}
+.sg-pop .sg-head{display:flex;align-items:baseline;gap:8px;margin:0 0 6px}
+.sg-pop .sg-sub{color:var(--faint);font-size:12px;flex:1}
+.sg-pop .sg-x{border:0;background:none;color:var(--dim);font-size:18px;line-height:1;cursor:pointer;padding:2px 6px}
+.sg-pop .sg-list{list-style:none;margin:8px 0 0;padding:0;overflow:auto;min-height:60px;flex:1 1 auto}
+.sg-pop .sg-row{display:flex;align-items:center;gap:6px;padding-left:calc(var(--d,0) * 18px)}
+.sg-pop .sg-name{flex:1;min-width:0;text-align:left;font:inherit;font-size:13px;color:var(--text);background:none;border:1px solid transparent;border-radius:4px;padding:4px 6px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sg-pop .sg-name:hover{background:var(--hover)}
+.sg-pop .sg-name:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.sg-pop .sg-row.on .sg-name{border-color:var(--acc);background:var(--hover);color:var(--acc2)}
+.sg-pop .sg-tw{color:var(--faint);margin-right:4px}
+.sg-pop .sg-tag{font-size:11px;color:var(--faint);border:1px dashed var(--line2);border-radius:3px;padding:0 4px}
+.sg-pop .sg-n{font-size:10px;padding:0 4px;border-radius:3px;background:#3c352b;color:var(--amber)}
+.sg-pop .sg-acts{display:flex;flex-wrap:wrap;align-items:center;gap:6px;border-bottom:1px solid var(--line);padding-bottom:8px;flex:none}
+.sg-pop .sg-of{color:var(--faint);font-weight:400}
+.sg-pop .sg-cur{flex:1 1 100%;font-size:12.5px;color:var(--dim)}
+.sg-pop .sg-par{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--dim)}
+.sg-pop .sg-par select{max-width:150px}
+.sg-pop .sg-add{margin-left:auto}
+.sg-pop .sg-del{color:var(--warn)}
+.sg-pop .sg-hint{margin:8px 0 0;font-size:11.5px;flex:none}
+.busy .busy-later{pointer-events:auto}     /* 4.9.123 打开多层效果时「稍后烘焙」 */

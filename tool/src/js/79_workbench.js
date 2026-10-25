@@ -180,7 +180,7 @@ function wbSnap() {
   return { kind: 'single', P: structuredClone(state.P), M: structuredClone(state.M), repId: state.repId || null };
 }
 function wbSig() { try { return JSON.stringify(wbSnap()); } catch (e) { return ''; } }
-const wbIdle = () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden && (state.tab !== 'combo' || (state.layers.length && state.layers.every(L => { const e = layerEntryOf(L); return e && e.bake; })));
+const wbIdle = () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden && (state.tab !== 'combo' || (state.layers.length && state.layers.every(L => { const e = layerEntryOf(L); return e && (e.bake || e.later); })));     // 4.9.123 稍后烘焙的层不算「还在烘」
 // 打开 / 换版本后，等烘焙稳定了再记「没改过」的样子（烘焙会自动补一些派生字段，不算你的改动）
 function wbArm() {
   const n = ++wb.arm; wb.sig = ''; wb.sig0 = wbSig(); wb.armEdit = false;     // 4.9.8：打开那一刻的样子（右栏「改过」在等烘焙稳定时拿它比）
@@ -847,7 +847,7 @@ function stageTick(D) {
 // 4.9.1：自动烘焙关时改了参数不烘，以前这里一直写「烘焙中…」；现在烘焙中 / 贴图是旧的 / 失败分开写（stageTick 和 wbSync 都调）
 function abStateSync() {
   const ab = $('#abState'); if (!ab) return; const busyB = state.baking || (typeof bakesPending === 'function' && bakesPending()), stale = typeof bakeStale === 'function' ? bakeStale() : state.dirty;
-  const auto = typeof autoBakeOn === 'function' && autoBakeOn() && !(typeof bakeCancelledNow === 'function' && bakeCancelledNow());     // 自动烘焙开：停手 0.38 s 后自己烘，中间也算「烘焙中」（刚取消的不算）
+  const auto = typeof autoBakeOn === 'function' && autoBakeOn() && !(typeof bakeCancelledNow === 'function' && bakeCancelledNow()) && !(typeof laterWaiting === 'function' && laterWaiting());     // 4.9.123 稍后烘焙的层：写「按 B 烘」，不写「烘焙中」     // 自动烘焙开：停手 0.38 s 后自己烘，中间也算「烘焙中」（刚取消的不算）
   const st = state.bakeError ? ['bad', '烘焙失败 · 保留上次成功'] : busyB || (stale && auto) ? ['is-baking', '烘焙中…'] : stale ? ['stale', '贴图是旧的 · 按 B 烘'] : ['', ''];
   if (ab.textContent !== st[1]) { ab.className = 'ab-state ' + st[0]; ab.textContent = st[1]; }
   const cb = $('#abBakeCancel'); if (cb) { const show = !state.bakeError && (busyB || (stale && auto)); if (cb.hidden === show) cb.hidden = !show; }     // 4.9.4 长烘焙可以取消
