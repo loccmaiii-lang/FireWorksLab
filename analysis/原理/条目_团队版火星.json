@@ -125,6 +125,731 @@
     "ramp3": "#fff6e8"
    },
    "note": "L2：1.5 mm 小团，vt 7.3 m/s、燃烧 1 s、火花 40 /s，飞得近、早灭、尾短；和 L1 同一套簇。只出 PC。团队版 T5（云端，2026-10-25）：按 analysis/原理/爆炸分簇火星.md 第 3 节的推导值建；两层同一批簇（同种子 11：簇方向、每簇星数比例一致），大团冲高约 24 m、飞约 33 m，小团约 11 m 就灭。调整只有曝光（模板 4 → 3，1.0 s 最亮时不顶白）和星头亮度（火团在尾里看得出），其余照推导；火花阻力 8.2 /s 超出滑杆 0–8 照填。未经 UE 验证。"
+  },
+  {
+   "id": "ESH1",
+   "date": "2026-10-25",
+   "name": "短路喷溅 · 熔铜滴与火星（Electric_Short_M_01）",
+   "base": "sparkgraph",
+   "tags": "团队版 短路 电弧 熔滴 火星 粒子图 循环 Electric_Short ESH1",
+   "p": {
+    "form": "loop",
+    "renderVer": 40,
+    "loopT": 2.1333333333333333,
+    "duration": 2.1333333333333333,
+    "sparkGraph": {
+     "name": "短路喷溅 · 熔铜滴与火星（Electric_Short_M_01）",
+     "period": 2.1333333333333333,
+     "bounds": [
+      -1.3,
+      1.3,
+      -2.1,
+      0.8
+     ],
+     "bursts": [
+      [
+       0.013,
+       0.028
+      ],
+      [
+       0.189,
+       0.011
+      ],
+      [
+       0.719,
+       0.019
+      ],
+      [
+       1.529,
+       0.022
+      ],
+      [
+       1.689,
+       0.02
+      ],
+      [
+       1.82,
+       0.024
+      ],
+      [
+       2.012,
+       0.028
+      ]
+     ],
+     "emitters": [
+      {
+       "id": "e01",
+       "name": "01｜弧点闪光",
+       "parent": null,
+       "seed": 710101,
+       "enabled": true,
+       "count": 40,
+       "speed": [
+        0,
+        0.3,
+        1
+       ],
+       "life": [
+        0.02,
+        0.06,
+        1
+       ],
+       "size": [
+        0.6,
+        1.6,
+        1.2
+       ],
+       "power": [
+        0.5,
+        1.5,
+        1
+       ],
+       "width": 0.06,
+       "gain": 2,
+       "drag": 0,
+       "gravity": [
+        0,
+        0,
+        0
+       ],
+       "directionMode": "sphere",
+       "direction": [
+        0,
+        0,
+        1
+       ],
+       "cone": 30,
+       "shape": "point",
+       "history": 0.03333333333333333,
+       "taper": 0.15,
+       "aspect": 1,
+       "spin": 0,
+       "twist": 0,
+       "extent": 0.01,
+       "clusterSize": 1,
+       "clusterProbability": 0,
+       "clusterWidth": 0.01,
+       "clusterDirection": 0,
+       "children": 1,
+       "event": 0.5,
+       "delay": 0,
+       "inherit": 1,
+       "probability": 1,
+       "noise": 0,
+       "noiseHz": 30,
+       "sizeCurve": [
+        [
+         0,
+         0.6
+        ],
+        [
+         0.2,
+         1
+        ],
+        [
+         1,
+         1.3
+        ]
+       ],
+       "brightCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         0.3,
+         0.6
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "burstShare": 1,
+       "fieldCoupling": 0
+      },
+      {
+       "id": "e02",
+       "name": "02｜熔铜滴 · 中",
+       "parent": null,
+       "seed": 710202,
+       "enabled": true,
+       "count": 520,
+       "speed": [
+        1.5,
+        8,
+        1.5
+       ],
+       "life": [
+        0.2,
+        0.46,
+        1.3
+       ],
+       "size": [
+        0.8,
+        1.25,
+        1.2
+       ],
+       "power": [
+        0.6,
+        1.5,
+        1.3
+       ],
+       "width": 0.0004,
+       "gain": 12000,
+       "drag": 1.2,
+       "gravity": [
+        0,
+        0,
+        -9.81
+       ],
+       "directionMode": "sphere",
+       "direction": [
+        0,
+        0,
+        1
+       ],
+       "cone": 30,
+       "shape": "line",
+       "history": 0.03333333333333333,
+       "taper": 0.15,
+       "aspect": 1,
+       "spin": 0,
+       "twist": 0,
+       "extent": 0.01,
+       "clusterSize": 6,
+       "clusterProbability": 0.5,
+       "clusterWidth": 0.008,
+       "clusterDirection": 0.6,
+       "children": 1,
+       "event": 0.5,
+       "delay": 0,
+       "inherit": 1,
+       "probability": 1,
+       "noise": 0,
+       "noiseHz": 30,
+       "sizeCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "brightCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         0.1,
+         0.45
+        ],
+        [
+         0.2,
+         0.22
+        ],
+        [
+         0.3,
+         0.12
+        ],
+        [
+         0.4,
+         0.12
+        ],
+        [
+         0.5,
+         0.12
+        ],
+        [
+         0.6,
+         0.07
+        ],
+        [
+         0.7,
+         0.02
+        ],
+        [
+         0.8,
+         0.004
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "burstShare": 0.8,
+       "fieldCoupling": 0
+      },
+      {
+       "id": "e03",
+       "name": "03｜大熔珠",
+       "parent": null,
+       "seed": 710303,
+       "enabled": true,
+       "count": 40,
+       "speed": [
+        1,
+        4,
+        1
+       ],
+       "life": [
+        0.6,
+        0.96,
+        1.2
+       ],
+       "size": [
+        0.8,
+        1.25,
+        1.2
+       ],
+       "power": [
+        0.6,
+        1.5,
+        1.3
+       ],
+       "width": 0.0008,
+       "gain": 12000,
+       "drag": 0.42,
+       "gravity": [
+        0,
+        0,
+        -9.81
+       ],
+       "directionMode": "sphere",
+       "direction": [
+        0,
+        0,
+        1
+       ],
+       "cone": 30,
+       "shape": "line",
+       "history": 0.03333333333333333,
+       "taper": 0.15,
+       "aspect": 1,
+       "spin": 0,
+       "twist": 0,
+       "extent": 0.01,
+       "clusterSize": 1,
+       "clusterProbability": 0,
+       "clusterWidth": 0.01,
+       "clusterDirection": 0,
+       "children": 1,
+       "event": 0.5,
+       "delay": 0,
+       "inherit": 1,
+       "probability": 1,
+       "noise": 0,
+       "noiseHz": 30,
+       "sizeCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "brightCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         0.1,
+         0.45
+        ],
+        [
+         0.2,
+         0.22
+        ],
+        [
+         0.3,
+         0.12
+        ],
+        [
+         0.4,
+         0.12
+        ],
+        [
+         0.5,
+         0.12
+        ],
+        [
+         0.6,
+         0.07
+        ],
+        [
+         0.7,
+         0.02
+        ],
+        [
+         0.8,
+         0.004
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "burstShare": 0.8,
+       "fieldCoupling": 0
+      },
+      {
+       "id": "e04",
+       "name": "04｜细铜火星",
+       "parent": null,
+       "seed": 710404,
+       "enabled": true,
+       "count": 3000,
+       "speed": [
+        8,
+        30,
+        1.5
+       ],
+       "life": [
+        0.006,
+        0.012,
+        1
+       ],
+       "size": [
+        0.8,
+        1.25,
+        1.2
+       ],
+       "power": [
+        0.6,
+        1.5,
+        1.3
+       ],
+       "width": 5e-05,
+       "gain": 240000,
+       "drag": 47.5,
+       "gravity": [
+        0,
+        0,
+        -9.81
+       ],
+       "directionMode": "sphere",
+       "direction": [
+        0,
+        0,
+        1
+       ],
+       "cone": 30,
+       "shape": "line",
+       "history": 0.03333333333333333,
+       "taper": 0.15,
+       "aspect": 1,
+       "spin": 0,
+       "twist": 0,
+       "extent": 0.005,
+       "clusterSize": 20,
+       "clusterProbability": 0.5,
+       "clusterWidth": 0.004,
+       "clusterDirection": 0.4,
+       "children": 1,
+       "event": 0.5,
+       "delay": 0,
+       "inherit": 1,
+       "probability": 1,
+       "noise": 0,
+       "noiseHz": 30,
+       "sizeCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "brightCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         0.1,
+         0.43
+        ],
+        [
+         0.2,
+         0.17
+        ],
+        [
+         0.3,
+         0.06
+        ],
+        [
+         0.4,
+         0.06
+        ],
+        [
+         0.5,
+         0.06
+        ],
+        [
+         0.6,
+         0.034
+        ],
+        [
+         0.7,
+         0.007
+        ],
+        [
+         0.8,
+         0.001
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "burstShare": 0.9,
+       "fieldCoupling": 0
+      },
+      {
+       "id": "e05",
+       "name": "05｜钢件火星（母）",
+       "parent": null,
+       "seed": 710505,
+       "enabled": true,
+       "count": 120,
+       "speed": [
+        10,
+        35,
+        1.5
+       ],
+       "life": [
+        0.016,
+        0.085,
+        4
+       ],
+       "size": [
+        0.8,
+        1.25,
+        1.2
+       ],
+       "power": [
+        0.6,
+        1.5,
+        1.3
+       ],
+       "width": 0.0001,
+       "gain": 132000,
+       "drag": 23.2,
+       "gravity": [
+        0,
+        0,
+        -9.81
+       ],
+       "directionMode": "sphere",
+       "direction": [
+        0,
+        0,
+        1
+       ],
+       "cone": 30,
+       "shape": "line",
+       "history": 0.03333333333333333,
+       "taper": 0.15,
+       "aspect": 1,
+       "spin": 0,
+       "twist": 0,
+       "extent": 0.005,
+       "clusterSize": 1,
+       "clusterProbability": 0,
+       "clusterWidth": 0.01,
+       "clusterDirection": 0,
+       "children": 1,
+       "event": 0.5,
+       "delay": 0,
+       "inherit": 1,
+       "probability": 1,
+       "noise": 0,
+       "noiseHz": 30,
+       "sizeCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "brightCurve": [
+        [
+         0,
+         0.6
+        ],
+        [
+         0.15,
+         1
+        ],
+        [
+         0.7,
+         1
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "burstShare": 0.9,
+       "fieldCoupling": 0
+      },
+      {
+       "id": "e06",
+       "name": "06｜钢件爆花",
+       "parent": "e05",
+       "seed": 710606,
+       "enabled": true,
+       "count": 0,
+       "speed": [
+        2,
+        6,
+        1.5
+       ],
+       "life": [
+        0.004,
+        0.012,
+        1.5
+       ],
+       "size": [
+        0.8,
+        1.25,
+        1.2
+       ],
+       "power": [
+        0.6,
+        1.5,
+        1.3
+       ],
+       "width": 3.5e-05,
+       "gain": 132000,
+       "drag": 70,
+       "gravity": [
+        0,
+        0,
+        -9.81
+       ],
+       "directionMode": "sphere",
+       "direction": [
+        0,
+        0,
+        1
+       ],
+       "cone": 30,
+       "shape": "line",
+       "history": 0.03333333333333333,
+       "taper": 0.15,
+       "aspect": 1,
+       "spin": 0,
+       "twist": 0,
+       "extent": 0,
+       "clusterSize": 1,
+       "clusterProbability": 0,
+       "clusterWidth": 0.01,
+       "clusterDirection": 0,
+       "children": 4,
+       "event": 0.9,
+       "delay": 0,
+       "inherit": 1,
+       "probability": 0.5,
+       "noise": 0,
+       "noiseHz": 30,
+       "sizeCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "brightCurve": [
+        [
+         0,
+         1
+        ],
+        [
+         0.6,
+         0.7
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "burstShare": 0,
+       "fieldCoupling": 0
+      }
+     ],
+     "followAxis": true,
+     "presetKey": "electricShort",
+     "fieldEnabled": 0,
+     "fieldResponse": 12,
+     "fieldStart": 0.002,
+     "fieldRamp": 0.025,
+     "fieldAxisX": 0,
+     "fieldAxisY": 0,
+     "fieldAxisZ": 1,
+     "fieldWindX": 0,
+     "fieldWindY": 0,
+     "fieldWindZ": 0,
+     "fieldConverge": 0,
+     "fieldTurbulence": 0,
+     "fieldScale": 0.16,
+     "fieldCycles": 1,
+     "fieldSeed": 29,
+     "scaleCone": 1,
+     "scaleCount": 1,
+     "scaleWidth": 1,
+     "scaleLife": 1,
+     "scaleGain": 1,
+     "scaleSpeed": 1,
+     "scaleGravity": 1,
+     "branchLife": 1,
+     "branchAngle": 1,
+     "branchCount": 1,
+     "branchWidth": 1,
+     "branchSpeed": 1,
+     "branchGravity": 1
+    },
+    "cameraMotion": 1,
+    "cameraShutter": 0.03333333333333333,
+    "cameraDof": 0,
+    "exposure": 1
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ffffff"
+     ]
+    ],
+    "xw": 0.08,
+    "ramp0": "#120100",
+    "ramp1": "#b34104",
+    "ramp2": "#ffc064",
+    "ramp3": "#fff6dd",
+    "headInt": 1,
+    "tailInt": 1
+   },
+   "note": "团队版 T5（云端，2026-10-25）：按 analysis/原理/短路喷溅.md 第 3 节建的分层粒子图（6 层，循环 64 帧 / 30 fps）。电弧按 Poisson 间隔不等地打 7 下（连打和 0.8 s 停顿交替），每下把熔铜甩成一把：中熔滴走重力主导的抛物线、在 1085 °C 凝固平台挂一会儿暗橙再变红，大熔珠落得最低，细铜火星 10 ms 一把白线，钢件火星末段 50% 分 4 颗。线性阻力按推导拟合值，镜头快门 1/30 s 拉丝。为观感调过：绝对亮度、三层数量、凝固平台亮度 ×2、细火星亮度（初温近沸点）、取景四边（推导文件 3.5 节）。未经 UE 验证（锁 Z、Local Space、Bloom）。",
+   "look": [
+    "正常速度看节奏：连打几下、停一下，不是匀速循环",
+    "每下爆发：中心白闪 + 一把白色细线 + 一圈橙色熔滴往外甩，熔滴成抛物线往下落、暗橙挂一会儿再变红",
+    "1.6–2.0 s 那几下有钢件火星（长黄线、末段分叉）",
+    "循环接缝（2.01 → 0.01 s）不要连成一下太长；引擎回放 + 游戏内大小；手机 256 格细火星还看不看得见"
+   ]
   }
  ],
  "combos": [
