@@ -1,0 +1,26 @@
+{
+ "effect": "explosion_cluster",
+ "entry": "EXC1",
+ "ver": "c94bcf62·master4.9.31",
+ "time": "2026-10-25 11:31",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "Explosion_Cluster_M_01",
+   "replica": "EXC1",
+   "files": [
+    "T_EFX_FireWorks_Explosion_Cluster_M_01_Big_4x4_01.png",
+    "T_EFX_FireWorks_Explosion_Cluster_M_01_Big_4x4_01_C.png",
+    "T_EFX_FireWorks_Explosion_Cluster_M_01_Big_4x4_01_HD.png",
+    "T_EFX_FireWorks_Explosion_Cluster_M_01_Big_R.png",
+    "T_EFX_FireWorks_Explosion_Cluster_M_01_Small_4x4_01_C.png",
+    "T_EFX_FireWorks_Explosion_Cluster_M_01_Small_4x4_01_HD.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
