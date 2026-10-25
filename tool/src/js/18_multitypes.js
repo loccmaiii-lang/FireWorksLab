@@ -345,13 +345,15 @@ async function openMultiType(id) {
 // 「＋ 新建效果」选了多层模板：直接存成一个我的效果（每层参数复制一份）
 async function mtCreateMine(id) {
   const r = MULTI_BY_ID[id]; if (!r) return;
-  const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', r.name, '新建');     // 4.9.6 应用内对话框（对话框15）
-  if (name == null) return;
+  // 4.9.121（团队版 ⑤）：新建时一起填英文名，建议值 = 模板英文名 + 序号（以前直接用模板英文名，同一个模板建两次导出互相覆盖）
+  const n = Object.keys(myAll()).length + 1, ask = await askNewFxNames('新效果叫什么？', '中文名在左栏、资产栏显示，之后在资产栏 ⋯ 里能改；英文名是导出的资产名，之后在「交付清单」里也能改。', r.name, enNameSuggest(r.en));     // 4.9.6 应用内对话框（对话框15）
+  if (ask == null) return;
+  const name = ask.cn, en = enNameWhy(ask.en) ? enNameSuggest(r.en) : ask.en.trim();
   const recId = 'fx' + Date.now().toString(36), layers = mtLayers(id);
   const rec = { id: recId, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [], from: { key: 'mt:' + id, name: r.name, base: r.name, ver: VERSION },
     snap: { kind: 'combo', name: name.trim() || r.name, layers: layers.map(x => { const M = x.M; return { id: null, type: x.type, P: x.P, M,
       L: { title: x.title, lid: myLid(), scale: 1, delay: x.delay, rate: 1, mirror: false, stages: M.stages.map(s => [...s]), xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: x.headInt, tailInt: x.tailInt, ...(x.out ? { out: structuredClone(x.out) } : {}) } }; }) } };
-  myPut(rec); setPackNames('my:' + recId, r.en, r.layers.map(l => l.en)); await openMultiTypeMine(recId);
+  rec.ue = { base: en, layers: r.layers.map(l => l.en), system: en }; myPut(rec); setPackNames('my:' + recId, en, r.layers.map(l => l.en), { system: en }); await openMultiTypeMine(recId);
 }
 async function openMultiTypeMine(recId) { await openMyEffect(recId); flash('已按多层模板新建：右栏「观察图层」里加层、改名；调好了点资产栏「保存」'); }
 // 缩略图：同心圆示意图（19_thumbsvg.js，用户 10-05 20:43「现在的缩略图就很好了，不用出新的缩略图」）

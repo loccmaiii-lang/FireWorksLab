@@ -274,14 +274,27 @@ function autoDraft() {
 }
 if (window.addEventListener) window.addEventListener('beforeunload', () => { try { autoDraft(); } catch (e) { } });
 function wbNow() { return new Date().toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'); }
-function askSaveName(title, note, initial, action = '保存') {
-  const dlg = $('#saveNameDlg'), input = $('#saveNameInput');
+// 4.9.121（团队版 ⑤，用户 10-25 00:00「全批准」）：o.en 给了 = 同一个对话框多一行「英文名」（新建效果时填），返回 { cn, en }；不给时和以前一样返回字符串
+function askSaveName(title, note, initial, action = '保存', o = null) {
+  const dlg = $('#saveNameDlg'), input = $('#saveNameInput'), withEn = !!o && o.en != null, box = $('#saveNameEnBox'), en = $('#saveNameEn'), msg = $('#saveNameEnMsg');
   $('#saveNameTitle').textContent = title; $('#saveNameNote').textContent = note; $('#saveNameSubmit').textContent = action;
   input.value = initial; dlg.returnValue = 'cancel';
+  if (box) { box.hidden = !withEn; en.disabled = !withEn; en.value = withEn ? String(o.en) : ''; en.setCustomValidity(''); msg.textContent = ''; }     // 不用时禁用：不参与表单校验
+  const check = () => { const why = withEn ? enNameWhy(en.value) : ''; en.setCustomValidity(why); msg.textContent = why; en.setAttribute('aria-invalid', String(!!why)); return !why; };
+  if (withEn) check();
   return new Promise(resolve => {
-    dlg.addEventListener('close', () => resolve(dlg.returnValue === 'save' ? input.value.trim() : null), { once: true });
+    const onIn = () => check();
+    if (withEn) en.addEventListener('input', onIn);
+    dlg.addEventListener('close', () => { if (withEn) en.removeEventListener('input', onIn); if (box) { box.hidden = true; en.disabled = true; }
+      resolve(dlg.returnValue === 'save' ? (withEn ? { cn: input.value.trim(), en: en.value.trim() } : input.value.trim()) : null); }, { once: true });
     dlg.showModal(); input.focus(); input.select();
   });
+}
+// 新建效果时的中文名 + 英文名：检查脚本把 askSaveName 换成只回一个字符串的桩时，英文名用建议值
+async function askNewFxNames(title, note, cn, en, action = '新建') {
+  const r = await askSaveName(title, note, cn, action, { en });
+  if (r == null) return null;
+  return typeof r === 'string' ? { cn: r, en } : r;
 }
 // 4.9.4（交互宪章 5：原生 confirm / prompt 换成应用内对话框）：起名 / 改名都走上面这个对话框，确认走 askConfirm。
 // 浏览器原生弹框会卡住整页、样式和别处不一样、Esc / 回车的行为也不同；这两个和保存时起名是同一个样子
@@ -415,7 +428,10 @@ function wbImportFile(file) {
   const rd = new FileReader();
   rd.onload = async () => {
     try {
-      const doc = JSON.parse(rd.result); if (doc.format !== 'fwl.recipe/1' || !doc.snap) throw new Error('不是烘焙器导出的配方文件');
+      const doc = JSON.parse(rd.result);
+      // 4.9.121（团队版 ④）：导出全部的包、我的效果 / 我的模板文件，或形态和当前打开的不一样的配方 → 直接新增为我的效果（以前报错要先打开同形态的效果）
+      if (doc.format !== 'fwl.recipe/1' || !doc.snap || (doc.snap.kind === 'combo') !== (state.tab === 'combo')) { if (typeof myImportUnpack === 'function') { myImportDocs(myImportUnpack(doc)); return; } }
+      if (doc.format !== 'fwl.recipe/1' || !doc.snap) throw new Error('不是烘焙器导出的配方文件');
       if ((doc.snap.kind === 'combo') !== (state.tab === 'combo')) throw new Error(doc.snap.kind === 'combo' ? '这是多层效果的配方，请先打开那个效果' : '这是单层的配方，当前打开的是多层效果');
       const list = wbList(), it = { id: Date.now().toString(36), name: (doc.name || '导入') + '（导入）', at: wbNow(), base: doc.base, baseVer: doc.baseVer, snap: doc.snap };
       list.push(it); wbPut(list); renderLib(); await wbLoad(it.id);
@@ -894,6 +910,12 @@ function delivName() {
   if (state.tab === 'combo') { const rv = lib.review && lib.review.kind === 'combo' ? lib.review.id : ''; return (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo'; }
   return state.name;
 }
+// 4.9.121（团队版 ⑤）：导出被英文名拦下 → 打开交付清单、光标放到英文名
+function exportNameStop(why) {
+  flash(why, true, 12000, true);
+  if (typeof toggleDeliv === 'function') toggleDeliv(true);
+  setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0);
+}
 function delivNameFeedback(host, msg, bad = false) {
   const out = host.querySelector('#dvNameStatus'); if (out) { out.textContent = msg; out.dataset.bad = String(bad); }
   flash(msg, bad, 6000, true);
@@ -1011,13 +1033,13 @@ function renderDeliv() {
   }
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
-  const prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '');     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
+  const nameWhy = exportNameBlock(nm), prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '') || nameWhy;     // 4.9.121（团队版 ⑤）：英文名还是 MyFx 时导出按钮灰、写原因     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '有一层的产物没在产物形态登记表里，导出会被拦'}</small></div><span class="sp"></span>
     <label class="dv-scope" title="导入器替换哪些（4.9.115，用户 10-18）：只换贴图 = 粒子系统、材质实例都不动，你在 UE 里改过的参数原样保留，贴图自己的 NoMip / Clamp 等设置也保留、只换像素；帧数 / 时长 / 格子改了要用「全部」。只换 PC / 手机：另一个平台那行导入器不勾。导出内容不变（要省掉手机烘焙，在产物表把手机选「不出」）">导入范围<select id="dvScope">${[['all', '全部（贴图 + 材质 + 粒子）'], ['textures', '只换贴图（PC + 手机）'], ['textures-pc', '只换 PC 贴图'], ['textures-mobile', '只换手机贴图']].map(([v, t]) => `<option value="${v}"${delivImportScope === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
     <button class="btn primary" type="button" id="dvExport"${noPackWhy ? ` disabled title="${noPackWhy.replace(/"/g, '&quot;')}"` : ''}>导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
-    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
+    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite" data-bad="${!!nameWhy}">${nameWhy ? '英文名还是缺省的 MyFx：改成这个效果自己的名字、点「保存名称」后才能导出' : ''}</small></div>
     ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;

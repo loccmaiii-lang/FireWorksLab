@@ -1951,12 +1951,27 @@ header.top .gpu::before{content:none}
 
 /* Keep the existing export progress/cancel visible in the destination workspace. */
 #deliveryWorkspace>#busy.busy{position:absolute;inset:0;z-index:5;border-radius:0;background:rgba(6,12,16,.88)}
+
+/* 4.9.121（团队版 ③ ④ ⑤）：新建效果的英文名、交付清单的名字提示、本机服务重连对话框、我的效果组头的导出 / 导入 */
+.save-dialog .save-en{margin-top:12px;display:flex;flex-direction:column;gap:4px}
+.save-dialog .save-en[hidden]{display:none}
+.save-dialog .save-en input{font-family:var(--mono)}
+.save-dialog .save-en small{font-size:12px;line-height:1.6;color:var(--dim)}
+.save-dialog .save-en .save-en-msg{color:var(--warn)}
+.save-dialog .save-en .save-en-msg:empty{display:none}
+.dv-names small[data-bad=true]{color:var(--warn)}
+.reconnect-dialog{width:min(560px,calc(100vw - 32px))}
+.reconnect-dialog .reconnect-steps{margin:0 0 12px;padding-left:20px;font-size:13px;line-height:1.7;color:var(--text)}
+.reconnect-dialog .reconnect-steps li{margin:0 0 6px}
+.reconnect-dialog .reconnect-detail{color:var(--warn);white-space:pre-wrap;overflow-wrap:anywhere}
+.reconnect-dialog .reconnect-detail:empty{display:none}
+.lg>summary .lg-io{order:2}
 </style>
 </head>
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘培器</span><small id="verLabel"></small></div>
+    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘焙器</span><small id="verLabel"></small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <nav class="delivery-nav" aria-label="烘焙器工作区"><button class="btn ghost" id="deliveryMake" type="button" hidden>返回效果制作</button><button class="btn ghost" id="deliveryOpen" type="button">资源交付</button></nav>
@@ -2265,7 +2280,23 @@ header.top .gpu::before{content:none}
     <h2 id="saveNameTitle">保存我的版本</h2>
     <p id="saveNameNote"></p>
     <label class="field">名称<input type="text" id="saveNameInput" autocomplete="off" required></label>
+    <div class="save-en" id="saveNameEnBox" hidden><label class="field">英文名<input type="text" id="saveNameEn" autocomplete="off" spellcheck="false" aria-describedby="saveNameEnHint saveNameEnMsg" disabled></label>
+      <small id="saveNameEnHint">UE 资产名用它（T_EFX_FireWorks_&lt;英文名&gt;_…）。只用英文字母、数字和下划线，单词首字母大写，例：Impact_Steel_M_01；之后在交付清单里也能改。</small><small id="saveNameEnMsg" class="save-en-msg" role="alert"></small></div>
     <div class="save-dialog-actions"><button class="btn" type="submit" value="cancel" formnovalidate>取消</button><button class="btn primary" id="saveNameSubmit" type="submit" value="save">保存</button></div>
+  </form>
+</dialog>
+<dialog class="save-dialog reconnect-dialog" id="reconnectDlg" aria-labelledby="reconnectTitle" aria-describedby="reconnectLead">
+  <form method="dialog">
+    <h2 id="reconnectTitle">本机交付服务没连上</h2>
+    <p id="reconnectLead">「指定目录」导出要靠本机交付服务（127.0.0.1:8034）把素材写进资源目录。这次的素材还没开始烘焙，按下面三步重连后接着导出：</p>
+    <ol class="reconnect-steps">
+      <li>打开仓库里的 <b>tool</b> 文件夹，双击 <b>启动烘焙器.cmd</b>。</li>
+      <li>看弹出的命令行窗口：一闪就关、并自动打开了一个新的烘焙器页面 = 服务已经起来了（新页面可以关掉，回到这一页）；窗口停住、写着错误 = 没起来，照窗口里的提示处理（常见：没装 Python 3.10 以上、本机启动配置里的路径不对）。</li>
+      <li>回到这一页点「重试连接」，连上后这次导出接着做。</li>
+    </ol>
+    <p class="hint">不想等：点「先导出 ZIP」，这次的素材包下载到浏览器的下载文件夹（内容和指定目录导出的一样）。</p>
+    <p class="hint reconnect-detail" id="reconnectDetail"></p>
+    <div class="save-dialog-actions"><button class="btn" type="submit" value="cancel" formnovalidate>取消导出</button><button class="btn" id="reconnectZip" type="submit" value="zip">先导出 ZIP</button><button class="btn primary" id="reconnectRetry" type="submit" value="retry">重试连接</button></div>
   </form>
 </dialog>
 
@@ -2395,7 +2426,8 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.120';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
+const VERSION = '4.9.121';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
+// 4.9.121（团队版 T3 第 1 批，用户 10-25 00:00「全批准」）：修「烘培」错字、新建效果填英文名 + MyFx 导出前拦下、「我的效果」导出全部 / 导入、本机交付服务没连上时的重连对话框（不改画面、不改导出内容）。
 // 4.9.100：原生单层尾缀独立保存/另存、旧人工版本恢复、命名和尺寸随副本保存（特效工作台5，用户10-14 Tiny保存未找到）；97–99由导出23保留，接续版本从101。
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
@@ -6923,13 +6955,15 @@ async function openMultiType(id) {
 // 「＋ 新建效果」选了多层模板：直接存成一个我的效果（每层参数复制一份）
 async function mtCreateMine(id) {
   const r = MULTI_BY_ID[id]; if (!r) return;
-  const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', r.name, '新建');     // 4.9.6 应用内对话框（对话框15）
-  if (name == null) return;
+  // 4.9.121（团队版 ⑤）：新建时一起填英文名，建议值 = 模板英文名 + 序号（以前直接用模板英文名，同一个模板建两次导出互相覆盖）
+  const n = Object.keys(myAll()).length + 1, ask = await askNewFxNames('新效果叫什么？', '中文名在左栏、资产栏显示，之后在资产栏 ⋯ 里能改；英文名是导出的资产名，之后在「交付清单」里也能改。', r.name, enNameSuggest(r.en));     // 4.9.6 应用内对话框（对话框15）
+  if (ask == null) return;
+  const name = ask.cn, en = enNameWhy(ask.en) ? enNameSuggest(r.en) : ask.en.trim();
   const recId = 'fx' + Date.now().toString(36), layers = mtLayers(id);
   const rec = { id: recId, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [], from: { key: 'mt:' + id, name: r.name, base: r.name, ver: VERSION },
     snap: { kind: 'combo', name: name.trim() || r.name, layers: layers.map(x => { const M = x.M; return { id: null, type: x.type, P: x.P, M,
       L: { title: x.title, lid: myLid(), scale: 1, delay: x.delay, rate: 1, mirror: false, stages: M.stages.map(s => [...s]), xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: x.headInt, tailInt: x.tailInt, ...(x.out ? { out: structuredClone(x.out) } : {}) } }; }) } };
-  myPut(rec); setPackNames('my:' + recId, r.en, r.layers.map(l => l.en)); await openMultiTypeMine(recId);
+  rec.ue = { base: en, layers: r.layers.map(l => l.en), system: en }; myPut(rec); setPackNames('my:' + recId, en, r.layers.map(l => l.en), { system: en }); await openMultiTypeMine(recId);
 }
 async function openMultiTypeMine(recId) { await openMyEffect(recId); flash('已按多层模板新建：右栏「观察图层」里加层、改名；调好了点资产栏「保存」'); }
 // 缩略图：同心圆示意图（19_thumbsvg.js，用户 10-05 20:43「现在的缩略图就很好了，不用出新的缩略图」）
@@ -13976,15 +14010,16 @@ async function exportMaster() {
   let b = null;
   try {
     const job = captureExportJob(), name = job.name;
+    { const why = exportNameBlock(job.naming); if (why) { exportNameStop(why); return; } }     // 4.9.121（团队版 ⑤）：英文名还是缺省 MyFx
     busy(true, '准备导出…', 0);
-    await DeliveryWorkspace.beginExport(job.destination, job.system);
+    const dest = (await DeliveryWorkspace.beginExport(job.destination, job.system)) || job.destination;     // 4.9.121（团队版 ③）：服务没连上时可以改成这次先出 ZIP
     // A private bake cannot be invalidated/disposed by edits or a later open.
     b = await bakeFinal(exportBakeParams(job.P, job.M), 1, p => busy(true, '烘焙 ' + job.P.texW + '×' + job.P.texH + '… ' + Math.round(p * 100) + '%', p * 0.9));
     if (productNoPack(b)) throw new Error(productNoPack(b));
     busy(true, '编码 PNG…', 0.93);
     const so = typeof singleOut === 'function' ? singleOut(job.P) : { pc: 'seq', mobile: 'seq' };
     if ((so.pc !== 'seq' || so.mobile !== 'seq') && (b.form === 'master' || b.form === 'segments')) {
-      await exportSingleScheme(name, b, job.destination, job); return;
+      await exportSingleScheme(name, b, dest, job); return;
     }
     const files = await texFiles(b, name);
     if (b.form === 'trail' && job.P.trExport4K) {
@@ -14007,7 +14042,7 @@ async function exportMaster() {
     }
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx;
     const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
-    await deliverResource(zip, zipName + '.zip', deliveryMetadata(b, job), job.destination);
+    await deliverResource(zip, zipName + '.zip', deliveryMetadata(b, job), dest);
     wbAutoExport(zipName, job.history);
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
@@ -14024,7 +14059,8 @@ async function exportVariants() {
   let bs = [], hung = false;
   try {
     const job = captureExportJob('variants'), name = job.name;
-    await DeliveryWorkspace.beginExport(job.destination, job.system);
+    { const why = exportNameBlock(job.naming); if (why) { exportNameStop(why); return; } }     // 4.9.121（团队版 ⑤）
+    const dest = (await DeliveryWorkspace.beginExport(job.destination, job.system)) || job.destination;     // 4.9.121（团队版 ③）
     bs = await bakeVariants(exportBakeParams(job.P, job.M), 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
     const b0 = bs[0], files = [];
     hung = !bs.some(b => b.next); if (hung) b0.vars = bs.slice(1);     // 一张贴图：V2 / V3 挂在第 1 张上（texFiles / 命名规范按变体出）
@@ -14040,7 +14076,7 @@ async function exportVariants() {
     if (hung && namingApplies(b0)) { const nm = job.naming, sys = job.system; out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
     const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
-    await deliverResource(zip, `${zipName}.zip`, deliveryMetadata(b0, job), job.destination);
+    await deliverResource(zip, `${zipName}.zip`, deliveryMetadata(b0, job), dest);
     wbAutoExport(zipName, job.history);
     flash('已导出三个种子变体' + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
@@ -14098,6 +14134,30 @@ function effEnName() {
 }
 function effEnCustom() { try { return asciiName((store.get('packNames', {})[wbKey()] || {}).base); } catch (e) { return ''; } }
 function syncEnName() { const el = typeof document !== 'undefined' && document.getElementById('enName'); if (el) { const n = effEnName(); if (el.textContent !== n) el.textContent = n; } }
+// 4.9.121（团队版 ⑤，用户 10-25 00:00「全批准」）：新建效果时就填英文名；字符集和导出拦截（63_gate.js FW_NAME_RE）同一条——英文字母 / 数字，单词之间一个下划线。
+//   「MyFx」是多层「我的效果」没起名时的缺省名：几个效果都叫它，导出会互相覆盖，所以导出前拦下（exportNameBlock）
+const EN_NAME_RE = /^[A-Za-z0-9]+(_[A-Za-z0-9]+)*$/, EN_NAME_DEFAULT = 'MyFx';
+function enNameWhy(v) {
+  const s = String(v == null ? '' : v).trim();
+  if (!s) return '请填写英文名';
+  if (!EN_NAME_RE.test(s)) return '英文名只能用英文字母、数字和下划线（下划线不放在开头、结尾，也不连着两个），例：Impact_Steel_M_01';
+  if (s === EN_NAME_DEFAULT) return '「MyFx」是没起名时的缺省名，导出会被拦下：请起这个效果自己的名字';
+  return '';
+}
+// 建议的英文名：来源的英文名（花型 / 效果）+ _01、_02…，避开这台浏览器里「我的效果」和交付清单已经用过的名字
+function enNameSuggest(base) {
+  let b = asciiName(base) || 'Fx'; b = b.charAt(0).toUpperCase() + b.slice(1); if (b === EN_NAME_DEFAULT) b = 'Fx';
+  const used = new Set(); const add = o => { if (o) for (const k of ['base', 'system']) if (o[k]) used.add(String(o[k])); };
+  try { for (const r of Object.values(typeof myAll === 'function' ? myAll() : {})) add(r && r.ue); } catch (e) { }
+  try { for (const o of Object.values(store.get('packNames', {}))) add(o); } catch (e) { }
+  for (let n = 1; n < 1000; n++) { const c = b + '_' + String(n).padStart(2, '0'); if (!used.has(c)) return c; }
+  return b + '_' + Date.now().toString(36);
+}
+// 导出前：「我的效果」的英文名还是缺省 MyFx → 不出包，写清在哪改（null = 可以导出）
+function exportNameBlock(naming) {
+  if (typeof lib === 'undefined' || !lib.my || !naming) return '';
+  return naming.base === EN_NAME_DEFAULT || naming.system === EN_NAME_DEFAULT ? `英文名还是缺省的「${EN_NAME_DEFAULT}」，这次没有导出：在交付清单「英文名」里改成这个效果自己的名字（只用英文字母、数字和下划线，例：Impact_Steel_M_01），点「保存名称」后再导出` : '';
+}
 function setPackNames(key, base, layers, names = { system: '' }) {
   const all = { ...store.get('packNames', {}) }; all[key] = { base, layers: [...layers], system: asciiName(names.system === undefined ? base : names.system), ...(names.entry ? { entry: String(names.entry) } : {}) };     // 4.9.101 entry：分档效果里是在哪一档保存的
   if (!store.set('packNames', all)) return false;
@@ -15455,9 +15515,26 @@ const DeliveryWorkspace = (() => {
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
     // 4.9.80（导出排查）：标签页在后台时浏览器不出帧，两帧 rAF 永远等不到 → 导出一直挂着；最多等 150 ms
     await new Promise(resolve=>{setTimeout(resolve,150);if(window.requestAnimationFrame)window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve));});
-    await connect();if(session.directoryError)throw Error(session.directoryError);
+    // 4.9.121（团队版 ③，用户 10-25 00:00「弹出提示教他们怎么重连」）：本机交付服务（8034）没连上 → 应用内对话框一步步教怎么重连；
+    //   「重试连接」连上了就接着导出，「先导出 ZIP」这次改成下载 ZIP（内容一样），「取消导出」和以前一样停在失败页。没有对话框（隔离检查）时照旧直接报错
+    for(let attempt=0;;attempt++){
+      let error=null;
+      try{await connect(attempt>0);if(session.directoryError)error=Error(session.directoryError);}catch(e){error=e;}
+      if(!error)break;
+      const choice=await reconnectAsk(error,attempt);
+      if(choice==='zip'){show(false);message('本机交付服务没连上，这次改为下载 ZIP；重连后再导出就会写进资源目录。',true);return 'zip';}
+      if(choice!=='retry')throw error;
+      message('正在重新连接本机交付服务…');
+    }
     if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
     try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
+    return target;
+  }
+  function reconnectAsk(error,attempt){
+    const dlg=node('reconnectDlg');if(!dlg||typeof dlg.showModal!=='function')return Promise.resolve('');
+    node('reconnectDetail').textContent=(attempt?'重试了 '+attempt+' 次还是没连上：':'这次的原因：')+error.message;
+    dlg.returnValue='cancel';
+    return new Promise(resolve=>{dlg.addEventListener('close',()=>resolve(dlg.returnValue||'cancel'),{once:true});dlg.showModal();node('reconnectRetry').focus();});
   }
   function exportFailed(error){
     stopAcceptObservation();
@@ -17995,8 +18072,9 @@ async function exportCombo() {
   if (!busyCan(true)) return;
   try {
     const job = captureExportJob('combo'), name = job.name;
+    { const why = exportNameBlock(job.naming); if (why) { exportNameStop(why); return; } }     // 4.9.121（团队版 ⑤）：英文名还是缺省 MyFx
     busy(true, '组合素材包：准备各层…', 0);
-    await DeliveryWorkspace.beginExport(job.destination, job.system);
+    const dest = (await DeliveryWorkspace.beginExport(job.destination, job.system)) || job.destination;     // 4.9.121（团队版 ③）
     let metadata, description;
     const files = await comboPackFiles(name, job.layers, p => busy(true, '组合素材包…', p), job, lb => {
       metadata = deliveryMetadata(null, job, lb);
@@ -18006,7 +18084,7 @@ async function exportCombo() {
     busy(true, '打包 ZIP…', 1);
     const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? job.system : name;
     const zip = await makeZip(files.map(([f, d]) => [pk + '/' + f, d]), job); busy(true, '准备交付素材包…', 1);
-    await deliverResource(zip, pk + '.zip', metadata, job.destination);
+    await deliverResource(zip, pk + '.zip', metadata, dest);
     if (typeof wbAutoExport === 'function') wbAutoExport(pk, job.history);
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('组合导出失败：' + e.message, true); }
@@ -20147,6 +20225,11 @@ function myMigrateComboSaves() {
   delete all.combo; store.set('mySaves', all);
   if (n) setTimeout(() => flash(`组合编辑器去掉了：你在里面存的 ${n} 个版本搬到了左栏「我的效果」`), 1500);
 }
+// 4.9.121：英文名建议从哪来：现有效果的层 = 那个效果的英文名，模板 = 花型的英文名
+function myEnSource(key, s) {
+  const m = /^(rv|rep):(.+)$/.exec(key || ''), ef = m && typeof effectOfEntry === 'function' ? effectOfEntry({ id: m[2] }) : null;
+  return (ef && ef.英文名) || (s && TYPE_EN[s.type]) || 'Fx';
+}
 // 新建：先在花型库里选第一层（模板或现有效果的层），再起名字
 function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第一层（之后可以再加层）', onPick: myCreate }); }
 // 4.9.89（导出排查 A12）：多层 / 我的效果里的尾缀层只认「PC：近段 + 远段合成一张」。别的尾缀形态（RT6 全套、V5、上升循环、物理尾缀）多层的烘焙 / 导出 / 回放没接，
@@ -20158,12 +20241,14 @@ function multiLayerBlock(P) {
 }
 async function myCreate(key) {
   { const why = multiLayerBlock(mySrc(key).P); if (why) { flash(why, true, 9000); return; } }
-  const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', `新效果 ${n}`, '新建');
-  if (name == null) return;
-  const s = mySrc(key), id = 'fx' + Date.now().toString(36);
-  const rec = { id, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [],
+  // 4.9.121（团队版 ⑤）：新建时一起填英文名（UE 资产名），建议值 = 来源的英文名 + 序号；以前缺省都是 MyFx，几个效果导出互相覆盖
+  const s = mySrc(key), n = Object.keys(myAll()).length + 1;
+  const ask = await askNewFxNames('新效果叫什么？', '中文名在左栏、资产栏显示，之后在资产栏 ⋯ 里能改；英文名是导出的资产名，之后在「交付清单」里也能改。', `新效果 ${n}`, enNameSuggest(myEnSource(key, s)));
+  if (ask == null) return;
+  const en = enNameWhy(ask.en) ? enNameSuggest(myEnSource(key, s)) : ask.en.trim(), name = ask.cn, id = 'fx' + Date.now().toString(36);
+  const rec = { id, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [], ue: { base: en, layers: [], system: en },
     snap: { kind: 'combo', name: name.trim(), layers: [{ id: null, type: s.type, P: s.P, M: s.M, L: { title: s.title, lid: myLid(), scale: 1, delay: 0, rate: 1, mirror: false } }] } };
-  myPut(rec); await openMyEffect(id);
+  myPut(rec); setPackNames('my:' + id, en, [], { system: en }); await openMyEffect(id);
   flash(`已新建「${rec.name}」：右栏「观察图层」里加层、改名；调好了点资产栏「保存」`);
 }
 async function openMyEffect(id, o = {}) {
@@ -20293,8 +20378,11 @@ function bindMyLayerTools(box) {
 // 4.5.3（用户 10-05 18:02）：通过的 AI 效果（nPassed 个，renderPassed 画）排在最上面；每项不再挂「删除」，删除在资产栏 ⋯ 里
 function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
   const list = Object.values(myAll()).filter(r => libMatch(r.name, r.id)).sort((a, b) => String(b.updated).localeCompare(String(a.updated)));
-  const g = libGroup(host, 'myfx', '我的效果', list.length + nPassed, false, nHidden ? `<button type="button" class="lg-hid" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nHidden}</button>` : '');
-  const hb = g.querySelector('.lg-hid'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
+  // 4.9.121（团队版 ④）：组头「导出全部」「导入…」——一个文件带走这台浏览器里全部我的效果和我的模板，换浏览器 / 发给同事后导入就新增
+  const io = `<button type="button" class="lg-hid lg-io" data-myio="export" title="把这台浏览器里全部「我的效果」和「我的模板」存成一个 .json 文件（fwl.myrecipe/1），换浏览器 / 换电脑 / 发给同事用">导出全部</button><button type="button" class="lg-hid lg-io" data-myio="import" title="选一个或几个 .json（导出全部的文件、analysis/我的配方/ 里的配方、⋯「导出配方文件」导出的），直接新增为我的效果 / 我的模板；不用先打开同形态的效果">导入…</button>`;
+  const g = libGroup(host, 'myfx', '我的效果', list.length + nPassed, false, (nHidden ? `<button type="button" class="lg-hid" data-myhid="1" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nHidden}</button>` : '') + io);
+  const hb = g.querySelector('[data-myhid]'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
+  for (const k of ['export', 'import']) { const b = g.querySelector(`[data-myio="${k}"]`); if (b) b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); if (k === 'export') myExportAll(); else myImportPick(); }); }
   if (renderPassed && nPassed) renderPassed(g);
   if (!list.length && !nPassed) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。你通过的效果也会出现在这里。</p>');
   for (const r of list) {
@@ -20302,6 +20390,103 @@ function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
     const count = myLayerCount(r.snap), ue = packNamesFor('my:' + r.id, null, count, single ? TYPE_EN[t] : 'MyFx', single ? t : '').base;
     libItem(g, 'my:' + r.id, `<span class="th" style="${thUser('my:' + r.id) || thSnapStyle('my:' + r.id + '@' + (r.updated || ''), r.snap) || typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${single ? '原生单层' : count + ' 层'}${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
   }
+}
+// =====================================================================
+//  4.9.121（团队版 ④，用户 10-25 00:00「全批准」）：「我的效果」组头「导出全部 / 导入…」
+//  · 导出全部：一个 .json（fwl.mybundle/1），里面每个效果一份 fwl.myrecipe/1（和保存时写进仓库 analysis/我的配方/ 的同一种），每个我的模板一份 fwl.mytemplate/1
+//  · 导入：选一个或几个 .json——导出全部的文件、analysis/我的配方/ 里的配方（fwl.myrecipe/1）、⋯「导出配方文件」导出的（fwl.recipe/1）、我的模板（fwl.mytemplate/1）
+//    → 直接新增为我的效果 / 我的模板（不用先打开同形态的效果）。和本地一模一样的不重复加；同编号但内容不同的另加一份「· 导入」，本地的不动。
+//    导入不进 Ctrl+Z（不是参数）；导进来的效果和别的我的效果一样能删（8 秒撤销）
+// =====================================================================
+const MY_BUNDLE = 'fwl.mybundle/1';
+function myRecipeDoc(r) {
+  return { format: 'fwl.myrecipe/1', key: 'my:' + r.id, tool: VERSION, id: r.id, name: r.name, at: r.updated || r.created || '', created: r.created || '', base: '我的效果', from: r.from, snap: r.snap, links: r.links || [],
+    ue: r.ue || store.get('packNames', {})['my:' + r.id], sizeSource: r.sizeSource, sizePick: r.sizePick };
+}
+function myBundle() {
+  const effects = Object.values(myAll()).filter(r => r && r.id && r.snap).map(r => JSON.parse(JSON.stringify(myRecipeDoc(r))));
+  const templates = Object.values(typeof tplAll === 'function' ? tplAll() : {}).filter(t => t && t.id).map(t => ({ format: 'fwl.mytemplate/1', tool: VERSION, ...structuredClone(t) }));
+  return { format: MY_BUNDLE, tool: VERSION, at: wbNow(), effects, templates };
+}
+function myExportAll() {
+  const b = myBundle();
+  if (!b.effects.length && !b.templates.length) { flash('这台浏览器里还没有我的效果 / 我的模板，没什么可导出'); return null; }
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[-:]/g, '').replace('T', '-'), fn = `我的效果_全部_${stamp}.json`;
+  download(new Blob([JSON.stringify(b, null, 1)], { type: 'application/json' }), fn);
+  flash(`已导出 ${b.effects.length} 个我的效果、${b.templates.length} 个我的模板：${fn}（换浏览器 / 发给同事后在「我的效果」组头点「导入…」）`, false, 9000);
+  return b;
+}
+function myImportPick() {
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json'; inp.multiple = true;
+  inp.addEventListener('change', () => { const fs = [...(inp.files || [])]; if (fs.length) myImportFiles(fs); });
+  inp.click();
+}
+async function myImportFiles(files) {
+  const docs = [], bad = [];
+  for (const f of files) {
+    try { if (f.size > 64 * 1024 * 1024) throw new Error('文件太大'); docs.push(...myImportUnpack(JSON.parse(await f.text()))); }
+    catch (e) { bad.push(`${f.name}：${e.message || e}`); }
+  }
+  return myImportDocs(docs, bad);
+}
+// 一个文件里有哪些东西（导出全部的包拆开）；不认识的格式报错
+function myImportUnpack(doc) {
+  if (!doc || typeof doc !== 'object') throw new Error('不是烘焙器的文件');
+  if (doc.format === MY_BUNDLE) return [...(doc.effects || []), ...(doc.templates || [])];
+  if (['fwl.myrecipe/1', 'fwl.mytemplate/1', 'fwl.recipe/1'].includes(doc.format)) return [doc];
+  throw new Error('不认识的格式「' + (doc.format || '没写') + '」（要 fwl.mybundle/1、fwl.myrecipe/1、fwl.mytemplate/1 或 fwl.recipe/1）');
+}
+// fwl.recipe/1（⋯「导出配方文件」）→ 我的效果记录：单层的礼花包成一层的多层效果（和「保存成我的效果」同一个做法），原生单层（尾缀全套等）保持单层
+function myRecFromRecipe(doc) {
+  const sn = doc && doc.snap, obj = x => x && typeof x === 'object' && !Array.isArray(x);
+  if (!obj(sn)) throw new Error('图层数据不完整');
+  const name = String(doc.name && doc.name !== 'AI 版' ? doc.name : doc.base || '导入的效果') + '（导入）';
+  let snap;
+  if (sn.kind === 'single') {
+    if (!obj(sn.P) || !Object.hasOwn(TYPES, sn.P.type) || !obj(sn.M)) throw new Error('单层类型或参数不完整');
+    snap = multiLayerBlock(sn.P) ? { kind: 'single', P: structuredClone(sn.P), M: structuredClone(sn.M), repId: sn.repId || null }
+      : { kind: 'combo', name, layers: [{ id: null, type: sn.P.type, P: structuredClone(sn.P), M: structuredClone(sn.M), L: { title: String(doc.base || TYPE_NAMES[sn.P.type] || '第 1 层'), lid: myLid(), scale: 1, delay: 0, rate: 1, mirror: false } }] };
+  } else if (sn.kind === 'combo') {
+    snap = { kind: 'combo', name, layers: (sn.layers || []).map((x, i) => { if (!obj(x)) throw new Error('图层数据不完整'); const type = x.type || (x.P && x.P.type);
+      return { id: null, type, P: structuredClone(x.P), M: structuredClone(x.M), L: { scale: 1, delay: 0, rate: 1, mirror: false, ...structuredClone(x.L || {}), title: (x.L && x.L.title) || `第 ${i + 1} 层`, lid: (x.L && x.L.lid) || myLid() } }; }) };
+  } else throw new Error('配方形态不完整');
+  const id = myId(), first = snap.kind === 'single' ? snap.P.type : snap.layers[0] && snap.layers[0].type, en = enNameSuggest(TYPE_EN[first] || 'Fx');
+  const rec = repoRecipe({ format: 'fwl.myrecipe/1', id, key: 'my:' + id, name, at: doc.at || wbNow(), snap, links: [], from: { key: doc.key || '', name: doc.base || doc.key || '配方文件', base: doc.base || '', ver: doc.baseVer || '' },
+    ue: { base: en, layers: [], system: en } });     // 和仓库读取同一套校验（类型、参数、层）
+  rec.created = wbNow(); rec.updated = wbNow(); return rec;
+}
+function myImportDocs(docs, bad = []) {
+  const n = { fx: 0, same: 0, copy: 0, tpl: 0, tplSame: 0 }, stable = x => Array.isArray(x) ? x.map(stable) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, stable(x[k])])) : x;
+  for (const doc of docs) {
+    try {
+      if (doc.format === 'fwl.mytemplate/1') {
+        const { format, tool, ...t } = doc, obj = x => x && typeof x === 'object' && !Array.isArray(x);
+        if (typeof t.name !== 'string' || !Object.hasOwn(TYPES, t.type) || !obj(t.P) || !obj(t.M)) throw new Error('我的模板「' + (t.name || '?') + '」类型或参数不完整');
+        const all = tplAll(), sig = JSON.stringify(stable(t)), local = t.id && all[t.id];
+        if (local && JSON.stringify(stable(local)) === sig) { n.tplSame++; continue; }
+        const rec = { ...structuredClone(t) }; if (!rec.id || local) { rec.id = 't' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); if (local) rec.name += ' · 导入'; }
+        if (!tplPut(rec)) throw new Error('浏览器存储写不进去（空间不够？）'); n.tpl++; continue;
+      }
+      let rec;
+      if (doc.format === 'fwl.recipe/1') rec = myRecFromRecipe(doc);
+      else if (typeof doc.key === 'string' && !doc.key.startsWith('my:')) { rec = myRecoverSingle(doc.key, doc); if (!rec) throw new Error('「' + (doc.name || doc.key) + '」不是我的效果（只是某个效果的版本记录）'); }
+      else rec = repoRecipe(doc);
+      if (doc.created) rec.created = doc.created;
+      const local = myAll()[rec.id];
+      if (local && repoRecipeSig(local) === repoRecipeSig(rec)) { n.same++; continue; }
+      if (local || (lib.my && lib.my.id === rec.id)) { rec.id = myId(); rec.name += ' · 导入'; if (rec.snap.kind === 'combo') rec.snap.name = rec.name; n.copy++; }
+      if (!myPut(rec) || !myAll()[rec.id]) throw new Error('浏览器存储写不进去（空间不够？）');
+      try { myRestorePrefs(rec); } catch (e) { bad.push(`「${rec.name}」的英文名缓存没写上：${e.message || e}`); }
+      n.fx++;
+    } catch (e) { bad.push(e.message || String(e)); }
+  }
+  if (n.fx || n.tpl) { lib.open.myfx = true; if (n.tpl) lib.open.mytpl = true; store.set('libOpen2', lib.open); renderLib(); }
+  const parts = [`新增我的效果 ${n.fx} 个${n.copy ? `（其中 ${n.copy} 个和本地同编号但内容不同，另加了一份「· 导入」，本地的没动）` : ''}`];
+  if (n.same) parts.push(`${n.same} 个和本地一模一样，没重复加`);
+  if (n.tpl || n.tplSame) parts.push(`我的模板新增 ${n.tpl} 个${n.tplSame ? `、${n.tplSame} 个已有` : ''}`);
+  if (bad.length) parts.push(`${bad.length} 项没导入：${bad.slice(0, 3).join('；')}${bad.length > 3 ? '…' : ''}`);
+  flash('导入完成：' + parts.join('；'), !!bad.length, 12000, true);
+  return { ...n, bad };
 }
 // =====================================================================
 //  4.2.4 存进仓库文件夹（用户 2026-10-03 00:25：公司环境可能不让开本地服务 → 不开服务器）
@@ -20807,14 +20992,27 @@ function autoDraft() {
 }
 if (window.addEventListener) window.addEventListener('beforeunload', () => { try { autoDraft(); } catch (e) { } });
 function wbNow() { return new Date().toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'); }
-function askSaveName(title, note, initial, action = '保存') {
-  const dlg = $('#saveNameDlg'), input = $('#saveNameInput');
+// 4.9.121（团队版 ⑤，用户 10-25 00:00「全批准」）：o.en 给了 = 同一个对话框多一行「英文名」（新建效果时填），返回 { cn, en }；不给时和以前一样返回字符串
+function askSaveName(title, note, initial, action = '保存', o = null) {
+  const dlg = $('#saveNameDlg'), input = $('#saveNameInput'), withEn = !!o && o.en != null, box = $('#saveNameEnBox'), en = $('#saveNameEn'), msg = $('#saveNameEnMsg');
   $('#saveNameTitle').textContent = title; $('#saveNameNote').textContent = note; $('#saveNameSubmit').textContent = action;
   input.value = initial; dlg.returnValue = 'cancel';
+  if (box) { box.hidden = !withEn; en.disabled = !withEn; en.value = withEn ? String(o.en) : ''; en.setCustomValidity(''); msg.textContent = ''; }     // 不用时禁用：不参与表单校验
+  const check = () => { const why = withEn ? enNameWhy(en.value) : ''; en.setCustomValidity(why); msg.textContent = why; en.setAttribute('aria-invalid', String(!!why)); return !why; };
+  if (withEn) check();
   return new Promise(resolve => {
-    dlg.addEventListener('close', () => resolve(dlg.returnValue === 'save' ? input.value.trim() : null), { once: true });
+    const onIn = () => check();
+    if (withEn) en.addEventListener('input', onIn);
+    dlg.addEventListener('close', () => { if (withEn) en.removeEventListener('input', onIn); if (box) { box.hidden = true; en.disabled = true; }
+      resolve(dlg.returnValue === 'save' ? (withEn ? { cn: input.value.trim(), en: en.value.trim() } : input.value.trim()) : null); }, { once: true });
     dlg.showModal(); input.focus(); input.select();
   });
+}
+// 新建效果时的中文名 + 英文名：检查脚本把 askSaveName 换成只回一个字符串的桩时，英文名用建议值
+async function askNewFxNames(title, note, cn, en, action = '新建') {
+  const r = await askSaveName(title, note, cn, action, { en });
+  if (r == null) return null;
+  return typeof r === 'string' ? { cn: r, en } : r;
 }
 // 4.9.4（交互宪章 5：原生 confirm / prompt 换成应用内对话框）：起名 / 改名都走上面这个对话框，确认走 askConfirm。
 // 浏览器原生弹框会卡住整页、样式和别处不一样、Esc / 回车的行为也不同；这两个和保存时起名是同一个样子
@@ -20948,7 +21146,10 @@ function wbImportFile(file) {
   const rd = new FileReader();
   rd.onload = async () => {
     try {
-      const doc = JSON.parse(rd.result); if (doc.format !== 'fwl.recipe/1' || !doc.snap) throw new Error('不是烘焙器导出的配方文件');
+      const doc = JSON.parse(rd.result);
+      // 4.9.121（团队版 ④）：导出全部的包、我的效果 / 我的模板文件，或形态和当前打开的不一样的配方 → 直接新增为我的效果（以前报错要先打开同形态的效果）
+      if (doc.format !== 'fwl.recipe/1' || !doc.snap || (doc.snap.kind === 'combo') !== (state.tab === 'combo')) { if (typeof myImportUnpack === 'function') { myImportDocs(myImportUnpack(doc)); return; } }
+      if (doc.format !== 'fwl.recipe/1' || !doc.snap) throw new Error('不是烘焙器导出的配方文件');
       if ((doc.snap.kind === 'combo') !== (state.tab === 'combo')) throw new Error(doc.snap.kind === 'combo' ? '这是多层效果的配方，请先打开那个效果' : '这是单层的配方，当前打开的是多层效果');
       const list = wbList(), it = { id: Date.now().toString(36), name: (doc.name || '导入') + '（导入）', at: wbNow(), base: doc.base, baseVer: doc.baseVer, snap: doc.snap };
       list.push(it); wbPut(list); renderLib(); await wbLoad(it.id);
@@ -21427,6 +21628,12 @@ function delivName() {
   if (state.tab === 'combo') { const rv = lib.review && lib.review.kind === 'combo' ? lib.review.id : ''; return (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo'; }
   return state.name;
 }
+// 4.9.121（团队版 ⑤）：导出被英文名拦下 → 打开交付清单、光标放到英文名
+function exportNameStop(why) {
+  flash(why, true, 12000, true);
+  if (typeof toggleDeliv === 'function') toggleDeliv(true);
+  setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0);
+}
 function delivNameFeedback(host, msg, bad = false) {
   const out = host.querySelector('#dvNameStatus'); if (out) { out.textContent = msg; out.dataset.bad = String(bad); }
   flash(msg, bad, 6000, true);
@@ -21544,13 +21751,13 @@ function renderDeliv() {
   }
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
-  const prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '');     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
+  const nameWhy = exportNameBlock(nm), prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '') || nameWhy;     // 4.9.121（团队版 ⑤）：英文名还是 MyFx 时导出按钮灰、写原因     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '有一层的产物没在产物形态登记表里，导出会被拦'}</small></div><span class="sp"></span>
     <label class="dv-scope" title="导入器替换哪些（4.9.115，用户 10-18）：只换贴图 = 粒子系统、材质实例都不动，你在 UE 里改过的参数原样保留，贴图自己的 NoMip / Clamp 等设置也保留、只换像素；帧数 / 时长 / 格子改了要用「全部」。只换 PC / 手机：另一个平台那行导入器不勾。导出内容不变（要省掉手机烘焙，在产物表把手机选「不出」）">导入范围<select id="dvScope">${[['all', '全部（贴图 + 材质 + 粒子）'], ['textures', '只换贴图（PC + 手机）'], ['textures-pc', '只换 PC 贴图'], ['textures-mobile', '只换手机贴图']].map(([v, t]) => `<option value="${v}"${delivImportScope === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
     <button class="btn primary" type="button" id="dvExport"${noPackWhy ? ` disabled title="${noPackWhy.replace(/"/g, '&quot;')}"` : ''}>导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
-    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
+    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite" data-bad="${!!nameWhy}">${nameWhy ? '英文名还是缺省的 MyFx：改成这个效果自己的名字、点「保存名称」后才能导出' : ''}</small></div>
     ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
@@ -22606,7 +22813,7 @@ for (const [g, types] of TYPE_GROUPS) {
   $('#type').appendChild(og);
 }
 $('#verLabel').textContent = 'v' + VERSION;
-document.title = '烟花烘培器 · v' + VERSION;
+document.title = '烟花烘焙器 · v' + VERSION;     // 4.9.121（团队版 ⑥）：修「烘培」错字
 $('#type').addEventListener('change', e => state.tab === 'combo' ? setType(e.target.value) : openType(e.target.value));     // 换整个花型要同时切身份；多层里改当前层仍是编辑参数。
 $('#enNameEdit').addEventListener('click', () => { toggleDeliv(true); setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0); });     // 4.9.4 英文名只在交付清单里改
 $('#x-form').addEventListener('change', e => setForm(e.target.value));

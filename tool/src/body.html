@@ -1,6 +1,6 @@
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘培器</span><small id="verLabel"></small></div>
+    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘焙器</span><small id="verLabel"></small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <nav class="delivery-nav" aria-label="烘焙器工作区"><button class="btn ghost" id="deliveryMake" type="button" hidden>返回效果制作</button><button class="btn ghost" id="deliveryOpen" type="button">资源交付</button></nav>
@@ -309,6 +309,22 @@
     <h2 id="saveNameTitle">保存我的版本</h2>
     <p id="saveNameNote"></p>
     <label class="field">名称<input type="text" id="saveNameInput" autocomplete="off" required></label>
+    <div class="save-en" id="saveNameEnBox" hidden><label class="field">英文名<input type="text" id="saveNameEn" autocomplete="off" spellcheck="false" aria-describedby="saveNameEnHint saveNameEnMsg" disabled></label>
+      <small id="saveNameEnHint">UE 资产名用它（T_EFX_FireWorks_&lt;英文名&gt;_…）。只用英文字母、数字和下划线，单词首字母大写，例：Impact_Steel_M_01；之后在交付清单里也能改。</small><small id="saveNameEnMsg" class="save-en-msg" role="alert"></small></div>
     <div class="save-dialog-actions"><button class="btn" type="submit" value="cancel" formnovalidate>取消</button><button class="btn primary" id="saveNameSubmit" type="submit" value="save">保存</button></div>
+  </form>
+</dialog>
+<dialog class="save-dialog reconnect-dialog" id="reconnectDlg" aria-labelledby="reconnectTitle" aria-describedby="reconnectLead">
+  <form method="dialog">
+    <h2 id="reconnectTitle">本机交付服务没连上</h2>
+    <p id="reconnectLead">「指定目录」导出要靠本机交付服务（127.0.0.1:8034）把素材写进资源目录。这次的素材还没开始烘焙，按下面三步重连后接着导出：</p>
+    <ol class="reconnect-steps">
+      <li>打开仓库里的 <b>tool</b> 文件夹，双击 <b>启动烘焙器.cmd</b>。</li>
+      <li>看弹出的命令行窗口：一闪就关、并自动打开了一个新的烘焙器页面 = 服务已经起来了（新页面可以关掉，回到这一页）；窗口停住、写着错误 = 没起来，照窗口里的提示处理（常见：没装 Python 3.10 以上、本机启动配置里的路径不对）。</li>
+      <li>回到这一页点「重试连接」，连上后这次导出接着做。</li>
+    </ol>
+    <p class="hint">不想等：点「先导出 ZIP」，这次的素材包下载到浏览器的下载文件夹（内容和指定目录导出的一样）。</p>
+    <p class="hint reconnect-detail" id="reconnectDetail"></p>
+    <div class="save-dialog-actions"><button class="btn" type="submit" value="cancel" formnovalidate>取消导出</button><button class="btn" id="reconnectZip" type="submit" value="zip">先导出 ZIP</button><button class="btn primary" id="reconnectRetry" type="submit" value="retry">重试连接</button></div>
   </form>
 </dialog>

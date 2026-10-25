@@ -441,15 +441,16 @@ async function exportMaster() {
   let b = null;
   try {
     const job = captureExportJob(), name = job.name;
+    { const why = exportNameBlock(job.naming); if (why) { exportNameStop(why); return; } }     // 4.9.121（团队版 ⑤）：英文名还是缺省 MyFx
     busy(true, '准备导出…', 0);
-    await DeliveryWorkspace.beginExport(job.destination, job.system);
+    const dest = (await DeliveryWorkspace.beginExport(job.destination, job.system)) || job.destination;     // 4.9.121（团队版 ③）：服务没连上时可以改成这次先出 ZIP
     // A private bake cannot be invalidated/disposed by edits or a later open.
     b = await bakeFinal(exportBakeParams(job.P, job.M), 1, p => busy(true, '烘焙 ' + job.P.texW + '×' + job.P.texH + '… ' + Math.round(p * 100) + '%', p * 0.9));
     if (productNoPack(b)) throw new Error(productNoPack(b));
     busy(true, '编码 PNG…', 0.93);
     const so = typeof singleOut === 'function' ? singleOut(job.P) : { pc: 'seq', mobile: 'seq' };
     if ((so.pc !== 'seq' || so.mobile !== 'seq') && (b.form === 'master' || b.form === 'segments')) {
-      await exportSingleScheme(name, b, job.destination, job); return;
+      await exportSingleScheme(name, b, dest, job); return;
     }
     const files = await texFiles(b, name);
     if (b.form === 'trail' && job.P.trExport4K) {
@@ -472,7 +473,7 @@ async function exportMaster() {
     }
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx;
     const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
-    await deliverResource(zip, zipName + '.zip', deliveryMetadata(b, job), job.destination);
+    await deliverResource(zip, zipName + '.zip', deliveryMetadata(b, job), dest);
     wbAutoExport(zipName, job.history);
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
@@ -489,7 +490,8 @@ async function exportVariants() {
   let bs = [], hung = false;
   try {
     const job = captureExportJob('variants'), name = job.name;
-    await DeliveryWorkspace.beginExport(job.destination, job.system);
+    { const why = exportNameBlock(job.naming); if (why) { exportNameStop(why); return; } }     // 4.9.121（团队版 ⑤）
+    const dest = (await DeliveryWorkspace.beginExport(job.destination, job.system)) || job.destination;     // 4.9.121（团队版 ③）
     bs = await bakeVariants(exportBakeParams(job.P, job.M), 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
     const b0 = bs[0], files = [];
     hung = !bs.some(b => b.next); if (hung) b0.vars = bs.slice(1);     // 一张贴图：V2 / V3 挂在第 1 张上（texFiles / 命名规范按变体出）
@@ -505,7 +507,7 @@ async function exportVariants() {
     if (hung && namingApplies(b0)) { const nm = job.naming, sys = job.system; out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
     out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
     const zip = await makeZip(out, job); busy(true, '准备交付素材包…', 1);
-    await deliverResource(zip, `${zipName}.zip`, deliveryMetadata(b0, job), job.destination);
+    await deliverResource(zip, `${zipName}.zip`, deliveryMetadata(b0, job), dest);
     wbAutoExport(zipName, job.history);
     flash('已导出三个种子变体' + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }

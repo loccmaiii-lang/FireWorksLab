@@ -1323,8 +1323,9 @@ async function exportCombo() {
   if (!busyCan(true)) return;
   try {
     const job = captureExportJob('combo'), name = job.name;
+    { const why = exportNameBlock(job.naming); if (why) { exportNameStop(why); return; } }     // 4.9.121（团队版 ⑤）：英文名还是缺省 MyFx
     busy(true, '组合素材包：准备各层…', 0);
-    await DeliveryWorkspace.beginExport(job.destination, job.system);
+    const dest = (await DeliveryWorkspace.beginExport(job.destination, job.system)) || job.destination;     // 4.9.121（团队版 ③）
     let metadata, description;
     const files = await comboPackFiles(name, job.layers, p => busy(true, '组合素材包…', p), job, lb => {
       metadata = deliveryMetadata(null, job, lb);
@@ -1334,7 +1335,7 @@ async function exportCombo() {
     busy(true, '打包 ZIP…', 1);
     const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? job.system : name;
     const zip = await makeZip(files.map(([f, d]) => [pk + '/' + f, d]), job); busy(true, '准备交付素材包…', 1);
-    await deliverResource(zip, pk + '.zip', metadata, job.destination);
+    await deliverResource(zip, pk + '.zip', metadata, dest);
     if (typeof wbAutoExport === 'function') wbAutoExport(pk, job.history);
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('组合导出失败：' + e.message, true); }

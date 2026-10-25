@@ -1811,3 +1811,18 @@ header.top .gpu::before{content:none}
 
 /* Keep the existing export progress/cancel visible in the destination workspace. */
 #deliveryWorkspace>#busy.busy{position:absolute;inset:0;z-index:5;border-radius:0;background:rgba(6,12,16,.88)}
+
+/* 4.9.121（团队版 ③ ④ ⑤）：新建效果的英文名、交付清单的名字提示、本机服务重连对话框、我的效果组头的导出 / 导入 */
+.save-dialog .save-en{margin-top:12px;display:flex;flex-direction:column;gap:4px}
+.save-dialog .save-en[hidden]{display:none}
+.save-dialog .save-en input{font-family:var(--mono)}
+.save-dialog .save-en small{font-size:12px;line-height:1.6;color:var(--dim)}
+.save-dialog .save-en .save-en-msg{color:var(--warn)}
+.save-dialog .save-en .save-en-msg:empty{display:none}
+.dv-names small[data-bad=true]{color:var(--warn)}
+.reconnect-dialog{width:min(560px,calc(100vw - 32px))}
+.reconnect-dialog .reconnect-steps{margin:0 0 12px;padding-left:20px;font-size:13px;line-height:1.7;color:var(--text)}
+.reconnect-dialog .reconnect-steps li{margin:0 0 6px}
+.reconnect-dialog .reconnect-detail{color:var(--warn);white-space:pre-wrap;overflow-wrap:anywhere}
+.reconnect-dialog .reconnect-detail:empty{display:none}
+.lg>summary .lg-io{order:2}

@@ -49,6 +49,30 @@ function effEnName() {
 }
 function effEnCustom() { try { return asciiName((store.get('packNames', {})[wbKey()] || {}).base); } catch (e) { return ''; } }
 function syncEnName() { const el = typeof document !== 'undefined' && document.getElementById('enName'); if (el) { const n = effEnName(); if (el.textContent !== n) el.textContent = n; } }
+// 4.9.121（团队版 ⑤，用户 10-25 00:00「全批准」）：新建效果时就填英文名；字符集和导出拦截（63_gate.js FW_NAME_RE）同一条——英文字母 / 数字，单词之间一个下划线。
+//   「MyFx」是多层「我的效果」没起名时的缺省名：几个效果都叫它，导出会互相覆盖，所以导出前拦下（exportNameBlock）
+const EN_NAME_RE = /^[A-Za-z0-9]+(_[A-Za-z0-9]+)*$/, EN_NAME_DEFAULT = 'MyFx';
+function enNameWhy(v) {
+  const s = String(v == null ? '' : v).trim();
+  if (!s) return '请填写英文名';
+  if (!EN_NAME_RE.test(s)) return '英文名只能用英文字母、数字和下划线（下划线不放在开头、结尾，也不连着两个），例：Impact_Steel_M_01';
+  if (s === EN_NAME_DEFAULT) return '「MyFx」是没起名时的缺省名，导出会被拦下：请起这个效果自己的名字';
+  return '';
+}
+// 建议的英文名：来源的英文名（花型 / 效果）+ _01、_02…，避开这台浏览器里「我的效果」和交付清单已经用过的名字
+function enNameSuggest(base) {
+  let b = asciiName(base) || 'Fx'; b = b.charAt(0).toUpperCase() + b.slice(1); if (b === EN_NAME_DEFAULT) b = 'Fx';
+  const used = new Set(); const add = o => { if (o) for (const k of ['base', 'system']) if (o[k]) used.add(String(o[k])); };
+  try { for (const r of Object.values(typeof myAll === 'function' ? myAll() : {})) add(r && r.ue); } catch (e) { }
+  try { for (const o of Object.values(store.get('packNames', {}))) add(o); } catch (e) { }
+  for (let n = 1; n < 1000; n++) { const c = b + '_' + String(n).padStart(2, '0'); if (!used.has(c)) return c; }
+  return b + '_' + Date.now().toString(36);
+}
+// 导出前：「我的效果」的英文名还是缺省 MyFx → 不出包，写清在哪改（null = 可以导出）
+function exportNameBlock(naming) {
+  if (typeof lib === 'undefined' || !lib.my || !naming) return '';
+  return naming.base === EN_NAME_DEFAULT || naming.system === EN_NAME_DEFAULT ? `英文名还是缺省的「${EN_NAME_DEFAULT}」，这次没有导出：在交付清单「英文名」里改成这个效果自己的名字（只用英文字母、数字和下划线，例：Impact_Steel_M_01），点「保存名称」后再导出` : '';
+}
 function setPackNames(key, base, layers, names = { system: '' }) {
   const all = { ...store.get('packNames', {}) }; all[key] = { base, layers: [...layers], system: asciiName(names.system === undefined ? base : names.system), ...(names.entry ? { entry: String(names.entry) } : {}) };     // 4.9.101 entry：分档效果里是在哪一档保存的
   if (!store.set('packNames', all)) return false;

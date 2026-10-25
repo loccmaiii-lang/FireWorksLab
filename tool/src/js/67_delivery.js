@@ -147,9 +147,26 @@ const DeliveryWorkspace = (() => {
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
     // 4.9.80（导出排查）：标签页在后台时浏览器不出帧，两帧 rAF 永远等不到 → 导出一直挂着；最多等 150 ms
     await new Promise(resolve=>{setTimeout(resolve,150);if(window.requestAnimationFrame)window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve));});
-    await connect();if(session.directoryError)throw Error(session.directoryError);
+    // 4.9.121（团队版 ③，用户 10-25 00:00「弹出提示教他们怎么重连」）：本机交付服务（8034）没连上 → 应用内对话框一步步教怎么重连；
+    //   「重试连接」连上了就接着导出，「先导出 ZIP」这次改成下载 ZIP（内容一样），「取消导出」和以前一样停在失败页。没有对话框（隔离检查）时照旧直接报错
+    for(let attempt=0;;attempt++){
+      let error=null;
+      try{await connect(attempt>0);if(session.directoryError)error=Error(session.directoryError);}catch(e){error=e;}
+      if(!error)break;
+      const choice=await reconnectAsk(error,attempt);
+      if(choice==='zip'){show(false);message('本机交付服务没连上，这次改为下载 ZIP；重连后再导出就会写进资源目录。',true);return 'zip';}
+      if(choice!=='retry')throw error;
+      message('正在重新连接本机交付服务…');
+    }
     if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
     try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
+    return target;
+  }
+  function reconnectAsk(error,attempt){
+    const dlg=node('reconnectDlg');if(!dlg||typeof dlg.showModal!=='function')return Promise.resolve('');
+    node('reconnectDetail').textContent=(attempt?'重试了 '+attempt+' 次还是没连上：':'这次的原因：')+error.message;
+    dlg.returnValue='cancel';
+    return new Promise(resolve=>{dlg.addEventListener('close',()=>resolve(dlg.returnValue||'cancel'),{once:true});dlg.showModal();node('reconnectRetry').focus();});
   }
   function exportFailed(error){
     stopAcceptObservation();

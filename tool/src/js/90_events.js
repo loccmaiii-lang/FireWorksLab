@@ -6,7 +6,7 @@ for (const [g, types] of TYPE_GROUPS) {
   $('#type').appendChild(og);
 }
 $('#verLabel').textContent = 'v' + VERSION;
-document.title = '烟花烘培器 · v' + VERSION;
+document.title = '烟花烘焙器 · v' + VERSION;     // 4.9.121（团队版 ⑥）：修「烘培」错字
 $('#type').addEventListener('change', e => state.tab === 'combo' ? setType(e.target.value) : openType(e.target.value));     // 换整个花型要同时切身份；多层里改当前层仍是编辑参数。
 $('#enNameEdit').addEventListener('click', () => { toggleDeliv(true); setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0); });     // 4.9.4 英文名只在交付清单里改
 $('#x-form').addEventListener('change', e => setForm(e.target.value));

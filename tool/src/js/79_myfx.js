@@ -128,6 +128,11 @@ function myMigrateComboSaves() {
   delete all.combo; store.set('mySaves', all);
   if (n) setTimeout(() => flash(`组合编辑器去掉了：你在里面存的 ${n} 个版本搬到了左栏「我的效果」`), 1500);
 }
+// 4.9.121：英文名建议从哪来：现有效果的层 = 那个效果的英文名，模板 = 花型的英文名
+function myEnSource(key, s) {
+  const m = /^(rv|rep):(.+)$/.exec(key || ''), ef = m && typeof effectOfEntry === 'function' ? effectOfEntry({ id: m[2] }) : null;
+  return (ef && ef.英文名) || (s && TYPE_EN[s.type]) || 'Fx';
+}
 // 新建：先在花型库里选第一层（模板或现有效果的层），再起名字
 function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第一层（之后可以再加层）', onPick: myCreate }); }
 // 4.9.89（导出排查 A12）：多层 / 我的效果里的尾缀层只认「PC：近段 + 远段合成一张」。别的尾缀形态（RT6 全套、V5、上升循环、物理尾缀）多层的烘焙 / 导出 / 回放没接，
@@ -139,12 +144,14 @@ function multiLayerBlock(P) {
 }
 async function myCreate(key) {
   { const why = multiLayerBlock(mySrc(key).P); if (why) { flash(why, true, 9000); return; } }
-  const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', `新效果 ${n}`, '新建');
-  if (name == null) return;
-  const s = mySrc(key), id = 'fx' + Date.now().toString(36);
-  const rec = { id, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [],
+  // 4.9.121（团队版 ⑤）：新建时一起填英文名（UE 资产名），建议值 = 来源的英文名 + 序号；以前缺省都是 MyFx，几个效果导出互相覆盖
+  const s = mySrc(key), n = Object.keys(myAll()).length + 1;
+  const ask = await askNewFxNames('新效果叫什么？', '中文名在左栏、资产栏显示，之后在资产栏 ⋯ 里能改；英文名是导出的资产名，之后在「交付清单」里也能改。', `新效果 ${n}`, enNameSuggest(myEnSource(key, s)));
+  if (ask == null) return;
+  const en = enNameWhy(ask.en) ? enNameSuggest(myEnSource(key, s)) : ask.en.trim(), name = ask.cn, id = 'fx' + Date.now().toString(36);
+  const rec = { id, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [], ue: { base: en, layers: [], system: en },
     snap: { kind: 'combo', name: name.trim(), layers: [{ id: null, type: s.type, P: s.P, M: s.M, L: { title: s.title, lid: myLid(), scale: 1, delay: 0, rate: 1, mirror: false } }] } };
-  myPut(rec); await openMyEffect(id);
+  myPut(rec); setPackNames('my:' + id, en, [], { system: en }); await openMyEffect(id);
   flash(`已新建「${rec.name}」：右栏「观察图层」里加层、改名；调好了点资产栏「保存」`);
 }
 async function openMyEffect(id, o = {}) {
@@ -274,8 +281,11 @@ function bindMyLayerTools(box) {
 // 4.5.3（用户 10-05 18:02）：通过的 AI 效果（nPassed 个，renderPassed 画）排在最上面；每项不再挂「删除」，删除在资产栏 ⋯ 里
 function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
   const list = Object.values(myAll()).filter(r => libMatch(r.name, r.id)).sort((a, b) => String(b.updated).localeCompare(String(a.updated)));
-  const g = libGroup(host, 'myfx', '我的效果', list.length + nPassed, false, nHidden ? `<button type="button" class="lg-hid" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nHidden}</button>` : '');
-  const hb = g.querySelector('.lg-hid'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
+  // 4.9.121（团队版 ④）：组头「导出全部」「导入…」——一个文件带走这台浏览器里全部我的效果和我的模板，换浏览器 / 发给同事后导入就新增
+  const io = `<button type="button" class="lg-hid lg-io" data-myio="export" title="把这台浏览器里全部「我的效果」和「我的模板」存成一个 .json 文件（fwl.myrecipe/1），换浏览器 / 换电脑 / 发给同事用">导出全部</button><button type="button" class="lg-hid lg-io" data-myio="import" title="选一个或几个 .json（导出全部的文件、analysis/我的配方/ 里的配方、⋯「导出配方文件」导出的），直接新增为我的效果 / 我的模板；不用先打开同形态的效果">导入…</button>`;
+  const g = libGroup(host, 'myfx', '我的效果', list.length + nPassed, false, (nHidden ? `<button type="button" class="lg-hid" data-myhid="1" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nHidden}</button>` : '') + io);
+  const hb = g.querySelector('[data-myhid]'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
+  for (const k of ['export', 'import']) { const b = g.querySelector(`[data-myio="${k}"]`); if (b) b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); if (k === 'export') myExportAll(); else myImportPick(); }); }
   if (renderPassed && nPassed) renderPassed(g);
   if (!list.length && !nPassed) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。你通过的效果也会出现在这里。</p>');
   for (const r of list) {
@@ -283,4 +293,101 @@ function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
     const count = myLayerCount(r.snap), ue = packNamesFor('my:' + r.id, null, count, single ? TYPE_EN[t] : 'MyFx', single ? t : '').base;
     libItem(g, 'my:' + r.id, `<span class="th" style="${thUser('my:' + r.id) || thSnapStyle('my:' + r.id + '@' + (r.updated || ''), r.snap) || typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${single ? '原生单层' : count + ' 层'}${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
   }
+}
+// =====================================================================
+//  4.9.121（团队版 ④，用户 10-25 00:00「全批准」）：「我的效果」组头「导出全部 / 导入…」
+//  · 导出全部：一个 .json（fwl.mybundle/1），里面每个效果一份 fwl.myrecipe/1（和保存时写进仓库 analysis/我的配方/ 的同一种），每个我的模板一份 fwl.mytemplate/1
+//  · 导入：选一个或几个 .json——导出全部的文件、analysis/我的配方/ 里的配方（fwl.myrecipe/1）、⋯「导出配方文件」导出的（fwl.recipe/1）、我的模板（fwl.mytemplate/1）
+//    → 直接新增为我的效果 / 我的模板（不用先打开同形态的效果）。和本地一模一样的不重复加；同编号但内容不同的另加一份「· 导入」，本地的不动。
+//    导入不进 Ctrl+Z（不是参数）；导进来的效果和别的我的效果一样能删（8 秒撤销）
+// =====================================================================
+const MY_BUNDLE = 'fwl.mybundle/1';
+function myRecipeDoc(r) {
+  return { format: 'fwl.myrecipe/1', key: 'my:' + r.id, tool: VERSION, id: r.id, name: r.name, at: r.updated || r.created || '', created: r.created || '', base: '我的效果', from: r.from, snap: r.snap, links: r.links || [],
+    ue: r.ue || store.get('packNames', {})['my:' + r.id], sizeSource: r.sizeSource, sizePick: r.sizePick };
+}
+function myBundle() {
+  const effects = Object.values(myAll()).filter(r => r && r.id && r.snap).map(r => JSON.parse(JSON.stringify(myRecipeDoc(r))));
+  const templates = Object.values(typeof tplAll === 'function' ? tplAll() : {}).filter(t => t && t.id).map(t => ({ format: 'fwl.mytemplate/1', tool: VERSION, ...structuredClone(t) }));
+  return { format: MY_BUNDLE, tool: VERSION, at: wbNow(), effects, templates };
+}
+function myExportAll() {
+  const b = myBundle();
+  if (!b.effects.length && !b.templates.length) { flash('这台浏览器里还没有我的效果 / 我的模板，没什么可导出'); return null; }
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[-:]/g, '').replace('T', '-'), fn = `我的效果_全部_${stamp}.json`;
+  download(new Blob([JSON.stringify(b, null, 1)], { type: 'application/json' }), fn);
+  flash(`已导出 ${b.effects.length} 个我的效果、${b.templates.length} 个我的模板：${fn}（换浏览器 / 发给同事后在「我的效果」组头点「导入…」）`, false, 9000);
+  return b;
+}
+function myImportPick() {
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json'; inp.multiple = true;
+  inp.addEventListener('change', () => { const fs = [...(inp.files || [])]; if (fs.length) myImportFiles(fs); });
+  inp.click();
+}
+async function myImportFiles(files) {
+  const docs = [], bad = [];
+  for (const f of files) {
+    try { if (f.size > 64 * 1024 * 1024) throw new Error('文件太大'); docs.push(...myImportUnpack(JSON.parse(await f.text()))); }
+    catch (e) { bad.push(`${f.name}：${e.message || e}`); }
+  }
+  return myImportDocs(docs, bad);
+}
+// 一个文件里有哪些东西（导出全部的包拆开）；不认识的格式报错
+function myImportUnpack(doc) {
+  if (!doc || typeof doc !== 'object') throw new Error('不是烘焙器的文件');
+  if (doc.format === MY_BUNDLE) return [...(doc.effects || []), ...(doc.templates || [])];
+  if (['fwl.myrecipe/1', 'fwl.mytemplate/1', 'fwl.recipe/1'].includes(doc.format)) return [doc];
+  throw new Error('不认识的格式「' + (doc.format || '没写') + '」（要 fwl.mybundle/1、fwl.myrecipe/1、fwl.mytemplate/1 或 fwl.recipe/1）');
+}
+// fwl.recipe/1（⋯「导出配方文件」）→ 我的效果记录：单层的礼花包成一层的多层效果（和「保存成我的效果」同一个做法），原生单层（尾缀全套等）保持单层
+function myRecFromRecipe(doc) {
+  const sn = doc && doc.snap, obj = x => x && typeof x === 'object' && !Array.isArray(x);
+  if (!obj(sn)) throw new Error('图层数据不完整');
+  const name = String(doc.name && doc.name !== 'AI 版' ? doc.name : doc.base || '导入的效果') + '（导入）';
+  let snap;
+  if (sn.kind === 'single') {
+    if (!obj(sn.P) || !Object.hasOwn(TYPES, sn.P.type) || !obj(sn.M)) throw new Error('单层类型或参数不完整');
+    snap = multiLayerBlock(sn.P) ? { kind: 'single', P: structuredClone(sn.P), M: structuredClone(sn.M), repId: sn.repId || null }
+      : { kind: 'combo', name, layers: [{ id: null, type: sn.P.type, P: structuredClone(sn.P), M: structuredClone(sn.M), L: { title: String(doc.base || TYPE_NAMES[sn.P.type] || '第 1 层'), lid: myLid(), scale: 1, delay: 0, rate: 1, mirror: false } }] };
+  } else if (sn.kind === 'combo') {
+    snap = { kind: 'combo', name, layers: (sn.layers || []).map((x, i) => { if (!obj(x)) throw new Error('图层数据不完整'); const type = x.type || (x.P && x.P.type);
+      return { id: null, type, P: structuredClone(x.P), M: structuredClone(x.M), L: { scale: 1, delay: 0, rate: 1, mirror: false, ...structuredClone(x.L || {}), title: (x.L && x.L.title) || `第 ${i + 1} 层`, lid: (x.L && x.L.lid) || myLid() } }; }) };
+  } else throw new Error('配方形态不完整');
+  const id = myId(), first = snap.kind === 'single' ? snap.P.type : snap.layers[0] && snap.layers[0].type, en = enNameSuggest(TYPE_EN[first] || 'Fx');
+  const rec = repoRecipe({ format: 'fwl.myrecipe/1', id, key: 'my:' + id, name, at: doc.at || wbNow(), snap, links: [], from: { key: doc.key || '', name: doc.base || doc.key || '配方文件', base: doc.base || '', ver: doc.baseVer || '' },
+    ue: { base: en, layers: [], system: en } });     // 和仓库读取同一套校验（类型、参数、层）
+  rec.created = wbNow(); rec.updated = wbNow(); return rec;
+}
+function myImportDocs(docs, bad = []) {
+  const n = { fx: 0, same: 0, copy: 0, tpl: 0, tplSame: 0 }, stable = x => Array.isArray(x) ? x.map(stable) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, stable(x[k])])) : x;
+  for (const doc of docs) {
+    try {
+      if (doc.format === 'fwl.mytemplate/1') {
+        const { format, tool, ...t } = doc, obj = x => x && typeof x === 'object' && !Array.isArray(x);
+        if (typeof t.name !== 'string' || !Object.hasOwn(TYPES, t.type) || !obj(t.P) || !obj(t.M)) throw new Error('我的模板「' + (t.name || '?') + '」类型或参数不完整');
+        const all = tplAll(), sig = JSON.stringify(stable(t)), local = t.id && all[t.id];
+        if (local && JSON.stringify(stable(local)) === sig) { n.tplSame++; continue; }
+        const rec = { ...structuredClone(t) }; if (!rec.id || local) { rec.id = 't' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); if (local) rec.name += ' · 导入'; }
+        if (!tplPut(rec)) throw new Error('浏览器存储写不进去（空间不够？）'); n.tpl++; continue;
+      }
+      let rec;
+      if (doc.format === 'fwl.recipe/1') rec = myRecFromRecipe(doc);
+      else if (typeof doc.key === 'string' && !doc.key.startsWith('my:')) { rec = myRecoverSingle(doc.key, doc); if (!rec) throw new Error('「' + (doc.name || doc.key) + '」不是我的效果（只是某个效果的版本记录）'); }
+      else rec = repoRecipe(doc);
+      if (doc.created) rec.created = doc.created;
+      const local = myAll()[rec.id];
+      if (local && repoRecipeSig(local) === repoRecipeSig(rec)) { n.same++; continue; }
+      if (local || (lib.my && lib.my.id === rec.id)) { rec.id = myId(); rec.name += ' · 导入'; if (rec.snap.kind === 'combo') rec.snap.name = rec.name; n.copy++; }
+      if (!myPut(rec) || !myAll()[rec.id]) throw new Error('浏览器存储写不进去（空间不够？）');
+      try { myRestorePrefs(rec); } catch (e) { bad.push(`「${rec.name}」的英文名缓存没写上：${e.message || e}`); }
+      n.fx++;
+    } catch (e) { bad.push(e.message || String(e)); }
+  }
+  if (n.fx || n.tpl) { lib.open.myfx = true; if (n.tpl) lib.open.mytpl = true; store.set('libOpen2', lib.open); renderLib(); }
+  const parts = [`新增我的效果 ${n.fx} 个${n.copy ? `（其中 ${n.copy} 个和本地同编号但内容不同，另加了一份「· 导入」，本地的没动）` : ''}`];
+  if (n.same) parts.push(`${n.same} 个和本地一模一样，没重复加`);
+  if (n.tpl || n.tplSame) parts.push(`我的模板新增 ${n.tpl} 个${n.tplSame ? `、${n.tplSame} 个已有` : ''}`);
+  if (bad.length) parts.push(`${bad.length} 项没导入：${bad.slice(0, 3).join('；')}${bad.length > 3 ? '…' : ''}`);
+  flash('导入完成：' + parts.join('；'), !!bad.length, 12000, true);
+  return { ...n, bad };
 }
