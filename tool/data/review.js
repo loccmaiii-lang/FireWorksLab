@@ -878,6 +878,725 @@ var FW_REVIEW = [
 "ver": "d1582f5d"
 },
 {
+"id": "GRS1",
+"task": "GRS1",
+"kind": "preset",
+"date": "2026-10-25",
+"name": "砂轮切割火星 · 45 钢（Grinder_Steel_M_01）",
+"note": "团队版 T5（云端，2026-10-25）：按 analysis/原理/砂轮切割火星.md 第 3 节建的分层粒子图（7 层，循环 64 帧 / 30 fps）。火星以砂轮线速度 30–40 m/s 沿切线向下 15° 锥喷（半角 12°），强线性阻力 23 /s 在 0.1 s 内刹住，寿命分布 [0.016, 0.085, 4] 回代出 ES2019 实测的停止距离（l ≈ 0.3 m）；粗、中、细三档粒径同框；中碳 45 钢末段爆花（一级 4 颗 / 0.8、二级 2 颗 / 0.4，途中小火星层概率 0 = 高碳才开）。镜头快门 1/30 s：近砂轮一把长白线、远处短线和爆花。为观感调过：绝对亮度、爆花亮度（补粒子图开头 2 ms / 末尾 8 ms 固定淡入淡出）、取景四边（推导文件 3.5 节）。碳含量切换见推导 3.4。未经 UE 验证（锁 Z、跟随角磨朝向、近距离大小）。",
+"look": [
+"正常速度看：连续的一条火星流，近砂轮密、远处有长尾（停止距离近处多、远处少）",
+"近处长白线、远处变短，末端有小分叉（爆花）",
+"0.42 s、1.31 s 两下压力起伏稍密一点",
+"引擎回放 + 游戏内大小；手机 256 格爆花还看不看得见"
+],
+"opinion": null,
+"tags": "团队版 砂轮 角磨 切割 钢 火星 爆花 粒子图 循环 Grinder_Steel GRS1",
+"doc": null,
+"imagesTitle": null,
+"principle": true,
+"base": "sparkgraph",
+"p": {
+"form": "loop",
+"renderVer": 40,
+"loopT": 2.1333333333333333,
+"duration": 2.1333333333333333,
+"sparkGraph": {
+"name": "砂轮切割火星 · 45 钢（Grinder_Steel_M_01）",
+"period": 2.1333333333333333,
+"bounds": [
+-0.15,
+2.3,
+-0.95,
+0.15
+],
+"bursts": [
+[
+0.42,
+0.05
+],
+[
+1.31,
+0.08
+]
+],
+"emitters": [
+{
+"id": "e01",
+"name": "01｜切点白热",
+"parent": null,
+"seed": 720101,
+"enabled": true,
+"count": 600,
+"speed": [
+0,
+0.3,
+1
+],
+"life": [
+0.015,
+0.05,
+1.2
+],
+"size": [
+0.6,
+1.6,
+1.2
+],
+"power": [
+0.5,
+1.5,
+1
+],
+"width": 0.004,
+"gain": 10,
+"drag": 0,
+"gravity": [
+0,
+0,
+0
+],
+"directionMode": "sphere",
+"direction": [
+0,
+0,
+1
+],
+"cone": 30,
+"shape": "point",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0.004,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 1,
+"event": 0.5,
+"delay": 0,
+"inherit": 1,
+"probability": 1,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+0.6
+],
+[
+0.2,
+1
+],
+[
+1,
+0
+]
+],
+"burstShare": 0.1,
+"fieldCoupling": 0
+},
+{
+"id": "e02",
+"name": "02｜主火星 · 100 µm",
+"parent": null,
+"seed": 720202,
+"enabled": true,
+"count": 4000,
+"speed": [
+30,
+40,
+1
+],
+"life": [
+0.016,
+0.085,
+4
+],
+"size": [
+0.8,
+1.25,
+1.2
+],
+"power": [
+0.6,
+1.5,
+1.3
+],
+"width": 0.0001,
+"gain": 150000,
+"drag": 23.2,
+"gravity": [
+0,
+0,
+-9.81
+],
+"directionMode": "cone",
+"direction": [
+0.966,
+0,
+-0.259
+],
+"cone": 12,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0.004,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 1,
+"event": 0.5,
+"delay": 0,
+"inherit": 1,
+"probability": 1,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+0.7
+],
+[
+0.08,
+1
+],
+[
+0.7,
+1
+],
+[
+1,
+0
+]
+],
+"burstShare": 0.1,
+"fieldCoupling": 0
+},
+{
+"id": "e03",
+"name": "03｜细火星 · 60 µm",
+"parent": null,
+"seed": 720303,
+"enabled": true,
+"count": 3000,
+"speed": [
+30,
+40,
+1
+],
+"life": [
+0.006,
+0.031,
+4
+],
+"size": [
+0.8,
+1.25,
+1.2
+],
+"power": [
+0.6,
+1.5,
+1.3
+],
+"width": 6e-05,
+"gain": 150000,
+"drag": 43.7,
+"gravity": [
+0,
+0,
+-9.81
+],
+"directionMode": "cone",
+"direction": [
+0.966,
+0,
+-0.259
+],
+"cone": 12,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0.004,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 1,
+"event": 0.5,
+"delay": 0,
+"inherit": 1,
+"probability": 1,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+0.7
+],
+[
+0.08,
+1
+],
+[
+0.7,
+1
+],
+[
+1,
+0
+]
+],
+"burstShare": 0.1,
+"fieldCoupling": 0
+},
+{
+"id": "e04",
+"name": "04｜粗火星 · 140 µm",
+"parent": null,
+"seed": 720404,
+"enabled": true,
+"count": 250,
+"speed": [
+30,
+40,
+1
+],
+"life": [
+0.031,
+0.167,
+4
+],
+"size": [
+0.8,
+1.25,
+1.2
+],
+"power": [
+0.6,
+1.5,
+1.3
+],
+"width": 0.00014,
+"gain": 150000,
+"drag": 15.4,
+"gravity": [
+0,
+0,
+-9.81
+],
+"directionMode": "cone",
+"direction": [
+0.966,
+0,
+-0.259
+],
+"cone": 12,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0.004,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 1,
+"event": 0.5,
+"delay": 0,
+"inherit": 1,
+"probability": 1,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+0.7
+],
+[
+0.08,
+1
+],
+[
+0.7,
+1
+],
+[
+1,
+0
+]
+],
+"burstShare": 0.1,
+"fieldCoupling": 0
+},
+{
+"id": "e05",
+"name": "05｜爆花一级",
+"parent": "e02",
+"seed": 720505,
+"enabled": true,
+"count": 0,
+"speed": [
+2,
+6,
+1.5
+],
+"life": [
+0.004,
+0.012,
+1.5
+],
+"size": [
+0.8,
+1.25,
+1.2
+],
+"power": [
+0.6,
+1.5,
+1.3
+],
+"width": 3.5e-05,
+"gain": 600000,
+"drag": 70,
+"gravity": [
+0,
+0,
+-9.81
+],
+"directionMode": "sphere",
+"direction": [
+0,
+0,
+1
+],
+"cone": 30,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 4,
+"event": 0.92,
+"delay": 0,
+"inherit": 1,
+"probability": 0.8,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+1
+],
+[
+0.6,
+0.7
+],
+[
+1,
+0
+]
+],
+"burstShare": 0,
+"fieldCoupling": 0
+},
+{
+"id": "e06",
+"name": "06｜爆花二级",
+"parent": "e05",
+"seed": 720606,
+"enabled": true,
+"count": 0,
+"speed": [
+1,
+3,
+1.5
+],
+"life": [
+0.002,
+0.006,
+1.2
+],
+"size": [
+0.8,
+1.25,
+1.2
+],
+"power": [
+0.6,
+1.5,
+1.3
+],
+"width": 2e-05,
+"gain": 1500000,
+"drag": 155,
+"gravity": [
+0,
+0,
+-9.81
+],
+"directionMode": "sphere",
+"direction": [
+0,
+0,
+1
+],
+"cone": 30,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 2,
+"event": 0.7,
+"delay": 0,
+"inherit": 1,
+"probability": 0.4,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+1
+],
+[
+0.6,
+0.7
+],
+[
+1,
+0
+]
+],
+"burstShare": 0,
+"fieldCoupling": 0
+},
+{
+"id": "e07",
+"name": "07｜途中小火星（高碳才有）",
+"parent": "e02",
+"seed": 720707,
+"enabled": true,
+"count": 0,
+"speed": [
+1,
+3,
+1.5
+],
+"life": [
+0.003,
+0.008,
+1.2
+],
+"size": [
+0.8,
+1.25,
+1.2
+],
+"power": [
+0.6,
+1.5,
+1.3
+],
+"width": 2e-05,
+"gain": 1500000,
+"drag": 155,
+"gravity": [
+0,
+0,
+-9.81
+],
+"directionMode": "sphere",
+"direction": [
+0,
+0,
+1
+],
+"cone": 30,
+"shape": "line",
+"history": 0.03333333333333333,
+"taper": 0.15,
+"aspect": 1,
+"spin": 0,
+"twist": 0,
+"extent": 0,
+"clusterSize": 1,
+"clusterProbability": 0,
+"clusterWidth": 0.01,
+"clusterDirection": 0,
+"children": 2,
+"event": 0.5,
+"delay": 0,
+"inherit": 1,
+"probability": 0,
+"noise": 0,
+"noiseHz": 30,
+"sizeCurve": [
+[
+0,
+1
+],
+[
+1,
+1
+]
+],
+"brightCurve": [
+[
+0,
+1
+],
+[
+0.6,
+0.7
+],
+[
+1,
+0
+]
+],
+"burstShare": 0,
+"fieldCoupling": 0
+}
+],
+"followAxis": true,
+"presetKey": "grinderSteel",
+"fieldEnabled": 0,
+"fieldResponse": 12,
+"fieldStart": 0.002,
+"fieldRamp": 0.025,
+"fieldAxisX": 0,
+"fieldAxisY": 0,
+"fieldAxisZ": 1,
+"fieldWindX": 0,
+"fieldWindY": 0,
+"fieldWindZ": 0,
+"fieldConverge": 0,
+"fieldTurbulence": 0,
+"fieldScale": 0.16,
+"fieldCycles": 1,
+"fieldSeed": 29,
+"scaleCone": 1,
+"scaleCount": 1,
+"scaleWidth": 1,
+"scaleLife": 1,
+"scaleGain": 1,
+"scaleSpeed": 1,
+"scaleGravity": 1,
+"branchLife": 1,
+"branchAngle": 1,
+"branchCount": 1,
+"branchWidth": 1,
+"branchSpeed": 1,
+"branchGravity": 1
+},
+"cameraMotion": 1,
+"cameraShutter": 0.03333333333333333,
+"cameraDof": 0,
+"exposure": 1
+},
+"m": {
+"stages": [
+[
+0,
+"#ffffff"
+]
+],
+"xw": 0.08,
+"ramp0": "#120100",
+"ramp1": "#b34104",
+"ramp2": "#ffc064",
+"ramp3": "#fff6dd",
+"headInt": 1,
+"tailInt": 1
+},
+"ver": "88693b43"
+},
+{
 "id": "EXC1",
 "task": "EXC1",
 "kind": "combo",
@@ -64891,30 +65610,36 @@ var FW_EFFECTS = [
 "Small"
 ],
 "负责": "团队版（云端）",
-"阶段": "制作中",
+"阶段": "待验收",
 "主条目": "EXC1",
 "工作版": "EXC1",
 "进度": {
 "计算": true,
-"素材导出": false,
-"AI自检": false,
+"素材导出": true,
+"AI自检": true,
 "用户验收": false
 },
 "缺": [
-"本机显卡导出 NFE-EXC1（PC 两层 + 手机只出大火团）后跑回放检查、看引擎回放",
-"用户审；UE 锁 Z、overdraw、游戏内大小未经实测"
+"用户审美验收；UE 锁 Z（礼花导出不写、要手加）、overdraw、游戏内大小、Bloom 未经实测"
 ],
-"下一步": "团队版 T5：配方按 analysis/原理/爆炸分簇火星.md 推导建好（礼花锦冠 + 扇面 6 簇，一次性、固定取景），云端 512 格定帧快检看过；排了本机导出 NFE-EXC1，回来后跑回放检查、审引擎回放再进待验收。",
+"下一步": "团队版 T5：导出 NFE-EXC1（烘焙器 4.9.123，指纹与条目一致）回放检查 PC 两层 pass、标准检查 13 项 ✅，引擎回放 5 个时刻 + 分层 + 64 帧贴图看过 → 待你验收。看法 analysis/results/NFE-EXC1/看法.md；推导与调整 analysis/原理/爆炸分簇火星.md 第 3.3、10 节。",
 "导出任务": [
 "NFE-EXC1"
 ],
+"待验收版": "EXC1",
+"交付说明": {
+"解决了什么": "爆炸抛出 6 束燃烧团：束内前快后慢拉成一串，火团走平方阻力弧线先冲后坠、尾巴挂在空中垂成帘；大小两档同一批簇、同一束里自然分层。一个包：PC 两个发射器，手机只出大火团。",
+"素材在哪": "analysis/results/NFE-EXC1；本机 analysis/local/输出/素材包/Explosion_Cluster_M_01",
+"仍有差异": "正方形固定取景，扇面只占面片中间一条（约 60 m × 28 m / 89 m 见方）；物理输入（粒径、初速、燃烧时间、束数、张角）是假设。",
+"未经 UE 验证": "锁 Z（要手加）、overdraw、游戏内大小、Bloom、压缩。"
+},
 "ver": "c94bcf62",
 "jobs": [
 {
 "id": "NFE-EXC1",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
@@ -64977,6 +65702,41 @@ var FW_EFFECTS = [
 "jobs": [
 {
 "id": "NFE-ESH1",
+"type": "export",
+"state": "在算",
+"seen": false
+}
+],
+"exports": [],
+"thumb": null,
+"thumbSim": null
+},
+{
+"key": "grinder_steel",
+"名": "砂轮切割火星",
+"英文名": "Grinder_Steel_M_01",
+"负责": "团队版（云端）",
+"阶段": "制作中",
+"主条目": "GRS1",
+"工作版": "GRS1",
+"进度": {
+"计算": true,
+"素材导出": false,
+"AI自检": false,
+"用户验收": false
+},
+"缺": [
+"本机显卡导出 NFE-GRS1（PC 512 格 + 手机 256 格，循环 64 帧）后跑回放检查、看引擎回放",
+"用户审；UE 锁 Z、跟随角磨朝向、近距离大小未经实测"
+],
+"下一步": "团队版 T5：配方按 analysis/原理/砂轮切割火星.md 推导建好（分层粒子图 7 层、锥喷 + 两级爆花，中碳默认，循环），云端 512 格定帧快检看过；排了本机导出 NFE-GRS1，回来后跑回放检查、审引擎回放再进待验收。",
+"导出任务": [
+"NFE-GRS1"
+],
+"ver": "88693b43",
+"jobs": [
+{
+"id": "NFE-GRS1",
 "type": "export",
 "state": "在算",
 "seen": false

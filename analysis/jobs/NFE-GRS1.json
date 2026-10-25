@@ -1,0 +1,9 @@
+{
+ "id": "NFE-GRS1",
+ "type": "export",
+ "effect": "grinder_steel",
+ "entry": "GRS1",
+ "name": "Grinder_Steel_M_01",
+ "priority": 1,
+ "note": "团队版（云端）T5 · 烘焙器 4.9.123：砂轮切割火星（分层粒子图 7 层，锥喷 + 两级爆花，循环 64 帧 / 30 fps）导出 PC（2048、单格 512）+ 手机（单格 256）。导出后自动跑回放检查；云端软件渲染跑不动全量，交本机。用户的重导优先（priority 1）。"
+}
