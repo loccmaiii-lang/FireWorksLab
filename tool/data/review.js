@@ -65703,11 +65703,44 @@ var FW_EFFECTS = [
 {
 "id": "NFE-ESH1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
-"exports": [],
+"exports": [
+{
+"job": "NFE-ESH1",
+"entry": "ESH1",
+"ver": "d1582f5d·graph4.9.118+loop4.9.106",
+"time": "2026-10-25 12:01",
+"packages": [
+{
+"name": "Electric_Short_M_01",
+"replica": "ESH1",
+"files": [
+"Electric_Short_M_01.json",
+"Electric_Short_M_01_Cascade参数.txt",
+"Electric_Short_M_01_Mobile.json",
+"Electric_Short_M_01_曲线.csv",
+"T_EFX_FireWorks_Electric_Short_M_01_4x4_01.png",
+"T_EFX_FireWorks_Electric_Short_M_01_4x4_01_HD.png",
+"T_EFX_FireWorks_Electric_Short_M_01_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"Electric_Short_M_01：1 帧碰到格子内圈"
+]
+},
+"stale": false
+}
+],
 "thumb": null,
 "thumbSim": null
 },
