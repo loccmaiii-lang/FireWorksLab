@@ -1,0 +1,8 @@
+12:21:50 开始：Electric_Short_M_01（导出素材）
+12:21:51 Electric_Short_M_01 导出 1 秒：Electric_Short_M_01.json、Electric_Short_M_01_Cascade参数.txt、Electric_Short_M_01_Mobile.json、Electric_Short_M_01_曲线.csv、T_EFX_FireWorks_Electric_Short_M_01_4x4_01.png、T_EFX_FireWorks_Electric_Short_M_01_4x4_01_C.png、T_EFX_FireWorks_Electric_Short_M_01_4x4_01_HD.png、T_EFX_FireWorks_Electric_Short_M_01_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+12:21:52 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-ESH1-R2\回放检查.jpg（✅ 通过）
+12:22:07 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-ESH1-R2\烘焙回放.jpg
+12:22:07 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-ESH1-R2\烘焙回放_原尺寸.jpg
+12:22:07 烘焙器预览 preview.js：169 KB
+12:22:07 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+12:22:07 完成，用时 0.3 分钟
