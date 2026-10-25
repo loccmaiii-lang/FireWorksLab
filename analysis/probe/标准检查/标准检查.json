@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-25 12:00",
+ "generated": "2026-10-25 12:12",
  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
  "std": {
   "pcCell": 512,
@@ -19310,7 +19310,7 @@
    "name": "短路喷溅 · 熔铜滴与火星（Electric_Short_M_01）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "d1582f5d·graph4.9.118+loop4.9.106",
+   "ver": "0f68c0fc·graph4.9.118+loop4.9.106",
    "checks": [
     [
      "实时模拟",
@@ -19374,7 +19374,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 79.0
+   "seconds": 93.8
   },
   "GRS1": {
    "id": "GRS1",
