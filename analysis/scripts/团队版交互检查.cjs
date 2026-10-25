@@ -3,6 +3,7 @@
 //   ④ 「我的效果」导出全部 / 导入：同一份记录来回一致、重复导入不重复加、同编号不同内容另加一份、⋯配方文件（fwl.recipe/1）直接新增、我的模板一起带
 //   ⑤ 新建效果填英文名：字符集和导出拦截同一条、建议名不重名、对话框桩只回中文名时用建议名、MyFx 导出前拦下
 //   ⑥ 运行时标题、页面上没有「烘培」错字
+//   ① 花型模板「粒子图」分组（4.9.122）：三个模板在分组里、仙女棒 / 尾焰和 SGS1 / SGR1 逐键一样且不读 review.js、↺ 还原回自己的图
 // 用法：node analysis/scripts/团队版交互检查.cjs（标准检查.py --ui-state-only 里也跑）
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict'), path = require('node:path');
 const root = path.join(__dirname, '../../tool/src/js/');
@@ -161,6 +162,28 @@ ctx.mySrc = key => { const type = String(key).replace(/^(rv|rep|type):/, ''); re
   await check('⑥ 运行时标题和顶栏写「烟花烘焙器」，源码里没有「烘培」', () => {
     for (const f of ['../body.html', '90_events.js']) assert(!src(f).includes('烟花烘培器'), f);
     assert(src('90_events.js').includes("document.title = '烟花烘焙器 · v'"));
+  });
+  // ---------------- ① 花型模板「粒子图」分组（4.9.122）----------------
+  const G = vm.createContext({ console, structuredClone, Math, JSON, Object, Array, Number, String, Set, Map, Error, TYPES: { fountain: { p: { form: 'loop' }, m: {} } }, SCHEMA: [], EMIT_DEF: {}, PEMIT: { E: [] } });
+  for (const f of ['17_graph_presets.js', '46_graph_model.js', '46_graph_templates.js']) vm.runInContext(src(f), G, { filename: f });
+  const GT = vm.runInContext('GRAPH_TEMPLATES', G), GP = vm.runInContext('GRAPH_PRESETS', G), SG = vm.runInContext('SparkGraph', G);
+  const review = (() => { const c = { window: {} }; vm.createContext(c); vm.runInContext(fs.readFileSync(path.join(__dirname, '../../tool/data/review.js'), 'utf8') + ';this.R = typeof FW_REVIEW !== "undefined" ? FW_REVIEW : window.FW_REVIEW', c); const R = c.R; return Array.isArray(R) ? R : R.entries || R.list || Object.values(R); })();
+  await check('① 「粒子图」分组：仙女棒、窜天猴尾焰、空白粒子图，在花型库 / 新建效果 / 顶栏下拉（TYPE_GROUPS）里', () => {
+    const groups = line('10_types.js', /\['粒子图', \[[^\]]*\]\]/); for (const t of ['sgSparkler', 'sgRocket', 'sgBlank']) { assert(groups.includes(`'${t}'`), t); assert(new RegExp(`\\b${t}: \\[`).test(src('10_types.js')), 'TYPE_INFO ' + t); assert(new RegExp(`\\b${t}: \\[`).test(src('72_picker.js')), 'TYPE_META ' + t); assert(vm.runInContext(`!!TYPES.${t} && TYPES.${t}.p.sparkGraph === GRAPH_TEMPLATES.${t}.graph`, G), 'TYPES ' + t); }
+  });
+  await check('① 仙女棒 / 窜天猴尾焰 = SGS1 / SGR1 那一套（逐键），写在源码里、不读 review.js；三张图都成立', () => {
+    for (const [t, id, ver] of [['sgSparkler', 'SGS1', 'c6f38fb9'], ['sgRocket', 'SGR1', '79964198']]) { const e = review.find(x => x.id === id); if (!e || e.ver !== ver) continue;     // 条目以后改了不影响模板（抄的是这一版）
+      assert.deepEqual(plain(GT[t].graph), plain(e.p.sparkGraph), t + ' 的粒子图和 ' + id + ' 不一样'); }
+    assert(!/FW_REVIEW|REPLICA_BY_ID|replicaPM|review\.js'/.test(src('46_graph_templates.js').replace(/^\s*\/\/.*$/mg, '')), '模板不能读条目数据');
+    for (const t of Object.keys(GT)) SG.validate(structuredClone(GT[t].graph));
+    assert.equal(GT.sgBlank.graph.emitters.length, 1); assert.equal(GT.sgBlank.graph.emitters[0].parent, null);
+  });
+  await check('① ↺ 还原 / 双击恢复默认：新模板回自己的图；旧 sparkgraph 形态照旧按预设（SGS1 / SGR1 打开参数不变）', () => {
+    const of = P => vm.runInContext('graphTemplateOf', G)(P);
+    assert.deepEqual(plain(of({ type: 'sgBlank', sparkGraph: { presetKey: 'blank', emitters: [] } })), plain(GT.sgBlank.graph));
+    assert.equal(of({ type: 'sparkgraph', sparkGraph: { presetKey: 'sparkler' } }), GP.sparkler); assert.equal(of({ type: 'sparkgraph', sparkGraph: { presetKey: 'rocket' } }), GP.rocket);
+    assert.equal(of({ type: 'sparkgraph', sparkGraph: { presetKey: 'nope' } }), null); assert.equal(of({ type: 'kiku' }), null);
+    assert(src('79_assetops.js').includes('graphTemplateOf(P)) || GRAPH_PRESETS[P.sparkGraph.presetKey] || GRAPH_PRESETS.rocket'), '还原的老路径保留');
   });
   console.log(`团队版交互：${checks.length}/${checks.length + failures.length} 通过`); for (const s of failures) console.error('FAIL ' + s); if (failures.length) process.exitCode = 1;
 })();

@@ -759,7 +759,7 @@ function buildMasterPanel() {
   panelSharedHome();
   pviewInit();
   const P = state.P, D = {...CameraImaging.defaults,...defaultsFor(P.type).P};
-  if (P.sparkGraph && typeof GRAPH_PRESETS !== 'undefined' && GRAPH_PRESETS[P.sparkGraph.presetKey]) D.sparkGraph = GRAPH_PRESETS[P.sparkGraph.presetKey];     // 4.9.87 双击恢复默认：仙女棒按仙女棒的模板
+  { const g = typeof graphTemplateOf === 'function' ? graphTemplateOf(P) : null; if (g) D.sparkGraph = g; }     // 4.9.87 双击恢复默认：仙女棒按仙女棒的模板；4.9.122 粒子图模板按它自己的图（旧 sparkgraph 形态照旧按预设）
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   // 4.9.14（对话框23，照 01_顺手调参_深化）：顶上固定一块 = 「金锦 › 火花」+ 独看 / 静音（多层）+ 一行发射器标签；
   // 下面一行搜索框 + 仅改动 + 英文名（总看得见，跟着内容滚；4.9.8 收在「搜索」按钮里，要多点一下）

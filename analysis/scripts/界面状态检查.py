@@ -4078,7 +4078,7 @@ W37_JS = r"""(async () => {
     const e = FW_REVIEW_LIST.find(x => x.kind !== 'combo' && x.kind !== 'queued' && !/^SG/.test(x.id)); openReview(e); await wait(300);
     const g = [...document.querySelectorAll('#params section.egrp')].map(x => x.dataset.g); out.after = [e.id, g.length];
     if (g.some(x => x === '分层粒子图' || x === '燃烧核心')) bad.push('换到别的效果还有粒子图的发射器');
-    if ([...document.querySelectorAll('#side button')].some(b => /窜天猴尾焰|仙女棒全形态/.test(b.textContent))) bad.push('左栏还有旧的候选按钮');
+    if ([...document.querySelectorAll('#side button')].some(b => !b.closest('[data-key]') && /窜天猴尾焰|仙女棒全形态/.test(b.textContent))) bad.push('左栏还有旧的候选按钮');     // 4.9.122：花型模板「粒子图」分组的「窜天猴尾焰」格子（data-key=type:sgRocket）不算
   } catch (err) { bad.push('异常：' + err.message); }
   finally { window.bake = ob; }
   return { ok: !bad.length, bad, out };
