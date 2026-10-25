@@ -1,0 +1,234 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Grinder_Steel_M_01_M",
+ "platform": "mobile",
+ "tier": "M",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.123",
+  "type": "sparkgraph",
+  "form": "loop",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "09eefc72"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01",
+   "sha256": "1fe9e5523aa90c9c6b544ddd92d4a9f9c5b2530cec3278343406a37c7541e404"
+  },
+  "cutout": {
+   "file": "T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Grinder_Steel_M_01_4x4_01_C",
+   "save_est": 0.611,
+   "hash": "be1ac8883eede03d1860",
+   "sha256": "c9faeb387f95baf91a06a1e9213fced183575696f3770cf443148a8ad8ae2db6"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_Grinder_Steel_M_01_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Grinder_Steel_M_01_R",
+   "hash": "753efd61d5d40d4b133",
+   "sha256": "976afda77cd502761fb997a7c0c97e20846c0249b3a541298366785df32ad229"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   },
+   "emissive_dissolve": 0.98
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2,
+  "fixed_bounds": {
+   "min": [
+    -260,
+    -260,
+    -110
+   ],
+   "max": [
+    260,
+    260,
+    20
+   ]
+  }
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.1333,
+    "loops": 0,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.0698,
+     -0.1435
+    ],
+    "local_space": true,
+    "uv_flip": "None"
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       249.9,
+       112.2,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.02
+        ],
+        [
+         0.9844,
+         63.02
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "OrientationAxisLock",
+     "flags": "EPAL_ROTATE_Z"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset把喷口/爆点放在粒子位置（面片中心相对原点X 1.1 m、Z -0.4 m）；取景改变须完整更新发射器尺寸和Pivot，不能只换贴图；未经UE验证",
+    "周期喷射：每周期一颗序列面片，Local Space跟随喷口；不含弹体升空弹道。未经UE实播。"
+   ],
+   "max_alive": 1
+  }
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "Grinder_Steel_M_01",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.123"
+ },
+ "resource_rules": {
+  "format": "fwl.resource-rules/1",
+  "margin": 0.1,
+  "scale": [
+   0.65,
+   1.6
+  ],
+  "round_cm": 10,
+  "fixed_bounds": "寿命内位置包络 + 面片角点 + Pivot + 10 %（导演倾斜未计入）",
+  "facing_camera_position": [],
+  "uv_flip_none_reason": "粒子图（喷口方向 / 气流）",
+  "emissive_dissolve": [
+   "main"
+  ]
+ }
+}
