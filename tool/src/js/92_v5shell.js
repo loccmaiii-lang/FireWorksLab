@@ -16,7 +16,6 @@ var V5_SVG = {
   caret: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>',
   cam: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.5h2.5l1.2-2h4.6l1.2 2H14v7.5H2z"/><circle cx="8" cy="9" r="2.3"/></svg>',
   clock: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="9" r="5"/><path d="M8 6.5V9l1.8 1.2M6.5 1.8h3M8 1.8V4"/></svg>',
-  reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4v3.2h3.2"/><path d="M3.4 7A5 5 0 1 1 4.6 11.6"/></svg>',
   plus: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>',
   back: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5L5 8l4.5 4.5"/></svg>'
 };
@@ -41,11 +40,10 @@ function v5Sched() { if (!v5 || !v5.built || v5.timer) return;     // 面板在�
 function v5Build() {
   if (v5.built || !$('#right') || !$('#viewbar')) return;
   const R = $('#right'), vb = $('#viewbar'), mk = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
-  document.querySelector('.app').classList.add('fw-scope');
   // 中栏顶行：↶ ↷ 还原 保存 另存 导出 ▾（精简左边）
   const acts = mk('div', 'v5-acts'); acts.id = 'v5Acts'; acts.setAttribute('role', 'group'); acts.setAttribute('aria-label', '效果操作');
   const rs = $('#abReset'), rsm = rs && rs.querySelector('summary');
-  if (rsm) { rsm.innerHTML = V5_SVG.reset + '<span class="v5-t">还原</span>'; rsm.setAttribute('aria-label', '还原'); }
+  if (rsm) { rsm.innerHTML = '↺<span class="v5-t"> 还原</span>'; rsm.setAttribute('aria-label', '还原'); }
   $('#abSaveAs').textContent = '另存';
   const ex = $('#abExportPack'); ex.textContent = '导出';
   ex.title = '导出整个效果的素材包：按交付清单「每层出什么」出 PC + 手机（多层时在哪一层点都是整个效果）';
