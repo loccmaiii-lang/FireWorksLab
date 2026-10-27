@@ -1946,7 +1946,7 @@ header.top .gpu::before{content:none}
 @starting-style{dialog[open]{opacity:0;scale:.98}}
 dialog::backdrop{transition:background-color var(--fw-motion-panel) var(--fw-ease-standard)}
 /* 模块展开：高度 200 ms（内容不重排、不改参数） */
-#right details.sec::details-content{block-size:0;overflow-y:clip;overflow-clip-margin:4px;transition:block-size var(--fw-motion-panel) var(--fw-ease-standard),content-visibility var(--fw-motion-panel) allow-discrete}
+#right details.sec::details-content{block-size:0;overflow-y:clip;overflow-clip-margin:4px;transition:block-size var(--fw-motion-panel) var(--fw-ease-standard)}     /* 只动高度：打开的那一刻里面就能聚焦（F1、Tab），收起不留空白 */
 #right details.sec[open]::details-content{block-size:auto}
 /* 抽屉（窄屏的左右栏）滑出 */
 main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-motion-panel) var(--fw-ease-enter)}
