@@ -227,8 +227,8 @@ function wbSync() {
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 // 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
-const OUT_SIG = () => { try { const { zoom, burstflow, ...rest } = OUTPUT_VER, s = wbSnap(), zz = q => !!q && (q.zoom === 'on' || q.zoom === 'anchor'), z = s.kind === 'combo' ? (s.layers || []).some(l => zz(l.P)) : zz(s.P); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
-    return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + ((s.kind === 'combo' ? (s.layers || []).some(l => burstFlowActive(l.P)) : burstFlowActive(s.P)) ? '|burstflow' + burstflow : '') + (s.kind==='combo'&&(s.layers||[]).some(x=>x.L&&x.L.eventSpawn)?'|events4.9.111':'') + ss; } catch (e) { return ''; } };
+const OUT_SIG = () => { try { const { zoom, burstflow, flame, ...rest } = OUTPUT_VER, s = wbSnap(), zz = q => !!q && (q.zoom === 'on' || q.zoom === 'anchor'), z = s.kind === 'combo' ? (s.layers || []).some(l => zz(l.P)) : zz(s.P); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
+    return JSON.stringify(rest) + ((s.kind === 'combo' ? (s.layers || []).some(l => FlameVolume.has(l.P)) : FlameVolume.has(s.P)) ? '|flame' + flame : '') + (z && zoom ? '|zoom' + zoom : '') + ((s.kind === 'combo' ? (s.layers || []).some(l => burstFlowActive(l.P)) : burstFlowActive(s.P)) ? '|burstflow' + burstflow : '') + (s.kind==='combo'&&(s.layers||[]).some(x=>x.L&&x.L.eventSpawn)?'|events4.9.111':'') + ss; } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];

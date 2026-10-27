@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-25 12:12",
- "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "generated": "2026-10-27 17:41",
+ "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
   "mobileCell": 256,
@@ -19446,6 +19446,77 @@
    ],
    "pass": true,
    "seconds": 126.9
+  },
+  "SGF1": {
+   "id": "SGF1",
+   "name": "地面循环火焰 · 第一版",
+   "kind": "preset",
+   "renderVer": 40,
+   "ver": "8c650563·flame4.9.124+graph4.9.118+loop4.9.106",
+   "checks": [
+    [
+     "实时模拟",
+     true,
+     ""
+    ],
+    [
+     "引擎回放 + 游戏内大小",
+     true,
+     ""
+    ],
+    [
+     "贴图 + 流转动画",
+     true,
+     ""
+    ],
+    [
+     "完整参数",
+     true,
+     ""
+    ],
+    [
+     "导出素材包（cascade.json PC + 手机）",
+     true,
+     ""
+    ],
+    [
+     "实拍对照",
+     true,
+     "无参考（不适用）"
+    ],
+    [
+     "单格 ≥ PC 下限",
+     true,
+     "单格 512 px"
+    ],
+    [
+     "手机单格 ≥ 下限",
+     true,
+     ""
+    ],
+    [
+     "屏幕放大 ≤ 1",
+     true,
+     "放大 0.703125"
+    ],
+    [
+     "30fps 显示帧 ≥ 90%",
+     true,
+     "64/64"
+    ],
+    [
+     "燃烧段有效帧率 ≥ 下限",
+     true,
+     "30 fps"
+    ],
+    [
+     "尺寸参数有效",
+     true,
+     ""
+    ]
+   ],
+   "pass": true,
+   "seconds": 0.1
   }
  }
 }

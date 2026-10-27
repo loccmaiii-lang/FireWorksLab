@@ -1,0 +1,22 @@
+{
+  "effect": "ground_flame",
+  "entry": "SGF1",
+  "ver": "8c650563·flame4.9.124+graph4.9.118+loop4.9.106",
+  "version": "4.9.124",
+  "time": "2026-10-27T17:43:44",
+  "dir": "analysis/results/20261027_地面循环火焰",
+  "packages": [
+    {
+      "name": "EFX_FireWorks_GroundFlame",
+      "replica": "SGF1",
+      "file": "GroundFlame.zip",
+      "sha256": "8504e83c1048db20804b224cc9270f3782f3ddba7574a9df1a47b8f8fd299b4b"
+    }
+  ],
+  "platforms": [
+    "PC",
+    "手机"
+  ],
+  "params": "analysis/results/20261027_地面循环火焰/导出参数.json",
+  "UE实播": false
+}

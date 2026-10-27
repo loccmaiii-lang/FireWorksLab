@@ -1,0 +1,784 @@
+{
+  "baseline": "7abc7397",
+  "baselineHTMLSHA256": "19f389cc1761c83de3738df276faf76791e88cda7cb6d19123623ac832347f46",
+  "currentHTMLSHA256": "598d0c76932d67a46d83742ab292caa77754ee50755070a22d4a56a3ccfa996c",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "scope": "九模板各三帧；全部现行待验收/已通过的旧效果及组合层各一帧，固定配方与实际GPU定帧；旧版由隔离HTTP页的主文档响应替换加载，不是生产HTTP版本。",
+  "complete": true,
+  "pass": true,
+  "rows": [
+    {
+      "id": "template:kiku",
+      "times": [
+        0.528,
+        1.54,
+        3.08
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "08c6d270301a509004424a58363fb0cf13fd4e2d8bb1a49d6773ed595ee813df",
+        "294d8a8d41ce11e06f84dcb9c8b5d20e5695a904bb5e606ba3eb0bb01e10faa9",
+        "90d0a3eea8ea6ed95052ed2098c4910dbd91d7bba94faa5e3b16505a12e74498"
+      ]
+    },
+    {
+      "id": "template:botan",
+      "times": [
+        0.378,
+        1.1024999999999998,
+        2.2049999999999996
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "b9596e3ecef8a8e4ec05de7f18381bdf86e2eda9c389df88f8851320e673439e",
+        "accea9a719c5ca81cc3c83f9ce1bfe717a650486c49b0b4895c1613d1db11816",
+        "02ffb466eefbadac2992b546192bace84b3ed65ff36c388830fdf0bc6d3ade27"
+      ]
+    },
+    {
+      "id": "template:kamuro",
+      "times": [
+        0.816,
+        2.38,
+        4.76
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "4a9c96f03f318f062b6a5909d0c10d6234ed9598bf3ba0011e15a3d24d810215",
+        "c1ccb817bd6bd08ba37e9fe9e5d316e2d3d308269416385b553d92c8aa7f6c35",
+        "59a89d8a12dadea089946bbf723f4c584a859b9e99af8d962711dee8cecf3f23"
+      ]
+    },
+    {
+      "id": "template:senrin",
+      "times": [
+        0.384,
+        1.1199999999999999,
+        2.2399999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1009c7983b82c1a7fd22256fea1261310e80a29def7bb1fb9a6c5a600cf51e4b",
+        "faed5c8c0db92966eef51c2cadb60e7647b88d41f836417b68932303e2ec7e40",
+        "9a011d7382e7b9226152ce2b55202a2e3d8f287003bdb8ce1693a6c8a72b038a"
+      ]
+    },
+    {
+      "id": "template:strobe",
+      "times": [
+        0.534,
+        1.5574999999999999,
+        3.1149999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "21ffec42612fed498f09757c9a7d03f8a4ed0c0be9adf5e5c018530a5266f020",
+        "7956f2ec0a1708f1520777591a6bb3f7edb40f200c8695df6f4c84c243da9685",
+        "6b516e95ab9b8b5404ca3bbec4e650bc9f37a537200e7058a951dd9675fd715f"
+      ]
+    },
+    {
+      "id": "template:crackle",
+      "times": [
+        0.408,
+        1.19,
+        2.38
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "4a4739b7ccddeddbb11d8789c9d0aa6ef91ea00a20b931d382ec3c7b26c0208d",
+        "ebaf0c5bfcb930b94f4c0c58e400432cfd2d7f0c26f31bba58ae71ec103f7f94",
+        "d13d30f76148c083130c99685209e34a068583427c905b454782837311215414"
+      ]
+    },
+    {
+      "id": "template:sgSparkler",
+      "times": [
+        0.256,
+        0.7466666666666666,
+        1.4933333333333332
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "95fdcbb50f4c5fbbc078991e1eb05cdf73b6027c34fdfc9d96caba929c5496ef",
+        "213800ad2d26829c339f65942c1fb6b99c2dc33eee9118b7e18b3cb87f5b8e65",
+        "fdb1a7d1f996a75f5adc14660951e00fc89f5f5c55c273428c29b6624c70b862"
+      ]
+    },
+    {
+      "id": "template:sgRocket",
+      "times": [
+        0.256,
+        0.7466666666666666,
+        1.4933333333333332
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "cf2f2bc58dea3bb5bc6bbd9eb39dcd63bc82f8b219669a9acd9b77326412db73",
+        "a85cee10aa0dab5e14209a28bcc4ebb7433144410455bce00e249c906348125c",
+        "6fc2a8e6b912b9f6d338cb2e21f2cd5460fb53f5bc010ab17d7651e65e328bd7"
+      ]
+    },
+    {
+      "id": "template:sgBlank",
+      "times": [
+        0.256,
+        0.7466666666666666,
+        1.4933333333333332
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "326002e97ac39db38b557846aefc501ffd4ce1535e5512a3f01777597616565c",
+        "64e5c9767bbafd06554c296188c4a2cb1b8046c16ceb05395b205abccf2cdd36",
+        "986ed0b795c103921884b50d154778219b5d81743a1bef048b867fc40be594fe"
+      ]
+    },
+    {
+      "id": "entry:JM4-40",
+      "times": [
+        1.9249999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "0db263c51f1bf48dabfa24843d38c0fcc18d8787fc52d5bad574c0004e7cc30d"
+      ]
+    },
+    {
+      "id": "entry:V5M",
+      "times": [
+        3.122
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "dd44b953851ce86f0e70f8ee28fdca44b1867134b9578aea358291c22401f76a"
+      ]
+    },
+    {
+      "id": "entry:RT6M",
+      "times": [
+        2.968
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:QA20-1",
+      "times": [
+        1.4
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "cf76cef67a411c53e58b1d6c9f1c84b63df65368d1cdedc9fc246771a5bb667d"
+      ]
+    },
+    {
+      "id": "entry:QA20-2",
+      "times": [
+        1.6834999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "84f84e314d218932a2e5714eda3f74c0ce0b458e830355659e9c2dd7efb2e0d4"
+      ]
+    },
+    {
+      "id": "entry:QC12-1",
+      "times": [
+        1.099
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "82ab85f2a46a83752889f3a45e6b17255bd8f24147bcfab31bd931df0560a677"
+      ]
+    },
+    {
+      "id": "entry:QC12-2",
+      "times": [
+        1.5014999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "c064be7b6781c56bd3d296b4ba6d9390afeae8c4f0c71d05b5877982e25a7264"
+      ]
+    },
+    {
+      "id": "entry:QC12-3",
+      "times": [
+        1.8199999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "2a31d0eee50965b0b9fabfd0cab4a2722dd3d2a9004d917bd837408dcd9e1245"
+      ]
+    },
+    {
+      "id": "entry:QD14-1",
+      "times": [
+        2.17
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:QD14-2",
+      "times": [
+        2.625
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "289a5a79fad453da1da549c9dd915124e5e331fb2c2704c2c8008a993d14f3bd"
+      ]
+    },
+    {
+      "id": "entry:QD14-3",
+      "times": [
+        2.17
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:QN12-1",
+      "times": [
+        1.442
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:QN12-2",
+      "times": [
+        1.7919999999999996
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "da70adf3ba55d44e195b7788b4658d7e8327beaa2ef3ec96c20c633004c2ab41"
+      ]
+    },
+    {
+      "id": "entry:PRISM3-A",
+      "times": [
+        0.9274999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "5c5e05639a8fd7baa930cea53c432f71f9e328319573b00b8c4eabcb83a4b9b1"
+      ]
+    },
+    {
+      "id": "entry:PRISM3-B",
+      "times": [
+        0.9274999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "6273f3668ebb3579b6044673c929bfb7b8ce9eeaf9911fecfe8365cf951214b8"
+      ]
+    },
+    {
+      "id": "entry:PRISM3-C",
+      "times": [
+        0.9274999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "36c2da85b79a4ecf4a0c132941387c728db7e0296d47c90e459ed69d40beaef3"
+      ]
+    },
+    {
+      "id": "entry:PRISM3-D",
+      "times": [
+        0.9274999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "093099ea18516bc87173c0774372e34cf86daf03f0645e5510d602637a0a21b5"
+      ]
+    },
+    {
+      "id": "entry:HK10-1",
+      "times": [
+        6.4575
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "02e3f39cc8b965d2060af0756c58b83330ea4d8de5ddcb8253daffd29b647934"
+      ]
+    },
+    {
+      "id": "entry:HK10-2",
+      "times": [
+        4.2875
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:HN2-O",
+      "times": [
+        1.2425
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "ee8528b6ec4b10467ff879b90e33139f2541886ae4749fce99f6c6a4c86113fb"
+      ]
+    },
+    {
+      "id": "entry:HN2-G",
+      "times": [
+        3.7624999999999997
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "a19bbec1a009aa001962f9bcaedf2e15d59bb1fd872efef77e4f16f35ac23feb"
+      ]
+    },
+    {
+      "id": "entry:JMG10",
+      "times": [
+        2.618
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "ccf6f9cdae969b54234b11eccd2da9398ea8a56bfb7dc1cd43083f69f5473ff4"
+      ]
+    },
+    {
+      "id": "entry:MYFL-O",
+      "times": [
+        1.1199999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1cb910d6b0689fd2d148b018d2e157028f239ef9733366b03359c0110b4c3488"
+      ]
+    },
+    {
+      "id": "entry:MYCR-O",
+      "times": [
+        3.43
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:MYJA-O-1",
+      "times": [
+        1.4874999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "c8d73055a16eec764b12dbb8dcce025c2f3c4bc4d13c824d1709470378a83a8f"
+      ]
+    },
+    {
+      "id": "entry:MYJA-O-2",
+      "times": [
+        2.3974999999999995
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "e1730489cf7226ec1af10dfc4d8b158b7846a612668d373430d9e488f713effc"
+      ]
+    },
+    {
+      "id": "entry:MYJM-O",
+      "times": [
+        1.5959999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "b0e79b08bae204cdd84f15354a56719857b04fcd15bc66d49bf91ea296fdb3df"
+      ]
+    },
+    {
+      "id": "entry:MYJC-O-1",
+      "times": [
+        1.6778999999999997
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "6c30fedff16204f44e40996a00bc9b7eb4c26b825cf8f64991c58bb1dcad8430"
+      ]
+    },
+    {
+      "id": "entry:MYJC-O-2",
+      "times": [
+        1.5434999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:MYHK-O-1",
+      "times": [
+        6.4575
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "02e3f39cc8b965d2060af0756c58b83330ea4d8de5ddcb8253daffd29b647934"
+      ]
+    },
+    {
+      "id": "entry:MYHK-O-2",
+      "times": [
+        4.2875
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:TP-JMG10-T75",
+      "times": [
+        1.9635
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "c4e1862ae8178a411740cfc08d4315a2397f7c7843d2c6e66b6db433efb84564"
+      ]
+    },
+    {
+      "id": "entry:TP-MYJA-O-T75-1",
+      "times": [
+        1.1584999999999999
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "59e251a02e3650e5c64387ed98625103caf3d0baf06aeeb632f4fbc496142089"
+      ]
+    },
+    {
+      "id": "entry:TP-MYJA-O-T75-2",
+      "times": [
+        1.798125
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "24811bc0b0b0c63e2b029c6d756c80daa6ce875ee5dc064233b1a02c4eb86999"
+      ]
+    },
+    {
+      "id": "entry:TP-MYHK-O-T75-1",
+      "times": [
+        4.843125
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "51b8546ed4d823754ce55f05a6cd3886dc649a7808d38289a874c5a1dfc76d41"
+      ]
+    },
+    {
+      "id": "entry:TP-MYHK-O-T75-2",
+      "times": [
+        3.2156249999999997
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:FG7",
+      "times": [
+        1.9599999999999997
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "3a5adee41450b8d2951fdda213f9f61799eef54cfa989606a75c7263e1a12b6d"
+      ]
+    },
+    {
+      "id": "entry:JQ7-1",
+      "times": [
+        0.616
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "fbaff1f9694921bb6f4884efa38490e08f651feb253d6d71e36b88b983c5d080"
+      ]
+    },
+    {
+      "id": "entry:JQ7-2",
+      "times": [
+        1.743
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "819e1b64e0740030ae27a540034fa920ed3468506a7e77260bb34f5ffea4b3e3"
+      ]
+    },
+    {
+      "id": "entry:JQ7-3",
+      "times": [
+        1.54
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "f580a5e84a27e6df6549f4a63f0957ff5e7e3a3d48379e9b8dc57706b7349b90"
+      ]
+    },
+    {
+      "id": "entry:JQ7-4",
+      "times": [
+        1.0395
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "cd2635b37c897896a61ca7b622836987b9641ab9101af4e743a8b101abc22af5"
+      ]
+    },
+    {
+      "id": "entry:FC10R-1",
+      "times": [
+        1.4
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "d27a184a9603cae3b662fd3d98a30edbba73dba7000c6d449fd1fa62d7c001aa"
+      ]
+    },
+    {
+      "id": "entry:FC10R-2",
+      "times": [
+        1.4
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "15d149812a6a05b34b0513ecef85e78b23d0f3aedf1e24c5440f3f27717007bc"
+      ]
+    },
+    {
+      "id": "entry:CS3C-T",
+      "times": [
+        2.4885
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:CS3C-H",
+      "times": [
+        0.833
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "12f80965b11edac05ba210fed50b9856c4bed54732358e5d549558ab2f1c01cc"
+      ]
+    },
+    {
+      "id": "entry:CS3S",
+      "times": [
+        2.6879999999999997
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:CSLRC-T",
+      "times": [
+        2.4885
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:CSLRC-H",
+      "times": [
+        0.833
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "12f80965b11edac05ba210fed50b9856c4bed54732358e5d549558ab2f1c01cc"
+      ]
+    },
+    {
+      "id": "entry:CSLRS",
+      "times": [
+        2.6879999999999997
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "1877ac1f1476113b1e51f1c1b478dd42d3dfce0ff08ea8b312d087c344a4a6df"
+      ]
+    },
+    {
+      "id": "entry:SGR1",
+      "times": [
+        0.7466666666666666
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "db11ce50168a28b3cf6977a02cfe38b4cb2d314791e3a591a135bb7cc83d351a"
+      ]
+    },
+    {
+      "id": "entry:SGS1",
+      "times": [
+        0.7466666666666666
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "314d559116c5dd83de782ed1f1f27d9ccec7de396c92b764a91411bf41f806d0"
+      ]
+    },
+    {
+      "id": "entry:SGRS1",
+      "times": [
+        0.7466666666666666
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "b5eb75dc87ed4e8b8da33b1b967b1f18865b0d04bc8d0bb9016bc91cd5ab9639"
+      ]
+    },
+    {
+      "id": "entry:JMB1",
+      "times": [
+        1.9249999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "12ce50ed5d40a9e5fd0b51abb462b082829f458ded4077ae80c418793c2178c6"
+      ]
+    },
+    {
+      "id": "entry:JMBV-A",
+      "times": [
+        1.9249999999999998
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "198d2d7b554fa563ad21be2c55c64446542ae1eaf71f20f4d989f66a4ee29b2d"
+      ]
+    },
+    {
+      "id": "entry:EXC1-B",
+      "times": [
+        1.575
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "05d01d96162525a249d1218ce1f7e7e5cbdc7c42f66c920de05716eb930ccd4c"
+      ]
+    },
+    {
+      "id": "entry:EXC1-S",
+      "times": [
+        1.575
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "deb26e48d95c1d6b365da0c39285ca41154b778e7b64377c55b3dda7c4ccafac"
+      ]
+    },
+    {
+      "id": "entry:ESH1",
+      "times": [
+        0.7466666666666666
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "758abb4ee90d364f083019171b8ca93b8c80625f7075e9777f5007fc66e8e23b"
+      ]
+    },
+    {
+      "id": "entry:GRS1",
+      "times": [
+        0.7466666666666666
+      ],
+      "planSame": true,
+      "pixelsSame": true,
+      "sha": [
+        "5ca172577509fafdc77710f0560b599e8880ddd131c33f02fd2d7742f2dee4ae"
+      ]
+    }
+  ]
+}

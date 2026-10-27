@@ -139,7 +139,10 @@ if __name__ == '__main__':
     ap.add_argument('--event-instances-only', action='store_true', help='CPU事件合同与导出门禁回归，不连接UE')
     ap.add_argument('--mobile-export-only', action='store_true', help='手机手动序列冲突提前定位与导出入口回归，不连接UE')
     ap.add_argument('--delivery-recovery-only', action='store_true', help='导出失败可见恢复、旧服务兼容与单文档导航回归，不连接UE')
+    ap.add_argument('--flame-model-only', action='store_true', help='周期体积火焰模型、参数边界与旧图逐位回归')
     a = ap.parse_args()
+    if a.flame_model_only:
+        raise SystemExit(subprocess.call(['node', str(HERE / 'flame_model_test.cjs')]))
     if a.delivery_recovery_only:
         for name in ('test_export_failure_state.cjs', 'test_importer_freshness.cjs', 'test_baker_handoff.cjs'):
             rc = subprocess.call(['node', str(ROOT / 'tool/local_delivery' / name)])

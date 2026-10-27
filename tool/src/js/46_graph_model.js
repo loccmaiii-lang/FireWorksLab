@@ -51,6 +51,7 @@ const SparkGraph = (() => {
     return {p,v};
   }
   function validate(r) {
+    if(!Number.isFinite(r?.spaceScale??1)||(r.spaceScale??1)<=0)throw Error('整体尺寸须为正有限数');
     if(!r||!(r.period>0&&Number.isFinite(r.period)))throw Error('循环周期必须大于0');
     for(const [k,name] of Object.entries(scaleNames)){const v=scaleOf(r,k),life=k==='scaleLife'||k==='branchLife';if(!Number.isFinite(v)||v<0||(life&&v===0))throw Error(name+'须为'+(life?'正':'非负')+'有限数');}
     if(!Array.isArray(r.emitters)||!r.emitters.length)throw Error('至少需要一个粒子层');
@@ -62,6 +63,7 @@ const SparkGraph = (() => {
       for(const d of [e.speed,e.life,e.size,e.power])if(!Array.isArray(d)||d.length!==3||!d.every(Number.isFinite)||d[0]<0||d[1]<d[0]||d[2]<=0)throw Error(e.name+'：随机范围无效');
       if(e.life[1]>=r.period)throw Error(e.name+'：寿命上限须小于循环周期');
       if(e.life[0]<=0)throw Error(e.name+'：寿命下限须大于0');
+      if(typeof FlameVolume!=='undefined')FlameVolume.validate(e);
       const effective=scaledEmitter(r,e);
       if(!Number.isFinite(effective.count)||!Number.isFinite(effective.children))throw Error(e.name+'：调整后的粒子数量过大');
       if(effective.life[1]>=r.period||!Number.isFinite(effective.life[1]))throw Error(e.name+'：调整后的寿命上限须小于循环周期，请减小寿命或增加周期');
@@ -74,7 +76,7 @@ const SparkGraph = (() => {
       if(!Number.isInteger(e.seed)||!Number.isInteger(e.count)||!Number.isInteger(e.children)||!Number.isInteger(e.clusterSize)||e.clusterSize<1)throw Error(e.name+'：种子和数量须为整数');
       if(!Number.isFinite(e.cone)||e.cone<0||e.cone>180||!Number.isFinite(e.aspect)||e.aspect<1||!Number.isFinite(e.spin)||!Number.isFinite(e.twist))throw Error(e.name+'：方向或形态参数无效');
       for(const k of ['gravity','direction'])if(!Array.isArray(e[k])||e[k].length!==3||!e[k].every(Number.isFinite))throw Error(e.name+'：'+k+'须为三维向量');
-      if(!['sphere','cone'].includes(e.directionMode)||!['line','point','fragment'].includes(e.shape)||!Math.hypot(...e.direction))throw Error(e.name+'：形态或方向无效');
+      if(!['sphere','cone'].includes(e.directionMode)||!['line','point','fragment','flame'].includes(e.shape)||!Math.hypot(...e.direction))throw Error(e.name+'：形态或方向无效');
       for(const k of ['sizeCurve','brightCurve'])if(!Array.isArray(e[k])||e[k].some((p,i,a)=>!Array.isArray(p)||p.length!==2||!p.every(Number.isFinite)||p[0]<0||p[0]>1||p[1]<0||(i&&p[0]<=a[i-1][0])))throw Error(e.name+'：曲线须按寿命从0到1递增，数值非负');
     }
   }
@@ -92,7 +94,7 @@ const SparkGraph = (() => {
           // 非均匀爆发：部分火星归入共享的不等间隔事件，保留连续底量。
           if(r.bursts.length&&h(id,105)<e.burstShare){const ev=r.bursts[Math.floor(h(id,106)*r.bursts.length)];birth=ev[0]+(h(id,107)+h(id,108)-1)*ev[1];}
           if(selected&&e.clusterDirection){const d=direction(e,cluster,111);v=norm(v.map((x,i)=>x*(1-e.clusterDirection)+d[i]*e.clusterDirection));}
-          const pos=direction({...e,directionMode:'sphere'},id,130),rad=e.extent*Math.cbrt(h(id,132));p=pos.map(x=>x*rad);v=v.map(x=>x*dist(e.speed,h(id,3)));
+          const pos=direction({...e,directionMode:'sphere'},id,130),rad=e.extent*Math.cbrt(h(id,132));p=pos.map(x=>x*rad);if(e.sourceScale||e.sourceOffset)p=FlameVolume.source(e,p);v=v.map(x=>x*dist(e.speed,h(id,3)));
         }
         const q={id,e,birth,life:Math.max(.001,dist(e.life,h(id,4))),width:e.width*dist(e.size,h(id,5)),power:e.gain*dist(e.power,h(id,6)),p,v,phase:TAU*h(id,7),parent,eventAge};if(flow)SparkFlow.attach(q,flow);out.push(q);all.push(q);
       }byId.set(e.id,out);
@@ -101,7 +103,7 @@ const SparkGraph = (() => {
   // 每项：[起点xy、终点xy、两端半径、两端亮度、形状、角度、随机值]。
   function geometry(graph,time,only=null) {
     const out=[],counts={},r=graph.recipe;
-    for(const q of graph.all){const e=q.e;if(e.enabled===false||(only&&e.id!==only))continue;
+    for(const q of graph.all){const e=q.e;if(e.shape==='flame'||e.enabled===false||(only&&e.id!==only))continue;
       const age=mod(time-q.birth,r.period);if(age>=q.life)continue;
       counts[e.id]=(counts[e.id]||0)+1;
       const u=age/q.life, fade=Math.min(1,age/.002)*Math.min(1,(q.life-age)/.008),I=q.power*curve(e.brightCurve,u)*fade;
@@ -122,7 +124,7 @@ const SparkGraph = (() => {
   //   现在每颗粒子的总光量 = 镜头开时同一颗（2π r²，和拖多长无关）：历史线 ≤ 12 段胶囊按「亮度坡度 × 面积」分这份光。格式同 cameraGeometry（12 个数一项）
   function flatGeometry(graph,time,ppm,only=null){
     const out=[],counts={},r=graph.recipe,RT=Math.sqrt(TAU);
-    for(const q of graph.all){const e=q.e;if(e.enabled===false||(only&&e.id!==only))continue;
+    for(const q of graph.all){const e=q.e;if(e.shape==='flame'||e.enabled===false||(only&&e.id!==only))continue;
       const age=mod(time-q.birth,r.period);if(age>=q.life)continue;
       counts[e.id]=(counts[e.id]||0)+1;
       const u=age/q.life,fade=Math.min(1,age/.002)*Math.min(1,(q.life-age)/.008),I=q.power*curve(e.brightCurve,u)*fade;
@@ -141,7 +143,7 @@ const SparkGraph = (() => {
   // 曝光窗口内逐粒积分。每项额外保存真实Y深度计算出的散焦半径；不重复画历史拖尾。
   function cameraGeometry(graph,time,P,ppm,only=null,onBatch=null){
     const c=CameraImaging.validate(P),[a,b]=CameraImaging.window(c,time),width=b-a,r=graph.recipe,out=[],counts={},quality=CameraImaging.quality(c);
-    for(const q of graph.all){const e=q.e;if(e.enabled===false||(only&&e.id!==only))continue;
+    for(const q of graph.all){const e=q.e;if(e.shape==='flame'||e.enabled===false||(only&&e.id!==only))continue;
       const first=Math.floor((a-q.birth-q.life)/r.period)+1,last=Math.floor((b-q.birth)/r.period);
       for(let cycle=first;cycle<=last;cycle++){
         const birth=q.birth+cycle*r.period,start=Math.max(a,birth),end=Math.min(b,birth+q.life);
@@ -211,6 +213,8 @@ const graphLayerItems = (() => {
     num('probability', '子粒发生概率', '', 0, 1, .01, '分叉', child),
     ...tri('life', '寿命', 's', 1, .001, '寿命'),
     num('extent', '出生半径', 'm', 0, .5, .0001, '形状', root),
+    ...vec('sourceScale', '出生范围倍率', ['X', 'Y（纵深）', 'Z（竖直）'], '×', 0, 10, .01, '形状', root),
+    ...vec('sourceOffset', '源中心', ['X', 'Y（纵深）', 'Z（竖直）'], 'm', -10, 10, .01, '形状', root),
     ...tri('speed', '速度', 'm/s', 80, .01, '初速'),
     { sel: K('directionMode'), tk: K('directionMode'), label: '喷射方向', mod: '初速', gl: true, options: [['sphere', '球形散射'], ['cone', '锥形喷射']] },
     num('cone', '喷射半锥角', '°', 0, 180, 1, '初速', cone),
@@ -226,16 +230,28 @@ const graphLayerItems = (() => {
     num('gain', '亮度', '×', 0, 60, .05, '亮度'),
     ...tri('power', '亮度倍率', '×', 6, .01, '亮度'),
     { curve: K('brightCurve'), tk: K('brightCurve'), label: '亮度随寿命', mod: '亮度', gl: true },
-    { sel: K('shape'), tk: K('shape'), label: '粒子形态', mod: '形态', gl: true, options: [['line', '运动拉丝'], ['point', '柔亮点'], ['fragment', '不规则碎片']] },
+    { sel: K('shape'), tk: K('shape'), label: '粒子形态', mod: '形态', gl: true, options: [['line', '运动拉丝'], ['point', '柔亮点'], ['fragment', '不规则碎片'], ['flame', '体积火焰']] },
     num('history', '历史线长时间', 's', 0, .1, .001, '形态', (P, e) => e.shape === 'line' && !P.cameraMotion && !P.cameraDof),
     num('taper', '尾端粗细比例', '', 0, 1, .01, '形态', (P, e) => e.shape === 'line' && !P.cameraMotion && !P.cameraDof),
-    num('aspect', '长宽比', '×', 1, 10, .1, '形态', (P, e) => e.shape !== 'line'),
-    num('spin', '自转', '°/s', -720, 720, 1, '形态', (P, e) => e.shape !== 'line'),
-    num('twist', '翻转', '°/s', -720, 720, 1, '形态', (P, e) => e.shape === 'fragment')
+    num('aspect', '长宽比', '×', 1, 10, .1, '形态', (P, e) => e.shape !== 'line' && e.shape !== 'flame'),
+    num('spin', '自转', '°/s', -720, 720, 1, '形态', (P, e) => e.shape !== 'line' && e.shape !== 'flame'),
+    num('twist', '翻转', '°/s', -720, 720, 1, '形态', (P, e) => e.shape === 'fragment'),
+    num('flameDensity', '火焰密度', '1/m', 0, 80, 0.1, '形态', (P,e)=>e.shape==='flame'),
+    num('flameDepth', '纵深厚度', '×', 0.05, 4, 0.05, '形态', (P,e)=>e.shape==='flame'),
+    num('flameNoise', '大块侵蚀', '1', 0, 1, 0.01, '形态', (P,e)=>e.shape==='flame'),
+    num('flameDetail', '细节侵蚀', '1', 0, 1, 0.01, '形态', (P,e)=>e.shape==='flame'),
+    num('flameScale', '细节尺度', 'm', 0.001, 2, 0.005, '形态', (P,e)=>e.shape==='flame'),
+    num('flameRise', '细节上移速度', 'm/s', -5, 5, 0.01, '形态', (P,e)=>e.shape==='flame'),
+    num('flameWarp', '卷曲位移', 'm', 0, .5, .005, '形态', (P,e)=>e.shape==='flame'),
+    num('flameTip', '尖端半径比例', '1', 0, 1, 0.01, '形态', (P,e)=>e.shape==='flame'),
+    num('flameFloor', '地面高度', 'm', -10, 10, 0.01, '形态', (P,e)=>e.shape==='flame'),
+    num('flameSteps', '射线积分样本', '次', 8, 64, 1, '形态', (P,e)=>e.shape==='flame', {int:true}),
+    {sel:K('flameFloorEnabled'),tk:K('flameFloorEnabled'),label:'地面截断',mod:'形态',gl:true,lshow:(P,e)=>e.shape==='flame',io:{get:v=>v,set:v=>+v},options:[[1,'开启'],[0,'关闭']]}
   ];
 })();
 SCHEMA.push(
   {sec:'分层粒子图',graphOnly:true,show:P=>!!P.sparkGraph,hint:'整体倍率默认1；各层原值保留。数量只改母粒批次，分叉结构不变；寿命会影响按母粒寿命触发的分叉时刻。',items:[
+    ['sparkGraph.spaceScale','整体尺寸','×',.01,20,.01],
     ['sparkGraph.scaleCone','喷射半锥角','×',0,3,.05],
     ['sparkGraph.scaleCount','粒子数量','×',0,4,.05],
     ['sparkGraph.scaleWidth','粒子大小','×',0,4,.05],

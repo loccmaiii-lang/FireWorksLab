@@ -387,7 +387,9 @@
     "分叉调整",
     "生成与运动",
     "全局气流",
-    "阻力重力"
+    "阻力重力",
+    "形状",
+    "形态"
    ]
   },
   {
@@ -7651,6 +7653,160 @@
    "名": "扰动尺度",
    "类别": "物理量",
    "单位": "m"
+  },
+  {
+   "id": "flame-spaceScale",
+   "key": "sparkGraph.spaceScale",
+   "sec": "分层粒子图",
+   "全名": "整体尺寸",
+   "发射器": "分层粒子图",
+   "模块": "整体调整",
+   "名": "整体尺寸",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "flame-emitters[].sourceScale",
+   "key": "sparkGraph.emitters[].sourceScale",
+   "sec": "分层粒子图",
+   "全名": "出生范围倍率",
+   "发射器": "分层粒子图",
+   "模块": "形状",
+   "名": "出生范围倍率",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "flame-emitters[].sourceOffset",
+   "key": "sparkGraph.emitters[].sourceOffset",
+   "sec": "分层粒子图",
+   "全名": "源中心",
+   "发射器": "分层粒子图",
+   "模块": "形状",
+   "名": "源中心",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "flame-emitters[].flameDensity",
+   "key": "sparkGraph.emitters[].flameDensity",
+   "sec": "分层粒子图",
+   "全名": "火焰密度",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "火焰密度",
+   "类别": "物理量",
+   "单位": "1/m"
+  },
+  {
+   "id": "flame-emitters[].flameDepth",
+   "key": "sparkGraph.emitters[].flameDepth",
+   "sec": "分层粒子图",
+   "全名": "纵深厚度",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "纵深厚度",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "flame-emitters[].flameNoise",
+   "key": "sparkGraph.emitters[].flameNoise",
+   "sec": "分层粒子图",
+   "全名": "大块侵蚀",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "大块侵蚀",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "flame-emitters[].flameDetail",
+   "key": "sparkGraph.emitters[].flameDetail",
+   "sec": "分层粒子图",
+   "全名": "细节侵蚀",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "细节侵蚀",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "flame-emitters[].flameScale",
+   "key": "sparkGraph.emitters[].flameScale",
+   "sec": "分层粒子图",
+   "全名": "细节尺度",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "细节尺度",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "flame-emitters[].flameRise",
+   "key": "sparkGraph.emitters[].flameRise",
+   "sec": "分层粒子图",
+   "全名": "细节上移速度",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "细节上移速度",
+   "类别": "物理量",
+   "单位": "m/s"
+  },
+  {
+   "id": "flame-emitters[].flameWarp",
+   "key": "sparkGraph.emitters[].flameWarp",
+   "sec": "分层粒子图",
+   "全名": "卷曲位移",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "卷曲位移",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "flame-emitters[].flameTip",
+   "key": "sparkGraph.emitters[].flameTip",
+   "sec": "分层粒子图",
+   "全名": "尖端半径比例",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "尖端半径比例",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "flame-emitters[].flameFloorEnabled",
+   "key": "sparkGraph.emitters[].flameFloorEnabled",
+   "sec": "分层粒子图",
+   "全名": "地面截断",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "地面截断",
+   "类别": "物理量",
+   "单位": "选项"
+  },
+  {
+   "id": "flame-emitters[].flameFloor",
+   "key": "sparkGraph.emitters[].flameFloor",
+   "sec": "分层粒子图",
+   "全名": "地面高度",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "地面高度",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "flame-emitters[].flameSteps",
+   "key": "sparkGraph.emitters[].flameSteps",
+   "sec": "分层粒子图",
+   "全名": "射线积分样本",
+   "发射器": "分层粒子图",
+   "模块": "形态",
+   "名": "射线积分样本",
+   "类别": "引擎字段",
+   "单位": "次"
   }
  ]
 }

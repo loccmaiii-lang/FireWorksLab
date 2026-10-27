@@ -34,14 +34,17 @@ function graphInitGL(){if(graphVAO)return;graphVAO=gl.createVertexArray();gl.bin
  graphBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,graphBuffer);
  for(const [i,n,o]of [[1,4,0],[2,4,4],[3,3,8]]){gl.enableVertexAttribArray(i);gl.vertexAttribPointer(i,n,gl.FLOAT,false,44,o*4);gl.vertexAttribDivisor(i,1);}gl.bindVertexArray(null);
 }
-function makeGraphRenderer(P){const graph=SparkGraph.build(P.sparkGraph);graphInitGL();return {
+function makeGraphRenderer(P){if(FlameVolume.has(P)&&(P.cameraMotion||P.cameraDof))throw Error('体积火焰暂不支持镜头运动模糊/散焦，请关闭镜头成像；可使用输出的快门比例');const graph=SparkGraph.build(P.sparkGraph);graphInitGL();return {
  Tp:graph.recipe.period,slots:graph.all.length,graph,cameraIntegrated:!!(P.cameraMotion||P.cameraDof),
- draw(ts,view,ppm,w){if(this.cameraIntegrated)return drawCameraGraph(graph,P,ts,view,ppm,w,this.solo||(LIVE_VIEW?graphSolo:null));
+ draw(ts,view,ppm,w){const scale=P.sparkGraph.spaceScale??1,oldPPMY=PPMY;
+ if(scale!==1){view=view.map(v=>v/scale);ppm*=scale;if(PPMY)PPMY*=scale;}
+ try{if(FlameVolume.has(P))drawFlameGraph(graph,ts,view,w,this.solo||(LIVE_VIEW?graphSolo:null));
+ if(this.cameraIntegrated)return drawCameraGraph(graph,P,ts,view,ppm,w,this.solo||(LIVE_VIEW?graphSolo:null));
  if(!window.__graphLegacyFlat)return drawFlatGraph(graph,P,ts,view,ppm,w,this.solo||(LIVE_VIEW?graphSolo:null));     // 4.9.97 V1 / V3：镜头关也走镜头的核（window.__graphLegacyFlat 只给对照检查用，不是参数）
  const g=SparkGraph.geometry(graph,ts,this.solo||(LIVE_VIEW?graphSolo:null)),pr=graphProgram;gl.useProgram(pr.p);gl.bindVertexArray(graphVAO);gl.bindBuffer(gl.ARRAY_BUFFER,graphBuffer);gl.bufferData(gl.ARRAY_BUFFER,g.data,gl.DYNAMIC_DRAW);
- gl.uniform4fv(pr.u.uView,view);gl.uniform2f(pr.u.uResolution,ppm*view[2]*2,(PPMY||ppm)*view[3]*2);gl.uniform1f(pr.u.uW,w);gl.uniform4fv(pr.u.uChan,[1,0,0,0]);gl.drawArraysInstanced(gl.TRIANGLES,0,6,g.data.length/11);return g.data.length/11;},dispose(){}
+ gl.uniform4fv(pr.u.uView,view);gl.uniform2f(pr.u.uResolution,ppm*view[2]*2,(PPMY||ppm)*view[3]*2);gl.uniform1f(pr.u.uW,w);gl.uniform4fv(pr.u.uChan,[1,0,0,0]);gl.drawArraysInstanced(gl.TRIANGLES,0,6,g.data.length/11);return g.data.length/11;}finally{PPMY=oldPPMY;}},dispose(){}
 };}
-function graphPlan(P){const b=P.sparkGraph.bounds,pl=loopPlan(P,b,P.sparkGraph.period),F=pl.L.F;
+function graphPlan(P){const scale=P.sparkGraph.spaceScale??1,b=scale===1?P.sparkGraph.bounds:P.sparkGraph.bounds.map(v=>v*scale),pl=loopPlan(P,b,P.sparkGraph.period),F=pl.L.F;
  // 四边是实际固定矩形；横向偏心通过Pivot锚回喷口，不再取较大一侧强制对称。
  // 保留loopPlan供其它循环效果使用，对称旧范围的计算顺序和像素不变。
  pl.cx=(b[0]+b[1])/2;pl.HX=(b[1]-b[0])/2*1.02;pl.Ww=2*pl.HX;pl.ppm=pl.L.cellW/pl.Ww;pl.px=(pl.HX-pl.cx)/pl.Ww;

@@ -1,0 +1,143 @@
+{
+  "errors": [],
+  "htmlSHA256": "e428688b9d15ef66567b04f4c36a9c1e51e8f5dff974b4f6d35f0f0918abce3b",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "impact": {
+    "rows": [
+      {
+        "key": "flameDensity",
+        "value": 2,
+        "changed": true
+      },
+      {
+        "key": "flameDepth",
+        "value": 0.3,
+        "changed": true
+      },
+      {
+        "key": "flameNoise",
+        "value": 0,
+        "changed": true
+      },
+      {
+        "key": "flameDetail",
+        "value": 0,
+        "changed": true
+      },
+      {
+        "key": "flameScale",
+        "value": 0.07,
+        "changed": true
+      },
+      {
+        "key": "flameRise",
+        "value": 0,
+        "changed": true
+      },
+      {
+        "key": "flameWarp",
+        "value": 0,
+        "changed": true
+      },
+      {
+        "key": "flameTip",
+        "value": 0.65,
+        "changed": true
+      },
+      {
+        "key": "flameFloor",
+        "value": 0.2,
+        "changed": true
+      },
+      {
+        "key": "flameFloorEnabled",
+        "value": 0,
+        "changed": true
+      },
+      {
+        "key": "flameSteps",
+        "value": 8,
+        "changed": true
+      },
+      {
+        "key": "sourceScale",
+        "value": [
+          0.3,
+          0.6,
+          0
+        ],
+        "changed": true
+      },
+      {
+        "key": "sourceOffset",
+        "value": [
+          0.2,
+          0,
+          0
+        ],
+        "changed": true
+      },
+      {
+        "key": "width",
+        "value": 0.16,
+        "changed": true
+      },
+      {
+        "key": "fieldEnabled",
+        "value": 0,
+        "changed": true
+      },
+      {
+        "key": "fieldWindX",
+        "value": 1.2,
+        "changed": true
+      },
+      {
+        "key": "fieldTurbulence",
+        "value": 0,
+        "changed": true
+      }
+    ],
+    "scale": {
+      "width": 2,
+      "height": 2,
+      "timesEqual": true
+    },
+    "periodPixelEqual": true
+  },
+  "export": {
+    "entry": "SGF1",
+    "ver": "8c650563·flame4.9.124+graph4.9.118+loop4.9.106",
+    "version": "4.9.124",
+    "exportMs": 850.7000002861023
+  },
+  "ui": {
+    "edit": true,
+    "flameDensityEdit": true,
+    "undoRedo": true,
+    "saveReload": true
+  },
+  "playback": [
+    {
+      "time": 1.5668000000000006,
+      "view": "export",
+      "playing": true
+    },
+    {
+      "time": 1.1168666666666665,
+      "view": "export",
+      "playing": true
+    },
+    {
+      "time": 0.6501333333333311,
+      "view": "export",
+      "playing": true
+    }
+  ],
+  "inert": {
+    "floor": "地面截断已关闭",
+    "zero": "火焰密度为0，没有可见火焰",
+    "cameraRejected": true
+  },
+  "pass": true
+}

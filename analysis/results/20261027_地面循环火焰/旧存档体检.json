@@ -1,0 +1,170 @@
+{
+ "ver": "4.9.124",
+ "keys": [
+  "cameraMotion"
+ ],
+ "rows": [
+  {
+   "name": "金曜菊-窜天猴",
+   "li": 1,
+   "title": "金芒菊",
+   "type": "kiku",
+   "res": [
+    {
+     "key": "cameraMotion",
+     "sec": "镜头成像",
+     "label": "快门运动模糊",
+     "vis": true,
+     "inert": "",
+     "from": 0,
+     "to": 1,
+     "max": 227,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.7,
+    1.5,
+    2.44
+   ],
+   "saved": "4.9.30"
+  },
+  {
+   "name": "金曜菊-窜天猴",
+   "li": 2,
+   "title": "点灭星",
+   "type": "strobe",
+   "res": [
+    {
+     "key": "cameraMotion",
+     "sec": "镜头成像",
+     "label": "快门运动模糊",
+     "vis": true,
+     "inert": "",
+     "from": 0,
+     "to": 1,
+     "max": 218,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.455,
+    0.975,
+    1.575
+   ],
+   "saved": "4.9.30"
+  },
+  {
+   "name": "金曜菊-A · 窜天猴B",
+   "li": 1,
+   "title": "引菊 → 锦 · 橙引线层",
+   "type": "kiku",
+   "res": [
+    {
+     "key": "cameraMotion",
+     "sec": "镜头成像",
+     "label": "快门运动模糊",
+     "vis": true,
+     "inert": "",
+     "from": 0,
+     "to": 1,
+     "max": 69,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.993,
+    2.127,
+    2.984
+   ],
+   "saved": "4.9.31"
+  },
+  {
+   "name": "金曜菊-A · 窜天猴B",
+   "li": 2,
+   "title": "引菊 → 锦 · 金锦层",
+   "type": "kiku",
+   "res": [
+    {
+     "key": "cameraMotion",
+     "sec": "镜头成像",
+     "label": "快门运动模糊",
+     "vis": true,
+     "inert": "",
+     "from": 0,
+     "to": 1,
+     "max": 229,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.725,
+    1.554,
+    2.967
+   ],
+   "saved": "4.9.31"
+  },
+  {
+   "name": "正式资产-窜天猴尾焰",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "cameraMotion",
+     "sec": "镜头成像",
+     "label": "快门运动模糊",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 0,
+     "max": 107,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.119"
+  },
+  {
+   "name": "正式资产-窜天猴尾焰-粒子",
+   "li": 1,
+   "title": "窜天猴尾焰 · 分层喷射",
+   "type": "sparkgraph",
+   "res": [
+    {
+     "key": "cameraMotion",
+     "sec": "镜头成像",
+     "label": "快门运动模糊",
+     "vis": true,
+     "inert": "",
+     "from": 1,
+     "to": 0,
+     "max": 35,
+     "verdict": "生效",
+     "why": ""
+    }
+   ],
+   "noisy": false,
+   "times": [
+    0.747,
+    1.6,
+    2.069
+   ],
+   "saved": "4.9.119"
+  }
+ ]
+}

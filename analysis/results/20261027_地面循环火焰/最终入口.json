@@ -1,0 +1,23 @@
+{
+  "version": "4.9.124",
+  "platform": "pc",
+  "check": {
+    "clipFrames": [],
+    "edgeFrames": [],
+    "chanUse": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "emptyMid": [],
+    "similar": 0,
+    "seam": 1.4056532135355437,
+    "maxClip": 0
+  },
+  "view": "export",
+  "ready": true,
+  "seedChanged": true,
+  "errors": [],
+  "htmlSHA256": "598d0c76932d67a46d83742ab292caa77754ee50755070a22d4a56a3ccfa996c"
+}

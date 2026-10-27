@@ -197,6 +197,7 @@ function p43LegacySync(P) {
 // （4.4.0 去掉过「更多」；4.9.8 又加回来，结果 4.9.11 留下的 14 项看不见。）收起 / 展开按模块记住
 function inertWhy(key, P) {
   if (!P) return '';
+  const flameWhy=typeof FlameVolume!=='undefined'?FlameVolume.inertWhy(key,P):'';if(flameWhy)return flameWhy;
   for (const [ks, f, why] of INERT) if (ks.includes(key) && f(P)) return why;
   return '';
 }
