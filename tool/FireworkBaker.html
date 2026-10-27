@@ -2344,7 +2344,8 @@ header.top .gpu::before{content:none}
 @starting-style{dialog[open]{opacity:0;scale:.98}}
 dialog::backdrop{transition:background-color var(--fw-motion-panel) var(--fw-ease-standard)}
 /* 模块展开：高度 200 ms（内容不重排、不改参数） */
-#right details.sec::details-content{block-size:0;overflow-y:clip;overflow-clip-margin:4px;transition:block-size var(--fw-motion-panel) var(--fw-ease-standard)}     /* 只动高度：打开的那一刻里面就能聚焦（F1、Tab），收起不留空白 */
+#right details.sec::details-content{block-size:0;overflow-y:clip;overflow-clip-margin:4px}
+#right details.sec.v5-anim::details-content{transition:block-size var(--fw-motion-panel) var(--fw-ease-standard)}     /* 只在人点模块标题时动（92_v5shell.js 加 v5-anim）；程序打开（搜索、去改、换页回来）不动，位置马上稳定 */
 #right details.sec[open]::details-content{block-size:auto}
 /* 抽屉（窄屏的左右栏）滑出 */
 main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-motion-panel) var(--fw-ease-enter)}
@@ -2452,7 +2453,8 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-colh{flex:none;width:28px;text-align:center;font-size:11px;color:var(--faint);cursor:help}
 .v5-colh.na{opacity:.5}
 #right.v5-min .v5-colh{visibility:hidden}
-.v5-tree{flex:none;overflow-y:auto;overflow-x:hidden;padding:0 4px 4px 6px;transition:height var(--fw-motion-panel) var(--fw-ease-standard)}
+.v5-tree{flex:none;overflow-y:auto;overflow-x:hidden;padding:0 4px 4px 6px}
+.v5-tree.anim{transition:height var(--fw-motion-panel) var(--fw-ease-standard)}
 .v5-split.on~*,.v5-split.on{cursor:row-resize}
 .v5-row{position:relative;display:flex;align-items:center;gap:2px;height:28px;padding-left:calc(var(--lv) * 16px);border-radius:3px;color:var(--dim)}
 .v5-row::before{content:"";position:absolute;left:calc(var(--lv) * 16px - 9px);top:0;bottom:0;border-left:1px solid var(--line);display:var(--v5-guide,block)}
@@ -2617,6 +2619,11 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .ab-menu>p,.ab-menu>small,.ab-menu>.hint,.ab-menu>span:not(.menu-label):not(.menu-div){margin:0;padding:6px 10px;font-size:11.5px;line-height:1.5;color:var(--faint)}
 #abMore .v5-del-label:has(+ #abDel[hidden]){display:none}
 .v5-ic.na{visibility:hidden}     /* 这一行没有这个开关：不画（列头悬停写哪些行有） */
+#delivView .dv-tip{margin:6px 0 0;font-size:11.5px;color:var(--faint)}
+#delivView .dv-tip>summary{cursor:pointer;list-style:none;color:var(--dim)}
+#delivView .dv-tip>summary::-webkit-details-marker{display:none}
+#delivView .dv-tip>summary::before{content:"? ";color:var(--faint)}
+#delivView .dv-tip p{margin:4px 0 0;line-height:1.6}
 </style>
 </head>
 <body>
@@ -20558,6 +20565,7 @@ function syncPtabs() {
   $('#pIter').hidden = pane !== 'tools';
   const cur = pane === 'review' ? 'review' : pane === 'tools' ? 'iter' : 'master';
   for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
+  if (typeof v5PaneSync === 'function') v5PaneSync();     // 4.9.125：树跟着换页马上收起 / 出来（paneGo 接着恢复滚动位置）
   if (typeof v5Sched === 'function') v5Sched();
 }
 // ---------------- 审阅记录 ----------------
@@ -22859,7 +22867,7 @@ function renderDeliv() {
       <div class="dv-names"><label title="${nameTip.replace(/"/g, '&quot;')}">英文名<input type="text" id="dvBase" value="${nm.base}" spellcheck="false"></label><span class="dv-nbtn"><button class="btn" type="button" id="dvSaveNames">保存</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}</span>
       ${lyInputs ? `<div class="dv-lys">${lyInputs}</div>` : ''}<small class="dv-sys" title="${nameTip.replace(/"/g, '&quot;')}">系统名 <b id="dvSystemName">${systemName}</b></small><small id="dvNameStatus" role="status" aria-live="polite" data-bad="${!!nameWhy}">${nameWhy ? '英文名还是缺省的 MyFx：改成这个效果自己的名字、点「保存」后才能导出' : ''}</small></div></section>
     <section class="dv-sec" aria-labelledby="dvS2"><h3 id="dvS2"><span class="dv-n">2</span>每层出什么</h3>
-      ${ssLine ? `<div class="dv-ss" id="dvSizeLine"><span class="dv-ssk">尺寸</span>${ssPick || ''}<small>${ssLine.replace(/^导出尺寸/, '')}</small></div>` : ''}${prod}</section>
+      ${ssLine ? `<div class="dv-ss" id="dvSizeLine"><span class="dv-ssk">尺寸档</span>${ssPick || ''}<small>${ssLine}</small></div>` : ''}${prod}</section>
     <section class="dv-sec" aria-labelledby="dvS3"><details class="dv-files"${store.get('dvFilesOpen', false) ? ' open' : ''}><summary><h3 id="dvS3"><span class="dv-n">3</span>包里有什么<small>${nFiles} 个图片文件 · 按当前烘焙推算</small></h3></summary>
       <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table></details></section>
     <section class="dv-sec" aria-labelledby="dvS4"><h3 id="dvS4"><span class="dv-n">4</span>导入 UE</h3>
@@ -23007,7 +23015,8 @@ function prodTableHTML(xs, combo) {
   });
   const mobileWhy = combo ? comboMobileConflictText(xs) : '';
   return `<table class="dv-t dv-prod"><thead><tr><th>层</th><th title="引擎回放、贴图流转按这一列画；改这里和层的「输出」是同一个值（进 Ctrl+Z）">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}`;     // 4.9.125：长说明去掉（PC 列 = 引擎回放画的那一列，写在列头悬停里；单束合不合适写在选项悬停和格子里）
+    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}
+    <details class="dv-tip"><summary>单束 / 单帧怎么出</summary><p>单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。「贴图流转」「引擎回放」按 PC 列看。</p></details>`;     // 4.9.125：长说明收进这一条（默认收起）
 }
 // 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：产物表单帧格子里「在引擎回放里看」；
 // 4.9.35（用户 18:50「引擎回放就只是引擎回放」）：引擎回放不分平台，直接按 PC 列画，点了 = 回到画面、切引擎回放
@@ -24112,7 +24121,7 @@ var V5_SVG = {
   back: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5L5 8l4.5 4.5"/></svg>'
 };
 const V5_RH = 28;                 // 树一行的高度（px）
-const V5_KEEP = 380;              // 参数区保底：一项参数通常要这么高（Lap 看板的规则）
+const V5_KEEP = 520;              // 参数区保底：一个发射器的模块（收起写摘要、第一个展开）一屏看得完要这么高（界面状态检查 W14 的口径）；不够时树至少 5 行
 const V5_WHY = {
   layer: '多层的层还没有「显示这层」开关：要新加参数（先记参数变更、等你批）。只看某一层用右边的 ◎',
   single: '单层效果只有这一层：关了就没有东西可导出',
@@ -24213,18 +24222,22 @@ function v5Sync() {
   if (box && box.hidden) rv.replaceChildren();
   rv.hidden = !rv.firstChild;
   const rb = rv.querySelector('[data-pane]'); if (rb) { const inRv = lib.pane === 'review'; rb.textContent = inRv ? '回到参数' : '审阅'; rb.setAttribute('aria-pressed', String(inRv)); if (!rb._v5) { rb._v5 = true; rb.addEventListener('click', ev => { if (lib.pane === 'review') { ev.stopImmediatePropagation(); paneGo('params'); } }, true); } }
-  // 换页（审阅 / 工具）：树收起来，顶上「← 参数」
-  const pane = state.tab === 'asset' ? 'params' : lib.pane || 'params', back = $('#v5Back');
-  back.hidden = pane === 'params'; back.querySelector('.v5-backt').textContent = pane === 'review' ? '审阅' : pane === 'tools' ? '工具' : '';
-  R.classList.toggle('v5-pane', pane !== 'params');
+  v5PaneSync();
   v5Tree();
   v5GraphTools();
   v5Heights();
 }
+// 换页（审阅 / 工具）：树收起来，顶上「← 参数」。syncPtabs 里同步调（换页后马上恢复滚动位置，树得先在）
+function v5PaneSync() {
+  if (!v5 || !v5.built) return;
+  const pane = state.tab === 'asset' ? 'params' : lib.pane || 'params', back = $('#v5Back');
+  back.hidden = pane === 'params'; back.querySelector('.v5-backt').textContent = pane === 'review' ? '审阅' : pane === 'tools' ? '工具' : '';
+  $('#right').classList.toggle('v5-pane', pane !== 'params');
+}
 // 树高：参数区保底 V5_KEEP，剩下的给树；至少 5 行、至多右栏一半、不超过树本身。拖过就按拖的（存这台电脑），双击收起
 function v5Heights() {
   if (!v5.built) return;
-  const R = $('#right'), tree = $('#v5Tree'), sc = $('#rScroll'); if (!R || !tree) return;
+  const R = $('#right'), tree = $('#v5Tree'), sc = $('#rScroll'); if (!R || !tree || R.classList.contains('v5-pane') || !tree.offsetParent) return;     // 树藏着（审阅 / 工具页、右栏收起）时不量
   const H = R.clientHeight, top = tree.getBoundingClientRect().top - R.getBoundingClientRect().top, content = tree.scrollHeight ? Math.max(V5_RH, tree.querySelectorAll('.v5-row').length * V5_RH + 4) : 0;
   const room = H - top - 8 - V5_KEEP, auto = Math.min(content, Math.floor(H / 2), Math.max(5 * V5_RH, room));
   const max = Math.max(2 * V5_RH, H - top - 8 - 140);
@@ -24242,9 +24255,10 @@ function v5Splitter(sp) {
   sp.addEventListener('pointermove', e => { if (!drag) return; const h = Math.max(0, h0 + e.clientY - y0); if (h < V5_RH) { if (!v5.min) { v5.min = true; v5Heights(); } return; } v5.min = false; v5.h = Math.round(h); v5Heights(); });
   const end = () => { if (!drag) return; drag = false; sp.classList.remove('on'); store.set('v5TreeH', v5.h); store.set('v5TreeMin', v5.min); };
   sp.addEventListener('pointerup', end); sp.addEventListener('pointercancel', end);
-  sp.addEventListener('dblclick', () => { v5.min = !v5.min; store.set('v5TreeMin', v5.min); v5Heights(); });
+  const toggle = () => { const t = tree(); t.classList.add('anim'); clearTimeout(t._anim); t._anim = setTimeout(() => t.classList.remove('anim'), 260); v5.min = !v5.min; store.set('v5TreeMin', v5.min); v5Heights(); };     // 收起 / 展开时才动画
+  sp.addEventListener('dblclick', toggle);
   sp.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { v5.min = !v5.min; store.set('v5TreeMin', v5.min); v5Heights(); e.preventDefault(); return; }
+    if (e.key === 'Enter') { toggle(); e.preventDefault(); return; }
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
     v5.min = false; v5.h = Math.max(2 * V5_RH, (tree().offsetHeight || 0) + (e.key === 'ArrowDown' ? V5_RH : -V5_RH)); store.set('v5TreeH', v5.h); store.set('v5TreeMin', false); v5Heights(); e.preventDefault();
   });
@@ -24470,6 +24484,11 @@ function selEnhance(row, s, it) {
 }
 function v5WrapRefresh(row) { const r0 = row._refresh; if (row._v5r) return; row._v5r = true; row._refresh = function () { if (r0) r0.apply(this, arguments); if (row._segSync) row._segSync(); }; }
 
+// 模块展开动画只给人点的那一下（点标题 / 回车 / 空格）：程序打开的（搜索自动展开、「去改」、换页回来）不动，位置马上稳定
+document.addEventListener('click', e => {
+  const sm = e.target && e.target.closest && e.target.closest('#right details.sec > summary'); if (!sm) return;
+  const d = sm.parentElement; d.classList.add('v5-anim'); clearTimeout(d._v5anim); d._v5anim = setTimeout(() => d.classList.remove('v5-anim'), 320);
+}, true);
 // ---------------- 启动 ----------------
 function v5Init() { try { v5Build(); } catch (e) { console.error('V5 右栏没搭起来：', e); } }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', v5Init); else v5Init();

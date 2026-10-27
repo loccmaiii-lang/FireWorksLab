@@ -21,7 +21,7 @@ var V5_SVG = {
   back: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5L5 8l4.5 4.5"/></svg>'
 };
 const V5_RH = 28;                 // 树一行的高度（px）
-const V5_KEEP = 380;              // 参数区保底：一项参数通常要这么高（Lap 看板的规则）
+const V5_KEEP = 520;              // 参数区保底：一个发射器的模块（收起写摘要、第一个展开）一屏看得完要这么高（界面状态检查 W14 的口径）；不够时树至少 5 行
 const V5_WHY = {
   layer: '多层的层还没有「显示这层」开关：要新加参数（先记参数变更、等你批）。只看某一层用右边的 ◎',
   single: '单层效果只有这一层：关了就没有东西可导出',
@@ -122,18 +122,22 @@ function v5Sync() {
   if (box && box.hidden) rv.replaceChildren();
   rv.hidden = !rv.firstChild;
   const rb = rv.querySelector('[data-pane]'); if (rb) { const inRv = lib.pane === 'review'; rb.textContent = inRv ? '回到参数' : '审阅'; rb.setAttribute('aria-pressed', String(inRv)); if (!rb._v5) { rb._v5 = true; rb.addEventListener('click', ev => { if (lib.pane === 'review') { ev.stopImmediatePropagation(); paneGo('params'); } }, true); } }
-  // 换页（审阅 / 工具）：树收起来，顶上「← 参数」
-  const pane = state.tab === 'asset' ? 'params' : lib.pane || 'params', back = $('#v5Back');
-  back.hidden = pane === 'params'; back.querySelector('.v5-backt').textContent = pane === 'review' ? '审阅' : pane === 'tools' ? '工具' : '';
-  R.classList.toggle('v5-pane', pane !== 'params');
+  v5PaneSync();
   v5Tree();
   v5GraphTools();
   v5Heights();
 }
+// 换页（审阅 / 工具）：树收起来，顶上「← 参数」。syncPtabs 里同步调（换页后马上恢复滚动位置，树得先在）
+function v5PaneSync() {
+  if (!v5 || !v5.built) return;
+  const pane = state.tab === 'asset' ? 'params' : lib.pane || 'params', back = $('#v5Back');
+  back.hidden = pane === 'params'; back.querySelector('.v5-backt').textContent = pane === 'review' ? '审阅' : pane === 'tools' ? '工具' : '';
+  $('#right').classList.toggle('v5-pane', pane !== 'params');
+}
 // 树高：参数区保底 V5_KEEP，剩下的给树；至少 5 行、至多右栏一半、不超过树本身。拖过就按拖的（存这台电脑），双击收起
 function v5Heights() {
   if (!v5.built) return;
-  const R = $('#right'), tree = $('#v5Tree'), sc = $('#rScroll'); if (!R || !tree) return;
+  const R = $('#right'), tree = $('#v5Tree'), sc = $('#rScroll'); if (!R || !tree || R.classList.contains('v5-pane') || !tree.offsetParent) return;     // 树藏着（审阅 / 工具页、右栏收起）时不量
   const H = R.clientHeight, top = tree.getBoundingClientRect().top - R.getBoundingClientRect().top, content = tree.scrollHeight ? Math.max(V5_RH, tree.querySelectorAll('.v5-row').length * V5_RH + 4) : 0;
   const room = H - top - 8 - V5_KEEP, auto = Math.min(content, Math.floor(H / 2), Math.max(5 * V5_RH, room));
   const max = Math.max(2 * V5_RH, H - top - 8 - 140);
@@ -151,9 +155,10 @@ function v5Splitter(sp) {
   sp.addEventListener('pointermove', e => { if (!drag) return; const h = Math.max(0, h0 + e.clientY - y0); if (h < V5_RH) { if (!v5.min) { v5.min = true; v5Heights(); } return; } v5.min = false; v5.h = Math.round(h); v5Heights(); });
   const end = () => { if (!drag) return; drag = false; sp.classList.remove('on'); store.set('v5TreeH', v5.h); store.set('v5TreeMin', v5.min); };
   sp.addEventListener('pointerup', end); sp.addEventListener('pointercancel', end);
-  sp.addEventListener('dblclick', () => { v5.min = !v5.min; store.set('v5TreeMin', v5.min); v5Heights(); });
+  const toggle = () => { const t = tree(); t.classList.add('anim'); clearTimeout(t._anim); t._anim = setTimeout(() => t.classList.remove('anim'), 260); v5.min = !v5.min; store.set('v5TreeMin', v5.min); v5Heights(); };     // 收起 / 展开时才动画
+  sp.addEventListener('dblclick', toggle);
   sp.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { v5.min = !v5.min; store.set('v5TreeMin', v5.min); v5Heights(); e.preventDefault(); return; }
+    if (e.key === 'Enter') { toggle(); e.preventDefault(); return; }
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
     v5.min = false; v5.h = Math.max(2 * V5_RH, (tree().offsetHeight || 0) + (e.key === 'ArrowDown' ? V5_RH : -V5_RH)); store.set('v5TreeH', v5.h); store.set('v5TreeMin', false); v5Heights(); e.preventDefault();
   });
@@ -379,6 +384,11 @@ function selEnhance(row, s, it) {
 }
 function v5WrapRefresh(row) { const r0 = row._refresh; if (row._v5r) return; row._v5r = true; row._refresh = function () { if (r0) r0.apply(this, arguments); if (row._segSync) row._segSync(); }; }
 
+// 模块展开动画只给人点的那一下（点标题 / 回车 / 空格）：程序打开的（搜索自动展开、「去改」、换页回来）不动，位置马上稳定
+document.addEventListener('click', e => {
+  const sm = e.target && e.target.closest && e.target.closest('#right details.sec > summary'); if (!sm) return;
+  const d = sm.parentElement; d.classList.add('v5-anim'); clearTimeout(d._v5anim); d._v5anim = setTimeout(() => d.classList.remove('v5-anim'), 320);
+}, true);
 // ---------------- 启动 ----------------
 function v5Init() { try { v5Build(); } catch (e) { console.error('V5 右栏没搭起来：', e); } }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', v5Init); else v5Init();

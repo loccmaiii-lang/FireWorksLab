@@ -1946,7 +1946,8 @@ header.top .gpu::before{content:none}
 @starting-style{dialog[open]{opacity:0;scale:.98}}
 dialog::backdrop{transition:background-color var(--fw-motion-panel) var(--fw-ease-standard)}
 /* 模块展开：高度 200 ms（内容不重排、不改参数） */
-#right details.sec::details-content{block-size:0;overflow-y:clip;overflow-clip-margin:4px;transition:block-size var(--fw-motion-panel) var(--fw-ease-standard)}     /* 只动高度：打开的那一刻里面就能聚焦（F1、Tab），收起不留空白 */
+#right details.sec::details-content{block-size:0;overflow-y:clip;overflow-clip-margin:4px}
+#right details.sec.v5-anim::details-content{transition:block-size var(--fw-motion-panel) var(--fw-ease-standard)}     /* 只在人点模块标题时动（92_v5shell.js 加 v5-anim）；程序打开（搜索、去改、换页回来）不动，位置马上稳定 */
 #right details.sec[open]::details-content{block-size:auto}
 /* 抽屉（窄屏的左右栏）滑出 */
 main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-motion-panel) var(--fw-ease-enter)}
@@ -2054,7 +2055,8 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-colh{flex:none;width:28px;text-align:center;font-size:11px;color:var(--faint);cursor:help}
 .v5-colh.na{opacity:.5}
 #right.v5-min .v5-colh{visibility:hidden}
-.v5-tree{flex:none;overflow-y:auto;overflow-x:hidden;padding:0 4px 4px 6px;transition:height var(--fw-motion-panel) var(--fw-ease-standard)}
+.v5-tree{flex:none;overflow-y:auto;overflow-x:hidden;padding:0 4px 4px 6px}
+.v5-tree.anim{transition:height var(--fw-motion-panel) var(--fw-ease-standard)}
 .v5-split.on~*,.v5-split.on{cursor:row-resize}
 .v5-row{position:relative;display:flex;align-items:center;gap:2px;height:28px;padding-left:calc(var(--lv) * 16px);border-radius:3px;color:var(--dim)}
 .v5-row::before{content:"";position:absolute;left:calc(var(--lv) * 16px - 9px);top:0;bottom:0;border-left:1px solid var(--line);display:var(--v5-guide,block)}
@@ -2219,3 +2221,8 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .ab-menu>p,.ab-menu>small,.ab-menu>.hint,.ab-menu>span:not(.menu-label):not(.menu-div){margin:0;padding:6px 10px;font-size:11.5px;line-height:1.5;color:var(--faint)}
 #abMore .v5-del-label:has(+ #abDel[hidden]){display:none}
 .v5-ic.na{visibility:hidden}     /* 这一行没有这个开关：不画（列头悬停写哪些行有） */
+#delivView .dv-tip{margin:6px 0 0;font-size:11.5px;color:var(--faint)}
+#delivView .dv-tip>summary{cursor:pointer;list-style:none;color:var(--dim)}
+#delivView .dv-tip>summary::-webkit-details-marker{display:none}
+#delivView .dv-tip>summary::before{content:"? ";color:var(--faint)}
+#delivView .dv-tip p{margin:4px 0 0;line-height:1.6}

@@ -163,6 +163,16 @@ def ask_stub(ans=None):
     return "window.__ans = " + a + "; window.askSaveName = async (t, n, init) => (window.__ans != null ? window.__ans : init); window.askConfirm = async () => true; 0"
 
 
+# 4.9.125 V5（对话框9）：右栏没有发射器标签 / 图层管理卡 / 固定的「现在改的是」那一块了，换成结构树；参数在 #rScroll 里滚。
+# 走查类检查按 V5 找对应的东西（树上的行、参数区的滚动块）；旧版本（--html 旧成品）照旧找原来的元素
+V5_ON = "!!(window.v5 && v5.built)"
+V5_RS = "(document.getElementById('rScroll') || $('#right'))"
+def v5_row(tab=None, layer=None):
+    """树上那一行的名字按钮的选择器（JS 表达式，先给它打标记）：tab = 发射器 / 页名，layer = 第几层（0 起）"""
+    cond = f"n.tab === {json.dumps(tab)}" if tab is not None else f"n.kind === 'layer' && n.i === {layer}"
+    return f"(() => {{ const i = (v5.nodes || []).findIndex(n => {cond}); const b = i >= 0 && document.querySelector(`#v5Tree .v5-name[data-n=\"${{i}}\"]`); return b || null; }})()"
+
+
 async def fresh(p, b):
     ctx = await b.new_context(viewport={'width': 1440, 'height': 900})
     pg = await ctx.new_page(); errs = []
@@ -2564,12 +2574,13 @@ async def w13(pg):
     return not r['bad'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
 
 
-W14_FS = r'''async () => { await openType('kiku'); await new Promise(r => setTimeout(r, 400)); selectEmitTab('星'); $('#right').scrollTop = 0; $('#libBody').scrollTop = 0;
+W14_FS = r'''async () => { await openType('kiku'); await new Promise(r => setTimeout(r, 400)); selectEmitTab('星'); $('#right').scrollTop = 0; (document.getElementById('rScroll') || $('#right')).scrollTop = 0; $('#libBody').scrollTop = 0;
+  const v5on = !!(window.v5 && v5.built), sel5 = document.querySelector('#v5Tree .v5-row.sel');     // 4.9.125 V5：发射器标签、「现在改的是」= 树上选中的那一行
   const vh = innerHeight, vw = innerWidth, R = el => { if (!el) return null; const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.bottom <= vh + 1 && r.top >= -1 && r.right <= vw + 1 && r.left >= -1; };
   const firstRow = panelRows.map(([r]) => r).find(r => !r.hidden && r.offsetParent && r.closest('section.egrp:not([hidden])') && r.closest('details.mod') && r.closest('details.mod').open);
-  return { name: R($('#abIdName')), save: R($('#abSave')), exportPack: R($('#abExportPack')), more: R(document.querySelector('#abMore > summary')), tabs: R($('#params .etabs')),
+  return { name: R($('#abIdName')), save: R($('#abSave')), exportPack: R($('#abExportPack')), more: R(document.querySelector('#abMore > summary')), tabs: v5on ? R(sel5) : R($('#params .etabs')),
     firstRow: R(firstRow), review: R(document.querySelector('#libBody .li')), newRecipe: R($('#newRecipe')), canvas: R(document.querySelector('.canvas-wrap')), play: R($('#play')),
-    scope: R($('#params .pscope .ps-path')), search: R($('#params .ptools input[type=search]')), foot: R($('#pFoot')) }; }'''
+    scope: v5on ? R(sel5) : R($('#params .pscope .ps-path')), search: R($('#params .ptools input[type=search]')), foot: R($('#pFoot')) }; }'''
 # 4.9.14（对话框23，用户 10-06 15:15「回滚再来」，照 01_顺手调参_深化）：第一屏的「舒适」口径——不再数参数行（4.9.8 的「≥ 8 行」把模块全展开往下堆）：
 # 这个发射器的模块一屏看得到几个（收起的都写了摘要）、参数行的滑杆和数值框各在一条竖线上、底部「和打开时比」那一条在
 W14_LAYOUT = r'''(() => { const R = $('#right').getBoundingClientRect(), vh = innerHeight, foot = $('#pFoot'), fb = foot && foot.offsetParent ? foot.getBoundingClientRect().top : Math.min(R.bottom, vh);
@@ -2617,7 +2628,7 @@ async def w14(p, b):
             # 1920×1080 两个都全部、1440×900 菊全部、1366×768 至少 6 个（参考稿 941 高时 9 个模块 3 个展开一屏看完）
             need = {(1366, 768): (6, 6), (1440, 900): (99, 6), (1920, 1080): (99, 99)}[(vw, vh)]
             l1 = await pg.evaluate(W14_LAYOUT)
-            await open_effect(pg, 'hiki_nishiki'); await pg.evaluate("(() => { state.playing = false; selectComboLayer(1); selectEmitTab('火花'); $('#right').scrollTop = 0; return 0; })()"); await pg.wait_for_timeout(300)
+            await open_effect(pg, 'hiki_nishiki'); await pg.evaluate("(() => { state.playing = false; selectComboLayer(1); selectEmitTab('火花'); $('#right').scrollTop = 0; (document.getElementById('rScroll') || $('#right')).scrollTop = 0; return 0; })()"); await pg.wait_for_timeout(300)
             l2 = await pg.evaluate(W14_LAYOUT); sc = await pg.evaluate("$('#params .pscope .ps-path').textContent")
             info[f'{vw}×{vh} 第一屏'] = {'菊 › 星': l1, '金锦 › 火花': l2, '顶上': sc}
             for nm, l, n in (('菊 › 星', l1, need[0]), ('金锦 › 火花', l2, need[1])):
@@ -2690,7 +2701,7 @@ async def w15(p, b):
         await open_effect(pg, 'hiki_nishiki'); await pg.wait_for_timeout(600); await idle(pg)
         r0 = await pg.evaluate("""(async () => { state.playing = false; selectComboLayer(1); selectEmitTab('火花'); state.layerView.solo = 1; state.t = 1.23;
           const d = [...document.querySelectorAll('#params details.mod')].find(x => x._key === '火花›生成'); if (d) { d.open = false; await new Promise(r => setTimeout(r, 30)); }
-          const R = $('#right'); R.scrollTop = 0; R.scrollTop = Math.min(260, R.scrollHeight - R.clientHeight - 1);
+          const R = (document.getElementById('rScroll') || $('#right')); R.scrollTop = 0; R.scrollTop = Math.min(260, R.scrollHeight - R.clientHeight - 1);
           const mods = Object.fromEntries([...document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod:not(.mod-empty)')].map(x => [x._key, x.open]));
           return { t: state.t, sel: state.comboSel, tab: pview.tab[emitTabFamily()], solo: state.layerView.solo, mods, scroll: R.scrollTop, tools: !$('#ptabs [data-tab=iter]').hidden }; })()""")
         info['切走前'] = {k: v for k, v in r0.items() if k != 'mods'}
@@ -2702,7 +2713,7 @@ async def w15(p, b):
         if tv['tab'] != 'combo': bad.append(f"切到「工具」页把打开的东西换了（state.tab = {tv['tab']}）")
         await pg.evaluate("$('#ptabs [data-tab=review]').click()"); await pg.wait_for_timeout(200)
         await pg.evaluate("$('#ptabs [data-tab=master]').click()"); await pg.wait_for_timeout(300)
-        r1 = await pg.evaluate("""(() => { const R = $('#right'); const mods = Object.fromEntries([...document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod:not(.mod-empty)')].map(x => [x._key, x.open]));
+        r1 = await pg.evaluate("""(() => { const R = (document.getElementById('rScroll') || $('#right')); const mods = Object.fromEntries([...document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod:not(.mod-empty)')].map(x => [x._key, x.open]));
           return { t: state.t, sel: state.comboSel, tab: pview.tab[emitTabFamily()], solo: state.layerView.solo, mods, scroll: R.scrollTop, params: !!$('#pMaster').offsetParent }; })()""")
         info['切回来'] = {k: v for k, v in r1.items() if k != 'mods'}
         for k in ('t', 'sel', 'tab', 'solo'):
@@ -2713,16 +2724,21 @@ async def w15(p, b):
         # ---- 4.9.8 引菊 → 锦 六步（提示词验收表；第 5 步「和打开时对比」用户 10-06 12:30 定 5.0 后做，不查）----
         await pg.evaluate("(() => { setAutoBake(false); state.layerView = { solo: -1, mute: [] }; selectComboLayer(0); return 0; })()"); await idle(pg)
         # 1 定位：选金锦层（图层管理那一行 / 收起时的层名按钮），再选火花 → 顶上写「金锦层 › 火花」，画布照常看整体（不独看、不静音）
-        await pg.evaluate("(() => { const b = document.querySelector('#layerCard .lrow[data-i=\"1\"]') && document.querySelector('#layerCard').open ? document.querySelector('#layerCard .lrow[data-i=\"1\"]') : document.querySelector('#layerCard .lc-chip[data-i=\"1\"]'); b.click(); return 0; })()"); await pg.wait_for_timeout(200)
-        await pg.click('#params .etabs [data-e="火花"]'); await pg.wait_for_timeout(200)
-        s1 = await pg.evaluate("({ sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length, sticky: getComputedStyle($('#params .pscope')).position })")
+        v5on = await pg.evaluate(V5_ON)
+        if v5on:     # 4.9.125 V5：树上点第 2 层、再点「火花」（真点击）
+            await pg.evaluate(f"(() => {{ {v5_row(layer=1)}.setAttribute('data-w15', 'layer'); return 0; }})()"); await pg.click('[data-w15="layer"]'); await pg.wait_for_timeout(200)
+            await pg.evaluate(f"(() => {{ {v5_row(tab='火花')}.setAttribute('data-w15', 'tab'); return 0; }})()"); await pg.click('[data-w15="tab"]'); await pg.wait_for_timeout(200)
+        else:
+            await pg.evaluate("(() => { const b = document.querySelector('#layerCard .lrow[data-i=\"1\"]') && document.querySelector('#layerCard').open ? document.querySelector('#layerCard .lrow[data-i=\"1\"]') : document.querySelector('#layerCard .lc-chip[data-i=\"1\"]'); b.click(); return 0; })()"); await pg.wait_for_timeout(200)
+            await pg.click('#params .etabs [data-e="火花"]'); await pg.wait_for_timeout(200)
+        s1 = await pg.evaluate("({ sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length, sticky: getComputedStyle((window.v5 && v5.built) ? $('#params .ptools') : $('#params .pscope')).position })")
         info['1 定位'] = s1
         if s1['sel'] != 1 or s1['scope'] != '金锦›火花': bad.append(f'第 1 步定位不对：{s1}')
         if s1['solo'] != -1 or s1['mute']: bad.append(f'第 1 步选层改了观察（独看 / 静音）：{s1}')
         if s1['sticky'] != 'sticky': bad.append('顶上那块没固定（滚动时会消失）')
-        sc = await pg.evaluate("(() => { const R = $('#right'); R.scrollTop = R.scrollHeight; const a = $('#params .pscope').getBoundingClientRect(), r = R.getBoundingClientRect(); return a.top >= r.top - 1 && a.bottom <= r.bottom + 1; })()")
+        sc = await pg.evaluate("(() => { const v = !!(window.v5 && v5.built), R = (document.getElementById('rScroll') || $('#right')); R.scrollTop = R.scrollHeight; const a = (v ? $('#v5Tree .v5-row.sel') : $('#params .pscope')).getBoundingClientRect(), r = $('#right').getBoundingClientRect(); return a.top >= r.top - 1 && a.bottom <= r.bottom + 1; })()")
         if not sc: bad.append('右栏滚到底时看不到「现在改的是」')
-        await pg.evaluate("$('#right').scrollTop = 0; 0")
+        await pg.evaluate("$('#right').scrollTop = 0; (document.getElementById('rScroll') || $('#right')).scrollTop = 0; 0")
         # 2 改寿命：暂停在 1.2 s，用数值框改火花寿命 → 数值、状态「改过」更新；时间不动；这一层排进重烘、贴图标旧（自动烘焙关）
         r2 = await pg.evaluate("""(() => { state.playing = false; state.t = 1.2; const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0], n = row.querySelector('.num');
           const v0 = state.P.sparkLife, g0 = state.gen; n.focus(); n.value = String(+(v0 + 0.4).toFixed(2)); n.dispatchEvent(new Event('input', { bubbles: true })); n.dispatchEvent(new Event('change', { bubbles: true })); n.blur();
@@ -2735,7 +2751,7 @@ async def w15(p, b):
         if abs(r2['t'] - 1.2) > 1e-9 or not r2['gen']: bad.append(f'第 2 步时间被动了 / 实时模拟没换代：{r2}')
         if not r2['stale'] or '旧' not in r2['ab']: bad.append(f"第 2 步自动烘焙关时贴图没标旧：{r2['ab']}")
         # 3 改颜色：火花 › 颜色「去改」→ 本层颜色（写明管整层）→ 改第一段颜色 → 「← 回到 火花 › 颜色」回到原来的位置；另一层颜色不动
-        r3 = await pg.evaluate("""(async () => { const R = $('#right'), d = [...document.querySelectorAll('#params section.egrp[data-g="火花"] > details.mod')].find(x => x._mod === '颜色'); d.open = true; await new Promise(r => setTimeout(r, 30));
+        r3 = await pg.evaluate("""(async () => { const R = (document.getElementById('rScroll') || $('#right')), d = [...document.querySelectorAll('#params section.egrp[data-g="火花"] > details.mod')].find(x => x._mod === '颜色'); d.open = true; await new Promise(r => setTimeout(r, 30));
           d.scrollIntoView({ block: 'center' }); await new Promise(r => setTimeout(r, 30)); const s0 = R.scrollTop, c0 = JSON.stringify(state.layers[0].stages);
           d.querySelector('.clink button').click(); await new Promise(r => setTimeout(r, 50));
           const cc = $('#colorControls'), b = cc.getBoundingClientRect(), rr = R.getBoundingClientRect(), inView = b.top < rr.bottom && b.bottom > rr.top;
@@ -2754,11 +2770,11 @@ async def w15(p, b):
           const L0 = state.layers[0].delay, d0 = state.layers[1].delay, b0 = bar(), n = pos.querySelector('input[id$="-delay"]').closest('.sl').querySelector('.num');
           n.value = String(+(d0 + 0.5).toFixed(2)); n.dispatchEvent(new Event('input', { bubbles: true })); n.dispatchEvent(new Event('change', { bubbles: true }));
           await new Promise(r => setTimeout(r, 30)); const cell = document.querySelector('#layerCard [data-st="1"]');
-          return { inEff, d0, d: state.layers[1].delay, cell: cell ? +cell.value : null, b0, b1: bar(), other: state.layers[0].delay === L0 }; })()""")
+          return { inEff, d0, d: state.layers[1].delay, cell: cell ? +cell.value : null, v5: !!(window.v5 && v5.built), b0, b1: bar(), other: state.layers[0].delay === L0 }; })()""")
         await pg.wait_for_timeout(200)
         info['4 调接力'] = r4
         if not r4['inEff']: bad.append('第 4 步「这一层在整朵里」不在效果标签里')
-        if abs(r4['d'] - r4['d0'] - 0.5) > 1e-6 or r4['cell'] is None or abs(r4['cell'] - r4['d']) > 1e-6: bad.append(f'第 4 步开始时间没改到 / 图层管理那一格没跟着变：{r4}')
+        if abs(r4['d'] - r4['d0'] - 0.5) > 1e-6 or (not r4['v5'] and (r4['cell'] is None or abs(r4['cell'] - r4['d']) > 1e-6)): bad.append(f'第 4 步开始时间没改到 / 图层管理那一格没跟着变：{r4}')     # 4.9.125 V5 没有图层管理卡，开始时间只在「这一层在整朵里」和时间轴
         if r4['b0'] is None or r4['b1'] is None or not r4['b1'] > r4['b0']: bad.append(f"第 4 步时间轴上金锦层的条没往后挪：{r4['b0']} → {r4['b1']}")
         if not r4['other']: bad.append('第 4 步改到了橙引线的开始时间')
         # 6 撤销 / 保存：撤销一次只回开始时间（颜色、寿命还在）；保存（AI 效果 → 存成我的效果）→ 刷新 → 打开：和保存的一样
@@ -2850,8 +2866,9 @@ async def w16(p, b):
         ok = await click("[...document.querySelectorAll('#libBody .li')].find(x => /引菊/.test(x.textContent))", 'lib')
         await idle(pg); await pg.wait_for_timeout(600); await idle(pg)
         await pg.evaluate("state.playing = false; 0")
-        ok = ok and await click("document.querySelector('#layerCard .lc-chip[data-i=\"1\"]') || document.querySelector('#layerCard .lrow[data-i=\"1\"]')", 'layer')
-        ok = ok and await click("document.querySelector('#params .etabs [data-e=\"火花\"]')", 'tab')
+        v5on = await pg.evaluate(V5_ON)     # 4.9.125 V5：层和发射器在树上点
+        ok = ok and await click(v5_row(layer=1) if v5on else "document.querySelector('#layerCard .lc-chip[data-i=\"1\"]') || document.querySelector('#layerCard .lrow[data-i=\"1\"]')", 'layer')
+        ok = ok and await click(v5_row(tab='火花') if v5on else "document.querySelector('#params .etabs [data-e=\"火花\"]')", 'tab')
         s1 = await pg.evaluate("({ key: lib.key, sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length })")
         info['1 选效果与图层'] = s1
         if not ok or s1['sel'] != 1 or s1['scope'] != '金锦›火花': bad.append(f'第 1 步没选到「金锦 › 火花」：{s1}')
@@ -2861,7 +2878,7 @@ async def w16(p, b):
         ok = await click("[...document.querySelectorAll('#params section.egrp[data-g=\"火花\"] > details.mod')].find(d => d._mod === '寿命').querySelector(':scope > summary')", 'lifesum')
         ok = ok and await type_num("panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0].querySelector('.num')", 'lifenum', want)
         s2 = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0];
-          return { life: layerEntryOf(state.layers[1]).P.sparkLife, chg: row.classList.contains('chg'), rr: !row.querySelector('.rrst').hidden, n: +((document.querySelector('#params .etabs [data-e="火花"] .et-n') || {}).textContent || 0),
+          return { life: layerEntryOf(state.layers[1]).P.sparkLife, chg: row.classList.contains('chg'), rr: !row.querySelector('.rrst').hidden, n: +((document.querySelector('#params .etabs [data-e="火花"] .et-n:not([hidden])') || [...document.querySelectorAll('#v5Tree .v5-row')].map(r => r.querySelector('.v5-name').textContent === '火花' && r.querySelector('.v5-chg')).find(Boolean) || {}).textContent || 0),
             foot: $('#pFoot .pf-chg').textContent, stale: bakeStale() }; })()""")
         info['2 调参数'] = s2
         if not ok or abs(s2['life'] - want) > 1e-6: bad.append(f'第 2 步寿命没改到金锦层：{s2}（应 {want}）')
@@ -2881,7 +2898,7 @@ async def w16(p, b):
         if s3['col'] == c0[1] or s3['other'] != c0[0]: bad.append('第 3 步颜色没改到金锦层 / 改到了别的层')
         if s3['tab'] != '火花' or not s3['back']: bad.append(f"第 3 步「← 回到」没回到火花 › 颜色：{info['3 调色并返回']}")
         # 4 调层延迟
-        ok = await click("document.querySelector('#params .etabs [data-e=\"效果\"]')", 'efftab')
+        ok = await click(v5_row(layer=1) if v5on else "document.querySelector('#params .etabs [data-e=\"效果\"]')", 'efftab')     # V5：点层名 = 这一层的效果页
         d0 = await pg.evaluate("state.layers[1].delay"); dw = round(d0 + 0.5, 2)
         bar = "(() => { stage2.tlSig = ''; buildTlBars(); const m = document.querySelector('#tlBars .tlb-t[data-i=\"1\"] i.main'); return m ? parseFloat(m.style.left) : null; })()"
         b0 = await pg.evaluate(bar)

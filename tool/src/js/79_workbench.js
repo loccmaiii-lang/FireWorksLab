@@ -1048,7 +1048,7 @@ function renderDeliv() {
       <div class="dv-names"><label title="${nameTip.replace(/"/g, '&quot;')}">英文名<input type="text" id="dvBase" value="${nm.base}" spellcheck="false"></label><span class="dv-nbtn"><button class="btn" type="button" id="dvSaveNames">保存</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}</span>
       ${lyInputs ? `<div class="dv-lys">${lyInputs}</div>` : ''}<small class="dv-sys" title="${nameTip.replace(/"/g, '&quot;')}">系统名 <b id="dvSystemName">${systemName}</b></small><small id="dvNameStatus" role="status" aria-live="polite" data-bad="${!!nameWhy}">${nameWhy ? '英文名还是缺省的 MyFx：改成这个效果自己的名字、点「保存」后才能导出' : ''}</small></div></section>
     <section class="dv-sec" aria-labelledby="dvS2"><h3 id="dvS2"><span class="dv-n">2</span>每层出什么</h3>
-      ${ssLine ? `<div class="dv-ss" id="dvSizeLine"><span class="dv-ssk">尺寸</span>${ssPick || ''}<small>${ssLine.replace(/^导出尺寸/, '')}</small></div>` : ''}${prod}</section>
+      ${ssLine ? `<div class="dv-ss" id="dvSizeLine"><span class="dv-ssk">尺寸档</span>${ssPick || ''}<small>${ssLine}</small></div>` : ''}${prod}</section>
     <section class="dv-sec" aria-labelledby="dvS3"><details class="dv-files"${store.get('dvFilesOpen', false) ? ' open' : ''}><summary><h3 id="dvS3"><span class="dv-n">3</span>包里有什么<small>${nFiles} 个图片文件 · 按当前烘焙推算</small></h3></summary>
       <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table></details></section>
     <section class="dv-sec" aria-labelledby="dvS4"><h3 id="dvS4"><span class="dv-n">4</span>导入 UE</h3>
@@ -1196,7 +1196,8 @@ function prodTableHTML(xs, combo) {
   });
   const mobileWhy = combo ? comboMobileConflictText(xs) : '';
   return `<table class="dv-t dv-prod"><thead><tr><th>层</th><th title="引擎回放、贴图流转按这一列画；改这里和层的「输出」是同一个值（进 Ctrl+Z）">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}`;     // 4.9.125：长说明去掉（PC 列 = 引擎回放画的那一列，写在列头悬停里；单束合不合适写在选项悬停和格子里）
+    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}
+    <details class="dv-tip"><summary>单束 / 单帧怎么出</summary><p>单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。「贴图流转」「引擎回放」按 PC 列看。</p></details>`;     // 4.9.125：长说明收进这一条（默认收起）
 }
 // 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：产物表单帧格子里「在引擎回放里看」；
 // 4.9.35（用户 18:50「引擎回放就只是引擎回放」）：引擎回放不分平台，直接按 PC 列画，点了 = 回到画面、切引擎回放

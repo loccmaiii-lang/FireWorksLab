@@ -41,6 +41,7 @@ function syncPtabs() {
   $('#pIter').hidden = pane !== 'tools';
   const cur = pane === 'review' ? 'review' : pane === 'tools' ? 'iter' : 'master';
   for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
+  if (typeof v5PaneSync === 'function') v5PaneSync();     // 4.9.125：树跟着换页马上收起 / 出来（paneGo 接着恢复滚动位置）
   if (typeof v5Sched === 'function') v5Sched();
 }
 // ---------------- 审阅记录 ----------------
