@@ -326,7 +326,7 @@ function sizeSpecCombo(layers, keyObj) { const sp = sizeSpecOf(keyObj); const r 
 function sizeSpecLine(isCombo) {
   const T = sizeSpecTable(); if (!T) return '';
   const sp = sizeSpecOf(), sz = isCombo ? comboSizeOf(state.layers) : effectSizeOf(state.P), now = sz ? `${sz.what === 'height' ? '开花高度' : '花径'} ${sz.m.toFixed(0)} m` : '';
-  if (!sp) return `导出尺寸：原大${now ? '（' + now + '）' : ''}——要匹配编排的大小，在右边选一档`;
+  if (!sp) return sz ? `导出尺寸：原大（${now}）——要匹配编排的大小，选一档` : '导出尺寸：原大（量不出这个效果的大小，没有档可选）';     // 4.9.125（走查 L1）：量不出大小时没有下拉，不再说「在右边选一档」
   if (sp.off) return `导出尺寸：这次不按标定（原大 / 手动导出缩放${now ? '；' + now : ''}）`;
   const r = sizeSpecScale(sp, sz); if (!r) return `导出尺寸「${sp.name}」：${sz ? (sz.what === 'height' ? '这一档没有开花高度' : '这一档没有花径') : '量不出这个效果的大小'}，照原大导出`;
   return `导出尺寸「${r.name}」${sp.picked ? '' : '（表里配的）'}：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.tk && r.tk !== 1 ? `、时间 × ${r.tk}${r.rise ? '（升空 ' + r.rise + ' s，原 ' + r.riseSrc + ' s）' : ''}，只有「合成一张」按时间缩` : ''}${r.warn ? ' · ⚠ ' + r.warn : ''}`;

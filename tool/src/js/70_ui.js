@@ -435,6 +435,7 @@ function syncExport() {
   fs.value = P.form;
   const k = bakeKind(P);
   $('#formNote').textContent = FORM_NOTES[k === 'riseLoop' ? 'unit' : k] + (k === 'riseLoop' ? ' 上升：贴图是弹体随体坐标里的星头与尾迹循环，弹道和尾迹火花由 Cascade 发射器完成。' : '');
+  fs.title = $('#formNote').textContent;     // 4.9.125：产物的说明放在下拉的悬停里（右栏不再多一段字）
   // 4.2.6 贴图尺寸放开（用户 2026-10-02 19:41「不要强制 2048」）：宽、高各自选；配方里不在列表里的尺寸也照样显示
   for (const [id, v] of [['x-texW', P.texW], ['x-texH', P.texH]]) { const el = $('#' + id), opts = [...new Set([512, 1024, 2048, 4096, +v])].sort((a, b) => a - b); const h = opts.join(); if (el.dataset.h !== h) { el.innerHTML = ''; for (const n of opts) el.add(new Option(n + (n === 4096 ? '（母版）' : ''), n)); el.dataset.h = h; } el.value = String(v); }
   $('#x-cols').value = P.cols; $('#x-rows').value = P.rows;
@@ -810,6 +811,7 @@ function buildMasterPanel() {
           state.P[it.sel] = v; onParam();
         });
         row._refresh = () => { s.value = selVal(state.P); };
+        if (typeof selEnhance === 'function') selEnhance(row, s, it);     // 4.9.125 只有开 / 关 → 方形开关；2–3 个短选项 → 分段（下拉藏着照旧用）
         det.appendChild(row);
       } else if (it.info === 'specBox' || it.info === 'specMore') {   // 4.2.6：规格框放进面板；4.9.5 拆成两块（贴图宽高 + 格子 / 其它）
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = it.info; det.appendChild(row);
@@ -902,7 +904,7 @@ function refreshVisibility() {
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
-    if (vis && it.sel && it.optOK) { const sl = row.querySelector('select'); if (sl) for (const o of sl.options) { const def = it.options.find(x => String(x[0]) === o.value), ok = !def || !!it.optOK(def[0], P); o.disabled = !ok; o.hidden = !ok && o.value !== sl.value; } }     // 4.9.89 只给这个效果能用的选项（合成一张的帧数、没有星头的 GPU 光点）
+    if (vis && it.sel && it.optOK) { const sl = row.querySelector('select'); if (sl) for (const o of sl.options) { const def = it.options.find(x => String(x[0]) === o.value), ok = !def || !!it.optOK(def[0], P); o.disabled = !ok; o.hidden = !ok && o.value !== sl.value; } if (row._segSync) row._segSync(); }     // 4.9.89 只给这个效果能用的选项（合成一张的帧数、没有星头的 GPU 光点）
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
     row.hidden = !vis || folded || lf || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
@@ -938,6 +940,7 @@ function refreshVisibility() {
   pview.nChgAll = Object.values(nChg).reduce((a, b) => a + b, 0); pview.nChg = nChg; pview.tabNow = auto ? '' : tab;
   if (host) host.classList.toggle('multi', auto || tab === '全部');     // 4.9.14：一次看一个发射器时，发射器标题由顶上「金锦 › 火花」代替
   scopeSync(); footSync();
+  if (typeof v5Sched === 'function') v5Sched();     // 4.9.125 V5 树跟着发射器 / 改过几项
 }
 // ---- 4.9.8（对话框23）参数栏：顶上那块、效果标签里的花型 / 产物、层的导出方案 / 位置与时间、模块收起时的摘要 ----
 // 「现在改的是：金锦层 › 火花」（单层：「菊 › 星」）；在搜索 / 只看改过的时写「› 搜索「寿命」」「› 改过的」
@@ -1023,7 +1026,7 @@ function colorLinks() {
   }
 }
 function colorGo(fromEmit) {
-  const R = $('#right'), cc = $('#colorControls'); if (!R || !cc) return;
+  const R = rScroller(), cc = $('#colorControls'); if (!R || !cc) return;     // 4.9.125 参数在 #rScroll 里滚
   pview.colorBack = { emit: fromEmit, scroll: R.scrollTop }; cc.open = true;
   let back = cc.querySelector('.cback'); if (!back) { back = document.createElement('button'); back.type = 'button'; back.className = 'btn mini cback'; cc.querySelector('summary').after(back);
     back.addEventListener('click', () => { const b = pview.colorBack; if (!b) return; pview.colorBack = null; back.hidden = true; if (b.emit && pview.tabNow !== b.emit) selectEmitTab(b.emit); R.scrollTop = b.scroll; }); }
@@ -1133,8 +1136,8 @@ function selectEmitTab(e) {
   if (pview.q || pview.changed) { pview.q = ''; pview.changed = false; store.set('pChanged', false); const i = $('#params .ptools input[type=search]'); if (i) i.value = ''; const c = $('#params .ptools .pchg input'); if (c) c.checked = false; }
   refreshVisibility();
   // 4.9.8：顶上那块固定着；换了发射器、而页面已经往下滚过，就滚回这个发射器的开头（紧贴在顶上那块下面）；选中的标签横着滚进视野
-  const sc = $('#params .pscope'), right = $('#right'), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);
-  if (sc && right && g && !g.hidden) { const d = g.getBoundingClientRect().top - sc.getBoundingClientRect().bottom; if (d < 0) right.scrollTop += d - 4; }
+  const right = rScroller(), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);     // 4.9.125 V5：参数区自己滚，顶上没有固定的那块了
+  if (right && g && !g.hidden) { const top = (document.querySelector('#params .ptools') || {}).offsetHeight || 0, d = g.getBoundingClientRect().top - right.getBoundingClientRect().top - top; if (d < 0 || d > right.clientHeight * .5) right.scrollTop += d - 4; }
   const tb = document.querySelector(`#params .etabs [data-e="${e}"]`); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 function refreshPanelValues() { for (const [row] of panelRows) row._refresh && row._refresh(); }

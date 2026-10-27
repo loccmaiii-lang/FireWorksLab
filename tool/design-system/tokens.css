@@ -10,6 +10,8 @@
   --fw-color-on-primary: #062a23;
   --fw-color-primary-container: #173d39;
   --fw-color-on-primary-container: #a1ded0;
+  --fw-color-primary-bright: #36e4b0;
+  --fw-color-control-border: #39515a;
   --fw-color-outline: #8da3ac;
   --fw-color-divider: #2b4149;
   --fw-color-error: #e7735a;
@@ -27,6 +29,8 @@
   --fw-type-body-line: 22px;
   --fw-type-field-size: 13px;
   --fw-type-field-line: 20px;
+  --fw-type-control-size: 12px;
+  --fw-type-control-line: 18px;
   --fw-type-helper-size: 12px;
   --fw-type-helper-line: 18px;
   --fw-space-1: 4px;
@@ -35,15 +39,49 @@
   --fw-space-4: 16px;
   --fw-space-6: 24px;
   --fw-space-8: 32px;
-  --fw-radius-control: 8px;
-  --fw-radius-panel: 12px;
-  --fw-radius-dialog: 16px;
+  --fw-radius-control: 4px;
+  --fw-radius-inner: 0px;
+  --fw-radius-toggle: 2px;
+  --fw-radius-panel: 4px;
+  --fw-radius-menu: 7px;
+  --fw-radius-menu-item: 5px;
+  --fw-radius-dialog: 10px;
+  --fw-radius-badge: 4px;
   --fw-size-control-compact: 32px;
   --fw-size-control-comfortable: 40px;
-  --fw-size-target-coarse: 48px;
+  --fw-size-control-inline: 26px;
   --fw-size-parameter-row: 30px;
   --fw-size-icon: 18px;
+  --fw-size-switch-w: 32px;
+  --fw-size-switch-h: 16px;
+  --fw-size-check: 16px;
+  --fw-size-menu-item: 32px;
+  --fw-size-target-coarse: 48px;
+  --fw-state-hover: 0.08;
+  --fw-state-focus: 0.12;
+  --fw-state-pressed: 0.12;
+  --fw-state-dragged: 0.16;
+  --fw-state-disabled: 0.38;
+  --fw-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --fw-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --fw-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --fw-motion-short: 100ms;
+  --fw-motion-medium: 150ms;
+  --fw-motion-panel: 200ms;
+  --fw-motion-large: 250ms;
+  --fw-motion-tooltip-delay: 500ms;
   --fw-motion-feedback-ms: 100ms;
-  --fw-motion-panel-ms: 160ms;
+  --fw-motion-panel-ms: 200ms;
   --fw-control-height: var(--fw-size-control-compact);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fw-scope {
+    --fw-motion-short: 0ms;
+    --fw-motion-medium: 0ms;
+    --fw-motion-panel: 0ms;
+    --fw-motion-large: 0ms;
+    --fw-motion-tooltip-delay: 0ms;
+    --fw-motion-feedback-ms: 0ms;
+    --fw-motion-panel-ms: 0ms;
+  }
 }

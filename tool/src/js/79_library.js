@@ -13,7 +13,8 @@ async function setTab(tab, o = {}) {
   if (tab === 'iter') { paneGo('tools'); return; }     // 旧的调用（工具页）= 换页
   const changed = tab !== state.tab;
   state.tab = tab; if (changed) state.t = 0;
-  if (tab !== 'combo') { state.comboSel = -1; state.layerView = { solo: -1, mute: [] }; }
+  if (tab !== 'combo') { state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
+    for (const id of ['lhOut', 'lhPos', 'lhLink']) { const el = document.getElementById(id); if (el) el.remove(); } }     // 4.9.125（走查 M6）：多层「这一层在整朵里 / 导出方案 / 轨迹联动」不带到下一个单层效果（选层时 buildLayerHead 会重建）
   $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pAsset').hidden = tab !== 'asset';
   syncComboPanels();
   $('#viewSeg').hidden = tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
@@ -24,7 +25,7 @@ async function setTab(tab, o = {}) {
 // 右栏换页：参数（params）/ 审阅（review）/ 工具（tools）。只换右栏显示的内容，打开的效果、时间、层、发射器都不动；各页的滚动位置各记各的
 lib.scroll = {};
 function paneGo(k) {
-  const right = $('#right'), from = lib.pane || 'params';
+  const right = rScroller(), from = lib.pane || 'params';     // 4.9.125 参数在 #rScroll 里滚
   if (k === from) { syncPtabs(); return; }
   if (right) lib.scroll[from] = right.scrollTop;
   lib.pane = k; syncPtabs();
@@ -40,6 +41,7 @@ function syncPtabs() {
   $('#pIter').hidden = pane !== 'tools';
   const cur = pane === 'review' ? 'review' : pane === 'tools' ? 'iter' : 'master';
   for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
+  if (typeof v5Sched === 'function') v5Sched();
 }
 // ---------------- 审阅记录 ----------------
 const rvGet = () => store.get('review', {});
@@ -305,7 +307,7 @@ function renderLib() {
   const effRow = (g, ef, k) => {
     const rd = k === 'review' ? effReady(ef) : null;
     const badge = effBadge(ef) + (rd ? readyBadge(ef) : stdBadge(ef.待验收版 || ef.主条目));
-    const sub = ef.阶段 === '未开始' ? (ef.说明 || '未开始') : rd && !rd.ok ? `${effSubline(ef)}<br><em class="nr">未就绪：${rd.why[0]}${rd.why.length > 1 ? ` 等 ${rd.why.length} 项` : ''}</em>` : effSubline(ef);
+    const sub = ef.阶段 === '未开始' ? (ef.说明 || '未开始') : effSubline(ef);     // 4.9.125（用户 10-27 20:50）：「未就绪：…」不再另起一行，原因在「未就绪」标签的悬停里
     const it = libItem(g, 'ef:' + ef.key, thumbOf(ef) + `<span class="tx"><b>${ef.名}</b><small>${sub}</small><span class="bds">${badge}</span></span>`, () => openEffect(ef));
     if (ef.阶段 === '未开始') it.classList.add('dimmed');
     tierRow(g, ef, k);
@@ -493,7 +495,7 @@ function setReview(e, formal) {
     </div>
     ${x.more ? `<details class="rcard rfold rfull"><summary>版本与历史 · 准备情况 · 交付说明</summary>${x.more}</details>` : ''}`;
   bindEffHeader(box, ef);
-  box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { paneGo('review'); $('#right').scrollTop = 0; }));
+  box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { paneGo('review'); rScroller().scrollTop = 0; }));
   $('#rvDot').hidden = !(cand && !r.st);
   const setSt = st => { const cur = rvOf(e).st; rvSet(rvKey(e), { st: cur === st ? '' : st }); setReview(e); renderLib(); };
   box.querySelectorAll('[data-whole]').forEach(b => b.addEventListener('click', () => { const ce = FW_REVIEW_LIST.find(x => x.id === b.dataset.whole && x.kind === 'combo'); if (ce) openReview(ce); }));

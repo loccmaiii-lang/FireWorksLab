@@ -136,7 +136,8 @@ function sgPopRender() {
   if (keepOp) { const f = (keep && keep.id ? pop.querySelector(`.sg-row[data-id="${keep.id}"] [data-sgo="${keepOp}"]`) : null) || pop.querySelector(`.sg-acts [data-sgo="${keepOp}"]`); if (f) f.focus({ preventScroll: true }); }
 }
 if (typeof keyBind === 'function') {
-  keyBind('tree', e => { if (!sgOn()) return; e.preventDefault(); const was = sgPop.open; sgPopToggle(); if (was) { const t = document.querySelector('#params .pscope .ps-tree'); if (t) t.focus(); } });
+  keyBind('tree', e => { const vt = document.getElementById('v5Tree'); if (vt && vt.offsetParent) { const f = vt.querySelector('.v5-row.sel .v5-name') || vt.querySelector('.v5-name'); if (f) { e.preventDefault(); f.focus(); } return; }     // 4.9.125 V5：Ctrl+/ = 跳到右栏的结构树
+    if (!sgOn()) return; e.preventDefault(); const was = sgPop.open; sgPopToggle(); if (was) { const t = document.querySelector('#params .pscope .ps-tree'); if (t) t.focus(); } });
   keyBind('esc', () => { if (!sgPop.open) return false; sgPopToggle(false); return true; }, 5);
 }
 if (typeof document !== 'undefined') document.addEventListener('pointerdown', ev => {     // 点弹层外面 = 关掉（点路径条、结构按钮自己处理）

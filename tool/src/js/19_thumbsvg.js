@@ -219,8 +219,8 @@ function thFeedback(msg, bad = false) {
 async function thCapture() {
   const keys = thUserKeys();
   if (!keys.length) { thFeedback('先在左栏打开一项，再保存它的缩略图', true); return false; }
-  const subject = wbKey(), btn = $('#thGrab'), label = btn && btn.textContent || '生成缩略图'; if (btn && btn.disabled) return false;
-  if (btn) { btn.disabled = true; btn.textContent = '生成中…'; } thFeedback('正在生成缩略图，等待当前画面刷新…');
+  const subject = wbKey(), btn = $('#thGrab'); if (btn && btn.disabled) return false;
+  if (btn) { btn.disabled = true; btn.setAttribute('aria-busy', 'true'); }     // 4.9.125 按钮只有相机图标：忙的时候变灰，不换字 thFeedback('正在生成缩略图，等待当前画面刷新…');
   try {
     const r = await thGrab();
     if (wbKey() !== subject) { thFeedback('已切换效果，本次缩略图未保存；请为当前效果重新生成', true); return false; }
@@ -233,7 +233,7 @@ async function thCapture() {
     thFeedback(`缩略图已保存：${t.toFixed(2)} s 这一帧${had ? '（已替换旧图）' : ''}；⋯ 里能恢复默认`);
     return true;
   } catch (e) { thFeedback('缩略图未保存：' + (e.message || e), true); return false; }
-  finally { if (btn) { btn.disabled = false; btn.textContent = label; } }
+  finally { if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); } }
 }
 // 恢复示意图 = 删掉截图；8 秒内能撤销（交互宪章第 8 节：删除要有撤销提示），撤销 = 把刚删的那张放回去
 function thRestore() {

@@ -133,7 +133,8 @@ function tempoInfoHTML() {
   const P = state.P; if (!tempoAir(P)) return '';
   const t = tempoOf(P), end = tempoEffectEnd(), combo = state.tab === 'combo' && state.layers && state.layers.length > 1, now = tempoBakeNow();
   const f2 = v => (+v).toFixed(2), btn = T => `<button type="button" data-tempo="${T}"${Math.abs(T - t) < 1e-6 ? ' class="on" aria-pressed="true"' : ''}>${T === 1 ? '原样' : '×' + T}</button>`;
-  const head = `<div>节奏 <b>×${f2(t)}</b>${t === 1 ? '（原样）' : t > 1 ? '（比原样快）' : '（比原样慢）'} · 整段 <b>${f2(end)} s</b>${combo ? '（整朵）' : ''}`
+  const tip = `同一朵花放快 / 放慢：时间 ÷、速度 ×、重力 ×²，大小形状不变；${combo ? '所有空中层一起换算，开始时间跟着。' : ''}贴图张数不变时，快了帧率就高、慢了就低。改回 1 = 原样。`;
+  const head = `<div title="${tip}">节奏 <b>×${f2(t)}</b>${t === 1 ? '（原样）' : t > 1 ? '（比原样快）' : '（比原样慢）'} · 整段 <b>${f2(end)} s</b>${combo ? '（整朵）' : ''}`
     + (now ? ` · ${combo ? '这一层 ' : ''}${now.F} 帧 / ${now.pages} 张 · 平均 ${now.fps.toFixed(0)} fps` : ' · 烘完写帧数') + '</div>';
   const quick = `<div class="tq">${[0.8, 1, 1.25, 1.5, 2].map(btn).join(' ')}</div>`;
   const target = `<div class="tt"><label>整段想要  <input type="number" data-tempo-target min="0.3" max="30" step="0.1" style="width:5.5em" value="${f2(end)}" aria-label="整段想要几秒"> s</label> <button type="button" data-tempo-go>用这个</button></div>`;
@@ -141,8 +142,7 @@ function tempoInfoHTML() {
   const trial = tr ? `<div class="otrial"><div>试算（不烘，只排帧；跳 = 游戏里${typeof STEP_REF_DIST !== 'undefined' ? ` ${STEP_REF_DIST} m 外` : ''}每帧最多跳几像素，标定线 ${typeof STEP_REF_PX !== 'undefined' ? STEP_REF_PX : 0.77}${combo ? '；只算这一层' : ''}）：</div>${tr.map(r => r.err ? `<div>×${r.T}：算不出（${r.err}）</div>`
       : `<div class="${r.cur ? 'on' : ''}" style="flex-wrap:nowrap;align-items:flex-start">${r.cur ? '<b style="white-space:nowrap">现在</b>' : `<button type="button" class="btn mini" style="white-space:nowrap" data-tempo="${r.T}">用 ×${r.T}</button>`}<span style="flex:1 1 0;min-width:0">${r.cur ? '×' + r.T + ' · ' : ''}${f2(r.end)} s · ${r.pages} 张 ${r.F} 帧${r.minFps != null ? ` · 最慢 ${r.minFps.toFixed(r.minFps < 10 ? 1 : 0)} fps` : ''}${r.max != null ? ` · 跳 ${r.max.toFixed(2)} px` : ''}${r.over ? `（${r.over} 帧超线）` : ''}</span></div>`).join('')}</div>`
     : `<div><button type="button" data-tempo-trial>试算几档节奏的帧数</button></div>`;
-  const note = `<p class="hint">同一朵花放快 / 放慢：时间 ÷、速度 ×、重力 ×²，大小形状不变；${combo ? '所有空中层一起换算，开始时间跟着。' : ''}贴图张数不变时，快了帧率就高、慢了就低。改回 1 = 原样。</p>`;
-  return `<div class="tempoinfo">${head}${quick}${target}${trial}${note}</div>`;
+  return `<div class="tempoinfo">${head}${quick}${target}${trial}</div>`;     // 4.9.125：那句说明挪进「节奏」那一行的悬停
 }
 function tempoInfoRefresh() { document.querySelectorAll('#params [data-info=tempoInfo]').forEach(r => r._refresh && r._refresh()); }
 if (typeof document !== 'undefined' && document.addEventListener) {

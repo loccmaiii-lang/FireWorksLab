@@ -211,7 +211,7 @@ function renderResetMenu() {
   const es = Object.entries(chg).filter(([, n]) => n > 0);
   host.innerHTML = items.map(([k, t, d]) => `<button type="button" data-reset="${k}" title="${d}">${t}</button>`).join('')
     + (es.length ? `<span class="menu-label">只还原一个发射器（到打开时）</span>` + es.map(([e, n]) => `<button type="button" data-reset-e="${e}">「${e}」· ${n} 项改过</button>`).join('') : (!combo || lay ? '<p class="hint">和打开时比还没改过参数</p>' : ''))
-    + '<p class="hint">都能用 Ctrl+Z 撤销。模块标题右边的 ↺ 只还原那一个模块。</p>';
+;     // 4.9.125：「都能用 Ctrl+Z 撤销……」写在「还原」按钮的悬停里，菜单里不再多一段
   host.querySelectorAll('[data-reset]').forEach(b => b.addEventListener('click', () => { $('#abReset').open = false; const k = b.dataset.reset;
     if (k === 'open') resetToOpened(); else if (k === 'openAll') { let s = null; try { s = JSON.parse(wb.sig); } catch (e) { } if (s) { wbApply(s); flash('已恢复到打开时（所有层）'); } } else if (k === 'def') resetToDefaults(); }));
   host.querySelectorAll('[data-reset-e]').forEach(b => b.addEventListener('click', () => { $('#abReset').open = false; resetScope(b.dataset.resetE); }));

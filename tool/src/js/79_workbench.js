@@ -44,6 +44,7 @@ function buildLayerCard() {
   box.querySelectorAll('[data-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.mute; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
   if (lib.my) bindMyLayerTools(box);
   if (typeof scopeSync === 'function') scopeSync();     // 4.9.14：顶上「金锦 › 火花」旁的独看 / 静音跟着（时间轴、图层管理、顶上三处是同一个开关）
+  if (typeof v5Sched === 'function') v5Sched();
 }
 function selectComboLayer(i) {
   if (state.tab !== 'combo') return;
@@ -58,7 +59,7 @@ function selectComboLayer(i) {
     if (e.bake) showStats(e.bake);
   } else buildComboPanel();
   syncComboPanels(); buildLayerCard();
-  $('#right').scrollTop = 0;
+  rScroller().scrollTop = 0;
 }
 // 导出方案的说明：这个方案在这一层上会少什么
 function outNote(L, e) {
@@ -194,7 +195,7 @@ function wbRefresh() {
   wbSync();
 }
 function wbSync() {
-  const bar = $('#assetBar'); bar.hidden = !wbVisible(); $('#versionHistory').hidden = bar.hidden; thUserSync(bar.hidden); if (bar.hidden) return;     // 4.9.6 时间轴「生成缩略图」跟资产栏一起出现
+  const bar = $('#assetBar'); bar.hidden = !wbVisible(); $('#versionHistory').hidden = bar.hidden; thUserSync(bar.hidden); if (typeof v5Sched === 'function') v5Sched(); if (bar.hidden) return;     // 4.9.6 时间轴「生成缩略图」跟资产栏一起出现
   const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
   const mtId = mtOpenId();
   $('#abName').textContent = lib.my ? lib.my.name : lib.tpl ? lib.tpl.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : mtId ? MULTI_BY_ID[mtId].name : TYPE_NAMES[state.P.type] || '';
@@ -236,7 +237,7 @@ function idBarInfo(list, changed) {
   if (changed) chips.push(['● 没保存', 'warn', '参数改过，还没保存（切走 / 刷新会先存成草稿）']);
   // 素材包：AI 条目看状态清单里的导出（同一指纹 = 一致）；自己的效果 / 模板看这台浏览器里「导出时」存的那份和现在比
   if (ef && e && typeof effReady === 'function' && !changed && wb.src.kind !== 'mine') { const r = effReady(ef);
-    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致（${r.ex.job || ''}，指纹 ${r.ver}）`] : ['素材包过期', 'warn', '导出后参数或烘焙器输出规则改了，素材包要重导']); }
+    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致（${r.ex.job || ''}，指纹 ${r.ver}）`] : ['素材包要重导', 'warn', '导出后参数或烘焙器输出规则改了，素材包要重导']); }
   else if (ef && e) chips.push(['和 AI 包不同', 'dim', '你改过参数 / 看的是你的版本：和 AI 导出的素材包不一样']);
   else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
     if (!last) chips.push(['还没导出', 'dim', '这台电脑的浏览器里没导出过这个效果']);
@@ -705,7 +706,7 @@ function buildTlBars() {
     // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
     const combo = state.tab === 'combo', mute = state.layerView.mute.includes(x.i), solo = state.layerView.solo === x.i;
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '恢复看这一层' : '先不看这一层'}（只影响画面，照样导出；配方里的「显示这层」在右栏树上）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="只看第 ${x.i + 1} 层" aria-pressed="${solo}" title="只看这一层（只影响画面，和右栏树上的 ◎ 是同一个）">${typeof V5_SVG !== 'undefined' ? V5_SVG.solo : 'S'}</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + (P || state.tab === 'combo' ? `<div class="tlcut" title="轨道上：上排圆点 = 星（点火、燃烧结束…），菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧从这里开始">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') + (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 ? '，开花闪光单独导出一颗软圆点（Flash）' : '') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
@@ -763,7 +764,7 @@ function trackDrag(ev, h) {
 // 「输出」一节顶上的结果（4.2.0）：入出点之间多少 tick → 烘了多少帧 → 每张怎么装、帧率多少；有问题直接写出来
 function outSummaryHTML() {
   const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), b = x && x.b, P = state.P;
-  if (!b || !b.meta || b.meta.frameTiming !== 'tick-start') return '<p class="hint">烘好以后这里显示：入点到出点之间多少 tick、烘了多少帧、怎么装进贴图、帧率多少。</p>';
+  if (!b || !b.meta || b.meta.frameTiming !== 'tick-start') return '<p class="hint" title="烘好以后这里显示：入点到出点之间多少 tick、烘了多少帧、怎么装进贴图、帧率多少">还没烘好</p>';
   const parts = bakeParts(b), F = parts.reduce((n, s) => n + s.meta.L.F, 0), m0 = parts[0].meta, end = bakeTotal(b), N = Math.round((end - (m0.t0 || 0)) * 30);
   let maxF = 0, minF = 99; for (const s of parts) for (const d of s.meta.dur || []) { const f = 1 / Math.max(d, 1 / 30); maxF = Math.max(maxF, f); minF = Math.min(minF, f); }
   const burnMin = Math.min(...parts.map(s => s.meta.minFps || 30));
@@ -1001,7 +1002,7 @@ function renderDeliv() {
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }
     const o = outOfX(x, combo);      // 4.2.12：每层的导出方案（4.9.25 单层也按自己的；4.9.80 手机「自动」按算出来的）
-    if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${x.mob && x.mob.auto ? mobileAutoText(x.mob) : OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
+    if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${x.mob && x.mob.auto ? mobileAutoText(x.mob) : OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : ' · 时间轴上先不看（照样导出）'}</td></tr>`);
     if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点约 ${dotsCount(layerPOf(x))} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
     const uOK = unitAllowed(layerPOf(x)), uPC = o.pc === 'unit' && uOK, uMob = o.mobile === 'unit' && uOK;     // 4.9.35 手机也能出单束（PC 也是单束时共用 PC 那几张）
     if (uPC || uMob) {     // 4.9.28 变体几张就几行（序号 01…）
@@ -1035,14 +1036,27 @@ function renderDeliv() {
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
   const nameWhy = exportNameBlock(nm), prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '') || nameWhy;     // 4.9.121（团队版 ⑤）：英文名还是 MyFx 时导出按钮灰、写原因     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
-  let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
-  host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '有一层的产物没在产物形态登记表里，导出会被拦'}</small></div><span class="sp"></span>
-    <label class="dv-scope" title="导入器替换哪些（4.9.115，用户 10-18）：只换贴图 = 粒子系统、材质实例都不动，你在 UE 里改过的参数原样保留，贴图自己的 NoMip / Clamp 等设置也保留、只换像素；帧数 / 时长 / 格子改了要用「全部」。只换 PC / 手机：另一个平台那行导入器不勾。导出内容不变（要省掉手机烘焙，在产物表把手机选「不出」）">导入范围<select id="dvScope">${[['all', '全部（贴图 + 材质 + 粒子）'], ['textures', '只换贴图（PC + 手机）'], ['textures-pc', '只换 PC 贴图'], ['textures-mobile', '只换手机贴图']].map(([v, t]) => `<option value="${v}"${delivImportScope === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
-    <button class="btn primary" type="button" id="dvExport"${noPackWhy ? ` disabled title="${noPackWhy.replace(/"/g, '&quot;')}"` : ''}>导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
-    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite" data-bad="${!!nameWhy}">${nameWhy ? '英文名还是缺省的 MyFx：改成这个效果自己的名字、点「保存名称」后才能导出' : ''}</small></div>
-    ${ssHTML}${prod}
-    <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
+  // 4.9.125（用户 10-27 21:18「预览更清晰，文字页面变小」）：交付清单是画面右边一条窄栏，画面照旧放引擎回放；四块按做决定的顺序：名字 → 每层出什么 → 包里有什么 → 导入 UE。
+  //   导出只留顶上一个（20:37 第 3 条）：这里只写能不能导、为什么；#dvExport 留着（不显示）给检查脚本看变灰
+  const ssLine = typeof sizeSpecLine === 'function' ? sizeSpecLine(combo) : '', ssPick = ssLine && typeof sizeSpecSelectHTML === 'function' ? sizeSpecSelectHTML(combo) : '';
+  const nFiles = rows.filter(r => /^<tr(?! class="grp")[^>]*><td>[^<（]+\.png<\/td>/.test(r)).length;
+  const goTxt = noPackWhy ? '不能导出：' + noPackWhy : !useNew ? '有一层的产物没在产物形态登记表里，导出会被拦' : '可以导出：点顶上「导出」出整个效果（PC + 手机）';
+  const nameTip = `最终系统名的平台后缀由导入器加。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀）。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。`;
+  host.innerHTML = `<div class="dv-h"><b class="dv-title">交付清单</b><span class="sp"></span><button class="btn ghost dv-x" type="button" id="dvBack" title="回到画面（预览照旧）">关闭</button></div>
+    <p class="dv-go${noPackWhy || !useNew ? ' bad' : ''}" id="dvGo" role="status">${goTxt.replace(/</g, '&lt;')}</p>
+    <section class="dv-sec" aria-labelledby="dvS1"><h3 id="dvS1"><span class="dv-n">1</span>名字</h3>
+      <div class="dv-names"><label title="${nameTip.replace(/"/g, '&quot;')}">英文名<input type="text" id="dvBase" value="${nm.base}" spellcheck="false"></label><span class="dv-nbtn"><button class="btn" type="button" id="dvSaveNames">保存</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}</span>
+      ${lyInputs ? `<div class="dv-lys">${lyInputs}</div>` : ''}<small class="dv-sys" title="${nameTip.replace(/"/g, '&quot;')}">系统名 <b id="dvSystemName">${systemName}</b></small><small id="dvNameStatus" role="status" aria-live="polite" data-bad="${!!nameWhy}">${nameWhy ? '英文名还是缺省的 MyFx：改成这个效果自己的名字、点「保存」后才能导出' : ''}</small></div></section>
+    <section class="dv-sec" aria-labelledby="dvS2"><h3 id="dvS2"><span class="dv-n">2</span>每层出什么</h3>
+      ${ssLine ? `<div class="dv-ss" id="dvSizeLine"><span class="dv-ssk">尺寸</span>${ssPick || ''}<small>${ssLine.replace(/^导出尺寸/, '')}</small></div>` : ''}${prod}</section>
+    <section class="dv-sec" aria-labelledby="dvS3"><details class="dv-files"${store.get('dvFilesOpen', false) ? ' open' : ''}><summary><h3 id="dvS3"><span class="dv-n">3</span>包里有什么<small>${nFiles} 个图片文件 · 按当前烘焙推算</small></h3></summary>
+      <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table></details></section>
+    <section class="dv-sec" aria-labelledby="dvS4"><h3 id="dvS4"><span class="dv-n">4</span>导入 UE</h3>
+      <label class="dv-scope" title="导入器替换哪些（4.9.115，用户 10-18）：只换贴图 = 粒子系统、材质实例都不动，你在 UE 里改过的参数原样保留，贴图自己的 NoMip / Clamp 等设置也保留、只换像素；帧数 / 时长 / 格子改了要用「全部」。只换 PC / 手机：另一个平台那行导入器不勾。导出内容不变（要省掉手机烘焙，在产物表把手机选「不出」）">导入范围<select id="dvScope">${[['all', '全部（贴图 + 材质 + 粒子）'], ['textures', '只换贴图（PC + 手机）'], ['textures-pc', '只换 PC 贴图'], ['textures-mobile', '只换手机贴图']].map(([v, t]) => `<option value="${v}"${delivImportScope === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label></section>
+    <button class="btn primary" type="button" id="dvExport" hidden${noPackWhy ? ` disabled title="${noPackWhy.replace(/"/g, '&quot;')}"` : ''}>导出素材包（PC + 手机）</button>`;
+  { const df = host.querySelector('.dv-files'); if (df) df.addEventListener('toggle', () => store.set('dvFilesOpen', df.open)); }
+  host.querySelectorAll('.dv-prod td small').forEach(sm => { if (!sm.title) sm.title = sm.textContent; });     // 窄栏里格子说明只露两行，全文在悬停里
+  { const ex = $('#abExportPack'); if (ex) ex.dataset.why = noPackWhy || ''; }
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
   host.querySelector('#dvScope').addEventListener('change', e => { delivImportScope = e.target.value; });
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
@@ -1177,13 +1191,12 @@ function prodTableHTML(xs, combo) {
     const uMany = mobileUnitTooMany(P) ? ` disabled title="${MOBILE_UNIT_MANY}"` : '';     // 4.9.80 手机单束 > 50 颗：一定被拦，不让选
     const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => {const eventWhy=burstFlowOutputReason(P,k)||(combo&&typeof EventInstances!=='undefined'?EventInstances.outputReason(x.L,pf,k):'');return `<option value="${k}"${k === v ? ' selected' : ''}${eventWhy?' disabled title="'+eventWhy+'"':k === 'unit' ? (pf === 'mobile' && uMany && v !== 'unit' ? uMany : uAttr) : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`;}).join('')}</select>`;
     const mobV = combo && !layerMobileManual(x.L) ? 'auto' : o.mobile;
-    return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
+    return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>时间轴上先不看（照样导出）</small>' : ''}</td>
       <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', combo ? OUT_MOBILE_UI : OUT_MOBILE, mobV)}<small>${x.mob && x.mob.auto && x.mob.kind !== 'off' ? mobileAutoText(x.mob) + ' · ' : ''}${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）
   });
   const mobileWhy = combo ? comboMobileConflictText(xs) : '';
-  return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th title="引擎回放画的是这一列">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}
-    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图流转」「引擎回放」按 PC 列看（PC 单束就看单束那张、单帧就看单帧）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
+  return `<table class="dv-t dv-prod"><thead><tr><th>层</th><th title="引擎回放、贴图流转按这一列画；改这里和层的「输出」是同一个值（进 Ctrl+Z）">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
+    ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}`;     // 4.9.125：长说明去掉（PC 列 = 引擎回放画的那一列，写在列头悬停里；单束合不合适写在选项悬停和格子里）
 }
 // 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：产物表单帧格子里「在引擎回放里看」；
 // 4.9.35（用户 18:50「引擎回放就只是引擎回放」）：引擎回放不分平台，直接按 PC 列画，点了 = 回到画面、切引擎回放
@@ -1204,8 +1217,12 @@ function setProduct(i, pf, v) {
   onExportScheme();
 }
 function toggleDeliv(on) {
-  stage2.deliv = on == null ? !stage2.deliv : on;
-  $('#delivView').hidden = !stage2.deliv; $('#viewFrame').hidden = stage2.deliv;
+  const was = stage2.deliv; stage2.deliv = on == null ? !stage2.deliv : on;
+  // 4.9.125（用户 10-27 21:18）：画面不再被清单盖住——交付清单在画面右边一条窄栏，画面切到「引擎回放」（导出的就是它），关掉清单回到原来的视图
+  $('#delivView').hidden = !stage2.deliv; $('#viewFrame').hidden = false;
+  document.querySelector('.stage').classList.toggle('dv-on', stage2.deliv);
+  if (stage2.deliv && !was) { stage2.delivPrevView = state.view; if (state.view !== 'export' && state.tab !== 'asset') { state.view = 'export'; bakeIfStale(); syncStale(); } }
+  else if (!stage2.deliv && was && stage2.delivPrevView && stage2.delivPrevView !== state.view) { state.view = stage2.delivPrevView; stage2.delivPrevView = ''; syncStale(); }
   syncStageTabs();
   if (stage2.deliv) renderDeliv();
 }

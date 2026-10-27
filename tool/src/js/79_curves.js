@@ -84,6 +84,7 @@ function endInfoHTML() {
   // 4.5.3（用户 10-05 18:02「序列时长填 9 s，图层与时间还是 2.83 s，改不了」）：设了出点时，序列到出点为止，改序列时长不管用 → 说清楚、给一键清除
   const cut = +P.cutOut > 0 && +P.cutOut < +P.duration - 1e-3 ? ` <span class="warn">出点在 ${(+P.cutOut).toFixed(2)} s：序列时长 ${(+P.duration).toFixed(2)} s 后面那段不导出</span> <button type="button" class="btn mini" data-cutclear="1">清除出点</button>` : '';
   if (short > 0.04) return `<p class="hint endinfo warn">最后一批火花约 <b>${e.toFixed(2)} s</b> 灭完，序列到 ${D.toFixed(2)} s，差 ${short.toFixed(2)} s（${fade}，看着像被切掉）。${cut ? '' : `<button type="button" class="btn mini" data-endfit="${e}">序列时长设成 ${e.toFixed(2)} s</button>`}${cut}</p>`;
+  if (!cut && !trim) return '';     // 4.9.125（用户 10-27 20:50「没用的备注全部去掉」）：盖得住就不写，只在差了 / 有出点 / 有裁切时说
   return `<p class="hint endinfo${trim ? ' warn' : ''}">最后一批火花约 ${e.toFixed(2)} s 灭完，序列 ${D.toFixed(2)} s 盖得住（${fade}）。${cut}${trim}</p>`;
 }
 async function curveCompute(P0, key, live, tid = '') {

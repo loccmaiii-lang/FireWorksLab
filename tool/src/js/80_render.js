@@ -520,7 +520,7 @@ function renderComboLive() {
   });
   } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   post();
-  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层；不按格子裁切，导出时伸出格子的部分没有）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}${liveCapNote()}`; hudB = '';
+  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层；不按格子裁切，导出时伸出格子的部分没有）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 只看 / 先不看中（只影响画面）' : ''}${liveCapNote()}`; hudB = '';
 }
 // 引擎回放要画单束时，在后台烘一次这一层的单束序列（不和别的烘焙同时跑）
 let unitTask = null;
@@ -584,7 +584,7 @@ function renderCombo() {
     drawLayer(e.bake, L, state.t, view); drawFlashList(fl[i], state.t, view);
   }
   additive(false); post();
-  hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${notes.length ? ' · ' + (mob ? '手机' : 'PC') + '：' + notes.join('、') : ''}${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
+  hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${notes.length ? ' · ' + (mob ? '手机' : 'PC') + '：' + notes.join('、') : ''}${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 只看 / 先不看中（只影响画面）' : ''}`; hudB = '';
 }
 function updateLabels() {
   const q = $('#qlabels'), b = state.texSheetNow && state.view === 'atlas' ? state.texSheetNow.b : previewBake();     // 4.9.20：按现在看的那一张
