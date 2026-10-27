@@ -1,868 +1,890 @@
 {
-  "格式": "df.dispatch-queue/1",
-  "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-22T12:25:24+08:00 烟花编排（22）-本机：T20 补跑没做成，改回卡住。",
-  "dot 怎么派": [
-    "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
-    "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
-    "派的时候把这条的「提示词」原样发给「交给」那个 Codex 对话框（接着它原来的上下文）。发不进原对话就新开一个 Codex 任务，同一个仓库目录，把「提示词」原样发过去——提示词第一步会让它先读那个对话框的记录。",
-    "派出后不用改这份文件；自己记住编号，同一编号只派一次。Codex 开工第一件事会把状态改成「在做」并推送。",
-    "「卡住」「完成」的不要再派。某条卡住了，不影响按顺序派下一条。",
-    "某条「在做」超过 3 小时仓库里没有它的新提交：问它一次进度，不要重派。",
-    "这份文件里只有「在哪」=「本机」的任务归 dot 派；云端对话框的活不在这里。"
-  ],
-  "Codex 共同规则": [
-    "开工前：读 AGENTS.md → CLAUDE.md；跑 python -X utf8 analysis/scripts/开工包.py --对话框 <你的名字或编号>（一页：同步、认领、等用户的事、最近交接；用户 2026-10-22 起代替「完整读」）；跑 python analysis/scripts/同步体检.py，有 ❌ 先处理；git fetch，有新提交就在保留本地改动的前提下 rebase。交付前按 协作/标准.md 逐条核。",
-    "认领：把这条的「状态」改成「在做」、「开始」写当前时间（香港时间），只提交这一个文件，推送成功后再干活。推送失败（有人先改了）就 fetch、rebase、重来。",
-    "UE 只读：只通过本机 GPUECli 服务（http://127.0.0.1:17780/gpcli）读，只用 /object/search、/object/get 和加载资产来读属性；写法照 analysis/scripts/workbench_engine_acceptance.mjs 的 request()（它只放行读取接口）。",
-    "绝对不做：保存任何资产或关卡、导入、替换、改属性、提交 P4、启动或关闭 UE、改 tool/src、改 tool/workbench、改在线看板。UE 没开或 GPUECli 连不上：不要自己开 UE，直接把状态改成「卡住」，原因写「UE 没开 / GPUECli 连不上」。",
-    "只改这条「只许改」里列出的文件，加上你自己的对话记录（对话记录/对话框<你的编号>.md）和这份派活队列里你这一条。git add 只加这些文件，不用 git add -A / commit -a。",
-    "对话记录：在你自己的对话记录里写一节「派活 T0x（dot 派，<时间>）」，原样贴本条「标题」，拆成勾选步骤，做完一步打勾。",
-    "做完：按「做完的标准」逐条自查；在这条写「状态」=「完成」、「完成」时间、「提交」（你的提交号）、「结果」（1–3 行：发现了什么、文件在哪、用户要不要做什么）；提交并推送。",
-    "卡住：写「状态」=「卡住」、「结果」写原因和已经试过什么、做到哪一步；已做的部分照样提交。不要猜、不要绕过规则。",
-    "每条最多 60 分钟。到时没做完：提交已有结果，状态写「卡住」，原因写「超时，做到第几步」。",
-    "提交信息开头写「派活 T0x：」，结尾按仓库惯例加署名行。rebase / 推送每一步看退出码，冲突保留对方内容再合并，绝不 force push。",
-    "改这份文件起冲突时：不要手工合并 JSON 文本。放弃你对这份文件的改动，fetch 后重新读最新版，只把你这一条的字段再改一遍，再提交。",
-    "过程证据（原始截图、读回原值、日志）放 analysis/local/<YYYYMMDD>_<名字>_<任务>/，不进 Git，留 14 天；交付证据只放 看法.md + 1–3 张关键图 + 小数据进 analysis/results/。要开副本用 git worktree（不整仓克隆），放 F:/FWL-副本/，开前登记、做完删（CLAUDE.md 第 5、6 节，用户 2026-10-22）。"
-  ],
-  "状态说明": {
-    "等前置": "条件还没满足，dot 不派；总管满足后改成「待派」",
-    "待派": "dot 可以派",
-    "在做": "Codex 已认领",
-    "完成": "做完了，等总管收口到看板",
-    "卡住": "做不下去，看「结果」里的原因",
-    "取消": "不做了"
+ "格式": "df.dispatch-queue/1",
+ "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
+ "更新": "2026-10-27T20:3x+08:00 团队版（云端）：加 T24（等前置，等用户放行）。",
+ "dot 怎么派": [
+  "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
+  "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
+  "派的时候把这条的「提示词」原样发给「交给」那个 Codex 对话框（接着它原来的上下文）。发不进原对话就新开一个 Codex 任务，同一个仓库目录，把「提示词」原样发过去——提示词第一步会让它先读那个对话框的记录。",
+  "派出后不用改这份文件；自己记住编号，同一编号只派一次。Codex 开工第一件事会把状态改成「在做」并推送。",
+  "「卡住」「完成」的不要再派。某条卡住了，不影响按顺序派下一条。",
+  "某条「在做」超过 3 小时仓库里没有它的新提交：问它一次进度，不要重派。",
+  "这份文件里只有「在哪」=「本机」的任务归 dot 派；云端对话框的活不在这里。"
+ ],
+ "Codex 共同规则": [
+  "开工前：读 AGENTS.md → CLAUDE.md；跑 python -X utf8 analysis/scripts/开工包.py --对话框 <你的名字或编号>（一页：同步、认领、等用户的事、最近交接；用户 2026-10-22 起代替「完整读」）；跑 python analysis/scripts/同步体检.py，有 ❌ 先处理；git fetch，有新提交就在保留本地改动的前提下 rebase。交付前按 协作/标准.md 逐条核。",
+  "认领：把这条的「状态」改成「在做」、「开始」写当前时间（香港时间），只提交这一个文件，推送成功后再干活。推送失败（有人先改了）就 fetch、rebase、重来。",
+  "UE 只读：只通过本机 GPUECli 服务（http://127.0.0.1:17780/gpcli）读，只用 /object/search、/object/get 和加载资产来读属性；写法照 analysis/scripts/workbench_engine_acceptance.mjs 的 request()（它只放行读取接口）。",
+  "绝对不做：保存任何资产或关卡、导入、替换、改属性、提交 P4、启动或关闭 UE、改 tool/src、改 tool/workbench、改在线看板。UE 没开或 GPUECli 连不上：不要自己开 UE，直接把状态改成「卡住」，原因写「UE 没开 / GPUECli 连不上」。",
+  "只改这条「只许改」里列出的文件，加上你自己的对话记录（对话记录/对话框<你的编号>.md）和这份派活队列里你这一条。git add 只加这些文件，不用 git add -A / commit -a。",
+  "对话记录：在你自己的对话记录里写一节「派活 T0x（dot 派，<时间>）」，原样贴本条「标题」，拆成勾选步骤，做完一步打勾。",
+  "做完：按「做完的标准」逐条自查；在这条写「状态」=「完成」、「完成」时间、「提交」（你的提交号）、「结果」（1–3 行：发现了什么、文件在哪、用户要不要做什么）；提交并推送。",
+  "卡住：写「状态」=「卡住」、「结果」写原因和已经试过什么、做到哪一步；已做的部分照样提交。不要猜、不要绕过规则。",
+  "每条最多 60 分钟。到时没做完：提交已有结果，状态写「卡住」，原因写「超时，做到第几步」。",
+  "提交信息开头写「派活 T0x：」，结尾按仓库惯例加署名行。rebase / 推送每一步看退出码，冲突保留对方内容再合并，绝不 force push。",
+  "改这份文件起冲突时：不要手工合并 JSON 文本。放弃你对这份文件的改动，fetch 后重新读最新版，只把你这一条的字段再改一遍，再提交。",
+  "过程证据（原始截图、读回原值、日志）放 analysis/local/<YYYYMMDD>_<名字>_<任务>/，不进 Git，留 14 天；交付证据只放 看法.md + 1–3 张关键图 + 小数据进 analysis/results/。要开副本用 git worktree（不整仓克隆），放 F:/FWL-副本/，开前登记、做完删（CLAUDE.md 第 5、6 节，用户 2026-10-22）。"
+ ],
+ "状态说明": {
+  "等前置": "条件还没满足，dot 不派；总管满足后改成「待派」",
+  "待派": "dot 可以派",
+  "在做": "Codex 已认领",
+  "完成": "做完了，等总管收口到看板",
+  "卡住": "做不下去，看「结果」里的原因",
+  "取消": "不做了"
+ },
+ "任务": [
+  {
+   "编号": "T00",
+   "看板": "n50",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 0,
+   "前置": [],
+   "要 UE": "不要",
+   "标题": "派活试跑：确认 dot → Codex → 推送 → 回写 这条链是通的（不碰 UE、不改别的文件）",
+   "为什么": "用户 10-13 23:05 要今晚让 dot 试跑。先用一条什么都不碰的任务把派发、认领、推送、回写走一遍，链路通了再跑 T01–T04。",
+   "只许改": [
+    "analysis/results/DISPATCH_TEST_20261013/回执.json",
+    "协作/派活队列.json（只改 T00 这一条）",
+    "对话记录/对话框8.md"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T00（试跑），按该文件「Codex 共同规则」执行。\n\n1. 照共同规则开工：同步体检、fetch / rebase。\n2. 认领：把 T00 的「状态」改成「在做」、「开始」写当前香港时间，只提交 协作/派活队列.json，推送。\n3. 新建 analysis/results/DISPATCH_TEST_20261013/回执.json，内容：{\"format\":\"df.dispatch-receipt/1\",\"task\":\"T00\",\"receivedAt\":\"<香港时间>\",\"by\":\"本机同步（8）\",\"dispatcher\":\"dot\",\"repoHeadBefore\":\"<认领前的提交号>\",\"note\":\"<一句话：你是从原对话收到的，还是新开的 Codex 任务>\"}。\n4. 在 对话记录/对话框8.md 末尾加一节「派活 T00（dot 派，<时间>）」，两个勾选步骤：认领、回执。\n5. 把 T00 改成「完成」，写「完成」时间、「提交」、「结果」（一行：链路通了，以及第 3 步那句话），提交推送。\n\n不碰 UE，不改别的文件。",
+   "做完的标准": [
+    "回执.json 能解析，字段齐",
+    "T00 状态 = 完成，有提交号",
+    "对话框8.md 有这一节",
+    "只改了「只许改」里的文件"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T00:08:08+08:00",
+   "完成": "2026-10-14T00:09:46+08:00",
+   "提交": "d7610fc2106bbbe469ad0f5228bb052daa08cbb9",
+   "结果": "链路通了；我是从新开的 Codex 委派任务收到 T00，来源为原对话 01a1004f-889b-7212-9e00-ad07494c2007。"
   },
-  "任务": [
-    {
-      "编号": "T00",
-      "看板": "n50",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 0,
-      "前置": [],
-      "要 UE": "不要",
-      "标题": "派活试跑：确认 dot → Codex → 推送 → 回写 这条链是通的（不碰 UE、不改别的文件）",
-      "为什么": "用户 10-13 23:05 要今晚让 dot 试跑。先用一条什么都不碰的任务把派发、认领、推送、回写走一遍，链路通了再跑 T01–T04。",
-      "只许改": [
-        "analysis/results/DISPATCH_TEST_20261013/回执.json",
-        "协作/派活队列.json（只改 T00 这一条）",
-        "对话记录/对话框8.md"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T00（试跑），按该文件「Codex 共同规则」执行。\n\n1. 照共同规则开工：同步体检、fetch / rebase。\n2. 认领：把 T00 的「状态」改成「在做」、「开始」写当前香港时间，只提交 协作/派活队列.json，推送。\n3. 新建 analysis/results/DISPATCH_TEST_20261013/回执.json，内容：{\"format\":\"df.dispatch-receipt/1\",\"task\":\"T00\",\"receivedAt\":\"<香港时间>\",\"by\":\"本机同步（8）\",\"dispatcher\":\"dot\",\"repoHeadBefore\":\"<认领前的提交号>\",\"note\":\"<一句话：你是从原对话收到的，还是新开的 Codex 任务>\"}。\n4. 在 对话记录/对话框8.md 末尾加一节「派活 T00（dot 派，<时间>）」，两个勾选步骤：认领、回执。\n5. 把 T00 改成「完成」，写「完成」时间、「提交」、「结果」（一行：链路通了，以及第 3 步那句话），提交推送。\n\n不碰 UE，不改别的文件。",
-      "做完的标准": [
-        "回执.json 能解析，字段齐",
-        "T00 状态 = 完成，有提交号",
-        "对话框8.md 有这一节",
-        "只改了「只许改」里的文件"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T00:08:08+08:00",
-      "完成": "2026-10-14T00:09:46+08:00",
-      "提交": "d7610fc2106bbbe469ad0f5228bb052daa08cbb9",
-      "结果": "链路通了；我是从新开的 Codex 委派任务收到 T00，来源为原对话 01a1004f-889b-7212-9e00-ad07494c2007。"
-    },
-    {
-      "编号": "T01",
-      "看板": "n07",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "导入前先读回：红彗星扇、银扇和 3 个要重导的资源在 UE 里的现值（含手调亮度）",
-      "为什么": "用户周三要导入 Comet / Silver 3.0 替换 FanComet_01 / FanSilver_01，导出（23）还要重导金锦菊、橙辉星、小青柠。UE 里这些粒子有人手调过（亮度 ×5–×100、寿命、面片尺寸，见 analysis/results/ENGINE_BAKER_SYNC_20261011/看法.md §1、§3），导入会把这些值冲掉。先读一份存档，导完才能对照写回。必须在用户导入之前做完。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261014/导入前现值.json",
-        "analysis/results/UE_READBACK_20261014/导入前现值.md",
-        "analysis/scripts/ue_readback_values.mjs（新建；只读脚本，可选，方便以后每次重导前复用）"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T01，按该文件「Codex 共同规则」执行，先读你自己的对话记录 对话记录/对话框8.md 最近两节了解上下文。\n\n任务：在用户导入新版之前，只读读回 5 个粒子系统在 UE 里的现值，存档备查。\n\n对象（资源表 ResourceFX 的 PC 行 → 粒子系统；名字以 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里的路径为准）：\n1. P_EFX_FireWorks_FanComet_01 → P_EFX_FireWorks_FanComet_01_HD（红彗星扇，将被 Comet 3.0 替换）\n2. P_EFX_FireWorks_FanSilver_01 → P_EFX_FireWorks_FanSilver_01_HD（银扇，将被 Silver 3.0 替换）\n3. 金锦菊 GoldSpark 那一行引用的粒子（注意：金锦菊用的粒子叫 GoldRay_HD，金芒菊用的叫 GoldSpark_HD，名字是对调的，按资源表那一行的引用路径读，别按名字猜）\n4. 橙辉星 OrangeGlitter 那一行引用的粒子（Combo_HD）\n5. 小青柠 Lime 那一行引用的粒子（LimeStar_HD）\n如果某一行在资源表里找不到，记下来，继续读其他的。\n\n每个粒子系统读：系统级（固定更新帧率 / FixedRelativeBoundingBox 与大小 / 剔除距离 / LOD 距离 / 预热时间）；每个发射器（名字、LOD0 是否启用、CPU/GPU、Required 模块的材质和 SubUV 横竖格数、Spawn 速率与 Burst、Lifetime、Initial Size 与 Size By Life、Color Over Life 和 Scale Color / Life 里的颜色与亮度倍数曲线（完整关键帧）、Initial Velocity、Drag、GPU 发射器的 Max Draw Count）。读不到的字段写 null 并注明原因，不要猜。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入前现值.json：{format:'df.ue-readback/1', readAt, source:'GPUECli 只读', assets:[{resourceId, particlePath, system:{...}, emitters:[...]}], missing:[...]}。\n- analysis/results/UE_READBACK_20261014/导入前现值.md：一张表，每个资源一行，列出「和导出缺省不一样」的值（亮度倍数不是 1、寿命、面片尺寸），最后写一句「用户导入新版后，照这份把手调值写回或交给导出（23）改烘焙器亮度口径」。\n- 可选：把读取逻辑写成 analysis/scripts/ue_readback_values.mjs（只允许 /object/get、/object/search，照 workbench_engine_acceptance.mjs 的写法），以后每次重导前都能跑。\n\n禁止：保存、改值、导入、替换、P4、开关 UE。UE 没开或 GPUECli 连不上 → 状态改「卡住」，原因写清楚，结束。",
-      "做完的标准": [
-        "5 个对象每个都有结果（读到，或写明在资源表里找不到）",
-        "JSON 能被 python -m json.tool 解析；每个发射器都有亮度倍数（或注明读不到）",
-        "md 里列出所有亮度倍数 ≠ 1 的发射器",
-        "UE 里没有任何资产被保存（git 之外没有可验证手段的话，在结果里写明「只用了 /object/get、/object/search」）",
-        "已提交推送，本条写了完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T00:16:46+08:00",
-      "完成": "2026-10-14T00:23:22+08:00",
-      "提交": "055e794e270000a6dfa7b94ce0713b8896f579fc",
-      "结果": "5 个系统 / 21 个发射器 LOD0 现值已存 analysis/results/UE_READBACK_20261014/导入前现值.json / .md，完整曲线与缓存保留；小青柠倍率30/5/5/100、橙辉星HDR30→5，寿命2.8–3.2s。只用了 /object/get、/object/search；实际632次object/get，无保存或写入。用户导入后按存档保护手调值或交导出（23）统一亮度口径。"
-    },
-    {
-      "编号": "T02",
-      "看板": "i23",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 2,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "周四测性能前：只读核对 Night 用到的每个粒子系统的导入设置",
-      "为什么": "导入器 v2.22 起才会写入固定 10 FPS、固定包围盒、120000 cm 剔除、GPU Max Draw Count 等设置（协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109）。10-07 以前导入、之后没重导的资源可能没有这些设置，周四测出来的帧率和截断会不准。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261014/导入设置核对.json",
-        "analysis/results/UE_READBACK_20261014/导入设置核对.md"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T02，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读核对周四性能测试要用到的每个粒子系统，导入设置是否符合导入器 v2.22 的标准。\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc（20 行）和 mobile（15 行）每一行的 FxSP、FxSP_Low、FxSP_High 引用到的全部粒子系统（去重）。\n\n标准（出处 协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109；用户 10-13 23:11 问「CPU 粒子是不是不用勾包围盒、性能测试用不着的别做」，按下面收窄）：\n- 系统 Fixed-Time 更新：10 FPS（delta 0.1）——所有系统都查\n- 固定相对包围盒：只对含 GPU 发射器的系统要求（开，各轴 ±100000 cm）；纯 CPU 系统只记实际值，不算 ❌（CPU 发射器每帧自己算包围盒）\n- 剔除距离 120000 cm（1200 m）——所有系统都查\n- 每个 GPU 发射器都有 Max Draw Count（> 0）\n- 不查预热 / 等待（和周四性能测试无关）\n\n每个粒子系统一行，逐项写实际值和 ✅ / ❌；读不到写 null 和原因。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入设置核对.json：{format:'df.ue-import-settings-check/1', readAt, standard:{...}, rows:[{resourceId, side:'pc'|'mobile', slot:'FxSP'|'FxSP_Low'|'FxSP_High', path, hasGpu, fixedFps, fixedBounds, boundsExtent, cullDistance, gpuEmitters:[{name, maxDrawCount}], pass:true|false, fails:[...]}]}\n- analysis/results/UE_READBACK_20261014/导入设置核对.md：先写一句结论（几个全过、几个有 ❌），再列出所有有 ❌ 的资源和缺哪项，最后写「建议：这些资源周四前用导入器重新导入一次（由用户点导入），或在测试结论里注明」。不要替用户改。\n\n禁止：保存、改值、导入、P4、开关 UE。UE 没开 → 卡住。",
-      "做完的标准": [
-        "资源发射器数.json 里引用到的每个粒子系统都有一行",
-        "每行 4 项标准都有实际值或注明读不到的原因（纯 CPU 系统的包围盒只记录不判）",
-        "md 的结论数字和 json 一致",
-        "已提交推送，本条写了完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T00:33:05+08:00",
-      "完成": "2026-10-14T00:37:49+08:00",
-      "提交": "cf1b2c7eeef456bd10c08c14b3aa99b0824cab9b",
-      "结果": "65处引用去重41个系统：8全过/33有❌，无读取失败；固定时间8、GPU盒6、剔除33、MaxDrawCount0项失败（可重叠）。analysis/results/UE_READBACK_20261014/导入设置核对.json / .md；CPU盒仅记录，不查预热。仅439次object/get，无UE写入；用户周四前导入失败资源或在测试结论注明。"
-    },
-    {
-      "编号": "T03",
-      "看板": "i22",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "取消",
-      "优先": 3,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "查 PC 资源表里金垂柳那一行 fxType 为什么是 (INVALID)，会不会影响播放",
-      "为什么": "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（10-11 读回）里 PC 表 20 行只有 P_EFX_FireWorks_GoldKamuro 的 fxType 是 (INVALID)，其余都是 SHOW。金垂柳是主角，Night 里 5 发都用它。手游编排 10-10 22:38 提过，之后没人跟。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261014/金垂柳fxType.md",
-        "analysis/results/UE_READBACK_20261014/金垂柳fxType.json"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T03，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读查清 PC 资源表（ResourceFX）里 P_EFX_FireWorks_GoldKamuro 这一行 fxType 是 (INVALID) 的原因和影响，不改。\n\n步骤：\n1. 读这一行的全部字段原值，和同表一行正常的（比如 P_EFX_FireWorks_FanComet_01，fxType = SHOW）逐字段对比。\n2. 读 fxType 这个字段的枚举定义（有哪些合法值），判断 (INVALID) 是空值、越界值还是被删掉的枚举项。\n3. 找使用 fxType 的地方：导演或资源表的读取逻辑会不会因为 INVALID 跳过这一行、不播放或按别的类型处理。能在 UE 里只读查到就写证据（蓝图节点 / 代码路径）；查不到就写「推断」并说明依据，不要当成结论。\n4. 手游表里有没有金垂柳的行（10-13 读回时手游表缺 8 个 ID）。\n\n输出：\n- analysis/results/UE_READBACK_20261014/金垂柳fxType.json：两行原值对比和枚举定义。\n- analysis/results/UE_READBACK_20261014/金垂柳fxType.md：三段——现象、原因（证据 / 推断分开写）、建议改法（比如「在资源表里把 fxType 改成 SHOW，由用户在 UE 里改并保存」）。最后一行写清楚：用户要不要在周三导入 B04 前改它。\n\n禁止：改资源表、保存、P4、开关 UE。",
-      "做完的标准": [
-        "有两行原值对比",
-        "原因写清楚，证据和推断分开",
-        "给出用户要不要改、怎么改的一句话",
-        "已提交推送，本条写了完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T00:45:14+08:00",
-      "完成": "",
-      "提交": "414b3a4a13234413057c89d4678e0c19191d510a",
-      "结果": "卡在当前表行/枚举定义读取：get/search仅反射到表/枚举对象，未返回行值、合法值或底层数值；原生播放函数体也不可见，不能判定INVALID原因及播放影响。已存金垂柳fxType.json/.md：历史两行47字段（42同/5异）、历史手游缺行、17次只读尝试证据；未改UE。B04前用户先核对，若当前仍INVALID建议选SHOW并保存；需专用只读查询授权或当前行/枚举/代码证据继续。；【10-18 本机同步检测销账（用户「销掉过期的账」）】当前 GoldKamuro PC / 手游行都是 SHOW（B09主角读数.md），旧 INVALID 的问题已被新现状覆盖；不再派。"
-    },
-    {
-      "编号": "T04",
-      "看板": "n03",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 4,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读，用来试跑）",
-      "标题": "写「手游 _M 占位」导入后检查脚本，并用现有手游资产试跑",
-      "为什么": "用户周三要用 UE「特效资产复制」做小银菊、金芒菊、银彩菊、金垂柳的 _M 占位（看板 i03）。规范要求这类资产过导入后检查才能进手游表，但 tool/local_delivery/fx_gate.py 只查交付包，没有查 UE 里资产的模式（看板 n03；协作/手游与小平台资产_执行方案_2026-10-12.md:105）。读回脚本和证据现在只在本机，不在仓库。",
-      "只许改": [
-        "analysis/scripts/手游占位检查.mjs（新建）",
-        "analysis/scripts/README.md（加一行用法）",
-        "analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T04，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：写一个只读检查脚本，用户导入手游 _M 占位后跑它，判断能不能进手游表。\n\n脚本：analysis/scripts/手游占位检查.mjs（Node，照 analysis/scripts/workbench_engine_acceptance.mjs 的 request() 写法，只允许 /object/get、/object/search）。\n用法：node analysis/scripts/手游占位检查.mjs <粒子系统路径或资源表 ID>... [--out <json>]\n逐个检查（依据 spec/烟花特效资产规范.md 手游部分、协作/手游与小平台资产_执行方案_2026-10-12.md）：\n1. LOD0 启用的发射器 ≤ 3\n2. GPU 发射器 = 0\n3. 每个发射器材质引用到的贴图尺寸 ≤ 1024（长边）\n4. 引用链（材质 → 材质实例 → 贴图）里没有名字带 _HD 的资产\n5. 资产名以 _M 结尾\n每项写实际值和 ✅ / ❌；有任何 ❌ 退出码 1；读不到的项算 ❌ 并写原因。脚本本身不能有任何写 UE 的调用。\n\n试跑：对现有手游资产跑一遍（至少 P_EFX_FireWorks_Trail_01_M 和 P_EFX_FireWorks_Hero_M，路径见 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 的 mobile），结果存 analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json。试跑结果不需要全过，只要能正确读出来。\n在 analysis/scripts/README.md 第 1 节表格加一行用法。\n\n禁止：保存、改值、导入、P4、开关 UE。",
-      "做完的标准": [
-        "node --check analysis/scripts/手游占位检查.mjs 通过",
-        "脚本里只有 /object/get、/object/search 两种请求",
-        "试跑至少 2 个现有 _M 资产，5 项都有实际值",
-        "README 有用法",
-        "已提交推送，本条写了完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T01:04:31+08:00",
-      "完成": "2026-10-14T01:12:54+08:00",
-      "提交": "64f0a738be9a0017791064e7508c925e014cc763",
-      "结果": "只读脚本手游占位检查.mjs与README用法已齐；node --check/13保护场景通过。试跑Trail_01_M与Hero_M五项实际值齐、904次get无缺失，均3启用/0GPU；Trail含HD引用，Hero贴图2048且上限0，两者未通过，退出1符合预期。结果analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json；无UE写入。用户新占位后用脚本复核，旧资产问题需另修。"
-    },
-    {
-      "编号": "T05",
-      "看板": "n63",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 5,
-      "前置": [],
-      "等什么": "（10-14 21:50 总管改待派）用户 21:44：周三大部分做完、命名改了一些、手游和小平台还差一些——先读回现状，缺的列出来。",
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "读回 ResourceFX（PC + 手游）现状对照用户改的命名，跑手游占位检查，更新资源发射器数表",
-      "为什么": "规范 §8 要求导入后读回写进 资源发射器数.json；这张表停在 10-11，周四测性能要用它算 GPU 和发射器预算（看板 n06）。",
-      "只许改": [
-        "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json",
-        "analysis/results/UE_READBACK_20261014/手游占位检查.json",
-        "analysis/results/UE_READBACK_20261014/资源发射器数_变化.md",
-        "analysis/results/RESOURCEFX_20261014/读回对照.md",
-        "analysis/results/RESOURCEFX_20261014/读回.json"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T05，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n背景：用户 10-14 21:44 改了 ResourceFX 的命名、导入了 Hero / XS / Tiny 尾缀和一批小平台资源，手游 _M 还差一些。总管按用户截图转录了 PC 表 36 行：协作/ResourceFX_3.0_行名_2026-10-14.json（截图只有 PC、只有名字和 id，看不到粒子路径和手游表）。用户定的手游种类：主角 / 大号 金芒菊；中号 银冠菊、辉星（橙辉星）；小号 爆裂星、点灭星、分裂星。\n\n1. 只读读回 PC 和手游两张 ResourceFX 表里所有「跨年烟花3.0_」开头的行：名字、ResourceId、粒子路径、FxSP / FxSP_Low / FxSP_High。存 analysis/results/RESOURCEFX_20261014/读回.json。读不到表格行的值（T03 碰到过 GPUECli 只返回表对象）就按 10-11 那次读资源发射器数的办法读；还是不行就停，「结果」写「卡住：读不到表格行，请用户在 UE 里把两张 ResourceFX 表各导出一份 CSV 放到 analysis/results/RESOURCEFX_20261014/」。\n2. 和截图转录逐行对：名字 / id 不一致的、截图里有但表里没有的、手游表缺哪几个 ID（重点看上面 6 种手游花和 2800–2805 小平台、2830 / 2834 / 2835 三根尾缀）。\n3. 对手游表里这几种花的 _M 跑 node analysis/scripts/手游占位检查.mjs（发射器数、GPU、贴图 ≤ 1024、引用链无 _HD），结果存 analysis/results/UE_READBACK_20261014/手游占位检查.json。\n4. 按 10-11 的格式（df.resource-emitter-census/1）更新 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（readAt 改成这次）——跨年秀（22）的 GPU / 发射器体检读它，现在停在 10-11，橙辉星、点灭星等引用的粒子已经换了。\n5. analysis/results/RESOURCEFX_20261014/读回对照.md：一屏写清 ① 名字 / id 对不上的 ② 手游还缺哪几个 _M ③ 占位检查有 ❌ 的（写「这几个先别进手游表」）④ 和 10-11 版比发射器数 / GPU 变了的行。\n\n禁止：改资源表、保存、导入、P4、开关 UE。",
-      "做完的标准": [
-        "读回.json 有 PC + 手游两张表的 3.0 行（或写明卡住、请用户导 CSV）",
-        "读回对照.md 四项都有",
-        "资源发射器数.json readAt 是这次、格式不变",
-        "已提交推送，本条写了完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T22:04:28+08:00",
-      "完成": "2026-10-14T22:16:48+08:00",
-      "提交": "8e89f67b",
-      "结果": "按10-11只读/datatable/search成功：PC41条3.0/手游3.0为0（另15旧行）；截图36个ID均在，2处小形→小型已现场改名。8个未入表_M候选6过，SilverChry_M/LittleSilver_M因MPC_EFX_General_HD引用❌，先别入手游表；六种花/小平台/新尾缀均缺3.0表行。56系统统计已更新：红彗星GPU0、银扇GPU1、中尾GPU2→6。读回对照与完整证据见analysis/results/RESOURCEFX_20261014/；未写UE。"
-    },
-    {
-      "编号": "C01",
-      "看板": "n08",
-      "交给": "云端夜班（代 跨年秀 22）",
-      "在哪": "云端",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "不要",
-      "对方在线就跳过": "跨年秀（22）",
-      "标题": "跨年秀宪章过期的几处，按现行做法改正（改完标「待你过目」）",
-      "为什么": "别的对话框照宪章算时间、GPU 预算和手游点位，现在会算错（看板 n08，10-13 全量对账发现，21:45 已排给 22 未开工）。",
-      "只许改": [
-        "协作/跨年秀编排宪章.md",
-        "协作/状态清单.json（只改「共享文件」里「总管（21） → 跨年秀（22） · 看板周三前「AI 欠你」两条」那一条，在末尾补一句 ② 已由夜班改完 + 提交号）",
-        "对话记录/夜班.md"
-      ],
-      "提示词": "你是 FireWorksLab 的云端夜班，这条替跨年秀（22）做。按 协作/派活队列.json「夜班怎么取」和「Codex 共同规则」执行。\n\n先判断：跨年秀（22）90 分钟内有提交（git log --since='90 minutes ago' -- 对话记录/对话框22.md 协作/编排B03.md 协作/跨年秀编排宪章.md）就跳过，本条留「待派」。\n\n要改的（逐条核对原文再改，只改过期的地方，别重写别的段落）：\n1. 时间原点：宪章第 6、99 行一带还按「原曲偏移 +5」。现行约定以 协作/新音频VO融合_时间约定_2026-10-13.md 为准——秒数从合并音频文件开始算、预览偏移 0；B03 修订2（工作台 16.0.26，协作/编排B03.md §0）零点 =「点火」16.2 s。把宪章里的时间约定改成这个，并注明「旧 +5 只对旧音乐有效」。\n2. GPU 预算：第 86、171 行写「同一秒新起 GPU ≤ 200（暂定）」。10-13 编辑器实测是 ≤ 250（看板 n18、i08 推荐里引用的实测；以 协作/编排B03.md 和 协作/周三落地计划_2026-10-14.md:10 的写法为准）。改成现行值，注明「编辑器实测，打包版待测」。\n3. 高差：第 181–186 行，第 0 条已写「高差只许往上（用户 10-13 10:10）」，下面第 4 条还写「合计软夹紧 −60…+25 m」、第 5 条还有 P2 −20、P6 −45 这类负值。按第 0 条改：负值全部去掉或改成 ≥ 0 的说法，保留用户原话出处。\n4. 手游点位：第 137 / 225 行一带写手游 P0 / P4 / P8，实际编排因一张表共用画质只能 P2 / P4 / P6（协作/编排B02.md）。统一成实际做法。\n每改一处，在宪章文末「修订记录」加一行（日期、改了哪条、依据文件:行）。没有修订记录段就新建。\n\n不许：改编排、改别的规则文件、改数值以外的设计意图。拿不准的地方不改，写进结果让用户定。\n做完：看板 n08 由总管改「待你过目」；你在本条「结果」写改了几处、哪几处拿不准。",
-      "做完的标准": [
-        "四类过期点都处理了，或写明为什么没改",
-        "每处修改都有修订记录行和依据",
-        "git diff 只涉及「只许改」的文件",
-        "已推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T01:20:00+08:00",
-      "完成": "2026-10-14T01:35:00+08:00",
-      "提交": "",
-      "结果": "（夜班 2026-10-13 23:16 跳过：跨年秀（22）22:30 有提交 c435e14a，留待派） ｜ 22 在线自己做了（10-14 01:35）：宪章 v2.5，四类都改了（时间原点 / GPU 250 / 高差去负值 / 手游点位按实际），另改尾缀高度现状、补已定、B03 / Day 进第 12 节；修订记录在第 13 节。拿不准没改：第 1–4 节表里的具体秒数没逐个换算（给了换算规则）、第 5 节「每格一波上限」没按 250 重算。"
-    },
-    {
-      "编号": "C02",
-      "看板": "i24",
-      "交给": "云端夜班（代 总管 21）",
-      "在哪": "云端",
-      "状态": "完成",
-      "优先": 2,
-      "前置": [],
-      "要 UE": "不要",
-      "标题": "出一张「7 个重做 + 3 个重导」的指派建议表（只出建议，不开工）",
-      "为什么": "看板 i24：重做 7 个（小银菊、银彩菊、金芒菊、金曜菊、绿牡丹、多重菊、金垂柳）、重导 3 个（金锦菊、橙辉星、小青柠）一直没人负责。用户要先看指派，再开工；重做的成本上限（看板 i09）用户还没定。",
-      "只许改": [
-        "协作/重做指派建议_2026-10-14.md（新建）",
-        "对话记录/夜班.md"
-      ],
-      "提示词": "你是 FireWorksLab 的云端夜班，这条替总管（21）做。按 协作/派活队列.json「夜班怎么取」和「Codex 共同规则」执行。\n\n读：协作/看板快照.json 的 resources（每个资源的「做法」「你的要求 ask」「下一步 next」「现在成本 cost」）、协作/状态清单.json 的 effects（各效果现在的负责人和阶段）和「共享文件」（谁认领着 tool/src）、看板 i09（重做成本上限，用户未定）、协作/全局看板.md 的对话框名册。\n\n出 协作/重做指派建议_2026-10-14.md：\n- 一张表，10 行：资源、做法（重做 / 重导）、你的要求（原文摘要）、建议交给谁（只从名册里现有对话框选，写清本机还是云端）、理由（一句）、依赖（比如「要等 23 修好按尺寸缩」「要等你定成本上限」）、周四性能测试用什么（重做完成前用 UE 旧版）。\n- 表下写：建议的先后顺序（先手游占比高的：小银菊、金芒菊、银彩菊、金垂柳）、哪几个要你先定的问题（最多 3 个）。\n- 明确写「这是建议，你点头后总管才排队，不会自己开工」。\n\n不许：改状态清单的负责人、排任何队、改效果文件。",
-      "做完的标准": [
-        "10 个资源都在表里",
-        "每行有建议负责人、理由、依赖",
-        "写明要用户先定的问题",
-        "已推送，本条写完成、提交号、结果"
-      ],
-      "派出": "夜班自取 2026-10-13 23:17",
-      "开始": "2026-10-13 23:17",
-      "完成": "2026-10-13 23:19",
-      "提交": "47384716",
-      "结果": "建议表 协作/重做指派建议_2026-10-14.md：小银菊 / 金芒菊 / 银彩菊 / 金曜菊 / 绿牡丹 / 多重菊 → 新花型；金垂柳 → 扇形（FanGold）；金锦菊 / 橙辉星 / 小青柠重导 → 导出（23，4.9.81 之后）。要用户先定：成本上限 i09、银彩菊 _M 砍哪层、多重菊颜色随机种子。只是建议，没排队。"
-    },
-    {
-      "编号": "C03",
-      "看板": "n62",
-      "交给": "跨年秀（22）（用户 22:22 直接开 22 做，夜班不用代）",
-      "在哪": "云端",
-      "状态": "完成",
-      "优先": 0,
-      "前置": [],
-      "要 UE": "不要",
-      "对方在线就跳过": "跨年秀（22）",
-      "标题": "编排跟上用户改的 ResourceFX 命名和手游种类，出 B05（工作台下一号，只换编排数据）",
-      "为什么": "用户 10-14 21:44：命名改了、要和编排同步；QA 用周三的版本测性能（看板 n56），编排里的名字对不上的行在 UE 里放不出来。",
-      "只许改": [
-        "协作/编排B01/新尾缀.json",
-        "analysis/scripts/编排B01*.py / 编排B01_编译.mjs（只改资源名映射和手游种类表，不改编排逻辑）",
-        "FXtools/节目/NewYearFireWorks_v01/（新 B05 产物）",
-        "tool/workbench/public/data/cloud-latest.json 及 publish-show --data-only 生成的文件",
-        "协作/编排B04.md 或新建 协作/编排B05.md",
-        "对话记录/夜班.md"
-      ],
-      "提示词": "你是 FireWorksLab 的云端夜班，这条替跨年秀（22）做。按 协作/派活队列.json「夜班怎么取」和「Codex 共同规则」执行。先判断：跨年秀（22）90 分钟内有提交（git log --since='90 minutes ago' -- 对话记录/对话框22.md 协作/编排B04.md 协作/编排B01）就跳过，本条留「待派」。\n\n先读：对话记录/对话框22.md 最后三节、协作/编排B04.md、协作/编排B01/新尾缀.json、协作/ResourceFX_3.0_行名_2026-10-14.json（用户截图转录）、看板快照里 n61 / n62。\n\n以 B04（工作台 16.0.29）为底出 B05，只改名字和手游种类，不改编排结构：\n1. 尾缀名字对调（用户 10-14：「S80叫XS,小平台的叫Tiny」）：坝顶低层那根（原 S80，开花 +80 m、升空 1.9171 s）→ 「跨年烟花3.0_低位_尾缀」（id RiseTrail_XS）；小平台那根（+62 m、1.6875 s）→ 「跨年烟花3.0_极小_尾缀」（id RiseTrail_Tiny）。高度 / 升空时间跟着用途走，不跟名字走。新尾缀.json 的 confirmed 改 true。\n2. 「跨年烟花3.0_小型_F_小银菊」全部改成「跨年烟花3.0_小型_F_银冠菊」（2814，同一个资源改了名）。**别改成「小号_B_小银菊」（2801），那是小平台新加的另一个资源。** B04 里有 1 处写成「小型_B_红彗星」，表里是「小形_B_红彗星」，改成表里的写法。\n3. 小平台：前台小花用新加的 2800 小金花 / 2801 小银菊 / 2802 短爆裂 / 2803 小分裂；短彗星、小花束尾用 2804 短彗星 / 2805 短银尾（用户：「长短没有做区分……可以在编排中缩放比例处理」，长短用条目 EffectScale）。\n4. 手游种类（用户 10-14 21:44，取代 10-14 00:30 看板 i10 的 7 种）：主角 / 大号 = 金芒菊；中号 = 银冠菊、辉星（橙辉星）；小号 = 爆裂星、点灭星、分裂星。手游片段只用这几种；PC 不变。尺寸不够的用子模板条目 EffectScale 放大（UE-14 实测整朵等比，analysis/results/MOBILE_TEST_20261011/看法.md 第 32 行）；放大倍数在编排文档里列一张表，单个不超过 1.6（推断：_M 贴图分辨率固定，再大会糊；面积按平方涨，手机填充率会涨）。「分裂星」是 2803 小分裂还是 2812 金裂星用户没说清——看板 n61 有答案就照答案，没有就按 2803 小分裂做并在文档里写明「按推断」。金垂柳不再上手游。\n5. 出版本：照 CLAUDE.md 第 10 节「云端只换编排」：npm run publish-show -- --data-only …（编排名 B05），再 npm run release -- --no-deploy --data-only；跑编排体检，B05 动画页。体检里 GPU / 发射器数如果还是 10-11 的表（派活 T05 没回来），在文档里注明「待 T05 读回后复核」。\n6. 文档：协作/编排B05.md 写清改了哪些名字、手游种类表、放大倍数表、还没对上的行。\n\n不许：改编排结构 / 节奏 / 点位；改工作台界面源码；猜表里没有的名字（对不上的列出来留给 22 / 用户）。\n做完：本条写完成、提交号、工作台版本号、对不上的行。",
-      "做完的标准": [
-        "B05 里所有「跨年烟花3.0_」引用都能在截图转录（或 T05 读回）里找到，对不上的列清单",
-        "两根尾缀按用途对上新名字",
-        "手游片段只用用户定的 6 种，放大倍数有表",
-        "工作台版本 +1、成品和编排一起推送",
-        "本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-14T22:40:00+08:00",
-      "完成": "2026-10-14T23:05:00+08:00",
-      "提交": "43445486（16.0.30）、b931236e（16.0.31 修正）",
-      "结果": "B05 = 工作台云端编排 16.0.31（16.0.30 的修正：用户 22:32 小分裂配方是前台 30 m → 小平台按前台尺寸算倍数、手游小位不放分裂星）；协作/编排B05.md。导演表认 ResourceId：两根尾缀按用途接（坝顶低层 RiseTrail_XS 低位_尾缀、小平台 RiseTrail_Tiny 极小_尾缀）、橙辉星 OrangeGlitter→Glitter、小平台花换 2801/2800/2802；一张表 26 个 ResourceId 全在 T05 读回里，对不上 0 行。手游只用 6 种（大位金芒菊×1.41–1.53、中位辉星/银冠菊×1.47–1.6、小位点灭星/爆裂星、小平台分裂星），共用片段拆 PC 照旧+手游替身，PC/手游发数同 B04。等用户：手游表加 3.0 行；银冠菊_M 检查没过（中位 2 排）；2800/2802/2803 还指向 LittleChry_HD。"
-    },
-    {
-      "编号": "T06",
-      "看板": "",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "只读排查「最亮处黑块在闪」：每个材质实例实际绑的序列图和 Ramp 是不是同一次导出、序列有没有超过 253、Ramp 末格是不是黑的、UE 缩小 / 材质参数 / Custom 节点",
-      "为什么": "用户 10-15 01:40 截图：好多贴图导入 UE 后最亮处一块块黑色马赛克在闪；11:00 改 RGBA8（不压缩）也没用 → 不是 BC7。云端复现了「旧序列（不封顶）+ 末格黑 Ramp」会出同样的黑块（analysis/probe/BC7护栏黑块_2026-10-15/），但要本机读回用户 UE 里实际是哪种（写任务的：导出（23））。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261015/黑块排查.json",
-        "analysis/results/UE_READBACK_20261015/黑块排查.md"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T06，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节和 analysis/probe/BC7护栏黑块_2026-10-15/README.md。\n\n背景（导出（23）写，用户 10-15 01:40 / 11:00）：好多贴图导入 UE 后，最亮的地方出现一块块黑色马赛克在闪。用户把序列图改成 RGBA8（不压缩）也没用，所以不是 BC7 压缩造成的。\n机制：4.9.31（10-07）起烘焙器的 Ramp（256×8）最后一格是黑的（护栏），序列图最亮只写到 253；材质按「查询坐标 = 序列灰度 v」双线性查 Ramp，v 到 254 就混进黑格、255 全黑。现在怀疑三条路让最亮的像素查到了黑格：\n  ① 序列图是 10-07 以前导出的（没封顶，最亮到 255），配的 Ramp 却是新的（末格黑）——比如 Ramp 后来重导 / 被别的效果的同色 Ramp 顶替 / 派生资源沿用了旧序列；\n  ② UE 里把序列图缩小过（Max Texture Size / LOD Bias / LOD Group 比源图小），缩小滤镜（Sharpen 一类）把亮度冲过 253；\n  ③ 材质实例里有曝光 / 亮度 / 溶解 / 对比度一类参数改了查询坐标，把 v 往上推。\n这条只读回证据、不改任何东西，看哪条成立。\n（10-15 11:25 用户补充：同一个效果把 Ramp 换成以前的旧 Ramp（末格不黑）黑块就没了；新 Ramp 的寻址改 Wrap 或 Clamp 都没用。所以确定是最亮的像素查到了末格黑。导出（23）的判断：多半是①——材质实例里实际绑定的序列图和 Ramp 不是同一次导出的（10-07 对话框5 读回过一次：材质实例实际绑的是旧的无 HD 序列，不是包里现在那张）。这条要把「每个材质实例实际绑定了哪两张、它们是不是同一代」读清楚。）\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc 和 mobile 每一行 FxSP / FxSP_Low / FxSP_High 引用的全部粒子系统（去重），每个系统里每个发射器的材质（实例）用到的序列图和 Ramp 贴图（去重）。\n\n1. 用 GPUECli 只读：\n   - 每张贴图：路径、SizeX / SizeY、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX / AddressY，能读到的话 Downscale / DownscaleOptions 和 AssetImportData 里的源文件路径与时间。\n   - 每个材质实例：父材质路径、全部 Scalar / Vector / Texture 参数的当前值（重点列出名字带 曝光 / Exposure / 亮度 / Bright / 溶解 / Dissolve / 对比 / Contrast / Gamma / Power 的）。\n   - 每个材质实例**实际绑定**的序列图和 Ramp 是哪两个资产（按 TextureParameterValues 读路径，不按名字猜）；同一个效果在本机导出根目录（df.firework-resource/1 索引）里现在那一版包的序列图 / Ramp 文件名，对一下是不是同一张。\n   - 父材质里查 Ramp 的 Custom 节点：把 Code 原文、输入引脚、采样用的 sampler 读出来（只读，存进 json 的 parentMaterial.customCode），用来排除「材质把查询坐标拉伸了」。\n2. 找到每张贴图的源 PNG（AssetImportData 里的路径；读不到就在本机导出根目录 / ResourceFX 素材目录按贴图名找同名 .png），用 Python + Pillow 只读统计：\n   - 序列图：每个通道的最大值、≥254 和 =255 的像素各占多少（百分比）；\n   - Ramp：宽 × 高、最后一格和倒数第二格的 RGB；\n   - 同目录有 cascade.json 的，记下里面写的烘焙器版本（tool 字段）。\n3. 判定（每张序列图一行）：\n   - 序列有 ≥254 的像素 且 它的 Ramp 末格是黑的 → 「① 配错对：序列没封顶（或不是同一次导出）+ Ramp 末格黑，会出黑块」，并写出这两张各自来自哪一版包、包里现在那一版是哪两张；\n   - 序列最大 ≤ 253、Ramp 末格黑、压缩是 BC7 → 「④ 同一代，可能是 BC7 把 253 冒到 254 / 255」（这一类单独列，导出（23）要据此决定要不要给新导出加余量）；\n   - MaxTextureSize / LODBias 让 UE 里的尺寸比源图小 → 「② UE 里缩小过」，同时写 MipGenSettings / DownscaleOptions；\n   - 材质实例里有上面那几类参数不是缺省值 → 「③ 材质参数可能推高查询坐标」，写出名字和值；\n   - 都不是 → 「没找到原因」。\n4. 输出：\n   - analysis/results/UE_READBACK_20261015/黑块排查.json：{format:'df.ue-black-block-check/1', readAt, rows:[{resourceId, side, system, emitter, material, parentMaterial, seq:{path, size, compression, srgb, filter, lodGroup, maxSize, lodBias, mipGen, downscale, source, max:[r,g,b,a], ge254:[...], eq255:[...], bakerVersion}, ramp:{path, size, compression, srgb, address, mipGen, source, last, prev}, params:{...}, verdict:[...]}]}\n   - analysis/results/UE_READBACK_20261015/黑块排查.md：第一句写结论（几张序列图命中 ① / ② / ③、几张没找到原因），再按 ① ② ③ 分组列资源名，最后一段「给导出（23）」：哪些需要重导序列、哪些只要换回配套的 Ramp。不要替用户改。\n\n禁止：保存、改值、导入、替换贴图、P4、开关 UE、改 tool/src。UE 没开 → 卡住。",
-      "做完的标准": [
-        "范围里每张序列图一行，读不到的写 null 和原因",
-        "每行写清材质实例实际绑定的序列图 / Ramp 路径，和包里现在那一版是不是同一张",
-        "每行有源 PNG 的最大值 / ≥254 占比、Ramp 末格颜色、UE 尺寸与源图尺寸",
-        "每行有判定（① / ② / ③ / 没找到原因）",
-        "黑块排查.md 第一句是结论，有「给导出（23）」一段",
-        "已提交推送，本条写了完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-15T12:01:53+08:00",
-      "完成": "2026-10-15T12:14:37+08:00",
-      "提交": "a2e6535f5d8b7f6eefdef7c6ff933b3b67d27ac0",
-      "结果": "只读排查执行结束，非根因闭环：56系统/218发射器/332LOD、78主图（44Ramp序列）；报告analysis/results/UE_READBACK_20261015/黑块排查.json及.md。\n①8张和④30张为同名PNG候选，UE导入源路径/时间均空，实际代际null；②3张均辅助图，③38张仅参数检查标记，45个Ramp实例查询参数1/1中性；16处Ramp不同名中15处有同SHA配套候选，点灭Strobe异SHA优先核实。\n3501次仅get/search读取，无UE写入；155文件SHA与统计/范围覆盖检查通过。缺源身份，不能确定哪些必须重导或只换Ramp，未替用户改。"
-    },
-    {
-      "编号": "T07",
-      "看板": "",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "取消",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "最好开着（只读）；17780 连不上本身就是要记的结论，不算卡住",
-      "标题": "只读排查「窜天猴尾焰交付：特效工作台报『Python 调用失败：TypeError: Failed to fetch』，PC / 手机两个资源包都检查失败」",
-      "为什么": "用户 10-15 15:06 截图：交付「窜天猴尾焰」（他自己存的「我的效果」，一层分层粒子图，UE 名 RocketTail）后，特效工作台顶上红字「Python 调用失败：TypeError: Failed to fetch」，烘焙器交付清单里 PC / 手机两个资源包都「检查失败」，用户说「还是会报错」。云端看不到私有导入器、UE 日志和 D 盘修订（写任务的：导出（23））。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261015/尾焰检查失败.json（新建）",
-        "analysis/results/UE_READBACK_20261015/尾焰检查失败.md（新建）"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T07，按该文件「Codex 共同规则」执行，只有第 1 步写的一处例外。先读 对话记录/对话框8.md 最近一节、tool/local_delivery/README.md、tool/local_http/README.md。\n\n背景（导出（23）写）：用户 10-15 15:06 截图——交付「窜天猴尾焰」（analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json：一层分层粒子图 sparkgraph，烘成「地面循环」，ue.base / system = RocketTail，custom）后，特效工作台顶上红字「Python 调用失败：TypeError: Failed to fetch」，烘焙器交付清单里 PC / 手机两个资源包都「检查失败」；用户说「还是会报错」。\n导出（23）的判断（推断，要你证实）：「Failed to fetch」是浏览器层面的失败——页面向 http://127.0.0.1:17780/gpcli 发请求，连 HTTP 响应都没拿到（服务没在听 / UE 卡住或崩了 / 服务处理这个请求时出异常、连接被断或错误响应没带跨域头）。两个包都「检查失败」多半是同一次调用失败连带的，不一定是包内容错。要分清是「17780 当时不在」还是「这一个包让 Python 那边出错」。\n\n1. 17780 现在在不在：netstat -ano | findstr 17780（哪个进程在听）；照 analysis/scripts/workbench_engine_acceptance.mjs 的 request() 发一个只读请求（GetPlatformName 或 /object/search 一个已知资产），记返回和耗时。**例外：连不上不算卡住**——把「17780 连不上 / 哪个进程 / UE 开没开」记下来（这本身就是答案），后面不要 UE 的几步照做，最后状态写「完成」。\n2. 找到这次交付：读交付根目录（%USERPROFILE%/.fireworkslab/delivery-settings.json 里的根，默认 D:\\ProjectTextures\\FireWorksLab）的 workspace-resources.json，找名字含 RocketTail 的资源；列出它所有修订（revisionId、createdAt、平台目录、文件名、大小），以 10-15 14:40–15:10 那几次为准。\n3. 对最新那一版跑 python tool/local_delivery/fx_gate.py <修订目录> --root <根> --json（不要加 --register），记退出码和全部原因。\n4. 和最近一个检查通过、导入成功的包比（YonshakuKamuro 修订 0e31af841d6954fcd76d，10-14 23:48 导入）：两边 cascade.json / cascade_mobile.json 的顶层键、textures 每项（file / class / 有没有 asset 字段）、materials 的 role、每个发射器 required 的键和 modules 名单；文件名里有没有非 ASCII 字符、路径长度；列出只在 RocketTail 里出现的东西（比如 OrientationAxisLock、loops 0、local_space、手机贴图名 _Mobile、FrameTest 图）。\n5. 读日志（只读文件，不发 UE 请求）：UE 编辑器当前日志（工程 Saved/Logs/ 最新的 .log；崩过的话 Saved/Crashes/）里 10-15 14:40–15:15 的 Python 报错 / Traceback / LogPython: Error / GPUECli 相关行；交付服务日志（目录配置旁 delivery-server.log）、%USERPROFILE%/.fireworkslab/local-http-tools.log 同一时间段。原样摘相关的几行（去掉凭据和用户名）。\n6. 只读看私有导入器怎么发这次检查：D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html、交付用的 df-fireworks-delivery_locmai.html / tool/local_delivery/runtime/importer.html——「Python 调用失败」在哪里报、检查发的是哪个接口和什么内容、有没有超时、PC / 手机是不是各发一次。**私有代码不复制进仓库**，只用中文写结论（大概第几行、做什么）。\n7. 判定一句（四选一）：A 17780 当时不在 / UE 关着或卡住；B 17780 在、别的包能检查，这一包的请求让 Python 那边出错（给 Traceback 和是哪个字段 / 文件触发的）；C fx_gate 不过（列原因）；D 没找到（写缺什么证据）。\n8. 输出：analysis/results/UE_READBACK_20261015/尾焰检查失败.json（{format:'df.delivery-check-failure/1', readAt, port17780:{listening, pid, process, probe}, resource:{name, revisions:[...]}, gate:{exit, reasons}, diffVsGood:[...], logs:[...], importerNotes, verdict:'A|B|C|D', why}）和 .md（第一句写结论；最后一段「给导出（23）」：要改烘焙器导出的哪一处、还是要改导入器、还是用户只要开着 UE 重试）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。",
-      "做完的标准": [
-        "写清 17780 现在在不在、是哪个进程",
-        "找到 RocketTail 这几次修订，最新一版有 fx_gate 结果",
-        "和 YonshakuKamuro 那一包的差异列出来",
-        "UE / 交付服务日志同一时间段的相关行摘出来（没有就写没有）",
-        "判定 A / B / C / D 之一，写依据",
-        "已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "",
-      "完成": "",
-      "提交": "",
-      "结果": "取消（导出（23）10-15 21:05）：本机同步（8）15:39 已查到 17780 端口绑定失败（UE 日志 HttpListener unable to bind），用户重启后窜天猴启动正常；剩下的检查失败是烘焙器命名问题（4.9.106 修），不用再排查。"
-    },
-    {
-      "编号": "T08",
-      "看板": "",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "取消",
-      "优先": 2,
-      "前置": [
-        "T10"
-      ],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "只读核实：母材质里 EmissiveDissolve 还接了什么；导入器更新材质实例时会不会把用户手改的 EmissiveDissolve 0.98 改回 1",
-      "为什么": "用户 10-15 20:53：把 EmissiveDissolve 改成 0.98 黑块直接解决了。要确认这个参数没有别的用途、以后导入器「更新」材质实例时不会把它改回 1（会改回的话要排给导入器（5）写 0.98）。原 T08 第 1、2、5 步（源图封顶、贴图组设置）不用做了。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261015/黑块_首选核实.json（新建）",
-        "analysis/results/UE_READBACK_20261015/黑块_首选核实.md（新建）"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T08，按该文件「Codex 共同规则」执行。先读 analysis/results/UE_READBACK_20261015/看法.md（含 15:30 更正）、黑块排查.md。\n\n背景（导出（23）写）：父材质 M_EFX_FlipBookSuperPack_FireBase_Unlit 查 Ramp 的坐标是 q = pow(v·pow(EmissiveDissolve, EmissiveDissolvePow), 2 − pow(EmissiveDissolve, EmissiveDissolvePow))（T06 读的），现在 45 个材质实例都是 1 / 1（q = v）。导出（23）准备建议用户把 EmissiveDissolve 改 0.98（Pow 保持 1）：q 最高 0.98，Ramp 第 255 格（黑）怎么都碰不到。用户 20:53 已在 UE 试过 0.98，黑块解决。现在只做下面第 3、4、7 步（第 1、2、5、6(a) 不用做），判定只写 (b)(c) 两条。\n\n1. 源 PNG：D:\\ProjectTextures\\FireWorksLab\\烟花\\大\\YonshakuKamuro\\revisions\\0e31af841d6954fcd76d\\PC\\YonshakuKamuro\\T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png——sha256（应为 962aca3a…5f30）、每通道最大值、≥254 / =255 / =253 各占多少；同目录 cascade.json 的 source.tool。\n2. UE 资产（GPUECli 只读）/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD：Size、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX/Y、能读到的 NumMips / AssetImportData 源路径和时间。同样读 T_EFX_FireWorks_LittleCrackle_Main_R、T_EFX_FireWorks_GoldRay_A_R、T_EFX_FireWorks_YonshakuKamuro_Main_R。\n3. 母材质里 EmissiveDissolve / EmissiveDissolvePow 两个参数节点连到哪：把从这两个参数到输出的表达式链读出来（节点类型、连线、有没有 DynamicParameter / VertexColor / 粒子颜色参与），回答：它们是不是**只**进 Ramp 查询坐标、有没有进透明度 / 溶解遮罩 / 别的分支。用到这张序列的材质实例（按引用查，如 MI_EFX_FireWorks_YonshakuKamuro_Main_02_HD）的全部 Scalar / Vector / Texture 参数当前值，Ramp 现在绑的哪张（用户在试，可能是 LittleCrackle 或 GoldRay）。\n4. 私有导入器（D:/FXTools/DFWorkbench/ 下的工作台和交付 HTML，只读）：cascade.json 里 materials.<角色>.scalars 是只认 rows / cols，还是任意参数名都写到材质实例；「更新」已有材质实例时，没写在 cascade.json 里的参数（比如用户手改的 EmissiveDissolve）会不会被重置成父材质默认值。**私有代码不复制进仓库**，只写结论。\n5. 工程配置（只读文件）：<工程>/Config/DefaultDeviceProfiles.ini、DefaultEngine.ini、引擎 Config/BaseDeviceProfiles.ini 里 TEXTUREGROUP_Effects 那一行（MinMagFilter、MipFilter、MipGenSettings、LODBias、MaxLODSize），Windows / Android / IOS 有没有覆盖。\n6. 判定：(a) 02_HD 源图最大 ≤ 253 → 「封顶的新序列，黑块是 UE 里冒上去的」，再按第 5 步写是 BC7（Mip 生成 SimpleAverage、没缩小）还是 Mip / 缩小滤镜（Sharpen* / LODBias）；源图有 ≥254 → 「不是封顶序列」，写 UE 里的实际源路径。(b) EmissiveDissolve 只进 Ramp 坐标 → 「改 0.98 只影响查色，可以」；还进了别的分支 → 写清哪条、改 0.98 会变什么。(c) 导入器会 / 不会重置手改参数。\n7. 输出：analysis/results/UE_READBACK_20261015/黑块_首选核实.json 和 .md（第一句写三条判定；最后一段「给导出（23）」）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。改 RGBA8 / 改 EmissiveDissolve 的试验留给用户自己在 UE 里做，你不要改。",
-      "做完的标准": [
-        "EmissiveDissolve / Pow 的表达式链读清，写明是不是只进 Ramp 坐标",
-        "写清导入器会不会把手改的材质实例参数改回去、scalars 认不认任意名字",
-        "黑块_首选核实.md 第一句是两条判定，有「给导出（23）」一段",
-        "已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "",
-      "完成": "",
-      "提交": "",
-      "结果": "【10-18 本机同步检测销账（用户「销掉过期的账」）】内容已被资源规范统一（26）干跑覆盖（bb228514：EmissiveDissolve 只进 Ramp，可以改；导入器「更新」会改回），第三步导出 4.9.113 + 导入器（交付入口）已做；前置 T10 也取消。",
-      "等什么": "等本机实测（25）完成T09/T10并恢复UE现场；后续与资源规范统一干跑核对范围，不在同一UE采样窗口另派。"
-    },
-    {
-      "编号": "T09",
-      "看板": "",
-      "交给": "本机同步（8）（用户 10-16 01:48 改由本机实测（25）执行）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "只读读数：B08 用到的 25 个 ResourceId 的粒子模块——估真实花径、各种开销、Tiny 缩 0.65 到不到 40 m；（可选）用户的颜色 / 大小随机案例",
-      "为什么": "用户 10-15 22:02：「先出B08，然后再跑B08的实机测量」；「粒子里的颜色，大小随机，我有做了一些案例……让本机读取一部分数据回传给你看」。B08 修订7（工作台 16.0.42，协作/编排B08.md）的花径表、低配限峰的两个量、小平台 Tiny ×0.65 到顶约 40 m 都是推断：名义直径没量过（10-11 估有的资源差 1.6–3 倍），负担权重是从 960 一张截图粗标的。读回来跨年秀（22）校表、校权重。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261015/B08资源读数.json（新建）",
-        "analysis/results/UE_READBACK_20261015/B08资源读数.md（新建）",
-        "analysis/results/UE_READBACK_20261015/颜色大小随机案例.json（新建，第 5 步做了才有）",
-        "analysis/results/UE_READBACK_20261015/颜色大小随机案例.md（新建，同上）",
-        "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（按 10-14 的格式 df.resource-emitter-census/1 更新，readAt 改成这次）"
-      ],
-      "案例路径": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD（用户 10-16 01:48 给本机实测（25））",
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T09，按该文件「Codex 共同规则」执行（UE 只读）。先读：协作/编排B08.md、analysis/results/MOBILE_TEST_20261011/看法.md（UE-14：条目 EffectScale 整朵等比、尾缀只改长度不改时间）、analysis/results/RESOURCEFX_20261014/ 的读回（ResourceId → PC / 手游粒子路径）、FXtools/节目/NewYearFireWorks_v01/资源发射器数.json。\n\nB08 一张表（FXtools/节目/NewYearFireWorks_v01/导演表-B08修订7-中配扇不多于B05-一张表.json）用到的 ResourceId：Crackle、FanComet_01、FanSilver_01、Glitter、GoldChry、GoldCoreLime、GoldCrackle、GoldKamuro、GoldRayChry、GoldSpark、GreenPeony、Lime、LittleCombo、LittleCrackle、LittleGold、LittleSilver、MultiLayerChry、NY_Trail_Large、NY_Trail_Medium、NY_Trail_Small、PrismWheels、RiseTrail_Tiny、SilverChry、SilverStrobeChry、Strobe（前面都是 P_EFX_FireWorks_）。\n\n1. 每个 ResourceId 按 ResourceFX 表**现在**的值找 PC 粒子（不要用 资源发射器数.json 的旧映射）；手游表里有这一行的，_M 也读。先确认 LittleGold / LittleCrackle / LittleCombo（2800 / 2802 / 2803）指向的是 *_HD 新粒子，不是旧的 LittleChry_HD——10-14 14:12 的读数还是旧的，23:38 的读回已经是新的。\n2. 每个粒子系统、每个发射器的 LOD0，读这些模块和字段（读不到的写「读不到」，不要猜）：Required（Material 及其父材质、BlendMode 能读就读、ScreenAlignment、bUseLocalSpace、EmitterDuration、EmitterLoops）；TypeData（GPU / Ribbon / Beam / 无）；Spawn（Rate、BurstList 每条 Count / CountLow / Time）；Lifetime；Initial Location / Sphere / Cylinder（半径）；Initial Velocity / Velocity Cone（StartVelocity、StartVelocityRadial、Velocity 的 Min / Max，分布类型）；Drag（DragCoefficient）；Acceleration / Const Acceleration；Velocity / Life；Initial Size / Size By Life / Size Scale；Initial Color / Color Over Life / Scale Color Life；Event Generator / Event Receiver Spawn（二次爆开）；MaxDrawCount；**每个位置 / 速度 / 大小模块的 bInWorldSpace、bApplyOwnerScale 之类和缩放有关的开关**；带 Seed 的模块读 RandomSeedInfo（bGetSeedFromInstance、bInstanceSeedIsIndex、bResetSeedOnEmitterLooping、bRandomlySelectSeedArray、RandomSeeds）；分布是不是 Parameter 类（读 ParameterName）。原始值存 B08资源读数.json。\n3. 估算（写明是从模块算的，不是截图量的）：\n   (a) 每个发射器最大半径 r = ∫v(t)dt：Cascade Drag 按 v(t) = v0·e^(−k·t) 算，r = v0/k·(1 − e^(−k·T))（k = 0 时 r = v0·T），v0 取速度上限、T 取寿命上限；另给 v0、T 都取中值的一版。有 Velocity / Life 曲线就按曲线采样积分。单位 cm → m。\n   (b) 一朵花的直径 = 2 × 主星发射器（不算闪光、烟、余烬）最大半径。写清哪个发射器算主星。\n   (c) 开销：每朵 CPU / GPU 发射器数、一次爆开的粒子总数（Burst 合计 + Rate × 时长）、最大粒子尺寸、寿命、BlendMode，以及一个粗的面积量 Σ(粒子数 × 尺寸² × 寿命)。\n   (d) RiseTrail_Tiny：EffectScale = 0.65 时，到顶高度会不会跟着 × 0.65（看 bUseLocalSpace、速度 / 加速度模块的世界空间和 Owner Scale 开关），升空时间会不会变；按模块算原生到顶高度（作者用的是 62.0 m / 1.6875 s）。\n3b. 顺手按 10-14 的格式（df.resource-emitter-census/1）更新 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（readAt 改成这次）——跨年秀（22）的 GPU 体检读它，现在停在 10-14 14:12，有 5 行的粒子后来换了。\n4. B08资源读数.md：第一句写三条结论（真实花径和作者名义直径最差差几倍、最贵的 5 种、Tiny 缩 0.65 是不是到约 40 m）。一张表：ResourceId、表里中文名、PC 粒子、发射器 CPU / GPU、粒子数、估算直径（上限 / 中值）、面积量、颜色 / 大小有没有逐粒子随机。作者的名义直径：小号 90 m、中号 150 m、大号按金芒菊 150 m 放大、小平台 LittleSilver 32 / LittleGold 40 / LittleCrackle 24 / LittleCombo 30 m。最后一段「给跨年秀（22）」。\n5. （可选）用户的颜色 / 大小随机案例：资产路径看本条「案例路径」，或用户贴给你的补充提示词。没有就跳过、结果里写「案例路径未给」。每个案例照第 2 步读全部模块，重点回答：① 颜色 / 大小随机是逐粒子（一朵里每颗星不一样）还是逐朵（整朵一个随机值）；② 靠什么做到（分布类型、Seed 设置、Instance Parameter 名字、Dynamic Parameter）；③ 同一朵里星头、尾巴、火花几个发射器拿到的随机值是不是同一个（颜色 / 大小会不会对不上）；④ 有没有用到导演能传的参数（RandomScaleRatio 之外）。写 颜色大小随机案例.json 和 .md（第一句写这四条的答案，最后一段「给跨年秀（22）」）。\n\n禁止：保存任何资产或关卡、改属性、导入、替换、P4、开关 UE、改 tool/src / tool/workbench、改编排文件。私有工具代码、凭据、用户名不写进仓库。",
-      "做完的标准": [
-        "25 个 ResourceId 都有 PC 读数，手游表里有的也有 _M 读数；读不到的逐个写原因",
-        "每个都有估算直径（上限 / 中值）和开销四项，写清算法和主星发射器",
-        "写清 Tiny 缩 0.65 后到顶高度、升空时间变不变，依据哪几个开关",
-        "资源发射器数.json 已按现表更新（readAt 是这次）",
-        "B08资源读数.md 第一句三条结论，有「给跨年秀（22）」一段",
-        "第 5 步：给了案例就有 颜色大小随机案例.md（第一句四条答案）；没给就在结果里写「案例路径未给」",
-        "已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-16T01:54:00+08:00",
-      "完成": "2026-10-16T02:22:22+08:00",
-      "提交": "50dfded182d38a995d51375a0f00bd6e8ed31eeb",
-      "结果": "25 个 ResourceId 全读（PC 41 系统 + 手游 13 个 _M，3347 次只读，无写入）：金芒菊原生约 230 m（名义 150，1.53×；大号实际约 325–353 m）、绿牡丹 / 多重菊约 287–289 m（1.9×，推断）、金锦菊 1.74×、金垂柳 1.73×，小号 / 小平台花 0.98–1.06×；最贵金垂柳 / 银彩菊 / 绿牡丹 / 金锦菊 / 彩千轮；银扇一束 54 颗且仍有 1 个 GPU（Dot_A），红彗星 25 颗 0 GPU；Tiny ×0.65 到顶 40.3 m、升空时间不变。analysis/results/UE_READBACK_20261015/B08资源读数.md / .json；点灭星随机案例（逐朵，颜色 7 种子挑 1）颜色大小随机案例.md；资源发射器数.json 已按现表更新。用户不用做什么；跨年秀（22）按读数改花径表和 A。"
-    },
-    {
-      "编号": "T10",
-      "看板": "",
-      "交给": "本机同步（8）（用户 10-16 01:48 改由本机实测（25）执行）",
-      "在哪": "本机",
-      "状态": "取消",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线；本条经用户授权可以在编辑器内存里换导演表、改 Debug 字段、移机位、放预览，不保存",
-      "标题": "编辑器里实放 B05 / B08 修订7：同一机位按时刻量 Translucency（ProfileGPU）+ 截图，比两版低配的峰；顺带量真实花径和小平台到顶高度",
-      "为什么": "用户 10-15 23:48：「你不是说不用我录视频也可以吗？让本机自己找机位测试，或者我找个机位给本机也可以……今晚一起做了」「今晚把你要实机测试的任务都排好，能测试就一起测了」。B08 低配限峰是按 B05 在 960 上的一张截图拟的（协作/编排B08.md 第 1 节），要在同一台机器、同一机位上比 B05 和 B08 修订7 在那几刻的 Translucency，看 B08 是不是明显低于 B05、大约在 B05 的八成。用户明天在 960 上测正式包；这条是今晚的预演。原「拆用户录的视频」不做了。",
-      "只许改": [
-        "analysis/results/B08_实机/（新建目录：测量 json、截图、说明.md）"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 派来的 T10，按 协作/派活队列.json「Codex 共同规则」执行，**但 UE 一条按本条的授权例外**：用户 10-15 23:48 授权本机在编辑器里自己测 B08（「让本机自己找机位测试……今晚一起做了」）。允许：在编辑器**内存里**把导演实例的 DefaultConfig 换成测试用的一张表、改 DebugPlatform / DebugQualityLevel / DebugPreviewStartTime、调用 DebugPreviewShow / DebugStopShow、用 SetLevelViewportCameraInfo 移视口机位、执行控制台命令（ProfileGPU、HighResShot、r.ProfileGPU.ShowUI 0、r.ScreenPercentage 100）。禁止：保存任何资产 / 关卡 / 蓝图、导入、P4、开关 UE、改粒子或材质。测完必须把 DefaultConfig、Debug 字段、机位写回原值并读回核对一致。\n\n先读：协作/编排B08.md（第 1 节两个量、低配刀口表）、analysis/results/MOBILE_TEST_20261011/看法.md 和同目录 merged-test.mjs / effscale-test.mjs / ue.mjs（10-11 用过的内存换表、DebugPreviewShow、HighResShot、移机位写法，照着用）。\n\n0. 备份：读导演实例（10-11 是 BP_Failed_NewYearFireworks_ShowDirector_7，按现在关卡里实际的找）的 DefaultConfig、DebugPlatform、DebugQualityLevel、DebugPreviewStartTime、bShowActive 和当前视口机位，存 analysis/local/B08_实机/instance-before.json（本机，不提交）。UE 里要是有人正在用（用户说过 UE 空着才能动；看不出来就看当前地图 / 有没有正在 PIE），不确定就停，状态写「卡住：UE 可能有人在用」。\n1. 机位：用户在派活时给了机位就用用户的；没给就自己找一个能看到 P0–P8 全排和小平台的正面远景（参考 10-11 缩放截图的机位，或玩家看烟花的位置），视口 1920×1080、r.ScreenPercentage 100。把机位位置 / 朝向 / FOV 写进结果。整条测试机位不动。\n2. 换表（内存）：先装 FXtools/节目/NewYearFireWorks_v01/导演表-B05-ResourceFX新命名-手游6种-一张表.json（B05，用户在 960 上测的那版），再装 FXtools/节目/NewYearFireWorks_v01/导演表-B08修订7-中配扇不多于B05-一张表.json（B08 修订7）。每次装完读回核对 EffectSubTemplates / EffectTemplates / EffectScheduleGroups 和文件一致、其他字段没变。\n3. 量 Translucency：先执行 r.ProfileGPU.ShowUI 0（不弹 GPU 可视化窗口）。每张表、PC 低配（DebugPlatform = PC，DebugQualityLevel = 低配，按 10-11 的写法）各放一遍整场（DebugPreviewStartTime 0，约 215 s；中途卡住可以分段从某个时刻起放），在下面这些演出时刻执行 ProfileGPU，从 UE 日志里把这一帧的 Translucency（含 TranslucencyAndDistortion / Translucent Lighting 等子项，写清取的是哪一行）和整帧 GPU 时间读出来：\n   5.0（空场基准）、16.6、43.5、56.5、64.5、65.3、108.5、116.5、129.7、132.6、158.5、165.0、168.0、171.5、181.5、182.6、184.5、187.5、189.0、192.8、194.4、195.5。\n   每个时刻再执行 HighResShot 1920x1080，文件名 <表>_<档>_<时刻>.png（例：B08_低_0065.3.png）。时刻用 DebugPreviewShow 调用后的墙钟计时，记下每次实际执行的时刻和偏差。\n   有余力：B08 再放一遍 PC 高配（只截图同样的时刻），一遍手游中配（DebugPlatform = Mobile，只截 23.9、65.3、132.6、186.0、195.5）。\n4. 真实花径（从截图量，推断）：用同一张图里 P0 到 P8 的距离（800 m，点位坐标见 dfshow）当比例尺，量这些时刻能清楚分开的单朵花的像素直径换成 m：65.3 s 银彩菊大 / 金芒菊中、132.6 s 金芒菊大、186 s 金芒菊大、195.5 s 银彩菊大、16.6 s 金芒菊中，再找一刻小平台小金花 / 小银菊 / 短爆裂开花最大的时候量直径，以及小平台花离平台的高度（作者的名义值：小号 90 m、中号 150 m、大号 212–230 m、小平台花 36–44 m、小平台开花约 40 m）。透视会有误差，写明怎么量的。\n5. 写回：DefaultConfig、Debug 字段、机位写回备份的原值，读回逐项核对一致。\n6. 结果 analysis/results/B08_实机/：Translucency.json（每张表每个时刻：Translucency ms、整帧 GPU ms、实际时刻）、截图、说明.md。说明.md 第一句写三条：① B08 修订7 低配在 64.5 / 182.6 / 184.5–189 s 的 Translucency 是 B05 的百分之几；② 全场 B08 低配 Translucency 最高的三个时刻和值（和 B05 最高的比）；③ 量到的花径和名义值差几倍。最后一段「给跨年秀（22）」。编辑器 GPU 不是 960，只看相对值。\n\n禁止：保存、导入、P4、开关 UE、改粒子 / 材质 / 资源表、改编排文件；不上传视频；凭据、用户名不写进仓库。",
-      "做完的标准": [
-        "B05 和 B08 修订7 在同一机位、PC 低配下，列出的时刻都有 Translucency 和整帧 GPU 读数（缺的写原因）",
-        "说明.md 第一句三条结论（三个峰 B08 / B05 百分比、B08 最高三刻、花径倍数），有「给跨年秀（22）」一段",
-        "截图按 <表>_<档>_<时刻> 命名，至少 PC 低配两张表齐全",
-        "DefaultConfig、Debug 字段、机位已写回并读回一致；没有保存任何资产 / 关卡",
-        "已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-16T02:22:22+08:00",
-      "完成": "",
-      "提交": "6b40ee23035308953ccb88f5cebb8605d6e0cad5",
-      "结果": "卡住：02:56 UE 断言 CurrentScope != nullptr（RenderGraphEvent.inl:36）崩溃退出，GPUECli 17780 连不上；崩溃前我 1.3 s 内连发了 4 次 ProfileGPU（推断是诱因），没有重开 UE。已做：同机位（用户摆的）PC 低配 B05 / B08 修订7 整场 22 刻 ProfileGPU（r.ParallelTranslucency 0）——B08 / B05 = 132 % / 121 % / 88 %（64.5 / 182.6 / 184.5–189 s），B08 最高 64.5、116.5、184.5 s（0.54 / 0.54 / 0.49 ms）；5080 上烟花只占 0.1–0.5 ms、单帧噪声和差值一样大，定不了，以 960 为准。花径只量成一朵金蕊柠大约 238 m（名义 212，1.1×）；整轮截图、多帧窗口、小平台开 / 关没做成。02:54 最后一次恢复读回一致；崩溃时内存里是 B05，未保存任何资产 / 关卡。用户要重开 UE。结果 analysis/results/B08_实机/说明.md、Translucency.json。；【10-18 本机同步检测销账（用户「销掉过期的账」）】原目标（B05 对 B08 预演）已被 B09 实放（25c01490）和 10-20 最终全量取代；960 目标机性能并进最终全量测试，不再按旧计划续。"
-    },
-    {
-      "编号": "T11",
-      "看板": "n83",
-      "交给": "Codex夜班（dot备用；本轮Codex夜班子任务替代，dot消息入口失败）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 2,
-      "前置": [],
-      "要 UE": "不要；仅已提交结果与图片，禁止17780和GPU",
-      "标题": "G106交付回包审看：窜天猴/仙女棒同版命名、PC手机契约及画面证据",
-      "为什么": "本地看板local-P008及对话记录/对话框23.md:521仍欠G106审看；四任务结果已回，用户本轮授权dot派发不与正在做的T09冲突的夜班任务。",
-      "只许改": [
-        "analysis/results/G106_夜班审看_20261016/（新建报告及证据索引）"
-      ],
-      "提示词": "你是既有「本机派活执行（dot备用）」的Codex夜班执行者。本轮用户在总管21-CodeX明确要求dot派发不与本机实测冲突的任务。先读AGENTS.md、CLAUDE.md、协作/标准.md及本条全文，按派活队列共同规则认领、检查、回写。使用专用独立克隆F:/FireWorksLab-Night-Codex：没有就克隆同一GitHub仓库；已有则先核origin、status并安全fetch/rebase，保留他方改动。不在F:/FireWorksLab、本机实测（25）或总管Board21工作树写文件。启用.githooks。两个夜班任务在该执行者串行执行，每项最多60分钟；只提交本条白名单、自己的夜班记录和派活队列里自己这一条。记录统一为对话记录/夜班-Codex.md。\n\n禁止连接UE/GPUECli、操作P4、启动浏览器渲染或GPU压测、改tool/src/tool/workbench/tool/fwlight/spec/正式库/用户验收/在线看板/定时任务，禁止触碰T09/T10占用的机位、资产与资源发射器数.json。只读生产文件，输出独立报告。来源按开工固定HEAD记录；结果不能混用版本。若能力或证据不足，准确列未测/卡点，不假写通过。完成后写执行结束/AI检查/用户验收三栏，并回写本条状态、时间、提交及结果；不要重派T09/T10。\n\n任务：接续local-P008欠的G106同版审看，输出analysis/results/G106_夜班审看_20261016/看法.md与核对.json。\n1. 读导出（23）20:53统一导出规范原话和最新记录、NFE-SGR1-G106/NFE-SGS1-G106/NFR-SG-G106/NFS-SG-G106结果。逐包核烘焙器版本/参数指纹/导出清单/PC与手机cascade一致性，校验T_EFX_FireWorks_完整英文资产名、Ramp大小写/引用、产物清单列全与包内文件。当前用户RocketDot存档若不在结果中，写未核，不能冒称其已通过。\n2. 亲眼打开仓库里的烘焙回放.jpg、原尺寸图、回放检查.jpg及NFR两包图，对关键时刻、局部、裁切、过曝、异常闪点/条纹逐项写观察；使用图片读取工具，不打开file://HTML、不启动渲染。静态图不能证明连续播放的项写未测，结合已有NFR采样记录分开陈述。旧G97看法只能对照，不能当G106已审。\n3. 读取标准检查.json里的目标两包结果，不把整个老候选库的既有失败泛化为本批失败。报告第一段给出同版机器检查/AI图片审看/未测/需要导出（23）或用户做什么。发现问题只列证据和最小建议，不改实现、不替用户验收。",
-      "做完的标准": [
-        "两包各有版本/指纹/PC手机契约的实际值及来源",
-        "亲眼审看已提交图片，逐图有结论；连续播放、UE及RocketDot用户存档缺证据的明确未测",
-        "看法.md和核对.json齐全，可交导出（23）接续；不改生产代码和资产",
-        "提交推送并回写本条完成或卡住，保留他方任务字段"
-      ],
-      "派出": "2026-10-16T02:39:59+08:00 总管21-CodeX内部夜班已受理，T12完成后串行接续；dot消息入口失败，无重复派发",
-      "开始": "2026-10-16T02:39:59+08:00",
-      "完成": "2026-10-16T02:46:09+08:00",
-      "提交": "2f93615d",
-      "结果": "G106两包元数据契约各18项通过，目标标准各12项全真，NFE/NFR回放记录pass；8张静态图已亲眼审看，未见明显裁切/矩形边/贯穿条纹。报告analysis/results/G106_夜班审看_20261016/看法.md和核对.json；原PNG/物理包、用户RocketDot存档、跨循环连续播放和UE缺证据，未替用户验收；导出（23）沿原存档重导接续。"
-    },
-    {
-      "编号": "T12",
-      "看板": "n84",
-      "交给": "Codex夜班（dot备用；本轮Codex夜班子任务替代，dot消息入口失败）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "不要；仅离线表与纯CPU灯光模型，不调用UE脚本",
-      "标题": "B08修订7离线交付核对：16.0.43版本、B05数量对比及灯光同源/SkyLight≤10",
-      "为什么": "看板QA候选仍需版本一致；最新22交修订7/16.0.43，8完成同次交付灯光。可在T09/T10进行时独立核交付文件，避免实测拿错版；不是重新编排或重做已通过全量回归。",
-      "只许改": [
-        "analysis/results/B08R7_夜班核对_20261016/（新建报告、只读核验数据、必要临时纯模型输出）"
-      ],
-      "提示词": "你是既有「本机派活执行（dot备用）」的Codex夜班执行者。本轮用户在总管21-CodeX明确要求dot派发不与本机实测冲突的任务。先读AGENTS.md、CLAUDE.md、协作/标准.md及本条全文，按派活队列共同规则认领、检查、回写。使用专用独立克隆F:/FireWorksLab-Night-Codex：没有就克隆同一GitHub仓库；已有则先核origin、status并安全fetch/rebase，保留他方改动。不在F:/FireWorksLab、本机实测（25）或总管Board21工作树写文件。启用.githooks。两个夜班任务在该执行者串行执行，每项最多60分钟；只提交本条白名单、自己的夜班记录和派活队列里自己这一条。记录统一为对话记录/夜班-Codex.md。\n\n禁止连接UE/GPUECli、操作P4、启动浏览器渲染或GPU压测、改tool/src/tool/workbench/tool/fwlight/spec/正式库/用户验收/在线看板/定时任务，禁止触碰T09/T10占用的机位、资产与资源发射器数.json。只读生产文件，输出独立报告。来源按开工固定HEAD记录；结果不能混用版本。若能力或证据不足，准确列未测/卡点，不假写通过。完成后写执行结束/AI检查/用户验收三栏，并回写本条状态、时间、提交及结果；不要重派T09/T10。\n\n任务：仅核对已提交16.0.43 B08修订7的交付输入，输出analysis/results/B08R7_夜班核对_20261016/核对.md及核对.json。\n1. 读对话记录/对话框22.md最新01:13段、协作/编排B08.md、当前cloud-latest.json和版本记录，定位修订7的dfshow/一张表/档位表。记录版本号、源文件SHA256及工作台实际引用；如果开工已更新，保留16.0.43基准并指出新版本，不自行替换。按slot/template/subtemplate过滤核PC/手游高中低嵌套、ResourceId集合和三表一致性。所需资源只用固定HEAD已提交证据，T09新实读另记不待它。\n2. 用已有编排数量对比.py的只读入口或纯内存展开，对B05为标定计算PC/手游高中低球花、扇、扇束、小平台、尾缀，列绝对值与差值。明确发射器/粒子成本模型不等于实机ms；不沿旧“扇每束GPU”的统计给性能放行。\n3. 读tool/fwlight/README及纯模型light_model.py/light-curve-model.mjs和已有逐键对照测试。仅以修订7在纯内存或本条输出目录计算四灯，核JS/Python同源、SkyLight有限值且峰值≤10、时间范围/四灯齐全。不得调用fwlight apply/verify/save或ue_bridge，不调用工作台release/build，不改16.0.42已提交旧灯光包，也不把它改名冒充修订7。若现有离线入口无法安全算，报告具体缺口，不接UE。\n4. 结论写“离线交付一致/有缺口”，列T10必须记录的导演/灯光版本、分辨率、档位；不宣称960性能或UE实播通过。\n最新必核：50dfded1的T09已完成，银扇一束54颗、Dot_A仍1 GPU，红彗星25颗0 GPU；与修订7假设扇无GPU有差异。把该份已提交新census作为实读依据，分别报告模型/实读下GPU峰与风险；不要在T10进行时改编排或把先前0GPU峰值当现值。",
-      "做完的标准": [
-        "16.0.43输入引用和指纹可追溯，PC/手游六档有实际数量及B05差值",
-        "修订7灯光四灯完整、SkyLight≤10及JS/Python对照有实际离线证据；不能测的具体说明",
-        "核对.md/json齐全，生产文件未改，无UE/GPU/发布操作",
-        "提交推送并回写本条完成或卡住，保留T09/T10及他方字段"
-      ],
-      "派出": "",
-      "开始": "2026-10-16T02:31:48+08:00",
-      "完成": "2026-10-16T02:39:39+08:00",
-      "提交": "b22ee17b",
-      "结果": "离线16.0.43引用/PC三表/六档嵌套及四灯JS-Python逐键一致，SkyLight6.9228≤10；新census PC同秒启动GPU峰B05 40/38/26、修订7 104/52/10，旧扇0GPU不能性能放行。T09手游表实际16行，原摘要13误写。报告analysis/results/B08R7_夜班核对_20261016/核对.md/json；UE/性能/用户验收未测，T10继续原现场。"
-    },
-    {
-      "编号": "T13",
-      "看板": "n37",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 2,
-      "前置": [
-        "T11",
-        "T12"
-      ],
-      "要 UE": "不要；只读仓库与派生看板，不接GPU/P4",
-      "为什么": "延续n37已批准文档卫生，减少重复T10/旧版本/过期资源提醒，不与25或8-b四项冲突。",
-      "只许改": [
-        "总管白名单：协作/看板待同步.json追加、本地视图/HTML、队列T13、自己的记录/交接；只读审查者不改文件"
-      ],
-      "提示词": "只读3198091b派生视图和最新提交，提出逐字段最少清理建议，给证据与保留项；总管核后仅追加pending。保留快照/对账/全局MD不改，旧pending不改，不删除用户数据，用户决定/验收缺口不得当过期关闭。排除8-b已接N23-20261016-01至04；不改生产代码，不接UE/GPU/P4，不改自动化。若无已批准、前置齐全的独立后续事项就报告等待，不为凑夜班扩范围。",
-      "做完的标准": [
-        "每条关闭/合并/纠正均有来源；稳定ID、旧pending和用户反馈原样保留",
-        "HTML与派生视图一致；在线appliedAt不伪写",
-        "T09/T10及他方任务字段不动，n37未覆盖的余项保留"
-      ],
-      "派出": "2026-10-16T02:57:32+08:00 内部审查已受理；本字段为本次登记时刻",
-      "开始": "2026-10-16T02:57:32+08:00",
-      "完成": "2026-10-16T03:04:03+08:00",
-      "提交": "f00a30d9",
-      "结果": "10处有证据清理完成（6 items＋4 resources），关闭3条旧提醒；稳定ID/原75条pending/用户意见保留，仅n60补用户明确新原话；T10未动、验收仍开。gpt-6.1-sol/max审查＋总管核源；n37其余文档卫生仍在。",
-      "交给": "总管21-CodeX协调；内部board_cleanup_audit（gpt-6.1-sol/max）审查",
-      "标题": "T11/T12后清理有证据的过期/重复看板提醒，保留ID与用户反馈；不替代用户验收"
-    },
-    {
-      "编号": "T14",
-      "看板": "n39",
-      "交给": "内部文档夜班 board_cleanup_audit（gpt-6.1-sol/max）；总管协调",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 3,
-      "前置": [
-        "T13"
-      ],
-      "要 UE": "不要；只核已提交证据与文档",
-      "标题": "5.0剩余需求索引：已实现/仍欠/等决定/待核，保留历史原话",
-      "为什么": "既有n39由总管认领，整理过期依据，能独立完成，不占本机实测或8-b源码。",
-      "只许改": [
-        "协作/5.0_剩余清单.md（新）",
-        "协作/5.0_需求梳理.md（仅顶部历史索引指引）",
-        "对话记录/夜班-Codex-文档.md",
-        "协作/派活队列.json（仅T14的认领和回执）"
-      ],
-      "提示词": "你接续总管的内部文档夜班，执行T14/n39，模型必须gpt-6.1-sol/max（本执行者已按该模型启动）。只做已有n39“5.0依据过期，没有一张剩余单”的证据索引，最多60分钟，且不得超过香港2026-10-16 08:00。先取clock当前时间，完整遵守CLAUDE.md和协作/标准.md；上一轮已读可复用但核变更。\n\n使用总管已建且已完成T11/T12的独立克隆F:/FireWorksLab-Night-Codex，现旧执行者已完成无活动；先核origin/status/未推送与归属，若有他方改动则停，不覆盖。按本克隆的CLAUDE第0节fetch/log/rebase并配置已有.githooks；不要在F:/FireWorksLab或Board21写文件。认领队列只改T14并推送，固定一个业务来源HEAD/香港时间，记录在新索引；后续只为安全推送同步，不混用未来新版本作已验证证据。\n\n1. 读协作/5.0_需求梳理.md、协作/筛查/汇总_要你定的.md与相关索引、当前看板本地视图中5.0有关稳定ID、参数/交互已批准原话，以及最新相关提交/记录/交付报告。目标是核对旧A–F与现在的关系，不是重做146项源码审计。按需定向读，不能缺记录就说没做。\n2. 写协作/5.0_剩余清单.md：先说明本次结论和数据来源/HEAD；按已有A–F或更简单的已有分组索引已实现（有明确证据）、仍欠（明确未完成）、等用户决定、待核（证据不足）。每项给稳定看板ID、范围、已有证据文件:行/提交、负责人、下一步及验收；同一事项只列一处。重要互相矛盾的旧句指出证据，无法确认保留。已交付不等于用户验收/UE通过。B08 QA是当前主线，5.0索引不使未批准功能自动获批。\n3. 协作/5.0_需求梳理.md顶部只加简短历史/新索引指引，保留原内容和用户原话；如旧文件本来已注明过期就不重复标。不要在其它原文做批量清理。\n4. 不新增产品需求、不删合参数、不改标准/宪章/代码/资源、云端快照/对账/全局MD/用户验收和自动化，不接UE/GPUECli/P4/GPU/浏览器。排除8-b四项N23-20261016-01至04及T08/T10；不认领它们。\n5. 验收只做文档必要检查：链接/引用存在、ID存在、状态与证据对应、原用户原话保留、无生产文件改动。源冲突/证据缺口准确写待核，不为凑全写已完成；无须全量测试或重跑渲染。自己的记录写对话记录/夜班-Codex-文档.md。只白名单提交两文档＋自己记录，推送后再仅T14写完成/真实提交/结果并推送；任何他方字段保持新HEAD原样。清理出可接续文档即任务范围完成，不代表5.0开发/用户审批完成。若卡住如实回执。\n\n完成后内部回报总管（collaboration），不要用send_message_to_thread发外部对话。不要自行再派新任务；所有后续由总管选。",
-      "做完的标准": [
-        "仅整理已有批准需求，所有状态有来源或标待核，关联稳定ID和负责人",
-        "原需求/用户原话保留，不把开发完成等同用户/UE验收",
-        "文档引用可用、最少白名单改动及真实Git回执；不占UE/GPU、不重派8-b任务"
-      ],
-      "派出": "",
-      "开始": "2026-10-16T03:11:13+08:00",
-      "完成": "2026-10-16T03:23:06+08:00",
-      "提交": "94bd046ae2a45703e789e6d479d9efddebc68cd9",
-      "结果": "已交协作/5.0_剩余清单.md及旧需求顶部历史指引（主体bac060d4）；父审查修订94bd046a已推送，仅修n68/i41交接措辞及自己的记录。\nn68明确C1仍有既有安全阻塞、不纳本轮且禁止新线程绕过，C2–C5/C7等用户决定；i41先等8-b已串行认领的N23-20261016-02修复/验证回包，不另派。\n依据固定923d5f8c已含3205cba7的夜班原话:20、23–24、29、38–43；78处链接/行号、28个ID及仅两行变更检查通过。其余原文、用户待定与UE未验边界保持，未动T15/T16等他方条目。"
-    },
-    {
-      "编号": "T15",
-      "看板": "n79",
-      "交给": "内部t10_offline_audit（gpt-6.1-sol/max）；总管回写",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 2,
-      "前置": [],
-      "要 UE": "不要；固定提交的既有JSON只读数学核对",
-      "标题": "T10回包离线复核：比例/采样/矛盾与未测边界，不替代实测",
-      "为什么": "新回包仍卡住，先把会误导QA的噪声口径与记录矛盾写清；纯CPU只读，与T14文档及8-b源码完全独立。",
-      "只许改": [
-        "子任务不改任何文件；总管仅自己记录/本地待同步与视图HTML、队列T15回执"
-      ],
-      "提示词": "只读7db4c44b固定来源的analysis/results/B08_实机/Translucency.json、说明.md、25记录及T10回执，用Python复核22刻两版数据、分母/窗口/比例、全场峰29%计算、分辨率/版本/机位等证据。核记录勾选与细报告矛盾、重复样本和实际灯光/FOV缺口。直接内部回报带文件行/JSON键和计算结果，不写文件/不提交/不碰T10字段，不接UE/GPUECli/P4/GPU/浏览器、不发别的对话消息。不得从单帧5080数据推960通过、不得将GPU启动模型当ms、不诊断未证实崩溃根因。最多30分钟且08:00前收口；缺证据标未测，给最小数据补齐与安全接续条件。执行者gpt-6.1-sol/max，先读CLAUDE/标准；避开T14与8-b四项。",
-      "做完的标准": [
-        "计算用脚本复核，真实数据范围/分母/窗口可追溯，未测边界保留",
-        "T10卡住状态不动；不声称960/UE/用户验收通过",
-        "无生产或用户文件修改；必要结论写入总管记录及pending"
-      ],
-      "派出": "2026-10-16T03:12:08+08:00 内部只读子任务已实际受理；时间为本次登记时刻",
-      "开始": "2026-10-16T03:12:08+08:00",
-      "完成": "2026-10-16T03:22:23+08:00",
-      "提交": "b899c31a",
-      "结果": "只读复核已完成，结果见对话记录/对话框21-本机.md:118（源7db4c44b、结果b899c31a）。132/121/88%成立；29%需排除5s基准且只是采样峰，全22刻采样峰降23.684%。44份单帧无重复，不能估噪声/显著性或判960。渲染与截图尺寸需分列；实际灯光/FOV/ProfileGPU原始归属等缺证据。T10仍卡住，未接UE/未改25数据。"
-    },
-    {
-      "编号": "T16",
-      "看板": "n37",
-      "交给": "内部t10_offline_audit（gpt-6.1-sol/max）；总管回写",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 3,
-      "前置": [
-        "T13",
-        "T15"
-      ],
-      "要 UE": "不要；只读固定提交的入口文档和证据",
-      "标题": "文档入口事实差异：当前结论/版本/过期索引，不删历史",
-      "为什么": "既有n37不用用户再批；当前入口10-13旧结论会误导接续，能在不占实测/源码的夜班明确纠正方向。",
-      "只许改": [
-        "子任务不改文件；总管仅自己的记录/交接最小提示、看板pending/视图/HTML与队列T16回执"
-      ],
-      "提示词": "T16延续已批准n37文档卫生，只做入口事实差异审查，最多30分钟且08:00前收口。执行模型gpt-6.1-sol/max。只读派发时总管指定的最新已推送HEAD（开始即固定并记录）的交接.md当前结论、协作/全局看板.md现在、更新记录.md顶部、仓库梳理.md目录索引及必要最新来源；主F/UE/P4/GPU/浏览器不可碰，不改文件、不提交，不发其它线程消息。找最多10处会误导接续的明确过期事实，逐条给旧句/文件行、新句完整建议、依据文件行或提交、适用源时间和该保留的用户决定/原文。GlobalMD/快照/对账归云端，不提离线直接改它们；交接/目录可只建议一条醒目的源时间/最新索引提示，保留历史原文，不批量抹旧日志。不要把未来N23结果或尚在做的T14当完成，不重做8-b待处理扫描器、不改标准/权限/规则，不新增产品需求或源代码审计。无法确认保留待核，不为凑10条扫描全仓库或重读全史。返回紧凑差异表和最多3个最小可执行修正文案；总管核后只改自有记录/待同步，其他文件是否改由总管核源判断。本条范围是差异审查，不代表整个n37完结。",
-      "做完的标准": [
-        "每处旧句/建议新句有固定来源和文件行，未知标待核；最多10处不扩源码审计",
-        "历史原文/用户意见保留；不改云端专属副本/标准/权限/UE/生产代码",
-        "差异表可接续；n37未覆盖和待云端余项保留，不称总项全部完成"
-      ],
-      "派出": "2026-10-16T03:31:54+08:00 内部t10_offline_audit（gpt-6.1-sol/max）已实际受理；固定源ed388a66",
-      "开始": "2026-10-16T03:31:54+08:00",
-      "完成": "2026-10-16T03:45:06+08:00",
-      "提交": "b9e2a38d0aa701ccb8bab63e1eb2c65107c18f85",
-      "结果": "入口10处事实差异已核，固定源ed388a66；结果b9e2a38d，对话记录/对话框21-本机.md:146及交接顶部源时间提示。原历史正文/用户意见保留，云端MD/快照/对账及生产文件未动。T16子项完成，n37整体仍待云端及未覆盖欠项；T10和8-b四项不改。"
-    },
-    {
-      "编号": "T17",
-      "看板": "",
-      "交给": "本机实测（25）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
-      "标题": "只读排查：去年手游「新年烟花2.0」粒子里 Initial Color 带曲线的发射器（定位 + 分组，不改）",
-      "为什么": "用户 10-16 19:26 / 20:05：去年手游烟花有个别发射器把淡出做在 Initial Color 的曲线上，客户端查出手机实机上某些效果刚开始不显示；要先定位全部、对话框15 出改法、用户审过再写入。",
-      "只许改": [
-        "analysis/results/INITCOLOR_M_20261016/读数.json（新建）",
-        "analysis/results/INITCOLOR_M_20261016/清单.csv（新建）",
-        "analysis/results/INITCOLOR_M_20261016/清单.md（新建）"
-      ],
-      "提示词": "你是本机实测（25）。这是 dot 从 协作/派活队列.json 派来的任务 T17，按该文件「Codex 共同规则」执行（UE 只读）。先读 对话记录/对话框15.md 最后两段（用户 10-16 19:26 / 20:05）。\n\n背景（用户 10-16 20:05）：去年「新年烟花2.0」手游粒子里，有个别发射器在 Initial Color 上做了曲线（例：某发射器 Dot_B，Start Alpha = Distribution Float Constant Curve，(0 s, 0.4) → (1.9 s, 0.0)，Linear），客户端查出这会让手机实机上某些效果刚开始不显示。很多发射器是复制出来的，曲线数值相近。这次只读排查、定位，**不改任何东西**；改法由对话框15 出、用户审过后另派写入任务。\n\n1. 范围：手游 ResourceFX 表里 RowDescription / 名字含「新年烟花2.0」的行（10-14 备份 analysis/results/RESOURCEFX_B05_20261014/手游表_备份_写前.json 里是 23 行），按表**现在**的值取每行的 FxSP、FxSP_Low、FxSP_High，去重成粒子系统清单（10-14 是 46 个，全在 /Game/Effects/Props/FireWorks）。注意有的 ResourceId 是 P_EFX_FireWork_（没有 s），不要按名字前缀筛。表现在的值和备份不一样的，写出来。\n2. 每个粒子系统：LODDistances；每个发射器：EmitterName；**每个 LOD**（不只 LOD0）：bEnabled、Modules 全列表（序号、类、bEnabled、对象路径）。同一个模块对象被几个 LOD 共用的，标出来。\n3. 命中条件：ParticleModuleColor（Initial Color）或 ParticleModuleColor_Seeded 的 StartColor 或 StartAlpha，分布类名带 Curve（ConstantCurve / UniformCurve 等）。另外单独标：ParticleModuleColorScaleOverLife（Scale Color / Life）勾了 bEmitterTime 且是曲线的。命中模块读：两个分布的类名、全部关键点（InVal、OutVal、ArriveTangent、LeaveTangent、InterpMode）、bClampAlpha、RawDistribution 的 Table（TimeScale、TimeBias、Values、EntryCount、LockFlag）。没命中但有 Initial Color 的，也记下它是常量值多少。\n4. 命中的发射器再读（改法要靠这些判断）：Required（EmitterDuration、EmitterDurationLow、bEmitterDurationUseRange、EmitterLoops、EmitterDelay、EmitterDelayLow、bDelayFirstLoopOnly）；Spawn（Rate 分布与值、RateScale、BurstList 每条 Count / CountLow / Time、BurstScale）；有没有 Event Receiver Spawn / Spawn Per Unit（这些粒子不在 0 秒出生）；Lifetime 分布与值；这个 LOD 里所有 Color Over Life、Scale Color / Life 模块（ColorOverLife / AlphaOverLife、ColorScaleOverLife / AlphaScaleOverLife 的分布和关键点、bEmitterTime、在模块列表里的序号，排在 Initial Color 前面还是后面）。读不到的写「读不到」，不要猜。\n5. 把命中按「曲线关键点 + 出生方式」相同的分组（复制出来的应该是一组），每组给一个代表发射器。\n\n产出（只建这三个文件）：\n- analysis/results/INITCOLOR_M_20261016/读数.json：原始读回（每个请求的路径、返回）。\n- analysis/results/INITCOLOR_M_20261016/清单.csv：每个命中模块一行：粒子系统、引用它的 ResourceId 和中文名、发射器、LOD、模块序号、命中的是颜色 / Alpha / 都有、关键点、出生方式（Burst 时刻和数量 / Rate / 事件）、寿命、时长 / 循环 / 延迟、Scale Color / Life 和 Color Over Life 的情况、是否共用模块、分组号。\n- analysis/results/INITCOLOR_M_20261016/清单.md：第一句写结论（读了几个粒子系统、几个发射器、有 Initial Color 的几个、带曲线的几个、分几组、读失败几个）；然后分组表；最后列读失败和表值变化。\n\n禁止：保存任何资产或关卡、改属性、导入、替换、P4、开关 UE、改 tool/src / tool/workbench / 编排文件。私有工具代码、凭据、用户名不写进仓库。",
-      "做完的标准": [
-        "23 行 × FxSP / Low / High 去重后的每个粒子系统都读了，读失败的逐个写原因",
-        "每个发射器、每个 LOD 的 Initial Color 都列了（命中的有完整关键点和 Table）",
-        "命中发射器的出生方式、寿命、时长 / 延迟、Scale Color / Life、Color Over Life 都有值或写「读不到」",
-        "清单.md 第一句是计数结论，有分组表",
-        "没有保存、没有改任何资产；已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-16T20:32:17+08:00",
-      "完成": "2026-10-16T20:48:11+08:00",
-      "提交": "1735973854fad34f62b8ac00f216e7825a0fcc71",
-      "结果": "干跑完成，仅PC/手游当前ResourceFXTable的新年烟花2.0：各23行，去重PC22系统/手游46系统；全部443发射器、1103个LOD均读回。\nInitial Color曲线命中PC38发射器/手游29发射器（82独立模块、181条LOD引用），按完整曲线与出生配置分27组；系统/必需字段读取失败0，表值精确复核无漂移，未修改或保存任何UE资产。\n结果：analysis/results/INITCOLOR_M_20261016/读数.json、清单.csv、清单.md；已交叉核对并推送main。RowName附加查询失败2次已保留；PC旧基线缺8行已注明。后续迁移需审阅，本轮不写入。",
-      "执行者": "T17干跑（Codex，本轮用户直接认领）",
-      "本轮范围": "用户2026-10-16本轮原话：云端有一个T17的任务，你去认领，范围仅限ResourcesFX表PC与手游的2.0内容，不用扩大，先干跑。覆盖原任务仅手游的范围，PC与手游均仅取当前ResourceFXTable中行名/RowDescription含新年烟花2.0的行及其FxSP/FxSP_Low/FxSP_High引用；只读定位分组，不改资产。"
-    },
-    {
-      "编号": "T18",
-      "看板": "",
-      "交给": "T17干跑（当前Codex对话定时接续，dot不另派）",
-      "在哪": "本机",
-      "状态": "等前置",
-      "优先": 1,
-      "前置": [
-        "T17"
-      ],
-      "前置说明": "用户明确暂停：先让画质排查工作。T18已释放UE，定时接续PAUSED，等用户通知恢复。",
-      "要 UE": "要：明确空闲，允许仅新建沙盒副本和短时验证；正式资产只读。",
-      "标题": "Initial Color首点/零Alpha采样沙盒验证：PC与手游2.0三层复现，复核27组修改方案（正式资产先不改）",
-      "为什么": "用户手测两层RGB看似只用首点，Hero_M的Second_Explode_01曲线首点Alpha=0仍可见，改常量0后不显示；要求晚间UE空闲做沙盒验证，查清机制后再比较方案。不能据此认定只读首点或首个非零值。",
-      "只许改": [
-        "analysis/results/INITCOLOR_SANDBOX_20261016/（仅本任务原始请求、试验矩阵、截图及结论）",
-        "analysis/scripts/initcolor_sandbox_20261016.py（仅确需时新建）",
-        "analysis/scripts/initcolor_sandbox_20261016.mjs（仅确需时新建）",
-        "对话记录/对话框T17.md",
-        "协作/派活队列.json（仅T18）",
-        "协作/状态清单.json（仅本任务UE认领及释放）"
-      ],
-      "提示词": "你是当前 T17 干跑对话的接续执行者。用户 2026-10-16 晚上要求：UE 有空时做沙盒验证，查清 Initial Color 首点/零值的现象，再对比结论和修改方案。T17 的只读审计已经完成，不重开、不重扫全库。本条是 T18，先实验、后报告；正式资产修改仍等用户审阅本次结论。\n\n一、时间和占用（先满足再认领，不占着 UE 等）：香港时间 2026-10-16 22:00 至 2026-10-17 08:00，每小时整点由当前对话的定时接续检查一次。读取最新 origin/main 和 F:/FireWorksLab 本地未提交的 协作/状态清单.json，核对 UE 单写认领及相关最近记录；服务在线不等于空闲，编辑器无输入也不等于用户已让出。已有明确未释放占用或不能确认空闲，本次不进 UE、不抢锁，保持等前置。不自动启动/关闭 UE，不发消息打扰其他对话。窗口结束仍不具备条件，记录实际障碍一次并暂停定时任务。前置满足后先将本条改在做、记实际开始，按共同规则单文件认领推送，并在共享状态中只新增自己的 T18 UE 窗口认领；写前再次检查并发。实际 UE 工作最多 60 分钟，等候不算。\n\n二、授权边界：遵守仓库 AGENTS.md、CLAUDE.md、协作/标准.md。仅本条覆盖共同规则中“UE 只读/不能改任何属性或保存”的部分：允许通过现有 GPUECli 在新的 /Game/Effects/_Sandbox/InitColor_T18_20261016/<本次运行号>/ 下复制粒子、修改副本的模块/曲线/出生参数、保存这些新沙盒副本，并短时放置本任务临时 Actor、截图读回。禁止修改或保存原资源、材质/贴图、ResourceFX 表、关卡、导演、P4；不写引擎 C++，不新建材质，不改工具/导入器。不得批量 SaveAll。复制 API 可能自动落盘，调用前验证目标前缀不存在且只落本次目录；所有内嵌模块都必须属于副本，发现引用原模块就停止修改该副本，不能污染共享源对象。没有可靠沙盒操作能力就报告具体缺口，不猜接口或绕过限制。不使用曾导致崩溃的 ProfileGPU。\n\n三、固定代表与基线：只用 T17 已归档的 PC/手游新年烟花2.0 范围。先验证用户这三层：\n1) /Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Medium_Yellow_HD.P_EFX_FireWorks_Medium_Yellow_HD：发射器索引2 FIieWorksFlower_01、索引7 FireWork_Explode_B；用对象路径和索引确认，不能只靠同名。\n2) /Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_M.P_EFX_FireWorks_Hero_M：发射器索引1 Second_Explode_01，归档子对象 ParticleSpriteEmitter_4。\n必要时只加 T17 范围内一个 GPU Dot_B 作 CPU/GPU 差异对照；若事件采样成为未解变量，只加归档 AI_RPG_M 的 FireWork_Explode_B。没有差异证据不扩大样本。\n输入：analysis/results/INITCOLOR_M_20261016/读数.json、清单.csv、清单.md 和 对话记录/对话框T17.md。读数的 requests + objectsIndex 才是原始属性，精简 assets 描述不重复存全部 props。先只读保存代表当前内存属性、原 uasset 磁盘哈希及相关开关；和 T17 基线比较，用户刚才的手测可能未保存，不能把当前手测当原始效果，也不能恢复/保存用户原件。需要原曲线时仅在新沙盒中按归档重建。所有报告区分用户反馈、归档配置、当前读回和实际运行证据。\n\n四、最小实验矩阵（顺序执行，先解核心问题再决定加测）：\nA. 用源材质、固定寿命/一次循环，在沙盒中先用 Alpha 常量0和1验证显示对照；将 RGB 设可看清且不饱和的固定值，Scale Color/Life 在隔离副本中设 RGB/Alpha 都为1。原系统和完整链副本保持另外一份，不能混淆隔离条件与最终效果。\nB. 对 Initial Alpha 使用 (0,0)、(0.2,1)、(0.8,0) Linear；将 Rate=0，在已知的发射器时刻分别安排单粒子 Burst，例如0、0.1、0.2、0.5。核对实际出生时刻/首个 Tick（接口支持才读真实粒子值；不支持就用定时控制和图像证据说明测量精度）。同一出生粒子随寿命观察，与不同出生时刻的粒子比较。另以常量0、0.4、1和“只改变后续点，首点仍0”的曲线对照，区分按出生时刻插值、永远首点、取首个非零值，不能靠一张亮图判断。\nC. 对 Initial RGB 使用原30/80开头曲线和常量首点对照；再在隔离副本用低亮度红→绿→蓝诊断曲线和可控非零出生时刻，排除 HDR 饱和/Bloom 让不同数值看起来一样。确认出生后颜色是否保持，再与相同曲线移到 Color Over Life（RelativeTime）的对照比较。两类时间轴不同不能直接称等价。延迟与循环时钟只有出现边界矛盾再加测。\nD. 恢复源出生配置及完整颜色模块链，比较：归档原配置；Initial Alpha 候选常量；首点常量假设；RGB迁移 Color Over Life、Alpha=1且放在所有 Scale 前。Hero_M 必须单独检查“Alpha常量1后原来淡入淡出是否消失”，Scale Alpha原为1不能承担原本不存在的淡出。两个 Scale 的乘法、Color Over Life 的覆盖分别验证，不能把两层 Color Over Life 当作相乘。不要为迁移方便改已有曲线时间/强度。\nE. 每项记录资产/发射器/LOD/模块索引、分布类、关键点、采样时间类型、实际出生配置、Scale位置和参数、曝光/机位/LOD、截图时刻及观察。关键0点边界至少复现3次；其余只做必要对照。读取 authored points 与 RawDistribution lookup table，若运行与 authored 不符再查缓存/烘焙差异；没有证据不把缓存故障当原因。没有本机 cooked 手机运行条件时明确“仅编辑器实证”，不称已修复客户端问题。\n\n五、回到方案和验收：先回答“是否只能取首点”“是否跳过零值”“RGB/Alpha是否同一规则”“既有Scale如何影响画面”，每项区分已证实、推断、未验证及适用CPU/GPU范围。再复核之前49+18/三种候选的前提，必要时重分67发射器，不保留错误简化：原A30（已有淡出、常量基色）、B19（Scale Alpha原为1、需安排淡出）、C18（RGB曲线迁移）均只是未验证候选。将结论映射回原27组/67层，优先给保留现有效果所需的最简单方案、强度/时序/淡出变化及用户验收点，不为调优扩大范围。数据不足就把需补验证的组列出，不自动取首点/峰值/全部设1。\n\n六、收口：输出原始请求与写入目标/返回、试验矩阵CSV、必要截图、结论与修改方案，放在 analysis/results/INITCOLOR_SANDBOX_20261016/；辅助脚本仅在需要时放 analysis/scripts/initcolor_sandbox_20261016.py 或 .mjs，私有工具实现/凭据不入库。结束清理只属于T18的临时Actor/回调，恢复本任务改动的机位/曝光/时间开关，绝不覆盖开始后用户新改动；不保存地图。复读并比较源内存属性与原文件哈希，发现差异先确认是否本任务造成，不能自行回滚用户操作。释放自己UE认领，正常门禁后只提交白名单报告、记录和本条回执。任务完成或无法继续时暂停当前定时接续；无变化的等候不重复汇报，有实证结论、执行失败或需要用户决策时在当前对话报告。完成只表示本次排查及方案交付，正式资产批改和用户验收另记。",
-      "做完的标准": [
-        "三个用户代表完成可复现的首点/非零出生时刻/常量0对照，未做的明确说明",
-        "区分EmitterTime出生采样和RelativeTime随寿命采样，Alpha和RGB分别有证据",
-        "分离Scale乘法、Color Over Life覆盖及HDR显示干扰，不把文档预期当当前引擎实测",
-        "对比三种旧候选并映射回原27组/67层，给最简单修改建议和验收点",
-        "源资产属性及磁盘哈希写前写后核对；临时Actor/回调清理，UE占用释放，未写正式资源/表/材质/P4",
-        "报告正常检查提交推送；定时接续结束，本次结论交用户审阅后才决定正式修改"
-      ],
-      "创建": "2026-10-16T21:51:02+08:00",
-      "派出": "",
-      "开始": "2026-10-16T22:05:46+08:00",
-      "完成": "",
-      "提交": "",
-      "结果": "用户明确暂停，画质排查优先；T18临时Actor0/回调None，单写占用已释放，定时接续PAUSED。\n本轮仅完成基线/Alpha常量0、0.4、1/曲线Burst设为0首轮，非零出生/RGB/完整Scale链未验证，正式资源未写入。首次沙盒22:15崩溃已诊断并修正数组写入格式，两个源uasset磁盘SHA256相同；内存重启差异不能称未变。\n暂停回执已归档；原始请求、截图、实验配置及未审核辅助脚本保留在本任务工作树。等用户通知恢复，不自动重跑。；【10-18 注】状态写「等前置」是因为没有「暂停」这个状态：实际是用户 10-16 22:29 明确暂停，T17 已完成也不要改成待派，等用户通知。",
-      "执行者": "T17干跑（当前Codex对话）",
-      "定时接续": {
-        "id": "t18-initial-color",
-        "类型": "当前对话heartbeat",
-        "状态": "PAUSED",
-        "窗口": "2026-10-16 22:00—2026-10-17 08:00（香港时间，整点检查；结束后暂停）",
-        "已核实": "应用工具更新成功，落盘status=PAUSED，当前对话目标未变。"
-      },
-      "用户暂停": {
-        "时间": "2026-10-16T22:29:18+08:00",
-        "原话": "你先暂停吧，先让画质排查工作",
-        "恢复条件": "等用户明确恢复；不自动接着执行"
-      }
-    },
-    {
-      "编号": "T19",
-      "看板": "",
-      "交给": "本机实测（25）（或本机同步（8））",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（例：用户 10-16 22:xx 暂停 T18 做画质排查）就等，别抢",
-      "标题": "只读核对 B09 主角：2830「超大_尾缀」（RiseTrail_Hero）PC / 手游指向哪个粒子、400 m 的 RiseTrail_Hero_L 在不在 UE 里、到顶多高多久；新网格金垂柳（GoldKamuro PC / 手游）的发射器、寿命、包围盒和大小",
-      "为什么": "用户 10-17 00:47：「我重新用mesh生成了一份新的金垂柳，现在很大，停留时间也变长了，大约为14秒……我希望可以变高点，用之前400m的高度？」「手游的金垂柳我也替换上去了」。B09（工作台 16.0.44，协作/编排B09.md）主角挂 2830 RiseTrail_Hero、开花点放在 398 m、寿命按 14 s、缩放 ×1.0、P0 / P4 / P8 间距 375 m。但 10-16 04:06 的读回（analysis/results/资源规范统一_20261016/采集/resourcefx_30.json）里 2830 和 2831 大型_尾缀都指 RiseTrail_L_HD（330 m，手游 RiseTrail_L_M）；400 m 的 P_EFX_FireWorks_RiseTrail_Hero_L_HD 在 10-12 导入器回执里建过（analysis/results/UE_READBACK_20261015/黑块排查.json 里的 receipt 004bd2f24f5f28506b10），10-13 本机同步核高度时又写「UE 里没有 RiseTrail_Hero_L」（analysis/results/UE_HEIGHT_1621/结论.json）。新垂柳的真实大小 / 寿命 / 开销没人读过，B09 的间距和 14 s 都是按用户口述。",
-      "只许改": [
-        "analysis/results/UE_READBACK_20261017/B09主角读数.json（新建）",
-        "analysis/results/UE_READBACK_20261017/B09主角读数.md（新建）"
-      ],
-      "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T19，按该文件「Codex 共同规则」执行（UE 只读）。先读：协作/编排B09.md 第 1 节第 1 条和第 2 节、analysis/results/UE_HEIGHT_1621/结论.json（尾缀高度怎么从 RiseLoop vZ / sizeY 算）、analysis/results/UE_READBACK_20261015/B08资源读数.md（上次读金垂柳的方法）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable，读三行 P_EFX_FireWorks_RiseTrail_Hero、P_EFX_FireWorks_NY_Trail_Large、P_EFX_FireWorks_GoldKamuro 的 FxSP / FxSP_Low / FxSP_High / EffectScale / FXType / MaxInstanceNum（行名一起记）。\n2. 搜资产名含 RiseTrail_Hero 的粒子系统（PC _HD 和手机版）：有没有、路径。找到的和 RiseTrail_L_HD / RiseTrail_L_M 各读 RiseLoop / Far 发射器的 Initial Velocity（Z）、Const Acceleration、Lifetime、Initial Size / Size Scale，按 UE_HEIGHT_1621 同一算法算到顶高度（m）和升空时间（s），和 400 m / 7.37 s、330 m / 7.37 s 比。\n3. GoldKamuro：按第 1 步 PC / 手游 FxSP 指的粒子，读每个发射器 LOD0：TypeData（Mesh / GPU / 无）、Mesh 资产路径和顶点数（读得到就读）、Required（Material、ScreenAlignment、bUseLocalSpace、EmitterDuration、EmitterLoops、UseFixedRelativeBoundingBox / FixedRelativeBoundingBox）、Spawn、Lifetime、Initial Size、Size By Life、Color Over Life 时长、Dynamic Parameter。估：一朵从开花到最后一个发射器结束多少秒；包围盒（或网格范围）给出的宽度和往下垂多少 m（EffectScale 1；B09 实际 0.998）；PC 有几个发射器、几个 GPU。\n4. B09主角读数.md 第一句写三条：① 2830 现在 PC / 手游各指哪个粒子；② 400 m 的主角尾缀粒子在不在、到顶几 m / 几 s；③ 新金垂柳 PC / 手游寿命、宽度、下垂、发射器数。再写「给跨年秀（22）」一段：B09 的 398 m、14 s、375 m 间距、×1.0 哪个要改、改成多少。原始值存 B09主角读数.json。",
-      "做完的标准": [
-        "三行 ResourceFX（PC + 手游）读数齐全，读不到的写原因",
-        "写清 RiseTrail_Hero_L 粒子在不在（PC / 手游），在的话给到顶高度和升空时间及算法",
-        "GoldKamuro PC / 手游各有寿命、宽度、下垂、发射器 / GPU 数，写清从哪些模块算的",
-        "B09主角读数.md 第一句三条结论 + 「给跨年秀（22）」一段",
-        "没有任何写入 / 保存；已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-17T05:11:35+08:00",
-      "完成": "2026-10-17T12:18:29+08:00",
-      "提交": "b52f42228d222f9861aacb58c318e3dae4efaf23（补测；原只读读数 abe2c9d0 已在 main）",
-      "结果": "完成（WorkBuddy 10-17 12:20 接续）：2830 现指 RiseTrail_Hero_HD / _M，UE 实测星头到顶 400.4 / 400.6–400.9 m @ 约 7.1 s（两轮一致；对照 L_HD 330.4 m @ 7.41 s，与读数 330.18 m @ 7.365 s 吻合），7.37 s 时 399.5 / 399.7 m → B09 开花点 397.92 m、7.37 s 不用改。报告 analysis/results/UE_READBACK_20261017/B09主角_Hero到顶实测.md；金垂柳 PC 2 发射器 / 1 GPU、手游 1 / 0、寿命 14–14.5 s 等见 B09主角读数.md。用户不用做什么。注：原卡写 UE 只读，本次按用户 12:01 指令建了 WB19_ 临时对象（未保存、已销毁、现场前后逐项相同）。"
-    },
-    {
-      "编号": "T20",
-      "看板": "",
-      "交给": "烟花编排（22）-本机（用户 10-19 01:5x「你跑T22……顺便把看板其它相关联的一起测试了吧……开始执行」）",
-      "在哪": "本机",
-      "状态": "卡住",
-      "优先": 1,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（看状态清单「共享文件」有没有 UE 写入 / 播放的登记）就等，别抢",
-      "标题": "最终候选只读体检（基线）：ResourceFX 3.0 每一行的粒子 / 材质 / 贴图——资源规范四项、NeverStream、Ramp 寻址、NoMip、局部全分辨率、磁盘未提交",
-      "为什么": "用户 10-17：最迟 10-20 最终全量，测完不能改编排和新增性能相关资源；10-18：「最终候选的只读体检，你可以设计好一个派活任务，写好提示词，然后夜班去做」「我们的导入导出永远不能有neverstream的勾选」。测前要知道 UE 里最终候选的真实状态：26 的 recheck.mjs 只核过 115 包四项；画质线改过一批贴图 / 材质（NoMip、Clamp、局部全分辨率）；10-17 扫描有 152 张 NeverStream；窜天猴 PC / 手游这两天要重导。今晚先出基线，周一定稿后 T21 用同一脚本复检。",
-      "只许改": [
-        "analysis/results/FINAL_AUDIT_20261018/audit.mjs（新建）",
-        "analysis/results/FINAL_AUDIT_20261018/体检_基线.json（新建）",
-        "analysis/results/FINAL_AUDIT_20261018/体检_基线.md（新建）"
-      ],
-      "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T20，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable 里所有「跨年烟花3.0_」行：行名、FxSP / FxSP_Low / FxSP_High、EffectScale、FXType、MaxInstanceNum。再对照当前编排 tool/workbench/public/data/cloud-latest.json 用到的 ResourceId，标出「编排里用到 / 没用到」。\n2. 每个被指到的粒子系统（PC _HD、手游 _M，含 Low / High）：bUseFixedRelativeBoundingBox / FixedRelativeBoundingBox（是不是 ±100000）、CullingDistance、UpdateTime_FPS；每个发射器每个 LOD 的 Required：Material、ScreenAlignment、UVFlippingMode、bUseLocalSpace、bUseMaxDrawCount / MaxDrawCount，是否 GPU。\n3. 每个用到的材质实例：Parent、EmissiveDissolve（有没有覆盖、值）、BasePropertyOverrides 里的 bOverride_TranslucencyRenderFullPercentageLast / TranslucencyRenderFullPercentageLast（局部全分辨率，影响性能）、贴图参数指向哪些贴图。\n4. 每张用到的贴图：尺寸、NeverStream、MipGenSettings、AddressX / AddressY、LODGroup、MaxTextureSize、CompressionSettings。\n5. 磁盘只读核：这些 uasset 是否只读（只读多半已提交 P4；可写 = 迁出或改了没提交），照 26 的 disk_check.py，只看不改。\n6. 写 analysis/results/FINAL_AUDIT_20261018/体检_基线.md：第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 和手游都应 NoMip；不是 NoMip 的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。原始读数写 体检_基线.json（每个资产一条，含路径），读 UE 的脚本存 audit.mjs，要能原样重跑（T21 用）。",
-      "做完的标准": [
-        "ResourceFX 两张表的 3.0 行读全，编排用到 / 没用到标清",
-        "每个粒子系统、材质实例、贴图的上述字段都有读数，读不到的写原因",
-        "体检_基线.md 第一段结论数字 + 三段分类；NeverStream=true 全部列出",
-        "audit.mjs 能原样重跑",
-        "没有任何写入 / 保存 / P4 操作；已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-19T08:12:53+08:00",
-      "完成": "",
-      "提交": "",
-      "结果": "烟花编排（22）-本机 只做了精简版：封板编排实际用到的行（PC 30 / 手游 12），见 analysis/results/COLOR_BASELINE_20261019/规范体检.md——烟花主序列全 NoMip、烟花 Ramp 全 Clamp+NoMip、贴图组全 DistantVFX、没有 ±100000 盒；共享 T_6DLight_EmissiveRamp_01 NeverStream=True + Y Wrap（银彩菊老 GoldSpark 那套在用）、老 GoldSpark 三个 MI EmissiveDissolve=1。没做：ResourceFX 3.0 全部行、磁盘 / P4 只读核——UE 10-19 02:13 崩溃（我跑 overdraw 时 ProfileGPU 紧接 HighResShot 触发 D3D12 断言），按规则不自己开 UE。 【10-22】10-19 08:1x 补跑认领后会话中断，没做；状态改回卡住（等 22 或派活重开）。"
-    },
-    {
-      "编号": "T21",
-      "看板": "",
-      "交给": "本机实测（25）（没有就本机同步（8））",
-      "在哪": "本机",
-      "状态": "等前置",
-      "优先": 1,
-      "前置": [
-        "T20"
-      ],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（看状态清单「共享文件」有没有 UE 写入 / 播放的登记）就等，别抢",
-      "标题": "最终候选只读体检（定稿复检）：同 T20，用 audit.mjs 重跑，和基线比",
-      "为什么": "T20 是 10-18 的基线；最终候选（B11 之后的定稿编排、窜天猴 PC / 手游重导完）周一 10-19 才定。定稿后复检一次，给 10-20 最终全量当「测的是什么」的清单。总管或用户确认定稿后，把本条改成「待派」。",
-      "只许改": [
-        "analysis/results/FINAL_AUDIT_20261018/体检_定稿.json（新建）",
-        "analysis/results/FINAL_AUDIT_20261018/体检_定稿.md（新建）",
-        "analysis/results/FINAL_AUDIT_20261018/audit.mjs（只修 bug）"
-      ],
-      "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T21，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读 T20 的 体检_基线.md 和 audit.mjs，再按 T20 的读法重读。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n用 analysis/results/FINAL_AUDIT_20261018/audit.mjs 原样重跑（脚本有 bug 只修 bug，不改口径），输出 体检_定稿.json / 体检_定稿.md。体检_定稿.md 第一段同 T20 的结论数字，并写和基线比哪些变了（新增 / 删掉的行、改了的资产）；重点核窜天猴新导入的 PC / 手游四项和 NeverStream、定稿编排用到的每一行。第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 和手游都应 NoMip；不是 NoMip 的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。",
-      "做完的标准": [
-        "同 T20 的读数齐全",
-        "体检_定稿.md 有和基线的差异清单",
-        "窜天猴 PC / 手游四项与 NeverStream 单独写结论",
-        "没有任何写入 / 保存 / P4 操作；已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "",
-      "完成": "",
-      "提交": "",
-      "结果": ""
-    },
-    {
-      "编号": "T22",
-      "看板": "",
-      "交给": "烟花编排（22）-本机（用户 10-19 01:5x「你跑T22……顺便把看板其它相关联的一起测试了吧……开始执行」）",
-      "在哪": "本机",
-      "状态": "完成",
-      "优先": 2,
-      "前置": [],
-      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（看状态清单「共享文件」有没有 UE 写入 / 播放的登记）就等，别抢",
-      "标题": "封板基线：编排用到的每一行（PC + 手游）颜色 / 大小 / 播放时间全记一遍",
-      "为什么": "用户 10-19 01:0x「今晚封板后希望你可以设计一个任务，把现在所有的颜色/大小/播放时间都记录标定一下，后面做颜色提升方案需要用」。等用户说「封板了」再由 22 或总管改成「待派」（封板前资源还在改，记了也会过期）。",
-      "只许改": [
-        "analysis/results/COLOR_BASELINE_20261019/标定.json（新建）",
-        "analysis/results/COLOR_BASELINE_20261019/标定.md（新建）",
-        "analysis/results/COLOR_BASELINE_20261019/色板.png（新建）",
-        "analysis/results/COLOR_BASELINE_20261019/读取.py 或 .mjs（新建，只读脚本）"
-      ],
-      "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T22，按该文件「Codex 共同规则」执行（UE 只读）。先读：CLAUDE.md 第 2、8 节；协作/编排B11.md 修订2 / 修订3 两节；对话记录/对话框22-本机.md（10-18 23:3x「尺寸数据错了」那段）；spec/cascade_params_v1.md 第 295–296 行（Ramp 按灰度取色、末格黑）；analysis/local/N18_22_新大型行只读_20261018_215919/核对新行与粒子.py（读法照抄：只用 /datatable/search、/object/get；Git Bash 里传 /Game 路径要加 MSYS_NO_PATHCONV=1；连接被中止就退避重试）。\n\n目的：用户 10-19 01:0x「今晚封板后……把现在所有的颜色/大小/播放时间都记录标定一下，后面做颜色提升方案需要用」。这是封板时的基线，不改任何东西。\n\n范围：封板编排 FXtools/节目/NewYearFireWorks_v01/导演表-B11修订3-收尾金垂柳-一张表.json（若用户之后另发了定稿版，以 状态清单「共享文件」里 22 最新的那条为准）实际用到的每一个 FXResourceId，PC 表（/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable）和手游表（/Game/DataTables/Resource/ResourceFXTable）分开。每一行记：\n1) 表：中文行名、ResourceId、FxSP、EffectScale；\n2) 编排用量：按 平台 × 高中低 展开的次数、导演表缩放的取值和次数、第一次 / 最后一次开花时刻、同一时刻最多几朵（展开写法照 analysis/scripts/编排数量对比.py）；\n3) 粒子：每个发射器（含 LOD0 关掉的，标出来）的材质实例、Screen Alignment、Emitter Duration / Delay、Lifetime、Initial Size、Size By Life 全部关键帧、Initial Color / Color_Seeded 的范围、Color Over Life / Color Scale Over Life / Alpha 的全部关键帧（颜色 0–1 和亮度倍数分开写）、Dynamic Parameter 帧号曲线；\n4) 材质实例：父材质、全部贴图参数（MainTex / Ramp / Dissolve 等路径）、标量和向量参数（EmissiveDissolve 等）；Ramp 若在仓库里找得到同名或同 SHA 的 PNG，取 0 / 64 / 128 / 192 / 254 格的颜色，找不到写「未取到像素」；\n5) 大小：面片边长 = Initial Size × Size By Life 最大值 × EffectScale；能找到主图源 PNG 的，按每格亮度外沿（阈值 8/255）× 面片推算花径并写「推算」，找不到写「未测」。已知参考：大型_B/E 银彩菊、大型_G_银白菊 主图 = analysis/results/JM1/JinMangJu_Fixed/；新金芒菊 = analysis/local/输出/金芒菊小起势_20261018/。\n\n输出：analysis/results/COLOR_BASELINE_20261019/标定.json（全部数值）、标定.md（第一段：行数、粒子数、读不到的项；然后每行一小节，表格写颜色 / 大小 / 时间；最后列「推算」和「未测」清单）、色板.png（每行一条：按 Ramp × Color Over Life 在开花后 0.2 / 1 / 2 / 3 s 的颜色画色块，只是示意）。不要评价好不好看，不要给改色建议。",
-      "做完的标准": [
-        "编排用到的每个 ResourceId 都有一节（PC、手游分开），一个不漏；读不到的写明",
-        "颜色曲线、大小、时间都是读回原值；推算的花径单独标「推算」",
-        "色板.png 每行一条",
-        "没有任何写入 / 保存 / P4 / 临时 Actor；已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "2026-10-19T01:53:14+08:00",
-      "完成": "2026-10-19T02:22:30+08:00",
-      "提交": "",
-      "结果": "烟花编排（22）-本机 只读读回（2612 次、0 错误，UE 崩溃前完成）：analysis/results/COLOR_BASELINE_20261019/ 标定.json / 标定.md / 色板.png / 看法.md。PC 30、手游 12 个 ResourceId，40 个粒子全是 1 级 LOD。缺：仓库里没有大多数 Ramp / 主图源 PNG，Ramp 取色与按主图推算花径多为「未测」，色板没乘 Ramp 颜色（看法.md 写明）；UE 开着时可只读导出 Ramp 补。"
-    },
-    {
-      "编号": "T23",
-      "看板": "",
-      "交给": "本机同步（8）",
-      "在哪": "本机",
-      "状态": "取消",
-      "优先": 0,
-      "前置": [],
-      "要 UE": "不要（只读 UE 日志文件，不发 UE 请求）",
-      "标题": "只读核实仙女棒手机包 Error 87：19:39 跑的是哪一版导入器；文件入口的导入器副本是不是旧的；核实后按 启动烘焙器.cmd 同样的方式重新生成副本",
-      "为什么": "用户 10-19 19:45：仙女棒（SkyRocketSparkler / Sparkler_Graph）导入仍报 UE Python WindowsError [Error 87]，导入器（5）12:06 已部署独立交付 2.29（证明改 stdin）。19:39 截图日志措辞还是 2.28 的「导入完成 → 导入中止」（2.29 改成「资产写入完成，待交付登记」）。导出（23）推断：用户从文件入口打开烘焙器，交付页加载的是 tool/local_delivery/runtime/importer.html 副本，它只在 启动烘焙器.cmd / tool/build.py 时重新生成（启动全部工具.cmd 不生成），12:06 以后没人重新生成 → 还是 2.28。要证据。",
-      "只许改": [
-        "analysis/results/IMPORT_ERR87_20261019/核实.md（新建）",
-        "analysis/results/IMPORT_ERR87_20261019/核实.json（新建）",
-        "tool/local_delivery/runtime/importer.html（gitignore 的本机副本：只许用第 4 步那条命令重新生成，不许手改）"
-      ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T23，按该文件「Codex 共同规则」执行；这条不发任何 UE 请求，只读文件。先读 analysis/probe/导入收尾修复_2.29.md、tool/local_delivery/prepare_local.py、tool/src/js/67_delivery.js 第 83–90 行（文件入口加载 local_delivery/runtime/importer.html，HTTP 入口加载 8034 /delivery-host）。\n\n1. 两份导入器：读 %USERPROFILE%/.fireworkslab/delivery-launcher.json 的 importerPath（应是 D:/FXTools/DFWorkbench/df-fireworks-delivery_locmai.html）。记这个源文件的 sha256、大小、修改时间；记用户工作副本（F:/FireWorksLab，或用户实际打开烘焙器的那份仓库）里 tool/local_delivery/runtime/importer.html 的修改时间、大小。副本是源文件加了两段注入脚本，所以不能直接比 sha：在副本里找源文件里才有的 2.29 标志（例如 proofs-stdin、资产写入完成，待交付登记、deliveryRegistrationOnly、补写交付登记），两份各数一遍，写有 / 没有。\n2. UE 日志（只读文件）：工程 Saved/Logs 下 10-19 当天的日志（含 DeltaForce*.log 及备份），找 19:3x 和 11:31 的「Error 87」前后：UE Python 执行的那段代码（<string> 第 6 行附近）、subprocess 启动的命令——命令里有没有 --proofs（旧）还是 --proofs-stdin（新），命令长度（字符数）。原样摘关键几行（去掉凭据和用户名，证明正文不用贴，只写长度）。\n3. 用户当时从哪个入口打开：看浏览器历史不行就不看；能从 8034 交付服务日志（delivery-server.log）里 19:3x 有没有 /delivery-host 或 /importer 请求判断（有 → HTTP 入口；没有、但有 /directory-transport → 文件入口）。\n4. 如果第 1 步确认副本里没有 2.29 标志：在用户工作副本根目录运行 python -X utf8 tool/local_delivery/launcher.py --no-browser（和双击 启动烘焙器.cmd --no-browser 一样：重新生成副本、复用已在跑的 8034，不开浏览器、不导入），再数一遍副本里的 2.29 标志，应为有。\n5. 原工作台 D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html、tool/烟花编排工作台.html 里有没有同样会把累计记录塞进命令行的 --proofs 调用（只数、只写结论；私有代码不复制进仓库）。\n6. 判定（一句）：A 19:39 跑的是旧副本（2.28），重新生成后就是 2.29；B 19:39 跑的已经是 2.29、命令也是 --proofs-stdin，还是 Error 87（写出那条命令和长度，这就是另一个原因）；C 证据不够（写缺什么）。\n7. 输出 analysis/results/IMPORT_ERR87_20261019/核实.json（{format:'df.import-err87-check/1', readAt, importerSource:{path,sha256,size,mtime,has229}, runtimeCopy:{path,size,mtime,has229Before,has229After}, ueLog:[...], entry, otherCopies:[...], verdict, why}）和 核实.md（第一句写判定；最后一段「给导出（23）」）。\n\n禁止：点检查 / 导入 / 补写登记、发 UE 请求、改私有导入器、改 tool/src、手改副本、把私有代码或凭据写进仓库。",
-      "做完的标准": [
-        "两份导入器的 2.29 标志有 / 没有写清，副本修改时间写清",
-        "UE 日志 11:31、19:3x 两次 Error 87 的启动命令是 --proofs 还是 --proofs-stdin、长度多少",
-        "判定 A / B / C 之一，写依据",
-        "若是 A：副本已重新生成、复数确认有 2.29 标志",
-        "已提交推送，本条写完成、提交号、结果"
-      ],
-      "派出": "",
-      "开始": "",
-      "完成": "",
-      "提交": "",
-      "结果": "取消（导出（23）2026-10-19 21:xx）：导入器（5）20:23 已做完同样的核实——19:39 实际跑旧 --proofs，命令 36,605 字符，PC 包登记中止；F 盘副本 20:10 已换成 2.29（analysis/probe/导入文件入口复核_20261019.md / .json）。不重复派。"
-    }
-  ],
-  "夜班怎么取": [
-    "只取「在哪」=「云端」、「状态」=「待派」、前置都完成的；按「优先」从小到大；每一班最多做 2 条（含收口以外的任何改动）。",
-    "执行规则同「Codex 共同规则」，把其中的 UE 相关条换成：云端碰不到 UE，需要 UE 的任务不归夜班。",
-    "任务写了「对方在线就跳过」的：按 协作/状态清单.json 的「在线」和对方对话记录的最近提交时间判断，90 分钟内有动静就不做，留「待派」。"
-  ]
+  {
+   "编号": "T01",
+   "看板": "n07",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "导入前先读回：红彗星扇、银扇和 3 个要重导的资源在 UE 里的现值（含手调亮度）",
+   "为什么": "用户周三要导入 Comet / Silver 3.0 替换 FanComet_01 / FanSilver_01，导出（23）还要重导金锦菊、橙辉星、小青柠。UE 里这些粒子有人手调过（亮度 ×5–×100、寿命、面片尺寸，见 analysis/results/ENGINE_BAKER_SYNC_20261011/看法.md §1、§3），导入会把这些值冲掉。先读一份存档，导完才能对照写回。必须在用户导入之前做完。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261014/导入前现值.json",
+    "analysis/results/UE_READBACK_20261014/导入前现值.md",
+    "analysis/scripts/ue_readback_values.mjs（新建；只读脚本，可选，方便以后每次重导前复用）"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T01，按该文件「Codex 共同规则」执行，先读你自己的对话记录 对话记录/对话框8.md 最近两节了解上下文。\n\n任务：在用户导入新版之前，只读读回 5 个粒子系统在 UE 里的现值，存档备查。\n\n对象（资源表 ResourceFX 的 PC 行 → 粒子系统；名字以 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里的路径为准）：\n1. P_EFX_FireWorks_FanComet_01 → P_EFX_FireWorks_FanComet_01_HD（红彗星扇，将被 Comet 3.0 替换）\n2. P_EFX_FireWorks_FanSilver_01 → P_EFX_FireWorks_FanSilver_01_HD（银扇，将被 Silver 3.0 替换）\n3. 金锦菊 GoldSpark 那一行引用的粒子（注意：金锦菊用的粒子叫 GoldRay_HD，金芒菊用的叫 GoldSpark_HD，名字是对调的，按资源表那一行的引用路径读，别按名字猜）\n4. 橙辉星 OrangeGlitter 那一行引用的粒子（Combo_HD）\n5. 小青柠 Lime 那一行引用的粒子（LimeStar_HD）\n如果某一行在资源表里找不到，记下来，继续读其他的。\n\n每个粒子系统读：系统级（固定更新帧率 / FixedRelativeBoundingBox 与大小 / 剔除距离 / LOD 距离 / 预热时间）；每个发射器（名字、LOD0 是否启用、CPU/GPU、Required 模块的材质和 SubUV 横竖格数、Spawn 速率与 Burst、Lifetime、Initial Size 与 Size By Life、Color Over Life 和 Scale Color / Life 里的颜色与亮度倍数曲线（完整关键帧）、Initial Velocity、Drag、GPU 发射器的 Max Draw Count）。读不到的字段写 null 并注明原因，不要猜。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入前现值.json：{format:'df.ue-readback/1', readAt, source:'GPUECli 只读', assets:[{resourceId, particlePath, system:{...}, emitters:[...]}], missing:[...]}。\n- analysis/results/UE_READBACK_20261014/导入前现值.md：一张表，每个资源一行，列出「和导出缺省不一样」的值（亮度倍数不是 1、寿命、面片尺寸），最后写一句「用户导入新版后，照这份把手调值写回或交给导出（23）改烘焙器亮度口径」。\n- 可选：把读取逻辑写成 analysis/scripts/ue_readback_values.mjs（只允许 /object/get、/object/search，照 workbench_engine_acceptance.mjs 的写法），以后每次重导前都能跑。\n\n禁止：保存、改值、导入、替换、P4、开关 UE。UE 没开或 GPUECli 连不上 → 状态改「卡住」，原因写清楚，结束。",
+   "做完的标准": [
+    "5 个对象每个都有结果（读到，或写明在资源表里找不到）",
+    "JSON 能被 python -m json.tool 解析；每个发射器都有亮度倍数（或注明读不到）",
+    "md 里列出所有亮度倍数 ≠ 1 的发射器",
+    "UE 里没有任何资产被保存（git 之外没有可验证手段的话，在结果里写明「只用了 /object/get、/object/search」）",
+    "已提交推送，本条写了完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T00:16:46+08:00",
+   "完成": "2026-10-14T00:23:22+08:00",
+   "提交": "055e794e270000a6dfa7b94ce0713b8896f579fc",
+   "结果": "5 个系统 / 21 个发射器 LOD0 现值已存 analysis/results/UE_READBACK_20261014/导入前现值.json / .md，完整曲线与缓存保留；小青柠倍率30/5/5/100、橙辉星HDR30→5，寿命2.8–3.2s。只用了 /object/get、/object/search；实际632次object/get，无保存或写入。用户导入后按存档保护手调值或交导出（23）统一亮度口径。"
+  },
+  {
+   "编号": "T02",
+   "看板": "i23",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 2,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "周四测性能前：只读核对 Night 用到的每个粒子系统的导入设置",
+   "为什么": "导入器 v2.22 起才会写入固定 10 FPS、固定包围盒、120000 cm 剔除、GPU Max Draw Count 等设置（协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109）。10-07 以前导入、之后没重导的资源可能没有这些设置，周四测出来的帧率和截断会不准。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261014/导入设置核对.json",
+    "analysis/results/UE_READBACK_20261014/导入设置核对.md"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T02，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读核对周四性能测试要用到的每个粒子系统，导入设置是否符合导入器 v2.22 的标准。\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc（20 行）和 mobile（15 行）每一行的 FxSP、FxSP_Low、FxSP_High 引用到的全部粒子系统（去重）。\n\n标准（出处 协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109；用户 10-13 23:11 问「CPU 粒子是不是不用勾包围盒、性能测试用不着的别做」，按下面收窄）：\n- 系统 Fixed-Time 更新：10 FPS（delta 0.1）——所有系统都查\n- 固定相对包围盒：只对含 GPU 发射器的系统要求（开，各轴 ±100000 cm）；纯 CPU 系统只记实际值，不算 ❌（CPU 发射器每帧自己算包围盒）\n- 剔除距离 120000 cm（1200 m）——所有系统都查\n- 每个 GPU 发射器都有 Max Draw Count（> 0）\n- 不查预热 / 等待（和周四性能测试无关）\n\n每个粒子系统一行，逐项写实际值和 ✅ / ❌；读不到写 null 和原因。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入设置核对.json：{format:'df.ue-import-settings-check/1', readAt, standard:{...}, rows:[{resourceId, side:'pc'|'mobile', slot:'FxSP'|'FxSP_Low'|'FxSP_High', path, hasGpu, fixedFps, fixedBounds, boundsExtent, cullDistance, gpuEmitters:[{name, maxDrawCount}], pass:true|false, fails:[...]}]}\n- analysis/results/UE_READBACK_20261014/导入设置核对.md：先写一句结论（几个全过、几个有 ❌），再列出所有有 ❌ 的资源和缺哪项，最后写「建议：这些资源周四前用导入器重新导入一次（由用户点导入），或在测试结论里注明」。不要替用户改。\n\n禁止：保存、改值、导入、P4、开关 UE。UE 没开 → 卡住。",
+   "做完的标准": [
+    "资源发射器数.json 里引用到的每个粒子系统都有一行",
+    "每行 4 项标准都有实际值或注明读不到的原因（纯 CPU 系统的包围盒只记录不判）",
+    "md 的结论数字和 json 一致",
+    "已提交推送，本条写了完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T00:33:05+08:00",
+   "完成": "2026-10-14T00:37:49+08:00",
+   "提交": "cf1b2c7eeef456bd10c08c14b3aa99b0824cab9b",
+   "结果": "65处引用去重41个系统：8全过/33有❌，无读取失败；固定时间8、GPU盒6、剔除33、MaxDrawCount0项失败（可重叠）。analysis/results/UE_READBACK_20261014/导入设置核对.json / .md；CPU盒仅记录，不查预热。仅439次object/get，无UE写入；用户周四前导入失败资源或在测试结论注明。"
+  },
+  {
+   "编号": "T03",
+   "看板": "i22",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "取消",
+   "优先": 3,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "查 PC 资源表里金垂柳那一行 fxType 为什么是 (INVALID)，会不会影响播放",
+   "为什么": "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（10-11 读回）里 PC 表 20 行只有 P_EFX_FireWorks_GoldKamuro 的 fxType 是 (INVALID)，其余都是 SHOW。金垂柳是主角，Night 里 5 发都用它。手游编排 10-10 22:38 提过，之后没人跟。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261014/金垂柳fxType.md",
+    "analysis/results/UE_READBACK_20261014/金垂柳fxType.json"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T03，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读查清 PC 资源表（ResourceFX）里 P_EFX_FireWorks_GoldKamuro 这一行 fxType 是 (INVALID) 的原因和影响，不改。\n\n步骤：\n1. 读这一行的全部字段原值，和同表一行正常的（比如 P_EFX_FireWorks_FanComet_01，fxType = SHOW）逐字段对比。\n2. 读 fxType 这个字段的枚举定义（有哪些合法值），判断 (INVALID) 是空值、越界值还是被删掉的枚举项。\n3. 找使用 fxType 的地方：导演或资源表的读取逻辑会不会因为 INVALID 跳过这一行、不播放或按别的类型处理。能在 UE 里只读查到就写证据（蓝图节点 / 代码路径）；查不到就写「推断」并说明依据，不要当成结论。\n4. 手游表里有没有金垂柳的行（10-13 读回时手游表缺 8 个 ID）。\n\n输出：\n- analysis/results/UE_READBACK_20261014/金垂柳fxType.json：两行原值对比和枚举定义。\n- analysis/results/UE_READBACK_20261014/金垂柳fxType.md：三段——现象、原因（证据 / 推断分开写）、建议改法（比如「在资源表里把 fxType 改成 SHOW，由用户在 UE 里改并保存」）。最后一行写清楚：用户要不要在周三导入 B04 前改它。\n\n禁止：改资源表、保存、P4、开关 UE。",
+   "做完的标准": [
+    "有两行原值对比",
+    "原因写清楚，证据和推断分开",
+    "给出用户要不要改、怎么改的一句话",
+    "已提交推送，本条写了完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T00:45:14+08:00",
+   "完成": "",
+   "提交": "414b3a4a13234413057c89d4678e0c19191d510a",
+   "结果": "卡在当前表行/枚举定义读取：get/search仅反射到表/枚举对象，未返回行值、合法值或底层数值；原生播放函数体也不可见，不能判定INVALID原因及播放影响。已存金垂柳fxType.json/.md：历史两行47字段（42同/5异）、历史手游缺行、17次只读尝试证据；未改UE。B04前用户先核对，若当前仍INVALID建议选SHOW并保存；需专用只读查询授权或当前行/枚举/代码证据继续。；【10-18 本机同步检测销账（用户「销掉过期的账」）】当前 GoldKamuro PC / 手游行都是 SHOW（B09主角读数.md），旧 INVALID 的问题已被新现状覆盖；不再派。"
+  },
+  {
+   "编号": "T04",
+   "看板": "n03",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 4,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读，用来试跑）",
+   "标题": "写「手游 _M 占位」导入后检查脚本，并用现有手游资产试跑",
+   "为什么": "用户周三要用 UE「特效资产复制」做小银菊、金芒菊、银彩菊、金垂柳的 _M 占位（看板 i03）。规范要求这类资产过导入后检查才能进手游表，但 tool/local_delivery/fx_gate.py 只查交付包，没有查 UE 里资产的模式（看板 n03；协作/手游与小平台资产_执行方案_2026-10-12.md:105）。读回脚本和证据现在只在本机，不在仓库。",
+   "只许改": [
+    "analysis/scripts/手游占位检查.mjs（新建）",
+    "analysis/scripts/README.md（加一行用法）",
+    "analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T04，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：写一个只读检查脚本，用户导入手游 _M 占位后跑它，判断能不能进手游表。\n\n脚本：analysis/scripts/手游占位检查.mjs（Node，照 analysis/scripts/workbench_engine_acceptance.mjs 的 request() 写法，只允许 /object/get、/object/search）。\n用法：node analysis/scripts/手游占位检查.mjs <粒子系统路径或资源表 ID>... [--out <json>]\n逐个检查（依据 spec/烟花特效资产规范.md 手游部分、协作/手游与小平台资产_执行方案_2026-10-12.md）：\n1. LOD0 启用的发射器 ≤ 3\n2. GPU 发射器 = 0\n3. 每个发射器材质引用到的贴图尺寸 ≤ 1024（长边）\n4. 引用链（材质 → 材质实例 → 贴图）里没有名字带 _HD 的资产\n5. 资产名以 _M 结尾\n每项写实际值和 ✅ / ❌；有任何 ❌ 退出码 1；读不到的项算 ❌ 并写原因。脚本本身不能有任何写 UE 的调用。\n\n试跑：对现有手游资产跑一遍（至少 P_EFX_FireWorks_Trail_01_M 和 P_EFX_FireWorks_Hero_M，路径见 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 的 mobile），结果存 analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json。试跑结果不需要全过，只要能正确读出来。\n在 analysis/scripts/README.md 第 1 节表格加一行用法。\n\n禁止：保存、改值、导入、P4、开关 UE。",
+   "做完的标准": [
+    "node --check analysis/scripts/手游占位检查.mjs 通过",
+    "脚本里只有 /object/get、/object/search 两种请求",
+    "试跑至少 2 个现有 _M 资产，5 项都有实际值",
+    "README 有用法",
+    "已提交推送，本条写了完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T01:04:31+08:00",
+   "完成": "2026-10-14T01:12:54+08:00",
+   "提交": "64f0a738be9a0017791064e7508c925e014cc763",
+   "结果": "只读脚本手游占位检查.mjs与README用法已齐；node --check/13保护场景通过。试跑Trail_01_M与Hero_M五项实际值齐、904次get无缺失，均3启用/0GPU；Trail含HD引用，Hero贴图2048且上限0，两者未通过，退出1符合预期。结果analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json；无UE写入。用户新占位后用脚本复核，旧资产问题需另修。"
+  },
+  {
+   "编号": "T05",
+   "看板": "n63",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 5,
+   "前置": [],
+   "等什么": "（10-14 21:50 总管改待派）用户 21:44：周三大部分做完、命名改了一些、手游和小平台还差一些——先读回现状，缺的列出来。",
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "读回 ResourceFX（PC + 手游）现状对照用户改的命名，跑手游占位检查，更新资源发射器数表",
+   "为什么": "规范 §8 要求导入后读回写进 资源发射器数.json；这张表停在 10-11，周四测性能要用它算 GPU 和发射器预算（看板 n06）。",
+   "只许改": [
+    "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json",
+    "analysis/results/UE_READBACK_20261014/手游占位检查.json",
+    "analysis/results/UE_READBACK_20261014/资源发射器数_变化.md",
+    "analysis/results/RESOURCEFX_20261014/读回对照.md",
+    "analysis/results/RESOURCEFX_20261014/读回.json"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T05，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n背景：用户 10-14 21:44 改了 ResourceFX 的命名、导入了 Hero / XS / Tiny 尾缀和一批小平台资源，手游 _M 还差一些。总管按用户截图转录了 PC 表 36 行：协作/ResourceFX_3.0_行名_2026-10-14.json（截图只有 PC、只有名字和 id，看不到粒子路径和手游表）。用户定的手游种类：主角 / 大号 金芒菊；中号 银冠菊、辉星（橙辉星）；小号 爆裂星、点灭星、分裂星。\n\n1. 只读读回 PC 和手游两张 ResourceFX 表里所有「跨年烟花3.0_」开头的行：名字、ResourceId、粒子路径、FxSP / FxSP_Low / FxSP_High。存 analysis/results/RESOURCEFX_20261014/读回.json。读不到表格行的值（T03 碰到过 GPUECli 只返回表对象）就按 10-11 那次读资源发射器数的办法读；还是不行就停，「结果」写「卡住：读不到表格行，请用户在 UE 里把两张 ResourceFX 表各导出一份 CSV 放到 analysis/results/RESOURCEFX_20261014/」。\n2. 和截图转录逐行对：名字 / id 不一致的、截图里有但表里没有的、手游表缺哪几个 ID（重点看上面 6 种手游花和 2800–2805 小平台、2830 / 2834 / 2835 三根尾缀）。\n3. 对手游表里这几种花的 _M 跑 node analysis/scripts/手游占位检查.mjs（发射器数、GPU、贴图 ≤ 1024、引用链无 _HD），结果存 analysis/results/UE_READBACK_20261014/手游占位检查.json。\n4. 按 10-11 的格式（df.resource-emitter-census/1）更新 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（readAt 改成这次）——跨年秀（22）的 GPU / 发射器体检读它，现在停在 10-11，橙辉星、点灭星等引用的粒子已经换了。\n5. analysis/results/RESOURCEFX_20261014/读回对照.md：一屏写清 ① 名字 / id 对不上的 ② 手游还缺哪几个 _M ③ 占位检查有 ❌ 的（写「这几个先别进手游表」）④ 和 10-11 版比发射器数 / GPU 变了的行。\n\n禁止：改资源表、保存、导入、P4、开关 UE。",
+   "做完的标准": [
+    "读回.json 有 PC + 手游两张表的 3.0 行（或写明卡住、请用户导 CSV）",
+    "读回对照.md 四项都有",
+    "资源发射器数.json readAt 是这次、格式不变",
+    "已提交推送，本条写了完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T22:04:28+08:00",
+   "完成": "2026-10-14T22:16:48+08:00",
+   "提交": "8e89f67b",
+   "结果": "按10-11只读/datatable/search成功：PC41条3.0/手游3.0为0（另15旧行）；截图36个ID均在，2处小形→小型已现场改名。8个未入表_M候选6过，SilverChry_M/LittleSilver_M因MPC_EFX_General_HD引用❌，先别入手游表；六种花/小平台/新尾缀均缺3.0表行。56系统统计已更新：红彗星GPU0、银扇GPU1、中尾GPU2→6。读回对照与完整证据见analysis/results/RESOURCEFX_20261014/；未写UE。"
+  },
+  {
+   "编号": "C01",
+   "看板": "n08",
+   "交给": "云端夜班（代 跨年秀 22）",
+   "在哪": "云端",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "不要",
+   "对方在线就跳过": "跨年秀（22）",
+   "标题": "跨年秀宪章过期的几处，按现行做法改正（改完标「待你过目」）",
+   "为什么": "别的对话框照宪章算时间、GPU 预算和手游点位，现在会算错（看板 n08，10-13 全量对账发现，21:45 已排给 22 未开工）。",
+   "只许改": [
+    "协作/跨年秀编排宪章.md",
+    "协作/状态清单.json（只改「共享文件」里「总管（21） → 跨年秀（22） · 看板周三前「AI 欠你」两条」那一条，在末尾补一句 ② 已由夜班改完 + 提交号）",
+    "对话记录/夜班.md"
+   ],
+   "提示词": "你是 FireWorksLab 的云端夜班，这条替跨年秀（22）做。按 协作/派活队列.json「夜班怎么取」和「Codex 共同规则」执行。\n\n先判断：跨年秀（22）90 分钟内有提交（git log --since='90 minutes ago' -- 对话记录/对话框22.md 协作/编排B03.md 协作/跨年秀编排宪章.md）就跳过，本条留「待派」。\n\n要改的（逐条核对原文再改，只改过期的地方，别重写别的段落）：\n1. 时间原点：宪章第 6、99 行一带还按「原曲偏移 +5」。现行约定以 协作/新音频VO融合_时间约定_2026-10-13.md 为准——秒数从合并音频文件开始算、预览偏移 0；B03 修订2（工作台 16.0.26，协作/编排B03.md §0）零点 =「点火」16.2 s。把宪章里的时间约定改成这个，并注明「旧 +5 只对旧音乐有效」。\n2. GPU 预算：第 86、171 行写「同一秒新起 GPU ≤ 200（暂定）」。10-13 编辑器实测是 ≤ 250（看板 n18、i08 推荐里引用的实测；以 协作/编排B03.md 和 协作/周三落地计划_2026-10-14.md:10 的写法为准）。改成现行值，注明「编辑器实测，打包版待测」。\n3. 高差：第 181–186 行，第 0 条已写「高差只许往上（用户 10-13 10:10）」，下面第 4 条还写「合计软夹紧 −60…+25 m」、第 5 条还有 P2 −20、P6 −45 这类负值。按第 0 条改：负值全部去掉或改成 ≥ 0 的说法，保留用户原话出处。\n4. 手游点位：第 137 / 225 行一带写手游 P0 / P4 / P8，实际编排因一张表共用画质只能 P2 / P4 / P6（协作/编排B02.md）。统一成实际做法。\n每改一处，在宪章文末「修订记录」加一行（日期、改了哪条、依据文件:行）。没有修订记录段就新建。\n\n不许：改编排、改别的规则文件、改数值以外的设计意图。拿不准的地方不改，写进结果让用户定。\n做完：看板 n08 由总管改「待你过目」；你在本条「结果」写改了几处、哪几处拿不准。",
+   "做完的标准": [
+    "四类过期点都处理了，或写明为什么没改",
+    "每处修改都有修订记录行和依据",
+    "git diff 只涉及「只许改」的文件",
+    "已推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T01:20:00+08:00",
+   "完成": "2026-10-14T01:35:00+08:00",
+   "提交": "",
+   "结果": "（夜班 2026-10-13 23:16 跳过：跨年秀（22）22:30 有提交 c435e14a，留待派） ｜ 22 在线自己做了（10-14 01:35）：宪章 v2.5，四类都改了（时间原点 / GPU 250 / 高差去负值 / 手游点位按实际），另改尾缀高度现状、补已定、B03 / Day 进第 12 节；修订记录在第 13 节。拿不准没改：第 1–4 节表里的具体秒数没逐个换算（给了换算规则）、第 5 节「每格一波上限」没按 250 重算。"
+  },
+  {
+   "编号": "C02",
+   "看板": "i24",
+   "交给": "云端夜班（代 总管 21）",
+   "在哪": "云端",
+   "状态": "完成",
+   "优先": 2,
+   "前置": [],
+   "要 UE": "不要",
+   "标题": "出一张「7 个重做 + 3 个重导」的指派建议表（只出建议，不开工）",
+   "为什么": "看板 i24：重做 7 个（小银菊、银彩菊、金芒菊、金曜菊、绿牡丹、多重菊、金垂柳）、重导 3 个（金锦菊、橙辉星、小青柠）一直没人负责。用户要先看指派，再开工；重做的成本上限（看板 i09）用户还没定。",
+   "只许改": [
+    "协作/重做指派建议_2026-10-14.md（新建）",
+    "对话记录/夜班.md"
+   ],
+   "提示词": "你是 FireWorksLab 的云端夜班，这条替总管（21）做。按 协作/派活队列.json「夜班怎么取」和「Codex 共同规则」执行。\n\n读：协作/看板快照.json 的 resources（每个资源的「做法」「你的要求 ask」「下一步 next」「现在成本 cost」）、协作/状态清单.json 的 effects（各效果现在的负责人和阶段）和「共享文件」（谁认领着 tool/src）、看板 i09（重做成本上限，用户未定）、协作/全局看板.md 的对话框名册。\n\n出 协作/重做指派建议_2026-10-14.md：\n- 一张表，10 行：资源、做法（重做 / 重导）、你的要求（原文摘要）、建议交给谁（只从名册里现有对话框选，写清本机还是云端）、理由（一句）、依赖（比如「要等 23 修好按尺寸缩」「要等你定成本上限」）、周四性能测试用什么（重做完成前用 UE 旧版）。\n- 表下写：建议的先后顺序（先手游占比高的：小银菊、金芒菊、银彩菊、金垂柳）、哪几个要你先定的问题（最多 3 个）。\n- 明确写「这是建议，你点头后总管才排队，不会自己开工」。\n\n不许：改状态清单的负责人、排任何队、改效果文件。",
+   "做完的标准": [
+    "10 个资源都在表里",
+    "每行有建议负责人、理由、依赖",
+    "写明要用户先定的问题",
+    "已推送，本条写完成、提交号、结果"
+   ],
+   "派出": "夜班自取 2026-10-13 23:17",
+   "开始": "2026-10-13 23:17",
+   "完成": "2026-10-13 23:19",
+   "提交": "47384716",
+   "结果": "建议表 协作/重做指派建议_2026-10-14.md：小银菊 / 金芒菊 / 银彩菊 / 金曜菊 / 绿牡丹 / 多重菊 → 新花型；金垂柳 → 扇形（FanGold）；金锦菊 / 橙辉星 / 小青柠重导 → 导出（23，4.9.81 之后）。要用户先定：成本上限 i09、银彩菊 _M 砍哪层、多重菊颜色随机种子。只是建议，没排队。"
+  },
+  {
+   "编号": "C03",
+   "看板": "n62",
+   "交给": "跨年秀（22）（用户 22:22 直接开 22 做，夜班不用代）",
+   "在哪": "云端",
+   "状态": "完成",
+   "优先": 0,
+   "前置": [],
+   "要 UE": "不要",
+   "对方在线就跳过": "跨年秀（22）",
+   "标题": "编排跟上用户改的 ResourceFX 命名和手游种类，出 B05（工作台下一号，只换编排数据）",
+   "为什么": "用户 10-14 21:44：命名改了、要和编排同步；QA 用周三的版本测性能（看板 n56），编排里的名字对不上的行在 UE 里放不出来。",
+   "只许改": [
+    "协作/编排B01/新尾缀.json",
+    "analysis/scripts/编排B01*.py / 编排B01_编译.mjs（只改资源名映射和手游种类表，不改编排逻辑）",
+    "FXtools/节目/NewYearFireWorks_v01/（新 B05 产物）",
+    "tool/workbench/public/data/cloud-latest.json 及 publish-show --data-only 生成的文件",
+    "协作/编排B04.md 或新建 协作/编排B05.md",
+    "对话记录/夜班.md"
+   ],
+   "提示词": "你是 FireWorksLab 的云端夜班，这条替跨年秀（22）做。按 协作/派活队列.json「夜班怎么取」和「Codex 共同规则」执行。先判断：跨年秀（22）90 分钟内有提交（git log --since='90 minutes ago' -- 对话记录/对话框22.md 协作/编排B04.md 协作/编排B01）就跳过，本条留「待派」。\n\n先读：对话记录/对话框22.md 最后三节、协作/编排B04.md、协作/编排B01/新尾缀.json、协作/ResourceFX_3.0_行名_2026-10-14.json（用户截图转录）、看板快照里 n61 / n62。\n\n以 B04（工作台 16.0.29）为底出 B05，只改名字和手游种类，不改编排结构：\n1. 尾缀名字对调（用户 10-14：「S80叫XS,小平台的叫Tiny」）：坝顶低层那根（原 S80，开花 +80 m、升空 1.9171 s）→ 「跨年烟花3.0_低位_尾缀」（id RiseTrail_XS）；小平台那根（+62 m、1.6875 s）→ 「跨年烟花3.0_极小_尾缀」（id RiseTrail_Tiny）。高度 / 升空时间跟着用途走，不跟名字走。新尾缀.json 的 confirmed 改 true。\n2. 「跨年烟花3.0_小型_F_小银菊」全部改成「跨年烟花3.0_小型_F_银冠菊」（2814，同一个资源改了名）。**别改成「小号_B_小银菊」（2801），那是小平台新加的另一个资源。** B04 里有 1 处写成「小型_B_红彗星」，表里是「小形_B_红彗星」，改成表里的写法。\n3. 小平台：前台小花用新加的 2800 小金花 / 2801 小银菊 / 2802 短爆裂 / 2803 小分裂；短彗星、小花束尾用 2804 短彗星 / 2805 短银尾（用户：「长短没有做区分……可以在编排中缩放比例处理」，长短用条目 EffectScale）。\n4. 手游种类（用户 10-14 21:44，取代 10-14 00:30 看板 i10 的 7 种）：主角 / 大号 = 金芒菊；中号 = 银冠菊、辉星（橙辉星）；小号 = 爆裂星、点灭星、分裂星。手游片段只用这几种；PC 不变。尺寸不够的用子模板条目 EffectScale 放大（UE-14 实测整朵等比，analysis/results/MOBILE_TEST_20261011/看法.md 第 32 行）；放大倍数在编排文档里列一张表，单个不超过 1.6（推断：_M 贴图分辨率固定，再大会糊；面积按平方涨，手机填充率会涨）。「分裂星」是 2803 小分裂还是 2812 金裂星用户没说清——看板 n61 有答案就照答案，没有就按 2803 小分裂做并在文档里写明「按推断」。金垂柳不再上手游。\n5. 出版本：照 CLAUDE.md 第 10 节「云端只换编排」：npm run publish-show -- --data-only …（编排名 B05），再 npm run release -- --no-deploy --data-only；跑编排体检，B05 动画页。体检里 GPU / 发射器数如果还是 10-11 的表（派活 T05 没回来），在文档里注明「待 T05 读回后复核」。\n6. 文档：协作/编排B05.md 写清改了哪些名字、手游种类表、放大倍数表、还没对上的行。\n\n不许：改编排结构 / 节奏 / 点位；改工作台界面源码；猜表里没有的名字（对不上的列出来留给 22 / 用户）。\n做完：本条写完成、提交号、工作台版本号、对不上的行。",
+   "做完的标准": [
+    "B05 里所有「跨年烟花3.0_」引用都能在截图转录（或 T05 读回）里找到，对不上的列清单",
+    "两根尾缀按用途对上新名字",
+    "手游片段只用用户定的 6 种，放大倍数有表",
+    "工作台版本 +1、成品和编排一起推送",
+    "本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-14T22:40:00+08:00",
+   "完成": "2026-10-14T23:05:00+08:00",
+   "提交": "43445486（16.0.30）、b931236e（16.0.31 修正）",
+   "结果": "B05 = 工作台云端编排 16.0.31（16.0.30 的修正：用户 22:32 小分裂配方是前台 30 m → 小平台按前台尺寸算倍数、手游小位不放分裂星）；协作/编排B05.md。导演表认 ResourceId：两根尾缀按用途接（坝顶低层 RiseTrail_XS 低位_尾缀、小平台 RiseTrail_Tiny 极小_尾缀）、橙辉星 OrangeGlitter→Glitter、小平台花换 2801/2800/2802；一张表 26 个 ResourceId 全在 T05 读回里，对不上 0 行。手游只用 6 种（大位金芒菊×1.41–1.53、中位辉星/银冠菊×1.47–1.6、小位点灭星/爆裂星、小平台分裂星），共用片段拆 PC 照旧+手游替身，PC/手游发数同 B04。等用户：手游表加 3.0 行；银冠菊_M 检查没过（中位 2 排）；2800/2802/2803 还指向 LittleChry_HD。"
+  },
+  {
+   "编号": "T06",
+   "看板": "",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "只读排查「最亮处黑块在闪」：每个材质实例实际绑的序列图和 Ramp 是不是同一次导出、序列有没有超过 253、Ramp 末格是不是黑的、UE 缩小 / 材质参数 / Custom 节点",
+   "为什么": "用户 10-15 01:40 截图：好多贴图导入 UE 后最亮处一块块黑色马赛克在闪；11:00 改 RGBA8（不压缩）也没用 → 不是 BC7。云端复现了「旧序列（不封顶）+ 末格黑 Ramp」会出同样的黑块（analysis/probe/BC7护栏黑块_2026-10-15/），但要本机读回用户 UE 里实际是哪种（写任务的：导出（23））。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261015/黑块排查.json",
+    "analysis/results/UE_READBACK_20261015/黑块排查.md"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T06，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节和 analysis/probe/BC7护栏黑块_2026-10-15/README.md。\n\n背景（导出（23）写，用户 10-15 01:40 / 11:00）：好多贴图导入 UE 后，最亮的地方出现一块块黑色马赛克在闪。用户把序列图改成 RGBA8（不压缩）也没用，所以不是 BC7 压缩造成的。\n机制：4.9.31（10-07）起烘焙器的 Ramp（256×8）最后一格是黑的（护栏），序列图最亮只写到 253；材质按「查询坐标 = 序列灰度 v」双线性查 Ramp，v 到 254 就混进黑格、255 全黑。现在怀疑三条路让最亮的像素查到了黑格：\n  ① 序列图是 10-07 以前导出的（没封顶，最亮到 255），配的 Ramp 却是新的（末格黑）——比如 Ramp 后来重导 / 被别的效果的同色 Ramp 顶替 / 派生资源沿用了旧序列；\n  ② UE 里把序列图缩小过（Max Texture Size / LOD Bias / LOD Group 比源图小），缩小滤镜（Sharpen 一类）把亮度冲过 253；\n  ③ 材质实例里有曝光 / 亮度 / 溶解 / 对比度一类参数改了查询坐标，把 v 往上推。\n这条只读回证据、不改任何东西，看哪条成立。\n（10-15 11:25 用户补充：同一个效果把 Ramp 换成以前的旧 Ramp（末格不黑）黑块就没了；新 Ramp 的寻址改 Wrap 或 Clamp 都没用。所以确定是最亮的像素查到了末格黑。导出（23）的判断：多半是①——材质实例里实际绑定的序列图和 Ramp 不是同一次导出的（10-07 对话框5 读回过一次：材质实例实际绑的是旧的无 HD 序列，不是包里现在那张）。这条要把「每个材质实例实际绑定了哪两张、它们是不是同一代」读清楚。）\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc 和 mobile 每一行 FxSP / FxSP_Low / FxSP_High 引用的全部粒子系统（去重），每个系统里每个发射器的材质（实例）用到的序列图和 Ramp 贴图（去重）。\n\n1. 用 GPUECli 只读：\n   - 每张贴图：路径、SizeX / SizeY、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX / AddressY，能读到的话 Downscale / DownscaleOptions 和 AssetImportData 里的源文件路径与时间。\n   - 每个材质实例：父材质路径、全部 Scalar / Vector / Texture 参数的当前值（重点列出名字带 曝光 / Exposure / 亮度 / Bright / 溶解 / Dissolve / 对比 / Contrast / Gamma / Power 的）。\n   - 每个材质实例**实际绑定**的序列图和 Ramp 是哪两个资产（按 TextureParameterValues 读路径，不按名字猜）；同一个效果在本机导出根目录（df.firework-resource/1 索引）里现在那一版包的序列图 / Ramp 文件名，对一下是不是同一张。\n   - 父材质里查 Ramp 的 Custom 节点：把 Code 原文、输入引脚、采样用的 sampler 读出来（只读，存进 json 的 parentMaterial.customCode），用来排除「材质把查询坐标拉伸了」。\n2. 找到每张贴图的源 PNG（AssetImportData 里的路径；读不到就在本机导出根目录 / ResourceFX 素材目录按贴图名找同名 .png），用 Python + Pillow 只读统计：\n   - 序列图：每个通道的最大值、≥254 和 =255 的像素各占多少（百分比）；\n   - Ramp：宽 × 高、最后一格和倒数第二格的 RGB；\n   - 同目录有 cascade.json 的，记下里面写的烘焙器版本（tool 字段）。\n3. 判定（每张序列图一行）：\n   - 序列有 ≥254 的像素 且 它的 Ramp 末格是黑的 → 「① 配错对：序列没封顶（或不是同一次导出）+ Ramp 末格黑，会出黑块」，并写出这两张各自来自哪一版包、包里现在那一版是哪两张；\n   - 序列最大 ≤ 253、Ramp 末格黑、压缩是 BC7 → 「④ 同一代，可能是 BC7 把 253 冒到 254 / 255」（这一类单独列，导出（23）要据此决定要不要给新导出加余量）；\n   - MaxTextureSize / LODBias 让 UE 里的尺寸比源图小 → 「② UE 里缩小过」，同时写 MipGenSettings / DownscaleOptions；\n   - 材质实例里有上面那几类参数不是缺省值 → 「③ 材质参数可能推高查询坐标」，写出名字和值；\n   - 都不是 → 「没找到原因」。\n4. 输出：\n   - analysis/results/UE_READBACK_20261015/黑块排查.json：{format:'df.ue-black-block-check/1', readAt, rows:[{resourceId, side, system, emitter, material, parentMaterial, seq:{path, size, compression, srgb, filter, lodGroup, maxSize, lodBias, mipGen, downscale, source, max:[r,g,b,a], ge254:[...], eq255:[...], bakerVersion}, ramp:{path, size, compression, srgb, address, mipGen, source, last, prev}, params:{...}, verdict:[...]}]}\n   - analysis/results/UE_READBACK_20261015/黑块排查.md：第一句写结论（几张序列图命中 ① / ② / ③、几张没找到原因），再按 ① ② ③ 分组列资源名，最后一段「给导出（23）」：哪些需要重导序列、哪些只要换回配套的 Ramp。不要替用户改。\n\n禁止：保存、改值、导入、替换贴图、P4、开关 UE、改 tool/src。UE 没开 → 卡住。",
+   "做完的标准": [
+    "范围里每张序列图一行，读不到的写 null 和原因",
+    "每行写清材质实例实际绑定的序列图 / Ramp 路径，和包里现在那一版是不是同一张",
+    "每行有源 PNG 的最大值 / ≥254 占比、Ramp 末格颜色、UE 尺寸与源图尺寸",
+    "每行有判定（① / ② / ③ / 没找到原因）",
+    "黑块排查.md 第一句是结论，有「给导出（23）」一段",
+    "已提交推送，本条写了完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-15T12:01:53+08:00",
+   "完成": "2026-10-15T12:14:37+08:00",
+   "提交": "a2e6535f5d8b7f6eefdef7c6ff933b3b67d27ac0",
+   "结果": "只读排查执行结束，非根因闭环：56系统/218发射器/332LOD、78主图（44Ramp序列）；报告analysis/results/UE_READBACK_20261015/黑块排查.json及.md。\n①8张和④30张为同名PNG候选，UE导入源路径/时间均空，实际代际null；②3张均辅助图，③38张仅参数检查标记，45个Ramp实例查询参数1/1中性；16处Ramp不同名中15处有同SHA配套候选，点灭Strobe异SHA优先核实。\n3501次仅get/search读取，无UE写入；155文件SHA与统计/范围覆盖检查通过。缺源身份，不能确定哪些必须重导或只换Ramp，未替用户改。"
+  },
+  {
+   "编号": "T07",
+   "看板": "",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "取消",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "最好开着（只读）；17780 连不上本身就是要记的结论，不算卡住",
+   "标题": "只读排查「窜天猴尾焰交付：特效工作台报『Python 调用失败：TypeError: Failed to fetch』，PC / 手机两个资源包都检查失败」",
+   "为什么": "用户 10-15 15:06 截图：交付「窜天猴尾焰」（他自己存的「我的效果」，一层分层粒子图，UE 名 RocketTail）后，特效工作台顶上红字「Python 调用失败：TypeError: Failed to fetch」，烘焙器交付清单里 PC / 手机两个资源包都「检查失败」，用户说「还是会报错」。云端看不到私有导入器、UE 日志和 D 盘修订（写任务的：导出（23））。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261015/尾焰检查失败.json（新建）",
+    "analysis/results/UE_READBACK_20261015/尾焰检查失败.md（新建）"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T07，按该文件「Codex 共同规则」执行，只有第 1 步写的一处例外。先读 对话记录/对话框8.md 最近一节、tool/local_delivery/README.md、tool/local_http/README.md。\n\n背景（导出（23）写）：用户 10-15 15:06 截图——交付「窜天猴尾焰」（analysis/我的配方/my_fxmv96inysff36h/正式资产-窜天猴尾焰__fxmv96inysff36h.json：一层分层粒子图 sparkgraph，烘成「地面循环」，ue.base / system = RocketTail，custom）后，特效工作台顶上红字「Python 调用失败：TypeError: Failed to fetch」，烘焙器交付清单里 PC / 手机两个资源包都「检查失败」；用户说「还是会报错」。\n导出（23）的判断（推断，要你证实）：「Failed to fetch」是浏览器层面的失败——页面向 http://127.0.0.1:17780/gpcli 发请求，连 HTTP 响应都没拿到（服务没在听 / UE 卡住或崩了 / 服务处理这个请求时出异常、连接被断或错误响应没带跨域头）。两个包都「检查失败」多半是同一次调用失败连带的，不一定是包内容错。要分清是「17780 当时不在」还是「这一个包让 Python 那边出错」。\n\n1. 17780 现在在不在：netstat -ano | findstr 17780（哪个进程在听）；照 analysis/scripts/workbench_engine_acceptance.mjs 的 request() 发一个只读请求（GetPlatformName 或 /object/search 一个已知资产），记返回和耗时。**例外：连不上不算卡住**——把「17780 连不上 / 哪个进程 / UE 开没开」记下来（这本身就是答案），后面不要 UE 的几步照做，最后状态写「完成」。\n2. 找到这次交付：读交付根目录（%USERPROFILE%/.fireworkslab/delivery-settings.json 里的根，默认 D:\\ProjectTextures\\FireWorksLab）的 workspace-resources.json，找名字含 RocketTail 的资源；列出它所有修订（revisionId、createdAt、平台目录、文件名、大小），以 10-15 14:40–15:10 那几次为准。\n3. 对最新那一版跑 python tool/local_delivery/fx_gate.py <修订目录> --root <根> --json（不要加 --register），记退出码和全部原因。\n4. 和最近一个检查通过、导入成功的包比（YonshakuKamuro 修订 0e31af841d6954fcd76d，10-14 23:48 导入）：两边 cascade.json / cascade_mobile.json 的顶层键、textures 每项（file / class / 有没有 asset 字段）、materials 的 role、每个发射器 required 的键和 modules 名单；文件名里有没有非 ASCII 字符、路径长度；列出只在 RocketTail 里出现的东西（比如 OrientationAxisLock、loops 0、local_space、手机贴图名 _Mobile、FrameTest 图）。\n5. 读日志（只读文件，不发 UE 请求）：UE 编辑器当前日志（工程 Saved/Logs/ 最新的 .log；崩过的话 Saved/Crashes/）里 10-15 14:40–15:15 的 Python 报错 / Traceback / LogPython: Error / GPUECli 相关行；交付服务日志（目录配置旁 delivery-server.log）、%USERPROFILE%/.fireworkslab/local-http-tools.log 同一时间段。原样摘相关的几行（去掉凭据和用户名）。\n6. 只读看私有导入器怎么发这次检查：D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html、交付用的 df-fireworks-delivery_locmai.html / tool/local_delivery/runtime/importer.html——「Python 调用失败」在哪里报、检查发的是哪个接口和什么内容、有没有超时、PC / 手机是不是各发一次。**私有代码不复制进仓库**，只用中文写结论（大概第几行、做什么）。\n7. 判定一句（四选一）：A 17780 当时不在 / UE 关着或卡住；B 17780 在、别的包能检查，这一包的请求让 Python 那边出错（给 Traceback 和是哪个字段 / 文件触发的）；C fx_gate 不过（列原因）；D 没找到（写缺什么证据）。\n8. 输出：analysis/results/UE_READBACK_20261015/尾焰检查失败.json（{format:'df.delivery-check-failure/1', readAt, port17780:{listening, pid, process, probe}, resource:{name, revisions:[...]}, gate:{exit, reasons}, diffVsGood:[...], logs:[...], importerNotes, verdict:'A|B|C|D', why}）和 .md（第一句写结论；最后一段「给导出（23）」：要改烘焙器导出的哪一处、还是要改导入器、还是用户只要开着 UE 重试）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。",
+   "做完的标准": [
+    "写清 17780 现在在不在、是哪个进程",
+    "找到 RocketTail 这几次修订，最新一版有 fx_gate 结果",
+    "和 YonshakuKamuro 那一包的差异列出来",
+    "UE / 交付服务日志同一时间段的相关行摘出来（没有就写没有）",
+    "判定 A / B / C / D 之一，写依据",
+    "已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "",
+   "完成": "",
+   "提交": "",
+   "结果": "取消（导出（23）10-15 21:05）：本机同步（8）15:39 已查到 17780 端口绑定失败（UE 日志 HttpListener unable to bind），用户重启后窜天猴启动正常；剩下的检查失败是烘焙器命名问题（4.9.106 修），不用再排查。"
+  },
+  {
+   "编号": "T08",
+   "看板": "",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "取消",
+   "优先": 2,
+   "前置": [
+    "T10"
+   ],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "只读核实：母材质里 EmissiveDissolve 还接了什么；导入器更新材质实例时会不会把用户手改的 EmissiveDissolve 0.98 改回 1",
+   "为什么": "用户 10-15 20:53：把 EmissiveDissolve 改成 0.98 黑块直接解决了。要确认这个参数没有别的用途、以后导入器「更新」材质实例时不会把它改回 1（会改回的话要排给导入器（5）写 0.98）。原 T08 第 1、2、5 步（源图封顶、贴图组设置）不用做了。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261015/黑块_首选核实.json（新建）",
+    "analysis/results/UE_READBACK_20261015/黑块_首选核实.md（新建）"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T08，按该文件「Codex 共同规则」执行。先读 analysis/results/UE_READBACK_20261015/看法.md（含 15:30 更正）、黑块排查.md。\n\n背景（导出（23）写）：父材质 M_EFX_FlipBookSuperPack_FireBase_Unlit 查 Ramp 的坐标是 q = pow(v·pow(EmissiveDissolve, EmissiveDissolvePow), 2 − pow(EmissiveDissolve, EmissiveDissolvePow))（T06 读的），现在 45 个材质实例都是 1 / 1（q = v）。导出（23）准备建议用户把 EmissiveDissolve 改 0.98（Pow 保持 1）：q 最高 0.98，Ramp 第 255 格（黑）怎么都碰不到。用户 20:53 已在 UE 试过 0.98，黑块解决。现在只做下面第 3、4、7 步（第 1、2、5、6(a) 不用做），判定只写 (b)(c) 两条。\n\n1. 源 PNG：D:\\ProjectTextures\\FireWorksLab\\烟花\\大\\YonshakuKamuro\\revisions\\0e31af841d6954fcd76d\\PC\\YonshakuKamuro\\T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png——sha256（应为 962aca3a…5f30）、每通道最大值、≥254 / =255 / =253 各占多少；同目录 cascade.json 的 source.tool。\n2. UE 资产（GPUECli 只读）/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD：Size、CompressionSettings、SRGB、Filter、LODGroup、MaxTextureSize、LODBias、MipGenSettings、AddressX/Y、能读到的 NumMips / AssetImportData 源路径和时间。同样读 T_EFX_FireWorks_LittleCrackle_Main_R、T_EFX_FireWorks_GoldRay_A_R、T_EFX_FireWorks_YonshakuKamuro_Main_R。\n3. 母材质里 EmissiveDissolve / EmissiveDissolvePow 两个参数节点连到哪：把从这两个参数到输出的表达式链读出来（节点类型、连线、有没有 DynamicParameter / VertexColor / 粒子颜色参与），回答：它们是不是**只**进 Ramp 查询坐标、有没有进透明度 / 溶解遮罩 / 别的分支。用到这张序列的材质实例（按引用查，如 MI_EFX_FireWorks_YonshakuKamuro_Main_02_HD）的全部 Scalar / Vector / Texture 参数当前值，Ramp 现在绑的哪张（用户在试，可能是 LittleCrackle 或 GoldRay）。\n4. 私有导入器（D:/FXTools/DFWorkbench/ 下的工作台和交付 HTML，只读）：cascade.json 里 materials.<角色>.scalars 是只认 rows / cols，还是任意参数名都写到材质实例；「更新」已有材质实例时，没写在 cascade.json 里的参数（比如用户手改的 EmissiveDissolve）会不会被重置成父材质默认值。**私有代码不复制进仓库**，只写结论。\n5. 工程配置（只读文件）：<工程>/Config/DefaultDeviceProfiles.ini、DefaultEngine.ini、引擎 Config/BaseDeviceProfiles.ini 里 TEXTUREGROUP_Effects 那一行（MinMagFilter、MipFilter、MipGenSettings、LODBias、MaxLODSize），Windows / Android / IOS 有没有覆盖。\n6. 判定：(a) 02_HD 源图最大 ≤ 253 → 「封顶的新序列，黑块是 UE 里冒上去的」，再按第 5 步写是 BC7（Mip 生成 SimpleAverage、没缩小）还是 Mip / 缩小滤镜（Sharpen* / LODBias）；源图有 ≥254 → 「不是封顶序列」，写 UE 里的实际源路径。(b) EmissiveDissolve 只进 Ramp 坐标 → 「改 0.98 只影响查色，可以」；还进了别的分支 → 写清哪条、改 0.98 会变什么。(c) 导入器会 / 不会重置手改参数。\n7. 输出：analysis/results/UE_READBACK_20261015/黑块_首选核实.json 和 .md（第一句写三条判定；最后一段「给导出（23）」）。\n\n禁止：重新点检查、点导入、保存任何资产、改值、导入、替换贴图、改压缩方式、P4、开关 UE、改 tool/src、改私有导入器；私有导入器代码、凭据、用户名不写进仓库（只用中文写结论）。改 RGBA8 / 改 EmissiveDissolve 的试验留给用户自己在 UE 里做，你不要改。",
+   "做完的标准": [
+    "EmissiveDissolve / Pow 的表达式链读清，写明是不是只进 Ramp 坐标",
+    "写清导入器会不会把手改的材质实例参数改回去、scalars 认不认任意名字",
+    "黑块_首选核实.md 第一句是两条判定，有「给导出（23）」一段",
+    "已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "",
+   "完成": "",
+   "提交": "",
+   "结果": "【10-18 本机同步检测销账（用户「销掉过期的账」）】内容已被资源规范统一（26）干跑覆盖（bb228514：EmissiveDissolve 只进 Ramp，可以改；导入器「更新」会改回），第三步导出 4.9.113 + 导入器（交付入口）已做；前置 T10 也取消。",
+   "等什么": "等本机实测（25）完成T09/T10并恢复UE现场；后续与资源规范统一干跑核对范围，不在同一UE采样窗口另派。"
+  },
+  {
+   "编号": "T09",
+   "看板": "",
+   "交给": "本机同步（8）（用户 10-16 01:48 改由本机实测（25）执行）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "只读读数：B08 用到的 25 个 ResourceId 的粒子模块——估真实花径、各种开销、Tiny 缩 0.65 到不到 40 m；（可选）用户的颜色 / 大小随机案例",
+   "为什么": "用户 10-15 22:02：「先出B08，然后再跑B08的实机测量」；「粒子里的颜色，大小随机，我有做了一些案例……让本机读取一部分数据回传给你看」。B08 修订7（工作台 16.0.42，协作/编排B08.md）的花径表、低配限峰的两个量、小平台 Tiny ×0.65 到顶约 40 m 都是推断：名义直径没量过（10-11 估有的资源差 1.6–3 倍），负担权重是从 960 一张截图粗标的。读回来跨年秀（22）校表、校权重。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261015/B08资源读数.json（新建）",
+    "analysis/results/UE_READBACK_20261015/B08资源读数.md（新建）",
+    "analysis/results/UE_READBACK_20261015/颜色大小随机案例.json（新建，第 5 步做了才有）",
+    "analysis/results/UE_READBACK_20261015/颜色大小随机案例.md（新建，同上）",
+    "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（按 10-14 的格式 df.resource-emitter-census/1 更新，readAt 改成这次）"
+   ],
+   "案例路径": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD（用户 10-16 01:48 给本机实测（25））",
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T09，按该文件「Codex 共同规则」执行（UE 只读）。先读：协作/编排B08.md、analysis/results/MOBILE_TEST_20261011/看法.md（UE-14：条目 EffectScale 整朵等比、尾缀只改长度不改时间）、analysis/results/RESOURCEFX_20261014/ 的读回（ResourceId → PC / 手游粒子路径）、FXtools/节目/NewYearFireWorks_v01/资源发射器数.json。\n\nB08 一张表（FXtools/节目/NewYearFireWorks_v01/导演表-B08修订7-中配扇不多于B05-一张表.json）用到的 ResourceId：Crackle、FanComet_01、FanSilver_01、Glitter、GoldChry、GoldCoreLime、GoldCrackle、GoldKamuro、GoldRayChry、GoldSpark、GreenPeony、Lime、LittleCombo、LittleCrackle、LittleGold、LittleSilver、MultiLayerChry、NY_Trail_Large、NY_Trail_Medium、NY_Trail_Small、PrismWheels、RiseTrail_Tiny、SilverChry、SilverStrobeChry、Strobe（前面都是 P_EFX_FireWorks_）。\n\n1. 每个 ResourceId 按 ResourceFX 表**现在**的值找 PC 粒子（不要用 资源发射器数.json 的旧映射）；手游表里有这一行的，_M 也读。先确认 LittleGold / LittleCrackle / LittleCombo（2800 / 2802 / 2803）指向的是 *_HD 新粒子，不是旧的 LittleChry_HD——10-14 14:12 的读数还是旧的，23:38 的读回已经是新的。\n2. 每个粒子系统、每个发射器的 LOD0，读这些模块和字段（读不到的写「读不到」，不要猜）：Required（Material 及其父材质、BlendMode 能读就读、ScreenAlignment、bUseLocalSpace、EmitterDuration、EmitterLoops）；TypeData（GPU / Ribbon / Beam / 无）；Spawn（Rate、BurstList 每条 Count / CountLow / Time）；Lifetime；Initial Location / Sphere / Cylinder（半径）；Initial Velocity / Velocity Cone（StartVelocity、StartVelocityRadial、Velocity 的 Min / Max，分布类型）；Drag（DragCoefficient）；Acceleration / Const Acceleration；Velocity / Life；Initial Size / Size By Life / Size Scale；Initial Color / Color Over Life / Scale Color Life；Event Generator / Event Receiver Spawn（二次爆开）；MaxDrawCount；**每个位置 / 速度 / 大小模块的 bInWorldSpace、bApplyOwnerScale 之类和缩放有关的开关**；带 Seed 的模块读 RandomSeedInfo（bGetSeedFromInstance、bInstanceSeedIsIndex、bResetSeedOnEmitterLooping、bRandomlySelectSeedArray、RandomSeeds）；分布是不是 Parameter 类（读 ParameterName）。原始值存 B08资源读数.json。\n3. 估算（写明是从模块算的，不是截图量的）：\n   (a) 每个发射器最大半径 r = ∫v(t)dt：Cascade Drag 按 v(t) = v0·e^(−k·t) 算，r = v0/k·(1 − e^(−k·T))（k = 0 时 r = v0·T），v0 取速度上限、T 取寿命上限；另给 v0、T 都取中值的一版。有 Velocity / Life 曲线就按曲线采样积分。单位 cm → m。\n   (b) 一朵花的直径 = 2 × 主星发射器（不算闪光、烟、余烬）最大半径。写清哪个发射器算主星。\n   (c) 开销：每朵 CPU / GPU 发射器数、一次爆开的粒子总数（Burst 合计 + Rate × 时长）、最大粒子尺寸、寿命、BlendMode，以及一个粗的面积量 Σ(粒子数 × 尺寸² × 寿命)。\n   (d) RiseTrail_Tiny：EffectScale = 0.65 时，到顶高度会不会跟着 × 0.65（看 bUseLocalSpace、速度 / 加速度模块的世界空间和 Owner Scale 开关），升空时间会不会变；按模块算原生到顶高度（作者用的是 62.0 m / 1.6875 s）。\n3b. 顺手按 10-14 的格式（df.resource-emitter-census/1）更新 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（readAt 改成这次）——跨年秀（22）的 GPU 体检读它，现在停在 10-14 14:12，有 5 行的粒子后来换了。\n4. B08资源读数.md：第一句写三条结论（真实花径和作者名义直径最差差几倍、最贵的 5 种、Tiny 缩 0.65 是不是到约 40 m）。一张表：ResourceId、表里中文名、PC 粒子、发射器 CPU / GPU、粒子数、估算直径（上限 / 中值）、面积量、颜色 / 大小有没有逐粒子随机。作者的名义直径：小号 90 m、中号 150 m、大号按金芒菊 150 m 放大、小平台 LittleSilver 32 / LittleGold 40 / LittleCrackle 24 / LittleCombo 30 m。最后一段「给跨年秀（22）」。\n5. （可选）用户的颜色 / 大小随机案例：资产路径看本条「案例路径」，或用户贴给你的补充提示词。没有就跳过、结果里写「案例路径未给」。每个案例照第 2 步读全部模块，重点回答：① 颜色 / 大小随机是逐粒子（一朵里每颗星不一样）还是逐朵（整朵一个随机值）；② 靠什么做到（分布类型、Seed 设置、Instance Parameter 名字、Dynamic Parameter）；③ 同一朵里星头、尾巴、火花几个发射器拿到的随机值是不是同一个（颜色 / 大小会不会对不上）；④ 有没有用到导演能传的参数（RandomScaleRatio 之外）。写 颜色大小随机案例.json 和 .md（第一句写这四条的答案，最后一段「给跨年秀（22）」）。\n\n禁止：保存任何资产或关卡、改属性、导入、替换、P4、开关 UE、改 tool/src / tool/workbench、改编排文件。私有工具代码、凭据、用户名不写进仓库。",
+   "做完的标准": [
+    "25 个 ResourceId 都有 PC 读数，手游表里有的也有 _M 读数；读不到的逐个写原因",
+    "每个都有估算直径（上限 / 中值）和开销四项，写清算法和主星发射器",
+    "写清 Tiny 缩 0.65 后到顶高度、升空时间变不变，依据哪几个开关",
+    "资源发射器数.json 已按现表更新（readAt 是这次）",
+    "B08资源读数.md 第一句三条结论，有「给跨年秀（22）」一段",
+    "第 5 步：给了案例就有 颜色大小随机案例.md（第一句四条答案）；没给就在结果里写「案例路径未给」",
+    "已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-16T01:54:00+08:00",
+   "完成": "2026-10-16T02:22:22+08:00",
+   "提交": "50dfded182d38a995d51375a0f00bd6e8ed31eeb",
+   "结果": "25 个 ResourceId 全读（PC 41 系统 + 手游 13 个 _M，3347 次只读，无写入）：金芒菊原生约 230 m（名义 150，1.53×；大号实际约 325–353 m）、绿牡丹 / 多重菊约 287–289 m（1.9×，推断）、金锦菊 1.74×、金垂柳 1.73×，小号 / 小平台花 0.98–1.06×；最贵金垂柳 / 银彩菊 / 绿牡丹 / 金锦菊 / 彩千轮；银扇一束 54 颗且仍有 1 个 GPU（Dot_A），红彗星 25 颗 0 GPU；Tiny ×0.65 到顶 40.3 m、升空时间不变。analysis/results/UE_READBACK_20261015/B08资源读数.md / .json；点灭星随机案例（逐朵，颜色 7 种子挑 1）颜色大小随机案例.md；资源发射器数.json 已按现表更新。用户不用做什么；跨年秀（22）按读数改花径表和 A。"
+  },
+  {
+   "编号": "T10",
+   "看板": "",
+   "交给": "本机同步（8）（用户 10-16 01:48 改由本机实测（25）执行）",
+   "在哪": "本机",
+   "状态": "取消",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线；本条经用户授权可以在编辑器内存里换导演表、改 Debug 字段、移机位、放预览，不保存",
+   "标题": "编辑器里实放 B05 / B08 修订7：同一机位按时刻量 Translucency（ProfileGPU）+ 截图，比两版低配的峰；顺带量真实花径和小平台到顶高度",
+   "为什么": "用户 10-15 23:48：「你不是说不用我录视频也可以吗？让本机自己找机位测试，或者我找个机位给本机也可以……今晚一起做了」「今晚把你要实机测试的任务都排好，能测试就一起测了」。B08 低配限峰是按 B05 在 960 上的一张截图拟的（协作/编排B08.md 第 1 节），要在同一台机器、同一机位上比 B05 和 B08 修订7 在那几刻的 Translucency，看 B08 是不是明显低于 B05、大约在 B05 的八成。用户明天在 960 上测正式包；这条是今晚的预演。原「拆用户录的视频」不做了。",
+   "只许改": [
+    "analysis/results/B08_实机/（新建目录：测量 json、截图、说明.md）"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 派来的 T10，按 协作/派活队列.json「Codex 共同规则」执行，**但 UE 一条按本条的授权例外**：用户 10-15 23:48 授权本机在编辑器里自己测 B08（「让本机自己找机位测试……今晚一起做了」）。允许：在编辑器**内存里**把导演实例的 DefaultConfig 换成测试用的一张表、改 DebugPlatform / DebugQualityLevel / DebugPreviewStartTime、调用 DebugPreviewShow / DebugStopShow、用 SetLevelViewportCameraInfo 移视口机位、执行控制台命令（ProfileGPU、HighResShot、r.ProfileGPU.ShowUI 0、r.ScreenPercentage 100）。禁止：保存任何资产 / 关卡 / 蓝图、导入、P4、开关 UE、改粒子或材质。测完必须把 DefaultConfig、Debug 字段、机位写回原值并读回核对一致。\n\n先读：协作/编排B08.md（第 1 节两个量、低配刀口表）、analysis/results/MOBILE_TEST_20261011/看法.md 和同目录 merged-test.mjs / effscale-test.mjs / ue.mjs（10-11 用过的内存换表、DebugPreviewShow、HighResShot、移机位写法，照着用）。\n\n0. 备份：读导演实例（10-11 是 BP_Failed_NewYearFireworks_ShowDirector_7，按现在关卡里实际的找）的 DefaultConfig、DebugPlatform、DebugQualityLevel、DebugPreviewStartTime、bShowActive 和当前视口机位，存 analysis/local/B08_实机/instance-before.json（本机，不提交）。UE 里要是有人正在用（用户说过 UE 空着才能动；看不出来就看当前地图 / 有没有正在 PIE），不确定就停，状态写「卡住：UE 可能有人在用」。\n1. 机位：用户在派活时给了机位就用用户的；没给就自己找一个能看到 P0–P8 全排和小平台的正面远景（参考 10-11 缩放截图的机位，或玩家看烟花的位置），视口 1920×1080、r.ScreenPercentage 100。把机位位置 / 朝向 / FOV 写进结果。整条测试机位不动。\n2. 换表（内存）：先装 FXtools/节目/NewYearFireWorks_v01/导演表-B05-ResourceFX新命名-手游6种-一张表.json（B05，用户在 960 上测的那版），再装 FXtools/节目/NewYearFireWorks_v01/导演表-B08修订7-中配扇不多于B05-一张表.json（B08 修订7）。每次装完读回核对 EffectSubTemplates / EffectTemplates / EffectScheduleGroups 和文件一致、其他字段没变。\n3. 量 Translucency：先执行 r.ProfileGPU.ShowUI 0（不弹 GPU 可视化窗口）。每张表、PC 低配（DebugPlatform = PC，DebugQualityLevel = 低配，按 10-11 的写法）各放一遍整场（DebugPreviewStartTime 0，约 215 s；中途卡住可以分段从某个时刻起放），在下面这些演出时刻执行 ProfileGPU，从 UE 日志里把这一帧的 Translucency（含 TranslucencyAndDistortion / Translucent Lighting 等子项，写清取的是哪一行）和整帧 GPU 时间读出来：\n   5.0（空场基准）、16.6、43.5、56.5、64.5、65.3、108.5、116.5、129.7、132.6、158.5、165.0、168.0、171.5、181.5、182.6、184.5、187.5、189.0、192.8、194.4、195.5。\n   每个时刻再执行 HighResShot 1920x1080，文件名 <表>_<档>_<时刻>.png（例：B08_低_0065.3.png）。时刻用 DebugPreviewShow 调用后的墙钟计时，记下每次实际执行的时刻和偏差。\n   有余力：B08 再放一遍 PC 高配（只截图同样的时刻），一遍手游中配（DebugPlatform = Mobile，只截 23.9、65.3、132.6、186.0、195.5）。\n4. 真实花径（从截图量，推断）：用同一张图里 P0 到 P8 的距离（800 m，点位坐标见 dfshow）当比例尺，量这些时刻能清楚分开的单朵花的像素直径换成 m：65.3 s 银彩菊大 / 金芒菊中、132.6 s 金芒菊大、186 s 金芒菊大、195.5 s 银彩菊大、16.6 s 金芒菊中，再找一刻小平台小金花 / 小银菊 / 短爆裂开花最大的时候量直径，以及小平台花离平台的高度（作者的名义值：小号 90 m、中号 150 m、大号 212–230 m、小平台花 36–44 m、小平台开花约 40 m）。透视会有误差，写明怎么量的。\n5. 写回：DefaultConfig、Debug 字段、机位写回备份的原值，读回逐项核对一致。\n6. 结果 analysis/results/B08_实机/：Translucency.json（每张表每个时刻：Translucency ms、整帧 GPU ms、实际时刻）、截图、说明.md。说明.md 第一句写三条：① B08 修订7 低配在 64.5 / 182.6 / 184.5–189 s 的 Translucency 是 B05 的百分之几；② 全场 B08 低配 Translucency 最高的三个时刻和值（和 B05 最高的比）；③ 量到的花径和名义值差几倍。最后一段「给跨年秀（22）」。编辑器 GPU 不是 960，只看相对值。\n\n禁止：保存、导入、P4、开关 UE、改粒子 / 材质 / 资源表、改编排文件；不上传视频；凭据、用户名不写进仓库。",
+   "做完的标准": [
+    "B05 和 B08 修订7 在同一机位、PC 低配下，列出的时刻都有 Translucency 和整帧 GPU 读数（缺的写原因）",
+    "说明.md 第一句三条结论（三个峰 B08 / B05 百分比、B08 最高三刻、花径倍数），有「给跨年秀（22）」一段",
+    "截图按 <表>_<档>_<时刻> 命名，至少 PC 低配两张表齐全",
+    "DefaultConfig、Debug 字段、机位已写回并读回一致；没有保存任何资产 / 关卡",
+    "已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-16T02:22:22+08:00",
+   "完成": "",
+   "提交": "6b40ee23035308953ccb88f5cebb8605d6e0cad5",
+   "结果": "卡住：02:56 UE 断言 CurrentScope != nullptr（RenderGraphEvent.inl:36）崩溃退出，GPUECli 17780 连不上；崩溃前我 1.3 s 内连发了 4 次 ProfileGPU（推断是诱因），没有重开 UE。已做：同机位（用户摆的）PC 低配 B05 / B08 修订7 整场 22 刻 ProfileGPU（r.ParallelTranslucency 0）——B08 / B05 = 132 % / 121 % / 88 %（64.5 / 182.6 / 184.5–189 s），B08 最高 64.5、116.5、184.5 s（0.54 / 0.54 / 0.49 ms）；5080 上烟花只占 0.1–0.5 ms、单帧噪声和差值一样大，定不了，以 960 为准。花径只量成一朵金蕊柠大约 238 m（名义 212，1.1×）；整轮截图、多帧窗口、小平台开 / 关没做成。02:54 最后一次恢复读回一致；崩溃时内存里是 B05，未保存任何资产 / 关卡。用户要重开 UE。结果 analysis/results/B08_实机/说明.md、Translucency.json。；【10-18 本机同步检测销账（用户「销掉过期的账」）】原目标（B05 对 B08 预演）已被 B09 实放（25c01490）和 10-20 最终全量取代；960 目标机性能并进最终全量测试，不再按旧计划续。"
+  },
+  {
+   "编号": "T11",
+   "看板": "n83",
+   "交给": "Codex夜班（dot备用；本轮Codex夜班子任务替代，dot消息入口失败）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 2,
+   "前置": [],
+   "要 UE": "不要；仅已提交结果与图片，禁止17780和GPU",
+   "标题": "G106交付回包审看：窜天猴/仙女棒同版命名、PC手机契约及画面证据",
+   "为什么": "本地看板local-P008及对话记录/对话框23.md:521仍欠G106审看；四任务结果已回，用户本轮授权dot派发不与正在做的T09冲突的夜班任务。",
+   "只许改": [
+    "analysis/results/G106_夜班审看_20261016/（新建报告及证据索引）"
+   ],
+   "提示词": "你是既有「本机派活执行（dot备用）」的Codex夜班执行者。本轮用户在总管21-CodeX明确要求dot派发不与本机实测冲突的任务。先读AGENTS.md、CLAUDE.md、协作/标准.md及本条全文，按派活队列共同规则认领、检查、回写。使用专用独立克隆F:/FireWorksLab-Night-Codex：没有就克隆同一GitHub仓库；已有则先核origin、status并安全fetch/rebase，保留他方改动。不在F:/FireWorksLab、本机实测（25）或总管Board21工作树写文件。启用.githooks。两个夜班任务在该执行者串行执行，每项最多60分钟；只提交本条白名单、自己的夜班记录和派活队列里自己这一条。记录统一为对话记录/夜班-Codex.md。\n\n禁止连接UE/GPUECli、操作P4、启动浏览器渲染或GPU压测、改tool/src/tool/workbench/tool/fwlight/spec/正式库/用户验收/在线看板/定时任务，禁止触碰T09/T10占用的机位、资产与资源发射器数.json。只读生产文件，输出独立报告。来源按开工固定HEAD记录；结果不能混用版本。若能力或证据不足，准确列未测/卡点，不假写通过。完成后写执行结束/AI检查/用户验收三栏，并回写本条状态、时间、提交及结果；不要重派T09/T10。\n\n任务：接续local-P008欠的G106同版审看，输出analysis/results/G106_夜班审看_20261016/看法.md与核对.json。\n1. 读导出（23）20:53统一导出规范原话和最新记录、NFE-SGR1-G106/NFE-SGS1-G106/NFR-SG-G106/NFS-SG-G106结果。逐包核烘焙器版本/参数指纹/导出清单/PC与手机cascade一致性，校验T_EFX_FireWorks_完整英文资产名、Ramp大小写/引用、产物清单列全与包内文件。当前用户RocketDot存档若不在结果中，写未核，不能冒称其已通过。\n2. 亲眼打开仓库里的烘焙回放.jpg、原尺寸图、回放检查.jpg及NFR两包图，对关键时刻、局部、裁切、过曝、异常闪点/条纹逐项写观察；使用图片读取工具，不打开file://HTML、不启动渲染。静态图不能证明连续播放的项写未测，结合已有NFR采样记录分开陈述。旧G97看法只能对照，不能当G106已审。\n3. 读取标准检查.json里的目标两包结果，不把整个老候选库的既有失败泛化为本批失败。报告第一段给出同版机器检查/AI图片审看/未测/需要导出（23）或用户做什么。发现问题只列证据和最小建议，不改实现、不替用户验收。",
+   "做完的标准": [
+    "两包各有版本/指纹/PC手机契约的实际值及来源",
+    "亲眼审看已提交图片，逐图有结论；连续播放、UE及RocketDot用户存档缺证据的明确未测",
+    "看法.md和核对.json齐全，可交导出（23）接续；不改生产代码和资产",
+    "提交推送并回写本条完成或卡住，保留他方任务字段"
+   ],
+   "派出": "2026-10-16T02:39:59+08:00 总管21-CodeX内部夜班已受理，T12完成后串行接续；dot消息入口失败，无重复派发",
+   "开始": "2026-10-16T02:39:59+08:00",
+   "完成": "2026-10-16T02:46:09+08:00",
+   "提交": "2f93615d",
+   "结果": "G106两包元数据契约各18项通过，目标标准各12项全真，NFE/NFR回放记录pass；8张静态图已亲眼审看，未见明显裁切/矩形边/贯穿条纹。报告analysis/results/G106_夜班审看_20261016/看法.md和核对.json；原PNG/物理包、用户RocketDot存档、跨循环连续播放和UE缺证据，未替用户验收；导出（23）沿原存档重导接续。"
+  },
+  {
+   "编号": "T12",
+   "看板": "n84",
+   "交给": "Codex夜班（dot备用；本轮Codex夜班子任务替代，dot消息入口失败）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "不要；仅离线表与纯CPU灯光模型，不调用UE脚本",
+   "标题": "B08修订7离线交付核对：16.0.43版本、B05数量对比及灯光同源/SkyLight≤10",
+   "为什么": "看板QA候选仍需版本一致；最新22交修订7/16.0.43，8完成同次交付灯光。可在T09/T10进行时独立核交付文件，避免实测拿错版；不是重新编排或重做已通过全量回归。",
+   "只许改": [
+    "analysis/results/B08R7_夜班核对_20261016/（新建报告、只读核验数据、必要临时纯模型输出）"
+   ],
+   "提示词": "你是既有「本机派活执行（dot备用）」的Codex夜班执行者。本轮用户在总管21-CodeX明确要求dot派发不与本机实测冲突的任务。先读AGENTS.md、CLAUDE.md、协作/标准.md及本条全文，按派活队列共同规则认领、检查、回写。使用专用独立克隆F:/FireWorksLab-Night-Codex：没有就克隆同一GitHub仓库；已有则先核origin、status并安全fetch/rebase，保留他方改动。不在F:/FireWorksLab、本机实测（25）或总管Board21工作树写文件。启用.githooks。两个夜班任务在该执行者串行执行，每项最多60分钟；只提交本条白名单、自己的夜班记录和派活队列里自己这一条。记录统一为对话记录/夜班-Codex.md。\n\n禁止连接UE/GPUECli、操作P4、启动浏览器渲染或GPU压测、改tool/src/tool/workbench/tool/fwlight/spec/正式库/用户验收/在线看板/定时任务，禁止触碰T09/T10占用的机位、资产与资源发射器数.json。只读生产文件，输出独立报告。来源按开工固定HEAD记录；结果不能混用版本。若能力或证据不足，准确列未测/卡点，不假写通过。完成后写执行结束/AI检查/用户验收三栏，并回写本条状态、时间、提交及结果；不要重派T09/T10。\n\n任务：仅核对已提交16.0.43 B08修订7的交付输入，输出analysis/results/B08R7_夜班核对_20261016/核对.md及核对.json。\n1. 读对话记录/对话框22.md最新01:13段、协作/编排B08.md、当前cloud-latest.json和版本记录，定位修订7的dfshow/一张表/档位表。记录版本号、源文件SHA256及工作台实际引用；如果开工已更新，保留16.0.43基准并指出新版本，不自行替换。按slot/template/subtemplate过滤核PC/手游高中低嵌套、ResourceId集合和三表一致性。所需资源只用固定HEAD已提交证据，T09新实读另记不待它。\n2. 用已有编排数量对比.py的只读入口或纯内存展开，对B05为标定计算PC/手游高中低球花、扇、扇束、小平台、尾缀，列绝对值与差值。明确发射器/粒子成本模型不等于实机ms；不沿旧“扇每束GPU”的统计给性能放行。\n3. 读tool/fwlight/README及纯模型light_model.py/light-curve-model.mjs和已有逐键对照测试。仅以修订7在纯内存或本条输出目录计算四灯，核JS/Python同源、SkyLight有限值且峰值≤10、时间范围/四灯齐全。不得调用fwlight apply/verify/save或ue_bridge，不调用工作台release/build，不改16.0.42已提交旧灯光包，也不把它改名冒充修订7。若现有离线入口无法安全算，报告具体缺口，不接UE。\n4. 结论写“离线交付一致/有缺口”，列T10必须记录的导演/灯光版本、分辨率、档位；不宣称960性能或UE实播通过。\n最新必核：50dfded1的T09已完成，银扇一束54颗、Dot_A仍1 GPU，红彗星25颗0 GPU；与修订7假设扇无GPU有差异。把该份已提交新census作为实读依据，分别报告模型/实读下GPU峰与风险；不要在T10进行时改编排或把先前0GPU峰值当现值。",
+   "做完的标准": [
+    "16.0.43输入引用和指纹可追溯，PC/手游六档有实际数量及B05差值",
+    "修订7灯光四灯完整、SkyLight≤10及JS/Python对照有实际离线证据；不能测的具体说明",
+    "核对.md/json齐全，生产文件未改，无UE/GPU/发布操作",
+    "提交推送并回写本条完成或卡住，保留T09/T10及他方字段"
+   ],
+   "派出": "",
+   "开始": "2026-10-16T02:31:48+08:00",
+   "完成": "2026-10-16T02:39:39+08:00",
+   "提交": "b22ee17b",
+   "结果": "离线16.0.43引用/PC三表/六档嵌套及四灯JS-Python逐键一致，SkyLight6.9228≤10；新census PC同秒启动GPU峰B05 40/38/26、修订7 104/52/10，旧扇0GPU不能性能放行。T09手游表实际16行，原摘要13误写。报告analysis/results/B08R7_夜班核对_20261016/核对.md/json；UE/性能/用户验收未测，T10继续原现场。"
+  },
+  {
+   "编号": "T13",
+   "看板": "n37",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 2,
+   "前置": [
+    "T11",
+    "T12"
+   ],
+   "要 UE": "不要；只读仓库与派生看板，不接GPU/P4",
+   "为什么": "延续n37已批准文档卫生，减少重复T10/旧版本/过期资源提醒，不与25或8-b四项冲突。",
+   "只许改": [
+    "总管白名单：协作/看板待同步.json追加、本地视图/HTML、队列T13、自己的记录/交接；只读审查者不改文件"
+   ],
+   "提示词": "只读3198091b派生视图和最新提交，提出逐字段最少清理建议，给证据与保留项；总管核后仅追加pending。保留快照/对账/全局MD不改，旧pending不改，不删除用户数据，用户决定/验收缺口不得当过期关闭。排除8-b已接N23-20261016-01至04；不改生产代码，不接UE/GPU/P4，不改自动化。若无已批准、前置齐全的独立后续事项就报告等待，不为凑夜班扩范围。",
+   "做完的标准": [
+    "每条关闭/合并/纠正均有来源；稳定ID、旧pending和用户反馈原样保留",
+    "HTML与派生视图一致；在线appliedAt不伪写",
+    "T09/T10及他方任务字段不动，n37未覆盖的余项保留"
+   ],
+   "派出": "2026-10-16T02:57:32+08:00 内部审查已受理；本字段为本次登记时刻",
+   "开始": "2026-10-16T02:57:32+08:00",
+   "完成": "2026-10-16T03:04:03+08:00",
+   "提交": "f00a30d9",
+   "结果": "10处有证据清理完成（6 items＋4 resources），关闭3条旧提醒；稳定ID/原75条pending/用户意见保留，仅n60补用户明确新原话；T10未动、验收仍开。gpt-6.1-sol/max审查＋总管核源；n37其余文档卫生仍在。",
+   "交给": "总管21-CodeX协调；内部board_cleanup_audit（gpt-6.1-sol/max）审查",
+   "标题": "T11/T12后清理有证据的过期/重复看板提醒，保留ID与用户反馈；不替代用户验收"
+  },
+  {
+   "编号": "T14",
+   "看板": "n39",
+   "交给": "内部文档夜班 board_cleanup_audit（gpt-6.1-sol/max）；总管协调",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 3,
+   "前置": [
+    "T13"
+   ],
+   "要 UE": "不要；只核已提交证据与文档",
+   "标题": "5.0剩余需求索引：已实现/仍欠/等决定/待核，保留历史原话",
+   "为什么": "既有n39由总管认领，整理过期依据，能独立完成，不占本机实测或8-b源码。",
+   "只许改": [
+    "协作/5.0_剩余清单.md（新）",
+    "协作/5.0_需求梳理.md（仅顶部历史索引指引）",
+    "对话记录/夜班-Codex-文档.md",
+    "协作/派活队列.json（仅T14的认领和回执）"
+   ],
+   "提示词": "你接续总管的内部文档夜班，执行T14/n39，模型必须gpt-6.1-sol/max（本执行者已按该模型启动）。只做已有n39“5.0依据过期，没有一张剩余单”的证据索引，最多60分钟，且不得超过香港2026-10-16 08:00。先取clock当前时间，完整遵守CLAUDE.md和协作/标准.md；上一轮已读可复用但核变更。\n\n使用总管已建且已完成T11/T12的独立克隆F:/FireWorksLab-Night-Codex，现旧执行者已完成无活动；先核origin/status/未推送与归属，若有他方改动则停，不覆盖。按本克隆的CLAUDE第0节fetch/log/rebase并配置已有.githooks；不要在F:/FireWorksLab或Board21写文件。认领队列只改T14并推送，固定一个业务来源HEAD/香港时间，记录在新索引；后续只为安全推送同步，不混用未来新版本作已验证证据。\n\n1. 读协作/5.0_需求梳理.md、协作/筛查/汇总_要你定的.md与相关索引、当前看板本地视图中5.0有关稳定ID、参数/交互已批准原话，以及最新相关提交/记录/交付报告。目标是核对旧A–F与现在的关系，不是重做146项源码审计。按需定向读，不能缺记录就说没做。\n2. 写协作/5.0_剩余清单.md：先说明本次结论和数据来源/HEAD；按已有A–F或更简单的已有分组索引已实现（有明确证据）、仍欠（明确未完成）、等用户决定、待核（证据不足）。每项给稳定看板ID、范围、已有证据文件:行/提交、负责人、下一步及验收；同一事项只列一处。重要互相矛盾的旧句指出证据，无法确认保留。已交付不等于用户验收/UE通过。B08 QA是当前主线，5.0索引不使未批准功能自动获批。\n3. 协作/5.0_需求梳理.md顶部只加简短历史/新索引指引，保留原内容和用户原话；如旧文件本来已注明过期就不重复标。不要在其它原文做批量清理。\n4. 不新增产品需求、不删合参数、不改标准/宪章/代码/资源、云端快照/对账/全局MD/用户验收和自动化，不接UE/GPUECli/P4/GPU/浏览器。排除8-b四项N23-20261016-01至04及T08/T10；不认领它们。\n5. 验收只做文档必要检查：链接/引用存在、ID存在、状态与证据对应、原用户原话保留、无生产文件改动。源冲突/证据缺口准确写待核，不为凑全写已完成；无须全量测试或重跑渲染。自己的记录写对话记录/夜班-Codex-文档.md。只白名单提交两文档＋自己记录，推送后再仅T14写完成/真实提交/结果并推送；任何他方字段保持新HEAD原样。清理出可接续文档即任务范围完成，不代表5.0开发/用户审批完成。若卡住如实回执。\n\n完成后内部回报总管（collaboration），不要用send_message_to_thread发外部对话。不要自行再派新任务；所有后续由总管选。",
+   "做完的标准": [
+    "仅整理已有批准需求，所有状态有来源或标待核，关联稳定ID和负责人",
+    "原需求/用户原话保留，不把开发完成等同用户/UE验收",
+    "文档引用可用、最少白名单改动及真实Git回执；不占UE/GPU、不重派8-b任务"
+   ],
+   "派出": "",
+   "开始": "2026-10-16T03:11:13+08:00",
+   "完成": "2026-10-16T03:23:06+08:00",
+   "提交": "94bd046ae2a45703e789e6d479d9efddebc68cd9",
+   "结果": "已交协作/5.0_剩余清单.md及旧需求顶部历史指引（主体bac060d4）；父审查修订94bd046a已推送，仅修n68/i41交接措辞及自己的记录。\nn68明确C1仍有既有安全阻塞、不纳本轮且禁止新线程绕过，C2–C5/C7等用户决定；i41先等8-b已串行认领的N23-20261016-02修复/验证回包，不另派。\n依据固定923d5f8c已含3205cba7的夜班原话:20、23–24、29、38–43；78处链接/行号、28个ID及仅两行变更检查通过。其余原文、用户待定与UE未验边界保持，未动T15/T16等他方条目。"
+  },
+  {
+   "编号": "T15",
+   "看板": "n79",
+   "交给": "内部t10_offline_audit（gpt-6.1-sol/max）；总管回写",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 2,
+   "前置": [],
+   "要 UE": "不要；固定提交的既有JSON只读数学核对",
+   "标题": "T10回包离线复核：比例/采样/矛盾与未测边界，不替代实测",
+   "为什么": "新回包仍卡住，先把会误导QA的噪声口径与记录矛盾写清；纯CPU只读，与T14文档及8-b源码完全独立。",
+   "只许改": [
+    "子任务不改任何文件；总管仅自己记录/本地待同步与视图HTML、队列T15回执"
+   ],
+   "提示词": "只读7db4c44b固定来源的analysis/results/B08_实机/Translucency.json、说明.md、25记录及T10回执，用Python复核22刻两版数据、分母/窗口/比例、全场峰29%计算、分辨率/版本/机位等证据。核记录勾选与细报告矛盾、重复样本和实际灯光/FOV缺口。直接内部回报带文件行/JSON键和计算结果，不写文件/不提交/不碰T10字段，不接UE/GPUECli/P4/GPU/浏览器、不发别的对话消息。不得从单帧5080数据推960通过、不得将GPU启动模型当ms、不诊断未证实崩溃根因。最多30分钟且08:00前收口；缺证据标未测，给最小数据补齐与安全接续条件。执行者gpt-6.1-sol/max，先读CLAUDE/标准；避开T14与8-b四项。",
+   "做完的标准": [
+    "计算用脚本复核，真实数据范围/分母/窗口可追溯，未测边界保留",
+    "T10卡住状态不动；不声称960/UE/用户验收通过",
+    "无生产或用户文件修改；必要结论写入总管记录及pending"
+   ],
+   "派出": "2026-10-16T03:12:08+08:00 内部只读子任务已实际受理；时间为本次登记时刻",
+   "开始": "2026-10-16T03:12:08+08:00",
+   "完成": "2026-10-16T03:22:23+08:00",
+   "提交": "b899c31a",
+   "结果": "只读复核已完成，结果见对话记录/对话框21-本机.md:118（源7db4c44b、结果b899c31a）。132/121/88%成立；29%需排除5s基准且只是采样峰，全22刻采样峰降23.684%。44份单帧无重复，不能估噪声/显著性或判960。渲染与截图尺寸需分列；实际灯光/FOV/ProfileGPU原始归属等缺证据。T10仍卡住，未接UE/未改25数据。"
+  },
+  {
+   "编号": "T16",
+   "看板": "n37",
+   "交给": "内部t10_offline_audit（gpt-6.1-sol/max）；总管回写",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 3,
+   "前置": [
+    "T13",
+    "T15"
+   ],
+   "要 UE": "不要；只读固定提交的入口文档和证据",
+   "标题": "文档入口事实差异：当前结论/版本/过期索引，不删历史",
+   "为什么": "既有n37不用用户再批；当前入口10-13旧结论会误导接续，能在不占实测/源码的夜班明确纠正方向。",
+   "只许改": [
+    "子任务不改文件；总管仅自己的记录/交接最小提示、看板pending/视图/HTML与队列T16回执"
+   ],
+   "提示词": "T16延续已批准n37文档卫生，只做入口事实差异审查，最多30分钟且08:00前收口。执行模型gpt-6.1-sol/max。只读派发时总管指定的最新已推送HEAD（开始即固定并记录）的交接.md当前结论、协作/全局看板.md现在、更新记录.md顶部、仓库梳理.md目录索引及必要最新来源；主F/UE/P4/GPU/浏览器不可碰，不改文件、不提交，不发其它线程消息。找最多10处会误导接续的明确过期事实，逐条给旧句/文件行、新句完整建议、依据文件行或提交、适用源时间和该保留的用户决定/原文。GlobalMD/快照/对账归云端，不提离线直接改它们；交接/目录可只建议一条醒目的源时间/最新索引提示，保留历史原文，不批量抹旧日志。不要把未来N23结果或尚在做的T14当完成，不重做8-b待处理扫描器、不改标准/权限/规则，不新增产品需求或源代码审计。无法确认保留待核，不为凑10条扫描全仓库或重读全史。返回紧凑差异表和最多3个最小可执行修正文案；总管核后只改自有记录/待同步，其他文件是否改由总管核源判断。本条范围是差异审查，不代表整个n37完结。",
+   "做完的标准": [
+    "每处旧句/建议新句有固定来源和文件行，未知标待核；最多10处不扩源码审计",
+    "历史原文/用户意见保留；不改云端专属副本/标准/权限/UE/生产代码",
+    "差异表可接续；n37未覆盖和待云端余项保留，不称总项全部完成"
+   ],
+   "派出": "2026-10-16T03:31:54+08:00 内部t10_offline_audit（gpt-6.1-sol/max）已实际受理；固定源ed388a66",
+   "开始": "2026-10-16T03:31:54+08:00",
+   "完成": "2026-10-16T03:45:06+08:00",
+   "提交": "b9e2a38d0aa701ccb8bab63e1eb2c65107c18f85",
+   "结果": "入口10处事实差异已核，固定源ed388a66；结果b9e2a38d，对话记录/对话框21-本机.md:146及交接顶部源时间提示。原历史正文/用户意见保留，云端MD/快照/对账及生产文件未动。T16子项完成，n37整体仍待云端及未覆盖欠项；T10和8-b四项不改。"
+  },
+  {
+   "编号": "T17",
+   "看板": "",
+   "交给": "本机实测（25）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+   "标题": "只读排查：去年手游「新年烟花2.0」粒子里 Initial Color 带曲线的发射器（定位 + 分组，不改）",
+   "为什么": "用户 10-16 19:26 / 20:05：去年手游烟花有个别发射器把淡出做在 Initial Color 的曲线上，客户端查出手机实机上某些效果刚开始不显示；要先定位全部、对话框15 出改法、用户审过再写入。",
+   "只许改": [
+    "analysis/results/INITCOLOR_M_20261016/读数.json（新建）",
+    "analysis/results/INITCOLOR_M_20261016/清单.csv（新建）",
+    "analysis/results/INITCOLOR_M_20261016/清单.md（新建）"
+   ],
+   "提示词": "你是本机实测（25）。这是 dot 从 协作/派活队列.json 派来的任务 T17，按该文件「Codex 共同规则」执行（UE 只读）。先读 对话记录/对话框15.md 最后两段（用户 10-16 19:26 / 20:05）。\n\n背景（用户 10-16 20:05）：去年「新年烟花2.0」手游粒子里，有个别发射器在 Initial Color 上做了曲线（例：某发射器 Dot_B，Start Alpha = Distribution Float Constant Curve，(0 s, 0.4) → (1.9 s, 0.0)，Linear），客户端查出这会让手机实机上某些效果刚开始不显示。很多发射器是复制出来的，曲线数值相近。这次只读排查、定位，**不改任何东西**；改法由对话框15 出、用户审过后另派写入任务。\n\n1. 范围：手游 ResourceFX 表里 RowDescription / 名字含「新年烟花2.0」的行（10-14 备份 analysis/results/RESOURCEFX_B05_20261014/手游表_备份_写前.json 里是 23 行），按表**现在**的值取每行的 FxSP、FxSP_Low、FxSP_High，去重成粒子系统清单（10-14 是 46 个，全在 /Game/Effects/Props/FireWorks）。注意有的 ResourceId 是 P_EFX_FireWork_（没有 s），不要按名字前缀筛。表现在的值和备份不一样的，写出来。\n2. 每个粒子系统：LODDistances；每个发射器：EmitterName；**每个 LOD**（不只 LOD0）：bEnabled、Modules 全列表（序号、类、bEnabled、对象路径）。同一个模块对象被几个 LOD 共用的，标出来。\n3. 命中条件：ParticleModuleColor（Initial Color）或 ParticleModuleColor_Seeded 的 StartColor 或 StartAlpha，分布类名带 Curve（ConstantCurve / UniformCurve 等）。另外单独标：ParticleModuleColorScaleOverLife（Scale Color / Life）勾了 bEmitterTime 且是曲线的。命中模块读：两个分布的类名、全部关键点（InVal、OutVal、ArriveTangent、LeaveTangent、InterpMode）、bClampAlpha、RawDistribution 的 Table（TimeScale、TimeBias、Values、EntryCount、LockFlag）。没命中但有 Initial Color 的，也记下它是常量值多少。\n4. 命中的发射器再读（改法要靠这些判断）：Required（EmitterDuration、EmitterDurationLow、bEmitterDurationUseRange、EmitterLoops、EmitterDelay、EmitterDelayLow、bDelayFirstLoopOnly）；Spawn（Rate 分布与值、RateScale、BurstList 每条 Count / CountLow / Time、BurstScale）；有没有 Event Receiver Spawn / Spawn Per Unit（这些粒子不在 0 秒出生）；Lifetime 分布与值；这个 LOD 里所有 Color Over Life、Scale Color / Life 模块（ColorOverLife / AlphaOverLife、ColorScaleOverLife / AlphaScaleOverLife 的分布和关键点、bEmitterTime、在模块列表里的序号，排在 Initial Color 前面还是后面）。读不到的写「读不到」，不要猜。\n5. 把命中按「曲线关键点 + 出生方式」相同的分组（复制出来的应该是一组），每组给一个代表发射器。\n\n产出（只建这三个文件）：\n- analysis/results/INITCOLOR_M_20261016/读数.json：原始读回（每个请求的路径、返回）。\n- analysis/results/INITCOLOR_M_20261016/清单.csv：每个命中模块一行：粒子系统、引用它的 ResourceId 和中文名、发射器、LOD、模块序号、命中的是颜色 / Alpha / 都有、关键点、出生方式（Burst 时刻和数量 / Rate / 事件）、寿命、时长 / 循环 / 延迟、Scale Color / Life 和 Color Over Life 的情况、是否共用模块、分组号。\n- analysis/results/INITCOLOR_M_20261016/清单.md：第一句写结论（读了几个粒子系统、几个发射器、有 Initial Color 的几个、带曲线的几个、分几组、读失败几个）；然后分组表；最后列读失败和表值变化。\n\n禁止：保存任何资产或关卡、改属性、导入、替换、P4、开关 UE、改 tool/src / tool/workbench / 编排文件。私有工具代码、凭据、用户名不写进仓库。",
+   "做完的标准": [
+    "23 行 × FxSP / Low / High 去重后的每个粒子系统都读了，读失败的逐个写原因",
+    "每个发射器、每个 LOD 的 Initial Color 都列了（命中的有完整关键点和 Table）",
+    "命中发射器的出生方式、寿命、时长 / 延迟、Scale Color / Life、Color Over Life 都有值或写「读不到」",
+    "清单.md 第一句是计数结论，有分组表",
+    "没有保存、没有改任何资产；已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-16T20:32:17+08:00",
+   "完成": "2026-10-16T20:48:11+08:00",
+   "提交": "1735973854fad34f62b8ac00f216e7825a0fcc71",
+   "结果": "干跑完成，仅PC/手游当前ResourceFXTable的新年烟花2.0：各23行，去重PC22系统/手游46系统；全部443发射器、1103个LOD均读回。\nInitial Color曲线命中PC38发射器/手游29发射器（82独立模块、181条LOD引用），按完整曲线与出生配置分27组；系统/必需字段读取失败0，表值精确复核无漂移，未修改或保存任何UE资产。\n结果：analysis/results/INITCOLOR_M_20261016/读数.json、清单.csv、清单.md；已交叉核对并推送main。RowName附加查询失败2次已保留；PC旧基线缺8行已注明。后续迁移需审阅，本轮不写入。",
+   "执行者": "T17干跑（Codex，本轮用户直接认领）",
+   "本轮范围": "用户2026-10-16本轮原话：云端有一个T17的任务，你去认领，范围仅限ResourcesFX表PC与手游的2.0内容，不用扩大，先干跑。覆盖原任务仅手游的范围，PC与手游均仅取当前ResourceFXTable中行名/RowDescription含新年烟花2.0的行及其FxSP/FxSP_Low/FxSP_High引用；只读定位分组，不改资产。"
+  },
+  {
+   "编号": "T18",
+   "看板": "",
+   "交给": "T17干跑（当前Codex对话定时接续，dot不另派）",
+   "在哪": "本机",
+   "状态": "等前置",
+   "优先": 1,
+   "前置": [
+    "T17"
+   ],
+   "前置说明": "用户明确暂停：先让画质排查工作。T18已释放UE，定时接续PAUSED，等用户通知恢复。",
+   "要 UE": "要：明确空闲，允许仅新建沙盒副本和短时验证；正式资产只读。",
+   "标题": "Initial Color首点/零Alpha采样沙盒验证：PC与手游2.0三层复现，复核27组修改方案（正式资产先不改）",
+   "为什么": "用户手测两层RGB看似只用首点，Hero_M的Second_Explode_01曲线首点Alpha=0仍可见，改常量0后不显示；要求晚间UE空闲做沙盒验证，查清机制后再比较方案。不能据此认定只读首点或首个非零值。",
+   "只许改": [
+    "analysis/results/INITCOLOR_SANDBOX_20261016/（仅本任务原始请求、试验矩阵、截图及结论）",
+    "analysis/scripts/initcolor_sandbox_20261016.py（仅确需时新建）",
+    "analysis/scripts/initcolor_sandbox_20261016.mjs（仅确需时新建）",
+    "对话记录/对话框T17.md",
+    "协作/派活队列.json（仅T18）",
+    "协作/状态清单.json（仅本任务UE认领及释放）"
+   ],
+   "提示词": "你是当前 T17 干跑对话的接续执行者。用户 2026-10-16 晚上要求：UE 有空时做沙盒验证，查清 Initial Color 首点/零值的现象，再对比结论和修改方案。T17 的只读审计已经完成，不重开、不重扫全库。本条是 T18，先实验、后报告；正式资产修改仍等用户审阅本次结论。\n\n一、时间和占用（先满足再认领，不占着 UE 等）：香港时间 2026-10-16 22:00 至 2026-10-17 08:00，每小时整点由当前对话的定时接续检查一次。读取最新 origin/main 和 F:/FireWorksLab 本地未提交的 协作/状态清单.json，核对 UE 单写认领及相关最近记录；服务在线不等于空闲，编辑器无输入也不等于用户已让出。已有明确未释放占用或不能确认空闲，本次不进 UE、不抢锁，保持等前置。不自动启动/关闭 UE，不发消息打扰其他对话。窗口结束仍不具备条件，记录实际障碍一次并暂停定时任务。前置满足后先将本条改在做、记实际开始，按共同规则单文件认领推送，并在共享状态中只新增自己的 T18 UE 窗口认领；写前再次检查并发。实际 UE 工作最多 60 分钟，等候不算。\n\n二、授权边界：遵守仓库 AGENTS.md、CLAUDE.md、协作/标准.md。仅本条覆盖共同规则中“UE 只读/不能改任何属性或保存”的部分：允许通过现有 GPUECli 在新的 /Game/Effects/_Sandbox/InitColor_T18_20261016/<本次运行号>/ 下复制粒子、修改副本的模块/曲线/出生参数、保存这些新沙盒副本，并短时放置本任务临时 Actor、截图读回。禁止修改或保存原资源、材质/贴图、ResourceFX 表、关卡、导演、P4；不写引擎 C++，不新建材质，不改工具/导入器。不得批量 SaveAll。复制 API 可能自动落盘，调用前验证目标前缀不存在且只落本次目录；所有内嵌模块都必须属于副本，发现引用原模块就停止修改该副本，不能污染共享源对象。没有可靠沙盒操作能力就报告具体缺口，不猜接口或绕过限制。不使用曾导致崩溃的 ProfileGPU。\n\n三、固定代表与基线：只用 T17 已归档的 PC/手游新年烟花2.0 范围。先验证用户这三层：\n1) /Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Medium_Yellow_HD.P_EFX_FireWorks_Medium_Yellow_HD：发射器索引2 FIieWorksFlower_01、索引7 FireWork_Explode_B；用对象路径和索引确认，不能只靠同名。\n2) /Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_M.P_EFX_FireWorks_Hero_M：发射器索引1 Second_Explode_01，归档子对象 ParticleSpriteEmitter_4。\n必要时只加 T17 范围内一个 GPU Dot_B 作 CPU/GPU 差异对照；若事件采样成为未解变量，只加归档 AI_RPG_M 的 FireWork_Explode_B。没有差异证据不扩大样本。\n输入：analysis/results/INITCOLOR_M_20261016/读数.json、清单.csv、清单.md 和 对话记录/对话框T17.md。读数的 requests + objectsIndex 才是原始属性，精简 assets 描述不重复存全部 props。先只读保存代表当前内存属性、原 uasset 磁盘哈希及相关开关；和 T17 基线比较，用户刚才的手测可能未保存，不能把当前手测当原始效果，也不能恢复/保存用户原件。需要原曲线时仅在新沙盒中按归档重建。所有报告区分用户反馈、归档配置、当前读回和实际运行证据。\n\n四、最小实验矩阵（顺序执行，先解核心问题再决定加测）：\nA. 用源材质、固定寿命/一次循环，在沙盒中先用 Alpha 常量0和1验证显示对照；将 RGB 设可看清且不饱和的固定值，Scale Color/Life 在隔离副本中设 RGB/Alpha 都为1。原系统和完整链副本保持另外一份，不能混淆隔离条件与最终效果。\nB. 对 Initial Alpha 使用 (0,0)、(0.2,1)、(0.8,0) Linear；将 Rate=0，在已知的发射器时刻分别安排单粒子 Burst，例如0、0.1、0.2、0.5。核对实际出生时刻/首个 Tick（接口支持才读真实粒子值；不支持就用定时控制和图像证据说明测量精度）。同一出生粒子随寿命观察，与不同出生时刻的粒子比较。另以常量0、0.4、1和“只改变后续点，首点仍0”的曲线对照，区分按出生时刻插值、永远首点、取首个非零值，不能靠一张亮图判断。\nC. 对 Initial RGB 使用原30/80开头曲线和常量首点对照；再在隔离副本用低亮度红→绿→蓝诊断曲线和可控非零出生时刻，排除 HDR 饱和/Bloom 让不同数值看起来一样。确认出生后颜色是否保持，再与相同曲线移到 Color Over Life（RelativeTime）的对照比较。两类时间轴不同不能直接称等价。延迟与循环时钟只有出现边界矛盾再加测。\nD. 恢复源出生配置及完整颜色模块链，比较：归档原配置；Initial Alpha 候选常量；首点常量假设；RGB迁移 Color Over Life、Alpha=1且放在所有 Scale 前。Hero_M 必须单独检查“Alpha常量1后原来淡入淡出是否消失”，Scale Alpha原为1不能承担原本不存在的淡出。两个 Scale 的乘法、Color Over Life 的覆盖分别验证，不能把两层 Color Over Life 当作相乘。不要为迁移方便改已有曲线时间/强度。\nE. 每项记录资产/发射器/LOD/模块索引、分布类、关键点、采样时间类型、实际出生配置、Scale位置和参数、曝光/机位/LOD、截图时刻及观察。关键0点边界至少复现3次；其余只做必要对照。读取 authored points 与 RawDistribution lookup table，若运行与 authored 不符再查缓存/烘焙差异；没有证据不把缓存故障当原因。没有本机 cooked 手机运行条件时明确“仅编辑器实证”，不称已修复客户端问题。\n\n五、回到方案和验收：先回答“是否只能取首点”“是否跳过零值”“RGB/Alpha是否同一规则”“既有Scale如何影响画面”，每项区分已证实、推断、未验证及适用CPU/GPU范围。再复核之前49+18/三种候选的前提，必要时重分67发射器，不保留错误简化：原A30（已有淡出、常量基色）、B19（Scale Alpha原为1、需安排淡出）、C18（RGB曲线迁移）均只是未验证候选。将结论映射回原27组/67层，优先给保留现有效果所需的最简单方案、强度/时序/淡出变化及用户验收点，不为调优扩大范围。数据不足就把需补验证的组列出，不自动取首点/峰值/全部设1。\n\n六、收口：输出原始请求与写入目标/返回、试验矩阵CSV、必要截图、结论与修改方案，放在 analysis/results/INITCOLOR_SANDBOX_20261016/；辅助脚本仅在需要时放 analysis/scripts/initcolor_sandbox_20261016.py 或 .mjs，私有工具实现/凭据不入库。结束清理只属于T18的临时Actor/回调，恢复本任务改动的机位/曝光/时间开关，绝不覆盖开始后用户新改动；不保存地图。复读并比较源内存属性与原文件哈希，发现差异先确认是否本任务造成，不能自行回滚用户操作。释放自己UE认领，正常门禁后只提交白名单报告、记录和本条回执。任务完成或无法继续时暂停当前定时接续；无变化的等候不重复汇报，有实证结论、执行失败或需要用户决策时在当前对话报告。完成只表示本次排查及方案交付，正式资产批改和用户验收另记。",
+   "做完的标准": [
+    "三个用户代表完成可复现的首点/非零出生时刻/常量0对照，未做的明确说明",
+    "区分EmitterTime出生采样和RelativeTime随寿命采样，Alpha和RGB分别有证据",
+    "分离Scale乘法、Color Over Life覆盖及HDR显示干扰，不把文档预期当当前引擎实测",
+    "对比三种旧候选并映射回原27组/67层，给最简单修改建议和验收点",
+    "源资产属性及磁盘哈希写前写后核对；临时Actor/回调清理，UE占用释放，未写正式资源/表/材质/P4",
+    "报告正常检查提交推送；定时接续结束，本次结论交用户审阅后才决定正式修改"
+   ],
+   "创建": "2026-10-16T21:51:02+08:00",
+   "派出": "",
+   "开始": "2026-10-16T22:05:46+08:00",
+   "完成": "",
+   "提交": "",
+   "结果": "用户明确暂停，画质排查优先；T18临时Actor0/回调None，单写占用已释放，定时接续PAUSED。\n本轮仅完成基线/Alpha常量0、0.4、1/曲线Burst设为0首轮，非零出生/RGB/完整Scale链未验证，正式资源未写入。首次沙盒22:15崩溃已诊断并修正数组写入格式，两个源uasset磁盘SHA256相同；内存重启差异不能称未变。\n暂停回执已归档；原始请求、截图、实验配置及未审核辅助脚本保留在本任务工作树。等用户通知恢复，不自动重跑。；【10-18 注】状态写「等前置」是因为没有「暂停」这个状态：实际是用户 10-16 22:29 明确暂停，T17 已完成也不要改成待派，等用户通知。",
+   "执行者": "T17干跑（当前Codex对话）",
+   "定时接续": {
+    "id": "t18-initial-color",
+    "类型": "当前对话heartbeat",
+    "状态": "PAUSED",
+    "窗口": "2026-10-16 22:00—2026-10-17 08:00（香港时间，整点检查；结束后暂停）",
+    "已核实": "应用工具更新成功，落盘status=PAUSED，当前对话目标未变。"
+   },
+   "用户暂停": {
+    "时间": "2026-10-16T22:29:18+08:00",
+    "原话": "你先暂停吧，先让画质排查工作",
+    "恢复条件": "等用户明确恢复；不自动接着执行"
+   }
+  },
+  {
+   "编号": "T19",
+   "看板": "",
+   "交给": "本机实测（25）（或本机同步（8））",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（例：用户 10-16 22:xx 暂停 T18 做画质排查）就等，别抢",
+   "标题": "只读核对 B09 主角：2830「超大_尾缀」（RiseTrail_Hero）PC / 手游指向哪个粒子、400 m 的 RiseTrail_Hero_L 在不在 UE 里、到顶多高多久；新网格金垂柳（GoldKamuro PC / 手游）的发射器、寿命、包围盒和大小",
+   "为什么": "用户 10-17 00:47：「我重新用mesh生成了一份新的金垂柳，现在很大，停留时间也变长了，大约为14秒……我希望可以变高点，用之前400m的高度？」「手游的金垂柳我也替换上去了」。B09（工作台 16.0.44，协作/编排B09.md）主角挂 2830 RiseTrail_Hero、开花点放在 398 m、寿命按 14 s、缩放 ×1.0、P0 / P4 / P8 间距 375 m。但 10-16 04:06 的读回（analysis/results/资源规范统一_20261016/采集/resourcefx_30.json）里 2830 和 2831 大型_尾缀都指 RiseTrail_L_HD（330 m，手游 RiseTrail_L_M）；400 m 的 P_EFX_FireWorks_RiseTrail_Hero_L_HD 在 10-12 导入器回执里建过（analysis/results/UE_READBACK_20261015/黑块排查.json 里的 receipt 004bd2f24f5f28506b10），10-13 本机同步核高度时又写「UE 里没有 RiseTrail_Hero_L」（analysis/results/UE_HEIGHT_1621/结论.json）。新垂柳的真实大小 / 寿命 / 开销没人读过，B09 的间距和 14 s 都是按用户口述。",
+   "只许改": [
+    "analysis/results/UE_READBACK_20261017/B09主角读数.json（新建）",
+    "analysis/results/UE_READBACK_20261017/B09主角读数.md（新建）"
+   ],
+   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T19，按该文件「Codex 共同规则」执行（UE 只读）。先读：协作/编排B09.md 第 1 节第 1 条和第 2 节、analysis/results/UE_HEIGHT_1621/结论.json（尾缀高度怎么从 RiseLoop vZ / sizeY 算）、analysis/results/UE_READBACK_20261015/B08资源读数.md（上次读金垂柳的方法）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable，读三行 P_EFX_FireWorks_RiseTrail_Hero、P_EFX_FireWorks_NY_Trail_Large、P_EFX_FireWorks_GoldKamuro 的 FxSP / FxSP_Low / FxSP_High / EffectScale / FXType / MaxInstanceNum（行名一起记）。\n2. 搜资产名含 RiseTrail_Hero 的粒子系统（PC _HD 和手机版）：有没有、路径。找到的和 RiseTrail_L_HD / RiseTrail_L_M 各读 RiseLoop / Far 发射器的 Initial Velocity（Z）、Const Acceleration、Lifetime、Initial Size / Size Scale，按 UE_HEIGHT_1621 同一算法算到顶高度（m）和升空时间（s），和 400 m / 7.37 s、330 m / 7.37 s 比。\n3. GoldKamuro：按第 1 步 PC / 手游 FxSP 指的粒子，读每个发射器 LOD0：TypeData（Mesh / GPU / 无）、Mesh 资产路径和顶点数（读得到就读）、Required（Material、ScreenAlignment、bUseLocalSpace、EmitterDuration、EmitterLoops、UseFixedRelativeBoundingBox / FixedRelativeBoundingBox）、Spawn、Lifetime、Initial Size、Size By Life、Color Over Life 时长、Dynamic Parameter。估：一朵从开花到最后一个发射器结束多少秒；包围盒（或网格范围）给出的宽度和往下垂多少 m（EffectScale 1；B09 实际 0.998）；PC 有几个发射器、几个 GPU。\n4. B09主角读数.md 第一句写三条：① 2830 现在 PC / 手游各指哪个粒子；② 400 m 的主角尾缀粒子在不在、到顶几 m / 几 s；③ 新金垂柳 PC / 手游寿命、宽度、下垂、发射器数。再写「给跨年秀（22）」一段：B09 的 398 m、14 s、375 m 间距、×1.0 哪个要改、改成多少。原始值存 B09主角读数.json。",
+   "做完的标准": [
+    "三行 ResourceFX（PC + 手游）读数齐全，读不到的写原因",
+    "写清 RiseTrail_Hero_L 粒子在不在（PC / 手游），在的话给到顶高度和升空时间及算法",
+    "GoldKamuro PC / 手游各有寿命、宽度、下垂、发射器 / GPU 数，写清从哪些模块算的",
+    "B09主角读数.md 第一句三条结论 + 「给跨年秀（22）」一段",
+    "没有任何写入 / 保存；已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-17T05:11:35+08:00",
+   "完成": "2026-10-17T12:18:29+08:00",
+   "提交": "b52f42228d222f9861aacb58c318e3dae4efaf23（补测；原只读读数 abe2c9d0 已在 main）",
+   "结果": "完成（WorkBuddy 10-17 12:20 接续）：2830 现指 RiseTrail_Hero_HD / _M，UE 实测星头到顶 400.4 / 400.6–400.9 m @ 约 7.1 s（两轮一致；对照 L_HD 330.4 m @ 7.41 s，与读数 330.18 m @ 7.365 s 吻合），7.37 s 时 399.5 / 399.7 m → B09 开花点 397.92 m、7.37 s 不用改。报告 analysis/results/UE_READBACK_20261017/B09主角_Hero到顶实测.md；金垂柳 PC 2 发射器 / 1 GPU、手游 1 / 0、寿命 14–14.5 s 等见 B09主角读数.md。用户不用做什么。注：原卡写 UE 只读，本次按用户 12:01 指令建了 WB19_ 临时对象（未保存、已销毁、现场前后逐项相同）。"
+  },
+  {
+   "编号": "T20",
+   "看板": "",
+   "交给": "烟花编排（22）-本机（用户 10-19 01:5x「你跑T22……顺便把看板其它相关联的一起测试了吧……开始执行」）",
+   "在哪": "本机",
+   "状态": "卡住",
+   "优先": 1,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（看状态清单「共享文件」有没有 UE 写入 / 播放的登记）就等，别抢",
+   "标题": "最终候选只读体检（基线）：ResourceFX 3.0 每一行的粒子 / 材质 / 贴图——资源规范四项、NeverStream、Ramp 寻址、NoMip、局部全分辨率、磁盘未提交",
+   "为什么": "用户 10-17：最迟 10-20 最终全量，测完不能改编排和新增性能相关资源；10-18：「最终候选的只读体检，你可以设计好一个派活任务，写好提示词，然后夜班去做」「我们的导入导出永远不能有neverstream的勾选」。测前要知道 UE 里最终候选的真实状态：26 的 recheck.mjs 只核过 115 包四项；画质线改过一批贴图 / 材质（NoMip、Clamp、局部全分辨率）；10-17 扫描有 152 张 NeverStream；窜天猴 PC / 手游这两天要重导。今晚先出基线，周一定稿后 T21 用同一脚本复检。",
+   "只许改": [
+    "analysis/results/FINAL_AUDIT_20261018/audit.mjs（新建）",
+    "analysis/results/FINAL_AUDIT_20261018/体检_基线.json（新建）",
+    "analysis/results/FINAL_AUDIT_20261018/体检_基线.md（新建）"
+   ],
+   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T20，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable 里所有「跨年烟花3.0_」行：行名、FxSP / FxSP_Low / FxSP_High、EffectScale、FXType、MaxInstanceNum。再对照当前编排 tool/workbench/public/data/cloud-latest.json 用到的 ResourceId，标出「编排里用到 / 没用到」。\n2. 每个被指到的粒子系统（PC _HD、手游 _M，含 Low / High）：bUseFixedRelativeBoundingBox / FixedRelativeBoundingBox（是不是 ±100000）、CullingDistance、UpdateTime_FPS；每个发射器每个 LOD 的 Required：Material、ScreenAlignment、UVFlippingMode、bUseLocalSpace、bUseMaxDrawCount / MaxDrawCount，是否 GPU。\n3. 每个用到的材质实例：Parent、EmissiveDissolve（有没有覆盖、值）、BasePropertyOverrides 里的 bOverride_TranslucencyRenderFullPercentageLast / TranslucencyRenderFullPercentageLast（局部全分辨率，影响性能）、贴图参数指向哪些贴图。\n4. 每张用到的贴图：尺寸、NeverStream、MipGenSettings、AddressX / AddressY、LODGroup、MaxTextureSize、CompressionSettings。\n5. 磁盘只读核：这些 uasset 是否只读（只读多半已提交 P4；可写 = 迁出或改了没提交），照 26 的 disk_check.py，只看不改。\n6. 写 analysis/results/FINAL_AUDIT_20261018/体检_基线.md：第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 和手游都应 NoMip；不是 NoMip 的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。原始读数写 体检_基线.json（每个资产一条，含路径），读 UE 的脚本存 audit.mjs，要能原样重跑（T21 用）。",
+   "做完的标准": [
+    "ResourceFX 两张表的 3.0 行读全，编排用到 / 没用到标清",
+    "每个粒子系统、材质实例、贴图的上述字段都有读数，读不到的写原因",
+    "体检_基线.md 第一段结论数字 + 三段分类；NeverStream=true 全部列出",
+    "audit.mjs 能原样重跑",
+    "没有任何写入 / 保存 / P4 操作；已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-19T08:12:53+08:00",
+   "完成": "",
+   "提交": "",
+   "结果": "烟花编排（22）-本机 只做了精简版：封板编排实际用到的行（PC 30 / 手游 12），见 analysis/results/COLOR_BASELINE_20261019/规范体检.md——烟花主序列全 NoMip、烟花 Ramp 全 Clamp+NoMip、贴图组全 DistantVFX、没有 ±100000 盒；共享 T_6DLight_EmissiveRamp_01 NeverStream=True + Y Wrap（银彩菊老 GoldSpark 那套在用）、老 GoldSpark 三个 MI EmissiveDissolve=1。没做：ResourceFX 3.0 全部行、磁盘 / P4 只读核——UE 10-19 02:13 崩溃（我跑 overdraw 时 ProfileGPU 紧接 HighResShot 触发 D3D12 断言），按规则不自己开 UE。 【10-22】10-19 08:1x 补跑认领后会话中断，没做；状态改回卡住（等 22 或派活重开）。"
+  },
+  {
+   "编号": "T21",
+   "看板": "",
+   "交给": "本机实测（25）（没有就本机同步（8））",
+   "在哪": "本机",
+   "状态": "等前置",
+   "优先": 1,
+   "前置": [
+    "T20"
+   ],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（看状态清单「共享文件」有没有 UE 写入 / 播放的登记）就等，别抢",
+   "标题": "最终候选只读体检（定稿复检）：同 T20，用 audit.mjs 重跑，和基线比",
+   "为什么": "T20 是 10-18 的基线；最终候选（B11 之后的定稿编排、窜天猴 PC / 手游重导完）周一 10-19 才定。定稿后复检一次，给 10-20 最终全量当「测的是什么」的清单。总管或用户确认定稿后，把本条改成「待派」。",
+   "只许改": [
+    "analysis/results/FINAL_AUDIT_20261018/体检_定稿.json（新建）",
+    "analysis/results/FINAL_AUDIT_20261018/体检_定稿.md（新建）",
+    "analysis/results/FINAL_AUDIT_20261018/audit.mjs（只修 bug）"
+   ],
+   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T21，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读 T20 的 体检_基线.md 和 audit.mjs，再按 T20 的读法重读。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n用 analysis/results/FINAL_AUDIT_20261018/audit.mjs 原样重跑（脚本有 bug 只修 bug，不改口径），输出 体检_定稿.json / 体检_定稿.md。体检_定稿.md 第一段同 T20 的结论数字，并写和基线比哪些变了（新增 / 删掉的行、改了的资产）；重点核窜天猴新导入的 PC / 手游四项和 NeverStream、定稿编排用到的每一行。第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 和手游都应 NoMip；不是 NoMip 的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。",
+   "做完的标准": [
+    "同 T20 的读数齐全",
+    "体检_定稿.md 有和基线的差异清单",
+    "窜天猴 PC / 手游四项与 NeverStream 单独写结论",
+    "没有任何写入 / 保存 / P4 操作；已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "",
+   "完成": "",
+   "提交": "",
+   "结果": ""
+  },
+  {
+   "编号": "T22",
+   "看板": "",
+   "交给": "烟花编排（22）-本机（用户 10-19 01:5x「你跑T22……顺便把看板其它相关联的一起测试了吧……开始执行」）",
+   "在哪": "本机",
+   "状态": "完成",
+   "优先": 2,
+   "前置": [],
+   "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）。UE 有人在用（看状态清单「共享文件」有没有 UE 写入 / 播放的登记）就等，别抢",
+   "标题": "封板基线：编排用到的每一行（PC + 手游）颜色 / 大小 / 播放时间全记一遍",
+   "为什么": "用户 10-19 01:0x「今晚封板后希望你可以设计一个任务，把现在所有的颜色/大小/播放时间都记录标定一下，后面做颜色提升方案需要用」。等用户说「封板了」再由 22 或总管改成「待派」（封板前资源还在改，记了也会过期）。",
+   "只许改": [
+    "analysis/results/COLOR_BASELINE_20261019/标定.json（新建）",
+    "analysis/results/COLOR_BASELINE_20261019/标定.md（新建）",
+    "analysis/results/COLOR_BASELINE_20261019/色板.png（新建）",
+    "analysis/results/COLOR_BASELINE_20261019/读取.py 或 .mjs（新建，只读脚本）"
+   ],
+   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T22，按该文件「Codex 共同规则」执行（UE 只读）。先读：CLAUDE.md 第 2、8 节；协作/编排B11.md 修订2 / 修订3 两节；对话记录/对话框22-本机.md（10-18 23:3x「尺寸数据错了」那段）；spec/cascade_params_v1.md 第 295–296 行（Ramp 按灰度取色、末格黑）；analysis/local/N18_22_新大型行只读_20261018_215919/核对新行与粒子.py（读法照抄：只用 /datatable/search、/object/get；Git Bash 里传 /Game 路径要加 MSYS_NO_PATHCONV=1；连接被中止就退避重试）。\n\n目的：用户 10-19 01:0x「今晚封板后……把现在所有的颜色/大小/播放时间都记录标定一下，后面做颜色提升方案需要用」。这是封板时的基线，不改任何东西。\n\n范围：封板编排 FXtools/节目/NewYearFireWorks_v01/导演表-B11修订3-收尾金垂柳-一张表.json（若用户之后另发了定稿版，以 状态清单「共享文件」里 22 最新的那条为准）实际用到的每一个 FXResourceId，PC 表（/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable）和手游表（/Game/DataTables/Resource/ResourceFXTable）分开。每一行记：\n1) 表：中文行名、ResourceId、FxSP、EffectScale；\n2) 编排用量：按 平台 × 高中低 展开的次数、导演表缩放的取值和次数、第一次 / 最后一次开花时刻、同一时刻最多几朵（展开写法照 analysis/scripts/编排数量对比.py）；\n3) 粒子：每个发射器（含 LOD0 关掉的，标出来）的材质实例、Screen Alignment、Emitter Duration / Delay、Lifetime、Initial Size、Size By Life 全部关键帧、Initial Color / Color_Seeded 的范围、Color Over Life / Color Scale Over Life / Alpha 的全部关键帧（颜色 0–1 和亮度倍数分开写）、Dynamic Parameter 帧号曲线；\n4) 材质实例：父材质、全部贴图参数（MainTex / Ramp / Dissolve 等路径）、标量和向量参数（EmissiveDissolve 等）；Ramp 若在仓库里找得到同名或同 SHA 的 PNG，取 0 / 64 / 128 / 192 / 254 格的颜色，找不到写「未取到像素」；\n5) 大小：面片边长 = Initial Size × Size By Life 最大值 × EffectScale；能找到主图源 PNG 的，按每格亮度外沿（阈值 8/255）× 面片推算花径并写「推算」，找不到写「未测」。已知参考：大型_B/E 银彩菊、大型_G_银白菊 主图 = analysis/results/JM1/JinMangJu_Fixed/；新金芒菊 = analysis/local/输出/金芒菊小起势_20261018/。\n\n输出：analysis/results/COLOR_BASELINE_20261019/标定.json（全部数值）、标定.md（第一段：行数、粒子数、读不到的项；然后每行一小节，表格写颜色 / 大小 / 时间；最后列「推算」和「未测」清单）、色板.png（每行一条：按 Ramp × Color Over Life 在开花后 0.2 / 1 / 2 / 3 s 的颜色画色块，只是示意）。不要评价好不好看，不要给改色建议。",
+   "做完的标准": [
+    "编排用到的每个 ResourceId 都有一节（PC、手游分开），一个不漏；读不到的写明",
+    "颜色曲线、大小、时间都是读回原值；推算的花径单独标「推算」",
+    "色板.png 每行一条",
+    "没有任何写入 / 保存 / P4 / 临时 Actor；已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "2026-10-19T01:53:14+08:00",
+   "完成": "2026-10-19T02:22:30+08:00",
+   "提交": "",
+   "结果": "烟花编排（22）-本机 只读读回（2612 次、0 错误，UE 崩溃前完成）：analysis/results/COLOR_BASELINE_20261019/ 标定.json / 标定.md / 色板.png / 看法.md。PC 30、手游 12 个 ResourceId，40 个粒子全是 1 级 LOD。缺：仓库里没有大多数 Ramp / 主图源 PNG，Ramp 取色与按主图推算花径多为「未测」，色板没乘 Ramp 颜色（看法.md 写明）；UE 开着时可只读导出 Ramp 补。"
+  },
+  {
+   "编号": "T23",
+   "看板": "",
+   "交给": "本机同步（8）",
+   "在哪": "本机",
+   "状态": "取消",
+   "优先": 0,
+   "前置": [],
+   "要 UE": "不要（只读 UE 日志文件，不发 UE 请求）",
+   "标题": "只读核实仙女棒手机包 Error 87：19:39 跑的是哪一版导入器；文件入口的导入器副本是不是旧的；核实后按 启动烘焙器.cmd 同样的方式重新生成副本",
+   "为什么": "用户 10-19 19:45：仙女棒（SkyRocketSparkler / Sparkler_Graph）导入仍报 UE Python WindowsError [Error 87]，导入器（5）12:06 已部署独立交付 2.29（证明改 stdin）。19:39 截图日志措辞还是 2.28 的「导入完成 → 导入中止」（2.29 改成「资产写入完成，待交付登记」）。导出（23）推断：用户从文件入口打开烘焙器，交付页加载的是 tool/local_delivery/runtime/importer.html 副本，它只在 启动烘焙器.cmd / tool/build.py 时重新生成（启动全部工具.cmd 不生成），12:06 以后没人重新生成 → 还是 2.28。要证据。",
+   "只许改": [
+    "analysis/results/IMPORT_ERR87_20261019/核实.md（新建）",
+    "analysis/results/IMPORT_ERR87_20261019/核实.json（新建）",
+    "tool/local_delivery/runtime/importer.html（gitignore 的本机副本：只许用第 4 步那条命令重新生成，不许手改）"
+   ],
+   "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T23，按该文件「Codex 共同规则」执行；这条不发任何 UE 请求，只读文件。先读 analysis/probe/导入收尾修复_2.29.md、tool/local_delivery/prepare_local.py、tool/src/js/67_delivery.js 第 83–90 行（文件入口加载 local_delivery/runtime/importer.html，HTTP 入口加载 8034 /delivery-host）。\n\n1. 两份导入器：读 %USERPROFILE%/.fireworkslab/delivery-launcher.json 的 importerPath（应是 D:/FXTools/DFWorkbench/df-fireworks-delivery_locmai.html）。记这个源文件的 sha256、大小、修改时间；记用户工作副本（F:/FireWorksLab，或用户实际打开烘焙器的那份仓库）里 tool/local_delivery/runtime/importer.html 的修改时间、大小。副本是源文件加了两段注入脚本，所以不能直接比 sha：在副本里找源文件里才有的 2.29 标志（例如 proofs-stdin、资产写入完成，待交付登记、deliveryRegistrationOnly、补写交付登记），两份各数一遍，写有 / 没有。\n2. UE 日志（只读文件）：工程 Saved/Logs 下 10-19 当天的日志（含 DeltaForce*.log 及备份），找 19:3x 和 11:31 的「Error 87」前后：UE Python 执行的那段代码（<string> 第 6 行附近）、subprocess 启动的命令——命令里有没有 --proofs（旧）还是 --proofs-stdin（新），命令长度（字符数）。原样摘关键几行（去掉凭据和用户名，证明正文不用贴，只写长度）。\n3. 用户当时从哪个入口打开：看浏览器历史不行就不看；能从 8034 交付服务日志（delivery-server.log）里 19:3x 有没有 /delivery-host 或 /importer 请求判断（有 → HTTP 入口；没有、但有 /directory-transport → 文件入口）。\n4. 如果第 1 步确认副本里没有 2.29 标志：在用户工作副本根目录运行 python -X utf8 tool/local_delivery/launcher.py --no-browser（和双击 启动烘焙器.cmd --no-browser 一样：重新生成副本、复用已在跑的 8034，不开浏览器、不导入），再数一遍副本里的 2.29 标志，应为有。\n5. 原工作台 D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html、tool/烟花编排工作台.html 里有没有同样会把累计记录塞进命令行的 --proofs 调用（只数、只写结论；私有代码不复制进仓库）。\n6. 判定（一句）：A 19:39 跑的是旧副本（2.28），重新生成后就是 2.29；B 19:39 跑的已经是 2.29、命令也是 --proofs-stdin，还是 Error 87（写出那条命令和长度，这就是另一个原因）；C 证据不够（写缺什么）。\n7. 输出 analysis/results/IMPORT_ERR87_20261019/核实.json（{format:'df.import-err87-check/1', readAt, importerSource:{path,sha256,size,mtime,has229}, runtimeCopy:{path,size,mtime,has229Before,has229After}, ueLog:[...], entry, otherCopies:[...], verdict, why}）和 核实.md（第一句写判定；最后一段「给导出（23）」）。\n\n禁止：点检查 / 导入 / 补写登记、发 UE 请求、改私有导入器、改 tool/src、手改副本、把私有代码或凭据写进仓库。",
+   "做完的标准": [
+    "两份导入器的 2.29 标志有 / 没有写清，副本修改时间写清",
+    "UE 日志 11:31、19:3x 两次 Error 87 的启动命令是 --proofs 还是 --proofs-stdin、长度多少",
+    "判定 A / B / C 之一，写依据",
+    "若是 A：副本已重新生成、复数确认有 2.29 标志",
+    "已提交推送，本条写完成、提交号、结果"
+   ],
+   "派出": "",
+   "开始": "",
+   "完成": "",
+   "提交": "",
+   "结果": "取消（导出（23）2026-10-19 21:xx）：导入器（5）20:23 已做完同样的核实——19:39 实际跑旧 --proofs，命令 36,605 字符，PC 包登记中止；F 盘副本 20:10 已换成 2.29（analysis/probe/导入文件入口复核_20261019.md / .json）。不重复派。"
+  },
+  {
+   "编号": "T24",
+   "看板": "",
+   "交给": "本机 Codex",
+   "在哪": "本机",
+   "状态": "等前置",
+   "优先": 1,
+   "前置": [
+    "用户放行（用户 10-27 20:08：「导入器届时你可以让本地的codex去做」）",
+    "A3 要导入 UE 沙盒，需用户放行时明确同意"
+   ],
+   "要 UE": "A0 只读；A3 导入沙盒（需用户同意）",
+   "标题": "导入器离线化与对外包：file:// 打开导入器选解压后的效果文件夹 → 检查 → 导入，不跑 8034；去本机路径；放进对外包；沙盒实测一次",
+   "为什么": "10-30 组内分享要给同事离线包；用户 10-27 17:14 要求像特效工作台那样一个网页就能导入导出，不跑 8034。导入器私有，云端看不到，只能本机做。",
+   "只许改": [
+    "D:/FXTools/DFWorkbench/workbench/（导入器私有源码与构建产物，先备份）",
+    "分支 team/external 的 tool/team/",
+    "analysis/results/20261028_导入器离线化/（新建）"
+   ],
+   "提示词": "按 协作/提示词/本机Codex_导入器离线化与对外包_2026-10-27.md 全文执行（A0–A3；B 等 V5 交互定稿另行放行）。遵守本文件「Codex 共同规则」，A3 的导入是用户单独同意的例外。",
+   "做完的标准": "见提示词文件第 6 节"
+  }
+ ],
+ "夜班怎么取": [
+  "只取「在哪」=「云端」、「状态」=「待派」、前置都完成的；按「优先」从小到大；每一班最多做 2 条（含收口以外的任何改动）。",
+  "执行规则同「Codex 共同规则」，把其中的 UE 相关条换成：云端碰不到 UE，需要 UE 的任务不归夜班。",
+  "任务写了「对方在线就跳过」的：按 协作/状态清单.json 的「在线」和对方对话记录的最近提交时间判断，90 分钟内有动静就不做，留「待派」。"
+ ]
 }
