@@ -112,6 +112,15 @@ def browser_check(page_path, out_dir, n_cases, open_case):
         ck.append(('首屏提示在', bool(info['welcome']), ''))
         ck.append(('「资源交付」换成「导入 UE」、交付页没加载', info['deliveryOpen'] == '导入 UE' and not info['frameSrc'], f"按钮={info['deliveryOpen']!r} iframe={info['frameSrc']!r}"))
         ck.append(('存储用对外版前缀（fwbteam.）', all(not k.startswith('fwb.') for k in info['storeKeys']) and any(k.startswith('fwbteam.') for k in info['storeKeys']), ', '.join(info['storeKeys'][:8])))
+        # 导出的交付一步（不烘焙）：对外版目的地恒为 zip；就算传「指定目录」也只下载，不连 8034；下载后底部提示怎么导入
+        with page.expect_download(timeout=30000) as dl:
+            dest = page.evaluate("() => { const d = DeliveryWorkspace.destination(); deliverResource(new Blob(['test'], { type: 'application/zip' }), '对外版下载测试.zip', {}, 'directory'); return d; }")
+        bar = page.evaluate('() => ({ shown: !document.querySelector("#teamExportBar").hidden, name: document.querySelector("#teamExportName").textContent, ws: !document.querySelector("#deliveryWorkspace").hidden })')
+        ck.append(('导出只下载 ZIP（目的地 zip、给「指定目录」也下载）、下载后底部提示', dest == 'zip' and dl.value.suggested_filename == '对外版下载测试.zip' and bar['shown'] and not bar['ws'], f"destination={dest} 下载={dl.value.suggested_filename} 提示={bar}"))
+        page.evaluate('() => document.querySelector("#teamExportHelp").click()'); page.wait_for_timeout(300)
+        ck.append(('「怎么导入」打开离线导入说明', page.evaluate('() => document.querySelector("#teamImportDlg").open'), ''))
+        shot3 = out_dir / '离线导入说明.png'; page.screenshot(path=str(shot3)); res['shots'].append(str(shot3))
+        page.evaluate('() => document.querySelector("#teamImportDlg").close()')
         if open_case:
             key = page.locator('#libBody details.lg-cases .li', has_text=open_case).first.get_attribute('data-key')
             page.evaluate('k => { openMyEffect(k.slice(3)); }', key); page.wait_for_timeout(1000)     # 软件渲染时 Playwright 的 click 会等帧超时，直接调打开
