@@ -1,6 +1,6 @@
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘焙器</span><small id="verLabel"></small></div>
+    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘焙器</span><span class="brand-team" id="brandTeam" hidden title="给同事用的离线包：去掉了内部审阅和任务入口，导出只下载 ZIP">对外版</span><small id="verLabel"></small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <nav class="delivery-nav" aria-label="烘焙器工作区"><button class="btn ghost" id="deliveryMake" type="button" hidden>返回效果制作</button><button class="btn ghost" id="deliveryOpen" type="button">资源交付</button></nav>
@@ -62,13 +62,13 @@
         <span class="menu-label">配方文件</span>
         <button type="button" id="abExportFile">导出配方文件（.json）</button>
         <button type="button" id="abImportFile">导入配方文件…</button>
-        <span class="menu-label">保存设置</span>
+        <span class="menu-label team-off">保存设置</span>
         <button type="button" id="abRepo">连接仓库文件夹…</button>
         <button type="button" id="abRepoRead">读取仓库中的我的效果</button>
         <span class="menu-label">模板</span>
         <button type="button" id="abSaveTpl">把这一层存为模板</button>
         <button type="button" id="abUpdTpl" hidden>更新模板</button>
-        <span class="menu-label">左栏</span>
+        <span class="menu-label team-off">左栏</span>
         <button type="button" id="abHide" hidden>从左栏隐藏这个效果</button>
         <span class="menu-label">协作</span>
         <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
@@ -119,6 +119,7 @@
           <div class="hud right" id="hudB"></div>
           <div class="busy" id="busy" hidden><div class="bar"><i id="busyBar"></i></div><span id="busyText">烘焙中</span></div>
           <div class="gridov" aria-hidden="true"></div>
+          <div class="team-welcome" id="teamWelcome" hidden><b>从左栏「案例」点一个开始</b><ol><li>看效果：画面上方「引擎回放」= 导出后在 UE 里播放的样子</li><li>改参数：右栏；改完点资产栏「另存为…」存成自己的效果</li><li>导出：资产栏「导出素材包」下载 ZIP，再按顶栏「导入 UE」的步骤导入</li></ol></div>
         </div>
       </div>
       <div class="preview-controls">
@@ -328,3 +329,20 @@
     <div class="save-dialog-actions"><button class="btn" type="submit" value="cancel" formnovalidate>取消导出</button><button class="btn" id="reconnectZip" type="submit" value="zip">先导出 ZIP</button><button class="btn primary" id="reconnectRetry" type="submit" value="retry">重试连接</button></div>
   </form>
 </dialog>
+<!-- 5.0.0-a1 对外精简模式（TEAM_MODE，tool/build.py --team）才用：离线导入说明、导出后提示。内部版里一直藏着 -->
+<dialog class="save-dialog reconnect-dialog team-import" id="teamImportDlg" aria-labelledby="teamImportTitle">
+  <form method="dialog">
+    <h2 id="teamImportTitle">把素材包导入 UE（离线，不用开本机服务）</h2>
+    <ol class="reconnect-steps">
+      <li>打开一个效果，点资产栏右边的 <b>导出素材包</b>：要先烘焙，等进度条走完，浏览器把 <b>.zip</b> 存进「下载」文件夹。</li>
+      <li>把 zip <b>解压</b>到任意文件夹（右键 → 全部解压缩）。</li>
+      <li>UE 编辑器开着，并已执行 <code>uecli.start 17780</code>。</li>
+      <li>双击包里 <b>导入器</b> 文件夹中的网页（Chrome / Edge），选刚才<b>解压出来的文件夹</b>。</li>
+      <li>点 <b>检查</b>，没有报错再点 <b>导入</b>。</li>
+    </ol>
+    <p class="hint">英文名（UE 资产名）在「交付清单」里看和改：只用英文字母、数字和下划线。两个效果英文名相同，导入时会互相覆盖。</p>
+    <p class="hint">「我的效果」只存在这个浏览器里：换电脑、清浏览器缓存会丢。定期点左栏「我的效果」组头的「导出全部」留一份 .json。</p>
+    <div class="save-dialog-actions"><button class="btn primary" type="submit" value="close">知道了</button></div>
+  </form>
+</dialog>
+<div class="team-export-bar" id="teamExportBar" role="status" hidden><span>已下载 <b id="teamExportName">素材包</b>（浏览器的「下载」文件夹）。导入 UE：解压 → 打开 导入器 网页 → 选解压后的文件夹 → 检查 → 导入。</span><button class="btn mini" id="teamExportHelp" type="button">怎么导入</button><button class="btn mini ghost" id="teamExportClose" type="button" aria-label="关闭提示">×</button></div>

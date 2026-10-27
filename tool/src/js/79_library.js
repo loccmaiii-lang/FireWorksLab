@@ -285,10 +285,12 @@ function libGroup(host, id, title, count, hot, extra) {
 }
 // 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 工具（4.3 去掉「历史」：只放当前版本）；
 // 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
-const LIB_OPEN_DEFAULT = { review: true, wip: true, myfx: true, mytpl: true, types: false, mtypes: true, tools: false };
+const LIB_OPEN_DEFAULT = TEAM_MODE ? { cases: true, myfx: true, mytpl: false, types: false, mtypes: false }     // 5.0.0-a1 对外版：首屏只展开案例和我的效果
+  : { review: true, wip: true, myfx: true, mytpl: true, types: false, mtypes: true, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
+  if (typeof caseLibGroup === 'function') caseLibGroup(host);     // 5.0.0-a1：随包案例（data/team_cases.js）放最上面一组
   const effs = typeof FW_EFFECTS !== 'undefined' ? FW_EFFECTS : [];
   // 一个效果可以同时在两处：有「已通过版」就一直在「已通过」里（出了新候选也不会从已通过里消失——用户 2026-10-01 指出 JM4 出 4.0 候选后找不到了）；
   // 有「待验收版」就同时在「待我验收」里。
@@ -332,7 +334,7 @@ function renderLib() {
   const segList = k => { const all = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
     return [all.filter(ef => hid.has(ef.key)).length, all.filter(ef => lib.showHidden || !hid.has(ef.key))]; };
   // 4.5.3（用户 10-05 18:02「已通过直接并入我的效果」）：左栏不再单独有「已通过」组，通过的效果排在「我的效果」最上面
-  for (const [k, t] of [['review', '待我验收'], ['wip', '制作中']]) {
+  for (const [k, t] of TEAM_MODE ? [] : [['review', '待我验收'], ['wip', '制作中']]) {     // 5.0.0-a1 对外版：没有 AI 条目，不列待我验收 / 制作中
     const [nh, list] = segList(k);
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
     if (lib.q && !list.length) continue;
@@ -373,7 +375,7 @@ function renderLib() {
   const tools = [
     ['tool:cloud', $('#cloudRecipesOpen').textContent, '云端配好的多层配方，本机烘焙后看', () => $('#cloudRecipesOpen').click()],
     ['tool:dir', '打开结果文件夹…', '临时看某个导出结果（贴图按引擎方式播放）', () => $('#assetOpen2').click()],
-  ].filter(([, a, b]) => libMatch(a, b, '工具'));
+  ].filter(([, a, b]) => !TEAM_MODE && libMatch(a, b, '工具'));     // 对外版不列内部工具
   if (tools.length) { const gt = libGroup(host, 'tools', '工具', tools.length); for (const [k, a, b, fn] of tools) libItem(gt, k, `<span class="tx"><b>${a}</b><small>${b}</small></span>`, fn, true); }
 }
 function libReveal() {
@@ -649,7 +651,7 @@ function initLibrary() {
   // 4.9.7：三页都只换右栏（paneGo），不重开效果、不动时间和选中的层
   for (const b of $('#ptabs').children) b.addEventListener('click', () => { const k = b.dataset.tab; paneGo(k === 'review' ? 'review' : k === 'iter' ? 'tools' : 'params'); });
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
-  $('#rvCopy').addEventListener('click', rvCopy);
+  $('#rvCopy').addEventListener('click', rvCopy);     // 对外版里藏着（样式 .team-mode）
   initWorkbench();
   $('#newRecipe').addEventListener('click', () => myNew());       // 4.2.7 新建效果：先选第一层，再加层（以前是「新建配方」= 打开一个花型模板）
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
@@ -657,13 +659,14 @@ function initLibrary() {
   myMigrateComboSaves();
   myMigrateSingleSaves();
   if (typeof mySyncNames === 'function' && mySyncNames()) setTimeout(() => flash('部分「我的效果」的英文名没能按效果记录对齐（浏览器存储写入失败），打开那个效果时会再试', true, 9000, true), 1600);     // 4.9.101 名字以记录为准
-  if (typeof graphMigrateSaves === 'function') graphMigrateSaves();     // 4.9.87 旧粒子图面板的浏览器存档搬进「版本」
+  if (!TEAM_MODE && typeof graphMigrateSaves === 'function') graphMigrateSaves();     // 4.9.87 旧粒子图面板的浏览器存档搬进「版本」（对外版不碰内部版的旧键）
   // 打开时：有「新」的待验收候选就先打开它；否则回到上次看的
   const fresh = EFFS().find(effIsNew), lastKey = store.get('lastKey', '');
   const lastEf = EFFS().find(ef => 'ef:' + ef.key === lastKey), lastRv = FW_REVIEW_LIST.find(e => 'rv:' + e.id === lastKey);
   if (fresh) { lib.seg = 'review'; }
+  if (TEAM_MODE && typeof teamInit === 'function') teamInit();     // 5.0.0-a1 对外版：放案例、首屏提示、离线导入说明
   renderLib();
-  if (/[?&]fast/.test(location.search)) return;     // 本地任务的自动化（compare.py）不自动打开条目
+  if (TEAM_MODE || /[?&]fast/.test(location.search)) return;     // 本地任务的自动化（compare.py）不自动打开条目；对外版首屏停在案例
   if (fresh) openEffect(fresh); else if (lastEf) openEffect(lastEf); else if (lastRv) openReview(lastRv);
   else if (lastKey.startsWith('my:') && myAll()[lastKey.slice(3)]) openMyEffect(lastKey.slice(3));
   else crumb('花型', TYPE_NAMES[state.P.type]);

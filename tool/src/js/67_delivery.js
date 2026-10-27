@@ -11,7 +11,7 @@ const DeliveryWorkspace = (() => {
   const node=id=>document.getElementById(id);
   // 导出失败会阻断旧清单；连接、导航的普通提示不能把原因变成不可见。
   const message=(text,error=false)=>{const n=node('deliveryStatus');n.textContent=exportFailedState&&exportFailure?exportFailure:text;n.dataset.error=String(error||exportFailedState);};
-  const destination=()=>node('deliveryDestination').value;
+  const destination=()=>TEAM_MODE?'zip':node('deliveryDestination').value;     // 5.0.0-a1 对外版只下载 ZIP（不连本机交付服务 8034）
   const importLabel=state=>({ready:'检查通过，待确认',conflict:'检查冲突，需处理',error:'检查失败',done:'导入已报告完成',partial:'部分完成',checking:'检查中',queued:'待检查',pending:'待检查',importing:'导入中',stopped:'已停止',saved:'UE 已报告保存'}[state]||'状态待核对');
   function updateRootControls(){
     for(const id of ['deliveryPick','deliverySaveRoot','deliveryDestination','deliveryRoot'])node(id).disabled=importerBusy||busyDelivery||!!exportHome;
@@ -285,6 +285,7 @@ const DeliveryWorkspace = (() => {
     finally{busyDelivery=false;updateRootControls();}
   }
   function init(){
+    if(TEAM_MODE){if(typeof teamDeliveryInit==='function')teamDeliveryInit();return;}     // 5.0.0-a1 对外版：不加载交付页、不连 8034；「资源交付」换成离线导入说明
     window.addEventListener('message',e=>{
       const data=e.data;if(e.source!==node('deliveryFrame').contentWindow||(localUI?!['null','file://'].includes(e.origin):e.origin!==frameOrigin)||data?.channel!==channel)return;
       if(data.type==='workspace-host-ready'){hostReady=true;node('deliveryFrame').hidden=false;node('deliveryLoading').hidden=true;updateRootControls();if(readyWait){clearTimeout(readyWait.timer);readyWait.resolve();readyWait=null;}return;}
@@ -383,7 +384,7 @@ function deliveryMetadata(b = null, job = null, lb = null, unitHolder = null) {
 async function deliverResource(blob, name, metadata, destination) {
   const iterationOf = typeof packIterationInfo !== 'undefined' ? packIterationInfo.get(blob) : null;
   if (iterationOf) metadata = { ...metadata, iterationOf: { ...structuredClone(iterationOf), deliveryName: name.replace(/\.zip$/i, '') } };
-  if (destination === 'zip') return download(blob,name);
+  if (destination === 'zip' || TEAM_MODE) { download(blob,name); if (TEAM_MODE && typeof teamExported === 'function') teamExported(name); return; }     // 5.0.0-a1 对外版：下载后提示怎么导入
   return DeliveryWorkspace.publish(blob,name,metadata);
 }
 document.addEventListener('DOMContentLoaded',()=>DeliveryWorkspace.init());

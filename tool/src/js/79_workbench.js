@@ -208,7 +208,8 @@ function wbSync() {
   const thHost = $('#abThumb'), thK = wb.key + ':' + (combo ? state.layers.length : 1) + ':' + thUserAt(wb.key); if (thHost.dataset.k !== thK) { const st = thUser(wb.key) || thStyleFor('', thLayersOfState); thHost.dataset.k = st ? thK : ''; thHost.innerHTML = `<span class="th in" style="${st || typeThumbStyle(state.P.type)}"></span>`; }
   const identityThumb = $('#assetIdentityThumb'); if (identityThumb && identityThumb.innerHTML !== thHost.innerHTML) identityThumb.innerHTML = thHost.innerHTML;
   const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
-  const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, s.auto ? `导出时 · ${s.at.slice(5)}${s.label ? ' · ' + s.label : ''}` : `我的 · ${s.name}（${s.at.slice(5)}）`])];
+  const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `${TEAM_MODE ? '原始版本' : 'AI 版'} · ${wbBaseId()}`],     // 5.0.0-a1 对外版没有 AI 条目：模板打开时叫「原始版本」
+ ...list.map(s => [s.id, s.auto ? `导出时 · ${s.at.slice(5)}${s.label ? ' · ' + s.label : ''}` : `我的 · ${s.name}（${s.at.slice(5)}）`])];
   const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
   if (sel.dataset.h !== html) { sel.innerHTML = html; sel.dataset.h = html; }
   sel.value = cur;
@@ -499,7 +500,7 @@ function curLayerBakes() {
 function srcLabel() {
   if (!wbVisible()) return '';
   const s = wb.src.kind === 'mine' && wbList().find(x => x.id === wb.src.id);
-  return (s ? `我的「${s.name}」` : lib.my ? `我的效果「${lib.my.name}」` : `AI 版 ${wbBaseId()}`) + (wb.changed ? ' · 参数已变' : '');     // 4.3.3：自己搭的效果不写「AI 版」
+  return (s ? `我的「${s.name}」` : lib.my ? `我的效果「${lib.my.name}」` : `${TEAM_MODE ? '原始版本' : 'AI 版'} ${wbBaseId()}`) + (wb.changed ? ' · 参数已变' : '');     // 4.3.3：自己搭的效果不写「AI 版」
 }
 function scopeLabel() {
   if (state.tab !== 'combo') return '';

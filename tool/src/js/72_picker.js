@@ -66,6 +66,7 @@ function pkRender() {
   const all = pkItems();
   for (const [k, l] of PK_CATS) {
     if ((k === 'fx' || k === 'myfxl') && pk.mode === 'open') continue;
+    if (k === 'fx' && TEAM_MODE) continue;     // 5.0.0-a1 对外版没带 AI 条目，「现有效果的层」是空的
     const n = k === 'all' ? all.length : k === 'fav' ? pk.fav.size : k === 'recent' ? pk.recent.length : all.filter(i => i.cat === k).length;
     const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(pk.cat === k));
     b.innerHTML = `${l}<span>${n}</span>`; b.addEventListener('click', () => { pk.cat = k; pkRender(); }); cats.appendChild(b);

@@ -6,7 +6,7 @@ for (const [g, types] of TYPE_GROUPS) {
   $('#type').appendChild(og);
 }
 $('#verLabel').textContent = 'v' + VERSION;
-document.title = '烟花烘焙器 · v' + VERSION;     // 4.9.121（团队版 ⑥）：修「烘培」错字
+document.title = (TEAM_MODE ? '烟花烘焙器 · 对外版 · v' : '烟花烘焙器 · v') + VERSION;     // 4.9.121（团队版 ⑥）：修「烘培」错字；5.0.0-a1 对外版标题
 $('#type').addEventListener('change', e => state.tab === 'combo' ? setType(e.target.value) : openType(e.target.value));     // 换整个花型要同时切身份；多层里改当前层仍是编辑参数。
 $('#enNameEdit').addEventListener('click', () => { toggleDeliv(true); setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0); });     // 4.9.4 英文名只在交付清单里改
 $('#x-form').addEventListener('change', e => setForm(e.target.value));
@@ -95,7 +95,7 @@ initUpdates();
 buildMasterPanel();
 initIter();
 initLibrary();
-if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
+if (!TEAM_MODE && !/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;     // 5.0.0-a1 对外版启动不烘焙：首屏停在左栏案例，打开效果才烘
 // 4.2.16 按需烘焙：工具栏「烘焙」按钮 / 「自动」开关、画面上的「贴图是旧的」横条
 $('#bakeNow').addEventListener('click', () => { if (!bakeCancel()) bakeNow(); });     // 4.9.4：烘焙中点它 = 取消
 $('#abBakeCancel').addEventListener('click', () => bakeCancel());

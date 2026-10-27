@@ -52,3 +52,6 @@ analysis/results/MOBILE_INITCOLOR_20261016/
 analysis/results/PRISM3_20261016/
 analysis/results/SparkGraph/
 analysis/results/UI16/整页交互草稿_2026-10-04/
+
+# 烘焙器对外包（tool/team/打包对外版.py 打出来的文件夹和 zip，不进 Git）
+tool/team/dist/

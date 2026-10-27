@@ -1859,3 +1859,20 @@ header.top .gpu::before{content:none}
 .sg-pop .sg-del{color:var(--warn)}
 .sg-pop .sg-hint{margin:8px 0 0;font-size:11.5px;flex:none}
 .busy .busy-later{pointer-events:auto}     /* 4.9.123 打开多层效果时「稍后烘焙」 */
+
+/* ---- 5.0.0-a1 对外精简（team/external；<html class="team-mode"> 由 tool/build.py --team 写）：只藏同事用不到的内部入口，内部版不受影响 ---- */
+.team-mode #updBtn, .team-mode #updDot,                   /* 顶栏「更新记录」（对外版也不嵌内容） */
+.team-mode #rvCopy, .team-mode #vtNote,                   /* 复制我的意见、记录当前帧到意见 */
+.team-mode #abCopyDiff, .team-mode #abRepo, .team-mode #abRepoRead,     /* 发给 AI、仓库文件夹 */
+.team-mode #ptabs [data-tab="review"], .team-mode #rvDot, .team-mode #pReview,     /* 审阅页签 / 审阅卡（待验收、就绪门禁、AI 的看法、跑任务提示） */
+.team-mode #deliveryWorkspace, .team-mode #deliveryDestination,          /* 资源交付页（要本机 8034）：对外版换成离线导入说明 */
+.team-mode .team-off { display: none !important; }
+.brand-team[hidden], .team-welcome[hidden], .team-export-bar[hidden] { display: none !important; }
+.brand .brand-team { align-self: center; flex: none; padding: 1px 8px; border-radius: 10px; border: 1px solid var(--acc); color: var(--acc); font-size: 12px; font-weight: 600; line-height: 18px; white-space: nowrap }
+.team-welcome { position: absolute; left: 12px; top: 12px; z-index: 5; max-width: min(380px, calc(100% - 24px)); padding: 10px 14px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line2); color: var(--text); font-size: 13px; line-height: 1.6; box-shadow: 0 4px 18px #0006; pointer-events: none }
+.team-welcome b { color: var(--acc) }
+.team-welcome ol { margin: 4px 0 0; padding-left: 18px }
+.team-export-bar { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 120; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; max-width: min(760px, calc(100vw - 32px)); padding: 10px 14px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--acc); box-shadow: 0 6px 22px #0007; color: var(--text); font-size: 13px; line-height: 1.5 }
+.team-export-bar b { color: var(--acc) }
+.team-import code { padding: 0 4px; border-radius: 4px; background: var(--low) }
+#libBody details.lg-cases > summary .lt { color: var(--acc2) }

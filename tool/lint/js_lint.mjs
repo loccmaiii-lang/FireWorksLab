@@ -7,7 +7,7 @@
 // 用法：node --expose-internals tool/lint/js_lint.mjs tool/FireworkBaker.html [--json]
 // 检查的是拼好的整段脚本（和浏览器里跑的一样：PNAMES / PEMIT 这些 build.py 注入的也在里面）。
 // 浏览器 / WebGL 的全局名字在 GLOBALS；tool/data/*.js 里定义的名字自动加进来。误报就把名字加进 GLOBALS。
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const acorn = require('internal/deps/acorn/acorn/dist/acorn');
@@ -43,8 +43,11 @@ const m = html.match(/<script>\r?\n'use strict';\r?\n([\s\S]*)<\/script>\s*<\/bo
 if (!m) { console.error('找不到主脚本'); process.exit(2); }
 const src = "'use strict';\n" + m[1], lineOff = html.slice(0, m.index).split('\n').length;   // 报行号时换算成 html 里的行
 
-// tool/data/*.js（review.js / standard.js）定义的名字
-for (const f of [...html.matchAll(/<script src="(data\/[^"]+)"><\/script>/g)].map(x => x[1])) {
+// tool/data/*.js（review.js / standard.js）定义的名字。5.0.0-a1：对外版（build.py --team）不加载 review.js / standard.js、内部版不加载 team_cases.js——
+//   脚本里用这些数据都先 typeof 判断（缺了也能用），所以 tool/data/ 下所有 .js 的名字都算已知，不只这一页引用的
+const dataFiles = new Set([...html.matchAll(/<script src="(data\/[^"]+)"><\/script>/g)].map(x => x[1]));
+try { for (const f of readdirSync(new URL('../data/', import.meta.url))) if (f.endsWith('.js')) dataFiles.add('data/' + f); } catch (e) { }
+for (const f of dataFiles) {
   let s = ''; try { s = readFileSync(new URL('../' + f, import.meta.url), 'utf8'); } catch (e) { continue; }
   for (const x of s.matchAll(/(?:^|[;\n])\s*(?:const|let|var|function)\s+([A-Za-z_$][\w$]*)/g)) GLOBALS.add(x[1]);
   for (const x of s.matchAll(/window\.([A-Za-z_$][\w$]*)\s*=/g)) GLOBALS.add(x[1]);

@@ -5,21 +5,23 @@
 const cloneM = M => ({ ...M, stages: M.stages.map(s => [...s]) });
 // 4.5.8（用户 10-05 21:40 小修 3）：以前写不进去（浏览器存满 / 禁用）什么都不说，界面照样「已保存」；读坏了返回空表，下次保存把整张表覆盖成一条。
 //  现在：写不进去返回 false、报错（常驻提示 + 状态行红字）；读坏了先把原文另存一份（fwb.<键>.坏<时间>）再报错，不会被下次保存覆盖掉
+// 5.0.0-a1 对外版（TEAM_MODE）的浏览器存储单独一套前缀：同一台电脑 file:// 打开的内部版和对外版不共用「我的效果」、左栏展开等
+const STORE_NS = TEAM_MODE ? 'fwbteam.' : 'fwb.';
 const store = {
   failAt: 0,
   get(k, d) {
-    let v = null; try { v = localStorage.getItem('fwb.' + k); } catch (e) { return d; }
+    let v = null; try { v = localStorage.getItem(STORE_NS + k); } catch (e) { return d; }
     if (!v) return d;
     try { return JSON.parse(v); }
     catch (e) {
-      const bk = 'fwb.' + k + '.坏' + Date.now().toString(36);
-      try { localStorage.setItem(bk, v); localStorage.removeItem('fwb.' + k); } catch (e2) { }
+      const bk = STORE_NS + k + '.坏' + Date.now().toString(36);
+      try { localStorage.setItem(bk, v); localStorage.removeItem(STORE_NS + k); } catch (e2) { }
       storeFail(`浏览器里「${k}」读出来是坏的：原文另存为 ${bk}，这次按空的打开`);
       return d;
     }
   },
   set(k, v) {
-    try { localStorage.setItem('fwb.' + k, JSON.stringify(v)); return true; }
+    try { localStorage.setItem(STORE_NS + k, JSON.stringify(v)); return true; }
     catch (e) { storeFail(`浏览器里存不进去（${e && e.name === 'QuotaExceededError' ? '存满了' : e && e.message || e}）：刚才的「${k}」没存上。先用 ⋯「导出配方文件」存一份`); return false; }
   }
 };

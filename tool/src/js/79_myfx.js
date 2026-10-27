@@ -280,19 +280,22 @@ function bindMyLayerTools(box) {
 // 左栏「我的效果」
 // 4.5.3（用户 10-05 18:02）：通过的 AI 效果（nPassed 个，renderPassed 画）排在最上面；每项不再挂「删除」，删除在资产栏 ⋯ 里
 function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
-  const list = Object.values(myAll()).filter(r => libMatch(r.name, r.id)).sort((a, b) => String(b.updated).localeCompare(String(a.updated)));
+  const list = Object.values(myAll()).filter(r => !(typeof caseHas === 'function' && caseHas(r.id)) && libMatch(r.name, r.id)).sort((a, b) => String(b.updated).localeCompare(String(a.updated)));     // 5.0.0-a1：随包案例在「案例」组里列，这里不重复
   // 4.9.121（团队版 ④）：组头「导出全部」「导入…」——一个文件带走这台浏览器里全部我的效果和我的模板，换浏览器 / 发给同事后导入就新增
   const io = `<button type="button" class="lg-hid lg-io" data-myio="export" title="把这台浏览器里全部「我的效果」和「我的模板」存成一个 .json 文件（fwl.myrecipe/1），换浏览器 / 换电脑 / 发给同事用">导出全部</button><button type="button" class="lg-hid lg-io" data-myio="import" title="选一个或几个 .json（导出全部的文件、analysis/我的配方/ 里的配方、⋯「导出配方文件」导出的），直接新增为我的效果 / 我的模板；不用先打开同形态的效果">导入…</button>`;
   const g = libGroup(host, 'myfx', '我的效果', list.length + nPassed, false, (nHidden ? `<button type="button" class="lg-hid" data-myhid="1" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nHidden}</button>` : '') + io);
   const hb = g.querySelector('[data-myhid]'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
   for (const k of ['export', 'import']) { const b = g.querySelector(`[data-myio="${k}"]`); if (b) b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); if (k === 'export') myExportAll(); else myImportPick(); }); }
   if (renderPassed && nPassed) renderPassed(g);
-  if (!list.length && !nPassed) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。你通过的效果也会出现在这里。</p>');
-  for (const r of list) {
-    const single = r.snap && r.snap.kind === 'single', t = single ? r.snap.P.type : r.snap && r.snap.layers && r.snap.layers[0] ? r.snap.layers[0].type : 'kiku';
-    const count = myLayerCount(r.snap), ue = packNamesFor('my:' + r.id, null, count, single ? TYPE_EN[t] : 'MyFx', single ? t : '').base;
-    libItem(g, 'my:' + r.id, `<span class="th" style="${thUser('my:' + r.id) || thSnapStyle('my:' + r.id + '@' + (r.updated || ''), r.snap) || typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${single ? '原生单层' : count + ' 层'}${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
-  }
+  if (!list.length && !nPassed) g.insertAdjacentHTML('beforeend', TEAM_MODE ? '<p class="lsub">还没有自己的效果：打开上面的案例改参数后点资产栏「另存为…」，或点最下面「＋ 新建效果」。存在这个浏览器里，记得定期点组头「导出全部」备份。</p>'
+    : '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。你通过的效果也会出现在这里。</p>');
+  for (const r of list) myLibItem(g, r);
+}
+// 左栏一行我的效果（「我的效果」组和 5.0.0-a1「案例」组共用）；badge = 右下角的小标签
+function myLibItem(g, r, badge = '我的效果') {
+  const single = r.snap && r.snap.kind === 'single', t = single ? r.snap.P.type : r.snap && r.snap.layers && r.snap.layers[0] ? r.snap.layers[0].type : 'kiku';
+  const count = myLayerCount(r.snap), ue = packNamesFor('my:' + r.id, null, count, single ? TYPE_EN[t] : 'MyFx', single ? t : '').base;
+  return libItem(g, 'my:' + r.id, `<span class="th" style="${thUser('my:' + r.id) || thSnapStyle('my:' + r.id + '@' + (r.updated || ''), r.snap) || typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${single ? '原生单层' : count + ' 层'}${r.from && badge !== '案例' ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">${badge}</span></span></span>`, () => openMyEffect(r.id));
 }
 // =====================================================================
 //  4.9.121（团队版 ④，用户 10-25 00:00「全批准」）：「我的效果」组头「导出全部 / 导入…」
