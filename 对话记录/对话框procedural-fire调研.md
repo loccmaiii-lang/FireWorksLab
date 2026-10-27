@@ -106,3 +106,13 @@
 补充参考（本轮已浏览的原始技术资料）：
 - NVIDIA GPU Gems 3，三维流体模拟与体积渲染：https://developer.nvidia.com/gpugems/gpugems3/part-v-physics-simulation/chapter-30-real-time-simulation-and-rendering-3d-fluids
 - NVIDIA GPU Gems，火焰动画素材、尺寸与相位差异的实践（该章最终方案为素材序列，不能作为本方案程序体积火焰已达真实画质的证据）：https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-6-fire-vulcan-demo
+
+
+## 2026-10-27：授权实现第一版循环火焰
+
+用户原话：「检查下方案，看看还有没有遗漏补充，然后实现一版看看，尽量把可能有的变化都考虑周全，以及可调参数尽量放开」。承接「落地持续燃烧，场在烘焙时控制」。本轮范围由调研推进到实现、内部验证与交付候选；新增参数授权包含本轮必要的火焰、源形状、尺寸参数。
+
+- [ ] 认领共享源码并补充实现方案、参数契约。
+- [ ] 接入通用体积火焰、地面燃烧模板、完整参数与失效提示。
+- [ ] 检查周期、尺寸、控场、保存恢复、PC/手机导出和旧效果回归。
+- [ ] 审看连续回放及关键帧，交付一个推荐候选，记录证据并提交推送。
