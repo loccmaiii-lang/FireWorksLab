@@ -1,0 +1,30 @@
+{
+  "images": [
+    {
+      "file": "01_首轮.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "af64e9426a96c16aa3a88283f9c83e5c2400de74d0d172f8d5eae6149d4add05"
+    },
+    {
+      "file": "02_首轮.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "0be4dc5e677e7d0951d0dfeb546f73bf980d36cd2bb95e1c80524bc9c9f77f92"
+    },
+    {
+      "file": "03_首轮.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "3fb4f33f66c96668732b627813487c5abfdaa1ea45b336fc870d2651071d214f"
+    }
+  ],
+  "browser_validation": "not_run: Local browser use is disabled in Work settings",
+  "status": "首轮图像草稿，非运行验证"
+}
