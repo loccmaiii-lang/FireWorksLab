@@ -1,0 +1,2275 @@
+{
+  "schema": "fwl.unified-candidate-verification/1",
+  "date": "2026-10-29T01:46:45",
+  "status": "candidate_self_checks_passed",
+  "user_approved": false,
+  "source_files_sha256": {
+    "demo.html": "f2403bd142e887ae9c6ef96c7f6d6dc61add29601e7c2e07bea90e60bb2c1360",
+    "components.html": "2f4234222814fb4c54468e3a86208965e8633d87101606365c9742a0409ed5f1",
+    "candidate-components.css": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213",
+    "candidate-tokens.css": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613",
+    "workspace.css": "0d9869391d6e2fe2eaf99bba21d9f54d2486ff2e015d4f2806008173c98ce173",
+    "workspace-adapter.js": "a4684ee2d67d53fe848b2cd303673dfd0dcafafa260f03430547bf988cb28a08",
+    "catalog.css": "db46bd81019b3a240cbdff53cc3eb3cc78aee64ed512a6a1d13087484285554a",
+    "catalog.js": "9b9392928c980385b8036cfd3d9556c89e48597e190db289267b2da83fc2e20d",
+    "component-kit.js": "88b3efc009f29bed2114a477e0467f8346b63aa5daae721c3a47c840c3111551"
+  },
+  "inventory": {
+    "components_mapped": 29,
+    "material_reference": 8,
+    "desktop_adaptation": 14,
+    "domain_specific": 7,
+    "patterns": 14,
+    "page_templates": 8,
+    "implemented_foundation_families": 8
+  },
+  "core": {
+    "browsers": [
+      {
+        "channel": "chrome",
+        "version": "154.0.8037.58"
+      },
+      {
+        "channel": "msedge",
+        "version": "156.0.4314.50"
+      }
+    ],
+    "checks": [
+      {
+        "name": "chrome:demo-core",
+        "detail": {
+          "saved_key": "fwl.ui-demo.v3-unified",
+          "sample_download": "Demo_交付测试_DEMO.json",
+          "scroll_restored": [
+            140,
+            140
+          ],
+          "selection": "main"
+        }
+      },
+      {
+        "name": "chrome:components-core",
+        "detail": {
+          "native_types": [
+            "button",
+            "input",
+            "range+number",
+            "select",
+            "checkbox+mixed",
+            "radio",
+            "checkbox-switch",
+            "button-radiogroup"
+          ],
+          "native_select": [
+            {
+              "density": "regular",
+              "sizes": [
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "example-name",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "tempo-number",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "sample-select",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "节奏滑杆",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                }
+              ],
+              "space_open": true,
+              "arrow_enter": "pc",
+              "escape_restore": "pc"
+            },
+            {
+              "density": "compact",
+              "sizes": [
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "example-name",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "tempo-number",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "sample-select",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "节奏滑杆",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                }
+              ],
+              "space_open": true,
+              "arrow_enter": "pc",
+              "escape_restore": "pc"
+            }
+          ],
+          "menu_keyboard": "ArrowDown/End/Escape/Tab",
+          "dialog": "invalid/cancel/Esc + focus return",
+          "loading": "650ms示例，未运行任务"
+        }
+      },
+      {
+        "name": "chrome:1366-quick",
+        "detail": [
+          {
+            "page": "editor",
+            "geometry": {
+              "title": "FireWorksLab · 编辑 · 设计示意",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html?page=editor&density=regular",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 768,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": {
+                "text": "当前编辑：金曜菊-B › 引菊→锦 · 金锦层",
+                "rect": {
+                  "x": 995,
+                  "y": 396,
+                  "w": 355,
+                  "h": 18
+                }
+              },
+              "visibleControls": 120
+            }
+          },
+          {
+            "page": "delivery",
+            "geometry": {
+              "title": "FireWorksLab · 预览优先交付 · 设计示意",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html?page=delivery&density=regular",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 768,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": null,
+              "visibleControls": 42
+            }
+          },
+          {
+            "page": "importer",
+            "geometry": {
+              "title": "FireWorksLab · 导入核对 · 设计示意",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html?page=importer&density=regular",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 768,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": null,
+              "visibleControls": 16
+            }
+          },
+          {
+            "page": "components",
+            "geometry": {
+              "title": "FireWorksLab · 统一控件状态样板",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/components.html",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 1932,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": null,
+              "visibleControls": 31
+            }
+          }
+        ]
+      },
+      {
+        "name": "chrome:network-log",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "msedge:demo-core",
+        "detail": {
+          "saved_key": "fwl.ui-demo.v3-unified",
+          "sample_download": "Demo_交付测试_DEMO.json",
+          "scroll_restored": [
+            140,
+            140
+          ],
+          "selection": "main"
+        }
+      },
+      {
+        "name": "msedge:components-core",
+        "detail": {
+          "native_types": [
+            "button",
+            "input",
+            "range+number",
+            "select",
+            "checkbox+mixed",
+            "radio",
+            "checkbox-switch",
+            "button-radiogroup"
+          ],
+          "native_select": [
+            {
+              "density": "regular",
+              "sizes": [
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "example-name",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "tempo-number",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "sample-select",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "节奏滑杆",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 40,
+                  "expected": 40
+                }
+              ],
+              "space_open": true,
+              "arrow_enter": "pc",
+              "escape_restore": "pc"
+            },
+            {
+              "density": "compact",
+              "sizes": [
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "example-name",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "tempo-number",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "sample-select",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "节奏滑杆",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                },
+                {
+                  "id": "BUTTON",
+                  "topBar": false,
+                  "height": 32,
+                  "expected": 32
+                }
+              ],
+              "space_open": true,
+              "arrow_enter": "pc",
+              "escape_restore": "pc"
+            }
+          ],
+          "menu_keyboard": "ArrowDown/End/Escape/Tab",
+          "dialog": "invalid/cancel/Esc + focus return",
+          "loading": "650ms示例，未运行任务"
+        }
+      },
+      {
+        "name": "msedge:1366-quick",
+        "detail": [
+          {
+            "page": "editor",
+            "geometry": {
+              "title": "FireWorksLab · 编辑 · 设计示意",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html?page=editor&density=regular",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 768,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": {
+                "text": "当前编辑：金曜菊-B › 引菊→锦 · 金锦层",
+                "rect": {
+                  "x": 995,
+                  "y": 396,
+                  "w": 355,
+                  "h": 18
+                }
+              },
+              "visibleControls": 120
+            }
+          },
+          {
+            "page": "delivery",
+            "geometry": {
+              "title": "FireWorksLab · 预览优先交付 · 设计示意",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html?page=delivery&density=regular",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 768,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": null,
+              "visibleControls": 42
+            }
+          },
+          {
+            "page": "importer",
+            "geometry": {
+              "title": "FireWorksLab · 导入核对 · 设计示意",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html?page=importer&density=regular",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 768,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": null,
+              "visibleControls": 16
+            }
+          },
+          {
+            "page": "components",
+            "geometry": {
+              "title": "FireWorksLab · 统一控件状态样板",
+              "url": "http://127.0.0.1:8034/design-system/drafts/v3-unified/components.html",
+              "viewport": {
+                "width": 1366,
+                "height": 768,
+                "dpr": 1
+              },
+              "documentWidth": 1366,
+              "documentHeight": 1932,
+              "horizontalClip": [],
+              "textClip": [],
+              "missingImages": [],
+              "path": null,
+              "visibleControls": 31
+            }
+          }
+        ]
+      },
+      {
+        "name": "msedge:network-log",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      }
+    ],
+    "source_files_sha256": {
+      "demo.html": "f2403bd142e887ae9c6ef96c7f6d6dc61add29601e7c2e07bea90e60bb2c1360",
+      "components.html": "2f4234222814fb4c54468e3a86208965e8633d87101606365c9742a0409ed5f1",
+      "candidate-components.css": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213",
+      "candidate-tokens.css": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613",
+      "workspace.css": "020694e7a8027c71860243e6f0a4cd40373964f2f5b8a47e2e9f97df787cd58a",
+      "workspace-adapter.js": "a4684ee2d67d53fe848b2cd303673dfd0dcafafa260f03430547bf988cb28a08",
+      "catalog.css": "db46bd81019b3a240cbdff53cc3eb3cc78aee64ed512a6a1d13087484285554a",
+      "catalog.js": "9b9392928c980385b8036cfd3d9556c89e48597e190db289267b2da83fc2e20d",
+      "component-kit.js": "88b3efc009f29bed2114a477e0467f8346b63aa5daae721c3a47c840c3111551"
+    },
+    "source_changed_during_run": false
+  },
+  "default_matrix": {
+    "count": 64,
+    "pages": [
+      "editor",
+      "delivery",
+      "importer",
+      "components.html"
+    ],
+    "browsers": [
+      {
+        "channel": "chrome",
+        "version": "154.0.8037.58"
+      },
+      {
+        "channel": "msedge",
+        "version": "156.0.4314.50"
+      }
+    ],
+    "densities": [
+      "regular",
+      "compact"
+    ],
+    "viewports": [
+      [
+        1920,
+        1080,
+        1
+      ],
+      [
+        1366,
+        768,
+        1
+      ],
+      [
+        2560,
+        1440,
+        1
+      ],
+      [
+        683,
+        384,
+        2
+      ]
+    ],
+    "source_files_sha256": {
+      "demo.html": "f2403bd142e887ae9c6ef96c7f6d6dc61add29601e7c2e07bea90e60bb2c1360",
+      "components.html": "2f4234222814fb4c54468e3a86208965e8633d87101606365c9742a0409ed5f1",
+      "candidate-components.css": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213",
+      "candidate-tokens.css": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613",
+      "workspace.css": "020694e7a8027c71860243e6f0a4cd40373964f2f5b8a47e2e9f97df787cd58a",
+      "workspace-adapter.js": "a4684ee2d67d53fe848b2cd303673dfd0dcafafa260f03430547bf988cb28a08",
+      "catalog.css": "db46bd81019b3a240cbdff53cc3eb3cc78aee64ed512a6a1d13087484285554a",
+      "catalog.js": "9b9392928c980385b8036cfd3d9556c89e48597e190db289267b2da83fc2e20d",
+      "component-kit.js": "88b3efc009f29bed2114a477e0467f8346b63aa5daae721c3a47c840c3111551"
+    },
+    "source_changed_during_run": false,
+    "scope_note": "矩阵后仅修≤620px高的parameters父盒为内容高度；其余视口及不含parameters的页面代码不变。最终短高专项以narrow为准，不将64状态都记为最终CSS SHA。"
+  },
+  "narrow": {
+    "states": 12,
+    "checks": [
+      {
+        "name": "chrome:regular:narrow-real-scroll",
+        "detail": {
+          "density": "regular",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 242,
+              "clientHeight": 223,
+              "scrollHeight": 923
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": 281,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 700,
+              "clientHeight": 223,
+              "scrollHeight": 923
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": -177,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "main",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "chrome:regular:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "chrome:compact:narrow-real-scroll",
+        "detail": {
+          "density": "compact",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 218,
+              "clientHeight": 235,
+              "scrollHeight": 877
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": 280,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 642,
+              "clientHeight": 235,
+              "scrollHeight": 877
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": -144,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "main",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "chrome:compact:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "msedge:regular:narrow-real-scroll",
+        "detail": {
+          "density": "regular",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 242,
+              "clientHeight": 223,
+              "scrollHeight": 923
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": 281,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 700,
+              "clientHeight": 223,
+              "scrollHeight": 923
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": -177,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "main",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "msedge:regular:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "msedge:compact:narrow-real-scroll",
+        "detail": {
+          "density": "compact",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 218,
+              "clientHeight": 235,
+              "scrollHeight": 877
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": 280,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 642,
+              "clientHeight": 235,
+              "scrollHeight": 877
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": -144,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "main",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "msedge:compact:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "chrome:regular:rt6:narrow-real-scroll",
+        "detail": {
+          "page": "rt6",
+          "density": "regular",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 242,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": 281,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 606,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": -83,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "chrome:regular:particle:narrow-real-scroll",
+        "detail": {
+          "page": "particle",
+          "density": "regular",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 242,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": 281,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 606,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": -83,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "chrome:regular:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "chrome:compact:rt6:narrow-real-scroll",
+        "detail": {
+          "page": "rt6",
+          "density": "compact",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 218,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": 280,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 552,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": -54,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "chrome:compact:particle:narrow-real-scroll",
+        "detail": {
+          "page": "particle",
+          "density": "compact",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 218,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": 280,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 552,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": -54,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "chrome:compact:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "msedge:regular:rt6:narrow-real-scroll",
+        "detail": {
+          "page": "rt6",
+          "density": "regular",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 242,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": 281,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 606,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": -83,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "msedge:regular:particle:narrow-real-scroll",
+        "detail": {
+          "page": "particle",
+          "density": "regular",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 242,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": 281,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 312,
+              "scrollTop": 0,
+              "clientHeight": 312,
+              "scrollHeight": 312
+            },
+            "feedback": {
+              "x": 0,
+              "y": 353,
+              "w": 683,
+              "h": 31,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inspector": {
+              "x": 0,
+              "y": 130,
+              "w": 683,
+              "h": 223,
+              "scrollTop": 606,
+              "clientHeight": 223,
+              "scrollHeight": 829
+            },
+            "path": {
+              "x": 16,
+              "y": 142,
+              "w": 651,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 497,
+              "y": -83,
+              "w": 64,
+              "h": 40,
+              "scrollTop": 0,
+              "clientHeight": 38,
+              "scrollHeight": 38
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "msedge:regular:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      },
+      {
+        "name": "msedge:compact:rt6:narrow-real-scroll",
+        "detail": {
+          "page": "rt6",
+          "density": "compact",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 218,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": 280,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 552,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": -54,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "msedge:compact:particle:narrow-real-scroll",
+        "detail": {
+          "page": "particle",
+          "density": "compact",
+          "first_parameter_reached": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 218,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": 280,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": true
+          },
+          "deep_scroll": {
+            "app": {
+              "x": 0,
+              "y": 41,
+              "w": 683,
+              "h": 313,
+              "scrollTop": 0,
+              "clientHeight": 313,
+              "scrollHeight": 313
+            },
+            "feedback": {
+              "x": 0,
+              "y": 354,
+              "w": 683,
+              "h": 30,
+              "scrollTop": 0,
+              "clientHeight": 29,
+              "scrollHeight": 29
+            },
+            "inspector": {
+              "x": 0,
+              "y": 119,
+              "w": 683,
+              "h": 235,
+              "scrollTop": 552,
+              "clientHeight": 235,
+              "scrollHeight": 787
+            },
+            "path": {
+              "x": 12,
+              "y": 131,
+              "w": 659,
+              "h": 18,
+              "scrollTop": 0,
+              "clientHeight": 18,
+              "scrollHeight": 18
+            },
+            "input": {
+              "x": 501,
+              "y": -54,
+              "w": 64,
+              "h": 32,
+              "scrollTop": 0,
+              "clientHeight": 30,
+              "scrollHeight": 30
+            },
+            "inputCenterUncovered": false
+          },
+          "tree_selection_preserved": "core",
+          "deep_path_ok": true
+        }
+      },
+      {
+        "name": "msedge:compact:narrow-network",
+        "detail": {
+          "blocked_requests": [],
+          "failed_requests": [],
+          "console_errors": [],
+          "page_errors": []
+        }
+      }
+    ],
+    "source_files_sha256": {
+      "demo.html": "f2403bd142e887ae9c6ef96c7f6d6dc61add29601e7c2e07bea90e60bb2c1360",
+      "components.html": "2f4234222814fb4c54468e3a86208965e8633d87101606365c9742a0409ed5f1",
+      "candidate-components.css": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213",
+      "candidate-tokens.css": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613",
+      "workspace.css": "0d9869391d6e2fe2eaf99bba21d9f54d2486ff2e015d4f2806008173c98ce173",
+      "workspace-adapter.js": "a4684ee2d67d53fe848b2cd303673dfd0dcafafa260f03430547bf988cb28a08",
+      "catalog.css": "db46bd81019b3a240cbdff53cc3eb3cc78aee64ed512a6a1d13087484285554a",
+      "catalog.js": "9b9392928c980385b8036cfd3d9556c89e48597e190db289267b2da83fc2e20d",
+      "component-kit.js": "88b3efc009f29bed2114a477e0467f8346b63aa5daae721c3a47c840c3111551"
+    },
+    "source_changed_during_run": false,
+    "scope_note": "editor/RT6/particle各两浏览器×两密度；实际inspector滚动、深滚动、输入遮挡和回树；替代早期误选param-modules滚动容器的专项。"
+  },
+  "runtime_summary": {
+    "schema": "fwl.ui-unified-final-runtime-summary/1",
+    "status": "passed_for_reported_scope",
+    "final_source_file_sha256": {
+      "demo.html": "f2403bd142e887ae9c6ef96c7f6d6dc61add29601e7c2e07bea90e60bb2c1360",
+      "components.html": "2f4234222814fb4c54468e3a86208965e8633d87101606365c9742a0409ed5f1",
+      "candidate-components.css": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213",
+      "candidate-tokens.css": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613",
+      "workspace.css": "0d9869391d6e2fe2eaf99bba21d9f54d2486ff2e015d4f2806008173c98ce173",
+      "workspace-adapter.js": "a4684ee2d67d53fe848b2cd303673dfd0dcafafa260f03430547bf988cb28a08",
+      "catalog.css": "db46bd81019b3a240cbdff53cc3eb3cc78aee64ed512a6a1d13087484285554a",
+      "catalog.js": "9b9392928c980385b8036cfd3d9556c89e48597e190db289267b2da83fc2e20d",
+      "component-kit.js": "88b3efc009f29bed2114a477e0467f8346b63aa5daae721c3a47c840c3111551"
+    },
+    "passed": [
+      {
+        "scope": "Chrome/Edge核心链",
+        "report": "core-verification.json",
+        "groups": 8,
+        "includes": [
+          "参数提交/撤销/重做/专属保存刷新",
+          "临时只看不脏，眼睛使准备失效及撤销恢复",
+          "错误输入保留/另存Esc焦点",
+          "交付收栏与返回选中/滚动140→140",
+          "demoOnly示例下载",
+          "导入设置变化使旧检查/确认失效，重检查后重新确认",
+          "组件八类、mixed、菜单键盘/对话框焦点/650ms进行中",
+          "两密度40/32实测及原生select真实键盘打开/选择/Esc"
+        ]
+      },
+      {
+        "scope": "四目标默认几何与图像",
+        "report": "matrix-verification.json",
+        "cases": 64,
+        "formula": "Chrome/Edge × 常规/紧凑 × 1920×1080@1/1366×768@1/2560×1440@1/683×384@2 × editor/delivery/importer/components",
+        "checks": [
+          "无页面横向溢出",
+          "可见图像成功加载",
+          "参数输入/row-action不被滚动容器横向裁切",
+          "可见控件内容无纵向裁切",
+          "候选基础字段40/32及审阅栏32实测"
+        ]
+      },
+      {
+        "scope": "最终短高真实滚动专项",
+        "reports": [
+          "narrow-verification.json",
+          "narrow-extra-verification.json"
+        ],
+        "states": 12,
+        "formula": "Chrome/Edge × 常规/紧凑 × editor/rt6/particle，683×384@2",
+        "checks": [
+          "在实际inspector滚动容器滚至参数",
+          "输入及当前编辑路径完整处于app有效区域/反馈条以上",
+          "elementFromPoint核对输入中心未遮挡",
+          "深滚动到底仍保持当前编辑路径",
+          "滚回结构树仍可操作并保持同一选中对象"
+        ]
+      }
+    ],
+    "failed": [],
+    "evidence_revision": {
+      "matrix_core_workspace_css_sha256": "020694e7a8027c71860243e6f0a4cd40373964f2f5b8a47e2e9f97df787cd58a",
+      "final_workspace_css_sha256": "0d9869391d6e2fe2eaf99bba21d9f54d2486ff2e015d4f2806008173c98ce173",
+      "only_changed_tested_file_since_matrix": "workspace.css",
+      "declared_patch_scope": "实现者修订仅位于max-height:620px：parameters高度随内容增长、align-self:start；保留原滚动/树布局。其它八个被测文件哈希保持一致。",
+      "reuse": "原64默认态证据及1366核心链保留；短高参数可达/当前路径专项由最终12状态替换与补充。1920截图不触发短高媒体查询，仍可复用。",
+      "fixture_correction": "原窄屏专项使用param-modules这一非滚动容器、is_visible未保证完整进入有效视口；改用inspector真实滚动及bbox/elementFromPoint。初始滚动边缘不记为产品缺陷。深滚动受过短sticky父盒约束是另一次真实复现，已修后复测。"
+    },
+    "browser_versions": [
+      {
+        "channel": "chrome",
+        "version": "154.0.8037.58"
+      },
+      {
+        "channel": "msedge",
+        "version": "156.0.4314.50"
+      }
+    ],
+    "network": "每上下文只允许本机8034/design-system/的GET；最终报告中blocked requests、failed requests、console errors、page errors均为0。未使用用户浏览器上下文。",
+    "untested": [
+      "真实配方、模拟/烘焙、真实素材包导出和UE导入/实播",
+      "完整WCAG认证及全部辅助技术",
+      "四目标之外的全量页面默认态",
+      "原生下拉在未支持base-select的旧浏览器/其它OS上的弹层外观"
+    ],
+    "screenshots_1920_regular": [
+      "chrome-1920-regular-editor.png",
+      "chrome-1920-regular-delivery.png",
+      "chrome-1920-regular-importer.png",
+      "chrome-1920-regular-components.png"
+    ],
+    "historical_evidence": [
+      "core-before-scroll-fix.json",
+      "demo-during-scroll-fix.json",
+      "matrix-before-padding-fix.json",
+      "core-during-importer-fix.json",
+      "narrow-occlusion.json"
+    ]
+  },
+  "review_pages": {
+    "pages": [
+      {
+        "target": "index.html",
+        "css": [
+          1920,
+          1080
+        ],
+        "dpr": 1,
+        "checks": {
+          "width": 1920,
+          "documentWidth": 1920,
+          "missing": 0
+        }
+      },
+      {
+        "target": "compare.html",
+        "css": [
+          1920,
+          1080
+        ],
+        "dpr": 1,
+        "checks": {
+          "width": 1920,
+          "documentWidth": 1920,
+          "missing": 0
+        }
+      },
+      {
+        "target": "index.html",
+        "css": [
+          1366,
+          768
+        ],
+        "dpr": 1,
+        "checks": {
+          "width": 1366,
+          "documentWidth": 1366,
+          "missing": 0
+        }
+      },
+      {
+        "target": "compare.html",
+        "css": [
+          1366,
+          768
+        ],
+        "dpr": 1,
+        "checks": {
+          "width": 1366,
+          "documentWidth": 1366,
+          "missing": 0
+        }
+      },
+      {
+        "target": "index.html",
+        "css": [
+          2560,
+          1440
+        ],
+        "dpr": 1,
+        "checks": {
+          "width": 2560,
+          "documentWidth": 2560,
+          "missing": 0
+        }
+      },
+      {
+        "target": "compare.html",
+        "css": [
+          2560,
+          1440
+        ],
+        "dpr": 1,
+        "checks": {
+          "width": 2560,
+          "documentWidth": 2560,
+          "missing": 0
+        }
+      },
+      {
+        "target": "index.html",
+        "css": [
+          683,
+          384
+        ],
+        "dpr": 2,
+        "checks": {
+          "width": 683,
+          "documentWidth": 683,
+          "missing": 0
+        }
+      },
+      {
+        "target": "compare.html",
+        "css": [
+          683,
+          384
+        ],
+        "dpr": 2,
+        "checks": {
+          "width": 683,
+          "documentWidth": 683,
+          "missing": 0
+        }
+      }
+    ],
+    "errors": [],
+    "requests": []
+  },
+  "delivery_measurements": [
+    {
+      "css": [
+        1366,
+        768
+      ],
+      "dpr": 1,
+      "workspaceWidth": 1134,
+      "previewWidth": 793.8125,
+      "previewHeight": 578,
+      "previewFraction": 0.7000110229276896,
+      "fittedImage": [
+        499.70310192023635,
+        491
+      ],
+      "editorVisible": false
+    },
+    {
+      "css": [
+        1920,
+        1080
+      ],
+      "dpr": 1,
+      "workspaceWidth": 1648,
+      "previewWidth": 1153.609375,
+      "previewHeight": 890,
+      "previewFraction": 0.7000056887135923,
+      "fittedImage": [
+        817.2333825701625,
+        803
+      ],
+      "editorVisible": false
+    }
+  ],
+  "comparison": {
+    "pairs": [
+      {
+        "page": "editor",
+        "source": "v3-unified",
+        "css_viewport": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "state": "初始示例/常规密度/同一来源静态图；交付未准备/导入未检查",
+        "app": {
+          "x": 0,
+          "y": 48,
+          "width": 1920,
+          "height": 997
+        },
+        "png": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\tool\\design-system\\drafts\\v3-unified\\screenshots\\editor-1920.png"
+      },
+      {
+        "page": "delivery",
+        "source": "v3-unified",
+        "css_viewport": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "state": "初始示例/常规密度/同一来源静态图；交付未准备/导入未检查",
+        "app": {
+          "x": 0,
+          "y": 48,
+          "width": 1920,
+          "height": 997
+        },
+        "png": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\tool\\design-system\\drafts\\v3-unified\\screenshots\\delivery-1920.png"
+      },
+      {
+        "page": "importer",
+        "source": "v3-unified",
+        "css_viewport": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "state": "初始示例/常规密度/同一来源静态图；交付未准备/导入未检查",
+        "app": {
+          "x": 0,
+          "y": 48,
+          "width": 1920,
+          "height": 997
+        },
+        "png": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\tool\\design-system\\drafts\\v3-unified\\screenshots\\importer-1920.png"
+      }
+    ],
+    "density": "regular",
+    "full_view": [
+      "visual/editor-comparison.png",
+      "visual/delivery-comparison.png",
+      "visual/importer-comparison.png"
+    ],
+    "focused": "visual/controls-comparison.png",
+    "root": "analysis/local/20261029_组件规范统一/"
+  },
+  "live_browser": {
+    "browser": "Chrome",
+    "review": "http://127.0.0.1:8034/design-system/drafts/v3-unified/index.html",
+    "demo": "http://127.0.0.1:8034/design-system/drafts/v3-unified/demo.html",
+    "screenshot": "screenshots/review-live.png"
+  },
+  "storage": {
+    "key": "fwl.ui-demo.v3-unified",
+    "isolated_from": "fwl.ui-demo.v1",
+    "export_schema": "fwl.ui-demo/1",
+    "demoOnly": true,
+    "productionAsset": false
+  },
+  "untested": [
+    "完整读屏与WCAG符合性验收",
+    "原生系统缩放/跨操作系统弹层一致性",
+    "file协议入口",
+    "真实烘焙/素材包/UE与三工具生产迁移",
+    "29类所有适用状态的生产实现"
+  ],
+  "evidence_root": "analysis/local/20261029_组件规范统一/qa/",
+  "history": [
+    "初轮滚动140→154，改为样式增强后再恢复；最终140→140",
+    "紧凑字段34/33px，内边距修订后实测统一32px",
+    "桌面导入隐藏tabs但保留5行导致actions占剩余空间；改4行，tabs可见时仍5行",
+    "短高parameters父盒过短使深滚动路径离开；最终height:max-content修复",
+    "早期初始边缘遮挡判断与测试滚动容器选错已纠正，不作为产品缺陷"
+  ]
+}

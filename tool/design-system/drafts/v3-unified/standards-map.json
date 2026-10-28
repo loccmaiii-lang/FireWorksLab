@@ -1,0 +1,1469 @@
+{
+  "format": "fwl.ui-standard-map/1",
+  "status": "candidate_for_user_review",
+  "date": "2026-10-29",
+  "scope": "Material/WAI通用规范＋项目桌面适配；仅候选设计产物",
+  "baselines": {
+    "visual": "124/975ee142中的已确定主题与整体气质",
+    "layout": "V5/125；保留现有三栏和右侧上结构下参数",
+    "working_demo": "v1/demo.html，256cf776",
+    "accepted_structure_direction": "f814a849/v2-structure：类型图标与父子导线；布局、树序、缩进、行高与语义保护",
+    "precedence": [
+      "本轮用户明确决定",
+      "既有已选结构视觉方向及业务语义",
+      "通用Material/WAI参考",
+      "本轮未审定的项目尺寸候选"
+    ]
+  },
+  "inventory": {
+    "component_specs": 29,
+    "patterns": 14,
+    "page_templates": 8,
+    "legacy_shared_unique_variables": 73,
+    "legacy_draft_variable_definitions": 60,
+    "inventory_note": "变量数量不相加成独立设计值；组件规格数不等于完整生产组件数",
+    "classification_counts": {
+      "Material参考": 8,
+      "桌面适配": 14,
+      "领域自定义": 7
+    }
+  },
+  "foundations": {
+    "status": "候选项目适配值；待用户审阅，不是Material强制尺寸",
+    "prefix": "--u-*；只作用v3-unified候选，不改--fw-*共享文件",
+    "color_policy": "继承现有fw蓝灰/青绿/状态色，不新增动态配色；按角色重新绑定必要边界、分隔、文字和主动作。",
+    "shape_css_px": {
+      "control": 4,
+      "menu_container": 7,
+      "menu_item": 4,
+      "switch": 2,
+      "panel": "平直表面与细分隔；不套新圆角卡片"
+    },
+    "profiles": {
+      "regular": {
+        "control_height": 40,
+        "body": [
+          14,
+          22
+        ],
+        "field": [
+          13,
+          20
+        ],
+        "helper": [
+          12,
+          18
+        ],
+        "tree_row": 32
+      },
+      "compact": {
+        "control_height": 32,
+        "body": [
+          13,
+          20
+        ],
+        "field": [
+          12,
+          18
+        ],
+        "helper": [
+          12,
+          18
+        ],
+        "tree_row": 28
+      }
+    },
+    "spacing_css_px": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32
+    ],
+    "density_policy": "根工作区单点传regular/compact；同一结构继承字阶、行高与间距，不只放大按钮。已认可结构布局、树序/缩进/操作列与分隔语义保留。",
+    "motion_policy": "不引入装饰滑入、缩放、弹跳或Material默认涟漪；重排直接切换，减少动态效果取消非必要反馈。",
+    "pointer_targets": "40/32是项目控件高度建议；必要操作测实际命中及间距，WCAG 24CSSpx及例外单独判断，粗指针按项目既有48px目标另验。",
+    "reference_ids": [
+      "M3-COLOR",
+      "M3-TYPE",
+      "WCAG-TARGET"
+    ]
+  },
+  "sources": [
+    {
+      "id": "M3-FOUND",
+      "title": "Material 3 Foundations",
+      "url": "https://m3.material.io/foundations/",
+      "scope": "组件分类、状态、设计变量及布局的通用参考；不等于项目采用默认外观。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "M3-START",
+      "title": "Material 3 Get started",
+      "url": "https://m3.material.io/get-started",
+      "scope": "基础、样式、组件及可定制体系；不安装Material运行库。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "M3-COLOR",
+      "title": "Material 3 Color roles",
+      "url": "https://m3.material.io/styles/color/the-color-system",
+      "scope": "按用途区分表面、文字、主动作、必要边界与分隔线；项目仍用既有蓝灰/青绿色值。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "M3-TYPE",
+      "title": "Material 3 Applying type",
+      "url": "https://m3.material.io/styles/typography/applying-type",
+      "scope": "文字用途、层级、行高、基线和等宽数字；项目像素值另列为候选。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "M3-LIST",
+      "title": "Material 3 Lists",
+      "url": "https://m3.material.io/components/lists/overview",
+      "scope": "列表中名称、辅助信息及尾部动作的一致排列；不用其默认移动端行高替换既有树。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "M3-SNACK",
+      "title": "Material 3 Snackbar",
+      "url": "https://m3.material.io/components/snackbar/overview",
+      "scope": "短结果反馈不打断任务；持续错误仍就地保留。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-CHECK",
+      "title": "WAI-ARIA Checkbox pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/",
+      "scope": "checked/unchecked/mixed与组内部分选择，mixed不表示未知。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-SLIDER",
+      "title": "WAI-ARIA Slider pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+      "scope": "滑杆范围、数值与键盘；原生range优先，触控辅助技术另测。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-RADIO",
+      "title": "WAI-ARIA Radio group pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/radio/",
+      "scope": "组内互斥值；工具条内与普通表单内键盘行为不能混用。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-TABS",
+      "title": "WAI-ARIA Tabs pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
+      "scope": "页签/窗格语义、焦点与选中；不把参数互斥值错误标成页签。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-MENU",
+      "title": "WAI-ARIA Menu button pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/",
+      "scope": "命令菜单打开、操作及返回触发器；原生select不伪装成命令菜单。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-DIALOG",
+      "title": "WAI-ARIA Modal dialog pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "scope": "模态范围、焦点进入/循环/恢复；最终业务授权由原控制器负责。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-DISCLOSURE",
+      "title": "WAI-ARIA Disclosure pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/",
+      "scope": "开合状态及受控内容；原生details/summary优先。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-TOOLTIP",
+      "title": "WAI-ARIA Tooltip pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/",
+      "scope": "仅作补充参考；页面注明该模式仍在完善。短提示不接收焦点，交互式帮助另用展开内容。",
+      "checked": "2026-10-29",
+      "source_status": "APG页面注明work in progress，不把其当规范性验收证书"
+    },
+    {
+      "id": "WAI-TREE",
+      "title": "WAI-ARIA Tree view pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/treeview/",
+      "scope": "层级、展开与选择/焦点区别；有行内动作的具体键盘适配仍需实测。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-SPLITTER",
+      "title": "WAI-ARIA Window splitter pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/",
+      "scope": "可访问名称、当前值、范围及方向键；保留项目已有折叠行为。",
+      "checked": "2026-10-29",
+      "source_status": "APG页面注明示例与review未完成，参考模式不代替实际键盘验收"
+    },
+    {
+      "id": "WCAG-TARGET",
+      "title": "WCAG 2.2 Understanding 2.5.8 Target size minimum",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "scope": "最低目标尺寸/间距及例外；24CSSpx不是所有按钮的推荐高度，项目40/32另行验证。",
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "WAI-SWITCH",
+      "title": "WAI-ARIA Switch pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/switch/",
+      "scope": "二值开关及稳定名称；checked明确on/off，不用于混选。",
+      "checked": "2026-10-29"
+    }
+  ],
+  "components": [
+    {
+      "id": "C01",
+      "name": "按钮/图标按钮",
+      "classification": "Material参考",
+      "reference_ids": [
+        "M3-FOUND",
+        "M3-COLOR",
+        "WCAG-TARGET"
+      ],
+      "decisions": {
+        "keep": [
+          "动词+对象、图标中文名称、唯一素材包导出入口"
+        ],
+        "merge": [
+          "主要/次要/幽灵/危险按钮统一4px控件圆角、同密度高度和焦点角色"
+        ],
+        "specialize": [
+          "执行范围、忙状态及禁用原因来自调用方"
+        ]
+      },
+      "rationale": "同用途动作有固定变体，区别由重要性与风险解释，不由旧页面来源决定。",
+      "acceptance": [
+        "同密度同变体在三个代表页外观相同",
+        "图标按钮名称可读且目标不与邻按钮相叠",
+        "disabled与busy均不会重复触发命令"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/0"
+    },
+    {
+      "id": "C02",
+      "name": "文本/数值/搜索/多行字段",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-FOUND",
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "标签、实际值、单位及输入原始精度"
+        ],
+        "merge": [
+          "文本/数值/搜索/多行/只读共用字段标题、帮助和错误槽"
+        ],
+        "specialize": [
+          "提交/取消/步长/范围使用原参数schema；长路径可复制"
+        ]
+      },
+      "rationale": "密集参数需要外置标签与独立单位；不搬入占高的浮动标签作为新默认。",
+      "acceptance": [
+        "非法值保留原输入并就地解释",
+        "只读可聚焦/复制，禁用不执行",
+        "错误+已修改并存时标记互不覆盖"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/1"
+    },
+    {
+      "id": "C03",
+      "name": "滑杆+数值",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-SLIDER",
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "滑杆和精确数值共享一个值模型，单位独立"
+        ],
+        "merge": [
+          "滑杆/数值/还原/锁定/帮助共用参数网格与焦点规则"
+        ],
+        "specialize": [
+          "一次拖动合并一次撤销，范围和step不改"
+        ]
+      },
+      "rationale": "Material滑杆原则补上项目所需的精确输入、修改标记和事务边界。",
+      "acceptance": [
+        "滑杆与数值双向同步",
+        "拖动整段只增加一次撤销",
+        "被上级条件覆盖时保留值并说明原因"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/2"
+    },
+    {
+      "id": "C04",
+      "name": "下拉选择",
+      "classification": "Material参考",
+      "reference_ids": [
+        "M3-FOUND",
+        "WAI-MENU"
+      ],
+      "decisions": {
+        "keep": [
+          "原生select语义、完整当前值"
+        ],
+        "merge": [
+          "选择框统一4px控件角色；展开列表与菜单共享面板/项外观"
+        ],
+        "specialize": [
+          "原生选项行为保持；不把select改成命令菜单，长选项保留可达全名"
+        ]
+      },
+      "rationale": "选择值和执行命令采用不同语义，但共享边界、字阶和状态角色。",
+      "acceptance": [
+        "键盘可选值并关闭",
+        "禁用选项说明可达",
+        "长选项不遮挡相邻命令；浏览器回退有记录"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/3"
+    },
+    {
+      "id": "C05",
+      "name": "勾选项",
+      "classification": "Material参考",
+      "reference_ids": [
+        "WAI-CHECK",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "整行标签点击和原生checkbox"
+        ],
+        "merge": [
+          "勾选框/标签/辅助原因的对齐及选中角色"
+        ],
+        "specialize": [
+          "仅真实部分选择显示mixed；未知另用状态文本"
+        ]
+      },
+      "rationale": "复选有三态，但没有未知等于半选这一语义。",
+      "acceptance": [
+        "Space切换且不触发行的另一动作",
+        "mixed、checked、unchecked分别可见",
+        "禁用原因不只在悬停提示中"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/4"
+    },
+    {
+      "id": "C06",
+      "name": "单选组",
+      "classification": "Material参考",
+      "reference_ids": [
+        "WAI-RADIO",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "同组最多一个实际值"
+        ],
+        "merge": [
+          "单选圆点、标签、辅助说明与同组间距"
+        ],
+        "specialize": [
+          "保持原生radio键盘行为，不强制生成默认值"
+        ]
+      },
+      "rationale": "统一的是一组互斥选择的结构和反馈。",
+      "acceptance": [
+        "同name原生组互斥",
+        "方向键切换保留原行为",
+        "未选择可明确呈现"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/5"
+    },
+    {
+      "id": "C07",
+      "name": "方形开关",
+      "classification": "Material参考",
+      "reference_ids": [
+        "M3-FOUND",
+        "WAI-SWITCH"
+      ],
+      "decisions": {
+        "keep": [
+          "方形开关2px小圆角与开/关明确值"
+        ],
+        "merge": [
+          "开关尺寸、状态文字和焦点反馈"
+        ],
+        "specialize": [
+          "只用于立即生效的二值设置；眼睛、只看仍各自保留语义"
+        ]
+      },
+      "rationale": "参考开关行为，不采用Material默认胶囊轮廓。",
+      "acceptance": [
+        "键盘Space可切换",
+        "aria-checked与实际值同步",
+        "不把关闭、禁用和未知混为一种状态",
+        "可访问名称稳定，开/关由checked表达"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/6"
+    },
+    {
+      "id": "C08",
+      "name": "分段选择",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-RADIO",
+        "WAI-TABS",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "少量短互斥值的分段呈现"
+        ],
+        "merge": [
+          "分段普通/选中/焦点外观与内部间距"
+        ],
+        "specialize": [
+          "参数值用radio/pressed语义，视图切换用tabs；放不下整组回退select"
+        ]
+      },
+      "rationale": "相似外观不意味着相同业务行为，需要按用途选语义。",
+      "acceptance": [
+        "选中+焦点可同时识别",
+        "参数组不会误用tabpanel",
+        "窄宽不出现单个汉字竖排"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/7"
+    },
+    {
+      "id": "C09",
+      "name": "模块折叠/子分组",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-DISCLOSURE",
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "摘要式折叠、模块标题与原参数归属"
+        ],
+        "merge": [
+          "标题、摘要、修改数与还原入口共用一行规则"
+        ],
+        "specialize": [
+          "开合属于视图状态，不进入配方撤销；保留搜索前开合"
+        ]
+      },
+      "rationale": "折叠以读参数为主，不增加卡片层级与装饰展开动画。",
+      "acceptance": [
+        "Enter/Space开合",
+        "折叠不改参数",
+        "长标题和摘要可换行，不覆盖还原动作"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/8"
+    },
+    {
+      "id": "C10",
+      "name": "页签/窗格导航",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-TABS",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "工作区/窗格切换与当前对象"
+        ],
+        "merge": [
+          "页签的焦点、选中线、文案和控件密度"
+        ],
+        "specialize": [
+          "切回恢复选择/搜索/滚动；窄屏页签只换呈现"
+        ]
+      },
+      "rationale": "桌面多窗格需要比通用页签更多上下文恢复契约。",
+      "acceptance": [
+        "方向键焦点与实际激活规则一致",
+        "每tab关联一个正确panel",
+        "切换不等于确认、不修改业务数据"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/9"
+    },
+    {
+      "id": "C11",
+      "name": "菜单",
+      "classification": "Material参考",
+      "reference_ids": [
+        "WAI-MENU",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "一级常用命令和必要危险项"
+        ],
+        "merge": [
+          "7px菜单容器/4px菜单项、自动行高、同一焦点与悬停角色"
+        ],
+        "specialize": [
+          "长说明按需展开；保留原快捷键，不增加多层子菜单"
+        ]
+      },
+      "rationale": "命令应可扫描且可达，不能靠固定行高容纳换行。",
+      "acceptance": [
+        "长命令行高自适应无重叠",
+        "Esc回触发器",
+        "菜单不出屏，焦点项可滚达"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/10"
+    },
+    {
+      "id": "C12",
+      "name": "对话框",
+      "classification": "Material参考",
+      "reference_ids": [
+        "WAI-DIALOG",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "明确对象、后果、取消与主动作"
+        ],
+        "merge": [
+          "标题/正文/错误/动作区结构及焦点恢复"
+        ],
+        "specialize": [
+          "原业务是否可取消与执行边界不变；原型无真实执行"
+        ]
+      },
+      "rationale": "对话框只处理需要阻断的决定，不给每个参数变更加确认。",
+      "acceptance": [
+        "Tab在模态范围内",
+        "Esc按允许的取消规则处理",
+        "关闭恢复原触发器；错误保留输入"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/11"
+    },
+    {
+      "id": "C13",
+      "name": "悬停提示/F1帮助",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-TOOLTIP",
+        "WAI-DISCLOSURE"
+      ],
+      "decisions": {
+        "keep": [
+          "图标短提示与既有F1帮助"
+        ],
+        "merge": [
+          "短提示在悬停与焦点均可获取；长帮助统一展开槽"
+        ],
+        "specialize": [
+          "禁用原因/错误/单位不得只存在tooltip；F1不新增全局绑定"
+        ]
+      },
+      "rationale": "短提示不接收焦点；有链接或操作的长帮助采用可交互内容。",
+      "acceptance": [
+        "无鼠标也能读到帮助",
+        "Esc关闭短提示",
+        "长帮助内容可Tab访问且与字段关联"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/12"
+    },
+    {
+      "id": "C14",
+      "name": "提示条/撤销条",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-SNACK",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "短结果不抢焦点，真实撤销范围明确"
+        ],
+        "merge": [
+          "提示条/撤销/重试的排列与状态文字"
+        ],
+        "specialize": [
+          "持续错误与可撤销消息按项目规则保留，不被新消息覆盖"
+        ]
+      },
+      "rationale": "商用工具需要可靠恢复，不能只为短暂反馈采用统一倒计时。",
+      "acceptance": [
+        "成功只在真实成功或明确样例时显示",
+        "撤销入口可键盘访问",
+        "持续错误在用户处理前仍可定位"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/13"
+    },
+    {
+      "id": "C15",
+      "name": "身份/状态标签",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-COLOR",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "对象/版本/当前编辑与当前只看分别表达"
+        ],
+        "merge": [
+          "状态词、图标和语义颜色的固定对应"
+        ],
+        "specialize": [
+          "状态来自相应证据轴，计划新增/更新不涂成完成"
+        ]
+      },
+      "rationale": "标签是信息，不自动变成可点击徽章；状态不能只看颜色。",
+      "acceptance": [
+        "纯展示不占Tab",
+        "未知、可执行、已检查、用户认可分别明确",
+        "相同词在三工具的证据条件一致"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/14"
+    },
+    {
+      "id": "C16",
+      "name": "进度/进行中",
+      "classification": "Material参考",
+      "reference_ids": [
+        "M3-FOUND",
+        "M3-COLOR"
+      ],
+      "decisions": {
+        "keep": [
+          "真实阶段、已知计数与可用取消"
+        ],
+        "merge": [
+          "确定/不确定进度的标签和状态槽"
+        ],
+        "specialize": [
+          "无总量不编百分比；不把动画结束当任务完成"
+        ]
+      },
+      "rationale": "通用进度呈现可复用，真实任务结果仍由控制器负责。",
+      "acceptance": [
+        "未知总量不出现假百分比",
+        "取消保留上次有效结果",
+        "进度更新不抢焦点或强拉日志滚动"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/15"
+    },
+    {
+      "id": "C17",
+      "name": "滚动区域/滚动条",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-FOUND",
+        "WCAG-TARGET"
+      ],
+      "decisions": {
+        "keep": [
+          "方头滚动条和局部滚动边界"
+        ],
+        "merge": [
+          "滚动条颜色/宽度、可聚焦内容区及返回位置"
+        ],
+        "specialize": [
+          "保留输入编辑键；短高视口允许改整页滚动，细滚动条例外单列"
+        ]
+      },
+      "rationale": "滚动条是桌面平台适配，不把所有窄可见部件都硬扩为同一按钮尺寸。",
+      "acceptance": [
+        "键盘能滚达内容尾部",
+        "焦点不被粘性栏遮住",
+        "回切恢复位置；日志阅读不被抢走"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/16"
+    },
+    {
+      "id": "C18",
+      "name": "可调分隔条",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-SPLITTER",
+        "WCAG-TARGET"
+      ],
+      "decisions": {
+        "keep": [
+          "右栏树/参数上下分区、已有分隔与折叠"
+        ],
+        "merge": [
+          "分隔条命中、名称、当前值和键盘反馈"
+        ],
+        "specialize": [
+          "保留原上下方向键、折为路径/恢复及上下限；不改编辑对象"
+        ]
+      },
+      "rationale": "可见线保持细，命中区域与可访问值另行定义。",
+      "acceptance": [
+        "拖动与方向键都可调整",
+        "最小/最大不挤空参数内容",
+        "恢复分隔不改变选择/搜索"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/17"
+    },
+    {
+      "id": "C19",
+      "name": "结构树行",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "WAI-TREE",
+        "M3-LIST"
+      ],
+      "decisions": {
+        "keep": [
+          "已选类型图标+父子导线、原树序/缩进/行高与操作列"
+        ],
+        "merge": [
+          "编辑选中、键盘焦点、显隐和只看的视觉表达"
+        ],
+        "specialize": [
+          "眼睛影响配方/导出，靶心只影响观察；RT6输出仍无眼睛"
+        ]
+      },
+      "rationale": "树属于层级模型，不能为了统一列表样子而扁平化。",
+      "acceptance": [
+        "祖先高亮只跟当前编辑路径",
+        "折叠/只看不改物理父子",
+        "键盘可分别选择行和操作眼睛/靶心"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/18"
+    },
+    {
+      "id": "C20",
+      "name": "资源/效果列表行",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-LIST",
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "真实名称、缩略图来源与固定修订"
+        ],
+        "merge": [
+          "列表图像/名称/辅助信息/尾部动作排列"
+        ],
+        "specialize": [
+          "缺失资源明确原因，选中与应用/加入沿用原动作"
+        ]
+      },
+      "rationale": "通用列表的扫描性用于资源行，资源有效性由业务证据决定。",
+      "acceptance": [
+        "长中文名和全名可达",
+        "读取失败不借用旧图冒充",
+        "选择不会静默加入节目或改变当前编辑对象"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/19"
+    },
+    {
+      "id": "C21",
+      "name": "资产/产物表",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-TYPE",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "表格列头、真实资产名、PC/手机与处理计划"
+        ],
+        "merge": [
+          "表头、行高、数值单位、选择和展开详情对齐"
+        ],
+        "specialize": [
+          "窄屏同一行详情补充必要列；选择改变按原规则使确认失效"
+        ]
+      },
+      "rationale": "资产核对采用可读数据表，领域计划和执行回执分别显示。",
+      "acceptance": [
+        "核对名称/目标完整可读或可展开",
+        "计划与真实结果不混列",
+        "窄高视口核对内容可滚达而非零高"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/20"
+    },
+    {
+      "id": "C22",
+      "name": "版本/修订列表",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "M3-LIST",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "配方版本/导出修订/UE回执/演出引用区别"
+        ],
+        "merge": [
+          "版本行结构和显式打开/应用动作"
+        ],
+        "specialize": [
+          "新修订不静默替换固定节目引用；保留指纹与缺失原因"
+        ]
+      },
+      "rationale": "Material提供列表呈现，不能替代资源修订和引用规则。",
+      "acceptance": [
+        "选择不等于应用",
+        "新版本提示不替换现有引用",
+        "指纹/来源可查看且不伪造验证状态"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/21"
+    },
+    {
+      "id": "C23",
+      "name": "数值/单位摘要",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "数值与单位原子组、来源及新旧状态"
+        ],
+        "merge": [
+          "摘要字阶、组间分隔与换行位置"
+        ],
+        "specialize": [
+          "75帧/5张等由真实业务计算；样板明确标示意"
+        ]
+      },
+      "rationale": "这是参数与产物的领域摘要，不应再拆成无归属状态徽章。",
+      "acceptance": [
+        "数字与单位不拆行",
+        "只在组间换行",
+        "未知/上次/当前/预计有正确文字"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/22"
+    },
+    {
+      "id": "C24",
+      "name": "流程步骤/阶段摘要",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "制作/导出/核对/导入/认可独立阶段"
+        ],
+        "merge": [
+          "当前步骤摘要与可回访入口"
+        ],
+        "specialize": [
+          "回访不确认；窄高压缩步骤呈现，不跳过核对"
+        ]
+      },
+      "rationale": "业务阶段不是通用完成进度条，必须以原证据边界驱动。",
+      "acceptance": [
+        "步骤显示对应真实任务或明确样例",
+        "当前阶段和下一动作清楚",
+        "窄高仍能访问核对内容"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/23"
+    },
+    {
+      "id": "C25",
+      "name": "空/错误/只读信息区",
+      "classification": "桌面适配",
+      "reference_ids": [
+        "M3-COLOR",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "空、失败、未连接、只读各自原因"
+        ],
+        "merge": [
+          "状态标题、影响范围、下一步及详情槽"
+        ],
+        "specialize": [
+          "保留旧有效内容；重试不清空当前输入/选择"
+        ]
+      },
+      "rationale": "反馈区共享结构，恢复动作由当前任务定义。",
+      "acceptance": [
+        "空结果提供清空/返回等可行动作",
+        "错误关联字段并保留输入",
+        "只读原因和未知状态不伪装成灰色禁用"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/24"
+    },
+    {
+      "id": "C26",
+      "name": "颜色段/Ramp领域外框",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "M3-FOUND",
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "Ramp色段、位置、插值与颜色数据模型"
+        ],
+        "merge": [
+          "标题/边界/选中/焦点/错误外框"
+        ],
+        "specialize": [
+          "不改变色段运算、配方或真实颜色；领域键盘/撤销仍沿原模型"
+        ]
+      },
+      "rationale": "本轮只统一外框和反馈，不能把色段编辑器称为完整通用组件。",
+      "acceptance": [
+        "色段数据和颜色不被主题覆盖",
+        "选中点与精确字段对应",
+        "领域内核未验证项单列"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/25"
+    },
+    {
+      "id": "C27",
+      "name": "曲线领域外框",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "M3-FOUND",
+        "M3-TYPE"
+      ],
+      "decisions": {
+        "keep": [
+          "曲线关键帧、单位、插值及原事务"
+        ],
+        "merge": [
+          "工具栏/边界/焦点/状态与精确数值区"
+        ],
+        "specialize": [
+          "不重写插值或为好看挪点；领域拖动事务沿用原控制器"
+        ]
+      },
+      "rationale": "统一可读外框，保留曲线内核与空间数值关系。",
+      "acceptance": [
+        "坐标和数值对应同一点",
+        "拖动与视图平移的撤销范围不同",
+        "错误和超范围值不静默钳制"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/26"
+    },
+    {
+      "id": "C28",
+      "name": "粒子图领域外框",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "WAI-TREE",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "物理父子、发射器和输出节点真实层级"
+        ],
+        "merge": [
+          "类型图标、导线、名称、选择/焦点/错误外框"
+        ],
+        "specialize": [
+          "不扁平化物理层级，不复制模拟器；视图与编辑对象分开"
+        ]
+      },
+      "rationale": "粒子图是领域模型，通用树只是其可访问结构参考。",
+      "acceptance": [
+        "父子关系与原节点一致",
+        "只看不改模型",
+        "领域操作未接通时明确说明范围"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/27"
+    },
+    {
+      "id": "C29",
+      "name": "Timeline领域外框",
+      "classification": "领域自定义",
+      "reference_ids": [
+        "M3-TYPE",
+        "M3-FOUND"
+      ],
+      "decisions": {
+        "keep": [
+          "片段时刻/时长/轨道/固定资源引用"
+        ],
+        "merge": [
+          "时间尺、标签层级、选择/焦点/信息外框"
+        ],
+        "specialize": [
+          "按可见宽度减标签，不挪真实重叠片段；缩放不进节目撤销"
+        ]
+      },
+      "rationale": "时间轴的领域几何保持真实，统一的是信息呈现和基础输入。",
+      "acceptance": [
+        "全曲密集标签不越片段",
+        "选中项全名在详情可达",
+        "视图缩放与片段编辑事务分别验证"
+      ],
+      "status": "候选规则；待用户审阅；未据此宣布实现或通过",
+      "source_ref": "../v1/specifications.json#/layers/components/28"
+    }
+  ],
+  "patterns": [
+    {
+      "id": "P01",
+      "name": "统一参数行",
+      "components": [
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C13",
+        "C15"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "参数名不重复单位；长名最多受控两行，值与单位仍完整",
+        "空间不足时整行切为标签在上/控件在下，不任意挤窄四列",
+        "保持既有schema、INERT、撤销、搜索、仅改动与保存"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/0"
+    },
+    {
+      "id": "P02",
+      "name": "平面模块与帮助",
+      "components": [
+        "C09",
+        "C13",
+        "C15"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "工作区一层表面，模块用留白/已有分隔线组织；不默认卡片套卡片",
+        "子组只增加一个缩进层级，不再套背景容器",
+        "保留用户开合和搜索结束后的原状态"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/1"
+    },
+    {
+      "id": "P03",
+      "name": "联动勾选列表（重点）",
+      "components": [
+        "C05",
+        "C13",
+        "C15"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "绝不把第1层勾选接在长句末尾；所有续行对齐名称列",
+        "mixed只由真实混选推导；未知/正在读取不等于未勾选",
+        "业务已有全选才复用，不为组件增加新功能",
+        "一次切换走原事务与确认失效规则；不自动删除禁用成员的原选择"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/2"
+    },
+    {
+      "id": "P04",
+      "name": "预设按钮组",
+      "components": [
+        "C01",
+        "C08",
+        "C23"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "×0.8…×2、用这个、试算等复用现有命令；不增加新算法",
+        "动作预设不是长期选中值；只有真正互斥枚举才分段",
+        "试算状态明确预计，不冒充已烘焙结果"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/3"
+    },
+    {
+      "id": "P05",
+      "name": "节奏/产物摘要：75帧·5张（重点）",
+      "components": [
+        "C23",
+        "C13"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/4"
+    },
+    {
+      "id": "P06",
+      "name": "V5树与参数组合",
+      "components": [
+        "C19",
+        "C18",
+        "C09",
+        "C02",
+        "C15"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "保持右栏一列，不引入新页签",
+        "常规高度沿用参数保底520px的V5默认；树至少5行、至多可用区域一半且不超实际内容",
+        "高度不足时用现有折成路径与窗格展开能力让参数可达；自适应默认属于待审设计提议，不静默改宪章",
+        "眼睛=显示这层/影响导出；只看=只影响画面，不能互相代替",
+        "紧凑/常规各提供整页树与参数布局；密度差异不改变当前对象、树展开和参数值。"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/5"
+    },
+    {
+      "id": "P07",
+      "name": "顶行操作与搜索筛选",
+      "components": [
+        "C01",
+        "C10",
+        "C11",
+        "C02",
+        "C08"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "V5中栏左视图右动作，导出仍唯一",
+        "窄时按既有优先级先缩短低频文字，再放入已有菜单；不隐藏唯一主入口",
+        "筛选不改变实际资产选择/数据，返回恢复原上下文"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/6"
+    },
+    {
+      "id": "P08",
+      "name": "逐资产核对与确认",
+      "components": [
+        "C20",
+        "C21",
+        "C15",
+        "C23",
+        "C01"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "浏览/选择/切平台不算确认；确认不等于导入",
+        "源包/命名/目标/平台/选择改变使旧确认失效，由原控制器判定",
+        "核对必须可见或可滚达，不能只留下执行按钮",
+        "执行按钮状态由现有确认指纹和连接条件决定，设计层不能强行解锁"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/7"
+    },
+    {
+      "id": "P09",
+      "name": "空/错误/进行中与恢复",
+      "components": [
+        "C14",
+        "C16",
+        "C25"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "空库、读取失败、权限拒绝、待连接分别表达",
+        "等待与重试不丢参数、队列、选择、滚动和日志阅读位置",
+        "仅使用现有取消/停止/重试能力，不新增后台自动执行"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/8"
+    },
+    {
+      "id": "P10",
+      "name": "多轴状态真值（重点）",
+      "components": [
+        "C15",
+        "C16",
+        "C14"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "每个轴只由相应真实回执/指纹/用户决定驱动",
+        "检查通过注明检查范围与版本；不等同UE实播通过",
+        "计划新增/更新/复用/跳过不使用完成语义",
+        "原型页面只显示实际证据状态；若做组件状态样例，必须独立标注状态样例并与真实资源隔离"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/9"
+    },
+    {
+      "id": "P11",
+      "name": "窄高导入工作区（重点）",
+      "components": [
+        "C10",
+        "C18",
+        "C24",
+        "C21",
+        "C01",
+        "C17"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/10"
+    },
+    {
+      "id": "P12",
+      "name": "Timeline标签随缩放分级（重点）",
+      "components": [
+        "C29",
+        "C13",
+        "C15",
+        "C23"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "只改标签呈现，不改片段时刻、时长、点位、引用、重叠关系或颜色",
+        "优先用实际文字测量与可见片段宽度决定是否完整显示，不以中文字符数硬猜",
+        "完整文本+内边距能放下才全名；中等宽显示短名/省略；窄宽只显示可读编号或色块",
+        "全曲概览默认不为所有重叠片段画全名；选中名在检查器完整显示",
+        "标签裁在所属片段可见区域，不扩写到邻片段或跨轨覆盖",
+        "真实碰撞保持业务几何，可用既有轨道/概览信息呈现，不能为避叠字挪动或删除片段",
+        "缩放是视图状态，不进节目数据撤销；沿用现有定位/放大时间轴入口，不新增全局快捷键"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/11"
+    },
+    {
+      "id": "P13",
+      "name": "固定修订引用与资源行",
+      "components": [
+        "C20",
+        "C22",
+        "C15",
+        "C21"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "基础模板库、花型模板、编排模板与烘焙器交付资源各有清晰中文名称",
+        "选择资源只是选中；加入/绑定/升级沿用原显式动作",
+        "显示真实修订与缺图/待导入/待标定，不用旧图、模拟UE状态或近似名称代替真实证据"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/12"
+    },
+    {
+      "id": "P14",
+      "name": "长名与路径",
+      "components": [
+        "C02",
+        "C13",
+        "C19",
+        "C20",
+        "C21"
+      ],
+      "classification": "领域组合模式",
+      "decision": "保留能力与数据语义，改用本轮基础组件角色；不是Material现成业务流程。",
+      "rules": [
+        "对象名可受控多行；数值与单位不可拆；路径在信息区按需展开/复制",
+        "截断必须有键盘可用的完整内容；不能让资产核对名称仅剩省略号",
+        "辅助文字对齐所属内容列，不接在勾选句末"
+      ],
+      "status": "候选模式，未由文档推定运行通过",
+      "source_ref": "../v1/specifications.json#/layers/patterns/13"
+    }
+  ],
+  "page_templates": [
+    {
+      "id": "T01",
+      "name": "烘焙器V5编辑",
+      "classification": "领域页面模板",
+      "layout": "保留左库/中预览/右结构参数；右栏仅一列，树和参数由C18分隔。",
+      "composition": [
+        "左侧效果库C20",
+        "中栏P07+原有预览+时间轴C29",
+        "右栏P06"
+      ],
+      "prototype_scope": "本轮重点制作与验收",
+      "avoid": [
+        "独立资产栏",
+        "右栏新页签",
+        "卡片套卡片",
+        "重复导出入口"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/0"
+    },
+    {
+      "id": "T02",
+      "name": "烘焙器交付清单",
+      "classification": "领域页面模板",
+      "layout": "清单按V5为中栏30%、宽320–420px；优先预览，不盖画布；四块为名字/每层出什么/包里有什么/导入范围。",
+      "composition": [
+        "引擎回放预览",
+        "P05/P08清单窄栏",
+        "原右栏按已有开关可收起"
+      ],
+      "prototype_scope": "本轮重点制作与验收",
+      "avoid": [
+        "大字号结果卡",
+        "交付页第二个导出按钮",
+        "把质量检查与可以操作混成通过"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/1"
+    },
+    {
+      "id": "T03",
+      "name": "导入核对工作区（独立与原工作台适配）",
+      "classification": "领域页面模板",
+      "layout": "两个入口共用呈现模板与组件；原有目录/UE/登记/回执适配器仍分别保留。",
+      "composition": [
+        "C24紧凑阶段",
+        "资源队列C20",
+        "平面设置P01/P02",
+        "逐资产核对P08",
+        "真实动作栏+可展开日志"
+      ],
+      "prototype_scope": "本轮重点制作与验收",
+      "avoid": [
+        "步骤条大卡",
+        "核对卡嵌资产卡嵌错误卡",
+        "视图切换自动确认",
+        "任何原型UE写入"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/2"
+    },
+    {
+      "id": "T04",
+      "name": "编排演出",
+      "classification": "领域页面模板",
+      "layout": "保留三栏和原场景/点位/节目模型；时间轴标签按缩放而非全量叠字。",
+      "composition": [
+        "编排资源C20",
+        "原舞台预览",
+        "C29+P12单一时间轴",
+        "平面检查器P01/P02",
+        "P07已有保存/交付"
+      ],
+      "prototype_scope": "保留既有稿作来源，领域完整实现不在本轮声明通过",
+      "avoid": [
+        "重做节目模型",
+        "把片段视图切换当数据改动",
+        "重叠事件挪时间来美化"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/3"
+    },
+    {
+      "id": "T05",
+      "name": "编排资源/模板库",
+      "classification": "领域页面模板",
+      "layout": "基础模板与交付资源用准确中文职责命名；同修订缩略图、平台、时长、尺度与真实状态完整可达。",
+      "composition": [
+        "P07搜索筛选",
+        "P13资源修订行",
+        "原有比例/效果预览",
+        "平面只读/绑定详情"
+      ],
+      "prototype_scope": "保留既有稿作来源，领域完整实现不在本轮声明通过",
+      "avoid": [
+        "把libraryKind内部值当用户文案",
+        "读取即加入节目",
+        "未导入显示已导入"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/4"
+    },
+    {
+      "id": "T06",
+      "name": "领域编辑（粒子图/Ramp/曲线）",
+      "classification": "领域页面模板",
+      "layout": "统一外框与状态，不改变领域画布、物理/曲线模型；不为领域编辑再开第二套页面系统。",
+      "composition": [
+        "T01或T04既有工作区",
+        "C26/C27/C28外框",
+        "P01参数与P02模块"
+      ],
+      "prototype_scope": "保留既有稿作来源，领域完整实现不在本轮声明通过",
+      "avoid": [
+        "领域控件里再放业务卡片栈",
+        "只统一外框就宣称内部交互通过"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/5"
+    },
+    {
+      "id": "T07",
+      "name": "错误/连接恢复/既有任务对话",
+      "classification": "领域页面模板",
+      "layout": "原因、范围、下一步与取消边界明确；用真实业务状态，不靠样例成功兜底。",
+      "composition": [
+        "C12",
+        "P09",
+        "P10"
+      ],
+      "prototype_scope": "保留既有稿作来源，领域完整实现不在本轮声明通过",
+      "avoid": [
+        "对每个选择加确认弹窗",
+        "Esc暗示撤销UE写入"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/6"
+    },
+    {
+      "id": "T08",
+      "name": "独立组件状态样板（后续草稿）",
+      "classification": "领域页面模板",
+      "layout": "独立样板不占正式工具侧栏；所有演示都标状态样例/布局样例，与真实资产状态分开。",
+      "composition": [
+        "全部组件的适用状态",
+        "紧凑/常规用途尺寸",
+        "根因与覆盖映射"
+      ],
+      "prototype_scope": "本轮重点制作与验收",
+      "avoid": [
+        "用户未审前发布正式库",
+        "样例数据或按钮真的连接目录/UE",
+        "把组件样板当真实任务验收"
+      ],
+      "source_ref": "../v1/specifications.json#/layers/page_templates/7"
+    }
+  ],
+  "approval_boundary": {
+    "user_approved": false,
+    "production_migration": false,
+    "shared_tokens_modified": false,
+    "real_recipe_or_import_or_ue": false,
+    "next_gate": "用户验收候选视觉/密度及代表交互后，另行进入正式库和迁移"
+  }
+}

@@ -1,0 +1,82 @@
+/* 三个代表页只消费候选基础；旧draft别名桥接避免复制业务布局。 */
+.u-scope {
+  --draft-control:var(--u-control-height); --draft-row:var(--u-control-height);
+  --draft-body:var(--u-font-body); --draft-body-line:var(--u-line-body);
+  --draft-label:var(--u-font-label); --draft-helper:var(--u-font-helper);
+}
+.u-scope .demo-toolbar {gap:8px; padding:6px 12px; min-height:48px}
+.u-scope .demo-toolbar .u-button,.u-scope .demo-toolbar .u-select {min-height:32px;font-size:12px;padding-block:4px;line-height:18px}
+.u-review-home {font-size:14px;font-weight:650;text-decoration:none;color:var(--fw-color-on-surface);margin-right:auto;white-space:nowrap}
+.u-review-home:focus-visible {outline:2px solid var(--fw-color-primary);outline-offset:3px}
+.u-scope .demo-toolbar .demo-description {margin-right:0}
+.u-scope .appbar-tools .u-button {min-height:32px;padding-block:4px}
+.u-scope .center-actions .u-button {min-height:var(--u-control-height)}
+.u-scope .segmented .u-button {border-radius:0;border:0;box-shadow:none;min-height:var(--u-control-height)}
+.u-scope .segmented .u-button[aria-pressed=true],.u-scope .segmented .u-button[aria-selected=true] {box-shadow:inset 0 -2px var(--fw-color-primary);background:var(--fw-color-primary-container)}
+.u-scope .tree-heading .u-button {min-height:28px;padding:0 8px;font-size:12px}
+.u-scope .u-domain-action:focus-visible {outline:2px solid var(--fw-color-primary);outline-offset:-2px}
+.u-scope .tree-row[aria-selected=true] {background:var(--fw-color-primary-container);outline:1px solid var(--fw-color-primary)}
+.u-scope .parameter-search-row .u-input,.u-scope .parameter-search-row .u-button {min-height:var(--u-control-height)}
+.u-scope .parameter-filters {gap:16px;margin-top:8px}
+.u-scope .parameter-filters label {min-height:28px;font-size:var(--u-font-label)}
+.u-scope .param-modules {container-type:inline-size;container-name:parameters}
+.u-scope .param-module {padding-top:16px}
+.u-scope .param-module + .param-module {margin-top:16px}
+.u-scope .param-module > summary {min-height:32px;align-items:center;font-size:14px;font-weight:650;line-height:22px}
+.u-scope .param-module > summary .helper {font-size:12px;font-weight:400;line-height:18px;text-align:right}
+.u-scope .parameter-grid {grid-template-columns:minmax(66px,1fr) minmax(50px,1fr) 64px 18px 24px 24px 24px;gap:4px;margin:8px 0;min-height:var(--u-control-height)}
+.u-scope .parameter-grid .u-input {min-height:var(--u-control-height);padding:4px 6px;text-align:right;min-width:0}
+.u-scope .parameter-grid .u-slider {min-height:var(--u-control-height)}
+.u-scope .parameter-grid .row-action {min-height:24px;height:24px;width:24px;border:0;border-radius:4px;padding:0}
+.u-scope .parameter-grid label {font-size:var(--u-font-label);line-height:20px;font-weight:500}
+.u-scope .param-unit {font-size:12px;line-height:18px;white-space:nowrap}
+.u-scope .field-row {min-height:var(--u-control-height);margin-bottom:12px;gap:12px}
+.u-scope .field-row select {border-radius:4px;color:var(--fw-color-on-surface)}
+.u-scope .field-label {font-weight:500;font-size:var(--u-font-label);line-height:20px}
+.u-scope .preset-row {gap:8px;margin:12px 0}
+.u-scope .preset-row .u-button {min-height:32px}
+.u-scope .demo-param-error {color:var(--fw-color-error);font-size:13px;line-height:20px}
+.u-scope .menu-commands .u-button {height:auto;min-height:var(--u-control-height);white-space:normal;text-align:left;border:0;padding:8px 12px}
+.u-scope .menu-commands small {white-space:normal;line-height:18px}
+.u-scope .observation-menu>summary {min-height:32px;padding:4px 8px;white-space:nowrap}
+.u-scope .observation-scope {margin-left:auto}
+.u-scope .delivery-name-form {gap:8px;align-items:start}
+.u-scope .delivery-name-form .u-input {min-width:0}
+.u-scope .delivery-section h3 {font-size:14px;line-height:22px;font-weight:650}
+.u-scope .delivery-section {padding:16px 0}
+.u-scope .delivery-checklist h2,.u-scope .import-pane h2 {font-weight:650}
+.u-scope .import-file {display:grid;gap:4px;padding:12px 0}
+.u-scope .importer-main {grid-template-rows:auto minmax(176px,1fr) auto auto}
+.u-scope .confirm-checks label {min-height:40px;align-items:center}
+.u-scope .import-actions {gap:8px}
+.u-scope .import-actions>.helper {max-width:65ch}
+.u-scope .import-actions .action-end {flex-wrap:wrap;gap:8px}
+.u-scope .import-review-summary .pair {gap:12px}
+.u-scope .import-pane {overflow-wrap:anywhere}
+.u-scope #demo-dialog.u-dialog {border-radius:var(--u-radius);max-height:calc(100dvh - 32px)}
+.u-scope #demo-dialog .u-input {width:100%}
+.u-scope #demo-dialog [data-close-dialog] {min-width:32px}
+.u-scope .demo-seek {border:0;border-radius:0}
+@container parameters (max-width:390px) {
+  .u-scope .parameter-grid {grid-template-columns:minmax(64px,1fr) 72px 20px 24px 24px 24px;row-gap:4px;margin:8px 0 12px}
+  .u-scope .parameter-grid>label {grid-row:1;grid-column:1/4}
+  .u-scope .parameter-grid>.draft-range {grid-row:2;grid-column:1}
+  .u-scope .parameter-grid>.draft-number {grid-row:2;grid-column:2}
+  .u-scope .parameter-grid>.param-unit {grid-row:2;grid-column:3}
+  .u-scope .parameter-grid>[data-u-row-action="0"] {grid-row:1;grid-column:4}
+  .u-scope .parameter-grid>[data-u-row-action="1"] {grid-row:1;grid-column:5}
+  .u-scope .parameter-grid>[data-u-row-action="2"] {grid-row:1;grid-column:6}
+}
+@media(max-width:899px) {
+  .u-scope .demo-toolbar {min-height:0;gap:6px;padding:4px 8px}
+  .u-scope .center-actions .u-button {padding:0 8px}
+  .u-scope .demo-toolbar .demo-description {display:none}
+}
+@media(max-width:980px),(max-height:620px) {
+  .u-scope .importer-main {grid-template-rows:auto auto minmax(176px,1fr) auto auto}
+}
+@media(max-height:620px) {
+  .u-scope.demo-shell .parameters {height:max-content;align-self:start}
+  .u-scope .import-columns {overflow:visible}
+  .u-scope .importer-main {grid-template-rows:auto auto minmax(176px,auto) auto auto}
+}
