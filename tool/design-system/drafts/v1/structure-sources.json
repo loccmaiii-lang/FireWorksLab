@@ -1,0 +1,26 @@
+{
+  "rt6": {
+    "capture": "F:\\FireWorksLab\\analysis\\local\\20261028_Codex_界面筛查\\baker_runtime\\main_chrome_2560_150\\01373_chrome_2560_dpr150_effect-trail_phys_identity_s0.json.gz",
+    "object": {
+      "kind": "effect",
+      "id": "trail_phys",
+      "expr": "openEffect(EFFS().find(e => e.key === \"trail_phys\"))",
+      "entry": "RT6M",
+      "resolution": "review"
+    },
+    "node_count": 23,
+    "preserves": "逐节点名称/原level顺序；粒子图分裂母粒→一级分叉→二级碎火星层级保留，输出子项只可观察"
+  },
+  "particle": {
+    "capture": "F:\\FireWorksLab\\analysis\\local\\20261028_Codex_界面筛查\\baker_runtime\\main_chrome_2560_150\\02083_chrome_2560_dpr150_effect-rocket_graph_L0___s0.json.gz",
+    "object": {
+      "kind": "effect",
+      "id": "rocket_graph",
+      "expr": "openEffect(EFFS().find(e => e.key === \"rocket_graph\"))",
+      "entry": "SGR1",
+      "resolution": "review"
+    },
+    "node_count": 16,
+    "preserves": "逐节点名称/原level顺序；粒子图分裂母粒→一级分叉→二级碎火星层级保留，输出子项只可观察"
+  }
+}

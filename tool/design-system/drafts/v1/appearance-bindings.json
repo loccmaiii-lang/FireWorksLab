@@ -1,0 +1,528 @@
+{
+  "format": "fwl.draft-frozen-appearance/1",
+  "baseline": "975ee1425649118ea96d75b9a30c2aa10dc11a55",
+  "source": "freeze124/computed.json",
+  "bindings": [
+    {
+      "selector": ".btn.primary",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "4px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "4px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "4px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "4px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": ".btn.ghost",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "6px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(90, 102, 106)",
+          "border-radius": "6px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(90, 102, 106)",
+          "border-radius": "6px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(90, 102, 106)",
+          "border-radius": "6px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": ".btn",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "6px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(90, 102, 106)",
+          "border-radius": "6px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(90, 102, 106)",
+          "border-radius": "6px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(90, 102, 106)",
+          "border-radius": "6px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false,
+      "validity": {
+        "normal": {
+          "eligible_basis": false,
+          "reason": "同一元素承接前一个焦点状态，普通态采集污染；不得作为普通按钮样式依据。"
+        }
+      },
+      "preferred_normal_basis": [
+        ".btn.ghost normal",
+        ".btn.primary normal",
+        "#abUndo的角色普通态"
+      ]
+    },
+    {
+      "selector": "#params input[type=number]",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "4px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "4px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "4px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "4px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false,
+      "validity": {
+        "focus": {
+          "eligible_basis_for_active_input_focus": false,
+          "activeElement_verified": false,
+          "reason": "当时未核实activeElement且样本可能只读/禁用，不用于活动数值输入焦点；改继承旧.sl .num:focus边框主色、outline:none。"
+        },
+        "active": {
+          "eligible_basis_for_active_input_focus": false,
+          "activeElement_verified": false,
+          "reason": "当时未核实activeElement且样本可能只读/禁用，不用于活动数值输入焦点；改继承旧.sl .num:focus边框主色、outline:none。"
+        }
+      }
+    },
+    {
+      "selector": "#params input[type=range]",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(59, 59, 59)",
+          "border-color": "rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(59, 59, 59)",
+          "border-color": "rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(59, 59, 59)",
+          "border-color": "rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(59, 59, 59)",
+          "border-color": "rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#params select",
+      "states": {
+        "normal": {
+          "color": "rgb(180, 197, 203)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "0px",
+          "outline": "rgb(180, 197, 203) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(180, 197, 203)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "0px",
+          "outline": "rgb(180, 197, 203) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(180, 197, 203)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(180, 197, 203)",
+          "background-color": "rgb(18, 31, 36)",
+          "border-color": "rgb(57, 81, 90)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#params summary",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(54, 228, 176)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(54, 228, 176)",
+          "border-radius": "0px",
+          "outline": "rgb(54, 228, 176) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(54, 228, 176)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(54, 228, 176)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(54, 228, 176)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(54, 228, 176)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": ".seg button[aria-pressed=true]",
+      "states": {
+        "normal": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "0px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "rgb(0, 212, 155) 0px 0px 0px 1px inset"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "0px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "rgb(0, 212, 155) 0px 0px 0px 1px inset"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "rgb(0, 212, 155) 0px 0px 0px 1px inset"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgb(23, 61, 57)",
+          "border-color": "rgb(0, 212, 155)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "rgb(0, 212, 155) 0px 0px 0px 1px inset"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": ".seg button[aria-pressed=false]",
+      "states": {
+        "normal": {
+          "color": "rgb(180, 197, 203)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(180, 197, 203) rgb(43, 65, 73) rgb(180, 197, 203) rgb(180, 197, 203)",
+          "border-radius": "0px",
+          "outline": "rgb(180, 197, 203) none 3px",
+          "box-shadow": "none"
+        },
+        "hover": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(228, 237, 239) rgb(43, 65, 73) rgb(228, 237, 239) rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(228, 237, 239) none 3px",
+          "box-shadow": "none"
+        },
+        "focus": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(228, 237, 239) rgb(43, 65, 73) rgb(228, 237, 239) rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        },
+        "active": {
+          "color": "rgb(228, 237, 239)",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border-color": "rgb(228, 237, 239) rgb(43, 65, 73) rgb(228, 237, 239) rgb(228, 237, 239)",
+          "border-radius": "0px",
+          "outline": "rgb(0, 212, 155) solid 2px",
+          "box-shadow": "none"
+        }
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#abSave",
+      "role": "操作主要按钮",
+      "style": {
+        "color": "rgb(228, 237, 239)",
+        "background-color": "rgb(23, 61, 57)",
+        "border-top-color": "rgb(0, 212, 155)",
+        "border-radius": "4px",
+        "outline-color": "rgb(228, 237, 239)",
+        "outline-style": "none",
+        "outline-width": "3px",
+        "box-shadow": "none"
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#abUndo",
+      "role": "操作普通按钮",
+      "style": {
+        "color": "rgb(228, 237, 239)",
+        "background-color": "rgb(27, 42, 47)",
+        "border-top-color": "rgb(57, 81, 90)",
+        "border-radius": "4px",
+        "outline-color": "rgb(228, 237, 239)",
+        "outline-style": "none",
+        "outline-width": "3px",
+        "box-shadow": "none"
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#deliveryOpen",
+      "role": "幽灵按钮",
+      "style": {
+        "color": "rgb(228, 237, 239)",
+        "background-color": "rgba(0, 0, 0, 0)",
+        "border-top-color": "rgb(57, 81, 90)",
+        "border-radius": "6px",
+        "outline-color": "rgb(228, 237, 239)",
+        "outline-style": "none",
+        "outline-width": "3px",
+        "box-shadow": "none"
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#libSearch",
+      "role": "输入框",
+      "style": {
+        "color": "rgb(228, 237, 239)",
+        "background-color": "rgb(18, 31, 36)",
+        "border-top-color": "rgb(57, 81, 90)",
+        "border-radius": "4px",
+        "outline-color": "rgb(228, 237, 239)",
+        "outline-style": "none",
+        "outline-width": "3px",
+        "box-shadow": "none"
+      },
+      "contains_text_or_source": false
+    },
+    {
+      "selector": "#abSrc",
+      "role": "来源选择器",
+      "style": {
+        "color": "rgb(228, 237, 239)",
+        "background-color": "rgb(18, 31, 36)",
+        "border-top-color": "rgb(57, 81, 90)",
+        "border-radius": "5px",
+        "outline-color": "rgb(228, 237, 239)",
+        "outline-style": "none",
+        "outline-width": "3px",
+        "box-shadow": "none"
+      },
+      "contains_text_or_source": false
+    }
+  ],
+  "legacy_focus_roles": [
+    {
+      "role": "活动数字框",
+      "selector": ".sl .num:focus",
+      "file": "tool/src/style.css",
+      "lines": [
+        262,
+        421
+      ],
+      "style": {
+        "border-color": "var(--acc)",
+        "outline": "none"
+      },
+      "basis": "实际legacy角色规则；不使用未核activeElement的readonly/disabled焦点采样"
+    },
+    {
+      "role": "参数搜索",
+      "selector": "#params>.ptools input[type=search]:focus",
+      "file": "tool/src/style.css",
+      "line": 1574,
+      "style": {
+        "border-color": "var(--acc)",
+        "outline": "none"
+      }
+    },
+    {
+      "role": "模块标题",
+      "selector": "#params>.egrp>details.sec>summary:focus-visible",
+      "file": "tool/src/style.css",
+      "line": 1604,
+      "style": {
+        "outline": "2px solid var(--acc)",
+        "outline-offset": "-2px"
+      }
+    },
+    {
+      "role": "视图分段",
+      "selector": ".v5-seg>button:focus-visible",
+      "file": "tool/src/style.css",
+      "line": 1900,
+      "style": {
+        "outline": "2px solid var(--acc)",
+        "outline-offset": "-2px"
+      }
+    },
+    {
+      "role": "结构名称和图标动作",
+      "selectors": [
+        ".v5-row .v5-name:focus-visible",
+        ".v5-ic:focus-visible"
+      ],
+      "file": "tool/src/style.css",
+      "lines": [
+        2057,
+        2079
+      ],
+      "style": {
+        "outline": "2px solid var(--acc)",
+        "outline-offset": "-2px"
+      }
+    },
+    {
+      "role": "普通按钮/summary默认",
+      "selector": "button:focus-visible,summary:focus-visible",
+      "file": "tool/src/style.css",
+      "line": 1017,
+      "style": {
+        "outline": "2px solid var(--acc)",
+        "outline-offset": "2px"
+      }
+    }
+  ],
+  "notes": [
+    "只保留选择器与计算样式，不复制页面文字或源码。",
+    "新增尺寸、排版和布局为提案；颜色/圆角/边框/焦点与悬停按实际角色绑定。",
+    "参数选择器0px、来源选择器5px；不把所有选择器机械设成同一圆角。",
+    "通用.btn普通态采集污染、数值焦点未核activeElement分别隔离；没有据此声称活动输入焦点已验。"
+  ],
+  "runtime_check_ref": "verification.json",
+  "shared_components_import": "../../components.css (existing, unchanged)",
+  "approval": "待用户确认；未批准近似值合并或正式库"
+}

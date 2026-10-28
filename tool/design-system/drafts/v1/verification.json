@@ -1,0 +1,3509 @@
+{
+  "schema": "fwl.design-review-draft/1",
+  "status": "待用户审核，非正式组件库",
+  "baseline": {
+    "product": "65e41bd1 / c045f46a",
+    "appearance": "975ee142",
+    "scope": "无生产/共享token/私有源码/UE修改"
+  },
+  "imagegen": {
+    "builtin": true,
+    "count": 1,
+    "actual_dimensions": [
+      1672,
+      941
+    ],
+    "target": [
+      1920,
+      1080
+    ],
+    "prompt": "imagegen-prompt.txt",
+    "image": "imagegen-editor.png",
+    "references_attached": [
+      "124实际初始页",
+      "125实际金锦层1366页"
+    ],
+    "review": "文字/局部控件偏差以HTML纠正，不作功能证据"
+  },
+  "runtime": {
+    "default_page_states": 112,
+    "browsers": [
+      "154.0.8037.58",
+      "156.0.4314.50"
+    ],
+    "pages": 7,
+    "densities": [
+      "regular",
+      "compact"
+    ],
+    "CSS_environments": [
+      [
+        1366,
+        768,
+        1
+      ],
+      [
+        1920,
+        1080,
+        1
+      ],
+      [
+        2560,
+        1440,
+        1.5
+      ],
+      [
+        683,
+        384,
+        2
+      ]
+    ],
+    "page_errors": [],
+    "horizontal_overflows": 0,
+    "missing_images": 0,
+    "business_requests": 0,
+    "UE_calls": 0,
+    "matrix_snapshot_code_hashes": {
+      "draft.js": "77b63c93f519f11932812e9d7f26db92673acbf7a4514c271bb1f8a8343aedda",
+      "draft.css": "10b742a9743611bad9452eceacfa2f8a830e980af38098ab88dc2d48b30a0d53",
+      "screen.html": "2df915190381e01d324f62be93321e9fdf6cb8e6f96c4eb47824e3cb87de0723",
+      "index.html": "72addeb20b54729a9ad85f67edb731817c9ee691c68aad97d6159dedc8f45272"
+    },
+    "current_code_hashes": {
+      "draft.js": "77b63c93f519f11932812e9d7f26db92673acbf7a4514c271bb1f8a8343aedda",
+      "draft.css": "10b742a9743611bad9452eceacfa2f8a830e980af38098ab88dc2d48b30a0d53",
+      "screen.html": "2df915190381e01d324f62be93321e9fdf6cb8e6f96c4eb47824e3cb87de0723",
+      "index.html": "72addeb20b54729a9ad85f67edb731817c9ee691c68aad97d6159dedc8f45272"
+    },
+    "post_matrix_change": null,
+    "interactions": [
+      {
+        "browser": "chrome",
+        "search": "范围：当前节点 · 1 项匹配",
+        "visibleMatchingRows": 1,
+        "clearValue": "",
+        "treeCollapsedRovingCount": 1,
+        "treeFocus": "effect",
+        "eye": "false",
+        "solo": "true",
+        "deliveryAutoHidden": true,
+        "deliveryManualOpen": true,
+        "returnContextRestored": true,
+        "importTabFocus": "tab-settings",
+        "tabPanelRole": "tabpanel",
+        "importEnabled": false
+      },
+      {
+        "browser": "msedge",
+        "search": "范围：当前节点 · 1 项匹配",
+        "visibleMatchingRows": 1,
+        "clearValue": "",
+        "treeCollapsedRovingCount": 1,
+        "treeFocus": "effect",
+        "eye": "false",
+        "solo": "true",
+        "deliveryAutoHidden": true,
+        "deliveryManualOpen": true,
+        "returnContextRestored": true,
+        "importTabFocus": "tab-settings",
+        "tabPanelRole": "tabpanel",
+        "importEnabled": false
+      }
+    ],
+    "state_checks": [
+      {
+        "browser": "chrome",
+        "emptySearchVisible": true,
+        "matches": 0,
+        "modifiedOnlyRows": 1,
+        "lockedReadonly": true,
+        "restoredNumber": "1",
+        "numericFocus": {
+          "border": "rgb(0, 212, 155)",
+          "outline": "none"
+        },
+        "splitterKeyboardDelta": 16,
+        "scrollBefore": 21,
+        "scrollAfter": 21,
+        "menuInsideViewport": true,
+        "menuEscClosed": true,
+        "menuFocusRestored": true
+      },
+      {
+        "browser": "chrome",
+        "outputEyeCount": 0,
+        "outputObserve": "true",
+        "outputParameterHeading": "输出设置\n只读状态示意"
+      },
+      {
+        "browser": "chrome",
+        "particleParentLevel": "4",
+        "particleChildLevel": "5",
+        "selectedPath": "当前编辑：06｜一级分叉 › 08｜二级碎火星",
+        "collapseMovedFocus": "p:e05",
+        "oneRovingTabstop": true,
+        "singleExportButton": true,
+        "errors": []
+      },
+      {
+        "browser": "msedge",
+        "emptySearchVisible": true,
+        "matches": 0,
+        "modifiedOnlyRows": 1,
+        "lockedReadonly": true,
+        "restoredNumber": "1",
+        "numericFocus": {
+          "border": "rgb(0, 212, 155)",
+          "outline": "none"
+        },
+        "splitterKeyboardDelta": 16,
+        "scrollBefore": 21,
+        "scrollAfter": 21,
+        "menuInsideViewport": true,
+        "menuEscClosed": true,
+        "menuFocusRestored": true
+      },
+      {
+        "browser": "msedge",
+        "outputEyeCount": 0,
+        "outputObserve": "true",
+        "outputParameterHeading": "输出设置\n只读状态示意"
+      },
+      {
+        "browser": "msedge",
+        "particleParentLevel": "4",
+        "particleChildLevel": "5",
+        "selectedPath": "当前编辑：06｜一级分叉 › 08｜二级碎火星",
+        "collapseMovedFocus": "p:e05",
+        "oneRovingTabstop": true,
+        "singleExportButton": true,
+        "errors": []
+      }
+    ],
+    "all_raw_evidence": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\analysis\\local\\20261028_Codex_界面筛查\\draft-qa",
+    "manual_review_boundary": "代表图按同视口原图及组合图目视，不声称112页全部人工逐字审核或读屏通过",
+    "source_files_stable_during_final_matrix": true,
+    "shared_components_import": "../../components.css；只读复用现有滚动条、color-scheme与控件基础，未修改共享文件",
+    "native_review_screenshot": {
+      "file": "screenshots/live-review.png",
+      "dimensions": [
+        1536,
+        769
+      ],
+      "note": "本机Chrome真实审阅页，未改变用户缩放；截图尺寸不等同物理屏幕或原参考页CSS视口"
+    }
+  },
+  "key_screenshots": [
+    {
+      "id": "chrome_1366_regular_editor",
+      "file": "screenshots/chrome_1366_regular_editor.png",
+      "environment": {
+        "CSS": [
+          1366,
+          768
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1366,
+          768,
+          1
+        ],
+        "documentWidth": 1366,
+        "documentHeight": 768,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1366,
+            "height": 768,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 768,
+            "scrollHeight": 768
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1366,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".center": {
+            "x": 232,
+            "y": 48,
+            "width": 746,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 746,
+            "scrollWidth": 746,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 978,
+            "y": 48,
+            "width": 388,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 387,
+            "scrollWidth": 387,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".param-modules": {
+            "x": 979,
+            "y": 453,
+            "width": 387,
+            "height": 315,
+            "visible": true,
+            "clientWidth": 387,
+            "scrollWidth": 387,
+            "clientHeight": 315,
+            "scrollHeight": 632
+          },
+          ".tree-pane": {
+            "x": 979,
+            "y": 117,
+            "width": 387,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 387,
+            "scrollWidth": 387,
+            "clientHeight": 216,
+            "scrollHeight": 384
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 232,
+            "y": 48,
+            "width": 746,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 746,
+            "scrollWidth": 746,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            463.06499261447567,
+            455.00000000000006
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1366_regular_delivery",
+      "file": "screenshots/chrome_1366_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          1366,
+          768
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1366,
+          768,
+          1
+        ],
+        "documentWidth": 1366,
+        "documentHeight": 768,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1366,
+            "height": 768,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 768,
+            "scrollHeight": 768
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1366,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".center": {
+            "x": 232,
+            "y": 48,
+            "width": 1134,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 1134,
+            "scrollWidth": 1134,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".delivery-body": {
+            "x": 232,
+            "y": 107,
+            "width": 1134,
+            "height": 661,
+            "visible": true,
+            "clientWidth": 1134,
+            "scrollWidth": 1134,
+            "clientHeight": 661,
+            "scrollHeight": 661
+          },
+          ".delivery-preview": {
+            "x": 232,
+            "y": 107,
+            "width": 793.8125,
+            "height": 661,
+            "visible": true,
+            "clientWidth": 794,
+            "scrollWidth": 794,
+            "clientHeight": 661,
+            "scrollHeight": 661
+          },
+          ".delivery-checklist": {
+            "x": 1025.8125,
+            "y": 107,
+            "width": 340.1875,
+            "height": 661,
+            "visible": true,
+            "clientWidth": 339,
+            "scrollWidth": 339,
+            "clientHeight": 661,
+            "scrollHeight": 955
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 232,
+            "y": 48,
+            "width": 1134,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1134,
+            "scrollWidth": 1134,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            504.79172821270305,
+            495.99999999999994
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1366_compact_delivery",
+      "file": "screenshots/chrome_1366_compact_delivery.png",
+      "environment": {
+        "CSS": [
+          1366,
+          768
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1366,
+          768,
+          1
+        ],
+        "documentWidth": 1366,
+        "documentHeight": 768,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1366,
+            "height": 768,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 768,
+            "scrollHeight": 768
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 40,
+            "width": 1366,
+            "height": 728,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 728,
+            "scrollHeight": 728
+          },
+          ".center": {
+            "x": 208,
+            "y": 40,
+            "width": 1158,
+            "height": 728,
+            "visible": true,
+            "clientWidth": 1158,
+            "scrollWidth": 1158,
+            "clientHeight": 728,
+            "scrollHeight": 728
+          },
+          ".delivery-body": {
+            "x": 208,
+            "y": 91,
+            "width": 1158,
+            "height": 677,
+            "visible": true,
+            "clientWidth": 1158,
+            "scrollWidth": 1158,
+            "clientHeight": 677,
+            "scrollHeight": 677
+          },
+          ".delivery-preview": {
+            "x": 208,
+            "y": 91,
+            "width": 810.609375,
+            "height": 677,
+            "visible": true,
+            "clientWidth": 811,
+            "scrollWidth": 811,
+            "clientHeight": 677,
+            "scrollHeight": 677
+          },
+          ".delivery-checklist": {
+            "x": 1018.609375,
+            "y": 91,
+            "width": 347.390625,
+            "height": 677,
+            "visible": true,
+            "clientWidth": 346,
+            "scrollWidth": 346,
+            "clientHeight": 677,
+            "scrollHeight": 831
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 208,
+            "y": 40,
+            "width": 1158,
+            "height": 51,
+            "visible": true,
+            "clientWidth": 1158,
+            "scrollWidth": 1158,
+            "clientHeight": 50,
+            "scrollHeight": 50
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            529.2171344165436,
+            520
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_editor",
+      "file": "screenshots/chrome_1920_regular_editor.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1920,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1480,
+            "y": 48,
+            "width": 440,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".param-modules": {
+            "x": 1481,
+            "y": 453,
+            "width": 439,
+            "height": 627,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 627,
+            "scrollHeight": 632
+          },
+          ".tree-pane": {
+            "x": 1481,
+            "y": 117,
+            "width": 439,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 216,
+            "scrollHeight": 384
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            780.5952732644017,
+            767
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_delivery",
+      "file": "screenshots/chrome_1920_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1920,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1648,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1648,
+            "scrollWidth": 1648,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".delivery-body": {
+            "x": 272,
+            "y": 107,
+            "width": 1648,
+            "height": 973,
+            "visible": true,
+            "clientWidth": 1648,
+            "scrollWidth": 1648,
+            "clientHeight": 973,
+            "scrollHeight": 973
+          },
+          ".delivery-preview": {
+            "x": 272,
+            "y": 107,
+            "width": 1153.609375,
+            "height": 973,
+            "visible": true,
+            "clientWidth": 1154,
+            "scrollWidth": 1154,
+            "clientHeight": 973,
+            "scrollHeight": 973
+          },
+          ".delivery-checklist": {
+            "x": 1425.609375,
+            "y": 107,
+            "width": 494.390625,
+            "height": 973,
+            "visible": true,
+            "clientWidth": 493,
+            "scrollWidth": 493,
+            "clientHeight": 973,
+            "scrollHeight": 973
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1648,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1648,
+            "scrollWidth": 1648,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            822.3220088626292,
+            808
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_rt6",
+      "file": "screenshots/chrome_1920_regular_rt6.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1920,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1480,
+            "y": 48,
+            "width": 440,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".param-modules": {
+            "x": 1481,
+            "y": 453,
+            "width": 439,
+            "height": 627,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 627,
+            "scrollHeight": 627
+          },
+          ".tree-pane": {
+            "x": 1481,
+            "y": 117,
+            "width": 439,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 216,
+            "scrollHeight": 832
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            629,
+            629
+          ],
+          "fitted": [
+            791.0000000000001,
+            791.0000000000001
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_particle",
+      "file": "screenshots/chrome_1920_regular_particle.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1920,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1480,
+            "y": 48,
+            "width": 440,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".param-modules": {
+            "x": 1481,
+            "y": 453,
+            "width": 439,
+            "height": 627,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 627,
+            "scrollHeight": 627
+          },
+          ".tree-pane": {
+            "x": 1481,
+            "y": 117,
+            "width": 439,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 216,
+            "scrollHeight": 608
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            768,
+            768
+          ],
+          "fitted": [
+            767,
+            767
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_workbench",
+      "file": "screenshots/chrome_1920_regular_workbench.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": {
+            "x": 1481,
+            "y": 114,
+            "width": 439,
+            "height": 729,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 729,
+            "scrollHeight": 729
+          },
+          ".tree-pane": null,
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": {
+            "x": 272,
+            "y": 718.8125,
+            "width": 1208,
+            "height": 361.1875,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 360,
+            "scrollHeight": 360
+          },
+          ".stage": {
+            "x": 272,
+            "y": 105,
+            "width": 1208,
+            "height": 613.8125,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 614,
+            "scrollHeight": 614
+          },
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 57,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 56,
+            "scrollHeight": 56
+          }
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_importer",
+      "file": "screenshots/chrome_1920_regular_importer.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": null,
+          ".tree-pane": null,
+          ".import-columns": {
+            "x": 0,
+            "y": 95,
+            "width": 1920,
+            "height": 585,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 585,
+            "scrollHeight": 585
+          },
+          ".import-review": {
+            "x": 1055.984375,
+            "y": 95,
+            "width": 864.015625,
+            "height": 585,
+            "visible": true,
+            "clientWidth": 863,
+            "scrollWidth": 863,
+            "clientHeight": 585,
+            "scrollHeight": 585
+          },
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": null
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_regular_components",
+      "file": "screenshots/chrome_1920_regular_components.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 3449
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": null,
+          ".tree-pane": null,
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": null
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_editor",
+      "file": "screenshots/chrome_1920_compact_editor.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 40,
+            "width": 1920,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".center": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1512,
+            "y": 40,
+            "width": 408,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".param-modules": {
+            "x": 1513,
+            "y": 441,
+            "width": 407,
+            "height": 639,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 639,
+            "scrollHeight": 639
+          },
+          ".tree-pane": {
+            "x": 1513,
+            "y": 107,
+            "width": 407,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 216,
+            "scrollHeight": 348
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 51,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 50,
+            "scrollHeight": 50
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            806.0384047267355,
+            791.9999999999999
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_delivery",
+      "file": "screenshots/chrome_1920_compact_delivery.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 40,
+            "width": 1920,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".center": {
+            "x": 240,
+            "y": 40,
+            "width": 1680,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1680,
+            "scrollWidth": 1680,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".delivery-body": {
+            "x": 240,
+            "y": 91,
+            "width": 1680,
+            "height": 989,
+            "visible": true,
+            "clientWidth": 1680,
+            "scrollWidth": 1680,
+            "clientHeight": 989,
+            "scrollHeight": 989
+          },
+          ".delivery-preview": {
+            "x": 240,
+            "y": 91,
+            "width": 1176,
+            "height": 989,
+            "visible": true,
+            "clientWidth": 1176,
+            "scrollWidth": 1176,
+            "clientHeight": 989,
+            "scrollHeight": 989
+          },
+          ".delivery-checklist": {
+            "x": 1416,
+            "y": 91,
+            "width": 504,
+            "height": 989,
+            "visible": true,
+            "clientWidth": 503,
+            "scrollWidth": 503,
+            "clientHeight": 989,
+            "scrollHeight": 989
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 240,
+            "y": 40,
+            "width": 1680,
+            "height": 51,
+            "visible": true,
+            "clientWidth": 1680,
+            "scrollWidth": 1680,
+            "clientHeight": 50,
+            "scrollHeight": 50
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            846.7474150664698,
+            832
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_rt6",
+      "file": "screenshots/chrome_1920_compact_rt6.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 40,
+            "width": 1920,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".center": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1512,
+            "y": 40,
+            "width": 408,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".param-modules": {
+            "x": 1513,
+            "y": 441,
+            "width": 407,
+            "height": 639,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 639,
+            "scrollHeight": 639
+          },
+          ".tree-pane": {
+            "x": 1513,
+            "y": 107,
+            "width": 407,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 216,
+            "scrollHeight": 740
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 51,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 50,
+            "scrollHeight": 50
+          }
+        },
+        "image": {
+          "natural": [
+            629,
+            629
+          ],
+          "fitted": [
+            816,
+            816
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_particle",
+      "file": "screenshots/chrome_1920_compact_particle.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 40,
+            "width": 1920,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".center": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1512,
+            "y": 40,
+            "width": 408,
+            "height": 1040,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 1040,
+            "scrollHeight": 1040
+          },
+          ".param-modules": {
+            "x": 1513,
+            "y": 441,
+            "width": 407,
+            "height": 639,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 639,
+            "scrollHeight": 639
+          },
+          ".tree-pane": {
+            "x": 1513,
+            "y": 107,
+            "width": 407,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 216,
+            "scrollHeight": 544
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 51,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 50,
+            "scrollHeight": 50
+          }
+        },
+        "image": {
+          "natural": [
+            768,
+            768
+          ],
+          "fitted": [
+            792,
+            792
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_workbench",
+      "file": "screenshots/chrome_1920_compact_workbench.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": {
+            "x": 1513,
+            "y": 105,
+            "width": 407,
+            "height": 619,
+            "visible": true,
+            "clientWidth": 407,
+            "scrollWidth": 407,
+            "clientHeight": 619,
+            "scrollHeight": 619
+          },
+          ".tree-pane": null,
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": {
+            "x": 240,
+            "y": 716,
+            "width": 1272,
+            "height": 364,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 363,
+            "scrollHeight": 363
+          },
+          ".stage": {
+            "x": 240,
+            "y": 89,
+            "width": 1272,
+            "height": 627,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 627,
+            "scrollHeight": 627
+          },
+          ".center-toolbar": {
+            "x": 240,
+            "y": 40,
+            "width": 1272,
+            "height": 49,
+            "visible": true,
+            "clientWidth": 1272,
+            "scrollWidth": 1272,
+            "clientHeight": 48,
+            "scrollHeight": 48
+          }
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_importer",
+      "file": "screenshots/chrome_1920_compact_importer.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": null,
+          ".tree-pane": null,
+          ".import-columns": {
+            "x": 0,
+            "y": 85,
+            "width": 1920,
+            "height": 541,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 541,
+            "scrollHeight": 541
+          },
+          ".import-review": {
+            "x": 1055.984375,
+            "y": 85,
+            "width": 864.015625,
+            "height": 541,
+            "visible": true,
+            "clientWidth": 863,
+            "scrollWidth": 863,
+            "clientHeight": 541,
+            "scrollHeight": 541
+          },
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": null
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_1920_compact_components",
+      "file": "screenshots/chrome_1920_compact_components.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "compact",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 3338
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": null,
+          ".tree-pane": null,
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": null
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_2560_regular_editor",
+      "file": "screenshots/chrome_2560_regular_editor.png",
+      "environment": {
+        "CSS": [
+          2560,
+          1440
+        ],
+        "DPR": 1.5,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          2560,
+          1440,
+          1.5
+        ],
+        "documentWidth": 2560,
+        "documentHeight": 1440,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 2560,
+            "height": 1440,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1440,
+            "scrollHeight": 1440
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 2560,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1848,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 1848,
+            "scrollWidth": 1848,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 2120,
+            "y": 48,
+            "width": 440,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".param-modules": {
+            "x": 2121,
+            "y": 453,
+            "width": 439,
+            "height": 987,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 987,
+            "scrollHeight": 987
+          },
+          ".tree-pane": {
+            "x": 2121,
+            "y": 117,
+            "width": 439,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 216,
+            "scrollHeight": 384
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1848,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1848,
+            "scrollWidth": 1848,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            1146.976366322009,
+            1127
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_2560_regular_delivery",
+      "file": "screenshots/chrome_2560_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          2560,
+          1440
+        ],
+        "DPR": 1.5,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          2560,
+          1440,
+          1.5
+        ],
+        "documentWidth": 2560,
+        "documentHeight": 1440,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 2560,
+            "height": 1440,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1440,
+            "scrollHeight": 1440
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 2560,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 2288,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 2288,
+            "scrollWidth": 2288,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".delivery-body": {
+            "x": 272,
+            "y": 107,
+            "width": 2288,
+            "height": 1333,
+            "visible": true,
+            "clientWidth": 2288,
+            "scrollWidth": 2288,
+            "clientHeight": 1333,
+            "scrollHeight": 1333
+          },
+          ".delivery-preview": {
+            "x": 272,
+            "y": 107,
+            "width": 1601.609375,
+            "height": 1333,
+            "visible": true,
+            "clientWidth": 1602,
+            "scrollWidth": 1602,
+            "clientHeight": 1333,
+            "scrollHeight": 1333
+          },
+          ".delivery-checklist": {
+            "x": 1873.609375,
+            "y": 107,
+            "width": 686.390625,
+            "height": 1333,
+            "visible": true,
+            "clientWidth": 685,
+            "scrollWidth": 685,
+            "clientHeight": 1333,
+            "scrollHeight": 1333
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 2288,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 2288,
+            "scrollWidth": 2288,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            1188.7031019202363,
+            1168
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_200_regular_delivery",
+      "file": "screenshots/chrome_200_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          683,
+          384
+        ],
+        "DPR": 2,
+        "density": "regular",
+        "reducedMotion": true
+      },
+      "metrics": {
+        "viewport": [
+          683,
+          384,
+          2
+        ],
+        "documentWidth": 683,
+        "documentHeight": 384,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 683,
+            "height": 384,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 384,
+            "scrollHeight": 384
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 89,
+            "width": 683,
+            "height": 295,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 295,
+            "scrollHeight": 295
+          },
+          ".center": {
+            "x": 0,
+            "y": 89,
+            "width": 683,
+            "height": 295,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 295,
+            "scrollHeight": 295
+          },
+          ".delivery-body": {
+            "x": 0,
+            "y": 148,
+            "width": 683,
+            "height": 236,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 236,
+            "scrollHeight": 236
+          },
+          ".delivery-preview": {
+            "x": 0,
+            "y": 148,
+            "width": 683,
+            "height": 236,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 236,
+            "scrollHeight": 236
+          },
+          ".delivery-checklist": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 0,
+            "y": 89,
+            "width": 683,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            145.5347119645495,
+            143
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "chrome_200_regular_importer",
+      "file": "screenshots/chrome_200_regular_importer.png",
+      "environment": {
+        "CSS": [
+          683,
+          384
+        ],
+        "DPR": 2,
+        "density": "regular",
+        "reducedMotion": true
+      },
+      "metrics": {
+        "viewport": [
+          683,
+          384,
+          2
+        ],
+        "documentWidth": 683,
+        "documentHeight": 899,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 683,
+            "height": 899,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 899,
+            "scrollHeight": 899
+          },
+          ".workspace": null,
+          ".center": null,
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": null,
+          ".param-modules": null,
+          ".tree-pane": null,
+          ".import-columns": {
+            "x": 0,
+            "y": 158,
+            "width": 683,
+            "height": 585,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 585,
+            "scrollHeight": 585
+          },
+          ".import-review": {
+            "x": 0,
+            "y": 158,
+            "width": 683,
+            "height": 585,
+            "visible": true,
+            "clientWidth": 683,
+            "scrollWidth": 683,
+            "clientHeight": 585,
+            "scrollHeight": 585
+          },
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": null
+        },
+        "image": null,
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "msedge_1366_regular_editor",
+      "file": "screenshots/msedge_1366_regular_editor.png",
+      "environment": {
+        "CSS": [
+          1366,
+          768
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1366,
+          768,
+          1
+        ],
+        "documentWidth": 1366,
+        "documentHeight": 768,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1366,
+            "height": 768,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 768,
+            "scrollHeight": 768
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1366,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".center": {
+            "x": 232,
+            "y": 48,
+            "width": 746,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 746,
+            "scrollWidth": 746,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 978,
+            "y": 48,
+            "width": 388,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 387,
+            "scrollWidth": 387,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".param-modules": {
+            "x": 979,
+            "y": 453,
+            "width": 387,
+            "height": 315,
+            "visible": true,
+            "clientWidth": 387,
+            "scrollWidth": 387,
+            "clientHeight": 315,
+            "scrollHeight": 632
+          },
+          ".tree-pane": {
+            "x": 979,
+            "y": 117,
+            "width": 387,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 387,
+            "scrollWidth": 387,
+            "clientHeight": 216,
+            "scrollHeight": 384
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 232,
+            "y": 48,
+            "width": 746,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 746,
+            "scrollWidth": 746,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            463.06499261447567,
+            455.00000000000006
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "msedge_1366_regular_delivery",
+      "file": "screenshots/msedge_1366_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          1366,
+          768
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1366,
+          768,
+          1
+        ],
+        "documentWidth": 1366,
+        "documentHeight": 768,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1366,
+            "height": 768,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 768,
+            "scrollHeight": 768
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1366,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 1366,
+            "scrollWidth": 1366,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".center": {
+            "x": 232,
+            "y": 48,
+            "width": 1134,
+            "height": 720,
+            "visible": true,
+            "clientWidth": 1134,
+            "scrollWidth": 1134,
+            "clientHeight": 720,
+            "scrollHeight": 720
+          },
+          ".delivery-body": {
+            "x": 232,
+            "y": 107,
+            "width": 1134,
+            "height": 661,
+            "visible": true,
+            "clientWidth": 1134,
+            "scrollWidth": 1134,
+            "clientHeight": 661,
+            "scrollHeight": 661
+          },
+          ".delivery-preview": {
+            "x": 232,
+            "y": 107,
+            "width": 793.8125,
+            "height": 661,
+            "visible": true,
+            "clientWidth": 794,
+            "scrollWidth": 794,
+            "clientHeight": 661,
+            "scrollHeight": 661
+          },
+          ".delivery-checklist": {
+            "x": 1025.8125,
+            "y": 107,
+            "width": 340.1875,
+            "height": 661,
+            "visible": true,
+            "clientWidth": 339,
+            "scrollWidth": 339,
+            "clientHeight": 661,
+            "scrollHeight": 955
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 232,
+            "y": 48,
+            "width": 1134,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1134,
+            "scrollWidth": 1134,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            504.79172821270305,
+            495.99999999999994
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "msedge_1920_regular_editor",
+      "file": "screenshots/msedge_1920_regular_editor.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1920,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 1480,
+            "y": 48,
+            "width": 440,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".param-modules": {
+            "x": 1481,
+            "y": 453,
+            "width": 439,
+            "height": 627,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 627,
+            "scrollHeight": 632
+          },
+          ".tree-pane": {
+            "x": 1481,
+            "y": 117,
+            "width": 439,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 216,
+            "scrollHeight": 384
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1208,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1208,
+            "scrollWidth": 1208,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            780.5952732644017,
+            767
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "msedge_1920_regular_delivery",
+      "file": "screenshots/msedge_1920_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          1920,
+          1080
+        ],
+        "DPR": 1,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          1920,
+          1080,
+          1
+        ],
+        "documentWidth": 1920,
+        "documentHeight": 1080,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1080,
+            "scrollHeight": 1080
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 1920,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1920,
+            "scrollWidth": 1920,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1648,
+            "height": 1032,
+            "visible": true,
+            "clientWidth": 1648,
+            "scrollWidth": 1648,
+            "clientHeight": 1032,
+            "scrollHeight": 1032
+          },
+          ".delivery-body": {
+            "x": 272,
+            "y": 107,
+            "width": 1648,
+            "height": 973,
+            "visible": true,
+            "clientWidth": 1648,
+            "scrollWidth": 1648,
+            "clientHeight": 973,
+            "scrollHeight": 973
+          },
+          ".delivery-preview": {
+            "x": 272,
+            "y": 107,
+            "width": 1153.609375,
+            "height": 973,
+            "visible": true,
+            "clientWidth": 1154,
+            "scrollWidth": 1154,
+            "clientHeight": 973,
+            "scrollHeight": 973
+          },
+          ".delivery-checklist": {
+            "x": 1425.609375,
+            "y": 107,
+            "width": 494.390625,
+            "height": 973,
+            "visible": true,
+            "clientWidth": 493,
+            "scrollWidth": 493,
+            "clientHeight": 973,
+            "scrollHeight": 973
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1648,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1648,
+            "scrollWidth": 1648,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            822.3220088626292,
+            808
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "msedge_2560_regular_editor",
+      "file": "screenshots/msedge_2560_regular_editor.png",
+      "environment": {
+        "CSS": [
+          2560,
+          1440
+        ],
+        "DPR": 1.5,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          2560,
+          1440,
+          1.5
+        ],
+        "documentWidth": 2560,
+        "documentHeight": 1440,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 2560,
+            "height": 1440,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1440,
+            "scrollHeight": 1440
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 2560,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 1848,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 1848,
+            "scrollWidth": 1848,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".delivery-body": null,
+          ".delivery-preview": null,
+          ".delivery-checklist": null,
+          ".inspector": {
+            "x": 2120,
+            "y": 48,
+            "width": 440,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".param-modules": {
+            "x": 2121,
+            "y": 453,
+            "width": 439,
+            "height": 987,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 987,
+            "scrollHeight": 987
+          },
+          ".tree-pane": {
+            "x": 2121,
+            "y": 117,
+            "width": 439,
+            "height": 216,
+            "visible": true,
+            "clientWidth": 439,
+            "scrollWidth": 439,
+            "clientHeight": 216,
+            "scrollHeight": 384
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 1848,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 1848,
+            "scrollWidth": 1848,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            1146.976366322009,
+            1127
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    },
+    {
+      "id": "msedge_2560_regular_delivery",
+      "file": "screenshots/msedge_2560_regular_delivery.png",
+      "environment": {
+        "CSS": [
+          2560,
+          1440
+        ],
+        "DPR": 1.5,
+        "density": "regular",
+        "reducedMotion": false
+      },
+      "metrics": {
+        "viewport": [
+          2560,
+          1440,
+          1.5
+        ],
+        "documentWidth": 2560,
+        "documentHeight": 1440,
+        "panels": {
+          ".app": {
+            "x": 0,
+            "y": 0,
+            "width": 2560,
+            "height": 1440,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1440,
+            "scrollHeight": 1440
+          },
+          ".workspace": {
+            "x": 0,
+            "y": 48,
+            "width": 2560,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 2560,
+            "scrollWidth": 2560,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".center": {
+            "x": 272,
+            "y": 48,
+            "width": 2288,
+            "height": 1392,
+            "visible": true,
+            "clientWidth": 2288,
+            "scrollWidth": 2288,
+            "clientHeight": 1392,
+            "scrollHeight": 1392
+          },
+          ".delivery-body": {
+            "x": 272,
+            "y": 107,
+            "width": 2288,
+            "height": 1333,
+            "visible": true,
+            "clientWidth": 2288,
+            "scrollWidth": 2288,
+            "clientHeight": 1333,
+            "scrollHeight": 1333
+          },
+          ".delivery-preview": {
+            "x": 272,
+            "y": 107,
+            "width": 1601.609375,
+            "height": 1333,
+            "visible": true,
+            "clientWidth": 1602,
+            "scrollWidth": 1602,
+            "clientHeight": 1333,
+            "scrollHeight": 1333
+          },
+          ".delivery-checklist": {
+            "x": 1873.609375,
+            "y": 107,
+            "width": 686.390625,
+            "height": 1333,
+            "visible": true,
+            "clientWidth": 685,
+            "scrollWidth": 685,
+            "clientHeight": 1333,
+            "scrollHeight": 1333
+          },
+          ".inspector": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".param-modules": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".tree-pane": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "visible": false,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          ".import-columns": null,
+          ".import-review": null,
+          ".timeline": null,
+          ".stage": null,
+          ".center-toolbar": {
+            "x": 272,
+            "y": 48,
+            "width": 2288,
+            "height": 59,
+            "visible": true,
+            "clientWidth": 2288,
+            "scrollWidth": 2288,
+            "clientHeight": 58,
+            "scrollHeight": 58
+          }
+        },
+        "image": {
+          "natural": [
+            1378,
+            1354
+          ],
+          "fitted": [
+            1188.7031019202363,
+            1168
+          ]
+        },
+        "missingImages": [],
+        "missingNames": []
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "label": "chrome CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 编辑",
+      "reference": "comparisons/chrome_1366_editor_125.png",
+      "draft": "screenshots/chrome_1366_regular_editor.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "chrome CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 交付",
+      "reference": "comparisons/chrome_1366_delivery_125.png",
+      "draft": "screenshots/chrome_1366_regular_delivery.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "chrome CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 编辑",
+      "reference": "comparisons/chrome_1920_editor_125.png",
+      "draft": "screenshots/chrome_1920_regular_editor.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "chrome CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 交付",
+      "reference": "comparisons/chrome_1920_delivery_125.png",
+      "draft": "screenshots/chrome_1920_regular_delivery.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "chrome CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 编辑",
+      "reference": "comparisons/chrome_2560_editor_125.png",
+      "draft": "screenshots/chrome_2560_regular_editor.png",
+      "note": "125实页仍烘焙中，仅布局参考",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "chrome CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 交付",
+      "reference": "comparisons/chrome_2560_delivery_125.png",
+      "draft": "screenshots/chrome_2560_regular_delivery.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "msedge CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 编辑",
+      "reference": "comparisons/msedge_1366_editor_125.png",
+      "draft": "screenshots/msedge_1366_regular_editor.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "msedge CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 交付",
+      "reference": "comparisons/msedge_1366_delivery_125.png",
+      "draft": "screenshots/msedge_1366_regular_delivery.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "msedge CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 编辑",
+      "reference": "comparisons/msedge_1920_editor_125.png",
+      "draft": "screenshots/msedge_1920_regular_editor.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "msedge CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 交付",
+      "reference": "comparisons/msedge_1920_delivery_125.png",
+      "draft": "screenshots/msedge_1920_regular_delivery.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "msedge CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 编辑",
+      "reference": "comparisons/msedge_2560_editor_125.png",
+      "draft": "screenshots/msedge_2560_regular_editor.png",
+      "note": "125实页仍烘焙中，仅布局参考",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    },
+    {
+      "label": "msedge CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 交付",
+      "reference": "comparisons/msedge_2560_delivery_125.png",
+      "draft": "screenshots/msedge_2560_regular_delivery.png",
+      "note": "125实页已结束烘焙；设计侧为静态截帧与示意字段",
+      "same_CSS_viewport": true,
+      "business_output_equivalence": false,
+      "source_object": "glitterb_twinkle_trial / layer1"
+    }
+  ],
+  "rules_audit_limits": "前期校准7/9；03/04待复现，部分源点/冻结状态/动效未知，不因稿件完成而变成通过",
+  "approval": "用户要求先审草稿，再从批准稿提取正式统一组件库；当前未获批准",
+  "manual_reviewed_screens": [
+    "1366常规交付同视口组合图",
+    "1920编辑/粒子图父子/RT6只看输出",
+    "200%导入核对",
+    "124状态对照表",
+    "本机Chrome交付审阅页"
+  ],
+  "review_entry_checks": [
+    {
+      "indexDeliveryVisible": true,
+      "densityCompact": true,
+      "particleSelected": true
+    },
+    {
+      "guideMissingImages": 0,
+      "guideDocumentWidth": 1920,
+      "browser": "154.0.8037.58",
+      "errors": []
+    }
+  ],
+  "delivered_at_local": "2026-10-28T21:54",
+  "repository_build": {
+    "result": "passed_under_command_UTF8",
+    "js_lint_errors": 0,
+    "js_lint_existing_hints": 22,
+    "static_check_errors": 0,
+    "static_existing_hints": 8,
+    "production_diff": [],
+    "first_gate_failure": "Windows cp936 decoding UTF-8 subprocess stdout raised UnicodeDecodeError; independently reproduced read-only",
+    "resolution": "Only this build/push command sets PYTHONUTF8=1 and PYTHONIOENCODING=utf-8; no gate bypass, no production/gate source edits"
+  },
+  "image_artifact_scope": "65图是用户要求的主稿、三视口/两浏览器、密度及同视口对照、真实静态资产；112过程状态全部保留local。analysis/results只留3张关键图。"
+}

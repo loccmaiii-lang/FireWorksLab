@@ -1,0 +1,169 @@
+{
+  "format": "fwl.draft-asset-provenance/1",
+  "records": [
+    {
+      "file": "assets/icons.js",
+      "sha256": "391365ced2a13425083554c9a7f1800e7bbb4eac9f08291da591b11e3ccdef72",
+      "bytes": 7095,
+      "source": "tool/design-system/icons.js",
+      "classification": "当前共享真实图标文件副本",
+      "license": "Tabler Icons v3.46.0 / MIT（文件内保留许可证）"
+    },
+    {
+      "file": "assets/preview-jm4.png",
+      "sha256": "b31eef91b9197ab5ce0b6c94af3e373fe2527598b6725126b0e525b55d73cd92",
+      "bytes": 242169,
+      "dimensions": [
+        512,
+        512
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/preview-jm4.png",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/preview-rt6.jpg",
+      "sha256": "00985875f27617144da25ceb3df84c90a7d4b849af3e6dcace491c50d430bb68",
+      "bytes": 10652,
+      "dimensions": [
+        629,
+        629
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/preview-rt6.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/preview-sgs1.png",
+      "sha256": "7cf495b04d53dd155ca54cdc74942d2ea09d6289413dbb79269d22702bd35fc2",
+      "bytes": 118181,
+      "dimensions": [
+        768,
+        768
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/preview-sgs1.png",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-hk.jpg",
+      "sha256": "0b7021f32aa3b6ef8e00aee63cf056219622038ece8844f7e07b687741902721",
+      "bytes": 9534,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-hk.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-hn.jpg",
+      "sha256": "b1e7c34cdf0c4bad7a063d56bf1e269eb5e5ac20605858356fdc8de1b33c7686",
+      "bytes": 10617,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-hn.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-jm4.jpg",
+      "sha256": "871abaac121a035f6284d09b0b00301610110dd7ca32f642ccce986397af61d0",
+      "bytes": 9841,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-jm4.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-prism.jpg",
+      "sha256": "0a929e6ae80eff4e5835e83209da81d49573a88c3fb69b0a9a971aafc7459c18",
+      "bytes": 3495,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-prism.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-qa.jpg",
+      "sha256": "20365aa6561a46131602afc88a3607f19bf6702b70f22f2d3603f053bd19c834",
+      "bytes": 11387,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-qa.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-qc.jpg",
+      "sha256": "7f164e8eacf5e707435333b317955eb35b76f05d35fcc8e162448b9b8ea12058",
+      "bytes": 10025,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-qc.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-qd.jpg",
+      "sha256": "e8603f09b443188ac8962a96fad1fff60fda50b649434a76f6c20ad01a3a577a",
+      "bytes": 10874,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-qd.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    },
+    {
+      "file": "assets/thumb-qn.jpg",
+      "sha256": "aacd51a9474bd2a6e5d51f3b04a628bc7fc547b19e6c2ba98ba8d1844b05eef4",
+      "bytes": 10534,
+      "dimensions": [
+        160,
+        160
+      ],
+      "source": "tool/design-system/prototypes/v5-124-20261028/assets/thumb-qn.jpg",
+      "classification": "旧静态参考资产",
+      "evidence_eligible": false
+    }
+  ],
+  "warning": "旧图只用于审阅比例与内容层次，不作为本轮截图取证或产物证据。未复制旧原型布局或控制器。",
+  "new_gold_reference": {
+    "file": "assets/preview-gold.png",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261028_Codex_界面筛查\\baker_runtime\\calibration05_real_gold\\00001_chrome_2560_dpr150_effect-glitterb_twinkle_trial_calibration_05_tempoInfo_s0.png",
+    "source_viewport": [
+      2560,
+      1440
+    ],
+    "source_DPR": 1.5,
+    "source_capture": "真实GLB-S1-L2未改参数烘焙截图，仅裁原画布矩形，不改烟花大小",
+    "use": "原型静态参考，不响应示意参数，不作为新烘焙/验证证据",
+    "sha256": "54927549e39874a51a2a344ace08faecf874af407b498e1bec75b455a278c799",
+    "crop_physical_pixels": [
+      837,
+      340,
+      2215,
+      1694
+    ],
+    "source_image": [
+      3840,
+      2160
+    ],
+    "note": "只裁画布内容矩形与底部非画面caption；保留火花边缘，不重画、不锐化或改变长宽比"
+  }
+}

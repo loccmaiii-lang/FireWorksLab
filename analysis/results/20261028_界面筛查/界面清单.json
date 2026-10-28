@@ -1,7 +1,7 @@
 {
   "schema": "fwl.ui-audit/1",
   "baseline": "65e41bd1d242ce7b124bbc7d68c915c4e822ac50",
-  "stage": "classification-complete-with-explicit-gaps-drafts-next",
+  "stage": "design-draft-delivered-awaiting-user-review-with-audit-gaps",
   "counts": {
     "烘焙器": 1379,
     "编排工作台": 1974,
@@ -11677,5 +11677,17 @@
       "tree_headers_fit": true,
       "claim_limit": "仅当前HTTP状态；不推断系统与浏览器各自缩放，不读取被策略拦截file页状态"
     }
+  },
+  "design_delivery": {
+    "entry": "tool/design-system/drafts/v1/index.html",
+    "spec": "tool/design-system/drafts/v1/specifications.json",
+    "verification": "tool/design-system/drafts/v1/verification.json",
+    "pages": 7,
+    "components": 29,
+    "patterns": 14,
+    "templates": 8,
+    "density": ["regular", "compact"],
+    "approval": "pending",
+    "production_changes": false
   }
 }

@@ -1,0 +1,306 @@
+{
+  "status": "草稿局部别名；未改共享tokens",
+  "definitions": [
+    {
+      "name": "--draft-bg",
+      "value": "var(--fw-color-surface,#111d21)",
+      "CSS_line": 3
+    },
+    {
+      "name": "--draft-low",
+      "value": "var(--fw-color-surface-low,#121f24)",
+      "CSS_line": 3
+    },
+    {
+      "name": "--draft-panel",
+      "value": "var(--fw-color-surface-container,#1b2a2f)",
+      "CSS_line": 4
+    },
+    {
+      "name": "--draft-high",
+      "value": "var(--fw-color-surface-high,#24373d)",
+      "CSS_line": 4
+    },
+    {
+      "name": "--draft-text",
+      "value": "var(--fw-color-on-surface,#e4edef)",
+      "CSS_line": 5
+    },
+    {
+      "name": "--draft-muted",
+      "value": "var(--fw-color-on-surface-muted,#b4c5cb)",
+      "CSS_line": 5
+    },
+    {
+      "name": "--draft-primary",
+      "value": "var(--fw-color-primary,#00d49b)",
+      "CSS_line": 6
+    },
+    {
+      "name": "--draft-primary-bg",
+      "value": "var(--fw-color-primary-container,#173d39)",
+      "CSS_line": 6
+    },
+    {
+      "name": "--draft-on-primary",
+      "value": "var(--fw-color-on-primary,#062a23)",
+      "CSS_line": 7
+    },
+    {
+      "name": "--draft-disabled-opacity",
+      "value": "var(--fw-state-disabled,0.38)",
+      "CSS_line": 7
+    },
+    {
+      "name": "--draft-primary-bright",
+      "value": "var(--fw-color-primary-bright,#36e4b0)",
+      "CSS_line": 8
+    },
+    {
+      "name": "--draft-border",
+      "value": "var(--fw-color-control-border,#39515a)",
+      "CSS_line": 8
+    },
+    {
+      "name": "--draft-divider",
+      "value": "var(--fw-color-divider,#2b4149)",
+      "CSS_line": 9
+    },
+    {
+      "name": "--draft-outline",
+      "value": "var(--fw-color-outline,#8da3ac)",
+      "CSS_line": 9
+    },
+    {
+      "name": "--draft-warn",
+      "value": "var(--fw-color-warning,#e4bb7c)",
+      "CSS_line": 10
+    },
+    {
+      "name": "--draft-warn-bg",
+      "value": "var(--fw-color-warning-container,#40321e)",
+      "CSS_line": 10
+    },
+    {
+      "name": "--draft-error",
+      "value": "var(--fw-color-error,#e7735a)",
+      "CSS_line": 11
+    },
+    {
+      "name": "--draft-error-bg",
+      "value": "var(--fw-color-error-container,#3f2525)",
+      "CSS_line": 11
+    },
+    {
+      "name": "--draft-hover-border",
+      "value": "#5a666a",
+      "CSS_line": 12
+    },
+    {
+      "name": "--draft-control",
+      "value": "40px",
+      "CSS_line": 13
+    },
+    {
+      "name": "--draft-row",
+      "value": "40px",
+      "CSS_line": 13
+    },
+    {
+      "name": "--draft-tree-row",
+      "value": "32px",
+      "CSS_line": 13
+    },
+    {
+      "name": "--draft-gap",
+      "value": "12px",
+      "CSS_line": 13
+    },
+    {
+      "name": "--draft-pad",
+      "value": "16px",
+      "CSS_line": 13
+    },
+    {
+      "name": "--draft-module-gap",
+      "value": "24px",
+      "CSS_line": 14
+    },
+    {
+      "name": "--draft-body",
+      "value": "14px",
+      "CSS_line": 14
+    },
+    {
+      "name": "--draft-body-line",
+      "value": "22px",
+      "CSS_line": 14
+    },
+    {
+      "name": "--draft-label",
+      "value": "13px",
+      "CSS_line": 14
+    },
+    {
+      "name": "--draft-helper",
+      "value": "12px",
+      "CSS_line": 15
+    },
+    {
+      "name": "--draft-title",
+      "value": "18px",
+      "CSS_line": 15
+    },
+    {
+      "name": "--draft-title-line",
+      "value": "26px",
+      "CSS_line": 15
+    },
+    {
+      "name": "--draft-object",
+      "value": "16px",
+      "CSS_line": 15
+    },
+    {
+      "name": "--draft-library-row",
+      "value": "72px",
+      "CSS_line": 16
+    },
+    {
+      "name": "--draft-header",
+      "value": "48px",
+      "CSS_line": 16
+    },
+    {
+      "name": "--draft-toolbar",
+      "value": "40px",
+      "CSS_line": 16
+    },
+    {
+      "name": "--draft-library-width",
+      "value": "272px",
+      "CSS_line": 17
+    },
+    {
+      "name": "--draft-inspector-width",
+      "value": "440px",
+      "CSS_line": 17
+    },
+    {
+      "name": "--draft-control",
+      "value": "32px",
+      "CSS_line": 21
+    },
+    {
+      "name": "--draft-row",
+      "value": "32px",
+      "CSS_line": 21
+    },
+    {
+      "name": "--draft-tree-row",
+      "value": "28px",
+      "CSS_line": 21
+    },
+    {
+      "name": "--draft-gap",
+      "value": "8px",
+      "CSS_line": 21
+    },
+    {
+      "name": "--draft-pad",
+      "value": "12px",
+      "CSS_line": 21
+    },
+    {
+      "name": "--draft-module-gap",
+      "value": "16px",
+      "CSS_line": 22
+    },
+    {
+      "name": "--draft-body",
+      "value": "13px",
+      "CSS_line": 22
+    },
+    {
+      "name": "--draft-body-line",
+      "value": "20px",
+      "CSS_line": 22
+    },
+    {
+      "name": "--draft-label",
+      "value": "12px",
+      "CSS_line": 22
+    },
+    {
+      "name": "--draft-title",
+      "value": "16px",
+      "CSS_line": 23
+    },
+    {
+      "name": "--draft-title-line",
+      "value": "24px",
+      "CSS_line": 23
+    },
+    {
+      "name": "--draft-object",
+      "value": "14px",
+      "CSS_line": 23
+    },
+    {
+      "name": "--draft-library-row",
+      "value": "56px",
+      "CSS_line": 23
+    },
+    {
+      "name": "--draft-header",
+      "value": "40px",
+      "CSS_line": 24
+    },
+    {
+      "name": "--draft-toolbar",
+      "value": "32px",
+      "CSS_line": 24
+    },
+    {
+      "name": "--draft-library-width",
+      "value": "240px",
+      "CSS_line": 24
+    },
+    {
+      "name": "--draft-inspector-width",
+      "value": "408px",
+      "CSS_line": 24
+    },
+    {
+      "name": "--draft-library-width",
+      "value": "232px",
+      "CSS_line": 168
+    },
+    {
+      "name": "--draft-inspector-width",
+      "value": "388px",
+      "CSS_line": 168
+    },
+    {
+      "name": "--draft-library-width",
+      "value": "208px",
+      "CSS_line": 168
+    },
+    {
+      "name": "--draft-inspector-width",
+      "value": "356px",
+      "CSS_line": 168
+    },
+    {
+      "name": "--draft-library-width",
+      "value": "192px",
+      "CSS_line": 171
+    },
+    {
+      "name": "--draft-inspector-width",
+      "value": "340px",
+      "CSS_line": 171
+    }
+  ],
+  "note": "角色颜色与圆角沿用124/现有fw角色；尺寸与两档密度待审，批准后才归入正式令牌和容器变体"
+}

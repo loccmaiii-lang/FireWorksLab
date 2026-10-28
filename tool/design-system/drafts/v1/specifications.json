@@ -1,0 +1,4167 @@
+{
+  "format": "fwl.ui-design-spec-proposal/1",
+  "status": "local_spec_proposal_only",
+  "language": "zh-CN",
+  "purpose": "供root在全部筛查收口且阶段5提交后制作一套可审阅草稿；用户审定后才实现正式组件库。",
+  "authorization_boundary": {
+    "writes": "仅此local JSON",
+    "not_implemented": [
+      "组件库",
+      "HTML/CSS原型",
+      "产品源码",
+      "tokens/宪章",
+      "私有导入器",
+      "UE或目录写入"
+    ],
+    "approval": "本提案不是用户审定；不声称状态样板、迁移或交互已通过。"
+  },
+  "source_of_truth": {
+    "layout": "4.9.125 V5，65e41bd1对应产品布局",
+    "appearance": "4.9.124真实计算样式，视觉基线975ee142",
+    "precedence": [
+      "本轮用户明确指令",
+      "124实际颜色/圆角/边框/高亮冻结角色",
+      "V5既定布局与业务语义",
+      "本提案可调尺寸/排版建议"
+    ],
+    "evidence": [
+      "F:/FWL-副本/20261028-界面交互-本机-全量筛查/analysis/local/20261028_Codex_界面筛查/freeze124/computed.json",
+      "F:/FireWorksLab/analysis/local/20261028_Codex_界面筛查/importer_catalog/visual-review.json",
+      "F:/FireWorksLab/analysis/local/20261028_Codex_界面筛查/independent-visual-review.json"
+    ],
+    "existing_docs": [
+      "协作/交互宪章.md §0/§4/§8/V5",
+      "tool/design-system/README.md",
+      "协作/方案/界面筛查与统一组件库_2026-10-28.md"
+    ],
+    "conflict_note": "现有tokens包含旧8/12等圆角，不能直接当所有124控件的角色绑定；也不能全页机械radius=0。逐角色以124实测与已批准状态为准。"
+  },
+  "recommendation": {
+    "name": "V5布局上的平面专业工具工作区",
+    "single_direction": true,
+    "default_density": "regular",
+    "principles": [
+      "一层工作区表面，模块靠标题/间距/已有分隔线组织",
+      "树、参数、流程、资产确认各自有明确职责",
+      "数字与单位作为原子组；说明不混进选择列表",
+      "只统一界面，不改变配方/时序/命名/导出/资产/执行策略",
+      "真实状态与证据优先于漂亮的成功图"
+    ],
+    "density_review_mode": "提供紧凑/常规两套整页对比稿让用户挑；默认推荐常规阅读。两档同结构、同组件、同124颜色/圆角/边框/状态，只调整字号、行高、留白与尺寸。",
+    "density_control_scope": "密度切换仅放设计审阅工具栏；不新增产品设置或持久化偏好入口。"
+  },
+  "layers": {
+    "foundation": {
+      "frozen": {
+        "colors": "只引用冻结124语义/状态角色，不新增色值或合并近似值。",
+        "radii": "按124控件/容器/菜单角色沿用，不清零也不放大。",
+        "borders": "颜色、宽度、样式、选中/焦点边界沿用124角色。",
+        "highlight": "选中/悬停/按下/焦点外观冻结；不加光环、白底层或装饰阴影。",
+        "role_aliases": {
+          "workspace": "frozen124.surface.workspace",
+          "panel": "frozen124.surface.panel",
+          "field": "frozen124.surface.field",
+          "text": "frozen124.text.primary",
+          "muted": "frozen124.text.secondary",
+          "divider": "frozen124.border.divider",
+          "control_outline": "frozen124.border.control",
+          "focus": "frozen124.focus",
+          "selected": "frozen124.selection",
+          "error": "frozen124.semantic.error",
+          "warning": "frozen124.semantic.warning",
+          "success": "frozen124.semantic.success"
+        },
+        "resolution_gate": "草稿生成前逐个角色绑定到124实测来源；找不到的状态只复用已有适用角色并标待核，不发明新色/新圆角/新边框。"
+      },
+      "proposed_layout_tokens": {
+        "unit": "CSS px",
+        "typography_steps": [
+          12,
+          13,
+          14,
+          16,
+          18,
+          24
+        ],
+        "roles": {
+          "helper": [
+            12,
+            18
+          ],
+          "field": [
+            13,
+            20
+          ],
+          "body": [
+            14,
+            22
+          ],
+          "module_title": [
+            14,
+            20
+          ],
+          "object_title": [
+            16,
+            24
+          ],
+          "workspace_title": [
+            18,
+            26
+          ],
+          "rare_page_title": [
+            24,
+            32
+          ]
+        },
+        "font": "复用现有本机中文字体栈；数值用既有等宽字体/tabular-nums，不加载在线字体。",
+        "spacing": [
+          4,
+          8,
+          12,
+          16,
+          24,
+          32
+        ],
+        "default_control_height": 40,
+        "primary_action_height": 40,
+        "parameter_row_min_height": 40,
+        "tree_row_min_height": 32,
+        "icon": [
+          16,
+          18
+        ],
+        "min_pointer_target": 24,
+        "primary_min_target": 32,
+        "coarse_pointer_min_target": 48,
+        "focus_space": "分配真实边界空间，沿用124焦点外观且不可被裁。",
+        "default_density": "regular"
+      },
+      "layout_constraints": [
+        "新增尺寸是草稿建议，不视为改了现有tokens或宪章。",
+        "参数模块不层层包卡；带边界容器最多工作区→必要领域框一层。",
+        "高密度不靠小于24px命中区或缩字凑首屏。",
+        "窄高按可用高度预算布局，不能用固定栏挤空内容。"
+      ],
+      "motion": {
+        "scope": "仅UI反馈，不改变烟花物理动画/时间轴数据",
+        "proposal": "沿用现有短/中/面板时长角色，只在用户动作表达状态或层级，支持中断。",
+        "reduced_motion": "减少动态效果时归零或立即替换；无数据不编动效质量通过。"
+      },
+      "states_contract": "每个组件以下定义9种状态的适用性；视觉冻结，语义由业务真实数据决定。",
+      "density_profiles": {
+        "compact": {
+          "name": "紧凑",
+          "purpose": "高信息密度整页对比稿",
+          "scope": "所有页面模板及组件统一继承，不仅按钮变小",
+          "typography_roles_css_px": {
+            "helper": [
+              12,
+              18
+            ],
+            "field": [
+              12,
+              18
+            ],
+            "body": [
+              13,
+              20
+            ],
+            "module_title": [
+              13,
+              20
+            ],
+            "object_title": [
+              14,
+              22
+            ],
+            "workspace_title": [
+              16,
+              24
+            ],
+            "rare_page_title": [
+              18,
+              26
+            ]
+          },
+          "control_height": 32,
+          "parameter_row_min_height": 32,
+          "tree_row_min_height": 28,
+          "module_gap": 16,
+          "field_gap": 8,
+          "section_padding": 12,
+          "library_row_min_height": 56,
+          "app_header_height": 40,
+          "toolbar_height": 32,
+          "main_action_height": 32,
+          "library_width_preferred": 240,
+          "inspector_width_preferred": 420
+        },
+        "regular": {
+          "name": "常规",
+          "purpose": "默认推荐，优先阅读与操作清晰度的整页对比稿",
+          "scope": "所有页面模板及组件统一继承",
+          "typography_roles_css_px": {
+            "helper": [
+              12,
+              18
+            ],
+            "field": [
+              13,
+              20
+            ],
+            "body": [
+              14,
+              22
+            ],
+            "module_title": [
+              14,
+              22
+            ],
+            "object_title": [
+              16,
+              24
+            ],
+            "workspace_title": [
+              18,
+              26
+            ],
+            "rare_page_title": [
+              24,
+              32
+            ]
+          },
+          "control_height": 40,
+          "parameter_row_min_height": 40,
+          "tree_row_min_height": 32,
+          "module_gap": 24,
+          "field_gap": 12,
+          "section_padding": 16,
+          "library_row_min_height": 72,
+          "app_header_height": 48,
+          "toolbar_height": 40,
+          "main_action_height": 40,
+          "library_width_preferred": 280,
+          "inspector_width_preferred": 480
+        }
+      },
+      "density_comparison_contract": [
+        "同一页面、对象、数据、状态、视口与缩放，分别输出compact和regular；不能拿不同页面或不同内容对比。",
+        "字号/行高/间距由根密度profile下发到组件，不能一页里随机混两档。",
+        "状态语义、颜色、圆角、边框、焦点/选中样式在两档间完全一致。",
+        "主稿默认常规阅读，紧凑同时可完整审阅；最终密度由用户审稿选择。",
+        "三档+200%窄高适配两档都要覆盖；窄高重排不缩小字号到profile之外。"
+      ]
+    },
+    "components": [
+      {
+        "id": "C01",
+        "name": "按钮/图标按钮",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "可选图标",
+          "完整动作名",
+          "可选作用范围/忙状态"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "height": 32,
+            "padding_inline": 8,
+            "gap": 4,
+            "icon": 16,
+            "min_target": 24
+          },
+          "regular": {
+            "height": 40,
+            "padding_inline": 12,
+            "gap": 8,
+            "icon": 18,
+            "min_target": 32
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.button",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.button.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.button.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.button.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.button.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.button.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "只读语义由所属信息行呈现，本控件不假造可编辑状态。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.button.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.button.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Tab进入；Enter/Space只触发当前聚焦按钮",
+          "不增加全局快捷键；执行按钮不绑定全局Enter",
+          "禁用不执行，原因在邻近文本可读"
+        ],
+        "copy_rules": [
+          "动词+对象，例：重新检查、确认手机包、导入已确认的2包",
+          "只用图标时提供中文aria-label与同义提示",
+          "导出主入口仍只有V5中栏顶行一个"
+        ],
+        "use_when": "瞬时动作、菜单触发、已有主要/次要/危险/图标变体。",
+        "do_not_use_when": "不拿按钮模拟独立布尔参数；不凭点击就写成功状态。",
+        "root_cause_mapping": [
+          "R01",
+          "R07",
+          "R08",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "variants": [
+          "主要",
+          "次要",
+          "幽灵",
+          "危险",
+          "图标"
+        ],
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C02",
+        "name": "文本/数值/搜索/多行字段",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "关联标签",
+          "输入值",
+          "单位或搜索/清除附属按钮",
+          "就地帮助与错误"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "height": 32,
+            "padding_inline": 8,
+            "number_width": 72,
+            "search_min_width": 144
+          },
+          "regular": {
+            "height": 40,
+            "padding_inline": 12,
+            "number_width": 88,
+            "search_min_width": 176
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.field",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.field.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.field.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.field.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.field.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.field.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.field.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.field.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.field.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.field.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Tab进出；编辑键保留系统行为",
+          "Enter按现有提交事务确认，Esc按既有规则取消当前编辑",
+          "数值方向键只在字段获得焦点时按已有step工作"
+        ],
+        "copy_rules": [
+          "标签不重复单位",
+          "实际值不能只省略；路径长值可横向滚动/复制，完整内容可达",
+          "非法值保留输入并说明范围，不静默钳制或写回默认"
+        ],
+        "use_when": "自由输入、精确数值、搜索与原有多行批量路径输入。",
+        "do_not_use_when": "不用字段承载不可编辑状态；只读值用同组件只读变体但保留可读对比度。",
+        "root_cause_mapping": [
+          "R03",
+          "R09",
+          "R11",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "variants": [
+          "text",
+          "number",
+          "search",
+          "textarea",
+          "readonly"
+        ],
+        "transaction": "一次拖动或一次提交只进现有撤销一次；不改变参数含义或范围。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C03",
+        "name": "滑杆+数值",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "同一个值模型",
+          "滑杆",
+          "精确数值字段",
+          "独立单位",
+          "条件/来源摘要"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "row_height": 32,
+            "slider_min_width": 72,
+            "value_width": 72,
+            "unit_width": 24
+          },
+          "regular": {
+            "row_height": 40,
+            "slider_min_width": 104,
+            "value_width": 88,
+            "unit_width": 32
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.slider",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.slider.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.slider.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.slider.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.slider.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.slider.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.slider.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.slider.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.slider.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Tab分别访问滑杆与数值；方向键遵循既有step",
+          "Home/End仅按滑杆原范围，不新加参数范围",
+          "拖动过程立即预览，释放后合并为一次既有撤销事务"
+        ],
+        "copy_rules": [
+          "精度与单位来自参数schema",
+          "派生/跟随值明确来源；不能把联动值当手填值",
+          "不生效时保留值、变灰并写原因"
+        ],
+        "use_when": "连续数值且有实际预览/计算作用。",
+        "do_not_use_when": "不为枚举、无意义参数或不可变结果造滑杆；不改物理上下限。",
+        "root_cause_mapping": [
+          "R03",
+          "R09",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C04",
+        "name": "下拉选择",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "标签",
+          "当前完整值",
+          "展开标记",
+          "选项/选项说明"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "height": 32,
+            "padding_inline": 8,
+            "option_height": 32
+          },
+          "regular": {
+            "height": 40,
+            "padding_inline": 12,
+            "option_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.select",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.select.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.select.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.select.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.select.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.select.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.select.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.select.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.select.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.select.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "保留原生Select的方向键、首字定位、Enter/Space和Esc",
+          "展开与关闭恢复焦点；禁用项原因可读"
+        ],
+        "copy_rules": [
+          "2–3个短互斥值优先分段；二值参数优先方形开关",
+          "长选项可换行或有完整提示，不缩字藏义",
+          "不支持选项写原因，不静默删值"
+        ],
+        "use_when": "较多、较长或需逐项说明的离散选项。",
+        "do_not_use_when": "不把多选当单选Select；不在选择视图时隐式授权导入。",
+        "root_cause_mapping": [
+          "R01",
+          "R07",
+          "R11",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C05",
+        "name": "勾选项",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "勾选图形",
+          "可点击标签",
+          "可选短状态/原因"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "glyph": 16,
+            "min_target": 24,
+            "row_min_height": 32,
+            "label_gap": 8
+          },
+          "regular": {
+            "glyph": 16,
+            "min_target": 32,
+            "row_min_height": 40,
+            "label_gap": 8
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.check",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.check.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.check.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.check.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.check.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.check.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.check.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": {
+              "behavior": "以静态勾选值+来源文字呈现，不伪造原生readonly属性。"
+            },
+            "appearance": "frozen124.check.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.check.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.check.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "原生Checkbox语义；Tab定位，Space切换",
+          "不拦截方向键或新增Shift范围选择"
+        ],
+        "copy_rules": [
+          "标签写被选择的对象/动作",
+          "只读/禁用原因在同一行下方；不要求悬停才可知",
+          "mixed仅表示真实混选，不等于未知"
+        ],
+        "use_when": "独立选项、资源选择与关联目标。",
+        "do_not_use_when": "不将长期启用状态、页面切换、导入确认混作通用勾选。",
+        "root_cause_mapping": [
+          "R02",
+          "R07",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "variants": [
+          "unchecked",
+          "checked",
+          "mixed"
+        ],
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C06",
+        "name": "单选组",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "组标签",
+          "同一命名组的选项",
+          "选项说明/禁用原因"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "glyph": 16,
+            "row_min_height": 32,
+            "option_gap": 8
+          },
+          "regular": {
+            "glyph": 16,
+            "row_min_height": 40,
+            "option_gap": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.radio",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.radio.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.radio.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.radio.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.radio.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.radio.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.radio.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.radio.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.radio.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.radio.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Tab进入组；方向键切选，Space确认当前项；保留原生radio行为",
+          "组内只有一个实际值，焦点与选择分开测试"
+        ],
+        "copy_rules": [
+          "选项名称保持同词性",
+          "无值写未选择，不编默认选项"
+        ],
+        "use_when": "需要同时比较的少量互斥方案。",
+        "do_not_use_when": "不替代二值开关或两个不同动作。",
+        "root_cause_mapping": [
+          "R01",
+          "R07",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C07",
+        "name": "方形开关",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "明确参数名",
+          "开/关图形",
+          "可读状态/禁用原因"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "track_width": 32,
+            "track_height": 16,
+            "min_target": 24,
+            "row_min_height": 32
+          },
+          "regular": {
+            "track_width": 32,
+            "track_height": 16,
+            "min_target": 32,
+            "row_min_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.switch",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.switch.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.switch.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.switch.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.switch.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.switch.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.switch.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.switch.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.switch.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.switch.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Tab定位；Space切换；aria-checked跟实际值",
+          "不从只看状态推断显示/导出开关"
+        ],
+        "copy_rules": [
+          "说明开启后影响什么",
+          "显示这层、只看、是否导出各有原业务语义，不重命名混用"
+        ],
+        "use_when": "两个值、即时生效的现有布尔参数。",
+        "do_not_use_when": "不新增参数；不在参数区重复树上显示这层；不可用于最终执行确认。",
+        "root_cause_mapping": [
+          "R01",
+          "R04",
+          "R08"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "appearance_note": "32×16方形开关沿用既有V5布局；圆角/开关色来自124已批准角色，不在本提案重定义。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C08",
+        "name": "分段选择",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "可访问组名",
+          "2–3个短互斥选项",
+          "单一选中标记"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "height": 32,
+            "segment_min_width": 48,
+            "padding_inline": 8
+          },
+          "regular": {
+            "height": 40,
+            "segment_min_width": 64,
+            "padding_inline": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.segment",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.segment.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.segment.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.segment.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.segment.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.segment.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.segment.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.segment.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.segment.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.segment.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "按实际语义用radio-group或tablist",
+          "radio方向键切值；tab按约定方向键移动焦点/Enter选页",
+          "不把导航与改参数混进同组"
+        ],
+        "copy_rules": [
+          "短名完整；放不下时整组改Select，不让单项文字竖排",
+          "选中状态只取真实当前值"
+        ],
+        "use_when": "少量短枚举、现有PC/手机或模式切换。",
+        "do_not_use_when": "不放四五个长选项；不自动改平台产物或启动导入。",
+        "root_cause_mapping": [
+          "R01",
+          "R07",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C09",
+        "name": "模块折叠/子分组",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "展开箭头",
+          "模块名",
+          "真实摘要",
+          "改动数/复位入口",
+          "平面内容区"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "header_height": 32,
+            "content_gap": 8,
+            "module_gap": 16,
+            "child_indent": 16
+          },
+          "regular": {
+            "header_height": 40,
+            "content_gap": 12,
+            "module_gap": 24,
+            "child_indent": 16
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.disclosure",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.disclosure.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Enter/Space开合；Tab访问复位与参数",
+          "开合不修改参数，搜索结束恢复原开合"
+        ],
+        "copy_rules": [
+          "默认摘要短而有单位，缺值写未计算",
+          "长说明进入按需帮助；不在展开后再套更多/卡片"
+        ],
+        "use_when": "参数模块和已存在子组。",
+        "do_not_use_when": "不把每一参数行包成独立卡片；不以折叠隐藏仍需核对的错误。",
+        "root_cause_mapping": [
+          "R03",
+          "R04",
+          "R09",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "default_open": "沿用当前业务/用户开合记录；不新增硬编码按效果分支。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C10",
+        "name": "页签/窗格导航",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "有名称的tablist",
+          "当前页签",
+          "对应tabpanel"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "height": 32,
+            "padding_inline": 12,
+            "min_target": 32
+          },
+          "regular": {
+            "height": 40,
+            "padding_inline": 16,
+            "min_target": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.tabs",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.tabs.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "方向键/Home/End移动本地页签焦点，Enter选中；Tab进入内容",
+          "切回恢复该窗格滚动、选择与焦点"
+        ],
+        "copy_rules": [
+          "页签表示展示区域，不表示已确认或已导入",
+          "窄屏只切呈现窗格，不改资源/平台/草稿"
+        ],
+        "use_when": "中栏视图、工作台工作区、窄屏导入队列/设置/核对。",
+        "do_not_use_when": "V5右栏保持树在上参数在下，不新加发射器页签或第二套版本页。",
+        "root_cause_mapping": [
+          "R04",
+          "R05",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C11",
+        "name": "菜单",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "触发按钮",
+          "平面选项列表",
+          "可选分组分隔",
+          "危险项与原因"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "item_height": 32,
+            "padding_inline": 8,
+            "icon": 16
+          },
+          "regular": {
+            "item_height": 40,
+            "padding_inline": 12,
+            "icon": 18
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.menu",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.menu.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.menu.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.menu.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.menu.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": {
+              "behavior": "仅可勾选菜单项使用selected，其余动作项N/A。"
+            },
+            "appearance": "frozen124.menu.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.menu.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "只读语义由所属信息行呈现，本控件不假造可编辑状态。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.menu.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.menu.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "方向键/Home/End；Enter激活；Esc关闭并回触发器",
+          "不自造全局快捷键，已有快捷键才显示"
+        ],
+        "copy_rules": [
+          "明确对象与动作",
+          "库外/危险/不可用项不悄悄消失，按现有权限显示原因"
+        ],
+        "use_when": "结构栏⋯、还原/导出等已有附属动作。",
+        "do_not_use_when": "不用菜单隐藏唯一主动作；不将危险执行藏在普通选择项中自动触发。",
+        "root_cause_mapping": [
+          "R01",
+          "R04",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C12",
+        "name": "对话框",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "标题与作用对象",
+          "必要正文/表单",
+          "主要与取消动作",
+          "错误定位"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "width_min": 360,
+            "width_max": 560,
+            "padding": 16,
+            "action_height": 32
+          },
+          "regular": {
+            "width_min": 480,
+            "width_max": 720,
+            "padding": 24,
+            "action_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.dialog",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.dialog.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "焦点进入、Tab局部循环；Esc按原业务取消；关闭恢复触发焦点",
+          "不可取消任务须明确原因，不假造取消回滚"
+        ],
+        "copy_rules": [
+          "描述真实范围与后果",
+          "最终执行不默认勾同意，不用模糊的确定",
+          "设计稿无真实执行接口"
+        ],
+        "use_when": "既有阻断决策、连接恢复、需集中编辑的任务。",
+        "do_not_use_when": "不把每次选项修改改成弹窗；不新增未授权确认步骤。",
+        "root_cause_mapping": [
+          "R01",
+          "R08",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C13",
+        "name": "悬停提示/F1帮助",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "关联触发器",
+          "短提示或按需长帮助",
+          "关闭/返回"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "tooltip_max_width": 280,
+            "help_max_width": 440,
+            "trigger_target": 24
+          },
+          "regular": {
+            "tooltip_max_width": 360,
+            "help_max_width": 560,
+            "trigger_target": 32
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.help",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.help.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.help.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.help.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "提示正文没有按下态；触发按钮由C01定义。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.help.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.help.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该控件不拥有异步工作，忙状态由所属任务区域呈现。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.help.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "焦点和悬停都能获取同义短提示；F1沿用已登记行为",
+          "Esc关闭，保留入口焦点"
+        ],
+        "copy_rules": [
+          "禁用原因/错误不能仅存在提示里",
+          "不把标签、数值、单位藏进悬停"
+        ],
+        "use_when": "术语、完整长名、计算口径与可选说明。",
+        "do_not_use_when": "不承载必做步骤、确认范围或唯一错误原因。",
+        "root_cause_mapping": [
+          "R02",
+          "R03",
+          "R09",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C14",
+        "name": "提示条/撤销条",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "状态词/图标",
+          "简短结果与范围",
+          "可选撤销/重试/关闭"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "min_height": 32,
+            "padding": 8,
+            "action_height": 32
+          },
+          "regular": {
+            "min_height": 40,
+            "padding": 12,
+            "action_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.notice",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.notice.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.notice.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.notice.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.notice.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.notice.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.notice.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.notice.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.notice.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "可键盘访问动作/关闭；非阻断提示不抢焦点",
+          "可撤销消息不自动消失或被后续消息顶掉"
+        ],
+        "copy_rules": [
+          "真实成功才写已保存/已导出",
+          "撤销写明范围；不能暗示Ctrl+Z能回滚UE写入"
+        ],
+        "use_when": "局部反馈、可恢复删除、既有工作流结果。",
+        "do_not_use_when": "不用短暂toast代替持续错误；不预先显示成功。",
+        "root_cause_mapping": [
+          "R08",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C15",
+        "name": "身份/状态标签",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "明确状态词",
+          "可选对象/版本/证据范围",
+          "可访问详情"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "min_height": 20,
+            "padding_inline": 4,
+            "text_role": "helper"
+          },
+          "regular": {
+            "min_height": 24,
+            "padding_inline": 8,
+            "text_role": "field"
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.status",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.status.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "focus": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "pressed": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "readonly": {
+            "applicable": {
+              "behavior": "状态由真实只读证据驱动，正文完整可达。"
+            },
+            "appearance": "frozen124.status.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.status.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.status.error",
+            "behavior": "显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。"
+          }
+        },
+        "keyboard": [
+          "纯展示不进Tab；确有详情动作才成为有名称的按钮",
+          "不得仅用颜色传达状态"
+        ],
+        "copy_rules": [
+          "新建/更新/复用/跳过属于计划，不是成功",
+          "已检查、已导出、UE已保存、用户认可严格分开",
+          "未知/未验证显示原词，不画成通过"
+        ],
+        "use_when": "草稿、资源修订、连接、检查及实际回执身份。",
+        "do_not_use_when": "不把选中态、可执行、模拟完成当资产导入或用户认可。",
+        "root_cause_mapping": [
+          "R07",
+          "R08"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "truth_model": "见P10多轴状态真值",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C16",
+        "name": "进度/进行中",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "真实阶段名",
+          "计数/已知进度",
+          "可用取消/停止动作",
+          "保留上次有效结果"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "min_height": 32,
+            "bar_height": 4,
+            "action_height": 32
+          },
+          "regular": {
+            "min_height": 40,
+            "bar_height": 8,
+            "action_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.progress",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.progress.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "focus": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "pressed": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "readonly": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "只读语义由所属信息行呈现，本控件不假造可编辑状态。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.progress.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.progress.error",
+            "behavior": "显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。"
+          }
+        },
+        "keyboard": [
+          "状态更新不抢焦点；aria-busy/live限必要阶段",
+          "停止/取消只调用既有任务边界，不改其语义"
+        ],
+        "copy_rules": [
+          "有总量才给比例，没有总量写正在检查/处理中",
+          "执行结束、检查通过、用户认可不是同一结果"
+        ],
+        "use_when": "烘焙、目录导出、检查、导入等真实长作业。",
+        "do_not_use_when": "不编时长/百分比；不把停止显示成全部回滚或完成。",
+        "root_cause_mapping": [
+          "R08",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C17",
+        "name": "滚动区域/滚动条",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "真实内容视口",
+          "明确滚动边界",
+          "124方头滚动条角色"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "scrollbar_width": 10,
+            "content_padding": 8
+          },
+          "regular": {
+            "scrollbar_width": 10,
+            "content_padding": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.scroll",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该控件不拥有异步工作，忙状态由所属任务区域呈现。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.scroll.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "滚动区域可本地聚焦，PageUp/Down/方向键不截获输入编辑",
+          "回到区域恢复原位置"
+        ],
+        "copy_rules": [
+          "只在溢出时滚动，不造多个空滚动壳",
+          "日志选中阅读时暂停自动跟随"
+        ],
+        "use_when": "参数区、树、队列、资产表、日志各自职责明确的内容。",
+        "do_not_use_when": "避免卡片里再套卡片滚动；常驻栏必须占真实空间。",
+        "root_cause_mapping": [
+          "R04",
+          "R05",
+          "R09",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "target_exception": "既有10px滚动条保留；滚轮/触控板/键盘提供等效操作。门禁须登记滚动条命中例外，不宣称其本身为24px控件。",
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C18",
+        "name": "可调分隔条",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "可拖动分隔线",
+          "可聚焦命中区域",
+          "当前区域比例/折叠状态"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "hit_size": 24,
+            "min_target_keyboard": 24,
+            "step": 8,
+            "visual_gutter": 8
+          },
+          "regular": {
+            "hit_size": 24,
+            "min_target_keyboard": 32,
+            "step": 8,
+            "visual_gutter": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.splitter",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.splitter.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.splitter.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.splitter.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.splitter.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.splitter.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "只读语义由所属信息行呈现，本控件不假造可编辑状态。"
+          },
+          "loading": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该控件不拥有异步工作，忙状态由所属任务区域呈现。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.splitter.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "沿用V5↑↓调高；Enter折为路径/展开；双击同义",
+          "可读aria-valuenow/min/max；不改变对象选择"
+        ],
+        "copy_rules": [
+          "写明调整树/参数或时间轴高度",
+          "高度不够时保证内容而非强制固定栏"
+        ],
+        "use_when": "V5树/参数、中间预览/时间轴等已有可调区域。 命中区可扩入无控件留白，但不得覆盖相邻输入；可见线宽/圆角仍来自124冻结角色。",
+        "do_not_use_when": "不新增装饰性拖拽条；不允许拖到核对/参数完全不可见。",
+        "root_cause_mapping": [
+          "R04",
+          "R05",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C19",
+        "name": "结构树行",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "展开箭头槽",
+          "类型/层号",
+          "名称",
+          "改动/输出摘要",
+          "显示这层",
+          "只看",
+          "⋯"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "row_min_height": 28,
+            "indent_step": 16,
+            "icon": 16,
+            "action_target": 24
+          },
+          "regular": {
+            "row_min_height": 32,
+            "indent_step": 16,
+            "icon": 18,
+            "action_target": 32
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.tree-row",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.tree-row.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "V5↑↓/Home/End走行，←→折叠展开；Enter按现有选择语义",
+          "行选择与眼睛/只看动作分别可达且不重复触发",
+          "树行局部roving tabindex，不增加全局键"
+        ],
+        "copy_rules": [
+          "长名允许受控两行，操作列固定；完整名称可达",
+          "显示这层影响配方/烘焙/导出，只看只影响画面",
+          "不支持开关写原因；不新增被禁业务能力"
+        ],
+        "use_when": "层、发射器、粒子层、尾缀输出和既有工作台结构。",
+        "do_not_use_when": "不用树再造第二套参数/版本导航；不在每行套卡片。",
+        "root_cause_mapping": [
+          "R04",
+          "R07",
+          "R08",
+          "R10",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "appearance_note": "层级用缩进、箭头与已有线色；不增新背景/描边/圆角。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C20",
+        "name": "资源/效果列表行",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "同修订缩略图或有原因占位",
+          "名称",
+          "来源/版本/平台/规格",
+          "实际状态",
+          "选择与现有附属动作"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "row_min_height": 56,
+            "thumbnail": 40,
+            "gap": 8
+          },
+          "regular": {
+            "row_min_height": 72,
+            "thumbnail": 56,
+            "gap": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.resource-row",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.resource-row.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "单击只选择；双击/Enter仅沿现有定位/打开语义",
+          "附属动作独立焦点，资源列表不在双击间自动跳动"
+        ],
+        "copy_rules": [
+          "长中文名受控多行，不把省略号当完整值",
+          "缩略图缺失就写缺失，不能借旧图冒充同版本",
+          "素材库与交付资源库按实际职责命名"
+        ],
+        "use_when": "烘焙器库、导入队列、交付修订、编排资源列表。",
+        "do_not_use_when": "不把选择当加入节目/确认导入；不混用框架模板和已绑定资源状态。",
+        "root_cause_mapping": [
+          "R07",
+          "R08",
+          "R09",
+          "R10",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C21",
+        "name": "资产/产物表",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "完整列头",
+          "按作用范围分组的数据行",
+          "PC/手机或类型列",
+          "选择/计划/真实结果",
+          "展开详情"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "header_min_height": 32,
+            "row_min_height": 32,
+            "cell_padding": 8
+          },
+          "regular": {
+            "header_min_height": 40,
+            "row_min_height": 40,
+            "cell_padding": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.table",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.table.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.table.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.table.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.table.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.table.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.table.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.table.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.table.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.table.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "使用表格语义；可交互单元可Tab到达",
+          "窄屏优先显示必要列，其余在同一行详情展开；不丢实际资产名"
+        ],
+        "copy_rules": [
+          "计划列用新增/更新/复用/跳过，结果列来自回执",
+          "不可用项写原因，未知值不补0或成功",
+          "行或平台选择变化作废对应旧确认"
+        ],
+        "use_when": "每层产物表、导入资产核对、交付引用表。",
+        "do_not_use_when": "不在单元格内放多层卡片或长文段；不以字段更窄隐藏确认信息。",
+        "root_cause_mapping": [
+          "R03",
+          "R05",
+          "R08",
+          "R09",
+          "R10"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C22",
+        "name": "版本/修订列表",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "对象/修订标识",
+          "来源指纹范围",
+          "当前引用/新版本状态",
+          "显式打开/应用动作"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "row_min_height": 40,
+            "gap": 8
+          },
+          "regular": {
+            "row_min_height": 48,
+            "gap": 12
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.version-row",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.version-row.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "Tab访问打开/应用；选择修订与应用为不同动作",
+          "关闭返回原对象及视野"
+        ],
+        "copy_rules": [
+          "配方版本、导出修订、UE回执、演出固定引用分开",
+          "新修订不静默替换当前节目引用"
+        ],
+        "use_when": "版本历史、不可变导出修订、演出引用升级。",
+        "do_not_use_when": "不创建第二套版本系统；不把当前列表行选中画成已应用/已导入。",
+        "root_cause_mapping": [
+          "R08",
+          "R10",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C23",
+        "name": "数值/单位摘要",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "标签",
+          "原子值+单位组",
+          "组间语义分隔",
+          "来源/新旧状态"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "min_height": 24,
+            "group_gap": 8,
+            "text_role": "field"
+          },
+          "regular": {
+            "min_height": 32,
+            "group_gap": 12,
+            "text_role": "body"
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.metric",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.metric.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "focus": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "pressed": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "selected": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "该组件无持久选择语义；不新增选中样式。"
+          },
+          "disabled": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.metric.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.metric.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.metric.error",
+            "behavior": "显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。"
+          }
+        },
+        "keyboard": [
+          "只读摘要默认不进Tab；确有帮助时单独提供可访问入口",
+          "复制文本按完整语义顺序"
+        ],
+        "copy_rules": [
+          "75 帧 · 5 张为布局样例，不是实际计算结果",
+          "数字与单位不拆行，允许只在组间换行",
+          "预计/上次/当前/待计算必须跟实际指纹状态"
+        ],
+        "use_when": "帧数/张数、时长、计数、节奏/产物摘要。",
+        "do_not_use_when": "不从帧数猜张数；不把估算或旧结果标成检查通过。",
+        "root_cause_mapping": [
+          "R03",
+          "R08",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C24",
+        "name": "流程步骤/阶段摘要",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "当前步骤名",
+          "当前实际进度",
+          "已完成的证据范围",
+          "当前可用下一步"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "min_height": 32,
+            "step_gap": 12
+          },
+          "regular": {
+            "min_height": 40,
+            "step_gap": 16
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.stepper",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.stepper.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "focus": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "pressed": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.stepper.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.stepper.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.stepper.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.stepper.error",
+            "behavior": "显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。"
+          }
+        },
+        "keyboard": [
+          "只显示的步骤不进Tab；可回访步骤才用按钮",
+          "回访核对不会自动确认或执行"
+        ],
+        "copy_rules": [
+          "目录导出、核对、导入、登记是不同阶段",
+          "窄高压成一步/总步数及当前名，不重复画大页头"
+        ],
+        "use_when": "目录交付/核对/执行前流程。",
+        "do_not_use_when": "不以浏览到下一页就勾完成；不让步骤条压没核对内容。",
+        "root_cause_mapping": [
+          "R05",
+          "R08"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C25",
+        "name": "空/错误/只读信息区",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "明确当前状态",
+          "真实原因/范围",
+          "可行下一步",
+          "可展开详情"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "padding": 12,
+            "title_role": "section",
+            "action_height": 32
+          },
+          "regular": {
+            "padding": 16,
+            "title_role": "section",
+            "action_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.empty-error",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.empty-error.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "focus": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "pressed": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.empty-error.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": false,
+            "appearance": null,
+            "behavior": "纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.empty-error.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.empty-error.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.empty-error.error",
+            "behavior": "显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。"
+          }
+        },
+        "keyboard": [
+          "必要动作可达，阻断错误可定位首个字段",
+          "非阻断空状态不抢焦点"
+        ],
+        "copy_rules": [
+          "空库、未连接、未检查、失败、只读分别描述",
+          "不能用空白或伪造资源遮掩读取失败"
+        ],
+        "use_when": "无数据、连接断开、检查错误、只读模板说明。",
+        "do_not_use_when": "不默认再套一张高亮大卡；不把无数据当正常通过。",
+        "root_cause_mapping": [
+          "R05",
+          "R08",
+          "R09",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C26",
+        "name": "颜色段/Ramp领域外框",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "标题/当前层来源→原有色段编辑→真实预览→按需帮助",
+          "只统一标题、边界、焦点、选择与错误位置"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "header_height": 32,
+            "outer_gap": 8,
+            "control_height": 32
+          },
+          "regular": {
+            "header_height": 40,
+            "outer_gap": 12,
+            "control_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.domain-frame",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "沿用现有领域编辑键盘，不新增全局快捷键",
+          "编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型"
+        ],
+        "copy_rules": [
+          "名称/单位/当前对象完整可达",
+          "预览、计算、UE验证和用户认可分开"
+        ],
+        "use_when": "已有领域编辑器与同类任务。",
+        "do_not_use_when": "不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。",
+        "root_cause_mapping": [
+          "R07",
+          "R09",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "domain_boundary": "内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C27",
+        "name": "曲线领域外框",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "标题/单位→原有曲线画布→关键点/数值→范围与错误",
+          "只统一标题、边界、焦点、选择与错误位置"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "header_height": 32,
+            "outer_gap": 8,
+            "control_height": 32
+          },
+          "regular": {
+            "header_height": 40,
+            "outer_gap": 12,
+            "control_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.domain-frame",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "沿用现有领域编辑键盘，不新增全局快捷键",
+          "编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型"
+        ],
+        "copy_rules": [
+          "名称/单位/当前对象完整可达",
+          "预览、计算、UE验证和用户认可分开"
+        ],
+        "use_when": "已有领域编辑器与同类任务。",
+        "do_not_use_when": "不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。",
+        "root_cause_mapping": [
+          "R07",
+          "R09",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "domain_boundary": "内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C28",
+        "name": "粒子图领域外框",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "当前粒子图身份→原有画布或结构树→选中项参数→原有预览",
+          "只统一标题、边界、焦点、选择与错误位置"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "header_height": 32,
+            "outer_gap": 8,
+            "control_height": 32
+          },
+          "regular": {
+            "header_height": 40,
+            "outer_gap": 12,
+            "control_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.domain-frame",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "沿用现有领域编辑键盘，不新增全局快捷键",
+          "编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型"
+        ],
+        "copy_rules": [
+          "名称/单位/当前对象完整可达",
+          "预览、计算、UE验证和用户认可分开"
+        ],
+        "use_when": "已有领域编辑器与同类任务。",
+        "do_not_use_when": "不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。",
+        "root_cause_mapping": [
+          "R04",
+          "R07",
+          "R10",
+          "R12"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "domain_boundary": "内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      },
+      {
+        "id": "C29",
+        "name": "Timeline领域外框",
+        "level": "组件",
+        "status": "建议稿，未获用户审定、未实现",
+        "tools": [
+          "烘焙器",
+          "导入器",
+          "编排工作台"
+        ],
+        "structure": [
+          "工具/范围→时间尺→原有轨道与片段→选中项详情→缩放与状态",
+          "只统一标题、边界、焦点、选择与错误位置"
+        ],
+        "dimensions_css_px": {
+          "compact": {
+            "header_height": 32,
+            "outer_gap": 8,
+            "control_height": 32
+          },
+          "regular": {
+            "header_height": 40,
+            "outer_gap": 12,
+            "control_height": 40
+          },
+          "selection": "整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。"
+        },
+        "frozen_appearance_ref": "frozen124.domain-frame",
+        "state_matrix": {
+          "default": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "显示真实当前值、对象与作用范围。"
+          },
+          "hover": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.hover",
+            "behavior": "沿用124文字/边框变化，不增光环、阴影或缩放。"
+          },
+          "focus": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.focus",
+            "behavior": "键盘焦点可见且不被相邻裁剪容器截去。"
+          },
+          "pressed": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.pressed",
+            "behavior": "按下状态与业务完成分开；不靠按下就改变完成标签。"
+          },
+          "selected": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.selected",
+            "behavior": "由真实选中/布尔值驱动，并提供对应aria状态。"
+          },
+          "disabled": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.disabled",
+            "behavior": "保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。"
+          },
+          "readonly": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.readonly",
+            "behavior": "完整显示可复制值及来源，避免伪装为低对比度禁用输入。"
+          },
+          "loading": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.default",
+            "behavior": "保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。"
+          },
+          "error": {
+            "applicable": true,
+            "appearance": "frozen124.domain-frame.error",
+            "behavior": "原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。"
+          }
+        },
+        "keyboard": [
+          "沿用现有领域编辑键盘，不新增全局快捷键",
+          "编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型"
+        ],
+        "copy_rules": [
+          "名称/单位/当前对象完整可达",
+          "预览、计算、UE验证和用户认可分开"
+        ],
+        "use_when": "已有领域编辑器与同类任务。",
+        "do_not_use_when": "不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。",
+        "root_cause_mapping": [
+          "R06",
+          "R07",
+          "R10",
+          "R11"
+        ],
+        "implementation_boundary": "只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。",
+        "domain_boundary": "内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。",
+        "density_text_binding": {
+          "compact": "foundation.density_profiles.compact.typography_roles_css_px",
+          "regular": "foundation.density_profiles.regular.typography_roles_css_px"
+        },
+        "browser_notes": "Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为。截图默认态不代表弹出菜单、读屏或全部9状态组合通过；差异按同视口实测记录。"
+      }
+    ],
+    "patterns": [
+      {
+        "id": "P01",
+        "name": "统一参数行",
+        "components": [
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C13",
+          "C15"
+        ],
+        "structure": [
+          "名称/改动标记",
+          "控件",
+          "值",
+          "单位",
+          "条件或来源在下一行"
+        ],
+        "dimensions": {
+          "compact": {
+            "min_height": 32,
+            "label_width": [
+              96,
+              136
+            ],
+            "value_width": 72,
+            "unit_width": 24,
+            "gap": 8
+          },
+          "regular": {
+            "min_height": 40,
+            "label_width": [
+              120,
+              160
+            ],
+            "value_width": 88,
+            "unit_width": 32,
+            "gap": 8
+          }
+        },
+        "rules": [
+          "参数名不重复单位；长名最多受控两行，值与单位仍完整",
+          "空间不足时整行切为标签在上/控件在下，不任意挤窄四列",
+          "保持既有schema、INERT、撤销、搜索、仅改动与保存"
+        ],
+        "root_cause_mapping": [
+          "R03",
+          "R09",
+          "R12"
+        ]
+      },
+      {
+        "id": "P02",
+        "name": "平面模块与帮助",
+        "components": [
+          "C09",
+          "C13",
+          "C15"
+        ],
+        "structure": [
+          "模块标题+真实摘要+复位",
+          "平面参数行",
+          "必要短条件",
+          "按需长帮助"
+        ],
+        "rules": [
+          "工作区一层表面，模块用留白/已有分隔线组织；不默认卡片套卡片",
+          "子组只增加一个缩进层级，不再套背景容器",
+          "保留用户开合和搜索结束后的原状态"
+        ],
+        "root_cause_mapping": [
+          "R02",
+          "R04",
+          "R09"
+        ]
+      },
+      {
+        "id": "P03",
+        "name": "联动勾选列表（重点）",
+        "components": [
+          "C05",
+          "C13",
+          "C15"
+        ],
+        "structure": [
+          "关联图层标题+已选/可用数量",
+          "一句短摘要",
+          "每个目标独立一行：勾选→层号/名称→作用/禁用原因",
+          "长说明按需打开"
+        ],
+        "dimensions": {
+          "compact": {
+            "item_min_height": 32,
+            "check_target": 24,
+            "label_gap": 8
+          },
+          "regular": {
+            "item_min_height": 40,
+            "check_target": 32,
+            "label_gap": 8
+          }
+        },
+        "keyboard": [
+          "原生checkbox逐行Tab/Space，不增加Shift范围或全局键",
+          "禁用原因就地可读，不要求聚焦已禁用input"
+        ],
+        "rules": [
+          "绝不把第1层勾选接在长句末尾；所有续行对齐名称列",
+          "mixed只由真实混选推导；未知/正在读取不等于未勾选",
+          "业务已有全选才复用，不为组件增加新功能",
+          "一次切换走原事务与确认失效规则；不自动删除禁用成员的原选择"
+        ],
+        "truth_examples": [
+          {
+            "display": "关联图层 · 已选2/3个可用层",
+            "status": "布局样例，非当前资产数据"
+          },
+          {
+            "display": "正在读取可关联图层",
+            "status": "需真实异步状态"
+          },
+          {
+            "display": "此层不支持联动：原原因",
+            "status": "原控制器原因，非设计器编造"
+          }
+        ],
+        "root_cause_mapping": [
+          "R02",
+          "R08",
+          "R11"
+        ]
+      },
+      {
+        "id": "P04",
+        "name": "预设按钮组",
+        "components": [
+          "C01",
+          "C08",
+          "C23"
+        ],
+        "structure": [
+          "组名",
+          "同一高度的预设动作",
+          "当前值/估算摘要"
+        ],
+        "rules": [
+          "×0.8…×2、用这个、试算等复用现有命令；不增加新算法",
+          "动作预设不是长期选中值；只有真正互斥枚举才分段",
+          "试算状态明确预计，不冒充已烘焙结果"
+        ],
+        "root_cause_mapping": [
+          "R01",
+          "R03",
+          "R12"
+        ]
+      },
+      {
+        "id": "P05",
+        "name": "节奏/产物摘要：75帧·5张（重点）",
+        "components": [
+          "C23",
+          "C13"
+        ],
+        "structure": [
+          "摘要名称",
+          "75 帧",
+          "组间分隔",
+          "5 张",
+          "平台与预计/当前/上次状态"
+        ],
+        "rendering_rules": [
+          "值与单位分别是一个不可拆的语义组；只允许在组间换行",
+          "窄时整个5张组移到下一行且与值组左边界对齐，不让张成为孤字",
+          "不把75帧和5张分别包成胶囊/小卡片",
+          "屏幕阅读文本为75帧，5张贴图，平台，当前结果状态"
+        ],
+        "value_contract": [
+          "两数必须读取同一业务计算结果与指纹，不使用ceil帧数/每张容量猜测",
+          "没有结果写待计算；估算写预计；参数变更后保留上次结果并明确参数已改",
+          "当产物不使用序列时写真实不适用原因，不补0帧0张"
+        ],
+        "example": {
+          "frames": 75,
+          "sheets": 5,
+          "label": "布局样例",
+          "asset_validation": "未宣称已检查/已导出/已导入"
+        },
+        "root_cause_mapping": [
+          "R03",
+          "R08",
+          "R12"
+        ]
+      },
+      {
+        "id": "P06",
+        "name": "V5树与参数组合",
+        "components": [
+          "C19",
+          "C18",
+          "C09",
+          "C02",
+          "C15"
+        ],
+        "structure": [
+          "身份/版本/审阅条",
+          "结构树",
+          "可调分隔",
+          "参数搜索/仅改动/英文名",
+          "平面模块",
+          "相对打开时改动摘要"
+        ],
+        "rules": [
+          "保持右栏一列，不引入新页签",
+          "常规高度沿用参数保底520px的V5默认；树至少5行、至多可用区域一半且不超实际内容",
+          "高度不足时用现有折成路径与窗格展开能力让参数可达；自适应默认属于待审设计提议，不静默改宪章",
+          "眼睛=显示这层/影响导出；只看=只影响画面，不能互相代替",
+          "紧凑/常规各提供整页树与参数布局；密度差异不改变当前对象、树展开和参数值。"
+        ],
+        "root_cause_mapping": [
+          "R04",
+          "R08",
+          "R09",
+          "R11"
+        ]
+      },
+      {
+        "id": "P07",
+        "name": "顶行操作与搜索筛选",
+        "components": [
+          "C01",
+          "C10",
+          "C11",
+          "C02",
+          "C08"
+        ],
+        "structure": [
+          "当前工作区/视图",
+          "一个主要动作区",
+          "次要动作",
+          "搜索与同范围筛选"
+        ],
+        "rules": [
+          "V5中栏左视图右动作，导出仍唯一",
+          "窄时按既有优先级先缩短低频文字，再放入已有菜单；不隐藏唯一主入口",
+          "筛选不改变实际资产选择/数据，返回恢复原上下文"
+        ],
+        "root_cause_mapping": [
+          "R01",
+          "R04",
+          "R11"
+        ]
+      },
+      {
+        "id": "P08",
+        "name": "逐资产核对与确认",
+        "components": [
+          "C20",
+          "C21",
+          "C15",
+          "C23",
+          "C01"
+        ],
+        "structure": [
+          "当前包/平台/修订",
+          "实际资产名与处理计划",
+          "完整可达的目标与覆盖范围",
+          "真实检查结果",
+          "确认范围与最后执行动作"
+        ],
+        "rules": [
+          "浏览/选择/切平台不算确认；确认不等于导入",
+          "源包/命名/目标/平台/选择改变使旧确认失效，由原控制器判定",
+          "核对必须可见或可滚达，不能只留下执行按钮",
+          "执行按钮状态由现有确认指纹和连接条件决定，设计层不能强行解锁"
+        ],
+        "root_cause_mapping": [
+          "R05",
+          "R08",
+          "R11"
+        ]
+      },
+      {
+        "id": "P09",
+        "name": "空/错误/进行中与恢复",
+        "components": [
+          "C14",
+          "C16",
+          "C25"
+        ],
+        "structure": [
+          "真实对象与当前阶段",
+          "原因/计数",
+          "可操作的恢复入口",
+          "保留旧有效内容"
+        ],
+        "rules": [
+          "空库、读取失败、权限拒绝、待连接分别表达",
+          "等待与重试不丢参数、队列、选择、滚动和日志阅读位置",
+          "仅使用现有取消/停止/重试能力，不新增后台自动执行"
+        ],
+        "root_cause_mapping": [
+          "R08",
+          "R09",
+          "R11"
+        ]
+      },
+      {
+        "id": "P10",
+        "name": "多轴状态真值（重点）",
+        "components": [
+          "C15",
+          "C16",
+          "C14"
+        ],
+        "axes": {
+          "recipe": [
+            "未保存",
+            "保存中",
+            "已保存",
+            "保存失败"
+          ],
+          "artifact": [
+            "无结果",
+            "烘焙中",
+            "旧结果",
+            "当前结果",
+            "取消",
+            "失败"
+          ],
+          "validation": [
+            "未检查",
+            "检查中",
+            "检查通过",
+            "检查失败",
+            "检查已过期"
+          ],
+          "directory": [
+            "未导出",
+            "写入中",
+            "已导出",
+            "部分写入",
+            "失败"
+          ],
+          "import_plan": [
+            "待检查",
+            "待核对",
+            "确认已失效",
+            "可执行"
+          ],
+          "ue": [
+            "未连接",
+            "未导入",
+            "执行中",
+            "部分完成",
+            "UE已保存",
+            "失败"
+          ],
+          "acceptance": [
+            "未经UE验证",
+            "已实播待认可",
+            "用户已认可"
+          ]
+        },
+        "evidence_rules": [
+          "每个轴只由相应真实回执/指纹/用户决定驱动",
+          "检查通过注明检查范围与版本；不等同UE实播通过",
+          "计划新增/更新/复用/跳过不使用完成语义",
+          "原型页面只显示实际证据状态；若做组件状态样例，必须独立标注状态样例并与真实资源隔离"
+        ],
+        "root_cause_mapping": [
+          "R08",
+          "R12"
+        ]
+      },
+      {
+        "id": "P11",
+        "name": "窄高导入工作区（重点）",
+        "components": [
+          "C10",
+          "C18",
+          "C24",
+          "C21",
+          "C01",
+          "C17"
+        ],
+        "height_budget_css_px": {
+          "compact": {
+            "app_header": 40,
+            "object_context": 28,
+            "pane_tabs": 32,
+            "action_bar_max": 48,
+            "status_inline_max": 20
+          },
+          "regular": {
+            "app_header": 48,
+            "object_context": 32,
+            "pane_tabs": 40,
+            "action_bar_max": 56,
+            "status_inline_max": 20
+          },
+          "review_area_min": 176,
+          "review_area_preferred_min": 240
+        },
+        "responsive_rules": [
+          "根据可用高度同时判断，不只按宽度媒体查询",
+          "可用内容不足240px时步骤条压成当前步骤摘要，日志不再常驻高面板，进入可展开的既有日志入口",
+          "窄屏队列/设置/核对为同一对象的呈现页签；核对区独立滚动，操作区占真实布局空间",
+          "两档都在CSS683×384/DPR2代表档保留至少176px可滚动核对区；常规字体不临时缩成紧凑字体。若连最小预算也放不下，取消固定定位并让整页纵向滚动，不用零高内容保住执行按钮。",
+          "执行入口仍可键盘到达，错误与确认范围不被页头/日志/动作栏遮住",
+          "不自动确认、不自动切换资源、不改变目录/UE接口"
+        ],
+        "prototype_acceptance": [
+          "同一合成包可查看实际名称/计划/目标与错误",
+          "最终动作可达且只有真实确认条件满足才启用",
+          "标题/日志/固定栏不覆盖核对内容"
+        ],
+        "root_cause_mapping": [
+          "R05",
+          "R08",
+          "R11"
+        ]
+      },
+      {
+        "id": "P12",
+        "name": "Timeline标签随缩放分级（重点）",
+        "components": [
+          "C29",
+          "C13",
+          "C15",
+          "C23"
+        ],
+        "label_priority": [
+          "当前选中片段",
+          "键盘焦点/悬停片段",
+          "其他不碰撞片段"
+        ],
+        "rules": [
+          "只改标签呈现，不改片段时刻、时长、点位、引用、重叠关系或颜色",
+          "优先用实际文字测量与可见片段宽度决定是否完整显示，不以中文字符数硬猜",
+          "完整文本+内边距能放下才全名；中等宽显示短名/省略；窄宽只显示可读编号或色块",
+          "全曲概览默认不为所有重叠片段画全名；选中名在检查器完整显示",
+          "标签裁在所属片段可见区域，不扩写到邻片段或跨轨覆盖",
+          "真实碰撞保持业务几何，可用既有轨道/概览信息呈现，不能为避叠字挪动或删除片段",
+          "缩放是视图状态，不进节目数据撤销；沿用现有定位/放大时间轴入口，不新增全局快捷键"
+        ],
+        "size_guidance_css_px": {
+          "full_name": "textMeasuredWidth + 16 <= visibleClipWidth",
+          "short_name": "visibleClipWidth >= 72且实际短名能放下",
+          "identifier": "24 <= visibleClipWidth < 72且编号能放下",
+          "overview_marker": "visibleClipWidth < 24不画强塞文字"
+        },
+        "accessibility": [
+          "小片段领域图形的命中例外须登记；保留现有键盘选择/检查器完整名称与放大入口作为替代",
+          "不得为了24px命中宽度让相邻片段点击区互相覆盖",
+          "Tooltip提供全名/起止/时长，键盘焦点也可读"
+        ],
+        "test_cases": [
+          "真实密集全曲",
+          "长中文名",
+          "多片段时间重叠",
+          "选中/悬停/焦点",
+          "局部放大",
+          "三档+200%等效窄视口",
+          "Chrome/Edge"
+        ],
+        "root_cause_mapping": [
+          "R06",
+          "R07",
+          "R10",
+          "R11"
+        ]
+      },
+      {
+        "id": "P13",
+        "name": "固定修订引用与资源行",
+        "components": [
+          "C20",
+          "C22",
+          "C15",
+          "C21"
+        ],
+        "rules": [
+          "基础模板库、花型模板、编排模板与烘焙器交付资源各有清晰中文名称",
+          "选择资源只是选中；加入/绑定/升级沿用原显式动作",
+          "显示真实修订与缺图/待导入/待标定，不用旧图、模拟UE状态或近似名称代替真实证据"
+        ],
+        "root_cause_mapping": [
+          "R08",
+          "R10",
+          "R11"
+        ]
+      },
+      {
+        "id": "P14",
+        "name": "长名与路径",
+        "components": [
+          "C02",
+          "C13",
+          "C19",
+          "C20",
+          "C21"
+        ],
+        "rules": [
+          "对象名可受控多行；数值与单位不可拆；路径在信息区按需展开/复制",
+          "截断必须有键盘可用的完整内容；不能让资产核对名称仅剩省略号",
+          "辅助文字对齐所属内容列，不接在勾选句末"
+        ],
+        "root_cause_mapping": [
+          "R02",
+          "R03",
+          "R09",
+          "R11"
+        ]
+      }
+    ],
+    "page_templates": [
+      {
+        "id": "T01",
+        "name": "烘焙器V5编辑",
+        "tool": "烘焙器",
+        "composition": [
+          "左侧效果库C20",
+          "中栏P07+原有预览+时间轴C29",
+          "右栏P06"
+        ],
+        "layout": "保留左库/中预览/右结构参数；右栏仅一列，树和参数由C18分隔。",
+        "narrow": "先按已有左右栏开关与分隔能力降低常驻占用，保留当前对象/参数/撤销/时间。",
+        "avoid": [
+          "独立资产栏",
+          "右栏新页签",
+          "卡片套卡片",
+          "重复导出入口"
+        ],
+        "roots": [
+          "R01",
+          "R04",
+          "R09",
+          "R11"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T02",
+        "name": "烘焙器交付清单",
+        "tool": "烘焙器",
+        "composition": [
+          "引擎回放预览",
+          "P05/P08清单窄栏",
+          "原右栏按已有开关可收起"
+        ],
+        "layout": "清单按V5为中栏30%、宽320–420px；优先预览，不盖画布；四块为名字/每层出什么/包里有什么/导入范围。",
+        "narrow": "中栏不能同时保住预览和320px清单时用已有侧栏/抽屉能力；返回恢复原布局与对象。",
+        "avoid": [
+          "大字号结果卡",
+          "交付页第二个导出按钮",
+          "把质量检查与可以操作混成通过"
+        ],
+        "roots": [
+          "R03",
+          "R08",
+          "R09"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T03",
+        "name": "导入核对工作区（独立与原工作台适配）",
+        "tool": "导入器",
+        "composition": [
+          "C24紧凑阶段",
+          "资源队列C20",
+          "平面设置P01/P02",
+          "逐资产核对P08",
+          "真实动作栏+可展开日志"
+        ],
+        "layout": "两个入口共用呈现模板与组件；原有目录/UE/登记/回执适配器仍分别保留。",
+        "narrow": "必须应用P11高度预算与同对象队列/设置/核对页签，不留下零高核对区。",
+        "avoid": [
+          "步骤条大卡",
+          "核对卡嵌资产卡嵌错误卡",
+          "视图切换自动确认",
+          "任何原型UE写入"
+        ],
+        "roots": [
+          "R05",
+          "R07",
+          "R08",
+          "R09",
+          "R11"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T04",
+        "name": "编排演出",
+        "tool": "编排工作台",
+        "composition": [
+          "编排资源C20",
+          "原舞台预览",
+          "C29+P12单一时间轴",
+          "平面检查器P01/P02",
+          "P07已有保存/交付"
+        ],
+        "layout": "保留三栏和原场景/点位/节目模型；时间轴标签按缩放而非全量叠字。",
+        "narrow": "使用已有面板与预览/时间轴分隔，当前片段、时间范围与主动作保持可达。",
+        "avoid": [
+          "重做节目模型",
+          "把片段视图切换当数据改动",
+          "重叠事件挪时间来美化"
+        ],
+        "roots": [
+          "R06",
+          "R07",
+          "R09",
+          "R11"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T05",
+        "name": "编排资源/模板库",
+        "tool": "编排工作台",
+        "composition": [
+          "P07搜索筛选",
+          "P13资源修订行",
+          "原有比例/效果预览",
+          "平面只读/绑定详情"
+        ],
+        "layout": "基础模板与交付资源用准确中文职责命名；同修订缩略图、平台、时长、尺度与真实状态完整可达。",
+        "narrow": "详情按同对象窗格切换，不新增第二套版本/节目上下文。",
+        "avoid": [
+          "把libraryKind内部值当用户文案",
+          "读取即加入节目",
+          "未导入显示已导入"
+        ],
+        "roots": [
+          "R08",
+          "R10",
+          "R11"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T06",
+        "name": "领域编辑（粒子图/Ramp/曲线）",
+        "tool": "三工具",
+        "composition": [
+          "T01或T04既有工作区",
+          "C26/C27/C28外框",
+          "P01参数与P02模块"
+        ],
+        "layout": "统一外框与状态，不改变领域画布、物理/曲线模型；不为领域编辑再开第二套页面系统。",
+        "narrow": "当前对象与精确数值可达，画布/详情可切窗格但不改数据。",
+        "avoid": [
+          "领域控件里再放业务卡片栈",
+          "只统一外框就宣称内部交互通过"
+        ],
+        "roots": [
+          "R04",
+          "R07",
+          "R09",
+          "R12"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T07",
+        "name": "错误/连接恢复/既有任务对话",
+        "tool": "三工具",
+        "composition": [
+          "C12",
+          "P09",
+          "P10"
+        ],
+        "layout": "原因、范围、下一步与取消边界明确；用真实业务状态，不靠样例成功兜底。",
+        "narrow": "正文单一可滚区，动作占真实空间；关闭恢复焦点。",
+        "avoid": [
+          "对每个选择加确认弹窗",
+          "Esc暗示撤销UE写入"
+        ],
+        "roots": [
+          "R08",
+          "R11"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      },
+      {
+        "id": "T08",
+        "name": "独立组件状态样板（后续草稿）",
+        "tool": "设计样板",
+        "composition": [
+          "全部组件的适用状态",
+          "紧凑/常规用途尺寸",
+          "根因与覆盖映射"
+        ],
+        "layout": "独立样板不占正式工具侧栏；所有演示都标状态样例/布局样例，与真实资产状态分开。",
+        "narrow": "用同一数据样例核对三档及200%等效布局，不使用旧invalid截图。",
+        "avoid": [
+          "用户未审前发布正式库",
+          "样例数据或按钮真的连接目录/UE",
+          "把组件样板当真实任务验收"
+        ],
+        "roots": [
+          "R01",
+          "R07",
+          "R10",
+          "R11"
+        ],
+        "density_comparison": {
+          "compact": "整页按compact字阶、行高、控件、间距及栏宽重排",
+          "regular": "整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐",
+          "review_control": "只在设计审阅工具栏切换",
+          "same_content_required": true
+        }
+      }
+    ]
+  },
+  "root_causes": [
+    {
+      "id": "R01",
+      "name": "手写控件与库外构造",
+      "rules": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ],
+      "evidence": [
+        "三工具生成点清单",
+        "节奏手写按钮",
+        "私有适配层按钮/下拉"
+      ],
+      "target": "基础控件工厂与HTML/React薄适配"
+    },
+    {
+      "id": "R02",
+      "name": "联动勾选夹在说明句后",
+      "rules": [
+        "B3",
+        "C4",
+        "D4",
+        "F2"
+      ],
+      "evidence": [
+        "轨迹联动/关联图层校准集"
+      ],
+      "target": "独立勾选列表模式，短摘要与帮助分开"
+    },
+    {
+      "id": "R03",
+      "name": "节奏数值、单位与产物摘要断行",
+      "rules": [
+        "B2",
+        "B3",
+        "C2",
+        "D2",
+        "D5"
+      ],
+      "evidence": [
+        "75帧/5张节奏摘要校准项",
+        "12_tempo.js"
+      ],
+      "target": "原子数值单位组与可控换行摘要"
+    },
+    {
+      "id": "R04",
+      "name": "V5树/参数层级与固定空间竞争",
+      "rules": [
+        "B1",
+        "B4",
+        "C1",
+        "C5",
+        "G2"
+      ],
+      "evidence": [
+        "92_v5shell.js",
+        "独立编辑与粒子图原图"
+      ],
+      "target": "树行、分隔条、参数模块同一模板"
+    },
+    {
+      "id": "R05",
+      "name": "导入器窄高核对区被固定区域挤空",
+      "rules": [
+        "B1",
+        "G2",
+        "F4"
+      ],
+      "evidence": [
+        "importer_catalog/visual-review.json:IMP-V1",
+        "原工作台等效200%原图"
+      ],
+      "target": "高度预算与单窗格导入模板"
+    },
+    {
+      "id": "R06",
+      "name": "Timeline全曲片段标签互叠",
+      "rules": [
+        "B2",
+        "B3",
+        "D1",
+        "H"
+      ],
+      "evidence": [
+        "independent-visual-review.json:001-main-default",
+        "Timeline.jsx"
+      ],
+      "target": "按可见宽度/缩放级别的标签呈现策略"
+    },
+    {
+      "id": "R07",
+      "name": "三工具画风角色及尺寸语言分裂",
+      "rules": [
+        "A3",
+        "E1",
+        "E2",
+        "G1"
+      ],
+      "evidence": [
+        "freeze124/computed.json",
+        "material-theme.css",
+        "私有material.css"
+      ],
+      "target": "冻结角色别名与共用布局tokens"
+    },
+    {
+      "id": "R08",
+      "name": "可操作、计划、检查和实际完成混成状态",
+      "rules": [
+        "E3",
+        "F2",
+        "F4"
+      ],
+      "evidence": [
+        "交付清单可导出/质量自检并存",
+        "导入确认与UE回执边界"
+      ],
+      "target": "多轴状态模型与证据标签"
+    },
+    {
+      "id": "R09",
+      "name": "命名表单长标签、卡片与说明层层嵌套",
+      "rules": [
+        "B3",
+        "B5",
+        "C1",
+        "D4",
+        "H"
+      ],
+      "evidence": [
+        "importer_catalog/visual-review.json:IMP-V2",
+        "命名字段/参数卡原图"
+      ],
+      "target": "平面参数行、模块与按需帮助"
+    },
+    {
+      "id": "R10",
+      "name": "动态生成点不能强归属",
+      "rules": [
+        "覆盖率"
+      ],
+      "evidence": [
+        "导入器强ID21/99、类候选22、未观察56",
+        "动态前缀与工厂"
+      ],
+      "target": "组件根绑定生成点ID，候选与强映射分开"
+    },
+    {
+      "id": "R11",
+      "name": "键盘、禁用原因、焦点和状态样本缺口",
+      "rules": [
+        "E3",
+        "F2",
+        "F3",
+        "F5"
+      ],
+      "evidence": [
+        "三工具运行时pending项",
+        "独立规则复核"
+      ],
+      "target": "组件本地键盘合同及状态样板"
+    },
+    {
+      "id": "R12",
+      "name": "参数无效/派生/只读值表达不一致",
+      "rules": [
+        "D2",
+        "D5",
+        "F2"
+      ],
+      "evidence": [
+        "参数INERT规则",
+        "派生摘要与产物未重烘状态"
+      ],
+      "target": "ParameterRow值来源与禁用原因"
+    }
+  ],
+  "implementation_handoff": {
+    "adaptation": "HTML与React共用语义CSS类与薄工厂/适配，不强迁技术栈。私有源码不入Git。",
+    "source_attribution": "未来组件根节点绑定明确generation-point/source-id；静态强对应、类名候选、运行未观察分开统计；不能用同类样板顶替每个生成点证据。",
+    "component_registration": "用户审定后登记版本、变体、适用状态、键盘、使用计数和负责人；不由本文件宣布已进入正式库。",
+    "migration": "按根因整类迁移并带N/N计数；保留原控制器、值/事务/确认语义。",
+    "governance": "正式宪章、tokens、登记表和样板同版本同步由后续获授权实现阶段处理；本提案不改它们。",
+    "density": "根工作区单点提供data-density，HTML/React与私有适配层均继承同一compact/regular字阶、行高、留白与尺寸；不维护两份页面结构。"
+  },
+  "draft_review_checks": [
+    "同一推荐方向提供紧凑/常规两套完整页面对比，默认推荐常规阅读；只在设计审阅工具栏切换，不新增产品密度设置入口。",
+    "三工具使用同一套冻结角色与公共组件；领域内核仍各自负责。",
+    "P03每目标独立一行，长说明不再夹着勾选；禁用/混选/未知分别可读。",
+    "P05在窄栏中75帧、5张不拆单位；估算/上次/当前结果来自同一指纹，样例明确标布局样例。",
+    "P11在等效200%保住可核对内容，最终导入仍停在真实确认/执行边界。",
+    "P12全曲标签不互叠且不改变片段时序/重叠/引用；完整名称有实际可达入口。",
+    "所有状态样例与真实资产隔离；未检查、未导入、未经UE验证与用户认可不能伪装。",
+    "Chrome与Edge × 三档+200%等效 × 键盘/焦点/Esc/减少动态效果，逐状态真采样；未采样保持pending。",
+    "不以旧invalid窄档或缩小联系表代替原图审看，不以当前草稿替代运行验证。"
+  ],
+  "open_items_not_blocking_spec": [
+    "确切124冻结角色绑定及未采样状态需在草稿前补核；本文件不批准近似色/圆角合并。",
+    "V5参数520px默认与窄高布局冲突时的自适应呈现需要放进草稿给用户审；不直接改宪章。",
+    "动效、只读/禁用原因、真实系统缩放与引擎结果仍按既有pending证据保留。",
+    "若组件规格触及既有参数/确认/数据模型，则退出本轮视觉设计范围，另按项目流程处理。"
+  ],
+  "spec_validation": {
+    "components": 29,
+    "components_with_all_9_state_entries": 29,
+    "components_with_both_density_dimensions": 29,
+    "patterns": 14,
+    "page_templates": 8,
+    "page_templates_with_full_density_comparison": 8,
+    "root_cause_groups": 12,
+    "new_color_literals": 0,
+    "status": "JSON结构与引用检查完成；设计尚未审定/实现/运行验证",
+    "evidence_files_resolved": 3
+  },
+  "draft_implementation_note": "设计规格，不是正式库。draft.js只有示意状态/切页/过滤/树/窗格/分隔条；无模拟器、文件/UE业务逻辑。"
+}

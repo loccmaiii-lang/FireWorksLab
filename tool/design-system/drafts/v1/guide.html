@@ -1,0 +1,674 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设计稿v1 · 依据与行为</title><link rel="stylesheet" href="../../tokens.css"><style>body{margin:0;font:14px/1.65 system-ui,"Microsoft YaHei",sans-serif;color:#e4edef;background:#111d21}main{max-width:1500px;padding:32px;margin:auto}h1{font-size:24px}h2{font-size:18px;margin-top:40px}h3{font-size:16px}a{color:#36e4b0}table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #2b4149;padding:12px}code{font:12px/1.6 Consolas,monospace;color:#b4c5cb}details{border-bottom:1px solid #2b4149;padding:12px 0}summary{cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}img{max-width:100%;height:auto}.note{color:#b4c5cb}nav{position:sticky;top:0;background:#121f24;padding:12px;border-bottom:1px solid #2b4149;display:flex;gap:20px;flex-wrap:wrap}.state{display:inline-block;min-width:100px;padding:8px 12px;border:1px solid #39515a;border-radius:6px;background:transparent;color:#e4edef}.chip{border-radius:0;background:#173d39;border-color:#00d49b;box-shadow:inset 0 0 0 1px #00d49b}.focus{outline:2px solid #00d49b;outline-offset:2px}.hover{border-color:#5a666a}.disabled{opacity:.38}.modified{color:#e4bb7c}.error{color:#e7735a;border-color:#e7735a}.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){main{padding:16px}.compare{grid-template-columns:1fr}th,td{padding:6px}}</style><nav><a href="index.html">交互稿</a><a href="#compare">同视口对照</a><a href="#foundations">基础</a><a href="#components">29组件</a><a href="#patterns">14模式</a><a href="#templates">8模板</a><a href="#behavior">D1–D7</a><a href="#states">状态对照</a></nav><main><h1>V5 布局，124 画风 · 设计稿 v1</h1><p>一套推荐方案；常规为默认，紧凑为整页对照。此目录是设计产物，未做正式组件库、生产迁移或真实导出。数值/状态有“示意”标记，真实图片来源逐项记在 asset-provenance.json。</p><p><a href="imagegen-editor.png">查看 ImageGen 方向图</a> · <a href="imagegen-prompt.txt">完整生成提示词</a> · <a href="specifications.json">四层完整规格 JSON</a> · <a href="appearance-bindings.json">124角色绑定与采样限制</a> · <a href="verification.json">本轮运行自检</a></p><details><summary>ImageGen 方向稿与可编辑稿的关系</summary><p>内置 ImageGen 一次生成，实际位图1672×941；1920×1080精确稿以HTML截图为准。，实际附124实页与125金锦层截图。方向图文字、图标和控件是生成内容，存在个别字形/命名和灰控件偏差；不当作产品或验收截图。HTML逐项核对真实名称、原图标、边框和状态，布局与功能以本稿为准。没有将位图当作代码或组件库。</p><img src="imagegen-editor.png" alt="ImageGen单一编辑方向图"></details>
+<h2 id="compare">同视口对照</h2><p>同一CSS视口比较布局。对象/产物状态不同的图明确标示，只用于空间比较；不能冒充相同业务结果。124与新稿的外观比较另见状态表，避免只比同色。</p><div id="comparison-gallery"><details><summary>chrome CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 编辑</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/chrome_1366_editor_125.png">125原图</a> / <a href="screenshots/chrome_1366_regular_editor.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/chrome_1366_editor_125.png" alt="125同视口editor"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/chrome_1366_regular_editor.png" alt="新稿同视口editor"></figure></div></details><details><summary>chrome CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 交付</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/chrome_1366_delivery_125.png">125原图</a> / <a href="screenshots/chrome_1366_regular_delivery.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/chrome_1366_delivery_125.png" alt="125同视口delivery"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/chrome_1366_regular_delivery.png" alt="新稿同视口delivery"></figure></div></details><details><summary>chrome CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 编辑</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/chrome_1920_editor_125.png">125原图</a> / <a href="screenshots/chrome_1920_regular_editor.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/chrome_1920_editor_125.png" alt="125同视口editor"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/chrome_1920_regular_editor.png" alt="新稿同视口editor"></figure></div></details><details><summary>chrome CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 交付</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/chrome_1920_delivery_125.png">125原图</a> / <a href="screenshots/chrome_1920_regular_delivery.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/chrome_1920_delivery_125.png" alt="125同视口delivery"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/chrome_1920_regular_delivery.png" alt="新稿同视口delivery"></figure></div></details><details><summary>chrome CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 编辑</summary><p>125实页仍烘焙中，仅布局参考。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/chrome_2560_editor_125.png">125原图</a> / <a href="screenshots/chrome_2560_regular_editor.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/chrome_2560_editor_125.png" alt="125同视口editor"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/chrome_2560_regular_editor.png" alt="新稿同视口editor"></figure></div></details><details><summary>chrome CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 交付</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/chrome_2560_delivery_125.png">125原图</a> / <a href="screenshots/chrome_2560_regular_delivery.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/chrome_2560_delivery_125.png" alt="125同视口delivery"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/chrome_2560_regular_delivery.png" alt="新稿同视口delivery"></figure></div></details><details><summary>msedge CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 编辑</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/msedge_1366_editor_125.png">125原图</a> / <a href="screenshots/msedge_1366_regular_editor.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/msedge_1366_editor_125.png" alt="125同视口editor"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/msedge_1366_regular_editor.png" alt="新稿同视口editor"></figure></div></details><details><summary>msedge CSS1366×768 DPR1 · 金曜菊-B/金锦层 · 交付</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/msedge_1366_delivery_125.png">125原图</a> / <a href="screenshots/msedge_1366_regular_delivery.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/msedge_1366_delivery_125.png" alt="125同视口delivery"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/msedge_1366_regular_delivery.png" alt="新稿同视口delivery"></figure></div></details><details><summary>msedge CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 编辑</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/msedge_1920_editor_125.png">125原图</a> / <a href="screenshots/msedge_1920_regular_editor.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/msedge_1920_editor_125.png" alt="125同视口editor"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/msedge_1920_regular_editor.png" alt="新稿同视口editor"></figure></div></details><details><summary>msedge CSS1920×1080 DPR1 · 金曜菊-B/金锦层 · 交付</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/msedge_1920_delivery_125.png">125原图</a> / <a href="screenshots/msedge_1920_regular_delivery.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/msedge_1920_delivery_125.png" alt="125同视口delivery"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/msedge_1920_regular_delivery.png" alt="新稿同视口delivery"></figure></div></details><details><summary>msedge CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 编辑</summary><p>125实页仍烘焙中，仅布局参考。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/msedge_2560_editor_125.png">125原图</a> / <a href="screenshots/msedge_2560_regular_editor.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/msedge_2560_editor_125.png" alt="125同视口editor"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/msedge_2560_regular_editor.png" alt="新稿同视口editor"></figure></div></details><details><summary>msedge CSS2560×1440 DPR1.5 · 金曜菊-B/金锦层 · 交付</summary><p>125实页已结束烘焙；设计侧为静态截帧与示意字段。相同CSS视口；不比较烟花大小，不将设计侧当成相同相机/实时产物。<a href="comparisons/msedge_2560_delivery_125.png">125原图</a> / <a href="screenshots/msedge_2560_regular_delivery.png">新稿原图</a></p><div class="compare"><figure><figcaption>125实际界面</figcaption><img src="comparisons/msedge_2560_delivery_125.png" alt="125同视口delivery"></figure><figure><figcaption>HTML设计稿 · 常规</figcaption><img src="screenshots/msedge_2560_regular_delivery.png" alt="新稿同视口delivery"></figure></div></details></div>
+<h2 id="foundations">第一层：基础与令牌建议</h2><p><a href="layout-token-proposals.json">本稿局部令牌别名清单</a>；尚未进入共享库。</p><p>冻结颜色、角色圆角与状态外观。新增尺寸仅在本目录 <code>--draft-*</code> 中；未修改共享tokens。近似色/圆角不合并，无画风变更获批。</p><table><tr><th>角色</th><th>常规 / 紧凑 CSS px</th><th>本稿别名</th></tr>
+<tr><td>正文</td><td>14/22 · 13/20</td><td><code>--draft-body / --draft-body-line</code></td></tr>
+<tr><td>字段</td><td>13/20 · 12/18</td><td><code>--draft-label</code></td></tr>
+<tr><td>标题</td><td>18/26 · 16/24</td><td><code>--draft-title / --draft-title-line</code></td></tr>
+<tr><td>辅助</td><td>12/18 · 12/18</td><td><code>--draft-helper</code></td></tr>
+<tr><td>控件/行</td><td>40 · 32</td><td><code>--draft-control / --draft-row</code></td></tr>
+<tr><td>结构行</td><td>32 · 28</td><td><code>--draft-tree-row</code></td></tr>
+<tr><td>模块间距</td><td>24 · 16</td><td><code>--draft-module-gap</code></td></tr>
+<tr><td>内边距</td><td>16 · 12</td><td><code>--draft-pad</code></td></tr>
+<tr><td>间距</td><td>12 · 8</td><td><code>--draft-gap</code></td></tr>
+</table><p>参数复合行：名称、滑杆、60px示意数值、20px单位与24px还原/锁/帮助。窄栏按实际可用宽度保留可点目标；规格中88px数值列是宽栏推荐，正式库需以适用容器变体登记，不能把本稿固定值误作已批准全局token。数值用等宽字体；系统字体沿用项目栈，不加载在线字体。</p><p>动效：本稿直接切换结构和工作区，仅已有控件状态语言；减少动态效果取消非必要过渡。烟花和时间轴为静态参考，不重造模拟器。</p>
+<h2 id="components">第二层：29张组件规格卡</h2><p>以下均为待审规格，不是已发布组件。Chrome154/Edge156共用相同角色样式；原生Select弹出面板保留系统行为，默认页截图不代表全部原生弹出态通过。每卡有9状态适用性、结构、尺寸、键盘、文案、浏览器、根因与边界。</p>
+<details><summary>C01 按钮/图标按钮</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;可选图标&quot;, &quot;完整动作名&quot;, &quot;可选作用范围/忙状态&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;height&quot;: 32, &quot;padding_inline&quot;: 8, &quot;gap&quot;: 4, &quot;icon&quot;: 16, &quot;min_target&quot;: 24}, &quot;regular&quot;: {&quot;height&quot;: 40, &quot;padding_inline&quot;: 12, &quot;gap&quot;: 8, &quot;icon&quot;: 18, &quot;min_target&quot;: 32}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.button&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;只读语义由所属信息行呈现，本控件不假造可编辑状态。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.button.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Tab进入；Enter/Space只触发当前聚焦按钮&quot;, &quot;不增加全局快捷键；执行按钮不绑定全局Enter&quot;, &quot;禁用不执行，原因在邻近文本可读&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;动词+对象，例：重新检查、确认手机包、导入已确认的2包&quot;, &quot;只用图标时提供中文aria-label与同义提示&quot;, &quot;导出主入口仍只有V5中栏顶行一个&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;瞬时动作、菜单触发、已有主要/次要/危险/图标变体。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不拿按钮模拟独立布尔参数；不凭点击就写成功状态。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R07&quot;, &quot;R08&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>variants</th><td>[&quot;主要&quot;, &quot;次要&quot;, &quot;幽灵&quot;, &quot;危险&quot;, &quot;图标&quot;]</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C02 文本/数值/搜索/多行字段</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;关联标签&quot;, &quot;输入值&quot;, &quot;单位或搜索/清除附属按钮&quot;, &quot;就地帮助与错误&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;height&quot;: 32, &quot;padding_inline&quot;: 8, &quot;number_width&quot;: 72, &quot;search_min_width&quot;: 144}, &quot;regular&quot;: {&quot;height&quot;: 40, &quot;padding_inline&quot;: 12, &quot;number_width&quot;: 88, &quot;search_min_width&quot;: 176}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.field&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.field.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Tab进出；编辑键保留系统行为&quot;, &quot;Enter按现有提交事务确认，Esc按既有规则取消当前编辑&quot;, &quot;数值方向键只在字段获得焦点时按已有step工作&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;标签不重复单位&quot;, &quot;实际值不能只省略；路径长值可横向滚动/复制，完整内容可达&quot;, &quot;非法值保留输入并说明范围，不静默钳制或写回默认&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;自由输入、精确数值、搜索与原有多行批量路径输入。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不用字段承载不可编辑状态；只读值用同组件只读变体但保留可读对比度。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R09&quot;, &quot;R11&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>variants</th><td>[&quot;text&quot;, &quot;number&quot;, &quot;search&quot;, &quot;textarea&quot;, &quot;readonly&quot;]</td></tr>
+<tr><th>transaction</th><td>&quot;一次拖动或一次提交只进现有撤销一次；不改变参数含义或范围。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C03 滑杆+数值</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;同一个值模型&quot;, &quot;滑杆&quot;, &quot;精确数值字段&quot;, &quot;独立单位&quot;, &quot;条件/来源摘要&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;row_height&quot;: 32, &quot;slider_min_width&quot;: 72, &quot;value_width&quot;: 72, &quot;unit_width&quot;: 24}, &quot;regular&quot;: {&quot;row_height&quot;: 40, &quot;slider_min_width&quot;: 104, &quot;value_width&quot;: 88, &quot;unit_width&quot;: 32}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.slider&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.slider.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Tab分别访问滑杆与数值；方向键遵循既有step&quot;, &quot;Home/End仅按滑杆原范围，不新加参数范围&quot;, &quot;拖动过程立即预览，释放后合并为一次既有撤销事务&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;精度与单位来自参数schema&quot;, &quot;派生/跟随值明确来源；不能把联动值当手填值&quot;, &quot;不生效时保留值、变灰并写原因&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;连续数值且有实际预览/计算作用。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不为枚举、无意义参数或不可变结果造滑杆；不改物理上下限。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R09&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C04 下拉选择</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;标签&quot;, &quot;当前完整值&quot;, &quot;展开标记&quot;, &quot;选项/选项说明&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;height&quot;: 32, &quot;padding_inline&quot;: 8, &quot;option_height&quot;: 32}, &quot;regular&quot;: {&quot;height&quot;: 40, &quot;padding_inline&quot;: 12, &quot;option_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.select&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.select.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;保留原生Select的方向键、首字定位、Enter/Space和Esc&quot;, &quot;展开与关闭恢复焦点；禁用项原因可读&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;2–3个短互斥值优先分段；二值参数优先方形开关&quot;, &quot;长选项可换行或有完整提示，不缩字藏义&quot;, &quot;不支持选项写原因，不静默删值&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;较多、较长或需逐项说明的离散选项。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不把多选当单选Select；不在选择视图时隐式授权导入。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R07&quot;, &quot;R11&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C05 勾选项</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;勾选图形&quot;, &quot;可点击标签&quot;, &quot;可选短状态/原因&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;glyph&quot;: 16, &quot;min_target&quot;: 24, &quot;row_min_height&quot;: 32, &quot;label_gap&quot;: 8}, &quot;regular&quot;: {&quot;glyph&quot;: 16, &quot;min_target&quot;: 32, &quot;row_min_height&quot;: 40, &quot;label_gap&quot;: 8}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.check&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: {&quot;behavior&quot;: &quot;以静态勾选值+来源文字呈现，不伪造原生readonly属性。&quot;}, &quot;appearance&quot;: &quot;frozen124.check.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.check.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;原生Checkbox语义；Tab定位，Space切换&quot;, &quot;不拦截方向键或新增Shift范围选择&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;标签写被选择的对象/动作&quot;, &quot;只读/禁用原因在同一行下方；不要求悬停才可知&quot;, &quot;mixed仅表示真实混选，不等于未知&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;独立选项、资源选择与关联目标。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不将长期启用状态、页面切换、导入确认混作通用勾选。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R02&quot;, &quot;R07&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>variants</th><td>[&quot;unchecked&quot;, &quot;checked&quot;, &quot;mixed&quot;]</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C06 单选组</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;组标签&quot;, &quot;同一命名组的选项&quot;, &quot;选项说明/禁用原因&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;glyph&quot;: 16, &quot;row_min_height&quot;: 32, &quot;option_gap&quot;: 8}, &quot;regular&quot;: {&quot;glyph&quot;: 16, &quot;row_min_height&quot;: 40, &quot;option_gap&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.radio&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.radio.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Tab进入组；方向键切选，Space确认当前项；保留原生radio行为&quot;, &quot;组内只有一个实际值，焦点与选择分开测试&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;选项名称保持同词性&quot;, &quot;无值写未选择，不编默认选项&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;需要同时比较的少量互斥方案。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不替代二值开关或两个不同动作。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R07&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C07 方形开关</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;明确参数名&quot;, &quot;开/关图形&quot;, &quot;可读状态/禁用原因&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;track_width&quot;: 32, &quot;track_height&quot;: 16, &quot;min_target&quot;: 24, &quot;row_min_height&quot;: 32}, &quot;regular&quot;: {&quot;track_width&quot;: 32, &quot;track_height&quot;: 16, &quot;min_target&quot;: 32, &quot;row_min_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.switch&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.switch.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Tab定位；Space切换；aria-checked跟实际值&quot;, &quot;不从只看状态推断显示/导出开关&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;说明开启后影响什么&quot;, &quot;显示这层、只看、是否导出各有原业务语义，不重命名混用&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;两个值、即时生效的现有布尔参数。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不新增参数；不在参数区重复树上显示这层；不可用于最终执行确认。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R04&quot;, &quot;R08&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>appearance_note</th><td>&quot;32×16方形开关沿用既有V5布局；圆角/开关色来自124已批准角色，不在本提案重定义。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C08 分段选择</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;可访问组名&quot;, &quot;2–3个短互斥选项&quot;, &quot;单一选中标记&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;height&quot;: 32, &quot;segment_min_width&quot;: 48, &quot;padding_inline&quot;: 8}, &quot;regular&quot;: {&quot;height&quot;: 40, &quot;segment_min_width&quot;: 64, &quot;padding_inline&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.segment&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.segment.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;按实际语义用radio-group或tablist&quot;, &quot;radio方向键切值；tab按约定方向键移动焦点/Enter选页&quot;, &quot;不把导航与改参数混进同组&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;短名完整；放不下时整组改Select，不让单项文字竖排&quot;, &quot;选中状态只取真实当前值&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;少量短枚举、现有PC/手机或模式切换。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不放四五个长选项；不自动改平台产物或启动导入。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R07&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C09 模块折叠/子分组</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;展开箭头&quot;, &quot;模块名&quot;, &quot;真实摘要&quot;, &quot;改动数/复位入口&quot;, &quot;平面内容区&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;header_height&quot;: 32, &quot;content_gap&quot;: 8, &quot;module_gap&quot;: 16, &quot;child_indent&quot;: 16}, &quot;regular&quot;: {&quot;header_height&quot;: 40, &quot;content_gap&quot;: 12, &quot;module_gap&quot;: 24, &quot;child_indent&quot;: 16}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.disclosure&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.disclosure.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Enter/Space开合；Tab访问复位与参数&quot;, &quot;开合不修改参数，搜索结束恢复原开合&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;默认摘要短而有单位，缺值写未计算&quot;, &quot;长说明进入按需帮助；不在展开后再套更多/卡片&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;参数模块和已存在子组。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不把每一参数行包成独立卡片；不以折叠隐藏仍需核对的错误。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R04&quot;, &quot;R09&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>default_open</th><td>&quot;沿用当前业务/用户开合记录；不新增硬编码按效果分支。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C10 页签/窗格导航</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;有名称的tablist&quot;, &quot;当前页签&quot;, &quot;对应tabpanel&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;height&quot;: 32, &quot;padding_inline&quot;: 12, &quot;min_target&quot;: 32}, &quot;regular&quot;: {&quot;height&quot;: 40, &quot;padding_inline&quot;: 16, &quot;min_target&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.tabs&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tabs.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;方向键/Home/End移动本地页签焦点，Enter选中；Tab进入内容&quot;, &quot;切回恢复该窗格滚动、选择与焦点&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;页签表示展示区域，不表示已确认或已导入&quot;, &quot;窄屏只切呈现窗格，不改资源/平台/草稿&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;中栏视图、工作台工作区、窄屏导入队列/设置/核对。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;V5右栏保持树在上参数在下，不新加发射器页签或第二套版本页。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R04&quot;, &quot;R05&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C11 菜单</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;触发按钮&quot;, &quot;平面选项列表&quot;, &quot;可选分组分隔&quot;, &quot;危险项与原因&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;item_height&quot;: 32, &quot;padding_inline&quot;: 8, &quot;icon&quot;: 16}, &quot;regular&quot;: {&quot;item_height&quot;: 40, &quot;padding_inline&quot;: 12, &quot;icon&quot;: 18}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.menu&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: {&quot;behavior&quot;: &quot;仅可勾选菜单项使用selected，其余动作项N/A。&quot;}, &quot;appearance&quot;: &quot;frozen124.menu.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;只读语义由所属信息行呈现，本控件不假造可编辑状态。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.menu.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;方向键/Home/End；Enter激活；Esc关闭并回触发器&quot;, &quot;不自造全局快捷键，已有快捷键才显示&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;明确对象与动作&quot;, &quot;库外/危险/不可用项不悄悄消失，按现有权限显示原因&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;结构栏⋯、还原/导出等已有附属动作。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不用菜单隐藏唯一主动作；不将危险执行藏在普通选择项中自动触发。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R04&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C12 对话框</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;标题与作用对象&quot;, &quot;必要正文/表单&quot;, &quot;主要与取消动作&quot;, &quot;错误定位&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;width_min&quot;: 360, &quot;width_max&quot;: 560, &quot;padding&quot;: 16, &quot;action_height&quot;: 32}, &quot;regular&quot;: {&quot;width_min&quot;: 480, &quot;width_max&quot;: 720, &quot;padding&quot;: 24, &quot;action_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.dialog&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.dialog.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;焦点进入、Tab局部循环；Esc按原业务取消；关闭恢复触发焦点&quot;, &quot;不可取消任务须明确原因，不假造取消回滚&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;描述真实范围与后果&quot;, &quot;最终执行不默认勾同意，不用模糊的确定&quot;, &quot;设计稿无真实执行接口&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;既有阻断决策、连接恢复、需集中编辑的任务。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不把每次选项修改改成弹窗；不新增未授权确认步骤。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R08&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C13 悬停提示/F1帮助</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;关联触发器&quot;, &quot;短提示或按需长帮助&quot;, &quot;关闭/返回&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;tooltip_max_width&quot;: 280, &quot;help_max_width&quot;: 440, &quot;trigger_target&quot;: 24}, &quot;regular&quot;: {&quot;tooltip_max_width&quot;: 360, &quot;help_max_width&quot;: 560, &quot;trigger_target&quot;: 32}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.help&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.help.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.help.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.help.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;提示正文没有按下态；触发按钮由C01定义。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.help.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.help.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该控件不拥有异步工作，忙状态由所属任务区域呈现。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.help.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;焦点和悬停都能获取同义短提示；F1沿用已登记行为&quot;, &quot;Esc关闭，保留入口焦点&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;禁用原因/错误不能仅存在提示里&quot;, &quot;不把标签、数值、单位藏进悬停&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;术语、完整长名、计算口径与可选说明。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不承载必做步骤、确认范围或唯一错误原因。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R02&quot;, &quot;R03&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C14 提示条/撤销条</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;状态词/图标&quot;, &quot;简短结果与范围&quot;, &quot;可选撤销/重试/关闭&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;min_height&quot;: 32, &quot;padding&quot;: 8, &quot;action_height&quot;: 32}, &quot;regular&quot;: {&quot;min_height&quot;: 40, &quot;padding&quot;: 12, &quot;action_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.notice&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.notice.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;可键盘访问动作/关闭；非阻断提示不抢焦点&quot;, &quot;可撤销消息不自动消失或被后续消息顶掉&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;真实成功才写已保存/已导出&quot;, &quot;撤销写明范围；不能暗示Ctrl+Z能回滚UE写入&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;局部反馈、可恢复删除、既有工作流结果。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不用短暂toast代替持续错误；不预先显示成功。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R08&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C15 身份/状态标签</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;明确状态词&quot;, &quot;可选对象/版本/证据范围&quot;, &quot;可访问详情&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;min_height&quot;: 20, &quot;padding_inline&quot;: 4, &quot;text_role&quot;: &quot;helper&quot;}, &quot;regular&quot;: {&quot;min_height&quot;: 24, &quot;padding_inline&quot;: 8, &quot;text_role&quot;: &quot;field&quot;}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.status&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.status.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: {&quot;behavior&quot;: &quot;状态由真实只读证据驱动，正文完整可达。&quot;}, &quot;appearance&quot;: &quot;frozen124.status.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.status.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.status.error&quot;, &quot;behavior&quot;: &quot;显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;纯展示不进Tab；确有详情动作才成为有名称的按钮&quot;, &quot;不得仅用颜色传达状态&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;新建/更新/复用/跳过属于计划，不是成功&quot;, &quot;已检查、已导出、UE已保存、用户认可严格分开&quot;, &quot;未知/未验证显示原词，不画成通过&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;草稿、资源修订、连接、检查及实际回执身份。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不把选中态、可执行、模拟完成当资产导入或用户认可。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R07&quot;, &quot;R08&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>truth_model</th><td>&quot;见P10多轴状态真值&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C16 进度/进行中</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;真实阶段名&quot;, &quot;计数/已知进度&quot;, &quot;可用取消/停止动作&quot;, &quot;保留上次有效结果&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;min_height&quot;: 32, &quot;bar_height&quot;: 4, &quot;action_height&quot;: 32}, &quot;regular&quot;: {&quot;min_height&quot;: 40, &quot;bar_height&quot;: 8, &quot;action_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.progress&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.progress.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;只读语义由所属信息行呈现，本控件不假造可编辑状态。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.progress.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.progress.error&quot;, &quot;behavior&quot;: &quot;显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;状态更新不抢焦点；aria-busy/live限必要阶段&quot;, &quot;停止/取消只调用既有任务边界，不改其语义&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;有总量才给比例，没有总量写正在检查/处理中&quot;, &quot;执行结束、检查通过、用户认可不是同一结果&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;烘焙、目录导出、检查、导入等真实长作业。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不编时长/百分比；不把停止显示成全部回滚或完成。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R08&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C17 滚动区域/滚动条</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;真实内容视口&quot;, &quot;明确滚动边界&quot;, &quot;124方头滚动条角色&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;scrollbar_width&quot;: 10, &quot;content_padding&quot;: 8}, &quot;regular&quot;: {&quot;scrollbar_width&quot;: 10, &quot;content_padding&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.scroll&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该控件不拥有异步工作，忙状态由所属任务区域呈现。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.scroll.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;滚动区域可本地聚焦，PageUp/Down/方向键不截获输入编辑&quot;, &quot;回到区域恢复原位置&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;只在溢出时滚动，不造多个空滚动壳&quot;, &quot;日志选中阅读时暂停自动跟随&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;参数区、树、队列、资产表、日志各自职责明确的内容。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;避免卡片里再套卡片滚动；常驻栏必须占真实空间。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R04&quot;, &quot;R05&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+<tr><th>target_exception</th><td>&quot;既有10px滚动条保留；滚轮/触控板/键盘提供等效操作。门禁须登记滚动条命中例外，不宣称其本身为24px控件。&quot;</td></tr>
+</table></details>
+<details><summary>C18 可调分隔条</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;可拖动分隔线&quot;, &quot;可聚焦命中区域&quot;, &quot;当前区域比例/折叠状态&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;hit_size&quot;: 24, &quot;min_target_keyboard&quot;: 24, &quot;step&quot;: 8, &quot;visual_gutter&quot;: 8}, &quot;regular&quot;: {&quot;hit_size&quot;: 24, &quot;min_target_keyboard&quot;: 32, &quot;step&quot;: 8, &quot;visual_gutter&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.splitter&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.splitter.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.splitter.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.splitter.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.splitter.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.splitter.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;只读语义由所属信息行呈现，本控件不假造可编辑状态。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该控件不拥有异步工作，忙状态由所属任务区域呈现。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.splitter.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;沿用V5↑↓调高；Enter折为路径/展开；双击同义&quot;, &quot;可读aria-valuenow/min/max；不改变对象选择&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;写明调整树/参数或时间轴高度&quot;, &quot;高度不够时保证内容而非强制固定栏&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;V5树/参数、中间预览/时间轴等已有可调区域。 命中区可扩入无控件留白，但不得覆盖相邻输入；可见线宽/圆角仍来自124冻结角色。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不新增装饰性拖拽条；不允许拖到核对/参数完全不可见。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R04&quot;, &quot;R05&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C19 结构树行</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;展开箭头槽&quot;, &quot;类型/层号&quot;, &quot;名称&quot;, &quot;改动/输出摘要&quot;, &quot;显示这层&quot;, &quot;只看&quot;, &quot;⋯&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;row_min_height&quot;: 28, &quot;indent_step&quot;: 16, &quot;icon&quot;: 16, &quot;action_target&quot;: 24}, &quot;regular&quot;: {&quot;row_min_height&quot;: 32, &quot;indent_step&quot;: 16, &quot;icon&quot;: 18, &quot;action_target&quot;: 32}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.tree-row&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.tree-row.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;V5↑↓/Home/End走行，←→折叠展开；Enter按现有选择语义&quot;, &quot;行选择与眼睛/只看动作分别可达且不重复触发&quot;, &quot;树行局部roving tabindex，不增加全局键&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;长名允许受控两行，操作列固定；完整名称可达&quot;, &quot;显示这层影响配方/烘焙/导出，只看只影响画面&quot;, &quot;不支持开关写原因；不新增被禁业务能力&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;层、发射器、粒子层、尾缀输出和既有工作台结构。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不用树再造第二套参数/版本导航；不在每行套卡片。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R04&quot;, &quot;R07&quot;, &quot;R08&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>appearance_note</th><td>&quot;层级用缩进、箭头与已有线色；不增新背景/描边/圆角。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C20 资源/效果列表行</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;同修订缩略图或有原因占位&quot;, &quot;名称&quot;, &quot;来源/版本/平台/规格&quot;, &quot;实际状态&quot;, &quot;选择与现有附属动作&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;row_min_height&quot;: 56, &quot;thumbnail&quot;: 40, &quot;gap&quot;: 8}, &quot;regular&quot;: {&quot;row_min_height&quot;: 72, &quot;thumbnail&quot;: 56, &quot;gap&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.resource-row&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.resource-row.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;单击只选择；双击/Enter仅沿现有定位/打开语义&quot;, &quot;附属动作独立焦点，资源列表不在双击间自动跳动&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;长中文名受控多行，不把省略号当完整值&quot;, &quot;缩略图缺失就写缺失，不能借旧图冒充同版本&quot;, &quot;素材库与交付资源库按实际职责命名&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;烘焙器库、导入队列、交付修订、编排资源列表。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不把选择当加入节目/确认导入；不混用框架模板和已绑定资源状态。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R07&quot;, &quot;R08&quot;, &quot;R09&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C21 资产/产物表</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;完整列头&quot;, &quot;按作用范围分组的数据行&quot;, &quot;PC/手机或类型列&quot;, &quot;选择/计划/真实结果&quot;, &quot;展开详情&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;header_min_height&quot;: 32, &quot;row_min_height&quot;: 32, &quot;cell_padding&quot;: 8}, &quot;regular&quot;: {&quot;header_min_height&quot;: 40, &quot;row_min_height&quot;: 40, &quot;cell_padding&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.table&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.table.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;使用表格语义；可交互单元可Tab到达&quot;, &quot;窄屏优先显示必要列，其余在同一行详情展开；不丢实际资产名&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;计划列用新增/更新/复用/跳过，结果列来自回执&quot;, &quot;不可用项写原因，未知值不补0或成功&quot;, &quot;行或平台选择变化作废对应旧确认&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;每层产物表、导入资产核对、交付引用表。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不在单元格内放多层卡片或长文段；不以字段更窄隐藏确认信息。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R05&quot;, &quot;R08&quot;, &quot;R09&quot;, &quot;R10&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C22 版本/修订列表</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;对象/修订标识&quot;, &quot;来源指纹范围&quot;, &quot;当前引用/新版本状态&quot;, &quot;显式打开/应用动作&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;row_min_height&quot;: 40, &quot;gap&quot;: 8}, &quot;regular&quot;: {&quot;row_min_height&quot;: 48, &quot;gap&quot;: 12}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.version-row&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.version-row.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;Tab访问打开/应用；选择修订与应用为不同动作&quot;, &quot;关闭返回原对象及视野&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;配方版本、导出修订、UE回执、演出固定引用分开&quot;, &quot;新修订不静默替换当前节目引用&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;版本历史、不可变导出修订、演出引用升级。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不创建第二套版本系统；不把当前列表行选中画成已应用/已导入。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R08&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C23 数值/单位摘要</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;标签&quot;, &quot;原子值+单位组&quot;, &quot;组间语义分隔&quot;, &quot;来源/新旧状态&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;min_height&quot;: 24, &quot;group_gap&quot;: 8, &quot;text_role&quot;: &quot;field&quot;}, &quot;regular&quot;: {&quot;min_height&quot;: 32, &quot;group_gap&quot;: 12, &quot;text_role&quot;: &quot;body&quot;}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.metric&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.metric.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;该组件无持久选择语义；不新增选中样式。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.metric.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.metric.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.metric.error&quot;, &quot;behavior&quot;: &quot;显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;只读摘要默认不进Tab；确有帮助时单独提供可访问入口&quot;, &quot;复制文本按完整语义顺序&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;75 帧 · 5 张为布局样例，不是实际计算结果&quot;, &quot;数字与单位不拆行，允许只在组间换行&quot;, &quot;预计/上次/当前/待计算必须跟实际指纹状态&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;帧数/张数、时长、计数、节奏/产物摘要。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不从帧数猜张数；不把估算或旧结果标成检查通过。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R08&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C24 流程步骤/阶段摘要</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;当前步骤名&quot;, &quot;当前实际进度&quot;, &quot;已完成的证据范围&quot;, &quot;当前可用下一步&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;min_height&quot;: 32, &quot;step_gap&quot;: 12}, &quot;regular&quot;: {&quot;min_height&quot;: 40, &quot;step_gap&quot;: 16}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.stepper&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.stepper.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.stepper.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.stepper.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.stepper.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.stepper.error&quot;, &quot;behavior&quot;: &quot;显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;只显示的步骤不进Tab；可回访步骤才用按钮&quot;, &quot;回访核对不会自动确认或执行&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;目录导出、核对、导入、登记是不同阶段&quot;, &quot;窄高压成一步/总步数及当前名，不重复画大页头&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;目录交付/核对/执行前流程。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不以浏览到下一页就勾完成；不让步骤条压没核对内容。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R05&quot;, &quot;R08&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C25 空/错误/只读信息区</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;明确当前状态&quot;, &quot;真实原因/范围&quot;, &quot;可行下一步&quot;, &quot;可展开详情&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;padding&quot;: 12, &quot;title_role&quot;: &quot;section&quot;, &quot;action_height&quot;: 32}, &quot;regular&quot;: {&quot;padding&quot;: 16, &quot;title_role&quot;: &quot;section&quot;, &quot;action_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.empty-error&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.empty-error.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.empty-error.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: false, &quot;appearance&quot;: null, &quot;behavior&quot;: &quot;纯展示区域不拥有此交互态；内部确有动作时由C01/C02等子组件承担。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.empty-error.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.empty-error.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.empty-error.error&quot;, &quot;behavior&quot;: &quot;显示真实错误/未知范围与可行下一步，沿用124对应状态外观；不得为纯展示元素设置伪造的输入invalid语义。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;必要动作可达，阻断错误可定位首个字段&quot;, &quot;非阻断空状态不抢焦点&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;空库、未连接、未检查、失败、只读分别描述&quot;, &quot;不能用空白或伪造资源遮掩读取失败&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;无数据、连接断开、检查错误、只读模板说明。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不默认再套一张高亮大卡；不把无数据当正常通过。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R05&quot;, &quot;R08&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C26 颜色段/Ramp领域外框</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;标题/当前层来源→原有色段编辑→真实预览→按需帮助&quot;, &quot;只统一标题、边界、焦点、选择与错误位置&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;header_height&quot;: 32, &quot;outer_gap&quot;: 8, &quot;control_height&quot;: 32}, &quot;regular&quot;: {&quot;header_height&quot;: 40, &quot;outer_gap&quot;: 12, &quot;control_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.domain-frame&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;沿用现有领域编辑键盘，不新增全局快捷键&quot;, &quot;编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;名称/单位/当前对象完整可达&quot;, &quot;预览、计算、UE验证和用户认可分开&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;已有领域编辑器与同类任务。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R07&quot;, &quot;R09&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>domain_boundary</th><td>&quot;内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C27 曲线领域外框</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;标题/单位→原有曲线画布→关键点/数值→范围与错误&quot;, &quot;只统一标题、边界、焦点、选择与错误位置&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;header_height&quot;: 32, &quot;outer_gap&quot;: 8, &quot;control_height&quot;: 32}, &quot;regular&quot;: {&quot;header_height&quot;: 40, &quot;outer_gap&quot;: 12, &quot;control_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.domain-frame&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;沿用现有领域编辑键盘，不新增全局快捷键&quot;, &quot;编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;名称/单位/当前对象完整可达&quot;, &quot;预览、计算、UE验证和用户认可分开&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;已有领域编辑器与同类任务。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R07&quot;, &quot;R09&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>domain_boundary</th><td>&quot;内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C28 粒子图领域外框</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;当前粒子图身份→原有画布或结构树→选中项参数→原有预览&quot;, &quot;只统一标题、边界、焦点、选择与错误位置&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;header_height&quot;: 32, &quot;outer_gap&quot;: 8, &quot;control_height&quot;: 32}, &quot;regular&quot;: {&quot;header_height&quot;: 40, &quot;outer_gap&quot;: 12, &quot;control_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.domain-frame&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;沿用现有领域编辑键盘，不新增全局快捷键&quot;, &quot;编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;名称/单位/当前对象完整可达&quot;, &quot;预览、计算、UE验证和用户认可分开&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;已有领域编辑器与同类任务。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R04&quot;, &quot;R07&quot;, &quot;R10&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>domain_boundary</th><td>&quot;内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details>
+<details><summary>C29 Timeline领域外框</summary><table>
+<tr><th>level</th><td>&quot;组件&quot;</td></tr>
+<tr><th>status</th><td>&quot;建议稿，未获用户审定、未实现&quot;</td></tr>
+<tr><th>tools</th><td>[&quot;烘焙器&quot;, &quot;导入器&quot;, &quot;编排工作台&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;工具/范围→时间尺→原有轨道与片段→选中项详情→缩放与状态&quot;, &quot;只统一标题、边界、焦点、选择与错误位置&quot;]</td></tr>
+<tr><th>dimensions_css_px</th><td>{&quot;compact&quot;: {&quot;header_height&quot;: 32, &quot;outer_gap&quot;: 8, &quot;control_height&quot;: 32}, &quot;regular&quot;: {&quot;header_height&quot;: 40, &quot;outer_gap&quot;: 12, &quot;control_height&quot;: 40}, &quot;selection&quot;: &quot;整页统一继承compact或regular密度profile；字阶/行高/留白也随profile变化，同一结构和124画风；不只改大按钮。&quot;}</td></tr>
+<tr><th>frozen_appearance_ref</th><td>&quot;frozen124.domain-frame&quot;</td></tr>
+<tr><th>state_matrix</th><td>{&quot;default&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;显示真实当前值、对象与作用范围。&quot;}, &quot;hover&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.hover&quot;, &quot;behavior&quot;: &quot;沿用124文字/边框变化，不增光环、阴影或缩放。&quot;}, &quot;focus&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.focus&quot;, &quot;behavior&quot;: &quot;键盘焦点可见且不被相邻裁剪容器截去。&quot;}, &quot;pressed&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.pressed&quot;, &quot;behavior&quot;: &quot;按下状态与业务完成分开；不靠按下就改变完成标签。&quot;}, &quot;selected&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.selected&quot;, &quot;behavior&quot;: &quot;由真实选中/布尔值驱动，并提供对应aria状态。&quot;}, &quot;disabled&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.disabled&quot;, &quot;behavior&quot;: &quot;保留当前值与就地原因；不能只靠悬停解释，也不能把未知状态当false。&quot;}, &quot;readonly&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.readonly&quot;, &quot;behavior&quot;: &quot;完整显示可复制值及来源，避免伪装为低对比度禁用输入。&quot;}, &quot;loading&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.default&quot;, &quot;behavior&quot;: &quot;保留已有值，标真实进行中与作用范围，阻止重复提交；未有进度时不编百分比。&quot;}, &quot;error&quot;: {&quot;applicable&quot;: true, &quot;appearance&quot;: &quot;frozen124.domain-frame.error&quot;, &quot;behavior&quot;: &quot;原因、影响范围与可执行下一步就地显示；值不丢失，关联aria-describedby/invalid。&quot;}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;沿用现有领域编辑键盘，不新增全局快捷键&quot;, &quot;编辑点与视图操作的焦点/撤销范围分别定义并保持现有模型&quot;]</td></tr>
+<tr><th>copy_rules</th><td>[&quot;名称/单位/当前对象完整可达&quot;, &quot;预览、计算、UE验证和用户认可分开&quot;]</td></tr>
+<tr><th>use_when</th><td>&quot;已有领域编辑器与同类任务。&quot;</td></tr>
+<tr><th>do_not_use_when</th><td>&quot;不为统一外框重写模拟/曲线插值/粒子模型/时间数据；不套多层卡片。&quot;</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R06&quot;, &quot;R07&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>implementation_boundary</th><td>&quot;只提出结构与规格；业务值、撤销、保存、导出、确认指纹及执行接口仍由现有控制器负责。&quot;</td></tr>
+<tr><th>domain_boundary</th><td>&quot;内容模型、颜色、物理、关键帧、时序、资源引用均保持；Timeline标签仅按P12改变呈现。&quot;</td></tr>
+<tr><th>density_text_binding</th><td>{&quot;compact&quot;: &quot;foundation.density_profiles.compact.typography_roles_css_px&quot;, &quot;regular&quot;: &quot;foundation.density_profiles.regular.typography_roles_css_px&quot;}</td></tr>
+</table></details><h2 id="patterns">第三层：14种组合模式</h2>
+<details><summary>P01 统一参数行</summary><table>
+<tr><th>components</th><td>[&quot;C02&quot;, &quot;C03&quot;, &quot;C04&quot;, &quot;C05&quot;, &quot;C06&quot;, &quot;C07&quot;, &quot;C08&quot;, &quot;C13&quot;, &quot;C15&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;名称/改动标记&quot;, &quot;控件&quot;, &quot;值&quot;, &quot;单位&quot;, &quot;条件或来源在下一行&quot;]</td></tr>
+<tr><th>dimensions</th><td>{&quot;compact&quot;: {&quot;min_height&quot;: 32, &quot;label_width&quot;: [96, 136], &quot;value_width&quot;: 72, &quot;unit_width&quot;: 24, &quot;gap&quot;: 8}, &quot;regular&quot;: {&quot;min_height&quot;: 40, &quot;label_width&quot;: [120, 160], &quot;value_width&quot;: 88, &quot;unit_width&quot;: 32, &quot;gap&quot;: 8}}</td></tr>
+<tr><th>rules</th><td>[&quot;参数名不重复单位；长名最多受控两行，值与单位仍完整&quot;, &quot;空间不足时整行切为标签在上/控件在下，不任意挤窄四列&quot;, &quot;保持既有schema、INERT、撤销、搜索、仅改动与保存&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R09&quot;, &quot;R12&quot;]</td></tr>
+</table></details>
+<details><summary>P02 平面模块与帮助</summary><table>
+<tr><th>components</th><td>[&quot;C09&quot;, &quot;C13&quot;, &quot;C15&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;模块标题+真实摘要+复位&quot;, &quot;平面参数行&quot;, &quot;必要短条件&quot;, &quot;按需长帮助&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;工作区一层表面，模块用留白/已有分隔线组织；不默认卡片套卡片&quot;, &quot;子组只增加一个缩进层级，不再套背景容器&quot;, &quot;保留用户开合和搜索结束后的原状态&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R02&quot;, &quot;R04&quot;, &quot;R09&quot;]</td></tr>
+</table></details>
+<details><summary>P03 联动勾选列表（重点）</summary><table>
+<tr><th>components</th><td>[&quot;C05&quot;, &quot;C13&quot;, &quot;C15&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;关联图层标题+已选/可用数量&quot;, &quot;一句短摘要&quot;, &quot;每个目标独立一行：勾选→层号/名称→作用/禁用原因&quot;, &quot;长说明按需打开&quot;]</td></tr>
+<tr><th>dimensions</th><td>{&quot;compact&quot;: {&quot;item_min_height&quot;: 32, &quot;check_target&quot;: 24, &quot;label_gap&quot;: 8}, &quot;regular&quot;: {&quot;item_min_height&quot;: 40, &quot;check_target&quot;: 32, &quot;label_gap&quot;: 8}}</td></tr>
+<tr><th>keyboard</th><td>[&quot;原生checkbox逐行Tab/Space，不增加Shift范围或全局键&quot;, &quot;禁用原因就地可读，不要求聚焦已禁用input&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;绝不把第1层勾选接在长句末尾；所有续行对齐名称列&quot;, &quot;mixed只由真实混选推导；未知/正在读取不等于未勾选&quot;, &quot;业务已有全选才复用，不为组件增加新功能&quot;, &quot;一次切换走原事务与确认失效规则；不自动删除禁用成员的原选择&quot;]</td></tr>
+<tr><th>truth_examples</th><td>[{&quot;display&quot;: &quot;关联图层 · 已选2/3个可用层&quot;, &quot;status&quot;: &quot;布局样例，非当前资产数据&quot;}, {&quot;display&quot;: &quot;正在读取可关联图层&quot;, &quot;status&quot;: &quot;需真实异步状态&quot;}, {&quot;display&quot;: &quot;此层不支持联动：原原因&quot;, &quot;status&quot;: &quot;原控制器原因，非设计器编造&quot;}]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R02&quot;, &quot;R08&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P04 预设按钮组</summary><table>
+<tr><th>components</th><td>[&quot;C01&quot;, &quot;C08&quot;, &quot;C23&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;组名&quot;, &quot;同一高度的预设动作&quot;, &quot;当前值/估算摘要&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;×0.8…×2、用这个、试算等复用现有命令；不增加新算法&quot;, &quot;动作预设不是长期选中值；只有真正互斥枚举才分段&quot;, &quot;试算状态明确预计，不冒充已烘焙结果&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R03&quot;, &quot;R12&quot;]</td></tr>
+</table></details>
+<details><summary>P05 节奏/产物摘要：75帧·5张（重点）</summary><table>
+<tr><th>components</th><td>[&quot;C23&quot;, &quot;C13&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;摘要名称&quot;, &quot;75 帧&quot;, &quot;组间分隔&quot;, &quot;5 张&quot;, &quot;平台与预计/当前/上次状态&quot;]</td></tr>
+<tr><th>rendering_rules</th><td>[&quot;值与单位分别是一个不可拆的语义组；只允许在组间换行&quot;, &quot;窄时整个5张组移到下一行且与值组左边界对齐，不让张成为孤字&quot;, &quot;不把75帧和5张分别包成胶囊/小卡片&quot;, &quot;屏幕阅读文本为75帧，5张贴图，平台，当前结果状态&quot;]</td></tr>
+<tr><th>value_contract</th><td>[&quot;两数必须读取同一业务计算结果与指纹，不使用ceil帧数/每张容量猜测&quot;, &quot;没有结果写待计算；估算写预计；参数变更后保留上次结果并明确参数已改&quot;, &quot;当产物不使用序列时写真实不适用原因，不补0帧0张&quot;]</td></tr>
+<tr><th>example</th><td>{&quot;frames&quot;: 75, &quot;sheets&quot;: 5, &quot;label&quot;: &quot;布局样例&quot;, &quot;asset_validation&quot;: &quot;未宣称已检查/已导出/已导入&quot;}</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R03&quot;, &quot;R08&quot;, &quot;R12&quot;]</td></tr>
+</table></details>
+<details><summary>P06 V5树与参数组合</summary><table>
+<tr><th>components</th><td>[&quot;C19&quot;, &quot;C18&quot;, &quot;C09&quot;, &quot;C02&quot;, &quot;C15&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;身份/版本/审阅条&quot;, &quot;结构树&quot;, &quot;可调分隔&quot;, &quot;参数搜索/仅改动/英文名&quot;, &quot;平面模块&quot;, &quot;相对打开时改动摘要&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;保持右栏一列，不引入新页签&quot;, &quot;常规高度沿用参数保底520px的V5默认；树至少5行、至多可用区域一半且不超实际内容&quot;, &quot;高度不足时用现有折成路径与窗格展开能力让参数可达；自适应默认属于待审设计提议，不静默改宪章&quot;, &quot;眼睛=显示这层/影响导出；只看=只影响画面，不能互相代替&quot;, &quot;紧凑/常规各提供整页树与参数布局；密度差异不改变当前对象、树展开和参数值。&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R04&quot;, &quot;R08&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P07 顶行操作与搜索筛选</summary><table>
+<tr><th>components</th><td>[&quot;C01&quot;, &quot;C10&quot;, &quot;C11&quot;, &quot;C02&quot;, &quot;C08&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;当前工作区/视图&quot;, &quot;一个主要动作区&quot;, &quot;次要动作&quot;, &quot;搜索与同范围筛选&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;V5中栏左视图右动作，导出仍唯一&quot;, &quot;窄时按既有优先级先缩短低频文字，再放入已有菜单；不隐藏唯一主入口&quot;, &quot;筛选不改变实际资产选择/数据，返回恢复原上下文&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R01&quot;, &quot;R04&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P08 逐资产核对与确认</summary><table>
+<tr><th>components</th><td>[&quot;C20&quot;, &quot;C21&quot;, &quot;C15&quot;, &quot;C23&quot;, &quot;C01&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;当前包/平台/修订&quot;, &quot;实际资产名与处理计划&quot;, &quot;完整可达的目标与覆盖范围&quot;, &quot;真实检查结果&quot;, &quot;确认范围与最后执行动作&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;浏览/选择/切平台不算确认；确认不等于导入&quot;, &quot;源包/命名/目标/平台/选择改变使旧确认失效，由原控制器判定&quot;, &quot;核对必须可见或可滚达，不能只留下执行按钮&quot;, &quot;执行按钮状态由现有确认指纹和连接条件决定，设计层不能强行解锁&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R05&quot;, &quot;R08&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P09 空/错误/进行中与恢复</summary><table>
+<tr><th>components</th><td>[&quot;C14&quot;, &quot;C16&quot;, &quot;C25&quot;]</td></tr>
+<tr><th>structure</th><td>[&quot;真实对象与当前阶段&quot;, &quot;原因/计数&quot;, &quot;可操作的恢复入口&quot;, &quot;保留旧有效内容&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;空库、读取失败、权限拒绝、待连接分别表达&quot;, &quot;等待与重试不丢参数、队列、选择、滚动和日志阅读位置&quot;, &quot;仅使用现有取消/停止/重试能力，不新增后台自动执行&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R08&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P10 多轴状态真值（重点）</summary><table>
+<tr><th>components</th><td>[&quot;C15&quot;, &quot;C16&quot;, &quot;C14&quot;]</td></tr>
+<tr><th>axes</th><td>{&quot;recipe&quot;: [&quot;未保存&quot;, &quot;保存中&quot;, &quot;已保存&quot;, &quot;保存失败&quot;], &quot;artifact&quot;: [&quot;无结果&quot;, &quot;烘焙中&quot;, &quot;旧结果&quot;, &quot;当前结果&quot;, &quot;取消&quot;, &quot;失败&quot;], &quot;validation&quot;: [&quot;未检查&quot;, &quot;检查中&quot;, &quot;检查通过&quot;, &quot;检查失败&quot;, &quot;检查已过期&quot;], &quot;directory&quot;: [&quot;未导出&quot;, &quot;写入中&quot;, &quot;已导出&quot;, &quot;部分写入&quot;, &quot;失败&quot;], &quot;import_plan&quot;: [&quot;待检查&quot;, &quot;待核对&quot;, &quot;确认已失效&quot;, &quot;可执行&quot;], &quot;ue&quot;: [&quot;未连接&quot;, &quot;未导入&quot;, &quot;执行中&quot;, &quot;部分完成&quot;, &quot;UE已保存&quot;, &quot;失败&quot;], &quot;acceptance&quot;: [&quot;未经UE验证&quot;, &quot;已实播待认可&quot;, &quot;用户已认可&quot;]}</td></tr>
+<tr><th>evidence_rules</th><td>[&quot;每个轴只由相应真实回执/指纹/用户决定驱动&quot;, &quot;检查通过注明检查范围与版本；不等同UE实播通过&quot;, &quot;计划新增/更新/复用/跳过不使用完成语义&quot;, &quot;原型页面只显示实际证据状态；若做组件状态样例，必须独立标注状态样例并与真实资源隔离&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R08&quot;, &quot;R12&quot;]</td></tr>
+</table></details>
+<details><summary>P11 窄高导入工作区（重点）</summary><table>
+<tr><th>components</th><td>[&quot;C10&quot;, &quot;C18&quot;, &quot;C24&quot;, &quot;C21&quot;, &quot;C01&quot;, &quot;C17&quot;]</td></tr>
+<tr><th>height_budget_css_px</th><td>{&quot;compact&quot;: {&quot;app_header&quot;: 40, &quot;object_context&quot;: 28, &quot;pane_tabs&quot;: 32, &quot;action_bar_max&quot;: 48, &quot;status_inline_max&quot;: 20}, &quot;regular&quot;: {&quot;app_header&quot;: 48, &quot;object_context&quot;: 32, &quot;pane_tabs&quot;: 40, &quot;action_bar_max&quot;: 56, &quot;status_inline_max&quot;: 20}, &quot;review_area_min&quot;: 176, &quot;review_area_preferred_min&quot;: 240}</td></tr>
+<tr><th>responsive_rules</th><td>[&quot;根据可用高度同时判断，不只按宽度媒体查询&quot;, &quot;可用内容不足240px时步骤条压成当前步骤摘要，日志不再常驻高面板，进入可展开的既有日志入口&quot;, &quot;窄屏队列/设置/核对为同一对象的呈现页签；核对区独立滚动，操作区占真实布局空间&quot;, &quot;两档都在CSS683×384/DPR2代表档保留至少176px可滚动核对区；常规字体不临时缩成紧凑字体。若连最小预算也放不下，取消固定定位并让整页纵向滚动，不用零高内容保住执行按钮。&quot;, &quot;执行入口仍可键盘到达，错误与确认范围不被页头/日志/动作栏遮住&quot;, &quot;不自动确认、不自动切换资源、不改变目录/UE接口&quot;]</td></tr>
+<tr><th>prototype_acceptance</th><td>[&quot;同一合成包可查看实际名称/计划/目标与错误&quot;, &quot;最终动作可达且只有真实确认条件满足才启用&quot;, &quot;标题/日志/固定栏不覆盖核对内容&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R05&quot;, &quot;R08&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P12 Timeline标签随缩放分级（重点）</summary><table>
+<tr><th>components</th><td>[&quot;C29&quot;, &quot;C13&quot;, &quot;C15&quot;, &quot;C23&quot;]</td></tr>
+<tr><th>label_priority</th><td>[&quot;当前选中片段&quot;, &quot;键盘焦点/悬停片段&quot;, &quot;其他不碰撞片段&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;只改标签呈现，不改片段时刻、时长、点位、引用、重叠关系或颜色&quot;, &quot;优先用实际文字测量与可见片段宽度决定是否完整显示，不以中文字符数硬猜&quot;, &quot;完整文本+内边距能放下才全名；中等宽显示短名/省略；窄宽只显示可读编号或色块&quot;, &quot;全曲概览默认不为所有重叠片段画全名；选中名在检查器完整显示&quot;, &quot;标签裁在所属片段可见区域，不扩写到邻片段或跨轨覆盖&quot;, &quot;真实碰撞保持业务几何，可用既有轨道/概览信息呈现，不能为避叠字挪动或删除片段&quot;, &quot;缩放是视图状态，不进节目数据撤销；沿用现有定位/放大时间轴入口，不新增全局快捷键&quot;]</td></tr>
+<tr><th>size_guidance_css_px</th><td>{&quot;full_name&quot;: &quot;textMeasuredWidth + 16 &lt;= visibleClipWidth&quot;, &quot;short_name&quot;: &quot;visibleClipWidth &gt;= 72且实际短名能放下&quot;, &quot;identifier&quot;: &quot;24 &lt;= visibleClipWidth &lt; 72且编号能放下&quot;, &quot;overview_marker&quot;: &quot;visibleClipWidth &lt; 24不画强塞文字&quot;}</td></tr>
+<tr><th>accessibility</th><td>[&quot;小片段领域图形的命中例外须登记；保留现有键盘选择/检查器完整名称与放大入口作为替代&quot;, &quot;不得为了24px命中宽度让相邻片段点击区互相覆盖&quot;, &quot;Tooltip提供全名/起止/时长，键盘焦点也可读&quot;]</td></tr>
+<tr><th>test_cases</th><td>[&quot;真实密集全曲&quot;, &quot;长中文名&quot;, &quot;多片段时间重叠&quot;, &quot;选中/悬停/焦点&quot;, &quot;局部放大&quot;, &quot;三档+200%等效窄视口&quot;, &quot;Chrome/Edge&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R06&quot;, &quot;R07&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P13 固定修订引用与资源行</summary><table>
+<tr><th>components</th><td>[&quot;C20&quot;, &quot;C22&quot;, &quot;C15&quot;, &quot;C21&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;基础模板库、花型模板、编排模板与烘焙器交付资源各有清晰中文名称&quot;, &quot;选择资源只是选中；加入/绑定/升级沿用原显式动作&quot;, &quot;显示真实修订与缺图/待导入/待标定，不用旧图、模拟UE状态或近似名称代替真实证据&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R08&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<details><summary>P14 长名与路径</summary><table>
+<tr><th>components</th><td>[&quot;C02&quot;, &quot;C13&quot;, &quot;C19&quot;, &quot;C20&quot;, &quot;C21&quot;]</td></tr>
+<tr><th>rules</th><td>[&quot;对象名可受控多行；数值与单位不可拆；路径在信息区按需展开/复制&quot;, &quot;截断必须有键盘可用的完整内容；不能让资产核对名称仅剩省略号&quot;, &quot;辅助文字对齐所属内容列，不接在勾选句末&quot;]</td></tr>
+<tr><th>root_cause_mapping</th><td>[&quot;R02&quot;, &quot;R03&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+</table></details>
+<h2 id="templates">第四层：8种页面模板</h2>
+<details><summary>T01 烘焙器V5编辑</summary><table>
+<tr><th>tool</th><td>&quot;烘焙器&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;左侧效果库C20&quot;, &quot;中栏P07+原有预览+时间轴C29&quot;, &quot;右栏P06&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;保留左库/中预览/右结构参数；右栏仅一列，树和参数由C18分隔。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;先按已有左右栏开关与分隔能力降低常驻占用，保留当前对象/参数/撤销/时间。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;独立资产栏&quot;, &quot;右栏新页签&quot;, &quot;卡片套卡片&quot;, &quot;重复导出入口&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R01&quot;, &quot;R04&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T02 烘焙器交付清单</summary><table>
+<tr><th>tool</th><td>&quot;烘焙器&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;引擎回放预览&quot;, &quot;P05/P08清单窄栏&quot;, &quot;原右栏按已有开关可收起&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;清单按V5为中栏30%、宽320–420px；优先预览，不盖画布；四块为名字/每层出什么/包里有什么/导入范围。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;中栏不能同时保住预览和320px清单时用已有侧栏/抽屉能力；返回恢复原布局与对象。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;大字号结果卡&quot;, &quot;交付页第二个导出按钮&quot;, &quot;把质量检查与可以操作混成通过&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R03&quot;, &quot;R08&quot;, &quot;R09&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T03 导入核对工作区（独立与原工作台适配）</summary><table>
+<tr><th>tool</th><td>&quot;导入器&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;C24紧凑阶段&quot;, &quot;资源队列C20&quot;, &quot;平面设置P01/P02&quot;, &quot;逐资产核对P08&quot;, &quot;真实动作栏+可展开日志&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;两个入口共用呈现模板与组件；原有目录/UE/登记/回执适配器仍分别保留。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;必须应用P11高度预算与同对象队列/设置/核对页签，不留下零高核对区。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;步骤条大卡&quot;, &quot;核对卡嵌资产卡嵌错误卡&quot;, &quot;视图切换自动确认&quot;, &quot;任何原型UE写入&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R05&quot;, &quot;R07&quot;, &quot;R08&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T04 编排演出</summary><table>
+<tr><th>tool</th><td>&quot;编排工作台&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;编排资源C20&quot;, &quot;原舞台预览&quot;, &quot;C29+P12单一时间轴&quot;, &quot;平面检查器P01/P02&quot;, &quot;P07已有保存/交付&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;保留三栏和原场景/点位/节目模型；时间轴标签按缩放而非全量叠字。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;使用已有面板与预览/时间轴分隔，当前片段、时间范围与主动作保持可达。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;重做节目模型&quot;, &quot;把片段视图切换当数据改动&quot;, &quot;重叠事件挪时间来美化&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R06&quot;, &quot;R07&quot;, &quot;R09&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T05 编排资源/模板库</summary><table>
+<tr><th>tool</th><td>&quot;编排工作台&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;P07搜索筛选&quot;, &quot;P13资源修订行&quot;, &quot;原有比例/效果预览&quot;, &quot;平面只读/绑定详情&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;基础模板与交付资源用准确中文职责命名；同修订缩略图、平台、时长、尺度与真实状态完整可达。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;详情按同对象窗格切换，不新增第二套版本/节目上下文。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;把libraryKind内部值当用户文案&quot;, &quot;读取即加入节目&quot;, &quot;未导入显示已导入&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R08&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T06 领域编辑（粒子图/Ramp/曲线）</summary><table>
+<tr><th>tool</th><td>&quot;三工具&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;T01或T04既有工作区&quot;, &quot;C26/C27/C28外框&quot;, &quot;P01参数与P02模块&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;统一外框与状态，不改变领域画布、物理/曲线模型；不为领域编辑再开第二套页面系统。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;当前对象与精确数值可达，画布/详情可切窗格但不改数据。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;领域控件里再放业务卡片栈&quot;, &quot;只统一外框就宣称内部交互通过&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R04&quot;, &quot;R07&quot;, &quot;R09&quot;, &quot;R12&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T07 错误/连接恢复/既有任务对话</summary><table>
+<tr><th>tool</th><td>&quot;三工具&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;C12&quot;, &quot;P09&quot;, &quot;P10&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;原因、范围、下一步与取消边界明确；用真实业务状态，不靠样例成功兜底。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;正文单一可滚区，动作占真实空间；关闭恢复焦点。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;对每个选择加确认弹窗&quot;, &quot;Esc暗示撤销UE写入&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R08&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<details><summary>T08 独立组件状态样板（后续草稿）</summary><table>
+<tr><th>tool</th><td>&quot;设计样板&quot;</td></tr>
+<tr><th>composition</th><td>[&quot;全部组件的适用状态&quot;, &quot;紧凑/常规用途尺寸&quot;, &quot;根因与覆盖映射&quot;]</td></tr>
+<tr><th>layout</th><td>&quot;独立样板不占正式工具侧栏；所有演示都标状态样例/布局样例，与真实资产状态分开。&quot;</td></tr>
+<tr><th>narrow</th><td>&quot;用同一数据样例核对三档及200%等效布局，不使用旧invalid截图。&quot;</td></tr>
+<tr><th>avoid</th><td>[&quot;用户未审前发布正式库&quot;, &quot;样例数据或按钮真的连接目录/UE&quot;, &quot;把组件样板当真实任务验收&quot;]</td></tr>
+<tr><th>roots</th><td>[&quot;R01&quot;, &quot;R07&quot;, &quot;R10&quot;, &quot;R11&quot;]</td></tr>
+<tr><th>density_comparison</th><td>{&quot;compact&quot;: &quot;整页按compact字阶、行高、控件、间距及栏宽重排&quot;, &quot;regular&quot;: &quot;整页按regular字阶、行高、控件、间距及栏宽重排；默认推荐&quot;, &quot;review_control&quot;: &quot;只在设计审阅工具栏切换&quot;, &quot;same_content_required&quot;: true}</td></tr>
+</table></details>
+<h2 id="behavior">简化与D1–D7行为说明</h2><table><tr><th>要求</th><th>具体稿件 / 简化</th><th>保留能力与上下文</th></tr>
+<tr><th>D1</th><td>交付页默认收编辑右栏；1366常规预览793.8px/主工作区1134px=70%；实际静态图适配约504.8×496px。200%改预览/清单窗格。</td><td>主动打开编辑栏；离开回原编辑节点、搜索、折叠与滚动。不是改变观察距离。</td></tr>
+<tr><th>D2</th><td>参数顶部固定一行当前编辑路径；不再叠两张对象卡。</td><td>RT6与粒子图源节点名称和父子层级来自本轮DOM，树滚走仍能知道编辑对象。</td></tr>
+<tr><th>D3</th><td>一个观察…入口，当前只看摘要+恢复全部；不保留第二条常驻长工具条。</td><td>树眼睛与靶心分开；RT6输出子项仅靶心，不给输出伪造配方眼睛。原临时观察能力实施时集中迁入，不删除。</td></tr>
+<tr><th>D4</th><td>观察菜单长文自动换行，按视口限制高度，一级命令+按需说明。</td><td>可滚动到所有命令；Esc关闭并返回入口，不新建多级菜单。</td></tr>
+<tr><th>D5</th><td>搜索只显示匹配字段与必要模块归属，显示当前节点范围/数量；无结果清楚。</td><td>清空恢复搜索前折叠和滚动。仅改动、英文名、还原、锁定和帮助都有局部示意状态。</td></tr>
+<tr><th>D6</th><td>名称旁保存名称，顶行为保存/另存；名称、每层输出、包内容与预检、导入范围四块。</td><td>配方/当前烘焙/已有素材包分开。唯一素材包导出入口；PC/手机同源；未生成原因就地显示，不画虚假通过。</td></tr>
+<tr><th>D7</th><td>去掉装饰性移动与树重排动画，切页直接切换。</td><td>hover/focus反馈沿124；reduced-motion关闭非必要动画。</td></tr>
+</table><p>全歌时间轴只做标签LOD：完整名→短名→编号→标记；选中检查器给完整名，不改真实轨道/片段几何。导入器短高核对区回文档流，内容最少176px，日志默认折叠，执行按钮始终不可用。</p>
+<h2 id="states">124参考与新稿：关键控件状态对照</h2><p><img src="assets/reference124-button.png" alt="124正常保存按钮原实页裁图"><br>前四态以124实际计算样式重建，并保留正常实页裁图；“重建”不是原截图。禁用/修改/错误仅有旧CSS与角色依据，未采样完整运行状态，不伪称124逐态实测。数值focus采样未断言活动元素，不作为焦点依据；按旧CSS的主色边框、outline:none继承。</p><table><tr><th>状态</th><th>124依据/参考</th><th>新稿对应外观</th></tr>
+<tr><th>普通</th><td><span class="state" style="color:rgb(228, 237, 239);background-color:rgba(0, 0, 0, 0);border-color:rgb(57, 81, 90);border-radius:6px;outline:rgb(228, 237, 239) none 3px;box-shadow:none">资源交付</span><br><code>.btn.ghost / normal</code> · 124实测重建</td><td><span class="state ">资源交付</span> · 复用同一角色</td></tr>
+<tr><th>悬停</th><td><span class="state" style="color:rgb(228, 237, 239);background-color:rgba(0, 0, 0, 0);border-color:rgb(90, 102, 106);border-radius:6px;outline:rgb(228, 237, 239) none 3px;box-shadow:none">资源交付</span><br><code>.btn.ghost / hover</code> · 124实测重建</td><td><span class="state hover">资源交付</span> · 复用同一角色</td></tr>
+<tr><th>选中</th><td><span class="state" style="color:rgb(228, 237, 239);background-color:rgb(23, 61, 57);border-color:rgb(0, 212, 155);border-radius:0px;outline:rgb(228, 237, 239) none 3px;box-shadow:rgb(0, 212, 155) 0px 0px 0px 1px inset">资源交付</span><br><code>.seg button[aria-pressed=true] / normal</code> · 124实测重建</td><td><span class="state chip">资源交付</span> · 复用同一角色</td></tr>
+<tr><th>焦点</th><td><span class="state" style="color:rgb(228, 237, 239);background-color:rgba(0, 0, 0, 0);border-color:rgb(90, 102, 106);border-radius:6px;outline:rgb(0, 212, 155) solid 2px;box-shadow:none">资源交付</span><br><code>.btn.ghost / focus</code> · 124实测重建</td><td><span class="state focus">资源交付</span> · 复用同一角色</td></tr>
+<tr><th>禁用</th><td>旧角色约定；未取得完整124运行状态截图，待核</td><td><span class="state disabled">保存 · 未连接</span><br>旧禁用透明度角色；未接业务</td></tr>
+<tr><th>修改</th><td>旧角色约定；未取得完整124运行状态截图，待核</td><td><span class="state modified">● 节奏 1.25 ×</span><br>保留改动标记与还原，示意值</td></tr>
+<tr><th>错误</th><td>旧角色约定；未取得完整124运行状态截图，待核</td><td><span class="state error">未生成，无法导出</span><br>就地原因；无真实业务失败/成功</td></tr>
+</table><p>普通/悬停用细边框与文字，选中为深青底+主色描边；焦点按角色区分内/外偏移。无新增玻璃、渐变、霓虹或胶囊。此表和HTML可交互样板共同审阅，不将外观样板当键盘通过证明。</p><h2>本阶段与后续</h2><p>执行：设计产物完成待审。自检：见 verification.json，有限矩阵通过与未测项分别记录。用户通过：尚无。你审核视觉与密度后，再从本稿提取正式tokens/共享CSS/JS工厂/React薄适配与登记表；现在没有做生产迁移。</p></main></html>

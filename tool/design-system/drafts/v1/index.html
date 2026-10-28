@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FireWorksLab · 候选稿审阅入口</title>
+  <link rel="stylesheet" href="../../tokens.css">
+  <link rel="stylesheet" href="../../components.css">
+  <link rel="stylesheet" href="draft.css">
+</head>
+<body class="fw-scope review-shell" data-density="regular">
+  <header class="review-toolbar">
+    <div class="review-title"><strong>界面候选稿</strong><span>124 画风 · 125 布局 · 一套推荐方案</span></div>
+    <label class="review-page-label">页面
+      <select id="review-page" aria-label="审阅页面">
+        <option value="editor">01 编辑</option><option value="delivery">02 预览优先交付</option>
+        <option value="rt6">03 RT6</option><option value="particle">04 粒子图</option>
+        <option value="workbench">05 编排主台</option><option value="importer">06 导入核对</option>
+        <option value="components">07 组件规格 / 四层</option>
+      </select>
+    </label>
+    <div class="review-density" role="group" aria-label="整页密度对比，仅供设计审阅">
+      <button type="button" data-review-density="regular" aria-pressed="true">常规 · 推荐</button>
+      <button type="button" data-review-density="compact" aria-pressed="false">紧凑</button>
+    </div>
+    <a id="review-open" href="screen.html?page=editor&amp;density=regular" target="_blank" rel="noopener">单独打开</a>
+    <a href="guide.html" target="_blank" rel="noopener">设计说明 / 对照</a><span class="review-note">设计草稿 · 待你审阅</span>
+  </header>
+  <iframe id="review-frame" title="FireWorksLab 可编辑界面候选稿" src="screen.html?page=editor&amp;density=regular"></iframe>
+  <script src="draft.js" defer></script>
+</body>
+</html>
