@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-28",
+  "scope": "代表流程审查与两阶段提示词；未修改生产代码，未生成本轮设计稿，未作用户验收",
+  "sources": [
+    {
+      "version": "124",
+      "commit": "975ee1425649118ea96d75b9a30c2aa10dc11a55",
+      "html_sha256": "217050c8c24520913c1dd6aefa92501ca82c12297acbb0d9743456ffbcbd0467",
+      "html_bytes": 2868134
+    },
+    {
+      "version": "125",
+      "commit": "c045f46a63df82c01c440a56003d5df7db29e6a0",
+      "html_sha256": "1026b852900c0b90c31cebc791cb950154a7273e53f02812b97da2daa4ca8d2b",
+      "html_bytes": 2989581
+    }
+  ],
+  "browser": "Codex 内置浏览器；固定 8034 服务根目录 F:/FireWorksLab/tool",
+  "capture_method": "124 /baker；125 通过既有 design-system 静态路由加载精确分支快照。检查后关闭临时页，快照移入本机过程目录。",
+  "screenshots": [
+    {
+      "file": "01_124_编辑_1920.jpg",
+      "process_file": "01_124_编辑_1920.jpg",
+      "pixels": [
+        1920,
+        1074
+      ],
+      "sha256": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f",
+      "kind": "真实页面截图，未编辑"
+    },
+    {
+      "file": "02_125_编辑_1920.jpg",
+      "process_file": "02_125_编辑_1920.jpg",
+      "pixels": [
+        1920,
+        1074
+      ],
+      "sha256": "e3cd2f4ab6497dcc1842f201c6077852b51827eb718f2b6f24f20ffc988dd69d",
+      "kind": "真实页面截图，未编辑"
+    },
+    {
+      "file": "03_125_交付_1366.jpg",
+      "process_file": "04_125_交付_1366.jpg",
+      "pixels": [
+        1366,
+        768
+      ],
+      "sha256": "e5ceead45c7e13c1a6c91a3d5889e455cd485f6692eacb1531b48b106a2ff90d",
+      "kind": "真实页面截图，未编辑"
+    }
+  ],
+  "measurements": {
+    "delivery_1366_css_px": {
+      "viewport": [
+        1366,
+        768
+      ],
+      "preview_frame": {
+        "x": 235,
+        "y": 101,
+        "width": 398,
+        "height": 447
+      },
+      "preview_inner": {
+        "x": 278,
+        "y": 205,
+        "width": 312,
+        "height": 312
+      },
+      "checklist": {
+        "x": 641,
+        "y": 101,
+        "width": 320,
+        "height": 657
+      },
+      "editor_right": {
+        "x": 976,
+        "y": 48,
+        "width": 390,
+        "height": 720
+      },
+      "tree_height": 140,
+      "parameter_scroll_height": 422
+    },
+    "delivery_1920_css_px": {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "preview_frame_width": 760,
+      "preview_inner_width": 693,
+      "checklist_width": 329,
+      "editor_right_width": 520
+    },
+    "long_menu_item_css_px": {
+      "label": "连接仓库文件夹（保存时顺便存进 git）…",
+      "width": 230.4,
+      "height": 32,
+      "clientHeight": 32,
+      "scrollHeight": 46,
+      "lineHeight": 19.5,
+      "whiteSpace": "normal"
+    },
+    "precision": "DOM 测量四舍五入；结论以布局比例和实际重叠为依据，不作为未来逐像素固定尺寸要求"
+  },
+  "token_comparison": {
+    "path": "tool/design-system/tokens.json",
+    "excluded": [
+      "version",
+      "description"
+    ],
+    "existing_token_value_differences": [],
+    "limitation": "新增 token、局部 CSS 与实际组件组合须另外检查，不等于整页视觉一致"
+  },
+  "interaction_samples": [
+    "火花眼睛关闭后有划线与未保存提示；撤销后 aria-pressed 恢复 true",
+    "RT6 展开输出并只看远段，状态与预览上方按钮对应；再次切换退出",
+    "RT6 搜索开花高度仍显示无关效果/产物控件",
+    "更多菜单长文本超出32px行高；Esc后菜单关闭",
+    "2560粒子图13层呈现；Enter切换树区收起/恢复，收起时有当前路径"
+  ],
+  "unverified": [
+    "QA20稳定多层完整走查",
+    "全部键盘路径",
+    "新素材包导出",
+    "UE导入及回放",
+    "Edge实测",
+    "动画性能",
+    "完整无障碍认证"
+  ],
+  "shared_log_observation": "124和125各有一次 MutationObserver.observe 参数不是Node的错误，无可归因堆栈，未认定为125回归。",
+  "process_evidence": "analysis/local/20261028_界面交互-本机_125审查/，本机过程材料按14天清理",
+  "recommendations": "D1–D7详见看法.md；建议尚未成为生产修复"
+}

@@ -1,0 +1,345 @@
+{
+  "design_version": "01",
+  "date": "2026-10-28",
+  "status": {
+    "design_created": true,
+    "ai_design_qa_passed": true,
+    "user_approved": false,
+    "production_implemented": false
+  },
+  "baselines": {
+    "visual_124": "975ee1425649118ea96d75b9a30c2aa10dc11a55",
+    "layout_125": "c045f46a63df82c01c440a56003d5df7db29e6a0",
+    "cloud_head_at_handoff": "27ccf3512b7161bd732d0080d868ae5b0db941e4",
+    "new_cloud_commit_scope": "仅新增全量筛查/组件库待定方案、任务书及对话记录；页面代码未变，当前A–F设计稿不等于该任务全量完成"
+  },
+  "url": "http://127.0.0.1:8034/design-system/prototypes/v5-124-20261028/index.html",
+  "prototype_sha256": {
+    "index.html": "405b1eed59e1820479e612e616960d0accdabbe19d2364185ccaa891bcc36123",
+    "prototype.css": "b7f7db158ebf68db3fb216d6139cfee45b8f27de23da0e4cc7f89da389bab043",
+    "prototype.js": "aa37eb00482b12887577201527bd79fceece09cdf11e2c1ab2ea62d2163f493f"
+  },
+  "style_proof": {
+    "buttonRadius": "4px",
+    "dpr": 1.0000000149011612,
+    "numericHeight": "26px",
+    "numericRadius": "4px",
+    "panel": "rgb(27, 42, 47)",
+    "parameterRow": "30px",
+    "selected": "rgb(23, 61, 57)",
+    "viewport": [
+      1920,
+      1074
+    ]
+  },
+  "console_errors": [],
+  "checks": [
+    {
+      "name": "进入退出交付恢复编辑上下文",
+      "passed": true
+    },
+    {
+      "name": "搜索只含匹配项，删除文本恢复原位置与折叠",
+      "passed": true
+    },
+    {
+      "name": "输出页与交付清单同源",
+      "passed": true
+    },
+    {
+      "name": "英文名错误就地反馈",
+      "passed": true
+    },
+    {
+      "name": "更多菜单自适应行高与Esc归还焦点",
+      "passed": true
+    },
+    {
+      "name": "多层至少保留一个显示",
+      "passed": true
+    },
+    {
+      "name": "粒子子层归属、隐藏/只看与撤销",
+      "passed": true
+    },
+    {
+      "name": "RT6临时多选观察保留且不改编辑对象",
+      "passed": true
+    },
+    {
+      "name": "控件八状态一页展示",
+      "passed": true
+    }
+  ],
+  "keyboard": {
+    "collapsedValue": "0",
+    "expandedValue": "218",
+    "endPath": "当前编辑\n金芒菊 › 全部",
+    "homePath": "当前编辑\n金芒菊 › 整体",
+    "passed": true
+  },
+  "screenshots": [
+    {
+      "file": "01_编辑_1920.jpg",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pixels": [
+        1920,
+        1080
+      ],
+      "sha256": "69203526dcc106fba14572919b5382c063ef61506a65ce9aa632497b09729c9e",
+      "kept_in_git": true,
+      "query": "",
+      "preview": {
+        "height": 770.4000244140625,
+        "width": 1103.0438232421875
+      },
+      "checklist": null,
+      "tree": {
+        "height": 224,
+        "width": 519.5187377929688
+      },
+      "params": {
+        "height": 525.2999877929688,
+        "width": 519.5187377929688
+      },
+      "page_fits": true,
+      "review_fits": null
+    },
+    {
+      "file": "02_交付_1920.jpg",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pixels": [
+        1920,
+        1080
+      ],
+      "sha256": "38804e7873ac52c4ecd95ac9df4b560b8848c4a28c9dc70278ab7a12b79097e0",
+      "kept_in_git": false,
+      "query": "?view=delivery",
+      "preview": {
+        "height": 847.2000122070312,
+        "width": 1191.362548828125
+      },
+      "checklist": {
+        "height": 962,
+        "width": 420
+      },
+      "tree": {
+        "height": 0,
+        "width": 0
+      },
+      "params": {
+        "height": 0,
+        "width": 0
+      },
+      "page_fits": true,
+      "review_fits": null
+    },
+    {
+      "file": "03_交付_1366.jpg",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pixels": [
+        1366,
+        768
+      ],
+      "sha256": "45d0c0bfbac4ba0f920a57a398603640e493e2164f8c09ff91d58f55e0a313f6",
+      "kept_in_git": true,
+      "query": "?view=delivery",
+      "preview": {
+        "height": 539.2000122070312,
+        "width": 774
+      },
+      "checklist": {
+        "height": 650,
+        "width": 340
+      },
+      "tree": {
+        "height": 0,
+        "width": 0
+      },
+      "params": {
+        "height": 0,
+        "width": 0
+      },
+      "page_fits": true,
+      "review_fits": null
+    },
+    {
+      "file": "04_RT6_编辑与只看_1920.jpg",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pixels": [
+        1920,
+        1080
+      ],
+      "sha256": "117f4f0005503c863019c05fa1cfefa53b87eda5674772e3a7bddd886f4f5476",
+      "kept_in_git": false,
+      "query": "?example=rt6&state=inspect",
+      "preview": {
+        "height": 770.4000244140625,
+        "width": 1103.0438232421875
+      },
+      "checklist": null,
+      "tree": {
+        "height": 448,
+        "width": 519.5187377929688
+      },
+      "params": {
+        "height": 301.3000183105469,
+        "width": 519.5187377929688
+      },
+      "page_fits": true,
+      "review_fits": null
+    },
+    {
+      "file": "05_编辑_1366.jpg",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pixels": [
+        1366,
+        768
+      ],
+      "sha256": "dca0281c74fc7ab344dd55aa5764714f4ac51f5bceb1cb9e38bfd0a5dd90b80f",
+      "kept_in_git": false,
+      "query": "",
+      "preview": {
+        "height": 489.8999938964844,
+        "width": 736
+      },
+      "checklist": null,
+      "tree": {
+        "height": 140,
+        "width": 389.2000122070313
+      },
+      "params": {
+        "height": 303.3000183105469,
+        "width": 389.2000122070313
+      },
+      "page_fits": true,
+      "review_fits": null
+    },
+    {
+      "file": "06_粒子图_2560.jpg",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "pixels": [
+        2560,
+        1440
+      ],
+      "sha256": "c3a45f60039d2feaa5b80c3a14693accf0fc8b38e9d82ad92cb38745e783aa67",
+      "kept_in_git": true,
+      "query": "?example=sgs&state=child",
+      "preview": {
+        "height": 1130.4000244140625,
+        "width": 1702
+      },
+      "checklist": null,
+      "tree": {
+        "height": 520,
+        "width": 559.2000122070312
+      },
+      "params": {
+        "height": 589.2999877929688,
+        "width": 559.2000122070312
+      },
+      "page_fits": true,
+      "review_fits": null
+    },
+    {
+      "file": "07_控件状态对照_1920.jpg",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pixels": [
+        1920,
+        1080
+      ],
+      "sha256": "fdd691758bcc07e1a0f70109b40844331f325b4bee89cadd1ee3a5d4ac010f8e",
+      "kept_in_git": false,
+      "query": "?review=states",
+      "preview": {
+        "height": 770.4000244140625,
+        "width": 1103.0438232421875
+      },
+      "checklist": null,
+      "tree": {
+        "height": 224,
+        "width": 519.5187377929688
+      },
+      "params": {
+        "height": 525.2999877929688,
+        "width": 519.5187377929688
+      },
+      "page_fits": true,
+      "review_fits": true
+    },
+    {
+      "file": "08_一页简化说明_1920.jpg",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pixels": [
+        1920,
+        1080
+      ],
+      "sha256": "a2780b8321610b4053d7878bfd8824b545425f94311d44c4dce561b1fbd3747e",
+      "kept_in_git": false,
+      "query": "?review=notes",
+      "preview": {
+        "height": 770.4000244140625,
+        "width": 1103.0438232421875
+      },
+      "checklist": null,
+      "tree": {
+        "height": 224,
+        "width": 519.5187377929688
+      },
+      "params": {
+        "height": 525.2999877929688,
+        "width": 519.5187377929688
+      },
+      "page_fits": true,
+      "review_fits": true
+    }
+  ],
+  "delivery_1366_comparison": {
+    "baseline_preview_css": [
+      398,
+      447
+    ],
+    "design_preview_css": [
+      774,
+      539.2
+    ],
+    "design_checklist_width": 340,
+    "preview_width_fraction_excluding_gap": 0.6948,
+    "limitation": "只比较界面外框；不从静态参考图推断游戏内花径"
+  },
+  "limits": [
+    "静态图像和参数数值为设计示意",
+    "未连接真实保存/模拟/烘焙/导出/UE",
+    "未做Edge、真实OS缩放或完整无障碍验收"
+  ],
+  "process_dir": "analysis/local/20261028_界面交互-本机_设计稿01/",
+  "asset_sources": "tool/design-system/prototypes/v5-124-20261028/assets/sources.json",
+  "interaction_colors": {
+    "focus": "rgb(0, 212, 155)",
+    "hover": "rgb(90, 102, 106)"
+  }
+}
