@@ -1,0 +1,125 @@
+{
+  "artifact": "FireWorksLab workflow demo v4",
+  "status": "self_check_passed_user_review_pending",
+  "productionApplied": false,
+  "branch": "codex/ui-workflow-demos-20261029",
+  "base": "76eadd33136d9b590907d3121191cb250a89abad",
+  "protectedFiles": {
+    "count": 169,
+    "changed": []
+  },
+  "sourceRecipe": {
+    "id": "GLB-S1",
+    "name": "金曜菊-B · 疏点游闪（首选）",
+    "file": "analysis/我的配方/my_fxglitterb_s1/金曜菊-B_疏点游闪（首选）__fxglitterb_s1.json",
+    "sha256": "af0518097001bc7e759db96824d2616e67006ff9c284e508298311c93f25daa8",
+    "tool": "4.9.112",
+    "layerIndex": 1,
+    "layerTitle": "引菊 → 锦 · 金锦层",
+    "layerRate": 1.5,
+    "timeNote": "单层桥按该层自身秒数实时模拟；原整朵中rate=1.5，不可把层秒数误当组合秒数。"
+  },
+  "parameterCount": 40,
+  "types": {
+    "number": 29,
+    "select": 9,
+    "color": 2
+  },
+  "groups": {
+    "shape": 8,
+    "motion": 11,
+    "look": 10,
+    "output": 11
+  },
+  "validation": {
+    "ui": {
+      "checkpoints": 212,
+      "passed": 212,
+      "scope": "Chrome/Edge实际控件链，/baker受控503；专门验证未就绪也可操作。真实渲染另验，不混为接通。",
+      "versions": {
+        "chrome": "154.0.8037.58",
+        "msedge": "156.0.4314.50"
+      }
+    },
+    "realKernel": {
+      "checkpoints": 66,
+      "passed": 66,
+      "scope": "真实原渲染核整页复核，540内部；UI控件全链另见ui-verification.json",
+      "versions": {
+        "chrome": "154.0.8037.58",
+        "msedge": "156.0.4314.50"
+      },
+      "outsideRequests": [],
+      "jsErrors": []
+    },
+    "finalDelta": {
+      "checkpoints": 23,
+      "passed": 23,
+      "scope": "交付有效面积、四块标题/导入范围、PC手机名称、初始保存状态、统一勾选与分隔条键盘/ARIA；真实核仍接通"
+    },
+    "feedbackRecovery": {
+      "checkpoints": 4,
+      "passed": 4,
+      "scope": "Chrome/Edge：修正错误或回到演示预算内后，画布与说明恢复，输入错误不送入原核。"
+    }
+  },
+  "viewportNote": "1920x1080 / 1366x768 / 2560x1440 为CSS viewport；683x384 deviceScaleFactor2是额外等价缩放测试，未宣称读到用户系统缩放。390x844补窄宽。",
+  "delivery1366": {
+    "previewColumn": 884,
+    "listColumn": 320,
+    "previewShareWithoutLibrary": 0.7342192691,
+    "displayedCanvas": [
+      520,
+      520
+    ],
+    "internalCanvas": [
+      540,
+      540
+    ],
+    "viewDistance": 1000
+  },
+  "limits": [
+    "40代表字段而非生产完整参数集",
+    "金锦可编辑，另两层真实只读且可观察",
+    "单层实时参考，不是三层合成或烘焙像素",
+    "正式保存/另存、烘焙/业务预检/导出/导入/UE均未连接",
+    "未做完整读屏/全无障碍合规审计/其他GPU性能认证"
+  ],
+  "nativeBrowser": {
+    "status": "opened_and_operated",
+    "browser": "user Chrome",
+    "cssViewport": [
+      1536,
+      769
+    ],
+    "reportedDPR": 2.5,
+    "osScaleOrPageZoom": "cannot distinguish from DPR, not inferred",
+    "actions": [
+      "search sparkSize",
+      "edit .75 to 1.5",
+      "blur/commit",
+      "undo to .75",
+      "clear search returns40"
+    ],
+    "productionSave": false,
+    "screenshot": "analysis/results/20261029_三套工作流Demo/本机B实页.png"
+  },
+  "files": {
+    "a.html": "0b5e710cae38fdfe3bd6e65414192663e3e85cea95063be8f1b22189da2f7ed5",
+    "b.html": "8c3c5963fa2b02014d824088c36aee8a87d8848ff521ffe1b508900f4eb697f1",
+    "c.html": "83c2acef343044393564813f1c6826e7f51e27276e08d5dc8b5e4d06e2025786",
+    "continuous-panel.js": "e6bc91040474b7434b0bb2b87f44d34d21428c25e388fc329587afe71d7a45f6",
+    "engine-bridge.js": "8d3af5bb392faef6e70974ead1910ce15e4d8c2f7ca51738f5458b2ec7dcee22",
+    "focus-panel.css": "a939533ab8521585e744c26447960eb9ae492642a44112a7321aef6f2b07ba11",
+    "focus-panel.js": "217679d43a097cfeb30a99e1bc9718b1f85e210e56033a1ac9262f75d368945e",
+    "ledger-panel.css": "265b2f67bbe8bc5eec8040259c51f5235a7b8d39331c820b74ecac0a385e4dd8",
+    "ledger-panel.js": "50706f6497c13a7f4b4f37b198023bb80a8bbdf03628ff02e9bf977ecd25512e",
+    "parameters.json": "1bdb425c76c5da359d4d15d46b70d1a93c90cb4dbe117b03e8cf70271357e08c",
+    "review.css": "4dfecd9ea9fb97cc7704e263058b5353bc44b75c98f66538d8e4ddf0d48aaee8",
+    "review.html": "29b9ea81b0e0600f650f5cc3cbaef4930800a1e7d9d3508688e484a36e828354",
+    "studio.css": "45069878e5ec38336c1fcc6b26bc420a060c7d3c15338dab0e7c24433b541e4e",
+    "studio.js": "13ae90b57cb81008c9830cd6244e9fe368f73062b75e4252845562be21da5023"
+  },
+  "finalAdjustment": "原生Chrome输入路径补focusout提交及即时aria-valuenow/撤销可用性；212项控件主链复核通过，真实核未改；原生路径再次确认。 错误与演示预算提示随恢复同步清除；四项真实预览状态恢复专项通过。",
+  "canonicalTextLineEndings": "LF, scoped .gitattributes; line-ending packaging only after functional freeze"
+}
