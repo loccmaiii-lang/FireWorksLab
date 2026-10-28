@@ -1,0 +1,2214 @@
+{
+"at": "2026-10-28T10:06:23.137Z",
+"口径": "手游表跨年烟花3.0行 + 金垂柳v3_M 用到的全部贴图（含 Ramp / Cutout / 辅助图），只读现场读回",
+"贴图": [
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCombo_R.T_EFX_FireWorks_LittleCombo_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleGold_M",
+"P_EFX_FireWorks_LittleGold_H",
+"P_EFX_FireWorks_LittleCombo_M",
+"P_EFX_FireWorks_LittleCombo_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleGold_HD",
+"P_EFX_FireWorks_LittleCombo_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Engine/EngineResources/DefaultTexture.DefaultTexture",
+"size": [
+128,
+128
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_Sharpen4",
+"LODGroup": "TEXTUREGROUP_World",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Dissolve",
+"DistortUVTex",
+"AlphaMaskTex",
+"EmissiveTex",
+"Fire",
+"SubTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleGold_M",
+"P_EFX_FireWorks_LittleGold_H",
+"P_EFX_FireWorks_LittleSilver_M",
+"P_EFX_FireWorks_LittleSilver_H",
+"P_EFX_FireWorks_LittleCrackle_M",
+"P_EFX_FireWorks_LittleCrackle_H",
+"P_EFX_FireWorks_LittleCombo_M",
+"P_EFX_FireWorks_LittleCombo_H",
+"P_EFX_FireWorks_Comet_Layers_M",
+"P_EFX_FireWorks_Comet_Layers_H",
+"P_EFX_FireWorks_Silver3_Layers_S_M",
+"P_EFX_FireWorks_Silver3_Layers_S_H",
+"P_EFX_FireWorks_SilverChry_M",
+"P_EFX_FireWorks_SilverChry_H",
+"P_EFX_FireWorks_Crackle_M",
+"P_EFX_FireWorks_Crackle_H",
+"P_EFX_FireWorks_Glitter_M",
+"P_EFX_FireWorks_Glitter_H",
+"P_EFX_FireWorks_Strobe_M",
+"P_EFX_FireWorks_Strobe_H",
+"P_EFX_FireWorks_GoldRayChry_M",
+"P_EFX_FireWorks_GoldRayChry_H",
+"P_EFX_FireWorks_GoldKamuro_M",
+"P_EFX_FireWorks_GoldKamuro_H",
+"P_EFX_FireWorks_RiseTrail_Hero_M",
+"P_EFX_FireWorks_RiseTrail_Hero_H",
+"P_EFX_FireWorks_RiseTrail_L_M",
+"P_EFX_FireWorks_RiseTrail_L_H",
+"P_EFX_FireWorks_RiseTrail_M_M",
+"P_EFX_FireWorks_RiseTrail_M_H",
+"P_EFX_FireWorks_RiseTrail_S_M",
+"P_EFX_FireWorks_RiseTrail_S_H",
+"P_EFX_FireWorks_RiseTrail_XS_M",
+"P_EFX_FireWorks_RiseTrail_XS_H",
+"P_EFX_FireWorks_RiseTrail_Tiny_M",
+"P_EFX_FireWorks_RiseTrail_Tiny_H",
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H",
+"P_EFX_FireWorks_GlitterChry_L",
+"P_EFX_FireWorks_SkyRocketCrash_M",
+"P_EFX_FireWorks_SkyRocketCrash_H",
+"P_EFX_FireWorks_SkyRocketCrash_L",
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H",
+"P_EFX_FireWorks_SkyRocketTail_L",
+"P_EFX_FireWorks_Smoke_M",
+"P_EFX_FireWorks_Smoke_H",
+"P_EFX_FireWorks_SkyRocketSparkler_M",
+"P_EFX_FireWorks_SkyRocketSprint_M",
+"P_EFX_FireWorks_SkyRocketSprint_H",
+"P_EFX_FireWorks_SkyRocketSprint_L",
+"P_EFX_FireWorks_GoldKamuro_V3_M"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleGold_HD",
+"P_EFX_FireWorks_LittleSilver_HD",
+"P_EFX_FireWorks_LittleCrackle_HD",
+"P_EFX_FireWorks_LittleCombo_HD",
+"P_EFX_FireWorks_Comet_Layers_S_HD",
+"P_EFX_FireWorks_Silver_Layers_S_HD",
+"P_EFX_FireWorks_FanGold_Central_01_HD",
+"P_EFX_FireWorks_FanGold_Middle_01_HD",
+"P_EFX_FireWorks_FanGold_OuterLeft_HD",
+"P_EFX_FireWorks_FanGold_OuterRight_HD",
+"P_EFX_FireWorks_Comet_Layers_HD",
+"P_EFX_FireWorks_FanSilver_01_HD",
+"P_EFX_FireWorks_Combo_HD",
+"P_EFX_FireWorks_Comet_HD",
+"P_EFX_FireWorks_SilverChry_HD",
+"P_EFX_FireWorks_Crackle_HD",
+"P_EFX_FireWorks_Lime_HD",
+"P_EFX_FireWorks_Glitter_HD",
+"P_EFX_FireWorks_Strobe_HD",
+"P_EFX_FireWorks_LimeStar_HD",
+"P_EFX_FireWorks_GoldRay_HD",
+"P_EFX_FireWork_PrismWheels_HD",
+"P_EFX_FireWorks_GoldSpark_HD",
+"P_EFX_FireWorks_GoldCoreLime_HD",
+"P_EFX_FireWorks_GoldRayChry_HD",
+"P_EFX_FireWorks_LimeCoreDelay_HD",
+"P_EFX_FireWorks_GoldKamuro_HD",
+"P_EFX_FireWorks_SilverStrobeChry_HD",
+"P_EFX_FireWorks_SilverStrobeChry_B_HD",
+"P_EFX_FireWorks_GoldRayChry_L_HD",
+"P_EFX_FireWorks_SilverWhiteChry_HD",
+"P_EFX_FireWorks_RiseTrail_Hero_HD",
+"P_EFX_FireWorks_RiseTrail_L_HD",
+"P_EFX_FireWorks_RiseTrail_M_HD",
+"P_EFX_FireWorks_RiseTrail_S_HD",
+"P_EFX_FireWorks_RiseTrail_XS_HD",
+"P_EFX_FireWorks_RiseTrail_Tiny_HD",
+"P_EFX_FireWorks_GlitterChry_HD",
+"P_EFX_FireWorks_SkyRocketCrash_HD",
+"P_EFX_FireWorks_SkyRocketTail_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+"P_EFX_FireWorks_SkyRocketSparkler_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+],
+"otherCount": 56433
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01_C.T_EFX_FireWorks_LittleGold_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleGold_M",
+"P_EFX_FireWorks_LittleGold_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleGold_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleSilver_GinKamuro_R.T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleSilver_M",
+"P_EFX_FireWorks_LittleSilver_H",
+"P_EFX_FireWorks_SilverChry_M",
+"P_EFX_FireWorks_SilverChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleSilver_HD",
+"P_EFX_FireWorks_SilverChry_HD"
+],
+"otherCount": 1
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_C.T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleSilver_M",
+"P_EFX_FireWorks_LittleSilver_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleSilver_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16.T_EFX_Spark_16",
+"size": [
+256,
+256
+],
+"MaxTextureSize": 256,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex",
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleSilver_M",
+"P_EFX_FireWorks_LittleSilver_H",
+"P_EFX_FireWorks_LittleCrackle_M",
+"P_EFX_FireWorks_LittleCrackle_H",
+"P_EFX_FireWorks_Comet_Layers_M",
+"P_EFX_FireWorks_Comet_Layers_H",
+"P_EFX_FireWorks_Crackle_M",
+"P_EFX_FireWorks_Crackle_H",
+"P_EFX_FireWorks_Smoke_M",
+"P_EFX_FireWorks_Smoke_H",
+"P_EFX_FireWorks_SkyRocketSprint_M",
+"P_EFX_FireWorks_SkyRocketSprint_H",
+"P_EFX_FireWorks_SkyRocketSprint_L"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleSilver_HD",
+"P_EFX_FireWorks_LittleCrackle_HD",
+"P_EFX_FireWorks_Comet_Layers_HD",
+"P_EFX_FireWorks_FanSilver_01_HD",
+"P_EFX_FireWorks_SilverChry_HD",
+"P_EFX_FireWorks_Crackle_HD",
+"P_EFX_FireWorks_LimeStar_HD",
+"P_EFX_FireWork_PrismWheels_HD",
+"P_EFX_FireWorks_LimeCoreDelay_HD",
+"P_EFX_FireWorks_GoldKamuro_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+],
+"otherCount": 1503
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LittleCrackle_Main_R.T_EFX_FireWorks_LittleCrackle_Main_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleCrackle_M",
+"P_EFX_FireWorks_LittleCrackle_H",
+"P_EFX_FireWorks_Crackle_M",
+"P_EFX_FireWorks_Crackle_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleCrackle_HD",
+"P_EFX_FireWorks_Crackle_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01_C.T_EFX_FireWorks_LittleCrackle_Main_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleCrackle_M",
+"P_EFX_FireWorks_LittleCrackle_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleCrackle_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01_C.T_EFX_FireWorks_LittleCombo_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleCombo_M",
+"P_EFX_FireWorks_LittleCombo_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LittleCombo_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Comet_Layers_L1_R.T_EFX_FireWorks_Comet_Layers_L1_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Comet_Layers_M",
+"P_EFX_FireWorks_Comet_Layers_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Comet_Layers_S_HD",
+"P_EFX_FireWorks_Comet_Layers_HD"
+],
+"otherCount": 1
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Silver3_S_R.T_EFX_FireWorks_Silver3_S_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Silver3_Layers_S_M",
+"P_EFX_FireWorks_Silver3_Layers_S_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Silver_Layers_S_HD",
+"P_EFX_FireWorks_FanSilver_01_HD"
+],
+"otherCount": 2
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C.T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Silver3_Layers_S_M",
+"P_EFX_FireWorks_Silver3_Layers_S_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Silver_Layers_S_HD",
+"P_EFX_FireWorks_FanSilver_01_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_C.T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Comet_Layers_M",
+"P_EFX_FireWorks_Comet_Layers_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Comet_Layers_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_C.T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SilverChry_M",
+"P_EFX_FireWorks_SilverChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SilverChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01_C.T_EFX_FireWorks_Crackle_Main_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Crackle_M",
+"P_EFX_FireWorks_Crackle_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Crackle_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Glitter_R.T_EFX_FireWorks_Glitter_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Glitter_M",
+"P_EFX_FireWorks_Glitter_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Glitter_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01_C.T_EFX_FireWorks_Glitter_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Glitter_M",
+"P_EFX_FireWorks_Glitter_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Glitter_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_RedCore_R.T_EFX_FireWorks_GoldCoreLime_RedCore_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Strobe_M",
+"P_EFX_FireWorks_Strobe_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Strobe_HD",
+"P_EFX_FireWorks_GoldCoreLime_HD",
+"P_EFX_FireWorks_GoldRayChry_L_HD",
+"P_EFX_FireWorks_SilverWhiteChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01_C.T_EFX_FireWorks_Strobe_Strobe_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Strobe_M",
+"P_EFX_FireWorks_Strobe_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_Strobe_HD",
+"P_EFX_FireWorks_GoldRayChry_L_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_Mask_01.T_EFX_Glow_Mask_01",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWork_PrismWheels_HD",
+"P_EFX_FireWorks_SilverStrobeChry_HD",
+"P_EFX_FireWorks_SilverStrobeChry_B_HD",
+"P_EFX_FireWorks_GoldRayChry_L_HD",
+"P_EFX_FireWorks_SilverWhiteChry_HD",
+"P_EFX_FireWorks_GlitterChry_HD",
+"P_EFX_FireWorks_SkyRocketTail_HD"
+],
+"otherCount": 190
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRayChry_R.T_EFX_FireWorks_GoldRayChry_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldRayChry_M",
+"P_EFX_FireWorks_GoldRayChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GoldRayChry_HD",
+"P_EFX_FireWorks_GoldRayChry_L_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01_C.T_EFX_FireWorks_GoldRayChry_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldRayChry_M",
+"P_EFX_FireWorks_GoldRayChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GoldRayChry_HD",
+"P_EFX_FireWorks_GoldRayChry_L_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Lead_R.T_EFX_FireWorks_LimeCoreDelay_Lead_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_LimeCoreDelay_HD",
+"P_EFX_FireWorks_GlitterChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62.T_EFX_Mask_62",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 512,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"NoiseMap"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldKamuro_M",
+"P_EFX_FireWorks_GoldKamuro_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GoldKamuro_HD"
+],
+"otherCount": 72
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Hero_FlowFixed.T_EFX_FireWorks_Hero_FlowFixed",
+"size": [
+16,
+1024
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_VectorDisplacementmap",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Clamp",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldKamuro_M",
+"P_EFX_FireWorks_GoldKamuro_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GoldKamuro_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Engine/EngineMaterials/T_Default_Material_Grid_M.T_Default_Material_Grid_M",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_World",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"(写死) TextureSample"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldKamuro_M",
+"P_EFX_FireWorks_GoldKamuro_H",
+"P_EFX_FireWorks_GoldKamuro_V3_M"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GoldKamuro_HD",
+"P_EFX_FireWorks_SkyRocketCrash_HD",
+"P_EFX_FireWorks_SkyRocketTail_HD",
+"P_EFX_FireWorks_SkyRocketSparkler_HD"
+],
+"otherCount": 207990
+},
+{
+"texture": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_22.T_EFX_Glow_22",
+"size": [
+4096,
+4096
+],
+"MaxTextureSize": 256,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"BaseTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SilverStrobeChry_HD",
+"P_EFX_FireWorks_SilverStrobeChry_B_HD",
+"P_EFX_FireWorks_SilverWhiteChry_HD",
+"P_EFX_FireWorks_GlitterChry_HD"
+],
+"otherCount": 84
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R.T_EFX_FireWorks_RiseTrail_L_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_Hero_M",
+"P_EFX_FireWorks_RiseTrail_Hero_H",
+"P_EFX_FireWorks_RiseTrail_L_M",
+"P_EFX_FireWorks_RiseTrail_L_H",
+"P_EFX_FireWorks_RiseTrail_M_M",
+"P_EFX_FireWorks_RiseTrail_M_H",
+"P_EFX_FireWorks_RiseTrail_S_M",
+"P_EFX_FireWorks_RiseTrail_S_H",
+"P_EFX_FireWorks_RiseTrail_XS_M",
+"P_EFX_FireWorks_RiseTrail_XS_H",
+"P_EFX_FireWorks_RiseTrail_Tiny_M",
+"P_EFX_FireWorks_RiseTrail_Tiny_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_RiseTrail_Hero_HD",
+"P_EFX_FireWorks_RiseTrail_L_HD",
+"P_EFX_FireWorks_RiseTrail_M_HD",
+"P_EFX_FireWorks_RiseTrail_S_HD",
+"P_EFX_FireWorks_RiseTrail_XS_HD",
+"P_EFX_FireWorks_RiseTrail_Tiny_HD"
+],
+"otherCount": 1
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_C.T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_Hero_M",
+"P_EFX_FireWorks_RiseTrail_Hero_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_RiseTrail_Hero_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_C.T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_XS_M",
+"P_EFX_FireWorks_RiseTrail_XS_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_RiseTrail_XS_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_C.T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_Tiny_M",
+"P_EFX_FireWorks_RiseTrail_Tiny_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_RiseTrail_Tiny_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01_C.T_EFX_FireWorks_GlitterChry_Lead_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GlitterChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GlitterChry_Gold_R.T_EFX_FireWorks_GlitterChry_Gold_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H",
+"P_EFX_FireWorks_GlitterChry_L"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GlitterChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01_C.T_EFX_FireWorks_GlitterChry_Gold_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H",
+"P_EFX_FireWorks_GlitterChry_L"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GlitterChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01_C.T_EFX_FireWorks_GlitterChry_Head_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_GlitterChry_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Sand/T_EFX_Sand_04.T_EFX_Sand_04",
+"size": [
+256,
+256
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketCrash_M",
+"P_EFX_FireWorks_SkyRocketCrash_H",
+"P_EFX_FireWorks_SkyRocketCrash_L"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketCrash_HD"
+],
+"otherCount": 1695
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RocketTail_Soft_R.T_EFX_FireWorks_RocketTail_Soft_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01_C.T_EFX_FireWorks_RocketTail_Soft_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01.T_EFX_Sparks_Sparkler_4x4_01",
+"size": [
+2048,
+2048
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex",
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketSparkler_M"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+"P_EFX_FireWorks_SkyRocketSparkler_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD"
+],
+"otherCount": 5
+},
+{
+"texture": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_15.T_EFX_Spark_15",
+"size": [
+64,
+64
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H",
+"P_EFX_FireWorks_Smoke_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+],
+"otherCount": 973
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_R.T_EFX_FireWorks_SkyRocketSparkler_Sparkler_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H",
+"P_EFX_FireWorks_SkyRocketTail_L",
+"P_EFX_FireWorks_SkyRocketSparkler_M"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD",
+"P_EFX_FireWorks_SkyRocketSparkler_HD"
+],
+"otherCount": 3
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_4x4_01C.T_EFX_FireWorks_RocketTail_4x4_01C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H",
+"P_EFX_FireWorks_SkyRocketTail_L"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD"
+],
+"otherCount": 1
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01_C.T_EFX_FireWorks_RocketDot_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketTail_HD"
+],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02.T_EFX_Sparks_Streak_8x1_02",
+"size": [
+2048,
+1024
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex",
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Smoke_M",
+"P_EFX_FireWorks_Smoke_H",
+"P_EFX_FireWorks_SkyRocketSparkler_M",
+"P_EFX_FireWorks_SkyRocketSprint_M",
+"P_EFX_FireWorks_SkyRocketSprint_H",
+"P_EFX_FireWorks_SkyRocketSprint_L"
+],
+"pcParticles": [
+"P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+"P_EFX_FireWorks_SkyRocketSparkler_HD",
+"P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+],
+"otherCount": 5
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Star_01.T_EFX_FireWokr_Star_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 2048,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex",
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Smoke_M",
+"P_EFX_FireWorks_Smoke_H"
+],
+"pcParticles": [
+"P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD"
+],
+"otherCount": 11
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWokr_Star_02.T_EFX_FireWokr_Star_02",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 2048,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex",
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Smoke_H"
+],
+"pcParticles": [
+"P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD"
+],
+"otherCount": 15
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01_C.T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketSparkler_M"
+],
+"pcParticles": [
+"P_EFX_FireWorks_SkyRocketSparkler_HD"
+],
+"otherCount": 2
+},
+{
+"texture": "/Game/Effects/Common/Texture/Glow/T_EFX_Cust_Glow_04.T_EFX_Cust_Glow_04",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketSprint_M",
+"P_EFX_FireWorks_SkyRocketSprint_H",
+"P_EFX_FireWorks_SkyRocketSprint_L"
+],
+"pcParticles": [
+"P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+],
+"otherCount": 58
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01.T_EFX_FireWorks_LittleGold_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleGold_M",
+"P_EFX_FireWorks_LittleGold_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01.T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleSilver_M",
+"P_EFX_FireWorks_LittleSilver_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01.T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleCrackle_M",
+"P_EFX_FireWorks_LittleCrackle_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01.T_EFX_FireWorks_LittleCombo_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_LittleCombo_M",
+"P_EFX_FireWorks_LittleCombo_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01.T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Comet_Layers_M",
+"P_EFX_FireWorks_Comet_Layers_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01.T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Silver3_Layers_S_M",
+"P_EFX_FireWorks_Silver3_Layers_S_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01.T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SilverChry_M",
+"P_EFX_FireWorks_SilverChry_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01.T_EFX_FireWorks_Crackle_Main_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Crackle_M",
+"P_EFX_FireWorks_Crackle_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01.T_EFX_FireWorks_Glitter_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Glitter_M",
+"P_EFX_FireWorks_Glitter_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01.T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_Strobe_M",
+"P_EFX_FireWorks_Strobe_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01.T_EFX_FireWorks_GoldRayChry_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldRayChry_M",
+"P_EFX_FireWorks_GoldRayChry_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01.T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_Hero_M",
+"P_EFX_FireWorks_RiseTrail_Hero_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01.T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_L_M",
+"P_EFX_FireWorks_RiseTrail_L_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C.T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_L_M",
+"P_EFX_FireWorks_RiseTrail_L_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01.T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_M_M",
+"P_EFX_FireWorks_RiseTrail_M_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01_C.T_EFX_FireWorks_RiseTrail_M_Full_32x2_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_M_M",
+"P_EFX_FireWorks_RiseTrail_M_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_S_M",
+"P_EFX_FireWorks_RiseTrail_S_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C.T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C",
+"size": [
+512,
+512
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_S_M",
+"P_EFX_FireWorks_RiseTrail_S_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01.T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_XS_M",
+"P_EFX_FireWorks_RiseTrail_XS_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01.T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_RiseTrail_Tiny_M",
+"P_EFX_FireWorks_RiseTrail_Tiny_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01.T_EFX_FireWorks_GlitterChry_Gold_4x4_01",
+"size": [
+2048,
+2048
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H",
+"P_EFX_FireWorks_GlitterChry_L"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01.T_EFX_FireWorks_GlitterChry_Head_4x4_01",
+"size": [
+2048,
+2048
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_M",
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GlitterChry_Lead_R.T_EFX_FireWorks_GlitterChry_Lead_R",
+"size": [
+256,
+8
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Clamp",
+"AddressY": "TA_Clamp",
+"params": [
+"EmissiveRampTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01.T_EFX_FireWorks_GlitterChry_Lead_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GlitterChry_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/DistantVFX/T_EFX_Explosion_Cannon_Flowmap_10.T_EFX_Explosion_Cannon_Flowmap_10",
+"size": [
+2048,
+2048
+],
+"MaxTextureSize": 256,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"FlowMap_01"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketCrash_M",
+"P_EFX_FireWorks_SkyRocketCrash_H",
+"P_EFX_FireWorks_SkyRocketCrash_L"
+],
+"pcParticles": [],
+"otherCount": 83
+},
+{
+"texture": "/Game/Effects/Common/Texture/InstantEFX/T_EFX_Explosion_Cannon_Smoke_06.T_EFX_Explosion_Cannon_Smoke_06",
+"size": [
+4096,
+4096
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": true,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"SubTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketCrash_M",
+"P_EFX_FireWorks_SkyRocketCrash_H",
+"P_EFX_FireWorks_SkyRocketCrash_L"
+],
+"pcParticles": [],
+"otherCount": 113
+},
+{
+"texture": "/Game/Effects/Common/Texture/Rock/T_EFX_Metal_01.T_EFX_Metal_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 128,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketCrash_M",
+"P_EFX_FireWorks_SkyRocketCrash_H"
+],
+"pcParticles": [],
+"otherCount": 78
+},
+{
+"texture": "/Game/Effects/Common/Texture/Rock/T_EFX_Rock_03.T_EFX_Rock_03",
+"size": [
+256,
+256
+],
+"MaxTextureSize": 128,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketCrash_M",
+"P_EFX_FireWorks_SkyRocketCrash_H"
+],
+"pcParticles": [],
+"otherCount": 360
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_L1_4x4_01.T_EFX_FireWorks_RocketTail_L1_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H",
+"P_EFX_FireWorks_SkyRocketTail_L"
+],
+"pcParticles": [],
+"otherCount": 1
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01.T_EFX_FireWorks_RocketDot_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_M",
+"P_EFX_FireWorks_SkyRocketTail_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01.T_EFX_FireWorks_RocketTail_Soft_4x4_01",
+"size": [
+2048,
+2048
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_H"
+],
+"pcParticles": [],
+"otherCount": 0
+},
+{
+"texture": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_01.T_EFX_Glow_01",
+"size": [
+256,
+256
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Effects",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"BaseTex",
+"Cutout"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketTail_H"
+],
+"pcParticles": [],
+"otherCount": 324
+},
+{
+"texture": "/Engine/EngineMaterials/OrientParticle.OrientParticle",
+"size": [
+64,
+64
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_Sharpen4",
+"LODGroup": "TEXTUREGROUP_World",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"(写死) TextureSample"
+],
+"mobileParticles": [
+"P_Destructible_Empty"
+],
+"pcParticles": [],
+"otherCount": 315
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01.T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01",
+"size": [
+1024,
+1024
+],
+"MaxTextureSize": 1024,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_BC7",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_SkyRocketSparkler_M"
+],
+"pcParticles": [],
+"otherCount": 2
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldKamuro_SparkNoise_01.T_EFX_FireWorks_GoldKamuro_SparkNoise_01",
+"size": [
+256,
+256
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_FromTextureGroup",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_Default",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Wrap",
+"params": [
+"NoiseMap"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldKamuro_V3_M"
+],
+"pcParticles": [],
+"otherCount": 1
+},
+{
+"texture": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldKamuro_Strip_01.T_EFX_FireWorks_GoldKamuro_Strip_01",
+"size": [
+128,
+1024
+],
+"MaxTextureSize": 0,
+"MipGenSettings": "TMGS_NoMipmaps",
+"LODGroup": "TEXTUREGROUP_Project03",
+"NeverStream": false,
+"CompressionSettings": "TC_VectorDisplacementmap",
+"AddressX": "TA_Wrap",
+"AddressY": "TA_Clamp",
+"params": [
+"MainTex"
+],
+"mobileParticles": [
+"P_EFX_FireWorks_GoldKamuro_V3_M"
+],
+"pcParticles": [],
+"otherCount": 1
+}
+]
+}

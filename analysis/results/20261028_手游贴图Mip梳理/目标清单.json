@@ -1,0 +1,626 @@
+{
+ "口径": "手游表「跨年烟花3.0」行（FxSP / High / Low）+ 金垂柳 v3_M 用到、材质参数 MainTex / BaseTex、现在 NoMip 的贴图。内存按 ASTC 6×6（0.44 B/像素，DefaultASTCQualityBySize）估；VectorDisplacementmap 按不压缩 RGBA8（4 B/像素）。「改后满载」= 带 mip、最高一级全载入（×4/3，流送最坏情况）；「低两档」= DistantVFX 组 MobileMinLODs (0,0,0,0,0,1,1) 在最低两档少载一级。实际常驻按距离流送，只会更低。没在真机量。",
+ "主序列": [
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_Comet_Layers_M",
+    "P_EFX_FireWorks_Comet_Layers_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_Crackle_M",
+    "P_EFX_FireWorks_Crackle_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_GlitterChry_Gold_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01",
+   "源尺寸": "2048x2048",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_GlitterChry_M",
+    "P_EFX_FireWorks_GlitterChry_H",
+    "P_EFX_FireWorks_GlitterChry_L"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_GlitterChry_Head_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01",
+   "源尺寸": "2048x2048",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_GlitterChry_M",
+    "P_EFX_FireWorks_GlitterChry_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_GlitterChry_Lead_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_GlitterChry_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_Glitter_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_Glitter_M",
+    "P_EFX_FireWorks_Glitter_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_GoldRayChry_M",
+    "P_EFX_FireWorks_GoldRayChry_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_LittleCombo_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_LittleCombo_M",
+    "P_EFX_FireWorks_LittleCombo_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_LittleCrackle_M",
+    "P_EFX_FireWorks_LittleCrackle_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_LittleGold_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_LittleGold_M",
+    "P_EFX_FireWorks_LittleGold_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_LittleSilver_M",
+    "P_EFX_FireWorks_LittleSilver_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_RiseTrail_Hero_M",
+    "P_EFX_FireWorks_RiseTrail_Hero_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_RiseTrail_L_M",
+    "P_EFX_FireWorks_RiseTrail_L_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_RiseTrail_M_M",
+    "P_EFX_FireWorks_RiseTrail_M_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_RiseTrail_S_M",
+    "P_EFX_FireWorks_RiseTrail_S_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_RiseTrail_Tiny_M",
+    "P_EFX_FireWorks_RiseTrail_Tiny_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_RiseTrail_XS_M",
+    "P_EFX_FireWorks_RiseTrail_XS_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RocketDot_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_SkyRocketTail_M",
+    "P_EFX_FireWorks_SkyRocketTail_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_RocketTail_Soft_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01",
+   "源尺寸": "2048x2048",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_SkyRocketTail_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": true,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_Silver3_Layers_S_M",
+    "P_EFX_FireWorks_Silver3_Layers_S_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_SilverChry_M",
+    "P_EFX_FireWorks_SilverChry_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "A 只给 3.0 手游用",
+   "贴图": "T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_Strobe_M",
+    "P_EFX_FireWorks_Strobe_H"
+   ],
+   "PC粒子": [],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "B 只被烟花用（含表外旧窜天猴变体）",
+   "贴图": "T_EFX_FireWorks_RocketTail_L1_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_L1_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_SkyRocketTail_M",
+    "P_EFX_FireWorks_SkyRocketTail_H",
+    "P_EFX_FireWorks_SkyRocketTail_L"
+   ],
+   "PC粒子": [],
+   "其他引用": [
+    "P_EFX_FireWorks_RocketTail_M"
+   ],
+   "其他数": 1
+  },
+  {
+   "组": "B 只被烟花用（含表外旧窜天猴变体）",
+   "贴图": "T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01",
+   "源尺寸": "1024x1024",
+   "手游实际": "1024x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.444,
+   "改后满载MB": 0.593,
+   "低两档MB": 0.148,
+   "手游粒子": [
+    "P_EFX_FireWorks_SkyRocketSparkler_M"
+   ],
+   "PC粒子": [],
+   "其他引用": [
+    "P_EFX_FireWorks_SkyRocketSparkler_H",
+    "P_EFX_FireWorks_SkyRocketSparkler_L"
+   ],
+   "其他数": 2
+  },
+  {
+   "组": "C 金垂柳（端手共用，v3 待合入）",
+   "贴图": "T_EFX_FireWorks_GoldKamuro_Strip_01",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldKamuro_Strip_01",
+   "源尺寸": "128x1024",
+   "手游实际": "128x1024",
+   "压缩": "TC_VectorDisplacementmap",
+   "细长格": false,
+   "现常驻MB": 0.5,
+   "改后满载MB": 0.667,
+   "低两档MB": 0.167,
+   "手游粒子": [
+    "P_EFX_FireWorks_GoldKamuro_V3_M"
+   ],
+   "PC粒子": [],
+   "其他引用": [
+    "P_EFX_FireWorks_GoldKamuro_V3_HD"
+   ],
+   "其他数": 1
+  },
+  {
+   "组": "C 金垂柳（端手共用，v3 待合入）",
+   "贴图": "T_EFX_FireWorks_Hero_FlowFixed",
+   "路径": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Hero_FlowFixed",
+   "源尺寸": "16x1024",
+   "手游实际": "16x1024",
+   "压缩": "TC_VectorDisplacementmap",
+   "细长格": false,
+   "现常驻MB": 0.062,
+   "改后满载MB": 0.083,
+   "低两档MB": 0.021,
+   "手游粒子": [
+    "P_EFX_FireWorks_GoldKamuro_M",
+    "P_EFX_FireWorks_GoldKamuro_H"
+   ],
+   "PC粒子": [
+    "P_EFX_FireWorks_GoldKamuro_HD"
+   ],
+   "其他引用": [],
+   "其他数": 0
+  },
+  {
+   "组": "D 跨项目共用（音乐节 / 别的特效）",
+   "贴图": "T_EFX_Sparks_Sparkler_4x4_01",
+   "路径": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+   "源尺寸": "2048x2048",
+   "手游实际": "2048x2048",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 1.778,
+   "改后满载MB": 2.37,
+   "低两档MB": 0.593,
+   "手游粒子": [
+    "P_EFX_FireWorks_SkyRocketSparkler_M"
+   ],
+   "PC粒子": [
+    "P_EFX_FireWorks_SkyRocketTail_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+    "P_EFX_FireWorks_SkyRocketSparkler_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD"
+   ],
+   "其他引用": [
+    "P_EFX_MusicFest_FireWork_Skyrocket_Fuse_B_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD",
+    "P_EFX_FireWorks_SkyRocketSparkler_H",
+    "P_EFX_FireWorks_SkyRocketSparkler_L"
+   ],
+   "其他数": 5
+  },
+  {
+   "组": "D 跨项目共用（音乐节 / 别的特效）",
+   "贴图": "T_EFX_Sparks_Streak_8x1_02",
+   "路径": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+   "源尺寸": "2048x1024",
+   "手游实际": "2048x1024",
+   "压缩": "TC_BC7",
+   "细长格": false,
+   "现常驻MB": 0.889,
+   "改后满载MB": 1.185,
+   "低两档MB": 0.296,
+   "手游粒子": [
+    "P_EFX_FireWorks_Smoke_M",
+    "P_EFX_FireWorks_Smoke_H",
+    "P_EFX_FireWorks_SkyRocketSparkler_M",
+    "P_EFX_FireWorks_SkyRocketSprint_M",
+    "P_EFX_FireWorks_SkyRocketSprint_H",
+    "P_EFX_FireWorks_SkyRocketSprint_L"
+   ],
+   "PC粒子": [
+    "P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+    "P_EFX_FireWorks_SkyRocketSparkler_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+   ],
+   "其他引用": [
+    "P_EFX_MusicFest_FireWork_Skyrocket_Fuse_B_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD",
+    "P_EFX_MusicFest_FireWork_Skyrocket_Boom_HD",
+    "P_EFX_FireWorks_SkyRocketSparkler_H"
+   ],
+   "其他数": 5
+  }
+ ],
+ "Ramp_保持NoMip": [
+  {
+   "贴图": "T_EFX_FireWorks_LittleCombo_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_LittleSilver_GinKamuro_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_LittleCrackle_Main_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_Comet_Layers_L1_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_Silver3_S_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_Glitter_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_GoldCoreLime_RedCore_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_GoldRayChry_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_LimeCoreDelay_Lead_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_RiseTrail_L_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_GlitterChry_Gold_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_RocketTail_Soft_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_SkyRocketSparkler_Sparkler_R",
+   "尺寸": "256x8"
+  },
+  {
+   "贴图": "T_EFX_FireWorks_GlitterChry_Lead_R",
+   "尺寸": "256x8"
+  }
+ ]
+}
