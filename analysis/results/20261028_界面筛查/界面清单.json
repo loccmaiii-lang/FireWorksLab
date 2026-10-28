@@ -1,0 +1,19 @@
+{
+  "schema": "fwl.ui-audit/1",
+  "baseline": "65e41bd1d242ce7b124bbc7d68c915c4e822ac50",
+  "stage": "static-complete-runtime-pending",
+  "counts": {
+    "烘焙器": 1379,
+    "编排工作台": 1974,
+    "导入器": 99
+  },
+  "component_ownership": [
+    3452,
+    3452
+  ],
+  "runtime_states": [],
+  "limitations": [
+    "静态生成点不等于运行实例；截图source映射尚未核验",
+    "124冻结采样未穷尽所有状态"
+  ]
+}
