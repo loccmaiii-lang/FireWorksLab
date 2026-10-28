@@ -299,7 +299,7 @@
     "LiteHDR（Claude Code） · 手游烟花秀贴图 Mip 改回常规 + 导入器 v2.31": {
       "负责": "LiteHDR（Claude Code）",
       "日期": "2026-10-28",
-      "状态": "进行中：UE 单写占用（26 张贴图），并认领私有导入器源码（D:/FXTools/DFWorkbench/workbench，T24 开始前以本次 v2.31 为准）",
+      "状态": "完成并释放 UE 与导入器源码：26 张读回一致、已迁出未提交 P4；导入器 v2.31 已构建；未测试（用户本轮不测）",
       "范围": "手游 24 张主序列 MipGenSettings → FromTextureGroup；T_EFX_Sparks_Sparkler_4x4_01 / T_EFX_Sparks_Streak_8x1_02 MaxTextureSize → 1024；导入器 flipbook 按平台写 mip；CLAUDE.md ④、spec §3、派活 T20/T21 口径",
       "授权": "用户 10-28：「选A方案，P4登录好了，修改吧」（方案 协作/方案/手游烟花贴图Mip恢复_2026-10-28.md 末节）",
       "保护": "PC 主序列、Ramp、DistantVFX 组、金垂柳 2 张不动；不提交 P4；改前备份 uasset",

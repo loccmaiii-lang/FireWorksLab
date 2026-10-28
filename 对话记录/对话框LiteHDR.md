@@ -370,8 +370,8 @@ D 进度（PC，`analysis/local/20261022_LiteHDR_批量修正/pc_fx.mjs` + `pc_p
 > 选A方案，P4登录好了，修改吧
 
 拆解：
-- [ ] 0 状态清单认领 UE 写入 + 导入器源码；核 P4 登录、编辑器源码管理连接、未保存资产。
-- [ ] 1 24 张手游主序列 MipGenSettings → FromTextureGroup；D 组 2 张 MaxTextureSize → 1024（PC 一起变，用户选 a）。备份 → 迁出 → 改 → 读回（只变这一项）→ 保存 → 独立复核；不提交 P4。
-- [ ] 2 导入器 v2.31：手游 flipbook 写 FromTextureGroup、PC 仍 NoMip；检查项先在旧版失败、改后通过；重建交付入口 + 文件入口副本。
-- [ ] 3 CLAUDE.md ④、spec §3、派活 T20 / T21 口径、T24 备注。
-- [ ] 4 记录、交接、推送；释放认领。
+- [x] 0 状态清单认领 UE 写入 + 导入器源码；核 P4 登录、编辑器源码管理连接、未保存资产。→ P4 票 180 小时；26 张没有未保存改动、没人迁出。
+- [x] 1 24 张手游主序列 MipGenSettings → FromTextureGroup；D 组 2 张 MaxTextureSize → 1024（PC 一起变，用户选 a）。备份 → 迁出 → 改 → 读回（只变这一项）→ 保存 → 独立复核；不提交 P4。→ 26 / 26 读回一致、磁盘已变、已迁出；备份本机。（dry 时发现 Python 枚举名写错，执行前改对。）
+- [x] 2 导入器 v2.31：手游 flipbook 写 FromTextureGroup、PC 仍 NoMip；检查项先在旧版失败、改后通过；重建交付入口 + 文件入口副本。→ 发现原来两条「主序列 NoMip」测试用的其实是手游贴图，拆成 PC / 手游；resource-rules 37 / 37（旧成品 5 条手游用例失败）、system-policy 40、update-backend 13、delivery-contract 11。
+- [x] 3 CLAUDE.md ④、spec §3、派活 T20 / T21 口径、T24 备注。→ 都已改；结果 `analysis/results/20261028_手游贴图Mip梳理/看法.md`。
+- [x] 4 记录、交接、推送；释放认领。

@@ -1,0 +1,294 @@
+{
+ "at": "2026-10-28T11:20:30.025Z",
+ "total": 26,
+ "ok": 26,
+ "bad": [],
+ "rows": [
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_L1_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01",
+   "prop": "MipGenSettings",
+   "now": "TMGS_FromTextureGroup",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+   "prop": "MaxTextureSize",
+   "now": 1024,
+   "ok": true,
+   "changed": [
+    "MaxTextureSize"
+   ],
+   "diskChanged": true,
+   "writable": true
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+   "prop": "MaxTextureSize",
+   "now": 1024,
+   "ok": true,
+   "changed": [
+    "MaxTextureSize"
+   ],
+   "diskChanged": true,
+   "writable": true
+  }
+ ]
+}
