@@ -1,0 +1,39 @@
+{
+  "images": [
+    {
+      "file": "01_已选方向.png",
+      "pixels": [
+        887,
+        1774
+      ],
+      "sha256": "a1b77662385ecb5ddb43f1bd2b344390a793899cd282fb30626334103e738e43"
+    },
+    {
+      "file": "02_对象标记.png",
+      "pixels": [
+        931,
+        1690
+      ],
+      "sha256": "fd6af62252628039251a54c9e721314b5c85d58381db97581bfc117eff0bfecb"
+    },
+    {
+      "file": "03_结构骨架.png",
+      "pixels": [
+        1003,
+        1568
+      ],
+      "sha256": "4f33fa55bd70cd09f9d07794031316bddd6e9b0e1c86ca1821b04abb1f7f7db6"
+    }
+  ],
+  "selected": "01_已选方向.png",
+  "code_checks": {
+    "status": "passed",
+    "pages": 3,
+    "selectionCases": 48,
+    "officialIconTypes": 6,
+    "controllerOutsideTree": "unchanged",
+    "treeActionsAndAria": "same as baseline",
+    "browserValidation": "blocked: Work settings disabled"
+  },
+  "visual_qa": "blocked: Local browser use is disabled in Work settings"
+}
