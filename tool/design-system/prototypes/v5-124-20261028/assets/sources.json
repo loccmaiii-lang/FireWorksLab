@@ -1,0 +1,197 @@
+{
+  "purpose": "第一阶段可编辑设计原型的真实既有图像；只用于界面设计演示。",
+  "assets": [
+    {
+      "file": "thumb-jm4.jpg",
+      "display_name": "金芒菊",
+      "source": "tool/data/thumbs.js",
+      "source_key": "rv:JM4-40",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "871abaac121a035f6284d09b0b00301610110dd7ca32f642ccce986397af61d0",
+      "metadata": {
+        "t": 0.935,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-qa.jpg",
+      "display_name": "金樱菊（球形A）",
+      "source": "tool/data/thumbs.js",
+      "source_key": "ef:qiuxing_a",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "20365aa6561a46131602afc88a3607f19bf6702b70f22f2d3603f053bd19c834",
+      "metadata": {
+        "t": 1.539,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6",
+        "of": "rv:QA19"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-qc.jpg",
+      "display_name": "翠芯银辉（球形C）",
+      "source": "tool/data/thumbs.js",
+      "source_key": "ef:qiuxing_c",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "7f164e8eacf5e707435333b317955eb35b76f05d35fcc8e162448b9b8ea12058",
+      "metadata": {
+        "t": 0.884,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6",
+        "of": "rv:QC11"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-qd.jpg",
+      "display_name": "橙芯四变菊（球形D）",
+      "source": "tool/data/thumbs.js",
+      "source_key": "ef:qiuxing_d",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "e8603f09b443188ac8962a96fad1fff60fda50b649434a76f6c20ad01a3a577a",
+      "metadata": {
+        "t": 0.75,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6",
+        "of": "rv:QD13"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-qn.jpg",
+      "display_name": "萤仔星（青柠星）",
+      "source": "tool/data/thumbs.js",
+      "source_key": "ef:qingning",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "aacd51a9474bd2a6e5d51f3b04a628bc7fc547b19e6c2ba98ba8d1844b05eef4",
+      "metadata": {
+        "t": 0.512,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6",
+        "of": "rv:QN11"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-prism.jpg",
+      "display_name": "万彩千轮",
+      "source": "tool/data/thumbs.js",
+      "source_key": "rv:PRISM3",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "0a929e6ae80eff4e5835e83209da81d49573a88c3fb69b0a9a971aafc7459c18",
+      "metadata": {
+        "t": 1.4,
+        "at": "2026-10-16 23:19",
+        "ver": "192edbc3·events4.9.111+master4.3.8-core1",
+        "job": "PRISM3R2_20261016"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-hk.jpg",
+      "display_name": "鸿巢四尺玉",
+      "source": "tool/data/thumbs.js",
+      "source_key": "ef:hongchao",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "0b7021f32aa3b6ef8e00aee63cf056219622038ece8844f7e07b687741902721",
+      "metadata": {
+        "t": 5.904,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6",
+        "of": "rv:HK10"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "thumb-hn.jpg",
+      "display_name": "引菊→锦",
+      "source": "tool/data/thumbs.js",
+      "source_key": "ef:hiki_nishiki",
+      "dimensions": [
+        160,
+        160
+      ],
+      "sha256": "b1e7c34cdf0c4bad7a063d56bf1e269eb5e5ac20605858356fdc8de1b33c7686",
+      "metadata": {
+        "t": 4.3,
+        "at": "2026-10-07 01:00",
+        "ver": "4.9.22",
+        "job": "NF6",
+        "of": "rv:HN2"
+      },
+      "usage": "库列表缩略图。原字节解码，未裁切或重绘；不要放大到超过原生尺寸作为画质证据。"
+    },
+    {
+      "file": "preview-jm4.png",
+      "display_name": "金芒菊",
+      "source": "analysis/results/POINT17_IMPL/regression/after_JM4-40_1.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "sha256": "b31eef91b9197ab5ce0b6c94af3e373fe2527598b6725126b0e525b55d73cd92",
+      "source_version": "4.3.8 默认渲染回归帧",
+      "usage": "预览区域中的静态参考图，原字节复制，未裁切、重绘或修改。",
+      "limitation": "旧版静态参考；不是124/125当前参数渲染或新导出回执。"
+    },
+    {
+      "file": "preview-sgs1.png",
+      "display_name": "仙女棒 · 13层全形态",
+      "source": "analysis/results/SparklerMotion/候选-1.png",
+      "dimensions": [
+        768,
+        768
+      ],
+      "sha256": "7cf495b04d53dd155ca54cdc74942d2ea09d6289413dbb79269d22702bd35fc2",
+      "source_version": "2026-10-17 运动试配候选",
+      "usage": "预览区域中的静态参考图，原字节复制，未裁切、重绘或修改。",
+      "limitation": "旧候选静态参考；不是当前4.9.125实时模拟，也不能作为UE成功证据。"
+    },
+    {
+      "file": "preview-rt6.jpg",
+      "display_name": "升空尾缀 RT6M",
+      "source": "本机8034/baker · 4.9.124 · RT6M中号 · 适应窗口 · 1.70s",
+      "dimensions": [
+        629,
+        629
+      ],
+      "sha256": "00985875f27617144da25ceb3df84c90a7d4b849af3e6dcace491c50d430bb68",
+      "limitation": "CUA按实际canvas边界截图629×629；底部为原生预览说明。仅作静态参考，不代表原型参数与画面的连线。"
+    }
+  ],
+  "rt6_status": "未找到无文字、无拼图的原RT6单帧资产；请由主代理从真实页面直接捕获canvas后补充。",
+  "icons": {
+    "shared": "../../icons.js · 现有 Tabler Icons v3.46.0 子集",
+    "v5": "v5-icons.js · 原样摘取c045f46a的V5_SVG，不重画图形"
+  }
+}
