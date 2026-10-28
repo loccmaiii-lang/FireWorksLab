@@ -1,0 +1,38 @@
+/* 用户选定的第二轮第1稿：只作用于结构树，不改上下分区、行高和操作列。 */
+.tree-pane { background:var(--draft-panel); }
+.parameters { background:var(--draft-bg); }
+.tree-heading h2 { display:flex; align-items:center; gap:8px; }
+.tree-node-icon,.structure-heading-icon {
+  display:inline-block; flex:none; width:16px; height:16px;
+  background:currentColor; mask:var(--node-icon) center/contain no-repeat;
+}
+.structure-heading-icon { --node-icon:url('assets/node-icons/hierarchy-2.svg'); color:var(--draft-primary); }
+.tree-node-icon[data-node-icon="sparkles"] { --node-icon:url('assets/node-icons/sparkles.svg'); }
+.tree-node-icon[data-node-icon="stack-2"] { --node-icon:url('assets/node-icons/stack-2.svg'); }
+.tree-node-icon[data-node-icon="circles"] { --node-icon:url('assets/node-icons/circles.svg'); }
+.tree-node-icon[data-node-icon="hierarchy-2"] { --node-icon:url('assets/node-icons/hierarchy-2.svg'); }
+.tree-node-icon[data-node-icon="package"] { --node-icon:url('assets/node-icons/package.svg'); }
+.tree-node-icon[data-node-icon="adjustments-horizontal"] { --node-icon:url('assets/node-icons/adjustments-horizontal.svg'); }
+.tree-row { position:relative; isolation:isolate; }
+.tree-row>.tree-toggle,.tree-row>.tree-name,.tree-row>.tree-type,.tree-row>.tree-action { position:relative; z-index:1; }
+.tree-row .tree-name { display:flex; align-items:center; gap:6px; }
+.tree-node-label { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+.tree-node-icon { color:var(--draft-muted); }
+.tree-row[data-node-kind="效果"] .tree-node-label,.tree-row[data-node-kind="图层"] .tree-node-label { font-weight:600; }
+.tree-row.is-on-edit-path .tree-node-icon { color:var(--draft-primary); }
+.tree-row.is-hidden .tree-node-icon { color:var(--draft-outline); opacity:.55; }
+.tree-guides { position:absolute; inset:0; pointer-events:none; z-index:0; }
+/* 引导线属于层级边界；不增加点击区或向读屏重复节点语义。 */
+.tree-guide { position:absolute; left:calc((var(--guide-level) - 1)*16px + 11px); top:0; bottom:0; border-left:1px solid var(--draft-outline); opacity:.45; }
+.tree-guide.is-branch { bottom:50%; width:12px; border-bottom:1px solid var(--draft-outline); }
+.tree-guide.is-branch.continues:after { content:""; position:absolute; left:-1px; top:100%; height:100%; border-left:1px solid var(--draft-outline); }
+.tree-guide.is-active { border-color:var(--draft-primary); opacity:.8; }
+.tree-guide.is-branch.is-active { border-bottom-color:var(--draft-outline); }
+.tree-guide.is-branch.is-active.active-turn { border-bottom-color:var(--draft-primary); }
+.tree-guide.is-branch.continues.active-below:after { border-color:var(--draft-primary); }
+.tree-guide.is-active:not(.active-below):after { border-color:var(--draft-outline); opacity:.55; }
+@media (forced-colors:active) {
+  .tree-node-icon,.structure-heading-icon { background:CanvasText; }
+  .tree-guide,.tree-guide.is-branch,.tree-guide.is-branch.continues:after { border-color:CanvasText; opacity:1; }
+  .tree-row[aria-selected="true"] { outline-color:Highlight; }
+}

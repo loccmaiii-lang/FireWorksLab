@@ -1,0 +1,27 @@
+{
+  "revision": "3034f812",
+  "path": "tool/design-system/drafts/v1",
+  "files": [
+    {
+      "file": "index.html",
+      "baseline_sha256": "e56a0c847b0aaba6d96eb7fa675d0084ade8ed863db7469596304abe87200bca",
+      "current_sha256": "a3288e9e557cd3effdb9da1e7a0a290f3cd71272114185558764b3ac1b2b889e"
+    },
+    {
+      "file": "screen.html",
+      "baseline_sha256": "684389b9937c61abdd78f45c0b8ccb614cc30dbb243ddd46983117416a18d4a6",
+      "current_sha256": "68c917ea744077908754945ca1c3ccd392cd8798aea6af223a66020aa74ca9f3"
+    },
+    {
+      "file": "draft.css",
+      "baseline_sha256": "390ede750603867f1e3fe248ce77b6de252dc8a5c3159d1ae97f7fde4a8ee0f5",
+      "current_sha256": "10b742a9743611bad9452eceacfa2f8a830e980af38098ab88dc2d48b30a0d53"
+    },
+    {
+      "file": "draft.js",
+      "baseline_sha256": "f18decaac676d44c15aa92dacc60ff745f79db3ebe4f90ffde82d16676fa8771",
+      "current_sha256": "c4e79999a2a6c47a3c70f6295235b6b8fb29af0994e16fce7b7c186c006d29cc"
+    }
+  ],
+  "copied_assets": "原v1 assets文件原样复制，新增node-icons单独登记"
+}

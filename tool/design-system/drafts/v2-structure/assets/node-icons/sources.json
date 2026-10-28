@@ -1,0 +1,55 @@
+{
+  "library": "Tabler Icons",
+  "version": "3.46.0",
+  "style": "outline",
+  "repository": "https://github.com/tabler/tabler-icons",
+  "tag": "v3.46.0",
+  "tag_object": {
+    "status": "官方tag raw文件已核对；GitHub API未取到ref",
+    "reason": "HTTP Error 403: rate limit exceeded"
+  },
+  "icons": {
+    "sparkles": {
+      "file": "sparkles.svg",
+      "role": "效果（同版本无firework/fireworks，以闪光语义替代）",
+      "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/icons/outline/sparkles.svg",
+      "sha256": "4e3e97b37d6399e647989856950d0c024a53f3d1bb2f1bf0714f1df2c1bd90d7"
+    },
+    "stack-2": {
+      "file": "stack-2.svg",
+      "role": "图层",
+      "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/icons/outline/stack-2.svg",
+      "sha256": "6a8c582d98be904df095ace2d05c60bea39a3aaf42ca7bd461ca6cec0f299042"
+    },
+    "circles": {
+      "file": "circles.svg",
+      "role": "发射器点群",
+      "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/icons/outline/circles.svg",
+      "sha256": "7493bc41ad5d7d6961800a46ec45e8c353c256a95ff3727bba2d4053c74c2280"
+    },
+    "hierarchy-2": {
+      "file": "hierarchy-2.svg",
+      "role": "结构/分组/粒子图",
+      "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/icons/outline/hierarchy-2.svg",
+      "sha256": "726ca4eff818363a5679cdb0571af7988040162b123761b2443a66dce2c3fde6"
+    },
+    "package": {
+      "file": "package.svg",
+      "role": "输出产物",
+      "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/icons/outline/package.svg",
+      "sha256": "f74504c6452c0e0e555280dfff5199c02fae0381b6c3d101afe88809a78887de"
+    },
+    "adjustments-horizontal": {
+      "file": "adjustments-horizontal.svg",
+      "role": "参数/设置",
+      "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/icons/outline/adjustments-horizontal.svg",
+      "sha256": "66b3be63d0ae4f75c6707ac802ef2bad9eb5f9c0af9ab77c7a1f9c7f1694a178"
+    }
+  },
+  "license": {
+    "file": "LICENSE",
+    "url": "https://raw.githubusercontent.com/tabler/tabler-icons/v3.46.0/LICENSE",
+    "sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db"
+  },
+  "note": "SVG bytes are official tag originals, without path or style edits. firework.svg and fireworks.svg are absent at this tag; sparkles is the explicit effect-type semantic substitute."
+}
