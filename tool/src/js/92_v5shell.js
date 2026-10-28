@@ -3,9 +3,10 @@
 //  · 资产栏不再单独占一行：↶ ↷ 还原 保存 另存 导出 ▾ 挪到中栏最上面一行（精简旁边）；名字、状态、⋯ 放进右栏顶上的结构栏
 //  · 右栏：结构栏 →（待我验收 / 正式库）审阅条 → 树（层 › 发射器 / 粒子层 / 输出）→ 分隔条（拖动；双击收起；记在这台电脑）→ 参数
 //  · 树每行两个开关（用户 20:37 第 1 条「看不见就不导出」）：
-//      眼睛 = 「显示这层」（配方：关了不画、不烘、不导出，进撤销）——只有现成开关的行能点：粒子图 / 火焰的层（enabled）、自定义发射器（x1On / x2On）；
+//      眼睛 = 「显示这层」（配方：关了不画、不烘、不导出，进撤销）：粒子图 / 火焰的层（enabled）、自定义发射器（x1On / x2On）；
+//        10-28 10:00 用户批了加参数（「你让我定的显示这层参数可以加」）：多层的层（L.show）、普通花型 / 升空尾缀的发射器（10_types.js SHOW_KEYS）也能点；
+//        地面循环、物理尾缀（旧）的发射器还没接，灰着写原因。至少留一个显示
 //      ◎ = 只看这一个（只影响画面，不改参数、不影响导出）——多层的层、粒子图的层、尾缀「输出」下面的几份。
-//      其余行灰着、悬停写原因：新加开关要先记参数变更、等用户批（CLAUDE.md 第 4 节），这一版不加
 //  · 只改位置和入口：元素 id、事件、参数、导出都不变（界面状态检查 / 合入门禁照旧找得到 ab* / dvExport / selectEmitTab）
 // =====================================================================
 var V5_SVG = {
@@ -22,9 +23,9 @@ var V5_SVG = {
 const V5_RH = 28;                 // 树一行的高度（px）
 const V5_KEEP = 520;              // 参数区保底：一个发射器的模块（收起写摘要、第一个展开）一屏看得完要这么高（界面状态检查 W14 的口径）；不够时树至少 5 行
 const V5_WHY = {
-  layer: '多层的层还没有「显示这层」开关：要新加参数（先记参数变更、等你批）。只看某一层用右边的 ◎',
   single: '单层效果只有这一层：关了就没有东西可导出',
-  emit: '这个发射器还没有「显示这层」开关：要新加参数（先记参数变更、等你批）',
+  emit: '这种花型（地面循环 / 物理尾缀）的发射器还没接「显示这层」',
+  lastEmit: '至少要留一个发射器显示（全关了就没有东西可导出）',
   soloEmit: '这种发射器还不能单独画（只看）',
   out: '这一份导不导出：在交付清单「每层出什么」里选',
   last: '至少要显示一层'
@@ -170,7 +171,9 @@ function v5Nodes() {
   const N = [], P = state.P; if (!P || state.tab === 'asset' || state.showcase) return N;
   const combo = state.tab === 'combo' && state.layers && state.layers.length > 0, tabs = v5Tabs(), cur = pview.tabNow || '', has = t => tabs.includes(t);
   const nChg = pview.nChg || {}, sg = typeof sgOn === 'function' && sgOn();
-  const emitNode = (t, lv, x = {}) => ({ key: 't:' + t, lv, kind: 'emit', name: t, tab: t, sel: cur === t, chg: nChg[t] || 0, eye: { can: false, why: V5_WHY.emit }, solo: { can: false, why: V5_WHY.soloEmit }, ...x });
+  const emitNode = (t, lv, x = {}) => { const sk = showKeyOf(P, t), off = !!sk && !emitShown(P, sk);
+    return { key: 't:' + t, lv, kind: 'emit', name: t, tab: t, sel: cur === t, chg: nChg[t] || 0, off, pickOff: true, title: off ? '「显示这层」关着：不画、不烘、不导出（挂在它上面的照样生成）；参数照样能改' : '',
+      eye: sk ? v5EmitEye(t, sk) : { can: false, why: V5_WHY.emit }, solo: { can: false, why: V5_WHY.soloEmit }, ...x }; };
   const pageNode = (t, lv, x = {}) => ({ key: 't:' + t, lv, kind: 'page', name: t, tab: t, sel: cur === t, chg: nChg[t] || 0, ...x });
   const kids = lv => {
     const done = new Set();
@@ -190,7 +193,7 @@ function v5Nodes() {
       if (xm) { N.push(emitNode(t, lv, { eye: v5XEye(+xm[1], true) })); continue; }
       N.push(emitNode(t, lv));
     }
-    for (const i of [...v5.xOff]) if (!(+P['x' + i + 'On'] > 0)) N.push(emitNode('自定义 ' + i, lv, { off: true, sel: false, eye: v5XEye(i, false), title: '「显示这层」关着：不画、不烘、不导出；点眼睛打开' }));
+    for (const i of [...v5.xOff]) if (!(+P['x' + i + 'On'] > 0)) N.push(emitNode('自定义 ' + i, lv, { off: true, pickOff: false, sel: false, eye: v5XEye(i, false), title: '「显示这层」关着：不画、不烘、不导出；点眼睛打开' }));
     if (document.getElementById('exAdd')) N.push({ key: 'x:+', lv, kind: 'add', name: '＋ 加发射器', title: '加一个自定义发射器：挂在星熄灭 / 开花 / 某个时刻 / 沿路上，生成光点或星', click: () => exAddSlot() });     // 原来在发射器标签行末尾
     if (has('输出')) { const oOpen = v5IsOpen('t:输出', false), outs = v5TrailOuts(); N.push(pageNode('输出', lv, { tw: outs.length ? (oOpen ? 'open' : 'closed') : '', title: '这一层的贴图、格子、曝光、取景；PC / 手机出什么在交付清单' }));
       if (outs.length && oOpen) v5TrailNodes(N, lv + 1, outs); }
@@ -200,10 +203,10 @@ function v5Nodes() {
     N.push({ key: 'whole', lv: 0, kind: 'page', name: `整体 · ${state.layers.length} 层`, title: '各层在整朵里的位置、延迟、时间倍率、颜色', sel: state.comboSel < 0, click: () => selectComboLayer(-1) });
     const v = state.layerView || { solo: -1, mute: [] };
     state.layers.forEach((L, i) => {
-      const me = state.comboSel === i, open = me && v5IsOpen('L' + i), muted = (v.mute || []).includes(i);
-      N.push({ key: 'L' + i, lv: 0, kind: 'layer', name: `${i + 1} · ${layerName(i)}`, sel: me && (cur === '效果' || !has('效果') && !cur), chg: me ? pview.nChgAll || 0 : 0, tw: me ? (open ? 'open' : 'closed') : 'closed', i,
-        title: `第 ${i + 1} 层 · ${layerName(i)}：点名字 = 这一层的整体（这一层在整朵里、整体调整、本层颜色）${muted ? '\n时间轴上把这一层设成了「先不看」（只影响观察）' : ''}`,
-        eye: { can: false, why: V5_WHY.layer }, solo: { can: true, on: v.solo === i, why: v.solo === i ? '只看这一层中：再点一下回到全部（只影响画面）' : '只看这一层（只影响画面，不改参数、不影响导出）', go: () => { v.solo = v.solo === i ? -1 : i; buildLayerCard(); v5Sched(); } },
+      const me = state.comboSel === i, open = me && v5IsOpen('L' + i), muted = (v.mute || []).includes(i), off = layerOff(L);
+      N.push({ key: 'L' + i, lv: 0, kind: 'layer', name: `${i + 1} · ${layerName(i)}`, sel: me && (cur === '效果' || !has('效果') && !cur), chg: me ? pview.nChgAll || 0 : 0, tw: me ? (open ? 'open' : 'closed') : 'closed', i, off, pickOff: true,
+        title: `第 ${i + 1} 层 · ${layerName(i)}：点名字 = 这一层的整体（这一层在整朵里、整体调整、本层颜色）${off ? '\n「显示这层」关着：整朵里不画、不导出（参数、产物都留着）' : muted ? '\n时间轴上把这一层设成了「先不看」（只影响观察）' : ''}`,
+        eye: v5LayerEye(i), solo: { can: !off, on: v.solo === i, why: v.solo === i ? '只看这一层中：再点一下回到全部（只影响画面）' : '只看这一层（只影响画面，不改参数、不影响导出）', go: () => { v.solo = v.solo === i ? -1 : i; buildLayerCard(); v5Sched(); } },
         menu: lib.my ? i : null, click: () => v5PickLayer(i) });
       if (open) kids(1);
     });
@@ -235,6 +238,34 @@ function v5GraphEye(id) {
   if (on && g.emitters.filter(x => x.enabled !== false).length <= 1) { flash(V5_WHY.last, true); return; }
   if (on && typeof graphSolo !== 'undefined' && graphSolo === id) graphSolo = null;
   sgEdit(gg => { const x = gg.emitters.find(y => y.id === id); x.enabled = !on; return [x]; }, `${on ? '隐藏' : '显示'}了「${GraphTree.short(e)}」：${on ? '不画、不烘、不导出（子粒照样生成）' : '重新画、烘、导出'}（Ctrl+Z 撤销）`);
+}
+// 4.9.125（用户 10-28 10:00 批）：普通花型 / 升空尾缀的发射器——「显示这层」键在 10_types.js SHOW_KEYS
+function v5ShownEmits() {     // 这一层还显示着、真有东西的发射器有几个（余烬比例 0、没开爆裂这种空标签不算）
+  const P = state.P, rows = ((SCHEMA.find(x => x.sec === '显示这层') || {}).items || []); let n = 0;
+  for (const t of v5Tabs()) { const sk = showKeyOf(P, t), it = sk && rows.find(r => r.sel === sk); if (sk && emitShown(P, sk) && (!it || !it.show || it.show(P))) n++; }
+  for (const i of [1, 2]) if (+P['x' + i + 'On'] > 0) n++;
+  if (P.sparkGraph) n += P.sparkGraph.emitters.filter(e => e.enabled !== false).length;
+  return n;
+}
+function v5EmitEye(t, sk) {
+  const on = emitShown(state.P, sk);
+  return { can: true, on, why: on ? '显示这层：关掉（不画、不烘、不导出；挂在它上面的照样生成；参数留着；Ctrl+Z 撤销）' : '显示这层：打开（重新画、烘、导出）', go: () => {
+    if (on && v5ShownEmits() <= 1) { flash(V5_WHY.lastEmit, true); return; }
+    state.P[sk] = on ? 0 : 1; onParam(); if (typeof refreshPanelValues === 'function') refreshPanelValues(); v5Sched();
+    flash(`${on ? '隐藏' : '显示'}了「${t}」${on ? '：不画、不烘、不导出（挂在它上面的照样生成）' : '：重新画、烘、导出'}（Ctrl+Z 撤销）`); } };
+}
+// 多层的层：层上 show（0 = 整朵里不画、不导出；打开时删掉这个键，没动过的层和以前逐字一样）
+function v5LayerEye(i) {
+  const L = state.layers[i], on = !layerOff(L);
+  return { can: true, on, why: on ? '显示这层：关掉（整朵里不画、不导出；参数、产物都留着；Ctrl+Z 撤销）' : '显示这层：打开（重新画、导出）', go: () => {
+    if (on && state.layers.filter(x => !layerOff(x)).length <= 1) { flash(V5_WHY.last, true); return; }
+    if (on) { L.show = 0; const v = state.layerView; if (v && v.solo === i) v.solo = -1; } else delete L.show;
+    if (typeof stage2 !== 'undefined') stage2.tlSig = '';
+    if (typeof undoNote === 'function') undoNote();
+    if (typeof buildLayerCard === 'function') buildLayerCard();
+    if (typeof stage2 !== 'undefined' && stage2.deliv && typeof renderDeliv === 'function') renderDeliv();
+    if (typeof wbSync === 'function') wbSync(); v5Sched();
+    flash(`${on ? '隐藏' : '显示'}了第 ${i + 1} 层「${layerName(i)}」${on ? '：整朵里不画、不导出' : '：重新画、导出'}（Ctrl+Z 撤销）`); } };
 }
 // 自定义发射器：x1On / x2On 就是它的「显示这层」（参数留着，再打开照旧）
 function v5XEye(i, on) {
@@ -306,7 +337,7 @@ function v5TreeBind(tree) {
     if (a === 'tw') { if (n.kind === 'layer' && state.tab === 'combo' && state.comboSel !== n.i) { v5PickLayer(n.i); return; } v5.open[n.key] = n.tw !== 'open'; store.set('v5Open', v5.open); v5Sched(); setTimeout(v5Heights, 0); return; }
     if (a === 'eye' || a === 'solo') { const o = n[a]; if (!o || !o.can) { if (o && o.why) flash(o.why, true); return; } o.go(); return; }
     if (a === 'menu') { v5LayerMenu(b, n.i); return; }
-    if (a === 'pick') { if (n.click) n.click(); else if (n.tab) { if (n.off) { flash('「显示这层」关着：先点眼睛打开', true); return; } selectEmitTab(n.tab); } else if (n.tw) { v5.open[n.key] = n.tw !== 'open'; store.set('v5Open', v5.open); v5Sched(); } }
+    if (a === 'pick') { if (n.click) n.click(); else if (n.tab) { if (n.off && !n.pickOff) { flash('「显示这层」关着：先点眼睛打开', true); return; } selectEmitTab(n.tab); } else if (n.tw) { v5.open[n.key] = n.tw !== 'open'; store.set('v5Open', v5.open); v5Sched(); } }
   });
   tree.addEventListener('dblclick', e => { const b = e.target.closest('[data-act="pick"]'); if (!b) return; const n = v5.nodes[+b.dataset.n]; if (n && n.tw) { v5.open[n.key] = n.tw !== 'open'; store.set('v5Open', v5.open); v5Sched(); } });
   tree.addEventListener('keydown', e => {
@@ -365,7 +396,7 @@ function selEnhance(row, s, it) {
       const sync = () => { sw.checked = s.value === labs[onI][0]; sw.disabled = s.disabled; sw.title = (labs[sw.checked ? onI : offI][3] || '').replace(/（/, '：').replace(/）$/, ''); };
       sw.addEventListener('change', () => { s.value = labs[sw.checked ? onI : offI][0]; s.dispatchEvent(new Event('change', { bubbles: true })); sync(); });
       s.after(sw); row.classList.add('v5-enh', 'v5-has-sw'); row._segSync = sync; v5WrapRefresh(row); sync();
-      if (/\.enabled$/.test(String(it.sel))) row.classList.add('v5-dup');     // 「显示这层」= 树上的眼睛（19:26「显示这一层和小眼睛重复了」）
+      if (/\.enabled$/.test(String(it.sel)) || SHOW_KEY_SET.has(String(it.sel))) row.classList.add('v5-dup');     // 「显示这层」= 树上的眼睛（19:26「显示这一层和小眼睛重复了」；4.9.125 新加的那几个也一样）
       return;
     }
   }

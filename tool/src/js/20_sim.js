@@ -21,12 +21,13 @@ class Sparks {
     this.p = new Float32Array(cap * 3); this.v = new Float32Array(cap * 3);
     this.age = new Float32Array(cap); this.life = new Float32Array(cap); this.T0 = new Float32Array(cap); this.rnd = new Float32Array(cap);
     this.air = new Float32Array(cap * 2); this.pd = new Float32Array(cap);
+    this.hd = new Uint8Array(cap);     // 4.9.125「显示这层」：1 = 这颗火花属于关着的发射器（照样出生、照样消耗随机数，只是不画）
   }
-  add(x, y, z, vx, vy, vz, age, life, T0, rnd, ax, ay, pd = 1e9) {
+  add(x, y, z, vx, vy, vz, age, life, T0, rnd, ax, ay, pd = 1e9, hd = 0) {
     if (this.n >= this.cap) { this.dropped = (this.dropped || 0) + 1; return; }     // 4.3（E9）：池满了丢的数记下来（自检报警）
     const i = this.n++, k = i * 3;
     this.p[k] = x; this.p[k + 1] = y; this.p[k + 2] = z; this.v[k] = vx; this.v[k + 1] = vy; this.v[k + 2] = vz;
-    this.age[i] = age; this.life[i] = life; this.T0[i] = T0; this.rnd[i] = rnd; this.air[i * 2] = ax; this.air[i * 2 + 1] = ay; this.pd[i] = pd;
+    this.age[i] = age; this.life[i] = life; this.T0[i] = T0; this.rnd[i] = rnd; this.air[i * 2] = ax; this.air[i * 2 + 1] = ay; this.pd[i] = pd; this.hd[i] = hd;
   }
   kill(i) {
     const j = --this.n; if (i === j) return;
@@ -34,7 +35,7 @@ class Sparks {
     this.p[a] = this.p[b]; this.p[a + 1] = this.p[b + 1]; this.p[a + 2] = this.p[b + 2];
     this.v[a] = this.v[b]; this.v[a + 1] = this.v[b + 1]; this.v[a + 2] = this.v[b + 2];
     this.age[i] = this.age[j]; this.life[i] = this.life[j]; this.T0[i] = this.T0[j]; this.rnd[i] = this.rnd[j];
-    this.air[i * 2] = this.air[j * 2]; this.air[i * 2 + 1] = this.air[j * 2 + 1]; this.pd[i] = this.pd[j];
+    this.air[i * 2] = this.air[j * 2]; this.air[i * 2 + 1] = this.air[j * 2 + 1]; this.pd[i] = this.pd[j]; this.hd[i] = this.hd[j];
   }
 }
 
@@ -315,6 +316,9 @@ class Sim {
     this.events = [];                    // 声音节点：[时刻, 类型]
     // 4.8.0（5.0 第 3 步一部分）：各发射器的大小 / 亮度按寿命曲线（空 = 不乘，画面不变）
     this.cv = { ps: parseCurve(P.sparkSizeCurve), pb: parseCurve(P.sparkBrightCurve), es: parseCurve(P.emberSizeCurve), eb: parseCurve(P.emberBrightCurve), ss: parseCurve(P.starSizeCurve), sb: parseCurve(P.starBrightCurve), us: parseCurve(P.subSizeCurve), ub: parseCurve(P.subBrightCurve), cs: parseCurve(P.crackleSizeCurve), cb: parseCurve(P.crackleBrightCurve), fb: parseCurve(P.flashBrightCurve), fs: parseCurve(P.flashSizeCurve) };     // 4.9.4 开花闪光大小随寿命
+    // 4.9.125「显示这层」：只在画（gather）的时候不画；模拟、随机数、取景 / 帧计划（30_plan.js 用 headI / flashes）都不变
+    const air = this.fam === 'aerial', sh = k => !air || emitShown(P, k);
+    this.vis = { star: sh('showStar'), spark: sh('showSpark'), ember: sh('showEmber'), crackle: sh('showCrackle'), sub: sh('showSub'), flash: sh('showFlash') };
     this.ex = this.fam === 'aerial' ? exSlotsOf(P) : []; this.exDots = []; this.exRng = new RNG((P.seed | 0) + 7177); this.exDone = {};     // 4.6.0 自定义发射器（默认没有 → 不碰主随机序列）
     if (this.fam === 'rise') { this.initRise(); return; }
     // 4.3.3 开花闪光大小（默认 1 = 以前）；4.6.0 开花闪光自己的半径（-1 = 跟初速：max(2 m, 0.045 × 初速)）、衰减、可见时长
@@ -430,7 +434,7 @@ class Sim {
       if (+P.subSize > 0) ch.sz = +P.subSize;                                                   // 4.6.0 子星大小（-1 = 同星）
       this.stars.push(ch);
     }
-    this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: P.subFlash >= 0 ? P.subFlash : P.flash * 0.3, sig: +P.subFlashR > 0 ? +P.subFlashR : Math.max(1, P.subSpeed * 0.05) });     // 4.6.0 子花闪光半径（-1 = 跟子花初速）
+    this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: P.subFlash >= 0 ? P.subFlash : P.flash * 0.3, sig: +P.subFlashR > 0 ? +P.subFlashR : Math.max(1, P.subSpeed * 0.05), sub: 1 });     // 4.6.0 子花闪光半径（-1 = 跟子花初速）
     this.events.push([this.t, P.subPattern === 'cross' ? 'crack' : 'pop']);
   }
   kobanaBurst(s) {
@@ -537,7 +541,7 @@ class Sim {
             if (jt > 0 && vs > 1e-3) { const a = [-s.vx / vs, -s.vy / vs, -s.vz / vs], j = jetDir(a, (+P.sparkJetCone || 0) * Math.PI / 180, rng.u(), rng.u()); wx += jt * j[0]; wy += jt * j[1]; wz += jt * j[2]; }
           }
           sp.add(qx, qy, qz, wx, wy, wz,
-            u * h, emb ? P.emberLife * Math.exp(cpuJ.elj * rng.n()) : lfe, T0 + cpuJ.t0j * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn));
+            u * h, emb ? P.emberLife * Math.exp(cpuJ.elj * rng.n()) : lfe, T0 + cpuJ.t0j * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn), s.kind === 2 && !this.vis.sub ? 1 : 0);
         }
       }
       if (s.kind === 5) {
@@ -615,8 +619,10 @@ class Sim {
     const hs = headShapeOf(P);     // 4.9.50 星头形状（全 0 = null，每颗星走原来那一行）
     const cj = sparkCpuJit(P);
     const push = (buf, n, x, y, I, sz) => { const k = n * 4; buf[k] = x; buf[k + 1] = y; buf[k + 2] = I; buf[k + 3] = sz; };
+    const V = this.vis;
     for (const s of this.stars) {
       if (!s.alive) continue;
+      if ((s.kind === 0 || s.kind === 1) && !V.star || s.kind === 2 && !V.sub) continue;     // 4.9.125「显示这层」：星 / 子花关着
       const I = this.headI(s); if (I <= 0) continue;
       if (nh >= capH - 1) { this.dropH = (this.dropH || 0) + 1; continue; }     // 4.3（E9）：星头缓冲满了没画的星（自检报警）
       let sz = s.sz != null ? s.sz * (s.exC && s.exC.sizeC ? Math.max(0, lifeCurveAt(s.exC.sizeC, clamp((s.age - (s.ign || 0)) / Math.max(0.05, s.burn - (s.ign || 0)), 0, 1))) : 1) : P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);     // 4.6.0 子星 / 自定义发射器的星有自己的大小
@@ -635,6 +641,7 @@ class Sim {
     const FL = this.flashes, fwSeen = fw && fw[3] ? flashPrevOf(fw, this, Infinity, FL.length) : Infinity;
     for (let fi = 0; fi < FL.length; fi++) {
       const f = FL[fi]; if (f.abs == null) continue;
+      if (f.crk ? !V.crackle : !V.star) continue;     // 4.9.125：爆裂关着 / 落水闪光跟星
       let a = this.t - f.t0, I; const cut = f.cut || 0.25;
       if (fw && f.crk) {     // 4.9.103 B8：爆裂小闪按这一帧停留时段里的平均亮度（随寿命曲线取重叠段中间的年龄）；只在最后一个子样本画、× 子样本数
         const a1 = fi >= fwSeen ? 0 : Math.max(0, fw[0] - f.t0), a2 = Math.min(cut, fw[1] - f.t0); if (!fw[3] || !(a2 > a1) || nh >= capH - 1) continue;
@@ -660,6 +667,7 @@ class Sim {
     this.gFlash = nh;
     for (let fi = 0; fi < FL.length; fi++) {
       const f = FL[fi]; if (f.abs != null) continue;
+      if (f.main && !V.flash || f.sub && !V.sub) continue;     // 4.9.125：开花闪光 / 子花关着
       let a = this.t - f.t0, ex; const cut = f.cut || 0.25;
       if (fw && !f.main && this.fam === 'aerial') {     // 4.9.103 B8：子花开花闪光 / 小花闪按这一帧停留时段里的平均亮度（主花开花闪光、上升的闪光不变）；只在最后一个子样本画、× 子样本数
         const a1 = fi >= fwSeen ? 0 : Math.max(0, fw[0] - f.t0), a2 = Math.min(cut, fw[1] - f.t0); if (!fw[3] || !(a2 > a1) || nh >= capH - 1) continue;
@@ -675,7 +683,7 @@ class Sim {
     const sp = this.sp; let nt = 0;
     const gl = P.glitter, gd = P.glitterDelay;
     for (let i = 0; i < sp.n && nt < capT - 1; i++) {
-      const emb = P.emberFrac > 0 && sp.rnd[i] < P.emberFrac;
+      const emb = P.emberFrac > 0 && sp.rnd[i] < P.emberFrac, hid = sp.hd[i] || (emb ? !V.ember : !V.spark);     // 4.9.125「显示这层」：子花 / 余烬 / 火花关着（下面算完闪烁的随机数才跳过：别的火花的闪烁一颗不变）
       // 4.4 冷却方式「按实际时间」：温度按年龄 ÷ 中值寿命（不按每颗自己的寿命），最后 30% 寿命淡出（和 GPU 核同一条）
       const abs = this.fam === 'aerial' && !emb, lc = abs ? P.sparkLife : sp.life[i], T = emb ? sp.T0[i] : sp.T0[i] * (1 - P.cooling * sp.age[i] / lc);
       let g = (T - 900) / 1150; if (g <= 0 && gl <= 0) continue; g = g > 0 ? g * g * g : 0;
@@ -690,6 +698,7 @@ class Sim {
       const j = i * 3, x = sp.p[j], y = sp.p[j + 1];
       if (refl > 0 && y < 0) continue;
       const tw = +P.twinkleHz > 0 ? Math.sin(6.2831853 * (P.twinkleHz * this.t + sp.rnd[i] * 7.31 % 1)) : rr.u() * 2 - 1;     // 4.4.3 闪烁频率（和 GPU 核同一条）
+      if (hid) continue;
       const I = g * (1 + P.twinkle * tw) * P.sparkBright * 0.6;
       push(bufT, nt++, x, y, I, tailSize);
       if (refl > 0 && nt < capT - 1) push(bufT, nt++, x + ripple(y, this.t), -y, I * refl * Math.exp(-y / 400), (+P.sparkTailAfterBurn === 1 ? tailSize : P.sparkSize) * 1.3);

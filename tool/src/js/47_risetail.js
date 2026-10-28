@@ -106,9 +106,10 @@ function rtPowderOf(P, LI, gi, M, rate, salt) {
     wx: (P.rtTurbS || 0) * phn(K, 11), wz: (P.rtTurbS || 0) * 0.7 * phn(K, 12)
   };
 }
-function rtPowderI(P, q, a, pulse) { const u = a / q.life; return P.rtAI * q.br * pulse * Math.min(1, a / 0.015) * Math.pow(Math.max(0, 1 - u), P.rtAWarm || 1); }
+function rtPowderI(P, q, a, pulse) { if (!emitShown(P, 'rtShowA')) return 0; const u = a / q.life; return P.rtAI * q.br * pulse * Math.min(1, a / 0.015) * Math.pow(Math.max(0, 1 - u), P.rtAWarm || 1); }
 // 星头：亮核 + 沿「向后方向」的短焰（一串点，越往后越宽越暗）。hx, hz = 星头位置；dx, dz = 向后单位向量
 function rtHeadPts(P, hx, hz, dx, dz, I, k) {
+  if (!emitShown(P, 'rtShowHead')) return k;     // 4.9.125「显示这层」：星头关着
   bufH[k++] = hx; bufH[k++] = hz; bufH[k++] = I; bufH[k++] = P.rtHeadSize;
   const L = P.rtHeadFl || 0;
   if (L > 1e-3 && (P.rtHeadFlI || 0) > 0) {
@@ -171,6 +172,8 @@ function rtTexClasses(P, LI) {
       shrink: P.rtShrink == null ? 0.5 : P.rtShrink, salt: (P.seed | 0) * 31 + salt * 1009 + 7, lifeMax: L * (1 + j) };
   });
 }
+// 4.9.125「显示这层」：画 / 烘的贴图火星只要开着的档（细 F / 中 M / 粗 C / 落火 E）；量取景、排版仍用 rtTexClasses 全部（关掉一档不改取景）
+const rtTexDraw = (P, LI) => rtTexClasses(P, LI).filter(C => emitShown(P, 'rtShow' + C.k));
 // 4.9.82：空曲线乘数为 1；可将新增外观变化推迟到主弹体燃尽以后。
 const rtTailGate = (P, t, T) => smoothstepJS(0, Math.max(0.05, +P.rtLateFade || 0.4), t - T);
 const rtTailCurve = (cv, u, gate) => cv ? 1 + (Math.max(0, lifeCurveAt(cv, u)) - 1) * gate : 1;
@@ -253,7 +256,7 @@ function rtTexSparksDraw(P, CL, LI, Vref, ts, te, view, ppm, w, fr, fadeAll, bot
 //   mode 'loop'：ts 取周期内任意时刻；'fade'：stop = 停喷时刻（循环相位），ts ≥ stop 后星头灭、不再喷，已有火粉 / 火星按自己的寿命熄灭
 function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
   const rate0 = P.rtARate || 0, M = Math.max(1, Math.round(rate0 * LI.Tl)), rate = M / LI.Tl, salt = (P.seed | 0) * 7 + 11, R0 = (P.rtD || 0) / 2;
-  const lifeMax = rtPowderLifeMax(P), CL = rtTexClasses(P, LI), nw = rtNearW(P);     // 4.5.1：近段只画年轻的（年龄权重 nw）
+  const lifeMax = rtPowderLifeMax(P), CL = rtTexDraw(P, LI), nw = rtNearW(P);     // 4.5.1：近段只画年轻的（年龄权重 nw）
   const R = {
     Tp: LI.Tl, slots: Math.ceil(rate * lifeMax) + 2, stop: opts.stop == null ? -1 : opts.stop, fadeDur: opts.fadeDur || 0, bot: opts.bot || null, subW: 0, fr: opts.fr || null,
     draw(ts, view, ppm, w) {
@@ -301,7 +304,7 @@ function rtWorldDraw(P, LI, ball, t, view, ppm, w, wf, cx, o) {
   const gate = +P.rtTailAfterBurn === 1 ? rtTailGate(P, t, ball.T) : 1;
   const T = ball.T, R0 = (P.rtD || 0) / 2, lifeMax = rtPowderLifeMax(P);
   let n = 0;
-  const CL = rtTexClasses(P, LI).filter(C => !(o && o.noE && C.k === 'E'));
+  const CL = rtTexDraw(P, LI).filter(C => !(o && o.noE && C.k === 'E'));
   if (CL.length) {
     // 贴图火星在地面坐标：出生时刻的弹体位置 + 速度（同一套随机量），拖影 = 相对星头此刻速度 × 循环层快门
     const te = Math.min(t, T), vh = ball.vel(Math.min(t, T)), ppy = PPMY || ppm, cap = bufT.length / 4, smax = Math.max(1, P.rtStreakMax || 6);
@@ -354,7 +357,7 @@ function rtEmberCol(P, k2) {
   return c;
 }
 function rtEmberDots(P, LI, ball, t, view, ppm, ppmY, cx, gain = 1) {
-  const C = rtTexClasses(P, LI).find(C => C.k === 'E'); if (!C) return 0;
+  const C = rtTexDraw(P, LI).find(C => C.k === 'E'); if (!C) return 0;
   const T = ball.T, R0 = (P.rtD || 0) / 2, te = Math.min(t, T), gate = +P.rtTailAfterBurn === 1 ? rtTailGate(P, t, T) : 1;
   const Sd = rtDispS(P, C.S), col = rtEmberCol(P, rtDispK(P, C.S));
   let n = 0, alive = 0;
@@ -458,9 +461,9 @@ function makeRiseTailFullRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
   }, dispose() { } };
   // 4.9.102 rtFullFx：引擎里加的效果 + 落火在收尾时合进来（没有这些东西时不挂 finish，和关着一样）
   if (fx) {
-    const tab = esSpawn({ emitters: rtBuildES(P).emitters.filter(e => RT_FX_NAMES.has(e.name)) }, 1), tex = rtTexClasses(P, LI).some(C => C.k === 'E');
+    const tab = esSpawn({ emitters: rtBuildES(P).emitters.filter(e => RT_FX_NAMES.has(e.name)) }, 1), tex = rtTexDraw(P, LI).some(C => C.k === 'E');
     Object.assign(R, { P, LI, ball, cx, vz, t0, fxTables: () => tab,
-      fxEnd: () => Math.max(tex ? T + rtTexClasses(P, LI).find(C => C.k === 'E').lifeMax : 0, ...tab.map(x => x.list.reduce((m, q) => Math.max(m, q.t0 + q.life), 0))) });
+      fxEnd: () => Math.max(tex ? T + rtTexDraw(P, LI).find(C => C.k === 'E').lifeMax : 0, ...tab.map(x => x.list.reduce((m, q) => Math.max(m, q.t0 + q.life), 0))) });
     if (tab.some(x => x.list.length) || tex) R.finish = (src, o) => rtFxFinish(R, src, o);
   }
   return R;
@@ -519,6 +522,8 @@ function rtStretchLife(P, ball, jet, kd, L, S, sizeLife, tauMul) {
   }
   return keys.some(k => k[1] > 1.05) ? keys : null;
 }
+// 4.9.125「显示这层」：粒子发射器 → 它归哪个发射器的开关（星头光晕跟星头；发射口闪光 / 火花跟发射口）
+const RT_EM_SHOW = { SparksFine: 'F', SparksMid: 'M', SparksTwinkle: 'M', SparksCoarse: 'C', Embers: 'E', HeadGlow: 'Head', SparkPops: 'Pop', LaunchGlow: 'Launch', LaunchSparks: 'Launch', Smoke: 'Smoke' };
 function rtBuildES(P) {
   const ball = rtBallistic(P), LI = rtLoopInfo(P), T = ball.T, f = P.rtSpin || 0, R0 = (P.rtD || 0) / 2, th = ball.th;
   const dtL = Math.min(0.05, f > 0 ? 1 / (12 * f) : 0.05), dtS = Math.min(0.05, P.rtPulse > 0 ? 1 / (4 * (P.rtPulseHz || 6)) : 0.25);
@@ -624,7 +629,9 @@ function rtBuildES(P) {
   const gpuEst = () => em.filter(e => e.gpu && e.spawn && e.spawn.length).reduce((a, e) => a + Math.max(...e.spawn.map(k => k[1])) * (e.life[0] + e.life[1]) / 2, 0);
   const est0 = gpuEst(), cap = +P.rtGpuMax > 0 ? +P.rtGpuMax : 0, fCap = cap > 0 && est0 > cap ? cap / est0 : 1;
   if (fCap < 1) for (const e of em) if (e.gpu && e.spawn && e.spawn.length) e.spawn = e.spawn.map(([t, r]) => [t, r * fCap]);
-  return { ball, LI, T, emitters: em, gpuEst: { est: Math.round(est0 * fCap), raw: Math.round(est0), cap, f: fCap } };
+  // 4.9.125「显示这层」：关着的发射器不画、不导出（在上面按 GPU 上限降过之后才去掉：别的发射器的出生率、颗数一点不变）
+  const emOn = em.filter(e => emitShown(P, 'rtShow' + (RT_EM_SHOW[e.name] || '')));
+  return { ball, LI, T, emitters: emOn, gpuEst: { est: Math.round(est0 * fCap), raw: Math.round(est0), cap, f: fCap } };
 }
 // 面片取景的粗估（随体坐标）：横向 = 喷口半径 + 甩出 / 阻力 + 散开；竖向 = 出膛速度下白热段 / 贴图火星的最长距离。只用来定测量窗口
 function rtLoopBox(P, Vref, LI) {
@@ -1007,7 +1014,7 @@ async function bakeEmitSet(P, scale, onProg) {
   const sk = lay.grow ? lay.sk : [[0, 1], [1, 1]];
   Object.assign(b.meta, { es: true, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) },
     T, Tl, nRev: LI.nRev, loopFps: LI.fps, Vref, stop, fEnd: Math.floor(stop / Tl * F) % F, sizeKeysRise: sk, grow: !!lay.grow, fadeFrames: Ff, fadeFps: bf ? bf.fps : 0, fadeSeconds: Df, hb: lay.hb,
-    texSparks: rtTexClasses(P, LI).map(C => C.k), ...(far ? { nearA: rtNearA(P), gpuSplit: rtGpuSplit(P), nearExpo: kN } : {}) });
+    texSparks: rtTexDraw(P, LI).map(C => C.k), ...(far ? { nearA: rtNearA(P), gpuSplit: rtGpuSplit(P), nearExpo: kN } : {}) });
   b.fades = bf ? [bf] : []; b.es = ES; b.form = 'emitset'; b.P = zoom0 === 'anchor' ? { ...P, zoom: 'anchor' } : P;
   return b;
 }
@@ -1075,7 +1082,7 @@ async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   const R = makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0);
   const b = await bakeFrames(Pa, scale, onProg, pa, R, { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, vis: fa.vis, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
-  if (R.finish) b.meta.fullFx = { names: [...R.fxTables().filter(x => x.list.length).map(x => x.e.name), ...(rtTexClasses(P, LI).some(C => C.k === 'E') ? ['EmbersTex'] : [])] };     // 4.9.102 合进来的有哪些（说明 / 统计 / 回放用）
+  if (R.finish) b.meta.fullFx = { names: [...R.fxTables().filter(x => x.list.length).map(x => x.e.name), ...(rtTexDraw(P, LI).some(C => C.k === 'E') ? ['EmbersTex'] : [])] };     // 4.9.102 合进来的有哪些（说明 / 统计 / 回放用）
   b.form = 'emitset'; b.esMobile = mobile; b.esFull = true; b.P = { ...P0 }; b.fades = []; b.far = null;
   return b;
 }
@@ -1506,7 +1513,7 @@ function renderEmitLive() {
   if (fx && (rtLive.fxGen !== state.gen || rtLive.fxSig !== JSON.stringify(P))) { rtLive.fxGen = state.gen; rtLive.fxSig = JSON.stringify(P); rtLive.fxTab = esSpawn({ emitters: rtBuildES(P).emitters.filter(e => RT_FX_NAMES.has(e.name)) }, 1); }
   const tabs = pcFull ? (fx ? rtLive.fxTab : []) : mobOff || (mobNear && !RT_MOBILE_PARTICLES) ? [] : rtLiveTables(P, mobile), on = tabs.map(x => rtOn(x.e.name)), hpm = hdrT.w / (2 * view[2]), hpmY = hdrT.h / (2 * view[3]);
   additive(true); const nd = tabs.length ? esDraw(tabs, t, view, hpm, hpmY, 1, on) : 0;
-  const texE = fx && rtTexClasses(P, LI).some(C => C.k === 'E'), ne = texE && rtOn('EmbersTex') ? rtEmberDots(P, LI, ball, t, view, hpm, hpmY, 0) : 0; additive(false);
+  const texE = fx && rtTexDraw(P, LI).some(C => C.k === 'E'), ne = texE && rtOn('EmbersTex') ? rtEmberDots(P, LI, ball, t, view, hpm, hpmY, 0) : 0; additive(false);
   post();
   const cnt = rtAliveCounts(tabs, t);
   rtLayerBarSync([['near', np, false], ...(far && !mobNear ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu]), ...(texE ? [['EmbersTex', ne, false]] : [])]);

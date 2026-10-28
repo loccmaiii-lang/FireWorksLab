@@ -143,6 +143,7 @@ uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShou
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
 uniform sampler2D uLen; uniform float uPerM, uSpR, uSpH, uJet, uJetC;     // 火花发射器补全（对话框FanGold，用户 10-09 21:48）：每米生成、起始半径 + 跟星头、向后喷 + 锥角；全 0 时不进分支
 uniform vec2 uCvHsS[6], uCvHsU[6]; uniform int uCvHsSN, uCvHsUN;     // 跟星头大小时的星头 / 子星大小随寿命
+uniform vec3 uHideSEB;     // 4.9.125「显示这层」：1 = 火花 / 余烬 / 分叉火花关着（不画；出生、随机数照旧）；缺省 0 = 全画
 uniform float uCq;     // 4.9.71 火花平方阻力系数 c = G / 火花终端速度²（1/m，对话框FanGold，用户 10-12 22:59）；0 = 只有线性阻力（以前，不进分支）
 uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6], uCvEmS[6], uCvBrS[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN, uCvEmSN, uCvBrSN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）；4.9.4 余烬 / 分叉火花大小
 ${GLSL_CV}
@@ -270,6 +271,7 @@ void main(){
   if(uDif>0.){ float Tl=uDifL/max(uDif,.05), x=age/Tl, sg=uDif*Tl*x/sqrt(1.+x);
     p.xy+=(curl2(sp.xy/uDifL)+.45*vec2(gss(uid,71u),gss(uid,73u)))*sg*W; }
   if(I<=0.){ cull(); return; }
+  if(c>0 ? uHideSEB.z>.5 : emb ? uHideSEB.y>.5 : uHideSEB.x>.5){ cull(); return; }     // 4.9.125「显示这层」
   // 4.4.3（E6，用户 10-04 09:58「加一个闪烁频率」）：火花闪烁频率 uTwHz > 0 → 每颗火花按这个频率明暗起伏（相位随机，引擎里 Color Over Life 做得出来）；0 = 以前的每个时间片随机（逐位相同）
   I*=(1.+uTwk*(uTwHz>0. ? sin(6.2831853*(uTwHz*uT+hsh(uid,77u))) : 2.*hsh(u2,uint(uTw)*16u+13u)-1.))*uBright*.6;
   // 4.2.0（对话框7 需求，引菊颜色纯度）：火花烧旺时间 sparkRise——刚离开星时没烧旺，靠星头那截暗、偏红；每颗星亮度离散 starBright——按星号取一个对数正态倍数（均值 1）
@@ -460,6 +462,7 @@ function buildTrackRun(P) {
   // 火花发射器补全：每米生成 → 每颗星走过的路程（每个轨迹采样一格）；跟星头大小 → 星头直径和大小曲线（缺省都不算，路程贴图 1×1）
   const fam = familyOf(P.type), perM = fam === 'aerial' && P.sparkRateBy === 'm', headOn = fam === 'aerial' && +P.sparkSpawnHead > 0, hsT = headOn ? headShapeOf(P) : null;
   const len = perM ? new Float32Array(Ns * nStars * 4) : null;
+  const subOff = fam === 'aerial' && !emitShown(P, 'showSub');     // 4.9.125「显示这层」：子花关着
   let M = 1, total = 0;
   for (let q = 0; q < nStars; q++) {
     const st = sim.all[q], first = snaps.findIndex(a => a.length > q * 6);
@@ -481,11 +484,11 @@ function buildTrackRun(P) {
     if (perM && st.kind !== 5) {     // 每米生成：第 3 位 = 这颗星的每米火花数，末段密度不用
       const Lt = t => { const fi = clamp(t / dt, 0, Ns - 1), i0 = Math.min(Math.floor(fi), Ns - 2), f = fi - i0, o = q * Ns * 4; return len[o + i0 * 4] + (len[o + (i0 + 1) * 4] - len[o + i0 * 4]) * f; };
       const pm = sparkPerMOf(P, st);
-      info[q * 12] = born; info[q * 12 + 1] = deathAt; info[q * 12 + 2] = deathAt > born && st.rate > 0 ? pm : 0; info[q * 12 + 3] = 0;
+      info[q * 12] = born; info[q * 12 + 1] = deathAt; info[q * 12 + 2] = deathAt > born && st.rate > 0 && !(subOff && st.kind === 2) ? pm : 0; info[q * 12 + 3] = 0;
       if (st.rate > 0 && pm > 0 && deathAt > born) { const c = Math.ceil(Math.max(0, pm * (Lt(deathAt) - Lt(born)))) + 1; M = Math.max(M, c); total += c; }
       continue;
     }
-    info[q * 12] = born; info[q * 12 + 1] = deathAt; info[q * 12 + 2] = deathAt > born ? st.rate : 0; info[q * 12 + 3] = a;
+    info[q * 12] = born; info[q * 12 + 1] = deathAt; info[q * 12 + 2] = deathAt > born && !(subOff && st.kind === 2) ? st.rate : 0; info[q * 12 + 3] = a;
     if (st.rate > 0 && deathAt > born) { const Bc = deathAt - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
@@ -549,7 +552,8 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
     gl.uniform1f(pr.u.uLateFade, Math.max(.05, +P.sparkLateFade || .4));
     gl.uniform1f(pr.u.uLateCurves, air && +P.sparkTailAfterBurn === 1 ? 1 : 0); }
   if (burst) { gl.uniform1f(pr.u.uBurstWind, burstFlowValue(P, 'burstFlowWind')); gl.uniform1f(pr.u.uBurstScale, burstFlowValue(P, 'burstFlowScale')); gl.uniform1f(pr.u.uBurstStart, Math.max(0, burstFlowValue(P, 'burstFlowStart'))); gl.uniform1f(pr.u.uBurstFade, Math.max(.05, burstFlowValue(P, 'burstFlowFade'))); }
-  if (pr.u.uCq) gl.uniform1f(pr.u.uCq, sparkCqOf(P));     // 4.9.71 火花平方阻力（缺省 0）
+  if (pr.u.uCq) gl.uniform1f(pr.u.uCq, sparkCqOf(P));
+  if (pr.u.uHideSEB) { const air = familyOf(P.type) === 'aerial'; gl.uniform3f(pr.u.uHideSEB, air && !emitShown(P, 'showSpark') ? 1 : 0, air && !emitShown(P, 'showEmber') ? 1 : 0, air && !emitShown(P, 'showBranch') ? 1 : 0); }     // 4.9.125     // 4.9.71 火花平方阻力（缺省 0）
   if (pr.u.uCoolAbs) gl.uniform1f(pr.u.uCoolAbs, familyOf(P.type) === 'aerial' ? 1 : 0);     // 5.0（4.7.0）：空中类只有「按实际年龄冷却」一种
   gl.uniform1f(pr.u.uTwk, P.twinkle); if (pr.u.uTwHz) gl.uniform1f(pr.u.uTwHz, +P.twinkleHz > 0 ? +P.twinkleHz : 0); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);

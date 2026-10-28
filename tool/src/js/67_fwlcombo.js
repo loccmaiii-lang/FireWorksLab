@@ -20,6 +20,7 @@ const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星�
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
 function layerOut(L, entry) {
+  if (layerOff(L)) return { pc: 'off', mobile: 'off' };     // 4.9.125「显示这层」关着：这一层不导出（层上存的产物不动，打开后照旧）
   const o = (L && L.out) || {}; let pc = OUT_PC_KINDS.includes(o.pc) ? o.pc : 'seq', mobile = OUT_MOBILE_KINDS.includes(o.mobile) ? o.mobile : 'seq';
   // 4.9.89（导出排查 A10）：尾缀层（循环层 + 粒子）只能按尾缀自己的产物出或不出——单束 / GPU 光点 / 单帧是礼花的（以前选了光点出一个空壳发射器）；
   //   尾缀自己在单层产物表里选了「手机：不出」照它（以前多层里不认，照样出手机）
@@ -163,7 +164,7 @@ function dotVisRun(P, sub) {
   const h = H_STEP * sub, s = new Sim({ ...P, engine: 'gpu' }), n = Math.ceil(P.duration / h), rec = new Map(), EV = Math.max(1, Math.round(12 / sub)), dt = EV * h;
   for (let i = 0; i < n; i++) {
     s.step(h); if ((i + 1) % EV) continue;
-    for (const st of s.stars) { if (!st.alive || st.kind === 5) continue; let q = rec.get(st); if (!q) rec.set(st, q = []); q.push([s.t, s.headI(st) / (st.I || 1), st.x, st.z, st.y, st.vx, st.vz, st.vy]); }   // 模拟 y 朝上 → 发射器 z 朝上
+    for (const st of s.stars) { if (!st.alive || st.kind === 5 || (st.kind === 0 || st.kind === 1) && !s.vis.star || st.kind === 2 && !s.vis.sub) continue; let q = rec.get(st);     /* 4.9.125「显示这层」：星 / 子花关着的不出光点 */ if (!q) rec.set(st, q = []); q.push([s.t, s.headI(st) / (st.I || 1), st.x, st.z, st.y, st.vx, st.vz, st.vy]); }   // 模拟 y 朝上 → 发射器 z 朝上
   }
   const S = [];
   for (const q of rec.values()) { let ia = -1, ib = -1; q.forEach((x, k) => { if (x[1] > 0) { if (ia < 0) ia = k; ib = k; } }); if (ia >= 0 && ib > ia) S.push(q.slice(ia, ib + 1)); }
@@ -207,7 +208,7 @@ function dotVisRun(P, sub) {
   return { n: S.length, on: bursts[0][0], bursts, life: [qt(durs, 0.1), qt(durs, 0.9)], med: qt(durs, 0.5), alpha, c0, cv, R, W, k: best.k, g: best.g };
 }
 // 光点大约几颗（不跑模拟，给层页头 / 交付页显示）：星头会亮的星 = 星数 × keepFrac，炭头亮度 0 → 0；准确数在导出 / 引擎回放时按模拟算
-function dotsCount(P) { return +P.headBright > 0 ? Math.round((+P.stars || 0) * (P.keepFrac != null ? clamp(+P.keepFrac, 0, 1) : 1)) : 0; }
+function dotsCount(P) { return +P.headBright > 0 && emitShown(P, 'showStar') ? Math.round((+P.stars || 0) * (P.keepFrac != null ? clamp(+P.keepFrac, 0, 1) : 1)) : 0; }
 // L.dotSize：光点直径 × 炭头大小（默认 1）；L.dotBright：光点亮度倍数（默认 1）——层页头「导出方案」选光点时可调（XD2：以前 × 1.7 偏大）
 function dotsES(L, P, M, fm) {
   const flowWhy = burstFlowOutputReason(P, 'dots'); if (flowWhy) throw Error(flowWhy);
@@ -268,7 +269,7 @@ function flashLook(M, x0, G, mono) {
 // P：这一层的参数；M：这一层的颜色；L：层（delay / rate / scale / mirror，单层 = 1）；o.until = 闪光要补到这一层自己的哪一刻（序列 = 入点，单束 / 光点 = ∞）、o.expo、o.mono（星头火花分开时星头那张不查 Ramp）
 const _flashES = new Map();
 function flashES(P, M, L, o = {}) {
-  if (!P || familyOf(P.type) !== 'aerial' || !(+fxP(P).flash > 0)) return [];
+  if (!P || familyOf(P.type) !== 'aerial' || !(+fxP(P).flash > 0) || !emitShown(P, 'showFlash')) return [];     // 4.9.125「显示这层」：开花闪光关着 → 不单独出 Flash
   const until = o.until == null ? Infinity : +o.until; if (!(until > 1 / 60)) return [];
   const key = JSON.stringify([P, M, L && [L.delay, L.rate, L.scale, L.mirror], o]); if (_flashES.has(key)) return _flashES.get(key);
   const sim = new Sim({ ...P, engine: 'gpu', _unit: 0 }), Pf = sim.P, E = o.expo > 0 ? +o.expo : fixedExposure(Pf), G = +Pf.encGamma > 0 ? +Pf.encGamma : 1;

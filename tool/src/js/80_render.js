@@ -470,7 +470,8 @@ function drawFlowCurve(b, f) {
 // 组合 · 实时模拟（2026-09-30）：每层按自己的参数实时模拟（和单个花型的「实时模拟」一样清楚），
 // 按层的缩放 / 延迟 / 时间倍率摆放，各自上色后叠加。「导出效果」页才用每层烘好的贴图（检查引擎里的叠放）。
 // 独看 / 静音（只影响观察，导出照旧是全部层）
-function layerShown(i) { const v = state.layerView || { solo: -1, mute: [] }; return v.solo >= 0 ? v.solo === i : !v.mute.includes(i); }
+function layerShown(i) { if (layerOff(state.layers && state.layers[i])) return false;     // 4.9.125「显示这层」关着：不画（也不导出，见 layerOut）
+  const v = state.layerView || { solo: -1, mute: [] }; return v.solo >= 0 ? v.solo === i : !v.mute.includes(i); }
 function comboAtlasLayer() { const v = state.layerView || { solo: -1 }; return state.comboSel >= 0 ? state.comboSel : v.solo >= 0 ? v.solo : 0; }
 function comboAtlasBake() { const L = state.layers[comboAtlasLayer()], e = L && state.lib.find(x => x.name === L.lib); return e && e.bake ? previewBake(e.bake) : null; }
 // 多层效果的「贴图」：看选中的那一层（没选就看第 1 层），时间换成这一层自己的时间

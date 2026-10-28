@@ -59,7 +59,7 @@ function trailPops(P) {
   return TRAIL_POPS.map(([k, salt, T0, cl, whisk]) => {
     const rate0 = P[k + 'Rate'] || 0; if (rate0 <= 0) return null;
     const Mp = Math.max(1, Math.round(rate0 * Tp)), rate = Mp / Tp, life = P[k + 'Life'];
-    return { salt, T0, cool: clamp(cl * cool, 0.02, 0.95), whisk, Mp, rate, life, Mw: Math.ceil(rate * life * 1.4) + 2,
+    return { k, show: emitShown(P, 'trShow' + k.slice(2)), salt, T0, cool: clamp(cl * cool, 0.02, 0.95), whisk, Mp, rate, life, Mw: Math.ceil(rate * life * 1.4) + 2,
       spread: P[k + 'Spread'], size: P[k + 'Size'], bright: P[k + 'Bright'] };
   }).filter(Boolean);
 }
@@ -67,6 +67,7 @@ function trailPops(P) {
 let TRAIL_RAW = false;     // trailBounds 量取景时 = true：星头不乘 trHeadExpo
 function drawTrailHead(R, P, ts, anchorY, view, ppm, w) {
   if (R.stopE >= 0 && ts > R.stopE + 1e-6) return;
+  if (!TRAIL_RAW && !emitShown(P, 'trShowHead')) return;     // 4.9.125「显示这层」：星头关着（量取景时照算，面片和以前一样大）
   const Tp = R.Tp;
   // 星头固定在面片中线上（x = 0）；快门内按星头移动距离细分，拖出连续的亮线而不是一串珠子
   const sw = R.subW || 0, n = sw > 0 ? clamp(Math.ceil(P.trV * sw / (0.25 * P.trHeadSize)), 1, 48) : 1;
@@ -109,6 +110,7 @@ function makeTrailRenderer(P) {
       setParticleUniforms(pr, [0, 1, 0, 0]); gl.uniform4fv(pr.u.uChan, [0, 1, 0, 0]); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uGauss, 1);
       gl.bindVertexArray(emptyVAO);
       for (const q of pops) {
+        if (!q.show && !TRAIL_RAW) continue;     // 4.9.125「显示这层」：这一层火花关着（量取景时照算）
         gl.uniform1f(pr.u.uRate, q.rate); gl.uniform1i(pr.u.uMp, q.Mp); gl.uniform1i(pr.u.uPop, q.salt); gl.uniform1f(pr.u.uLife, q.life);
         gl.uniform1f(pr.u.uSpread, q.spread); gl.uniform1f(pr.u.uT0, q.T0); gl.uniform1f(pr.u.uCool, q.cool); gl.uniform1f(pr.u.uBright, q.bright);
         gl.uniform1f(pr.u.uSize, q.size); gl.uniform1f(pr.u.uWhisk, q.whisk ? 1 : 0);

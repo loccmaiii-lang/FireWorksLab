@@ -241,7 +241,7 @@ function idBarInfo(list, changed) {
   else if (ef && e) chips.push(['和 AI 包不同', 'dim', '你改过参数 / 看的是你的版本：和 AI 导出的素材包不一样']);
   else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
     if (!last) chips.push(['还没导出', 'dim', '这台电脑的浏览器里没导出过这个效果']);
-    else { let same = false; const noPrev = o => JSON.stringify(o, (k, v) => k === 'previewBloom' ? undefined : v);     // 预览泛光只是画面显示，不算改了素材包
+    else { let same = false; const noPrev = o => JSON.stringify(o, (k, v) => k === 'previewBloom' || SHOW_KEY_SET.has(k) && +v === 1 ? undefined : v);     // 预览泛光只是画面显示，不算改了素材包；4.9.125「显示这层」= 1（缺省）和以前没这个键一样
       try { same = noPrev(last.snap) === noPrev(wbSnap()) && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
       chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `素材包导出于 ${last.at}，之后改过参数（或烘焙器输出规则变了）`]); } }
   const src = lib.my ? ['我的效果', '', '我的效果' + (lib.my.from ? '（派生自 ' + lib.my.from.name + '）' : '')] : lib.tpl ? ['我的模板', '', '我的模板'] : mtId ? ['多层模板', '', '多层花型模板'] : ef ? [e ? `AI · ${e.id}` : `AI · ${ef.阶段 || '条目'}`, '', `AI 做的效果 · ${ef.阶段 || ''}${e ? ' · 条目 ' + e.id : ''}`] : e ? ['AI 条目', '', 'AI 条目 ' + e.id] : lib.formal ? ['正式库', 'ok', '正式库 ' + lib.formal.id] : lib.key === 'combo' ? ['组合编辑器', '', '组合编辑器'] : ['花型模板', '', '花型模板'];
@@ -1181,6 +1181,8 @@ function setTailLayerOut(L, e, pf, v) {
 }
 function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
+    // 4.9.125「显示这层」关着：这一层不导出（层上选的产物留着，打开后照旧）
+    if (combo && layerOff(x.L)) return `<tr class="dv-off"><td>第 ${x.i + 1} 层 · ${x.name}<small>显示这层关着（右栏树上这一层的眼睛）</small></td><td colspan="2"><span class="dim">不导出</span><small>整朵里不画、不导出；打开后按原来选的出</small></td></tr>`;
     const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
     // 4.9.69 升空尾缀（循环层 + 粒子）：PC 照旧全套；手机能选 _M / 不出（用户 10-10 16:51「升空尾缀无法选择手机导出什么格式，无法创建手机粒子文件」）
     // 4.9.96（导出排查 A11 / H1）：多层里的尾缀层也给同样的下拉（以前一行灰字，选不了）；纯星头 PC「序列（单帧小面片）/ CPU 粒子（星头）/ 不出」、手机「CPU 粒子 / 不出」

@@ -165,8 +165,29 @@ const BASE = {
   // 4.9.21 效果 › 整体调整（用户 10-06 21:51「就按照之前的全局风格帮我加回去，放在效果层里，类似一个最后的全局调整」，每层一份）：1 = 原样
   adjTailLen: 1, adjSparkSize: 1, adjSpread: 1, adjHeadSize: 1, adjSparkBright: 1, adjTwinkle: 1,
   // 4.9.30 节奏（对话框新花型，用户 10-07 13:31）：现在是原样的几倍（> 1 快）；直接改写存的参数（12_tempo.js applyTempo），这里只记倍数
-  tempo: 1
+  tempo: 1,
+  // 4.9.125「显示这层」（对话框9，用户 10-28 10:00「你让我定的显示这层参数可以加」）：1 = 显示（缺省，旧效果不变）；0 = 这个发射器不画、不烘、不导出，
+  //   挂在它上面的照样生成（和粒子图「显示这层」同一个意思）。面板上不单独占一行，= 右栏树上的眼睛
+  showStar: 1, showSpark: 1, showEmber: 1, showBranch: 1, showCrackle: 1, showSub: 1, showFlash: 1,
+  rtShowHead: 1, rtShowA: 1, rtShowF: 1, rtShowM: 1, rtShowC: 1, rtShowE: 1, rtShowSmoke: 1, rtShowPop: 1, rtShowLaunch: 1,
+  trShowHead: 1, trShowF: 1, trShowM: 1, trShowC: 1, trShowW: 1
 };
+// 4.9.125「显示这层」：没写（旧存档）或 1 = 显示；只有明确写 0 才隐藏
+const emitShown = (P, k) => !(P && P[k] != null && P[k] !== '' && +P[k] === 0);
+// 发射器（右栏树 / 面板标签）→ 它的「显示这层」键。自定义发射器沿用 x1On / x2On（没列在这里）；多层的层是层上的 show（layerOff）
+const SHOW_KEYS = {
+  aerial: { '星': 'showStar', '火花': 'showSpark', '余烬': 'showEmber', '分叉火花': 'showBranch', '爆裂': 'showCrackle', '子花': 'showSub', '开花闪光': 'showFlash' },
+  emitset: { '星头': 'rtShowHead', '白热火花': 'rtShowA', '细火花': 'rtShowF', '中火花': 'rtShowM', '粗火花': 'rtShowC', '落火': 'rtShowE', '烟带': 'rtShowSmoke', '爆亮': 'rtShowPop', '发射口': 'rtShowLaunch' },
+  trail: { '星头': 'trShowHead', '白热火花': 'trShowF', '金火花': 'trShowM', '橙色火花': 'trShowC', '丝状火花': 'trShowW' }
+};
+const SHOW_KEY_SET = new Set(Object.values(SHOW_KEYS).flatMap(o => Object.values(o)));
+function showKeyOf(P, emitter) {
+  if (!P) return '';
+  const g = isEmit(P) ? SHOW_KEYS.emitset : isTrail(P) && !(typeof isPhysBody === 'function' && isPhysBody(P)) ? SHOW_KEYS.trail : familyOf(P.type) === 'aerial' && !P.sparkGraph ? SHOW_KEYS.aerial : null;     // 物理尾缀（旧）不接
+  return g && g[emitter] || '';
+}
+// 多层的层：层上 show = 0 → 整朵里不画、不烘、不导出（和时间轴的「先不看」不同）；没写 = 显示
+const layerOff = L => !!L && L.show != null && +L.show === 0;
 // 4.9.21 整体调整：照 4.1.1 全局风格层（62_style.js styledP）的 6 个倍数，叠在最后——存的火花寿命等原值不动，模拟 / 烘焙 / 导出前才乘（fxP）。
 // 只管空中花型；不管自定义发射器。全是 1 时返回原对象（逐像素不变）。乘完的那份把倍数写回 1，再调一次 fxP 不会再乘（烘焙结果 b.P 就是这份）。
 const ADJ_DEF = [['adjTailLen', ['sparkLife', 'emberLife']], ['adjSparkSize', ['sparkSize']], ['adjSpread', ['sparkSpread']], ['adjHeadSize', ['headSize']], ['adjSparkBright', ['sparkBright']], ['adjTwinkle', ['twinkle']]];
@@ -1094,5 +1115,18 @@ const SCHEMA = [
     ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
     ['qHz', '快门采样频率', 'Hz', 120, 1920, 30],
     ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1]
+  ] },
+  // 4.9.125「显示这层」（对话框9，用户 10-28 10:00）：每个发射器一行，归在各自发射器的「生成」（星头 / 发射口没有「生成」：亮度 / 闪光）；
+  //   右栏树上的眼睛就是它（V5 面板里这一行藏着，19:26「显示这一层和小眼睛重复了」）
+  { sec: '显示这层', show: P => !P.sparkGraph, items: [
+    ...[['showStar', '星'], ['showSpark', '火花'], ['showEmber', '余烬'], ['showBranch', '分叉火花'], ['showCrackle', '爆裂'], ['showSub', '子花'], ['showFlash', '开花闪光']].map(([k, n]) => ({ sel: k, label: n + '：显示这层', show: P => isAir(P) && !P.sparkGraph && (
+      k === 'showSpark' ? +(P.type === 'senrin' || P.type === 'crossette' ? P.carrierTail : P.sparkRate) > 0 : k === 'showEmber' ? +P.emberFrac > 0 && !(+P.branch > 0) : k === 'showBranch' ? +P.branch > 0
+        : k === 'showCrackle' ? +P.crackle > 0 : k === 'showSub' ? P.type === 'senrin' || P.type === 'crossette' : true),
+      options: [[1, '显示'], [0, '隐藏（不画、不烘、不导出；挂在它上面的照样生成）']] })),
+    ...[['rtShowHead', '星头', P => true], ['rtShowA', '白热火花', P => +P.rtARate > 0], ['rtShowF', '细火花', P => +P.rtFRate > 0], ['rtShowM', '中火花', P => +P.rtMRate > 0], ['rtShowC', '粗火花', P => +P.rtCRate > 0],
+      ['rtShowE', '落火', P => +P.rtERate > 0], ['rtShowSmoke', '烟带', P => +P.rtSmoke > 0], ['rtShowPop', '爆亮', P => +P.rtPopRate > 0], ['rtShowLaunch', '发射口', P => +P.rtLaunch > 0]].map(([k, n, f]) => ({ sel: k, label: n + '：显示这层', show: P => isEmit(P) && f(P),
+      options: [[1, '显示'], [0, '隐藏（不画、不烘、不导出）']] })),
+    ...[['trShowHead', '星头', P => true], ['trShowF', '白热火花', P => +P.trFRate > 0], ['trShowM', '金火花', P => +P.trMRate > 0], ['trShowC', '橙色火花', P => +P.trCRate > 0], ['trShowW', '丝状火花', P => +P.trWRate > 0]].map(([k, n, f]) => ({ sel: k, label: n + '：显示这层', show: P => isTrail(P) && !isPhysBody(P) && f(P),
+      options: [[1, '显示'], [0, '隐藏（不画、不烘、不导出）']] }))
   ] }
 ];
