@@ -1,0 +1,76 @@
+/* A 石墨工作室：精密刻度、低彩度面差、薄荷指示；保留原尺寸与信息结构。 */
+body[data-visual="graphite"] {
+  color-scheme:dark;
+  --draft-bg:#181b1e;--draft-low:#121416;--draft-panel:#202428;--draft-high:#2b3136;
+  --draft-text:#e9eeec;--draft-muted:#a9b3b7;--draft-primary:#8fe6bd;--draft-primary-bright:#b2f2d5;
+  --draft-primary-bg:#233d33;--draft-on-primary:#13271e;--draft-border:#4e5a60;--draft-divider:#343c42;
+  --draft-outline:#a4b0b5;--draft-hover-border:#91a5ac;--draft-warn:#f2bc77;--draft-warn-bg:#3a2e1e;
+  --draft-error:#ffaba4;--draft-error-bg:#442627;--draft-success:#8fe6bd;
+  font-family:"Segoe UI Variable Text","Segoe UI","Microsoft YaHei",sans-serif;
+}
+body[data-visual="graphite"] button,body[data-visual="graphite"] input,body[data-visual="graphite"] select,body[data-visual="graphite"] textarea {border-radius:3px}
+body[data-visual="graphite"] button {background:var(--draft-panel);box-shadow:inset 0 1px #ffffff04}
+body[data-visual="graphite"] button:hover:not(:disabled) {background:var(--draft-high);border-color:var(--draft-hover-border)}
+body[data-visual="graphite"] button:active:not(:disabled) {background:var(--draft-low);box-shadow:inset 0 1px 2px #0004}
+body[data-visual="graphite"] .appbar {background:#111315;border-bottom-color:#455057}
+body[data-visual="graphite"] .brand {font-weight:620;letter-spacing:.04em}
+body[data-visual="graphite"] .df-mark {font-family:"Bahnschrift","Segoe UI",sans-serif;font-size:25px;letter-spacing:-1px;color:var(--draft-text)}
+body[data-visual="graphite"] .appbar-context {font-size:13px}
+body[data-visual="graphite"] .library {background:#15181a}
+body[data-visual="graphite"] .pane-heading {font-weight:650;letter-spacing:.04em}
+body[data-visual="graphite"] .library-item {border-radius:3px;box-shadow:none;background:transparent}
+body[data-visual="graphite"] .library-item:hover {background:#21272b;border-color:transparent}
+body[data-visual="graphite"] .library-item[aria-pressed="true"] {background:#222f2a;border-color:#395648;box-shadow:inset 3px 0 var(--draft-primary)}
+body[data-visual="graphite"] .library-item img {border-radius:2px;border:1px solid #3d464b}
+body[data-visual="graphite"] .library-item strong {font-weight:600}
+body[data-visual="graphite"] .library-search {background:#101214;border-color:#414b51}
+body[data-visual="graphite"] .library-footer {border-top-style:solid}
+body[data-visual="graphite"] .inspector {background:#1b1f22}
+body[data-visual="graphite"] .inspector-identity {background:#242a2e}
+body[data-visual="graphite"] .inspector-identity strong {font-weight:650;letter-spacing:.015em}
+body[data-visual="graphite"] .tree-pane {background:#191d20}
+body[data-visual="graphite"] .tree-row {border-radius:0}
+body[data-visual="graphite"] .tree-row[aria-selected="true"] {outline:none;border-left:2px solid var(--draft-primary);background:#283c33}
+body[data-visual="graphite"] .tree-row[aria-selected="true"] .tree-name {font-weight:650;color:#b2f2d5}
+body[data-visual="graphite"] .tree-name,body[data-visual="graphite"] .tree-action,body[data-visual="graphite"] .tree-toggle {background:transparent;box-shadow:none}
+body[data-visual="graphite"] .tree-action[aria-pressed="true"] {background:var(--draft-primary-bg);color:var(--draft-primary)}
+body[data-visual="graphite"] .tree-heading h2 {font-size:12px;letter-spacing:.05em;color:var(--draft-muted);font-weight:600}
+body[data-visual="graphite"] .splitter {background:#121619;border-color:#3b444a}
+body[data-visual="graphite"] .param-context {background:#1b1f22}
+body[data-visual="graphite"] .param-context .path {color:#ccd5d8;font-weight:600}
+body[data-visual="graphite"] .param-module>summary {color:#f3f5f3;font-size:14px;font-weight:650;letter-spacing:.015em}
+body[data-visual="graphite"] .param-module>summary:before {color:var(--draft-primary)}
+body[data-visual="graphite"] .parameter-grid {border-bottom:1px solid #ffffff04}
+body[data-visual="graphite"] .parameter-grid:hover {background:#ffffff03}
+body[data-visual="graphite"] .parameter-grid .draft-number {background:#121619;border-color:#465259;color:#dcece5;border-radius:2px}
+body[data-visual="graphite"] .parameter-grid .is-modified,body[data-visual="graphite"] .is-modified .draft-number {background:var(--draft-warn-bg);border-color:var(--draft-warn)}
+body[data-visual="graphite"] .row-action {box-shadow:none;background:transparent;color:var(--draft-muted)}
+body[data-visual="graphite"] .row-action[aria-pressed="true"] {background:var(--draft-primary-bg);color:var(--draft-primary)}
+body[data-visual="graphite"] .center-toolbar {background:#1b1f22}
+body[data-visual="graphite"] .segmented,body[data-visual="graphite"] .center-toolbar .segmented {border-color:transparent;background:#141719;border-radius:3px}
+body[data-visual="graphite"] .segmented button {border-radius:0;background:transparent;box-shadow:none}
+body[data-visual="graphite"] .segmented button[aria-pressed="true"],body[data-visual="graphite"] .segmented button[aria-selected="true"] {color:var(--draft-primary-bright);background:#26312e;box-shadow:inset 0 -2px var(--draft-primary);font-weight:600}
+body[data-visual="graphite"] .btn-primary:not(:disabled) {background:var(--draft-primary);color:#13271e;border-color:var(--draft-primary);box-shadow:none}
+body[data-visual="graphite"] .btn-primary:hover:not(:disabled) {background:#b2f2d5;color:#13271e}
+body[data-visual="graphite"] .btn-ghost {background:transparent;box-shadow:none}
+body[data-visual="graphite"] .btn-play {background:#233d33;color:var(--draft-primary);border-color:#456c58}
+body[data-visual="graphite"] .observation-row {background:#202529}
+body[data-visual="graphite"] .playback-area,body[data-visual="graphite"] .timeline {background:#1b2023}
+body[data-visual="graphite"] .timeline-toolbar {background:#22282c}
+body[data-visual="graphite"] .timeline-clip {border-radius:2px;background:#2b343a}
+body[data-visual="graphite"] .timeline-clip[aria-pressed="true"] {background:#294337;color:#c5f5dc}
+body[data-visual="graphite"] .delivery-checklist,body[data-visual="graphite"] .workbench-inspector {background:#1b1f22}
+body[data-visual="graphite"] .delivery-section h3,body[data-visual="graphite"] .import-pane h2 {font-weight:650;letter-spacing:.03em}
+body[data-visual="graphite"] .import-context {background:#20262a}
+body[data-visual="graphite"] .import-pane:nth-child(2) {background:#1b2023}
+body[data-visual="graphite"] .import-actions,body[data-visual="graphite"] .import-status {background:#15191c}
+body[data-visual="graphite"] .badge {border-radius:2px}
+body[data-visual="graphite"] .badge-demo {border-color:#756044;background:#352b20;color:#f2bc77}
+body[data-visual="graphite"] .menu-commands,body[data-visual="graphite"] #demo-dialog {background:#232a2e;border-color:#59686f;border-radius:4px;box-shadow:0 16px 48px #0006}
+body[data-visual="graphite"] .observation-menu summary {border-radius:3px}
+body[data-visual="graphite"] .demo-toolbar {background:#0f1113;border-bottom-color:#3b444a}
+body[data-visual="graphite"] .demo-toolbar strong {font-weight:600;letter-spacing:.05em}
+body[data-visual="graphite"] .demo-toolbar button[aria-pressed="true"] {background:#233d33;border-color:#58856e;color:#b2f2d5}
+body[data-visual="graphite"] #demo-feedback {background:#14181a;border-top-color:#343c42}
+body[data-visual="graphite"] .swatch i {border-radius:2px}
+body[data-visual="graphite"] .spec-lead h1 {font-family:"Segoe UI Variable Display","Segoe UI","Microsoft YaHei",sans-serif;letter-spacing:-.02em;font-weight:650}

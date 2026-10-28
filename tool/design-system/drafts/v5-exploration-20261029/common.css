@@ -1,0 +1,42 @@
+/* 独立草稿的视觉适配层，不改变 V5 的栅格、密度尺寸和业务控制器。 */
+body[data-visual] {
+  --fw-color-surface:var(--draft-bg); --fw-color-surface-low:var(--draft-low);
+  --fw-color-surface-container:var(--draft-panel); --fw-color-surface-high:var(--draft-high);
+  --fw-color-on-surface:var(--draft-text); --fw-color-on-surface-muted:var(--draft-muted);
+  --fw-color-primary:var(--draft-primary); --fw-color-primary-bright:var(--draft-primary-bright);
+  --fw-color-on-primary:var(--draft-on-primary); --fw-color-primary-container:var(--draft-primary-bg);
+  --fw-color-on-primary-container:var(--draft-primary-bright); --fw-color-divider:var(--draft-divider);
+  --fw-color-outline:var(--draft-outline); --fw-color-control-border:var(--draft-border);
+  --fw-color-warning:var(--draft-warn); --fw-color-warning-container:var(--draft-warn-bg);
+  --fw-color-error:var(--draft-error); --fw-color-error-container:var(--draft-error-bg);
+  --fw-color-focus:var(--draft-primary); --fw-color-success:var(--draft-success,var(--draft-primary));
+  font-variant-numeric:tabular-nums; text-rendering:optimizeLegibility;
+}
+body[data-visual] button,body[data-visual] input,body[data-visual] select,body[data-visual] summary {
+  transition:background-color 140ms ease,border-color 140ms ease,color 140ms ease,box-shadow 140ms ease;
+}
+body[data-visual] button:disabled {opacity:.48;cursor:not-allowed}
+body[data-visual] input[readonly] {background:var(--draft-bg);color:var(--draft-muted);border-style:dashed}
+body[data-visual] :where(button,a,input,select,textarea,summary,[tabindex]):focus-visible {outline:2px solid var(--draft-primary);outline-offset:2px}
+body[data-visual] .draft-number:focus,body[data-visual] #parameter-search:focus {outline:2px solid var(--draft-primary);outline-offset:1px;box-shadow:none}
+body[data-visual] .btn-primary:not(:disabled) {font-weight:650}
+body[data-visual] .status-warning,body[data-visual] .modification-dot {color:var(--draft-warn)}
+body[data-visual] .status-error,body[data-visual] .demo-param-error {color:var(--draft-error)}
+body[data-visual] .is-modified .draft-number {border-color:var(--draft-warn);background:var(--draft-warn-bg)}
+body[data-visual] [aria-invalid=true],body[data-visual] .sample-error {border-color:var(--draft-error)!important;background:var(--draft-error-bg)}
+body[data-visual] .preview,body[data-visual] .stage {background:#121f24;color:#e4edef}
+body[data-visual] .preview-caption {background:#121f24e8;color:#c2cdd2}
+body[data-visual] .preview-axis,body[data-visual] .stage-note {color:#c2cdd2}
+body[data-visual] .stage-grid {stroke:#2b4149}
+body[data-visual] .stage-extent {stroke:#8da3ac}
+body[data-visual] .preview-img {filter:none}
+body[data-visual] .preview .badge {background:#16242c;color:#dde9ee;border-color:#60747d}
+body[data-visual] .library-item img {background:#121f24}
+body[data-visual] .draft-number,body[data-visual] .metric-number,body[data-visual] [data-demo-time] {font-family:"Cascadia Code","Consolas",monospace;font-variant-numeric:tabular-nums}
+body[data-visual] .draft-range,body[data-visual] .demo-seek {accent-color:var(--draft-primary)}
+body[data-visual] #demo-dialog::backdrop {background:#050811a6;backdrop-filter:blur(3px)}
+body[data-visual] .spec-table tr:hover td,body[data-visual] .review-table tr:hover td {background:var(--draft-low)}
+body[data-visual] .demo-toolbar {color:var(--draft-muted)}
+body[data-visual] .demo-toolbar strong {color:var(--draft-text)}
+body[data-visual] #demo-feedback {color:var(--draft-muted)}
+@media(prefers-reduced-motion:reduce){body[data-visual] *,body[data-visual] *:before,body[data-visual] *:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}

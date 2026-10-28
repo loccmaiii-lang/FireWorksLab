@@ -1,0 +1,3051 @@
+{
+  "summary": {
+    "matrix": 90,
+    "interactions": 34,
+    "failed": 0,
+    "scriptErrors": 0,
+    "contrastPairs": 21,
+    "minTextContrast": 4.92
+  },
+  "matrix": [
+    {
+      "theme": "graphite",
+      "page": "editor",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "editor",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "editor",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          156,
+          1153.6,
+          802
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": null,
+        "checklist": [
+          1425.6,
+          156,
+          494.4,
+          889
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          156,
+          1153.6,
+          802
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": null,
+        "checklist": [
+          1425.6,
+          156,
+          494.4,
+          889
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          156,
+          1153.6,
+          802
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": null,
+        "checklist": [
+          1425.6,
+          156,
+          494.4,
+          889
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "rt6",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "rt6",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "rt6",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "particle",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "particle",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "particle",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          197,
+          1208,
+          761
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": [
+          1480,
+          97,
+          440,
+          948
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "workbench",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "workbench",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "workbench",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          97,
+          272,
+          948
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "importer",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "importer",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "importer",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "components",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "components",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "components",
+      "density": "regular",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "editor",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "editor",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "editor",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "delivery",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          140,
+          1176,
+          828
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": null,
+        "checklist": [
+          1416,
+          140,
+          504,
+          907
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "delivery",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          140,
+          1176,
+          828
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": null,
+        "checklist": [
+          1416,
+          140,
+          504,
+          907
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "delivery",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          140,
+          1176,
+          828
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": null,
+        "checklist": [
+          1416,
+          140,
+          504,
+          907
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "rt6",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "rt6",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "rt6",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "particle",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "particle",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "particle",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          240,
+          180,
+          1272,
+          788
+        ],
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": [
+          1512,
+          89,
+          408,
+          958
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "workbench",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "workbench",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "workbench",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          89,
+          240,
+          958
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "importer",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "importer",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "importer",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "components",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "components",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "components",
+      "density": "compact",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "editor",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "editor",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "editor",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          156,
+          793.8,
+          490
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": null,
+        "checklist": [
+          1025.8,
+          156,
+          340.2,
+          577
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          156,
+          793.8,
+          490
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": null,
+        "checklist": [
+          1025.8,
+          156,
+          340.2,
+          577
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          156,
+          793.8,
+          490
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": null,
+        "checklist": [
+          1025.8,
+          156,
+          340.2,
+          577
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "rt6",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "rt6",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "rt6",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "particle",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "particle",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "particle",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          232,
+          245,
+          746,
+          401
+        ],
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": [
+          978,
+          97,
+          388,
+          636
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "workbench",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "workbench",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "workbench",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          97,
+          232,
+          636
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "importer",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "importer",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "importer",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "components",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "components",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "components",
+      "density": "regular",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "editor",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "editor",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "editor",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "delivery",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          140,
+          810.6,
+          516
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": null,
+        "checklist": [
+          1018.6,
+          140,
+          347.4,
+          595
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "delivery",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          140,
+          810.6,
+          516
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": null,
+        "checklist": [
+          1018.6,
+          140,
+          347.4,
+          595
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "delivery",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          140,
+          810.6,
+          516
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": null,
+        "checklist": [
+          1018.6,
+          140,
+          347.4,
+          595
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "rt6",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "rt6",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "rt6",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "particle",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "particle",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "particle",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          208,
+          180,
+          802,
+          476
+        ],
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": [
+          1010,
+          89,
+          356,
+          646
+        ],
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "workbench",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "workbench",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "workbench",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": [
+          0,
+          89,
+          208,
+          646
+        ],
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "importer",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "importer",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "importer",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "components",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "porcelain",
+      "page": "components",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "indigo",
+      "page": "components",
+      "density": "compact",
+      "viewport": [
+        1366,
+        768
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": null,
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": null
+      },
+      "samePreviewGeometry": true
+    },
+    {
+      "theme": "graphite",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          156,
+          1601.6,
+          1162
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          1308
+        ],
+        "inspector": null,
+        "checklist": [
+          1873.6,
+          156,
+          686.4,
+          1249
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      }
+    },
+    {
+      "theme": "porcelain",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          156,
+          1601.6,
+          1162
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          1308
+        ],
+        "inspector": null,
+        "checklist": [
+          1873.6,
+          156,
+          686.4,
+          1249
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      }
+    },
+    {
+      "theme": "indigo",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          272,
+          156,
+          1601.6,
+          1162
+        ],
+        "library": [
+          0,
+          97,
+          272,
+          1308
+        ],
+        "inspector": null,
+        "checklist": [
+          1873.6,
+          156,
+          686.4,
+          1249
+        ],
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      }
+    },
+    {
+      "theme": "graphite",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        800,
+        600
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          0,
+          216,
+          800,
+          266
+        ],
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      }
+    },
+    {
+      "theme": "porcelain",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        800,
+        600
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          0,
+          216,
+          800,
+          266
+        ],
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      }
+    },
+    {
+      "theme": "indigo",
+      "page": "delivery",
+      "density": "regular",
+      "viewport": [
+        800,
+        600
+      ],
+      "pass": true,
+      "geometry": {
+        "overflow": false,
+        "images": 0,
+        "preview": [
+          0,
+          216,
+          800,
+          266
+        ],
+        "library": null,
+        "inspector": null,
+        "checklist": null,
+        "primaryClipped": false,
+        "canvas": "rgb(18, 31, 36)"
+      }
+    }
+  ],
+  "interaction": [
+    {
+      "name": "graphite 数值同步/修改/撤销/重做",
+      "pass": true
+    },
+    {
+      "name": "graphite 错误状态/恢复",
+      "pass": true
+    },
+    {
+      "name": "graphite 搜索/空态/恢复",
+      "pass": true
+    },
+    {
+      "name": "graphite 保存演示/独立存储/刷新恢复",
+      "pass": true
+    },
+    {
+      "name": "graphite 更多观察/键盘Esc",
+      "pass": true
+    },
+    {
+      "name": "graphite 另存弹窗/焦点/关闭",
+      "pass": true
+    },
+    {
+      "name": "graphite 树显隐/撤销",
+      "pass": true
+    },
+    {
+      "name": "graphite 准备示例/交付/示例下载",
+      "pass": true
+    },
+    {
+      "name": "porcelain 数值同步/修改/撤销/重做",
+      "pass": true
+    },
+    {
+      "name": "porcelain 错误状态/恢复",
+      "pass": true
+    },
+    {
+      "name": "porcelain 搜索/空态/恢复",
+      "pass": true
+    },
+    {
+      "name": "porcelain 保存演示/独立存储/刷新恢复",
+      "pass": true
+    },
+    {
+      "name": "porcelain 更多观察/键盘Esc",
+      "pass": true
+    },
+    {
+      "name": "porcelain 另存弹窗/焦点/关闭",
+      "pass": true
+    },
+    {
+      "name": "porcelain 树显隐/撤销",
+      "pass": true
+    },
+    {
+      "name": "porcelain 准备示例/交付/示例下载",
+      "pass": true
+    },
+    {
+      "name": "indigo 数值同步/修改/撤销/重做",
+      "pass": true
+    },
+    {
+      "name": "indigo 错误状态/恢复",
+      "pass": true
+    },
+    {
+      "name": "indigo 搜索/空态/恢复",
+      "pass": true
+    },
+    {
+      "name": "indigo 保存演示/独立存储/刷新恢复",
+      "pass": true
+    },
+    {
+      "name": "indigo 更多观察/键盘Esc",
+      "pass": true
+    },
+    {
+      "name": "indigo 另存弹窗/焦点/关闭",
+      "pass": true
+    },
+    {
+      "name": "indigo 树显隐/撤销",
+      "pass": true
+    },
+    {
+      "name": "indigo 准备示例/交付/示例下载",
+      "pass": true
+    },
+    {
+      "name": "比较入口 同状态切换三套/原版/页面/密度同步",
+      "pass": true
+    },
+    {
+      "name": "graphite 播放暂停/时间滑杆",
+      "pass": true
+    },
+    {
+      "name": "graphite 参数锁定/键盘分隔",
+      "pass": true
+    },
+    {
+      "name": "graphite 导入核对/确认演示",
+      "pass": true
+    },
+    {
+      "name": "porcelain 播放暂停/时间滑杆",
+      "pass": true
+    },
+    {
+      "name": "porcelain 参数锁定/键盘分隔",
+      "pass": true
+    },
+    {
+      "name": "porcelain 导入核对/确认演示",
+      "pass": true
+    },
+    {
+      "name": "indigo 播放暂停/时间滑杆",
+      "pass": true
+    },
+    {
+      "name": "indigo 参数锁定/键盘分隔",
+      "pass": true
+    },
+    {
+      "name": "indigo 导入核对/确认演示",
+      "pass": true
+    }
+  ],
+  "contrast": [
+    {
+      "theme": "graphite",
+      "selector": "body",
+      "foreground": "rgb(233, 238, 236)",
+      "background": "rgb(24, 27, 30)",
+      "ratio": 14.75
+    },
+    {
+      "theme": "graphite",
+      "selector": ".helper",
+      "foreground": "rgb(169, 179, 183)",
+      "background": "rgb(17, 19, 21)",
+      "ratio": 8.71
+    },
+    {
+      "theme": "graphite",
+      "selector": ".library-item strong",
+      "foreground": "rgb(233, 238, 236)",
+      "background": "rgb(34, 47, 42)",
+      "ratio": 11.87
+    },
+    {
+      "theme": "graphite",
+      "selector": ".param-module>summary",
+      "foreground": "rgb(243, 245, 243)",
+      "background": "rgb(27, 31, 34)",
+      "ratio": 15.14
+    },
+    {
+      "theme": "graphite",
+      "selector": ".parameter-grid label",
+      "foreground": "rgb(233, 238, 236)",
+      "background": "rgb(27, 31, 34)",
+      "ratio": 14.15
+    },
+    {
+      "theme": "graphite",
+      "selector": ".parameter-grid .row-action",
+      "foreground": "rgb(169, 179, 183)",
+      "background": "rgb(27, 31, 34)",
+      "ratio": 7.76
+    },
+    {
+      "theme": "graphite",
+      "selector": ".btn-primary",
+      "foreground": "rgb(19, 39, 30)",
+      "background": "rgb(143, 230, 189)",
+      "ratio": 10.64
+    },
+    {
+      "theme": "porcelain",
+      "selector": "body",
+      "foreground": "rgb(41, 51, 43)",
+      "background": "rgb(244, 243, 237)",
+      "ratio": 11.79
+    },
+    {
+      "theme": "porcelain",
+      "selector": ".helper",
+      "foreground": "rgb(98, 109, 98)",
+      "background": "rgb(255, 254, 250)",
+      "ratio": 5.36
+    },
+    {
+      "theme": "porcelain",
+      "selector": ".library-item strong",
+      "foreground": "rgb(52, 77, 48)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 9.33
+    },
+    {
+      "theme": "porcelain",
+      "selector": ".param-module>summary",
+      "foreground": "rgb(54, 72, 49)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 9.87
+    },
+    {
+      "theme": "porcelain",
+      "selector": ".parameter-grid label",
+      "foreground": "rgb(41, 51, 43)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 13.1
+    },
+    {
+      "theme": "porcelain",
+      "selector": ".parameter-grid .row-action",
+      "foreground": "rgb(96, 119, 84)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 4.92
+    },
+    {
+      "theme": "porcelain",
+      "selector": ".btn-primary",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(73, 99, 68)",
+      "ratio": 6.66
+    },
+    {
+      "theme": "indigo",
+      "selector": "body",
+      "foreground": "rgb(238, 240, 255)",
+      "background": "rgb(20, 23, 37)",
+      "ratio": 15.73
+    },
+    {
+      "theme": "indigo",
+      "selector": ".helper",
+      "foreground": "rgb(178, 184, 210)",
+      "background": "rgb(16, 19, 31)",
+      "ratio": 9.41
+    },
+    {
+      "theme": "indigo",
+      "selector": ".library-item strong",
+      "foreground": "rgb(238, 240, 255)",
+      "background": "rgb(58, 52, 91)",
+      "ratio": 10.18
+    },
+    {
+      "theme": "indigo",
+      "selector": ".param-module>summary",
+      "foreground": "rgb(233, 233, 250)",
+      "background": "rgb(32, 36, 57)",
+      "ratio": 12.75
+    },
+    {
+      "theme": "indigo",
+      "selector": ".parameter-grid label",
+      "foreground": "rgb(238, 240, 255)",
+      "background": "rgb(28, 32, 51)",
+      "ratio": 14.22
+    },
+    {
+      "theme": "indigo",
+      "selector": ".parameter-grid .row-action",
+      "foreground": "rgb(238, 240, 255)",
+      "background": "rgb(28, 32, 51)",
+      "ratio": 14.22
+    },
+    {
+      "theme": "indigo",
+      "selector": ".btn-primary",
+      "foreground": "rgb(33, 24, 49)",
+      "background": "rgb(198, 185, 255)",
+      "ratio": 9.51
+    }
+  ],
+  "sourceHashes": [
+    {
+      "file": "demo.html",
+      "unchanged": true
+    },
+    {
+      "file": "draft.js",
+      "unchanged": true
+    },
+    {
+      "file": "draft.css",
+      "unchanged": true
+    },
+    {
+      "file": "screen.html",
+      "unchanged": true
+    },
+    {
+      "file": "guide.html",
+      "unchanged": true
+    },
+    {
+      "file": "specifications.json",
+      "unchanged": true
+    }
+  ],
+  "errors": [],
+  "failures": []
+}

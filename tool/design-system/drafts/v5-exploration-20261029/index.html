@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FireWorksLab · V5 三套视觉探索</title>
+  <link rel="stylesheet" href="compare.css">
+  <script src="compare.js" defer></script>
+</head>
+<body>
+  <header class="study-bar">
+    <div class="study-brand"><span>FWL <b>/</b> DESIGN STUDIES</span><strong>V5 视觉探索 <small>01—03</small></strong></div>
+    <nav class="directions" aria-label="设计方向">
+      <button data-direction="graphite" aria-pressed="true"><i class="dot graphite"></i><span><b>A</b> 石墨工作室</span></button>
+      <button data-direction="porcelain" aria-pressed="false"><i class="dot porcelain"></i><span><b>B</b> 瓷白编辑台</span></button>
+      <button data-direction="indigo" aria-pressed="false"><i class="dot indigo"></i><span><b>C</b> 深靛控制室</span></button>
+    </nav>
+    <div class="study-actions"><button data-direction="baseline" aria-pressed="false" class="baseline">V5 原版</button><button id="show-notes" aria-expanded="false" aria-controls="notes">方案说明</button><a id="open-preview" href="preview.html?direction=graphite&page=editor" target="_blank" rel="noopener">单独打开 ↗</a></div>
+  </header>
+  <div class="direction-caption"><span id="direction-line">A / 低彩度石墨表面 · 精密边框 · 薄荷指示</span><span id="direction-tradeoff">制作效率优先，品牌表现较克制。</span><span class="caption-tip">切换方案保留当前操作状态</span></div>
+  <section id="notes" class="notes" hidden aria-label="方案说明与截图比较">
+    <div class="notes-heading"><div><span class="eyebrow">ONE WORKFLOW, THREE LANGUAGES</span><h1>同一套工作流，三种视觉性格。</h1></div><button id="close-notes" aria-label="关闭方案说明">关闭</button></div>
+    <p class="notes-intro">保留 V5 七页、两档密度和原有交互。可在内页切换页面、修改数值、显隐图层、保存演示、测试交付和导入状态，然后直接切换 A / B / C 对比。</p>
+    <div class="concept-grid">
+      <article><div class="concept-index">01 <span>PRECISION</span></div><h2>石墨工作室</h2><p>低彩度深灰与薄荷指示，精确字重、3px控件、底线标签与低阴影，把注意力让给画面和数值。</p><div class="palette"><i style="--c:#181b1e"></i><i style="--c:#202428"></i><i style="--c:#8fe6bd"></i><i style="--c:#f2bc77"></i></div><p class="tradeoff"><b>取舍</b> 高密度制作最稳妥，视觉表达较安静。</p><button data-direction="graphite" class="choose">体验 A →</button><a href="screenshots/A-graphite.jpg" target="_blank"><img src="screenshots/A-graphite.jpg" alt="A 石墨工作室，1920×1080编辑页截图"></a></article>
+      <article><div class="concept-index">02 <span>CLARITY</span></div><h2>瓷白编辑台</h2><p>暖瓷白、墨色与橄榄绿，少量衬线标题、白色控件、8px圆角与编辑式层级，逐项核对更从容。</p><div class="palette"><i style="--c:#f4f3ed"></i><i style="--c:#ffffff"></i><i style="--c:#496344"></i><i style="--c:#8b5b16"></i></div><p class="tradeoff"><b>取舍</b> 白天阅读清晰，暗室与黑底预览之间反差较强。</p><button data-direction="porcelain" class="choose">体验 B →</button><a href="screenshots/B-porcelain.jpg" target="_blank"><img src="screenshots/B-porcelain.jpg" alt="B 瓷白编辑台，1920×1080编辑页截图"></a></article>
+      <article><div class="concept-index">03 <span>IMMERSION</span></div><h2>深靛控制室</h2><p>墨靛与熏衣草、强字重数值、10px圆润控件、胶囊状态与表面分组，建立夜间创作的空间感。</p><div class="palette"><i style="--c:#141725"></i><i style="--c:#202439"></i><i style="--c:#c6b9ff"></i><i style="--c:#f2bd93"></i></div><p class="tradeoff"><b>取舍</b> 编排和展示更鲜明，强调色存在感更强。</p><button data-direction="indigo" class="choose">体验 C →</button><a href="screenshots/C-indigo.jpg" target="_blank"><img src="screenshots/C-indigo.jpg" alt="C 深靛控制室，1920×1080编辑页截图"></a></article>
+    </div>
+    <p class="notes-foot">独立草稿，未接入原项目。烟花图像为原静态参考；演示存档和示例 JSON 均独立，不能作为真实素材包。截图仅用于视觉比较。</p>
+  </section>
+  <main class="preview-host"><iframe id="preview" title="V5 独立可交互视觉草稿" src="preview.html?direction=graphite&amp;page=editor&amp;density=regular"></iframe></main>
+</body>
+</html>

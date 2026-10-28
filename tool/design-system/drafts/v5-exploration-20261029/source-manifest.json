@@ -1,0 +1,21 @@
+{
+  "source": "独立工作树 tool/design-system/drafts/v1；组件候选提交3034f812，最新demo.html为用户本机后续草稿",
+  "demo_sha256": "0f3be849f92e9cede0c915d1752563b031028fafb6e8a52ea18b62ddaa093e59",
+  "source_files": {
+    "demo.html": "0f3be849f92e9cede0c915d1752563b031028fafb6e8a52ea18b62ddaa093e59",
+    "draft.js": "77b63c93f519f11932812e9d7f26db92673acbf7a4514c271bb1f8a8343aedda",
+    "draft.css": "10b742a9743611bad9452eceacfa2f8a830e980af38098ab88dc2d48b30a0d53",
+    "screen.html": "2df915190381e01d324f62be93321e9fdf6cb8e6f96c4eb47824e3cb87de0723",
+    "guide.html": "b5ab348b3972e799ea9d9d0f2abf461c9e647cd8257919d5cf37054ec6652b5a",
+    "specifications.json": "3d6bca80fd5dc2343615d12a80d01531248d5e36851b9b7a5a2967e473ae7033"
+  },
+  "changes": [
+    "插入4个独立CSS和视觉适配/首帧初始化脚本",
+    "仅替换Demo专属浏览器存储key，避免触碰原Demo存档"
+  ],
+  "unchanged": [
+    "内嵌图像",
+    "原始控制器全部业务交互",
+    "七页布局、密度尺寸及响应式断点"
+  ]
+}

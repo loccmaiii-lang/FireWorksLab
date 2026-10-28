@@ -1,0 +1,240 @@
+/* 方案 B：瓷白编辑台。仅改变视觉角色；尺寸、网格、断点与控制器沿用 V5。 */
+body[data-visual="porcelain"] {
+  color-scheme: light;
+  --draft-bg: #f4f3ed;
+  --draft-low: #eceee7;
+  --draft-panel: #ffffff;
+  --draft-high: #f9faf6;
+  --draft-text: #29332b;
+  --draft-muted: #626d62;
+  --draft-primary: #496344;
+  --draft-primary-bright: #354d32;
+  --draft-primary-bg: #e4ecdf;
+  --draft-on-primary: #ffffff;
+  --draft-border: #b8c2b2;
+  --draft-divider: #dce1d6;
+  --draft-outline: #82917b;
+  --draft-hover-border: #839779;
+  --draft-warn: #8b5b16;
+  --draft-warn-bg: #f6ecd5;
+  --draft-error: #a43e32;
+  --draft-error-bg: #fce9e4;
+  --draft-disabled-opacity: .48;
+  --fw-radius-control: 8px;
+  --fw-radius-menu: 10px;
+  --fw-radius-menu-item: 6px;
+  --fw-radius-dialog: 12px;
+  --fw-radius-panel: 10px;
+  --porcelain-heading: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 清楚的三种纸面：温灰工作底、白色操作面、浅绿当前对象。 */
+body[data-visual="porcelain"] .app,
+body[data-visual="porcelain"] .workspace,
+body[data-visual="porcelain"] .workbench { background: var(--draft-bg); }
+
+body[data-visual="porcelain"] .appbar,
+body[data-visual="porcelain"] .center-toolbar,
+body[data-visual="porcelain"] .timeline-toolbar,
+body[data-visual="porcelain"] .import-context,
+body[data-visual="porcelain"] .import-actions {
+  background: #fffefa;
+  border-color: var(--draft-divider);
+}
+
+body[data-visual="porcelain"] .library {
+  background: #f0f1e9;
+  border-right-color: #d3dbcc;
+}
+
+body[data-visual="porcelain"] .inspector,
+body[data-visual="porcelain"] .workbench-inspector,
+body[data-visual="porcelain"] .delivery-checklist,
+body[data-visual="porcelain"] .import-review {
+  background: var(--draft-panel);
+}
+
+body[data-visual="porcelain"] .inspector-identity,
+body[data-visual="porcelain"] .param-context {
+  background: #f8f9f3;
+}
+
+body[data-visual="porcelain"] .tree-pane { background: #fcfcf8; }
+body[data-visual="porcelain"] .parameters { background: #ffffff; }
+body[data-visual="porcelain"] .splitter { background: #ecefe7; border-color: #d5ddce; }
+body[data-visual="porcelain"] .splitter:after { background: #94a38c; }
+body[data-visual="porcelain"] .splitter:hover { background: #e0e8d8; }
+
+/* 宋体仅用于对象和页面标题；参数、动作与数字维持工具字体。 */
+body[data-visual="porcelain"] .pane-heading,
+body[data-visual="porcelain"] .inspector-identity > strong,
+body[data-visual="porcelain"] .delivery-checklist > h2,
+body[data-visual="porcelain"] .import-context h1,
+body[data-visual="porcelain"] .spec-lead h1 {
+  font-family: var(--porcelain-heading);
+  font-weight: 700;
+  letter-spacing: .025em;
+}
+
+body[data-visual="porcelain"] .brand { font-weight: 650; letter-spacing: .01em; }
+body[data-visual="porcelain"] .df-mark { color: #496344; font-weight: 750; }
+body[data-visual="porcelain"] .pane-heading .helper { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; font-weight: 400; letter-spacing: 0; }
+body[data-visual="porcelain"] .param-module > summary,
+body[data-visual="porcelain"] .tree-heading h2,
+body[data-visual="porcelain"] .delivery-section h3,
+body[data-visual="porcelain"] .import-pane h2 { font-weight: 650; }
+body[data-visual="porcelain"] .draft-number,
+body[data-visual="porcelain"] .metric-number { font-family: "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums; }
+
+/* 白色控件与圆润内缘；不增加控件高度或参数行间距。 */
+body[data-visual="porcelain"] button,
+body[data-visual="porcelain"] input,
+body[data-visual="porcelain"] select,
+body[data-visual="porcelain"] textarea {
+  border-radius: 8px;
+  background-color: #ffffff;
+  border-color: var(--draft-border);
+  box-shadow: none;
+}
+
+body[data-visual="porcelain"] button:hover:not(:disabled) { background-color: #f3f6ee; border-color: var(--draft-hover-border); }
+body[data-visual="porcelain"] button:active:not(:disabled) { background-color: #e5ecdf; }
+body[data-visual="porcelain"] button:disabled { background-color: #f1f2ed; }
+body[data-visual="porcelain"] input[readonly] { background-color: #f5f6f0; color: #586452; }
+body[data-visual="porcelain"] input[readonly]:focus { border-color: #8e9e84; }
+body[data-visual="porcelain"] .field-row select { border-radius: 6px; color: var(--draft-text); }
+body[data-visual="porcelain"] .draft-number { background: #fff; border-color: #bcc7b5; }
+body[data-visual="porcelain"] .parameter-grid .draft-range,
+body[data-visual="porcelain"] .demo-seek { background: transparent; border-radius: 0; }
+
+body[data-visual="porcelain"] .btn-primary,
+body[data-visual="porcelain"] .fw-button--primary {
+  color: #ffffff;
+  background: #496344;
+  border-color: #496344;
+  font-weight: 650;
+}
+body[data-visual="porcelain"] .btn-primary:hover:not(:disabled),
+body[data-visual="porcelain"] .fw-button--primary:hover:not(:disabled) { color: #ffffff; background: #3b5436; border-color: #3b5436; }
+body[data-visual="porcelain"] .btn-primary:active:not(:disabled) { background: #30482c; }
+body[data-visual="porcelain"] .btn-primary:disabled { color: #5b6c54; background: #dce4d5; border-color: #aebea3; }
+body[data-visual="porcelain"] .btn-ghost { background: transparent; }
+body[data-visual="porcelain"] .btn-play { color: #ffffff; background: #496344; border-color: #496344; border-radius: 50%; }
+body[data-visual="porcelain"] .btn-play:hover:not(:disabled) { color: #ffffff; background: #3b5436; }
+
+/* 标签页采用纸面标签与底部标记；选择树使用浅色行和一条墨绿内线。 */
+body[data-visual="porcelain"] .segmented { border-color: #cfd8c7; }
+body[data-visual="porcelain"] .segmented button { border-radius: 6px 6px 0 0; background: transparent; color: #626d62; }
+body[data-visual="porcelain"] .segmented button[aria-pressed="true"],
+body[data-visual="porcelain"] .segmented button[aria-selected="true"] {
+  color: #354d32;
+  background: #e6eddf;
+  box-shadow: inset 0 -2px #496344;
+  font-weight: 650;
+}
+body[data-visual="porcelain"] .center-toolbar .segmented { border-color: #d5ddce; border-radius: 8px; background: #f3f5ee; }
+body[data-visual="porcelain"] .center-toolbar .segmented button { border-radius: 7px; }
+body[data-visual="porcelain"] .center-toolbar .segmented button[aria-pressed="true"] { background: #ffffff; box-shadow: inset 0 -2px #496344; }
+body[data-visual="porcelain"] .library-item { background: transparent; border-color: transparent; border-radius: 8px; }
+body[data-visual="porcelain"] .library-item:hover:not(:disabled) { background: #e7ecdf; border-color: transparent; }
+body[data-visual="porcelain"] .library-item[aria-pressed="true"] { background: #ffffff; border-color: #c8d4be; box-shadow: inset 3px 0 #496344; }
+body[data-visual="porcelain"] .library-item[aria-pressed="true"] strong { color: #344d30; }
+body[data-visual="porcelain"] .library-item img { border-radius: 6px; }
+body[data-visual="porcelain"] .library-unready { background: #fafbf6; border-style: dashed; border-color: #bdc9b4; }
+body[data-visual="porcelain"] .tree-row { border-radius: 5px; }
+body[data-visual="porcelain"] .tree-row[aria-selected="true"] { background: #e7eedf; color: #30492d; outline-color: transparent; border-left-color: #496344; box-shadow: inset 2px 0 #496344; }
+body[data-visual="porcelain"] .tree-name,
+body[data-visual="porcelain"] .tree-toggle,
+body[data-visual="porcelain"] .tree-action { background: transparent; border-radius: 5px; }
+body[data-visual="porcelain"] .tree-name:hover:not(:disabled),
+body[data-visual="porcelain"] .tree-action:hover:not(:disabled),
+body[data-visual="porcelain"] .tree-toggle:hover:not(:disabled) { background: #e3eadb; }
+body[data-visual="porcelain"] .tree-action[aria-pressed="true"] { background: #d6e2cb; color: #344f2f; }
+
+/* 参数区域靠标题字重、细分隔与数值字形组织，不改变模块几何。 */
+body[data-visual="porcelain"] .param-module { border-color: #e0e5da; }
+body[data-visual="porcelain"] .param-module > summary { color: #364831; }
+body[data-visual="porcelain"] .param-module > summary:before { color: #7a8e70; }
+body[data-visual="porcelain"] .param-module > summary:hover { color: #2c4726; }
+body[data-visual="porcelain"] .parameter-grid .row-action { background: transparent; border-radius: 5px; color: #607754; }
+body[data-visual="porcelain"] .parameter-grid .row-action:hover:not(:disabled) { color: #3d5a34; background: #edf2e7; }
+body[data-visual="porcelain"] .row-action[aria-pressed="true"] { color: #35522d; background: #e3ecd9; }
+body[data-visual="porcelain"] .is-modified .draft-number { border-color: #b98a49; background: #fffaf0; }
+body[data-visual="porcelain"] .help-disclosure,
+body[data-visual="porcelain"] .param-row-help { color: #5d6f54; }
+body[data-visual="porcelain"] .draft-switch { border-radius: 8px; background: #e3e8dd; }
+body[data-visual="porcelain"] .draft-switch:after { border-radius: 50%; background: #819475; }
+body[data-visual="porcelain"] .draft-switch[aria-checked="true"] { background: #496344; border-color: #496344; }
+body[data-visual="porcelain"] .draft-switch[aria-checked="true"]:after { background: #ffffff; }
+body[data-visual="porcelain"] input[type="checkbox"] { border-radius: 4px; background: #fff; }
+body[data-visual="porcelain"] input[type="checkbox"]:checked { background: #496344; border-color: #496344; }
+
+/* 烟花原图及其视口保持暗色观察面，绝不处理图像本身。 */
+body[data-visual="porcelain"] .preview,
+body[data-visual="porcelain"] .stage {
+  --draft-low: #121f24;
+  --draft-muted: #b4c5cb;
+  --draft-text: #e4edef;
+  --draft-border: #39515a;
+  --draft-divider: #2b4149;
+  background: #121f24;
+}
+body[data-visual="porcelain"] .preview-meta .badge,
+body[data-visual="porcelain"] .stage .badge { background: #1b2a2f; color: #d7e1dd; border-color: #39515a; border-radius: 6px; }
+body[data-visual="porcelain"] .preview-meta .preview-caption { background: #121f24; color: #b4c5cb; }
+body[data-visual="porcelain"] .stage-grid { stroke: #2b4149; }
+body[data-visual="porcelain"] .stage-extent { stroke: #8da3ac; }
+body[data-visual="porcelain"] .stage-nodes { fill: #b1c9a1; }
+body[data-visual="porcelain"] .playback-area,
+body[data-visual="porcelain"] .playback { background: #f6f8f1; }
+body[data-visual="porcelain"] .observation-row { background: #f1f4eb; }
+
+body[data-visual="porcelain"] .timeline { background: #f8faf4; }
+body[data-visual="porcelain"] .track-name,
+body[data-visual="porcelain"] .ruler-line { background: #edf1e7; }
+body[data-visual="porcelain"] .clip-lane { background-color: #fcfdf9; }
+body[data-visual="porcelain"] .timeline-clip { border-color: #b7c7aa; border-radius: 6px; background: #e6eddd; color: #4b6242; }
+body[data-visual="porcelain"] .timeline-clip[aria-pressed="true"] { background: #496344; border-color: #496344; color: #ffffff; }
+
+/* 核对信息延续纸面表格，警告与错误采用有文字的独立语义色。 */
+body[data-visual="porcelain"] .import-pane { background: #fafbf6; }
+body[data-visual="porcelain"] .import-pane:last-child { background: #ffffff; }
+body[data-visual="porcelain"] .review-table th,
+body[data-visual="porcelain"] .spec-table th { color: #5e7055; font-weight: 650; background: #f1f5e9; }
+body[data-visual="porcelain"] .review-table tr:nth-child(even) td,
+body[data-visual="porcelain"] .spec-table tr:nth-child(even) td { background: #f9fbf5; }
+body[data-visual="porcelain"] .import-log,
+body[data-visual="porcelain"] .import-status { background: #edf1e7; }
+body[data-visual="porcelain"] .badge { background: #f4f7ee; border-color: #c7d2bd; color: #566d4a; border-radius: 6px; }
+body[data-visual="porcelain"] .badge-demo { background: #f9efd9; border-color: #dac395; color: #845411; }
+body[data-visual="porcelain"] .status-warning { color: #8b5b16; }
+body[data-visual="porcelain"] .status-error { color: #a43e32; }
+body[data-visual="porcelain"] .status-pending { color: #626d62; }
+body[data-visual="porcelain"] .status-dot { background: currentColor; }
+body[data-visual="porcelain"] .sample-error { background: #fff4f0; }
+
+body[data-visual="porcelain"] .menu-commands,
+body[data-visual="porcelain"] .fw-menu { background: #fffefa; border-color: #c1ccb7; border-radius: 10px; box-shadow: 0 6px 18px rgb(46 62 36 / .1); }
+body[data-visual="porcelain"] .menu-commands button { background: transparent; border-radius: 6px; }
+body[data-visual="porcelain"] .menu-commands button:hover { background: #edf3e5; }
+body[data-visual="porcelain"] .observation-menu summary { background: #ffffff; border-radius: 7px; }
+body[data-visual="porcelain"] #demo-dialog { background: #fffefa; border-color: #bcc9b1; border-radius: 12px; box-shadow: 0 12px 40px rgb(38 49 31 / .13); }
+body[data-visual="porcelain"] #demo-dialog::backdrop { background: rgb(37 46 31 / .28); }
+body[data-visual="porcelain"] #demo-dialog header,
+body[data-visual="porcelain"] #demo-dialog footer { background: #f3f6eb; border-color: #dce4d4; }
+body[data-visual="porcelain"] #demo-dialog h2 { font-family: var(--porcelain-heading); }
+body[data-visual="porcelain"] .demo-toolbar { background: #e7ecdf; border-bottom-color: #bdcbb1; }
+body[data-visual="porcelain"] .demo-toolbar > strong { color: #3c5734; letter-spacing: .02em; }
+body[data-visual="porcelain"] .demo-toolbar button[aria-pressed="true"] { background: #ffffff; border-color: #8da47d; color: #3f5b36; }
+body[data-visual="porcelain"] #demo-feedback { background: #fffefa; border-color: #b5c7a5; color: #405934; border-radius: 8px; box-shadow: 0 3px 12px rgb(46 62 36 / .07); }
+body[data-visual="porcelain"] .spec-app { background: #fffefa; }
+body[data-visual="porcelain"] .swatch i { border-radius: 7px; }
+body[data-visual="porcelain"] .density-comparison > div { border-left-color: #a4b695; }
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-visual="porcelain"] button,
+  body[data-visual="porcelain"] input,
+  body[data-visual="porcelain"] select { transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease; }
+}
