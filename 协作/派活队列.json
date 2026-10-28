@@ -754,7 +754,7 @@
     "analysis/results/FINAL_AUDIT_20261018/体检_基线.json（新建）",
     "analysis/results/FINAL_AUDIT_20261018/体检_基线.md（新建）"
    ],
-   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T20，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable 里所有「跨年烟花3.0_」行：行名、FxSP / FxSP_Low / FxSP_High、EffectScale、FXType、MaxInstanceNum。再对照当前编排 tool/workbench/public/data/cloud-latest.json 用到的 ResourceId，标出「编排里用到 / 没用到」。\n2. 每个被指到的粒子系统（PC _HD、手游 _M，含 Low / High）：bUseFixedRelativeBoundingBox / FixedRelativeBoundingBox（是不是 ±100000）、CullingDistance、UpdateTime_FPS；每个发射器每个 LOD 的 Required：Material、ScreenAlignment、UVFlippingMode、bUseLocalSpace、bUseMaxDrawCount / MaxDrawCount，是否 GPU。\n3. 每个用到的材质实例：Parent、EmissiveDissolve（有没有覆盖、值）、BasePropertyOverrides 里的 bOverride_TranslucencyRenderFullPercentageLast / TranslucencyRenderFullPercentageLast（局部全分辨率，影响性能）、贴图参数指向哪些贴图。\n4. 每张用到的贴图：尺寸、NeverStream、MipGenSettings、AddressX / AddressY、LODGroup、MaxTextureSize、CompressionSettings。\n5. 磁盘只读核：这些 uasset 是否只读（只读多半已提交 P4；可写 = 迁出或改了没提交），照 26 的 disk_check.py，只看不改。\n6. 写 analysis/results/FINAL_AUDIT_20261018/体检_基线.md：第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 和手游都应 NoMip；不是 NoMip 的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。原始读数写 体检_基线.json（每个资产一条，含路径），读 UE 的脚本存 audit.mjs，要能原样重跑（T21 用）。",
+   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T20，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n1. ResourceFX：PC /Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable 和手游 /Game/DataTables/Resource/ResourceFXTable 里所有「跨年烟花3.0_」行：行名、FxSP / FxSP_Low / FxSP_High、EffectScale、FXType、MaxInstanceNum。再对照当前编排 tool/workbench/public/data/cloud-latest.json 用到的 ResourceId，标出「编排里用到 / 没用到」。\n2. 每个被指到的粒子系统（PC _HD、手游 _M，含 Low / High）：bUseFixedRelativeBoundingBox / FixedRelativeBoundingBox（是不是 ±100000）、CullingDistance、UpdateTime_FPS；每个发射器每个 LOD 的 Required：Material、ScreenAlignment、UVFlippingMode、bUseLocalSpace、bUseMaxDrawCount / MaxDrawCount，是否 GPU。\n3. 每个用到的材质实例：Parent、EmissiveDissolve（有没有覆盖、值）、BasePropertyOverrides 里的 bOverride_TranslucencyRenderFullPercentageLast / TranslucencyRenderFullPercentageLast（局部全分辨率，影响性能）、贴图参数指向哪些贴图。\n4. 每张用到的贴图：尺寸、NeverStream、MipGenSettings、AddressX / AddressY、LODGroup、MaxTextureSize、CompressionSettings。\n5. 磁盘只读核：这些 uasset 是否只读（只读多半已提交 P4；可写 = 迁出或改了没提交），照 26 的 disk_check.py，只看不改。\n6. 写 analysis/results/FINAL_AUDIT_20261018/体检_基线.md：第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 应 NoMip；手游应 FromTextureGroup（用户 10-28 按性能组改，见 CLAUDE.md 第 2 节 ④）；不符的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。原始读数写 体检_基线.json（每个资产一条，含路径），读 UE 的脚本存 audit.mjs，要能原样重跑（T21 用）。",
    "做完的标准": [
     "ResourceFX 两张表的 3.0 行读全，编排用到 / 没用到标清",
     "每个粒子系统、材质实例、贴图的上述字段都有读数，读不到的写原因",
@@ -786,7 +786,7 @@
     "analysis/results/FINAL_AUDIT_20261018/体检_定稿.md（新建）",
     "analysis/results/FINAL_AUDIT_20261018/audit.mjs（只修 bug）"
    ],
-   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T21，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读 T20 的 体检_基线.md 和 audit.mjs，再按 T20 的读法重读。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n用 analysis/results/FINAL_AUDIT_20261018/audit.mjs 原样重跑（脚本有 bug 只修 bug，不改口径），输出 体检_定稿.json / 体检_定稿.md。体检_定稿.md 第一段同 T20 的结论数字，并写和基线比哪些变了（新增 / 删掉的行、改了的资产）；重点核窜天猴新导入的 PC / 手游四项和 NeverStream、定稿编排用到的每一行。第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 和手游都应 NoMip；不是 NoMip 的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。",
+   "提示词": "你是本机实测（25）（没有就本机同步（8））。这是 dot 从 协作/派活队列.json 派来的任务 T21，按该文件「Codex 共同规则」执行（UE 只读、60 分钟上限）。先读 T20 的 体检_基线.md 和 audit.mjs，再按 T20 的读法重读。先读：CLAUDE.md 第 2 节（「永远不勾 NeverStream」）、spec/cascade_params_v1.md §1.3（资源规范四项）、协作/渲染基础问题清单.md I2、analysis/results/资源规范统一_20261016/复核_20261017/接手复核.md（26 的读法，recheck.mjs / disk_check.py 可以照抄）、analysis/results/QUALITY_REVIEW_20261017/烟花贴图设置扫描.json（上次贴图扫描的字段口径）。\n\n用 analysis/results/FINAL_AUDIT_20261018/audit.mjs 原样重跑（脚本有 bug 只修 bug，不改口径），输出 体检_定稿.json / 体检_定稿.md。体检_定稿.md 第一段同 T20 的结论数字，并写和基线比哪些变了（新增 / 删掉的行、改了的资产）；重点核窜天猴新导入的 PC / 手游四项和 NeverStream、定稿编排用到的每一行。第一段写结论数字：3.0 行数（PC / 手游）、粒子系统数、四项不一致数（盒是 ±100000、缺 0.98、方形大序列不是 FacingCameraPosition、翻转和 spec §1.3 规则不符）、NeverStream=true 的贴图数（用户永远不许，全部列出）、Wrap 的 Ramp 数、NoMip 贴图清单（用户 10-18 16:4x 定：ResourceFX 3.0 行用到、只被烟花引用的主序列——材质参数 MainTex / BaseTex——PC 应 NoMip；手游应 FromTextureGroup（用户 10-28 按性能组改，见 CLAUDE.md 第 2 节 ④）；不符的逐张列出，算「测试前必须处理」；共享贴图和噪声 / 遮罩 / 溶解辅助图不算）、开了局部全分辨率的材质清单、磁盘可写（没提交）的资产数。再分三段：「测试前必须处理」（NeverStream=true、编排用到但盒是 ±100000 或缺 0.98、引用丢失 / 指向不存在的资产）、「可后修（并进 I2）」、「只是记录」。不要自己判定画面好坏。",
    "做完的标准": [
     "同 T20 的读数齐全",
     "体检_定稿.md 有和基线的差异清单",
@@ -867,19 +867,20 @@
    "状态": "等前置",
    "优先": 1,
    "前置": [
-    "用户放行（用户 10-27 20:08：「导入器届时你可以让本地的codex去做」）",
-    "A3 要导入 UE 沙盒，需用户放行时明确同意"
+    "用户放行",
+    "A1 暂停 8034 一次、A3 导入 UE 沙盒：都要用户放行时明确同意",
+    "A2 等云端改好打包脚本推到 team/external"
    ],
    "要 UE": "A0 只读；A3 导入沙盒（需用户同意）",
-   "标题": "导入器离线化与对外包：file:// 打开导入器选解压后的效果文件夹 → 检查 → 导入，不跑 8034；去本机路径；放进对外包；沙盒实测一次",
-   "为什么": "10-30 组内分享要给同事离线包；用户 10-27 17:14 要求像特效工作台那样一个网页就能导入导出，不跑 8034。导入器私有，云端看不到，只能本机做。",
+   "标题": "同事包里的导出与导入：核查你电脑上的链路（嵌入导入器 + 8034 + 17780）、试没有 8034 的路线、出同事包（含编排工作台）、沙盒实测一次",
+   "为什么": "10-30 组内分享要给同事一个包。用户 10-28 20:00 纠正：导入器已嵌在烘焙器里（124 版打开就能自动导入），问题是同事电脑缺导入器副本 / 8034 / 默认目录。导入器私有、云端看不到，只能本机做。",
    "只许改": [
-    "D:/FXTools/DFWorkbench/workbench/（导入器私有源码与构建产物，先备份）",
     "分支 team/external 的 tool/team/",
-    "analysis/results/20261028_导入器离线化/（新建）"
+    "analysis/results/20261028_同事包导入/（新建）",
+    "私有导入器 D:/FXTools/DFWorkbench/workbench/ 只读"
    ],
-   "提示词": "按 协作/提示词/本机Codex_导入器离线化与对外包_2026-10-27.md 全文执行（A0–A3；B 等 V5 交互定稿另行放行）。遵守本文件「Codex 共同规则」，A3 的导入是用户单独同意的例外。",
-   "做完的标准": "见提示词文件第 6 节"
+   "提示词": "按 协作/提示词/本机Codex_导入器离线化与对外包_2026-10-27.md 全文执行（10-28 重写：A0 核查、A1 试没有 8034、A2 出包、A3 沙盒导入）。遵守本文件「Codex 共同规则」，A3 的导入是用户单独同意的例外。\n\n（10-28 LiteHDR 补充）导入器私有源码已到 v2.31：主序列 MipGenSettings 按平台写（PC NoMip、手游 FromTextureGroup），见 D:/FXTools/DFWorkbench/workbench/CHANGELOG.md 顶部；导入器只读，别把这条规则改回去。",
+   "做完的标准": "见提示词文件第 5 节"
   }
  ],
  "夜班怎么取": [

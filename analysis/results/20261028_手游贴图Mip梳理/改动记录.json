@@ -1,0 +1,210 @@
+[
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_L1_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+  "prop": "mip_gen_settings",
+  "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01",
+  "checkout": true,
+  "before": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>"
+ },
+ {
+  "saved": true,
+  "after": "1024",
+  "prop": "max_texture_size",
+  "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+  "checkout": true,
+  "before": "0"
+ },
+ {
+  "saved": true,
+  "after": "1024",
+  "prop": "max_texture_size",
+  "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+  "checkout": true,
+  "before": "0"
+ }
+]
