@@ -1861,44 +1861,75 @@ header.top .gpu::before{content:none}
 .busy .busy-later{pointer-events:auto}     /* 4.9.123 打开多层效果时「稍后烘焙」 */
 
 /* ===================================================================================================
-   4.9.125 V5 右栏（对话框9；用户 2026-10-27 18:33–21:24，10-28 01:21「布局交互保留，还原上一版 ui 画风」）
-   · 画风 = 4.9.124：颜色、圆角、选中样子、勾选 / 下拉 / 滚动条都是浏览器原来的样子，这一段不改它们；只给 V5 新加的东西（树、结构栏、分隔条、
-     开关、分段、交付清单窄栏）写样子，用的都是原来的颜色和选中样子（选中 = #173d39 底 + 主色边；开着 = 主色底，和「实拍对照」一样）
-   · 动效只给状态变化：悬停 / 选中 150 ms、菜单出现 150 ms、模块展开 200 ms（只在人点的时候）；系统「减少动态效果」时全为 0
+   4.9.125 V5 右栏 + 共用组件接入（对话框9；用户 2026-10-27 20:50 / 21:18 / 21:24；10-28 12:38）
+   · 布局（尺寸、字号、统一的下拉 / 勾选 / 单选 / 滚动条 / 开关 / 分段、树、交付清单）= 4.9.125；
+     画风（圆角、颜色、高亮：选中 / 悬停 / 按下 / 焦点）= 4.9.124：选中 = 深绿底 + 主色边，焦点环 = 主色，悬停只变字色 / 边框（不加一层亮底）
+   · 共用组件 tool/design-system v0.2.1（v0.1.1 原有的不改，只加新组件），Chrome / Edge 一样
+   · 动效只给状态变化：悬停 / 选中 150 ms、菜单出现 150 ms（离开 100 ms）、模块展开 200 ms；系统「减少动态效果」时全为 0
    =================================================================================================== */
-.app{--fw-motion-short:100ms;--fw-motion-medium:150ms;--fw-motion-panel:200ms;--fw-ease-standard:cubic-bezier(.2,0,0,1);--fw-ease-enter:cubic-bezier(.05,.7,.1,1);--fw-ease-exit:cubic-bezier(.3,0,.8,.15);interpolate-size:allow-keywords}
-@media (prefers-reduced-motion:reduce){.app{--fw-motion-short:0ms;--fw-motion-medium:0ms;--fw-motion-panel:0ms}}
-/* 状态变化的过渡（颜色、边、阴影）：按钮、标签、输入框一样快（只是变的时候平滑一点，样子不变） */
+.app.fw-scope{font:inherit;font-variant-numeric:normal;background:none;color:inherit;interpolate-size:allow-keywords}
+/* 状态变化的过渡（颜色、边、阴影）：所有按钮、标签、输入框一样快 */
 .app :is(button,.btn,summary.btn,.tgl,select,input[type=text],input[type=number],input[type=search],.li,.v5-row,.lc-chip){
   transition:background-color var(--fw-motion-medium) var(--fw-ease-standard),border-color var(--fw-motion-medium) var(--fw-ease-standard),color var(--fw-motion-medium) var(--fw-ease-standard),box-shadow var(--fw-motion-medium) var(--fw-ease-standard),opacity var(--fw-motion-medium) var(--fw-ease-standard)}
 
-/* ---- 开关（只有开 / 关两种值的参数，原来是下拉）：接近直角；关 = 线色底 + 灰块，开 = 主色底 + 亮块（和「实拍对照」开着一样的颜色）---- */
-.app input.v5-sw{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:32px;height:18px;margin:0;border:0;border-radius:3px;background:var(--line2);cursor:pointer;
-  transition:background-color var(--fw-motion-short) var(--fw-ease-standard)}
-.app input.v5-sw::after{content:"";position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:2px;background:var(--dim);transition:transform var(--fw-motion-medium) var(--fw-ease-enter),background-color var(--fw-motion-short) var(--fw-ease-standard)}
-.app input.v5-sw:checked{background:var(--acc)}
-.app input.v5-sw:checked::after{transform:translateX(14px);background:var(--text)}
-.app input.v5-sw:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.app input.v5-sw:disabled{opacity:.45;cursor:not-allowed}
+/* ---- 勾选：16 px，统一（仅改动、英文名、自动烘焙、水平镜像……）；样子是浏览器自己的 + 主色（4.9.124「仅改动 / 英文名」就是这样：勾上 = 主色底）---- */
+.app input[type=checkbox]:not(.fw-switch,.tlloop input){flex:none;width:16px;height:16px;margin:0;vertical-align:-3px;accent-color:var(--acc);cursor:pointer}
+.app input[type=checkbox]:not(.fw-switch,.tlloop input):disabled{opacity:.45;cursor:not-allowed}
+/* 单选：14 px，浏览器自己的样子 + 主色（和勾选一样） */
+.app input[type=radio]{flex:none;width:14px;height:14px;margin:0;accent-color:var(--acc);cursor:pointer}
+.app label.check,.app .check,.app .pchg,.app .bk-auto,.app .expo{display:inline-flex;align-items:center;gap:7px}
+
+/* ---- 开关：方形 32 × 16（用户 21:18「跟我们现在直角较类似的按钮风格」）；颜色 = 4.9.124「实拍对照」：关 = 线色底 + 灰块，开 = 主色底 + 亮块 ---- */
+.app input.fw-switch{background:var(--line2)}
+.app input.fw-switch::after{background:var(--dim)}
+.app input.fw-switch:checked{background:var(--acc)}
+.app input.fw-switch:checked::after{background:var(--text)}
+.app .fw-switch:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.app .fw-switch:disabled{opacity:.45;cursor:not-allowed}
 #right .field.v5-enh>select{display:none}
 #right #params details.mod>.field.v5-has-sw>.v5-sw{grid-column:2;justify-self:start}
 #right .field.v5-dup{display:none!important}
-/* 分段（2–3 个短选项，原来是下拉）：和中栏模式切换同一个样子 */
-.v5-seg{grid-column:2;display:flex;min-width:0;width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.v5-seg>button{flex:1 1 0;min-width:0;min-height:28px;padding:3px 6px;border:0;border-left:1px solid var(--line);border-radius:0;background:none;color:var(--dim);font:inherit;font-size:12px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+/* 分段（2–3 个短选项）：和中栏模式切换同一个样子 */
+.v5-seg{grid-column:2;display:flex;min-width:0;width:100%;border:1px solid var(--line2);border-radius:4px;overflow:hidden;background:var(--low)}
+.v5-seg>button{flex:1 1 0;min-width:0;min-height:26px;padding:2px 6px;border:0;border-left:1px solid var(--line2);border-radius:0;background:none;color:var(--dim);font:inherit;font-size:12px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
 .v5-seg>button:first-child{border-left:0}
 .v5-seg>button[hidden]{display:none}
 .v5-seg>button:hover:not(:disabled){color:var(--text)}
-.v5-seg>button[aria-checked=true]{background:var(--hover);box-shadow:inset 0 0 0 1px var(--acc);color:var(--text)}
+.v5-seg>button[aria-checked=true]{background:var(--hover);color:var(--text);box-shadow:inset 0 0 0 1px var(--acc)}
 .v5-seg>button:disabled{opacity:.45;cursor:not-allowed}
 .v5-seg>button:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
 #right .field.inert .v5-seg,#right .field.inert .v5-sw{opacity:.5}
+
+/* ---- 下拉：关着的样子统一；Chrome / Edge 135+ 打开的列表画成和 ⋯ 菜单一样（别的浏览器退回系统下拉，功能不变）---- */
+.app select:not([multiple]):not([size]):not(.fw-select):not(.btn){appearance:none;-webkit-appearance:none;min-height:28px;padding:3px 26px 3px 8px;border:1px solid var(--line2);border-radius:4px;background:var(--low) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b4c5cb'/%3E%3C/svg%3E") no-repeat right 9px center;color:var(--text);font-size:12.5px;cursor:pointer}
+.app select:not(.fw-select):disabled{opacity:.5;cursor:default}
+.app select#abSrc{border-radius:5px}     /* 版本来源下拉：圆角 = 4.9.124 */
+@supports (appearance:base-select){
+  .app select:not([multiple]):not([size]):not(.fw-select):is(.btn,:not(.btn)),.app select:not([multiple]):not([size]):not(.fw-select):is(.btn,:not(.btn))::picker(select){appearance:base-select}
+  .app select:not([multiple]):not([size]):not(.fw-select):is(.btn,:not(.btn)){display:inline-flex;align-items:center;gap:6px;background-image:none;padding-right:8px}
+  .app select:not([multiple]):not([size]):not(.fw-select)::picker-icon{content:"";width:10px;height:6px;flex:none;margin-left:auto;background:var(--dim);clip-path:polygon(0 0,100% 0,50% 100%);transition:rotate var(--fw-motion-medium) var(--fw-ease-standard)}
+  .app select:not([multiple]):not([size]):not(.fw-select):open::picker-icon{rotate:180deg}
+  .app select:not([multiple]):not([size]):not(.fw-select)::picker(select){margin-block:4px;padding:4px;min-width:anchor-size(width);max-height:min(60vh,520px);overflow-y:auto;border:1px solid var(--line2);border-radius:7px;background:var(--panel);color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.45);
+    opacity:0;translate:0 -4px;transition:opacity var(--fw-motion-short) var(--fw-ease-exit),translate var(--fw-motion-short) var(--fw-ease-exit),display var(--fw-motion-short) allow-discrete,overlay var(--fw-motion-short) allow-discrete}
+  .app select:not([multiple]):not([size]):not(.fw-select):open::picker(select){opacity:1;translate:0 0;transition:opacity var(--fw-motion-medium) var(--fw-ease-enter),translate var(--fw-motion-medium) var(--fw-ease-enter),display var(--fw-motion-medium) allow-discrete,overlay var(--fw-motion-medium) allow-discrete}
+  @starting-style{.app select:not([multiple]):not([size]):not(.fw-select):open::picker(select){opacity:0;translate:0 -4px}}
+  .app select:not([multiple]):not([size]):not(.fw-select) option{display:flex;align-items:center;gap:8px;min-height:30px;padding:4px 10px;border-radius:5px;font-size:12.5px;line-height:1.4;white-space:normal;color:var(--text);background:none;transition:background-color var(--fw-motion-short) var(--fw-ease-standard),color var(--fw-motion-short) var(--fw-ease-standard)}
+  .app select:not([multiple]):not([size]):not(.fw-select) option:hover:not(:disabled),.app select:not([multiple]):not([size]):not(.fw-select) option:focus-visible{background:var(--hover);color:var(--acc);outline:none}
+  .app select:not([multiple]):not([size]):not(.fw-select) option:checked{color:var(--acc);font-weight:600}
+  .app select:not([multiple]):not([size]):not(.fw-select) option::checkmark{color:var(--acc);order:1;margin-left:auto}
+  .app select:not([multiple]):not([size]):not(.fw-select) option:disabled{opacity:.45}
+  .app select:not([multiple]):not([size]):not(.fw-select) option[hidden]{display:none}
+  .app select:not([multiple]):not([size]):not(.fw-select) optgroup{font-size:11px;color:var(--faint);font-weight:400}
+}
 
 /* ---- 菜单（还原、导出 ▾、⋯、预览设置、时间工具、版本记录）：出现 150 ms 减速、往下 4 px 落位；往上开的往上落 ---- */
 .ab-more>.ab-menu{transition:opacity var(--fw-motion-medium) var(--fw-ease-enter),translate var(--fw-motion-medium) var(--fw-ease-enter)}
 @starting-style{.ab-more[open]>.ab-menu{opacity:0;translate:0 -4px}}
 @starting-style{:is(.preview-settings,.timeline-tools,.version-history)[open]>.ab-menu{opacity:0;translate:0 4px}}
+.ab-menu button{min-height:32px;border-radius:5px;transition:background-color var(--fw-motion-short) var(--fw-ease-standard),color var(--fw-motion-short) var(--fw-ease-standard)}
 .ab-menu button:disabled{opacity:.45;cursor:not-allowed;background:none!important;color:var(--text)!important}
+.ab-menu .v5-danger:not(:disabled):hover{color:#f6c8bb!important;background:#422f30!important}
+.ab-menu button:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
 /* 对话框：出现时 98% → 100%、淡入 */
 .app dialog[open],body>dialog[open]{transition:opacity var(--fw-motion-panel) var(--fw-ease-enter),scale var(--fw-motion-panel) var(--fw-ease-enter)}
 @starting-style{dialog[open]{opacity:0;scale:.98}}
@@ -1916,20 +1947,27 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .stage>.viewbar{flex-wrap:nowrap;align-items:center}
 .v5-acts{display:flex;align-items:center;gap:4px;flex:none;margin-right:2px;padding-right:8px;border-right:1px solid var(--line)}
 .v5-acts[hidden]{display:none}
-.v5-acts>.btn,.v5-acts>.ab-more>summary.btn,.v5-export>.btn,.v5-export>.ab-more>summary.btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:33px;padding:5px 9px;font-size:12px;border-radius:4px;white-space:nowrap}     /* 原资产栏按钮的尺寸 */
+.v5-acts>.btn,.v5-acts>.ab-more>summary.btn,.v5-export>.btn,.v5-export>.ab-more>summary.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:33px;min-height:33px;padding:0 11px;font-size:12px;border-radius:4px;white-space:nowrap}
 .v5-acts .ui-icon{width:16px;height:16px}
-.v5-acts>#abUndo,.v5-acts>#abRedo{width:32px;padding:4px;font-size:17px;line-height:1}
-.v5-acts>#abSave{background:var(--hover);border-color:var(--acc);color:var(--text);padding-inline:17px}
-.v5-export>#abExportPack{border-color:var(--line2)}
+.v5-acts>#abUndo,.v5-acts>#abRedo{width:33px;padding:0;font-size:16px}
+.v5-acts>#abUndo:disabled,.v5-acts>#abRedo:disabled{opacity:.35}
+.v5-acts>#abSave{background:var(--hover);border-color:var(--acc);color:var(--text);padding-inline:15px}
 .v5-acts svg,.v5-tools svg,.v5-bar svg,.v5-back svg,.v5-ico svg,.v5-tree svg,.v5-export svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .v5-acts svg .f,.v5-bar svg .f,.v5-tree svg .f{fill:currentColor;stroke:none}
 .v5-export{display:inline-flex;align-items:stretch}
 .v5-export>#abExportPack{border-radius:4px 0 0 4px}
 .v5-export>.ab-more>summary.btn{width:24px;padding:0;border-left:0;border-radius:0 4px 4px 0}
 .v5-export>.ab-more>summary.btn svg{width:12px;height:12px}
+.v5-export>.ab-more[open]>summary.btn{background:var(--hover);border-color:var(--acc)}
 .v5-acts .ab-menu{min-width:240px}
+.v5-acts>.ab-reset>summary.btn svg{width:15px;height:15px}
 .stage>.viewbar #btnFocus,.stage>.viewbar #btnRight,.stage>.viewbar #btnSide{width:33px;min-width:33px;padding:0;justify-content:center}
 .stage>.viewbar #btnFocus .tl,.stage>.viewbar #btnRight .tl,.stage>.viewbar #btnSide .tl{display:none}
+.stage>.viewbar #btnRef{gap:7px}
+/* 实拍对照：方形开关（和参数里的开关同一种，21:18）；颜色 = 4.9.124 这个开关：关 = 线色底 + 灰块，开 = 主色底 + 亮块 */
+#btnRef::after{width:32px;height:16px;flex:none;border-radius:2px;box-sizing:border-box;border:0;box-shadow:none;margin-left:2px;
+  background:var(--line2) linear-gradient(var(--dim),var(--dim)) no-repeat 3px 50%/10px 10px;transition:background-color var(--fw-motion-short) var(--fw-ease-standard),background-position var(--fw-motion-medium) var(--fw-ease-enter)}
+#btnRef[aria-pressed=true]::after{background:var(--acc) linear-gradient(var(--text),var(--text)) no-repeat calc(100% - 3px) 50%/10px 10px;box-shadow:none}
 @container workstage (max-width:1020px){
   .v5-acts>.ab-reset>summary.btn .v5-t{display:none}
   .v5-acts>.ab-reset>summary.btn{width:33px;padding:0}
@@ -1966,11 +2004,10 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-r1 .v5-more>summary.btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;min-height:28px;padding:0;border-radius:4px;background:none;border-color:transparent;color:var(--dim)}
 .v5-r1 .v5-more>summary.btn:hover,.v5-r1 .v5-more[open]>summary.btn{color:var(--text);border-color:var(--line2);background:var(--low)}
 .v5-r1 .v5-more>.ab-menu{min-width:250px;max-height:min(70dvh,640px)}
-.v5-r1 .v5-close{min-height:28px;height:28px;padding:0 10px;font-size:12px;border-radius:4px;margin:0;color:var(--dim)}
-.v5-r1 .v5-close:hover{color:var(--text)}
+.v5-r1 .v5-close{min-height:28px;height:28px;padding:0 10px;font-size:12px;border-radius:6px;margin:0}     /* 圆角、颜色 = 4.9.124 右栏「收起」 */
 .v5-r2{display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-width:0;min-height:20px}
 .v5-r2 .id-chips{display:flex;flex-wrap:wrap;gap:4px;min-width:0}
-.v5-r2 .idc{font-size:11px;line-height:18px;padding:0 5px;border:1px solid var(--line2);border-radius:3px;color:var(--dim);white-space:nowrap;flex:none}     /* 和原资产栏身份标签一样 */
+.v5-r2 .idc{font-size:11px;line-height:18px;padding:0 6px;border-radius:3px;border:1px solid var(--line2);color:var(--dim);background:none;white-space:nowrap}     /* 颜色 = 4.9.124 资产栏的身份标签 */
 .v5-r2 .idc.v{color:var(--faint)}
 .v5-r2 .idc.warn{color:var(--amber);border-color:#6b5a3a}
 .v5-r2 .idc.ok{color:var(--acc);border-color:#1f5b49}
@@ -1984,7 +2021,9 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-review .rstrip{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0;padding:0;border:0;background:none;min-height:26px}
 .v5-review .rstrip b{font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:40%}
 .v5-review .rstrip .sp{flex:1}
-.v5-review .rstrip b{font-size:13px}     /* 按钮、选中样子用原来审阅条的（.rstrip .btn.mini / okb / fixb） */
+.v5-review .rstrip .btn.mini{min-height:26px;height:26px;padding:0 9px;font-size:12px;border-radius:4px}
+.v5-review .rstrip .btn.okb[aria-pressed=true]{background:var(--hover);border-color:var(--acc);color:var(--acc)}     /* = 4.9.124 审阅条 */
+.v5-review .rstrip .btn.fixb[aria-pressed=true]{background:#422f30;border-color:#c86a55;color:#f6c8bb}
 .v5-review .rstrip .gate{flex-basis:100%;margin:2px 0 0;font-size:11.5px;color:var(--amber)}
 .v5-back{flex:none;display:flex;align-items:center;gap:10px;padding:8px 12px 8px 10px;border-bottom:1px solid var(--line);background:var(--panel)}
 .v5-back[hidden]{display:none}
@@ -1995,7 +2034,7 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-treebox{flex:none;display:flex;flex-direction:column;min-height:0;background:var(--panel)}
 .v5-tools{display:flex;align-items:center;gap:6px;min-height:34px;padding:4px 10px 2px var(--pad)}
 .v5-tools .v5-add{display:inline-flex;align-items:center;gap:4px;height:26px;min-height:26px;padding:0 9px 0 6px;font-size:12px;border-radius:4px;border:1px solid var(--line2);color:var(--dim)}
-.v5-tools .v5-add:hover:not(:disabled){color:var(--text);border-color:var(--faint)}
+.v5-tools .v5-add:hover:not(:disabled){color:var(--text);border-color:var(--hov)}
 .v5-tools .v5-add:disabled{opacity:.45;cursor:not-allowed}
 .v5-tools .v5-add svg{width:14px;height:14px}
 .v5-path{min-width:0;font-size:12.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -2008,14 +2047,14 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-row{position:relative;display:flex;align-items:center;gap:2px;height:28px;padding-left:calc(var(--lv) * 16px);border-radius:3px;color:var(--dim)}
 .v5-row::before{content:"";position:absolute;left:calc(var(--lv) * 16px - 9px);top:0;bottom:0;border-left:1px solid var(--line);display:var(--v5-guide,block)}
 .v5-row[style*="--lv:0"]::before{display:none}
-.v5-row:hover{background:rgb(228 237 239 / .05)}
+.v5-row:hover{background:var(--hover)}
 .v5-row.sel{background:var(--hover);box-shadow:inset 0 0 0 1px var(--acc)}
 .v5-row .v5-tw{flex:none;display:inline-flex;align-items:center;justify-content:center;width:18px;height:22px;padding:0;border:0;background:none;color:var(--faint);cursor:pointer;border-radius:3px}
 .v5-row .v5-tw svg{width:12px;height:12px;transition:rotate var(--fw-motion-medium) var(--fw-ease-standard)}
 .v5-row[aria-expanded=false] .v5-tw svg{rotate:-90deg}
 .v5-row .v5-tw:hover{color:var(--text)}
 .v5-row .v5-name{flex:1 1 auto;min-width:0;height:26px;padding:0 6px 0 2px;border:0;background:none;color:inherit;font:inherit;font-size:13px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;border-radius:3px}
-.v5-row .v5-name:focus-visible{outline:2px solid var(--acc2);outline-offset:-2px}
+.v5-row .v5-name:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
 .v5-row.k-layer .v5-name{color:var(--text);font-weight:600}
 .v5-row.k-group .v5-name{color:var(--text)}
 .v5-row.k-page .v5-name{color:var(--dim)}
@@ -2031,13 +2070,13 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:26px;padding:0;border:0;border-radius:3px;background:none;color:var(--dim);cursor:pointer}
 .v5-ic.v5-none{width:28px}
 .v5-ic svg{width:15px;height:15px}
-.v5-ic:hover:not(.na){color:var(--text);background:rgb(228 237 239 / .08)}
+.v5-ic:hover:not(.na){color:var(--text)}
 .v5-ic.na{color:var(--faint);opacity:.32;cursor:help}
 .v5-ic.v5-eye[aria-pressed=false]{color:var(--faint)}
 .v5-ic.v5-solo.on{color:var(--acc)}
 .v5-ic.v5-solo svg .f{opacity:0;transition:opacity var(--fw-motion-medium) var(--fw-ease-standard)}
 .v5-ic.v5-solo.on svg .f{opacity:1}
-.v5-ic:focus-visible{outline:2px solid var(--acc2);outline-offset:-2px}
+.v5-ic:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
 .v5-row .v5-menu{opacity:0}
 .v5-row:hover .v5-menu,.v5-row.sel .v5-menu,.v5-row .v5-menu:focus-visible{opacity:1}
 /* 分隔条：一条 1 px 线，悬停 / 拖动时主色；手柄三点 */
@@ -2053,13 +2092,16 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 #right.v5.v5-min #params>.pscope .ps-path{font-size:14px}
 #right.v5.v5-min #params>.pscope .ps-row{margin:0;min-height:24px}
 #right.v5 #params>.ptools{position:sticky;top:0;z-index:6;margin:0 calc(-1 * var(--pad));padding:8px var(--pad) 8px;background:var(--panel);border-bottom:1px solid var(--line)}
+#right.v5 #params>.ptools input[type=search]{min-height:30px}
+#right.v5 #params>.ptools .pchg{font-size:12.5px;color:var(--dim)}
+#right.v5 #params>.ptools .pchg.pen{font-size:12.5px;color:var(--dim)}
 #right.v5 .layerhead>details,#right.v5 #params>.egrp>details#lhPos{margin-top:4px}
 /* 粒子层：母粒 ▾ · 复制 · ＋ 子粒 · 删除（4.9.123 的结构弹层挪到这一层参数的最上面）*/
 .v5-gtools{display:flex;align-items:center;gap:6px;margin:4px 0 6px;padding:6px 0;border-bottom:1px solid var(--line)}
 .v5-gtools .v5-gpar{display:inline-flex;align-items:center;gap:6px;min-width:0;font-size:12.5px;color:var(--dim)}
 .v5-gtools .v5-gpar select{max-width:170px;min-width:0}
 .v5-gtools .btn.mini{min-height:26px;height:26px;padding:0 9px;font-size:12px;border-radius:4px}
-.v5-gtools .v5-danger:hover{color:var(--warn);border-color:#6b4038}
+.v5-gtools .v5-danger:hover{color:#ffb4a8;border-color:#c0504d}     /* = 4.9.124 删除按钮悬停 */
 /* 参数区底部：导出 / 恢复到打开时去掉（导出只留顶上一个；还原在顶上「还原」菜单里）*/
 .v5-gone{display:none!important}
 #pMaster .pm-btns:not(:has(> :not(.v5-gone):not(input[hidden]))){display:none}
@@ -2074,7 +2116,7 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .v5-pop button{min-height:32px;padding:0 10px;border:0;border-radius:5px;background:none;color:var(--text);font:inherit;font-size:13px;text-align:left;cursor:pointer}
 .v5-pop button:hover:not(:disabled),.v5-pop button:focus-visible{background:var(--hover);color:var(--acc);outline:none}
 .v5-pop button:disabled{opacity:.45;cursor:not-allowed}
-.v5-pop .v5-danger:hover:not(:disabled){background:#3f2525;color:var(--warn)}
+.v5-pop .v5-danger:hover:not(:disabled){background:#422f30;color:#f6c8bb}
 /* 窄屏（右栏在下面那种）：参数不再单独滚，树照旧 */
 @media(max-width:650px){#right.v5{overflow:visible!important}#right.v5>#rScroll{overflow:visible}}
 
@@ -2091,13 +2133,13 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 .stage.dv-on>.tlbars{grid-area:tlb}
 .stage.dv-on:not(:has(>:is(#showcaseBar,#migNote,#bakeError):not([hidden]))){grid-template-rows:0 auto minmax(0,1fr) auto auto;row-gap:7px}
 .stage.dv-on:not(:has(>:is(#showcaseBar,#migNote,#bakeError):not([hidden])))>.viewbar{margin-top:-7px}
-#delivView.delivview{display:flex;flex-direction:column;gap:0;padding:0;overflow-y:auto;overflow-x:hidden;background:var(--low);border:1px solid var(--line2);border-radius:7px;font-size:12.5px;scrollbar-gutter:stable}
+#delivView.delivview{display:flex;flex-direction:column;gap:0;padding:0;overflow-y:auto;overflow-x:hidden;background:var(--panel);border:1px solid var(--line);border-radius:4px;font-size:12.5px;scrollbar-gutter:stable}
 #delivView[hidden]{display:none}
 #delivView .dv-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;margin:0;padding:8px 10px 8px 14px;background:var(--panel);border-bottom:1px solid var(--line)}
 #delivView .dv-title{font-size:14px;font-weight:600;color:var(--text);display:inline}
 #delivView .dv-x{min-height:26px;height:26px;padding:0 10px;font-size:12px;border-radius:4px;color:var(--dim)}
-#delivView .dv-go{margin:10px 14px 2px;padding:7px 10px;border:1px solid #2f6b5a;border-radius:4px;background:var(--hover);color:var(--gold2);font-size:12px;line-height:1.55}
-#delivView .dv-go.bad{border-color:#6b4038;background:#3f2525;color:#f2b8a8}
+#delivView .dv-go{margin:10px 14px 2px;padding:7px 10px;border:1px solid #1f5b49;border-radius:4px;background:var(--hover);color:var(--acc);font-size:12px;line-height:1.55}
+#delivView .dv-go.bad{border-color:#c86a55;background:#422f30;color:#f6c8bb}
 #delivView .dv-sec{padding:10px 14px 12px;border-bottom:1px solid var(--line)}
 #delivView .dv-sec:last-of-type{border-bottom:0}
 #delivView .dv-sec h3{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:13px;font-weight:600;color:var(--text)}
@@ -2105,8 +2147,7 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 #delivView .dv-n{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:2px;border:1px solid var(--line2);color:var(--dim);font-size:11px;font-weight:600}
 #delivView .dv-names{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:6px 8px;margin:0}
 #delivView .dv-names label{display:flex;flex-direction:column;gap:3px;min-width:0;font-size:11.5px;color:var(--dim)}
-#delivView .dv-names input{width:100%;min-width:0;min-height:28px;padding:3px 8px;border:1px solid var(--line2);border-radius:4px;background:var(--low);color:var(--text);font:12.5px var(--mono)}
-#delivView .dv-names input:focus{outline:none;border-color:var(--acc)}
+#delivView .dv-names input{width:100%;min-width:0;min-height:28px;padding:3px 8px;border:1px solid var(--line2);border-radius:5px;background:var(--panel);color:var(--text);font:12.5px var(--mono)}     /* 底色、圆角 = 4.9.124 交付清单名字框 */
 #delivView .dv-nbtn{grid-column:2;grid-row:1;display:flex;gap:6px}
 #delivView .dv-nbtn .btn{min-height:28px;height:28px;padding:0 10px;font-size:12px;border-radius:4px}
 #delivView .dv-names small{grid-column:1 / -1;width:auto;font-size:11.5px;color:var(--faint);overflow-wrap:anywhere}
@@ -2130,7 +2171,7 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 #delivView .dv-files>summary h3{margin:0}
 #delivView .dv-files>summary h3::before{content:"";width:6px;height:6px;margin:0 2px 0 4px;border-right:1.5px solid var(--dim);border-bottom:1.5px solid var(--dim);rotate:-45deg;transition:rotate var(--fw-motion-medium) var(--fw-ease-standard);order:9}
 #delivView .dv-files[open]>summary h3::before{rotate:45deg}
-#delivView .dv-files>summary:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+#delivView .dv-files>summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 #delivView .dv-files[open]>summary{margin-bottom:8px}
 #delivView .dv-files .dv-t td{padding:4px 6px 4px 0;font-size:11px}
 #delivView .dv-files .dv-t td+td{white-space:normal}
@@ -2156,12 +2197,14 @@ main.drawer-right>#right,main.drawer-side>#side{transition:translate var(--fw-mo
 #delivView .dv-names input[data-ly]{width:100%}
 .stage.dv-on .canvas-wrap.split .canvas-box{width:min(100cqw,100cqh)}
 .stage.dv-on .canvas-wrap.split .canvas-box.wide{width:100cqw;height:100cqh}
-#right #params details.mod>.field>input.v5-sw,#right .field>input.v5-sw{grid-column:2;justify-self:start;width:32px;min-width:32px;height:18px;min-height:0;padding:0;margin:0;border:0;border-radius:3px}
+#right #params details.mod>.field>input.v5-sw,#right .field>input.v5-sw{grid-column:2;justify-self:start;width:32px;min-width:32px;height:16px;min-height:0;padding:0;margin:0;border:0;border-radius:2px;background:var(--line2)}
+#right #params details.mod>.field>input.v5-sw:checked,#right .field>input.v5-sw:checked{background:var(--acc)}     /* 参数行的输入框规则（圆角 4、底色）别盖到开关上 */
 #right .pm-ident #formNote{display:none}
 .tlb-observe.solo svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5}
 .tlb-observe.solo svg .f{fill:currentColor;stroke:none;opacity:0}
 .tlb-observe.solo[aria-pressed=true] svg .f{opacity:1}
 #colorControls .color-scope{display:none}
+.ab-menu>p,.ab-menu>small,.ab-menu>.hint,.ab-menu>span:not(.menu-label):not(.menu-div){margin:0;padding:6px 10px;font-size:11.5px;line-height:1.5;color:var(--faint)}
 #abMore .v5-del-label:has(+ #abDel[hidden]){display:none}
 .v5-ic.na{visibility:hidden}     /* 这一行没有这个开关：不画（列头悬停写哪些行有） */
 #delivView .dv-tip{margin:6px 0 0;font-size:11.5px;color:var(--faint)}

@@ -81,3 +81,81 @@
 @media (prefers-reduced-motion: reduce) {
   .fw-button, .fw-icon-button, .fw-segment { transition: none; }
 }
+
+/* =====================================================================
+   v0.2.1 新加的组件（烘焙器 4.9.125；用户 10-27 20:50「滚动条 / 下拉 / 勾选统一」、21:18「颜色、选中样子不改，接近直角」、10-28 12:38「下拉勾选单选滚动条是布局可以保留，画风（直角、颜色、高亮）不要改」）
+   上面 v0.1.1 原有的组件一个字不改；下面新加的，颜色和高亮照 4.9.124 页面：选中 / 悬停 = 深绿底（primary-container）+ 主色字或主色边，焦点环 = focus 色。
+   动效只给状态变化，时长都用 --fw-motion-*（系统「减少动态效果」时 tokens 里归零）。
+   ===================================================================== */
+/* 滚动条：细、方头、没有箭头、轨道透明；颜色用控件边框色，悬停用轮廓色。Chrome / Edge 用 ::-webkit-scrollbar，Firefox 用标准属性 */
+.fw-scope ::-webkit-scrollbar, .fw-scope::-webkit-scrollbar { width: 10px; height: 10px; }
+.fw-scope ::-webkit-scrollbar-track, .fw-scope::-webkit-scrollbar-track { background: transparent; }
+.fw-scope ::-webkit-scrollbar-button, .fw-scope::-webkit-scrollbar-button { display: none; }
+.fw-scope ::-webkit-scrollbar-corner, .fw-scope::-webkit-scrollbar-corner { background: transparent; }
+.fw-scope ::-webkit-scrollbar-thumb, .fw-scope::-webkit-scrollbar-thumb { background: var(--fw-color-control-border); border: 2px solid transparent; background-clip: padding-box; border-radius: var(--fw-radius-toggle); }
+.fw-scope ::-webkit-scrollbar-thumb:hover, .fw-scope::-webkit-scrollbar-thumb:hover { background-color: var(--fw-color-outline); }
+@supports not selector(::-webkit-scrollbar) {
+  .fw-scope, .fw-scope * { scrollbar-width: thin; scrollbar-color: var(--fw-color-control-border) transparent; }
+}
+/* 开关：方形（接近直角，21:18）；颜色照 4.9.124「实拍对照」开关——关 = 边框色底 + 灰块，开 = 主色底 + 亮块 */
+.fw-switch {
+  appearance: none; -webkit-appearance: none; position: relative; flex: none; box-sizing: border-box; width: var(--fw-size-switch-w); height: var(--fw-size-switch-h); margin: 0;
+  border: 0; border-radius: var(--fw-radius-toggle); background: var(--fw-color-control-border); cursor: pointer;
+  transition: background-color var(--fw-motion-short) var(--fw-ease-standard);
+}
+.fw-switch::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: calc(var(--fw-size-switch-h) - 6px); height: calc(var(--fw-size-switch-h) - 6px); border-radius: 1px; background: var(--fw-color-on-surface-muted);
+  transition: transform var(--fw-motion-medium) var(--fw-ease-enter), background-color var(--fw-motion-short) var(--fw-ease-standard);
+}
+.fw-switch:checked { background: var(--fw-color-primary); }
+.fw-switch:checked::after { transform: translateX(calc(var(--fw-size-switch-w) - var(--fw-size-switch-h))); background: var(--fw-color-on-surface); }
+.fw-switch:focus-visible { outline: 2px solid var(--fw-color-focus); outline-offset: 2px; }
+.fw-switch:disabled { opacity: .55; cursor: not-allowed; }
+/* 单选：和 .fw-check 一样用浏览器自己的样子 + 主色 */
+.fw-radio { accent-color: var(--fw-color-primary); width: 16px; height: 16px; margin: 0; }
+.fw-radio:focus-visible { outline: 2px solid var(--fw-color-focus); outline-offset: 3px; }
+/* 打开的下拉列表（Chrome / Edge 135+；别的浏览器退回系统下拉）：画成和 ⋯ 菜单一样（4.9.124 的菜单：面板底、7 px 圆角、项 5 px，悬停 = 深绿底 + 主色字） */
+@supports (appearance: base-select) {
+  .fw-select, .fw-select::picker(select) { appearance: base-select; }
+  .fw-select { display: inline-flex; align-items: center; gap: var(--fw-space-2); }
+  .fw-select::picker-icon { color: var(--fw-color-on-surface-muted); transition: rotate var(--fw-motion-medium) var(--fw-ease-standard); }
+  .fw-select:open::picker-icon { rotate: 180deg; }
+  .fw-select::picker(select) {
+    margin-block: 4px; padding: 4px; border: 1px solid var(--fw-color-control-border); border-radius: var(--fw-radius-menu);
+    background: var(--fw-color-surface-container); color: var(--fw-color-on-surface); box-shadow: 0 8px 24px rgb(0 0 0 / .45);
+    opacity: 0; translate: 0 -4px;
+    transition: opacity var(--fw-motion-short) var(--fw-ease-exit), translate var(--fw-motion-short) var(--fw-ease-exit), display var(--fw-motion-short) allow-discrete, overlay var(--fw-motion-short) allow-discrete;
+  }
+  .fw-select:open::picker(select) {
+    opacity: 1; translate: 0 0;
+    transition: opacity var(--fw-motion-medium) var(--fw-ease-enter), translate var(--fw-motion-medium) var(--fw-ease-enter), display var(--fw-motion-medium) allow-discrete, overlay var(--fw-motion-medium) allow-discrete;
+  }
+  @starting-style { .fw-select:open::picker(select) { opacity: 0; translate: 0 -4px; } }
+  .fw-select option { display: flex; align-items: center; gap: var(--fw-space-2); min-height: var(--fw-size-menu-item); padding: 0 10px; border-radius: var(--fw-radius-menu-item); }
+  .fw-select option:hover, .fw-select option:focus-visible { background: var(--fw-color-primary-container); color: var(--fw-color-primary); outline: none; }
+  .fw-select option:checked { color: var(--fw-color-primary); font-weight: 600; }
+  .fw-select option::checkmark { color: var(--fw-color-primary); }
+  .fw-select option:disabled { opacity: .55; }
+}
+/* 菜单（⋯、还原 ▾、导出 ▾、层行 ⋯）：4.9.124 的 ⋯ 菜单同一个样子 */
+.fw-menu { min-width: 200px; margin: 4px 0 0; padding: 4px; border: 1px solid var(--fw-color-control-border); border-radius: var(--fw-radius-menu); background: var(--fw-color-surface-container); color: var(--fw-color-on-surface); box-shadow: 0 8px 24px rgb(0 0 0 / .45); }
+.fw-menu-label { padding: 6px 10px 2px; color: var(--fw-color-on-surface-muted); font-size: var(--fw-type-helper-size); }
+.fw-menu-divider { height: 1px; margin: 4px 0; background: var(--fw-color-divider); border: 0; }
+.fw-menu-item {
+  display: flex; align-items: center; gap: var(--fw-space-2); width: 100%; min-height: var(--fw-size-menu-item); padding: 0 10px; border: 0; border-radius: var(--fw-radius-menu-item);
+  background: transparent; color: inherit; font: inherit; text-align: start; cursor: pointer;
+  transition: background-color var(--fw-motion-short) var(--fw-ease-standard), color var(--fw-motion-short) var(--fw-ease-standard);
+}
+.fw-menu-item:hover, .fw-menu-item:focus-visible { background: var(--fw-color-primary-container); color: var(--fw-color-primary); outline: none; }
+.fw-menu-item--danger { color: var(--fw-color-error); }
+.fw-menu-item--danger:hover, .fw-menu-item--danger:focus-visible { background: var(--fw-color-error-container); color: var(--fw-color-error); }
+.fw-menu-item:disabled { opacity: .55; cursor: not-allowed; }
+/* 提示（只有图标的按钮）：现有深色 */
+.fw-tooltip { margin: 0; padding: 4px 8px; border: 1px solid var(--fw-color-control-border); border-radius: var(--fw-radius-menu-item); background: var(--fw-color-surface-high); color: var(--fw-color-on-surface); font-size: var(--fw-type-helper-size); line-height: 16px; pointer-events: none; }
+/* 模块折叠：高度 200 ms（只在人点的时候；Chrome / Edge 131+） */
+.fw-details { interpolate-size: allow-keywords; }
+.fw-details::details-content { block-size: 0; overflow: hidden; transition: block-size var(--fw-motion-panel) var(--fw-ease-standard), content-visibility var(--fw-motion-panel) allow-discrete; }
+.fw-details[open]::details-content { block-size: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .fw-switch, .fw-switch::after, .fw-menu-item, .fw-select::picker(select), .fw-details::details-content { transition: none; }
+}
