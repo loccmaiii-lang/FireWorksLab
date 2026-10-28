@@ -3353,102 +3353,102 @@ WB-CSS-1080,编排工作台,tool/workbench/src/template-workspace.css,26,,CSS ru
 WB-CSS-1081,编排工作台,tool/workbench/src/template-workspace.css,26,,CSS rule,花型/分层编辑模式,CSS › .app.template-workspace .recipe-preview .panel-heading>span,css_static_only: 静态CSS选择器/声明，计算样式未逐声明追踪级联；不借用父组件截图反算CSS覆盖,catalog:fwl.ui-audit.workbench-static/1
 WB-CSS-1082,编排工作台,tool/workbench/src/template-workspace.css,27,,CSS rule,资源库/模板工作区,CSS › .app.template-workspace .library,css_static_only: 静态CSS选择器/声明，计算样式未逐声明追踪级联；不借用父组件截图反算CSS覆盖,catalog:fwl.ui-audit.workbench-static/1
 WB-CSS-1083,编排工作台,tool/workbench/src/template-workspace.css,27,,CSS rule,花型/分层编辑模式,CSS › .app.template-workspace .recipe-preview,css_static_only: 静态CSS选择器/声明，计算样式未逐声明追踪级联；不借用父组件截图反算CSS覆盖,catalog:fwl.ui-audit.workbench-static/1
-IMP-0001,导入器,fireworks.html,2,9,HTML模板/details,折叠模块,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0002,导入器,fireworks.html,2,32,HTML模板/summary,折叠标题,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0003,导入器,fireworks.html,3,30,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0004,导入器,fireworks.html,3,134,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0005,导入器,fireworks.html,8,181,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0006,导入器,fireworks.html,8,282,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0007,导入器,fireworks.html,8,489,HTML模板/select,下拉,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0008,导入器,fireworks.html,8,569,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0009,导入器,fireworks.html,8,741,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0010,导入器,fireworks.html,8,845,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0011,导入器,fireworks.html,8,946,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0012,导入器,fireworks.html,8,1130,HTML模板/input,勾选,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0013,导入器,fireworks.html,8,1234,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0014,导入器,fireworks.html,10,222,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0015,导入器,fireworks.html,10,524,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0016,导入器,fireworks.html,12,173,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0017,导入器,fireworks.html,12,281,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0018,导入器,fireworks.html,12,424,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0019,导入器,fireworks.html,12,549,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0020,导入器,fireworks.html,12,676,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0021,导入器,fireworks.html,15,161,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0022,导入器,fireworks.html,15,287,HTML模板/input,勾选,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0023,导入器,fireworks.html,15,390,HTML模板/button,按钮,导入器/目录与清单/主操作,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0024,导入器,fireworks-ui.js,83,89,HTML模板/input,文本输入,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0025,导入器,fireworks-ui.js,83,268,HTML模板/input,文本输入,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0026,导入器,fireworks-ui.js,83,615,HTML模板/select,下拉,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0027,导入器,fireworks-ui.js,83,692,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0028,导入器,fireworks-ui.js,83,777,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0029,导入器,fireworks-ui.js,83,874,HTML模板/details,折叠模块,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0030,导入器,fireworks-ui.js,83,910,HTML模板/summary,折叠标题,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0031,导入器,fireworks-ui.js,83,1067,HTML模板/input,勾选,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0032,导入器,fireworks-ui.js,218,170,HTML模板/input,勾选,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0033,导入器,fireworks-ui.js,218,359,HTML模板/button,按钮,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0034,导入器,fireworks-ui.js,240,83,HTML模板/input,文本输入,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0035,导入器,fireworks-ui.js,240,228,HTML模板/select,下拉,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0036,导入器,fireworks-ui.js,240,281,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0037,导入器,fireworks-ui.js,240,355,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0038,导入器,fireworks-ui.js,240,483,HTML模板/select,下拉,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0039,导入器,fireworks-ui.js,240,660,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0040,导入器,fireworks-ui.js,240,741,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0041,导入器,fireworks-ui.js,240,1148,HTML模板/details,折叠模块,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0042,导入器,fireworks-ui.js,240,1184,HTML模板/summary,折叠标题,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0043,导入器,fireworks-ui.js,246,147,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0044,导入器,fireworks-ui.js,246,202,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0045,导入器,fireworks-ui.js,267,42,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0046,导入器,fireworks-ui.js,280,282,HTML模板/textarea,多行输入,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0047,导入器,fireworks-ui.js,280,407,HTML模板/input,文本输入,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0048,导入器,fireworks-ui.js,282,472,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0049,导入器,fireworks-ui.js,282,508,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0050,导入器,fireworks-ui.js,78,75,DOM创建/button,按钮,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0051,导入器,fireworks-ui.js,245,32,DOM创建/label,标签,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0052,导入器,fireworks-ui.js,246,33,DOM创建/select,下拉,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0053,导入器,fireworks-ui.js,264,263,DOM创建/textarea,多行输入,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0054,导入器,fireworks-ui.js,282,302,DOM创建/label,标签,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0055,导入器,fireworks-ui.js,282,403,DOM创建/select,下拉,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0056,导入器,fireworks-ui.js,283,25,DOM创建/div,交互容器,导入器/动态资源清单与确认,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0057,导入器,fireworks-workspace.js,66,143,HTML模板/input,文本输入,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0058,导入器,fireworks-workspace.js,68,13,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0059,导入器,fireworks-workspace.js,68,96,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0060,导入器,fireworks-workspace.js,82,172,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0061,导入器,fireworks-workspace.js,82,181,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0062,导入器,fireworks-workspace.js,82,277,HTML模板/button,按钮,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0063,导入器,fireworks-workspace.js,87,101,HTML模板/input,勾选,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0064,导入器,fireworks-workspace.js,87,481,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0065,导入器,fireworks-workspace.js,87,514,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0066,导入器,fireworks-workspace.js,87,758,HTML模板/input,勾选,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0067,导入器,fireworks-workspace.js,89,637,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0068,导入器,fireworks-workspace.js,89,671,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0069,导入器,shell.html,2,24,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0070,导入器,shell.html,3,79,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0071,导入器,shell.html,7,7,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0072,导入器,shell.html,8,7,HTML模板/details,折叠模块,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0073,导入器,shell.html,8,39,HTML模板/summary,折叠标题,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0074,导入器,shell.html,9,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0075,导入器,shell.html,10,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0076,导入器,shell.html,11,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0077,导入器,shell.html,13,7,HTML模板/details,折叠模块,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0078,导入器,shell.html,13,39,HTML模板/summary,折叠标题,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0079,导入器,shell.html,14,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0080,导入器,shell.html,15,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0081,导入器,shell.html,17,7,HTML模板/details,折叠模块,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0082,导入器,shell.html,17,39,HTML模板/summary,折叠标题,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0083,导入器,shell.html,18,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0084,导入器,shell.html,20,74,HTML模板/button,按钮,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0085,导入器,shell.js,10,457,DOM创建/div,交互容器,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0086,导入器,shell.js,10,530,DOM创建/div,交互容器,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0087,导入器,shell.js,10,567,DOM创建/div,交互容器,原特效工作台/共享导航与状态,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0088,导入器,material.js,7,39,DOM创建/span,交互容器,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0089,导入器,material.js,40,60,DOM创建/span,交互容器,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0090,导入器,material.js,47,24,DOM创建/div,交互容器,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0091,导入器,material.js,49,21,DOM创建/button,按钮,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0092,导入器,material.js,77,23,DOM创建/div,交互容器,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0093,导入器,material.js,80,21,DOM创建/button,按钮,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0094,导入器,material.js,87,25,DOM创建/div,交互容器,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0095,导入器,material.js,88,26,DOM创建/span,交互容器,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0096,导入器,material.js,88,65,DOM创建/button,按钮,共享组件适配层/DOM包装,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0097,导入器,workbench-log.js,26,27,DOM创建/button,按钮,共享日志,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0098,导入器,workbench-scroll.js,23,19,DOM创建/div,交互容器,共享滚动反馈,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
-IMP-0099,导入器,build.py,29,51,HTML模板/button,按钮,构建期外框插入,not_run,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0001,导入器,fireworks.html,2,9,HTML模板/details,折叠模块,导入器/目录与清单/主操作,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0002,导入器,fireworks.html,2,32,HTML模板/summary,折叠标题,导入器/目录与清单/主操作,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0003,导入器,fireworks.html,3,30,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0004,导入器,fireworks.html,3,134,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0005,导入器,fireworks.html,8,181,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0006,导入器,fireworks.html,8,282,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0007,导入器,fireworks.html,8,489,HTML模板/select,下拉,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0008,导入器,fireworks.html,8,569,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0009,导入器,fireworks.html,8,741,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0010,导入器,fireworks.html,8,845,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0011,导入器,fireworks.html,8,946,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0012,导入器,fireworks.html,8,1130,HTML模板/input,勾选,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0013,导入器,fireworks.html,8,1234,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0014,导入器,fireworks.html,10,222,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0015,导入器,fireworks.html,10,524,HTML模板/button,按钮,导入器/目录与清单/主操作,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0016,导入器,fireworks.html,12,173,HTML模板/button,按钮,导入器/目录与清单/主操作,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0017,导入器,fireworks.html,12,281,HTML模板/button,按钮,导入器/目录与清单/主操作,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0018,导入器,fireworks.html,12,424,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0019,导入器,fireworks.html,12,549,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0020,导入器,fireworks.html,12,676,HTML模板/button,按钮,导入器/目录与清单/主操作,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0021,导入器,fireworks.html,15,161,HTML模板/button,按钮,导入器/目录与清单/主操作,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0022,导入器,fireworks.html,15,287,HTML模板/input,勾选,导入器/目录与清单/主操作,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0023,导入器,fireworks.html,15,390,HTML模板/button,按钮,导入器/目录与清单/主操作,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0024,导入器,fireworks-ui.js,83,89,HTML模板/input,文本输入,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0025,导入器,fireworks-ui.js,83,268,HTML模板/input,文本输入,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0026,导入器,fireworks-ui.js,83,615,HTML模板/select,下拉,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0027,导入器,fireworks-ui.js,83,692,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0028,导入器,fireworks-ui.js,83,777,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0029,导入器,fireworks-ui.js,83,874,HTML模板/details,折叠模块,导入器/动态资源清单与确认,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0030,导入器,fireworks-ui.js,83,910,HTML模板/summary,折叠标题,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0031,导入器,fireworks-ui.js,83,1067,HTML模板/input,勾选,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0032,导入器,fireworks-ui.js,218,170,HTML模板/input,勾选,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0033,导入器,fireworks-ui.js,218,359,HTML模板/button,按钮,导入器/动态资源清单与确认,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0034,导入器,fireworks-ui.js,240,83,HTML模板/input,文本输入,导入器/动态资源清单与确认,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0035,导入器,fireworks-ui.js,240,228,HTML模板/select,下拉,导入器/动态资源清单与确认,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0036,导入器,fireworks-ui.js,240,281,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0037,导入器,fireworks-ui.js,240,355,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0038,导入器,fireworks-ui.js,240,483,HTML模板/select,下拉,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0039,导入器,fireworks-ui.js,240,660,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0040,导入器,fireworks-ui.js,240,741,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0041,导入器,fireworks-ui.js,240,1148,HTML模板/details,折叠模块,导入器/动态资源清单与确认,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0042,导入器,fireworks-ui.js,240,1184,HTML模板/summary,折叠标题,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0043,导入器,fireworks-ui.js,246,147,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0044,导入器,fireworks-ui.js,246,202,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0045,导入器,fireworks-ui.js,267,42,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0046,导入器,fireworks-ui.js,280,282,HTML模板/textarea,多行输入,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0047,导入器,fireworks-ui.js,280,407,HTML模板/input,文本输入,导入器/动态资源清单与确认,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0048,导入器,fireworks-ui.js,282,472,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0049,导入器,fireworks-ui.js,282,508,HTML模板/option,下拉选项,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0050,导入器,fireworks-ui.js,78,75,DOM创建/button,按钮,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0051,导入器,fireworks-ui.js,245,32,DOM创建/label,标签,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0052,导入器,fireworks-ui.js,246,33,DOM创建/select,下拉,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0053,导入器,fireworks-ui.js,264,263,DOM创建/textarea,多行输入,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0054,导入器,fireworks-ui.js,282,302,DOM创建/label,标签,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0055,导入器,fireworks-ui.js,282,403,DOM创建/select,下拉,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0056,导入器,fireworks-ui.js,283,25,DOM创建/div,交互容器,导入器/动态资源清单与确认,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0057,导入器,fireworks-workspace.js,66,143,HTML模板/input,文本输入,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0058,导入器,fireworks-workspace.js,68,13,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0059,导入器,fireworks-workspace.js,68,96,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0060,导入器,fireworks-workspace.js,82,172,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0061,导入器,fireworks-workspace.js,82,181,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0062,导入器,fireworks-workspace.js,82,277,HTML模板/button,按钮,原特效工作台/导入工作区外框,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0063,导入器,fireworks-workspace.js,87,101,HTML模板/input,勾选,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0064,导入器,fireworks-workspace.js,87,481,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0065,导入器,fireworks-workspace.js,87,514,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0066,导入器,fireworks-workspace.js,87,758,HTML模板/input,勾选,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0067,导入器,fireworks-workspace.js,89,637,HTML模板/details,折叠模块,原特效工作台/导入工作区外框,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0068,导入器,fireworks-workspace.js,89,671,HTML模板/summary,折叠标题,原特效工作台/导入工作区外框,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0069,导入器,shell.html,2,24,HTML模板/button,按钮,原特效工作台/共享导航与状态,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0070,导入器,shell.html,3,79,HTML模板/button,按钮,原特效工作台/共享导航与状态,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0071,导入器,shell.html,7,7,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0072,导入器,shell.html,8,7,HTML模板/details,折叠模块,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0073,导入器,shell.html,8,39,HTML模板/summary,折叠标题,原特效工作台/共享导航与状态,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0074,导入器,shell.html,9,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0075,导入器,shell.html,10,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0076,导入器,shell.html,11,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0077,导入器,shell.html,13,7,HTML模板/details,折叠模块,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0078,导入器,shell.html,13,39,HTML模板/summary,折叠标题,原特效工作台/共享导航与状态,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0079,导入器,shell.html,14,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0080,导入器,shell.html,15,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0081,导入器,shell.html,17,7,HTML模板/details,折叠模块,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0082,导入器,shell.html,17,39,HTML模板/summary,折叠标题,原特效工作台/共享导航与状态,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0083,导入器,shell.html,18,9,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0084,导入器,shell.html,20,74,HTML模板/button,按钮,原特效工作台/共享导航与状态,class_candidate: 类名/工厂候选，尚无唯一执行源点映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0085,导入器,shell.js,10,457,DOM创建/div,交互容器,原特效工作台/共享导航与状态,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0086,导入器,shell.js,10,530,DOM创建/div,交互容器,原特效工作台/共享导航与状态,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0087,导入器,shell.js,10,567,DOM创建/div,交互容器,原特效工作台/共享导航与状态,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0088,导入器,material.js,7,39,DOM创建/span,交互容器,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0089,导入器,material.js,40,60,DOM创建/span,交互容器,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0090,导入器,material.js,47,24,DOM创建/div,交互容器,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0091,导入器,material.js,49,21,DOM创建/button,按钮,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0092,导入器,material.js,77,23,DOM创建/div,交互容器,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0093,导入器,material.js,80,21,DOM创建/button,按钮,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0094,导入器,material.js,87,25,DOM创建/div,交互容器,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0095,导入器,material.js,88,26,DOM创建/span,交互容器,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0096,导入器,material.js,88,65,DOM创建/button,按钮,共享组件适配层/DOM包装,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0097,导入器,workbench-log.js,26,27,DOM创建/button,按钮,共享日志,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0098,导入器,workbench-scroll.js,23,19,DOM创建/div,交互容器,共享滚动反馈,not_observed: 动态前缀、条件/共享旧入口或屏外状态未取得唯一映射,catalog:fwl.ui-importer-sanitized-static-catalog/1
+IMP-0099,导入器,build.py,29,51,HTML模板/button,按钮,构建期外框插入,exact_html_id: 仅HTML模板ID对应已见实例；不是JS执行位置或全部状态通过,catalog:fwl.ui-importer-sanitized-static-catalog/1
