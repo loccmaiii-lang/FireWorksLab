@@ -1,0 +1,161 @@
+{
+  "schema": "fwl.ui-demo-delivery/1",
+  "date": "2026-10-29T00:29:36",
+  "result": "passed_with_scope",
+  "target": "tool/design-system/drafts/v1/demo.html",
+  "url": "http://127.0.0.1:8034/design-system/drafts/v1/demo.html",
+  "sha256": "b1e26a657ff05df25f97129f6591a9e162ef5e6563465a06be801ccee3b5bb11",
+  "size_bytes": 847038,
+  "embedded_raster_assets": 11,
+  "storage_key": "fwl.ui-demo.v1",
+  "export_schema": "fwl.ui-demo/1",
+  "export_markers": {
+    "demoOnly": true,
+    "productionAsset": false
+  },
+  "journey_and_default_matrix": {
+    "file_sha256": "7411d4055a8613cf539a06cf67d0ad861ce5267895dfbb12b541d94a317f8ad8",
+    "browsers": [
+      {
+        "browser": "chrome",
+        "version": "154.0.8037.58",
+        "journey": "passed",
+        "download": "Demo_交付测试_DEMO.json",
+        "unexpected_requests": [],
+        "console_errors": []
+      },
+      {
+        "browser": "msedge",
+        "version": "156.0.4314.50",
+        "journey": "passed",
+        "download": "Demo_交付测试_DEMO.json",
+        "unexpected_requests": [],
+        "console_errors": []
+      }
+    ],
+    "default_states": 42,
+    "css_viewports": [
+      [
+        1920,
+        1080,
+        1
+      ],
+      [
+        1366,
+        768,
+        1
+      ],
+      [
+        683,
+        384,
+        2
+      ]
+    ],
+    "scope": "最终窄高CSS修订前的完整操作链和42默认状态；修订只影响max-height:620px的参数滚动布局。不能把42状态都记为最终SHA。",
+    "raw": "analysis/local/20261028_Codex_界面筛查/demo-qa/verification.json"
+  },
+  "final_targeted_checks": {
+    "file_sha256": "b1e26a657ff05df25f97129f6591a9e162ef5e6563465a06be801ccee3b5bb11",
+    "states": 12,
+    "browsers": [
+      "chrome",
+      "msedge"
+    ],
+    "pages": [
+      "editor",
+      "rt6",
+      "particle"
+    ],
+    "densities": [
+      "regular",
+      "compact"
+    ],
+    "css_viewport": [
+      683,
+      384
+    ],
+    "dpr": 2,
+    "assertions": [
+      "滚动并编辑后当前对象路径仍位于参数窗格内",
+      "无页面横向溢出"
+    ],
+    "raw": "analysis/local/20261028_Codex_界面筛查/demo-qa/narrow-checks.json"
+  },
+  "same_size_comparisons": [
+    {
+      "width": 1920,
+      "outer_demo_viewport": [
+        1920,
+        1080
+      ],
+      "matched_content_size": [
+        1920,
+        996
+      ],
+      "DPR": 1,
+      "source": "screen.html?page=editor&density=regular",
+      "demo": "demo.html",
+      "state": "初始编辑/金锦层/观察全部/无修改；原稿时间层列表收起；Demo启用控件和替换交互播放条",
+      "source_crop": [
+        0,
+        0,
+        1920,
+        996
+      ],
+      "demo_crop": {
+        "x": 0,
+        "y": 49,
+        "width": 1920,
+        "height": 996
+      },
+      "comparison": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\analysis\\local\\20261028_Codex_界面筛查\\demo-qa\\1920-comparison.png",
+      "focused_comparison": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\analysis\\local\\20261028_Codex_界面筛查\\demo-qa\\1920-controls-comparison.png"
+    },
+    {
+      "width": 1366,
+      "outer_demo_viewport": [
+        1366,
+        768
+      ],
+      "matched_content_size": [
+        1366,
+        684
+      ],
+      "DPR": 1,
+      "source": "screen.html?page=editor&density=regular",
+      "demo": "demo.html",
+      "state": "初始编辑/金锦层/观察全部/无修改；原稿时间层列表收起；Demo启用控件和替换交互播放条",
+      "source_crop": [
+        0,
+        0,
+        1366,
+        684
+      ],
+      "demo_crop": {
+        "x": 0,
+        "y": 49,
+        "width": 1366,
+        "height": 684
+      },
+      "comparison": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\analysis\\local\\20261028_Codex_界面筛查\\demo-qa\\1366-comparison.png",
+      "focused_comparison": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\analysis\\local\\20261028_Codex_界面筛查\\demo-qa\\1366-controls-comparison.png"
+    }
+  ],
+  "live_browser": {
+    "browser": "Chrome",
+    "url": "http://127.0.0.1:8034/design-system/drafts/v1/demo.html",
+    "screenshot": "screenshots/demo-live.png",
+    "visible_size": [
+      1536,
+      769
+    ],
+    "status": "已实际打开，保留供用户操作"
+  },
+  "limitations": [
+    "只测试HTTP入口，未自动验证file协议",
+    "静态参考图不随参数或时间重算",
+    "不含真实烘焙、素材包、UE或真实导入",
+    "未穷尽全部交互排列、读屏或用户审美验收",
+    "原草稿和正式组件库仍待用户审核"
+  ]
+}
