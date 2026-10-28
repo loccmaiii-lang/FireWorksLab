@@ -9,12 +9,14 @@
   },
   "baselines": {
     "visual_124": "975ee1425649118ea96d75b9a30c2aa10dc11a55",
-    "layout_125": "c045f46a63df82c01c440a56003d5df7db29e6a0"
+    "layout_125": "c045f46a63df82c01c440a56003d5df7db29e6a0",
+    "cloud_head_at_handoff": "27ccf3512b7161bd732d0080d868ae5b0db941e4",
+    "new_cloud_commit_scope": "仅新增全量筛查/组件库待定方案、任务书及对话记录；页面代码未变，当前A–F设计稿不等于该任务全量完成"
   },
   "url": "http://127.0.0.1:8034/design-system/prototypes/v5-124-20261028/index.html",
   "prototype_sha256": {
     "index.html": "405b1eed59e1820479e612e616960d0accdabbe19d2364185ccaa891bcc36123",
-    "prototype.css": "80efe40a2e9f8de40aa5873bc259e2f429cfe891ee8f5e549a6da2753286868a",
+    "prototype.css": "b7f7db158ebf68db3fb216d6139cfee45b8f27de23da0e4cc7f89da389bab043",
     "prototype.js": "aa37eb00482b12887577201527bd79fceece09cdf11e2c1ab2ea62d2163f493f"
   },
   "style_proof": {
@@ -180,7 +182,7 @@
         1920,
         1080
       ],
-      "sha256": "cc295ae4ae7b4c9d429be456a42ff01e45ebb7279e69be0e7534b737cd7ecc80",
+      "sha256": "117f4f0005503c863019c05fa1cfefa53b87eda5674772e3a7bddd886f4f5476",
       "kept_in_git": false,
       "query": "?example=rt6&state=inspect",
       "preview": {
@@ -267,7 +269,7 @@
         1920,
         1080
       ],
-      "sha256": "007bb45253d1c051605604e9b86e5e737fd4013e8d20892fc38a63b237be5340",
+      "sha256": "fdd691758bcc07e1a0f70109b40844331f325b4bee89cadd1ee3a5d4ac010f8e",
       "kept_in_git": false,
       "query": "?review=states",
       "preview": {
@@ -335,5 +337,9 @@
     "未做Edge、真实OS缩放或完整无障碍验收"
   ],
   "process_dir": "analysis/local/20261028_界面交互-本机_设计稿01/",
-  "asset_sources": "tool/design-system/prototypes/v5-124-20261028/assets/sources.json"
+  "asset_sources": "tool/design-system/prototypes/v5-124-20261028/assets/sources.json",
+  "interaction_colors": {
+    "focus": "rgb(0, 212, 155)",
+    "hover": "rgb(90, 102, 106)"
+  }
 }
