@@ -172,7 +172,7 @@
     },
     {
       "file": "03_128窄屏.png",
-      "sha256": "3d88159e9d5a9bbed96d0025fd139e263f0af298ab0a378b3c5f5df99e4254d9"
+      "sha256": "9ee6b64bd5f4495f35b06afb335ae775052a8b46a70341dc1cf9a6e6d0dd6818"
     }
   ],
   "boundary": [
@@ -183,6 +183,19 @@
     "不合main/125，保留127/126及他方文件"
   ],
   "prePush": {
-    "status": "待执行原钩子"
+    "status": "通过并推送",
+    "seconds": 211,
+    "implementation": "e93fe64f",
+    "pushedHead": "f69efd17",
+    "source": "原pre-push钩子，FW_GATE_HTML为正常B入口，无autobake=0；未绕过钩子",
+    "contract": {
+      "representatives": 18,
+      "rows": 199,
+      "pass": true
+    },
+    "export": "拦截/空壳发射器/寿命/大小均通过",
+    "uiState": "8/8",
+    "build": "通过，成品与提交一致",
+    "sync": "origin/main独立候选88c0a7bf已保留入本分支，未将评审分支合入main"
   }
 }
