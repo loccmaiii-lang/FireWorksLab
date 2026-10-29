@@ -274,3 +274,31 @@ def source_tag(slide, x, y, w, h, tag, pos='bl'):
 
 def notes(slide, body):
     slide.notes_slide.notes_text_frame.text = body
+
+
+# ---------- 第 2 版新增组件 ----------
+def before_after(slide, x, y, w, h, img_before, img_after, tag_before='修前', tag_after='修后', gap=12, src=None):
+    """修前 / 修后成对图：等宽两格，左上角小标签，来源标注放右下角。"""
+    cw = (w - gap) / 2
+    for i, (img, tg) in enumerate(((img_before, tag_before), (img_after, tag_after))):
+        cx = x + i * (cw + gap)
+        slide.shapes.add_picture(img, E(cx), E(y), E(cw), E(h))
+        tw = 24 * len(tg) + 28
+        rect(slide, cx, y, tw, 38, fill=BG if i == 0 else ACC, fill_alpha=0.78 if i == 0 else 0.92)
+        text(slide, cx, y, tw, 38, tg, size=S_SMALL, color=TXT if i == 0 else BG, bold=True, align='c', anchor='m',
+             lh=1.2)
+    if src:
+        source_tag(slide, x, y, w, h, src, pos='br')
+
+
+def node_circle(slide, cx, cy, d, label, size=36):
+    rect(slide, cx - d / 2, cy - d / 2, d, d, fill=ACC, fill_alpha=0.06, line=ACC, line_w=3, shape=MSO_SHAPE.OVAL)
+    text(slide, cx - d / 2, cy - d / 2, d, d, label, size=size, color=ACC, bold=True, align='c', anchor='m', lh=1.1)
+
+
+def stat(slide, x, y, w, num, cap, size=96, color=ACC, cap_size=S_SMALL + 2, note=None):
+    """一组数字：大号数字 + 一行说明（+ 可选灰色注）。"""
+    text(slide, x, y, w, size * 1.08, num, size=size, color=color, bold=True, lh=1.0)
+    text(slide, x, y + size * 1.1, w, 40, cap, size=cap_size, alpha=A_SUB, lh=1.35)
+    if note:
+        text(slide, x, y + size * 1.1 + 38, w, 36, note, size=S_SMALL, alpha=A_FOOT, lh=1.35)
