@@ -464,7 +464,7 @@ def p08(d, I):
              ('曲线精简', '面片大小最多分 12 级；\v曲线点从近百个减到二十几个'),
              ('帧数分配', '动得快的阶段帧给得密，\v慢的阶段少给'),
              ('停用紧凑取景', '逐帧紧裁、面片跟着跑，\v在引擎里会抖')]
-    text(s, L, 960, W_CONTENT, 30, '正式资源中有交付记录的 17 组：固定 10 组、随开花放大 5 组、锚点 2 组', size=S_SMALL - 4,
+    text(s, L, 960, W_CONTENT, 30, '正式资源中有交付记录的 17 组：固定 10 组、随开花放大 5 组、尾缀锚在发射点 2 组（共用一个源包）', size=S_SMALL - 4,
          alpha=A_FOOT, lh=1.2)
     sw = (W_CONTENT - 3 * 40) / 4
     for i, (h, b) in enumerate(steps):
@@ -526,12 +526,12 @@ def p10(d, I):
 
 def p11(d, I):
     s = d.slide('02 · 解决思路 · 排节目', '编排先从舞台推出规则，再按规则排')
-    X0, X1, Yt = L + 40, L + 1048, 470
+    X0, X1, Yt = L + 40, L + 1048, 520
     label_text(s, L, 214, 600, '舞台与点位 · 设计值')
     step = (X1 - X0) / 8
     # 坝体：点位在坝顶
-    rect(s, X0, Yt, X1 - X0, 130, fill=TXT, fill_alpha=0.06, line=TXT, line_alpha=0.25, line_w=1)
-    text(s, X0 + 16, Yt + 14, 400, 34, '坝体 · 宽约 800 m、高约 150 m', size=S_SMALL - 2, alpha=A_NOTE, lh=1.2)
+    rect(s, X0, Yt, X1 - X0, 110, fill=TXT, fill_alpha=0.06, line=TXT, line_alpha=0.25, line_w=1)
+    text(s, X0 + 16, Yt + 14, 600, 34, '坝体 · 宽约 800 m、高约 150 m（高度线为示意，不按比例）', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
     for i in range(9):
         cx = X0 + i * step
         rect(s, cx - 11, Yt - 26, 22, 22, fill=ACC, shape=MSO_SHAPE.OVAL)
@@ -539,16 +539,21 @@ def p11(d, I):
             rect(s, cx + step / 2 - 7, Yt - 22, 14, 14, fill=TXT, fill_alpha=0.75, shape=MSO_SHAPE.OVAL)
     fx0 = X0 + step * 2.2
     fstep = step * 3.6 / 6
-    rect(s, fx0 - 30, Yt + 92, fstep * 6 + 60, 40, fill=TXT, fill_alpha=0.10)
+    rect(s, fx0 - 30, Yt + 74, fstep * 6 + 60, 36, fill=TXT, fill_alpha=0.10)
     for i in range(7):
         cx = fx0 + i * fstep
-        rect(s, cx - 6, Yt + 80, 12, 12, fill=TXT, fill_alpha=0.45, shape=MSO_SHAPE.OVAL)
+        rect(s, cx - 6, Yt + 62, 12, 12, fill=TXT, fill_alpha=0.45, shape=MSO_SHAPE.OVAL)
+    # 开花高度（相对坝顶，竖向按 0.5 px/m 示意，不与横向同比例）
+    for name, hgt in (('S', 150), ('M', 210), ('L', 330), ('主角', 400)):
+        yy = Yt - 26 - hgt * 0.5
+        line(s, X0, yy, X1, yy, color=TXT, alpha=0.18, w=1, dash=True)
+        text(s, X1 - 220, yy - 34, 220, 30, f'{name} 开花高度 +{hgt} m', size=S_SMALL - 6, alpha=A_NOTE, align='r', lh=1.2)
     leg = [(ACC, None, '主点 P0–P8 · 9 个，点距约 100 m'), (TXT, 0.75, '中间点 B0–B7 · 8 个'), (TXT, 0.45, '前台点 F0–F6 · 7 个')]
     for i, (c, a, t) in enumerate(leg):
-        ly = 640 + i * 44
+        ly = 650 + i * 44
         rect(s, L + 40, ly + 12, 16, 16, fill=c, fill_alpha=a, shape=MSO_SHAPE.OVAL)
         text(s, L + 68, ly, 600, 40, t, size=S_SMALL, alpha=A_SUB, lh=1.4)
-    text(s, L + 700, 640, 380, 100, ['合计', '24 个发射点位'], size=S_BODY - 2, bold=True, lh=1.4)
+    text(s, L + 700, 650, 380, 100, ['合计', '24 个发射点位'], size=S_BODY - 2, bold=True, lh=1.4)
     x = 1200
     w = 1824 - x
     label_text(s, x, 214, w, '花径与点距之比 → 分档')
