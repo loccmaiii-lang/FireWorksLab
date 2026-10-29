@@ -8,7 +8,7 @@
 import os
 import re
 import sys
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -116,8 +116,8 @@ def framing_panels():
         f2 = fan.resize((int(fw * fs * S * 0.62), int(fh * fs * S * 0.62)), Image.LANCZOS)
         px = x0 + int(bw2 * bx) - f2.width // 2
         py = y0 + int(bh2 * by) - f2.height + int(8 * S)
-        mask = Image.eval(f2.convert('L'), lambda v: 255 if v > 14 else int(v * 18))
-        canvas.paste(f2, (px, py), mask)
+        region = canvas.crop((px, py, px + f2.width, py + f2.height))
+        canvas.paste(ImageChops.lighter(region, f2), (px, py))
         cx, cy = x0 + int(bw2 * bx), y0 + int(bh2 * by)
         r = int(9 * S)
         d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(15, 247, 150))
@@ -162,6 +162,7 @@ def build_images():
     I['p19c'] = prep(lq + '金芒菊_绽放局部放大_低档.jpg', 'p19_bl_now.jpg', 240, 330, box=(150, 410, 510, 770))
     I['p19d'] = prep(lq + '金芒菊_绽放局部放大_低档.jpg', 'p19_bl_fix.jpg', 240, 330, box=(518, 410, 878, 770))
     I['p20'] = prep('22_bug_最亮处黑块_示意图.png', 'p20_ramp.jpg', 300, 300)
+    I['demo'] = prep('06_烘焙器界面_引擎回放.jpg', 'demo_bg.jpg', 1200, 675, focus=(0.5, 0.5))
     I['p21'] = prep('05_烘焙器界面_仙女棒.jpg', 'p21_baker.jpg', 1728, 500, focus=(0.5, 0.42))
     return I
 
@@ -387,7 +388,7 @@ def p08(d, I):
     s = d.slide('02 · 解决思路 · 出图', '取景流程化：让贴图的像素尽量用在烟花上')
     pw, gap = 552, 36
     panels = [('p08fixed', '固定框（默认）', '整段的最大范围一个框'),
-              ('p08zoom', '随开花放大', '框以爆点为中心跟着长大'),
+              ('p08zoom', '随开花放大', '以爆点为中心长大；扇形开满反而更空'),
               ('p08anchor', '锚在爆点', '偏一侧的花，只朝有内容的方向放大')]
     ratios = ['0.20', '0.21', '0.41']
     for i, (k, h, b) in enumerate(panels):
@@ -395,8 +396,8 @@ def p08(d, I):
         image(s, I[k], x, 214, pw, 420)
         text(s, x + 20, 228, 300, 34, f'0{i + 1}', size=S_SMALL, color=ACC, bold=True, lh=1.2)
         text(s, x, 648, pw, 44, h, size=S_CARD, bold=True, lh=1.3)
-        text(s, x, 696, pw - 160, 40, b, size=S_SMALL, alpha=A_SUB, lh=1.4)
-        text(s, x + pw - 150, 650, 150, 70, ratios[i], size=44, color=ACC if i == 2 else TXT, bold=True,
+        text(s, x, 700, pw, 40, b, size=S_SMALL, alpha=A_SUB, lh=1.4)
+        text(s, x + pw - 150, 646, 150, 52, ratios[i], size=44, color=ACC if i == 2 else TXT, bold=True,
              align='r', lh=1.1)
     text(s, L, 740, W_CONTENT, 34, '示意图：同一帧扇形放进三种面片框，绿点为爆点；数字为扇形测试中各帧「内容占面片」比例的中位数',
          size=S_SMALL - 2, alpha=A_FOOT, lh=1.3)
@@ -821,8 +822,40 @@ def p23(d, I):
     return s
 
 
-PAGES = [p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
-         p21, p22, p23]
+def p_demo(d, I):
+    s = d.slide('02 · 解决思路 · 演示', '三个工具串起来：从调参到 UE 里播放')
+    placeholder(s, L, 214, 1200, 675, '录屏位：完整操作（约 2 分钟）',
+                '选案例调参 → 引擎回放 → 导出 PC 与手游 → 导入器检查写入 → UE 中播放', bg_image=I['demo'],
+                bg_alpha=0.88)
+    source_tag(s, L, 214, 1200, 675, '底图：工具界面')
+    x = 1344
+    steps = [('01', '选案例、调参', '烘焙器实时模拟'),
+             ('02', '看引擎回放', '按导出的贴图播放'),
+             ('03', '一次导出', 'PC 与手游两套素材包'),
+             ('04', '检查并导入', '点「导入」才写 UE'),
+             ('05', 'UE 中播放', '粒子系统、贴图、材质实例')]
+    y = 214
+    for num, tt, sub in steps:
+        text(s, x, y, 60, 40, num, size=28, color=ACC, bold=True, lh=1.3)
+        text(s, x + 64, y, 420, 40, tt, size=S_BODY, bold=True, lh=1.3)
+        text(s, x + 64, y + 42, 420, 36, sub, size=S_SMALL, alpha=A_NOTE, lh=1.4)
+        y += 108
+    card(s, x, 770, 480, 120, key=True)
+    text(s, x + 36, 770, 430, 120, [[{'t': '实际用时 ', 'size': S_BODY, 'alpha': A_SUB},
+                                      {'t': '__ 分 __ 秒', 'size': 34, 'bold': True, 'color': ACC}]],
+         anchor='m', lh=1.3)
+    return s
+
+
+DEMO_NOTES = ('第 13 页 · 完整操作演示（建议 150 秒，含录屏）',
+              '三个工具介绍完，看一段完整操作：选一个案例调参，在引擎回放里确认，一次导出 PC 和手游两套，导入器检查后写进 UE，最后在 UE 里播放。（播放录屏，约 2 分钟）录屏经过剪辑，实际用时 ×× 分钟。',
+              '用户 10-30 02:08「录屏我会出」；步骤同第一版第 11 页；实际用时由用户录完填写')
+
+
+# 每页：(页面函数, 文稿页号)；录屏页的台词在 DEMO_NOTES（文稿 23 页之外，用户 02:08 说录屏自己出）
+PAGES = [(p01, 1), (p02, 2), (p03, 3), (p04, 4), (p05, 5), (p06, 6), (p07, 7), (p08, 8), (p09, 9), (p10, 10),
+         (p11, 11), (p12, 12), (p_demo, None), (p13, 13), (p14, 14), (p15, 15), (p16, 16), (p17, 17), (p18, 18),
+         (p19, 19), (p20, 20), (p21, 21), (p22, 22), (p23, 23)]
 
 
 # ---------------------------------------------------------------- 台词（从第三版文稿读取）
@@ -846,9 +879,10 @@ def main():
     md = ['# 讲稿：烟花秀 AI 全流程 · 第三版（组内分享 2026-10-30）', '',
           '> 由 build_v3.py 从 ../第三版逐页文稿_云端.md 生成，与 PPT 每页备注一致。时长按每分钟约 250 字估。', '']
     total = 0
-    for i, fn in enumerate(PAGES, 1):
+    for i, (fn, wp) in enumerate(PAGES, 1):
         s = fn(d, I)
-        head, nar, basis = N[i]
+        head, nar, basis = N[wp] if wp else DEMO_NOTES
+        head = re.sub(r'^第 \d+ 页', f'第 {i} 页', head)
         notes(s, head + '\n\n' + nar + ('\n\n依据：' + basis if basis else ''))
         n = len(nar)
         total += n
