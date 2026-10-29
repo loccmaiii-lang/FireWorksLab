@@ -142,10 +142,20 @@ function tempoInfoHTML() {
   const trial = tr ? `<div class="otrial"><div>试算（不烘，只排帧；跳 = 游戏里${typeof STEP_REF_DIST !== 'undefined' ? ` ${STEP_REF_DIST} m 外` : ''}每帧最多跳几像素，标定线 ${typeof STEP_REF_PX !== 'undefined' ? STEP_REF_PX : 0.77}${combo ? '；只算这一层' : ''}）：</div>${tr.map(r => r.err ? `<div>×${r.T}：算不出（${r.err}）</div>`
       : `<div class="${r.cur ? 'on' : ''}" style="flex-wrap:nowrap;align-items:flex-start">${r.cur ? '<b style="white-space:nowrap">现在</b>' : `<button type="button" class="btn mini" style="white-space:nowrap" data-tempo="${r.T}">用 ×${r.T}</button>`}<span style="flex:1 1 0;min-width:0">${r.cur ? '×' + r.T + ' · ' : ''}${f2(r.end)} s · ${r.pages} 张 ${r.F} 帧${r.minFps != null ? ` · 最慢 ${r.minFps.toFixed(r.minFps < 10 ? 1 : 0)} fps` : ''}${r.max != null ? ` · 跳 ${r.max.toFixed(2)} px` : ''}${r.over ? `（${r.over} 帧超线）` : ''}</span></div>`).join('')}</div>`
     : `<div><button type="button" data-tempo-trial>试算几档节奏的帧数</button></div>`;
-  return `<div class="tempoinfo">${head}${quick}${target}${trial}</div>`;     // 4.9.125：那句说明挪进「节奏」那一行的悬停
+  if (document.body.dataset.ui === 'material-b') {
+    const presets = [0.8, 1, 1.25, 1.5, 2], custom = !presets.some(v => Math.abs(v - t) < 1e-6);
+    const options = (custom ? `<option value="${t}">自定 ×${f2(t)}</option>` : '') + presets.map(v => `<option value="${v}"${Math.abs(v - t) < 1e-6 ? ' selected' : ''}>${v === 1 ? '原样 · 1×' : v + '×'}</option>`).join('');
+    return `<div class="tempoinfo"><div class="mb-tempo-head">${head}</div><label class="mb-tempo-preset" title="${tip}">全效果节奏<select data-tempo-preset aria-label="全效果节奏预设">${options}</select></label><details class="mb-tempo-options"><summary>节奏选项</summary>${target}${trial}</details></div>`;
+  }
+  return `<div class="tempoinfo">${head}${quick}${target}${trial}</div>`;     // 旧入口保留原呈现
 }
 function tempoInfoRefresh() { document.querySelectorAll('#params [data-info=tempoInfo]').forEach(r => r._refresh && r._refresh()); }
 if (typeof document !== 'undefined' && document.addEventListener) {
+  document.addEventListener('change', ev => {
+    const el = ev.target;
+    if (!el || !el.matches || !el.matches('.tempoinfo [data-tempo-preset]')) return;
+    applyTempo(+el.value); tempoInfoRefresh();
+  });
   document.addEventListener('click', ev => {
     const b = ev.target && ev.target.closest ? ev.target.closest('[data-tempo],[data-tempo-go],[data-tempo-trial]') : null;
     if (!b || !b.closest('.tempoinfo')) return;

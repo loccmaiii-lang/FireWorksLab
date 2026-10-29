@@ -1,0 +1,123 @@
+{
+  "version": "4.9.127",
+  "ui": "material-b",
+  "branch": "codex/ui-material-baker-review-20261029",
+  "time": "2026-10-29T15:01:44.907893+08:00",
+  "sourceSha256": "b5a5631708973383e33dd2851733c697e42550c024aa59d860188e75d7f7132e",
+  "frozen126Sha256": "671be3c00754051f398979daa3029ce103ccba1a50123dccc6d1777441b48090",
+  "checks": {
+    "uiCases": 91,
+    "uiPass": true,
+    "W14": "通过：1366 菊9/9 金锦火花6/9；1440/1920两者9/9",
+    "gate": [
+      {
+        "item": "提醒",
+        "pass": true,
+        "why": "新增 96 张图片（超过 20）：tool/design-system/drafts/v1/screenshots（38）、tool/design-system/drafts/v1/assets（13）、tool/design-system/drafts/v1/comparisons（13）、tool/design-system/drafts/v5-spectrum-20261029/screenshots（10）。过程截图放 analysis/local/，交付只留 1–3 张关键图；确要进 Git 请在提交说明写理由"
+      },
+      {
+        "item": "体检",
+        "pass": true,
+        "why": "5dc67；⚠ 已跟踪文件有本地改动 11 个（本机自动同步会因此跳过）：analysis/probe/标准检查/标准检查.json；analysis/probe/标准检查/标准检查.md；tool/CHANGELOG.md；tool/FireworkBaker.html；tool/build.py；⚠ 状态清单里排队要合并的分支 codex/ui-material-baker-review-20261029 还没进 main（34 个提交）；⚠ 状态清单里排队要合并的分支 team/external 还没进 main（6 个提交）；⚠ 有 1 个 git worktree 副本最后提交超过 24 小时（做完要 git worktree remove）：C:/Users/locmai/.codex/worktrees/t17-initcolor-2-0/FireWorksLab（codex/t17-initcolor-2-0，2026-10-16 22:29）；结论：可以干活（⚠ 只是提醒）"
+      },
+      {
+        "item": "构建",
+        "pass": true,
+        "why": "构建通过（工作树里有没提交的源码改动，成品按工作树生成）"
+      },
+      {
+        "item": "契约",
+        "pass": true,
+        "why": "18 个代表效果、199 行"
+      },
+      {
+        "item": "导出",
+        "pass": true,
+        "why": "导出拦截、空壳发射器、寿命 / 大小都过"
+      },
+      {
+        "item": "界面",
+        "pass": true,
+        "why": "8/8 项过"
+      }
+    ],
+    "standardItemCount": 91,
+    "standardPass": false,
+    "standardDetails": {
+      "pass": 90,
+      "error": {
+        "MESH-WILLOW-1": "找不到条目"
+      },
+      "exitCode": 0,
+      "baseline": null,
+      "relation": "条目数据、JS_ENTRY读取、标准阈值未改；此缺项不属于本轮UI变更，不修配方。"
+    }
+  },
+  "protection": {
+    "checked": 422,
+    "changed": [
+      "tool/src/material-b.css",
+      "tool/src/js/10_types.js",
+      "tool/src/js/80_render.js",
+      "tool/src/js/94_focus_review.js",
+      "tool/build.py"
+    ],
+    "missing": [],
+    "unexpected": [],
+    "frozen126Unchanged": true
+  },
+  "manual": {
+    "1366": {
+      "viewFrame": [
+        777,
+        587.67
+      ],
+      "atlasCanvas": [
+        763.66,
+        480.32
+      ],
+      "deliveryList": [
+        336,
+        657
+      ],
+      "defaultPreviewShare": 0.693,
+      "pointerDrag": [
+        336,
+        404
+      ],
+      "keyboardArrowRight": [
+        404,
+        388
+      ],
+      "doubleClickReset": 336
+    },
+    "900": {
+      "documentWidth": 900,
+      "previewWidth": 552,
+      "deliveryWidth": 320
+    },
+    "1920": "真实GLB-S1金锦层编辑及RT6L只看远段已截图",
+    "2560": {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "documentWidth": 2560,
+      "preview": [
+        1827,
+        1259.67
+      ],
+      "deliveryWidth": 420
+    },
+    "reducedMotion": {
+      "matches": true,
+      "animationName": "none"
+    }
+  },
+  "limits": [
+    "本轮无UE实测",
+    "未重新导出真实ZIP；上轮126真实保存/烘焙/ZIP证据仍保留，不能冒充127导出验收",
+    "不宣称全仓库设计系统已统一；此次只限B评审入口",
+    "file成品已构建，自动实测走对应字节HTTP；个人file来源草稿未迁移"
+  ]
+}

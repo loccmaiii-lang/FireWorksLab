@@ -5,9 +5,14 @@ here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 css = open(os.path.join(src, 'style.css'), encoding='utf-8').read()
 css = ''.join(open(os.path.join(here, 'design-system', f), encoding='utf-8').read() for f in ('tokens.css', 'components.css')) + '\n' + css
+# 独立评审皮肤仅匹配 data-ui，不改变默认旧入口。
+review_css = os.path.join(src, 'material-b.css')
+if os.path.exists(review_css):
+    css += '\n' + open(review_css, encoding='utf-8').read()
 body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
 js = ''.join(open(f, encoding='utf-8').read() for f in sorted(glob.glob(os.path.join(src, 'js', '*.js'))))
 js = open(os.path.join(here, 'shared', 'cascade_events.js'), encoding='utf-8').read() + '\n' + js
+js = open(os.path.join(here, 'design-system', 'icons.js'), encoding='utf-8').read() + '\n' + js
 ver = re.search(r"const VERSION = '([^']+)'", js)
 # 仓库根目录的 更新记录.md（最新在上）→ UPDATES，烘焙器顶栏「更新记录」里显示
 import json
@@ -63,11 +68,16 @@ html = f'''<!doctype html>
 <script src="data/size_spec.js"></script>
 <script>
 'use strict';
+// HTTP 仍走原 /baker 路由；布局开关不参与配方与产物。
+if (new URLSearchParams(location.search).get('ui') === 'material-b') document.body.dataset.ui = 'material-b';
 {js}</script>
 </body>
 </html>
 '''
 open(os.path.join(here, 'FireworkBaker.html'), 'w', encoding='utf-8').write(html)
+# 同一份完整业务脚本生成第二入口，离线打开也直接进入新布局。
+review_html = html.replace('<body>', '<body data-ui="material-b">', 1).replace('<title>烟花母版烘焙器</title>', '<title>烟花烘焙器 · Material B 评审</title>', 1)
+open(os.path.join(here, 'FireworkBaker_MaterialB.html'), 'w', encoding='utf-8').write(review_html)
 print('built', len(html), 'bytes', ver.group(1) if ver else '')
 
 # 4.4.3（排查计划第 1 步）：构建完跑静态检查，有错误构建失败（html 已经写出来，退出码 1）
@@ -77,9 +87,10 @@ import shutil, subprocess, sys
 bad = False
 node = shutil.which('node')
 if node:
-    r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), os.path.join(here, 'FireworkBaker.html')], capture_output=True, text=True)
-    print(r.stdout.strip()); bad |= r.returncode != 0
-    if r.returncode not in (0, 1): print(r.stderr.strip())
+    for entry in ('FireworkBaker.html', 'FireworkBaker_MaterialB.html'):
+        r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), os.path.join(here, entry)], capture_output=True, text=True)
+        print(entry + ': ' + r.stdout.strip()); bad |= r.returncode != 0
+        if r.returncode not in (0, 1): print(r.stderr.strip())
 else:
     print('⚠ 没有 node：跳过脚本静态检查（云端改 tool/src 时必须有）')
 r = subprocess.run([sys.executable, os.path.join(here, '..', 'analysis', 'scripts', '静态核对.py')], capture_output=True, text=True)

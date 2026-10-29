@@ -36,7 +36,7 @@
   "网格垂柳UEv3（Codex）": "2026-10-22 19:33",
   "团队版（云端）": "2026-10-25 13:10",
   "procedural-fire调研": "2026-10-27 17:43",
-  "界面交互-本机（Codex）": "2026-10-29 12:21"
+  "界面交互-本机（Codex）": "2026-10-29T14:30"
  },
  "阶段含义": {
   "制作中": "AI 在做，用户不用看",
@@ -309,14 +309,18 @@
   "界面交互-本机（Codex） · 三工具筛查与设计": {
    "负责": "界面交互-本机（Codex）",
    "日期": "2026-10-29",
-   "状态": "进行中：完整烘焙器Material/B评审入口，默认旧布局保留",
-   "授权": "用户2026-10-29逐图指出结构/筛选/参数操作/倍率布局问题，确认接入完整烘焙器测试真实保存烘焙导出，并保留旧入口；不合入main/125",
-   "范围": "tool/src/js/94_focus_review.js；tool/src/material-b.css；tool/src/js/12_tempo.js；tool/build.py；版本/CHANGELOG；双HTML入口；本条状态/对话记录；协作/方案/完整烘焙器B布局评审_2026-10-29.md；analysis/results/20261029_完整烘焙器B评审/",
+   "状态": "4.9.127独立完整B入口界面自检通过，等待用户视觉/操作评审；126和默认旧入口保留，未合入main/125。",
+   "授权": "用户2026-10-29七项反馈，已明确标题只做单效果页签；完整烘焙器接入授权延续，保留旧入口/126，不改引擎/配方/UE/导入器，不合入main或125",
+   "范围": "本任务已有未提交UI；tool/src/js/94_focus_review.js、95_tree_review.js、96_inspect_workspace.js、material-b.css；build/版本/CHANGELOG；完整HTML及126存档；本条/本日志/本轮计划与结果；80_render.js 仅新工作区的 wide 布局条件；analysis/scripts/MaterialB评审检查.py 与 标准检查.py 仅新增独立评审回归入口（不改既有检查）",
    "保护": "只在独立评审分支改UI源/构建/版本记录；不改渲染/模拟核、参数含义、配方、导入器、节目、UE；默认旧入口与旧稿保留",
    "副本": "F:/FWL-副本/20261028-界面交互-本机-全量筛查；codex/ui-material-baker-review-20261029；8034",
    "预览": "http://127.0.0.1:8034/design-system/drafts/v6-b-spectrum-20261029/index.html",
-   "结果": "本轮B：复用40真实代表字段与原单层核，studio仅独立存档键；34浏览器观测、40字段映射、同视口完整/重点对照及一轮修正通过，405保护文件不变；仍540平方/1000m、烘焙调用0，原B存档未动。前轮三工作流/Material/Spectrum八类保留；原全量筛查缺口仍按旧报告待验。",
-   "历史预览": "http://127.0.0.1:8034/design-system/drafts/v4-workflows-20261029/review.html"
+   "结果": "analysis/results/20261029_完整烘焙器B评审/看法.md；新UI未提交，远端只有认领f9185b4e",
+   "历史预览": "http://127.0.0.1:8034/design-system/drafts/v4-workflows-20261029/review.html",
+   "入口": "http://127.0.0.1:8034/baker?ui=material-b；旧 /baker 保留；tool/FireworkBaker_MaterialB.html",
+   "验证": "构建静态0错；309分组+18节奏+14菜单几何+13筛选位置；8状态项及真W16通过；真实ZIP 45文件/40PNG CRC过；420保护文件无越界。W14未过、最终推送门禁未跑。",
+   "下一步": "用户测试树观察/页签/拖宽/合并工作区，选择后再决定正式应用；结果见analysis/results/20261029_B树与交付整合/看法.md。全量条目MESH-WILLOW-1数据缺项另列，本轮不改。",
+   "在线": "2026-10-29T15:05:02+08:00"
   }
  },
  "effects": [

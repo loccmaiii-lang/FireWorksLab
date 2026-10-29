@@ -638,7 +638,7 @@ function loop(now) {
   $('#viewSeg').hidden=!!state.showcase;
   if (!mv || state.view !== 'atlas' || !ab) { const ts = $('#texSeg'); if (ts) ts.hidden = true; }     // 4.9.20：贴图 / 流转时 renderAtlas 里按这一层的贴图清单显示
   $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.texSheetNow;     // 4.9.35 没有「整张 / 流转」切换了；单帧 / 光点 / 不出没有曲线
-  { const wd = state.view === 'atlas' && !state.showcase && state.tab !== 'asset' && !stage2.deliv, bx = $('#box'); if (bx.classList.contains('wide') !== wd) { bx.classList.toggle('wide', wd); boxRectAt = -1e9; } }     // 4.9.35 贴图流转铺满画面区
+  { const wd = state.view === 'atlas' && !state.showcase && state.tab !== 'asset' && (!stage2.deliv || stage2.inspectFlow), bx = $('#box'); if (bx.classList.contains('wide') !== wd) { bx.classList.toggle('wide', wd); boxRectAt = -1e9; } }     // 4.9.35 贴图流转铺满画面区
   $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && ((familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form)) || isEmit(state.P)));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#rtLayerBar').hidden = !(state.tab !== 'combo' && state.tab !== 'asset' && isEmit(state.P) && (state.view === 'live' || state.view === 'export'));     // 4.5.1 升空尾缀分层看

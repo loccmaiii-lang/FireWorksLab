@@ -1,0 +1,198 @@
+{
+  "at": "2026-10-29T13:09:32+08:00",
+  "status": "review-ready / submission-blocked",
+  "branch": "codex/ui-material-baker-review-20261029",
+  "implementation_committed": false,
+  "implementation_pushed": false,
+  "blocking_check": "W14窄屏模块密度（旧入口也有失败，阈值未改）",
+  "http": {
+    "new": {
+      "url": "http://127.0.0.1:8034/baker?ui=material-b",
+      "source_matches": true
+    },
+    "old": {
+      "url": "http://127.0.0.1:8034/baker",
+      "source_matches": true
+    }
+  },
+  "artifacts": [
+    {
+      "file": "tool/FireworkBaker.html",
+      "bytes": 3054751,
+      "sha256": "fc9ca84335b948e12ceb2fab7f80c9322a9a8ca16d7d43d887ebd615e9f87ac7"
+    },
+    {
+      "file": "tool/FireworkBaker_MaterialB.html",
+      "bytes": 3054787,
+      "sha256": "671be3c00754051f398979daa3029ce103ccba1a50123dccc6d1777441b48090"
+    },
+    {
+      "file": "tool/build.py",
+      "bytes": 7016,
+      "sha256": "2adcc60a68faf18c434993226a1fa51ee4f1ada135e60f1cb4198f4ece6ada7a"
+    },
+    {
+      "file": "tool/src/js/10_types.js",
+      "bytes": 154143,
+      "sha256": "1164d42e6fffc92cc949716bd04893fd11312ef4ac6d8bae9275fcc10e028895"
+    },
+    {
+      "file": "tool/src/js/12_tempo.js",
+      "bytes": 17144,
+      "sha256": "1636c180f61fb01d698cc364f5954be2018f4bd60b81d4c9aea97b6a68c5a3ca"
+    },
+    {
+      "file": "tool/src/js/94_focus_review.js",
+      "bytes": 21416,
+      "sha256": "02133b71fec644a64a22461e822e1824051f3b8ecb16bba5a619c9b0d99df0f4"
+    },
+    {
+      "file": "tool/src/material-b.css",
+      "bytes": 17661,
+      "sha256": "93e330cdc635f27f0330a90a32c335ebbc6a313c2158abfb0f067313d9e99fa6"
+    }
+  ],
+  "checks": {
+    "build_static_errors": 0,
+    "schema_parameters": 705,
+    "existing_state_items": [
+      "N3",
+      "W7",
+      "W37",
+      "R10",
+      "R11",
+      "X1",
+      "R12",
+      "R13"
+    ],
+    "group_assertions": [
+      309,
+      309
+    ],
+    "tempo_assertions": [
+      18,
+      18
+    ],
+    "menu_geometry_assertions": [
+      14,
+      14
+    ],
+    "filter_scroll_assertions": [
+      13,
+      13
+    ],
+    "real_workflow_W16": true,
+    "final_push_gate_run": false
+  },
+  "zip": {
+    "zip": "C:\\Users\\locmai\\Downloads\\UIReview_MaterialB_20261029.zip",
+    "bytes": 20585979,
+    "sha256": "5268c56fb67c744b64f77cb1a10d2d7537d814eeedc0af4cdac4118492749d7f",
+    "files": 45,
+    "png": 40,
+    "configs": [
+      {
+        "path": "UIReview_MaterialB_20261029/cascade.json",
+        "name": "MyFx",
+        "platform": "pc",
+        "emitters": 12
+      },
+      {
+        "path": "UIReview_MaterialB_20261029/cascade_mobile.json",
+        "name": "UIReview_MaterialB_20261029_M",
+        "platform": "mobile",
+        "emitters": 1
+      }
+    ],
+    "bad_crc": null
+  },
+  "protection": {
+    "protected": 420,
+    "authorizedChanged": [
+      "tool/src/js/10_types.js",
+      "tool/src/js/12_tempo.js",
+      "tool/FireworkBaker.html",
+      "tool/build.py"
+    ],
+    "unexpectedChanged": [],
+    "oldMyEffects": 0,
+    "alteredOldMyEffects": [],
+    "addedTestCopies": [
+      {
+        "id": "fxmvt27jlpymgvq",
+        "name": "界面评审测试副本 · Material B · 20261029"
+      }
+    ],
+    "oldSavedVersionKeys": 2,
+    "alteredOldSavedVersionKeys": [],
+    "addedSavedVersionKeys": [
+      "my:fxmvt27jlpymgvq"
+    ]
+  },
+  "viewports_css_px": [
+    [
+      1366,
+      768
+    ],
+    [
+      1440,
+      900
+    ],
+    [
+      1920,
+      1080
+    ],
+    [
+      2560,
+      1440
+    ]
+  ],
+  "screenshots_device_scale_factor": 1,
+  "delivery_1366": {
+    "old": {
+      "workarea": [
+        398,
+        350
+      ],
+      "canvas": [
+        215.82,
+        215.82
+      ],
+      "list_width": 320,
+      "editor_width": 390
+    },
+    "new": {
+      "workarea": [
+        776.71,
+        587.67
+      ],
+      "canvas": [
+        481.66,
+        481.66
+      ],
+      "list_width": 336.29,
+      "editor_width": 0
+    },
+    "context_restored": true
+  },
+  "limitations": [
+    "W14密度未通过，停止提交/推送",
+    "SGR1三个分叉模块15项仅在全部中可达",
+    "RT6/SGR参数检查不是其真GPU烘焙验证",
+    "info/spec宿主内部操作不在参数成员统计中",
+    "未执行UE导入/实播、全业务逐控件或WCAG认证"
+  ],
+  "evidence_local": [
+    "分组检查.json",
+    "节奏接线检查.json",
+    "菜单几何检查.json",
+    "筛选位置恢复检查.json",
+    "既有状态回归.json",
+    "真实主链路.json",
+    "旧入口W14基线.json",
+    "新入口W14复核.json",
+    "真实ZIP核对.json",
+    "保护核对.json",
+    "交付恢复.json"
+  ]
+}

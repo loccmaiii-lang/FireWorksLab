@@ -128,6 +128,7 @@ if __name__ == '__main__':
     ap.add_argument('targets', nargs='*')
     ap.add_argument('--no-write', action='store_true')
     ap.add_argument('--ui-state-only', action='store_true', help='只跑离线界面状态回归，不启动浏览器')
+    ap.add_argument('--material-b-ui-only', action='store_true', help='只查独立 Material B 评审入口的树观察及贴图交付交互，不连接 UE')
     ap.add_argument('--director-preview-only', action='store_true', help='只跑导演预览恢复回归，不连接UE')
     ap.add_argument('--startup-only', action='store_true', help='只跑显卡程序按需初始化回归，不启动浏览器')
     ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
@@ -141,6 +142,8 @@ if __name__ == '__main__':
     ap.add_argument('--delivery-recovery-only', action='store_true', help='导出失败可见恢复、旧服务兼容与单文档导航回归，不连接UE')
     ap.add_argument('--flame-model-only', action='store_true', help='周期体积火焰模型、参数边界与旧图逐位回归')
     a = ap.parse_args()
+    if a.material_b_ui_only:
+        raise SystemExit(subprocess.call([sys.executable, '-X', 'utf8', str(HERE / 'MaterialB评审检查.py')]))
     if a.flame_model_only:
         raise SystemExit(subprocess.call(['node', str(HERE / 'flame_model_test.cjs')]))
     if a.delivery_recovery_only:
