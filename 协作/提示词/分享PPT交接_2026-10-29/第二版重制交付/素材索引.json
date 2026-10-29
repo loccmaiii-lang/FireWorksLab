@@ -1,0 +1,289 @@
+[
+  {
+    "name": "blender",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\blender.jpg",
+    "source": "D:\\Blender\\Firework_FX_Lab\\assets\\Sparkler\\V05\\preview\\审稿帧_20.png",
+    "crop": null,
+    "sha256": "727a6769be3a56244486204be618446db7927101b79790c67f7eab70d1c0ea13"
+  },
+  {
+    "name": "blender_ui",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\blender_ui.jpg",
+    "source": "D:\\Blender\\Firework_FX_Lab\\reports\\S1\\ui-reopened.png",
+    "crop": [
+      1775,
+      75,
+      2078,
+      1230
+    ],
+    "sha256": "2947dc47b5d3e98d27e852e83130bc917d5ab1ef6deb6b4eb4a3378a8bba278f"
+  },
+  {
+    "name": "baker",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\baker.jpg",
+    "source": "F:\\FireWorksLab\\协作\\提示词\\分享PPT交接_2026-10-29\\素材\\05_烘焙器界面_仙女棒.jpg",
+    "crop": null,
+    "sha256": "311a35f0de83350f17ab6bd21e6a7143d62c86aee3b63eb1fc06dc7f85114342"
+  },
+  {
+    "name": "sequence",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\sequence.jpg",
+    "source": "F:\\FireWorksLab\\协作\\提示词\\分享PPT交接_2026-10-29\\素材\\16_仙女棒_64帧序列贴图.jpg",
+    "crop": null,
+    "sha256": "855f3584028417d27934825d7ce422b9e244824c415b30383692d2106a8154fa"
+  },
+  {
+    "name": "ue_cascade",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ue_cascade.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\_tmp\\ppt2\\me\\cas_emitters.jpg",
+    "crop": null,
+    "sha256": "79c193135a3d08e80287def0129e49b994978dce3ceda5212c37fa8b21276594"
+  },
+  {
+    "name": "ue_texture",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ue_texture.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\_tmp\\ppt2\\me\\tex_left.jpg",
+    "crop": null,
+    "sha256": "6b6fe0e829372b10c7800612195195eb3b61c2954d6007857b217a4fad9afae8"
+  },
+  {
+    "name": "ue_settings",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ue_settings.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\_tmp\\ppt2\\me\\tex_right.jpg",
+    "crop": [
+      0,
+      0,
+      638,
+      640
+    ],
+    "sha256": "d00f683c6cd985f3caf04ee1cb9d582d71883740c4cfc0e237452b60af348277"
+  },
+  {
+    "name": "sparkler_history",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\sparkler_history.jpg",
+    "source": "F:\\FireWorksLab\\协作\\提示词\\分享PPT交接_2026-10-29\\素材\\10_仙女棒_引擎回放.jpg",
+    "crop": null,
+    "sha256": "9008c5d0b2c8f80c68bf7c1a8f6ca723f6ef1016eb02296f21de172f8aa8885b"
+  },
+  {
+    "name": "sparkler",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\sparkler.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\GraphFraming\\SGS1\\candidate\\PC-回放.jpg",
+    "crop": [
+      1910,
+      388,
+      2260,
+      738
+    ],
+    "sha256": "f1f5ceb361f0737ea9f26f60218d6634a3bad7428b1a10ef718b860eff25c7d4"
+  },
+  {
+    "name": "spark_layers",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\spark_layers.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\SparkGraph\\13层形态对照.jpg",
+    "crop": null,
+    "sha256": "b93fff1949e3ba19a726a4ca00f3e95aeed265992cc5d928889fff88ff3360b3"
+  },
+  {
+    "name": "spark_branch",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\spark_branch.jpg",
+    "source": "F:\\FireWorksLab\\协作\\提示词\\分享PPT交接_2026-10-29\\素材\\07_分叉_仙女棒局部.jpg",
+    "crop": null,
+    "sha256": "0a00f5633810e8b49b4e5bfbdd7e83078ad9817675ad2c22dca35e832d8eac26"
+  },
+  {
+    "name": "tail",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\tail.jpg",
+    "source": "F:\\FireWorksLab\\协作\\提示词\\分享PPT交接_2026-10-29\\素材\\13_升空尾缀_UE实机.jpg",
+    "crop": null,
+    "sha256": "58c3ecb3f7acec2bd4456f8a864f644a1d13cf7d3f8bb4095358e5c155154d20"
+  },
+  {
+    "name": "tail_compare",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\tail_compare.jpg",
+    "source": "F:\\FireWorksLab\\协作\\提示词\\分享PPT交接_2026-10-29\\素材\\15_升空尾缀_实拍模拟导出对照.jpg",
+    "crop": null,
+    "sha256": "e630801e308bfda64c321022678a334dfc89d4ff3b79d37de4a16ece911559d3"
+  },
+  {
+    "name": "tail_before",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\tail_before.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\LOWQ_FIX_20261018\\升空_现状对NoMip_低档.jpg",
+    "crop": [
+      150,
+      2000,
+      438,
+      2390
+    ],
+    "sha256": "d8ae626e6ef709a303275529cb0f99e300a15568b61dae0423c7f7392c1e89e6"
+  },
+  {
+    "name": "tail_after",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\tail_after.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\LOWQ_FIX_20261018\\升空_现状对NoMip_低档.jpg",
+    "crop": [
+      448,
+      2000,
+      734,
+      2390
+    ],
+    "sha256": "d8ae626e6ef709a303275529cb0f99e300a15568b61dae0423c7f7392c1e89e6"
+  },
+  {
+    "name": "bloom_before",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\bloom_before.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\LOWQ_FIX_20261018\\金芒菊_绽放局部放大_低档.jpg",
+    "crop": [
+      150,
+      412,
+      510,
+      770
+    ],
+    "sha256": "b3e0cfe12ed29d1e1f54ba83a4555cba7779ab99bd10b375aeaa3df78ef41fdb"
+  },
+  {
+    "name": "bloom_after",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\bloom_after.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\LOWQ_FIX_20261018\\金芒菊_绽放局部放大_低档.jpg",
+    "crop": [
+      518,
+      412,
+      878,
+      770
+    ],
+    "sha256": "b3e0cfe12ed29d1e1f54ba83a4555cba7779ab99bd10b375aeaa3df78ef41fdb"
+  },
+  {
+    "name": "ramp_after",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ramp_after.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\资源规范统一_20261016\\第2步UE证据.jpg",
+    "crop": [
+      925,
+      655,
+      1335,
+      965
+    ],
+    "sha256": "1d4101045364ee22655203db82345575a365ead65aac5bee28a1e55cee74642a"
+  },
+  {
+    "name": "ramp_mechanism",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ramp_mechanism.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\probe\\BC7护栏黑块_2026-10-15\\Ramp末格_复现.png",
+    "crop": null,
+    "sha256": "38babfed9382bd8f281247acb03ecd913b2750bc193a872f884ef338556be745"
+  },
+  {
+    "name": "ui_params",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ui_params.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\20261028_V5视觉交互复核\\01_124_编辑_1920.jpg",
+    "crop": [
+      1395,
+      48,
+      1905,
+      880
+    ],
+    "sha256": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f"
+  },
+  {
+    "name": "ui_library",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ui_library.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\20261028_V5视觉交互复核\\01_124_编辑_1920.jpg",
+    "crop": [
+      0,
+      54,
+      305,
+      725
+    ],
+    "sha256": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f"
+  },
+  {
+    "name": "ui_header",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\ui_header.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\results\\20261028_V5视觉交互复核\\01_124_编辑_1920.jpg",
+    "crop": [
+      0,
+      0,
+      1920,
+      50
+    ],
+    "sha256": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f"
+  },
+  {
+    "name": "goldlime",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\goldlime.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261022_LiteHDR_批量修正\\shots\\pc_after\\GoldCoreLime_HD_m_t01.3_g.png",
+    "crop": [
+      365,
+      85,
+      915,
+      635
+    ],
+    "sha256": "68be641abe6cf252e4fab89af4554a7cd8d9c0996bde6493d5f37828936879f6"
+  },
+  {
+    "name": "goldray",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\goldray.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261022_LiteHDR_批量修正\\shots\\pc_after\\GoldRay_HD_m_t00.7_g.png",
+    "crop": [
+      365,
+      85,
+      915,
+      635
+    ],
+    "sha256": "9d28af86e89777677ba7cf580430fffef0fef838366a4465c40d00a36c21162f"
+  },
+  {
+    "name": "lime",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\lime.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261022_LiteHDR_批量修正\\shots\\pc_after\\Lime_HD_m_t00.8_g.png",
+    "crop": [
+      365,
+      85,
+      915,
+      635
+    ],
+    "sha256": "a8903f62489e673f57b79cd54b739eb03fbf6e0ec69cca5f8929b3e38fc8da62"
+  },
+  {
+    "name": "little",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\little.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261022_LiteHDR_批量修正\\shots\\pc_after\\LittleGold_HD_m_t00.6_g.png",
+    "crop": [
+      365,
+      85,
+      915,
+      635
+    ],
+    "sha256": "d14fdb6b2523ff1d5966a74c90e8374266b0d172cd2416940710e974d9954b51"
+  },
+  {
+    "name": "silver",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\silver.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261022_LiteHDR_批量修正\\shots\\pc_after\\SilverWhiteChry_HD_m_t01.4_g.png",
+    "crop": [
+      365,
+      85,
+      915,
+      635
+    ],
+    "sha256": "6b05d8f1915c0c9c7d920b93275b6f4eac351157d21c3c5d70b2c1ab6ee96f68"
+  },
+  {
+    "name": "crackle",
+    "path": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\assets\\crackle.jpg",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261022_LiteHDR_批量修正\\shots\\pc_after\\Crackle_HD_m_t00.9_g.png",
+    "crop": [
+      365,
+      85,
+      915,
+      635
+    ],
+    "sha256": "640b37315f5292f5c2b69fe28a655e1fbe12f38a914df82db8bfd32b960a1a3f"
+  },
+  {
+    "name": "importer_original",
+    "source": "F:\\FireWorksLab\\analysis\\local\\20261030_PPT第二版重制_Codex\\source\\第一版_保留副本.pptx",
+    "package_part": "ppt/media/image13.jpg",
+    "used_as": "第10页Fixture接入流程示例，非与上图同一资源包"
+  }
+]
