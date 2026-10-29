@@ -127,7 +127,7 @@ def build_images():
     cover_src = codex[0] if codex else '01_封面_UE跨年秀.jpg'
     I = {'cover_is_codex': bool(codex)}
     I['cover'] = prep(cover_src, 'p01_cover.jpg', 1920, 1080, focus=(0.5, 0.5), scale=1.0,
-                      darken=None if codex else left_scrim(0.93, 0.66, bottom=0.62))
+                      darken=left_scrim(0.55, 0.46) if codex else left_scrim(0.93, 0.66, bottom=0.62))
     I['p02'] = prep('02_UE跨年秀_彩色全景.jpg', 'p02_show.jpg', 672, 770, box=(700, 150, 1600, 900),
                     focus=(0.5, 0.5))
     I['p04a'] = prep('07_分叉_仙女棒局部.jpg', 'p04_fork.jpg', 542, 458, mode='contain', feather=24, pad=0.02,
@@ -215,19 +215,18 @@ def p01(d, I):
     image(s, I['cover'], 0, 0, 1920, 1080)
     source_tag(s, 0, 0, 1920, 1080, '示意图' if I['cover_is_codex'] else 'UE 实机', pos='br')
     page_footer(s, d.footer)
-    text(s, L, 300, 1100, 36, 'VFX 组内分享 · 2026.10.30', size=S_LABEL, color=ACC, bold=True, spc=4, lh=1.3)
-    text(s, L, 352, 1300, 140, '烟花秀 AI 全流程', size=112, bold=True, lh=1.15)
-    text(s, L, 510, 1100, 56, '烟花烘焙器 · 导入器 · 烟花编排工作台', size=36, alpha=0.86, lh=1.3)
-    text(s, L, 568, 1100, 44, '一个多月，从做效果、进引擎到排节目', size=28, alpha=A_NOTE, lh=1.4)
-    end_bar(s, L, 650, 72)
-    rect(s, L, 812, 860, 1, fill=TXT, fill_alpha=0.12)
+    # 标题块放左上的空夜空，目录竖排放左下暗区，避开右侧的花
+    text(s, L, 176, 1100, 36, 'VFX 组内分享 · 2026.10.30', size=S_LABEL, color=ACC, bold=True, spc=4, lh=1.3)
+    text(s, L, 226, 1300, 140, '烟花秀 AI 全流程', size=112, bold=True, lh=1.15)
+    text(s, L, 386, 1100, 56, '烟花烘焙器 · 导入器 · 烟花编排工作台', size=36, alpha=0.86, lh=1.3)
+    text(s, L, 444, 1100, 44, '一个多月，从做效果、进引擎到排节目', size=28, alpha=A_NOTE, lh=1.4)
+    end_bar(s, L, 524, 72)
+    rect(s, L, 716, 320, 1, fill=TXT, fill_alpha=0.14)
     items = [('01', '问题'), ('02', '解决思路'), ('03', '解决了什么'), ('04', '学到的'), ('05', '分享')]
-    x = L
-    for num, name in items:
-        wname = 28 * len(name)
-        text(s, x, 838, 40, 40, num, size=28, color=ACC, bold=True, lh=1.3)
-        text(s, x + 46, 838, wname + 10, 40, name, size=28, alpha=A_SUB, lh=1.3)
-        x += 46 + wname + 48
+    for i, (num, name) in enumerate(items):
+        y = 736 + i * 46
+        text(s, L, y, 44, 40, num, size=26, color=ACC, bold=True, lh=1.3)
+        text(s, L + 52, y, 300, 40, name, size=26, alpha=A_SUB, lh=1.3)
     return s
 
 
