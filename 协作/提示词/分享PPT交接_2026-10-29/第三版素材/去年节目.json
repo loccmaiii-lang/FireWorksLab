@@ -1,0 +1,179 @@
+{
+  "format": "df.t26-last-year-readback/1",
+  "currentRead": {
+    "at": "2026-10-30T02:20:15.787308+08:00",
+    "route": "/object/get",
+    "payload": {
+      "path": "/Game/Effects_HD/Cutsence/Dam_Seq_PoiFirework_HD/Seq_SequenceTimeline_A.Seq_SequenceTimeline_A",
+      "properties": [
+        "MovieScene"
+      ]
+    },
+    "error": "<urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+  },
+  "currentVerification": "blocked_socket_permission",
+  "historicalSource": "analysis\\local\\20261029_分享PPT-本机_UE截图\\q_seq.json",
+  "historicalSourceSha256": "2d61910adb001e1093bf7b110d860b6f74c818d1e27674e4922e3bd01188b966",
+  "historicalSnapshotDate": "2026-10-29（源文件及当轮对话记录；非本轮实时读回）",
+  "mainSequences": [
+    {
+      "name": "Seq_SequenceTimeline_A",
+      "startS": 26.66666603088379,
+      "endS": 70.13333129882812,
+      "rangeDurationS": 43.466665267944336,
+      "particleTrackCount": 0,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Seq_SequenceTimeline_A_MP",
+      "startS": 26.66666603088379,
+      "endS": 70.13333129882812,
+      "rangeDurationS": 43.466665267944336,
+      "particleTrackCount": 0,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Seq_SequenceTimeline_A_MP_LOW",
+      "startS": 26.66666603088379,
+      "endS": 70.13333129882812,
+      "rangeDurationS": 43.466665267944336,
+      "particleTrackCount": 0,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Seq_SequenceTimeline_B",
+      "startS": 26.66666603088379,
+      "endS": 70.13333129882812,
+      "rangeDurationS": 43.466665267944336,
+      "particleTrackCount": 0,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Seq_SequenceTimeline_S",
+      "startS": 24.0,
+      "endS": 70.07475280761719,
+      "rangeDurationS": 46.07475280761719,
+      "particleTrackCount": 0,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    }
+  ],
+  "subSequences": [
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_A1",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 75,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_A2",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 32,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_A3",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 35,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_A4",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 32,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_B1",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 75,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_B2",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 32,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_B3",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 35,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_B4",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 32,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_S1",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 76,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_S2",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 32,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_S3",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 35,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    },
+    {
+      "name": "Sub/Seq_SequenceTimeline_Affiliated_Dam_S4",
+      "startS": 0.0,
+      "endS": 70.19550323486328,
+      "rangeDurationS": 70.19550323486328,
+      "particleTrackCount": 32,
+      "distinctParticleSystems": null,
+      "reason": "历史快照仅统计轨道类型与数目，未包含粒子Template引用；本轮GPUECli权限拒绝，不能取得不同粒子系统名单。"
+    }
+  ],
+  "particleAssetsUnique": null,
+  "threeTypesVerdict": "无法核实；A/B/S为序列标签，不是粒子花型分类。",
+  "ueWrites": 0,
+  "retryCount": 0
+}

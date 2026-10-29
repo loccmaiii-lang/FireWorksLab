@@ -1,0 +1,593 @@
+{
+  "format": "df.ppt-source-image-inventory/1",
+  "task": "T26",
+  "createdAt": "2026-10-30T02:24:33+08:00",
+  "root": "F:/FireWorksLab",
+  "copied": [
+    {
+      "output": "原图/ue_texture_sparkler.png",
+      "source": "analysis/local/20261029_分享PPT-本机_UE截图/ue_texture_sparkler.png",
+      "category": "工具界面",
+      "content": "UE 贴图编辑器完整截图；第二版第 2 页 tex_left.jpg 对应的完整原图",
+      "usedIn": "第一版备用；第二版 2",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        3872,
+        2120
+      ],
+      "outputDimensions": [
+        3872,
+        2120
+      ],
+      "sourceBytes": 2824164,
+      "outputBytes": 2824164,
+      "sourceSha256Before": "1a049d1e7edf444c63f6380d428d511c63cfd635bad3ab0b966a1dc4eb10531a",
+      "sourceSha256After": "1a049d1e7edf444c63f6380d428d511c63cfd635bad3ab0b966a1dc4eb10531a",
+      "outputSha256": "1a049d1e7edf444c63f6380d428d511c63cfd635bad3ab0b966a1dc4eb10531a",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/ue_cascade_goldcorelime.png",
+      "source": "analysis/local/20261029_分享PPT-本机_UE截图/ue_cascade_goldcorelime.png",
+      "category": "工具界面",
+      "content": "UE Cascade 编辑器完整截图；第二版第 2 页 cas_emitters.jpg 对应的完整原图",
+      "usedIn": "第一版备用；第二版 2",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        3872,
+        2120
+      ],
+      "outputDimensions": [
+        3872,
+        2120
+      ],
+      "sourceBytes": 1048154,
+      "outputBytes": 1048154,
+      "sourceSha256Before": "58f437488611b596acf9b7ba1838d495551e852c105a93127b6db23fa66612de",
+      "sourceSha256After": "58f437488611b596acf9b7ba1838d495551e852c105a93127b6db23fa66612de",
+      "outputSha256": "58f437488611b596acf9b7ba1838d495551e852c105a93127b6db23fa66612de",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/ue_sequencer_S1_open.png",
+      "source": "analysis/local/20261029_分享PPT-本机_UE截图/ue_sequencer_S1_open.png",
+      "category": "工具界面",
+      "content": "UE 旧定序器 Affiliated_Dam_S1 展开轨道的完整截图",
+      "usedIn": "第一版 5；第二版 3",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        3840,
+        2088
+      ],
+      "outputDimensions": [
+        3840,
+        2088
+      ],
+      "sourceBytes": 456204,
+      "outputBytes": 456204,
+      "sourceSha256Before": "ae1b5f76dabfad95f3f7f4da9f2f5420c2d294482759ce14d2f6fbabda8ed1ee",
+      "sourceSha256After": "ae1b5f76dabfad95f3f7f4da9f2f5420c2d294482759ce14d2f6fbabda8ed1ee",
+      "outputSha256": "ae1b5f76dabfad95f3f7f4da9f2f5420c2d294482759ce14d2f6fbabda8ed1ee",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/IMPORT5_THEME_20261024_after_1920.png",
+      "source": "analysis/local/IMPORT5_THEME_20261024_after_1920.png",
+      "category": "工具界面",
+      "content": "特效工作台烟花素材导入页；空批次与三列布局",
+      "usedIn": "第一版 6；第二版 5",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        1920,
+        1080
+      ],
+      "outputDimensions": [
+        1920,
+        1080
+      ],
+      "sourceBytes": 108352,
+      "outputBytes": 108352,
+      "sourceSha256Before": "9b76a4eb01448e46d4d49cffc8eccc92fb168bb2a13dc85e538eda3e00b6d922",
+      "sourceSha256After": "9b76a4eb01448e46d4d49cffc8eccc92fb168bb2a13dc85e538eda3e00b6d922",
+      "outputSha256": "9b76a4eb01448e46d4d49cffc8eccc92fb168bb2a13dc85e538eda3e00b6d922",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/IMPORT5_120_recovered.png",
+      "source": "analysis/local/IMPORT5_120_recovered.png",
+      "category": "工具界面",
+      "content": "烘焙器 4.9.120 内的资源导入交付结果页；Fixture 修订",
+      "usedIn": "第一版 9；第二版 12",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        1440,
+        900
+      ],
+      "outputDimensions": [
+        1440,
+        900
+      ],
+      "sourceBytes": 100485,
+      "outputBytes": 100485,
+      "sourceSha256Before": "1735606e2ab156cb9d09fd2d7f603b37a62e540e939ac5cdb18056798283637d",
+      "sourceSha256After": "1735606e2ab156cb9d09fd2d7f603b37a62e540e939ac5cdb18056798283637d",
+      "outputSha256": "1735606e2ab156cb9d09fd2d7f603b37a62e540e939ac5cdb18056798283637d",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/tex_left.jpg",
+      "source": "analysis/local/_tmp/ppt2/me/tex_left.jpg",
+      "category": "工具界面",
+      "content": "第二版第 2 页实际引用的既有裁图；完整原图为 ue_texture_sparkler.png",
+      "usedIn": "第二版 2",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        1290,
+        1025
+      ],
+      "outputDimensions": [
+        1290,
+        1025
+      ],
+      "sourceBytes": 133571,
+      "outputBytes": 133571,
+      "sourceSha256Before": "6b6fe0e829372b10c7800612195195eb3b61c2954d6007857b217a4fad9afae8",
+      "sourceSha256After": "6b6fe0e829372b10c7800612195195eb3b61c2954d6007857b217a4fad9afae8",
+      "outputSha256": "6b6fe0e829372b10c7800612195195eb3b61c2954d6007857b217a4fad9afae8",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/cas_emitters.jpg",
+      "source": "analysis/local/_tmp/ppt2/me/cas_emitters.jpg",
+      "category": "工具界面",
+      "content": "第二版第 2 页实际引用的既有裁图；完整原图为 ue_cascade_goldcorelime.png",
+      "usedIn": "第二版 2",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        1130,
+        590
+      ],
+      "outputDimensions": [
+        1130,
+        590
+      ],
+      "sourceBytes": 134011,
+      "outputBytes": 134011,
+      "sourceSha256Before": "79c193135a3d08e80287def0129e49b994978dce3ceda5212c37fa8b21276594",
+      "sourceSha256After": "79c193135a3d08e80287def0129e49b994978dce3ceda5212c37fa8b21276594",
+      "outputSha256": "79c193135a3d08e80287def0129e49b994978dce3ceda5212c37fa8b21276594",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/wb_stage.jpg",
+      "source": "analysis/local/_tmp/ppt2/me/wb_stage.jpg",
+      "category": "工具界面",
+      "content": "第二版第 6 页实际引用的既有舞台面板裁图；编排工作台，非 UE 机位截图",
+      "usedIn": "第二版 6",
+      "sourceWasGitTracked": false,
+      "sourceDimensions": [
+        1200,
+        380
+      ],
+      "outputDimensions": [
+        1200,
+        380
+      ],
+      "sourceBytes": 37577,
+      "outputBytes": 37577,
+      "sourceSha256Before": "6b9c60e9e1e9f325a15dac74a5b6d38ce0a1c41cf1680e4a494c33c346a1bdbf",
+      "sourceSha256After": "6b9c60e9e1e9f325a15dac74a5b6d38ce0a1c41cf1680e4a494c33c346a1bdbf",
+      "outputSha256": "6b9c60e9e1e9f325a15dac74a5b6d38ce0a1c41cf1680e4a494c33c346a1bdbf",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/15_升空尾缀_实拍模拟导出对照.jpg",
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/15_升空尾缀_实拍模拟导出对照.jpg",
+      "category": "示意图",
+      "content": "既有三行五时刻对照总图：上为实拍，中为实时模拟，下为引擎回放；不是 UE 实机帧",
+      "usedIn": "第一版 13；第二版 14",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1500,
+        922
+      ],
+      "outputDimensions": [
+        1500,
+        922
+      ],
+      "sourceBytes": 115481,
+      "outputBytes": 115481,
+      "sourceSha256Before": "e630801e308bfda64c321022678a334dfc89d4ff3b79d37de4a16ece911559d3",
+      "sourceSha256After": "e630801e308bfda64c321022678a334dfc89d4ff3b79d37de4a16ece911559d3",
+      "outputSha256": "e630801e308bfda64c321022678a334dfc89d4ff3b79d37de4a16ece911559d3",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/Ramp末格_复现.png",
+      "source": "analysis/probe/BC7护栏黑块_2026-10-15/Ramp末格_复现.png",
+      "category": "示意图",
+      "content": "既有 Ramp 末格机制复现六格总图；旧序列/现序列、末格黑/不黑及 Wrap/Clamp；非 UE 修前修后实测",
+      "usedIn": "第二版 16",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1568,
+        1116
+      ],
+      "outputDimensions": [
+        1568,
+        1116
+      ],
+      "sourceBytes": 284008,
+      "outputBytes": 284008,
+      "sourceSha256Before": "38babfed9382bd8f281247acb03ecd913b2750bc193a872f884ef338556be745",
+      "sourceSha256After": "38babfed9382bd8f281247acb03ecd913b2750bc193a872f884ef338556be745",
+      "outputSha256": "38babfed9382bd8f281247acb03ecd913b2750bc193a872f884ef338556be745",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/第2步UE证据.jpg",
+      "source": "analysis/results/资源规范统一_20261016/第2步UE证据.jpg",
+      "category": "UE 实机",
+      "content": "UE 4.24 第 2 步实播六格证据总图；含矩形尾缀、爆裂、金垂柳等与原有说明文字；非同机位修前修后对照",
+      "usedIn": "第二版 16",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1500,
+        1505
+      ],
+      "outputDimensions": [
+        1500,
+        1505
+      ],
+      "sourceBytes": 165787,
+      "outputBytes": 165787,
+      "sourceSha256Before": "1d4101045364ee22655203db82345575a365ead65aac5bee28a1e55cee74642a",
+      "sourceSha256After": "1d4101045364ee22655203db82345575a365ead65aac5bee28a1e55cee74642a",
+      "outputSha256": "1d4101045364ee22655203db82345575a365ead65aac5bee28a1e55cee74642a",
+      "processing": "字节原样复制"
+    },
+    {
+      "output": "原图/01_124_编辑_1920.jpg",
+      "source": "analysis/results/20261028_V5视觉交互复核/01_124_编辑_1920.jpg",
+      "category": "工具界面",
+      "content": "烘焙器 4.9.124 生产界面原截图；1920×1074 是原始尺寸，不补高至 1080",
+      "usedIn": "第二版 17",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1920,
+        1074
+      ],
+      "outputDimensions": [
+        1920,
+        1074
+      ],
+      "sourceBytes": 172952,
+      "outputBytes": 172952,
+      "sourceSha256Before": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f",
+      "sourceSha256After": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f",
+      "outputSha256": "c497482d4f1f8a56d29b8ac65bc9664f7bb2411f599534cfaf9d0e423ade215f",
+      "processing": "字节原样复制"
+    }
+  ],
+  "existingGitSources": [
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/00_封面_A.jpg",
+      "category": "示意图",
+      "content": "第一版实际采用封面；既有说明明确含生成重绘",
+      "usedIn": "第一版 1",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1920,
+        1080
+      ],
+      "sourceBytes": 813138,
+      "sourceSha256": "5ea56def117c48ca0f399b2d3d2cf590bb215842a930eff6b8e11cb522838175",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/01_封面_UE跨年秀.jpg",
+      "category": "UE 实机",
+      "content": "原始跨年秀截图；第一版脚本封面后备项",
+      "usedIn": "第一版后备",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1920,
+        1080
+      ],
+      "sourceBytes": 363952,
+      "sourceSha256": "e2dc28dc5eebd4d9358ec08a510d911537b4abce729f048f0a1ffedd53db46c3",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/02_UE跨年秀_彩色全景.jpg",
+      "category": "UE 实机",
+      "content": "UE 跨年秀彩色全景",
+      "usedIn": "第一版 2",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1600,
+        900
+      ],
+      "sourceBytes": 352979,
+      "sourceSha256": "ceabf01e78f156efbf23f7faeb7c19457ddaad7eae1478b7947cd1489035512b",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/07_分叉_仙女棒局部.jpg",
+      "category": "引擎回放",
+      "content": "仙女棒分叉局部，沿用第一版采访素材标注",
+      "usedIn": "第一版 4",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        780,
+        602
+      ],
+      "sourceBytes": 52871,
+      "sourceSha256": "0a00f5633810e8b49b4e5bfbdd7e83078ad9817675ad2c22dca35e832d8eac26",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/08_成簇_尾焰局部.jpg",
+      "category": "引擎回放",
+      "content": "尾焰成簇局部，沿用第一版采访素材标注",
+      "usedIn": "第一版 4",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        260,
+        350
+      ],
+      "sourceBytes": 14237,
+      "sourceSha256": "0508a130400119cdb8c5b55b9a3c4cb30ddf23a2176e269cf0cc016ad7a45d04",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/09_爆发_尾焰0.23秒与0.40秒.jpg",
+      "category": "引擎回放",
+      "content": "尾焰两个时刻对照，沿用第一版采访素材标注",
+      "usedIn": "第一版 4",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1088,
+        840
+      ],
+      "sourceBytes": 55905,
+      "sourceSha256": "8a9c95417a9a36e18930cd50debc7e36d52f2fc8b15b76c8b8dbbfcb13e00f8a",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/05_烘焙器界面_仙女棒.jpg",
+      "category": "工具界面",
+      "content": "烘焙器仙女棒界面",
+      "usedIn": "第一版 6；第二版 4、5",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1600,
+        1000
+      ],
+      "sourceBytes": 298246,
+      "sourceSha256": "311a35f0de83350f17ab6bd21e6a7143d62c86aee3b63eb1fc06dc7f85114342",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/04_编排工作台界面.jpg",
+      "category": "工具界面",
+      "content": "编排工作台完整界面；非 UE 机位实拍",
+      "usedIn": "第一版 6、10；第二版 5",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1920,
+        1080
+      ],
+      "sourceBytes": 343357,
+      "sourceSha256": "9a9f3076583ec4e16ef962b8f533221863eceec82763d6eccd7b3f5a5f6e5237",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/03_UE跨年秀_金色扇面.jpg",
+      "category": "UE 实机",
+      "content": "UE 跨年秀金色扇面",
+      "usedIn": "第一版 6、8；第二版 5、9",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1600,
+        832
+      ],
+      "sourceBytes": 342627,
+      "sourceSha256": "ae7053b00a5329f894eb37fe64f804cb054827ecf99bbe8e4c5bec7839e1ce70",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/19_金芒爆裂菊.jpg",
+      "category": "引擎回放",
+      "content": "金芒爆裂菊样例，沿用第一版采访素材标注",
+      "usedIn": "第一版 8；第二版 9",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        768,
+        768
+      ],
+      "sourceBytes": 119910,
+      "sourceSha256": "93719cd871246c9b2f5ef73f4276d7c442f1299075bdbf2ea8d0fbf8c3b688ef",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/10_仙女棒_引擎回放.jpg",
+      "category": "引擎回放",
+      "content": "仙女棒引擎回放样例",
+      "usedIn": "第一版 8、13；第二版 9",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        720,
+        720
+      ],
+      "sourceBytes": 53397,
+      "sourceSha256": "9008c5d0b2c8f80c68bf7c1a8f6ca723f6ef1016eb02296f21de172f8aa8885b",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/12_窜天猴尾焰_引擎回放全身.jpg",
+      "category": "引擎回放",
+      "content": "窜天猴尾焰引擎回放样例",
+      "usedIn": "第一版 8；第二版 9",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        560,
+        720
+      ],
+      "sourceBytes": 21175,
+      "sourceSha256": "2b319abdc219e00e8184c614452004b06b175c9fc980b112e82b2a58e36f52c0",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/20_小青柠.jpg",
+      "category": "引擎回放",
+      "content": "小青柠样例，沿用第一版采访素材标注",
+      "usedIn": "第一版 8；第二版 9",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        300,
+        276
+      ],
+      "sourceBytes": 18286,
+      "sourceSha256": "1abb13326311957643af61b2acabe0dc994017385d96d7c6873eb0098b90544a",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/06_烘焙器界面_引擎回放.jpg",
+      "category": "工具界面",
+      "content": "含引擎回放的烘焙器完整界面；第一版录屏占位底图",
+      "usedIn": "第一版 11",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1600,
+        1000
+      ],
+      "sourceBytes": 331434,
+      "sourceSha256": "66587c045a9a3caef8daa171d538a2240a5606eceff6a7910a3aa36eb754a104",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/21_bug_星头方块_UE实机.jpg",
+      "category": "UE 实机",
+      "content": "星头方块 UE 原素材；未做第一版构建脚本的黄框改绿处理",
+      "usedIn": "第一版 12",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        843,
+        840
+      ],
+      "sourceBytes": 74326,
+      "sourceSha256": "a1f0f5a0f644c61610da40a619d08265ff1ef1b21d8c14fa809b2c89d14c7630",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "协作/提示词/分享PPT交接_2026-10-29/素材/22_bug_最亮处黑块_示意图.png",
+      "category": "示意图",
+      "content": "既有最亮处黑块示意图",
+      "usedIn": "第一版 12",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "sourceBytes": 148007,
+      "sourceSha256": "7ca6e96ce4c2e9cb5b6bd280b36d29f63c45d8275c77358a3dbea3b8a801efa9",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "analysis/results/GraphFraming/SGS1/candidate/PC-回放.jpg",
+      "category": "引擎回放",
+      "content": "4.9.118 PC 导出包回放",
+      "usedIn": "第二版 13",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        2270,
+        742
+      ],
+      "sourceBytes": 97554,
+      "sourceSha256": "f1f5ceb361f0737ea9f26f60218d6634a3bad7428b1a10ef718b860eff25c7d4",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "analysis/results/SparklerControls/基线-2.png",
+      "category": "示意图",
+      "content": "烘焙器实时模拟修订前局部，非 UE、非导出引擎回放",
+      "usedIn": "第二版 13",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        768,
+        768
+      ],
+      "sourceBytes": 87852,
+      "sourceSha256": "4aeea70703a1e8a001eb2ff919d6395c0995d4bea88ea6526b8eea39dc0e4061",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "analysis/results/SparklerControls/候选-2.png",
+      "category": "示意图",
+      "content": "烘焙器实时模拟修订后局部，非 UE、非导出引擎回放",
+      "usedIn": "第二版 13",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        768,
+        768
+      ],
+      "sourceBytes": 91271,
+      "sourceSha256": "4ffc2f9dea72badab379a0fce6a7def03a0275d1c129d25b8bf7ed80218de1a1",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "analysis/results/LOWQ_FIX_20261018/升空_现状对NoMip_低档.jpg",
+      "category": "UE 实机",
+      "content": "既有实际低档 UE 控制变量对照总图；本次未做第二版取框裁切",
+      "usedIn": "第二版 15",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1926,
+        2788
+      ],
+      "sourceBytes": 455707,
+      "sourceSha256": "d8ae626e6ef709a303275529cb0f99e300a15568b61dae0423c7f7392c1e89e6",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "analysis/results/LOWQ_FIX_20261018/金芒菊_绽放局部放大_低档.jpg",
+      "category": "UE 实机",
+      "content": "既有实际低档 UE 控制变量对照总图；本次未做第二版取框裁切",
+      "usedIn": "第二版 15",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1254,
+        1516
+      ],
+      "sourceBytes": 235828,
+      "sourceSha256": "b3e0cfe12ed29d1e1f54ba83a4555cba7779ab99bd10b375aeaa3df78ef41fdb",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    },
+    {
+      "source": "analysis/results/SparkGraph/13层形态对照.jpg",
+      "category": "示意图",
+      "content": "烘焙器实时模拟分层形态对照；非 UE，非 Blender 原渲染",
+      "usedIn": "第二版 22",
+      "sourceWasGitTracked": true,
+      "sourceDimensions": [
+        1200,
+        1400
+      ],
+      "sourceBytes": 60296,
+      "sourceSha256": "b93fff1949e3ba19a726a4ca00f3e95aeed265992cc5d928889fff88ff3360b3",
+      "processing": "已在 Git；保留现有来源路径，不重复复制"
+    }
+  ],
+  "verification": {
+    "copyCount": 12,
+    "outputBytes": 5580746,
+    "allNativeDimensions": true,
+    "allSourceHashesUnchanged": true,
+    "convertedCount": 0
+  },
+  "gaps": [
+    "第二版第 6 页脚本只引用编排工作台 wb_stage.jpg；没有引用 UE 舞台机位实拍，不能提供不存在的同源 UE 图。",
+    "第二版第 16 页黑点参数栏没有 UE 成对图；Ramp 机制图和六格修后 UE 总图不组成同机位修前修后实验。"
+  ]
+}
