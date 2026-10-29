@@ -1,0 +1,300 @@
+{
+  "date": "2026-10-29",
+  "stage": "design-review-only",
+  "base": "v3-unified Material/WAI adapted candidate",
+  "variant": "Spectrum-oriented, same u-* kit and workspace adapter",
+  "officialSpectrumPackageInstalled": false,
+  "productionSourceChanges": false,
+  "sharedTokenChanges": false,
+  "preservation": {
+    "checkedFiles": 194,
+    "changedFiles": []
+  },
+  "viewportUnit": "CSS pixel; explicit screenshot viewport, not monitor inch",
+  "checks": [
+    {
+      "test": "两版独立字段校验",
+      "adobe": "true",
+      "material": "true",
+      "search": "当前节点 · 0项，没有匹配参数。清空搜索恢复全部。"
+    },
+    {
+      "test": "搜索清空恢复",
+      "result": "当前节点 · 3项",
+      "materialStillEmpty": "当前节点 · 0项，没有匹配参数。清空搜索恢复全部。"
+    },
+    {
+      "test": "数值越界保留并标错",
+      "value": "2",
+      "invalid": "true"
+    },
+    {
+      "test": "紧凑尺寸与字阶",
+      "number": {
+        "font": "14px",
+        "height": 32
+      },
+      "material": {
+        "font": "12px",
+        "height": 32
+      }
+    },
+    {
+      "test": "本次编辑内Esc恢复",
+      "value": "1",
+      "invalid": "false"
+    },
+    {
+      "test": "有效数值键盘步进同步",
+      "number": "1.01",
+      "range": "1.01"
+    },
+    {
+      "test": "下拉选择",
+      "result": "当前选择：手机"
+    },
+    {
+      "test": "混选转全选",
+      "result": "全部选择 · 已选择2/2"
+    },
+    {
+      "test": "子项转混选",
+      "result": "混选 · 已选择1/2"
+    },
+    {
+      "test": "单选",
+      "result": "当前选择：Zoom取景"
+    },
+    {
+      "test": "开关键盘",
+      "result": "辅助线开启；不影响示例参数或导出。"
+    },
+    {
+      "test": "分段End",
+      "result": "当前选择：俯视。观察示例不改变参数。"
+    },
+    {
+      "test": "分段Home及方向键",
+      "result": "当前选择：侧视。观察示例不改变参数。"
+    },
+    {
+      "test": "长菜单展开",
+      "open": "",
+      "items": [
+        "只看当前层",
+        "恢复全部观察，并保留当前编辑对象与参数位置",
+        "不可用命令 · 示例"
+      ]
+    },
+    {
+      "test": "菜单Esc关闭",
+      "open": null,
+      "expanded": "false"
+    },
+    {
+      "test": "模态关闭恢复焦点",
+      "open": null,
+      "triggerFocused": true
+    },
+    {
+      "test": "工作区原生键盘修改后撤销",
+      "value": "1"
+    },
+    {
+      "test": "隔离示例保存刷新",
+      "value": "1.21",
+      "hiddenDesktopPane": "none"
+    },
+    {
+      "test": "1366交付面积",
+      "viewport": [
+        1366,
+        768
+      ],
+      "preview": {
+        "height": 489.3333435058594,
+        "width": 793.8021240234375
+      },
+      "checklist": {
+        "height": 576,
+        "scrollHeight": 826,
+        "width": 340.19793701171875
+      },
+      "horizontalOverflow": false
+    },
+    {
+      "test": "交付返回编辑上下文",
+      "tempo": "1.21"
+    },
+    {
+      "test": "导入示例核对后可确认",
+      "enabled": true
+    },
+    {
+      "test": "设置变更使旧确认失效",
+      "enabled": false,
+      "message": "设置已改变，原确认已失效，请重新检查示例。"
+    },
+    {
+      "test": "设置改变后核对摘要刷新",
+      "summary": "示例数2\n检查尚未检查示例\nUE未连接",
+      "confirmEnabled": false
+    },
+    {
+      "test": "小窗口底部动作滚动可达",
+      "activePane": "true",
+      "overflow": false
+    },
+    {
+      "test": "683×384参数窗格",
+      "input": {
+        "height": 40,
+        "width": 64
+      },
+      "overflow": false
+    },
+    {
+      "test": "2560交付",
+      "preview": {
+        "height": 1161.3333740234375,
+        "width": 1601.604248046875
+      },
+      "overflow": false
+    },
+    {
+      "test": "小窗滚动到参数输入",
+      "box": {
+        "height": 40,
+        "y": 287
+      }
+    },
+    {
+      "test": "1366真实对照长菜单",
+      "viewport": {
+        "height": 768,
+        "width": 1366
+      },
+      "items": [
+        {
+          "bottom": 186.6666717529297,
+          "height": 40,
+          "right": 459.3333587646485
+        },
+        {
+          "bottom": 226.6666717529297,
+          "height": 40,
+          "right": 459.3333587646485
+        },
+        {
+          "bottom": 266.6666717529297,
+          "height": 40,
+          "right": 459.3333587646485
+        }
+      ]
+    },
+    {
+      "test": "进行中阻止重复",
+      "busy": "true",
+      "disabled": true
+    },
+    {
+      "test": "完整样板紧凑字段",
+      "number": {
+        "font": "14px",
+        "height": 32
+      },
+      "label": {
+        "font": "13px"
+      }
+    },
+    {
+      "test": "长文本说明",
+      "valueLength": 336,
+      "box": {
+        "font": "14px",
+        "height": 88,
+        "scrollHeight": 162,
+        "whiteSpace": "pre-wrap"
+      }
+    },
+    {
+      "test": "重置保留当前页",
+      "page": "editor",
+      "title": "FireWorksLab · 编辑 · 设计示意",
+      "url": "http://127.0.0.1:8034/design-system/drafts/v5-spectrum-20261029/demo.html?page=editor&density=regular"
+    }
+  ],
+  "console": {
+    "standaloneComponents": "no errors observed",
+    "demo": "no errors observed",
+    "comparison": "IAB injected-script MutationObserver error during iframe initialisation; no observed interaction failure",
+    "evidence": {
+      "error": "IAB comparison iframe initialisation reports MutationObserver observe(non-Node)",
+      "injectedScriptLength": 561076,
+      "containsCandidateMarker": false,
+      "sourceUrl": "",
+      "tailStack": "node:electron/js2c/sandbox_bundle",
+      "candidateFilesContainMutationObserver": false,
+      "impact": "No observed interruption in iframe component interaction; recorded as browser environment issue"
+    }
+  },
+  "verifiedScope": "eight primitives and representative editor/delivery/importer interactions",
+  "unverified": [
+    "real bake/asset export/UE integration",
+    "full screen-reader audit",
+    "cross-browser/native select compatibility",
+    "touch and forced-colors hardware testing"
+  ],
+  "storageKey": "fwl.ui-demo.v5-spectrum",
+  "testStorageReset": true,
+  "preview": "old static reference imagery from v3, not a live renderer",
+  "staticChecks": {
+    "protectedFileCount": 194,
+    "protectedChanges": [],
+    "localHtmlLinks": 52,
+    "missingLinks": [],
+    "javascriptSyntaxChecks": 4,
+    "screenshots": {
+      "button-focused-comparison.png": [
+        1920,
+        453
+      ],
+      "component-comparison.png": [
+        1920,
+        1080
+      ],
+      "delivery-1366.png": [
+        1366,
+        768
+      ],
+      "editor-1920.png": [
+        1920,
+        1080
+      ],
+      "editor-small.png": [
+        683,
+        384
+      ],
+      "field-error-comparison.png": [
+        1920,
+        1080
+      ],
+      "menu-1366.png": [
+        1366,
+        768
+      ],
+      "overview-comparison.png": [
+        3840,
+        1120
+      ],
+      "segment-comparison.png": [
+        1920,
+        1080
+      ],
+      "slider-compact-comparison.png": [
+        1920,
+        1080
+      ]
+    }
+  }
+}

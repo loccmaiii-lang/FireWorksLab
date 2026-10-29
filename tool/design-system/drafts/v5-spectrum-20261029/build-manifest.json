@@ -1,0 +1,29 @@
+{
+  "base": "v3-unified, Material/WAI project-adapted candidate",
+  "variant": "Spectrum-oriented FireWorksLab candidate, not official Spectrum package",
+  "sameBehaviourFiles": [
+    "../v3-unified/component-kit.js",
+    "../v3-unified/workspace-adapter.js",
+    "../v3-unified/catalog.js"
+  ],
+  "storage": "fwl.ui-demo.v5-spectrum",
+  "productionCalls": false,
+  "preview": "v3 static example imagery; not the v4 real-kernel workflow",
+  "variantBehaviourFixes": [
+    "Importer setting change refreshes stale review summary; confirmation invalidation semantics unchanged",
+    "Reset example values preserves current page and URL agreement"
+  ],
+  "baseHashes": {
+    "components.html": "2f4234222814fb4c54468e3a86208965e8633d87101606365c9742a0409ed5f1",
+    "demo.html": "f2403bd142e887ae9c6ef96c7f6d6dc61add29601e7c2e07bea90e60bb2c1360",
+    "candidate-tokens.css": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613",
+    "candidate-components.css": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213",
+    "component-kit.js": "88b3efc009f29bed2114a477e0467f8346b63aa5daae721c3a47c840c3111551",
+    "workspace-adapter.js": "a4684ee2d67d53fe848b2cd303673dfd0dcafafa260f03430547bf988cb28a08",
+    "catalog.js": "9b9392928c980385b8036cfd3d9556c89e48597e190db289267b2da83fc2e20d"
+  },
+  "generatedHashes": {
+    "components.html": "42afc7d4a1be196cf131c4246fa7157ca234d4f15d2111f12a57e1cfa7675c74",
+    "demo.html": "8c3a5b625a4483e351a6ffc55d63358a92209f9cb294bb80173be63d8a9a5d87"
+  }
+}

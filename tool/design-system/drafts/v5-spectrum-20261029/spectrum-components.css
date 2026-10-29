@@ -1,0 +1,258 @@
+/* 只覆盖隔离候选的 u-* 外观；值、步长、撤销及键盘仍归 v3 控制器。 */
+.u-scope[data-design="spectrum"] :is(.u-button,.u-input,.u-select,.u-slider,.u-checkbox,.u-radio,.u-switch,.u-segment,.u-dialog,.u-menu-item) {
+  box-sizing:border-box; font-family:var(--u-font); transition:none;
+}
+
+/* C01：工具动作保持中性，最高主动作独占薄荷强调。 */
+.u-scope[data-design="spectrum"] .u-button {
+  min-height:var(--u-control); padding:5px 12px;
+  border:var(--u-line) solid var(--u-border); border-radius:var(--u-radius);
+  color:var(--u-text); background:var(--u-panel); box-shadow:none;
+  font-size:var(--u-label); line-height:var(--u-label-line); font-weight:500;
+}
+.u-scope[data-design="spectrum"] .u-button.u-quiet { border-color:transparent; background:transparent; }
+.u-scope[data-design="spectrum"] .u-button:hover:not(:disabled):not([aria-disabled="true"]) {
+  border-color:var(--u-outline); background:var(--u-high); color:var(--u-text);
+}
+.u-scope[data-design="spectrum"] .u-button:active:not(:disabled):not([aria-disabled="true"]) {
+  border-color:var(--u-text); background:var(--u-high); color:var(--u-text);
+}
+.u-scope[data-design="spectrum"] .u-button.u-primary {
+  border-color:var(--u-accent-fill); background:var(--u-accent-fill); color:var(--u-accent-ink); font-weight:600;
+}
+.u-scope[data-design="spectrum"] .u-button.u-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  border-color:var(--u-accent-hover); background:var(--u-accent-hover); color:var(--u-accent-ink);
+}
+.u-scope[data-design="spectrum"] .u-button.u-primary:active:not(:disabled):not([aria-disabled="true"]) {
+  border-color:var(--u-accent-ink); background:var(--u-accent-fill); color:var(--u-accent-ink);
+}
+.u-scope[data-design="spectrum"] .u-button.u-danger { border-color:var(--u-error); color:var(--u-error); background:transparent; }
+.u-scope[data-design="spectrum"] .u-button.u-danger:is(:hover,:active):not(:disabled):not([aria-disabled="true"]) {
+  border-color:var(--u-error); background:var(--u-error-bg); color:var(--u-error);
+}
+.u-scope[data-design="spectrum"] .u-button.u-icon { width:var(--u-control); min-width:var(--u-control); padding:4px; }
+.u-scope[data-design="spectrum"] .u-button.u-inline {
+  min-height:var(--u-inline); padding:2px 8px; font-size:var(--u-label); line-height:var(--u-label-line);
+}
+.u-scope[data-design="spectrum"] .u-button.u-inline.u-icon { width:var(--u-inline); min-width:var(--u-inline); padding:2px; }
+.u-scope[data-design="spectrum"] .u-button:is(:disabled,[aria-disabled="true"]) {
+  opacity:1; cursor:not-allowed; color:var(--u-muted); background:var(--u-low); border-color:var(--u-divider); box-shadow:none;
+}
+.u-scope[data-design="spectrum"] .u-button[aria-busy="true"] { cursor:progress; }
+
+/* 焦点独立于选中、修改及错误；不以布局移动表示按下。 */
+.u-scope[data-design="spectrum"] :is(.u-button,.u-input,.u-select,.u-slider,.u-checkbox,.u-radio,.u-switch,.u-segment,.u-summary,.u-menu-item):focus-visible {
+  outline:var(--u-focus-width) solid var(--u-focus); outline-offset:2px;
+}
+.u-scope[data-design="spectrum"] #parameter-search.u-input:focus-visible {
+  outline:var(--u-focus-width) solid var(--u-focus); outline-offset:2px;
+}
+
+/* C02 / C04：值保持常规字重，标签与说明建立层级。 */
+.u-scope[data-design="spectrum"] :is(.u-input,.u-select) {
+  min-height:var(--u-control); min-width:0; padding:4px 10px;
+  border:var(--u-line) solid var(--u-outline); border-radius:var(--u-radius);
+  background:var(--u-low); color:var(--u-text); box-shadow:none;
+  font-size:var(--u-body); line-height:var(--u-body-line); font-weight:400;
+}
+.u-scope[data-design="spectrum"] .u-select { padding-inline-end:28px; }
+.u-scope[data-design="spectrum"] .u-input:hover:not(:disabled):not([readonly]),
+.u-scope[data-design="spectrum"] .u-select:hover:not(:disabled) { border-color:var(--u-text); }
+.u-scope[data-design="spectrum"] .u-input:focus-visible { border-color:var(--u-outline); }
+.u-scope[data-design="spectrum"] .u-input[readonly] {
+  border-style:solid; border-color:var(--u-border); color:var(--u-text); background:var(--u-panel); cursor:text; user-select:text;
+}
+.u-scope[data-design="spectrum"] :is(.u-input,.u-select):disabled {
+  opacity:1; color:var(--u-muted); -webkit-text-fill-color:var(--u-muted);
+  border-color:var(--u-divider); background:var(--u-low); cursor:not-allowed;
+}
+.u-scope[data-design="spectrum"] :is(.u-input,.u-select)[aria-invalid="true"] { border-color:var(--u-error); }
+.u-scope[data-design="spectrum"] :is(.u-input,.u-select).is-modified {
+  border-inline-start-width:var(--u-line); box-shadow:inset 2px 0 0 var(--u-warning);
+}
+.u-scope[data-design="spectrum"] textarea.u-input { min-height:88px; resize:vertical; }
+.u-scope[data-design="spectrum"] .u-label {
+  color:var(--u-muted); font-size:var(--u-label); line-height:var(--u-label-line); font-weight:500;
+}
+.u-scope[data-design="spectrum"] .u-help { font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400; }
+.u-scope[data-design="spectrum"] .u-field-error { font-size:var(--u-label); line-height:var(--u-label-line); font-weight:400; }
+.u-scope[data-design="spectrum"] .u-input[type="number"] {
+  appearance:auto; -moz-appearance:auto; text-align:right; font-variant-numeric:tabular-nums;
+}
+/* 覆盖旧 Demo 的 display:none，不新增步进结构或替换原生事件。 */
+.u-scope[data-design="spectrum"] .u-input[type="number"]::-webkit-inner-spin-button,
+.u-scope[data-design="spectrum"] .u-input[type="number"]::-webkit-outer-spin-button {
+  display:block; -webkit-appearance:inner-spin-button; opacity:1; margin-inline-start:4px; cursor:pointer;
+}
+@supports (appearance:base-select) {
+  .u-scope[data-design="spectrum"] .u-select,
+  .u-scope[data-design="spectrum"] .u-select::picker(select) { appearance:base-select; }
+  .u-scope[data-design="spectrum"] .u-select { padding-inline-end:10px; }
+  .u-scope[data-design="spectrum"] .u-select::picker-icon { color:var(--u-muted); }
+  .u-scope[data-design="spectrum"] .u-select::picker(select) {
+    border-color:var(--u-outline); border-radius:var(--u-menu-radius); background:var(--u-panel); color:var(--u-text);
+  }
+  .u-scope[data-design="spectrum"] .u-select option {
+    min-height:var(--u-control); padding:5px 10px; font-size:var(--u-body); line-height:var(--u-body-line); font-weight:400; border-radius:var(--u-radius);
+  }
+  .u-scope[data-design="spectrum"] .u-select option:is(:hover,:focus-visible,:checked) {
+    background:var(--u-selection-fill); color:var(--u-selection-ink);
+  }
+  .u-scope[data-design="spectrum"] .u-select option::checkmark { color:var(--u-selection-ink); }
+  .u-scope[data-design="spectrum"] .u-select option:disabled { color:var(--u-muted); background:transparent; }
+}
+
+/* C03：细轨和中性旋钮；可点区域不随可见轨道变细。 */
+.u-scope[data-design="spectrum"] .u-slider,
+.u-scope[data-design="spectrum"] .parameter-grid .u-slider.draft-range {
+  appearance:none; -webkit-appearance:none; width:100%; min-width:48px;
+  height:var(--u-control); min-height:var(--u-control); padding:0; margin:0; border:0;
+  background:transparent; accent-color:var(--u-text); cursor:pointer; box-shadow:none;
+}
+.u-scope[data-design="spectrum"] .u-slider::-webkit-slider-runnable-track {
+  height:var(--u-slider-track); border:0; border-radius:0; background:var(--u-outline);
+}
+.u-scope[data-design="spectrum"] .u-slider::-webkit-slider-thumb {
+  appearance:none; -webkit-appearance:none; box-sizing:border-box;
+  width:var(--u-slider-thumb); height:var(--u-slider-thumb);
+  margin-top:calc((var(--u-slider-track) - var(--u-slider-thumb)) / 2);
+  border:1px solid var(--u-text); border-radius:50%; background:var(--u-panel); box-shadow:none;
+}
+.u-scope[data-design="spectrum"] .u-slider::-moz-range-track {
+  height:var(--u-slider-track); border:0; border-radius:0; background:var(--u-outline);
+}
+.u-scope[data-design="spectrum"] .u-slider::-moz-range-progress {
+  height:var(--u-slider-track); border-radius:0; background:var(--u-outline);
+}
+.u-scope[data-design="spectrum"] .u-slider::-moz-range-thumb {
+  box-sizing:border-box; width:var(--u-slider-thumb); height:var(--u-slider-thumb);
+  border:1px solid var(--u-text); border-radius:50%; background:var(--u-panel); box-shadow:none;
+}
+.u-scope[data-design="spectrum"] .u-slider:focus-visible { outline:none; }
+.u-scope[data-design="spectrum"] .u-slider:focus-visible::-webkit-slider-thumb { outline:2px solid var(--u-focus); outline-offset:2px; }
+.u-scope[data-design="spectrum"] .u-slider:focus-visible::-moz-range-thumb { outline:2px solid var(--u-focus); outline-offset:2px; }
+.u-scope[data-design="spectrum"] .u-slider:is(:hover,:active):not(:disabled)::-webkit-slider-thumb { background:var(--u-text); }
+.u-scope[data-design="spectrum"] .u-slider:is(:hover,:active):not(:disabled)::-moz-range-thumb { background:var(--u-text); }
+.u-scope[data-design="spectrum"] .u-slider:disabled { opacity:1; cursor:not-allowed; }
+.u-scope[data-design="spectrum"] .u-slider:disabled::-webkit-slider-runnable-track { background:var(--u-divider); }
+.u-scope[data-design="spectrum"] .u-slider:disabled::-moz-range-track,
+.u-scope[data-design="spectrum"] .u-slider:disabled::-moz-range-progress { background:var(--u-divider); }
+.u-scope[data-design="spectrum"] .u-slider:disabled::-webkit-slider-thumb { border-color:var(--u-muted); background:var(--u-low); }
+.u-scope[data-design="spectrum"] .u-slider:disabled::-moz-range-thumb { border-color:var(--u-muted); background:var(--u-low); }
+
+/* C05 / C06：保留原生勾选、混选及组键盘，等权选项使用中性色。 */
+.u-scope[data-design="spectrum"] :is(.u-checkbox,.u-radio) {
+  appearance:auto; accent-color:var(--u-toggle-fill); width:18px; height:18px; min-height:0;
+}
+.u-scope[data-design="spectrum"] :is(.u-checkbox,.u-radio):disabled { accent-color:var(--u-muted); opacity:1; cursor:not-allowed; }
+.u-scope[data-design="spectrum"] .u-check-row {
+  min-height:var(--u-control); font-size:var(--u-label); line-height:var(--u-label-line); font-weight:400;
+}
+
+/* C07：输入开关与旧 Demo 的 role=switch 按钮共用方形外观。 */
+.u-scope[data-design="spectrum"] .u-switch,
+.u-scope[data-design="spectrum"] .u-button[role="switch"] {
+  appearance:none; -webkit-appearance:none; position:relative; flex:none; display:inline-block;
+  width:36px; min-width:36px; height:20px; min-height:0; margin:0; padding:0;
+  border:1px solid var(--u-outline); border-radius:var(--u-switch-radius); background:var(--u-low); box-shadow:none;
+}
+.u-scope[data-design="spectrum"] .u-switch::after,
+.u-scope[data-design="spectrum"] .u-button[role="switch"]::after {
+  content:""; position:absolute; top:3px; left:3px; width:12px; height:12px;
+  border-radius:1px; background:var(--u-text); box-shadow:none;
+}
+.u-scope[data-design="spectrum"] .u-switch:checked,
+.u-scope[data-design="spectrum"] .u-button[role="switch"][aria-checked="true"] {
+  border-color:var(--u-toggle-fill); background:var(--u-toggle-fill);
+}
+.u-scope[data-design="spectrum"] .u-switch:checked::after,
+.u-scope[data-design="spectrum"] .u-button[role="switch"][aria-checked="true"]::after { left:19px; background:var(--u-toggle-ink); }
+.u-scope[data-design="spectrum"] .u-switch:disabled,
+.u-scope[data-design="spectrum"] .u-button[role="switch"]:is(:disabled,[aria-disabled="true"]) {
+  border-color:var(--u-divider); background:var(--u-low); cursor:not-allowed;
+}
+.u-scope[data-design="spectrum"] .u-switch:disabled::after,
+.u-scope[data-design="spectrum"] .u-button[role="switch"]:is(:disabled,[aria-disabled="true"])::after { background:var(--u-muted); }
+
+/* C08：一个轨道容器，持久选中与键盘焦点分别可见。 */
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented) {
+  flex-wrap:nowrap; align-items:stretch; gap:0; padding:0; min-height:var(--u-control);
+  width:fit-content; max-width:100%; border:1px solid var(--u-border); border-radius:var(--u-radius);
+  background:var(--u-low); box-sizing:border-box;
+}
+.u-scope[data-design="spectrum"] .u-segments { display:flex; }
+/* 业务容器的显隐由原断点决定，分段外观不增加工作区网格子项。 */
+.u-scope[data-design="spectrum"] :is(.pane-switcher,.import-pane-tabs) { display:none; }
+@media (max-width:899px) {
+  .u-scope[data-design="spectrum"] .pane-switcher { display:flex; }
+}
+@media (max-width:980px),(max-height:620px) {
+  .u-scope[data-design="spectrum"] .import-pane-tabs { display:flex; }
+}
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented)[hidden] { display:none; }
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment {
+  flex:1 1 auto; min-width:0; min-height:calc(var(--u-control) - 2px); padding:5px 12px;
+  border:0; border-radius:2px; background:transparent; color:var(--u-muted); box-shadow:none;
+  font-size:var(--u-label); line-height:var(--u-label-line); font-weight:500;
+}
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment:is(:hover,:active):not(:disabled):not([aria-disabled="true"]) {
+  border:0; background:var(--u-high); color:var(--u-text);
+}
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment:is([aria-pressed="true"],[aria-checked="true"],[aria-selected="true"]) {
+  border:0; background:var(--u-selection-fill); color:var(--u-selection-ink); box-shadow:inset 0 0 0 1px var(--u-outline);
+}
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment:focus-visible { outline-offset:-3px; }
+.u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment:is(:disabled,[aria-disabled="true"]) {
+  border:0; color:var(--u-muted); background:var(--u-low); cursor:not-allowed;
+}
+
+/* 同一密度在目录和工作页均生效，局部工具按钮仍保留 inline 角色。 */
+.u-scope[data-design="spectrum"] .demo-toolbar :is(.u-button,.u-select),
+.u-scope[data-design="spectrum"] .appbar-tools .u-button,
+.u-scope[data-design="spectrum"] .preset-row .u-button { min-height:var(--u-control); font-size:var(--u-label); line-height:var(--u-label-line); }
+.u-scope[data-design="spectrum"] .tree-heading .u-button { font-size:var(--u-label); line-height:var(--u-label-line); }
+.u-scope[data-design="spectrum"] .parameter-grid .u-input { padding-inline:4px; font-size:var(--u-body); line-height:var(--u-body-line); font-weight:400; }
+.u-scope[data-design="spectrum"] .u-menu-body { border-radius:var(--u-menu-radius); }
+.u-scope[data-design="spectrum"] .u-menu-item { padding:6px 10px; font-size:var(--u-label); line-height:var(--u-label-line); }
+.u-scope[data-design="spectrum"] .u-menu-item:is(:hover,:focus-visible):not(:disabled) { background:var(--u-selection-fill); color:var(--u-selection-ink); }
+.u-scope[data-design="spectrum"] .u-dialog { border-radius:var(--u-radius); }
+
+@media (pointer:coarse) {
+  .u-scope[data-design="spectrum"] :is(.u-button,.u-segment,.u-input,.u-select,.u-check-row,.u-summary,.u-menu-item),
+  .u-scope[data-design="spectrum"] .demo-toolbar :is(.u-button,.u-select),
+  .u-scope[data-design="spectrum"] .appbar-tools .u-button,
+  .u-scope[data-design="spectrum"] .preset-row .u-button,
+  .u-scope[data-design="spectrum"] .u-button.u-inline,
+  .u-scope[data-design="spectrum"] .checkbox-row { min-height:48px; }
+  .u-scope[data-design="spectrum"] :is(.u-button.u-icon,.u-button.u-inline.u-icon) { min-width:48px; }
+  .u-scope[data-design="spectrum"] .u-slider,
+  .u-scope[data-design="spectrum"] .parameter-grid .u-slider.draft-range { height:48px; min-height:48px; }
+  .u-scope[data-design="spectrum"] :is(.u-segments,.segmented) { min-height:50px; }
+  .u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment { min-height:48px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .u-scope[data-design="spectrum"] :is(.u-button,.u-input,.u-select,.u-slider,.u-checkbox,.u-radio,.u-switch,.u-segment,.u-dialog,.u-menu-item) {
+    transition:none; animation:none; scroll-behavior:auto;
+  }
+}
+@media (forced-colors:active) {
+  .u-scope[data-design="spectrum"] {
+    --u-accent-fill:Highlight; --u-accent-hover:Highlight; --u-accent-ink:HighlightText;
+    --u-selection-fill:Highlight; --u-selection-ink:HighlightText;
+    --u-toggle-fill:Highlight; --u-toggle-ink:HighlightText;
+    --u-focus:Highlight; --u-outline:ButtonText; --u-border:ButtonText;
+  }
+  .u-scope[data-design="spectrum"] :is(.u-input,.u-select)[aria-invalid="true"] { border-style:dashed; }
+  .u-scope[data-design="spectrum"] :is(.u-input,.u-select).is-modified { border-inline-start:3px double Mark; box-shadow:none; }
+  .u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment:is([aria-pressed="true"],[aria-checked="true"],[aria-selected="true"]) {
+    outline:1px solid Highlight; outline-offset:-1px; border-color:Highlight; box-shadow:none;
+  }
+  .u-scope[data-design="spectrum"] :is(.u-segments,.segmented) .u-segment:focus-visible { outline:2px solid Highlight; outline-offset:-3px; }
+  .u-scope[data-design="spectrum"] :is(.u-checkbox,.u-radio) { accent-color:Highlight; }
+  .u-scope[data-design="spectrum"] .u-slider:focus-visible { outline:2px solid Highlight; outline-offset:2px; }
+  .u-scope[data-design="spectrum"] .u-slider::-webkit-slider-runnable-track { background:CanvasText; }
+  .u-scope[data-design="spectrum"] .u-slider::-moz-range-track,
+  .u-scope[data-design="spectrum"] .u-slider::-moz-range-progress { background:CanvasText; }
+  .u-scope[data-design="spectrum"] .u-slider::-webkit-slider-thumb { border-color:CanvasText; background:Canvas; }
+  .u-scope[data-design="spectrum"] .u-slider::-moz-range-thumb { border-color:CanvasText; background:Canvas; }
+}

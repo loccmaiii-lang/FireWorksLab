@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>FireWorksLab · Spectrum取向 · 八类组件样板</title>
+  <link rel="stylesheet" href="../../tokens.css">
+  <link rel="stylesheet" href="../v3-unified/candidate-tokens.css">
+  <link rel="stylesheet" href="../v3-unified/candidate-components.css">
+  <link rel="stylesheet" href="../v3-unified/catalog.css">
+  <script src="../v1/assets/icons.js" defer></script>
+  <script src="../v3-unified/component-kit.js" defer></script>
+  <script src="../v3-unified/catalog.js" defer></script>
+<link rel="stylesheet" href="spectrum-tokens.css"><link rel="stylesheet" href="spectrum-components.css"></head>
+<body class="fw-scope u-scope catalog" data-density="regular" data-design="spectrum">
+  <header class="catalog-header">
+    <div class="catalog-brand"><strong>FireWorksLab</strong><span>Spectrum取向 · 待审</span></div>
+    <nav aria-label="审阅入口"><a href="index.html">审阅清单</a><a href="demo.html?page=editor">编辑</a><a href="demo.html?page=delivery">交付</a><a href="demo.html?page=importer">导入核对</a><a href="../v3-unified/components.html">Material原版</a></nav>
+    <div class="catalog-density" role="group" aria-label="样板密度"><button class="u-button u-inline" type="button" data-catalog-density="regular" aria-pressed="true">常规</button><button class="u-button u-inline" type="button" data-catalog-density="compact" aria-pressed="false">紧凑</button></div>
+  </header>
+  <div class="catalog-layout">
+    <aside class="catalog-index" aria-label="组件目录">
+      <h2>基础控件</h2>
+      <nav><a href="#buttons">01 按钮</a><a href="#fields">02 字段</a><a href="#slider">03 滑杆与数值</a><a href="#select">04 下拉选择</a><a href="#checks">05 勾选与混选</a><a href="#radios">06 单选</a><a href="#switch">07 开关</a><a href="#segments">08 分段选择</a><a href="#feedback">菜单、对话框与反馈</a><a href="#contract">统一规则摘要</a></nav>
+      <p class="u-help">仅内置演示数据。没有真实保存、文件读写、素材包或UE调用。</p>
+      <a class="catalog-return" href="../v3-unified/components.html">保留的 Material 样板</a>
+    </aside>
+    <main class="catalog-main" id="catalog-main">
+      <header class="catalog-lead"><p class="catalog-kicker">01 基础规则 / 02 组件 / 03 模式 / 04 页面</p><h1>Spectrum取向 · 八类组件样板</h1><p>保留蓝灰、青绿、直角感和细边框。同用途控件共用尺寸与边界；下面的控件均可实际操作。</p><p class="u-help">Spectrum取向调整动作强调、输入层级和面板选中语言；不是官方组件包。此页不是29类组件全部状态验收结果。</p></header>
+
+      <section class="catalog-section" id="buttons" aria-labelledby="buttons-title">
+        <header><span class="catalog-number">C01</span><h2 id="buttons-title">按钮与图标按钮</h2><span class="catalog-tag">同尺寸，按职责区分强调</span></header>
+        <div class="catalog-row"><h3>普通 / 主要 / 安静</h3><div class="catalog-samples"><button type="button" class="u-button" data-catalog-action="普通按钮">打开示例</button><button type="button" class="u-button u-primary" data-catalog-action="主要按钮">保存示例</button><button type="button" class="u-button u-quiet" data-catalog-action="安静按钮">取消</button><button type="button" class="u-button u-icon" data-catalog-action="图标按钮" aria-label="重新查看示例"><span data-fw-icon="refresh"></span></button></div><p class="u-help">同一高度、4px小圆角。薄荷主动作与中性工具动作分层；不靠放大或装饰阴影。</p></div>
+        <div class="catalog-row"><h3>禁用 / 进行中</h3><div class="catalog-samples"><div class="sample-column"><button type="button" class="u-button" disabled aria-describedby="disabled-reason">导入UE</button><p id="disabled-reason" class="u-help">不可用：此样板没有UE连接。</p></div><div class="sample-column"><button type="button" class="u-button" id="busy-button" data-busy-demo>体验进行中状态</button><p id="busy-caption" class="u-help">仅650ms界面演示，不运行任务。</p></div></div><p class="u-help">禁用保留可读文字，并就地说明原因。进行中阻止重复触发，完成反馈不冒充业务成功。</p></div>
+        <div class="catalog-row"><h3>危险操作</h3><div class="catalog-samples"><button type="button" class="u-button u-danger" data-catalog-action="危险按钮仅作强调演示，没有删除对象">移除演示项</button></div><p class="u-help">只用于有损或高影响操作；本按钮不执行删除。</p></div>
+      </section>
+
+      <section class="catalog-section" id="fields" aria-labelledby="fields-title">
+        <header><span class="catalog-number">C02</span><h2 id="fields-title">字段、搜索与多行输入</h2><span class="catalog-tag">标签常驻，错误保留输入</span></header>
+        <div class="catalog-row"><h3><label for="example-name">名称</label></h3><div class="u-field"><input class="u-input" id="example-name" value="金曜菊 · 金锦层" maxlength="64" aria-describedby="name-help name-error"><p id="name-help" class="u-help">可编辑，清空后体验必填错误；修改标记与错误可以并存。</p><p id="name-error" class="u-field-error" hidden></p></div><p class="u-help">输入时保留值，失焦时校验；黄色细内标记表达已修改，错误用文字和错误边界表达。</p></div>
+        <div class="catalog-row"><h3>只读 / 禁用</h3><div class="sample-stack"><label class="u-field"><span class="u-label">来源修订 · 只读可复制</span><input class="u-input" value="GLB-S1 · 示例修订" readonly aria-describedby="readonly-help"><span id="readonly-help" class="u-help">只读使用较弱边界，值仍可聚焦、选择与复制。</span></label><label class="u-field"><span class="u-label">目标项目 · 禁用</span><input class="u-input" value="未连接" disabled aria-describedby="target-help"><span id="target-help" class="u-help">未建立连接，不能选择目标项目。</span></label></div><p class="u-help">只读仍可聚焦和复制；禁用不接受输入。两者不会只靠透明度区别。</p></div>
+        <div class="catalog-row"><h3><label for="sample-search">搜索</label></h3><div class="u-field"><input class="u-input" type="search" id="sample-search" placeholder="搜索示例参数" aria-describedby="search-result"><p class="u-help" id="search-result" role="status">当前节点 · 3项</p><ul class="search-results" id="sample-results"><li>节奏</li><li>层长</li><li>线条宽度</li></ul></div><p class="u-help">只筛选这三项示例参数；空结果明确提示，清空后恢复完整列表。</p></div>
+        <div class="catalog-row"><h3><label for="sample-note">多行说明</label></h3><textarea class="u-input" id="sample-note" rows="3">金锦层的视觉备注，仅用于样板操作。</textarea><p class="u-help">文字自动换行，保留正常字号。允许按内容增高，不固定单行高度裁字。</p></div>
+      </section>
+
+      <section class="catalog-section" id="slider" aria-labelledby="slider-title">
+        <header><span class="catalog-number">C03</span><h2 id="slider-title">滑杆与数值</h2><span class="catalog-tag">共享值，单位独立</span></header>
+        <div class="catalog-row"><h3><label for="tempo-number">节奏</label></h3><div class="u-field" data-u-slider id="sample-slider"><div class="u-slider-row"><input class="u-slider" type="range" min="0.5" max="1.5" step="0.01" value="1" aria-label="节奏滑杆"><input class="u-input" id="tempo-number" type="number" min="0.5" max="1.5" step="0.01" value="1" aria-describedby="tempo-help tempo-error"><span>×</span></div><p class="u-help" id="tempo-help">范围0.5–1.5，步长0.01；数值输入按Esc恢复本次编辑前的值。</p><p class="u-field-error" id="tempo-error" data-u-slider-error hidden></p><p class="u-help" id="slider-commits" role="status">已提交0次；一次拖动完成后提交一次。</p></div><p class="u-help">拖动同步数值，结束后提交。越界输入保留并标错，不静默截断成另一个值；本样板不重算烟花。</p></div>
+      </section>
+
+      <section class="catalog-section" id="select" aria-labelledby="select-title">
+        <header><span class="catalog-number">C04</span><h2 id="select-title">下拉选择</h2><span class="catalog-tag">原生键盘与选择行为</span></header>
+        <div class="catalog-row"><h3><label for="sample-select">输出平台</label></h3><div class="u-field"><select class="u-select" id="sample-select" aria-describedby="select-state"><option value="both">PC与手机 · 同源配置</option><option value="pc">PC</option><option value="mobile">手机</option><option disabled>不可用的演示选项</option></select><p class="u-help" id="select-state" role="status">当前选择：PC与手机 · 同源配置</p></div><p class="u-help">字段外框与文本框共用4px小圆角。支持base-select时延续统一弹层；其他环境保留系统选择与键盘行为，另记兼容边界。</p></div>
+      </section>
+
+      <section class="catalog-section" id="checks" aria-labelledby="checks-title">
+        <header><span class="catalog-number">C05</span><h2 id="checks-title">勾选与混选</h2><span class="catalog-tag">整行可点，层级不压平</span></header>
+        <div class="catalog-row"><h3>输出范围 · 示例</h3><div class="sample-stack" id="sample-checks"><label class="u-check-row"><input class="u-checkbox" id="parent-check" type="checkbox" aria-describedby="check-state"><span>全部平台</span></label><div class="sample-child-checks"><label class="u-check-row"><input class="u-checkbox child-check" type="checkbox" value="PC" checked><span>PC</span></label><label class="u-check-row"><input class="u-checkbox child-check" type="checkbox" value="手机"><span>手机</span></label></div><p class="u-help" id="check-state" role="status">混选 · 已选择1/2</p></div><p class="u-help">父项根据子项显示未选、全选或混选。状态有文字摘要，点击父项选择全部或清空。</p></div>
+      </section>
+
+      <section class="catalog-section" id="radios" aria-labelledby="radios-title">
+        <header><span class="catalog-number">C06</span><h2 id="radios-title">单选组</h2><span class="catalog-tag">互斥选择与完整标签</span></header>
+        <div class="catalog-row"><h3>取景 · 示例</h3><fieldset class="sample-fieldset"><legend class="u-sr-only">取景方式</legend><label class="u-check-row"><input class="u-radio" type="radio" name="sample-framing" value="固定取景" checked><span>固定取景</span></label><label class="u-check-row"><input class="u-radio" type="radio" name="sample-framing" value="Zoom取景"><span>Zoom取景</span></label><p class="u-help" id="radio-state" role="status">当前选择：固定取景</p></fieldset><p class="u-help">使用原生单选组的方向键切换与Space选择。这里只有两种已有取景名称，不改变配方或相机。</p></div>
+      </section>
+
+      <section class="catalog-section" id="switch" aria-labelledby="switch-title">
+        <header><span class="catalog-number">C07</span><h2 id="switch-title">开关</h2><span class="catalog-tag">即时布尔状态</span></header>
+        <div class="catalog-row"><h3>显示辅助线</h3><div class="sample-stack"><label class="u-check-row"><input class="u-switch" type="checkbox" role="switch" id="sample-switch" aria-describedby="switch-state"><span>观察辅助线 · 示例</span></label><p class="u-help" id="switch-state" role="status">辅助线关闭；不影响示例参数或导出。</p></div><p class="u-help">方形开关保留小圆角；点击与Space即时生效。标签写作用，不把开关当提交按钮。</p></div>
+      </section>
+
+      <section class="catalog-section" id="segments" aria-labelledby="segments-title">
+        <header><span class="catalog-number">C08</span><h2 id="segments-title">短选项分段</h2><span class="catalog-tag">选择与焦点可同时辨认</span></header>
+        <div class="catalog-row"><h3>观察方向 · 示例</h3><div class="sample-stack"><div class="u-segments" data-u-segments role="radiogroup" aria-label="观察方向"><button type="button" class="u-segment" role="radio" aria-checked="true" tabindex="0" data-value="正视">正视</button><button type="button" class="u-segment" role="radio" aria-checked="false" tabindex="-1" data-value="侧视">侧视</button><button type="button" class="u-segment" role="radio" aria-checked="false" tabindex="-1" data-value="俯视">俯视</button></div><p id="segment-state" class="u-help" role="status">当前选择：正视。方向键切换，Home/End到首尾。</p></div><p class="u-help">单一Tab入口；选中底色与键盘焦点框分别表达，不把仅悬停当成已经选中。</p></div>
+      </section>
+
+      <section class="catalog-section" id="feedback" aria-labelledby="feedback-title">
+        <header><span class="catalog-number">C11–C16</span><h2 id="feedback-title">菜单、对话框与状态反馈</h2><span class="catalog-tag">命令可达，关闭恢复焦点</span></header>
+        <div class="catalog-row"><h3>长命令菜单</h3><div class="catalog-samples"><details class="u-menu" data-u-menu><summary class="u-button" aria-haspopup="menu" aria-expanded="false">观察命令<span data-fw-icon="expand"></span></summary><div class="u-menu-body" role="menu" aria-label="观察示例命令"><button type="button" class="u-menu-item" role="menuitem" data-catalog-action="只看当前层">只看当前层</button><button type="button" class="u-menu-item" role="menuitem" data-catalog-action="恢复全部观察">恢复全部观察，并保留当前编辑对象与参数位置</button><button type="button" class="u-menu-item" role="menuitem" disabled>不可用命令 · 示例</button></div></details><button type="button" class="u-button" id="dialog-open">体验对话框</button></div><p class="u-help">长菜单项自然增高；方向键选择、Esc关闭。对话框原生模态，关闭后返回触发按钮。</p></div>
+        <div class="catalog-row"><h3>持久错误与说明</h3><div class="sample-error"><strong>示例校验未通过</strong><p>参数超出允许范围。保留当前输入，请回到“滑杆与数值”修正。</p><a href="#slider">定位示例参数</a></div><p class="u-help">持续问题留在相关区域，包含原因和下一步。短反馈放在页面底部，不遮挡控件。</p></div>
+      </section>
+
+      <section class="catalog-section" id="contract" aria-labelledby="contract-title">
+        <header><span class="catalog-number">规则</span><h2 id="contract-title">本轮统一了什么</h2></header>
+        <dl class="contract-list"><div><dt>同用途默认外观</dt><dd>按钮、字段、下拉统一4px小圆角与1px细边；主要、安静、危险变体保留各自职责。</dd></div><div><dt>同一密度接口</dt><dd>常规40px、紧凑32px；两档保留14px正文和13px字段标签，只收紧间距。数值为本项目候选，不是Material强制值。</dd></div><div><dt>边界角色</dt><dd>输入的必要边界用已有轮廓色，模块分隔用较弱分隔色；不再混用成同一种灰线。</dd></div><div><dt>适用状态</dt><dd>按交互、值、可用性及校验分别定义；混选属于复选，拖动属于滑杆，错误不强加给所有组件。</dd></div><div><dt>实现边界</dt><dd>此页和三个代表页共用候选样式。正式注册、生产迁移与真实业务验收，在用户审稿后另行进行。</dd></div></dl>
+        <p class="u-help">可尝试：Tab走完整页 → 选中分段后继续用方向键 → 越界输入并按Esc → 改变子勾选 → 打开菜单与对话框再关闭。屏幕截图和静态检查不能代替完整读屏验收。</p>
+      </section>
+    </main>
+  </div>
+  <output id="catalog-feedback" class="catalog-feedback" role="status" aria-live="polite">可以直接操作上述控件。所有值只保留在当前页面内存中。</output>
+  <dialog id="sample-dialog" class="u-dialog" aria-labelledby="sample-dialog-title" aria-describedby="sample-dialog-description"><h2 id="sample-dialog-title">核对示例名称</h2><p id="sample-dialog-description">此对话框只验证焦点、输入与关闭恢复，不会保存文件。</p><label class="u-field"><span class="u-label">示例名称</span><input class="u-input" id="dialog-name" value="金曜菊 · 金锦层" autofocus></label><div class="u-dialog-actions"><button type="button" class="u-button u-quiet" data-dialog-close>取消</button><button type="button" class="u-button u-primary" id="dialog-confirm">确认示例</button></div></dialog>
+</body>
+</html>

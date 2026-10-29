@@ -1,0 +1,58 @@
+/* Spectrum 取向隔离候选：只重分既有颜色角色，不改正式令牌。 */
+.u-scope[data-design="spectrum"] {
+  --u-bg:var(--fw-color-surface);
+  --u-low:var(--fw-color-surface-low);
+  --u-panel:var(--fw-color-surface-container);
+  --u-high:var(--fw-color-surface-high);
+  --u-text:var(--fw-color-on-surface);
+  --u-muted:var(--fw-color-on-surface-muted);
+  --u-primary:var(--fw-color-primary);
+  --u-primary-bg:var(--fw-color-primary-container);
+  --u-primary-text:var(--fw-color-on-primary-container);
+  --u-outline:var(--fw-color-outline);
+  --u-border:var(--fw-color-control-border);
+  --u-divider:var(--fw-color-divider);
+  --u-error:var(--fw-color-error);
+  --u-error-bg:var(--fw-color-error-container);
+  --u-warning:var(--fw-color-warning);
+  --u-warning-bg:var(--fw-color-warning-container);
+  --u-success:var(--fw-color-success);
+  --u-focus:var(--fw-color-focus);
+  --u-accent-fill:var(--fw-color-primary);
+  --u-accent-hover:var(--fw-color-primary-bright);
+  --u-accent-ink:var(--fw-color-on-primary);
+  --u-selection-fill:var(--fw-color-surface-high);
+  --u-selection-ink:var(--fw-color-on-surface);
+  --u-toggle-fill:var(--fw-color-on-surface);
+  --u-toggle-ink:var(--fw-color-surface-low);
+  --u-space-1:4px; --u-space-2:8px; --u-space-3:12px;
+  --u-space-4:16px; --u-space-6:24px; --u-space-8:32px;
+  --u-radius:4px; --u-menu-radius:4px; --u-switch-radius:2px;
+  --u-line:1px; --u-focus-width:2px;
+  --u-control:40px; --u-row:40px; --u-tree-row:32px;
+  --u-body:14px; --u-body-line:22px;
+  --u-label:13px; --u-label-line:20px;
+  --u-helper:12px; --u-helper-line:18px;
+  --u-title:18px; --u-title-line:26px;
+  --u-object:16px; --u-object-line:24px;
+  --u-pad:16px; --u-gap:12px; --u-module-gap:24px;
+  --u-icon:18px; --u-inline:28px; --u-input-width:88px;
+  --u-slider-track:2px; --u-slider-thumb:14px;
+  --u-control-height:var(--u-control);
+  --u-font-body:var(--u-body); --u-line-body:var(--u-body-line);
+  --u-font-label:var(--u-label); --u-font-helper:var(--u-helper);
+  font-size:var(--u-body); line-height:var(--u-body-line);
+  font-weight:400; color:var(--u-text); color-scheme:dark;
+}
+
+/* 密度只压高度和空隙，正文、标签、帮助文字不随之缩小。 */
+.u-scope[data-design="spectrum"][data-density="compact"] {
+  --u-control:32px; --u-row:32px; --u-tree-row:28px;
+  --u-body:14px; --u-body-line:22px;
+  --u-label:13px; --u-label-line:20px;
+  --u-helper:12px; --u-helper-line:18px;
+  --u-title:18px; --u-title-line:26px;
+  --u-object:16px; --u-object-line:24px;
+  --u-pad:12px; --u-gap:8px; --u-module-gap:16px;
+  --u-icon:16px; --u-input-width:72px;
+}
