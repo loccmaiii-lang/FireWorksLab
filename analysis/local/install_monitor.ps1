@@ -10,17 +10,18 @@ $ErrorActionPreference = 'Stop'
 $monitorRepoPath = (Resolve-Path -LiteralPath $WorkerRepo).Path
 $monitorUserRepoPath = if ($UserRepo) { (Resolve-Path -LiteralPath $UserRepo).Path } else { $null }
 $monitorPythonPath = (Resolve-Path -LiteralPath $Python).Path
-$monitorScriptPath = Join-Path $(if ($monitorUserRepoPath) { $monitorUserRepoPath } else { $monitorRepoPath }) 'analysis\local\run_monitor.ps1'
+$monitorPythonwPath = Join-Path (Split-Path -Parent $monitorPythonPath) 'pythonw.exe'
+if (-not (Test-Path -LiteralPath $monitorPythonwPath -PathType Leaf)) { throw 'pythonw.exe was not found beside Python; no task was changed.' }
+$monitorScriptPath = Join-Path $(if ($monitorUserRepoPath) { $monitorUserRepoPath } else { $monitorRepoPath }) 'analysis\local\run_monitor_hidden.py'
 if (-not (Test-Path -LiteralPath $monitorScriptPath)) { throw 'Monitor script was not found.' }
 foreach ($monitorArgument in @($monitorScriptPath, $monitorRepoPath, $StateDir, $Deps, $monitorPythonPath, $monitorUserRepoPath)) {
     if ($null -eq $monitorArgument) { continue }
     if ($monitorArgument.Contains('"')) { throw 'Paths must not contain quotation marks.' }
 }
 New-Item -ItemType Directory -Path $StateDir -Force | Out-Null
-$monitorArguments = '-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File "{0}" -WorkerRepo "{1}" -StateDir "{2}" -Deps "{3}" -Workers {4} -Python "{5}"' -f $monitorScriptPath, $monitorRepoPath, $StateDir, $Deps, $Workers, $monitorPythonPath
+$monitorArguments = '"{0}" -WorkerRepo "{1}" -StateDir "{2}" -Deps "{3}" -Workers {4} -Python "{5}"' -f $monitorScriptPath, $monitorRepoPath, $StateDir, $Deps, $Workers, $monitorPythonPath
 if ($monitorUserRepoPath) { $monitorArguments += ' -UserRepo "{0}"' -f $monitorUserRepoPath }
-$monitorPowerShell = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
-$monitorAction = New-ScheduledTaskAction -Execute $monitorPowerShell -Argument $monitorArguments -WorkingDirectory $monitorRepoPath
+$monitorAction = New-ScheduledTaskAction -Execute $monitorPythonwPath -Argument $monitorArguments -WorkingDirectory $monitorRepoPath
 $monitorTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(10) -RepetitionInterval (New-TimeSpan -Minutes 10)
 $monitorUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 $monitorPrincipal = New-ScheduledTaskPrincipal -UserId $monitorUser -LogonType Interactive -RunLevel Limited

@@ -12,6 +12,8 @@ analysis/local/*
 !analysis/local/requirements.txt
 !analysis/local/run_jobs.py
 !analysis/local/run_monitor.ps1
+!analysis/local/run_monitor_hidden.py
+!analysis/local/test_monitor_hidden.py
 !analysis/local/test_watch_jobs.py
 !analysis/local/watch_jobs.py
 !analysis/local/使用说明.md
