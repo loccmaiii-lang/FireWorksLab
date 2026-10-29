@@ -36,7 +36,7 @@
   "网格垂柳UEv3（Codex）": "2026-10-22 19:33",
   "团队版（云端）": "2026-10-25 13:10",
   "procedural-fire调研": "2026-10-27 17:43",
-  "界面交互-本机（Codex）": "2026-10-29 10:54"
+  "界面交互-本机（Codex）": "2026-10-29 11:27"
  },
  "阶段含义": {
   "制作中": "AI 在做，用户不用看",
@@ -309,9 +309,9 @@
   "界面交互-本机（Codex） · 三工具筛查与设计": {
    "负责": "界面交互-本机（Codex）",
    "日期": "2026-10-29",
-   "状态": "完成：Material v3保留，Spectrum八类候选可操作待审；正式库不动",
-   "授权": "用户新全量筛查任务；允许脚本；已授权核实并正常重启8034/8025到本轮副本；用户要求按组件稿新增可操作Demo文件；用户明确今晚自主推进三套独立可交互草稿，保留未提交成果，明早交付，正式项目不改；本轮用户要求以八类统一组件候选为底，保留Material，再出Adobe风格",
-   "范围": "analysis/results/20261028_界面筛查/；analysis/scripts/界面规则筛查.py；tool/design-system/drafts/v1/；本对话记录/状态条目；analysis/local过程数据忽略；tool/design-system/drafts/v3-unified/；协作/方案/组件规范统一候选稿_2026-10-29.md；tool/design-system/drafts/v4-workflows-20261029/；analysis/results/20261029_三套工作流Demo/；协作/方案/三套工作流Demo_2026-10-29.md；tool/design-system/drafts/v5-spectrum-20261029/；协作/方案/八类组件Spectrum适配_2026-10-29.md",
+   "状态": "进行中：新增B接入Spectrum统一组件Demo，原B/Material及正式项目保留",
+   "授权": "用户新全量筛查任务；允许脚本；已授权核实并正常重启8034/8025到本轮副本；用户要求按组件稿新增可操作Demo文件；用户明确今晚自主推进三套独立可交互草稿，保留未提交成果，明早交付，正式项目不改；本轮用户要求以八类统一组件候选为底，保留Material，再出Adobe风格；用户明确偏好Material，授权Adobe统一组件接入B的独立可操作Demo，保留真实参数和预览及旧版对比",
+   "范围": "analysis/results/20261028_界面筛查/；analysis/scripts/界面规则筛查.py；tool/design-system/drafts/v1/；本对话记录/状态条目；analysis/local过程数据忽略；tool/design-system/drafts/v3-unified/；协作/方案/组件规范统一候选稿_2026-10-29.md；tool/design-system/drafts/v4-workflows-20261029/；analysis/results/20261029_三套工作流Demo/；协作/方案/三套工作流Demo_2026-10-29.md；tool/design-system/drafts/v5-spectrum-20261029/；协作/方案/八类组件Spectrum适配_2026-10-29.md；tool/design-system/drafts/v6-b-spectrum-20261029/；analysis/results/20261029_B接入Spectrum/；协作/方案/B接入Spectrum组件Demo_2026-10-29.md",
    "保护": "不改生产源码、共享tokens/现有组件/宪章、私有源码、节目、UE；不推main；用户审稿前不做正式组件库",
    "副本": "F:/FWL-副本/20261028-界面交互-本机-全量筛查；codex/ui-spectrum-candidate-20261029；复用8034，F主树不写",
    "预览": "http://127.0.0.1:8034/design-system/drafts/v5-spectrum-20261029/index.html",
