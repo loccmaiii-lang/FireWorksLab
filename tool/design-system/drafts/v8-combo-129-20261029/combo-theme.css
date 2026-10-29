@@ -1,0 +1,131 @@
+/* 129项目混合组件；用户14族选型+三处主题绿。仅审阅副本，不是官方品牌整库。 */
+/* C01 · material */
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is([data-mb-component=button],[data-mb-component=icon-button]):not([data-mb-structural=true]):not(.mb-value-reset,.mreset,.lk,.shelp,.v5-danger,.danger,.warn,.fw-button--danger):not(.ab-menu *,.v5-pop *,.mb-observe-menu *):not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-button:not(:disabled):not([aria-disabled=true]):not(.inert *){border-radius:4px;background-color:#1b2a2f;color:#e4edef;font-size:13px;font-weight:500;box-shadow:none}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is([data-mb-component=button],[data-mb-component=icon-button]):not([data-mb-structural=true]):not(.mb-value-reset,.mreset,.lk,.shelp,.v5-danger,.danger,.warn,.fw-button--danger):not(.ab-menu *,.v5-pop *,.mb-observe-menu *):not(:disabled):not([aria-disabled=true]):not(.inert *):hover,
+#combo-lab .u-button:not(:disabled):not([aria-disabled=true]):not(.inert *):hover{background-color:#24373d;border-color:#8da3ac}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is(.primary,.fw-button--primary)[data-mb-component=button]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-button.u-primary:not(:disabled):not([aria-disabled=true]):not(.inert *){background-color:#173d39;border-color:#00d49b;color:#a1ded0;font-weight:600}
+#combo-lab .u-button.u-quiet:not(:disabled):not([aria-disabled=true]):not(.inert *){border-color:transparent;background:transparent;color:#b4c5cb}
+#combo-lab .u-button.u-danger:not(:disabled):not([aria-disabled=true]):not(.inert *){color:#e7735a;border-color:#e7735a;background:transparent}
+
+/* C02 · adobe */
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is(input[data-mb-component=input],textarea[data-mb-component=textarea]):not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-input:not([type=color]):not(:disabled):not([aria-disabled=true]):not(.inert *),body[data-ui="material-b"] #right :is(.mb-value-row,#params .mb-value-row)>.mb-value-number:not(:disabled):not([aria-disabled=true]):not(.inert *){border-radius:4px;background-color:#121f24;font-size:14px;font-weight:400}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is(input[data-mb-component=input],textarea[data-mb-component=textarea]):not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]):not(.bad):not(.over *),
+#combo-lab .u-input:not([type=color]):not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]):not(.bad),
+body[data-ui="material-b"] #right :is(.mb-value-row,#params .mb-value-row)>.mb-value-number:not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]):not(.over *){color:#e4edef}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is(input[data-mb-component=input],textarea[data-mb-component=textarea]):not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]):not(.bad):not(.is-modified):not(.over *),
+#combo-lab .u-input:not([type=color]):not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]):not(.bad):not(.is-modified),
+body[data-ui="material-b"] #right :is(.mb-value-row,#params .mb-value-row)>.mb-value-number:not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]):not(.over *){border-color:#8da3ac}
+#combo-lab .u-input[readonly],body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=input][readonly]:not(:disabled):not([aria-disabled=true]):not(.inert *){border-style:solid;border-color:#39515a}
+
+/* C03 · adobe */
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=slider]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab input.u-slider:not(:disabled):not([aria-disabled=true]):not(.inert *){appearance:none;-webkit-appearance:none;background:transparent;accent-color:#00d49b}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=slider]:not(:disabled):not([aria-disabled=true]):not(.inert *)::-webkit-slider-runnable-track,
+#combo-lab input.u-slider:not(:disabled):not([aria-disabled=true]):not(.inert *)::-webkit-slider-runnable-track{height:2px;border:0;border-radius:0;background:linear-gradient(to right,#00d49b 0 var(--mb-fill,0%),#8da3ac var(--mb-fill,0%) 100%)}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=slider]:not(:disabled):not([aria-disabled=true]):not(.inert *)::-webkit-slider-thumb,
+#combo-lab input.u-slider:not(:disabled):not([aria-disabled=true]):not(.inert *)::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:14px;height:14px;margin-top:-6px;border:1px solid #00d49b;background:#1b2a2f;border-radius:50%;box-shadow:none}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=slider]:not(:disabled):not([aria-disabled=true]):not(.inert *)::-moz-range-track,
+#combo-lab input.u-slider:not(:disabled):not([aria-disabled=true]):not(.inert *)::-moz-range-track{height:2px;border:0;border-radius:0;background:#8da3ac}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=slider]:not(:disabled):not([aria-disabled=true]):not(.inert *)::-moz-range-progress,
+#combo-lab input.u-slider:not(:disabled):not([aria-disabled=true]):not(.inert *)::-moz-range-progress{height:2px;background:#00d49b}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=slider]:not(:disabled):not([aria-disabled=true]):not(.inert *)::-moz-range-thumb,
+#combo-lab input.u-slider:not(:disabled):not([aria-disabled=true]):not(.inert *)::-moz-range-thumb{width:14px;height:14px;border:1px solid #00d49b;background:#1b2a2f;border-radius:50%;box-shadow:none}
+
+/* C04 · adobe */
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select],
+#combo-lab select.u-select{box-sizing:border-box;height:32px;min-height:32px;padding:5px 10px;line-height:20px}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select]>button,
+#combo-lab select.u-select>button{box-sizing:border-box;display:flex;align-items:center;height:20px;min-height:20px;min-width:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;line-height:20px;box-shadow:none}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab select.u-select:not(:disabled):not([aria-disabled=true]):not(.inert *){border-radius:4px;background-color:#121f24;color:#e4edef;font-size:14px;font-weight:400}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select]:not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]),
+#combo-lab select.u-select:not(:disabled):not([aria-disabled=true]):not(.inert *):not([aria-invalid=true]){border-color:#8da3ac}
+@supports(appearance:base-select){
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select]::picker(select),#combo-lab .u-select::picker(select){border-radius:4px;border-color:#8da3ac;background:#1b2a2f;color:#e4edef}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select] option:is(:hover,:focus-visible,:checked):not(:disabled),
+#combo-lab .u-select option:is(:hover,:focus-visible,:checked):not(:disabled){background:#173d39;color:#a1ded0}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) select[data-mb-component=select] option::checkmark,#combo-lab .u-select option::checkmark{color:#00d49b}
+}
+
+/* C05 · material */
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=checkbox]:not(:disabled):not([aria-disabled=true]):not(.inert *),#combo-lab .u-checkbox:not(:disabled):not([aria-disabled=true]):not(.inert *){accent-color:#00d49b;width:18px;height:18px;min-height:0}
+
+/* C06 · material */
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) input[data-mb-component=radio]:not(:disabled):not([aria-disabled=true]):not(.inert *),#combo-lab .u-radio:not(:disabled):not([aria-disabled=true]):not(.inert *){accent-color:#00d49b;width:18px;height:18px;min-height:0}
+
+/* C07 · material */
+body[data-ui="material-b"] input.mb-toggle[data-mb-component=switch]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+body[data-ui="material-b"] #right #params .mb-choice-row>input.mb-toggle[data-mb-component=switch]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-switch:not(:disabled):not([aria-disabled=true]):not(.inert *){appearance:none;-webkit-appearance:none;position:relative;width:36px;height:20px;min-height:0;padding:0;border:1px solid #8da3ac;border-radius:2px;background:#39515a}
+body[data-ui="material-b"] input.mb-toggle[data-mb-component=switch]:not(:disabled):not([aria-disabled=true]):not(.inert *)::after,
+body[data-ui="material-b"] #right #params .mb-choice-row>input.mb-toggle[data-mb-component=switch]:not(:disabled):not([aria-disabled=true]):not(.inert *)::after,
+#combo-lab .u-switch:not(:disabled):not([aria-disabled=true]):not(.inert *)::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:1px;background:#e4edef}
+body[data-ui="material-b"] input.mb-toggle[data-mb-component=switch]:checked:not(:disabled):not([aria-disabled=true]):not(.inert *),
+body[data-ui="material-b"] #right #params .mb-choice-row>input.mb-toggle[data-mb-component=switch]:checked:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-switch:checked:not(:disabled):not([aria-disabled=true]):not(.inert *){background:#173d39;border-color:#00d49b}
+body[data-ui="material-b"] input.mb-toggle[data-mb-component=switch]:checked:not(:disabled):not([aria-disabled=true]):not(.inert *)::after,
+body[data-ui="material-b"] #right #params .mb-choice-row>input.mb-toggle[data-mb-component=switch]:checked:not(:disabled):not([aria-disabled=true]):not(.inert *)::after,
+#combo-lab .u-switch:checked:not(:disabled):not([aria-disabled=true]):not(.inert *)::after{left:19px;background:#00d49b}
+
+/* C08 · material */
+body[data-ui="material-b"] :is(.mb-tabs,#mbInspectModes,.v5-seg),
+#combo-lab .u-segments{gap:4px;border:0;border-radius:4px;background:transparent}
+body[data-ui="material-b"] :is(.mb-tabs,#mbInspectModes)>button[data-mb-component]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+body[data-ui="material-b"] #right #params .v5-seg>button:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-segment:not(:disabled):not([aria-disabled=true]):not(.inert *){border:1px solid #39515a;border-radius:4px;background:transparent;color:#b4c5cb;font-weight:500;box-shadow:none}
+body[data-ui="material-b"] :is(.mb-tabs,#mbInspectModes)>button[data-mb-component]:is([aria-selected=true],[aria-pressed=true]):not(:disabled):not([aria-disabled=true]):not(.inert *),
+body[data-ui="material-b"] #right #params .v5-seg>button[aria-checked=true]:not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-segment:is([aria-checked=true],[aria-selected=true],[aria-pressed=true]):not(:disabled):not([aria-disabled=true]):not(.inert *){border-color:#00d49b;background:#173d39;color:#a1ded0;box-shadow:none}
+
+/* C09 · material */
+body[data-ui="material-b"] #right #params :is(details.mod,#lhPos,#lhOut,#lhLink)>summary,#combo-lab .u-summary{color:#a1ded0;font-size:14px;line-height:22px;font-weight:650}
+#combo-lab .u-details{border-top:1px solid #2b4149}
+#combo-lab .u-summary{min-height:28px;padding-block:4px}
+
+/* C11 · adobe */
+body[data-ui="material-b"] :is(.ab-menu,.v5-pop,.mb-display-menu,.mb-display-pop,.mb-observe-menu),#combo-lab .u-menu-body{border:1px solid #8da3ac;border-radius:4px;background:#1b2a2f;color:#e4edef}
+body[data-ui="material-b"] :is(.ab-menu,.v5-pop) [data-mb-component=button],#combo-lab .u-menu-item{height:auto;min-height:32px;padding:6px 10px;white-space:normal;overflow-wrap:anywhere;line-height:20px;border-radius:4px}
+body[data-ui="material-b"] :is(#main,#deliveryWorkspace,#picker,#updDlg,#undoToast,#storeErr,dialog,.top,[popover]) :is(.ab-menu,.v5-pop) [data-mb-component=button]:is(:hover,:focus-visible,[aria-checked=true],[aria-selected=true]):not(:disabled):not([aria-disabled=true]):not(.inert *):not(.v5-danger),
+body[data-ui="material-b"] .mb-display .pchg:is(:hover,:has(input:checked)),
+body[data-ui="material-b"] .mb-observe-menu button:is(:hover,[aria-pressed=true]):not(:disabled):not([aria-disabled=true]):not(.inert *),
+#combo-lab .u-menu-item:is(:hover,:focus-visible,[aria-checked=true],[aria-selected=true]):not(:disabled):not([aria-disabled=true]):not(.inert *){background:#173d39;color:#a1ded0}
+
+/* C12 · adobe */
+body[data-ui="material-b"] :is(dialog,[role=dialog]),#combo-lab.u-scope,#combo-lab .u-dialog{border-radius:4px;border-color:#8da3ac;background:#1b2a2f;color:#e4edef;font-size:14px}
+#combo-lab .u-dialog::backdrop{background:rgb(0 0 0 / .55)}
+
+/* C16 · adobe */
+body[data-ui="material-b"] #busy .bar{height:3px;border-radius:1px;background:#39515a}
+body[data-ui="material-b"] #busy .bar i,body[data-ui="material-b"] #busyBar{background:#00d49b;transition:none}
+body[data-ui="material-b"] #busyText{color:#e4edef;font-size:13px;line-height:20px}
+#combo-lab progress{appearance:none;-webkit-appearance:none;width:100%;height:3px;border:0;border-radius:1px;background:#39515a;accent-color:#00d49b;overflow:hidden}
+#combo-lab progress::-webkit-progress-bar{background:#39515a;border-radius:1px}
+#combo-lab progress::-webkit-progress-value{background:#00d49b;border-radius:1px}
+#combo-lab progress::-moz-progress-bar{background:#00d49b;border-radius:1px}
+
+/* TREE · adobe */
+body[data-ui="material-b"] #right .v5-row,#combo-lab .sample-tree-row{height:28px;min-height:28px;gap:2px;border-radius:2px}
+body[data-ui="material-b"] #right .v5-row{padding-left:calc(var(--lv)*16px)}
+body[data-ui="material-b"] #right .v5-row.sel,#combo-lab .sample-tree-row.selected{background:#173d39;box-shadow:inset 2px 0 #00d49b;outline:0}
+body[data-ui="material-b"] #right .v5-row .v5-name,body[data-ui="material-b"] #right .v5-row[data-mb-role=layer] .v5-name,#combo-lab .sample-tree-name{color:#e4edef;font-size:13px;line-height:20px;font-weight:400}
+#combo-lab .sample-tree-name{padding:0 6px 0 2px}
+body[data-ui="material-b"] #right .v5-row[data-mb-role=effect] .v5-name,#combo-lab .sample-tree-row[aria-level="1"] .sample-tree-name{font-weight:650}
+body[data-ui="material-b"] #right .mb-node-type,body[data-ui="material-b"] #right .v5-row[data-mb-on-path=true] .mb-node-type,#combo-lab .sample-node-type{color:#b4c5cb;background-color:currentColor;width:18px;height:18px}
+body[data-ui="material-b"] #right .v5-row .v5-eye[data-mb-component][aria-pressed=true],#combo-lab .sample-tree-eye[aria-pressed=true]{color:#a1ded0}
+body[data-ui="material-b"] #right .v5-row .v5-eye[data-mb-component][aria-pressed=false],#combo-lab .sample-tree-eye[aria-pressed=false]{color:#b4c5cb}
+body[data-ui="material-b"] #right .v5-eye .fw-icon,#combo-lab .sample-tree-eye [data-fw-icon]{width:18px;height:18px}
+#combo-lab :is(.sample-tree-caret,.sample-tree-solo){display:inline-flex;align-items:center;justify-content:center;width:28px;min-width:28px;height:26px;padding:0;border:0;border-radius:3px;background:none;color:#b4c5cb;font:13px/20px var(--u-font)}
+#combo-lab .sample-tree-caret{width:18px;min-width:18px;height:24px}
+#combo-lab .sample-tree-solo:is(.on,[aria-pressed=true]){color:#a1ded0}
+body[data-ui="material-b"] #right :is(.mb-tree-guide,.mb-tree-guide.is-active,.mb-tree-guide.is-branch.is-active,.mb-tree-guide.is-branch.is-active.active-turn),
+body[data-ui="material-b"] #right .mb-tree-guide.is-branch.continues.active-below::after,body[data-ui="material-b"] #right .mb-tree-guide.is-active:not(.active-below)::after{border-color:#39515a;opacity:1}
+body[data-ui="material-b"] #right .v5-row.off .v5-name,body[data-ui="material-b"] #right .v5-row.off .mb-node-type{color:#8da3ac}
+
+/* COLOR · adobe */
+body[data-ui="material-b"] #colorControls .stage-row :is(.stage-time,.stage-hex),body[data-ui="material-b"] #right #params .curvef .cv-keys,#combo-lab #project-color input:not([type=color]){border:1px solid #8da3ac;border-radius:4px;background:#121f24;color:#e4edef;font-size:12px;line-height:20px}
+body[data-ui="material-b"] #colorControls .stage-row :is(.stage-time,.stage-hex)[aria-invalid=true],body[data-ui="material-b"] #right #params .curvef .cv-keys.bad{border-color:#e7735a;color:#e7735a}
+body[data-ui="material-b"] #colorControls .stage-row input[data-mb-component=color],body[data-ui="material-b"] #matColors .ramp-stop input[data-mb-component=color],#combo-lab #project-color input[type=color]{border:1px solid #8da3ac;border-radius:4px;padding:2px}
+body[data-ui="material-b"] #matColors .ramp-preview,body[data-ui="material-b"] #right .cv-plot,#combo-lab #project-ramp,#combo-lab .cv-plot{border:1px solid #39515a;border-radius:4px}
