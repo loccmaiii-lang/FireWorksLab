@@ -1,0 +1,45 @@
+/* 候选组件状态合同。未接入生产；图形节点与警告摘要需由128适配负责人绑定真实数据。 */
+@scope (body[data-ui="material-b"][data-visual-language="reference-1"] #right) {
+  :scope { color:var(--br-text); background:var(--br-bg); font:var(--br-body-size)/var(--br-body-line) var(--br-sans); }
+  :scope :is(.v5-bar,.v5-treebox,.v5-tools) { background:var(--br-low); }
+  :scope #params>.ptools { background:var(--br-panel); border-color:var(--br-divider); }
+  :scope :is(button,input,select,summary) { font-variant-numeric:tabular-nums; }
+  :scope :is(button,input:not([type=range]),select) { border-radius:var(--br-radius); }
+  :scope :is(button,input,select,summary,[tabindex]):focus-visible { outline:var(--br-focus-width) solid var(--br-primary); outline-offset:var(--br-focus-offset); }
+  :scope button { transition:background-color var(--br-feedback),border-color var(--br-feedback); }
+  :scope button:hover:enabled { background:var(--br-high); }
+  :scope .v5-row { min-height:var(--br-tree-row); border-radius:2px; }
+  :scope .v5-row.sel { background:var(--br-selected); box-shadow:inset 2px 0 var(--br-primary); }
+  :scope .v5-row.sel .v5-name { color:var(--br-text); }
+  :scope .v5-row:not(.sel):hover { background:var(--br-high); }
+  :scope .mb-node-type { flex:none; width:var(--br-icon); height:var(--br-icon); color:var(--br-muted); }
+  :scope .mb-node-label { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  :scope .mb-tree-guide { opacity:.45; border-color:var(--br-border); }
+  /* 下方表单不增加结构图标、额外身份区或新页签。 */
+  :scope :is(.sl,.sl.nolock) { min-height:var(--br-row); }
+  :scope .sl>.num { min-height:var(--br-number); height:var(--br-number); width:var(--br-number-width); padding:4px 6px; color:var(--br-text); border:1px solid var(--br-control-border); background:var(--br-low); font:var(--br-number-size)/var(--br-label-line) var(--br-mono); text-align:right; }
+  :scope :is(.ptools input[type=search],.field>select) { border-color:var(--br-control-border); background:var(--br-low); }
+  :scope .sl>.punit { color:var(--br-muted); min-width:var(--br-unit-width); white-space:nowrap; }
+  :scope :is(input,select)[readonly] { color:var(--br-muted); background:var(--br-low); cursor:default; }
+  :scope :is(input,select):disabled { color:var(--br-disabled); opacity:1; cursor:not-allowed; }
+  :scope input[type=range]:disabled { --mb-active:var(--br-disabled); --mb-track:var(--br-border); opacity:1; }
+  :scope input[type=range]:disabled::-webkit-slider-thumb { background:var(--br-disabled); border-color:var(--br-disabled); }
+  :scope input[type=range]:disabled::-moz-range-thumb { background:var(--br-disabled); border-color:var(--br-disabled); }
+  /* 只绑定显式switch语义，避免把水平镜像等普通checkbox改成开关。 */
+  :scope [role=switch] { appearance:none; display:inline-block; box-sizing:border-box; flex:0 0 var(--br-switch-width); position:relative; width:var(--br-switch-width); min-width:var(--br-switch-width); max-width:var(--br-switch-width); height:var(--br-switch-height); min-height:var(--br-switch-height); max-height:var(--br-switch-height); padding:0; border:1px solid var(--br-control-border); border-radius:var(--br-switch-radius); background:var(--br-low); vertical-align:middle; }
+  :scope [role=switch]::before { content:""; position:absolute; top:2px; left:2px; width:var(--br-switch-thumb); height:var(--br-switch-thumb); border-radius:1px; background:var(--br-muted); }
+  :scope [role=switch]:is([aria-checked=true],:checked) { border-color:var(--br-primary); background:var(--br-selected); }
+  :scope [role=switch]:is([aria-checked=true],:checked)::before { left:calc(100% - var(--br-switch-thumb) - 2px); background:var(--br-primary); }
+  :scope .bref-warning { padding:var(--br-space-3); border:0; border-inline-start:2px solid var(--br-warning); background:var(--br-low); color:var(--br-muted); font-size:var(--br-helper-size); line-height:var(--br-helper-line); }
+  :scope .bref-warning strong { display:block; color:var(--br-warning); font-weight:600; }
+  :scope .bref-warning p { margin:var(--br-space-1) 0 0; }
+  :scope .bref-warning button { flex:none; min-height:var(--br-number); }
+  :scope [data-modified=true]>.num { border-color:var(--br-warning); }
+  :scope [aria-invalid=true] { border-color:var(--br-error); }
+}
+@media (prefers-reduced-motion:reduce) {
+  body[data-ui="material-b"][data-visual-language="reference-1"] #right * { transition:none!important; animation:none!important; }
+}
+@media (forced-colors:active) {
+  body[data-ui="material-b"][data-visual-language="reference-1"] #right [aria-selected=true] { outline:1px solid Highlight; }
+}

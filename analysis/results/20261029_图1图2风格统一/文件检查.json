@@ -1,0 +1,39 @@
+{
+  "images": [
+    {
+      "file": "01_风格参考.png",
+      "size": [
+        887,
+        850
+      ],
+      "sha256": "e30ad87437d1610bfde4f42e5f2b8b0275efc7b2f9c74f4f647dd77575ac5474"
+    },
+    {
+      "file": "02_修改对象.png",
+      "size": [
+        721,
+        1826
+      ],
+      "sha256": "7ebe6a0377f145187ee177dac5827bd09283dc2ec05d5c7f25ffe3212f5b2014"
+    },
+    {
+      "file": "03_统一风格候选.png",
+      "size": [
+        789,
+        1993
+      ],
+      "sha256": "15bd4167f98cd1c719895fceb85ab7963aa7b238fcf13b39b48b8f3b9a5fd421"
+    }
+  ],
+  "generation": "deterministic",
+  "css_parser": "PostCSS passed; 53 declared, no unresolved br variables",
+  "token_pair_contrast": {
+    "正文/背景": 14.46,
+    "辅助/面板": 8.31,
+    "禁用文字/输入底": 6.39,
+    "交互边界/输入底": 3.67,
+    "焦点/面板": 7.68
+  },
+  "limits": "仅上述纯色配对计算；非整页WCAG/真实渲染或交互验证",
+  "scope": "图像与独立样式候选，未接入活动B128"
+}
