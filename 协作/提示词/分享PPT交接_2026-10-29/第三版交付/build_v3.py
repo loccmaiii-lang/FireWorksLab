@@ -135,25 +135,24 @@ def build_images():
                     box=(19, 0, 524, 505))
     # 第 4 页：本机原图到了用原图，否则先用第二版渲染里裁出的两块
     if has_local('tex_left.jpg'):
-        I['p04a'] = prep('tex_left.jpg', 'p04_tex.jpg', 846, 440)
+        I['p04a'] = prep('tex_left.jpg', 'p04_tex.jpg', 742, 440)
     else:
-        I['p04a'] = prep('第二版交付/渲染/第02页.png', 'p04_tex.jpg', 846, 440, box=(1248, 214, 1686, 560))
+        I['p04a'] = prep('第二版交付/渲染/第02页.png', 'p04_tex.jpg', 742, 440, box=(1248, 214, 1686, 560))
     if has_local('cas_emitters.jpg'):
-        I['p04b'] = prep('cas_emitters.jpg', 'p04_cas.jpg', 846, 440)
+        I['p04b'] = prep('cas_emitters.jpg', 'p04_cas.jpg', 950, 440)
     else:
-        I['p04b'] = prep('第二版交付/渲染/第02页.png', 'p04_cas.jpg', 846, 440, box=(1150, 586, 1772, 860))
+        I['p04b'] = prep('第二版交付/渲染/第02页.png', 'p04_cas.jpg', 950, 440, box=(1150, 586, 1772, 860))
     I['p05'] = os.path.join(V1IMG, 'p05_sequencer.jpg')
     for k in ('baker', 'importer', 'workbench', 'ue'):
         I['p06' + k] = os.path.join(V1IMG, f'p06_{k}.jpg')
-    I['p07'] = prep('06_烘焙器界面_引擎回放.jpg', 'p07_replay.jpg', 1008, 420, focus=(0.5, 0.5))
+    I['p07'] = prep('06_烘焙器界面_引擎回放.jpg', 'p07_replay.jpg', 1008, 420, box=(520, 0, 1600, 1000), focus=(0.5, 0.45))
     I.update({'p08' + k: v for k, v in framing_panels().items()})
     I['p09a'] = prep('analysis/results/FC6O_Blender/FC6O_atlas.png', 'p09_fan_atlas.jpg', 571, 354, mode='contain')
     I['p09b'] = prep('analysis/results/CS3_RT6/CS3S_atlas.png', 'p09_trail_atlas.jpg', 571, 354, mode='contain')
     I['p10'], I['p10h'] = importer_shot()
     I['p12'] = workbench_shot()
     I['p13tiles'], I['p13tag'] = effect_tiles()
-    I['p14a'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p14_ue_a.jpg', 672, 300, box=(14, 590, 734, 994))
-    I['p14b'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p14_ue_b.jpg', 672, 300, box=(766, 590, 1486, 994))
+    I['p14b'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p14_ue_b.jpg', 1008, 566, box=(772, 596, 1480, 994))
     I['demo'] = prep('06_烘焙器界面_引擎回放.jpg', 'demo_bg.jpg', 1200, 675, focus=(0.5, 0.5))
     I['p17'] = prep('15_升空尾缀_实拍模拟导出对照.jpg', 'p17_trail.jpg', 1008, 620, focus=(0.5, 0.5))
     I['p18a'] = prep('17_仙女棒13层_第1至7层.jpg', 'p18_l1.jpg', 1162, 188)
@@ -165,8 +164,7 @@ def build_images():
     I['p19c'] = prep(lq + '金芒菊_绽放局部放大_低档.jpg', 'p19_bl_now.jpg', 240, 330, box=(150, 410, 510, 770))
     I['p19d'] = prep(lq + '金芒菊_绽放局部放大_低档.jpg', 'p19_bl_fix.jpg', 240, 330, box=(518, 410, 878, 770))
     I['p20'] = prep('22_bug_最亮处黑块_示意图.png', 'p20_ramp.jpg', 300, 300)
-    I['p21'] = prep('analysis/results/20261028_V5视觉交互复核/01_124_编辑_1920.jpg', 'p21_baker.jpg', 1728, 500,
-                    focus=(0.5, 0.35))
+    I['p21'] = prep('05_烘焙器界面_仙女棒.jpg', 'p21_baker.jpg', 1728, 500, focus=(0.5, 0.42))
     return I
 
 
@@ -182,8 +180,6 @@ def importer_shot():
     for n in sorted(os.listdir(LOCALSRC)) if os.path.isdir(LOCALSRC) else []:
         if n.startswith('导入器'):
             return prep(n, 'p10_importer.jpg', 1008, 567), 567
-    if has_local('IMPORT5_THEME_20261024_after_1920.png'):
-        return prep('IMPORT5_THEME_20261024_after_1920.png', 'p10_importer.jpg', 1008, 567), 567
     im = Image.open(os.path.join(V1IMG, 'p09_importer.jpg')).convert('RGB')
     im = _paint(im, (10, 400, 240, 456), (60, 470))
     p = os.path.join(IMG, 'p10_importer.jpg')
@@ -197,7 +193,7 @@ def workbench_shot():
     im = _paint(im, (200, 266, 272, 294), (150, 300))
     tmp = os.path.join(IMG, '_wb_src.jpg')
     im.save(tmp, quality=95)
-    return prep(tmp, 'p12_workbench.jpg', 1728, 440, focus=(0.5, 0.46))
+    return prep(tmp, 'p12_workbench.jpg', 1728, 396, box=(0, 560, 1920, 1000))
 
 
 EFFECT_TILES = [('25_', '金蕊柠'), ('28_', '金琉菊'), ('32_', '小青柠'), ('35_', '小金花'), ('40_', '银白菊')]
@@ -216,11 +212,11 @@ def effect_tiles():
         tw = (1162 - (len(have) - 1) * 12) / len(have)
         out = [(prep(f, f'p13_{i}.jpg', tw, 280, focus=TILE_FOCUS.get(name, (0.5, 0.42))), name)
                for i, (f, name) in enumerate(have)]
-        return out, 'UE 实机'
-    srcs = [('03_UE跨年秀_金色扇面.jpg', '扇面（UE）', dict(box=(560, 120, 1060, 640))),
-            ('02_UE跨年秀_彩色全景.jpg', '彩色组合（UE）', dict(box=(80, 80, 600, 600))),
-            ('19_金芒爆裂菊.jpg', '金芒爆裂菊', dict(fix_black=True)),
-            ('20_小青柠.jpg', '小青柠', dict(fix_black=True))]
+        return [(p, n + ' · UE 实机') for p, n in out], 'UE 实机'
+    srcs = [('03_UE跨年秀_金色扇面.jpg', '整场扇面 · UE 实机', dict(box=(560, 120, 1060, 640))),
+            ('02_UE跨年秀_彩色全景.jpg', '彩色组合 · UE 实机', dict(box=(80, 80, 600, 600))),
+            ('19_金芒爆裂菊.jpg', '金芒爆裂菊 · 引擎回放', dict(fix_black=True)),
+            ('20_小青柠.jpg', '小青柠 · 引擎回放', dict(fix_black=True))]
     tw = (1162 - 3 * 12) / 4
     out = [(prep(n, f'p13_{i}.jpg', tw, 280, **kw), name) for i, (n, name, kw) in enumerate(srcs)]
     return out, 'UE 实机 / 引擎回放'
@@ -334,18 +330,18 @@ def p03(d, I):
     card(s, rx, 714, rw, 242, key=True)
     text(s, rx + 40, 738, rw - 80, 36, '之前的做法', size=S_LABEL, color=ACC, bold=True, spc=4, lh=1.3)
     text(s, rx + 40, 784, rw - 80, 140, ['手工：渲染后在软件里裁、排、合通道，再回 Cascade 手算尺寸和曲线，一改就重来。',
-                                          '脚本：让 AI 写脚本驱动 Blender 出图，能出，但每轮要等渲染，调参看不到最终效果。'],
+                                          '脚本：AI 驱动 Blender 出图，每轮要等渲染，调参看不到最终效果。'],
          size=S_SMALL + 1, alpha=A_SUB, lh=1.55, space_after=10)
     return s
 
 
 def p04(d, I):
     s = d.slide('01 · 问题 · 进引擎', '进引擎时，每张贴图、每个实例都要按规范设置')
-    iw = (W_CONTENT - 36) / 2
-    image(s, I['p04a'], L, 214, iw, 440)
-    image(s, I['p04b'], L + iw + 36, 214, iw, 440)
-    text(s, L, 664, iw, 34, 'UE 编辑器 · 序列贴图', size=S_SMALL - 2, alpha=A_NOTE, lh=1.3)
-    text(s, L + iw + 36, 664, iw, 34, 'UE 编辑器 · 发射器模块', size=S_SMALL - 2, alpha=A_NOTE, lh=1.3)
+    w1, w2 = 742, W_CONTENT - 36 - 742
+    image(s, I['p04a'], L, 214, w1, 440)
+    image(s, I['p04b'], L + w1 + 36, 214, w2, 440)
+    text(s, L, 664, w1, 34, 'UE 编辑器 · 序列贴图', size=S_SMALL - 2, alpha=A_NOTE, lh=1.3)
+    text(s, L + w1 + 36, 664, w2, 34, 'UE 编辑器 · 发射器模块', size=S_SMALL - 2, alpha=A_NOTE, lh=1.3)
     rows = [('贴图', '流送、贴图组、Mip 等，\v按用途和平台各不相同'),
             ('材质实例与发射器', '参数、包围盒、朝向\v都要设'),
             ('每改一版', '重新创建、重新设置；\v漏一项往往到实机才发现')]
@@ -506,8 +502,8 @@ def p10(d, I):
     s = d.slide('02 · 解决思路 · 进引擎', '导入器：把引擎设置规范写进工具，确认后才写入 UE')
     image(s, I['p10'], L, 214, COL60_W, I.get('p10h', 630))
     text(s, L, 214 + I.get('p10h', 630) + 12, COL60_W, 80,
-         ['导入器在特效工作台里，挨着原来的配表入口；烘焙器「资源交付」页导出后也能直接进导入清单',
-          '写进 UE 靠 UE 插件和本机交付服务'],
+         ['测试数据（Fixture）界面；导入器在特效工作台里，挨着原来的配表入口，',
+          '烘焙器「资源交付」页导出后也能直接进导入清单；写进 UE 靠 UE 插件和本机交付服务'],
          size=S_SMALL - 2, alpha=A_NOTE, lh=1.5)
     x = COL40_X
     steps = [('01', '配置素材', '读素材包，检查命名、尺寸、\v平台和规范项，不合格先拦下'),
@@ -558,9 +554,9 @@ def p11(d, I):
     w = 1824 - x
     label_text(s, x, 214, w, '花径与点距之比 → 分档')
     text(s, x, 256, w, 100, ['约 1.5 倍还分得清；', '两倍多连成花墙；再大就糊'], size=S_SMALL + 1, alpha=A_SUB, lh=1.55)
-    heads = ['档', '花径', '与点距之比', '开花高度']
-    rows = [('S', '90 m', '0.9', '+150 m'), ('M', '150 m', '1.5', '+210 m'), ('L', '230 m', '2.3', '+330 m'),
-            ('主角', '280 m', '2.8', '+400 m')]
+    heads = ['档', '花径', '开花高度', '升空尾缀']
+    rows = [('S', '90 m', '+150 m', 'S'), ('M', '150 m', '+210 m', 'M'), ('L', '230 m', '+330 m', 'L'),
+            ('主角', '280 m', '+400 m', 'Hero')]
     cx = [x, x + 110, x + 260, x + 410]
     for j, hh in enumerate(heads):
         text(s, cx[j], 380, 200, 34, hh, size=S_SMALL - 2, alpha=A_FOOT, bold=True, lh=1.2)
@@ -572,16 +568,19 @@ def p11(d, I):
                  color=ACC if j == 0 else TXT, alpha=A_BODY if j == 0 else A_SUB, lh=1.3)
         y += 64
     rect(s, x, y, w, 1, fill=TXT, fill_alpha=0.10)
-    text(s, x, y + 12, w, 80, ['每档配同名升空尾缀（主角配 Hero）；高度相对坝顶', '主角只放 P0 / P4 / P8，不与同档相邻'],
+    text(s, x, y + 12, w, 80, ['花径为构图目标；高度相对坝顶', '主角只放 P0 / P4 / P8'],
          size=S_SMALL - 4, alpha=A_FOOT, lh=1.5)
     chain = ['舞台与点位', '花径与点距之比', '分档定高度', '重叠与同刻检查', '编排宪章', '每版自动检查']
     cw, gap = 250, 45.6
     for i, t in enumerate(chain):
         bx = L + i * (cw + gap)
-        rect(s, bx, 812, cw, 72, fill=ACC, fill_alpha=0.08 if i != 4 else 0.16, line=ACC, line_alpha=A_GREEN_LINE)
+        if i == 4:
+            rect(s, bx, 812, cw, 72, fill=CARD, line=ACC, line_alpha=0.8, line_w=2)
+        else:
+            rect(s, bx, 812, cw, 72, fill=CARD, line='F5F5F5', line_alpha=A_STROKE)
         text(s, bx, 812, cw, 72, t, size=S_SMALL + 1, bold=(i == 4), align='c', anchor='m', lh=1.2)
         if i < 5:
-            line(s, bx + cw + 6, 848, bx + cw + gap - 6, 848, alpha=0.7, w=2, arrow=True)
+            line(s, bx + cw + 6, 848, bx + cw + gap - 6, 848, color=TXT, alpha=0.45, w=2, arrow=True)
     text(s, L, 906, W_CONTENT, 40, '编排宪章：写成文档、每一版都自动检查的编排规则。以上为设计值，实机机位与点距不同时以实机校正',
          size=S_SMALL - 2, alpha=A_NOTE, lh=1.4)
     return s
@@ -589,16 +588,17 @@ def p11(d, I):
 
 def p12(d, I):
     s = d.slide('02 · 解决思路 · 排节目', '编排工作台：在时间轴上排，导出导演蓝图要的三张表')
-    image(s, I['p12'], L, 214, W_CONTENT, 440)
-    text(s, L, 662, W_CONTENT, 30, '工具界面 · 烟花编排工作台', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
-    card(s, L, 704, COL60_W, 252, key=True)
-    label_text(s, L + 40, 726, 600, '可视化')
-    text(s, L + 40, 770, 920, 50, '音乐波形、点位、烟花模板在同一条时间轴上', size=S_CARD, bold=True, lh=1.3)
-    text(s, L + 40, 826, 920, 100, '对着音乐改节奏、换模板；改完就能看', size=S_BODY - 2, alpha=A_SUB, lh=1.6)
-    card(s, COL40_X, 704, COL40_W, 252)
-    label_text(s, COL40_X + 40, 726, 600, '程序化')
-    text(s, COL40_X + 40, 770, 600, 50, '按宪章检查，一键出三张表', size=S_CARD, bold=True, lh=1.3)
-    text(s, COL40_X + 40, 826, 600, 120, ['重叠、档位、预算每次都查；', '子模板、模板、时序三张表给导演蓝图'], size=S_SMALL + 1,
+    image(s, I['p12'], L, 214, W_CONTENT, 396)
+    text(s, L, 618, W_CONTENT, 30, '工具界面 · 烟花编排工作台：段落、音乐波形、各点位轨道在同一条时间轴上', size=S_SMALL - 4,
+         alpha=A_NOTE, lh=1.2)
+    card(s, L, 680, COL60_W, 276, key=True)
+    label_text(s, L + 40, 704, 600, '可视化')
+    text(s, L + 40, 748, 920, 50, '音乐波形、点位、烟花模板在同一条时间轴上', size=S_CARD, bold=True, lh=1.3)
+    text(s, L + 40, 806, 920, 100, '对着音乐改节奏、换模板；改完就能看', size=S_BODY - 2, alpha=A_SUB, lh=1.6)
+    card(s, COL40_X, 680, COL40_W, 276)
+    label_text(s, COL40_X + 40, 704, 600, '程序化')
+    text(s, COL40_X + 40, 748, 600, 50, '按宪章检查，一键出三张表', size=S_CARD, bold=True, lh=1.3)
+    text(s, COL40_X + 40, 806, 600, 120, ['重叠、档位、预算每次都查；', '子模板、模板、时序三张表给导演蓝图'], size=S_SMALL + 1,
          alpha=A_SUB, lh=1.55)
     return s
 
@@ -608,7 +608,7 @@ def p13(d, I):
     card(s, L, 214, 518, 742, key=True)
     text(s, 140, 252, 440, 110, '26', size=104, color=ACC, bold=True, lh=1.0)
     text(s, 140, 372, 440, 50, '种开花花型', size=34, bold=True, lh=1.3)
-    text(s, 140, 428, 420, 100, ['按尺寸共 30 个规格：', '小号 6 · 小型 13 · 中型 7 · 大型 7'], size=S_SMALL + 1, alpha=A_SUB, lh=1.55)
+    text(s, 140, 424, 420, 110, ['按尺寸共 30 个规格：', '小号 6 · 小型 10 · 中型 7 · 大型 7', '（金锦冠 4 段算 1 个）'], size=S_SMALL - 2, alpha=A_SUB, lh=1.55)
     rect(s, 140, 540, 420, 1, fill=TXT, fill_alpha=0.12)
     text(s, 140, 566, 420, 140, ['其中 20 种找到烘焙器导出材料，', '19 种留有配方和导出记录，', '要调整时改参数重新导出'],
          size=S_SMALL + 1, alpha=A_SUB, lh=1.6)
@@ -620,7 +620,6 @@ def p13(d, I):
         x = rx + i * (tw + 12)
         image(s, img, x, 214, tw, 280)
         text(s, x, 500, tw, 34, name, size=S_SMALL - 2, alpha=A_SUB, align='c', lh=1.3)
-    source_tag(s, rx, 214, rw, 280, I['p13tag'], pos='br')
     rows = CATEGORY_ROWS
     heads = [(rx, '形态'), (rx + 600, 'PC'), (rx + 900, '手游')]
     for x, tt in heads:
@@ -651,22 +650,21 @@ CATEGORY_ROWS = [('球形开花（菊、牡丹）', '9 种', '1 种'),
 
 def p14(d, I):
     s = d.slide('03 · 实践成果 · 进引擎', '接入成果：两轮整批修正，读回全部一致')
-    text(s, L, 214, 1008, 36, '10-18 · 和性能组定下贴图规范后', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
-    text(s, L, 262, 1000, 170, [[{'t': '149', 'size': 150, 'color': ACC, 'bold': True},
-                                  {'t': '/149', 'size': 96, 'color': ACC, 'bold': True}]], lh=1.0)
-    text(s, L, 436, 1000, 50, '张贴图整批重设，读回全部一致', size=S_CARD + 2, bold=True, lh=1.3)
-    text(s, L, 490, 1000, 50, '别的项目也在用的共享贴图单独列出核对，不跟着改', size=S_BODY - 2, alpha=A_SUB, lh=1.5)
-    rect(s, L, 572, 1008, 1, fill=TXT, fill_alpha=0.12)
-    text(s, L, 600, 1008, 36, '10-16 · 更早一轮', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
-    text(s, L, 648, 1000, 90, [[{'t': '115', 'size': 72, 'bold': True}, {'t': ' 个包', 'size': 30, 'bold': True}]],
-         lh=1.0)
-    text(s, L, 740, 1000, 90, ['48 个粒子系统、67 个材质实例，统一几项发射器与材质设置，', '读回无错误'], size=S_BODY - 2,
-         alpha=A_SUB, lh=1.6)
+    image(s, I['p14b'], L, 214, COL60_W, 566)
+    text(s, L, 790, COL60_W, 30, 'UE 4.24 实播 · 10-16 修正后的金垂柳', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
+    text(s, L, 846, COL60_W, 100, ['之后这些都写进了导入器，', '新资源导入时自动按规范设置'], size=S_BODY - 2, color=ACC, lh=1.5)
     x = COL40_X
-    image(s, I['p14a'], x, 214, COL40_W, 300)
-    image(s, I['p14b'], x, 526, COL40_W, 300)
-    text(s, x, 836, COL40_W, 30, 'UE 4.24 实播 · 10-16 修正后 · 爆裂星、金垂柳', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
-    text(s, x, 880, COL40_W, 80, ['之后这些都写进了导入器，', '新资源导入时自动按规范设置'], size=S_SMALL + 1, color=ACC, lh=1.5)
+    text(s, x, 214, COL40_W, 36, '10-18 · 和性能组定下贴图规范后', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
+    text(s, x, 262, COL40_W, 140, [[{'t': '149', 'size': 120, 'color': ACC, 'bold': True},
+                                     {'t': '/149', 'size': 76, 'color': ACC, 'bold': True}]], lh=1.0)
+    text(s, x, 400, COL40_W, 90, ['张贴图整批重设，读回全部一致；', '共享贴图单独列出核对，不跟着改'], size=S_SMALL + 1,
+         alpha=A_SUB, lh=1.6)
+    rect(s, x, 516, COL40_W, 1, fill=TXT, fill_alpha=0.12)
+    text(s, x, 544, COL40_W, 36, '10-16 · 更早一轮', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
+    text(s, x, 592, COL40_W, 90, [[{'t': '115', 'size': 72, 'bold': True}, {'t': ' 个包', 'size': 30, 'bold': True}]],
+         lh=1.0)
+    text(s, x, 684, COL40_W, 120, ['48 个粒子系统、67 个材质实例，', '统一几项发射器与材质设置，', '读回无错误'], size=S_SMALL + 1,
+         alpha=A_SUB, lh=1.6)
     return s
 
 
@@ -703,22 +701,37 @@ def p15(d, I):
     return s
 
 
+DAILY = [13, 26, 29, 99, 101, 156, 98, 93, 96, 116, 240, 173, 58, 121, 37, 47, 109, 115, 78, 104, 59, 44, 40, 12, 1,
+         46, 21, 9, 31, 0, 9, 12, 15]
+
+
 def p16(d, I):
     s = d.slide('03 · 实践成果 · 投入', '一个人对接 AI，贯穿需求、制作、验收和编排')
-    cards = [('定方向', ['需求、目标与限制', '舞台与编排设计', '审美方向']),
-             ('做判断', ['美术把关', 'UE 里验收', '规范取舍']),
-             ('维护规则和交接', ['把要求写成规则', '每段工作留交接', '让工作能一段段接续'])]
+    cards = [('定方向', '需求、目标与限制；舞台与编排设计'),
+             ('做判断', '美术把关、UE 里验收、规范取舍'),
+             ('维护规则和交接', '把要求写成规则，每段工作留交接')]
     for i, (h, b) in enumerate(cards):
         x = L + i * (544 + 48)
-        card(s, x, 214, 544, 520)
-        text(s, x + 44, 250, 200, 80, f'0{i + 1}', size=64, color=ACC, bold=True, lh=1.0)
-        text(s, x + 44, 356, 460, 56, h, size=40, bold=True, lh=1.3)
-        text(s, x + 44, 440, 460, 220, b, size=S_BODY + 2, alpha=A_SUB, lh=1.75)
-        end_bar(s, x + 44, 680)
-    rect(s, L, 790, W_CONTENT, 1, fill=TXT, fill_alpha=0.12)
-    text(s, L, 820, W_CONTENT, 44, '这一版累计约 2200 次项目提交（其中约 350 次为显卡后台自动回传），烘焙器迭代近 200 个版本号',
-         size=S_BODY - 2, alpha=A_SUB, lh=1.4)
-    text(s, L, 874, W_CONTENT, 40, '导演蓝图与程序共同设计；贴图规范与性能组共同确定', size=S_SMALL, alpha=A_FOOT, lh=1.4)
+        card(s, x, 214, 544, 250, key=(i == 0))
+        text(s, x + 40, 238, 120, 60, f'0{i + 1}', size=44, color=ACC, bold=True, lh=1.1)
+        text(s, x + 40, 306, 470, 50, h, size=S_CARD + 4, bold=True, lh=1.3)
+        text(s, x + 40, 366, 470, 80, b, size=S_SMALL + 1, alpha=A_SUB, lh=1.5)
+    # 每天提交量（不标日期）
+    text(s, L, 510, 1100, 40, '一个多月里每天的项目提交量', size=S_BODY - 2, bold=True, lh=1.3)
+    text(s, L + 1100, 510, 628, 40, '约 2200 次提交 · 烘焙器近 200 个版本号', size=S_BODY - 2, alpha=A_SUB, align='r', lh=1.3)
+    cx0, cw0, base, hh = L, W_CONTENT, 900, 320
+    n = len(DAILY)
+    slot = cw0 / n
+    bw = slot * 0.56
+    peak = max(DAILY)
+    rect(s, cx0, base, cw0, 1, fill=TXT, fill_alpha=0.15)
+    for i, v in enumerate(DAILY):
+        if v == 0:
+            continue
+        bh = max(2, hh * v / peak)
+        rect(s, cx0 + i * slot + (slot - bw) / 2, base - bh, bw, bh, fill=TXT, fill_alpha=0.30)
+    text(s, L, 916, W_CONTENT, 34, '其中约 350 次是显卡后台自动回传；导演蓝图与程序共同设计，贴图规范与性能组共同确定',
+         size=S_SMALL - 2, alpha=A_FOOT, lh=1.3)
     return s
 
 
@@ -784,7 +797,7 @@ def p19(d, I):
 
 
 def p20(d, I):
-    s = d.slide('04 · 经验与方法 · 排查', '黑点与末格黑块：修好一次，写进导出和导入规则')
+    s = d.slide('04 · 经验与方法 · 排查', '黑点与末格黑块：查清原因，写进导出和导入规则')
     card(s, L, 214, 518, 742, key=True)
     text(s, 140, 262, 430, 60, '修一次', size=56, bold=True, lh=1.2)
     line(s, 160, 350, 160, 410, alpha=0.8, w=3, arrow=True)
@@ -817,10 +830,10 @@ def p20(d, I):
 def p21(d, I):
     s = d.slide('04 · 经验与方法 · 规则', '参数和界面也立规则：宪章加令牌，向 DF 特效工作台风格收口')
     image(s, I['p21'], L, 214, W_CONTENT, 500)
-    text(s, L, 722, W_CONTENT, 30, '工具界面 · 烟花烘焙器 4.9.124', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
-    blocks = [('参数宪章', '每个参数先说清是物理量、引擎字段还是预览设置；调了不生效的要变灰并写原因'),
-              ('交互宪章 + 设计令牌', '入口、状态、反馈统一写法；令牌是颜色、字号等统一取值，从 DF 特效工作台反推'),
-              ('现状', '三个工具按同一套配色收口；组件和形状还在逐步统一')]
+    text(s, L, 722, W_CONTENT, 30, '工具界面 · 烟花烘焙器', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
+    blocks = [('参数宪章', '每个参数先说清：是物理量、\v引擎字段，还是预览设置；\v调了不生效的变灰并写原因'),
+              ('交互宪章 + 设计令牌', '入口、状态、反馈统一写法；\v令牌是颜色、字号等统一取值，\v从 DF 特效工作台反推'),
+              ('现状', '三个工具按同一套配色收口；\v组件和形状还在逐步统一')]
     bw = (W_CONTENT - 2 * 40) / 3
     for i, (h, b) in enumerate(blocks):
         x = L + i * (bw + 40)

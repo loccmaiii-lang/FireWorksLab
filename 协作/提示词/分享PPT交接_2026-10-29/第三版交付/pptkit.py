@@ -284,8 +284,8 @@ def before_after(slide, x, y, w, h, img_before, img_after, tag_before='修前', 
         cx = x + i * (cw + gap)
         slide.shapes.add_picture(img, E(cx), E(y), E(cw), E(h))
         tw = 24 * len(tg) + 28
-        rect(slide, cx, y, tw, 38, fill=BG if i == 0 else ACC, fill_alpha=0.78 if i == 0 else 0.92)
-        text(slide, cx, y, tw, 38, tg, size=S_SMALL, color=TXT if i == 0 else BG, bold=True, align='c', anchor='m',
+        rect(slide, cx, y, tw, 38, fill=BG, fill_alpha=0.82)
+        text(slide, cx, y, tw, 38, tg, size=S_SMALL, color=TXT if i == 0 else ACC, bold=True, align='c', anchor='m',
              lh=1.2)
     if src:
         source_tag(slide, x, y, w, h, src, pos='br')
