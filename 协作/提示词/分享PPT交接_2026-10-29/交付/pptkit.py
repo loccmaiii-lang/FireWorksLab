@@ -81,7 +81,10 @@ class Deck:
             add_fade(s)
         return s
 
-    def save(self, path):
+    def save(self, path, title='', subject=''):
+        cp = self.prs.core_properties
+        cp.title, cp.subject = title, subject
+        cp.author = cp.last_modified_by = ''
         self.prs.save(path)
 
 

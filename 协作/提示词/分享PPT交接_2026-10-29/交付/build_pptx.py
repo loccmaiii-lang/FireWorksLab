@@ -389,7 +389,7 @@ def p07(d, I):
     text(s, (x_first + x_last) / 2 - 200, y_back - 40, 400, 34, '进入下一轮', size=S_SMALL, alpha=A_NOTE,
          align='c', lh=1.2)
     text(s, L, 668, 900, 40, '每日提交 · 09-27 至 10-29', size=S_SMALL, alpha=A_SUB, bold=True, lh=1.4)
-    text(s, 880, 668, 944, 40, '共约 2200 次 · 32 天有提交 · 本机显卡后台回传 352 次', size=S_SMALL,
+    text(s, 880, 668, 944, 40, '约 2200 次 · 32 天有提交 · 显卡后台回传 352 次 · 烘焙器 1.0 → 4.9.124', size=S_SMALL,
          alpha=A_NOTE, align='r', lh=1.4)
     daily_bars(s, L, 740, W_CONTENT, 190)
     return s
@@ -624,7 +624,7 @@ def main():
         total += n
         md += [f'## {head}', '', body, '', f'（{n} 字）', '']
     md.insert(3, f'全文约 {total} 字。')
-    d.save(OUT)
+    d.save(OUT, title='烟花秀 AI 全流程', subject='VFX 组内分享 · 2026-10-30')
     with open(SCRIPT_MD, 'w', encoding='utf-8') as f:
         f.write('\n'.join(md))
     print('saved', OUT, 'notes chars', total)
