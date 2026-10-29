@@ -1,0 +1,924 @@
+{
+  "format": "fwl.component-style-sources/1",
+  "date": "2026-10-29",
+  "source_head": "28088d0795b69797737d037ddf56cd17334d67e8",
+  "repository_root": "F:/FWL-副本/20261028-界面交互-本机-全量筛查",
+  "current_version": "4.9.128",
+  "left_entry": "tool/design-system/drafts/v4-workflows-20261029/b.html",
+  "adobe_entry": "tool/design-system/drafts/v6-b-spectrum-20261029/b.html",
+  "right_entry": "tool/FireworkBaker_MaterialB.html",
+  "scope": "来源核实目录，供单HTML组件选择对照；未改旧稿/正式源，不代表新一轮全状态验收。",
+  "required_original_eight": [
+    "C01",
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C11",
+    "C12",
+    "C16"
+  ],
+  "notes": [
+    "Material/Adobe均是本项目参考型候选，不是官方组件包，也未强制换库。",
+    "八类源自v3标准映射，非样板页面前八块。",
+    "current.family为adobe/material/mixed/custom，只表示来源接近程度；128多为Adobe定向但并非纯Adobe。",
+    "supportsSwitch=false表示没有独立等价双皮肤，应显示共有/沿用128自定义；不伪造官方树、进度条、领域编辑器。",
+    "C02包含字段/参数行，C08包含Tabs/分段，COLOR包含C26/C27；分开说明不同语义。",
+    "此14族是精简选择目录，不替代U01–U25全组件覆盖；外部iframe与OS文件对话框未统一。",
+    "尺寸为CSS像素，40/32表示regular/compact；视口媒体条件已注明。"
+  ],
+  "items": [
+    {
+      "id": "C01",
+      "name": "按钮与图标按钮",
+      "standard_ids": [
+        "C01"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#buttons",
+        "selectors": [
+          ".u-button",
+          ".u-primary",
+          ".u-icon"
+        ],
+        "spec": [
+          "40px / compact32px，圆角4px，1px细边框。",
+          "主按钮深青绿底与绿边框；普通按钮中性面板底，按下青绿。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#buttons",
+        "selectors": [
+          ".u-button",
+          ".u-primary",
+          ".u-quiet"
+        ],
+        "spec": [
+          "40px / compact32px，圆角4px。",
+          "最高主动作实心主题绿/深字；普通按下中性，quiet边框透明。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "偏Adobe候选，32px桌面密度自定。",
+        "spec": [
+          "通用32px、13px/20px、内边距5px 10px、圆角4px。",
+          "主按钮实心绿；同权选中中性底/描边；树与行内动作另有28/26/24px变体。"
+        ],
+        "selectors": [
+          "[data-mb-component=button]",
+          "[data-mb-component=icon-button]"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C02",
+      "name": "字段、搜索与真实参数行",
+      "standard_ids": [
+        "C02",
+        "C03",
+        "C13",
+        "C23"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#fields",
+        "selectors": [
+          ".u-input",
+          ".focus-param",
+          ".focus-param-title",
+          ".param-number"
+        ],
+        "spec": [
+          "v3字段：40/32px，4px圆角；只读虚线，修改左侧3px琥珀线。",
+          "B参数为两行组合：名称/76px数值/还原在首行，滑杆第二行；名称14px/22px。"
+        ],
+        "note": "B是项目工作流组合，并非Material官方ParameterRow；仅40个代表参数，不能限制正式完整字段。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#fields",
+        "selectors": [
+          ".u-input",
+          ".focus-param",
+          ".focus-param-title",
+          ".param-number.u-input"
+        ],
+        "spec": [
+          "v5字段正文14px、弱实线只读、内侧2px修改线；保留原生number步进器。",
+          "v6 B沿用两行参数布局与76px数值宽，名称13px/20px、compact控件32px。"
+        ],
+        "note": "v6 B具体入口为同目录b.html；不是另造参数计算器。",
+        "sources": [
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css",
+          "tool/design-system/drafts/v6-b-spectrum-20261029/b-adapter.css",
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css"
+        ]
+      },
+      "current": {
+        "family": "mixed",
+        "note": "基础字段偏Adobe，五列真实参数行是项目自定义。",
+        "spec": [
+          "普通字段32px/13px，4px圆角；参数数值30px/13px等宽、步进器隐藏。",
+          "名称|滑杆|数字|单位|还原，间距6px；数值64px/单位40px/还原24px。",
+          "参数行34px；视口高≤900时行30px/数值28px；宽≤1450时数值60px。",
+          "原锁定/F1、修改、越界、暂不起作用、禁用各语义保留，不能只比较输入框颜色。"
+        ],
+        "selectors": [
+          ".mb-value-row",
+          ".mb-choice-row",
+          ".mb-value-number",
+          ".mb-value-unit",
+          ".mb-value-reset"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js",
+          "tool/src/js/70_ui.js",
+          "tool/src/js/71_panel43.js",
+          "tool/src/js/94_focus_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C03",
+      "name": "滑杆",
+      "standard_ids": [
+        "C03"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#slider",
+        "selectors": [
+          ".u-slider",
+          "#sample-slider"
+        ],
+        "spec": [
+          "原生range、主题绿accent；没有固定自绘轨道/滑块尺寸。",
+          "样板命中区40/32px；B下一行滑杆命中高20px。"
+        ],
+        "note": "不同浏览器原生range形状可能不同，不是固定Material官方轨道。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#slider",
+        "selectors": [
+          ".u-slider",
+          "#sample-slider"
+        ],
+        "spec": [
+          "细轨2px，中性outline色；14px空心圆滑块。",
+          "命中区40/32px，hover滑块填中性文字色。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "mixed",
+        "note": "Adobe细轨方向 + 用户主题绿色定制，非纯Adobe/Material。",
+        "spec": [
+          "轨道3px：已选段主题绿、未选段边框色。",
+          "12px实心绿色滑块，命中高24px；--mb-fill只呈现现有值。",
+          "范围、步长、还原、数值与计算仍由原控制器负责。"
+        ],
+        "selectors": [
+          "input[data-mb-component=slider]"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C04",
+      "name": "下拉选择",
+      "standard_ids": [
+        "C04"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#select",
+        "selectors": [
+          ".u-select",
+          "#sample-select"
+        ],
+        "spec": [
+          "闭合40/32px、圆角4px。",
+          "base-select弹层圆角7px；悬停青绿底，选中标记绿色。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#select",
+        "selectors": [
+          ".u-select",
+          "#sample-select"
+        ],
+        "spec": [
+          "闭合40/32px、正文14px；弹层圆角4px。",
+          "中性高表面悬停/选中，勾选标记中性。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "偏Adobe外观；原生下拉基础沿用125。",
+        "spec": [
+          "普通闭合32px、13px/20px、圆角4px。",
+          "base-select选项最小32px、自然换行、中性选中。",
+          "不支持base-select时仍为系统选择；参数行尺寸继承紧凑字段。"
+        ],
+        "selectors": [
+          "select[data-mb-component=select]"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C05",
+      "name": "复选框与混选",
+      "standard_ids": [
+        "C05"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#checks",
+        "selectors": [
+          ".u-checkbox",
+          "#parent-check",
+          ".child-check"
+        ],
+        "spec": [
+          "原生18×18px，主题绿色accent。",
+          "父子全选/混选示例，整行标签可点。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#checks",
+        "selectors": [
+          ".u-checkbox",
+          "#parent-check",
+          ".child-check"
+        ],
+        "spec": [
+          "原生18×18px，中性浅色accent。",
+          "继承相同混选与标签行为。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "中性色原生复选，接近Adobe候选。",
+        "spec": [
+          "原生18×18px，中性浅色accent；标签最小28px。",
+          "RT观察和关联层保留checkbox多选，不转换即时开关。",
+          "勾形/混选图形仍有浏览器和OS差异。"
+        ],
+        "selectors": [
+          "input[data-mb-component=checkbox]",
+          ".mb-rt-observe-check"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C06",
+      "name": "单选组",
+      "standard_ids": [
+        "C06"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#radios",
+        "selectors": [
+          ".u-radio",
+          "input[name=sample-framing]"
+        ],
+        "spec": [
+          "原生18×18px圆形单选，绿色accent。",
+          "同名互斥、方向键与Space；完整标签可点。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#radios",
+        "selectors": [
+          ".u-radio",
+          "input[name=sample-framing]"
+        ],
+        "spec": [
+          "原生18×18px圆形单选，中性浅色accent。",
+          "继承相同键盘语义。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "中性色原生单选，接近Adobe候选。",
+        "spec": [
+          "18×18px、中性浅色accent，标签13px/20px。",
+          "换皮不改变选项互斥关系，不把长选项强塞成分段。"
+        ],
+        "selectors": [
+          "input[data-mb-component=radio]"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C07",
+      "name": "即时布尔开关",
+      "standard_ids": [
+        "C07"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#switch",
+        "selectors": [
+          ".u-switch",
+          "#sample-switch"
+        ],
+        "spec": [
+          "36×20px方形轨道，2px圆角；滑块12×12px。",
+          "开启深青绿轨道/绿边框与绿色滑块。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#switch",
+        "selectors": [
+          ".u-switch",
+          "#sample-switch"
+        ],
+        "spec": [
+          "相同36×20px几何与12px滑块。",
+          "开启浅中性轨道、深色滑块；关闭深底浅滑块。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "采用Adobe定向的中性开关表达。",
+        "spec": [
+          "36×20px、轨道圆角2px、滑块12px。",
+          "只适配即时布尔设置；输出选择、关联层和RT多选仍是复选框。"
+        ],
+        "selectors": [
+          "input.mb-toggle[data-mb-component=switch]"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C08",
+      "name": "任务页签与短选项分段",
+      "standard_ids": [
+        "C08",
+        "C10"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#segments",
+        "selectors": [
+          ".u-segments",
+          ".u-segment",
+          ".focus-group-tab"
+        ],
+        "spec": [
+          "v3短分段：独立边框按钮、间隔4px，青绿底/边框选中。",
+          "v4 B任务Tabs：四列共框，最小44px，两行组名/计数，选中青绿底+2px底线。"
+        ],
+        "note": "Tabs切内容，radio分段选择值，不可互换语义。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#segments",
+        "selectors": [
+          ".u-segments",
+          ".u-segment",
+          ".focus-group-tabs"
+        ],
+        "spec": [
+          "分段gap0，共享外框和分隔线，中性高表面选中。",
+          "v6 B任务Tabs regular52px/compact44px，仍为两行名称/计数。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css",
+          "tool/design-system/drafts/v6-b-spectrum-20261029/b-adapter.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "等权选项偏Adobe共框；任务/单效果标题页签是项目自定义。",
+        "spec": [
+          "共框4px圆角、gap0、中性选中描边；任务页签最小30px。",
+          "参数短分段26px按钮/28px容器。",
+          "任务平时仅组名，搜索时显示结果；单效果标题不扩成多文档。"
+        ],
+        "selectors": [
+          ".mb-tabs",
+          ".mb-tab",
+          "#mbInspectModes",
+          ".v5-seg"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/94_focus_review.js",
+          "tool/src/js/96_delivery_review.js",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C09",
+      "name": "折叠、分组摘要与帮助",
+      "standard_ids": [
+        "C09",
+        "C13"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v4-workflows-20261029/b.html",
+        "selectors": [
+          ".focus-group-heading",
+          ".focus-group-description",
+          ".focus-help"
+        ],
+        "spec": [
+          "B组标题14px/22px、650字重，组头最小34px；说明summary最小28px。",
+          "v3通用details为分隔线+summary，不等于B任务分组或所有业务模块。"
+        ],
+        "note": "项目组合，无官方MaterialAccordion直接接入。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v6-b-spectrum-20261029/b.html",
+        "selectors": [
+          ".focus-group-heading",
+          ".focus-group-description",
+          ".focus-help"
+        ],
+        "spec": [
+          "v6标题13px/20px、600字重，帮助/摘要12px。",
+          "复用同一B details/控制器，只调整文字层级和间距。"
+        ],
+        "note": "无独立官方SpectrumAccordion替换。",
+        "sources": [
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css",
+          "tool/design-system/drafts/v6-b-spectrum-20261029/b-adapter.css"
+        ]
+      },
+      "current": {
+        "family": "custom",
+        "note": "真实业务details + 项目标题密度，不是某官方Accordion。",
+        "spec": [
+          "模块标题最小32px、14px/22px、600字重；摘要12px/20px。",
+          "视口高≤900时模块标题28px。",
+          "保留真实参数父子、适用条件、开合与F1帮助。"
+        ],
+        "selectors": [
+          "details.mod>summary",
+          "summary .msum",
+          ".shelp"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/70_ui.js",
+          "tool/src/js/71_panel43.js",
+          "tool/src/js/94_focus_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C11",
+      "name": "命令菜单与参数显示菜单",
+      "standard_ids": [
+        "C11"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#feedback",
+        "selectors": [
+          ".u-menu",
+          ".u-menu-body",
+          ".u-menu-item"
+        ],
+        "spec": [
+          "弹层圆角7px、菜单项4px；项高40/32px起，长文字自动增高。",
+          "悬停/焦点青绿底；样板支持方向键、Esc与关闭回焦点。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#feedback",
+        "selectors": [
+          ".u-menu",
+          ".u-menu-body",
+          ".u-menu-item"
+        ],
+        "spec": [
+          "弹层圆角4px，中性悬停/选中，6px 10px内边距。",
+          "沿用同一项目样板控制器，非官方SpectrumActionMenu。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "adobe",
+        "note": "偏Adobe外观，保留原真实V5菜单控制器。",
+        "spec": [
+          "4px圆角、项最小32px，13px/20px，6px 9px内边距。",
+          "长命令自然换行、flex:0 0 auto，限高不压回单行。",
+          "“仅改动/英文名”集中参数显示菜单，原控件监听保留。"
+        ],
+        "selectors": [
+          ".ab-menu",
+          ".v5-pop",
+          ".mb-display-menu"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/material-b.css",
+          "tool/src/js/94_focus_review.js",
+          "tool/src/js/92_v5shell.js",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C12",
+      "name": "对话框与表单弹层",
+      "standard_ids": [
+        "C12"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#feedback",
+        "selectors": [
+          "#sample-dialog",
+          ".u-dialog",
+          ".u-dialog-actions"
+        ],
+        "spec": [
+          "原生dialog，宽min(480px,视口-32px)、圆角4px、24px内边距。",
+          "主动作深青绿底、普通取消透明底。"
+        ],
+        "note": "",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#feedback",
+        "selectors": [
+          "#sample-dialog",
+          ".u-dialog",
+          ".u-dialog-actions"
+        ],
+        "spec": [
+          "继承v3原生dialog壳与布局，仅字段/按钮改为Adobe定向。",
+          "主动作实心绿；同样4px圆角。"
+        ],
+        "note": "没有另一套独立Adobe弹窗布局，v6 B还沿用项目弹层壳。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "mixed",
+        "note": "原真实弹窗组合，控件偏Adobe；不整套替换为候选dialog。",
+        "spec": [
+          "原保存/快捷键等弹窗壳保留；统一细边框、4px圆角、控件与主题。",
+          "不能把样板480px宽度/24px内边距强套全部真实弹窗。",
+          "128保存取消后焦点回body，回触发按钮未验收，不宣称全焦点覆盖。"
+        ],
+        "selectors": [
+          "dialog",
+          "[role=dialog]"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/body.html",
+          "tool/src/js/70_ui.js",
+          "tool/src/js/97_component_review.js"
+        ]
+      },
+      "supportsSwitch": true
+    },
+    {
+      "id": "C16",
+      "name": "进度与进行中反馈",
+      "standard_ids": [
+        "C16"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v3-unified/components.html#buttons",
+        "selectors": [
+          "#busy-button",
+          "#busy-caption"
+        ],
+        "spec": [
+          "现成可操作样板只有650ms忙碌按钮。",
+          "standards-map有C16，但components.html无独立确定进度条样本。"
+        ],
+        "note": "partial：不能根据C11–C16章节标题推定完整进度条已实现。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+          "tool/design-system/drafts/v3-unified/candidate-components.css"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v5-spectrum-20261029/components.html#buttons",
+        "selectors": [
+          "#busy-button",
+          "#busy-caption"
+        ],
+        "spec": [
+          "复用相同650ms忙碌按钮行为，只改按钮外观。",
+          "未发现独立Adobe定向进度条实现。"
+        ],
+        "note": "partial：没有可直接比较的第二套独立进度条。",
+        "sources": [
+          "tool/design-system/drafts/v3-unified/candidate-components.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-tokens.css",
+          "tool/design-system/drafts/v5-spectrum-20261029/spectrum-components.css"
+        ]
+      },
+      "current": {
+        "family": "custom",
+        "note": "保留真实任务进度，项目自定义；不提供虚假双皮肤。",
+        "spec": [
+          "进度轨3px，宽min(220px,容器-32px)，已完成段主题绿。",
+          "深色任务遮罩与真实进度文本，原busy/任务控制器供值。",
+          "对照页若演示百分比须标模拟，不能伪造烘焙或导出成功。"
+        ],
+        "selectors": [
+          "#busy",
+          "#busy .bar",
+          "#busyBar",
+          "#busyText"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/body.html",
+          "tool/src/js/70_ui.js",
+          "tool/src/js/50_bake.js"
+        ]
+      },
+      "supportsSwitch": false
+    },
+    {
+      "id": "TREE",
+      "name": "真实结构树、类型图标与观察动作",
+      "standard_ids": [
+        "C19"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v4-workflows-20261029/b.html",
+        "selectors": [
+          ".tree-root",
+          ".tree-row",
+          ".node-type",
+          ".node-name"
+        ],
+        "spec": [
+          "B项目树：根名13px/650，行32px，类型图标18px，连接线1px。",
+          "选中青绿底+2px左线；演示树只有3层上下文。"
+        ],
+        "note": "自定义项目树，Tabler资产；不含完整发射器/粒子父子。",
+        "sources": [
+          "tool/design-system/drafts/v4-workflows-20261029/studio.css",
+          "tool/design-system/drafts/v4-workflows-20261029/studio.js"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v6-b-spectrum-20261029/b.html",
+        "selectors": [
+          ".tree-root",
+          ".tree-row",
+          ".node-type",
+          ".node-name"
+        ],
+        "spec": [
+          "v6树主要继承v4 studio.css，没有独立Adobe树皮肤。",
+          "类型图标/连接线/层级相同；compact属性不能推断所有树行固定28px。"
+        ],
+        "note": "不存在可直接移植的官方Adobe树。",
+        "sources": [
+          "tool/design-system/drafts/v4-workflows-20261029/studio.css",
+          "tool/design-system/drafts/v6-b-spectrum-20261029/b-adapter.css"
+        ]
+      },
+      "current": {
+        "family": "custom",
+        "note": "复用已认可B树语言，适配完整真实物理层级。",
+        "spec": [
+          "28px行、16px缩进；caret18px/类型图标18px/名称13px。",
+          "效果/层600字重，其他400；选中青绿底+2px左线，连接线1px。",
+          "本地Tabler类型图标；去可见人工序号/◆但原ARIA名称保留。",
+          "眼睛影响配方/导出，靶心/RT复选仅临时观察；树内恢复全部。"
+        ],
+        "selectors": [
+          ".v5-row",
+          ".mb-node-type",
+          ".mb-tree-guides",
+          ".v5-eye",
+          ".v5-solo"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/js/92_v5shell.js",
+          "tool/src/js/95_tree_review.js",
+          "tool/design-system/drafts/v2-structure/assets/node-icons/sources.json"
+        ]
+      },
+      "supportsSwitch": false
+    },
+    {
+      "id": "COLOR",
+      "name": "颜色段、Ramp与寿命曲线",
+      "standard_ids": [
+        "C26",
+        "C27"
+      ],
+      "material": {
+        "label": "Material 参考候选",
+        "sample": "tool/design-system/drafts/v4-workflows-20261029/b.html",
+        "selectors": [
+          ".focus-type-color",
+          ".param-color"
+        ],
+        "spec": [
+          "B只有通用颜色参数输入，不包含完整真实Ramp/寿命曲线编辑器。",
+          "v3标准映射C26/C27是领域自定义。"
+        ],
+        "note": "无完整Material对应样板，不应拿通用ColorPicker冒充同等编辑器。",
+        "sources": [
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css",
+          "tool/design-system/drafts/v4-workflows-20261029/studio.css",
+          "tool/design-system/drafts/v3-unified/standards-map.json"
+        ]
+      },
+      "adobe": {
+        "label": "Adobe / Spectrum 定向候选",
+        "sample": "tool/design-system/drafts/v6-b-spectrum-20261029/b.html",
+        "selectors": [
+          ".focus-type-color",
+          ".param-color.u-input"
+        ],
+        "spec": [
+          "v6只给颜色输入套字段尺寸/字体，没有新Ramp或曲线控制器。",
+          "无与Material分立的完整Adobe领域编辑样板。"
+        ],
+        "note": "不能为制造差异改实际烟花颜色、Ramp采样、曲线插值。",
+        "sources": [
+          "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css",
+          "tool/design-system/drafts/v6-b-spectrum-20261029/b-adapter.css"
+        ]
+      },
+      "current": {
+        "family": "custom",
+        "note": "保留真实领域编辑器，只统一外围字段与阅读角色。",
+        "spec": [
+          "色井32×32px/4px圆角；时间/HEX字段28px、等宽12px。",
+          "Ramp/曲线外围细边框与4px圆角；曲线表格12px/20px等宽。",
+          "原实际颜色、渐变、SVG曲线、值与计算不变。"
+        ],
+        "selectors": [
+          "#colorControls .stage-row",
+          "#matColors .ramp-stop",
+          ".ramp-preview",
+          ".cv-plot",
+          ".cv-keys",
+          ".cv-table"
+        ],
+        "sources": [
+          "tool/src/material-b-components.css",
+          "tool/src/style.css",
+          "tool/src/js/70_ui.js",
+          "tool/src/js/79_curves.js"
+        ]
+      },
+      "supportsSwitch": false
+    }
+  ]
+}

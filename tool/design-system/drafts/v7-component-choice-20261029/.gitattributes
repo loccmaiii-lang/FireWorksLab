@@ -1,0 +1,3 @@
+* text eol=lf
+index.html -text
+128-right.snapshot.html binary

@@ -1,0 +1,200 @@
+{
+  "format": "fwl.component-picker.sources/1",
+  "baseline": "4.9.128",
+  "workspaces": {
+    "format": "fwl-style-picker-sources/1",
+    "files": [
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/b.html",
+        "bytes": 763,
+        "sha256": "8c3c5963fa2b02014d824088c36aee8a87d8848ff521ffe1b508900f4eb697f1"
+      },
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/engine-bridge.js",
+        "bytes": 16750,
+        "sha256": "8d3af5bb392faef6e70974ead1910ce15e4d8c2f7ca51738f5458b2ec7dcee22"
+      },
+      {
+        "path": "tool/design-system/tokens.css",
+        "bytes": 2769,
+        "sha256": "8936034ec9896be7686345418fad103f3d48a15748b38153430892a041b919e4"
+      },
+      {
+        "path": "tool/design-system/drafts/v3-unified/candidate-tokens.css",
+        "bytes": 2399,
+        "sha256": "6d4ae5cf5441c6e9c7067bc16ae4807b6051dc467fc9f5bd5a30ea3b887a1613"
+      },
+      {
+        "path": "tool/design-system/drafts/v3-unified/candidate-components.css",
+        "bytes": 9964,
+        "sha256": "9b6f525764e1b6901874d848d704923c5aba5cd3a3f3ab11771eb4155bfda213"
+      },
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/studio.css",
+        "bytes": 20412,
+        "sha256": "45069878e5ec38336c1fcc6b26bc420a060c7d3c15338dab0e7c24433b541e4e"
+      },
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/focus-panel.css",
+        "bytes": 11247,
+        "sha256": "a939533ab8521585e744c26447960eb9ae492642a44112a7321aef6f2b07ba11"
+      },
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/studio.js",
+        "bytes": 37922,
+        "sha256": "13ae90b57cb81008c9830cd6244e9fe368f73062b75e4252845562be21da5023"
+      },
+      {
+        "path": "tool/design-system/drafts/v1/assets/preview-gold.png",
+        "bytes": 279689,
+        "sha256": "54927549e39874a51a2a344ace08faecf874af407b498e1bec75b455a278c799"
+      },
+      {
+        "path": "tool/design-system/drafts/v2-structure/assets/node-icons/stack-2.svg",
+        "bytes": 457,
+        "sha256": "6a8c582d98be904df095ace2d05c60bea39a3aaf42ca7bd461ca6cec0f299042"
+      },
+      {
+        "path": "tool/design-system/drafts/v2-structure/assets/node-icons/sparkles.svg",
+        "bytes": 522,
+        "sha256": "4e3e97b37d6399e647989856950d0c024a53f3d1bb2f1bf0714f1df2c1bd90d7"
+      },
+      {
+        "path": "tool/design-system/drafts/v2-structure/assets/node-icons/circles.svg",
+        "bytes": 507,
+        "sha256": "7493bc41ad5d7d6961800a46ec45e8c353c256a95ff3727bba2d4053c74c2280"
+      },
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/parameters.json",
+        "bytes": 166566,
+        "sha256": "1bdb425c76c5da359d4d15d46b70d1a93c90cb4dbe117b03e8cf70271357e08c"
+      },
+      {
+        "path": "tool/design-system/drafts/v1/assets/icons.js",
+        "bytes": 7095,
+        "sha256": "391365ced2a13425083554c9a7f1800e7bbb4eac9f08291da591b11e3ccdef72"
+      },
+      {
+        "path": "tool/design-system/drafts/v4-workflows-20261029/focus-panel.js",
+        "bytes": 9893,
+        "sha256": "217679d43a097cfeb30a99e1bc9718b1f85e210e56033a1ac9262f75d368945e"
+      },
+      {
+        "path": "tool/design-system/components.css",
+        "bytes": 15582,
+        "sha256": "6a2a0f54f8ea9fc486c55960988f43451ee73f413a7af6de491cb048efacfe38"
+      },
+      {
+        "path": "tool/src/style.css",
+        "bytes": 183942,
+        "sha256": "411f384d9c2d42628ad7cfe21ed6256cd9a9e9b8dabc1856abf45b166335535f"
+      },
+      {
+        "path": "tool/src/material-b.css",
+        "bytes": 10404,
+        "sha256": "dcc0c064d05ca0d8f4ccac9ee6b026eae576e75f03991f9db4c8e099a8cc66ae"
+      },
+      {
+        "path": "tool/src/material-b-components.css",
+        "bytes": 34334,
+        "sha256": "2f54ed2efeb3e483094ca9c82f2045e6729aa347ed88b02dfe6d029cab02fa12"
+      },
+      {
+        "path": "tool/design-system/drafts/v7-component-choice-20261029/128-right.snapshot.html",
+        "bytes": 1644098,
+        "sha256": "642dd3a619e9520f83098b009f0de079291f1b646ab79a4d6b597263319f3a6f"
+      },
+      {
+        "path": "tool/design-system/drafts/v2-structure/assets/node-icons/adjustments-horizontal.svg",
+        "bytes": 680,
+        "sha256": "66b3be63d0ae4f75c6707ac802ef2bad9eb5f9c0af9ab77c7a1f9c7f1694a178"
+      },
+      {
+        "path": "tool/design-system/drafts/v2-structure/assets/node-icons/hierarchy-2.svg",
+        "bytes": 519,
+        "sha256": "726ca4eff818363a5679cdb0571af7988040162b123761b2443a66dce2c3fde6"
+      },
+      {
+        "path": "tool/design-system/drafts/v2-structure/assets/node-icons/package.svg",
+        "bytes": 525,
+        "sha256": "f74504c6452c0e0e555280dfff5199c02fae0381b6c3d101afe88809a78887de"
+      },
+      {
+        "path": "tool/src/material-b-icons/arrow-back-up.svg",
+        "bytes": 420,
+        "sha256": "064b1b29a6cff3f83ea064ae76f37177f934d3d58244f8b7d28922aeeb948286"
+      },
+      {
+        "path": "tool/src/material-b-icons/dots.svg",
+        "bytes": 507,
+        "sha256": "e0a3f950691ef2e3a4c5c35200eabded201eeb9980b61beab84dcb345c630d9a"
+      },
+      {
+        "path": "tool/src/material-b-icons/help-circle.svg",
+        "bytes": 503,
+        "sha256": "0149afb36ec5442f4ab3fc4e37cd0639af9f794665bbce19a57de583bcb6bf24"
+      },
+      {
+        "path": "tool/src/material-b-icons/lock-open.svg",
+        "bytes": 549,
+        "sha256": "91e8115cc397641e0ea529a073850179f8cbe6f28e86a64ca839e4be229b3450"
+      },
+      {
+        "path": "tool/src/material-b-icons/lock.svg",
+        "bytes": 548,
+        "sha256": "19ef0a4888688ea415b611b7c9e085134683a7fbdce5517be1f722a65e28928d"
+      },
+      {
+        "path": "tool/design-system/icons.js",
+        "bytes": 7095,
+        "sha256": "391365ced2a13425083554c9a7f1800e7bbb4eac9f08291da591b11e3ccdef72"
+      }
+    ],
+    "warnings": [],
+    "adaptations": {
+      "b": [
+        "原v4 B的40项参数与原控制器",
+        "静态参考适配；无HTTP/渲染核/自动烘焙",
+        "独立会话内存；不读取原localStorage",
+        "隐藏素材交付/下载入口；不提供生产保存或导出"
+      ],
+      "mb128": [
+        "真实128运行时DOM快照与原5份CSS",
+        "仅原生组件值/行样本还原/锁定pressed/页签状态",
+        "不包含完整baker控制器；未接通动作就地提示"
+      ]
+    },
+    "protocol": {
+      "channel": "fwl-style-picker/1",
+      "apply-choices": {
+        "css": "string <=400000"
+      },
+      "mode": [
+        "panel",
+        "workspace"
+      ],
+      "receive": "event.source === parent"
+    },
+    "boundary": {
+      "sandbox": "allow-scripts",
+      "sameOrigin": false,
+      "storage": "memory-only",
+      "network": "none",
+      "productionSave": false,
+      "productionExport": false,
+      "realTimePreview": false,
+      "automaticBake": false
+    }
+  },
+  "catalog": "28088d0795b69797737d037ddf56cd17334d67e8",
+  "componentCount": 14,
+  "baker128Sha256": "4c1c75e094815291b6ca92682fa5699fc078059e36b7a4ca50c393841b19186a",
+  "thirdPartyNotices": [
+    {
+      "name": "Tabler Icons 3.46.0",
+      "license": "MIT",
+      "text": "MIT License\n\nCopyright (c) 2020-2026 Paweł Kuna\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "boundary": "组件选型副本；左静态参考+原参数交互，右原DOM控件样本；不执行正式保存/烘焙/素材导出/UE"
+}
