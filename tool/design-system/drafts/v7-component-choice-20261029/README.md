@@ -30,3 +30,9 @@ python -X utf8 tool/design-system/drafts/v7-component-choice-20261029/build.py
 128快照来自实际 `/baker?ui=material-b` 的 GLB-S1 金锦层，在序列化前保留当前输入值/选择/勾选；不把运行状态当作本选型文件的烘焙或验证结果。来源哈希及 Tabler MIT 许可在 `source-manifest.json` 和单HTML内保留。
 
 核验及截图见 `design-qa.md`、仓库 `analysis/results/20261029_组件风格选择/`。正式应用留待用户选定方向。
+
+## 用户已确认的选择（2026-10-29）
+
+[用户原始导出 JSON](../../../../analysis/results/20261029_组件风格选择/FWL-组件选择-128.json) 已随组件库归档到同一评审分支；14类均已选择，Material6类、Adobe8类。打开本目录原选型HTML后，用「导入选择 JSON」载入此文件；原始空白选型入口保持。
+
+备注原文保留：C03「采用adobe，保留material绿色滑杆」；C04和C11「采用adobe，但选中要绿色」。这些是后续实施的视觉要求，本次上传不执行样式或生产迁移；TREE/COLOR/C16仍需按既有边界细化，不把所选方向当作完整皮肤已实现。
