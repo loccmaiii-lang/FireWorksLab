@@ -959,11 +959,14 @@ def main():
         s = fn(d, I)
         head, nar, basis = N[wp] if wp else DEMO_NOTES
         head = re.sub(r'^第 \d+ 页', f'第 {i} 页', head)
+        if wp:
+            sec = int(round(len(nar) / 250 * 60 / 5.0) * 5)
+            head = re.sub(r'（建议 \d+ 秒）', f'（约 {sec} 秒）', head)
         notes(s, head + '\n\n' + nar + ('\n\n依据：' + basis if basis else ''))
         n = len(nar)
         total += n
         md += [f'## {head}', '', nar, '', f'（{n} 字）' + (f'　依据：{basis}' if basis else ''), '']
-    md.insert(3, f'全文约 {total} 字，约 {total / 250:.1f} 分钟。')
+    md.insert(3, f'全文约 {total} 字，按每分钟 250 字约 {total / 250:.1f} 分钟，另加录屏约 2 分钟；以试讲为准。')
     d.save(OUT, title='烟花秀 AI 全流程', subject='VFX 组内分享 · 2026-10-30')
     with open(SCRIPT_MD, 'w', encoding='utf-8') as f:
         f.write('\n'.join(md))
