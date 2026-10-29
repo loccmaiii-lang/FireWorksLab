@@ -1,0 +1,186 @@
+/* B的业务与真实预览继续由原控制器负责；这里只把原布局接到候选u-*令牌。 */
+body.u-scope[data-design="spectrum"][data-concept="focus"] [hidden] {
+  display:none !important;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .app {
+  grid-template-rows:auto minmax(58px,auto) auto minmax(0,1fr) 28px;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .review-bar {
+  min-width:0; min-height:40px; padding-block:4px; flex-wrap:wrap; gap:4px 14px;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .review-bar > a {
+  max-width:none; white-space:normal; overflow:visible; text-overflow:clip;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .concept-nav { flex-wrap:wrap; }
+body.u-scope[data-design="spectrum"][data-concept="focus"] .b-variant-label {
+  color:var(--u-text); font-size:var(--u-label); line-height:var(--u-label-line); font-weight:500;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .b-density-select {
+  display:inline-flex; align-items:center; gap:7px; margin-left:auto; color:var(--u-muted);
+  font-size:var(--u-helper); line-height:var(--u-helper-line); white-space:nowrap;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .b-density-select .u-select {
+  width:auto; max-width:150px; font-size:var(--u-label); line-height:var(--u-label-line);
+}
+
+/* B的固定字段布局保留：字号、操作高度和行距由同一密度接口提供。 */
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-panel {
+  font-size:var(--u-body); line-height:var(--u-body-line);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-param-title {
+  min-height:var(--u-control); color:var(--u-text);
+  font:500 var(--u-label)/var(--u-label-line) var(--u-font);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-param-en {
+  font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control :is(.param-number.u-input,.param-choice.u-select) {
+  min-height:var(--u-control); padding-block:4px;
+  font-size:var(--u-body); line-height:var(--u-body-line); font-weight:400;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-number.u-input {
+  width:76px; max-width:100%; padding-inline:7px;
+  text-align:right; font-variant-numeric:tabular-nums;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-slider.u-slider {
+  height:var(--u-control); min-height:var(--u-control); padding:0; margin:0; border:0; background:transparent;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-choice.u-select {
+  width:100%; max-width:100%; white-space:normal;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-color.u-input {
+  width:100%; min-height:var(--u-control); height:var(--u-control); padding:3px;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-unit {
+  font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control :is(.field-meta,.field-required-meta) {
+  font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400; overflow-wrap:anywhere;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-error.u-field-error {
+  font-size:var(--u-label); line-height:var(--u-label-line); font-weight:400; overflow-wrap:anywhere;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-param.is-changed .param-number.u-input,
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-param.is-changed .param-choice.u-select {
+  box-shadow:inset 2px 0 0 var(--u-warning);
+}
+
+/* 这里是带数量的任务页签，不压成普通单行短分段，也不接管其键盘语义。 */
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; min-height:0;
+  padding:0; gap:0; border:1px solid var(--u-border); border-radius:var(--u-radius); background:var(--u-low);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments .focus-group-tab.u-segment {
+  display:flex; flex-direction:column; align-items:stretch; justify-content:center;
+  min-width:0; min-height:52px; padding:6px; gap:0;
+  border:0; border-inline-end:1px solid var(--u-divider); border-radius:0;
+  background:transparent; color:var(--u-muted); text-align:left; box-shadow:none;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"][data-density="compact"] .focus-group-tabs.u-segments .focus-group-tab.u-segment {
+  min-height:44px; padding:3px 6px;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments .focus-group-tab.u-segment:last-child { border-inline-end:0; }
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments .focus-group-tab.u-segment:is(:hover,:active) {
+  background:var(--u-high); color:var(--u-text);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments .focus-group-tab.u-segment[aria-selected="true"] {
+  background:var(--u-selection-fill); color:var(--u-selection-ink);
+  border-inline-end:1px solid var(--u-divider); box-shadow:inset 0 0 0 1px var(--u-outline);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments .focus-group-tab.u-segment[aria-selected="true"]:last-child { border-inline-end:0; }
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-tab-name {
+  font-size:var(--u-label); line-height:var(--u-label-line); font-weight:600;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-tab-meta {
+  font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] :is(.focus-group-heading h3,.focus-result-heading h4) {
+  font-size:var(--u-label); line-height:var(--u-label-line); font-weight:600;
+}
+
+/* 局部工具和说明保持可点；不靠降低文字透明度表达禁用。 */
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-reset.u-button.u-inline.u-icon {
+  width:28px; min-width:28px; min-height:28px; padding:3px; border-radius:var(--u-radius);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-reset.u-button:disabled {
+  opacity:1; color:var(--u-muted); background:transparent; border-color:transparent;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] :is(.focus-help,.focus-group-description) > summary.u-summary {
+  min-height:28px; padding:4px 0; font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-help > div {
+  font-size:var(--u-helper); line-height:var(--u-helper-line); font-weight:400; overflow-wrap:anywhere;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .param-tools .filter-button.u-button {
+  min-height:var(--u-control); padding:4px 9px; font-size:var(--u-label); line-height:var(--u-label-line);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] :is(.filter-button.u-button,.u-button[data-action="lock"])[aria-pressed="true"] {
+  background:var(--u-selection-fill); color:var(--u-selection-ink); border-color:var(--u-outline);
+  box-shadow:inset 0 0 0 1px var(--u-outline);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] #param-search.u-input {
+  width:100%; min-height:var(--u-control); padding-inline-end:36px;
+  font-size:var(--u-body); line-height:var(--u-body-line);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .search-clear.u-button {
+  top:2px; right:2px; width:28px; min-width:28px; min-height:calc(var(--u-control) - 4px);
+  padding:0; border:0; background:transparent;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .preview-top .u-select {
+  min-height:var(--u-control); font-size:var(--u-label); line-height:var(--u-label-line);
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .transport #time.u-slider {
+  height:var(--u-control); min-height:var(--u-control); min-width:70px;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .more-menu .u-button {
+  width:100%; height:auto; min-height:var(--u-control); white-space:normal; overflow-wrap:anywhere;
+  padding:7px 10px; font-size:var(--u-label); line-height:var(--u-label-line); text-align:left;
+}
+body.u-scope[data-design="spectrum"][data-concept="focus"] .u-dialog {
+  padding:0; max-height:calc(100dvh - 32px); overflow:auto;
+}
+
+@media (max-width:740px),(max-height:520px) {
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .app {
+    grid-template-rows:auto minmax(50px,auto) auto minmax(0,1fr) 26px;
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .review-bar {
+    padding-inline:10px; gap:3px 8px;
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .b-variant-label { font-size:12px; }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .mobile-nav {
+    min-height:38px; flex-wrap:wrap; align-items:stretch;
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .mobile-nav .u-button {
+    min-height:var(--u-control); font-size:var(--u-label); line-height:var(--u-label-line);
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .header-actions .u-button { padding-inline:7px; }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .param-tools { flex-wrap:wrap; }
+}
+@media (max-height:520px) {
+  body.u-scope[data-design="spectrum"][data-concept="focus"][data-density] .focus-group-tabs.u-segments .focus-group-tab.u-segment {
+    flex-direction:row; align-items:center; justify-content:space-between; gap:5px; min-height:var(--u-control); padding:3px 6px;
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-tab-meta { width:auto; gap:5px; }
+}
+@media (pointer:coarse) {
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control :is(.param-number.u-input,.param-choice.u-select,.param-color.u-input),
+  body.u-scope[data-design="spectrum"][data-concept="focus"] :is(.param-tools .filter-button.u-button,#param-search.u-input,.mobile-nav .u-button,.more-menu .u-button) { min-height:48px; }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-color.u-input,
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-control .param-slider.u-slider,
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .transport #time.u-slider { height:48px; min-height:48px; }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-reset.u-button.u-inline.u-icon { width:48px; min-width:48px; min-height:48px; }
+  body.u-scope[data-design="spectrum"][data-concept="focus"][data-density] .focus-group-tabs.u-segments .focus-group-tab.u-segment { min-height:48px; }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] :is(.focus-help,.focus-group-description) > summary.u-summary { min-height:48px; }
+}
+@media (forced-colors:active) {
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-group-tabs.u-segments .focus-group-tab.u-segment[aria-selected="true"] {
+    outline:1px solid Highlight; outline-offset:-1px; box-shadow:none;
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] :is(.filter-button.u-button,.u-button[data-action="lock"])[aria-pressed="true"] {
+    border-color:Highlight; box-shadow:none;
+  }
+  body.u-scope[data-design="spectrum"][data-concept="focus"] .focus-param.is-changed :is(.param-number.u-input,.param-choice.u-select) {
+    border-inline-start:3px double Mark; box-shadow:none;
+  }
+}

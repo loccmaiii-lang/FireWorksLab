@@ -1,0 +1,742 @@
+{
+  "date": "2026-10-29",
+  "stage": "interactive-demo-review",
+  "userPreference": "Material remains preferred; Adobe B is an independent comparison",
+  "preservation": {
+    "files": 405,
+    "changed": []
+  },
+  "controllerOnlyStorageKeyChanged": true,
+  "sharedRuntime": [
+    "parameters.json",
+    "focus-panel.js",
+    "engine-bridge.js",
+    "studio.css",
+    "focus-panel.css"
+  ],
+  "baseHashes": {
+    "b.html": "8c3c5963fa2b02014d824088c36aee8a87d8848ff521ffe1b508900f4eb697f1",
+    "studio.js": "13ae90b57cb81008c9830cd6244e9fe368f73062b75e4252845562be21da5023",
+    "parameters.json": "1bdb425c76c5da359d4d15d46b70d1a93c90cb4dbe117b03e8cf70271357e08c",
+    "focus-panel.js": "217679d43a097cfeb30a99e1bc9718b1f85e210e56033a1ac9262f75d368945e",
+    "engine-bridge.js": "8d3af5bb392faef6e70974ead1910ce15e4d8c2f7ca51738f5458b2ec7dcee22",
+    "studio.css": "45069878e5ec38336c1fcc6b26bc420a060c7d3c15338dab0e7c24433b541e4e",
+    "focus-panel.css": "a939533ab8521585e744c26447960eb9ae492642a44112a7321aef6f2b07ba11"
+  },
+  "localHtmlReferences": 27,
+  "missingReferences": [],
+  "javascriptSyntaxChecks": 2,
+  "screenshots": {
+    "b-comparison-1920.png": [
+      3840,
+      1120
+    ],
+    "b-parameters-comparison.png": [
+      808,
+      840
+    ],
+    "delivery-1366.png": [
+      1366,
+      768
+    ]
+  },
+  "browser": {
+    "checks": [
+      {
+        "test": "真实B初始化",
+        "result": {
+          "count": 40,
+          "types": {
+            "number": 29,
+            "select": 9,
+            "color": 2
+          },
+          "contexts": [
+            {
+              "id": "orange",
+              "editable": false
+            },
+            {
+              "id": "gold",
+              "editable": true
+            },
+            {
+              "id": "strobe",
+              "editable": false
+            }
+          ],
+          "key": "fwl.workflow-demo.20261029.spectrum-b.focus",
+          "frame": {
+            "width": 540,
+            "height": 540,
+            "time": 1.2,
+            "count": 3
+          },
+          "ready": true
+        }
+      },
+      {
+        "test": "紧凑密度与适配类",
+        "result": {
+          "classes": "param-number u-input",
+          "font": "14px",
+          "height": 32,
+          "role": "spinbutton",
+          "type": "text"
+        },
+        "label": {
+          "font": "13px"
+        },
+        "retryVisible": false
+      },
+      {
+        "test": "整数错误保留及最后有效预览",
+        "result": {
+          "value": "1.5",
+          "error": "此参数需要整数；输入未被自动改写。",
+          "preview": 200,
+          "history": 1
+        },
+        "saveEnabled": false,
+        "invalid": "true"
+      },
+      {
+        "test": "原生箭头步进与一笔撤销",
+        "after": {
+          "value": 201,
+          "history": 3
+        }
+      },
+      {
+        "test": "撤销箭头步进",
+        "result": {
+          "value": 200,
+          "errors": {}
+        }
+      },
+      {
+        "test": "真实预览随星数变化",
+        "beforeFrame": {
+          "width": 540,
+          "height": 540,
+          "time": 1.2,
+          "count": 5
+        },
+        "after": {
+          "stateStars": 260,
+          "previewStars": 260,
+          "frame": {
+            "width": 540,
+            "height": 540,
+            "time": 1.2,
+            "count": 7
+          },
+          "ready": true
+        }
+      },
+      {
+        "test": "超常用范围的有限精确值不截断",
+        "result": {
+          "value": 601.25,
+          "hard": null
+        },
+        "rowText": "初速\n已改\nm/s\n\n超出常用滑杆范围；数值原样保留，没有截断。\n\n参数说明"
+      },
+      {
+        "test": "原条件灰化切换",
+        "perM": "",
+        "rate": null,
+        "reason": "每米火花数\n个/m\n\n仅火花生成方式为每米时生效。\n\n参数说明"
+      },
+      {
+        "test": "常规密度",
+        "result": {
+          "font": "14px",
+          "height": 40
+        },
+        "groupHeight": 52
+      },
+      {
+        "test": "整层锁定",
+        "readonly": "",
+        "sliderEnabled": false
+      },
+      {
+        "test": "真实只读层与独立观察",
+        "result": {
+          "current": "orange",
+          "observed": "gold",
+          "value": 200,
+          "original": 200
+        },
+        "readonly": ""
+      },
+      {
+        "test": "眼睛只影响输出配置",
+        "result": {
+          "enabled": false,
+          "current": "gold",
+          "observed": "gold",
+          "preview": "gold"
+        }
+      },
+      {
+        "test": "原分组键盘",
+        "group": "motion"
+      },
+      {
+        "test": "搜索无结果",
+        "count": 0,
+        "message": "未找到匹配参数\n\n换个关键词，或关闭“仅改动”再找。"
+      },
+      {
+        "test": "清空搜索恢复任务组",
+        "group": "motion",
+        "rows": 11
+      },
+      {
+        "test": "仅改动沿原配方基线",
+        "rows": 1,
+        "result": "当前层 · 1/40 项"
+      },
+      {
+        "test": "英文名保留",
+        "text": "Spawn Burst"
+      },
+      {
+        "test": "更多菜单Esc焦点",
+        "hidden": "",
+        "focus": true
+      },
+      {
+        "test": "长名称输入可读",
+        "valueLength": 112,
+        "width": 438.6666870117187,
+        "overflow": false
+      },
+      {
+        "test": "1366交付布局",
+        "viewport": {
+          "height": 768,
+          "width": 1366
+        },
+        "preview": {
+          "height": 637.6666870117188,
+          "width": 884
+        },
+        "checklist": {
+          "height": 637.6666870117188,
+          "scroll": 638,
+          "width": 320
+        },
+        "overflow": false
+      },
+      {
+        "test": "交付检查后变更范围需重检",
+        "message": "设置已更改，请重新检查草稿。",
+        "scope": "textures"
+      },
+      {
+        "test": "窄窗菜单首次定位",
+        "viewport": {
+          "height": 384,
+          "width": 683
+        },
+        "trigger": {
+          "bottom": 81.33333587646484,
+          "y": 49.33333587646485
+        },
+        "menu": {
+          "bottom": 234.6666717529297,
+          "width": 300,
+          "y": 82
+        }
+      },
+      {
+        "test": "480菜单与换行顶栏",
+        "trigger": {
+          "bottom": 81.33333587646484,
+          "top": 49.33333587646485
+        },
+        "menu": {
+          "bottom": 234.6666717529297,
+          "top": 82
+        }
+      },
+      {
+        "test": "滑杆一次拖动一笔历史",
+        "before": {
+          "history": 1,
+          "value": 200
+        },
+        "after": {
+          "history": 2,
+          "value": 260
+        }
+      },
+      {
+        "test": "撤销整笔拖动",
+        "result": {
+          "history": 1,
+          "value": 200
+        }
+      },
+      {
+        "test": "独立保存刷新与原配方差异",
+        "result": {
+          "value": 201,
+          "saved": 201,
+          "initial": 200,
+          "key": "fwl.workflow-demo.20261029.spectrum-b.focus"
+        },
+        "oldStoreUnchanged": true
+      },
+      {
+        "test": "四组全部适用字段接入",
+        "groups": [
+          {
+            "group": "shape",
+            "rows": 8,
+            "fields": [
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "stars",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "burstR0",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "pattern",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkSize",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "headSize",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkPerM",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkRateBy",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkRate",
+                "type": "text",
+                "unified": true
+              }
+            ]
+          },
+          {
+            "group": "motion",
+            "rows": 11,
+            "fields": [
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "duration",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "v0",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "vt",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "grav",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "wind",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "burn",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkLife",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkDrag",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkGrav",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "speedJit",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkStop",
+                "type": "text",
+                "unified": true
+              }
+            ]
+          },
+          {
+            "group": "look",
+            "rows": 10,
+            "fields": [
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "headBright",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "sparkBright",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "T0",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "cooling",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "twinkle",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "twinkleHz",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "haloFrac",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "haloR",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "ramp1",
+                "type": "color",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "ramp2",
+                "type": "color",
+                "unified": true
+              }
+            ]
+          },
+          {
+            "group": "output",
+            "rows": 11,
+            "fields": [
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "exposure",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "cutIn",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "cutOut",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "texW",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "texH",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "cols",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "rows",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "cellPad",
+                "type": "text",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "zoom",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "outPC",
+                "type": "select-one",
+                "unified": true
+              },
+              {
+                "font": "14px",
+                "height": 32,
+                "id": "outMobile",
+                "type": "select-one",
+                "unified": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "test": "683参数可滚动到输入",
+        "viewport": {
+          "height": 384,
+          "width": 683
+        },
+        "field": {
+          "bottom": 306.66668701171875,
+          "font": "14px",
+          "height": 32,
+          "top": 274.66668701171875
+        },
+        "horizontalOverflow": false
+      },
+      {
+        "test": "2560布局与单层核保持",
+        "viewport": {
+          "height": 1440,
+          "width": 2560
+        },
+        "inspector": 460,
+        "horizontalOverflow": false,
+        "frame": {
+          "width": 540,
+          "height": 540,
+          "time": 1.2,
+          "count": 4
+        }
+      },
+      {
+        "test": "默认窗口恢复",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "overflow": false
+      },
+      {
+        "test": "真实核取景及禁止生产调用",
+        "audit": {
+          "storage": "memory-only",
+          "origin": "null",
+          "network": "CSP + API disabled",
+          "bakeCalls": 0,
+          "errors": [],
+          "internalResolution": 540,
+          "renderFrames": 7,
+          "canvas": [
+            540,
+            540
+          ],
+          "viewport": [
+            540,
+            540,
+            1
+          ],
+          "baking": false,
+          "view": "live",
+          "type": "kiku",
+          "visible": true,
+          "devicePixelRatio": 1,
+          "previewDistance": 1000
+        }
+      },
+      {
+        "test": "真实预览播放暂停",
+        "clock": 2.15,
+        "label": "播放本层预览"
+      },
+      {
+        "test": "时间轴键盘定位",
+        "clock": 2.16
+      },
+      {
+        "test": "交付勾选接入原状态",
+        "enabled": false,
+        "message": "设置已更改，请重新检查草稿。"
+      }
+    ],
+    "console": [],
+    "final": {
+      "value": 200,
+      "scope": "all",
+      "errors": {},
+      "ready": true,
+      "frame": {
+        "width": 540,
+        "height": 540,
+        "time": 1.2,
+        "count": 2
+      },
+      "audit": {
+        "storage": "memory-only",
+        "origin": "null",
+        "network": "CSP + API disabled",
+        "bakeCalls": 0,
+        "errors": [],
+        "internalResolution": 540,
+        "renderFrames": 4,
+        "canvas": [
+          540,
+          540
+        ],
+        "viewport": [
+          540,
+          540,
+          1
+        ],
+        "baking": false,
+        "view": "live",
+        "type": "kiku",
+        "visible": true,
+        "devicePixelRatio": 1,
+        "previewDistance": 1000
+      }
+    }
+  },
+  "renderPixelChange": {
+    "previewSize": [
+      1322,
+      766
+    ],
+    "changedPixels": 169326,
+    "totalPixels": 1012652,
+    "changedFraction": 0.16721045334428808,
+    "time": 1.2,
+    "stars": [
+      200,
+      260
+    ]
+  },
+  "productionChanges": false,
+  "unverified": [
+    "native color picker system popup",
+    "full screen-reader audit",
+    "cross-browser",
+    "touch/forced-colors hardware",
+    "bake/export/UE"
+  ]
+}

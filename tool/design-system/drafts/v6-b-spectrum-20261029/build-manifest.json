@@ -1,0 +1,32 @@
+{
+  "source": "v4-workflows-20261029/b.html + studio.js",
+  "studioModification": "Only the local demo storage key; no parameter, transaction, preview or export logic changed",
+  "storageKey": "fwl.workflow-demo.20261029.spectrum-b.focus",
+  "originalStorageKey": "fwl.workflow-demo.20261029.focus",
+  "baseHref": "../v4-workflows-20261029/",
+  "sharedSpectrum": [
+    "../v5-spectrum-20261029/spectrum-tokens.css",
+    "../v5-spectrum-20261029/spectrum-components.css"
+  ],
+  "sameRuntime": [
+    "parameters.json",
+    "focus-panel.js",
+    "engine-bridge.js",
+    "studio.css",
+    "focus-panel.css"
+  ],
+  "baseHashes": {
+    "b.html": "8c3c5963fa2b02014d824088c36aee8a87d8848ff521ffe1b508900f4eb697f1",
+    "studio.js": "13ae90b57cb81008c9830cd6244e9fe368f73062b75e4252845562be21da5023",
+    "parameters.json": "1bdb425c76c5da359d4d15d46b70d1a93c90cb4dbe117b03e8cf70271357e08c",
+    "focus-panel.js": "217679d43a097cfeb30a99e1bc9718b1f85e210e56033a1ac9262f75d368945e",
+    "engine-bridge.js": "8d3af5bb392faef6e70974ead1910ce15e4d8c2f7ca51738f5458b2ec7dcee22",
+    "studio.css": "45069878e5ec38336c1fcc6b26bc420a060c7d3c15338dab0e7c24433b541e4e",
+    "focus-panel.css": "a939533ab8521585e744c26447960eb9ae492642a44112a7321aef6f2b07ba11"
+  },
+  "generatedHashes": {
+    "b.html": "a459cedd214caabdcc774005713f5283b039161e530fdddca64537aeae2476ba",
+    "studio.js": "eb0797c3946fdb9ca5a47b61990c0dc62f991e16eb3d2ade7fab9d8d7cc23cf9"
+  },
+  "productionSourceChanged": false
+}
