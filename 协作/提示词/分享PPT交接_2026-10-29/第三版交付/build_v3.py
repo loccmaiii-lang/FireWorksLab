@@ -152,6 +152,8 @@ def build_images():
     I['p10'], I['p10h'] = importer_shot()
     I['p12'] = workbench_shot()
     I['p13tiles'], I['p13tag'] = effect_tiles()
+    I['p14a'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p14_ue_a.jpg', 672, 300, box=(14, 590, 734, 994))
+    I['p14b'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p14_ue_b.jpg', 672, 300, box=(766, 590, 1486, 994))
     I['demo'] = prep('06_烘焙器界面_引擎回放.jpg', 'demo_bg.jpg', 1200, 675, focus=(0.5, 0.5))
     I['p17'] = prep('15_升空尾缀_实拍模拟导出对照.jpg', 'p17_trail.jpg', 1008, 620, focus=(0.5, 0.5))
     I['p18a'] = prep('17_仙女棒13层_第1至7层.jpg', 'p18_l1.jpg', 1162, 188)
@@ -179,7 +181,9 @@ def importer_shot():
     """导入器截图：本机给了真实效果的原图就用原图；否则用第一版的 Fixture 图，盖掉左下角的测试弹窗。"""
     for n in sorted(os.listdir(LOCALSRC)) if os.path.isdir(LOCALSRC) else []:
         if n.startswith('导入器'):
-            return prep(n, 'p10_importer.jpg', 1008, 630), 630
+            return prep(n, 'p10_importer.jpg', 1008, 567), 567
+    if has_local('IMPORT5_THEME_20261024_after_1920.png'):
+        return prep('IMPORT5_THEME_20261024_after_1920.png', 'p10_importer.jpg', 1008, 567), 567
     im = Image.open(os.path.join(V1IMG, 'p09_importer.jpg')).convert('RGB')
     im = _paint(im, (10, 400, 240, 456), (60, 470))
     p = os.path.join(IMG, 'p10_importer.jpg')
@@ -210,7 +214,7 @@ def effect_tiles():
                 have.append((m[0], name))
     if len(have) >= 4:
         tw = (1162 - (len(have) - 1) * 12) / len(have)
-        out = [(prep(f, f'p13_{i}.jpg', tw, 300, focus=TILE_FOCUS.get(name, (0.5, 0.42))), name)
+        out = [(prep(f, f'p13_{i}.jpg', tw, 280, focus=TILE_FOCUS.get(name, (0.5, 0.42))), name)
                for i, (f, name) in enumerate(have)]
         return out, 'UE 实机'
     srcs = [('03_UE跨年秀_金色扇面.jpg', '扇面（UE）', dict(box=(560, 120, 1060, 640))),
@@ -218,7 +222,7 @@ def effect_tiles():
             ('19_金芒爆裂菊.jpg', '金芒爆裂菊', dict(fix_black=True)),
             ('20_小青柠.jpg', '小青柠', dict(fix_black=True))]
     tw = (1162 - 3 * 12) / 4
-    out = [(prep(n, f'p13_{i}.jpg', tw, 300, **kw), name) for i, (n, name, kw) in enumerate(srcs)]
+    out = [(prep(n, f'p13_{i}.jpg', tw, 280, **kw), name) for i, (n, name, kw) in enumerate(srcs)]
     return out, 'UE 实机 / 引擎回放'
 
 
@@ -460,6 +464,8 @@ def p08(d, I):
              ('曲线精简', '面片大小最多分 12 级；\v曲线点从近百个减到二十几个'),
              ('帧数分配', '动得快的阶段帧给得密，\v慢的阶段少给'),
              ('停用紧凑取景', '逐帧紧裁、面片跟着跑，\v在引擎里会抖')]
+    text(s, L, 960, W_CONTENT, 30, '正式资源中有交付记录的 17 组：固定 10 组、随开花放大 5 组、锚点 2 组', size=S_SMALL - 4,
+         alpha=A_FOOT, lh=1.2)
     sw = (W_CONTENT - 3 * 40) / 4
     for i, (h, b) in enumerate(steps):
         x = L + i * (sw + 40)
@@ -500,12 +506,13 @@ def p10(d, I):
     s = d.slide('02 · 解决思路 · 进引擎', '导入器：把引擎设置规范写进工具，确认后才写入 UE')
     image(s, I['p10'], L, 214, COL60_W, I.get('p10h', 630))
     text(s, L, 214 + I.get('p10h', 630) + 12, COL60_W, 80,
-         ['导入入口在烘焙器「资源交付」页；写进 UE 靠 UE 插件和本机交付服务', '灵感来自原特效工作台的配表入口'],
+         ['导入器在特效工作台里，挨着原来的配表入口；烘焙器「资源交付」页导出后也能直接进导入清单',
+          '写进 UE 靠 UE 插件和本机交付服务'],
          size=S_SMALL - 2, alpha=A_NOTE, lh=1.5)
     x = COL40_X
-    steps = [('01', '读包检查', '命名、尺寸、平台和规范项；\v不合格的先拦下'),
-             ('02', '按平台创建与设置', '贴图、材质实例、发射器\v按规范设好'),
-             ('03', '读回核对', '写完再读一遍，和规范对照')]
+    steps = [('01', '配置素材', '读素材包，检查命名、尺寸、\v平台和规范项，不合格先拦下'),
+             ('02', '核对清单', '按平台列出要建的贴图、\v材质实例、发射器和设置'),
+             ('03', '执行导入', '按规范写进 UE，\v写完再读回核对')]
     y = 220
     for n, h, b in steps:
         numbered(s, x, y, COL40_W, n, h, b)
@@ -596,9 +603,9 @@ def p13(d, I):
     card(s, L, 214, 518, 742, key=True)
     text(s, 140, 252, 440, 110, '26', size=104, color=ACC, bold=True, lh=1.0)
     text(s, 140, 372, 440, 50, '种开花花型', size=34, bold=True, lh=1.3)
-    text(s, 140, 428, 420, 60, '按尺寸共 30 个规格', size=S_BODY - 2, alpha=A_SUB, lh=1.5)
-    rect(s, 140, 520, 420, 1, fill=TXT, fill_alpha=0.12)
-    text(s, 140, 548, 420, 140, ['其中 20 种找到烘焙器导出材料，', '19 种留有配方和导出记录，', '要调整时改参数重新导出'],
+    text(s, 140, 428, 420, 100, ['按尺寸共 30 个规格：', '小号 6 · 小型 13 · 中型 7 · 大型 7'], size=S_SMALL + 1, alpha=A_SUB, lh=1.55)
+    rect(s, 140, 540, 420, 1, fill=TXT, fill_alpha=0.12)
+    text(s, 140, 566, 420, 140, ['其中 20 种找到烘焙器导出材料，', '19 种留有配方和导出记录，', '要调整时改参数重新导出'],
          size=S_SMALL + 1, alpha=A_SUB, lh=1.6)
     text(s, 140, 860, 420, 80, ['按资源表花型统计，含素材复用，', '不等于 26 套独立模拟'], size=S_SMALL - 2, alpha=A_FOOT, lh=1.5)
     rx, rw = 662, 1162
@@ -606,28 +613,35 @@ def p13(d, I):
     tw = (rw - (len(tiles) - 1) * 12) / len(tiles)
     for i, (img, name) in enumerate(tiles):
         x = rx + i * (tw + 12)
-        image(s, img, x, 214, tw, 300)
-        text(s, x, 522, tw, 34, name, size=S_SMALL - 2, alpha=A_SUB, align='c', lh=1.3)
-    source_tag(s, rx, 214, rw, 300, I['p13tag'], pos='br')
+        image(s, img, x, 214, tw, 280)
+        text(s, x, 500, tw, 34, name, size=S_SMALL - 2, alpha=A_SUB, align='c', lh=1.3)
+    source_tag(s, rx, 214, rw, 280, I['p13tag'], pos='br')
     rows = CATEGORY_ROWS
-    heads = [(rx, '分类'), (rx + 520, 'PC'), (rx + 840, '手游')]
-    for x, t in heads:
-        text(s, x, 590, 300, 34, t, size=S_SMALL - 2, alpha=A_FOOT, bold=True, lh=1.2)
-    y = 628
-    rh = (956 - 628) / len(rows)
+    heads = [(rx, '形态'), (rx + 600, 'PC'), (rx + 900, '手游')]
+    for x, tt in heads:
+        text(s, x, 556, 300, 30, tt, size=S_SMALL - 4, alpha=A_FOOT, bold=True, lh=1.2)
+    y = 588
+    rh = 41
     for name, pc, mb in rows:
         rect(s, rx, y, rw, 1, fill=TXT, fill_alpha=0.10)
-        text(s, rx, y, 500, rh, name, size=S_SMALL + 2, bold=True, anchor='m', lh=1.3)
-        text(s, rx + 520, y, 310, rh, pc, size=S_SMALL + 1, alpha=A_SUB, anchor='m', lh=1.3)
-        text(s, rx + 840, y, 322, rh, mb, size=S_SMALL + 1, alpha=A_SUB, anchor='m', lh=1.3)
+        text(s, rx, y, 600, rh, name, size=S_SMALL, bold=True, anchor='m', lh=1.2)
+        text(s, rx + 600, y, 300, rh, pc, size=S_SMALL, alpha=A_SUB, anchor='m', lh=1.2)
+        text(s, rx + 900, y, 262, rh, mb, size=S_SMALL, alpha=A_SUB, anchor='m', lh=1.2)
         y += rh
+    rect(s, rx, y, rw, 1, fill=TXT, fill_alpha=0.10)
+    text(s, rx, y + 8, rw, 30, '另 1 种（彩千轮）形态未定；PC 开花合计 26 种，手游 12 种；共引用 212 张贴图', size=S_SMALL - 4,
+         alpha=A_FOOT, lh=1.2)
     return s
 
 
-CATEGORY_ROWS = [('开花花型', '26 种 · 30 个规格', '12 种'),
+CATEGORY_ROWS = [('球形开花（菊、牡丹）', '9 种', '1 种'),
+                 ('冠', '3 种', '3 种'),
+                 ('柳', '1 种', '1 种'),
+                 ('扇形', '1 种 · 金锦冠，4 段', '—'),
+                 ('彗星', '5 种', '2 种'),
+                 ('特殊星效（爆裂、分裂、辉星、点灭）', '6 种', '5 种'),
                  ('升空尾缀', '6 档', '6 档'),
-                 ('窜天猴', '1 套 · 7 个组件', '1 套 · 6 个组件'),
-                 ('引用贴图', '212 张（两个平台合计）', '')]
+                 ('窜天猴', '7 个组件', '6 个组件')]
 
 
 def p14(d, I):
@@ -644,15 +658,10 @@ def p14(d, I):
     text(s, L, 740, 1000, 90, ['48 个粒子系统、67 个材质实例，统一几项发射器与材质设置，', '读回无错误'], size=S_BODY - 2,
          alpha=A_SUB, lh=1.6)
     x = COL40_X
-    card(s, x, 214, COL40_W, 742, key=True)
-    text(s, x + 44, 250, 600, 50, '之后都写进了导入器', size=S_CARD + 2, bold=True, lh=1.3)
-    y = 340
-    for h, b in [('导出时', '按平台写好设置'), ('导入时', '按包写入，再读回核对'), ('共享贴图', '单独列出来问，不跟着改')]:
-        green_sq(s, x + 44, y + 14)
-        text(s, x + 74, y, 540, 44, h, size=S_BODY, bold=True, lh=1.3)
-        text(s, x + 74, y + 46, 540, 44, b, size=S_SMALL + 1, alpha=A_SUB, lh=1.4)
-        y += 130
-    text(s, x + 44, 780, 584, 120, ['新资源导入时自动按规范设置，', '不用每次靠人记'], size=S_BODY - 2, color=ACC, lh=1.6)
+    image(s, I['p14a'], x, 214, COL40_W, 300)
+    image(s, I['p14b'], x, 526, COL40_W, 300)
+    text(s, x, 836, COL40_W, 30, 'UE 4.24 实播 · 10-16 修正后 · 爆裂星、金垂柳', size=S_SMALL - 4, alpha=A_NOTE, lh=1.2)
+    text(s, x, 880, COL40_W, 80, ['之后这些都写进了导入器，', '新资源导入时自动按规范设置'], size=S_SMALL + 1, color=ACC, lh=1.5)
     return s
 
 
