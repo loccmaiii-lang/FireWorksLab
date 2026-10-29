@@ -112,11 +112,90 @@
     if (!note) { note = document.createElement('p'); note.className = 'mb-rt-observe-note'; box.appendChild(note); }
     const explanation = metadata().note; text(note, explanation); hide(note, !explanation);
   }
+
+  // 从原可见节点推导视觉注解。只读 lv/key/sel；不重排、补造或扁平化物理层级。
+  function structureRows(nodes) {
+    const stack = [], rows = nodes.map((node, index) => {
+      const depth = Number.isInteger(node.lv) && node.lv >= 0 ? node.lv : 0;
+      stack.length = depth;
+      const ancestors = stack.slice(); stack[depth] = index;
+      return { node, index, depth, ancestors };
+    });
+    const selected = rows.find(row => row.node.sel);
+    const path = selected ? [...selected.ancestors, selected.index].filter(Number.isInteger) : [];
+    const edges = path.slice(1).map((end, index) => ({ start: path[index], end, level: rows[end].depth }));
+    const nextSiblings = rows.map(row => {
+      for (let next = row.index + 1; next < rows.length; next++) {
+        if (rows[next].depth <= row.depth) return rows[next].depth === row.depth;
+      }
+      return false;
+    });
+    return rows.map(row => {
+      const guides = [];
+      for (let level = 1; level <= row.depth; level++) {
+        const branch = level === row.depth;
+        if (!branch && !nextSiblings[row.ancestors[level]]) continue;
+        const edge = edges.find(item => item.level === level && item.start < row.index && row.index <= item.end);
+        guides.push({ level, branch, continues: branch && nextSiblings[row.index], active: !!edge,
+          turn: !!edge && row.index === edge.end, below: !!edge && row.index < edge.end });
+      }
+      return { ...row, onPath: path.includes(row.index), guides };
+    });
+  }
+  function nodeRole(node) {
+    if (node.kind === 'layer') return state.tab === 'combo' ? 'layer' : 'effect';
+    if (node.kind === 'emit') return 'emitter';
+    if (node.kind === 'out' || node.key === 't:输出') return 'output';
+    if (node.kind === 'group') return node.key === 'g:graph' ? 'graph' : 'group';
+    if (node.kind === 'add') return 'add';
+    return node.key === 'whole' ? 'effect' : 'settings';
+  }
+  const typeIcons = Object.freeze({ effect: 'sparkles', layer: 'stack-2', emitter: 'circles', graph: 'hierarchy-2',
+    group: 'hierarchy-2', output: 'package', settings: 'adjustments-horizontal', add: 'circles' });
+  function presentStructure(row, info, nodes) {
+    const { node, depth, ancestors, onPath, guides } = info, role = nodeRole(node);
+    row.dataset.mbKind = node.kind; row.dataset.mbDepth = String(depth); row.dataset.mbRole = role;
+    row.dataset.mbNodeKey = node.key; row.dataset.mbOnPath = String(onPath);
+    row.dataset.mbAncestor = String(onPath && !node.sel);
+    row.dataset.mbParentKey = nodes[ancestors[depth - 1]]?.key || '';
+    let lines = row.querySelector(':scope > .mb-tree-guides');
+    if (!lines) { lines = document.createElement('span'); lines.className = 'mb-tree-guides'; lines.setAttribute('aria-hidden', 'true'); row.prepend(lines); }
+    const signature = JSON.stringify(guides);
+    if (lines.dataset.mbGuideSignature !== signature) {
+      const segments = guides.map(guide => {
+        const line = document.createElement('span');
+        line.className = 'mb-tree-guide' + (guide.branch ? ' is-branch' : '') + (guide.continues ? ' continues' : '')
+          + (guide.active ? ' is-active' : '') + (guide.turn ? ' active-turn' : '') + (guide.below ? ' active-below' : '');
+        line.style.setProperty('--mb-guide-level', String(guide.level)); return line;
+      });
+      lines.replaceChildren(...segments); lines.dataset.mbGuideSignature = signature;
+    }
+    const name = row.querySelector('.v5-name'); if (!name) return;
+    let icon = name.querySelector(':scope > .mb-node-type'), label = name.querySelector(':scope > .mb-node-label');
+    if (!icon || !label) {
+      // 原 button 实例、data-act/data-n、焦点和监听不变；读屏仍读完整原名称。
+      if (!name.hasAttribute('aria-label')) name.setAttribute('aria-label', node.name);
+      icon = document.createElement('span'); icon.className = 'mb-node-type'; icon.setAttribute('aria-hidden', 'true');
+      label = document.createElement('span'); label.className = 'mb-node-label'; name.replaceChildren(icon, label);
+    }
+    const iconName = typeIcons[role], uri = window.FWTypeIconAssets?.[iconName];
+    icon.dataset.mbTypeIcon = iconName;
+    if (uri) {
+      const value = 'url("' + uri + '")';
+      if (icon.style.getPropertyValue('--mb-type-icon') !== value) icon.style.setProperty('--mb-type-icon', value);
+    }
+    // 仅去原渲染器添加的层序号、分组符号；真实名称中的 01、数字和字样均保留。
+    const displayName = node.kind === 'layer' && state.tab === 'combo' && Number.isInteger(node.i)
+      ? String(layerName(node.i)) : node.kind === 'group' ? node.name.replace(/^◆\s*/, '') : node.name;
+    text(label, displayName);
+  }
   function syncTreeUI() {
     const tree = document.getElementById('v5Tree'); if (!tree) return;
     tools();
+    const nodes = v5.nodes || [], structure = structureRows(nodes);
     tree.querySelectorAll('.v5-row').forEach(row => {
-      const node = v5.nodes?.[+row.dataset.n]; if (!node) return;
+      const info = structure[+row.dataset.n], node = info?.node; if (!node) return;
+      presentStructure(row, info, nodes);
       const eye = row.querySelector('[data-act="eye"]');
       if (eye && !eye.querySelector('[data-fw-icon]') && window.FWIcons) {
         const icon = document.createElement('span'); icon.className = 'fw-icon';

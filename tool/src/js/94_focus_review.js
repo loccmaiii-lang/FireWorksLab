@@ -13,7 +13,6 @@
     output: new Set(['直接调', '算出来的', '导出方案', '入点出点', '取景', '帧', '贴图', '编码', '画质', '曝光光晕', '手机', '镜头', '镜头成像'])
   };
   const selection = new Map();
-  const refreshed = new WeakSet();
   let scope = '', task = 'all', queued = false, reopenEnglish = false;
   let inDelivery = false, deliveryEditing = false;
   let filterReturn = null;
@@ -30,29 +29,6 @@
     if (!filterReturn && !pview.q && !pview.changed) filterReturn = { subject: subjectKey(), top: rScroller().scrollTop };
   }
   function setHidden(node, hidden) { if (node.hidden !== hidden) node.hidden = hidden; }
-  function fillRanges(host) {
-    host.querySelectorAll('input[type="range"]').forEach(input => {
-      const lo = Number(input.min), hi = Number(input.max), value = Number(input.value);
-      const fill = hi > lo && Number.isFinite(value) ? Math.max(0, Math.min(100, (value - lo) / (hi - lo) * 100)) : 0;
-      const text = fill.toFixed(3) + '%';
-      if (input.style.getPropertyValue('--mb-fill') !== text) input.style.setProperty('--mb-fill', text);
-    });
-  }
-  function prepareRows(rows) {
-    rows.forEach(([row]) => {
-      // 真实值刷新（撤销、换层等）也同步轨道；不接管输入、校验或提交。
-      if (typeof row._refresh === 'function' && !refreshed.has(row)) {
-        const refresh = row._refresh;
-        row._refresh = function () { const result = refresh.apply(this, arguments); fillRanges(row); return result; };
-        refreshed.add(row);
-      }
-      const label = row.querySelector(':scope > .k'), unit = row.querySelector(':scope > .punit');
-      if (label && unit && unit.textContent.trim() === '×') {
-        const text = [...label.childNodes].find(node => node.nodeType === Node.TEXT_NODE);
-        if (text && /\s*×\s*$/.test(text.nodeValue)) text.nodeValue = text.nodeValue.replace(/\s*×\s*$/, '');
-      }
-    });
-  }
   function prepareTools(host) {
     const tools = host.querySelector(':scope > .ptools');
     if (!tools) return null;
@@ -155,7 +131,7 @@
     treeHeading(); workspaceSync();
     const ui = prepareTools(host);
     if (!ui) return;
-    prepareRows(panelRows); fillRanges(right); contextSync(ui.tools.querySelector('.mb-context'));
+    contextSync(ui.tools.querySelector('.mb-context'));
     const filtering = !!pview.q || !!pview.changed;
     if (!filtering) {
       const nextScope = [typeof lib !== 'undefined' ? lib.key || '' : '', state.tab, state.comboSel, pview.tabNow || '全部'].join('|');
@@ -246,8 +222,8 @@
       if (!stage2.deliv) return;
       event.preventDefault(); event.stopImmediatePropagation(); deliveryEditing = false; workspaceSync();
     }, true);
-    right.addEventListener('input', event => { if (event.target.matches('input[type="range"]')) fillRanges(event.target.parentElement); else if (event.target.matches('#params input[type="search"]')) schedule(); });
-    right.addEventListener('change', () => { fillRanges(right); schedule(); });
+    right.addEventListener('input', event => { if (event.target.matches('#params input[type="search"]')) schedule(); });
+    right.addEventListener('change', schedule);
     // 英文名会重建面板；保留显示菜单和键盘位置，而不复制原监听或偏好状态。
     document.addEventListener('change', event => {
       if (event.target.matches('#params .mb-display [data-en]')) reopenEnglish = true;

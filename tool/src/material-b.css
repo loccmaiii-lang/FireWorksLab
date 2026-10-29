@@ -1,5 +1,4 @@
-/* Material B 完整烘焙器评审：只改变呈现，旧入口不启用。颜色沿用现有主题。 */
-/* 交付时暂收编辑栏；原 panels 偏好不变，主动打开和离开交付分别恢复。 */
+/* B 评审工作区布局。基础控件只在 material-b-components.css 定义。旧入口不启用。 */
 body[data-ui="material-b"].mb-delivery-peek #main{--rw:0px;--gr:0px}
 body[data-ui="material-b"].mb-delivery-peek #main>#right,
 body[data-ui="material-b"].mb-delivery-peek #main>#gutR{display:none}
@@ -7,359 +6,76 @@ body[data-ui="material-b"].mb-delivery-peek .stage.dv-on>.tlbars{display:none}
 body[data-ui="material-b"].mb-delivery-edit #main{--rw:var(--rightW,clamp(340px,27vw,520px));--gr:5px}
 body[data-ui="material-b"].mb-delivery-edit #main.noright>#right{display:flex}
 body[data-ui="material-b"].mb-delivery-edit #main.noright>#gutR{display:block}
-body[data-ui="material-b"] #right{
-  --pc-name:clamp(92px,28%,132px);--pc-num:64px;--pc-unit:28px;--pc-act:24px;
-  --pad:16px;
-}
-body[data-ui="material-b"] #right :is(button,summary,input,select){font-variant-numeric:tabular-nums}
-body[data-ui="material-b"] #right :is(button,summary,select,input):focus-visible{
-  outline:2px solid var(--acc2);outline-offset:2px;
-}
-body[data-ui="material-b"] #right .mb-task-hidden{display:none!important}
-body[data-ui="material-b"] #right.mb-tree-auto #v5Tree{max-height:clamp(84px,calc(100dvh - 680px),140px)}
-
-/* 结构区：层级由树本身表达，标题没有装饰图标。 */
-body[data-ui="material-b"] .v5-bar{gap:4px;padding-top:10px;padding-bottom:8px}
-body[data-ui="material-b"] .v5-r1 .v5-name{font-size:15px;line-height:22px}
-body[data-ui="material-b"] .v5-r2 .idc{border:0;padding:0 6px 0 0;line-height:20px;background:none}
-body[data-ui="material-b"] .v5-tools{gap:8px;min-height:38px;padding-block:4px}
-body[data-ui="material-b"] .mb-tree-title{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap}
-body[data-ui="material-b"] .v5-tools .v5-add{height:28px;min-height:28px;border-radius:3px}
-body[data-ui="material-b"] .v5-tree{padding:0 6px 5px}
-body[data-ui="material-b"] .v5-row{height:31px;border-radius:2px}
-body[data-ui="material-b"] .v5-row .v5-name{height:29px;font-size:13px}
-body[data-ui="material-b"] .v5-row.sel{background:var(--hover);box-shadow:inset 2px 0 var(--acc)}
-body[data-ui="material-b"] .v5-row.sel .v5-name{color:var(--text)}
-body[data-ui="material-b"] .v5-ic{height:28px;width:28px;border-radius:3px}
-body[data-ui="material-b"] .v5-ic[aria-pressed=true]{color:var(--gold2)}
-body[data-ui="material-b"] .v5-split::after{height:1px;top:4px;width:30px;margin-left:-15px;border-radius:0;background:var(--faint)}
-body[data-ui="material-b"] .v5-tree.anim,
-body[data-ui="material-b"] .v5-row .v5-tw svg,
-body[data-ui="material-b"] #right details.sec.v5-anim::details-content{transition:none}
-
-/* 搜索常驻；显示偏好收在一个菜单里，生效筛选仍有明确提示。 */
-body[data-ui="material-b"] #right.v5 #params>.ptools{
-  column-gap:8px;row-gap:4px;align-items:center;flex-wrap:wrap;padding-top:6px;padding-bottom:6px;
-}
-body[data-ui="material-b"] #right.v5 #params>.ptools input[type=search]{
-  flex:1 1 160px;min-height:32px;border-radius:3px;
-}
-body[data-ui="material-b"] .mb-display{position:relative;flex:0 0 auto}
-body[data-ui="material-b"] .mb-display>summary{
-  display:flex;align-items:center;justify-content:center;gap:6px;min-height:32px;
-  padding:4px 10px;border:1px solid var(--line2);border-radius:3px;
-  background:var(--low);color:var(--dim);font-size:12px;font-weight:400;list-style:none;cursor:pointer;
-}
-body[data-ui="material-b"] .mb-display>summary::-webkit-details-marker{display:none}
-body[data-ui="material-b"] .mb-display>summary::after{content:'⌄';font-size:13px;line-height:1}
-body[data-ui="material-b"] .mb-display[open]>summary,
-body[data-ui="material-b"] .mb-display>summary:hover{color:var(--text);border-color:var(--hov)}
-body[data-ui="material-b"] .mb-display :is(.mb-display-menu,.mb-display-pop){
-  position:absolute;right:0;top:calc(100% + 5px);z-index:12;min-width:190px;max-width:min(280px,calc(100vw - 32px));
-  padding:5px;border:1px solid var(--line2);border-radius:4px;background:var(--panel);box-shadow:0 6px 18px #0006;
-}
-body[data-ui="material-b"] .mb-display .pchg{
-  display:flex!important;align-items:center;gap:9px;min-height:34px;padding:5px 9px;
-  border-radius:2px;white-space:normal!important;line-height:20px;cursor:pointer;
-}
-body[data-ui="material-b"] .mb-display .pchg:hover{background:var(--hover)}
-body[data-ui="material-b"] .mb-filter-state{
-  display:flex;align-items:center;gap:6px;flex:1 1 100%;min-width:0;
-  color:var(--dim);font-size:12px;line-height:20px;overflow-wrap:anywhere;
-}
-body[data-ui="material-b"] .mb-filter-state:empty,
-body[data-ui="material-b"] .mb-filter-state[hidden]{display:none}
-body[data-ui="material-b"] .mb-filter-state button{
-  flex:none;min-height:24px;padding:1px 5px;border:0;border-radius:2px;background:none;color:var(--acc2);font-size:12px;cursor:pointer;
-}
-body[data-ui="material-b"] .mb-filter-state button:hover{background:var(--hover)}
-
-/* B 的任务标签只显示组名，完整模块与物理归属仍由原面板承载。 */
-body[data-ui="material-b"] .mb-tabs{
-  display:flex;flex:1 1 100%;align-items:stretch;gap:0;min-width:0;
-  border-bottom:1px solid var(--line2);margin:0;padding:0;background:var(--panel);
-}
-body[data-ui="material-b"] .mb-tab{
-  flex:1 1 0;display:flex;align-items:center;justify-content:center;min-width:0;min-height:32px;
-  padding:5px 8px;border:0;border-bottom:2px solid transparent;border-radius:0;
-  background:none;color:var(--dim);font-size:13px;line-height:20px;white-space:nowrap;cursor:pointer;
-}
-body[data-ui="material-b"] .mb-tab:hover{color:var(--text);background:var(--hover)}
-body[data-ui="material-b"] .mb-tab[aria-selected=true]{border-bottom-color:var(--acc);color:var(--acc2);font-weight:600}
-body[data-ui="material-b"] .mb-tab:focus-visible{outline-offset:-3px!important}
-body[data-ui="material-b"] #params>.egrp>details.sec>summary{min-height:32px;font-size:14px;line-height:22px;letter-spacing:0;padding-block:4px}
-body[data-ui="material-b"] #params details.mod>summary .msum{font-size:12px;color:var(--dim)}
-
-/* 精确数值与单位形成一组；恢复按改动出现，原锁定及帮助语义不变。 */
-body[data-ui="material-b"] #right .sl,
-body[data-ui="material-b"] #right .sl.nolock,
-body[data-ui="material-b"] #right #params .sl,
-body[data-ui="material-b"] #right #params .sl.nolock,
-body[data-ui="material-b"] #right #matSliders .sl{
-  column-gap:6px;row-gap:3px;min-height:34px;padding-block:2px;
-}
-body[data-ui="material-b"] #right .sl>.k{font-size:13px;line-height:20px}
-body[data-ui="material-b"] #right .sl>.num{
-  height:30px;padding:4px 6px;border-radius:3px;font-size:12.5px;background:var(--low);
-}
-body[data-ui="material-b"] #right .sl>.punit{padding-left:0;font-size:12px;color:var(--dim);white-space:nowrap;line-height:16px}
-body[data-ui="material-b"] #right .sl>.rrst,
-body[data-ui="material-b"] #right .field>.rrst{width:24px;height:28px;line-height:28px;border-radius:3px}
-body[data-ui="material-b"] #right .sl .lk{top:12px;width:16px;height:16px;left:-18px}
-body[data-ui="material-b"] #right #params details.mod>.field{min-height:36px;column-gap:6px}
-body[data-ui="material-b"] #right #params details.mod>.field>.fk{line-height:20px}
-body[data-ui="material-b"] #right #params details.mod>.field>select,
-body[data-ui="material-b"] #right #params details.mod>.field>input{min-height:30px;border-radius:3px}
-body[data-ui="material-b"] #right .v5-seg{border-radius:3px}
-body[data-ui="material-b"] #right .v5-seg>button{min-height:28px;line-height:18px}
-
-/* 轨道命中区仍为 24px，实际视觉为 3px 轨与 12px 把手。 */
-body[data-ui="material-b"] #right input[type=range]{
-  --mb-track:var(--line2);--mb-active:var(--acc);
-  -webkit-appearance:none;appearance:none;height:24px;min-width:0;background:transparent;border:0;border-radius:0;padding:0;
-}
-body[data-ui="material-b"] #right input[type=range]::-webkit-slider-runnable-track{
-  height:3px;border:0;border-radius:1px;
-  background:linear-gradient(to right,var(--mb-active) 0 var(--mb-fill,0%),var(--mb-track) var(--mb-fill,0%) 100%);
-}
-body[data-ui="material-b"] #right input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;width:12px;height:12px;margin-top:-4.5px;
-  border:1px solid var(--acc);border-radius:50%;background:var(--acc);box-shadow:none;
-}
-body[data-ui="material-b"] #right input[type=range]::-moz-range-track{height:3px;border:0;border-radius:1px;background:var(--mb-track)}
-body[data-ui="material-b"] #right input[type=range]::-moz-range-progress{height:3px;background:var(--mb-active)}
-body[data-ui="material-b"] #right input[type=range]::-moz-range-thumb{width:12px;height:12px;border:1px solid var(--acc);border-radius:50%;background:var(--acc)}
-body[data-ui="material-b"] #right input[type=range]:focus-visible{outline:2px solid var(--acc2);outline-offset:1px;border-radius:3px}
-body[data-ui="material-b"] #right input[type=range]:disabled{--mb-active:var(--faint);cursor:default;opacity:.45}
-body[data-ui="material-b"] #right input[type=range]:disabled::-webkit-slider-thumb{border-color:var(--faint);background:var(--faint)}
-body[data-ui="material-b"] #right input[type=range]:disabled::-moz-range-thumb{border-color:var(--faint);background:var(--faint)}
-
-/* 节奏只有一个命名预设入口；目标秒数与试算按需展开。 */
-body[data-ui="material-b"] .tempoinfo{margin:6px 0 8px;color:var(--dim);font-size:12px;line-height:20px}
-body[data-ui="material-b"] .mb-tempo-head{margin:0 0 8px;line-height:21px;overflow-wrap:anywhere}
-body[data-ui="material-b"] .mb-tempo-head b{color:var(--text);font-weight:500}
-body[data-ui="material-b"] .mb-tempo-preset{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:5px 0 8px}
-body[data-ui="material-b"] .mb-tempo-preset select{min-height:30px;min-width:110px;max-width:62%;border:1px solid var(--line2);border-radius:3px;background:var(--low);padding:3px 8px;color:var(--text)}
-body[data-ui="material-b"] .mb-tempo-options{border:0;padding:0;margin:6px 0}
-body[data-ui="material-b"] .mb-tempo-options>summary{width:fit-content;min-height:28px;padding:3px 0;color:var(--dim);font-size:12px;font-weight:400;cursor:pointer}
-body[data-ui="material-b"] .mb-tempo-options>summary:hover{color:var(--acc2)}
-body[data-ui="material-b"] .mb-tempo-options .tt{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
-body[data-ui="material-b"] .mb-tempo-options .tt label{display:flex;align-items:center;gap:6px}
-body[data-ui="material-b"] .mb-tempo-options input[type=number]{height:30px;border:1px solid var(--line2);border-radius:3px;background:var(--low);padding:4px 6px}
-body[data-ui="material-b"] .mb-tempo-options button{min-height:30px;padding:4px 8px;border:1px solid var(--line2);border-radius:3px;background:var(--low);font-size:12px;line-height:20px;white-space:normal;cursor:pointer}
-body[data-ui="material-b"] .mb-tempo-options button:hover:not(:disabled){border-color:var(--hov);color:var(--text)}
-body[data-ui="material-b"] .mb-tempo-options .otrial>div{display:flex;align-items:flex-start;gap:8px;margin-block:6px;line-height:20px}
-
-/* 菜单允许长命令换行；不为重排增加动画。 */
-body[data-ui="material-b"] :is(.ab-menu,.v5-pop) button{flex:0 0 auto;height:auto;min-height:32px;padding-block:6px;line-height:20px;white-space:normal;overflow-wrap:anywhere}
-body[data-ui="material-b"] .v5-pop{border-radius:4px;transition:none;translate:none}
-body[data-ui="material-b"] .v5-pop button{border-radius:3px}
-body[data-ui="material-b"] #pHelp{font-size:12px;line-height:20px}
-@media(max-width:1450px){
-  body[data-ui="material-b"] #right{--pad:12px;--pc-name:clamp(86px,27%,112px);--pc-num:60px;--pc-unit:26px}
-  body[data-ui="material-b"] .mb-tab{padding-inline:5px}
-}
-@media(max-width:650px){
-  body[data-ui="material-b"] #right{--pc-name:28%;--pc-num:64px;--pc-unit:28px;--pad:16px}
-  body[data-ui="material-b"] #right.v5 #params>.ptools{position:sticky;top:0}
-}
-@media(prefers-reduced-motion:reduce){
-  body[data-ui="material-b"] #right *,
-  body[data-ui="material-b"] #right *::before,
-  body[data-ui="material-b"] #right *::after{transition:none!important;animation:none!important}
-}
-
-/* 完整工作流适配：观察集中在预览区，原参数路径压成一行。 */
-body[data-ui="material-b"] .mb-observe{position:relative;flex:0 1 auto;min-width:0}
-body[data-ui="material-b"] .mb-observe>summary{
-  display:flex;align-items:center;gap:6px;max-width:min(250px,calc(100vw - 40px));min-height:30px;
-  padding:4px 9px;border:1px solid var(--line2);border-radius:3px;background:var(--low);
-  color:var(--dim);font-size:12px;line-height:20px;font-weight:400;list-style:none;cursor:pointer;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-body[data-ui="material-b"] .mb-observe>summary::-webkit-details-marker{display:none}
-body[data-ui="material-b"] .mb-observe>summary::after{content:'⌄';flex:none;font-size:13px;line-height:1}
-body[data-ui="material-b"] .mb-observe[open]>summary,
-body[data-ui="material-b"] .mb-observe>summary:hover{border-color:var(--hov);color:var(--text)}
-body[data-ui="material-b"] .mb-observe>summary:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
-body[data-ui="material-b"] .mb-observe-menu{
-  position:absolute;z-index:45;right:0;top:calc(100% + 5px);display:flex;flex-direction:column;gap:2px;
-  width:min(300px,calc(100vw - 32px));min-width:0;max-height:min(60dvh,480px);overflow:auto;
-  padding:5px;border:1px solid var(--line2);border-radius:4px;background:var(--panel);box-shadow:0 6px 18px #0006;
-  color:var(--text);font-size:12px;line-height:20px;
-}
-body[data-ui="material-b"] .mb-observe:not([open])>.mb-observe-menu{display:none}
-body[data-ui="material-b"] .mb-observe-row{
-  display:block;width:100%;min-height:32px;padding:6px 9px;border:0;border-radius:3px;
-  background:none;color:var(--dim);font:inherit;line-height:20px;text-align:left;
-  white-space:normal;overflow-wrap:anywhere;cursor:pointer;
-}
-body[data-ui="material-b"] .mb-observe-row:hover,
-body[data-ui="material-b"] .mb-observe-row[aria-pressed=true]{color:var(--text);background:var(--hover)}
-body[data-ui="material-b"] .mb-observe-row[aria-pressed=true]{box-shadow:inset 2px 0 var(--acc)}
-body[data-ui="material-b"] .mb-observe-menu button:focus-visible{outline:2px solid var(--acc2);outline-offset:-2px}
-body[data-ui="material-b"] .mb-observe-menu #rtLayerBar:not([hidden]){
-  display:flex!important;flex-direction:column;align-items:stretch;gap:2px;max-width:none;
-  margin-top:4px;padding-top:5px;border-top:1px solid var(--line);
-}
-body[data-ui="material-b"] .mb-observe-menu #rtLayerBar button{
-  display:block;width:100%;min-height:32px;padding:6px 9px;border:0;border-radius:3px;
-  background:none;color:var(--text);font-size:12px;line-height:20px;text-align:left;
-  white-space:normal;overflow-wrap:anywhere;
-}
-body[data-ui="material-b"] .mb-observe-menu #rtLayerBar button:hover{background:var(--hover)}
-body[data-ui="material-b"] .mb-observe-menu #rtLayerBar button.off{color:var(--faint);opacity:.7}
-body[data-ui="material-b"] .mb-observe-menu #rtLayerBar .sep{width:100%;height:1px;margin:4px 0}
-body[data-ui="material-b"] .mb-observe-menu :is(p,.hint){margin:3px 9px 5px;color:var(--faint);font-size:12px;line-height:20px;white-space:normal}
-
-body[data-ui="material-b"] .mb-tree-toggle{
-  flex:none;min-height:28px;padding:3px 7px;border:1px solid transparent;border-radius:3px;
-  background:none;color:var(--dim);font-size:12px;line-height:20px;cursor:pointer;white-space:nowrap;
-}
-body[data-ui="material-b"] .mb-tree-toggle:hover{border-color:var(--line2);color:var(--text);background:var(--low)}
-body[data-ui="material-b"] .v5-tools>.v5-colh{display:none}
-/* 树滚动和自动高度继续遵循 V5 的 28px 行高，不另造第二套测量。 */
-body[data-ui="material-b"] .v5-row{height:28px}
-body[data-ui="material-b"] .v5-row .v5-name{height:26px}
-body[data-ui="material-b"] #right.v5 #params>.pscope,
-body[data-ui="material-b"] #right.v5.v5-min #params>.pscope{
-  display:block;position:static;margin:0 calc(-1 * var(--pad));padding:7px var(--pad);
-  border:0;border-bottom:1px solid var(--line);background:var(--panel);
-}
-body[data-ui="material-b"] #right.v5 #params>.pscope .ps-row{min-height:20px;margin:0;gap:6px}
-body[data-ui="material-b"] #right.v5 #params>.pscope .ps-path{
-  min-width:0;gap:5px;font-size:12px;line-height:20px;font-weight:400;color:var(--dim);
-}
-body[data-ui="material-b"] #right.v5 #params>.pscope .ps-path :is(.ps-layer,.ps-emit){color:var(--dim)}
-body[data-ui="material-b"] #right.v5 #params>.pscope .ps-anc{font-weight:400;color:var(--faint)}
-body[data-ui="material-b"] .mb-tab:disabled{color:var(--faint);cursor:default;opacity:.55;background:none}
-body[data-ui="material-b"] #right.v5 #params .ptools>.mb-context{
-  display:block;position:static;flex:1 1 100%;min-width:0;margin:0;padding:0 0 2px;border:0;background:none;
-}
-body[data-ui="material-b"] #right.v5 #params .mb-context .ps-row{min-height:20px;margin:0;gap:6px}
-body[data-ui="material-b"] #right.v5 #params .mb-context .ps-path{
-  min-width:0;gap:5px;font-size:12px;line-height:20px;font-weight:400;color:var(--dim);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-body[data-ui="material-b"] #right.v5 #params .mb-context .ps-path :is(.ps-layer,.ps-emit){color:var(--dim)}
-body[data-ui="material-b"] #right.v5 #params .mb-context .ps-anc{font-weight:400;color:var(--faint)}
-body[data-ui="material-b"] .mb-filter-copy{flex:1 1 auto;min-width:0}
-
-/* 4.9.127：按已选 Adobe 稿统一颜色角色，不更改共享令牌或旧入口。 */
-body[data-ui="material-b"] #right,
+body[data-ui="material-b"] #right{--pad:16px;background:var(--bg)}
 body[data-ui="material-b"] #right.v5>#rScroll,
 body[data-ui="material-b"] #right #pMaster,
 body[data-ui="material-b"] #right #params{background:var(--bg)}
 body[data-ui="material-b"] #right :is(.v5-bar,.v5-treebox,.v5-tools,.v5-split),
 body[data-ui="material-b"] #right.v5 #params>.ptools{background:var(--low)}
-body[data-ui="material-b"] #right :is(.mb-tabs,.mb-display-menu,.mb-display-pop){background:var(--low)}
-body[data-ui="material-b"] #right .v5-row:hover:not(.sel){background:var(--panel2)}
-body[data-ui="material-b"] #right .v5-row.sel{background:var(--hover);box-shadow:inset 2px 0 var(--acc)}
-body[data-ui="material-b"] #right .v5-row.sel .v5-name{color:var(--text)}
-body[data-ui="material-b"] #right .v5-eye[aria-pressed=true]{color:var(--gold2)}
-body[data-ui="material-b"] #right .v5-eye[aria-pressed=false]{color:var(--dim)}
-body[data-ui="material-b"] #right .v5-eye svg{width:18px;height:18px;stroke-width:2}
-body[data-ui="material-b"] #right .v5-solo.on{color:var(--gold2)}
-body[data-ui="material-b"] #right .sl>.num,
-body[data-ui="material-b"] #right #params details.mod>.field>select,
-body[data-ui="material-b"] #right #params details.mod>.field>input:is([type=text],[type=number]){border-color:var(--faint)}
-body[data-ui="material-b"] #right .sl.chg>.num{border-color:#7b6339}
-body[data-ui="material-b"] #right .sl.over>.num{border-color:var(--amber)}
-body[data-ui="material-b"] #right .mb-tabs{border:1px solid var(--line2);border-radius:3px}
-body[data-ui="material-b"] #right .mb-tab{border:0;border-inline-end:1px solid var(--line);background:none;color:var(--dim);font-weight:500}
-body[data-ui="material-b"] #right .mb-tab:last-child{border-inline-end:0}
-body[data-ui="material-b"] #right .mb-tab[aria-selected=true]{background:var(--panel2);color:var(--text);box-shadow:inset 0 0 0 1px var(--faint);font-weight:600}
-body[data-ui="material-b"] #right .mb-tab:disabled{color:var(--faint);cursor:default;opacity:.55;background:none;box-shadow:none}
-body[data-ui="material-b"] #right .mb-tab[aria-selected=true]:disabled{background:var(--panel2);color:var(--text);box-shadow:inset 0 0 0 1px var(--faint);opacity:1}
-body[data-ui="material-b"] #right .mb-tabs[hidden],
-body[data-ui="material-b"] #right .mb-context[hidden]{display:none!important}
-
-/* 一个当前效果页签；状态仍在原第二行，不模拟多文档。 */
+body[data-ui="material-b"] #right .mb-task-hidden{display:none!important}
+body[data-ui="material-b"] #right.mb-tree-auto #v5Tree{max-height:clamp(84px,calc(100dvh - 680px),140px)}
+body[data-ui="material-b"] #right .v5-bar{gap:4px;padding-top:10px;padding-bottom:8px}
 body[data-ui="material-b"] #v5Bar .v5-r1{align-items:center;min-height:30px}
-body[data-ui="material-b"] #v5Bar #abIdName{
-  display:block;flex:0 1 auto;min-width:0;max-width:100%;min-height:30px;padding:4px 10px;
-  border:1px solid var(--line2);border-bottom-color:var(--acc);border-radius:3px 3px 0 0;
-  background:var(--bg);color:var(--text);font-size:13px;line-height:20px;font-weight:600;
-  letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+body[data-ui="material-b"] #v5Bar .v5-r1>:is(.v5-more,.v5-close){flex:none;white-space:nowrap}
+body[data-ui="material-b"] #right .v5-tools{gap:8px;min-height:38px;padding-block:4px}
+body[data-ui="material-b"] #right .v5-tools>.v5-colh{display:none}
+body[data-ui="material-b"] #right .v5-tree{padding:0 6px 5px}
+body[data-ui="material-b"] #right .v5-split::after{height:1px;top:4px;width:30px;margin-left:-15px;border-radius:0;background:var(--faint)}
+body[data-ui="material-b"] #right .v5-tree.anim,
+body[data-ui="material-b"] #right .v5-row .v5-tw svg,
+body[data-ui="material-b"] #right details.sec.v5-anim::details-content{transition:none}
 
-/* 树保留独立只看动作；RT 多项观察也由原临时观察状态控制。 */
-body[data-ui="material-b"] #right .v5-tree [data-act=solo]{display:inline-flex}
-body[data-ui="material-b"] #right .mb-rt-observe{
-  flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:26px;
-  padding:4px;border:0;border-radius:3px;background:none;color:var(--dim);cursor:pointer;
-}
-body[data-ui="material-b"] #right .mb-rt-observe input[type=checkbox],
-body[data-ui="material-b"] #right input.mb-rt-observe[type=checkbox]{width:16px;height:16px;margin:0;padding:0;accent-color:var(--acc)}
-body[data-ui="material-b"] #right .mb-rt-observe[aria-pressed=true]{color:var(--gold2);background:var(--hover)}
-body[data-ui="material-b"] #right .mb-tree-look-state{flex:1 1 auto;min-width:0;color:var(--dim);font-size:12px;line-height:20px;white-space:normal;overflow-wrap:anywhere}
-body[data-ui="material-b"] #right .mb-tree-look-state:empty{display:none}
-body[data-ui="material-b"] #right .mb-tree-restoreAll{
-  flex:none;min-height:28px;padding:3px 7px;border:1px solid transparent;border-radius:3px;
-  background:none;color:var(--gold2);font-size:12px;line-height:20px;white-space:nowrap;cursor:pointer;
-}
-body[data-ui="material-b"] #right .mb-tree-restoreAll:hover{border-color:var(--line2);background:var(--panel2)}
-body[data-ui="material-b"] #right .v5-eye .fw-icon{
-  display:inline-block;flex:none;width:18px;height:18px;background:currentColor;
-  -webkit-mask-image:var(--fw-icon-image);mask-image:var(--fw-icon-image);
-  -webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;
-  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-}
+/* 搜索固定；上下文只由原路径按实际树可见性显示。 */
+body[data-ui="material-b"] #right.v5 #params>.ptools{column-gap:8px;row-gap:4px;align-items:center;flex-wrap:wrap;padding-block:6px}
+body[data-ui="material-b"] #right.v5 #params>.ptools input[type=search]{flex:1 1 160px}
+body[data-ui="material-b"] .mb-display{position:relative;flex:0 0 auto}
+body[data-ui="material-b"] .mb-display :is(.mb-display-menu,.mb-display-pop){position:absolute;right:0;top:calc(100% + 5px);z-index:12;min-width:190px;max-width:min(280px,calc(100vw - 32px));padding:5px}
+body[data-ui="material-b"] .mb-filter-state{display:flex;align-items:center;gap:6px;flex:1 1 100%;min-width:0;color:var(--dim);font-size:12px;line-height:20px;overflow-wrap:anywhere}
+body[data-ui="material-b"] .mb-filter-state:empty{display:none}
+body[data-ui="material-b"] .mb-filter-copy{flex:1 1 auto;min-width:0}
+body[data-ui="material-b"] .mb-tabs{display:flex;flex:1 1 100%;align-items:stretch;gap:0;min-width:0;margin:0}
+body[data-ui="material-b"] #right.v5 #params .ptools>.mb-context{display:block;position:static;flex:1 1 100%;min-width:0;margin:0;padding:0 0 2px;border:0;background:none}
+body[data-ui="material-b"] #right.v5 #params .mb-context .ps-row{min-height:20px;margin:0;gap:6px}
+body[data-ui="material-b"] #right.v5 #params .mb-context .ps-path{min-width:0;gap:5px;font-size:12px;line-height:20px;font-weight:400;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body[data-ui="material-b"] #right.v5 #params .mb-context .ps-path :is(.ps-layer,.ps-emit){color:var(--dim)}
+body[data-ui="material-b"] #right.v5 #params .mb-context .ps-anc{font-weight:400;color:var(--faint)}
+body[data-ui="material-b"] #right .mb-tabs[hidden],
+body[data-ui="material-b"] #right .mb-context[hidden],
+body[data-ui="material-b"] .mb-filter-state[hidden]{display:none!important}
+
+/* 节奏、观察的领域内容和布局；控件本体由统一组件承载。 */
+body[data-ui="material-b"] .tempoinfo{margin:6px 0 8px;color:var(--dim);font-size:12px;line-height:20px}
+body[data-ui="material-b"] .mb-tempo-head{margin:0 0 8px;line-height:21px;overflow-wrap:anywhere}
+body[data-ui="material-b"] .mb-tempo-head b{color:var(--text);font-weight:500}
+body[data-ui="material-b"] .mb-tempo-preset{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:5px 0 8px}
+body[data-ui="material-b"] .mb-tempo-preset select{min-width:110px;max-width:62%}
+body[data-ui="material-b"] .mb-tempo-options{border:0;padding:0;margin:6px 0}
+body[data-ui="material-b"] .mb-tempo-options .tt{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+body[data-ui="material-b"] .mb-tempo-options .tt label{display:flex;align-items:center;gap:6px}
+body[data-ui="material-b"] .mb-tempo-options .otrial>div{display:flex;align-items:flex-start;gap:8px;margin-block:6px;line-height:20px}
 body[data-ui="material-b"] #right .mb-tree-observe-tools{display:flex;align-items:center;gap:4px;min-width:0}
-body[data-ui="material-b"] #right .mb-observe-state{flex:1 1 auto;min-width:0;color:var(--dim);font-size:12px;line-height:20px;white-space:normal;overflow-wrap:anywhere}
-body[data-ui="material-b"] #right .mb-observe-state:empty{display:none}
-body[data-ui="material-b"] #right .mb-observe-reset{flex:none;min-height:28px;padding:3px 7px;border:1px solid transparent;border-radius:3px;background:none;color:var(--gold2);font-size:12px;line-height:20px;white-space:nowrap;cursor:pointer}
-body[data-ui="material-b"] #right .mb-observe-reset:hover{border-color:var(--line2);background:var(--panel2)}
-body[data-ui="material-b"] #right .mb-rt-observe-check{display:inline-flex;flex:none;align-items:center;justify-content:center;gap:4px;min-width:52px;min-height:28px;padding:3px 4px;border-radius:3px;color:var(--dim);font-size:12px;line-height:20px;cursor:pointer}
-body[data-ui="material-b"] #right .mb-rt-observe-check:hover{background:var(--panel2);color:var(--text)}
-body[data-ui="material-b"] #right .mb-rt-observe-check input[type=checkbox]{flex:none;width:16px;height:16px;margin:0;accent-color:var(--acc);cursor:pointer}
-body[data-ui="material-b"] #right .mb-rt-observe-check:has(input:checked){color:var(--gold2)}
+body[data-ui="material-b"] #right :is(.mb-observe-state,.mb-tree-look-state){flex:1 1 auto;min-width:0;color:var(--dim);font-size:12px;line-height:20px;white-space:normal;overflow-wrap:anywhere}
+body[data-ui="material-b"] #right :is(.mb-observe-state,.mb-tree-look-state):empty{display:none}
 body[data-ui="material-b"] #right .mb-rt-observe-note{margin:4px var(--pad) 7px;color:var(--faint);font-size:12px;line-height:20px;white-space:normal;overflow-wrap:anywhere}
 
-/* 贴图与交付共用一个可拖分隔工作区，分隔条只影响空间分配。 */
-body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace){
-  display:grid;grid-template-columns:minmax(0,1fr) 8px var(--mb-delivery-width,clamp(320px,30%,420px));
-  grid-template-rows:auto auto minmax(0,1fr) auto auto;
-  grid-template-areas:"msg msg msg" "bar bar bar" "view split dv" "tl split dv" "tlb split dv";
-  column-gap:0;row-gap:7px;
-}
+/* 可拖交付工作区：只影响空间分配，不改变预览比例或业务输出。 */
+body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace){display:grid;grid-template-columns:minmax(0,1fr) 8px var(--mb-delivery-width,clamp(320px,30%,420px));grid-template-rows:auto auto minmax(0,1fr) auto auto;grid-template-areas:"msg msg msg" "bar bar bar" "view split dv" "tl split dv" "tlb split dv";column-gap:0;row-gap:7px}
 body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace):not(:has(>:is(#showcaseBar,#migNote,#bakeError):not([hidden]))){grid-template-rows:0 auto minmax(0,1fr) auto auto}
-body[data-ui="material-b"] .stage:is(.mb-delivery-workspace,.mb-flow-workspace)>#mbDeliverySplit{
-  grid-area:split;position:relative;align-self:stretch;min-width:8px;min-height:48px;margin:0;padding:0;
-  border:0;border-radius:0;background:transparent;cursor:col-resize;touch-action:none;
-}
+body[data-ui="material-b"] .stage:is(.mb-delivery-workspace,.mb-flow-workspace)>#mbDeliverySplit{grid-area:split;position:relative;align-self:stretch;min-width:8px;min-height:48px;margin:0;padding:0;border:0;border-radius:0;background:transparent;cursor:col-resize;touch-action:none}
 body[data-ui="material-b"] #mbDeliverySplit::before{content:'';position:absolute;left:3px;top:0;bottom:0;width:1px;background:var(--line2)}
 body[data-ui="material-b"] #mbDeliverySplit::after{content:'';position:absolute;left:2px;top:50%;width:3px;height:30px;margin-top:-15px;background:var(--faint);border-radius:1px}
 body[data-ui="material-b"] #mbDeliverySplit:hover::before,
 body[data-ui="material-b"] #mbDeliverySplit:focus-visible::before,
 body[data-ui="material-b"] #mbDeliverySplit[aria-grabbed=true]::before{background:var(--acc)}
 body[data-ui="material-b"] #mbDeliverySplit:focus-visible{outline:2px solid var(--acc2);outline-offset:-1px}
-body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace).mb-delivery-collapsed{
-  grid-template-columns:minmax(0,1fr);grid-template-areas:"msg" "bar" "view" "tl" "tlb";
-}
+body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace).mb-delivery-collapsed{grid-template-columns:minmax(0,1fr);grid-template-areas:"msg" "bar" "view" "tl" "tlb"}
 body[data-ui="material-b"] .stage.mb-delivery-collapsed>#mbDeliverySplit,
 body[data-ui="material-b"] .stage.mb-delivery-collapsed>#delivView{display:none!important}
 body[data-ui="material-b"] #delivView{background:var(--bg)}
 body[data-ui="material-b"] #delivView .dv-h{background:var(--low)}
-body[data-ui="material-b"] .mb-inspect-layer{
-  display:inline-block;max-width:100%;min-height:28px;padding:2px 0;border:0;border-radius:2px;
-  background:none;color:var(--text);font:inherit;text-align:left;white-space:normal;cursor:pointer;
-}
-body[data-ui="material-b"] .mb-inspect-layer:hover{color:var(--acc2);text-decoration:underline}
-body[data-ui="material-b"] .mb-inspect-layer[aria-current=true]{color:var(--gold2)}
-body[data-ui="material-b"] #mbInspectModes{
-  display:flex;flex:0 0 auto;align-items:stretch;gap:0;min-width:0;border:1px solid var(--line2);border-radius:3px;background:var(--low);
-}
-body[data-ui="material-b"] #mbInspectModes button{
-  flex:1 1 auto;min-width:0;min-height:30px;padding:4px 9px;border:0;border-inline-end:1px solid var(--line);
-  border-radius:0;background:none;color:var(--dim);font-size:12px;line-height:20px;letter-spacing:0;white-space:nowrap;cursor:pointer;
-}
-body[data-ui="material-b"] #mbInspectModes button:last-child{border-inline-end:0}
-body[data-ui="material-b"] #mbInspectModes button:is([aria-pressed=true],[aria-selected=true]){background:var(--panel2);color:var(--text);box-shadow:inset 0 0 0 1px var(--faint)}
-body[data-ui="material-b"] #mbInspectModes button:hover{color:var(--text)}
-body[data-ui="material-b"] #mbInspectModes button:focus-visible{outline:2px solid var(--acc2);outline-offset:-2px}
+body[data-ui="material-b"] #mbInspectModes{display:flex;flex:0 0 auto;align-items:stretch;gap:0;min-width:0}
 body[data-ui="material-b"] #mbInspectModes[hidden],
-body[data-ui="material-b"] #mbDeliverySplit[hidden]{display:none!important}
+body[data-ui="material-b"] #mbDeliverySplit[hidden],
 body[data-ui="material-b"] #mbDeliveryShow[hidden],
 body[data-ui="material-b"] #abDeliv[hidden],
 body[data-ui="material-b"] #rtLayerBar[data-mb-observation-backend="true"]{display:none!important}
@@ -369,41 +85,27 @@ body[data-ui="material-b"] .stage.mb-delivery-workspace>:is(#viewFrame,#delivVie
 body[data-ui="material-b"] .stage.mb-flow-workspace>:is(#viewFrame,#delivView){animation:mb-flow-feedback 130ms ease-out}
 body[data-ui="material-b"].mb-delivery-dragging .stage *,
 body[data-ui="material-b"] .stage.mb-delivery-dragging *{animation:none!important;transition:none!important}
+@media(max-width:1450px){body[data-ui="material-b"] #right{--pad:12px}}
 @media(max-width:1000px){
   body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace){grid-template-columns:minmax(0,1fr) 8px min(var(--mb-delivery-width,320px),60%)}
-  body[data-ui="material-b"] #mbInspectModes button{padding-inline:7px;min-height:32px}
   body[data-ui="material-b"] #delivView .dv-h{gap:5px;flex-wrap:wrap;padding-inline:10px}
 }
 @media(max-width:650px){
-  body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace):not(.mb-delivery-collapsed){
-    grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(260px,50dvh) auto auto auto;
-    grid-template-areas:"msg" "bar" "view" "tl" "tlb" "dv";
-  }
+  body[data-ui="material-b"] #right{--pad:16px}
+  body[data-ui="material-b"] #right.v5 #params>.ptools{position:sticky;top:0}
+  body[data-ui="material-b"] .stage.dv-on:is(.mb-delivery-workspace,.mb-flow-workspace):not(.mb-delivery-collapsed){grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(260px,50dvh) auto auto auto;grid-template-areas:"msg" "bar" "view" "tl" "tlb" "dv"}
   body[data-ui="material-b"] .stage:is(.mb-delivery-workspace,.mb-flow-workspace)>#mbDeliverySplit{display:none}
   body[data-ui="material-b"] #delivView{max-height:65dvh;min-height:240px}
 }
-@media(prefers-reduced-motion:reduce){
-  body[data-ui="material-b"] *,
-  body[data-ui="material-b"] *::before,
-  body[data-ui="material-b"] *::after{animation:none!important;transition:none!important}
-}
-
-/* 900px 及以下只收紧留白，模块、时段字段与文字尺寸保持原样。 */
 @media(max-height:900px){
   body[data-ui="material-b"] #right .v5-bar{padding-top:6px;padding-bottom:4px;gap:2px}
   body[data-ui="material-b"] #right .v5-review{padding-top:2px;padding-bottom:2px}
   body[data-ui="material-b"] #right .v5-review .rstrip{min-height:26px}
-  body[data-ui="material-b"] #right .v5-review .rstrip .btn.mini{height:26px;min-height:26px}
   body[data-ui="material-b"] #right .v5-tools{min-height:32px;padding-top:2px;padding-bottom:2px}
-  body[data-ui="material-b"] #right .sl,
-  body[data-ui="material-b"] #right .sl.nolock,
-  body[data-ui="material-b"] #right #params .sl,
-  body[data-ui="material-b"] #right #params .sl.nolock,
-  body[data-ui="material-b"] #right #matSliders .sl{min-height:30px;padding-block:1px}
-  body[data-ui="material-b"] #right .sl>.num{height:28px}
-  body[data-ui="material-b"] #right #params details.mod>.field{min-height:30px}
-  body[data-ui="material-b"] #right #params>.egrp>details.sec>summary{min-height:28px;padding-block:3px}
   body[data-ui="material-b"] #right.v5 #params>.ptools{padding-block:4px}
   body[data-ui="material-b"] #right #params>.egrp>.ehead{min-height:24px;padding-block:1px}
   body[data-ui="material-b"] #right #params>.egrp>details.mod[open]{padding-bottom:4px}
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-ui="material-b"] *,body[data-ui="material-b"] *::before,body[data-ui="material-b"] *::after{animation:none!important;transition:none!important}
 }

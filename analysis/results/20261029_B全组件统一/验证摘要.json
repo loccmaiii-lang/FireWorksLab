@@ -1,0 +1,188 @@
+{
+  "at": "2026-10-29T16:09:31.123852+08:00",
+  "version": "4.9.128",
+  "branch": "codex/ui-material-baker-review-20261029",
+  "entry": "http://127.0.0.1:8034/baker?ui=material-b",
+  "builds": {
+    "FireworkBaker.html": {
+      "bytes": 3122460,
+      "sha256": "a442f7327e6f78fedd31314917bcecf8472741911d57d166f9d646478e3b9fd0"
+    },
+    "FireworkBaker_MaterialB.html": {
+      "bytes": 3122496,
+      "sha256": "4c1c75e094815291b6ca92682fa5699fc078059e36b7a4ca50c393841b19186a"
+    },
+    "FireworkBaker_MaterialB_4.9.127.html": {
+      "bytes": 3090424,
+      "sha256": "2aac4bb0c0db19896f943e5e171d4fb3d835e828e392d30f1701107bf621f806"
+    }
+  },
+  "component": {
+    "pass": true,
+    "checks": 183,
+    "source": {
+      "url": "http://127.0.0.1:8034/baker?ui=material-b&autobake=0&fast=",
+      "sha256": "a442f7327e6f78fedd31314917bcecf8472741911d57d166f9d646478e3b9fd0",
+      "httpBytesVerified": true
+    },
+    "cases": [
+      {
+        "case": "普通Schema",
+        "pass": true,
+        "checks": 50,
+        "pageErrors": []
+      },
+      {
+        "case": "层头出生联动",
+        "pass": true,
+        "checks": 36,
+        "pageErrors": []
+      },
+      {
+        "case": "RT6",
+        "pass": true,
+        "checks": 18,
+        "pageErrors": []
+      },
+      {
+        "case": "SGR1",
+        "pass": true,
+        "checks": 18,
+        "pageErrors": []
+      },
+      {
+        "case": "SGS1",
+        "pass": true,
+        "checks": 18,
+        "pageErrors": []
+      },
+      {
+        "case": "跨区域外壳",
+        "pass": true,
+        "checks": 43,
+        "pageErrors": []
+      }
+    ]
+  },
+  "interaction": {
+    "pass": true,
+    "checks": 91,
+    "source": {
+      "url": "http://127.0.0.1:8034/baker?fast=&ui=material-b&autobake=0",
+      "path": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\tool\\FireworkBaker.html",
+      "sha256": "a442f7327e6f78fedd31314917bcecf8472741911d57d166f9d646478e3b9fd0",
+      "httpBytesVerified": true
+    },
+    "cases": [
+      {
+        "case": "金曜菊",
+        "pass": true,
+        "checks": 12,
+        "pageErrors": [],
+        "why": ""
+      },
+      {
+        "case": "RT6未烘焙",
+        "pass": true,
+        "checks": 19,
+        "pageErrors": [],
+        "why": ""
+      },
+      {
+        "case": "交付恢复",
+        "pass": true,
+        "checks": 8,
+        "pageErrors": [],
+        "why": ""
+      },
+      {
+        "case": "贴图与交付工作区",
+        "pass": true,
+        "checks": 52,
+        "pageErrors": [],
+        "why": ""
+      },
+      {
+        "case": "W14",
+        "pass": true,
+        "checks": 0,
+        "pageErrors": [],
+        "why": "{\"入口缺\": [], \"1366×768\": [], \"1366×768 第一屏\": {\"菊 › 星\": {\"emit\": \"星\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 3, \"numX\": [1208], \"rangeX\": [1107]}, \"金锦 › 火花\": {\"emit\": \"火花\", \"mods\": 9, \"seen\": 6, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 5, \"numX\": [1208], \"rangeX\": [1107]}, \"顶上\": \"金锦›火花\"}, \"1440×900\": [], \"1440×900 第一屏\": {\"菊 › 星\": {\"emit\": \"星\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 3, \"numX\": [1282], \"rangeX\": [1171]}, \"金锦 › 火花\": {\"emit\": \"火花\", \"mods\": 9, \"seen\": 8, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 5, \"numX\": [1282], \"rangeX\": [1171]}, \"顶上\": \"金锦›火花\"}, \"1920×1080\": [], \"1920×1080 第一屏\": {\"菊 › 星\": {\"emit\": \"星\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 3, \"numX\": [1754], \"rangeX\": [1572]}, \"金锦 › 火花\": {\"emit\": \"火花\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 5, \"numX\": [1754], \"rangeX\": [1572]}, \"顶上\": \"金锦›火花\"}}"
+      }
+    ]
+  },
+  "protection": {
+    "checked": 424,
+    "changed": [
+      "tool/src/material-b.css",
+      "tool/src/js/10_types.js",
+      "tool/src/js/94_focus_review.js",
+      "tool/src/js/95_tree_review.js",
+      "tool/build.py",
+      "analysis/scripts/标准检查.py"
+    ],
+    "unexpected": [],
+    "missing": [],
+    "frozen127EqualsCommitted127WorktreeBytes": true,
+    "frozen127Sha256": "2aac4bb0c0db19896f943e5e171d4fb3d835e828e392d30f1701107bf621f806"
+  },
+  "manual": {
+    "tool": "CUA/IAB tab17, normal HTTP entry",
+    "viewports": [
+      [
+        1920,
+        1080
+      ],
+      [
+        1366,
+        768
+      ],
+      [
+        900,
+        900
+      ],
+      [
+        2560,
+        1440
+      ]
+    ],
+    "dpr": "约1，未改OS缩放",
+    "scenes": [
+      "GLB-S1金锦层层头/环境/树与127同视口对照（时刻不同，仅UI）",
+      "实际保存模态打开/字段焦点/取消，无实际保存；取消回body，回触发器未验收",
+      "HN2长标题1366、金锦火花参数与滚动",
+      "1366/900/2560贴图与交付清单和长字段"
+    ],
+    "improvements": [
+      "结构类按钮退出普通动作内边距",
+      "库标题24px单行",
+      "长标题不挤断收起按钮，bar恢复62.67px",
+      "色井32px方形、色段删除28px行内",
+      "清单层名保留轻量原动作"
+    ]
+  },
+  "screenshots": [
+    {
+      "file": "01_127层头环境.png",
+      "sha256": "71f3b63853f59fd65c3e1f7c2aa42fbb59ac012e84bb3785cc4f0f56893a6b4d"
+    },
+    {
+      "file": "02_128层头环境.png",
+      "sha256": "c9b8c465c6b84bd7b89612ea68611571546a74210d1b96ca73ec83e590581aca"
+    },
+    {
+      "file": "03_128窄屏.png",
+      "sha256": "3d88159e9d5a9bbed96d0025fd139e263f0af298ab0a378b3c5f5df99e4254d9"
+    }
+  ],
+  "boundary": [
+    "隔离183/91项使用原FAKE/暂停RAF，非像素/真实ZIP/UE检查",
+    "人工实页正常入口真实预览，不假造导出成功",
+    "iframe/系统选择器未统一",
+    "全部组件组合状态未逐项人工验收",
+    "不合main/125，保留127/126及他方文件"
+  ],
+  "prePush": {
+    "status": "待执行原钩子"
+  }
+}

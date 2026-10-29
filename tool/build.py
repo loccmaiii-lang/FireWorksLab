@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """把 src/ 下的样式、页面和脚本拼成单文件 FireworkBaker.html（直接双击打开即可用）。"""
-import glob, os, re
+import glob, os, re, json, base64
 here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 css = open(os.path.join(src, 'style.css'), encoding='utf-8').read()
@@ -9,13 +9,21 @@ css = ''.join(open(os.path.join(here, 'design-system', f), encoding='utf-8').rea
 review_css = os.path.join(src, 'material-b.css')
 if os.path.exists(review_css):
     css += '\n' + open(review_css, encoding='utf-8').read()
+component_css = os.path.join(src, 'material-b-components.css')
+if os.path.exists(component_css):
+    css += '\n' + open(component_css, encoding='utf-8').read()
 body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
 js = ''.join(open(f, encoding='utf-8').read() for f in sorted(glob.glob(os.path.join(src, 'js', '*.js'))))
 js = open(os.path.join(here, 'shared', 'cascade_events.js'), encoding='utf-8').read() + '\n' + js
 js = open(os.path.join(here, 'design-system', 'icons.js'), encoding='utf-8').read() + '\n' + js
+# B 类型图标沿用已核实的 Tabler 原资产；离线成品内嵌，不改共享图标库。
+type_icons = {}
+for icon_root in (os.path.join(here, 'design-system', 'drafts', 'v2-structure', 'assets', 'node-icons'), os.path.join(src, 'material-b-icons')):
+    for icon in glob.glob(os.path.join(icon_root, '*.svg')):
+        type_icons[os.path.basename(icon)[:-4]] = 'data:image/svg+xml;base64,' + base64.b64encode(open(icon, 'rb').read()).decode('ascii')
+js = 'window.FWTypeIconAssets = ' + json.dumps(type_icons) + ';\n' + js
 ver = re.search(r"const VERSION = '([^']+)'", js)
 # 仓库根目录的 更新记录.md（最新在上）→ UPDATES，烘焙器顶栏「更新记录」里显示
-import json
 upd = []
 up = os.path.join(here, '..', '更新记录.md')
 if os.path.exists(up):
