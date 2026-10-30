@@ -187,7 +187,7 @@ def build_images():
     I['p09a'] = prep('wb_基础模板.png', 'p09_base.jpg', 571, 321, box=(0, 60, 1590, 1000))
     I['p09b'] = prep('wb_花型模板.png', 'p09_flower.jpg', 571, 321, box=(0, 60, 1590, 1000))
     I['p09c'] = prep('wb_编排片段.png', 'p09_cues.jpg', 571, 321, box=(0, 600, 1920, 1000), focus=(0.35, 0.5))
-    I['p09d'] = prep('wb_交付.png', 'p09_deliv.jpg', 571, 321, box=(1100, 100, 1920, 560))
+    I['p09d'] = prep('wb_交付.png', 'p09_deliv.jpg', 571, 321, box=(1340, 96, 1920, 422))
     for k in ('baker', 'importer', 'workbench', 'ue'):
         I['p10' + k] = os.path.join(V1IMG, f'p06_{k}.jpg')
     I['p11'] = [(prep(f's09_{n:02d}.jpg', f'p11_{n}.jpg', 300, 300), name) for n, name in
