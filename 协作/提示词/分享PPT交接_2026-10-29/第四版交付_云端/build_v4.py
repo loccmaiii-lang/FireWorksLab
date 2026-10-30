@@ -191,8 +191,10 @@ def build_images():
     for k in ('baker', 'importer', 'workbench', 'ue'):
         I['p10' + k] = os.path.join(V1IMG, f'p06_{k}.jpg')
     I['p11'] = [(prep(f's09_{n:02d}.jpg', f'p11_{n}.jpg', 300, 300), name) for n, name in
-                ((4, '金蕊柠'), (6, '金锦菊'), (8, '小青柠'), (10, '小金花'), (12, '银白菊'), (14, '爆裂星'))]
-    I['p12'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p12_ue.jpg', 1008, 566, box=(772, 596, 1480, 994))
+                ((4, '金蕊柠'), (6, '金锦菊'), (8, '小青柠'), (10, '小金花'))]
+    I['p11'] += [(prep('03_UE跨年秀_金色扇面.jpg', 'p11_fan.jpg', 300, 300, box=(560, 120, 1060, 620)), '扇形 · 整场'),
+                 (prep('s13_04.jpg', 'p11_trail.jpg', 300, 300, focus=(0.62, 0.45)), '升空尾缀')]
+    I['p12'] = prep('第三版素材/原图/第2步UE证据.jpg', 'p12_ue.jpg', 1008, 566, box=(784, 600, 1476, 990))
     I['p14a'] = prep('17_仙女棒13层_第1至7层.jpg', 'p14_l1.jpg', 1162, 188)
     I['p14b'] = prep('18_仙女棒13层_第8至13层.jpg', 'p14_l2.jpg', 1162, 188)
     I['p14c'] = prep('16_仙女棒_64帧序列贴图.jpg', 'p14_sheet.jpg', 1162, 290)
@@ -204,7 +206,7 @@ def build_images():
                      mode='contain')
     I['p16b'] = prep(lq + '升空_现状对NoMip_低档.jpg', 'p16_sq_fix.jpg', 264, 470, box=(1334, 836, 1624, 1210),
                      mode='contain')
-    I['p16ramp'] = prep('第三版素材/原图/Ramp末格_复现.png', 'p16_ramp.jpg', 840, 300, box=(0, 0, 1568, 556))
+    I['p16ramp'] = prep('第三版素材/原图/Ramp末格_复现.png', 'p16_ramp.jpg', 1064, 450, box=(0, 0, 1042, 556), mode='contain')
     I['demo'] = prep('06_烘焙器界面_引擎回放.jpg', 'demo_bg.jpg', 1200, 675, focus=(0.5, 0.5))
     I['thank'] = prep('01_封面_UE跨年秀.jpg', 'thank.jpg', 1920, 1080, scale=1.0, darken=thank_scrim)
     return I
@@ -281,7 +283,7 @@ def p_cover(d, I):
 
 
 def p_scale(d, I):
-    s = d.slide('01 · 制作与挑战 · 规模', '制作规模：种类、规格与时长都远超去年')
+    s = d.slide('01 · 制作与挑战 · 规模', '制作规模：开花 26 种、尾缀 6 档、时长约 220 秒')
     text(s, L, 214, 1008, 230, [[{'t': '3', 'size': 200, 'alpha': 0.45, 'bold': True},
                                   {'t': ' → ', 'size': 120, 'alpha': 0.45, 'bold': True},
                                   {'t': '26', 'size': 200, 'color': ACC, 'bold': True}]], lh=1.0)
@@ -296,6 +298,7 @@ def p_scale(d, I):
         text(s, L + 320, y + 2, 680, 40, head, size=S_BODY, bold=True, lh=1.3)
         text(s, L + 320, y + 42, 680, 36, body, size=S_SMALL, alpha=A_SUB, lh=1.4)
         y += 126
+    text(s, L, 940, 1008, 30, '按花名计；去年数据为讲者统计', size=S_SMALL - 4, alpha=A_FOOT, lh=1.2)
     image(s, I['p02'], COL40_X, 214, COL40_W, 742, tag='UE 实机 · 今年')
     return s
 
@@ -365,14 +368,14 @@ def p_choreo_problem(d, I):
 def p_baker(d, I):
     s = d.slide('02 · 解决思路 · 制作规模', '烟花烘焙器：从模板快速生成效果')
     card(s, L, 214, 518, 742)
-    label_text(s, L + 40, 246, 440, '原有方式')
+    label_text(s, L + 40, 246, 440, '此前尝试')
     text(s, L + 40, 290, 440, 50, 'AI 脚本驱动 Blender', size=S_CARD + 2, bold=True, lh=1.35)
     for i, t_ in enumerate(['每轮等待离线渲染', '预览与输出不一致']):
         rect(s, L + 40, 366 + i * 52 + 13, 14, 14, fill=TXT, fill_alpha=0.35)
         text(s, L + 70, 366 + i * 52, 420, 44, t_, size=S_BODY - 2, alpha=A_SUB, lh=1.4)
     rect(s, L + 40, 490, 438, 1, fill=TXT, fill_alpha=0.12)
     label_text(s, L + 40, 516, 440, '烘焙器')
-    pros = [('可视化', '实时调参，导出后回放复核'), ('快速输出', '即改即看，直接输出引擎格式'), ('项目定制', '按本项目舞台、视距与规范')]
+    pros = [('可视化', '实时调参；导出后在烘焙器内回放'), ('快速输出', '即改即看，直接输出引擎格式'), ('项目定制', '按本项目舞台、视距与规范')]
     y = 562
     for h, b in pros:
         text(s, L + 40, y, 440, 40, h, size=S_BODY, bold=True, lh=1.3)
@@ -381,8 +384,8 @@ def p_baker(d, I):
     rx = 662
     image(s, I['p05a'], rx, 214, 571, 330)
     image(s, I['p05b'], rx + 591, 214, 571, 330)
-    caption(s, rx, 552, 571, '单层花型模板 · 27 种', size=S_SMALL - 2)
-    caption(s, rx + 591, 552, 571, '多层模板 · 30 种', size=S_SMALL - 2)
+    caption(s, rx, 552, 571, '单层花型模板 · 27 种（4.9.18 统计）', size=S_SMALL - 2)
+    caption(s, rx + 591, 552, 571, '多层模板 · 30 种（4.9.18 统计）', size=S_SMALL - 2)
     image(s, I['p05c'], rx, 600, 571, 330)
     caption(s, rx, 938, 571, '效果库 · 基于模板调出的效果', size=S_SMALL - 2)
     bx = rx + 591
@@ -406,14 +409,14 @@ def p_export(d, I):
     for i, (k, h, r) in enumerate(panels):
         x = L + i * (pw + gap)
         image(s, I[k], x, 214, pw, 274)
-        text(s, x, 498, pw - 110, 40, h, size=S_BODY - 2, bold=True, lh=1.3)
-        text(s, x + pw - 110, 496, 110, 44, r, size=30, color=ACC if i == 2 else TXT, bold=True, align='r', lh=1.2)
+        text(s, x, 498, pw, 40, [[{'t': h, 'bold': True}, {'t': '  · ' + r, 'color': ACC if i == 2 else TXT, 'bold': True}]],
+             size=S_BODY - 2, lh=1.3)
     caption(s, L, 548, 1128, '取景示意：扇形开满时刻，绿点为爆点；数字为扇形测试中内容占面片的比例（中位数）')
     image(s, I['p06pack'], 1248, 214, 576, 357)
     caption(s, 1248, 580, 576, '工具界面 · 一张贴图 4×4 格 × RGBA = 64 帧')
-    steps = [('取景', '三种方式按花型选择'), ('烘焙后收紧', '按每帧内容二次收紧'), ('排格打包', '格子随形状，单张 64 帧'),
-             ('Ramp 与 Cutout', '灰度查色；收益不足一成不出 Cutout'), ('双平台导出', 'PC 与手游同时输出'),
-             ('回放复核', '按导出贴图在引擎回放中检查')]
+    steps = [('取景', '三种方式\v按花型选择'), ('烘焙后收紧', '按每帧内容\v二次收紧'), ('排格打包', '按形状排格\v每张 64 帧'),
+             ('Ramp 与 Cutout', '灰度查色\v按收益生成 Cutout'), ('双平台导出', 'PC 与手游\v同时输出'),
+             ('回放复核', '在烘焙器内\v按导出贴图回放')]
     cw = (W_CONTENT - 5 * 16) / 6
     for i, (h, b) in enumerate(steps):
         x = L + i * (cw + 16)
@@ -442,7 +445,8 @@ def p_import(d, I):
     for i, t_ in enumerate(chips):
         cx = L + (i % 5) * (cw + 14)
         cy = 850 + (i // 5) * 58
-        pill(s, cx, cy, cw, 46, t_, size=S_SMALL - 2)
+        rect(s, cx, cy, cw, 46, fill=CARD, line='F5F5F5', line_alpha=A_STROKE)
+        text(s, cx, cy, cw, 46, t_, size=S_SMALL - 2, alpha=A_SUB, align='c', anchor='m', lh=1.2)
     return s
 
 
@@ -527,7 +531,7 @@ def p_summary(d, I):
             text(s, x + cw, 328, gap, 34, links[i], size=S_SMALL, alpha=A_NOTE, align='c', lh=1.2)
     card(s, L, 730, COL60_W, 226, key=True)
     label_text(s, L + 40, 756, 600, '分工')
-    text(s, L + 40, 800, 920, 130, ['目标、审美与引擎约束由我确定；工具由 AI 开发；', '关键结果在 UE 验收（一人对接，约 2200 次提交）'],
+    text(s, L + 40, 800, 920, 130, ['目标、审美与引擎约束由我确定；工具由 AI 开发，关键结果在 UE 验收', '一人对接 AI；仓库约 2200 次提交（含后台自动回传）'],
          size=S_BODY - 2, lh=1.6)
     card(s, COL40_X, 730, COL40_W, 226)
     label_text(s, COL40_X + 40, 756, 600, '跨组协作')
@@ -546,7 +550,7 @@ def p_resources(d, I):
         y = 214 + (i // 3) * (th + gy)
         image(s, img, x, y, tw, th)
         text(s, x, y + th + 6, tw, 34, name, size=S_SMALL, alpha=A_SUB, align='c', lh=1.3)
-    caption(s, L, 214 + 2 * (th + gy) + 4, 1008, 'UE 资产试放 · 跨年烟花 3.0 花型示例')
+    caption(s, L, 214 + 2 * (th + gy) + 4, 1008, 'UE 实机 · 跨年烟花 3.0 资源示例')
     x = COL40_X
     blocks = [('PC', [('26', '种开花（球花与扇形）'), ('6', '档升空尾缀'), ('1', '套窜天猴')]),
               ('手游', [('12', '种开花'), ('6', '档升空尾缀'), ('1', '套窜天猴')])]
@@ -561,25 +565,25 @@ def p_resources(d, I):
         y += 26
     rect(s, x, y, COL40_W, 1, fill=TXT, fill_alpha=0.12)
     label_text(s, x, y + 24, COL40_W, '引用贴图')
-    text(s, x, y + 68, COL40_W, 50, 'PC 133 · 手游 33 · 共用 46', size=S_CARD, bold=True, lh=1.3)
-    text(s, x, y + 120, COL40_W, 40, '20 种开花保留烘焙器配方，可调参重新导出', size=S_SMALL, alpha=A_NOTE, lh=1.4)
+    text(s, x, y + 68, COL40_W, 50, 'PC 专用 133 · 手游专用 33 · 共用 46', size=S_BODY, bold=True, lh=1.3)
+    text(s, x, y + 116, COL40_W, 70, ['去重共 212 张；20 种开花有烘焙器导出材料，', '其中 19 种有配方与导出记录'], size=S_SMALL - 2, alpha=A_NOTE, lh=1.5)
     return s
 
 
 def p_import_result(d, I):
     s = d.slide('03 · 实践成果 · 资源交付', '接入成果：两轮批量修正，读回一致')
-    image(s, I['p12'], L, 214, COL60_W, 566, tag='UE 实机 · 修正后')
-    text(s, L, 810, COL60_W, 50, '规则已内置于导入器，新资源导入时自动执行', size=S_BODY - 2, color=ACC, lh=1.5)
-    x = COL40_X
-    text(s, x, 214, COL40_W, 36, '贴图规范确定后', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
-    text(s, x, 262, COL40_W, 140, [[{'t': '149', 'size': 120, 'color': ACC, 'bold': True},
-                                     {'t': '/149', 'size': 76, 'color': ACC, 'bold': True}]], lh=1.0)
-    text(s, x, 400, COL40_W, 40, '张贴图批量重设，读回一致', size=S_SMALL + 2, alpha=A_SUB, lh=1.5)
-    rect(s, x, 480, COL40_W, 1, fill=TXT, fill_alpha=0.12)
-    text(s, x, 508, COL40_W, 36, '更早一轮', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
-    text(s, x, 556, COL40_W, 90, [[{'t': '115', 'size': 72, 'bold': True}, {'t': ' 个包', 'size': 30, 'bold': True}]],
-         lh=1.0)
-    text(s, x, 648, COL40_W, 80, ['粒子系统 48 个、材质实例 67 个，', '读回无错误'], size=S_SMALL + 2, alpha=A_SUB, lh=1.6)
+    x = L
+    text(s, x, 214, 640, 36, '贴图规范确定后', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
+    text(s, x, 262, 640, 140, [[{'t': '149', 'size': 120, 'color': ACC, 'bold': True},
+                                {'t': '/149', 'size': 76, 'color': ACC, 'bold': True}]], lh=1.0)
+    text(s, x, 400, 640, 40, '张贴图批量重设，读回一致', size=S_SMALL + 2, alpha=A_SUB, lh=1.5)
+    rect(s, x, 480, 640, 1, fill=TXT, fill_alpha=0.12)
+    text(s, x, 508, 640, 36, '更早一轮', size=S_LABEL, color=ACC, bold=True, spc=2, lh=1.3)
+    text(s, x, 556, 640, 90, [[{'t': '115', 'size': 72, 'bold': True}, {'t': ' 个包', 'size': 30, 'bold': True}]], lh=1.0)
+    text(s, x, 648, 640, 80, ['粒子系统 48 个、材质实例 67 个，', '读回无错误'], size=S_SMALL + 2, alpha=A_SUB, lh=1.6)
+    text(s, x, 840, 640, 90, ['规则已内置于导入器，', '新资源导入时自动执行'], size=S_BODY - 2, color=ACC, lh=1.5)
+    image(s, I['p12'], 816, 214, 1008, 566, tag='UE 实机 · 修正后')
+    caption(s, 816, 790, 1008, 'UE 4.24 实播 · 10-16 修正后的金垂柳')
     return s
 
 
@@ -587,7 +591,7 @@ def p_choreo_result(d, I):
     s = d.slide('03 · 实践成果 · 编排', '编排成果：同一编排按平台与画质分档输出')
     card(s, L, 214, W_CONTENT, 470)
     text(s, L + 40, 240, 1200, 40, '各档一场的播放次数', size=S_BODY, bold=True, lh=1.3)
-    data = [('PC', [('高', 1145, '约 1100'), ('中', 852, '约 850'), ('低', 438, '约 440')]),
+    data = [('PC', [('高', 1145, '约 1150'), ('中', 852, '约 850'), ('低', 438, '约 440')]),
             ('手游', [('高', 448, '约 450'), ('中', 349, '约 350'), ('低', 181, '约 180')])]
     base, top, vmax = 600, 330, 1145
     bw, gap_in, gap_grp = 150, 40, 200
@@ -619,7 +623,7 @@ def p_sparkler(d, I):
     card(s, L, 214, 518, 742, key=True)
     text(s, 140, 244, 450, 130, '13→1', size=112, color=ACC, bold=True, lh=1.0)
     text(s, 140, 372, 430, 80, ['每平台 1 张 64 帧主序列', '+ 1 个发射器'], size=S_SMALL + 2, alpha=A_SUB, lh=1.5)
-    placeholder(s, 140, 470, 432, 243, 'UE 实录位', '16:9 视频或动图')
+    placeholder(s, 140, 470, 432, 243, 'UE 实录位', '讲者补充；来不及可删除')
     text(s, 140, 740, 420, 36, '以往', size=S_SMALL + 1, color=ACC, bold=True, lh=1.3)
     text(s, 140, 776, 430, 36, '窜天猴拖尾用 10 个发射器拼合', size=S_SMALL, alpha=A_SUB, lh=1.4)
     text(s, 140, 830, 420, 36, '本次', size=S_SMALL + 1, color=ACC, bold=True, lh=1.3)
@@ -632,8 +636,8 @@ def p_sparkler(d, I):
     gx = rx + 6 * cell
     rect(s, gx + 4, 456, cell - 8, 180, fill=BG, line=ACC, line_alpha=0.8, line_w=2)
     gif(s, I['p14gif'], gx + 14, 462, cell - 28, cell - 28)
-    text(s, gx + 4, 604, cell - 8, 30, '13 合 1', size=S_SMALL - 2, color=ACC, bold=True, align='c', lh=1.2)
-    text(s, rx, 662, rw, 36, '合成后的 64 帧主序列 · 导出贴图（UE 观感待验收）', size=S_SMALL, alpha=A_SUB, bold=True, lh=1.3)
+    text(s, gx + 4, 604, cell - 8, 30, '13 合 1 · 示意', size=S_SMALL - 4, color=ACC, bold=True, align='c', lh=1.2)
+    text(s, rx, 662, rw, 36, '合成后的 64 帧主序列（按帧展开）· 导出贴图，UE 观感待验收', size=S_SMALL, alpha=A_SUB, bold=True, lh=1.3)
     image(s, I['p14c'], rx, 704, rw, 252)
     return s
 
@@ -642,45 +646,30 @@ def p_trail(d, I):
     s = d.slide('03 · 实践成果 · 技术案例', '升空尾缀：近段与远段拆分，按屏幕位移分配帧数')
     image(s, I['p15ue'], L, 214, 560, 432, tag='UE 实机')
     y = 680
-    for h, b in [('近段', '循环面片，随弹体移动，表现新喷出的火星'), ('远段', '一次性序列，表现留在空中、缓慢下落的老火星')]:
+    for h, b in [('近段', '循环面片，随弹体移动，表现新喷出的火星'), ('远段', '一次性序列，表现留在空中的老火星；按火星年龄拆分，非相机远近')]:
         green_sq(s, L, y + 14)
         text(s, L + 28, y, 530, 40, h, size=S_BODY, bold=True, lh=1.3)
         text(s, L + 28, y + 42, 530, 60, b, size=S_SMALL, alpha=A_SUB, lh=1.4)
         y += 110
-    caption(s, L, 912, 560, '并非按相机距离切换')
     gx = 700
     gif(s, I['p15gif'], gx, 214, 236, 700)
     caption(s, gx, 922, 236, '实拍 / 模拟 / 导出')
     x = 980
     w = R - x
     label_text(s, x, 214, w, '帧数分配')
-    text(s, x, 260, w, 50, 'Δp = ∫ v(t) dt × 每米像素', size=S_CARD, bold=True, lh=1.3, font_cn=FONT_CN)
-    text(s, x, 316, w, 70, ['按 800 m、1080p 观看条件换算每帧屏幕位移；', '约 0.77 像素为本项目经验线'], size=S_SMALL,
-         alpha=A_SUB, lh=1.5)
-    heads = [(x, '版本'), (x + 180, 'L / M / S 总帧数'), (x + 480, '上升段最慢帧率')]
-    for hx, t_ in heads:
-        text(s, hx, 410, 300, 30, t_, size=S_SMALL - 4, alpha=A_FOOT, bold=True, lh=1.2)
-    rows = [('4.9.26', '253 / 126 / 102', '按阶段重新分配'), ('4.9.31', '256 / 128 / 96', '30 / 15 / 30 fps')]
-    y = 446
-    for r in rows:
-        rect(s, x, y, w, 1, fill=TXT, fill_alpha=0.10)
-        text(s, x, y + 12, 170, 40, r[0], size=S_BODY - 2, bold=True, lh=1.3)
-        text(s, x + 180, y + 12, 300, 40, r[1], size=S_BODY - 2, alpha=A_SUB, lh=1.3)
-        text(s, x + 480, y + 12, 340, 40, r[2], size=S_BODY - 2, alpha=A_SUB, lh=1.3)
-        y += 62
-    rect(s, x, y, w, 1, fill=TXT, fill_alpha=0.10)
-    card(s, x, 620, w, 160, key=True)
-    text(s, x + 36, 640, w - 60, 40, [[{'t': '1.9 → 30', 'size': 44, 'bold': True, 'color': ACC},
-                                        {'t': '  fps · L 档上升段最慢帧率', 'size': S_SMALL + 1, 'alpha': A_SUB}]],
-         lh=1.2)
-    text(s, x + 36, 712, w - 60, 50, '远景流畅；代价是单格高度降低，近看略软', size=S_SMALL + 1, alpha=A_SUB, lh=1.4)
-    text(s, x, 810, w, 70, ['PC 大档：近段 + 远段两个发射器；', 'Tiny、XS 与手游：一个全段发射器'], size=S_SMALL, alpha=A_NOTE,
-         lh=1.5)
+    text(s, x, 262, w, 50, 'Δp = ∫ v(t) dt × 每米像素', size=S_CARD + 2, bold=True, lh=1.3)
+    text(s, x, 326, w, 80, ['按 800 m、1080p 观看条件换算每帧屏幕位移，', '快的阶段多给帧，慢的阶段少给'], size=S_SMALL + 1,
+         alpha=A_SUB, lh=1.55)
+    card(s, x, 450, w, 230, key=True)
+    text(s, x + 36, 478, w - 60, 90, '1.9 → 30', size=84, color=ACC, bold=True, lh=1.0)
+    text(s, x + 36, 580, w - 60, 40, 'fps · L 档远段上升段最慢帧率', size=S_BODY - 2, lh=1.3)
+    text(s, x + 36, 626, w - 60, 40, '代价：单格高度降低，近看略软', size=S_SMALL, alpha=A_SUB, lh=1.4)
+    text(s, x, 720, w, 80, ['PC 主档：近段 + 远段 2 个发射器；', '小档与手游：1 个全段发射器'], size=S_SMALL, alpha=A_NOTE, lh=1.6)
     return s
 
 
 def p_bugs(d, I):
-    s = d.slide('03 · 实践成果 · 问题排查', '方头与黑点：定位原因，写入导出与导入规则')
+    s = d.slide('03 · 实践成果 · 问题排查', '方头与黑块：定位原因，写入导出与导入规则')
     label_text(s, L, 214, 700, '方头 · 低配出现')
     before_after(s, L, 260, 540, 470, I['p16a'], I['p16b'], tag_before='修前', tag_after='修后')
     caption(s, L, 740, 540, 'UE 实机 · PC 低档同机位 · 升空尾缀')
@@ -691,9 +680,9 @@ def p_bugs(d, I):
         y += 54
     x = 760
     w = R - x
-    label_text(s, x, 214, w, '黑点 · 最亮处出现黑块')
-    image(s, I['p16ramp'], x, 260 + (470 - w * 556 / 1568) / 2, w, w * 556 / 1568)
-    caption(s, x, 740, w, '机制复现（模拟，非 UE）：左 旧序列 + 末格黑 Ramp；中 末格不黑；右 现序列 + 末格黑')
+    label_text(s, x, 214, w, '黑块 · 最亮处出现黑点')
+    image(s, I['p16ramp'], x, 260, w, 450)
+    caption(s, x, 740, w, '机制复现（模拟，非 UE）：左 末格为黑的 Ramp 出现黑点；右 末格不黑则没有')
     y = 800
     for h, b in [('原因', '最亮处采样落到 Ramp 末格的黑色（末格涂黑用于去除光晕灰线）'),
                  ('修法', 'EmissiveDissolve 设为 0.98，确认有效后写入导出与导入规则')]:
@@ -781,7 +770,7 @@ NOTES = {
     'p_scale': ('制作规模', '先看规模。去年只有 3 种烟花、1 条升空尾缀，节目约 70 秒；今年开花种类增加到 26 种，扇形也在其中，升空尾缀按开花高度分为 6 档，节目约 220 秒，约为去年的 3 倍。PC 与手游还要分别输出，各分画质档位。',
                 '去年 3 种、1 条尾缀、约 70 秒 = 讲者口述（10-30 01:42、11:07）；编排工作台资源快照（tool/workbench/public/data/resource-catalogue.json，10-09）中「新年烟花2.0」有 1 行拖尾、开花为小/中/大 × 红/黄/白 9 行另加大金。今年 26 种、6 档、219.5 秒：第二版核验 verify_A1_A2 §1、B11 修订 3。'),
     'p_delivery_problem': ('资源交付的重复工作', '规模扩大后，最先暴露的是资源交付中的重复工作。导出时，每种烟花都要确定取景、帧数、格子、打包、Ramp 与 Cutout，并分别输出两个平台；导入时，每个资源又有十余项引擎设置。原来这些都靠人工逐个完成，效果一调整就要重做；漏设一项，就会出现贴图常驻内存、星头方块或最亮处黑块等问题。',
-                           '12 项设置沿用第一版第 3 页（烟花贴图规范与性能组约定、烟花特效资产规范）；CLAUDE.md §2。'),
+                           '12 项设置沿用第一版第 3 页（烟花贴图规范与性能组约定、烟花特效资产规范）；项目规则 §2。'),
     'p_choreo_problem': ('编排的挑战', '第三个挑战是编排。去年在定序器中手工拼接，共 12 条子序列、两千七百多条轨道，调整一处节奏需要逐条对齐，也无法直观预览整体构图，各画质档还要分别维护；性能组也反馈内存占用偏高。今年节目约 220 秒、24 个发射点位，PC 与手游各分 3 档画质，节奏还要随音乐反复调整，手工排轨的修改成本过高。',
                          '12 子序列、2726 轨道：UE 只读统计（10-29，第二版核验 A3）；内存偏高 = 性能组口述反馈，无数字。'),
     'p_baker': ('烟花烘焙器', '针对制作规模，我让 AI 开发了烟花烘焙器。此前用 AI 脚本驱动 Blender 出图，可以输出，但每轮都要等待渲染，预览也与输出不一致。烘焙器只输出游戏视角所需的序列，内置单层花型模板和多层模板：选择模板、调整参数，就能得到新效果，保存后进入效果库，继续派生和复用。',
@@ -789,14 +778,14 @@ NOTES = {
     'p_export': ('导出规范', '资源交付的问题分导出和导入两步解决。导出规范首先是取景：固定框为默认，随开花放大让开花初期获得更多像素，锚在爆点适合单侧花型；扇形测试中，内容占面片的比例由约两成提高到约四成。之后自动排格打包，一张贴图容纳 64 帧，灰度存储、Ramp 查色，按收益生成 Cutout，PC 与手游同时导出，交付前在引擎回放中复核。',
                  'tool/CHANGELOG.md 4.9.33、4.9.81（FC6O 取景计划估算 0.20 / 0.21 / 0.41）；spec/cascade_params_v1.md §7、§10；本机 T26 统计正式资源 17 组：固定 10、随开花放大 5、锚点 2。'),
     'p_import': ('导入规范', '导入由导入器完成，设计参考了原有特效工作台的配表入口。导入器读取素材包，先检查命名、尺寸与规范项，再按平台创建贴图、材质实例和发射器，确认后写入 UE 并读回核对。与性能组确定的贴图规范，以及包围盒、朝向、EmissiveDissolve 等设置，都内置于工具，不再依赖人工记忆。',
-                 'CLAUDE.md §2 烟花贴图规范（v2.31）；spec/workspace_resource_v1.md（检查不写 UE，确认后写入）；截图为特效工作台烟花素材导入页（10-24）。'),
+                 '项目规则 §2 烟花贴图规范（v2.31）；spec/workspace_resource_v1.md（检查不写 UE，确认后写入）；截图为特效工作台烟花素材导入页（10-24）。'),
     'p_choreo_rules': ('编排推演', '编排先推演规则。舞台为宽约 800 米、高约 150 米的坝体，按约 100 米点距布置主发射点，共 24 个点位。花径约为点距 1.5 倍时可以分辨单花，2 倍以上形成花墙，3 倍左右容易糊成一片。据此把花型分为 S、M、L 和主角四档，确定开花高度，再用极限帧检查同一时刻各档最大展开时的重叠。这些规则写入编排宪章，每版编排自动检查；设计值与实机不同时，以实机校正。',
                        '对话框22；协作/跨年秀编排宪章.md；第二版重制第 7 页；极限帧设计图为用户 11:07 提供。「极限帧」在仓库中无同名记录，此处按设计图含义理解为同一时刻各档最大展开。'),
     'p_workbench': ('烟花编排工作台', '规则通过编排工作台落地。资源表中的效果是基础模板；组合尺寸、高度和尾缀后成为花型模板；花型模板放上时间轴形成编排片段，常用组合可以存为编排模板。片段按音乐划分段落，可以按段调整节奏和构图，最后一键生成导演表并导入 UE。编排过程可视化，检查和输出程序化，修改节奏只需重新出表。',
                     '截图为云端打开 tool/烟花编排工作台.html（16.0.42，节目 B11 修订 3）：基础模板 33、花型模板 97、编排片段 492。'),
     'p_summary': ('解决思路汇总', '汇总起来，三个问题对应三个工具：烘焙器解决制作规模，导入器解决资源交付，编排工作台解决编排，工具之间以固定格式衔接。目标、审美与引擎约束由我确定，工具由 AI 开发，关键结果在 UE 中验收；导演蓝图与程序共同设计，贴图规范与性能组共同确定。',
                   '约 2200 次提交：第二版核验 verify_A1_A2 §1（含约 350 次显卡后台自动回传）。'),
-    'p_resources': ('资源成果', '下面看成果。资源方面，进入跨年 3.0 资源表的有球花与扇形共 26 种、升空尾缀 6 档、窜天猴一套；手游覆盖其中 12 种开花、全部尾缀和窜天猴。引用贴图 PC 专用 133 张、手游专用 33 张、两端共用 46 张。其中 20 种开花保留了烘焙器配方，可以调参后重新导出。',
+    'p_resources': ('资源成果', '下面看成果。资源方面，进入跨年 3.0 资源表的有球花与扇形共 26 种、升空尾缀 6 档、窜天猴一套；手游覆盖其中 12 种开花、全部尾缀和窜天猴。引用贴图去重共 212 张，其中 PC 专用 133 张、手游专用 33 张、两端共用 46 张。26 种开花中，19 种保留了烘焙器配方与导出记录，可以调参后重新导出。',
                     'verify_A1_A2 §1、§6；第三版素材/资源分类.md。20 种为找到烘焙器导出材料（19 种有配方与导出记录）。'),
     'p_import_result': ('接入成果', '接入方面进行过两轮批量修正：贴图规范确定后，149 张贴图批量重设，读回一致；更早一轮修正了 115 个包，读回无错误。这些规则已经内置于导入器，新资源导入时自动执行。',
                         'analysis/results/TEX_SPEC_20261018/verify.json；资源规范统一_20261016/改后读回.json。'),
@@ -804,9 +793,9 @@ NOTES = {
                         'B11 修订 3 编排检查（PC 1145 / 852 / 438，手游 448 / 349 / 181）。'),
     'p_sparkler': ('仙女棒', '接下来是两个技术案例。第一个是仙女棒，火星有一级、二级分叉，也有清晰与模糊的层次。以往类似效果，比如现有的窜天猴拖尾，用了 10 个发射器拼合。这次 13 类火星的结构来自我之前的 Blender 工程，AI 将其移植为通用的母子分叉，在烘焙时合成为一张 64 帧序列，每个平台只需一个发射器。',
                    'verify_A4；动图由导出的 64 帧主序列按顺序播放，Ramp 着色为示意；UE 实录由讲者补。'),
-    'p_trail': ('升空尾缀', '第二个是升空尾缀。尾缀拆成近段和远段：近段为循环面片，随弹体移动；远段为一次性序列，表现留在空中的老火星。帧数按观看距离换算每帧屏幕位移后分配，快的阶段多给帧、慢的阶段少给，L 档上升段最慢帧率由约 1.9 提高到 30。代价是单格高度降低，近看略软。',
+    'p_trail': ('升空尾缀', '第二个是升空尾缀。尾缀拆成近段和远段：近段为循环面片，随弹体移动；远段为一次性序列，表现留在空中的老火星。帧数按观看距离换算每帧屏幕位移后分配，快的阶段多给帧、慢的阶段少给，L 档远段上升段的最慢帧率由约 1.9 提高到 30。代价是单格高度降低，近看略软。',
                  '第二版重制第 13、19 页；tool/src/js/31_plan40.js；tool/CHANGELOG.md 4.9.26、4.9.31；0.77 像素为本项目经验线。'),
-    'p_bugs': ('方头与黑点', '排查方面，方头和黑点是两个典型问题。方头只在低配出现：长条格压扁后采样到低 Mip，星头变方；固定机位与档位对比后定位，PC 主序列改为不使用 Mip。黑点出现在最亮处：亮度采样落到 Ramp 末格的黑色，设置 EmissiveDissolve 为 0.98 后解决。两项规则都已写入导出与导入流程。',
+    'p_bugs': ('方头与黑点', '排查方面，方头和最亮处黑块是两个典型问题。方头只在低配出现：长条格压扁后采样到低 Mip，星头变方；固定机位与档位对比后定位，PC 主序列改为不使用 Mip。黑块出现在最亮处，看上去是一个个黑点：亮度采样落到 Ramp 末格的黑色，设置 EmissiveDissolve 为 0.98 后解决。两项规则都已写入导出与导入流程。',
                'analysis/results/LOWQ_FIX_20261018；analysis/probe/BC7护栏黑块_2026-10-15（机制复现为模拟）；0.98 修法有用户确认（对话框23）。'),
     'p_demo': ('流程演示', '最后用一段录屏演示完整流程：选择模板调参，在引擎回放中复核，同时导出 PC 与手游，经导入器写入 UE，再在编排工作台中排入节目。（播放录屏，约 2 分钟）录屏经过剪辑，实际用时 ×× 分钟。', '录屏由讲者提供。'),
     'p_method': ('工作方法', '最后是这一个多月的心得：批量需求可以分三个阶段与 AI 协作。第一，明确需求：定义目标、约束和验收标准，由 AI 梳理所需技术，选择最简可行方案。第二，建立规范：按效果、工具和编排拆分任务，把参数、交互和编排规则写成宪章，每次执行前先读规范与交接。第三，结果把关：先自动检查，再在 UE 验收，执行、自检与验收分开记录，通过的版本锁定复用。工具包我会放在 xx 处，建议从一项重复性工作开始尝试。', ''),
