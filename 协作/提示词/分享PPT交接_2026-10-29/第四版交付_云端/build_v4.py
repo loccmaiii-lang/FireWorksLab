@@ -687,8 +687,8 @@ PEAK = os.path.join(SRC, 'b11r1_peak185.json')
 PEAK_STYLE = {'S': (TXT, 0.5, 1.3), 'M': (TXT, 0.8, 1.4), 'L': (ACC, 0.85, 1.6), 'H': (ACC, 1.0, 2.6)}
 
 
-def draw_peak(s, X0, Y0, W, H, bursts, head, sub):
-    """同一时刻各档开到最大（满径）时的重叠：按 PPT 配色原生绘制。数据取自编排方案页 185.0 s。"""
+def draw_peak(s, X0, Y0, W, H, data, head, sub):
+    """同一时刻的舞台：球花按满径画（同点叠放的两发合成一圈，底色更亮），扇形、升空尾缀、小平台小花按此刻状态画。"""
     rect(s, X0, Y0, W, H, fill=CARD, line='F5F5F5', line_alpha=A_STROKE)
     padl, padr, padt, padb = 70, 30, 66, 30
     zmax, xhalf = 725, 560
@@ -704,20 +704,44 @@ def draw_peak(s, X0, Y0, W, H, bursts, head, sub):
     for xm in (-250, -100, 100, 250):
         line(s, X(xm), Z(150), X(xm), Z(0), color=TXT, alpha=0.12, w=1)
     rect(s, X(-100), Z(50), 200 * sc, 50 * sc, fill=TXT, fill_alpha=0.05, line='F5F5F5', line_alpha=0.18)
-    text(s, X(-400), Z(150) - 26, 200, 22, '坝顶 150 m', size=14, alpha=A_FOOT, lh=1.0)
-    for b in sorted([b for b in bursts if not b['up']], key=lambda b: -b['d']):
-        r = b['d'] / 2 * sc
-        cx, cy = X(b['x']), Z(b['top'])
-        k_ = 'H' if b['sp'] == 'GKH' else b['sz']
-        col, la, lw = PEAK_STYLE[k_]
-        rect(s, cx - r, cy - r, 2 * r, 2 * r, fill=col, fill_alpha=0.06, line=col, line_alpha=la, line_w=lw,
-             shape=MSO_SHAPE.OVAL)
+    text(s, X0 + 14, Z(150) - 12, 60, 24, '150 m', size=14, alpha=A_FOOT, lh=1.0)
     for xm in (-375, -288, -197, -100, 0, 100, 197, 288, 375):
         rect(s, X(xm) - 5, Z(150) - 9, 10, 9, fill=TXT, fill_alpha=0.85, shape=MSO_SHAPE.ISOSCELES_TRIANGLE)
     for xm in (-331, -245, -148, -50, 50, 148, 245, 331):
         rect(s, X(xm) - 3, Z(150) - 6, 6, 6, line='F5F5F5', line_alpha=0.6, shape=MSO_SHAPE.OVAL)
     for xm in (-69, -46, -23, 0, 23, 46, 69):
         rect(s, X(xm) - 3, Z(50) - 6, 6, 6, fill=TXT, fill_alpha=0.6, shape=MSO_SHAPE.DIAMOND)
+    # 地面：扇形与小平台小花的束
+    for g in data['segs']:
+        if g['a'] <= 0.02:
+            continue
+        al = {'fan': 0.45, 'red': 0.8, 'combo': 0.55}[g['k']] * min(1.0, g['a'] / 0.7)
+        line(s, X(g['x1']), Z(g['z1']), X(g['x2']), Z(g['z2']), color=TXT, alpha=al, w=1)
+    for dt in data['dots']:
+        if dt['a'] > 0.05:
+            rect(s, X(dt['x']) - 2, Z(dt['z']) - 2, 4, 4, fill=TXT, fill_alpha=0.85 * dt['a'], shape=MSO_SHAPE.OVAL)
+    for c in data['cflowers']:
+        r = c['d'] / 2 * sc
+        rect(s, X(c['x']) - r, Z(c['z']) - r, 2 * r, 2 * r, fill=TXT, fill_alpha=0.05, line='F5F5F5', line_alpha=0.5,
+             line_w=1, shape=MSO_SHAPE.OVAL)
+    # 升空尾缀
+    for tl in data['tails']:
+        line(s, X(tl['x']), Z(tl['z1']), X(tl['x']), Z(tl['z2']), color=TXT, alpha=0.6, w=1.6)
+        rect(s, X(tl['x']) - 3, Z(tl['z2']) - 3, 6, 6, fill=TXT, shape=MSO_SHAPE.OVAL)
+    # 球花：同点同高的叠放合成一圈
+    groups = {}
+    for b in data['flowers']:
+        key = (round(b['x']), round(b['top']))
+        g = groups.setdefault(key, {'x': b['x'], 'top': b['top'], 'd': 0, 'n': 0, 'k': 'S'})
+        g['n'] += 1
+        k_ = 'H' if b['sp'] == 'GKH' else b['sz']
+        if b['d'] > g['d']:
+            g['d'], g['k'] = b['d'], k_
+    for g in sorted(groups.values(), key=lambda g: -g['d']):
+        r = g['d'] / 2 * sc
+        col, la, lw = PEAK_STYLE[g['k']]
+        rect(s, X(g['x']) - r, Z(g['top']) - r, 2 * r, 2 * r, fill=col, fill_alpha=0.06 * g['n'], line=col,
+             line_alpha=la, line_w=lw, shape=MSO_SHAPE.OVAL)
     text(s, X0 + 24, Y0 + 16, W - 48, 36, [[{'t': head, 'bold': True}, {'t': '  ' + sub, 'alpha': A_SUB}]],
          size=S_SMALL, lh=1.3)
 
@@ -734,10 +758,9 @@ def p_choreo_result(d, I):
         rect(s, x, 222, 20, 20, line=col, line_alpha=la, line_w=lw, shape=MSO_SHAPE.OVAL)
         text(s, x + 28, 214, 150, 36, lab, size=S_SMALL - 4, alpha=A_SUB, lh=1.3)
     pw, gap, py, ph = 852, 24, 258, 500
-    n_pc = sum(1 for b in pk['bursts']['pc'] if not b['up'])
-    n_mb = sum(1 for b in pk['bursts']['mobile'] if not b['up'])
-    draw_peak(s, L, py, pw, ph, pk['bursts']['pc'], 'PC 高配', f'球花 {n_pc} 朵同时展开')
-    draw_peak(s, L + pw + gap, py, pw, ph, pk['bursts']['mobile'], '手游高配', f'球花 {n_mb} 朵同时展开')
+    pc, mb = pk['pc'], pk['mobile']
+    draw_peak(s, L, py, pw, ph, pc, 'PC 高配', f"球花 {len(pc['flowers'])} 发 · 扇形 14 点 · 升空 {len(pc['tails'])} 发")
+    draw_peak(s, L + pw + gap, py, pw, ph, mb, '手游高配', f"球花 {len(mb['flowers'])} 发 · 升空 {len(mb['tails'])} 发")
     # 辅助：播放次数、版本、待改进
     y0, h0 = 784, 172
     cw = 1000
@@ -982,11 +1005,11 @@ NOTES = {
                         '这些规则现在都在导入器里，新资源进来会自动执行。右边是 UE 里的 Overdraw 视图，颜色越暖叠得越多，哪里需要减层一眼就能看出来。'
                         '在开发机上实测，PC 高配烟花半透明的耗时在 0.08 到 0.5 毫秒之间。下面讲两个技术案例。',
                         'TEX_SPEC_20261018/verify.json；资源规范统一_20261016/改后读回.json；实测见 OVERDRAW_B11r3_20261019/看法.md（RTX 5080 编辑器视口，非目标机）；截图为用户提供。'),
-    'p_choreo_result': ('编排成果', '3:05 同一时刻：PC 31 朵、手游 13 朵 · 自动分档 · 11 个大版本',
+    'p_choreo_result': ('编排成果', '3:05 同一时刻：PC 31 发、手游 13 发 · 自动分档 · 11 个大版本',
                         '编排成果先看重叠检查。'
-                        '上面这两张是整场球花最满的时刻，3 分 05 秒，所有花都按开到最大来画：PC 高配同时有 31 朵，手游 13 朵，圈和圈重叠的地方，就是推演时要控制的。'
+                        '上面这两张是整场球花最满的时刻，3 分 05 秒：球花按开到最大来画，地面的扇形和升空尾缀是这一刻的状态。PC 高配同时有 31 发球花，手游 13 发，圈和圈重叠的地方，就是推演时要控制的。'
                         '下面是辅助数据：同一份编排按平台和画质自动分档，PC 一场从大约 1150 次到 440 次播放，手游从 450 次到 180 次，不用每档单独排；一共迭代了 11 个大版本，每版都自动检查。目前节拍对齐的指标还没达到宪章目标，还在继续调。',
-                        'B11 修订 3 编排检查（PC 1145 / 852 / 438，手游 448 / 349 / 181）；重叠图取编排方案 B11 修订 1 页逐 0.5 s 扫描球花面积最大的 185.0 s（PC 小 10 · 中 8 · 大 13；手游同刻大 13），按满径原生绘制。'),
+                        'B11 修订 3 编排检查（PC 1145 / 852 / 438，手游 448 / 349 / 181）；重叠图取编排方案 B11 修订 1 页逐 0.5 s 扫描球花面积最大的 185.0 s（PC 小 10 · 中 8 · 大 13；手游同刻大 13），球花按满径、扇形 / 尾缀 / 小平台小花按此刻状态原生绘制；同点同高叠放的两发合成一圈（底色加深）。'),
     'p_sparkler': ('仙女棒', '一级二级分叉 · 以往 10 个发射器 · 13 类合成 1 张 64 帧 · 左 UE 实录',
                    '第一个是仙女棒。它的火星有一级、二级分叉，也有清楚和模糊的层次。以往类似的效果，比如窜天猴的拖尾，要用 10 个发射器拼。'
                    '这次我把之前 Blender 工程里的 13 类火星交给 AI，改成通用的母子分叉，烘焙时合成一张 64 帧序列，每个平台只要一个发射器。'
