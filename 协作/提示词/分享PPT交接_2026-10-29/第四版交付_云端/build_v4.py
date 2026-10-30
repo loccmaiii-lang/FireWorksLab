@@ -161,6 +161,19 @@ def trail_gif():
     return p
 
 
+def cover_fade(im):
+    """封面：左侧压暗放标题与目录，右侧保留实机画面。"""
+    import numpy as np
+    W, H = im.size
+    x = np.linspace(0, 1, W)[None, :]
+    y = np.linspace(0, 1, H)[:, None]
+    a = np.clip(0.92 - (x - 0.28) / 0.44 * 0.74, 0.18, 0.92)
+    a = np.clip(a + np.clip((y - 0.70) / 0.30, 0, 1) * 0.35, 0, 0.95)
+    arr = np.asarray(im.convert('RGB')).astype(float)
+    out = arr * (1 - a[..., None]) + np.array([10, 10, 10]) * a[..., None]
+    return Image.fromarray(out.astype('uint8'))
+
+
 def thank_scrim(im):
     W, H = im.size
     ov = Image.new('RGB', (W, H), (10, 10, 10))
@@ -175,7 +188,8 @@ def thank_scrim(im):
 
 def build_images():
     I = {}
-    I['cover'] = os.path.join(V1IMG, 'p01_cover.jpg')
+    I['cover'] = prep('UE_实机_今年节目_游戏内.jpg', 'cover.jpg', 1920, 1080, box=(643, 96, 2763, 1288), scale=1.0,
+                      darken=cover_fade)
     I['p02'] = prep('02_UE跨年秀_彩色全景.jpg', 'p02_show.jpg', 1728, 420, focus=(0.5, 0.66))
     I['p04'] = os.path.join(V1IMG, 'p05_sequencer.jpg')
     I['p05a'] = prep('analysis/results/NF4/缩略图/总表_花型模板.jpg', 'p05_tpl.jpg', 571, 330)
@@ -211,7 +225,8 @@ def build_images():
                      mode='contain')
     I['p16ramp'] = prep('第三版素材/原图/Ramp末格_复现.png', 'p16_ramp.jpg', 1064, 450, box=(0, 0, 1042, 556), mode='contain')
     I['demo'] = prep('06_烘焙器界面_引擎回放.jpg', 'demo_bg.jpg', 1200, 675, focus=(0.5, 0.5))
-    I['thank'] = prep('01_封面_UE跨年秀.jpg', 'thank.jpg', 1920, 1080, scale=1.0, darken=thank_scrim)
+    I['thank'] = prep('UE_实机_今年节目_游戏内.jpg', 'thank.jpg', 1920, 1080, box=(1382, 96, 3775, 1442), scale=1.0,
+                      darken=thank_scrim)
     return I
 
 
@@ -269,7 +284,7 @@ def gif(s, path, x, y, w, h):
 def p_cover(d, I):
     s = d.slide(transition=True)
     image(s, I['cover'], 0, 0, 1920, 1080)
-    source_tag(s, 0, 0, 1920, 1080, '示意图', pos='br')
+    source_tag(s, 0, 0, 1920, 1080, 'UE 实机', pos='br')
     page_footer(s, d.footer)
     text(s, L, 176, 1100, 36, 'VFX 组内分享 · 2026.10.30', size=S_LABEL, color=ACC, bold=True, spc=4, lh=1.3)
     text(s, L, 226, 1300, 140, '烟花秀 AI 全流程', size=112, bold=True, lh=1.15)
