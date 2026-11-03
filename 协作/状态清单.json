@@ -304,6 +304,15 @@
       "授权": "用户 10-28：「选A方案，P4登录好了，修改吧」（方案 协作/方案/手游烟花贴图Mip恢复_2026-10-28.md 末节）",
       "保护": "PC 主序列、Ramp、DistantVFX 组、金垂柳 2 张不动；不提交 P4；改前备份 uasset",
       "记录": "对话记录/对话框LiteHDR.md"
+    },
+    "LiteHDR（Claude Code） · stable 分支重做手游 26 张贴图": {
+      "负责": "LiteHDR（Claude Code）",
+      "日期": "2026-11-03",
+      "状态": "进行中：UE 单写占用（用户现在打开的 F:/loc_Stable 编辑器，P4 工作区 loc_Stable，stream //DFProject/view/v_stable_editor）",
+      "范围": "同 10-28：手游 24 张主序列 MipGenSettings → FromTextureGroup；T_EFX_Sparks_Sparkler_4x4_01 / T_EFX_Sparks_Streak_8x1_02 MaxTextureSize → 1024；先查新分支现状，已是目标值的只迁出",
+      "授权": "用户 11-03：「我切换了个分支，之前的26张贴图需要再迁出合回，请你根据我现在打开的UE，进行检查并且帮我重复处理一遍」",
+      "保护": "只碰这 26 张、只改计划那一项；不提交 P4；改前备份 uasset",
+      "记录": "对话记录/对话框LiteHDR.md"
     }
   },
   "effects": [
