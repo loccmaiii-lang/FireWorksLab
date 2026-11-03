@@ -47,6 +47,8 @@
   R14 4.9.97 分层粒子图画面（导出排查 V4 / V2 / V3 / V1）：松叶分叉接燃尽后气流、镜头核 σ 下限 0.55 像素、镜头关世界等比、镜头关走镜头的核（历史线光量 = 一颗点）
   R15 4.9.102 合成一张补效果（导出排查 V5 + 落火）：rtFullFx 缺省 / 条目 / 指纹、收尾钩子、燃尽门只作用在曲线上、引擎回放 = 实时（每组 ±10 %、整幅 ±6 %）、落火按 GPU 口径、材质改了要重烘、右栏出现与变灰
   R16 4.9.103 导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18：短闪光按帧停留时段积分（逐颗光量 = 实际、辉星每帧 = 细采样）、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段、状态栏 / 产物表标注
+  R17 4.9.125（用户 11-03 20:33「同事打开模板无法在图层下面加层，需要先点另存为旁边的加层后才会在图层下面出现加层按钮」）：空浏览器打开多层花型模板，图层管理里就有「＋ 加一层」；
+     点了先存成我的多层副本（问一次名字），再弹加层选择器；之后再点不再问名字
   R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -1878,6 +1880,32 @@ R16_JS = r"""async () => {
   });
   return { ok: !bad.length, bad, out };
 }"""
+
+
+# 4.9.125（用户 11-03 20:33）：图层管理的「＋ 加一层」以前只在「我的效果」里画，模板 / AI 效果 / 正式库只能先找资产栏的「＋ 加层」
+R17_OPEN = """(() => { window.__opening = true; window.__asks = 0; const a = window.askSaveName; window.askSaveName = async (...x) => { window.__asks++; return a(...x); };
+  Promise.resolve(openMultiType(MULTI_TYPES[0].id)).finally(() => window.__opening = false); return 0; })()"""
+R17_STATE = "({ tab: state.tab, my: !!lib.my, key: lib.key, card: !$('#layerCard').hidden, add: !!$('#layerCard #myAdd'), n: state.layers.length, asks: window.__asks, picker: !$('#picker').hidden, mode: pk.mode })"
+
+
+async def r17(pg):
+    """空浏览器（同事那台没有我的效果）打开多层花型模板：图层管理里就有「＋ 加一层」；点了先存成我的多层副本、再弹加层选择器；之后再点不再问名字"""
+    await pg.evaluate(R17_OPEN); await idle(pg)
+    r0 = await pg.evaluate(R17_STATE); bad = []
+    if r0['tab'] != 'combo' or r0['my'] or not r0['card']: return False, f"前提不对：打开多层模板后 {r0}"
+    if not r0['add']: return False, f"打开多层花型模板（{r0['key']}，不是我的效果）时图层管理里没有「＋ 加一层」，只能先点资产栏「＋ 加层」"
+    await pg.evaluate("(() => { $('#layerCard').open = true; window.__opening = true; $('#layerCard #myAdd').click(); setTimeout(() => window.__opening = false, 600); return 0; })()"); await idle(pg)
+    r1 = await pg.evaluate(R17_STATE)
+    if r1['asks'] != 1: bad.append(f"点模板的「＋ 加一层」应先问一次名字（存成我的副本），实际问了 {r1['asks']} 次")
+    if not r1['my'] or not str(r1['key']).startswith('my:'): bad.append(f"点了以后没存成我的效果：{r1['key']}")
+    if not r1['picker'] or r1['mode'] != 'addLayer': bad.append(f"存好以后没弹加层选择器（picker={r1['picker']}，mode={r1['mode']}）")
+    if r1['n'] != r0['n']: bad.append(f"还没选层就变了层数 {r0['n']} → {r1['n']}")
+    await pg.evaluate("(() => { pkClose(); $('#layerCard #myAdd').click(); return 0; })()"); await idle(pg)
+    r2 = await pg.evaluate(R17_STATE)
+    if r2['asks'] != 1: bad.append(f"已经是我的效果，再点「＋ 加一层」不该再问名字（共问了 {r2['asks']} 次）")
+    if not r2['picker'] or r2['mode'] != 'addLayer': bad.append('我的效果里点「＋ 加一层」没弹加层选择器')
+    await pg.evaluate("pkClose(); 0")
+    return not bad, '；'.join(bad) or f"多层模板 {r0['key']}（{r0['n']} 层）：图层管理有「＋ 加一层」→ 先存成 {r1['key']}、弹加层选择器；再点直接选层、不再问名字"
 
 
 async def r16(pg):
@@ -4132,7 +4160,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('R16', r16, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('R16', r16, False), ('R17', r17, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

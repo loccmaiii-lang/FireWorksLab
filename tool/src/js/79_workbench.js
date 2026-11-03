@@ -30,9 +30,11 @@ function buildLayerCard() {
       <span class="tx"><b>${i + 1} · ${layerName(i)}</b><small>开始 <input class="lst" type="number" min="0" max="10" step="0.01" value="${(+L.delay || 0).toFixed(2)}" data-st="${i}" aria-label="第 ${i + 1} 层开始时间"> s<span class="ldur"> · 时长 ${dur.toFixed(2)} s</span>${e && e.editSig ? ' · <em>已调</em>' : ''}</small></span>
       <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span>${lib.my ? myLayerTools(i) : ''}</div>`;
   });
-  if (lib.my) rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层：花型模板，或现有效果里的某一层（参数复制一份）">＋ 加一层</button>`);
+  // 4.9.125（用户 11-03 20:33「同事打开模板无法在图层下面加层，需要先点另存为旁边的加层后才会在图层下面出现加层按钮」）：
+  //   以前只在我的效果里画；模板 / AI 效果 / 正式库也画，点了和资产栏「＋ 加层」同一个动作（addLayerAnywhere：先存成我的多层副本、原来的不动，再选层）
+  rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="${lib.my ? '加一层：花型模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成你的多层副本（原来的不动），再选要加的层'}">＋ 加一层</button>`);
   // 4.9.8：「整体」挪到标题这一行右边（各层的位置、延迟、时间倍率、颜色），省一行给参数
-  box.innerHTML = `<summary><span class="lc-t">图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ''}</span><span class="lc-chips">${state.layers.map((L, i) => `<button type="button" class="lc-chip${state.comboSel === i ? ' cur' : ''}" data-i="${i}" aria-pressed="${state.comboSel === i}" title="改第 ${i + 1} 层 · ${layerName(i)} 的参数">${i + 1} ${layerName(i)}</button>`).join('')}</span><button type="button" class="lc-whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" title="整体：各层在整朵里的位置、延迟、时间倍率、颜色" aria-pressed="${state.comboSel < 0}">整体</button></summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
+  box.innerHTML = `<summary><span class="lc-t">图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ' · 加层'}</span><span class="lc-chips">${state.layers.map((L, i) => `<button type="button" class="lc-chip${state.comboSel === i ? ' cur' : ''}" data-i="${i}" aria-pressed="${state.comboSel === i}" title="改第 ${i + 1} 层 · ${layerName(i)} 的参数">${i + 1} ${layerName(i)}</button>`).join('')}</span><button type="button" class="lc-whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" title="整体：各层在整朵里的位置、延迟、时间倍率、颜色" aria-pressed="${state.comboSel < 0}">整体</button></summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
     <div class="lc-rows">${rows.join('')}</div>`;
   box.querySelectorAll('.lc-whole, .lc-chip').forEach(b => b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); selectComboLayer(+b.dataset.i); }));
   box.querySelectorAll('.lrow').forEach(r => {
@@ -42,7 +44,7 @@ function buildLayerCard() {
   box.querySelectorAll('[data-st]').forEach(inp => inp.addEventListener('change', () => { const i = +inp.dataset.st, L = state.layers[i]; L.delay = clamp(+inp.value || 0, 0, 10); if (state.comboSel === i) buildLayerHead(i); else if (state.comboSel < 0) buildComboPanel(); buildLayerCard(); }));
   box.querySelectorAll('[data-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.solo; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
   box.querySelectorAll('[data-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.mute; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
-  if (lib.my) bindMyLayerTools(box);
+  if (lib.my) bindMyLayerTools(box); else { const add = box.querySelector('#myAdd'); if (add) add.addEventListener('click', () => addLayerAnywhere()); }
   if (typeof scopeSync === 'function') scopeSync();     // 4.9.14：顶上「金锦 › 火花」旁的独看 / 静音跟着（时间轴、图层管理、顶上三处是同一个开关）
 }
 function selectComboLayer(i) {
