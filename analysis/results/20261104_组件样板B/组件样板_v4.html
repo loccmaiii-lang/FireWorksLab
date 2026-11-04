@@ -48,6 +48,7 @@ button{font:inherit;color:inherit}
 .btn.quiet{background:transparent;border-color:transparent;color:var(--g8);padding:0 8px}
 .btn.quiet:hover,.btn.quiet.is-hover{background:var(--g4);color:var(--g9)}
 .btn.quiet:disabled{background:transparent;border-color:transparent;color:var(--gDis)}
+.rc.hide-idle :is(#restoreAll,#footRst):disabled{display:none}
 .rc.edge :is(.field,.num,.sel):not(:hover):not(:focus):not(:disabled):not(.is-error):not([readonly]){border-color:var(--g4)}
 .btn[aria-pressed="true"]{background:var(--p2);border-color:var(--p4);color:var(--p4)}
 .btn:disabled{background:var(--g2);border-color:var(--g5);color:var(--g7);cursor:not-allowed}
@@ -272,6 +273,9 @@ body.scrubbing,body.scrubbing *{cursor:ew-resize!important;user-select:none}
         <span class="gap"></span><span>输入框边</span>
         <button class="btn sm" id="e0" aria-pressed="true">无</button>
         <button class="btn sm" id="e1" aria-pressed="false">淡</button>
+        <span class="gap"></span><span>无可恢复时</span>
+        <button class="btn sm" id="r0" aria-pressed="true">停用</button>
+        <button class="btn sm" id="r1" aria-pressed="false">隐藏</button>
       </div>
       <div class="rc" id="rc">
         <div class="rc-top">
@@ -312,7 +316,7 @@ body.scrubbing,body.scrubbing *{cursor:ew-resize!important;user-select:none}
           <li><b>分组</b>：模块间距收回一些，多显示约一行参数。</li>
           <li><b>树</b>：显示 / 只看图标平时半透明，悬停或选中行、已开启的才全亮。</li>
           <li><b>参数区顶端</b>：搜索框左缘对齐滑杆列。</li>
-          <li><b>恢复</b>：没有可恢复内容时显示为停用（比 v2 更清楚），不再隐藏。</li>
+          <li><b>恢复</b>：没有可恢复内容时显示为停用（比 v2 更清楚）；上方「无可恢复时」可切换「隐藏」对比。</li>
           <li><b>文字</b>：「这一层在整朵里」改为「时间与缩放」；「需重新导出」文字改为中性色，只留黄点。</li>
         </ul>
         <p class="sub" style="margin:10px 0 6px">v3（第 2 轮评审）</p>
@@ -730,6 +734,8 @@ const press = (ids, on) => ids.forEach(x => $('#' + x).setAttribute('aria-presse
 $('#w1920').addEventListener('click', () => { rc.style.setProperty('--rcw', '440px'); rc.style.setProperty('--rch', '780px'); rc.style.setProperty('--treeRows', '6'); rc.style.removeProperty('--treeh'); press(['w1920', 'w1366'], 'w1920'); });
 $('#w1366').addEventListener('click', () => { rc.style.setProperty('--rcw', '360px'); rc.style.setProperty('--rch', '640px'); rc.style.setProperty('--treeRows', '4'); rc.style.removeProperty('--treeh'); press(['w1920', 'w1366'], 'w1366'); });
 $('#h24').addEventListener('click', () => { document.documentElement.style.setProperty('--h-tree', '24px'); rc.style.removeProperty('--treeh'); press(['h24', 'h28'], 'h24'); });
+$('#r0').addEventListener('click', () => { rc.classList.remove('hide-idle'); press(['r0', 'r1'], 'r0'); });
+$('#r1').addEventListener('click', () => { rc.classList.add('hide-idle'); press(['r0', 'r1'], 'r1'); });
 $('#e0').addEventListener('click', () => { rc.classList.remove('edge'); press(['e0', 'e1'], 'e0'); });
 $('#e1').addEventListener('click', () => { rc.classList.add('edge'); press(['e0', 'e1'], 'e1'); });
 $('#h28').addEventListener('click', () => { document.documentElement.style.setProperty('--h-tree', '28px'); rc.style.removeProperty('--treeh'); press(['h24', 'h28'], 'h28'); });
