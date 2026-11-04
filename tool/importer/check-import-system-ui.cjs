@@ -1,0 +1,35 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const src=fs.readFileSync(__dirname+'/check-import-workspace.cjs','utf8').split('(async()=>{')[0];
+const ctx={require,__dirname,console,process,setTimeout};vm.createContext(ctx);vm.runInContext(src+'\nglobalThis.probe={boot,add,pause,api,el,state,rows};',ctx);
+const {boot,add,pause,api,el,state,rows}=ctx.probe;let passed=0;const check=(n,f)=>{f();console.log('PASS '+n);passed++;};
+// Delivery moves the same native policy node into complete settings. Test both placements.
+const policyUI=w=>w.document.querySelector('.fw-workspace')||el(w,'reviewContent');
+const spec={format:'fwl.cascade/1',name:'GPUUI',textures:{},materials:{m:{role:'soft_dot'}},emitters:[{name:'Sparks',gpu:true,material:'m',required:{duration_s:3,loops:1},spawn:{rate:{const:100},bursts:[[0,10]]},modules:[{m:'Lifetime',Lifetime:{const:2}}]}]};
+const plain=x=>JSON.parse(JSON.stringify(x));
+(async()=>{
+ const t=boot({spec:()=>spec});await pause();await add(t.w,'F:/packs/a | GPUPreview_01');
+ const id=rows(t.w)[0].id;
+ check('particle policy and calculated limit visible in current preview details',()=>{assert.match(policyUI(t.w).textContent,/固定10 FPS.*剔除1200m/);assert.match(policyUI(t.w).textContent,/计算上限 221/);assert.equal(policyUI(t.w).querySelectorAll('[data-gpu-index]').length,1);});
+ api(t.w).confirmCurrent();check('confirmed package is executable before changes',()=>assert.equal(el(t.w,'primary').dataset.action,'execute'));
+ const input=policyUI(t.w).querySelector('[data-gpu-index]');input.focus();input.value='123';input.dispatchEvent(new t.w.Event('input'));
+ policyUI(t.w).querySelector('.fw-gpu-policy').open=true;
+ check('typing invalidates confirmation immediately without replacing focused input',()=>{assert(el(t.w,'btnExec').disabled);assert.equal(el(t.w,'primary').dataset.action,'check');assert.equal(t.w.document.activeElement,input);assert.equal(policyUI(t.w).querySelector('[data-gpu-index]'),input);assert.equal(t.writes.length,0);});
+ await api(t.w).setGpuMeasuredPeak(id,0,'123');
+ check('valid measured value rechecks and requires fresh confirmation',()=>{assert.match(policyUI(t.w).textContent,/将写入 123 · 实机峰值/);assert(el(t.w,'btnExec').disabled);assert.equal(el(t.w,'primary').dataset.action,'confirm');});
+ check('editing retains expanded GPU section',()=>assert(policyUI(t.w).querySelector('.fw-gpu-policy').open));
+ const saved=plain(state(t.w));t.close();
+ const restored=boot({spec:()=>spec,state:saved});await pause();
+ check('refresh preserves measured input but requires checking',()=>{assert.deepEqual(Object.values(rows(restored.w)[0].gpuMeasuredPeaks),[123]);assert(el(restored.w,'btnExec').disabled);});
+ await api(restored.w).preview();check('recheck restores exact measured setting',()=>assert.match(policyUI(restored.w).textContent,/将写入 123 · 实机峰值/));
+ await api(restored.w).setGpuMeasuredPeak(id,0,'1.5');check('invalid measured input blocks confirmation with actionable error',()=>{assert.equal(rows(restored.w)[0].state,'error');assert(el(restored.w,'btnExec').disabled);assert.match(policyUI(restored.w).textContent,/实机峰值/);});
+ await api(restored.w).setGpuMeasuredPeak(id,0,'');check('clearing restores calculated limit',()=>{assert.equal(rows(restored.w)[0].state,'ready');assert.match(policyUI(restored.w).textContent,/将写入 221 · 计算保守上限/);});
+ await api(restored.w).setGpuMeasuredPeak(id,0,'123');
+ let release;const busy=restored.w.eval('Workbench').run('fixture',()=>new Promise(r=>release=r));await api(restored.w).setGpuMeasuredPeak(id,0,'777');
+ check('busy state blocks measured input changes',()=>assert.deepEqual(Object.values(rows(restored.w)[0].gpuMeasuredPeaks),[123]));release();await busy;
+ api(restored.w).confirmCurrent();await api(restored.w).execute();
+ check('explicit execution receives measured value while source spec remains unchanged',()=>{assert.equal(restored.writes.length,1);assert.deepEqual(Object.values(restored.writes[0].gpuMeasuredPeaks),[123]);assert.deepEqual(plain(restored.writes[0].spec),spec);assert.deepEqual(plain(restored.errors),[]);});restored.close();
+ const changed=plain(spec);changed.emitters[0].spawn.rate.const=10;
+ const t2=boot({spec:()=>changed,state:saved});await pause();await api(t2.w).preview();
+ check('changed source emission cannot reuse stale measured peak',()=>{assert.match(policyUI(t2.w).textContent,/计算保守上限/);assert.equal(policyUI(t2.w).querySelector('[data-gpu-index]').value,'');});t2.close();
+ fs.writeFileSync(__dirname+'/backups/20261007-system-policy-ui.json',JSON.stringify({passed,realUERequests:0,actualBrowserVerified:false},null,2));console.log(passed+' system UI checks passed');
+})().catch(e=>{console.error(e);process.exitCode=1;});

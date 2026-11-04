@@ -1,0 +1,21 @@
+  <div class="topbar">
+    <div class="brand"><button type="button" class="btn ghost wb-tools-toggle" id="wb-tools-toggle" aria-controls="wb-tools" aria-expanded="false" onclick="WorkbenchPresentation.toggleTools()">工具菜单</button><span class="brand-mark">DF</span><div>特效工作台<small>EFFECT TOOLKIT</small></div></div>
+    <div class="connection"><span id="conn" class="badge checking">检测中…</span><button type="button" class="btn ghost" id="wb-reconnect" onclick="recheckConn()">重新连接</button><span class="user-tag">工作台 v{{VERSION}} · locmai</span></div>
+  </div>
+  <div class="mainbody">
+    <nav class="sidebar" id="wb-tools" aria-label="工具导航">
+      <button type="button" class="btn ghost wb-tools-close" onclick="WorkbenchPresentation.toggleTools(false)">关闭工具菜单</button>
+      <details class="nav-group" open><summary>资产处理</summary><div class="nav-children">
+        <button type="button" class="tab" data-panel="asset" onclick="switchPanel('asset')">特效资产复制</button>
+        <button type="button" class="tab" data-panel="material" onclick="switchPanel('material')">材质实例复制</button>
+        <button type="button" class="tab active" data-panel="fwimp" onclick="switchPanel('fwimp')">烟花素材导入</button>
+      </div></details>
+      <details class="nav-group" open><summary>数据配表</summary><div class="nav-children">
+        <button type="button" class="tab" data-panel="weapon" onclick="switchPanel('weapon')">整枪配表</button>
+        <button type="button" class="tab" data-panel="resfx" onclick="switchPanel('resfx')">ResourceFX 配表</button>
+      </div></details>
+      <details class="nav-group" open><summary>编排设计</summary><div class="nav-children">
+        <button type="button" class="tab" data-panel="show" onclick="switchPanel('show')">烟花编排</button>
+      </div></details>
+      <div class="sidebar-foot">当前项目<strong>DF / PC &amp; Mobile</strong><button type="button" class="wb-log-link" onclick="Workbench.openLog()">运行日志</button><small>本机 UE 服务<br>127.0.0.1:17780</small></div>
+    </nav>

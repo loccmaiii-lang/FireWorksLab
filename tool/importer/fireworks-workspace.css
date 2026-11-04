@@ -1,0 +1,103 @@
+/* Material import workspace: fixed shell and actions; independent local pane scrolling. */
+.content:has(#panel-fwimp.wb-active-page) .page-heading{padding:12px var(--wb-gutter);align-items:center;min-height:88px}
+.content:has(#panel-fwimp.wb-active-page) .page-heading h1{font-size:28px;line-height:36px;margin:2px 0}
+.content:has(#panel-fwimp.wb-active-page) .page-heading p{display:none}
+.wb-page-scroll:has(#panel-fwimp.wb-active-page){overflow:hidden;padding:0 var(--wb-gutter) 12px;scrollbar-gutter:auto}
+#panel-fwimp.wb-active-page{height:100%;min-height:0;display:grid!important;grid-template-rows:auto minmax(0,1fr) auto;gap:12px}
+#panel-fwimp [hidden]{display:none!important}
+#panel-fwimp .fw-tabs{margin:0;gap:24px;border-bottom:1px solid var(--md-outline-variant)}
+#panel-fwimp .fw-tabs button{font-size:14px;min-height:48px;padding:0 4px;position:relative;border-radius:0}
+#fwimp-work{min-height:0;display:flex;flex-direction:column;gap:12px}
+#panel-fwimp .fw-workspace-head{flex:none}
+#panel-fwimp .fw-steps{margin:0;display:flex;gap:24px;font-size:14px;line-height:20px;padding:0;border:0}
+#panel-fwimp .fw-steps li{flex:1;gap:12px;min-height:40px}
+#panel-fwimp .fw-steps li span{width:32px;height:32px;font-size:14px;border-color:var(--md-outline);background:transparent;color:var(--md-on-surface-variant)}
+#panel-fwimp .fw-steps li.active span{background:var(--md-primary);color:var(--md-on-primary);border-color:transparent}
+#panel-fwimp .fw-status{flex:none;margin:0;padding:0;min-height:0;border:0;background:none;line-height:20px;font-size:14px;color:var(--md-on-surface-variant);overflow-wrap:anywhere}
+#panel-fwimp .fw-status.error{color:var(--md-error)}
+#panel-fwimp .fw-workspace{flex:1;display:grid;grid-template-columns:minmax(236px,.95fr) minmax(280px,1.05fr) minmax(0,1.65fr);gap:16px;min-height:0;min-width:0;padding:0;border:0;background:none}
+#panel-fwimp .fw-queue-pane,#panel-fwimp .fw-settings-pane,#panel-fwimp .fw-name-review{min-width:0;min-height:0;margin:0;border:1px solid var(--md-outline-variant);border-radius:12px;background:var(--md-surface-container);overflow:hidden}
+#panel-fwimp .fw-queue-pane{display:flex;flex-direction:column;overflow:auto;overscroll-behavior:contain}
+#panel-fwimp .fw-pane-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:20px 16px 12px;margin:0;font-size:22px;line-height:28px;font-weight:500}
+#panel-fwimp .fw-pane-title small{font-size:14px;line-height:20px;font-weight:400;color:var(--md-on-surface-variant)}
+#panel-fwimp .fw-toolbar{display:flex;flex-direction:column;flex:none;gap:8px;margin:0;padding:0 16px 8px;min-height:0}
+#panel-fwimp .fw-toolbar .row{display:flex;flex-wrap:wrap;gap:8px;width:100%;margin:0}
+#panel-fwimp .fw-toolbar select{width:100%;min-width:0;flex:1}
+#panel-fwimp .fw-toolbar .btn{font-size:14px;padding:0 12px;min-height:48px;flex:none}
+#panel-fwimp .fw-toolbar .row:first-child .btn{width:48px;padding:12px}
+#panel-fwimp .fw-list-head{flex:none;padding:0 16px;border:0;min-height:48px}
+#panel-fwimp .fw-selection-row{flex:none;padding:0 8px 0 16px;gap:4px;flex-wrap:wrap;min-height:48px}
+#panel-fwimp .fw-select-all{font-size:14px;margin:0;min-height:48px;gap:8px}
+#panel-fwimp .fw-selection-row .btn{font-size:14px;padding:0 8px}
+#panel-fwimp .fw-filters button{font-size:14px;min-height:48px;padding:0 12px}
+#panel-fwimp #fwimp-list{overflow:auto;min-height:96px;flex:1 0 96px;overscroll-behavior:contain;scrollbar-gutter:stable}
+#panel-fwimp .fw-item{display:grid;grid-template-columns:40px minmax(0,1fr);padding:12px 12px 12px 8px;min-height:88px;gap:0 4px;border-radius:0;border-bottom:1px solid var(--md-outline-variant)}
+#panel-fwimp .fw-item.inspect{background:var(--md-secondary-container);border-left:3px solid var(--md-primary);padding-left:5px}
+#panel-fwimp .fw-package-choice{display:flex;align-items:center;justify-content:center;min-height:48px;margin:0;cursor:pointer}
+#panel-fwimp .fw-item-name{display:block;text-align:left;font-size:14px;line-height:20px;padding:4px;background:transparent;color:inherit;border:0;border-radius:8px;min-height:48px}
+#panel-fwimp .fw-item-name strong{display:block;overflow-wrap:anywhere;font-weight:600}
+#panel-fwimp .fw-item small{font-size:14px;line-height:20px;margin:4px 0 0;overflow-wrap:anywhere;color:var(--md-on-surface-variant)}
+#panel-fwimp .fw-item small:first-of-type{display:none}
+#panel-fwimp .fw-item>.fw-tag{grid-column:2;justify-self:start;font-size:14px;margin-top:8px}
+#panel-fwimp .fw-settings-pane{display:grid;grid-template-rows:auto minmax(0,1fr)}
+#panel-fwimp .fw-detail,#panel-fwimp .fw-editor{overflow:auto;overscroll-behavior:contain;min-height:0;min-width:0;padding:4px 16px 20px;border:0;border-radius:0;margin:0;background:none;scrollbar-gutter:stable}
+#panel-fwimp .fw-detail h3,#panel-fwimp .fw-editor h3{font-size:18px;line-height:24px;font-weight:600;margin:0 0 12px}
+#panel-fwimp .fw-detail label,#panel-fwimp .fw-editor label{font-size:14px;line-height:20px;margin:12px 0 4px}
+#panel-fwimp .fw-detail input:not([type=checkbox]),#panel-fwimp .fw-detail select,#panel-fwimp .fw-editor input:not([type=checkbox]),#panel-fwimp .fw-editor select{font-size:16px;line-height:24px;min-height:48px;padding:10px 12px;width:100%}
+#panel-fwimp input[type=checkbox]{width:20px;height:20px;min-height:0;padding:0;flex:none}
+#panel-fwimp .fw-naming-fields{grid-template-columns:minmax(0,1fr) 80px;gap:12px;margin:12px 0}
+#panel-fwimp .fw-naming-fields+p.hint{display:none}
+#panel-fwimp .fw-detail .hint,#panel-fwimp .fw-editor .hint{font-size:14px;line-height:20px;margin:8px 0;color:var(--md-on-surface-variant)}
+#panel-fwimp .fw-advanced-naming,#panel-fwimp .fw-preview-rules{margin:12px 0;font-size:14px;line-height:20px;overflow-wrap:anywhere}
+#panel-fwimp .fw-advanced-naming summary,#panel-fwimp .fw-preview-rules summary{cursor:pointer;color:var(--md-on-surface-variant);padding:12px 8px;min-height:48px;border-radius:8px;display:flex;align-items:center}
+#panel-fwimp .fw-detail .fw-naming-option{display:flex;align-items:center;min-height:48px;gap:8px}
+#panel-fwimp .fw-name-review{display:grid;grid-template-rows:auto minmax(0,1fr);padding:0}
+#panel-fwimp .fw-review-head{padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:64px;border-bottom:1px solid var(--md-outline-variant)}
+#panel-fwimp .fw-review-head h3{font-size:22px;line-height:28px;font-weight:500;margin:0}
+#panel-fwimp .fw-review-head .btn{margin-left:auto;min-height:48px;padding:0 12px;font-size:14px}
+#panel-fwimp #fwimp-scopeSummary{font-size:14px;color:var(--md-on-surface-variant)}
+#panel-fwimp #fwimp-reviewContent{min-height:0;overflow:auto;overscroll-behavior:contain;padding:16px;scrollbar-gutter:stable}
+#panel-fwimp .fw-review-pack{padding:0;margin:0;border:0;background:none}
+#panel-fwimp .fw-preview-identity{display:flex;justify-content:space-between;gap:12px;margin:0 0 12px;font-size:16px;line-height:24px}
+#panel-fwimp .fw-name-table{overflow:visible;margin:0}
+#panel-fwimp .fw-name-table table{min-width:0;width:100%;table-layout:fixed;font-size:14px;line-height:20px}
+#panel-fwimp .fw-name-table th,#panel-fwimp .fw-name-table td{padding:12px 4px;vertical-align:top;font-size:14px;border-color:var(--md-outline-variant)}
+#panel-fwimp .fw-name-table th:first-child{width:32px}
+#panel-fwimp .fw-name-table th:nth-child(2){width:62px}
+#panel-fwimp .fw-name-table th:last-child{width:66px}
+#panel-fwimp .fw-final-name{display:block;white-space:normal;overflow:visible;font-size:14px;overflow-wrap:anywhere;word-break:normal;font-weight:500;line-height:20px;max-width:100%}
+#panel-fwimp .fw-operation{display:inline-block;margin:0;font-size:14px;line-height:20px;overflow-wrap:anywhere;padding:4px 6px;border-radius:6px;color:var(--md-on-surface-variant);background:var(--md-surface-high)}
+#panel-fwimp .fw-asset-skipped{opacity:1;color:var(--md-on-surface-variant)}
+#panel-fwimp .fw-target-path{display:none;font-size:14px;margin-top:8px;color:var(--md-on-surface-variant);overflow-wrap:anywhere}
+#panel-fwimp .fw-show-paths .fw-target-path{display:block}
+#panel-fwimp .fw-asset-source{display:none;font-size:14px;color:var(--md-on-surface-variant);margin-top:4px}
+#panel-fwimp .fw-show-paths .fw-asset-source{display:block}
+#panel-fwimp .fw-asset-source summary{cursor:pointer;min-height:48px;padding:12px 4px;border-radius:6px}
+#panel-fwimp .fw-asset-source p{font-size:14px;line-height:20px;margin:8px 0;overflow-wrap:anywhere}
+#panel-fwimp .fw-asset-choice{display:flex;align-items:center;justify-content:center;min-height:48px;margin:0;cursor:pointer}
+#panel-fwimp .fw-reuse-choice{font-size:14px;align-items:center;justify-content:flex-start;margin-top:8px;gap:8px}
+#panel-fwimp .fw-workspace-error{color:var(--md-error);background:var(--md-error-container);padding:16px;font-size:14px;line-height:20px;overflow-wrap:anywhere;margin-bottom:16px;border-radius:12px}
+#panel-fwimp .fw-workspace-error p{margin:8px 0}
+#panel-fwimp .fw-workspace-error summary{min-height:48px;padding:12px 4px;border-radius:6px}
+#panel-fwimp .fw-actions{flex:none;position:static;display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;min-height:88px;padding:16px;margin:0;gap:16px;border-radius:12px;box-shadow:none;min-width:0;background:var(--md-surface-high);border:1px solid var(--md-outline-variant)}
+#panel-fwimp .fw-actions>div:first-child{min-width:0;flex:1}
+#panel-fwimp .fw-actions strong{font-size:18px;line-height:24px;font-weight:500}
+#panel-fwimp .fw-actions small{font-size:14px;line-height:20px;margin-top:4px}
+#panel-fwimp .fw-actions>.row{flex:none;gap:12px;margin:0}
+#panel-fwimp .fw-actions .btn{font-size:14px;min-height:48px;padding:0 20px;white-space:normal}
+#panel-fwimp .fw-legacy-action,#panel-fwimp .fw-review-actions,#panel-fwimp #fwimp-btnPreview{display:none!important}
+#panel-fwimp .fw-editor>.row:last-child{display:none}
+#panel-fwimp .fw-editor textarea{min-height:170px;width:100%;font-size:16px;line-height:24px}
+#panel-fwimp .fw-feedback{font-size:14px;line-height:20px;margin:0;max-height:40px;overflow:auto}
+#panel-fwimp .fw-feedback:empty,#panel-fwimp .fw-status:empty{display:none}
+#panel-fwimp #fwimp-queue{min-height:0;overflow:auto}
+#panel-fwimp .fw-empty{font-size:16px;line-height:24px;padding:24px 16px}
+#panel-fwimp .fw-gpu-limit{display:grid;gap:8px;margin:12px 0;padding:16px;border:1px solid var(--md-outline-variant);border-radius:12px}
+#panel-fwimp .fw-gpu-limit input{width:100%;min-width:0;box-sizing:border-box}
+#panel-fwimp .fw-gpu-limit small{font-size:14px;line-height:20px;color:var(--md-on-surface-variant)}
+@media(max-width:1100px){#panel-fwimp .fw-workspace{grid-template-columns:minmax(0,1fr)}#panel-fwimp .fw-toolbar{flex-direction:row;flex-wrap:wrap}#panel-fwimp .fw-toolbar .row{width:auto;flex:1}#panel-fwimp .fw-toolbar .row:first-child .btn{width:auto}#panel-fwimp .fw-pane-title{padding-top:12px}#panel-fwimp .fw-queue-pane{display:flex}#panel-fwimp .fw-steps{gap:12px}}
+@media(max-width:600px){.content:has(#panel-fwimp.wb-active-page) .page-heading{padding:8px 12px;min-height:72px}.content:has(#panel-fwimp.wb-active-page) .page-heading h1{font-size:24px;line-height:32px}.wb-page-scroll:has(#panel-fwimp.wb-active-page){padding:0 8px 8px}#panel-fwimp.wb-active-page,#fwimp-work{gap:8px}#panel-fwimp .fw-steps{gap:4px;font-size:14px}#panel-fwimp .fw-steps li{gap:4px}#panel-fwimp .fw-steps li span{width:24px;height:24px}#panel-fwimp .fw-review-head,#panel-fwimp #fwimp-reviewContent{padding:8px}#panel-fwimp .fw-actions{flex-wrap:wrap;padding:12px;gap:8px;min-height:88px}#panel-fwimp .fw-actions>.row{width:100%;justify-content:flex-end}#panel-fwimp .fw-actions strong{font-size:16px}#panel-fwimp .fw-review-head h3{font-size:20px}#panel-fwimp .fw-name-table th:nth-child(2){width:48px}#panel-fwimp .fw-name-table th:last-child{width:48px}}
+
+#panel-fwimp .fw-queue-head{display:flex;align-items:center;gap:4px;flex:none;padding:12px}.fw-queue-head>.row{flex:none;gap:0;margin:0}
+#panel-fwimp .fw-queue-head .fw-pane-title{flex:1;display:block;padding:0;font-size:22px;line-height:28px;min-width:0}#panel-fwimp .fw-queue-head .fw-pane-title small{display:block;margin-top:4px}
+#panel-fwimp .fw-icon-action{width:48px;height:48px;min-width:48px;padding:12px;border:0;background:transparent;border-radius:50%}

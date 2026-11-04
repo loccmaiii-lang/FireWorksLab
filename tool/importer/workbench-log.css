@@ -1,0 +1,17 @@
+/* Fixed feedback dock. workbench-scroll.css reserves its measured height in the right pane. */
+:root{--wb-log-height:236px}
+.logcard{position:fixed;bottom:0;left:var(--wb-sidebar);right:0;margin:0;padding:10px 18px 12px;border-radius:6px 6px 0 0;z-index:35;box-shadow:0 -8px 24px #0005;max-height:36vh;display:flex;flex-direction:column;gap:8px}
+.logcard .head{flex-wrap:nowrap;min-height:34px;gap:12px;margin:0;flex:none}
+#wb-log-toggle{white-space:nowrap;min-height:34px;flex:none;font-size:14px}
+#wb-log-toggle::after{content:' ▾'}
+.logcard.is-folded #wb-log-toggle::after{content:' ▴'}
+#wb-last-log{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;line-height:1.6}
+#wb-last-log.err{color:var(--danger)}
+#wb-last-log.warn{color:var(--warn)}
+.logcard #log{height:172px;min-height:0;max-height:25vh;overflow:auto;flex:1;overscroll-behavior:contain;white-space:pre-wrap;overflow-wrap:anywhere;padding:8px 10px;margin:0}
+.logcard.is-folded{gap:0}
+.fw-asset-choice{display:flex;align-items:center;gap:10px;margin:0;font-size:14px;color:var(--text);cursor:pointer}
+.fw-asset-choice input{width:18px;height:18px;flex:none;accent-color:var(--accent)}
+.fw-asset-skipped{opacity:.65}
+.fw-scope-summary{color:var(--accent);font-size:14px;margin:10px 0}
+@media(max-width:720px){.logcard{left:0;right:0;padding:8px 12px;max-height:32vh}.logcard .head{gap:8px;flex-wrap:wrap}#wb-last-log{order:3;flex-basis:100%}#wb-log-latest{margin-left:auto}.logcard #log{max-height:20vh}#wb-log-toggle{font-size:14px}}

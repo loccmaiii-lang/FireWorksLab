@@ -1,0 +1,344 @@
+{
+  "grades": {
+    "Small": {
+      "rise_s": 3.5,
+      "height_m": 190,
+      "height_range_m": [
+        180,
+        200
+      ],
+      "diameter_m": 110,
+      "diameter_range_m": [
+        100,
+        120
+      ]
+    },
+    "Medium": {
+      "rise_s": 5,
+      "height_m": 265,
+      "height_range_m": [
+        250,
+        280
+      ],
+      "diameter_m": 190,
+      "diameter_range_m": [
+        180,
+        200
+      ]
+    },
+    "Large": {
+      "rise_s": 8,
+      "height_m": 410,
+      "height_range_m": [
+        400,
+        420
+      ],
+      "diameter_m": 290,
+      "diameter_range_m": [
+        280,
+        300
+      ]
+    }
+  },
+  "trails": {
+    "Small": {
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\TrailCal_Small_20261002",
+      "as": "TrailCalSmall_01",
+      "reference_rise_s": 9.7667,
+      "reference_fade_height_m": 599.69,
+      "reference_measured_height_m": 600,
+      "spatial_ratio": 0.31683036235388284,
+      "temporal_ratio": 0.3583605516704721,
+      "rise_s": 3.5,
+      "fade_start_height_m": 190,
+      "predicted_rise_endpoint_m": 187.67257859691364,
+      "reference_model_endpoint_m": 592.3440455725432,
+      "native_playback_measurement": "not yet measured; user reference is approximately 600m",
+      "local_space": true
+    },
+    "Medium": {
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\TrailCal_Medium_20261002",
+      "as": "TrailCalMedium_01",
+      "reference_rise_s": 9.7667,
+      "reference_fade_height_m": 599.69,
+      "reference_measured_height_m": 600,
+      "spatial_ratio": 0.4418949790725208,
+      "temporal_ratio": 0.5119436452435315,
+      "rise_s": 5,
+      "fade_start_height_m": 265,
+      "predicted_rise_endpoint_m": 261.75385962201113,
+      "reference_model_endpoint_m": 592.3440455725432,
+      "native_playback_measurement": "not yet measured; user reference is approximately 600m",
+      "local_space": true
+    },
+    "Large": {
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\TrailCal_Large_20261002",
+      "as": "TrailCalLarge_01",
+      "reference_rise_s": 9.7667,
+      "reference_fade_height_m": 599.69,
+      "reference_measured_height_m": 600,
+      "spatial_ratio": 0.6836865713952208,
+      "temporal_ratio": 0.8191098323896505,
+      "rise_s": 8,
+      "fade_start_height_m": 410,
+      "predicted_rise_endpoint_m": 404.9776696038665,
+      "reference_model_endpoint_m": 592.3440455725432,
+      "native_playback_measurement": "not yet measured; user reference is approximately 600m",
+      "local_space": true
+    }
+  },
+  "bursts": [
+    {
+      "entry": "QA19",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\QiuXingA_40_20261002",
+      "as": "QiuXingA40_01",
+      "base": "QiuXingA40",
+      "native_diameter_m": 129.465890625,
+      "measurements": [
+        {
+          "emitter": "L1_Main",
+          "visible_diameter_m": 102.87678125000001
+        },
+        {
+          "emitter": "L2_Main",
+          "visible_diameter_m": 129.465890625
+        }
+      ],
+      "replay_pass": true,
+      "replay_fails": [],
+      "grade_scales": {
+        "Small": 0.8496446397500694,
+        "Medium": 1.4675680141137561,
+        "Large": 2.239972232068365
+      }
+    },
+    {
+      "entry": "ZB5",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\QiuXingB_40_20261002",
+      "as": "QiuXingB40_01",
+      "base": "QiuXingB40",
+      "native_diameter_m": 74.228208984375,
+      "measurements": [
+        {
+          "emitter": "L1_Main",
+          "visible_diameter_m": 46.34665625
+        },
+        {
+          "emitter": "L2_Main",
+          "visible_diameter_m": 47.948296875000004
+        },
+        {
+          "emitter": "L3_Main",
+          "visible_diameter_m": 74.228208984375
+        }
+      ],
+      "replay_pass": false,
+      "replay_fails": [
+        {
+          "emitter": "QiuxingB40 · L1_Main",
+          "fails": [
+            "过曝像素 3.8%"
+          ]
+        }
+      ],
+      "grade_scales": {
+        "Small": 1.481916396812901,
+        "Medium": 2.5596737763131925,
+        "Large": 3.906870500688557
+      },
+      "source_update": {
+        "owner_commit": "dd09ace",
+        "source_result": "ZB5E3",
+        "source_version": "b7ffa862",
+        "only_baked_exposure_changed": true,
+        "cascade_parameters_unchanged": true,
+        "source_hashes": {
+          "T_QiuxingB40_L1.png": "01ba11a7cd5f7ada5daf882347743be30e4ede32db2ce8307812780f7986afe4",
+          "T_QiuxingB40_L1_Cutout.png": "513f7c52375fd0b58b54a5520b1b97fab3375ad442f90ccd9665ca0c880ec9e6",
+          "T_QiuxingB40_L1_FrameTest.png": "fe50ae88981899149daa7794f441342df4f39602e02f6a3239449dfb365a6799",
+          "T_QiuxingB40_L1_Ramp.png": "a6709df17a078f70e53decc8debc38f18a31ccc5d2027b396ee5d033c2e06236",
+          "T_QiuxingB40_L2.png": "4dfbc98df2d90b173851e9a663a5b0e861c7a0f1f1b091134ce1dc1b0c0a2f9e",
+          "T_QiuxingB40_L2_Cutout.png": "88a741cc99060f0eb6be23ebaf035366b9d42e4081aa5ae92196b2d51083a112",
+          "T_QiuxingB40_L2_FrameTest.png": "eadb171fc76ecafd481d8d3b0a6e45d92a17fed55695aefe56f6802be578cadc",
+          "T_QiuxingB40_L2_Ramp.png": "a6709df17a078f70e53decc8debc38f18a31ccc5d2027b396ee5d033c2e06236",
+          "T_QiuxingB40_L3.png": "639b81592de9ea0692784ac2b7d9b671ecaf327a6db3333cc50dfe7db6353358",
+          "T_QiuxingB40_L3_Cutout.png": "57057133cf1981ca2c0e764fe56e4a8136195d899aad05ebd2ec3e5dde23b8ba",
+          "T_QiuxingB40_L3_FrameTest.png": "7debd523eba610a774686c77f15c5fdd5ddd8e947a082b66ec5b789e02b37b90",
+          "T_QiuxingB40_L3_Ramp.png": "a6709df17a078f70e53decc8debc38f18a31ccc5d2027b396ee5d033c2e06236",
+          "T_QiuxingB40_Mobile_L1.png": "800cdfae98a5206805ebfbf995dc37f2b4d8fdcc130ab2fcf3027f87ec0f87e6",
+          "T_QiuxingB40_Mobile_L1_Cutout.png": "92ba3a963c809f9749cc581b28ba9bb7d32a83e5b0a55bc335b4ef563dc215ac",
+          "T_QiuxingB40_Mobile_L1_FrameTest.png": "9ae825b54e09a6cfc773735d1d16f06a41e6200d84a3ae78e80907c17d1c83c2",
+          "T_QiuxingB40_Mobile_L1_Ramp.png": "a6709df17a078f70e53decc8debc38f18a31ccc5d2027b396ee5d033c2e06236",
+          "T_QiuxingB40_Mobile_L2.png": "ce84a95608292f26805096ee41e1e0aeb28130e6f962278dc7b3db959f16c239",
+          "T_QiuxingB40_Mobile_L2_Cutout.png": "158ff141d4ae05e161a4877158f59dadaf30534b4ff56899deb8e497a515a43b",
+          "T_QiuxingB40_Mobile_L2_FrameTest.png": "79c18f6f6df8cb5dcdf7ceb19905844e217c77f2c75adaed07bf48beea485a9b",
+          "T_QiuxingB40_Mobile_L2_Ramp.png": "a6709df17a078f70e53decc8debc38f18a31ccc5d2027b396ee5d033c2e06236",
+          "T_QiuxingB40_Mobile_L3.png": "d6c6f26af9435fe29733dc3b20b2636b0a294c7d87868077650d8a2dd3d07f14",
+          "T_QiuxingB40_Mobile_L3_Cutout.png": "b27b3f6479e06837038e8e61903108eb2f9a1751ad9518b9ecc7e9261c9ba2d5",
+          "T_QiuxingB40_Mobile_L3_FrameTest.png": "faa4b2325ba5b09d66e6db0cd0b551ae575193f8825d3dc9392b7e5d74827c2d",
+          "T_QiuxingB40_Mobile_L3_Ramp.png": "a6709df17a078f70e53decc8debc38f18a31ccc5d2027b396ee5d033c2e06236",
+          "cascade.json": "6433a019cd88c751b396bc616c16d64eb0833dc56d2cb90153283396b529078e",
+          "cascade_mobile.json": "260a60bb62cea14ac167ab92ca5f9740d009cf2cecd8fb9ccc51b9abb510d31c"
+        },
+        "changed_export_files": [
+          "T_QiuXingB_40_20261002_L1.png",
+          "T_QiuXingB_40_20261002_L1_Cutout.png",
+          "T_QiuXingB_40_20261002_Mobile_L1.png",
+          "T_QiuXingB_40_20261002_Mobile_L1_Cutout.png",
+          "T_QiuXingB_40_20261002_Mobile_L3.png"
+        ]
+      }
+    },
+    {
+      "entry": "QC11",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\QiuXingC_40_20261002",
+      "as": "QiuXingC40_01",
+      "base": "QiuXingC40",
+      "native_diameter_m": 454.45439453125,
+      "measurements": [
+        {
+          "emitter": "L1_Main",
+          "visible_diameter_m": 298.479990234375
+        },
+        {
+          "emitter": "L2_Main",
+          "visible_diameter_m": 454.45439453125
+        }
+      ],
+      "replay_pass": false,
+      "replay_fails": [
+        {
+          "emitter": "QiuXingC_40_20261002 · L2_Main",
+          "fails": [
+            "中间空帧 2"
+          ]
+        }
+      ],
+      "grade_scales": {
+        "Small": 0.24204849006567586,
+        "Medium": 0.41808375556798555,
+        "Large": 0.6381278374458728
+      }
+    },
+    {
+      "entry": "QD13",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\QiuXingD_40_20261002",
+      "as": "QiuXingD40_01",
+      "base": "QiuXingD40",
+      "native_diameter_m": 247.5719296875,
+      "measurements": [
+        {
+          "emitter": "L1_Main",
+          "visible_diameter_m": 173.353828125
+        },
+        {
+          "emitter": "L2_MainA",
+          "visible_diameter_m": 236.9109375
+        },
+        {
+          "emitter": "L2_MainB",
+          "visible_diameter_m": 247.5719296875
+        },
+        {
+          "emitter": "L3_Main",
+          "visible_diameter_m": 102.382998046875
+        }
+      ],
+      "replay_pass": true,
+      "replay_fails": [],
+      "grade_scales": {
+        "Small": 0.44431531530593366,
+        "Medium": 0.7674537264375219,
+        "Large": 1.171376740352007
+      }
+    },
+    {
+      "entry": "QN11",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\QingNing_40_20261002",
+      "as": "QingNing40_01",
+      "base": "QingNing40",
+      "native_diameter_m": 185.299640625,
+      "measurements": [
+        {
+          "emitter": "L1_Main",
+          "visible_diameter_m": 90.22154296875
+        },
+        {
+          "emitter": "L2_Main",
+          "visible_diameter_m": 185.299640625
+        }
+      ],
+      "replay_pass": true,
+      "replay_fails": [],
+      "grade_scales": {
+        "Small": 0.5936330994975453,
+        "Medium": 1.0253662627684872,
+        "Large": 1.5650327168571647
+      }
+    },
+    {
+      "entry": "ZW5",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\QianLun_40_20261002",
+      "as": "QianLun40_01",
+      "base": "QianLun40",
+      "native_diameter_m": 150.93126171875002,
+      "measurements": [
+        {
+          "emitter": "L1_Main",
+          "visible_diameter_m": 150.93126171875002
+        },
+        {
+          "emitter": "L2_Main",
+          "visible_diameter_m": 142.3133359375
+        },
+        {
+          "emitter": "L3_Main",
+          "visible_diameter_m": 132.31466015625
+        },
+        {
+          "emitter": "L4_Main",
+          "visible_diameter_m": 110.35839453125
+        }
+      ],
+      "replay_pass": true,
+      "replay_fails": [],
+      "grade_scales": {
+        "Small": 0.7288085897338975,
+        "Medium": 1.2588512004494594,
+        "Large": 1.9214044638439116
+      }
+    },
+    {
+      "entry": "crossette-default40",
+      "directory": "D:\\ProjectTextures\\FireWorksLab\\Crossette_40_20261002",
+      "as": "Crossette40_01",
+      "base": "Crossette40",
+      "native_diameter_m": 119.13240234375,
+      "measurements": [
+        {
+          "emitter": "Main",
+          "visible_diameter_m": 119.13240234375
+        }
+      ],
+      "replay_pass": true,
+      "replay_fails": [],
+      "grade_scales": {
+        "Small": 0.923342414287937,
+        "Medium": 1.5948641701337092,
+        "Large": 2.4342663649409246
+      }
+    }
+  ],
+  "gold_reference": {
+    "initial_size_range_cm": [
+      2200,
+      2400
+    ],
+    "reference_scale": 15,
+    "average_quad_diameter_m": 345,
+    "measured_visual_diameter_m": 300,
+    "visible_fraction": 0.8695652173913043,
+    "current_native_scale_readback": 10,
+    "method": "new packs use measured texture content extent; old gold asset remains unchanged"
+  }
+}

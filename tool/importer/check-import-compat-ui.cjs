@@ -1,0 +1,26 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+let src=fs.readFileSync(__dirname+'/check-import-workspace.cjs','utf8').split('(async()=>{')[0];
+src=src.replace('JSON.stringify({spec,exists})',"JSON.stringify({spec,exists,sourceHash:'fixture',textureHashes:Object.fromEntries(Object.keys(spec.textures).map(k=>[k,'a'.repeat(64)]))})");
+const ctx={require,__dirname,console,process,setTimeout};vm.createContext(ctx);vm.runInContext(src+'\nglobalThis.probe={boot,add,pause,api,el,state,rows};',ctx);
+const {boot,add,pause,api,el,state,rows}=ctx.probe;let passed=0;const check=(n,f)=>{f();console.log('PASS '+n);passed++;};
+(async()=>{
+ const t=boot();await pause();await add(t.w,'F:/a | Config_01');api(t.w).confirmCurrent();
+ check('PC配置默认可见且已经确认',()=>{assert.equal(el(t.w,'configFile').value,'cascade.json');assert.equal(el(t.w,'primary').dataset.action,'execute');});
+ el(t.w,'configFile').value='cascade_mobile.json';el(t.w,'configFile').dispatchEvent(new t.w.Event('change'));
+ check('切换手机配置立即废弃确认并保存',()=>{assert.equal(rows(t.w)[0].configFile,'cascade_mobile.json');assert.equal(rows(t.w)[0].state,'unchecked');assert(el(t.w,'btnExec').disabled);});
+ await api(t.w).preview();
+ check('重新检查读取所选手机文件而非PC文件',()=>assert(t.calls.some(c=>c.args?.PythonCommand?.includes('config_file = u"cascade_mobile.json"'))));
+ const saved=state(t.w);t.close();const restored=boot({state:saved});await pause();check('刷新保留手机选择但不保留旧确认',()=>{assert.equal(el(restored.w,'configFile').value,'cascade_mobile.json');assert(el(restored.w,'btnExec').disabled);});restored.close();
+ const alias={format:'fwl.cascade/1',name:'Alias',textures:{a:{class:'ramp',file:'same.png',asset:'T_Alias_R'},b:{class:'ramp',file:'same.png',asset:'T_Alias_R'}},materials:{},emitters:[]};
+ const a=boot({spec:()=>alias});await pause();await add(a.w,'F:/a | Alias_01');
+ check('同包两个别名通过预览，不产生重名冲突',()=>{assert.equal(rows(a.w)[0].state,'ready');assert.equal(rows(a.w)[0].assets['tex:a'],rows(a.w)[0].assets['tex:b']);});
+ const id=rows(a.w)[0].id;await api(a.w).setAssetSelected(id,'tex:a',false);
+ check('取消别名一项同步取消全部对应引用',()=>{assert(rows(a.w)[0].excludedAssetKeys.includes('tex:a'));assert(rows(a.w)[0].excludedAssetKeys.includes('tex:b'));});
+ await api(a.w).setAssetSelected(id,'tex:b',true);check('重新勾选别名恢复整个物理资产组',()=>{assert.equal(rows(a.w)[0].excludedAssetKeys.length,0);assert.equal(rows(a.w)[0].state,'ready');});a.close();
+ let n=0;const batch=boot({spec:()=>({format:'fwl.cascade/1',name:'Batch'+(++n),textures:{r:{class:'ramp',hash:'0123456789abcdef12',file:'r.png',asset:'T_Batch_'+n+'_R'}},materials:{},emitters:[]})});await pause();await add(batch.w,'F:/a | Owner_01\nF:/b | Borrower_01');
+ check('同批次相同内容跨名称复用来源目标',()=>{const rr=rows(batch.w);assert(rr.every(x=>x.state==='ready'));assert.equal(rr[0].assets['tex:r'],rr[1].assets['tex:r']);assert(el(batch.w,'reviewContent').textContent.includes('资产'));});
+ const first=batch.w.document.querySelector('.fw-item input');first.checked=false;first.dispatchEvent(new batch.w.Event('change'));
+ check('取消复用来源阻止后续包，不静默悬空引用',()=>{assert.equal(rows(batch.w)[1].state,'error');assert.match(rows(batch.w)[1].errs.join(' '),/复用的来源未勾选/);assert(el(batch.w,'btnExec').disabled);});
+ check('所有交互检查没有真实引擎写入',()=>{assert.equal(batch.writes.length,0);assert.deepEqual([...batch.errors],[]);});batch.close();
+ console.log(passed+' importer compatibility UI checks passed');
+})().catch(e=>{console.error(e);process.exitCode=1;});

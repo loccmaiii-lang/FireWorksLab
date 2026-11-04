@@ -1,0 +1,38 @@
+// 私有适配器隔离回归；任何原生写入都由模拟器拒绝。
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
+let state={},targets={},saved={},policyBad=false,writes=0,passed=0;
+const clone=x=>JSON.parse(JSON.stringify(x));
+const ctx={MAP:{dirs:{},naming:{},texture_examples:{},material_roles:{}},MOD:{},makePlan:()=>({}),validate:()=>[],importEmitters:async()=>{},readPack:async()=>{},importOne:async()=>{writes++;},
+ selectionDependencies:it=>it.dependencies||[],texturePolicy:p=>({maxSize:p.endsWith('_HD')?2048:1024}),guard:p=>assert(p.startsWith('/Game/')),
+ loadLS:()=>clone(state),saveLS:o=>{state=o;},selectedAssetEntries:it=>Object.entries(it.assets).filter(([k])=>it.selectedAssetKeys===undefined||it.selectedAssetKeys.includes(k)),assetSelected:(it,key)=>it.selectedAssetKeys===undefined||it.selectedAssetKeys.includes(key),
+ pyStr:JSON.stringify,objPath:p=>p+'.'+p.split('/').pop(),texturePolicyErrors:()=>policyBad?['policy']:[],props:async()=>({}),tagged:(lines,t)=>lines.find(x=>x.startsWith(t)).slice(t.length),
+ py:async code=>{
+  if(code.includes('# FWL_DERIVED_FIRST')){const entries=JSON.parse(code.match(/^entries = (.+)$/m)[1]);return ['FWLDERIVEDFIRST:'+JSON.stringify(entries.map(([key,pkg])=>({key,pkg,exists:false,saved:false,class:'',...(targets[pkg]||{})})))];}
+  if(code.includes('# FWL_DELIVERY_GATE'))return ['FWLDELIVERYGATE:'+JSON.stringify({ok:true,registry:{}})];
+  if(code.includes('# FWL_TEXTURE_FINGERPRINT')){const pkg=JSON.parse(code.match(/^pkg = (.+)$/m)[1]);return ['FWLFINGERPRINT:'+JSON.stringify(saved[pkg]||{pkg,exists:false,class:'',diskHash:''})];}
+  throw Error('禁止未声明原生操作');
+ }};
+vm.createContext(ctx);vm.runInContext(fs.readFileSync(__dirname+'/fireworks-compat.js','utf8')+'\n'+fs.readFileSync(__dirname+'/delivery-contract.js','utf8')+'\nthis.h={planTextureReuse,verifyTextureReuse,registerTextureFingerprints,collectPlannedTextures,textureReuseIdentity,writeAssetEntries,importOne};',ctx);
+const item=(name='Base',kind='ramp')=>({dir:'F:/fixture',spec:{derived:{from:'Base'},textures:{r:{class:kind,file:'r.png',asset:'T_Base_R',hash:'0123456789abcdef12'}}},textureHashes:{r:'a'.repeat(64)},assets:{'tex:r':'/Game/T_'+name},selectedAssetKeys:['tex:r']});
+const reset=()=>{state={};targets={};saved={};policyBad=false;writes=0;};
+const check=async(n,f)=>{reset();await f();console.log('PASS '+n);passed++;};
+(async()=>{
+ await check('首次派生包可按原名称创建共享贴图',async()=>{const a=item();await ctx.h.planTextureReuse(a);assert.equal(ctx.h.writeAssetEntries(a).length,1);assert.equal(Object.keys(a.textureReuse).length,0);});
+ await check('没有原包也可首次建立序列贴图',async()=>{const a=item('Base_HD','flipbook');await ctx.h.planTextureReuse(a);assert.equal(ctx.h.writeAssetEntries(a).length,1);});
+ await check('已存在但没有内容证明不得覆盖',async()=>{const a=item();targets[a.assets['tex:r']]={exists:true,saved:true,class:'Texture2D'};await assert.rejects(()=>ctx.h.planTextureReuse(a),/已存在/);});
+ await check('磁盘文件存在但加载失败不得覆盖',async()=>{const a=item();targets[a.assets['tex:r']]={saved:true};await assert.rejects(()=>ctx.h.planTextureReuse(a),/已存在/);});
+ await check('错误资产类型不得创建同名资源',async()=>{const a=item();targets[a.assets['tex:r']]={exists:true,class:'Material'};await assert.rejects(()=>ctx.h.planTextureReuse(a),/已存在/);});
+ await check('保存证明一致时只复用不写入',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));await ctx.h.planTextureReuse(a);assert.equal(ctx.h.writeAssetEntries(a).length,0);await ctx.h.verifyTextureReuse(a);});
+ await check('磁盘内容改变后不得当成缺失重建',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));saved[a.assets['tex:r']].diskHash='c'.repeat(64);targets[a.assets['tex:r']]={exists:true,saved:true};await assert.rejects(()=>ctx.h.planTextureReuse(a),/已存在/);});
+ await check('脏资源和错误像素策略仍拦截',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));targets[a.assets['tex:r']]={exists:true,saved:true};policyBad=true;await assert.rejects(()=>ctx.h.planTextureReuse(a),/已存在/);policyBad=false;saved[a.assets['tex:r']].dirty=true;await assert.rejects(()=>ctx.h.planTextureReuse(a),/已存在/);});
+ await check('取消非必需贴图不会强制创建',async()=>{const a=item();a.selectedAssetKeys=[];await ctx.h.planTextureReuse(a);assert.equal(ctx.h.writeAssetEntries(a).length,0);});
+ await check('取消缺失的必需依赖仍明确报错',async()=>{const a=item();a.selectedAssetKeys=[];a.dependencies=[{key:'tex:r',pkg:a.assets['tex:r']}];await assert.rejects(()=>ctx.h.planTextureReuse(a),/未勾选/);});
+ await check('未勾选必需依赖有证明时可复用',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));a.selectedAssetKeys=[];a.dependencies=[{key:'tex:r',pkg:a.assets['tex:r']}];await ctx.h.planTextureReuse(a);assert(a.textureReuse['tex:r']);assert.equal(ctx.h.writeAssetEntries(a).length,0);});
+ await check('第二平台复用本批次首包，保存前不能执行复用',async()=>{const a=item(),b=item('Alias'),planned=new Map();await ctx.h.planTextureReuse(a,planned);ctx.h.collectPlannedTextures(a,planned,'pc');await ctx.h.planTextureReuse(b,planned);assert.equal(b.assets['tex:r'],a.assets['tex:r']);assert.equal(ctx.h.writeAssetEntries(b).length,0);await assert.rejects(()=>ctx.h.verifyTextureReuse(b),/丢失或改变/);});
+ await check('不同内容仍保留独立写入供碰撞检查拦截',async()=>{const a=item(),b=item(),planned=new Map();b.textureHashes.r='c'.repeat(64);await ctx.h.planTextureReuse(a,planned);ctx.h.collectPlannedTextures(a,planned,'pc');await ctx.h.planTextureReuse(b,planned);assert.equal(ctx.h.writeAssetEntries(b).length,1);});
+ await check('执行前出现同名磁盘文件则在任何写入前停止',async()=>{const a=item();await ctx.h.planTextureReuse(a);targets[a.assets['tex:r']]={saved:true};await assert.rejects(()=>ctx.h.importOne(a),/已存在|发生变化/);assert.equal(writes,0);});
+ await check('显式同名更新可替换有可靠旧证明的共享内容',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));a.textureHashes.r='c'.repeat(64);a.mode='update';targets[a.assets['tex:r']]={exists:true,saved:true,class:'Texture2D'};await ctx.h.planTextureReuse(a);assert.equal(ctx.h.writeAssetEntries(a).length,1);assert(a.deliveryTextureUpdates['tex:r']);});
+ await check('新建模式不得覆盖有旧证明但内容不同的共享图',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));a.textureHashes.r='c'.repeat(64);a.mode='create';targets[a.assets['tex:r']]={exists:true,saved:true};await assert.rejects(()=>ctx.h.planTextureReuse(a),/目标已存在/);});
+ await check('共享内容更新后若磁盘或范围再变动则执行前停止',async()=>{const a=item();saved[a.assets['tex:r']]={pkg:a.assets['tex:r'],exists:true,class:'Texture2D',dirty:false,diskHash:'b'.repeat(64)};await ctx.h.registerTextureFingerprints(a,ctx.h.writeAssetEntries(a));a.textureHashes.r='c'.repeat(64);a.mode='update';targets[a.assets['tex:r']]={exists:true,saved:true};await ctx.h.planTextureReuse(a);saved[a.assets['tex:r']].diskHash='d'.repeat(64);await assert.rejects(()=>ctx.h.importOne(a),/发生变化/);assert.equal(writes,0);});
+ assert.equal(writes,0);console.log(passed+' 派生首次导入隔离检查通过；真实 UE 写入 0。');
+})().catch(e=>{console.error(e);process.exitCode=1;});

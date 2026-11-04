@@ -1,0 +1,120 @@
+#panel-show .show-fieldset{border:0;margin:0;padding:0;min-width:0}
+#df-pattern-study{--df-bg:var(--bg);--df-panel:var(--card);--df-field:var(--input);--df-line:var(--border);--df-text:var(--text);--df-sub:var(--muted);--df-green:var(--accent);--df-green-text:#07291f;--df-guide:#718282;--df-soft:#213d35;font:14px/1.5 "Segoe UI","Microsoft YaHei",sans-serif;padding:0;color:var(--df-text)}
+    #df-pattern-study *{box-sizing:border-box}
+    #df-pattern-study .df-window{background:var(--df-bg);border:1px solid var(--df-line);border-radius:9px;overflow:hidden}
+    #df-pattern-study .df-heading{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    #df-pattern-study h2{font-size:20px;font-weight:600;line-height:1.5;margin:0}
+    #df-pattern-study h3{font-size:16px;font-weight:600;line-height:1.5;margin:0}
+    #df-pattern-study .df-note{font-size:12px;color:var(--df-sub)}
+    #df-pattern-study .df-draft{font-size:12px;color:var(--df-green)}
+    #df-pattern-study .df-units{padding:0 18px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;border-bottom:1px solid var(--df-line)}
+    #df-pattern-study .df-button{font:inherit;border:1px solid var(--df-line);border-radius:5px;padding:7px 10px;min-height:36px;background:var(--df-field);color:var(--df-text)}
+    #df-pattern-study .df-units button[aria-pressed=true]{border-color:var(--df-green);background:var(--df-soft);color:var(--df-text);font-weight:600}
+    #df-pattern-study .df-button:disabled{opacity:.55}
+    #df-pattern-study .df-primary{background:var(--df-green);border-color:var(--df-green);color:var(--df-green-text);font-weight:600}
+    #df-pattern-study .df-layout{display:grid;grid-template-columns:minmax(250px,310px) minmax(0,1fr)}
+    #df-pattern-study .df-settings{padding:18px;background:var(--df-panel);border-right:1px solid var(--df-line);min-width:0}
+    #df-pattern-study .df-section-gap{margin-top:16px}
+    #df-pattern-study .df-field{display:block;margin-bottom:14px}
+    #df-pattern-study .df-label{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+    #df-pattern-study input[type=number],#df-pattern-study select{display:block;width:100%;min-height:36px;background:var(--df-field);color:var(--df-text);border:1px solid var(--df-line);border-radius:5px;padding:7px 8px;font:inherit;color-scheme:dark}
+    #df-pattern-study input[type=range]{display:block;width:100%;accent-color:var(--df-green);margin:6px 0}
+    #df-pattern-study output{font-variant-numeric:tabular-nums}
+    #df-pattern-study .df-source-info{color:var(--df-sub);font-size:12px;margin:-6px 0 16px}
+    #df-pattern-study details{border-top:1px solid var(--df-line);padding-top:12px}
+    #df-pattern-study summary{font-size:16px;font-weight:600;margin-bottom:12px}
+    #df-pattern-study .df-seed-row{display:flex;gap:8px;align-items:center}
+    #df-pattern-study .df-seed-row input{flex:1;min-width:0}
+    #df-pattern-study .df-seed-row button{flex:none}
+    #df-pattern-study .df-preview{padding:18px;min-width:0}
+    #df-pattern-study .df-preview-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    #df-pattern-study .df-meta{color:var(--df-sub);font-variant-numeric:tabular-nums;margin-top:6px}
+    #df-pattern-study .df-scene{display:block;width:100%;height:clamp(250px,32vh,380px);margin-top:8px}
+    #df-pattern-study .df-scene text,#df-pattern-study .df-timeline text{fill:var(--df-sub);font:12px 'Segoe UI','Microsoft YaHei',sans-serif}
+    #df-pattern-study .df-ground{stroke:var(--df-line);stroke-width:1}
+    #df-pattern-study .df-guide{stroke:var(--df-guide);stroke-width:1;opacity:.6}
+    #df-pattern-study .df-trail{stroke:var(--df-green);stroke-width:2;stroke-linecap:round}
+    #df-pattern-study .df-head{fill:var(--df-green)}
+    #df-pattern-study .df-burst{stroke:var(--df-green);fill:none;stroke-width:1.6}
+    #df-pattern-study .df-number.df-fired{fill:var(--df-text)}
+    #df-pattern-study .df-timeline{display:block;width:100%;height:70px;margin:0 0 6px}
+    #df-pattern-study .df-time-dot{fill:var(--df-guide)}
+    #df-pattern-study .df-time-dot.df-active{fill:var(--df-green)}
+    #df-pattern-study .df-time-burst{fill:none;stroke:var(--df-guide);stroke-width:1.5}
+    #df-pattern-study .df-time-burst.df-active{stroke:var(--df-green)}
+    #df-pattern-study .df-cursor{stroke:var(--df-green);stroke-width:1}
+    #df-pattern-study .df-playbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+    #df-pattern-study .df-scrub{flex:1;min-width:144px}
+    #df-pattern-study .df-status{color:var(--df-sub);margin-top:10px;min-height:21px}
+    #df-pattern-study .df-footer{padding:12px 18px;border-top:1px solid var(--df-line);display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;color:var(--df-sub);font-size:12px}
+    #df-pattern-study .df-numbers{padding:14px 18px;border-top:1px solid var(--df-line)}
+    #df-pattern-study .df-numbers details{padding:0;border:0}
+    #df-pattern-study .df-table-wrap{overflow-x:auto}
+    #df-pattern-study table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+    #df-pattern-study th,#df-pattern-study td{padding:8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--df-line)}
+    #df-pattern-study th{color:var(--df-sub);font-weight:500}
+    #df-pattern-study th:first-child,#df-pattern-study td:first-child{text-align:left}
+    #df-pattern-study .df-legend{color:var(--df-sub);font-size:12px;display:flex;gap:14px;flex-wrap:wrap;margin-top:2px}
+    @media(max-width:1000px){#df-pattern-study .df-layout{grid-template-columns:minmax(0,1fr)}#df-pattern-study .df-settings{border-right:0;border-bottom:1px solid var(--df-line)}#df-pattern-study .df-basic,#df-pattern-study .df-advanced-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}#df-pattern-study .df-wide{grid-column:1/-1}}
+    @media(max-width:380px){#df-pattern-study .df-basic,#df-pattern-study .df-advanced-grid{display:block}#df-pattern-study .df-heading,#df-pattern-study .df-settings,#df-pattern-study .df-preview,#df-pattern-study .df-footer,#df-pattern-study .df-numbers{padding:14px}#df-pattern-study .df-units{padding:0 14px 14px}}
+    @media(pointer:coarse){#df-pattern-study input[type=number],#df-pattern-study select,#df-pattern-study .df-button{min-height:44px}#df-pattern-study input[type=number],#df-pattern-study select{font-size:16px}#df-pattern-study input[type=range]{min-height:32px}}
+#df-pattern-study label{font-size:14px}
+#df-pattern-study .df-label{font-size:13px}
+#df-pattern-study .df-local-status{padding:12px 18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+#df-pattern-study .df-play-options{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:14px}
+#df-pattern-study .df-speed{display:flex;align-items:center;gap:9px;font-size:12px}
+#df-pattern-study .df-speed select{width:auto;min-width:78px;font-size:13px}
+#df-pattern-study .df-loop{display:flex;align-items:center;gap:8px;font-size:13px;min-height:36px}
+#df-pattern-study .df-loop input{width:16px;height:16px;margin:0}
+#df-pattern-study .df-button:not(:disabled),#df-pattern-study summary,#df-pattern-study select{cursor:pointer}
+#df-pattern-study .df-error{color:var(--danger);font-size:13px;margin-top:12px}
+#df-pattern-study .df-error:empty{display:none}
+#df-pattern-study .df-loop input:disabled{cursor:not-allowed}
+@media(max-width:1000px){#df-pattern-study .df-scene{height:350px}}
+@media(max-width:640px){#df-pattern-study .df-scene{height:300px}}
+
+#df-pattern-study [hidden]{display:none!important}
+#df-pattern-study input[type=text],#df-pattern-study textarea{display:block;width:100%;max-width:100%;background:var(--df-field);color:var(--df-text);border:1px solid var(--df-line);border-radius:5px;padding:9px;font:inherit;min-height:36px}
+#df-pattern-study textarea{resize:vertical;font:12px/1.6 Consolas,"Microsoft YaHei",monospace;overflow-wrap:anywhere}
+#df-pattern-study .df-library{margin-top:18px}
+#df-pattern-study .df-library summary{font-size:14px}
+#df-pattern-study .df-library .df-note{overflow-wrap:anywhere}
+#df-pattern-study .df-export{padding:18px;border-top:1px solid var(--df-line);background:var(--df-panel)}
+#df-pattern-study .df-preview>.df-export{padding:0 0 16px;margin-bottom:16px;border-top:0;border-bottom:1px solid var(--df-line);background:transparent}
+#df-pattern-study .df-export-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#df-pattern-study .df-export-heading p{margin:5px 0 12px}
+#df-pattern-study .df-export-actions{display:flex;gap:8px;flex-wrap:wrap}
+#df-pattern-study .df-template-name{max-width:400px;margin-top:12px}
+#df-pattern-study .df-export-warning{border-left:3px solid var(--warn);padding:8px 12px;margin:12px 0;background:var(--df-field);font-size:13px}
+#df-pattern-study .df-export-warning p{margin:0 0 6px}
+#df-pattern-study .df-check{display:flex;align-items:flex-start;gap:8px;min-height:36px;font-size:13px}
+#df-pattern-study input[type=checkbox]{accent-color:var(--df-green)}
+#df-pattern-study .df-check input{width:16px;height:16px;flex:none;margin:3px 0 0}
+#df-pattern-study .df-stages-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:20px 0 12px}
+#df-pattern-study .df-stage{padding:14px 0;border-top:1px solid var(--df-line)}
+#df-pattern-study .df-stage-heading{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+#df-pattern-study .df-stage-heading select{flex:1;min-width:0}
+#df-pattern-study .df-stage-heading button{flex:none;font-size:12px}
+#df-pattern-study .df-stage-fields{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+#df-pattern-study .df-stage .df-wide{grid-column:1/-1}
+#df-pattern-study .df-stage .df-label{font-size:12px}
+#df-pattern-study .df-stage details summary{font-size:13px}
+#df-pattern-study .df-stage input[type=text]{font-family:Consolas,"Microsoft YaHei",monospace;font-size:12px}
+#df-pattern-study input[type=search]{display:block;width:100%;max-width:100%;min-height:44px;background:var(--df-field);color:var(--df-text);border:1px solid var(--df-line);border-radius:5px;padding:8px;font:inherit;color-scheme:dark}
+#df-pattern-study .df-resource-picker{min-width:0;padding:10px;border:1px solid var(--df-line);border-radius:5px;margin-bottom:12px}
+#df-pattern-study .df-resource-picker .df-field{margin-bottom:8px}
+#df-pattern-study .df-resource-picker .df-note{margin:0;overflow-wrap:anywhere}
+#df-pattern-study .df-resource-picker select,#df-pattern-resource-preset,#df-pattern-id-refresh{min-height:44px}
+#df-pattern-study :is(button,input,select,textarea,summary):focus-visible{outline:2px solid var(--df-green);outline-offset:3px}
+#df-pattern-study .df-button:disabled{cursor:not-allowed}
+#df-pattern-study .df-fan-contour{border-top:1px solid var(--df-line);margin:16px 0;padding-top:16px}
+#df-pattern-study .df-fan-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#df-pattern-study .df-fan-heading .df-button{min-height:44px}
+#df-pattern-study .df-fan-contour>.df-note{line-height:1.7;margin:10px 0 14px}
+#df-pattern-study .df-fan-contour details summary{font-size:14px}
+#df-pattern-study .df-calibration .df-label{font:12px/1.6 Consolas,"Microsoft YaHei",monospace;overflow-wrap:anywhere;margin-top:12px}
+#df-pattern-study .df-envelope{fill:none;stroke:var(--df-green);stroke-width:1;stroke-dasharray:4 5;opacity:.4}
+#df-pattern-study input:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:640px){#df-pattern-study .df-export{padding:14px}#df-pattern-study .df-export-actions{width:100%}#df-pattern-study .df-export-actions button{flex:1}#df-pattern-study .df-template-name{max-width:none}}
+@media(pointer:coarse){#df-pattern-study input[type=text]{font-size:16px;min-height:44px}}
+

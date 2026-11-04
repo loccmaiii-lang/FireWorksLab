@@ -1,0 +1,31 @@
+/* Viewport shell: only navigation, working content and log history own scroll. */
+html,body{height:100%;overflow:hidden;scroll-padding:0}
+body{padding:0;padding-bottom:0;overflow:hidden}
+.app{display:grid;grid-template-rows:auto minmax(0,1fr);height:100vh;height:100dvh;min-height:0;max-width:none;margin:0;padding:0;overflow:hidden}
+.topbar{margin:0;flex-shrink:0}
+.mainbody{display:grid;grid-template-columns:var(--wb-sidebar) minmax(0,1fr);min-height:0;height:100%;overflow:hidden;align-items:stretch}
+.sidebar{display:flex;flex-direction:column;position:relative;top:auto;align-self:stretch;width:var(--wb-sidebar);height:100%;min-height:0;max-height:100%;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-gutter:stable}
+.sidebar>.nav-group,.sidebar>.sidebar-foot{flex-shrink:0}
+.content{display:grid;grid-template-rows:auto minmax(0,1fr);width:100%;min-width:0;min-height:0;height:100%;max-width:none;margin:0;padding:0;padding-bottom:var(--wb-log-height);overflow:hidden}
+.page-heading{margin:0;padding:22px var(--wb-gutter) 20px;border-bottom:1px solid var(--border);background:var(--bg);min-width:0}
+.page-heading>div:first-child{min-width:0}
+.wb-page-scroll{min-width:0;min-height:0;overflow:auto;padding:22px var(--wb-gutter) 24px;overscroll-behavior-y:contain;scrollbar-gutter:stable;scroll-padding:16px 0 100px;scroll-behavior:auto;overflow-anchor:none}
+.wb-page-scroll:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.fw-actions,.fw-review-actions,.wb-execution,#panel-show .df-footer{bottom:0}
+#log{overscroll-behavior-y:contain}
+@media(max-width:720px){
+  .mainbody{grid-template-columns:minmax(0,1fr)}
+  .sidebar{display:none;position:fixed;inset:0 auto 0 0;top:0;z-index:90;width:240px;height:100vh;height:100dvh;min-height:0;max-height:100dvh;overflow-y:auto;padding:16px}
+  .wb-tools-open .sidebar{display:flex}
+  .sidebar-foot{display:block}
+  .content{width:100%;padding:0;padding-bottom:var(--wb-log-height);min-height:0}
+  .page-heading{padding:12px var(--wb-gutter);gap:8px}
+  .page-heading h1{margin:3px 0 4px}
+  .wb-heading-actions{padding-top:0}
+  .wb-page-scroll{padding:16px var(--wb-gutter) 20px;min-height:0}
+}
+@media(max-height:600px){
+  .page-heading{padding-top:10px;padding-bottom:10px}
+  .page-heading h1{margin:2px 0 4px}
+  .logcard{max-height:28vh}
+}

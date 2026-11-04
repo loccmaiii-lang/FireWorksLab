@@ -1,0 +1,44 @@
+<div class="sp-switch" role="group" aria-label="烟花编排工作区">
+  <button type="button" id="sp-mode-classic" aria-pressed="true">子模板制作</button>
+  <button type="button" id="sp-mode-project" aria-pressed="false">整场工程 <span>联动 v1</span></button>
+  <span class="sp-switch-note">单发 → 阵型 → 整场，共用一份工程</span>
+</div>
+<div id="sp-root" class="sp-root" hidden>
+  <header class="sp-project-head">
+    <div><p class="sp-eyebrow">SHOW PROJECT · PC</p><h2 id="sp-project-title">空白编排工程</h2><p id="sp-project-subtitle">先建立完整单发，或导入开场与白墙小样。</p></div>
+    <div class="sp-actions"><button id="sp-new" type="button">新建空白</button><button id="sp-sample" type="button" class="sp-primary">导入开场＋白墙小样</button><button id="sp-import" type="button">导入工程</button><input id="sp-file" type="file" accept=".json,application/json" hidden></div>
+  </header>
+  <div class="sp-project-bar">
+    <label>工程名<input id="sp-name" type="text" maxlength="256" placeholder="填写工程名称"></label>
+    <label>固定随机码<input id="sp-seed" type="number" min="1" max="2147483646" step="1"></label>
+    <label>预卷 s<input id="sp-preroll" type="number" min="0" max="3600" step="0.1"></label>
+    <div class="sp-actions"><button id="sp-undo" type="button">撤销</button><button id="sp-redo" type="button">重做</button><button id="sp-save" type="button">保存</button><button id="sp-backup" type="button">备份 JSON</button><button id="sp-reload" type="button">读取本机版本</button></div>
+  </div>
+  <p id="sp-save-status" class="sp-save-status" role="status" aria-live="polite"></p>
+  <nav class="sp-tabs" aria-label="工程编辑页"><button id="sp-tab-timeline" data-tab="timeline" type="button" aria-pressed="true">整场时间轴</button><button id="sp-tab-shots" data-tab="shots" type="button" aria-pressed="false">完整单发</button><button id="sp-tab-formations" data-tab="formations" type="button" aria-pressed="false">场地与阵型</button><button id="sp-tab-resources" data-tab="resources" type="button" aria-pressed="false">资源与标定</button></nav>
+  <div class="sp-main">
+    <section class="sp-editor" aria-labelledby="sp-editor-title">
+      <header class="sp-editor-head"><div><p class="sp-eyebrow" id="sp-editor-step">04 / TIME</p><h3 id="sp-editor-title">整场时间轴</h3></div><button id="sp-add" type="button">＋ 添加事件</button></header>
+      <div id="sp-list" class="sp-list" aria-label="当前页条目"></div>
+      <div id="sp-editor-form" class="sp-editor-form"></div>
+    </section>
+    <section class="sp-preview" aria-labelledby="sp-preview-title">
+      <header class="sp-preview-head"><div><p class="sp-eyebrow">LAYOUT & RHYTHM</p><h3 id="sp-preview-title">构图与节奏</h3></div><span class="sp-badge">简笔画示意 · 非 UE 回放</span></header>
+      <div class="sp-playbar"><button id="sp-play" type="button" class="sp-primary">播放</button><button id="sp-reset" type="button">回到开始</button><label>速度<select id="sp-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><label>查看范围<select id="sp-range"><option value="all">整场</option><option value="opening">开场 0–15s</option><option value="wall">白墙 180–210s</option></select></label><label>视图<select id="sp-view"><option value="front">正视构图</option><option value="top">俯视点位</option></select></label></div>
+      <svg id="sp-scene" class="sp-scene" viewBox="0 0 1000 540" role="img" aria-label="按米数绘制的发射面、相对升高与目标花径示意"></svg>
+      <div class="sp-timebar"><output id="sp-time-label" for="sp-time">0.00 s</output><input id="sp-time" type="range" min="0" max="210" step="0.01" value="0" aria-label="预览时间"><span id="sp-time-end">210 s</span></div>
+      <svg id="sp-timeline" class="sp-timeline" role="img" aria-label="事件发射至目标起爆时间，虚线表示跨段预发"></svg>
+      <div class="sp-legend"><span><i class="sp-dot launch"></i>发射 / 预发</span><span><i class="sp-dot burst"></i>起爆 / 齐亮</span><span>计时不随播放速度改变</span></div>
+      <div id="sp-stats" class="sp-stats"></div>
+      <details class="sp-checks" open><summary id="sp-checks-summary">工程检查</summary><div id="sp-checks" role="status"></div><button id="sp-rebind" type="button">核对后重新绑定关联版本</button></details>
+    </section>
+  </div>
+  <section class="sp-output" aria-labelledby="sp-output-title"><header><div><p class="sp-eyebrow">OUTPUT</p><h3 id="sp-output-title">编排数据</h3><p>子模板、阵型与触发时间分项复制；全部输出来自当前工程。</p></div><div class="sp-actions"><button id="sp-export-txt" type="button">下载整包 TXT</button><button id="sp-copy-all" type="button">复制整包清单</button></div></header>
+    <div class="sp-output-select"><label>原生参数项目<select id="sp-output-select"></select></label><button id="sp-copy" type="button" class="sp-primary">复制当前参数</button><span id="sp-output-hint"></span></div>
+    <textarea id="sp-output-text" rows="4" readonly spellcheck="false" aria-label="当前原生参数，可手动全选复制"></textarea>
+    <p id="sp-output-status" class="sp-note" role="status" aria-live="polite"></p>
+    <details><summary>逐发时间、位置与尺寸</summary><div class="sp-table-wrap"><table><thead><tr><th>事件 / 点</th><th>完整单发</th><th>发射 s</th><th>起爆 s</th><th>相对升高 m</th><th>世界炸高 m</th><th>目标花径 m</th></tr></thead><tbody id="sp-rows"></tbody></table></div></details>
+  </section>
+  <div id="sp-dialog" class="sp-dialog" role="dialog" aria-modal="true" aria-labelledby="sp-dialog-title" hidden><section class="sp-dialog-sheet"><header><h3 id="sp-dialog-title">导入工程预览</h3><button id="sp-dialog-close" type="button">返回</button></header><p id="sp-import-summary"></p><label>导入方式<select id="sp-import-mode"><option value="merge">合并新增 · 冲突项改名</option><option value="replace">替换当前工程 · 可撤销</option></select></label><div id="sp-import-rows" class="sp-import-rows"></div><p id="sp-import-check" class="sp-note"></p><div class="sp-actions"><button id="sp-import-confirm" type="button" class="sp-primary">确认导入</button></div></section></div>
+  <div id="sp-notice" class="sp-notice" role="status" aria-live="polite"></div>
+</div>

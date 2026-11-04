@@ -1,0 +1,17 @@
+{
+  "owner": "conversation 5",
+  "evidence": "repository collaboration state 2026-10-04 19:40; e0aa0b5",
+  "scope": "SizeByLife preRoll metadata validation and native property exclusion",
+  "changes": [
+    {
+      "file": "fireworks-plan.js",
+      "before": "      for(const md of em.modules||[])if(!MOD[md.m])errs.push('发射器 '+em.name+'：不认识的模块 '+md.m);\n",
+      "after": "      for(const md of em.modules||[]){\n        if(!MOD[md.m])errs.push('发射器 '+em.name+'：不认识的模块 '+md.m);\n        if('preRoll' in md){\n          if(md.m!=='SizeByLife')errs.push('发射器 '+em.name+'：preRoll 只支持 SizeByLife 模块');\n          if(typeof md.preRoll!=='boolean')errs.push('发射器 '+em.name+'：preRoll 必须为布尔值');\n        }\n      }\n"
+    },
+    {
+      "file": "fireworks-import.js",
+      "before": "          if (prop === 'm' || prop === 'note' || prop === '_note') continue;\n",
+      "after": "          // preRoll identifies the exported growth curve; it is not a native module property.\n          if (prop === 'm' || prop === 'note' || prop === '_note' || (md.m === 'SizeByLife' && prop === 'preRoll')) continue;\n"
+    }
+  ]
+}

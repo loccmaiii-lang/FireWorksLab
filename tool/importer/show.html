@@ -1,0 +1,139 @@
+<section id="panel-show" style="display:none;">
+<fieldset class="show-fieldset">
+<div id="df-pattern-study">
+<div class="df-window">
+    <div class="df-local-status"><span>本地节奏预览 · 无需连接 UE</span><span>轨迹示意</span></div>
+    <p id="df-pattern-migration-note" class="df-note" hidden></p>
+    <div class="df-units" role="group" aria-label="编排层级">
+      <button id="df-pattern-resource-mode" type="button" aria-pressed="true" class="df-button cursor-interaction">制作子模板</button>
+      <button id="df-pattern-template-mode" type="button" aria-pressed="false" class="df-button cursor-interaction">编排子模板</button>
+    </div>
+    <div class="df-layout">
+      <div class="df-settings">
+        <h3 id="df-pattern-form-title">单簇造型</h3>
+        <label id="df-pattern-shape-field" class="df-field df-section-gap"><span class="df-label">子模板类型</span><select id="df-pattern-shape"><option value="fan">扇形 / 单簇</option><option value="sequence">升空＋爆炸 / 资源段</option></select></label>
+        <div id="df-pattern-fan-fields">
+        <label id="df-pattern-profile-field" class="df-field df-section-gap"><span id="df-pattern-profile-label" class="df-label">已保存的子模板配方</span><select id="df-pattern-profile" class="cursor-interaction"><option value="blank">空白 / 自定义</option></select></label>
+        <div id="df-pattern-resource-choice" class="df-section-gap">
+          <label class="df-field"><span class="df-label">搜索 ID</span><input id="df-pattern-resource-search" type="search" placeholder="搜索 Trail、Silver、爆炸…" autocomplete="off"></label>
+          <label class="df-field"><span class="df-label">ID 预设</span><select id="df-pattern-resource-preset"></select></label>
+          <p id="df-pattern-resource-hint" class="df-note"></p>
+        </div>
+        <label id="df-pattern-resource-id-field" class="df-field"><span class="df-label">单簇 ResourceId</span><input id="df-pattern-resource-id" type="text" maxlength="256" value="" spellcheck="false" autocomplete="off" placeholder="填写资源表里的 ResourceId"></label>
+        <div id="df-pattern-source-info" class="df-source-info">未载入配比 · 请先填写 ResourceId</div>
+        <div class="df-basic">
+          <label class="df-field"><span id="df-pattern-count-label" class="df-label">簇数</span><input id="df-pattern-count" type="number" min="1" max="256" step="1" value="5" required></label>
+          <label class="df-field"><span class="df-label">展开角度 <output id="df-pattern-spread-value" for="df-pattern-spread">68°</output></span><input id="df-pattern-spread" type="range" min="10" max="140" step="1" value="68"></label>
+          <label class="df-field"><span class="df-label">角度分布</span><select id="df-pattern-layout" class="cursor-interaction"><option value="uniform">均匀分布</option><option value="custom">手填配比</option><option value="center">中心更密</option><option value="edge">两侧更密</option></select></label>
+          <label class="df-field"><span class="df-label">出现顺序</span><select id="df-pattern-order" class="cursor-interaction"><option value="lr">左 → 右</option><option value="rl">右 → 左</option><option value="out">里 → 外（成对）</option><option value="together">同时出现</option><option value="in">外 → 里（成对）</option></select></label>
+          <label class="df-field df-wide"><span class="df-label">每步间隔（秒）</span><input id="df-pattern-interval" type="number" min="0" max="5" step="0.01" value="0.08" required></label>
+        </div>
+        <details id="df-pattern-manual-ratios" class="df-library">
+          <summary>手填配比（可选）</summary>
+          <p class="df-note">默认留空。角度填 −1～1 的递增关键点，乘以半展开角；大小填倍率，乘以整体大小。多个关键点会按簇数插值，单个大小倍率适用于全部簇。</p>
+          <label class="df-field"><span class="df-label">角度配比 · 从左到右</span><textarea id="df-pattern-angle-ratios" rows="2" maxlength="4096" spellcheck="false" placeholder="例如 -1, 0, 1"></textarea></label>
+          <label class="df-field"><span class="df-label">大小配比 · 从左到右</span><textarea id="df-pattern-size-ratios" rows="2" maxlength="4096" spellcheck="false" placeholder="例如 1, 1.2, 1"></textarea></label>
+          <div class="df-export-actions"><button id="df-pattern-ratios-apply" type="button" class="df-button">应用手填配比</button><button id="df-pattern-ratios-clear" type="button" class="df-button">清空配比</button></div>
+          <p id="df-pattern-ratios-status" class="df-note" role="status">未填写时使用均匀角度、统一大小，不套用旧模板数值。</p>
+        </details>
+        <section id="df-pattern-fan-contour" class="df-fan-contour" aria-labelledby="df-pattern-fan-heading">
+          <div class="df-fan-heading"><h3 id="df-pattern-fan-heading">扇形轮廓</h3><button id="df-pattern-fan-clean" type="button" class="df-button">规整扇形</button></div>
+          <p class="df-note">规整扇形：统一大小、均匀角度、零随机、齐发。只生成几何规则，不加载旧配比。</p>
+          <label class="df-field"><span class="df-label">大小分布</span><select id="df-pattern-sizeLayout"><option value="uniform">统一大小</option><option value="custom">手填配比</option><option value="symmetric">手填配比 · 左右对称</option></select></label>
+          <label class="df-field"><span class="df-label">完成时的外轮廓</span><select id="df-pattern-outline"><option value="native">按填写的大小计算长度</option><option value="arc">圆弧 · 等长</option><option value="dome">圆顶 · 两侧较短</option><option value="level">平顶 · 端点等高</option></select></label>
+          <label id="df-pattern-edgeLength-field" class="df-field" hidden><span class="df-label">两侧 / 中央长度 <output id="df-pattern-edgeLength-value" for="df-pattern-edgeLength">0.85 倍</output></span><input id="df-pattern-edgeLength" type="range" min="0.4" max="1.5" step="0.01" value="0.85"></label>
+          <details id="df-pattern-fan-length"><summary>长度输出与素材校准</summary>
+            <label class="df-check"><input id="df-pattern-applyLengthScale" type="checkbox">输出 Z 长度缩放（独立于 X/Y 大小）</label>
+            <p class="df-note">需要单独调整线长时启用，须确认素材支持纵向缩放。这里的长度沿发射方向，竖直高度还与角度有关。</p>
+            <label class="df-field"><span class="df-label">整体长度 <output id="df-pattern-lengthScale-value" for="df-pattern-lengthScale">1.00 倍</output></span><input id="df-pattern-lengthScale" type="range" min="0.25" max="2" step="0.01" value="1"></label>
+            <div id="df-pattern-fan-calibration"></div><p class="df-note">相对原长表示该素材在 Z=1 时的完整轨迹长度，默认1仅假设素材等长。长度比可在UE实测后填写；缩放不自动改变Cascade寿命。</p>
+          </details>
+          <p id="df-pattern-fan-length-note" class="df-note" role="status"></p>
+        </section>
+        <details id="df-pattern-advanced">
+          <summary class="cursor-interaction">大小与轻微变化</summary>
+          <div class="df-advanced-grid">
+            <label class="df-field"><span class="df-label">开始时间（秒）</span><input id="df-pattern-start" type="number" min="0" max="60" step="0.01" value="0" required></label>
+            <label class="df-field"><span class="df-label">整体大小 <output id="df-pattern-scale-value" for="df-pattern-scale">1.00 倍</output></span><input id="df-pattern-scale" type="range" min="0.5" max="1.5" step="0.05" value="1"></label>
+            <label class="df-field"><span class="df-label">大小随机 <output id="df-pattern-size-value" for="df-pattern-size">±3%</output></span><input id="df-pattern-size" type="range" min="0" max="20" step="1" value="3"></label>
+            <label class="df-field"><span class="df-label"><span id="df-pattern-height-label">升空高度随机</span><output id="df-pattern-height-value" for="df-pattern-height">±4%</output></span><input id="df-pattern-height" type="range" min="0" max="12" step="1" value="4"></label>
+            <label class="df-field"><span class="df-label">角度随机上限 <output id="df-pattern-angle-value" for="df-pattern-angle">±1°</output></span><input id="df-pattern-angle" type="range" min="0" max="8" step="0.5" value="1"></label>
+            <label class="df-field df-wide"><span class="df-label">固定随机码</span><span class="df-seed-row"><input id="df-pattern-seed" type="number" min="1" max="2147483646" step="1" value="7341" required><button id="df-pattern-reroll" type="button" class="df-button cursor-interaction">换一组</button></span></label>
+          </div>
+        </details>
+        </div>
+        <div id="df-pattern-sequence-fields" hidden>
+          <label class="df-field"><span class="df-label">已保存的子模板配方</span><select id="df-pattern-sequence-profile"></select></label>
+          <div class="df-source-info">默认空白。这里复用完整配方；只选资源请使用每段的ID预设。</div>
+          <button id="df-pattern-sequence-new" type="button" class="df-button">新建空白子模板</button>
+          <div class="df-basic df-section-gap">
+            <label class="df-field"><span class="df-label">烟花规格</span><select id="df-pattern-sequence-category"><option value="small">小型 · 3.5 s</option><option value="medium">中型 · 5 s</option><option value="large">大型 · 8 s</option><option value="custom">自定义</option></select></label>
+            <label class="df-field"><span class="df-label">Cascade 升空时长（秒）</span><input id="df-pattern-sequence-flight" type="number" min="0.01" max="3600" step="0.01" value="8" required></label>
+            <label class="df-field"><span class="df-label">最高爆炸高度（米）</span><input id="df-pattern-sequence-maximumHeight" type="number" min="0.01" max="10000" step="0.01" value="400" required></label>
+            <label class="df-field"><span class="df-label">高度向下变化（%）</span><input id="df-pattern-sequence-heightJitter" type="number" min="0" max="100" step="1" value="0" required></label>
+          </div>
+          <div class="df-source-info">大小、高度变化保持升空时长。高度换算：1 米＝100 UE 厘米。</div>
+          <details id="df-pattern-sequence-advanced">
+            <summary>方向、大小与固定变化</summary>
+            <div class="df-advanced-grid">
+              <label class="df-field"><span class="df-label">开始时间（秒）</span><input id="df-pattern-sequence-start" type="number" min="0" max="3600" step="0.01" value="0" required></label>
+              <label class="df-field"><span class="df-label">整发倾斜（Roll °）</span><input id="df-pattern-sequence-roll" type="number" min="-180" max="180" step="0.1" value="0" required></label>
+              <label class="df-field"><span class="df-label">整体大小（倍）</span><input id="df-pattern-sequence-scale" type="number" min="0.01" max="10" step="0.01" value="1" required></label>
+              <label class="df-field"><span class="df-label">大小随机（±%）</span><input id="df-pattern-sequence-sizeJitter" type="number" min="0" max="50" step="1" value="3" required></label>
+              <label class="df-field"><span class="df-label">倾斜随机（±°）</span><input id="df-pattern-sequence-angleJitter" type="number" min="0" max="45" step="0.1" value="1" required></label>
+              <label class="df-field"><span class="df-label">固定随机码</span><input id="df-pattern-sequence-seed" type="number" min="1" max="2147483646" step="1" value="7341" required></label>
+            </div>
+            <label class="df-check"><input id="df-pattern-sequence-applyHeightScale" type="checkbox">用尾缀 Z 缩放匹配高度</label>
+            <label class="df-field df-section-gap"><span class="df-label">尾缀资源原始高度（米）</span><input id="df-pattern-sequence-baseHeight" type="number" min="0.01" max="10000" step="0.01" value="400"></label>
+            <p class="df-note">勾选后尾缀 EffectScale.Z 按目标高度／原始高度计算，大小变化作用于 X/Y；须先在 UE 确认资源支持纵向缩放。未勾选时，仅改变爆炸位置，不改变尾缀轨迹高度。</p>
+          </details>
+          <div class="df-stages-heading"><h3>资源段</h3><button id="df-pattern-sequence-add" type="button" class="df-button">添加一段</button></div>
+          <div id="df-pattern-sequence-stages"></div>
+        </div>
+        <details id="df-pattern-id-library" class="df-library">
+          <summary>ID 列表与更新</summary>
+          <p id="df-pattern-id-library-note" class="df-note"></p>
+          <button id="df-pattern-id-refresh" type="button" class="df-button">更新 ID 列表</button>
+          <p id="df-pattern-id-status" class="df-note" role="status" aria-live="polite">选择器可离线使用；更新只读取资源表，不改变草稿。</p>
+        </details>
+        <details id="df-pattern-library" class="df-library">
+          <summary id="df-pattern-library-title">素材库</summary>
+          <p class="df-note">这里保存整份子模板配方，包含参数。只想挑选资源时，使用上方的ID预设；需要复用自己调好的子模板时，再保存或粘贴完整参数。</p>
+          <button id="df-pattern-library-sync" type="button" class="df-button">读取完整子模板（含参数）</button>
+          <label class="df-field df-section-gap"><span class="df-label">添加子模板参数</span><textarea id="df-pattern-library-text" rows="5" spellcheck="false" placeholder="(TemplateName=... ,Entries=(...))"></textarea></label>
+          <button id="df-pattern-library-add" type="button" class="df-button">添加到素材库</button>
+          <p id="df-pattern-library-status" class="df-note" role="status" aria-live="polite">本地素材可离线使用。</p>
+        </details>
+      </div>
+      <div class="df-preview">
+    <section class="df-export" aria-labelledby="df-pattern-export-heading">
+      <div class="df-export-heading"><div><h3 id="df-pattern-export-heading">模板参数</h3><p id="df-pattern-export-target" class="df-note">复制后粘贴到 BP 的一个子模板数组项。</p></div><div class="df-export-actions"><button id="df-pattern-copy" type="button" class="df-button df-primary">复制模板参数</button><button id="df-pattern-download" type="button" class="df-button">下载 TXT</button><button id="df-pattern-save-template" type="button" class="df-button">存入素材库</button></div></div>
+      <label class="df-field df-template-name"><span class="df-label">新模板名称</span><input id="df-pattern-export-name" type="text" maxlength="256" value="" spellcheck="false" autocomplete="off" required></label>
+      <div id="df-pattern-export-height" class="df-export-warning"><p>升空高度随机还没有确认的 BP 字段；直接导出会保留素材原高度。</p><label class="df-check"><input id="df-pattern-export-original-height" type="checkbox">按素材原高度导出时间、角度和大小</label></div>
+      <p id="df-pattern-export-note" class="df-note"></p>
+      <div id="df-pattern-export-status" class="df-status" role="status" aria-live="polite"></div>
+      <details id="df-pattern-export-details"><summary>查看可复制参数</summary><label class="df-field"><span class="df-label">UE 属性格式 · 可手动全选复制</span><textarea id="df-pattern-export-text" rows="5" readonly spellcheck="false"></textarea></label></details>
+    </section>
+        <div class="df-preview-heading"><h3>节奏与轮廓预览</h3><span class="df-note">按导出缩放估算 · 真实轨迹看 Cascade</span></div>
+        <div id="df-pattern-meta" class="df-meta">5 簇 · 68° · 左 → 右</div>
+        <div class="df-playbar">
+          <button id="df-pattern-play" type="button" class="df-button cursor-interaction">播放一遍</button>
+          <label class="df-scrub"><span class="df-label">预览时间 <output id="df-pattern-time-value" for="df-pattern-time"></output></span><input id="df-pattern-time" type="range" min="0" max="2.4" step="0.01" value="0"></label>
+        </div>
+        <div class="df-play-options"><label class="df-speed">播放速度<select id="df-pattern-speed"><option value="0.5">0.5 倍</option><option value="1" selected>1 倍</option><option value="2">2 倍</option></select></label><label class="df-loop"><input id="df-pattern-loop" type="checkbox">循环播放</label></div>
+        <svg id="df-pattern-scene" class="df-scene" role="img" aria-labelledby="df-pattern-scene-title df-pattern-scene-desc"><title id="df-pattern-scene-title">烟花展开方向与触发节奏</title><desc id="df-pattern-scene-desc">单发射点的 Comet 扇形，保持地面起点，轻微改变大小、升空高度和角度。</desc></svg>
+        <svg id="df-pattern-timeline" class="df-timeline" role="img" aria-label="开始与爆炸时刻，及当前预览时间"></svg>
+        <div id="df-pattern-legend" class="df-legend"><span>● 触发</span><span>单簇运动示意 · 1.20 s</span></div>
+        <div id="df-pattern-error" class="df-error" role="alert"></div>
+        <div id="df-pattern-status" class="df-status" role="status" aria-live="polite">已生成 5 簇</div>
+      </div>
+    </div>
+    <footer class="df-footer"><span id="df-pattern-generated">已生成 5 条单簇数值</span><span id="df-pattern-preserved">重播保留同一组变化</span></footer>
+
+    <div class="df-numbers">
+      <details id="df-pattern-numbers"><summary class="cursor-interaction">逐发数值</summary><div class="df-note" id="df-pattern-numeric-note">逻辑编排数值 · 只读预览</div><div class="df-table-wrap"><table aria-label="逐发生成的编排数值"><thead><tr><th scope="col">序号</th><th scope="col">开始 s</th><th scope="col">角度 °</th><th scope="col">大小 ×</th><th id="df-pattern-height-header" scope="col">升空高度 ×</th><th id="df-pattern-burst-header" scope="col" hidden>爆炸 s</th></tr></thead><tbody id="df-pattern-rows"></tbody></table></div></details>
+    </div>
+  </div>
+</div>
+</fieldset>
+</section>
