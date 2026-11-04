@@ -1,0 +1,176 @@
+{
+  "version": "4.9.129",
+  "runtime": "完整128业务+129确认的组件外观",
+  "entry": "tool/FireworkBaker_129.html",
+  "url": "http://127.0.0.1:8034/design-system/selected129/FireworkBaker_129.html",
+  "oldEntry": "http://127.0.0.1:8034/baker?ui=material-b",
+  "download": "FWL-完整烘焙器-4.9.129-我的组合.html",
+  "bytes": 6358766,
+  "static": {
+    "pass": true,
+    "version": "4.9.129",
+    "families": 14,
+    "businessIdenticalExceptVersion": true,
+    "fourDataScriptsExact": true,
+    "externalScripts": 0,
+    "selectionAndNotesExact": true,
+    "protection": {
+      "checked": true,
+      "files": 361,
+      "changed": []
+    },
+    "sha256": "789fe37c7dc7a559aa8cdcf22df31faca112d726ede94972084573893a214561"
+  },
+  "components": {
+    "C01": "material",
+    "C02": "adobe",
+    "C03": "adobe",
+    "C04": "adobe",
+    "C05": "material",
+    "C06": "material",
+    "C07": "material",
+    "C08": "material",
+    "C09": "material",
+    "C11": "adobe",
+    "C12": "adobe",
+    "C16": "adobe",
+    "TREE": "adobe",
+    "COLOR": "adobe"
+  },
+  "accentOverrides": {
+    "C03": "theme",
+    "C04": "theme",
+    "C11": "theme"
+  },
+  "treeSelection": "0px圆角、2px inset纯直线",
+  "runtimeRegression": {
+    "pass": true,
+    "checks": 183,
+    "sha256": "2d4f3a6cc9cecfb09ddb3cf794e6a755cdd274613c94473c05a91ee89d89eef8",
+    "cases": [
+      {
+        "case": "普通Schema",
+        "checks": 50,
+        "pass": true
+      },
+      {
+        "case": "层头出生联动",
+        "checks": 36,
+        "pass": true
+      },
+      {
+        "case": "RT6",
+        "checks": 18,
+        "pass": true
+      },
+      {
+        "case": "SGR1",
+        "checks": 18,
+        "pass": true
+      },
+      {
+        "case": "SGS1",
+        "checks": 18,
+        "pass": true
+      },
+      {
+        "case": "跨区域外壳",
+        "checks": 43,
+        "pass": true
+      }
+    ],
+    "boundary": "既有隔离FAKE/停RAF的真实DOM分类/几何；不用于证明真烘焙。真业务由实页操作与下载验证。",
+    "finalDelta": "之后仅增加闭合select单行规则；最终实页重载复核336px交付清单，长选项闭合31px不溢出、展开normal换行且绿色选中。"
+  },
+  "realOperations": [
+    {
+      "case": "从GLB-S1另存独立测试效果",
+      "pass": true,
+      "name": "129组件真实操作测试 · 金曜菊B · 20261104",
+      "id": "fxmw1k7pww7zyya"
+    },
+    {
+      "case": "金锦层参数真实键盘提交、撤销、重做、保存、重开",
+      "pass": true,
+      "delay": 0.2,
+      "scale": 1.1,
+      "timeRate": 1.5
+    },
+    {
+      "case": "树选择、眼睛关闭/恢复、只看第2层/恢复全部",
+      "pass": true,
+      "note": "眼睛影响配方；只看改变layerView.solo，不替代输出开关"
+    },
+    {
+      "case": "真实GPU烘焙、引擎回放、贴图流转、PC与手机ZIP导出",
+      "pass": true,
+      "zip": "UIReview129_20261104.zip",
+      "sha256": "9db5eb1dc99fd78a7f3747f573cdd0f3eb018ba93f8508eedc8c548817213173"
+    },
+    {
+      "case": "菜单ArrowDown移动焦点、Esc关闭回触发按钮",
+      "pass": true,
+      "focus": "下移",
+      "background": "rgb(23, 61, 57)",
+      "text": "rgb(161, 222, 208)",
+      "returnFocus": "这一层的操作"
+    },
+    {
+      "case": "最终树选中计算样式",
+      "pass": true,
+      "radius": "0px",
+      "shadow": "rgb(0, 212, 155) 2px 0px 0px 0px inset"
+    },
+    {
+      "case": "真实复选框尺寸与主题色",
+      "pass": true,
+      "size": [
+        18,
+        18
+      ],
+      "accent": "rgb(0, 212, 155)"
+    },
+    {
+      "case": "1366x768交付清单宽度拖动、滚动与长文本",
+      "pass": true,
+      "before": {
+        "preview": 717,
+        "list": 396
+      },
+      "after": {
+        "preview": 777,
+        "list": 336
+      },
+      "closedSelect": {
+        "height": 31,
+        "scrollHeight": 31,
+        "whiteSpace": "nowrap"
+      },
+      "openOptionWhiteSpace": "normal"
+    },
+    {
+      "case": "离开交付恢复右侧编辑、1920x1080最终检查",
+      "pass": true,
+      "rightWidth": 520
+    }
+  ],
+  "screenshots": [
+    "01-完整129-1920.jpg",
+    "02-交付129-1366.jpg",
+    "03-树菜单绿色焦点.jpg"
+  ],
+  "limits": [
+    "真实业务通过本机8034/IAB验证；file://双击未复核",
+    "未执行UE导入、P4或个人节目操作",
+    "没有把可导出视为视觉标准通过；下载包未做UE画质验收",
+    "跨浏览器、全读屏、全部配方组合未穷举；OS文件/颜色选择器及资源交付iframe保持原生/原项目样式"
+  ],
+  "packageCheck": "素材包检查.json",
+  "fixes": [
+    "真实树popover原通用按钮规则盖掉绿色焦点；补定向优先级",
+    "真实树菜单补方向键/Home/End/Esc及回焦点",
+    "禁用滑杆继承Adobe几何，字段保留14px",
+    "出生方式/整体颜色/预览分段补同类映射",
+    "窄交付清单闭合下拉保持单行，展开仍完整换行"
+  ]
+}

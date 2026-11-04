@@ -1,0 +1,78 @@
+/* 完整烘焙器的真实DOM补充。基础14族规则直接来自用户确认的129，
+   此处只补样本未包含的直属popover、动态控件与系统高对比状态。 */
+
+/* 树菜单挂在body顶层，不在#main内；同一C11绿色规则必须覆盖这里。 */
+/* 收起时保持单行；展开的option仍用原来的自适应换行，保留完整名称。 */
+body[data-ui="material-b"][data-component-profile="129"] select[data-mb-component="select"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body[data-ui="material-b"][data-component-profile="129"] #v5Pop [data-mb-component="button"] {
+  display: block;
+  width: 100%;
+  border: 0;
+  text-align: left;
+  background: transparent;
+  box-shadow: none;
+}
+body[data-ui="material-b"][data-component-profile="129"] #v5Pop [data-mb-component="button"]:is(:hover,:focus-visible,[aria-checked="true"],[aria-selected="true"]):not(:disabled):not(.v5-danger) {
+  background: #173d39;
+  color: #a1ded0;
+}
+
+/* 禁用/暂不起作用仍保留Adobe几何，颜色继续使用原工具的灰色语义。 */
+body[data-ui="material-b"][data-component-profile="129"] :is(#main,#deliveryWorkspace,dialog) input[data-mb-component="slider"]:is(:disabled,.inert *)::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 0;
+}
+body[data-ui="material-b"][data-component-profile="129"] :is(#main,#deliveryWorkspace,dialog) input[data-mb-component="slider"]:is(:disabled,.inert *)::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: -6px;
+  border: 1px solid #8da3ac;
+  background: #1b2a2f;
+  border-radius: 50%;
+}
+body[data-ui="material-b"][data-component-profile="129"] :is(#main,#deliveryWorkspace,dialog) input[data-mb-component="slider"]:is(:disabled,.inert *)::-moz-range-track {height:2px;border-radius:0}
+body[data-ui="material-b"][data-component-profile="129"] :is(#main,#deliveryWorkspace,dialog) input[data-mb-component="slider"]:is(:disabled,.inert *)::-moz-range-thumb {width:14px;height:14px;border:1px solid #8da3ac;background:#1b2a2f;border-radius:50%}
+body[data-ui="material-b"][data-component-profile="129"] :is(#main,#deliveryWorkspace,dialog) :is(input[data-mb-component="input"],textarea[data-mb-component="textarea"],select[data-mb-component="select"]):is(:disabled,.inert *),
+body[data-ui="material-b"][data-component-profile="129"] #right :is(.mb-value-row,#params .mb-value-row)>.mb-value-number:is(:disabled,.inert *) {font-size:14px}
+
+/* 菜单按钮不能被C01的一般按钮悬停重新盖成灰色。 */
+body[data-ui="material-b"][data-component-profile="129"] .mb-display-menu .pchg:is(:hover,:focus-within,:has(input:checked)),
+body[data-ui="material-b"][data-component-profile="129"] .ab-menu [data-mb-component="button"]:is(:hover,:focus-visible,[aria-checked="true"],[aria-selected="true"]):not(:disabled):not(.danger):not(.warn) {
+  background: #173d39;
+  color: #a1ded0;
+}
+
+/* 出生方式、本层颜色也是参数折叠组，继承用户选中的C09。 */
+body[data-ui="material-b"][data-component-profile="129"] #right :is(#eventInstancePanel,#colorControls)>summary {
+  color: #a1ded0;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 650;
+}
+
+/* 整体页、出生方式的随机颜色及普通层Ramp同样是COLOR的方形色井。 */
+body[data-ui="material-b"][data-component-profile="129"] #right input[data-mb-component="color"] {
+  flex: none;
+  width: 32px;
+  min-width: 32px;
+  max-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  max-height: 32px;
+  border: 1px solid #8da3ac;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+@media (forced-colors: active) {
+  body[data-ui="material-b"][data-component-profile="129"] #right .v5-row.sel {
+    outline: 1px solid Highlight;
+    outline-offset: -1px;
+    border-radius: 0;
+  }
+}

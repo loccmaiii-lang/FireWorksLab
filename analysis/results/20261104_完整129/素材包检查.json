@@ -1,0 +1,390 @@
+{
+  "file": "UIReview129_20261104.zip",
+  "bytes": 20584094,
+  "sha256": "9db5eb1dc99fd78a7f3747f573cdd0f3eb018ba93f8508eedc8c548817213173",
+  "platforms": {
+    "pc": {
+      "config": "cascade.json",
+      "version": "烟花母版烘焙器 4.9.129",
+      "emitters": 12,
+      "textures": 27,
+      "missing": [],
+      "hashMismatch": [],
+      "plan_sig": "434a0a29"
+    },
+    "mobile": {
+      "config": "cascade_mobile.json",
+      "version": "烟花母版烘焙器 4.9.129",
+      "emitters": 1,
+      "textures": 3,
+      "missing": [],
+      "hashMismatch": [],
+      "plan_sig": "9554361e"
+    }
+  },
+  "images": [
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Lead_4x4_01_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Lead_4x4_01_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Lead_4x4_01_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Lead_R.png",
+      "size": [
+        256,
+        8
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Lead_4x4_01.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_01_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_01_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_01_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_02_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_02_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_02_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_03_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_03_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_03_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_04_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_04_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_04_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_05_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_05_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_2x2_05_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Gold_R.png",
+      "size": [
+        256,
+        8
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_01_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_01_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_01_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_02_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_02_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_02_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_03_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_03_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_03_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_04_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_04_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_04_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_05_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_05_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_05_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_06_HD.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_06_FrameTest.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_2x2_06_C.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    },
+    {
+      "file": "T_EFX_FireWorks_UIReview129_20261104_Head_R.png",
+      "size": [
+        256,
+        8
+      ],
+      "mode": "RGBA",
+      "nonUniform": true
+    }
+  ],
+  "files": 45,
+  "pass": true,
+  "boundary": "真实页面下载ZIP；CRC、双平台配置、全部贴图引用/sha256、PNG解码通过。不表示艺术效果通过或UE导入通过。"
+}
