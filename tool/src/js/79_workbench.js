@@ -82,6 +82,9 @@ function outNote(L, e) {
     if (+P.strobeHz > 0) w.push('点灭：光点不会闪（spec 10.B 的点灭星另配）');
     if (+P.subStars > 0 && ['senrin', 'crossette'].includes(P.type)) w.push('千轮 / 分裂的子花不在光点里');
   }
+  // 4.9.126 合成一张：和同平台别的「合成一张」层烘成一个序列，颜色用其中层号最小那一层
+  if (o.pc === 'merge' || o.mobile === 'merge') { const pcs = o.pc === 'merge' ? mergeCellText('pc') : '', mbs = o.mobile === 'merge' ? mergeCellText('mobile') : '';
+    return [pcs && 'PC ' + pcs, mbs && '手机 ' + mbs].filter(Boolean).join('；') + '。几层的形状和节奏照分层回放合成，颜色统一用颜色层的（别的层按显示亮度换算，色相会变）；这一层的开花闪光照旧单独出'; }
   // 4.9.35（用户 10-07 18:50）：单帧并进产物表，PC / 手机都能选；手机没有 GPU 光点
   const frameTxt = '单帧（一张图 + 功能图，Size By Life 长大、按亮度淡出）';
   const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列、所有星共用，尾迹沿速度是直的——没有重力弯曲 / 倒影 / 湍流；引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : o.pc === 'frame' ? frameTxt : '不出'} · 手机：${mp && mp.auto ? mobileAutoText(mp) + '：' : ''}${o.mobile === 'seq' ? '序列（纯图片）' : o.mobile === 'unit' ? '单束（CPU，手机自己的一套贴图 ≤ 1024；每颗星一个粒子，手游最多 50 颗）' : o.mobile === 'frame' ? frameTxt : '不出'}`;
@@ -133,7 +136,7 @@ function buildLayerHead(i) {
     const tail = le && isEmit(le.P), head = tail && typeof rtHeadOnly === 'function' && rtHeadOnly(le.P);     // 4.9.96 H1：纯星头层 PC 能选「CPU 粒子（星头）」
     for (const pf of ['pc', 'mobile']) for (const op of ex.querySelectorAll(`[data-out=${pf}] option`)) {
       const t0 = (pf === 'pc' ? OUT_PC : OUT_MOBILE_UI).find(q => q[0] === op.value); if (t0) op.textContent = t0[1];
-      const eventWhy=burstFlowOutputReason(le&&le.P,op.value)||(typeof EventInstances!=='undefined'?EventInstances.outputReason(L,pf,op.value):'');
+      const eventWhy=burstFlowOutputReason(le&&le.P,op.value)||(typeof EventInstances!=='undefined'?EventInstances.outputReason(L,pf,op.value):'')||(op.value==='merge'?mergeOutputReason(L,le):'');
       if(eventWhy){op.disabled=true;op.title=eventWhy;continue;}
       if (head && pf === 'pc' && op.value === 'dots') { op.disabled = false; op.textContent = 'CPU 粒子（星头）'; op.title = '纯星头：一颗软圆点 CPU 粒子沿弹道走（和手机同一颗），没有贴图'; }
       else if (head && op.value === 'seq') { op.textContent = pf === 'pc' ? '序列（单帧小面片）' : 'CPU 粒子（星头）'; op.title = ''; }
@@ -1033,7 +1036,8 @@ function renderDeliv() {
     });
     if (pcSeq || mbSeq || o.pc === 'unit' || o.mobile === 'unit' || o.pc === 'frame' || o.mobile === 'frame') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, null, 0, 'R') : TN(ln, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
   }
-  rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
+  if (combo) rows.push(...mergeDelivRows(xs, nm, useNew));     // 4.9.126 合成一张
+  rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器（合成一张的几层合成一个），同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
   const nameWhy = exportNameBlock(nm), prod = prodTableHTML(xs, combo), noPackWhy = xs.map(x => x.b && productNoPack(x.b)).filter(Boolean)[0] || (combo ? comboMobileConflictText(xs) : '') || nameWhy;     // 4.9.121（团队版 ⑤）：英文名还是 MyFx 时导出按钮灰、写原因     // 4.9.117：手机已确定冲突时直接在原产物表修正，不进入资源交付。
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
@@ -1096,6 +1100,7 @@ function prodCellHTML(x, pf, combo) {
     const lo = lowOf(combo ? x.L : state.P), lw = x.b && lowCached(x.b, lo, combo ? comboLayerM(x.L) : state.M);
     return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${pf === 'mobile' ? ` · 手机自己的一张（≤ ${MOBILE_TEX_MAX()}、不带 _HD）` : ''}${lw ? '' : '（贴图在引擎回放或导出时烘）'}${pf === 'pc' ? ' <button type="button" class="mini" data-lowview title="回到画面、切到引擎回放：按 cascade.json 播这张单帧（可勾溶解预览 / 并排）">在引擎回放里看</button>' : ''}`;
   }
+  if (s === 'merge') return mergeCellText(pf);     // 4.9.126 合成一张
   if (s === 'dots') return `GPU 光点约 ${dotsCount(P)} 颗 · 没有贴图 · 1 个软圆点发射器`;
   if (s === 'unit' && unitAllowed(P)) {
     if (pf === 'mobile') return `单束 · 手机自己的一套贴图（≤ ${MOBILE_TEX_MAX()}、不带 _HD）· ${Math.round(+P.stars || 0)} 颗星各一个 CPU 粒子${mobileUnitTooMany(P) ? ' · ⚠ ' + MOBILE_UNIT_MANY : ''}`;     // 4.9.35 手机单束；4.9.80 手机另出一套
@@ -1177,7 +1182,7 @@ function prodTableHTML(xs, combo) {
     const o = outOfX(x, combo), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ` disabled title="${unitBlockReason(P)}"` : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
     const uMany = mobileUnitTooMany(P) ? ` disabled title="${MOBILE_UNIT_MANY}"` : '';     // 4.9.80 手机单束 > 50 颗：一定被拦，不让选
-    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => {const eventWhy=burstFlowOutputReason(P,k)||(combo&&typeof EventInstances!=='undefined'?EventInstances.outputReason(x.L,pf,k):'');return `<option value="${k}"${k === v ? ' selected' : ''}${eventWhy?' disabled title="'+eventWhy+'"':k === 'unit' ? (pf === 'mobile' && uMany && v !== 'unit' ? uMany : uAttr) : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`;}).join('')}</select>`;
+    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => {const eventWhy=burstFlowOutputReason(P,k)||(combo&&typeof EventInstances!=='undefined'?EventInstances.outputReason(x.L,pf,k):'')||(k==='merge'?mergeOutputReason(x.L,x.e,combo):'');return `<option value="${k}"${k === v ? ' selected' : ''}${eventWhy?' disabled title="'+eventWhy+'"':k === 'unit' ? (pf === 'mobile' && uMany && v !== 'unit' ? uMany : uAttr) : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`;}).join('')}</select>`;
     const mobV = combo && !layerMobileManual(x.L) ? 'auto' : o.mobile;
     return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
       <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', combo ? OUT_MOBILE_UI : OUT_MOBILE, mobV)}<small>${x.mob && x.mob.auto && x.mob.kind !== 'off' ? mobileAutoText(x.mob) + ' · ' : ''}${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）

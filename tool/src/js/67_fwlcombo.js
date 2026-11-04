@@ -15,8 +15,9 @@ function comboLayerM(L) {
 // 4.2.13：PC 加「单束」（每颗星一个沿速度拉长的面片，贴图是一颗星的序列；走查 D21 / B9）
 // 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里……哪一层用单帧，哪一层用序列，哪一层用GPU粒子，哪一层用单束」；
 //   18:5x「手机列保留，手机也可以选序列或者单帧或者单束，但没有GPU」「单帧放主包、名字不加 _MB」）：PC 加单帧，手机 序列 / 单束 / 单帧 / 不出；没有低端列 / cascade_low.json 了
-const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']],
-  OUT_MOBILE = [['seq', '序列'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']];
+// 4.9.126（用户 11-03 / 11-04）：合成一张 = 这一层和同平台别的「合成一张」层烘成一个序列、一个发射器，颜色用其中层号最小那一层（67_merge.js）
+const OUT_PC = [['seq', '序列（大面片）'], ['merge', '合成一张（几层合成一个序列）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']],
+  OUT_MOBILE = [['seq', '序列'], ['merge', '合成一张（几层合成一个序列）'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']];
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
 function layerOut(L, entry) {
@@ -28,6 +29,8 @@ function layerOut(L, entry) {
   if (e && e.P && typeof isEmit === 'function' && isEmit(e.P)) { if (pc !== 'off') pc = pc === 'dots' && typeof rtHeadOnly === 'function' && rtHeadOnly(e.P) ? 'dots' : 'seq'; if (mobile !== 'off') mobile = e.P.outMobile === 'off' ? 'off' : 'seq'; }
   //   4.9.106（G4）：别的产物按产物形态登记表——地面循环 / V5 / 上升星头循环 / 单元序列只有「序列 / 不出」（以前层页头能选单束 / 光点 / 单帧，导出时悄悄按序列出或出空壳）
   else if (e && e.P && typeof productFormOf === 'function') { const F = productFormOf(e.bake || e.P); if (F && F !== PF_AIR) { if (!F.pc.includes(pc)) pc = 'seq'; if (!F.mobile.includes(mobile)) mobile = 'seq'; } }
+  //   4.9.126 合成一张：不能合的层（事件实例层等，mergeOutputReason）按序列出
+  if ((pc === 'merge' || mobile === 'merge') && typeof mergeOutputReason === 'function' && mergeOutputReason(L, e || null)) { if (pc === 'merge') pc = 'seq'; if (mobile === 'merge') mobile = 'seq'; }
   return { pc, mobile };
 }
 // ---- 4.9.80 多层的手机格「自动」（用户 10-13 20:00「最近导出功能的Bug有点多，可以排查一遍」→ 导出排查 ①）----
@@ -65,13 +68,17 @@ function layerMobileUse(L, b, kind) {
 // 组合每层手机实际出什么：xs = [{ L, b }]（层号顺序）→ [{ kind, auto, why }]
 function comboMobilePlan(xs) {
   const used = [], out = []; let n = 0;
+  // 4.9.126 合成一张：手动选的那几层是同一张序列——先占时段（自动的层和它同时播就不出），发射器按最多那层的张数算一次
+  const mk = (xs || []).map(x => { const o = layerOut(x.L, x.e || (x.b && x.b.P ? { P: x.b.P, bake: x.b } : undefined)); return o.mobile; }), mg = typeof mergeGroup === 'function' ? mergeGroup(xs, mk) : null;
+  if (mg) { for (const i of mg) used.push({ i, wins: layerMobileUse(xs[i].L, xs[i].b, 'seq').wins }); n += Math.max(...mg.map(i => layerMobileUse(xs[i].L, xs[i].b, 'seq').n)); }
   (xs || []).forEach((x, i) => {
+    if (mg && mg.includes(i)) { out.push({ kind: 'merge', auto: false, why: '' }); return; }
     const o = layerOut(x.L, x.e || (x.b && x.b.P ? { P: x.b.P, bake: x.b } : undefined)), manual = layerMobileManual(x.L) || !(x.b && ['master', 'segments'].includes(x.b.form)); let kind = o.mobile, why = '';     // 自动只管大面片母版层（产物表能选的那种）；尾缀等照旧
     if (kind === 'off' && x.b && x.b.form === 'emitset' && x.b.P && x.b.P.outMobile === 'off' && !(x.L.out && x.L.out.mobile === 'off')) why = '尾缀自己选了「手机：不出」';     // 4.9.89 A10
     const u = layerMobileUse(x.L, x.b, kind);
     if (!manual && kind !== 'off') {
       const hit = used.find(q => q.wins.some(([a0, a1]) => u.wins.some(([b0, b1]) => a0 < b1 - 1e-6 && b0 < a1 - 1e-6)));
-      if (hit) { kind = 'off'; why = `和第 ${hit.i + 1} 层同时播，手游同一时刻只能 1 张大序列`; }
+      if (hit) { kind = 'off'; why = mg && mg.includes(hit.i) ? '和合成一张同时播，手游同一时刻只能 1 张大序列' : `和第 ${hit.i + 1} 层同时播，手游同一时刻只能 1 张大序列`; }
       else if (n + u.n > MOBILE_EMITTERS_MAX) { kind = 'off'; why = `手机发射器会超过 ${MOBILE_EMITTERS_MAX} 个`; }
     }
     if (kind !== 'off') { used.push({ i, wins: u.wins }); n += u.n; }
@@ -83,6 +90,8 @@ function comboMobilePlan(xs) {
 // 缺失/过期缓存和其他产物交给原有导出重烘及最终规范检查，不用旧画面误拦新配方。
 function comboMobileConflicts(xs) {
   const plan = comboMobilePlan(xs), used = [], hit = new Set();
+  { const mg = (xs || []).map((x, i) => plan[i].kind === 'merge' ? i : -1).filter(i => i >= 0);     // 4.9.126 合成一张：几层是同一张序列，先占时段
+    if (mg.length) used.push({ i: mg[0], wins: mg.flatMap(i => layerMobileUse(xs[i].L, xs[i].b, 'seq').wins) }); }
   (xs || []).forEach((x, i) => {
     if (plan[i].kind !== 'seq' || !x.b || !x.b.meta || !['master', 'segments'].includes(x.b.form)
       || (x.e && typeof layerStale === 'function' && layerStale(x.e))) return;
@@ -320,7 +329,7 @@ function fwlCombo(name, layers, mobile = false) {
     out.materials[pre + 'flash'] = { role: 'soft_dot' };
     for (const e of fl) out.emitters.push({ ...fwlFlashEmitter(e, mobile, pre + 'flash'), name: pre + e.name, layer: i + 1 });
   };
-  layers.forEach(({ L, b, i: li, dots, unit, unitName, frame, frameName }, k) => {
+  layers.forEach(({ L, b, i: li, dots, unit, unitName, frame, frameName, texName, mergedSrcs }, k) => {
     const i = li == null ? k : li, pre = `L${i + 1}_`;
     if (frame) {     // 4.9.35 单帧层（用户 10-07 18:50 并进产物表）：灰度单帧 + Ramp（现有序列材质 1 × 1 格）+ 功能图 / 溶解标记；PC、手机都是单帧时共用同一张
       const sc = +L.scale > 0 ? +L.scale : 1, r = fwlLowLayer(frameName || comboLayerName(name, i), frame, comboLayerM(L), { ...L, layerNo: i + 1 }, pre);
@@ -346,7 +355,7 @@ function fwlCombo(name, layers, mobile = false) {
     // 4.9.80（导出排查 ⑨）：尾缀层（循环层 + 粒子）一律走 fwlEmitSet——以前只认「合成一张」，PC 合成一张、手机只有近段时手机配置被当成大面片母版写，引用一张不存在的贴图
     // 4.9.87：只有一层的「我的效果」是循环效果（喷泉、分层粒子图）时照单层导出那样一直循环（fwlLoop）——保存窜天猴 / 仙女棒 = 存成一层的我的效果，预览按时间轴循环，导出以前却只播一次；
     //   多层里的循环层照旧播一个周期（和多层预览一致，要不要一直循环等用户定）
-    const ln = comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile, { dot: !!dots }) : b.form === 'loop' && layers.length === 1 ? fwlLoop(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
+    const ln = texName || comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile, { dot: !!dots }) : b.form === 'loop' && layers.length === 1 ? fwlLoop(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
     if (es && mobile && !b.esFull) fwlMaxAlive(body.emitters);
     const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
     for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
@@ -372,10 +381,12 @@ function fwlCombo(name, layers, mobile = false) {
       });
       out.emitters.push({ ...e, name: pre + e.name, material: pre + e.material, layer: i + 1,
         required: { ...e.required, duration_s: r4(e.required.duration_s / rate), delay_s: r4((+L.delay || 0) + e.required.delay_s / rate), ...(e.required.cutout ? { cutout: pre + e.required.cutout } : {}) },
-        modules, ...(L.mirror ? { notes: ['这一层在烘焙器里水平镜像；导出的贴图没有翻转，引擎里需要把面片 X 尺寸取负或换翻转贴图（未经 UE 验证）'] } : {}) });
+        modules, ...(L.mirror ? { notes: ['这一层在烘焙器里水平镜像；导出的贴图没有翻转，引擎里需要把面片 X 尺寸取负或换翻转贴图（未经 UE 验证）'] } : {}),
+        ...(mergedSrcs ? { notes: [...(e.notes || []), `合成一张（4.9.126）：第 ${mergedSrcs.map(x => x.i + 1).join('、')} 层按引擎回放同一套时间 / 位置合成这一个序列（不重新模拟）；颜色统一用第 ${mergedSrcs[0].i + 1} 层的 Ramp 和颜色曲线，别的层按各自的显示亮度换算后相加；未经 UE 验证`] } : {}) });
     }
     out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, body.system.preview_distance_cm * sc);
-    if (b.form === 'master' || b.form === 'segments') addFlash('seq', b, L, i, pre);
+    if (mergedSrcs) for (const q of mergedSrcs) addFlash('seq', q.b, q.L, q.i, `L${q.i + 1}_`);     // 4.9.126 合成一张：各层自己的开花闪光（入点前那段）照旧
+    else if (b.form === 'master' || b.form === 'segments') addFlash('seq', b, L, i, pre);
   });
   if (mobile) { out.emitters = fwlFlashFit(out.emitters, true, out.notes); for (const k of Object.keys(out.materials)) if (/flash$/.test(k) && !out.emitters.some(e => e.material === k)) delete out.materials[k]; }
   out.notes.push('多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。');
@@ -501,7 +512,7 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
   { const np = lb.map((x, i) => productNoPack(x.b) ? `第 ${i + 1} 层：${productNoPack(x.b)}` : '').filter(Boolean); if (np.length) { own.forEach(disposeBake); throw new Error(np.join('；')); } }     // 4.9.106 G4
   const ownMobile = [];     // 4.9.80 手机「自动」：按组合时的各层烘焙算（和交付清单同一个 comboMobilePlan）
   try {
-    const mplan = comboMobilePlan(lb), pcE = [], mbE = [], nmE = [];
+    const mplan = comboMobilePlan(lb), pcE = [], mbE = [], nmE = [], pcKs = [], mbKs = [];
     for (let i = 0; i < lb.length; i++) {
       const { L, b, e } = lb[i], ln = comboLayerName(name, i), mn = comboLayerName(name + '_Mobile', i), M = comboLayerM(L), o = layerOut(L, e), uOK = unitAllowed(b.P);   // 4.2.12：每层的导出方案
       for (const k of [o.pc, o.mobile]) { const why = burstFlowOutputReason(b.P, k); if (why) throw Error(why); }
@@ -520,15 +531,25 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
         if (b.form === 'emitset' && mb && mb.meta) b.mobNaming = { form: 'emitset', esFull: !!mb.esFull, meta: { L: mb.meta.L, full: mb.meta.full ? { Dtot: mb.meta.full.Dtot } : null }, fades: [], far: null }; }     // 4.9.106 交付清单按导出时的手机格子列文件（和单层 platformFiles 同一条）
       else if (mbK === 'unit') { files.push(...await texFiles(um, mn)); await ramp(mn); }
       else if (mbK === 'frame') files.push(...await lowFiles(mn, lwM, M));
-      pcE.push({ L, b, unit: pcK === 'unit' ? ub : undefined, unitName: ln, frame: pcK === 'frame' ? lw : undefined, frameName: ln, kind: pcK });
-      mbE.push({ L, b: mb || b, unit: mbK === 'unit' ? um : undefined, unitName: mn, frame: mbK === 'frame' ? lwM : undefined, frameName: mn, kind: mbK });
+      pcKs.push(pcK); mbKs.push(mbK);     // 4.9.126 合成一张的层：这一层自己不出贴图 / 发射器（下面合成那一张代表它）
+      pcE.push({ L, b, unit: pcK === 'unit' ? ub : undefined, unitName: ln, frame: pcK === 'frame' ? lw : undefined, frameName: ln, kind: pcK === 'merge' ? 'off' : pcK });
+      mbE.push({ L, b: mb || b, unit: mbK === 'unit' ? um : undefined, unitName: mn, frame: mbK === 'frame' ? lwM : undefined, frameName: mn, kind: mbK === 'merge' ? 'off' : mbK });
       nmE.push({ ln, mn, b: pcK === 'unit' ? ub : b, mb: mbK === 'seq' ? mb : mbK === 'unit' ? um : null, pcTex: pcK === 'seq',
         frame: lw ? { pc: pcK === 'frame', mob: mbK === 'frame', suffix: lw.maps ? lw.suffix : '' } : null });
     }
     // 产物表里每层选的那一种：L.out 按 kind 改写（单束不适用 → 序列），comboEntries 照它挑
     const sel = (E, mobile) => comboEntries(E.map(x => ({ ...x, L: { ...x.L, out: { pc: mobile ? 'seq' : x.kind, mobile: mobile ? x.kind : 'seq' } } })), mobile).map(x => ({ ...x, L: lb[x.i].L }));
-    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, sel(pcE, false), false), null, 1))]);
-    files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', sel(mbE, true), true), null, 1))]);
+    // 4.9.126 合成一张（67_merge.js）：每个平台选了「合成一张」的层合成一个序列（PC 用 PC 的格子，手机按 mobileParams 缩小、帧计划一样）
+    const pcIdx = mergeGroup(lb, pcKs), mbIdx = mergeGroup(lb, mbKs), same = !!(pcIdx && mbIdx && pcIdx.join() === mbIdx.join());
+    const mixN = name + '_' + MERGE_EN, mixMN = name + '_Mobile_' + (pcIdx && !same ? MERGE_EN_M : MERGE_EN);
+    const mixRamp = async (idx, n) => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(comboLayerM(mergeColorL(lb[idx[0]].L))), 256, 8)]);
+    let mPC = null, mMB = null;
+    if (pcIdx) { mPC = await mergeBake(lb, pcIdx, false, p => onProg && onProg(0.9 + 0.04 * p)); own.push(mPC); files.push(...await texFiles(mPC, mixN)); await mixRamp(pcIdx, mixN); }
+    if (mbIdx) { mMB = await mergeBake(lb, mbIdx, true, p => onProg && onProg(0.94 + 0.04 * p)); own.push(mMB); files.push(...await texFiles(mMB, mixMN)); if (!same) await mixRamp(mbIdx, mixMN); }
+    const withMix = (list, idx, mb, tex) => { if (!idx) return list; const x = { L: mergeColorL(lb[idx[0]].L), b: mb, i: idx[0], texName: tex, mergedSrcs: idx.map(i => ({ L: lb[i].L, b: lb[i].b, i })) };
+      const k = list.findIndex(q => q.i > x.i); if (k < 0) list.push(x); else list.splice(k, 0, x); return list; };
+    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, withMix(sel(pcE, false), pcIdx, mPC, mixN), false), null, 1))]);
+    files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', withMix(sel(mbE, true), mbIdx, mMB, mixMN), true), null, 1))]);
     files = packKeepReferenced(files);
     if (onBaked) onBaked(lb);
     if (job) rememberExportLayouts(job, lb);
@@ -536,7 +557,10 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = job ? null : typeof lib !== 'undefined' ? lib.effect : null, key = job ? job.key : typeof wbKey === 'function' ? wbKey() : name, nt = lb.length === 1 && lb[0].b ? lb[0].b.P.type : '', nm = job ? job.naming : packNamesFor(key, ef, lb.length, name, nt);     // 4.9.106 G4：一层的多层效果和交付清单同样按这一层的花型加档位后缀（尾缀 _S / _M / _L）
       const sk = job ? job.sp.spec : typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null;     // 4.9.69 派生资源：系统名区分、贴图沿用
-      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })), { sys: job ? job.system : packSysName(nm.base, nt, sk, nm.system), spec: sk && sk.id }), layers, job);
+      const ents = nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] }));
+      if (mPC) ents.push({ ln: mixN, mn: same ? mixMN : name + '_NoMobile_' + MERGE_EN, b: mPC, mb: same ? mMB : mPC, layer: MERGE_EN, pcTex: true, extra: true });     // 4.9.126 合成一张：层名 Mix
+      if (mMB && !same) ents.push({ ln: name + '_NoPC_' + MERGE_EN_M, mn: mixMN, b: mMB, mb: mMB, layer: pcIdx ? MERGE_EN_M : MERGE_EN, pcTex: false, extra: true });     // PC 合的层不一样（或 PC 没合）：手机自己的 Ramp / Cut
+      return comboSpecScale(applyPackNaming(files, nm.base, ents, { sys: job ? job.system : packSysName(nm.base, nt, sk, nm.system), spec: sk && sk.id }), layers, job);
     }
     return comboSpecScale(files, layers, job);
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); if (job) lb.forEach(x => disposeExportHolder(x.e)); }
@@ -544,7 +568,7 @@ async function comboPackFiles(name, layers, onProg, job = null, onBaked = null) 
 
 // ---- 4.4.2 单层效果的导出方案（用户 10-04 21:17：以前只有多层效果的层页头能选 GPU 光点 / 单束；单层也要）----
 // 单层没有「层」：用 state.P 里的 outPC / outMobile / dotSize / dotBright 拼一个只有一层的 L（颜色就是 state.M），和多层走同一套 fwlCombo / fwlDots / fwlUnit
-function singleOut(P) { return singleSchemeOn(P) ? { pc: OUT_PC_KINDS.includes(P.outPC) ? P.outPC : 'seq', mobile: OUT_MOBILE_KINDS.includes(P.outMobile) ? P.outMobile : 'seq' } : { pc: 'seq', mobile: 'seq' }; }
+function singleOut(P) { const k = (v, ok) => ok.includes(v) && v !== 'merge' ? v : 'seq'; return singleSchemeOn(P) ? { pc: k(P.outPC, OUT_PC_KINDS), mobile: k(P.outMobile, OUT_MOBILE_KINDS) } : { pc: 'seq', mobile: 'seq' }; }     // 4.9.126 单层没有合成一张
 function singleLayer(P, M) { const o = singleOut(P), L = { ...M, delay: 0, rate: 1, scale: 1, out: o }; if (+P.dotSize > 0 && +P.dotSize !== 1) L.dotSize = +P.dotSize; if (+P.dotBright > 0 && +P.dotBright !== 1) L.dotBright = +P.dotBright; return L; }
 function singleSchemeNote(P, M = state.M) { const L = singleLayer(P, M); return typeof outNote === 'function' ? outNote(L, { P }) : ''; }
 // 单层的光点：缓存在一个假条目上（参数 / 颜色变了按 dotsTables 自己的签名重算）

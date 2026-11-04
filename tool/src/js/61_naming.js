@@ -95,7 +95,7 @@ function fwTexName(base, layer, L, sheet, kind, mobile) {
 //  命名、产物表、包内文件清单、导出拦截都从这张表读；新加一种产物不登记 → 合入门禁「统一规范」检查不过、推不上去。
 //  own：这种产物的 PC / 手机格有自己的选项（尾缀：近段 / 合成一张，见 79_workbench.js tailProdRow），只用 pc / mobile 限制层页头
 // =====================================================================
-const PF_AIR = { pc: ['seq', 'unit', 'dots', 'frame', 'off'], mobile: ['seq', 'unit', 'frame', 'off'], seq: '序列（大面片）' };
+const PF_AIR = { pc: ['seq', 'merge', 'unit', 'dots', 'frame', 'off'], mobile: ['seq', 'merge', 'unit', 'frame', 'off'], seq: '序列（大面片）' };     // 4.9.126 合成一张（67_merge.js）
 const PRODUCT_FORMS = {
   master: PF_AIR, segments: PF_AIR,
   unit: { pc: ['seq', 'off'], mobile: ['seq', 'off'], seq: '序列（单元序列）', why: '这一层本身就是单元序列（每颗星一个面片）：GPU 光点、单帧是大面片的出法' },
@@ -181,8 +181,9 @@ function applyPackNaming(files, base, entries, o = {}) {
     if (/^cascade(_mobile)?\.json$/.test(f)) {
       const j = JSON.parse(dec.decode(d));
       for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file) { if (map.has(t.file)) t.file = map.get(t.file); t.asset = t.file.replace(/^.*\//, '').replace(/\.png$/i, ''); }     // 4.9.29 extras（彩色单帧）
+      // 4.9.126 合成一张（Mix / MixM）是 extra 条目：不算一层，另记在 naming.merged
       // 导入器直接用 textures[].asset 当 UE 资产名（已含 T_EFX_FireWorks_ 前缀、_HD 等后缀），不要再加前缀（spec/cascade_params_v1.md 第 1.1 节）
-      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base, layers: entries.map(x => x.layer || ''), asset_names: 'textures[].asset', prefix_included: true, ...(sys !== base ? { system: sys } : {}) };
+      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base, layers: entries.filter(x => !x.extra).map(x => x.layer || ''), ...(entries.some(x => x.extra) ? { merged: entries.filter(x => x.extra).map(x => x.layer) } : {}), asset_names: 'textures[].asset', prefix_included: true, ...(sys !== base ? { system: sys } : {}) };
       // 4.9.69 手机：粒子名 = <系统名>_<档位>（规范 v1 §2：P_EFX_FireWorks_<名>_H / _M，不带 _HD / _Mobile），档位在 tier
       if (/_mobile/.test(f)) { j.tier = j.tier || 'M'; j.name = sys + '_' + j.tier; }
       if (sys !== base) j.derived = { from: base, system: sys, spec: o.spec || null, note: '派生资源：贴图沿用原效果那一套（规范 v1 §2），只有粒子 / 系统名不同' };

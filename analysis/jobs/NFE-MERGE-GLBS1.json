@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MERGE-GLBS1",
+ "type": "export",
+ "entry": "GLB-S1",
+ "name": "GlitterChry_Mix",
+ "priority": 3,
+ "layer_out": {"1": {"pc": "merge", "mobile": "merge"}, "2": {"pc": "merge", "mobile": "merge"}, "3": {"pc": "merge", "mobile": "merge"}},
+ "note": "4.9.126 多层「合成一张」真烘焙试导（导出（23），用户 11-04 10:37「PC与手机都要有，能接受统一用一层颜色」）：金曜菊-B S1 三层（橙引线 / 金锦 / 点灭星）PC + 手机都选合成一张 → 一个素材包里 PC、手机各只有一组 L1_Main… 合成序列（颜色用第 1 层橙引线）、贴图名 _Mix_，导出后自动回放检查。云端只跑了合成贴图的检查（analysis/scripts/合成一张检查.py），这次看真烘焙的合成和分层回放同一刻一样不一样（烘焙回放截图、回放检查）。不挂效果、不进待我验收、不改条目。"
+}

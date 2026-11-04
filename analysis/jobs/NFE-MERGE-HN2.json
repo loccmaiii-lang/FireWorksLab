@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MERGE-HN2",
+ "type": "export",
+ "entry": "HN2",
+ "name": "HikiNishiki_Mix",
+ "priority": 3,
+ "layer_out": {"1": {"pc": "merge", "mobile": "merge"}, "2": {"pc": "merge", "mobile": "merge"}},
+ "note": "4.9.126 多层「合成一张」真烘焙试导（导出（23））：引菊 → 锦两层 PC + 手机都选合成一张（颜色用第 1 层橙引线，金锦变成橙色），导出后自动回放检查。和 NFE-MERGE-GLBS1 一起看合成的取景 / 帧数 / 亮度。不挂效果、不进待我验收、不改条目。"
+}

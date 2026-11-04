@@ -33,7 +33,7 @@ from browser_runtime import validation_url, verify_validation_source
 SRC_PREFIX = ('tool/src/', 'analysis/命名/')
 BUILD_INPUTS = ('tool/src/', 'analysis/命名/', 'tool/design-system/', '更新记录.md', 'spec/尺寸标定.json', 'tool/build.py')
 BUILD_OUTPUTS = ['tool/FireworkBaker.html', 'tool/data/size_spec.js']
-UI_ITEMS = ['N3', 'W7', 'W37', 'R10', 'R11', 'X1', 'R12', 'R13']     # R12：4.9.89 导出接线（合成一张入出点 / 帧数 / 停几 tick、纯星头）；R13：4.9.96 纯星头 CPU 粒子 / 开花闪光 / 尾缀层产物表 / 按时间缩
+UI_ITEMS = ['N3', 'W7', 'W37', 'R10', 'R11', 'X1', 'R12', 'R13', 'R18']     # R12：4.9.89 导出接线（合成一张入出点 / 帧数 / 停几 tick、纯星头）；R13：4.9.96 纯星头 CPU 粒子 / 开花闪光 / 尾缀层产物表 / 按时间缩
 
 # ---------------------------------------------------------------- 页面里的检查
 LIB = r"""(async () => {

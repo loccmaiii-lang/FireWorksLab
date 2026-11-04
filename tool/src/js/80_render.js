@@ -540,8 +540,8 @@ function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut
 function drawFlashList(list, t, view) { const tab = list && list.length ? flashTables(list) : null; if (tab) esDraw(tab, engineTick(t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); }
 function comboFlashLists(items, mob) {
   const lists = [], plan = mob ? comboMobilePlan(state.layers.map(L => { const e = layerEntryOf(L); return { L, b: e && e.bake }; })) : null; let n = 0, nf = 0;
-  items.forEach(([L, e, i]) => { const k = comboLayerDraw(L), b = e.bake, list = layerFlashES(k === 'unit' && !unitAllowed(e.P) ? 'seq' : k, b, b && b.P, comboLayerM(L), L); lists[i] = list; nf += list.length; });
-  if (mob) { state.layers.forEach((L, i) => { const e = layerEntryOf(L), p = plan[i]; if (e && e.bake && p) n += layerMobileUse(L, e.bake, p.kind).n; }); if (n + nf > MOBILE_EMITTERS_MAX) return []; }
+  items.forEach(([L, e, i]) => { const k = comboLayerDraw(L), b = e.bake, list = layerFlashES((k === 'unit' && !unitAllowed(e.P)) || k === 'merge' ? 'seq' : k, b, b && b.P, comboLayerM(L), L); lists[i] = list; nf += list.length; });     // 4.9.126 合成一张：各层的开花闪光照旧
+  if (mob) { let nm = 0; state.layers.forEach((L, i) => { const e = layerEntryOf(L), p = plan[i]; if (!(e && e.bake && p)) return; if (p.kind === 'merge') nm = Math.max(nm, layerMobileUse(L, e.bake, 'seq').n); else n += layerMobileUse(L, e.bake, p.kind).n; }); n += nm; if (n + nf > MOBILE_EMITTERS_MAX) return []; }     // 4.9.126 合成一张的几层算一组
   return lists;
 }
 function renderCombo() {
@@ -566,8 +566,16 @@ function renderCombo() {
   hdrT.bind(); additive(true);
   // 4.2.12 导出方案：这个平台不出的层不画；PC 出光点的层画光点（和 cascade.json 同一份发射器数据）
   const mob = state.platform === 'mobile', notes = [], fl = comboFlashLists(items, mob);     // 4.9.96 B1 / B2：每层的开花闪光（和 cascade.json 同一份）
+  // 4.9.126 合成一张：这个平台选了合成一张的几层画合成好的那一张（和导出同一套，PC 烘焙作源；手机按手机格子）；还在合成时先不画、写「合成中」
+  const mxs = state.layers.map(L => { const e0 = layerEntryOf(L); return { L, b: e0 && e0.bake }; }), mIdx = mergeGroup(mxs, state.layers.map(L => comboLayerDraw(L)));
+  let mDone = false;
   for (const [L, e, i] of items) if (layerShown(i)) {
     const s = comboLayerDraw(L);
+    if (s === 'merge' && mIdx && mIdx.includes(i)) {
+      if (!mDone) { mDone = true; const mb = mergePreviewBake(mxs, mIdx, mob ? 'mobile' : 'pc'); if (mb) drawLayer(mb, mergeColorL(state.layers[mIdx[0]]), state.t, view);
+        notes.push(mb ? `第 ${mIdx.map(j => j + 1).join('、')} 层合成一张（颜色用第 ${mIdx[0] + 1} 层）` : '合成一张合成中'); }
+      drawFlashList(fl[i], state.t, view); continue;
+    }
     if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
     if (s === 'frame') { const e0 = state.lib.find(x => x.name === L.lib) || e, M = comboLayerM(L), lo = lowOf(L), lw = e0.bake ? lowCached(e0.bake, lo, M) : null;     // 4.9.29 单帧
       if (!lw) { if (e0.bake) ensureLow(e0.bake, lo, M); notes.push(`第 ${i + 1} 层单帧烘焙中`); continue; }

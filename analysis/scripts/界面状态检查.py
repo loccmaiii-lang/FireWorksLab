@@ -49,6 +49,8 @@
   R16 4.9.103 导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18：短闪光按帧停留时段积分（逐颗光量 = 实际、辉星每帧 = 细采样）、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段、状态栏 / 产物表标注
   R17 4.9.125（用户 11-03 20:33「同事打开模板无法在图层下面加层，需要先点另存为旁边的加层后才会在图层下面出现加层按钮」）：空浏览器打开多层花型模板，图层管理里就有「＋ 加一层」；
      点了先存成我的多层副本（问一次名字），再弹加层选择器；之后再点不再问名字
+  R18 4.9.126 多层「合成一张」（用户 11-03 / 11-04「PC与手机都要有，能接受统一用一层颜色」）：多层模板产物表 PC / 手机能选合成一张；两层都选 →
+     手机计划是 merge、没有冲突提示，格子写「合成一张：第 1、2 层 · 颜色用第 1 层」，交付清单列 _Mix_ 贴图；单层效果的合成一张变灰；层页头能选
   R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -1906,6 +1908,46 @@ async def r17(pg):
     if not r2['picker'] or r2['mode'] != 'addLayer': bad.append('我的效果里点「＋ 加一层」没弹加层选择器')
     await pg.evaluate("pkClose(); 0")
     return not bad, '；'.join(bad) or f"多层模板 {r0['key']}（{r0['n']} 层）：图层管理有「＋ 加一层」→ 先存成 {r1['key']}、弹加层选择器；再点直接选层、不再问名字"
+
+
+# 4.9.126（用户 11-03 20:33 / 11-04 10:37）：多层合成一张的界面接线（假烘焙：只看表、计划和文件名，像素看 合成一张检查.py）
+R18_JS = r"""(async () => {
+  const bad = [], info = {};
+  const opt = (pf, i) => document.querySelector(`#delivView select[data-prod="${pf}"][data-i="${i}"] option[value="merge"]`);
+  toggleDeliv(true); renderDeliv();
+  for (const pf of ['pc', 'mobile']) for (const i of [0, 1]) { const o = opt(pf, i); if (!o) bad.push(`产物表第 ${i + 1} 层 ${pf} 没有「合成一张」`); else if (o.disabled) bad.push(`产物表第 ${i + 1} 层 ${pf} 的合成一张是灰的：${o.title}`); }
+  for (const pf of ['pc', 'mobile']) for (const i of [0, 1]) setProduct(i, pf, 'merge');
+  const xs = curLayerBakes(); comboMobilePlan(xs).forEach((p, k) => { xs[k].mob = p; });
+  info.pc = state.layers.map(L => layerOut(L).pc); info.mobile = comboMobilePlan(xs).map(p => p.kind); info.conflict = comboMobileConflictText(xs);
+  if (info.pc.join() !== 'merge,merge') bad.push('PC 没记成合成一张：' + info.pc.join());
+  if (info.mobile.join() !== 'merge,merge') bad.push('手机计划不是合成一张：' + info.mobile.join());
+  if (info.conflict) bad.push('合成一张还报手机冲突：' + info.conflict);
+  renderDeliv(); const txt = $('#delivView').textContent;
+  info.cell = (txt.match(/合成一张：第 1、2 层[^（]*/) || [''])[0];
+  if (!/合成一张：第 1、2 层 · 颜色用第 1 层/.test(txt)) bad.push('产物表格子没写「合成一张：第 1、2 层 · 颜色用第 1 层」');
+  if (!/T_EFX_FireWorks_\w+_Mix_\d+x\d+_01_HD\.png/.test(txt)) bad.push('交付清单没列 PC 的 _Mix_…_HD 贴图');
+  if (!/T_EFX_FireWorks_\w+_Mix_\d+x\d+_01\.png/.test(txt)) bad.push('交付清单没列手机的 _Mix_ 贴图');
+  if (/T_EFX_FireWorks_\w+_L?\d?_?[A-Za-z]*_\d+x\d+_01_HD\.png/.test(txt.replace(/T_EFX_FireWorks_\w+_Mix_\d+x\d+_01_HD\.png/g, ''))) bad.push('合成以后交付清单还列着各层自己的 PC 序列');
+  selectComboLayer(0); const lh = document.querySelector('#lhOut [data-out=pc] option[value=merge]'); if (!lh || lh.disabled) bad.push('层页头 PC 没有可选的合成一张');
+  info.note = (document.querySelector('#lhOutNote') || {}).textContent || '';
+  if (!/合成一张/.test(info.note)) bad.push('层页头方案说明没写合成一张');
+  toggleDeliv(false);
+  window.__opening = true; try { openType('kiku'); } finally { window.__opening = false; }
+  await new Promise(r => setTimeout(r, 300));
+  toggleDeliv(true); renderDeliv();
+  const so = document.querySelector('#delivView select[data-prod="pc"] option[value="merge"]');
+  if (so && !so.disabled) bad.push('单层效果的合成一张没变灰');
+  info.single = so ? so.title : '（单层没这个选项）';
+  toggleDeliv(false);
+  return { bad, info };
+})()"""
+
+
+async def r18(pg):
+    """多层合成一张（4.9.126）：产物表 / 手机计划 / 交付清单 / 层页头接线；单层变灰"""
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openMultiType('shinKiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate(R18_JS)
+    return not r['bad'], '；'.join(r['bad']) or json.dumps(r['info'], ensure_ascii=False)[:600]
 
 
 async def r16(pg):
@@ -4160,7 +4202,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('R16', r16, False), ('R17', r17, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('R12', r12, False), ('R13', r13, False), ('R14', r14, False), ('R15', r15, False), ('R16', r16, False), ('R17', r17, False), ('R18', r18, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('W37', w37, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
