@@ -1,0 +1,3345 @@
+{
+  "format": "df.ppt3-resource-classification/1",
+  "createdAt": "2026-10-30T02:27:07+08:00",
+  "inventoryAt": "2026-10-28T10:06:23.137Z",
+  "summary": {
+    "pcRows": 46,
+    "mobileRows": 24,
+    "pcSizeRows": {
+      "小号": 6,
+      "小型": 13,
+      "中型": 7,
+      "大型": 7,
+      "尾缀": 6,
+      "窜天猴": 7
+    },
+    "mobileSizeRows": {
+      "小号": 4,
+      "小型": 6,
+      "中型": 1,
+      "大型": 1,
+      "尾缀": 6,
+      "窜天猴": 6
+    },
+    "pcBloomRows": 33,
+    "pcNamedBloomTypes": 26,
+    "pcBloomSpecsAfterGoldFanMerge": 30,
+    "mobileNamedBloomTypes": 12,
+    "pcPrimaryMorphologyNamedTypeCounts": {
+      "冠": 3,
+      "特殊星效": 6,
+      "彗星": 5,
+      "扇形": 1,
+      "球形开花": 9,
+      "未定": 1,
+      "柳": 1
+    },
+    "mobilePrimaryMorphologyNamedTypeCounts": {
+      "冠": 3,
+      "特殊星效": 5,
+      "彗星": 2,
+      "球形开花": 1,
+      "柳": 1
+    },
+    "pcDistinctParticleAssets": 44,
+    "mobileDistinctParticleAssets": 51,
+    "rowPrimaryMorphologyCounts": {
+      "PC": {
+        "冠": 3,
+        "特殊星效": 6,
+        "彗星": 5,
+        "扇形": 4,
+        "球形开花": 13,
+        "未定": 1,
+        "柳": 1,
+        "其他": 13
+      },
+      "手游": {
+        "冠": 3,
+        "特殊星效": 5,
+        "彗星": 2,
+        "球形开花": 1,
+        "柳": 1,
+        "其他": 12
+      }
+    },
+    "combinedPlatformRecordMorphologyCounts": {
+      "冠": 6,
+      "特殊星效": 11,
+      "彗星": 7,
+      "扇形": 4,
+      "球形开花": 14,
+      "未定": 1,
+      "柳": 2,
+      "其他": 25
+    }
+  },
+  "rulesAndLimitations": [
+    "主形态为本报告的互斥统计栏：先看已证实整面几何（扇形），再看特殊星效模板，再按kiku/botan球、kamuro冠、yanagi柳；无配方时仅用原理/行名并标等级；不能确定的记未定。副特征在detail保留，不叠加计数。",
+    "小金花、小银菊、银冠菊按kamuro=锦冠归冠，允许下垂；柳按仓库yanagi“大幅下垂”概念。金垂柳未证实配方，仅按行名归柳，标识符GoldKamuro不当作模板。金锦冠的扇面结构优先，不能同时加冠。",
+    "26是同名美术花型口径：33开花行−金锦冠四段额外3行−同名跨尺寸/重复的额外4行（金芒菊、金蕊柠、多重菊、银彩菊）=26；短爆裂与爆裂星、小分裂与金裂星仍为不同花名，不因模板相同而合并。按UE粒子系统路径去重不是26口径。",
+    "完整扇形家族1种：金锦冠（PC四行、手游无）。若把用于扇形编排的单束也叫扇形用途，则共3种：金锦冠、红彗星、银星扇；后两种当前按tailS配方归彗星。FC6O/橙扇不在本inventory，不能计入。",
+    "大型2826–2829仅4个是旧大型A–D记录；10-16 ResourceFX快照有42行、大型A–D四行。到10-28增加大型E_银彩菊、F_金芒菊、G_银白菊，以及窜天猴碰撞爆炸，成为46行；大型为7行。不能把历史编号范围当当前全部大型行，也不能倒推新增数字编号。",
+    "手游从inventory去掉显式“（金垂柳 v3，待合入）”额外条目，保留窜天猴拖尾烟雾行（其Low槽空占位不删行），得到24行；资产去重计数排除P_Destructible_Empty后51。",
+    "数字ResourceFX编号70行均未从源字段读到，JSON为null；字符串ResourceId来自10-16精确同行名旧表及B11新增三行记录，可能滞后，已注明。PC碰撞爆炸、手游窜天猴六行未证实字符串ResourceId，不猜。",
+    "此为2026-10-28库存快照的资料复核，不是2026-10-30实时UE重读，也不表示任何效果本轮获用户验收。",
+    "46/24的分母是两平台ResourceFX中RowDescription=跨年烟花3.0的实际行，含尾缀、组件与行内空槽。inventory采集脚本S15可核；其70个平台行记录不是70种花型，也不是70个不同UE粒子系统。",
+    "另列7条PC历史数字号（S12的10-18截图/编排记录）于historicalResourceFxNumber，不填入10-28未保存的resourceFxNumber字段。"
+  ],
+  "sources": {
+    "S01": {
+      "path": "F:/FireWorksLab/analysis/local/20261028_LiteHDR_手游贴图Mip/inventory.json",
+      "sha256": "d3e3126baf317962fe7302e88f8c61394214885c5bf3e3e909490215fe039c71",
+      "scope": "2026-10-28 UE读回；rows/plat/cols/path。无数字编号及ResourceId字段。"
+    },
+    "S02": {
+      "path": "F:/FireWorksLab/analysis/results/资源规范统一_20261016/采集/resourcefx_30.json",
+      "sha256": "21190fd9f8bdd464580ee7db01899c7eb768231c70713045935ba3c7aeb772f5",
+      "scope": "2026-10-16旧ResourceFX读回；用于按精确_row_name查字符串ResourceId，不作为10-28数量依据。"
+    },
+    "S03": {
+      "path": "F:/FireWorksLab/协作/提示词/分享PPT交接_2026-10-29/第二版交付/核验依据/verify_A1_A2.md",
+      "sha256": "8cf368363a1688315e00010214a570d09104c49e62b3926547ee3e5e40413f74",
+      "scope": "第二版核验§1、§6：口径及20组资源到配方来源的对应；本报告独立复算行数。"
+    },
+    "S04": {
+      "path": "F:/FireWorksLab/tool/src/js/10_types.js",
+      "sha256": "8684f3c44e1be82871a07ee7ef96e6671c2c974796420d35108f17a4fd550129",
+      "scope": "TYPE_INFO:24-32中文模板名；kamuro=锦冠、yanagi=柳等。"
+    },
+    "S05": {
+      "path": "F:/FireWorksLab/tool/src/js/72_picker.js",
+      "sha256": "0654be9c0fa3ce15fd5a68c6d5e24020f9b18890f0858e36c226917ef1167e22",
+      "scope": "TYPE_META:6-12中文形态与机制；kiku/botan标球，冠与柳分别描述。"
+    },
+    "S06": {
+      "path": "F:/FireWorksLab/analysis/原理/FanGold.md",
+      "sha256": "e6f9829f473d55cf52594fa0a3f8fe2a71539571942ad7ff8f02bb2048736770",
+      "scope": "FanGold是地面扇形组合；原文含Center/Mid/OuterL/OuterR；仅佐证金锦冠家族形态，不将FG7候选参数冒充现有正式版本。"
+    },
+    "S07": {
+      "path": "F:/FireWorksLab/analysis/原理/CometSilver3_RT6.md",
+      "sha256": "afa751074d629f04aa6abdfe91a8be54dc6b11402dc49dce41537b3187d96f2b",
+      "scope": "Comet红头金尾、Silver银白整束；同轨迹单束，Comet/Silver RT6系列。"
+    },
+    "S08": {
+      "path": "F:/FireWorksLab/analysis/原理/条目_CometSilverLayers.json",
+      "sha256": "578ce11799d94169a9b509f957a07e96260fc596c0f5113af6d85153edccf2f0",
+      "scope": "CSLRC-T/H、CSLRS的base=tailS；当前3.1末段分层家族。"
+    },
+    "S09": {
+      "path": "F:/FireWorksLab/analysis/原理/条目_金蕊柠.json",
+      "sha256": "0bce5e995028e29e5c1b676520aa8293b6ddfe5b61f5eb3cc1ff16dc7056275e",
+      "scope": "金蕊柠模板族：botan/kiku、pattern=sphere；现文件为JQ7，不能代替verify中的历史JQ2导出参数。"
+    },
+    "S10": {
+      "path": "F:/FireWorksLab/analysis/迭代/条目.json",
+      "sha256": "8099e9d8608e02609acd88b4adb3b53ffc7b65e9d1e8c43b7187edb20042dd16",
+      "scope": "QN11→QN11-1/-2：base=botan、p.pattern=sphere；verify映射到绿牡丹。"
+    },
+    "S11": {
+      "path": "F:/FireWorksLab/analysis/原理/万彩千轮.md",
+      "sha256": "16010f9c20ced339df43bf41244d3c1ac4eb7c8f255098a735318563246e27c4",
+      "scope": "含历史Prism及PRISM3候选多朵环/球小割说明；当前PrismWheels_HD版本未能逐一对应，故不据此强定形态。"
+    },
+    "S12": {
+      "path": "F:/FireWorksLab/协作/编排B11.md",
+      "sha256": "d7a9cc93a3d78eac26133a3757274c5ce021b95fe47e8f5c99143a1299c7171c",
+      "scope": "大型_E/F/G新增行的字符串ResourceId，正文表格第40–42行。"
+    },
+    "S13": {
+      "path": "D:/ProjectTextures/FireWorksLab/Combo/Combo_组合说明.json",
+      "sha256": "d0d7fa1e026e1c9ac787ec4fdc3530a0ee8e9afc8ec0bb92a4868348dae3d12d",
+      "scope": "金裂星→Combo旧包：layers[].masterType=crossette；name=分裂星。"
+    },
+    "S14": {
+      "path": "D:/ProjectTextures/FireWorksLab/Combo/cascade.json",
+      "sha256": "5de128e1aca302c1b822a7ba7f4fade008cc03f257b1d32160af6c6a7a427761",
+      "scope": "source.layers[].type=crossette，印证旧包模板。"
+    },
+    "R01": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/LittleGold/revisions/39b4a60d9feac1cd4b4c/workspace-resource.json",
+      "sha256": "bb848c780dfbb74ae5bc5dd09ebd77a87c2e3a4003f4998efc572b7f3637813e",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R02": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/LittleSilver/revisions/9e45a97f443b12089b19/workspace-resource.json",
+      "sha256": "e0859d2727e9b8b176b9c01aa3d5df0699c63b2f2d231b372ed49794de120c94",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R03": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/LittleCrackle/revisions/fc5a1c4f192c576415fd/workspace-resource.json",
+      "sha256": "5d83bf37f154cd09f8e194c4fe1f0858c1d42d68d055dcb56cc1810595265763",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R04": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/LittleCombo/revisions/a1e1a3a5d4416a279157/workspace-resource.json",
+      "sha256": "7099e00a8a94b399ca10f060fcbf738aeb97e85071d73fa8ad284a805731974d",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R05": {
+      "path": "D:/ProjectTextures/FireWorksLab/尾缀/小/Comet_Layers/revisions/c325a9e8d33d5ff2c4e8/workspace-resource.json",
+      "sha256": "7be8d8f59f9cf815eaf41e7ea81cdd5119db18e9e6ed116ad7d0e3084702816e",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R06": {
+      "path": "D:/ProjectTextures/FireWorksLab/尾缀/小/Silver3_Layers_S/revisions/603ece17457ef20d0905/workspace-resource.json",
+      "sha256": "1e58971ad60af0314517bb5efef149168639b83d3a4d4ad59d1217d9ebee1952",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R07": {
+      "path": "D:/ProjectTextures/FireWorksLab/尾缀/小/Comet3/revisions/c35b5e54c22c90f13e93/workspace-resource.json",
+      "sha256": "34aaf8cf08f58895befbcbbe7f73c18239fbb5bd5e0dc7d6be0ebc0f649bbcab",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R08": {
+      "path": "D:/ProjectTextures/FireWorksLab/尾缀/小/Silver3_Layers_S/revisions/603ece17457ef20d0905/workspace-resource.json",
+      "sha256": "1e58971ad60af0314517bb5efef149168639b83d3a4d4ad59d1217d9ebee1952",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R09": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/SilverChry/revisions/d114e23e14681ce74079/workspace-resource.json",
+      "sha256": "adab26ac39d87aa33ff99e5c0c771876f4e118f6b2cd529a248ff928829cf078",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R10": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/Crackle/revisions/28daf4753656cc9ddce9/workspace-resource.json",
+      "sha256": "a11acabb904d091847c85509323e6263aea3330438d244fe837a6e76b1632239",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R11": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/Lime/revisions/e6fee84bc5f26c210e09/workspace-resource.json",
+      "sha256": "68bbf3526b14511d8caa4ea193bb0e348beb751645a0bef7561889939ee60228",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R12": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/Glitter/revisions/3dcf49db4b577f8c0922/workspace-resource.json",
+      "sha256": "236b0a5a0e98d440d43799bd2e8075106cb8b95333412d816982de3d66ea9827",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R13": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/Strobe_D90/revisions/afe5eaf200fefe56279e/workspace-resource.json",
+      "sha256": "da27919e26afa1f400ae1086dc77aea60782e088d2c4eb026e27f2ee05c4329a",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R14": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/未分类/GoldRay/revisions/959ffda279a5bfca1236/workspace-resource.json",
+      "sha256": "6d6761c9bbebb213cbb30eb74a57d3ee154af09b68f3b82b5d7e629be141fff4",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R15": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/中/GoldSpark/revisions/17d959903d5595452746/workspace-resource.json",
+      "sha256": "e567fb4ac571d2a6ce363955d1e877802c1d9c9209a850fc115bce53ece0c6de",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R16": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/大/GoldRayChry/revisions/1c2bffc44943faa251e6/workspace-resource.json",
+      "sha256": "9b7e837dc6b51c050be92d3c21cb1543d1b7851ebd2dff8596916400bf70b938",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "R17": {
+      "path": "D:/ProjectTextures/FireWorksLab/烟花/小/LimeCoreDelay/revisions/8110a43aa4ed204025d0/workspace-resource.json",
+      "sha256": "3f77183e0345960143b5672eb8229e8f09186c3cc3b5d0d9cf8dd498dc165028",
+      "scope": "verify §6映射的交付修订；读取metadata.recipe的模板类型与pattern，不等同于核验UE当前贴图内容。"
+    },
+    "S15": {
+      "path": "F:/FireWorksLab/analysis/local/20261028_LiteHDR_手游贴图Mip/tex_inventory.mjs",
+      "sha256": "4f821e9668ab8cd7f0a980e9eef5663980b4bcbfa57d0dfd3d3058b8bb05acfd",
+      "scope": "采集脚本：ResourceFX两平台按RowDescription=跨年烟花3.0搜索，PC采FxSP，手游采FxSP/High/Low；添加未入表V3额外样本。"
+    }
+  },
+  "recipeDiscriminants": {
+    "小金花": {
+      "sourceId": "R01",
+      "types": [
+        "kamuro"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "小银菊": {
+      "sourceId": "R02",
+      "types": [
+        "kamuro"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "短爆裂": {
+      "sourceId": "R03",
+      "types": [
+        "crackle"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "小分裂": {
+      "sourceId": "R04",
+      "types": [
+        "crossette"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "短彗星": {
+      "sourceId": "R05",
+      "types": [
+        "tailS",
+        "tailS"
+      ],
+      "patterns": [
+        "sphere",
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "短银尾": {
+      "sourceId": "R06",
+      "types": [
+        "tailS"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": "CSLRS",
+      "kind": "single"
+    },
+    "红彗星": {
+      "sourceId": "R07",
+      "types": [
+        "tailS",
+        "tailS"
+      ],
+      "patterns": [
+        "sphere",
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "银星扇": {
+      "sourceId": "R08",
+      "types": [
+        "tailS"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": "CSLRS",
+      "kind": "single"
+    },
+    "银冠菊": {
+      "sourceId": "R09",
+      "types": [
+        "kamuro"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "爆裂星": {
+      "sourceId": "R10",
+      "types": [
+        "crackle"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "小青柠": {
+      "sourceId": "R11",
+      "types": [
+        "botan",
+        "botan",
+        "botan"
+      ],
+      "patterns": [
+        "sphere",
+        "sphere",
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "橙辉星": {
+      "sourceId": "R12",
+      "types": [
+        "glitter"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "点灭星": {
+      "sourceId": "R13",
+      "types": [
+        "strobe"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "金锦菊": {
+      "sourceId": "R14",
+      "types": [
+        "kiku",
+        "kiku"
+      ],
+      "patterns": [
+        "sphere",
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "金曜菊": {
+      "sourceId": "R15",
+      "types": [
+        "kiku",
+        "botan",
+        "botan"
+      ],
+      "patterns": [
+        "sphere",
+        "sphere",
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    },
+    "金芒菊": {
+      "sourceId": "R16",
+      "types": [
+        "kiku"
+      ],
+      "patterns": [
+        "sphere"
+      ],
+      "repId": "JM4-40",
+      "kind": "single"
+    },
+    "多重菊": {
+      "sourceId": "R17",
+      "types": [
+        "botan",
+        "botan",
+        "botan"
+      ],
+      "patterns": [
+        "sphere",
+        "sphere",
+        "sphere"
+      ],
+      "repId": null,
+      "kind": "combo"
+    }
+  },
+  "namedBloomTypes": {
+    "小金花": {
+      "primary": "冠",
+      "detail": "锦冠模板；有下垂尾迹",
+      "sourceIds": [
+        "R01",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+    },
+    "小银菊": {
+      "primary": "冠",
+      "detail": "锦冠模板；有下垂尾迹",
+      "sourceIds": [
+        "R02",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+    },
+    "银冠菊": {
+      "primary": "冠",
+      "detail": "锦冠模板；有下垂尾迹",
+      "sourceIds": [
+        "R09",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+    },
+    "短爆裂": {
+      "primary": "特殊星效",
+      "detail": "爆裂",
+      "sourceIds": [
+        "R03",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=['crackle']；crackle=爆裂星。"
+    },
+    "爆裂星": {
+      "primary": "特殊星效",
+      "detail": "爆裂",
+      "sourceIds": [
+        "R10",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=['crackle']；crackle=爆裂星。"
+    },
+    "小分裂": {
+      "primary": "特殊星效",
+      "detail": "分裂",
+      "sourceIds": [
+        "R04",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=crossette；仓库定义分裂（十字）。"
+    },
+    "金裂星": {
+      "primary": "特殊星效",
+      "detail": "分裂",
+      "sourceIds": [
+        "S13",
+        "S14",
+        "S04",
+        "S05"
+      ],
+      "basis": "Combo原包masterType/source.layers.type=crossette；ResourceId的GoldCrackle不能替代配方证据。"
+    },
+    "短彗星": {
+      "primary": "彗星",
+      "detail": "单束升空彗尾",
+      "sourceIds": [
+        "R05",
+        "S07",
+        "S08"
+      ],
+      "basis": "metadata.recipe type=['tailS', 'tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+    },
+    "短银尾": {
+      "primary": "彗星",
+      "detail": "单束升空彗尾",
+      "sourceIds": [
+        "R06",
+        "S07",
+        "S08"
+      ],
+      "basis": "metadata.recipe type=['tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+    },
+    "红彗星": {
+      "primary": "彗星",
+      "detail": "单束；可用于扇形编排",
+      "sourceIds": [
+        "R07",
+        "S07",
+        "S08"
+      ],
+      "basis": "metadata.recipe type=['tailS', 'tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+    },
+    "银星扇": {
+      "primary": "彗星",
+      "detail": "单束；可用于扇形编排",
+      "sourceIds": [
+        "R08",
+        "S07",
+        "S08"
+      ],
+      "basis": "metadata.recipe type=['tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+    },
+    "小彗星": {
+      "primary": "彗星",
+      "detail": "行名依据；配方类型未核实",
+      "sourceIds": [
+        "S01"
+      ],
+      "basis": "正式行名明确小彗星；未读取到与该UE资产对应的确定配方。"
+    },
+    "金锦冠": {
+      "primary": "扇形",
+      "detail": "完整扇面家族；四行按一花型计",
+      "sourceIds": [
+        "S01",
+        "S02",
+        "S06"
+      ],
+      "basis": "FanGold原理§1明确地面扇形组合；原文列Center/Mid/OuterL/OuterR。此处归扇面几何，不因其锦冠母模板重复计冠。"
+    },
+    "橙辉星": {
+      "primary": "特殊星效",
+      "detail": "辉星",
+      "sourceIds": [
+        "R12",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=glitter；仓库中文模板/机制定义。"
+    },
+    "点灭星": {
+      "primary": "特殊星效",
+      "detail": "点灭",
+      "sourceIds": [
+        "R13",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe type=strobe；仓库中文模板/机制定义。"
+    },
+    "小青柠": {
+      "primary": "球形开花",
+      "detail": "菊/牡丹主模板；混合层不重复计",
+      "sourceIds": [
+        "R11",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe types=['botan', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+    },
+    "金锦菊": {
+      "primary": "球形开花",
+      "detail": "菊/牡丹主模板；混合层不重复计",
+      "sourceIds": [
+        "R14",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe types=['kiku', 'kiku']、patterns=['sphere', 'sphere']；仓库kiku/botan归球。"
+    },
+    "金曜菊": {
+      "primary": "球形开花",
+      "detail": "菊/牡丹主模板；混合层不重复计",
+      "sourceIds": [
+        "R15",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe types=['kiku', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+    },
+    "金芒菊": {
+      "primary": "球形开花",
+      "detail": "菊/牡丹主模板；混合层不重复计",
+      "sourceIds": [
+        "R16",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe types=['kiku']、patterns=['sphere']；仓库kiku/botan归球。"
+    },
+    "多重菊": {
+      "primary": "球形开花",
+      "detail": "菊/牡丹主模板；混合层不重复计",
+      "sourceIds": [
+        "R17",
+        "S04",
+        "S05"
+      ],
+      "basis": "metadata.recipe types=['botan', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+    },
+    "绿牡丹": {
+      "primary": "球形开花",
+      "detail": "牡丹两层",
+      "sourceIds": [
+        "S10",
+        "S03",
+        "S04",
+        "S05"
+      ],
+      "basis": "verify映射QN11；其两层base=botan，p.pattern=sphere。"
+    },
+    "金蕊柠": {
+      "primary": "球形开花",
+      "detail": "金菊芯+柠点星",
+      "sourceIds": [
+        "S09",
+        "S03",
+        "S04",
+        "S05"
+      ],
+      "basis": "verify映射金蕊柠模板族；仓库配方botan+kiku、pattern=sphere。现JQ7只作模板类型证据，不冒充JQ2原始配方。"
+    },
+    "彩千轮": {
+      "primary": "未定",
+      "detail": "千轮名义；当前UE版本对应未核实",
+      "sourceIds": [
+        "S01",
+        "S11"
+      ],
+      "basis": "行名彩千轮；文档含PRISM3环/球小割候选，但未证实对应10-28 inventory的PrismWheels_HD，不能直接计球形或特殊星效。"
+    },
+    "金垂柳": {
+      "primary": "柳",
+      "detail": "行名依据；无已核实对应模板",
+      "sourceIds": [
+        "S01"
+      ],
+      "basis": "行名明确金垂柳。ResourceId含GoldKamuro仅为标识符，不把它推断成配方type=kamuro。"
+    },
+    "银彩菊": {
+      "primary": "球形开花",
+      "detail": "按行名菊；模板未核实",
+      "sourceIds": [
+        "S01"
+      ],
+      "basis": "行名明确菊，按名称形态归球形开花；未核验对应配方，不能细分点灭/银冠等。"
+    },
+    "银白菊": {
+      "primary": "球形开花",
+      "detail": "按行名菊；模板未核实",
+      "sourceIds": [
+        "S01"
+      ],
+      "basis": "行名明确菊，按名称形态归球形开花；未核验对应配方，不能细分点灭/银冠等。"
+    }
+  },
+  "rows": [
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小号_A_小金花",
+      "inventoryRowName": "小号_A_小金花",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleGold",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "小金花",
+      "morphology": {
+        "primary": "冠",
+        "detail": "锦冠模板；有下垂尾迹",
+        "sourceIds": [
+          "R01",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleGold_HD.P_EFX_FireWorks_LittleGold_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小号_B_小银菊",
+      "inventoryRowName": "小号_B_小银菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleSilver",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "小银菊",
+      "morphology": {
+        "primary": "冠",
+        "detail": "锦冠模板；有下垂尾迹",
+        "sourceIds": [
+          "R02",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleSilver_HD.P_EFX_FireWorks_LittleSilver_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小号_C_短爆裂",
+      "inventoryRowName": "小号_C_短爆裂",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleCrackle",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "短爆裂",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "爆裂",
+        "sourceIds": [
+          "R03",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['crackle']；crackle=爆裂星。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCrackle_HD.P_EFX_FireWorks_LittleCrackle_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小号_D_小分裂",
+      "inventoryRowName": "小号_D_小分裂",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleCombo",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "小分裂",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "分裂",
+        "sourceIds": [
+          "R04",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=crossette；仓库定义分裂（十字）。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleCombo_HD.P_EFX_FireWorks_LittleCombo_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小号_A_短彗星",
+      "inventoryRowName": "小号_A_短彗星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Comet_Layers_S",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "短彗星",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "单束升空彗尾",
+        "sourceIds": [
+          "R05",
+          "S07",
+          "S08"
+        ],
+        "basis": "metadata.recipe type=['tailS', 'tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_S_HD.P_EFX_FireWorks_Comet_Layers_S_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小号_B_短银尾",
+      "inventoryRowName": "小号_B_短银尾",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Silver_Layers_S",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "短银尾",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "单束升空彗尾",
+        "sourceIds": [
+          "R06",
+          "S07",
+          "S08"
+        ],
+        "basis": "metadata.recipe type=['tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Silver_Layers_S_HD.P_EFX_FireWorks_Silver_Layers_S_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_A_金锦冠_中心",
+      "inventoryRowName": "小型_A_金锦冠_中心",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanGold_Central_01",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "金锦冠",
+      "morphology": {
+        "primary": "扇形",
+        "detail": "完整扇面家族；四行按一花型计",
+        "sourceIds": [
+          "S01",
+          "S02",
+          "S06"
+        ],
+        "basis": "FanGold原理§1明确地面扇形组合；原文列Center/Mid/OuterL/OuterR。此处归扇面几何，不因其锦冠母模板重复计冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_A_金锦冠_中间",
+      "inventoryRowName": "小型_A_金锦冠_中间",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanGold_Middle_01",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "金锦冠",
+      "morphology": {
+        "primary": "扇形",
+        "detail": "完整扇面家族；四行按一花型计",
+        "sourceIds": [
+          "S01",
+          "S02",
+          "S06"
+        ],
+        "basis": "FanGold原理§1明确地面扇形组合；原文列Center/Mid/OuterL/OuterR。此处归扇面几何，不因其锦冠母模板重复计冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_A_金锦冠_外左",
+      "inventoryRowName": "小型_A_金锦冠_外左",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanGold_OuterLeft",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "金锦冠",
+      "morphology": {
+        "primary": "扇形",
+        "detail": "完整扇面家族；四行按一花型计",
+        "sourceIds": [
+          "S01",
+          "S02",
+          "S06"
+        ],
+        "basis": "FanGold原理§1明确地面扇形组合；原文列Center/Mid/OuterL/OuterR。此处归扇面几何，不因其锦冠母模板重复计冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_A_金锦冠_外右",
+      "inventoryRowName": "小型_A_金锦冠_外右",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanGold_OuterRight",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "金锦冠",
+      "morphology": {
+        "primary": "扇形",
+        "detail": "完整扇面家族；四行按一花型计",
+        "sourceIds": [
+          "S01",
+          "S02",
+          "S06"
+        ],
+        "basis": "FanGold原理§1明确地面扇形组合；原文列Center/Mid/OuterL/OuterR。此处归扇面几何，不因其锦冠母模板重复计冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_B_红彗星",
+      "inventoryRowName": "小型_B_红彗星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanComet_01",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "红彗星",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "单束；可用于扇形编排",
+        "sourceIds": [
+          "R07",
+          "S07",
+          "S08"
+        ],
+        "basis": "metadata.recipe type=['tailS', 'tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_Layers_HD.P_EFX_FireWorks_Comet_Layers_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_C_银星扇",
+      "inventoryRowName": "小型_C_银星扇",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanSilver_01",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "银星扇",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "单束；可用于扇形编排",
+        "sourceIds": [
+          "R08",
+          "S07",
+          "S08"
+        ],
+        "basis": "metadata.recipe type=['tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_D_金裂星",
+      "inventoryRowName": "小型_D_金裂星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldCrackle",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "金裂星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "分裂",
+        "sourceIds": [
+          "S13",
+          "S14",
+          "S04",
+          "S05"
+        ],
+        "basis": "Combo原包masterType/source.layers.type=crossette；ResourceId的GoldCrackle不能替代配方证据。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_E_小彗星",
+      "inventoryRowName": "小型_E_小彗星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Comet",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "小彗星",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "行名依据；配方类型未核实",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "正式行名明确小彗星；未读取到与该UE资产对应的确定配方。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_F_银冠菊",
+      "inventoryRowName": "小型_F_银冠菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_SilverChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "银冠菊",
+      "morphology": {
+        "primary": "冠",
+        "detail": "锦冠模板；有下垂尾迹",
+        "sourceIds": [
+          "R09",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_G_爆裂星",
+      "inventoryRowName": "小型_G_爆裂星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Crackle",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "爆裂星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "爆裂",
+        "sourceIds": [
+          "R10",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['crackle']；crackle=爆裂星。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_H_小青柠",
+      "inventoryRowName": "小型_H_小青柠",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Lime",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "小青柠",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R11",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['botan', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Lime_HD.P_EFX_FireWorks_Lime_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_I__橙辉星",
+      "inventoryRowName": "小型_I__橙辉星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Glitter",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "橙辉星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "辉星",
+        "sourceIds": [
+          "R12",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=glitter；仓库中文模板/机制定义。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Glitter_HD.P_EFX_FireWorks_Glitter_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_J_点灭星",
+      "inventoryRowName": "小型_J_点灭星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Strobe",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "点灭星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "点灭",
+        "sourceIds": [
+          "R13",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=strobe；仓库中文模板/机制定义。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Strobe_HD.P_EFX_FireWorks_Strobe_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_A_绿牡丹",
+      "inventoryRowName": "中型_A_绿牡丹",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GreenPeony",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "绿牡丹",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "牡丹两层",
+        "sourceIds": [
+          "S10",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "basis": "verify映射QN11；其两层base=botan，p.pattern=sphere。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_B_金锦菊",
+      "inventoryRowName": "中型_B_金锦菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldSpark",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "金锦菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R14",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['kiku', 'kiku']、patterns=['sphere', 'sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_C_彩千轮",
+      "inventoryRowName": "中型_C_彩千轮",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_PrismWheels",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "彩千轮",
+      "morphology": {
+        "primary": "未定",
+        "detail": "千轮名义；当前UE版本对应未核实",
+        "sourceIds": [
+          "S01",
+          "S11"
+        ],
+        "basis": "行名彩千轮；文档含PRISM3环/球小割候选，但未证实对应10-28 inventory的PrismWheels_HD，不能直接计球形或特殊星效。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_D_金曜菊",
+      "inventoryRowName": "中型_D_金曜菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "金曜菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R15",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['kiku', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_E_金蕊柠",
+      "inventoryRowName": "中型_E_金蕊柠",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldCoreLime",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "金蕊柠",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "金菊芯+柠点星",
+        "sourceIds": [
+          "S09",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "basis": "verify映射金蕊柠模板族；仓库配方botan+kiku、pattern=sphere。现JQ7只作模板类型证据，不冒充JQ2原始配方。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2823,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_C_金蕊柠",
+      "inventoryRowName": "大型_C_金蕊柠",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldCoreLime_L",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "金蕊柠",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "金菊芯+柠点星",
+        "sourceIds": [
+          "S09",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "basis": "verify映射金蕊柠模板族；仓库配方botan+kiku、pattern=sphere。现JQ7只作模板类型证据，不冒充JQ2原始配方。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2828,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_B_金芒菊",
+      "inventoryRowName": "中型_B_金芒菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldRayChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "金芒菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R16",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['kiku']、patterns=['sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_HD.P_EFX_FireWorks_GoldRayChry_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2824,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_F_多重菊",
+      "inventoryRowName": "中型_F_多重菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_MultiLayerChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "多重菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R17",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['botan', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2825,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_D_多重菊",
+      "inventoryRowName": "大型_D_多重菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_MultiLayerChry_L",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "多重菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R17",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['botan', 'botan', 'botan']、patterns=['sphere', 'sphere', 'sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2829,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_A_金垂柳",
+      "inventoryRowName": "大型_A_金垂柳",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldKamuro",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "金垂柳",
+      "morphology": {
+        "primary": "柳",
+        "detail": "行名依据；无已核实对应模板",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "行名明确金垂柳。ResourceId含GoldKamuro仅为标识符，不把它推断成配方type=kamuro。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2826,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_B_银彩菊",
+      "inventoryRowName": "大型_B_银彩菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_SilverStrobeChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "银彩菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "按行名菊；模板未核实",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "行名明确菊，按名称形态归球形开花；未核验对应配方，不能细分点灭/银冠等。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_HD.P_EFX_FireWorks_SilverStrobeChry_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": 2827,
+      "historicalResourceFxNumberEvidence": {
+        "sourceId": "S12",
+        "location": "99、110、148行",
+        "status": "10-18截图/编排历史记录，不冒充10-28数字字段读回"
+      }
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_E_银彩菊",
+      "inventoryRowName": "大型_E_银彩菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_SilverStrobeChry_B",
+      "resourceIdEvidence": [
+        "S12"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "银彩菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "按行名菊；模板未核实",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "行名明确菊，按名称形态归球形开花；未核验对应配方，不能细分点灭/银冠等。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverStrobeChry_B_HD.P_EFX_FireWorks_SilverStrobeChry_B_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_F_金芒菊",
+      "inventoryRowName": "大型_F_金芒菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldRayChry_L",
+      "resourceIdEvidence": [
+        "S12"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "金芒菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R16",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['kiku']、patterns=['sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRayChry_L_HD.P_EFX_FireWorks_GoldRayChry_L_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_G_银白菊",
+      "inventoryRowName": "大型_G_银白菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_SilverWhiteChry",
+      "resourceIdEvidence": [
+        "S12"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "银白菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "按行名菊；模板未核实",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "行名明确菊，按名称形态归球形开花；未核验对应配方，不能细分点灭/银冠等。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverWhiteChry_HD.P_EFX_FireWorks_SilverWhiteChry_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_超大_尾缀",
+      "inventoryRowName": "超大_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Hero_HD.P_EFX_FireWorks_RiseTrail_Hero_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_大型_尾缀",
+      "inventoryRowName": "大型_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_NY_Trail_Large",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_中型_尾缀",
+      "inventoryRowName": "中型_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_小型_尾缀",
+      "inventoryRowName": "小型_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_NY_Trail_Small",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_低位_尾缀",
+      "inventoryRowName": "低位_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_XS_HD.P_EFX_FireWorks_RiseTrail_XS_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_极小_尾缀",
+      "inventoryRowName": "极小_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_Tiny_HD.P_EFX_FireWorks_RiseTrail_Tiny_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+      "inventoryRowName": "窜天猴sku_烟花爆炸",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Boom",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GlitterChry_HD.P_EFX_FireWorks_GlitterChry_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_碰撞爆炸",
+      "inventoryRowName": "窜天猴sku_碰撞爆炸",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SkyRocketCrash_HD.P_EFX_FireWorks_SkyRocketCrash_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+      "inventoryRowName": "窜天猴sku_拖尾尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Trail",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SkyRocketTail_HD.P_EFX_FireWorks_SkyRocketTail_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_拖尾烟雾",
+      "inventoryRowName": "窜天猴sku_拖尾烟雾",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Smoke",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD.P_EFX_MusicFest_FireWork_Skyrocket_Smoke_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_点火引线",
+      "inventoryRowName": "窜天猴sku_点火引线",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Fuse",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SkyRocketSparkler_HD.P_EFX_FireWorks_SkyRocketSparkler_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_喷射焰火",
+      "inventoryRowName": "窜天猴sku_喷射焰火",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "PC",
+      "rowName": "跨年烟花3.0_窜天猴sku_二次加速",
+      "inventoryRowName": "窜天猴sku_二次加速",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD",
+          "columns": [
+            "PC:FxSP"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小号_A_小金花",
+      "inventoryRowName": "小号_A_小金花",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleGold",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "小金花",
+      "morphology": {
+        "primary": "冠",
+        "detail": "锦冠模板；有下垂尾迹",
+        "sourceIds": [
+          "R01",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_H.P_EFX_FireWorks_LittleGold_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小号_B_小银菊",
+      "inventoryRowName": "小号_B_小银菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleSilver",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "小银菊",
+      "morphology": {
+        "primary": "冠",
+        "detail": "锦冠模板；有下垂尾迹",
+        "sourceIds": [
+          "R02",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_H.P_EFX_FireWorks_LittleSilver_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小号_C_短爆裂",
+      "inventoryRowName": "小号_C_短爆裂",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleCrackle",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "短爆裂",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "爆裂",
+        "sourceIds": [
+          "R03",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['crackle']；crackle=爆裂星。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_H.P_EFX_FireWorks_LittleCrackle_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小号_D_小分裂",
+      "inventoryRowName": "小号_D_小分裂",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_LittleCombo",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小号",
+      "bloomName": "小分裂",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "分裂",
+        "sourceIds": [
+          "R04",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=crossette；仓库定义分裂（十字）。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_H.P_EFX_FireWorks_LittleCombo_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_B_红彗星",
+      "inventoryRowName": "小型_B_红彗星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanComet_01",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "红彗星",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "单束；可用于扇形编排",
+        "sourceIds": [
+          "R07",
+          "S07",
+          "S08"
+        ],
+        "basis": "metadata.recipe type=['tailS', 'tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_H.P_EFX_FireWorks_Comet_Layers_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_C_银星扇",
+      "inventoryRowName": "小型_C_银星扇",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_FanSilver_01",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "银星扇",
+      "morphology": {
+        "primary": "彗星",
+        "detail": "单束；可用于扇形编排",
+        "sourceIds": [
+          "R08",
+          "S07",
+          "S08"
+        ],
+        "basis": "metadata.recipe type=['tailS']（tailS）；Comet/Silver原理为同轨迹单束。不能仅凭FanComet/FanSilver字符串认作整面扇形。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_H.P_EFX_FireWorks_Silver3_Layers_S_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_F_银冠菊",
+      "inventoryRowName": "小型_F_银冠菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_SilverChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "银冠菊",
+      "morphology": {
+        "primary": "冠",
+        "detail": "锦冠模板；有下垂尾迹",
+        "sourceIds": [
+          "R09",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['kamuro']；仓库定义kamuro=锦冠。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_H.P_EFX_FireWorks_SilverChry_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_G_爆裂星",
+      "inventoryRowName": "小型_G_爆裂星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Crackle",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "爆裂星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "爆裂",
+        "sourceIds": [
+          "R10",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=['crackle']；crackle=爆裂星。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_H.P_EFX_FireWorks_Crackle_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_I__橙辉星",
+      "inventoryRowName": "小型_I__橙辉星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Glitter",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "橙辉星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "辉星",
+        "sourceIds": [
+          "R12",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=glitter；仓库中文模板/机制定义。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_H.P_EFX_FireWorks_Glitter_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_J_点灭星",
+      "inventoryRowName": "小型_J_点灭星",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_Strobe",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "小型",
+      "bloomName": "点灭星",
+      "morphology": {
+        "primary": "特殊星效",
+        "detail": "点灭",
+        "sourceIds": [
+          "R13",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe type=strobe；仓库中文模板/机制定义。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_H.P_EFX_FireWorks_Strobe_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_中型_B_金芒菊",
+      "inventoryRowName": "中型_B_金芒菊",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldRayChry",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "中型",
+      "bloomName": "金芒菊",
+      "morphology": {
+        "primary": "球形开花",
+        "detail": "菊/牡丹主模板；混合层不重复计",
+        "sourceIds": [
+          "R16",
+          "S04",
+          "S05"
+        ],
+        "basis": "metadata.recipe types=['kiku']、patterns=['sphere']；仓库kiku/botan归球。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_H.P_EFX_FireWorks_GoldRayChry_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_大型_A_金垂柳",
+      "inventoryRowName": "大型_A_金垂柳",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_GoldKamuro",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "大型",
+      "bloomName": "金垂柳",
+      "morphology": {
+        "primary": "柳",
+        "detail": "行名依据；无已核实对应模板",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "行名明确金垂柳。ResourceId含GoldKamuro仅为标识符，不把它推断成配方type=kamuro。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_M.P_EFX_FireWorks_GoldKamuro_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldKamuro_H.P_EFX_FireWorks_GoldKamuro_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_超大_尾缀",
+      "inventoryRowName": "超大_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_M.P_EFX_FireWorks_RiseTrail_Hero_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Hero_H.P_EFX_FireWorks_RiseTrail_Hero_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_大型_尾缀",
+      "inventoryRowName": "大型_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_NY_Trail_Large",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_H.P_EFX_FireWorks_RiseTrail_L_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_中型_尾缀",
+      "inventoryRowName": "中型_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_H.P_EFX_FireWorks_RiseTrail_M_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_小型_尾缀",
+      "inventoryRowName": "小型_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_NY_Trail_Small",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_H.P_EFX_FireWorks_RiseTrail_S_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_低位_尾缀",
+      "inventoryRowName": "低位_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_RiseTrail_XS",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_H.P_EFX_FireWorks_RiseTrail_XS_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_极小_尾缀",
+      "inventoryRowName": "极小_尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+      "resourceIdEvidence": [
+        "S02"
+      ],
+      "resourceIdStatus": "历史精确同行名或后续新增记录；非本轮重读该字段",
+      "sizeClass": "尾缀",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "升空尾缀",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_H.P_EFX_FireWorks_RiseTrail_Tiny_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+      "inventoryRowName": "窜天猴sku_烟花爆炸",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_M.P_EFX_FireWorks_GlitterChry_M",
+          "columns": [
+            "手游:FxSP"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_H.P_EFX_FireWorks_GlitterChry_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GlitterChry_L.P_EFX_FireWorks_GlitterChry_L",
+          "columns": [
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_窜天猴sku_碰撞爆炸",
+      "inventoryRowName": "窜天猴sku_碰撞爆炸",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketCrash_M.P_EFX_FireWorks_SkyRocketCrash_M",
+          "columns": [
+            "手游:FxSP"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketCrash_H.P_EFX_FireWorks_SkyRocketCrash_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketCrash_L.P_EFX_FireWorks_SkyRocketCrash_L",
+          "columns": [
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+      "inventoryRowName": "窜天猴sku_拖尾尾缀",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketTail_M.P_EFX_FireWorks_SkyRocketTail_M",
+          "columns": [
+            "手游:FxSP"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketTail_H.P_EFX_FireWorks_SkyRocketTail_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketTail_L.P_EFX_FireWorks_SkyRocketTail_L",
+          "columns": [
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_窜天猴sku_拖尾烟雾",
+      "inventoryRowName": "窜天猴sku_拖尾烟雾",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Smoke_M.P_EFX_FireWorks_Smoke_M",
+          "columns": [
+            "手游:FxSP"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Smoke_H.P_EFX_FireWorks_Smoke_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Destructible/BattleField/P_Destructible_Empty.P_Destructible_Empty",
+          "columns": [
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": true
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_窜天猴sku_点火引线",
+      "inventoryRowName": "窜天猴sku_点火引线",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSparkler_M.P_EFX_FireWorks_SkyRocketSparkler_M",
+          "columns": [
+            "手游:FxSP",
+            "手游:FxSP_High",
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    },
+    {
+      "platform": "手游",
+      "rowName": "跨年烟花3.0_窜天猴sku_二次加速",
+      "inventoryRowName": "窜天猴sku_二次加速",
+      "resourceFxNumber": null,
+      "resourceFxNumberStatus": "源读回未保留数字编号；未按行序推定",
+      "resourceId": null,
+      "resourceIdEvidence": [],
+      "resourceIdStatus": "未从已读来源证实；资产路径保留如下，不去后缀猜Id",
+      "sizeClass": "窜天猴",
+      "bloomName": null,
+      "morphology": {
+        "primary": "其他",
+        "detail": "窜天猴组件，细分形态未定",
+        "sourceIds": [
+          "S01"
+        ],
+        "basis": "以行名功能区分；未用这些组件行增加26种开花花型。"
+      },
+      "particleAssets": [
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSprint_M.P_EFX_FireWorks_SkyRocketSprint_M",
+          "columns": [
+            "手游:FxSP"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSprint_H.P_EFX_FireWorks_SkyRocketSprint_H",
+          "columns": [
+            "手游:FxSP_High"
+          ],
+          "emptyPlaceholder": false
+        },
+        {
+          "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SkyRocketSprint_L.P_EFX_FireWorks_SkyRocketSprint_L",
+          "columns": [
+            "手游:FxSP_Low"
+          ],
+          "emptyPlaceholder": false
+        }
+      ],
+      "historicalResourceFxNumber": null,
+      "historicalResourceFxNumberEvidence": null
+    }
+  ],
+  "assertions": {
+    "pcRowCategorySum": 46,
+    "mobileRowCategorySum": 24,
+    "combinedPlatformRecordCategorySum": 70,
+    "pcNamedBloomCategorySum": 26,
+    "mobileNamedBloomCategorySum": 12,
+    "combinedRecordsAreNotDistinctNames": true
+  }
+}

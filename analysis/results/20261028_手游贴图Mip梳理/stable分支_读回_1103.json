@@ -1,0 +1,580 @@
+{
+ "at": "2026-11-03T04:28:21.023Z",
+ "total": 26,
+ "ok": 26,
+ "bad": [],
+ "rows": [
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Comet3_GoldTail_Full_16x1_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8503088",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Crackle_Main_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Gold_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8545680",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Head_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8545680",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GlitterChry_Lead_4x4_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8524627",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Glitter_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldRayChry_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCombo_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleCrackle_Main_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleGold_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_LittleSilver_GinKamuro_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Hero_Full_32x2_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8503088",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_L_Full_32x2_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_M_Full_32x2_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_Tiny_Full_32x1_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RiseTrail_XS_Full_32x1_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketDot_4x4_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8524627",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_Soft_4x4_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8524627",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Silver3_Layers_S_Full_16x1_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SilverChry_GinKamuro_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Strobe_Strobe_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_L1_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RocketTail_L1_4x4_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8524627",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01",
+   "ok": true,
+   "changed": [
+    "MipGenSettings"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_SkyRocketSparkler_Sparkler_4x4_01.uasset",
+    "have": "1",
+    "head": "1",
+    "change": "8524627",
+    "headAction": "branch",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01",
+   "ok": true,
+   "changed": [
+    "MaxTextureSize"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Spark/T_EFX_Sparks_Sparkler_4x4_01.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  },
+  {
+   "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02",
+   "ok": true,
+   "changed": [
+    "MaxTextureSize"
+   ],
+   "p4": {
+    "depot": "//DFProject/main/stable/DFM/Content/Effects/Common/Texture/Spark/T_EFX_Sparks_Streak_8x1_02.uasset",
+    "have": "2",
+    "head": "2",
+    "change": "8503088",
+    "headAction": "integrate",
+    "action": "edit",
+    "otherOpen": false,
+    "otherLock": false,
+    "ourLock": true,
+    "exists": true,
+    "writable": true
+   },
+   "diskChanged": true,
+   "onlyCheckout": false
+  }
+ ]
+}
