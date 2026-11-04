@@ -67,5 +67,15 @@
     "download": "C:\\Users\\locmai\\Downloads\\FWL-我的组合-129-直线版-20261104.html",
     "sha256": "f6d777cb69074b41b6ae4629272d8dfabd0c1ad31dabc02c828affcb93a659ae"
   },
-  "visualVerification": "本轮未完成新实页视觉复核；前一轮Windows浏览器安全检查无法确认URL而停止，未以其他浏览器入口绕过。仓库回归检查使用原有独立测试机制。"
+  "visualVerification": "本轮未完成新实页视觉复核；前一轮Windows浏览器安全检查无法确认URL而停止，未以其他浏览器入口绕过。仓库回归检查使用原有独立测试机制。",
+  "push": {
+    "branch": "codex/ui-material-baker-review-20261029",
+    "implementationCommit": "8d69c99f",
+    "normalPrePush": true,
+    "seconds": 192,
+    "contractExamples": 18,
+    "parameterRows": 199,
+    "uiPassed": 8,
+    "exportChecksPassed": true
+  }
 }
