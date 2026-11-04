@@ -225,7 +225,8 @@ def _scene_overrides(item_id: str, side: str) -> str:
 {lab} progress::-webkit-progress-value{{background:{active};border-radius:1px}}
 {lab} progress::-moz-progress-bar{{background:{active};border-radius:1px}}'''
     if item_id == 'TREE':
-        return f'''{p} #right .v5-row,{lab} .sample-tree-row{{height:28px;min-height:28px;gap:2px;border-radius:2px}}
+        # 用户2026-11-04确认纯直线：树行与内侧选中线共用直角，不继承128的2px圆角。
+        return f'''{p} #right .v5-row,{lab} .sample-tree-row{{height:28px;min-height:28px;gap:2px;border-radius:0}}
 {p} #right .v5-row{{padding-left:calc(var(--lv)*16px)}}
 {p} #right .v5-row.sel,{lab} .sample-tree-row.selected{{background:{selected};box-shadow:inset 2px 0 {active};outline:0}}
 {p} #right .v5-row .v5-name,{p} #right .v5-row[data-mb-role=layer] .v5-name,{lab} .sample-tree-name{{color:{normal};font-size:13px;line-height:20px;font-weight:400}}

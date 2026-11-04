@@ -102,13 +102,13 @@
       },
       {
         "path": "tool/design-system/drafts/v8-combo-129-20261029/combo-theme.css",
-        "bytes": 18294,
-        "sha256": "05b675ba0ca24797909e1929acd4539e4d535872b8a45e33e831b0d6bbaa8688"
+        "bytes": 18292,
+        "sha256": "f0b46f8a6a436dbd29b2985a8a800883d279c1962bfa7e8296ec68a9e8977a31"
       },
       {
         "path": "tool/design-system/drafts/v8-combo-129-20261029/catalog_samples.py",
-        "bytes": 37800,
-        "sha256": "4f40616733156761dc1fe827b5857c1cf1fa1f5053b740eb99dc60137fe51b8c"
+        "bytes": 37909,
+        "sha256": "0c6d847026d640ed9368534bc452563021593fb3540a0bf9f96fe095551ae6a4"
       },
       {
         "path": "tool/design-system/drafts/v3-unified/components.html",
@@ -251,13 +251,13 @@
   },
   "comboSources": {
     "appearance-profile.json": "a8768ca7aa60556acc47f9d99279a9501bd5fda0b56e53eb0fd5a54d1bdc88fc",
-    "combo-theme.css": "05b675ba0ca24797909e1929acd4539e4d535872b8a45e33e831b0d6bbaa8688",
+    "combo-theme.css": "f0b46f8a6a436dbd29b2985a8a800883d279c1962bfa7e8296ec68a9e8977a31",
     "combo-adapter.js": "02c2312be55f7f3ffd97c3fb1313a0fc87d59359960d0af6f9d67ce576f391b9",
-    "catalog_samples.py": "4f40616733156761dc1fe827b5857c1cf1fa1f5053b740eb99dc60137fe51b8c",
+    "catalog_samples.py": "0c6d847026d640ed9368534bc452563021593fb3540a0bf9f96fe095551ae6a4",
     "bundle_sources.py": "18576eabb86913b0dd9a86c63aa27ffdf068844e6b1f72999ee83c37501be332",
     "picker.js": "744a5af4e2827c4996d45457a23448c014d00110b4028bfaf5fa10e2700c385a"
   },
-  "baker128Sha256": "4c1c75e094815291b6ca92682fa5699fc078059e36b7a4ca50c393841b19186a",
+  "baker128Sha256": "ee13ec615a5c014d296431b137f62191a55f1f4d11704ceed5ccce0d3b2cfb12",
   "thirdPartyNotices": [
     {
       "name": "Tabler Icons 3.46.0",

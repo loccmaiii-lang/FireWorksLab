@@ -107,7 +107,7 @@ body[data-ui="material-b"] #busyText{color:#e4edef;font-size:13px;line-height:20
 #combo-lab progress::-moz-progress-bar{background:#00d49b;border-radius:1px}
 
 /* TREE · adobe */
-body[data-ui="material-b"] #right .v5-row,#combo-lab .sample-tree-row{height:28px;min-height:28px;gap:2px;border-radius:2px}
+body[data-ui="material-b"] #right .v5-row,#combo-lab .sample-tree-row{height:28px;min-height:28px;gap:2px;border-radius:0}
 body[data-ui="material-b"] #right .v5-row{padding-left:calc(var(--lv)*16px)}
 body[data-ui="material-b"] #right .v5-row.sel,#combo-lab .sample-tree-row.selected{background:#173d39;box-shadow:inset 2px 0 #00d49b;outline:0}
 body[data-ui="material-b"] #right .v5-row .v5-name,body[data-ui="material-b"] #right .v5-row[data-mb-role=layer] .v5-name,#combo-lab .sample-tree-name{color:#e4edef;font-size:13px;line-height:20px;font-weight:400}

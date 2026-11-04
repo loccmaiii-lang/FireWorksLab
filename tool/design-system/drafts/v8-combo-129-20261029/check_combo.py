@@ -23,7 +23,7 @@ LOCAL = ROOT / "analysis/local/20261029_129组合"
 IDS = ("C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C11", "C12", "C16", "TREE", "COLOR")
 SOURCE_RECORD = ROOT / "analysis/results/20261029_组件风格选择/FWL-组件选择-128.json"
 SOURCE_SHA = "6b8ea15e5819e859e50e7000c5dea9d48dbd7ee4813f1aadbe0b886f3a017f1d"
-GIT_BASE = "6d543791cc3df63dcba1437554e115d00a99af0b"
+GIT_BASE = "e6347814476b609d1c93a6e714d5e5f4bfe81d02"  # 用户2026-11-04授权同步main；原基线记录保留
 PROTECTED_PATHS = (
     "tool/src", "tool/design-system",
     ":(exclude)tool/design-system/drafts/v8-combo-129-20261029",
@@ -253,7 +253,7 @@ def main() -> int:
                     failures.append({"document": name, "script": index, "error": (result.stderr or result.stdout)[:1800]})
     check("内联JS语法检查", bool(node) and not failures, {"scripts": script_count, "failures": failures, "node": node})
 
-    check(*old_sources_check(ROOT, LOCAL / "保护起点.json"))
+    check(*old_sources_check(ROOT, LOCAL / "保护起点-20261104.json"))
     source_errors = []
     manifest = data.get("manifest", {})
     sources = manifest.get("workspaces", {}).get("files", [])

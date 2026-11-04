@@ -1,0 +1,71 @@
+{
+  "merge": "e6347814476b609d1c93a6e714d5e5f4bfe81d02",
+  "upstream": "54b3a781ada6cf2d04ab3ac036abd42f4a91fa32",
+  "fullBakerVersion": "4.9.128",
+  "demoVersion": "129",
+  "static": {
+    "pass": true,
+    "checks": 17,
+    "html": {
+      "path": "F:\\FWL-副本\\20261028-界面交互-本机-全量筛查\\tool\\design-system\\drafts\\v8-combo-129-20261029\\index.html",
+      "sha256": "f6d777cb69074b41b6ae4629272d8dfabd0c1ad31dabc02c828affcb93a659ae",
+      "bytes": 5888419
+    }
+  },
+  "upstreamRegression": [
+    {
+      "item": "A7",
+      "pass": true,
+      "why": "3 层 ['中心', '中心 副本', '金曜菊-B · 疏点游闪（首选） · 引菊 → 锦 · 橙引线层']、星数 [123, 123, 200]、同一批星 ✓、复制的层独立 ✓",
+      "sec": 17.8
+    },
+    {
+      "item": "S2",
+      "pass": true,
+      "why": "{\"新建后\": {\"sel\": 0, \"type\": \"botan\", \"n\": 1, \"rows\": 23}, \"加层后\": {\"sel\": 1, \"n\": 2, \"own\": [true, true], \"rows\": 24, \"stars\": 293}, \"改星数\": {\"layer\": 77, \"orig\": 293, \"other\": [90, 77]}, \"再打开\": {\"sel\": 0, \"stars\": [90, 77], \"label\": \"我的效果「检查新建」\"}}",
+      "sec": 13.0
+    },
+    {
+      "item": "R17",
+      "pass": true,
+      "why": "多层模板 mt:shinKiku（2 层）：图层管理有「＋ 加一层」→ 先存成 my:fxmw1jh0cd9wtwd、弹加层选择器；再点直接选层、不再问名字",
+      "sec": 2.9
+    },
+    {
+      "item": "W1",
+      "pass": true,
+      "why": "{\"时间轴\": {\"tle\": 0, \"curves\": false, \"rows\": 2, \"opts\": [\"follow\", \"glue\"]}, \"精简布局\": {\"hid\": true, \"back\": true}, \"开关\": {\"d0\": 3.55, \"i0\": 1.28, \"s0\": 1.2, \"on\": {\"dur\": 3.75, \"ign2\": 1.48}, \"back\": {\"dur\": 3.55, \"ign2\": 1.28}, \"off\": {\"dur\": 3.55, \"ign2\": 1.28}}, \"派生\": {\"my\": true, \"from\": \"引菊 → 锦（橙色直线菊转金锦，尾缀3.0_A 主层）\", \"n0\": 2, \"n1\": 2, \"n2\": 3, \"sl\": 3.1, \"id\": \"fxmw1jh3lwgkj19\", \"links\": 1}, \"模板\": {\"n\": 1, \"id\": \"tmw1jh4ak\", \"type\": \"kiku\", \"inPicker\": true, \"tpl\": true, \"key\": \"tpl:tmw1jh4ak\", \"stars\": 293, \"want\": 293, \"del\": \"删除这个模板（删了 8 秒内能撤销）\"}, \"删除撤销\": {\"gone\": true, \"back\": true, \"g2\": true, \"b2\": true}, \"还原\": {\"a\": {\"sl\": 0.55, \"v0\": 170}, \"b\": {\"v0\": 150}, \"d\": {\"sl\": 0.55, \"v0\": 150}}, \"隐藏\": {\"hid\": true, \"back\": true}}",
+      "sec": 7.3
+    }
+  ],
+  "sourceProtection": {
+    "mergeCommit": "e6347814476b609d1c93a6e714d5e5f4bfe81d02",
+    "upstreamCommit": "54b3a781ada6cf2d04ab3ac036abd42f4a91fa32",
+    "authorizedProtectedChanges": {
+      "tool/src/js/79_workbench.js": {
+        "before": "7871724171eac23082af983473243e647549c0a38e045db2d7ce45c98cfcce29",
+        "after": "60554b3aaa33ed1fbed065a92d3a0a586154aa406509d9f041ba717e908ba328"
+      },
+      "tool/FireworkBaker.html": {
+        "before": "a442f7327e6f78fedd31314917bcecf8472741911d57d166f9d646478e3b9fd0",
+        "after": "2ec5cd2078af211e676049710f93ad9bab4730032b72cca6b0f4efbe8ffeb8e6"
+      },
+      "tool/FireworkBaker_MaterialB.html": {
+        "before": "4c1c75e094815291b6ca92682fa5699fc078059e36b7a4ca50c393841b19186a",
+        "after": "ee13ec615a5c014d296431b137f62191a55f1f4d11704ceed5ccce0d3b2cfb12"
+      }
+    },
+    "unchangedOldFiles": 361,
+    "boundary": "用户授权同步main模板加层；其余旧件保持。129直线修正只在v8。"
+  },
+  "demoScope": {
+    "onlyStyleChange": "TREE row border-radius:2px→0",
+    "threeGreenAndChoicesSame": true,
+    "workspacesSame": true,
+    "cloudGitBaseline": "e6347814476b609d1c93a6e714d5e5f4bfe81d02",
+    "cloudBaselinePass": true,
+    "download": "C:\\Users\\locmai\\Downloads\\FWL-我的组合-129-直线版-20261104.html",
+    "sha256": "f6d777cb69074b41b6ae4629272d8dfabd0c1ad31dabc02c828affcb93a659ae"
+  },
+  "visualVerification": "本轮未完成新实页视觉复核；前一轮Windows浏览器安全检查无法确认URL而停止，未以其他浏览器入口绕过。仓库回归检查使用原有独立测试机制。"
+}
