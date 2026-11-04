@@ -1,0 +1,30 @@
+{
+ "effect": null,
+ "entry": "GLB-S1",
+ "ver": "a0517b92·master4.3.8-core1+master4.9.31·size4-F_SILVER-32-62",
+ "time": "2026-11-04 13:12",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "GlitterChry_Mix",
+   "replica": "GLB-S1",
+   "files": [
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_01.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_01_C.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_01_HD.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_02.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_02_C.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_02_HD.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_03.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_03_C.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_2x2_03_HD.png",
+    "T_EFX_FireWorks_GlitterChry_S1_Mix_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
