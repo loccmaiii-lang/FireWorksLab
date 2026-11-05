@@ -46,7 +46,7 @@
   --h-tp:36px; --h-film:28px; --h-ruler:28px;
   --w-left:300px; --w-right:460px; --w-tlab:160px;
   /* 检查器五列（§2）：参数名 112 ｜ 控件 自适应 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（改动标记在左侧内边距里） */
-  --w-lab:112px; --w-val:44px; --w-valr:100px; --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.1 第 15 条：滑杆到数值 8 px；单值数值格 44，区间（含展开箭头）100 */
+  --w-lab:112px; --w-val:40px; --w-valr:100px; --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.1 第 15 条：滑杆到数值 8 px；单值数值格 40，区间（含展开箭头）100 */
   --ico:16px; --ico-s:16px; --thumb:40px;
   --tl-min:6; --indent:16px;
   color-scheme:dark;
@@ -57,7 +57,7 @@
   --lh1:14px; --lh2:18px; --lh3:20px;
   --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px;
   --w-left:260px; --w-right:380px; --w-tlab:132px;
-  --w-lab:96px; --w-val:40px; --w-valr:92px; --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
+  --w-lab:96px; --w-val:36px; --w-valr:92px; --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
   --thumb:36px; --tl-min:4;
 }
 
@@ -303,8 +303,8 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .trow.t-add:hover{background:none}
 .tree .none-hit{padding:8px 4px;color:var(--t3);font-size:var(--fs1)}
 
-/* 4.2 参数行（§2 五列、§9）：改动标记在左侧内边距（竖条 = 本次改过，空心圆 = 不是默认值）
-   参数名 ｜ 控件 ｜ 数值（右对齐）｜ 单位 ｜ 操作（恢复只在改过或悬停时出现） */
+/* 4.2 参数行（§2 五列、§9；v3.1 第 15、16 条）：改动标记在左侧内边距（竖条 = 本次改过）；不是默认值只靠操作列常显的恢复按钮
+   参数名 ｜ 控件 ｜ 数值（右对齐）｜ 单位 ｜ 操作（恢复只在不是默认值时出现，悬停不出） */
 .prm,.mod-h{position:relative;display:grid;grid-template-columns:var(--w-lab) minmax(0,1fr) var(--w-val) var(--w-unit) var(--w-act);column-gap:0;align-items:center;min-height:var(--h-row)}
 .prm>.plw{grid-column:1;padding-right:var(--gap-prm)}
 .prm>.ctl1{grid-column:2;padding-right:var(--gap-val)}
@@ -609,9 +609,9 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .menu.exp .mi .k{min-width:2ch;text-align:right;color:var(--t2)}
 .menu .mlegend{display:flex;flex-direction:column;gap:4px;padding:6px 12px 8px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3)}
 .menu .mlegend span{display:flex;align-items:center;gap:8px}
-.menu .mlegend i{flex:none;display:inline-block;width:6px;text-align:center}
+.menu .mlegend i{flex:none;display:inline-grid;place-items:center;width:14px}
 .menu .mlegend i.bar::before{content:"";display:inline-block;width:2px;height:14px;background:var(--t1);vertical-align:middle}
-.menu .mlegend i.dot::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--g7);vertical-align:middle}
+.menu .mlegend i.rs svg.i{width:12px;height:12px;color:var(--t2)}   /* v3.1 第 16 条：不再有空心圆，「非默认」= 恢复按钮常显 */
 /* 提示框（§12）：浮层面色，带 6 px 小三角，离触发点 8 px，最宽 260 px */
 .tip{position:fixed;z-index:60;max-width:260px;padding:6px 10px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);font-size:var(--fs1);line-height:var(--lh1);color:var(--t2);pointer-events:none}
 .tip::before{content:"";position:absolute;width:8px;height:8px;background:var(--ov);border:solid var(--ovLine);border-width:1px 0 0 1px;left:var(--ax,12px);top:-5px;transform:rotate(45deg)}

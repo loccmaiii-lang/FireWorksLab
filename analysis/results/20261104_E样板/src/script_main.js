@@ -2223,7 +2223,7 @@ document.addEventListener('click', e => {
     preview: () => openMenu(a, [{head: '背景'}, {t: '夜空', chk: true, keep: true}, {t: '纯黑', chk: false, keep: true}, '-', {t: '安全框', chk: false, keep: true, act: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); $('.ck', b).innerHTML = on ? ico('check') : ''; }}],
       {align: 'right', checks: true}),
     viewOpt: () => openMenu(a, [{t: '仅已改', sub: '非默认或本次改过', chk: UI.onlyChg, act: () => { UI.onlyChg = !UI.onlyChg; applyFilter(); }}, '-', {t: '全部展开', act: () => foldAll(true)}, {t: '全部折叠', act: () => foldAll(false)}, '-',
-      {html0: '<div class="mlegend" role="note"><span><i class="bar"></i>本次改过</span><span><i class="dot"></i>非默认</span></div>'}], {align: 'right', checks: true}),
+      {html0: `<div class="mlegend" role="note"><span><i class="bar"></i>本次改过</span><span><i class="rs">${ico('reset')}</i>非默认</span></div>`}], {align: 'right', checks: true}),
     foldAll: () => foldAll(!$$('#pbody .mod:not(.mod-one)').some(m => !m.hidden && !m.classList.contains('is-closed'))),
     clearPq: () => { UI.pq = ''; $('#pq input').value = ''; $('#pq').classList.remove('has-val'); applyFilter(); },
     showAll: () => { UI.onlyChg = false; applyFilter(); },
@@ -2374,7 +2374,7 @@ if (window.ResizeObserver) { const ro = new ResizeObserver(fitCI); ['#cell', '#c
 
 /* 截图与走查脚本用的入口 */
 window.KIT = {
-  set: kitSet, select: name => { const sc = cur(); const r = rowsOf(sc).find(x => label(sc, x.n) === name || x.n.name === name); if (r) select(r.n.id); },
+  set: kitSet, select: name => { const sc = cur(), [p, c] = name.split('/'), L = c && sc.root.kids.find(x => x.name === p); const r = L ? {n: L.kids.find(x => x.name === c)} : rowsOf(sc).find(x => label(sc, x.n) === name || x.n.name === name); if (r && r.n) select(r.n.id); },   /* 「金锦层/星」指定哪一层下的发射器 */
   selectOutputOf: name => { const sc = cur(); const l = sc.root.kids.find(x => x.name === name); if (l) jumpToOutput(l); },
   mode: setMode, openExport: () => $('#expBtn .btn + .btn').click(),
   tip: lab => { const pl = $$('#pbody .pl[data-help]').find(p => PS[p.dataset.help].lab === lab); if (pl) showTip(pl, helpHTML(pl.dataset.help)).classList.add('pin'); },
@@ -2584,7 +2584,7 @@ function markPrmStates() {
   r('时间倍率')?.classList.add('is-hover');
   const lk = $('.lk', r('颗粒大小') || document.body); if (lk && !PS['sheet|prm|参数行|颗粒大小'].lock) { PS['sheet|prm|参数行|颗粒大小'].lock = true; lk.setAttribute('aria-pressed', 'true'); }
 }
-const tagFor = {开始时间: '普通', 时间倍率: '本次改过：竖条；悬停出现锁', 颗粒大小: '已锁定', 缩放: '非默认：恢复按钮常显、默认值刻度', 寿命: '随机幅度：数值格右边的展开箭头', 初速: '随机幅度展开后可调', 湍流尺度: '停用：整行弱化，滑杆位置写原因', 张数: '只读结果与说明', 速度: '随机区间一行，名称后写「分布 1.8」', 方向: '控制锥角；球面时收成一行', 爆后扰动: '关闭时下面 3 项收成一行', 单格: '原生下拉'};
+const tagFor = {开始时间: '普通', 时间倍率: '本次改过：竖条；悬停出现锁', 颗粒大小: '已锁定', 缩放: '非默认：恢复按钮常显、默认值刻度', 寿命: '随机幅度：数值格右边的展开箭头', 初速: '随机幅度展开后可调', 湍流尺度: '停用：滑杆变暗，数值列弱色小字写原因', 张数: '只读结果与说明', 速度: '随机区间一行，名称后写「分布 1.8」', 方向: '控制锥角；球面时收成一行', 爆后扰动: '关闭时下面 3 项收成一行', 单格: '原生下拉'};
 
 /* ---------- 全表：组合部件（清单第 3 节） ---------- */
 function staticTree() {
