@@ -510,7 +510,7 @@ function autoDefRow(row, k, step) {
     const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); row.classList.toggle('adef-off', !on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
     bt.textContent = on ? '跟着算' : '接回';
     bt.setAttribute('aria-label', on ? `跟着算（${a[2]}）：点一下断开，固定在 ${fmtV(v, step)}` : `已断开：点一下接回（${a[2]}，现在算出来是 ${fmtV(v, step)}）`);
-    bt.title = on ? `跟着算：${a[2]}。直接拖 / 输入就断开；点这里也能断开（固定在 ${fmtV(v, step)}）` : `已断开：用你填的 ${fmtV(P[k], step)}。点「接回」回到跟着算（${a[2]}，现在算出来是 ${fmtV(v, step)}）`;
+    bt.title = on ? `跟着算：${a[2]}` : `已断开；跟着算是 ${fmtV(v, step)}`;
     tx.textContent = on ? `跟着算：${a[2]}` : `已断开：用你填的 ${fmtV(P[k], step)}；跟着算是 ${fmtV(v, step)}（${a[2]}）`;
     if (on) { inp.value = v; num.value = fmtV(v, step); row.classList.remove('over'); num.title = ''; }
   };
@@ -815,7 +815,7 @@ function buildMasterPanel() {
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = it.info; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
-        row._refresh = () => { row.innerHTML = it.info === 'lowAtNow' ? `<p class="hint endinfo">单帧现在取 ${+state.P.lowAt > 0 ? (+state.P.lowAt).toFixed(2) + ' s' : '自动（花开得最大那一刻）'} · <button type="button" class="btn mini" data-lowat="1">用时间轴现在的 ${engineTick(state.t).toFixed(2)} s</button>${+state.P.lowAt > 0 ? ' <button type="button" class="btn mini" data-lowat="0">改回自动</button>' : ''}</p>` : it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'tempoInfo' && typeof tempoInfoHTML === 'function' ? tempoInfoHTML() : it.info === 'sparkQInfo' ? sparkQInfoHTML(state.P) : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
+        row._refresh = () => { row.innerHTML = it.info === 'lowAtNow' ? `<div class="e50-ro"><span class="fk" data-tip="自动 = 花开得最大那一刻">单帧时刻</span><span class="v">${+state.P.lowAt > 0 ? (+state.P.lowAt).toFixed(2) + ' s' : '自动'}</span><span class="acts"><button type="button" class="btn mini" data-lowat="1" data-tip="取播放头 ${engineTick(state.t).toFixed(2)} s">用播放头</button>${+state.P.lowAt > 0 ? '<button type="button" class="btn mini" data-lowat="0">自动</button>' : ''}</span></div>` : it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'tempoInfo' && typeof tempoInfoHTML === 'function' ? tempoInfoHTML() : it.info === 'sparkQInfo' ? sparkQInfoHTML(state.P) : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
         if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); }
           if (e.target.closest('[data-cutclear]')) { state.P.cutOut = 0; onParam(); refreshPanelValues(); flash('出点已清除：序列放到序列时长为止'); } });
         if (it.info === 'lowAtNow') row.addEventListener('click', e => { const q = e.target.closest('[data-lowat]'); if (!q) return; state.P.lowAt = q.dataset.lowat === '1' ? +engineTick(state.t).toFixed(4) : 0; onExportScheme(); refreshPanelValues(); row._refresh(); flash(state.P.lowAt > 0 ? `单帧取 ${state.P.lowAt.toFixed(2)} s（Ctrl+Z 撤回）` : '单帧改回自动'); });     // 4.9.29
@@ -1133,7 +1133,7 @@ function selectEmitTab(e) {
   if (pview.q || pview.changed) { pview.q = ''; pview.changed = false; store.set('pChanged', false); const i = $('#params .ptools input[type=search]'); if (i) i.value = ''; const c = $('#params .ptools .pchg input'); if (c) c.checked = false; }
   refreshVisibility();
   // 4.9.8：顶上那块固定着；换了发射器、而页面已经往下滚过，就滚回这个发射器的开头（紧贴在顶上那块下面）；选中的标签横着滚进视野
-  const sc = $('#params .pscope'), right = $('#right'), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);
+  const sc = $('#params .ps-search') || $('#params .pscope'), right = $('#right'), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);     // 5.0.0：发射器标签藏起来了，按搜索行算
   if (sc && right && g && !g.hidden) { const d = g.getBoundingClientRect().top - sc.getBoundingClientRect().bottom; if (d < 0) right.scrollTop += d - 4; }
   const tb = document.querySelector(`#params .etabs [data-e="${e}"]`); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
@@ -1319,7 +1319,7 @@ function buildComboPanel() {
     for (const e of state.lib) { const o = document.createElement('option'); o.value = e.name; o.textContent = e.name; sel.appendChild(o); }
     sel.value = L.lib; sel.addEventListener('change', () => { L.lib = sel.value; });
     const x = document.createElement('button'); x.className = 'x'; x.textContent = '删除'; x.addEventListener('click', () => { state.layers.splice(i, 1); buildComboPanel(); });
-    const ed = document.createElement('button'); ed.className = 'btn mini lc-edit'; ed.type = 'button'; ed.textContent = '调这一层的参数 →'; ed.addEventListener('click', () => selectComboLayer(i));
+    const ed = document.createElement('button'); ed.className = 'btn btn-icon lc-edit'; ed.type = 'button'; ed.innerHTML = eIcon('cr'); ed.setAttribute('aria-label', '调这一层'); ed.dataset.tip = '调这一层的参数'; ed.addEventListener('click', () => selectComboLayer(i));     // 5.0.0：图标命令
     head.append(sel, ed, x); card.appendChild(head);
     slider(card, `l${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
     slider(card, `l${i}-delay`, '延迟', 's', 0, 3, 0.01, () => L.delay, v => L.delay = v, 0);

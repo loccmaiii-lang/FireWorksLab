@@ -29,10 +29,10 @@
       for (const L of m.layers) {
         const cur = L.i === m.sel;
         const solo = state.layerView && state.layerView.solo === L.i;
-        h += `<div class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
+        h += `<div class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}" data-tip="${esc(layerTip(L.i))}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
           + `<span class="ta${L.off || solo ? ' keep' : ''}"><button type="button" class="btn btn-icon eye" data-ta="mute" aria-pressed="${!L.off}" aria-label="显示第 ${L.i + 1} 层" title="${L.off ? '显示' : '隐藏'}这一层（只影响观察）">${ico(L.off ? 'eyeoff' : 'eye')}</button>`
           + `<button type="button" class="btn btn-icon solo" data-ta="solo" aria-pressed="${solo}" aria-label="只看第 ${L.i + 1} 层" title="${solo ? '取消只看' : '只看这一层'}（只影响观察）">${ico(solo ? 'soloon' : 'solo')}</button>`
-          + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" title="层的开始时间、时长、改名、复制、删除（图层管理）">${ico('more')}</button></span></div>`;
+          + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" aria-haspopup="menu" title="时间、排序、改名、复制、删除">${ico('more')}</button></span></div>`;
         if (cur) h += emRows(true);
       }
     } else h = emRows(true);
@@ -51,7 +51,7 @@
       if (k === 'mute' && v) v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i];
       else if (k === 'solo' && v) v.solo = v.solo === i ? -1 : i;
       if ((k === 'mute' || k === 'solo') && typeof buildLayerCard === 'function') buildLayerCard();
-      if (k === 'more') { if (state.comboSel !== i && typeof selectComboLayer === 'function') selectComboLayer(i); const lc = $q('#layerCard'); if (lc) { lc.open = true; setTimeout(() => lc.scrollIntoView({ block: 'nearest' }), 0); } }
+      if (k === 'more') { e.stopImmediatePropagation(); if (pop && pop.dataset.li === String(i)) closePop(); else layerMenu(ta, i); return; }     // 5.0.0：图层管理卡片去掉，层的操作在这里
       setTimeout(() => render(true), 0); return;
     }
     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
@@ -63,6 +63,32 @@
     setTimeout(() => render(true), 0);
   });
   document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer]')) { e.preventDefault(); e.target.click(); } });
+  // 5.0.0 层行的悬停提示（原图层管理卡片上的开始、时长）
+  function layerDur(i) { const L = state.layers && state.layers[i], x = L && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null; return x && x.bake && typeof bakeTotal === 'function' ? bakeTotal(x.bake) / (L.rate || 1) : null; }
+  function layerTip(i) { const L = state.layers && state.layers[i]; if (!L) return ''; const d = layerDur(i); return `开始 ${(+L.delay || 0).toFixed(2)} s，时长 ${d == null ? '—' : d.toFixed(2) + ' s'}`; }
+  // 5.0.0 层的「⋯」菜单（原图层管理卡片上的：上移 / 下移 / 改名 / 复制 / 删除只对我的效果；时间与缩放在这一层的「效果」里）
+  function layerMenu(btn, i) {
+    closePop(); const my = typeof lib !== 'undefined' && !!lib.my, n = state.layers.length, why = my ? '' : ' disabled data-tip="先另存为我的效果"';
+    pop = document.createElement('div'); pop.className = 'e40-pop'; pop.setAttribute('role', 'menu');
+    pop.innerHTML = `<button type="button" class="mi" role="menuitem" data-lm="time">${ico('timer')}时间与缩放</button><hr>`
+      + `<button type="button" class="mi" role="menuitem" data-lm="up"${!my ? why : i === 0 ? ' disabled' : ''}>${ico('cu')}上移</button>`
+      + `<button type="button" class="mi" role="menuitem" data-lm="down"${!my ? why : i === n - 1 ? ' disabled' : ''}>${ico('cd')}下移</button>`
+      + `<button type="button" class="mi" role="menuitem" data-lm="ren"${why}>${ico('file')}改名…</button>`
+      + `<button type="button" class="mi" role="menuitem" data-lm="dup"${why}>${ico('plus')}复制</button>`
+      + `<button type="button" class="mi" role="menuitem" data-lm="del"${why}>${ico('x')}删除</button>`;
+    let r = btn.getBoundingClientRect(); if (!r.width) r = btn.closest('.trow').getBoundingClientRect(); const side = $q('#side').getBoundingClientRect();
+    pop.style.left = Math.max(4, r.right - side.left - 180) + 'px'; pop.style.top = (r.bottom - side.top + 2) + 'px'; pop.dataset.li = i;
+    $q('#side').append(pop); const f = pop.querySelector('.mi:not(:disabled)'); if (f) f.focus({ preventScroll: true });
+  }
+  document.addEventListener('click', e => {
+    const it = e.target.closest && e.target.closest('.e40-pop [data-lm]'); if (!it || it.disabled) return;
+    const i = +it.closest('.e40-pop').dataset.li, k = it.dataset.lm; closePop();
+    if (k === 'time') { if (typeof selectComboLayer === 'function' && state.comboSel !== i) selectComboLayer(i); if (typeof selectEmitTab === 'function') selectEmitTab('效果');
+      setTimeout(() => { const p = $q('#lhPos'); if (p) { p.open = true; p.scrollIntoView({ block: 'nearest' }); const nn = p.querySelector('input.num'); if (nn) nn.focus({ preventScroll: true }); } }, 30); }
+    else if (k === 'up' && typeof myMoveLayer === 'function') myMoveLayer(i, -1); else if (k === 'down' && typeof myMoveLayer === 'function') myMoveLayer(i, 1);
+    else if (k === 'ren' && typeof myRenameLayer === 'function') myRenameLayer(i); else if (k === 'dup' && typeof myDupLayer === 'function') myDupLayer(i); else if (k === 'del' && typeof myDelLayer === 'function') myDelLayer(i);
+    setTimeout(() => render(true), 0);
+  });
   setInterval(() => { if (!document.hidden) { render(); syncSave(); syncStale(); syncMods(); syncIcons(); } }, 250);
 
   // ---- 需重新导出（v3.7 第 1 条）：资产栏「素材包过期 / 要重导」→ 效果名后、导出按钮里各一个琥珀小点；原因写在悬停提示和导出菜单里 ----

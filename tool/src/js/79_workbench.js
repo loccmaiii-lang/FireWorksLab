@@ -94,7 +94,7 @@ function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   for (const id of ['lhOut', 'lhPos', 'lhLink']) { const el = document.getElementById(id); if (el) el.remove(); }     // 4.9.8：上一层的导出方案 / 位置与时间放在参数栏里（layerBitsPlace），先拿掉
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b title="第 ${i + 1} 层 · ${layerName(i)}">当前图层 · ${layerName(i)}</b><button class="shelp" type="button" id="lhHelp" title="这一层怎么调">？</button></div>
-    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图流转」显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
+    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「序列贴图」显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
     ${lib.my || linkedWith(i).length ? `<details class="lh-link-details sec" id="lhLink"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
   // 4.9.8：「位置与时间」放进这一层的「效果」发射器顶上，默认展开（接力调开始时间常用）；开始时间和图层管理里那一格是同一个值
   const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="开始时间、缩放、时间倍率、水平镜像（这一层在整朵里的位置和时间）">这一层在整朵里</summary>'; host.appendChild(pos);
@@ -477,7 +477,7 @@ function initWorkbench() {
 //  查看交付（素材包里的每个文件：层、段、平台、单格、延迟）、通过门槛（独看 / 静音、显示曝光、改过参数时不能通过）
 // =====================================================================
 const stage2 = { deliv: false, tlSig: '', last: 0 };
-const VIEW_NAMES = { live: '实时模拟', export: '引擎回放', atlas: '贴图流转' };
+const VIEW_NAMES = { live: '实时模拟', export: '引擎回放', atlas: '序列贴图' };
 // 4.9.35（用户 10-07 18:50「贴图与流转我也认为可以合并，现在只有一个正方形，画布利用空间不够，两个页面合成一个」）：「贴图」「流转」合成一页「贴图流转」
 // （渲染器里还是 state.view = 'atlas'，按钮叫 flow）；交付清单是覆盖页，不给渲染器增加新的视图状态。
 function syncStageTabs() {
@@ -514,12 +514,15 @@ function scopeLabel() {
   if (v.mute.length) return ` · 静音 ${v.mute.map(i => i + 1).join('、')} 层（仅观察）`;
   return state.comboSel >= 0 ? ` · 整体（正在调第 ${state.comboSel + 1} 层）` : ' · 整体 · 全部层';
 }
+// 5.0.0 画面左下读数（规范 v4 §7）：「PC　30 fps　帧 12 / 64」——帧 = 播放头落在导出的第几帧（当前层）；单格、张数只在「输出」模块里写
 function specLabel() {
-  const plat = state.platform === 'mobile' ? '手机' : 'PC';
+  const plat = state.platform === 'mobile' ? '手机' : 'PC', sp2 = '\u3000';
   const bs = curLayerBakes().filter(x => x.b), pick = state.tab === 'combo' ? bs.find(x => x.i === comboAtlasLayer()) || bs[0] : bs[0];
-  if (!pick) return plat + ' · 还没烘好';
-  const b = previewBake(pick.b) || pick.b, parts = bakeParts(b), F = parts.reduce((n, s) => n + s.meta.L.F, 0), L = b.meta.L;
-  return `${plat} · 单格 ${Math.round(L.cellW)} px · ${F} 帧 · ${parts.length} 张${state.tab === 'combo' ? `（第 ${pick.i + 1} 层）` : ''}`;
+  if (!pick) return plat + sp2 + '未烘焙';
+  const b = previewBake(pick.b) || pick.b, parts = bakeParts(b), F = parts.reduce((n, s) => n + s.meta.L.F, 0), sp = layerSpans(pick);
+  const lt = sp ? (state.t - sp.d) * sp.r : state.t;
+  let k = 0; for (const s of parts) for (const t of s.meta.times || []) if ((s.meta.t0 || 0) + t <= lt + 1e-6) k++;
+  return `${plat}${sp2}30 fps${sp2}帧 ${k ? Math.min(k, F) : '–'} / ${F}`;
 }
 // 开花 / 展开 / 衰减：取主层（最大的一层）的帧预算：展开 = 开始淡出的时刻（花开到最大），衰减 = 淡出段中间
 function jumpTimes() {
@@ -677,6 +680,18 @@ function seqVoidText(sp) {
   return sp.cut ? `${a} – ${z} s 不导出：这一层设了出点 ${sp.cutAt.toFixed(2)} s（序列时长 ${z} s 只是时间轴画到这里）。要导出更长：时间轴下面「清除」入出点`
     : `${a} – ${z} s 全黑（最亮像素 < 2/255），烘焙时不烘、不导出（序列时长 ${z} s 只是时间轴画到这里）。要这一层亮得更久：调燃烧时间 / 火花寿命，或「效果 › 整体调整 › 节奏」放慢`;
 }
+// 5.0.0 导出范围行（规范 v4 §9）：「导出范围　0.35 – 2.85 s」＋ 设为入点 / 设为出点 / 恢复（图标命令）｜ 一并移动、同刻联动（右对齐）
+function tlRangeRow(rows, P) {
+  const x = P && rows.find(r => layerPOf(r) === P), sp = x && layerSpans(x), set = !!P && (+P.cutIn > 0 || +P.cutOut > 0);
+  const val = sp ? `${sp.t0.toFixed(2)}\u2009–\u2009${sp.end.toFixed(2)} s` : '—';
+  const tip = !P ? '先选一层' : [`入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'}，出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}`,
+    sp && sp.seq > sp.end + 0.02 ? `序列 ${sp.seq.toFixed(2)} s，${sp.cut ? '出点后' : '全黑段'}不导出` : ''].filter(Boolean).join('\n');
+  const b = (k, ic, lab, t, dis) => `<button type="button" class="btn btn-icon" data-cut="${k}" aria-label="${lab}" data-tip="${dis && !P ? '先选一层' : t}"${dis ? ' disabled' : ''}>${eIcon(ic)}</button>`;
+  return `<div class="tlx" role="group" aria-label="导出范围"><span class="tlx-k">导出范围</span><span class="tlx-v" data-tip="${tip}">${val}</span>`
+    + `<span class="tlx-b">${b('in', 'in', '设为入点', '入点设到播放头', !P)}${b('out', 'outp', '设为出点', '出点设到播放头', !P)}${b('clear', 'reset', '恢复', set ? '恢复自动范围' : '范围未改过', !P || !set)}</span><span class="sp"></span>`
+    + `<label class="check tlopt" data-tip="改时间点时，时长和入点跟着走"><input type="checkbox" data-tlopt="follow"${state.followOff ? '' : ' checked'}> 一并移动</label>`
+    + (state.tab === 'combo' && (state.links || []).length ? `<label class="check tlopt" data-tip="同一时刻的点一起动"><input type="checkbox" data-tlopt="glue"${state.glueOff ? '' : ' checked'}> 同刻联动</label>` : '') + '</div>';
+}
 function seqTailNote(rows, P) {
   const x = rows.find(r => layerPOf(r) === P), sp = x && layerSpans(x);
   return sp && sp.seq > sp.end + 0.02 ? ` · 序列时长 ${sp.seq.toFixed(2)} s，导出到 ${sp.end.toFixed(2)} s（斜纹 = 不导出：${sp.cut ? '出点后' : '后面全黑没烘'}）` : '';
@@ -711,10 +726,8 @@ function buildTlBars() {
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
     const combo = state.tab === 'combo', mute = state.layerView.mute.includes(x.i), solo = state.layerView.solo === x.i;
     return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
-  }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
-    + (P || state.tab === 'combo' ? `<div class="tlcut" title="轨道上：上排圆点 = 星（点火、燃烧结束…），菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧从这里开始">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
-      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') + (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 ? '，开花闪光单独导出一颗软圆点（Flash）' : '') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
-      <label class="check tlopt" title="开：拖 / 改点火、燃烧结束这些时间点时，序列时长跟着这一层最后看得见的时刻伸缩，入点跟着点火平移。关：只改你动的那个参数"><input type="checkbox" data-tlopt="follow"${state.followOff ? '' : ' checked'}> 时长 / 入点跟着走</label>${state.tab === 'combo' && (state.links || []).length ? `<label class="check tlopt" title="开：同一批星的几层在同一时刻的点（例：引线火花停 = 锦点火）粘在一起，动一个另一个跟着动（轨道上带链条的点）。关：各改各的"><input type="checkbox" data-tlopt="glue"${state.glueOff ? '' : ' checked'}> 同一时刻的点一起动</label>` : ''}</div>` : '');
+  }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>';
+  host.insertAdjacentHTML('afterbegin', tlRangeRow(rows, P));
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
   host.querySelectorAll('.tlb-n[data-i]').forEach(n => n.addEventListener('click', () => { if (state.tab === 'combo') selectComboLayer(state.comboSel === +n.dataset.i ? -1 : +n.dataset.i); }));
@@ -723,8 +736,8 @@ function buildTlBars() {
   host.querySelectorAll('[data-track-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.trackSolo, v = state.layerView; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
   host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
   host.querySelectorAll('[data-tlopt]').forEach(c => c.addEventListener('change', () => { const off = !c.checked;
-    if (c.dataset.tlopt === 'follow') { state.followOff = off; store.set('tlFollowOff', off); flash(off ? '改时间点时序列时长 / 入点不再跟着走' : '改时间点时序列时长 / 入点跟着走'); }
-    else { state.glueOff = off; store.set('tlGlueOff', off); flash(off ? '同一批星的几层：时间点各改各的' : '同一批星的几层：同一时刻的点一起动'); }
+    if (c.dataset.tlopt === 'follow') { state.followOff = off; store.set('tlFollowOff', off); flash(off ? '一并移动：关' : '一并移动：开'); }
+    else { state.glueOff = off; store.set('tlGlueOff', off); flash(off ? '同刻联动：关' : '同刻联动：开'); }
     stage2.tlSig = ''; buildTlBars(); }));
   host.querySelectorAll('.ph, .cut').forEach(h => h.addEventListener('pointerdown', ev => trackDrag(ev, h)));
   document.querySelectorAll('[data-info=outSummary]').forEach(r => r._refresh && r._refresh());
@@ -768,7 +781,7 @@ function trackDrag(ev, h) {
 // 「输出」一节顶上的结果（4.2.0）：入出点之间多少 tick → 烘了多少帧 → 每张怎么装、帧率多少；有问题直接写出来
 function outSummaryHTML() {
   const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), b = x && x.b, P = state.P;
-  if (!b || !b.meta || b.meta.frameTiming !== 'tick-start') return '<p class="hint">烘好以后这里显示：入点到出点之间多少 tick、烘了多少帧、怎么装进贴图、帧率多少。</p>';
+  if (!b || !b.meta || b.meta.frameTiming !== 'tick-start') return '<div class="osum e50-osum"><div class="e50-ro"><span class="fk">帧数</span><span class="v">未烘焙</span></div></div>';
   const parts = bakeParts(b), F = parts.reduce((n, s) => n + s.meta.L.F, 0), m0 = parts[0].meta, end = bakeTotal(b), N = Math.round((end - (m0.t0 || 0)) * 30);
   let maxF = 0, minF = 99; for (const s of parts) for (const d of s.meta.dur || []) { const f = 1 / Math.max(d, 1 / 30); maxF = Math.max(maxF, f); minF = Math.min(minF, f); }
   const burnMin = Math.min(...parts.map(s => s.meta.minFps || 30));
@@ -780,11 +793,13 @@ function outSummaryHTML() {
   if (minF < 7.5 - 0.05) warn.push(`最慢 ${minF.toFixed(1)} fps，低于标准的 7.5 fps`);
   if (P.outPack !== 'fit' && used < cap * 0.5) warn.push(`贴图里一半以上的格子是空的（用了 ${used} / ${cap}）：可以把「格子」改成「按帧数选最小贴图」，或「帧数」改成「最省」`);
   const led = ledgerOfBake(b);
-  return `<div class="osum"><div><b>${F} 帧</b>（${mode}）· 入点 ${(m0.t0 || 0).toFixed(2)} → 出点 ${end.toFixed(2)} s，${N} 个 tick${m0.cut && (m0.cut.in || m0.cut.out) ? '（用了你设的入出点）' : '（自动：第一次到最后一次看得见）'}</div>
-    <div>帧率 ${maxF.toFixed(0)} fps → 最慢 ${minF.toFixed(1)} fps（燃烧段最慢 ${burnMin.toFixed(1)}）</div>
-    <div>${parts.length} 张：${parts.map(sheet).join('；')} · 单格 ${Math.round(m0.L.cellW)} px · 格子用了 ${used} / ${cap}</div>
-    ${led ? `<div title="相邻两帧之间，跑得快的星（90 分位星速）在游戏画面上（1080p、四尺玉占 1/3 屏高、${STEP_REF_DIST} m）挪了多少像素。标定线 = 金芒菊 4.56 s 放一张 64 帧（你 10-01 说游戏里很流畅）里停 2 tick 以上的帧最多跳的像素；开花段每 tick 一帧不算">游戏里每帧最多跳 <b>${led.maxHeld}</b> 像素（${STEP_REF_DIST} m；标定线 ${STEP_REF_PX} = 金芒菊）${led.over ? ` · <span class="ow-i">${led.over} 帧超线</span>` : ' · 都在线内'}</div>` : ''}
-    ${warn.map(w => `<div class="ow">⚠ ${w}</div>`).join('')}${frameTrialHTML(P)}</div>`;
+  // 5.0.0（全新 5.0）：只读行；细节进悬停提示；警告一句一行；「试算」删掉
+  const ro = (k, v, tip, cls = '') => `<div class="e50-ro${cls}"${tip ? ` data-tip="${String(tip).replace(/"/g, '&quot;')}"` : ''}><span class="fk">${k}</span><span class="v">${v}</span></div>`;
+  return `<div class="osum e50-osum">${ro('帧数', `${F} 帧`, `${mode}；${(m0.t0 || 0).toFixed(2)}–${end.toFixed(2)} s，${N} tick`)}`
+    + ro('帧率', `${maxF.toFixed(0)}–${minF.toFixed(1)} fps`, `燃烧段最慢 ${burnMin.toFixed(1)} fps`)
+    + ro('贴图', `${parts.length} 张 · ${parts.map(sheet).join('；')}`, `单格 ${Math.round(m0.L.cellW)} px，格子用了 ${used} / ${cap}`)
+    + (led ? ro('每帧跳动', `${led.maxHeld} px`, `${STEP_REF_DIST} m 外；标定线 ${STEP_REF_PX} px`, led.over ? ' warn' : '') : '')
+    + warn.map(x => `<div class="e50-warn">${x.replace(/：可以把.*$/, '')}</div>`).join('') + '</div>';
 }
 // 4.9.25：单束以前另有资产栏「单束」菜单、交付页「导出单束包」、「把产物改成单束」三处入口，都并进交付清单的产物表（prodTableHTML）
 // 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
@@ -812,7 +827,7 @@ function rebakeLayers(idxs) {
 function setCut(kind) {
   const P = editLayerP(); if (!P) return;
   const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), sp = x && layerSpans(x);
-  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash('已清除入点 / 出点（回到自动）'); return; }
+  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash('导出范围已恢复自动'); return; }
   applyCut(P, sp, kind, Math.max(0, (state.t - (sp ? sp.d : 0)) * (sp ? sp.r : 1)), false);
 }
 // drag = 拖把手：拖回可见范围的尽头就是「自动」
@@ -837,7 +852,7 @@ function applyCut(P, sp, kind, tl, drag) {
 function stageTick(D) {
   const playing = String(state.playing), play = $('#play');
   if (play.dataset.playing !== playing || !play.querySelector('.ui-icon')) { play.dataset.playing = playing; play.innerHTML = uiIcon(state.playing ? 'player-pause' : 'player-play'); play.setAttribute('aria-label', state.playing ? '暂停' : '播放'); play.title = state.playing ? '暂停（空格）' : '播放（空格）'; }
-  $('#vfTick').textContent = `30 fps · tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`;
+  { const tk = `tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`, vs = $('#vfSpec'); if (vs.dataset.tip !== tk) vs.dataset.tip = tk; }     // 5.0.0：tick 收进左下读数的悬停提示
   // 4.2.22 播放头：轨道的位置每 1/4 秒量一次（offsetLeft 每帧强制排版），播放头用 transform 挪（不触发排版）
   const now = performance.now(), host = $('#tlBars'), ph = host.querySelector('.tlb-ph');
   if (ph && (!stage2.trBox || now - stage2.last >= 250)) { const tr = host.querySelector('.tlb-t'); stage2.trBox = tr ? [tr.offsetLeft, tr.offsetWidth] : null; }
@@ -1190,7 +1205,7 @@ function prodTableHTML(xs, combo) {
   const mobileWhy = combo ? comboMobileConflictText(xs) : '';
   return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th title="引擎回放画的是这一列">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     ${mobileWhy ? `<p class="warn" role="alert">${mobileWhy}</p>` : ''}
-    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图流转」「引擎回放」按 PC 列看（PC 单束就看单束那张、单帧就看单帧）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
+    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「序列贴图」「引擎回放」按 PC 列看（PC 单束就看单束那张、单帧就看单帧）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
 }
 // 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：产物表单帧格子里「在引擎回放里看」；
 // 4.9.35（用户 18:50「引擎回放就只是引擎回放」）：引擎回放不分平台，直接按 PC 列画，点了 = 回到画面、切引擎回放
@@ -1218,7 +1233,7 @@ function toggleDeliv(on) {
 }
 function tickStep(n) { state.playing = false; $('#play').textContent = '播放'; state.t = Math.max(0, Math.min(curDuration(), engineTick(state.t + 1e-6) + n / 30)); }
 // 重播（4.2.0，用户 16:22）：回到 0 秒并播放；快捷键 R
-function replay() { state.t = 0; state.playing = true; $('#play').textContent = '暂停'; }
+function replay() { state.t = 0; state.playing = true; $('#play').textContent = '暂停'; }     // 5.0.0：播放键的图标由 stageTick 按 state.playing 换回
 function initStage() {
   $('#replay').innerHTML = uiIcon('refresh'); $('#replay').setAttribute('aria-label', '重播');
   $('#replay').addEventListener('click', replay);

@@ -2307,3 +2307,138 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
   #right>.right-head{min-height:36px}
   #right>.right-head .ptabs>button{min-height:35px}
 }
+
+/* ===================== 烟花工坊 5.0.0（本机「烟花工坊（5.0）」，全新 5.0）：只挪位置、改样子，不碰参数和导出 ===================== */
+/* 画面上方那条：距离、预览曝光挪到画面右下读数，预览设置进画面右键菜单；只剩「尾缀分层看」「看哪一张贴图」时才出现 */
+.viewframe .preview-controls>#distBox,.viewframe .preview-controls>#expoBox,.viewframe .preview-controls>#previewSettings{display:none}
+.viewframe .preview-controls:not(:has(>#rtLayerBar:not([hidden]))):not(:has(>#texSeg:not([hidden]))){display:none}
+/* 画面读数（§7）：左下平台 / 帧率，右下距离、预览曝光；两层暗晕，可拖可输入 */
+.viewframe .vf-foot{display:flex;align-items:center;gap:var(--s4);min-height:28px}
+.vf-read{display:inline-flex;align-items:center;gap:var(--s4)}
+.vf-read .vr{display:inline-flex;align-items:baseline;gap:6px;min-height:24px;padding:0 4px;border-radius:var(--r2);cursor:ew-resize;user-select:none;color:var(--t3);font-size:var(--fs1)}
+.vf-read .vr[hidden]{display:none}
+.vf-read .vr:hover,.vf-read .vr.drag{background:color-mix(in srgb,var(--g4) 70%,transparent)}
+.vf-read .vr .vr-v{color:var(--t2);font-variant-numeric:tabular-nums}
+.vf-read .vr.chg .vr-v{color:var(--t1)}
+.vf-read .vr-in{width:64px;height:20px;padding:0 4px;border:1px solid var(--ovLine);border-radius:var(--r2);background:var(--ov);color:var(--t1);font:inherit;font-size:var(--fs1)}
+.vf-read .vr-in.bad{border-color:var(--e3)}
+/* 画面右键菜单 */
+.e50-ctx{position:fixed;z-index:80;min-width:180px;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);display:flex;flex-direction:column}
+.e50-ctx[hidden]{display:none}
+.e50-ctx .bakectl{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:0;border:0;background:none}
+.e50-ctx :is(.bakebtn,.bk-auto,.expo){display:flex;align-items:center;gap:8px;width:100%;min-height:var(--h-hit);margin:0;padding:0 12px;border:0;border-radius:0;background:none;color:var(--t1);font-size:var(--fs2);text-align:left;white-space:nowrap;cursor:pointer}
+.e50-ctx :is(.bakebtn,.bk-auto,.expo):hover{background:var(--press)}
+.e50-ctx .expo[hidden]{display:none}
+/* 导出范围行（§9）：行名列写「导出范围」，数值从刻度 0 s 那条线起；设为入点 / 设为出点 / 恢复；一并移动、同刻联动右对齐 */
+.tlbars>.tlx{position:sticky;top:-4px;z-index:5;display:flex;align-items:center;min-height:var(--h-io);background:var(--panel);color:var(--t2);font-size:var(--fs2)}
+.tlbars>.tlx~.tlr{top:calc(var(--h-io) - 4px)}
+.tlx .tlx-k{flex:none;width:var(--labelW);margin-right:6px;color:var(--t3);font-size:var(--fs1)}
+.tlx .tlx-v{color:var(--t1);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tlx .tlx-b{display:inline-flex;gap:4px;margin-left:12px}
+.tlx .tlx-b .btn-icon{width:var(--h-hit);height:var(--h-hit);min-height:0;padding:0}
+.tlx .tlx-b .btn-icon[disabled]{opacity:.4}
+.tlx .sp{flex:1}
+.tlx .tlopt{display:inline-flex;align-items:center;gap:6px;margin-left:var(--s4);color:var(--t2);font-size:var(--fs2);white-space:nowrap}
+.viewframe .vf-foot #vfTick{display:none}
+/* ---- 检查器（§10）：只藏不删的旧部件（脚本照旧读它们；功能在搜索行、⋯、结构树、面包屑提示里） ---- */
+#right{--pc-name:var(--w-lab);--pc-num:var(--w-val);--pc-unit:var(--w-unit);--pc-act:var(--w-act)}
+#params>.pscope,#params>section.egrp>.ehead,#params .mod-empties,#params details.mod>summary .shelp,#params details.mod>p.hint{display:none}
+#exposureControls,#pMaster>.actions>#stats,#pMaster>.actions>.pm-btns,#pMaster>.actions>p.note,#pFoot,#layerCard{display:none!important}
+#colorControls .color-scope,#colorControls>summary .scope-caption{display:none}
+/* 搜索行：搜索框 ＋ 筛选 ▾ ＋ 全部折叠 ＋ ⋯ */
+#params>.ptools.ps-search{display:flex;align-items:center;gap:var(--s2);padding:var(--s2) 0;margin:0}
+#params>.ptools.ps-search>label.pchg{display:none}
+.e50-q{position:relative;flex:1;min-width:0;display:flex;align-items:center}
+.e50-q>svg.i{position:absolute;left:8px;color:var(--t3);pointer-events:none}
+.e50-q>input[type=search]{width:100%;height:var(--h-hit);min-height:0;padding:0 8px 0 30px;border:1px solid var(--line);border-radius:var(--r2);background:none;color:var(--t1);font-size:var(--fs2)}
+.e50-q>input[type=search]:focus{border-color:var(--g6);background:var(--ov)}
+#params .e50-filt,#params .e50-more{position:relative;flex:none}
+#params .e50-filt>summary{gap:4px}
+#params .e50-filt>summary.on{color:var(--t1)}
+#params .e50-filt>summary.on::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--p4)}
+#params .e50-more>summary{width:var(--h-hit);padding:0}
+#params .e50-menu{position:absolute;z-index:40;top:calc(100% + 4px);right:0;left:auto;min-width:160px;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);display:flex;flex-direction:column}
+#params .e50-menu .pchg,#params .e50-menu .mi{display:flex;align-items:center;gap:8px;min-height:var(--h-hit);margin:0;padding:0 12px;border:0;background:none;color:var(--t1);font-size:var(--fs2);white-space:nowrap;text-align:left;cursor:pointer}
+#params .e50-menu .pchg:hover,#params .e50-menu .mi:not(:disabled):hover{background:var(--press)}
+#params .e50-menu .mi:disabled{opacity:.4;cursor:default}
+#params .e50-menu .mi[hidden]{display:none}
+#params .e50-menu hr{margin:4px 0}
+/* 「按最亮时刻设曝光」：标签和滑杆之间（标签列右端） */
+#right .sl>.e50-auto{grid-column:1;grid-row:1;justify-self:end;width:24px;height:24px;min-height:0;padding:0;color:var(--t3)}
+#right .sl>.e50-auto:hover{color:var(--t1)}
+#right .sl>.e50-auto[hidden]{display:none}
+#right .sl>.e50-auto:disabled{opacity:.4}
+/* 节奏：档位（分段）、整段时长（数值列） */
+#params .infohost[data-info=tempoInfo]{padding-left:var(--in-prm)}
+#params .tempoinfo{display:flex;flex-direction:column;gap:0;margin:0;padding:0;border:0;background:none}
+#params .tempoinfo .e50-row{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm)}
+#params .tempoinfo .fk{grid-column:1;color:var(--t2);font-size:var(--fs2)}
+#params .tempoinfo .e50-seg{grid-column:2 / 4;display:flex;width:100%;height:var(--h-ctl)}
+#params .tempoinfo .e50-seg>button{flex:1;min-width:0;padding:0 4px;font-size:var(--fs1)}
+#params .tempoinfo .num{grid-column:3;width:100%;height:var(--h-ctl);text-align:right}
+#params .tempoinfo .punit{grid-column:4;color:var(--t3);font-size:var(--fs1)}
+/* 规格块（输出 › 直接调 / 贴图）：每项一行，按检查器的列（名字｜控件｜数值｜单位｜操作），下拉不再横跨整行 */
+#params .spechost .grid2{display:block}
+#params .spechost .field{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;font-size:var(--fs2);color:var(--t2)}
+#params .spechost .field>select,#params .spechost .field>.pair2{grid-column:2;width:100%;min-width:0}
+#params .spechost .field>.fk{grid-column:1}
+#params .spechost .check{display:flex;align-items:center;gap:8px;min-height:var(--h-prm);margin:0;padding-left:calc(var(--pc-name) + 10px);font-size:var(--fs2);color:var(--t2)}
+#params .spechost .check[hidden]{display:none}
+/* 下拉 / 文字行：名字｜控件（到数值列为止，不横跨整行）｜单位｜操作 */
+#right #params details.mod>.field{grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);min-height:var(--h-prm);margin:0}
+#right #params details.mod>.field>select,#right #params details.mod>.field>input{grid-column:2 / 4;min-height:var(--h-ctl)}
+#right #params details.mod>.field>.rrst{grid-column:5}
+#right #params details.mod>.field.curvef>.cv-box,#right #params details.mod>.field.curvef>.cv-keys{grid-column:1 / -1}
+#params .spechost{padding-left:var(--in-prm)}
+#params .spechost .field>.pair2{grid-column:2 / 4}
+#params .spechost .pair2 select{padding:0 4px;min-height:var(--h-ctl)}
+/* 只读行（输出 › 算出来的、单帧时刻）：名字｜值（主文字色）｜小命令 */
+#params .e50-ro{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) auto;column-gap:10px;align-items:center;min-height:var(--h-prm);font-size:var(--fs2)}
+#params .e50-ro>.fk{color:var(--t2)}
+#params .e50-ro>.v{color:var(--t1);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#params .e50-ro.warn>.v{color:var(--w3)}
+#params .e50-ro>.acts{display:inline-flex;gap:4px}
+#params .e50-warn{padding-left:calc(var(--pc-name) + 10px);font-size:var(--fs1);line-height:1.5;color:var(--w3)}
+#params .osum.e50-osum{margin:0;padding:0;border:0;background:none}
+#params .infohost[data-info=outSummary],#params .infohost[data-info=lowAtNow]{padding-left:var(--in-prm)}
+/* 跟着算 / 接回：只留开关，说明在悬停提示里 */
+#right .sl .adef{grid-column:2 / -1}
+#right .sl .adef .adef-t{display:none}
+/* 状态句（序列时长下面、导出方案说明等）：一行弱色小字，全文在悬停提示里 */
+#params .infohost p.hint{margin:0 0 4px;padding-left:calc(var(--pc-name) + 10px);font-size:var(--fs1);line-height:1.5;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#params .infohost p.hint.warn{color:var(--w3);white-space:normal}
+/* 旧参数（没用上的）那一行折叠开关：开发留的，不显示 */
+#params>.egrp>.oldb{display:none}
+/* 花型 / 英文名 / 产物：每项一行 */
+#params .pm-ident{display:flex;flex-direction:column;gap:0;margin:0 0 var(--s2);padding:0 0 0 var(--in-prm);border:0;background:none}
+#params .pm-ident .row2{display:contents}
+#params .pm-ident .field{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) auto;column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;font-size:var(--fs2);color:var(--t2)}
+#params .pm-ident .typebtn{display:inline-flex;align-items:center;gap:8px;min-height:var(--h-ctl);padding:0 4px 0 0;border:0;background:none;color:var(--t1);text-align:left;min-width:0}
+#params .pm-ident .typebtn .tb-img{width:24px;height:24px;flex:none}
+#params .pm-ident .typebtn .tb-txt{display:flex;align-items:baseline;gap:6px;min-width:0;overflow:hidden}
+#params .pm-ident .typebtn .tb-txt b{font-weight:var(--fw1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#params .pm-ident .typebtn .tb-txt small{color:var(--t3);font-size:var(--fs1)}
+#params .pm-ident .typebtn em{margin-left:auto;font-style:normal;color:var(--t3);font-size:var(--fs1)}
+#params .pm-ident .typebtn:hover em{color:var(--t1)}
+#params .pm-ident .enname{display:flex;align-items:center;gap:8px;min-width:0}
+#params .pm-ident .enname b{font-weight:var(--fw1);color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#params .pm-ident>label.field>select{grid-column:2 / 4}
+#params .pm-ident #formNote{display:none}
+/* 其余能收起的块（这一层在整朵里、出生方式、轨迹联动、本层颜色、多层「各层在整朵里」、工具页）：和模块同一种标题——600、右端箭头、不画左箭头 */
+#right details.sec:not(.mod)>summary{display:flex;align-items:center;gap:8px;min-height:36px;padding:0 4px 0 0;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);list-style:none;cursor:pointer}
+#right details.sec:not(.mod)>summary::-webkit-details-marker{display:none}
+#right details.sec:not(.mod)>summary::before{display:none}
+#right details.sec:not(.mod)>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:auto;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
+#right details.sec:not(.mod)[open]>summary::after{transform:none}
+#right details.sec:not(.mod)>summary:hover::after{background:var(--t1)}
+#right details.sec details.sec>summary{font-weight:var(--fw1);color:var(--t2);min-height:var(--h-prm)}
+/* 多层的「各层在整朵里」：每层一块，块与块之间一条线，不填底色；标题右端「调这一层」图标 */
+#pCombo #layers>.card{margin:0;padding:var(--s2) 0 var(--s4);border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;box-shadow:none}
+#pCombo #layers>.card>.head{display:flex;align-items:center;gap:8px;min-height:32px;margin:0;padding:0;background:none}
+#pCombo #layers>.card>.head>b{flex:1;font-weight:var(--fw2);color:var(--t1);font-size:var(--fs2)}
+#pCombo #layers>.card>.head>.lc-edit{width:var(--h-hit);height:var(--h-hit);min-height:0;padding:0;color:var(--t3)}
+#pCombo #layers>.card>.head>.lc-edit:hover{color:var(--t1)}
+#pCombo #layers>.card>.head>select,#pCombo #layers>.card>.head>.x{display:none}
+#pCombo .line:has(#btnExportCombo){display:none}

@@ -1510,7 +1510,7 @@ function renderEmitLive() {
   post();
   const cnt = rtAliveCounts(tabs, t);
   rtLayerBarSync([['near', np, false], ...(far && !mobNear ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu]), ...(texE ? [['EmbersTex', ne, false]] : [])]);
-  const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（真实米数：四尺玉 ${GAME_REF_D} m 在 1000 m 占屏高 1/3）` : '';
+  const dist = state.disp === 'game' ? ` · 实机窗口 ${state.dist} m` : '';
   hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗${mobOff ? ' · 手机预览：产物表手机这一格是「不出」，没有画' : mobNear ? ` · 手机预览：_M 只有近段${far ? '（星头 + 跟着走的年轻火花）' : '循环'}${RT_MOBILE_PARTICLES ? `${far ? '，远段手机没有、不画' : ''} + 粒子层 ${nd.toLocaleString()} 颗（手机减量）` : `，${far ? '远段 / ' : ''}粒子层手机没有、不画`}` : pcFull ? (fx ? ` · ${mobile ? '手机' : 'PC'} 合成一张：引擎里加的效果 / 落火也烘进了那一张（${(nd + ne).toLocaleString()} 颗软圆点，导出里按 Ramp 色）；GPU 火花不在导出里、不画` : ` · ${mobile ? '手机' : 'PC'} 合成一张：只画导出里有的（星头 + 全部火花），GPU 粒子 / 星头光晕 / 发射口 / 烟带不在导出里、不画`) : ` + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）`}${dist}${rtShowNote()}`;
   hudB = '';
 }
@@ -1542,7 +1542,7 @@ function renderEmitExportFull(b) {
   }
   additive(false); post();
   rtLayerBarSync([['full', null, false]]);
-  const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
+  const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 实机窗口 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
   if (b.esHead) { hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'} · 纯星头 · ${offPC ? 'PC 不出这一层' : dot ? 'CPU 粒子（星头）1 颗软圆点，没有贴图' : '单帧小面片 1 颗（CPU）'}${t < fa.t0 ? ' · 还没到入点' : t > fa.t0 + fa.Dtot ? ' · 已结束' : ''}${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`; hudB = ''; return; }
   hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${b.meta.fullFx ? ' · 引擎里加的效果 / 落火已烘进贴图（Ramp 色）' : ''}${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
   if (fa.anchor && s) hudText += ` · 随内容放大 · 锚在发射点：这一帧 ${(s.w / fa.Ww).toFixed(2)} × ${(s.h / fa.Wh).toFixed(2)}`;     // 4.9.81
@@ -1580,7 +1580,7 @@ function renderEmitExport(b) {
   additive(false); post();
   const cnt = rtAliveCounts(tabs, t);
   rtLayerBarSync([['near', null, false], ...(b.far ? [['far', null, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
-  const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '';
+  const dist = state.disp === 'game' ? ` · 实机窗口 ${state.dist} m` : '';
   hudText = `引擎回放 · ${b.esMobile ? '手机' : 'PC'} · 循环层 ${!rtOn('near') ? '（分层看关了）' : !s ? '已结束' : s.phase === 'rise' ? '上升循环第 ' + (s.f + 1) + '/' + m.L.F + ' 帧' : '贴图动态消散第 ' + (s.f + 1) + '/' + s.bb.meta.L.F + ' 帧'}（面片 ${((s && s.w) || m.Ww).toFixed(1)} × ${(((s && s.h) || m.Wh) * (s ? s.sy : 1)).toFixed(1)} m）${b.far ? ' + 远段 ' + (sa ? '第 ' + (sa.f + 1) + '/' + sa.bb.meta.far.F + ' 帧' : '—') : ''} + 粒子层 ${nd.toLocaleString()} 颗${dist} · 溶解另由材质处理（未经 UE 验证）${rtShowNote()}`;
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°：近段（速度朝向）和远段（Rectangle + 锁 Z + Local Space）一起倾，看接缝；粒子层倾斜时不画；以 UE 实测为准`;
   hudB = '';

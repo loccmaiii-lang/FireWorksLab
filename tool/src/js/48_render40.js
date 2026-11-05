@@ -151,7 +151,7 @@ function renderLive40() {
   LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss); LIVE_VIEW = true;
   try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
-  hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}${typeof liveSchemeNote==='function'?liveSchemeNote(P):''}`;
+  hudText=`实时模拟 · ${state.disp==='game'&&camera?'实机窗口 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}${typeof liveSchemeNote==='function'?liveSchemeNote(P):''}`;
   const headPx=(+P.headSize||0)*Math.min(L.cellW/(2*view[2]),L.cellH/(2*view[3]));
   hudB=+P.headBright>0 ? `星头标称直径约 ${headPx.toFixed(2)} 纹素（当前取景）${headPx<3?' · 小光点易受采样影响，可增大单格；超采样不能替代单格分辨率':''}` : '';
   if(P.sparkGraph)hudB=`${P.sparkGraph.emitters.length} 层 · 历史轨迹拉伸 · 当前${graphSolo?'单层观察（导出仍含全部启用层）':'显示全部启用层'}`;

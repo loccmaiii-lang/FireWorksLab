@@ -80,12 +80,12 @@ import shutil, subprocess, sys
 bad = False
 node = shutil.which('node')
 if node:
-    r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), os.path.join(here, 'FireworkBaker.html')], capture_output=True, text=True)
+    r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), os.path.join(here, 'FireworkBaker.html')], capture_output=True, text=True, encoding='utf-8', errors='replace')     # 5.0.0：Windows 控制台不是 UTF-8
     print(r.stdout.strip()); bad |= r.returncode != 0
     if r.returncode not in (0, 1): print(r.stderr.strip())
 else:
     print('⚠ 没有 node：跳过脚本静态检查（云端改 tool/src 时必须有）')
-r = subprocess.run([sys.executable, os.path.join(here, '..', 'analysis', 'scripts', '静态核对.py')], capture_output=True, text=True)
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(here, '..', 'analysis', 'scripts', '静态核对.py')], capture_output=True, text=True, encoding='utf-8', errors='replace')
 print(r.stdout.strip()); bad |= r.returncode != 0
 
 # ---------------------------------------------------------------------
@@ -144,7 +144,7 @@ if os.path.isdir(shell_dir):
         with tempfile.TemporaryDirectory() as td:
             tf = os.path.join(td, 'workshop_lint.html')
             open(tf, 'w', encoding='utf-8').write('<html><body>\n' + ''.join(f'<script src="data/{f}"></script>\n' for f in ('review.js', 'standard.js', 'thumbs.js', 'size_spec.js')) + "<script>\n'use strict';\n" + js + '\n' + shell_js + '</script>\n</body></html>\n')
-            r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), tf], capture_output=True, text=True)
+            r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), tf], capture_output=True, text=True, encoding='utf-8', errors='replace')
             print('外壳 lint：' + (r.stdout.strip() or 'ok')); bad |= r.returncode != 0
             if r.returncode not in (0, 1): print(r.stderr.strip())
 

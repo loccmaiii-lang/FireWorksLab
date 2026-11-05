@@ -43,7 +43,7 @@
   <symbol id="i-reset" viewBox="0 0 16 16"><path d="M2.75 8a5.25 5.25 0 1 0 5.25-5.25 5.7 5.7 0 0 0-3.95 1.6L3.3 5.2"/><path d="M2.75 2.75v3h3"/></symbol>
   <symbol id="i-play" viewBox="0 0 16 16"><path d="M4.25 3.25v9.5L12.05 8z"/></symbol>
   <symbol id="i-pause" viewBox="0 0 16 16"><path d="M4.25 2.75h1.5v10.5h-1.5zm6 0h1.5v10.5h-1.5z"/></symbol>
-  <symbol id="i-restart" viewBox="0 0 16 16"><path d="M3.25 2.75v10.5"/><path d="M12.4 3.6v8.8L6.25 8z"/></symbol>
+  <symbol id="i-restart" viewBox="0 0 16 16"><path d="M3.25 2.75v10.5"/><path d="M12.4 3.6v8.8L6.25 8z"/></symbol><symbol id="i-replay" viewBox="0 0 16 16"><path d="M13.25 8a5.25 5.25 0 1 1-1.54-3.71"/><path d="M12.25 1.75v3h-3"/><path d="M6.75 5.75v4.5L10.25 8z"/></symbol>
   <symbol id="i-loop" viewBox="0 0 16 16"><path d="M9 5.25h4.25v7.5H2.75v-7.5h4"/><path d="M5.1 3.6l1.65 1.65L5.1 6.9"/></symbol>
   <symbol id="i-camera" viewBox="0 0 16 16"><path d="M2.75 5h10.5v8H2.75zm3-2.25h4.5V5"/><circle cx="8" cy="9" r="2"/></symbol>
   <symbol id="i-timer" viewBox="0 0 16 16"><circle cx="8" cy="9" r="4.25"/><path d="M6.25 2.75h3.5M8 3.5v1.25M8 9V6.75"/></symbol>
@@ -83,10 +83,10 @@
           <div class="seg m" id="viewSeg" role="group" aria-label="工作模式">
             <button data-view="live" aria-pressed="true">实时模拟</button>
             <button data-view="export" aria-pressed="false">引擎回放</button>
-            <button data-view="flow" aria-pressed="false" title="左：当前帧放大（最近邻，看得到真实像素）；右：整张贴图（金框 = 当前帧）+ 帧号曲线">贴图流转</button>
-            <button id="abDeliv" type="button" data-view="delivery" aria-pressed="false" title="查看完整素材包的文件、平台、规格和延迟">交付清单</button>
+            <button data-view="flow" aria-pressed="false" title="当前帧放大与整张贴图">序列贴图</button>
+            <button id="abDeliv" type="button" data-view="delivery" aria-pressed="false" title="素材包的文件、平台和规格">交付清单</button>
           </div>
-          <div class="seg m" id="dispSeg" hidden role="group" aria-label="画面大小"><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true" title="真实米数（4.6.0）：相机按「四尺玉在 1000 m 占屏高 1/3」定一次，别的号数、升空尾缀都按自己的真实大小显示">游戏内大小</button></div>
+          <div class="seg m" id="dispSeg" hidden role="group" aria-label="画面大小"><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true" title="按真实米数显示">实机窗口</button></div>
           <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
           <span class="sp"></span>
           <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
@@ -190,12 +190,12 @@
         <div class="rtlay" id="rtLayerBar" hidden title="升空尾缀分层看（只影响观察，不改参数和导出）：点一层开 / 关，双击只看这一层，「全部」恢复"></div>
         <div class="seg small texseg" id="texSeg" hidden role="group" aria-label="看哪一张贴图（这一层导出的每一张序列）"></div>
         
-        <label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label>
-        <label class="fexpo" title="显示曝光（只影响预览，不改素材）">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
-        <details class="ab-more preview-settings" id="previewSettings"><summary class="btn" title="烘焙、贴图图层、构图网格、记录当前帧">预览设置</summary><div class="ab-menu">
-          <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动烘焙</label></div>
+        <label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label>
+        <label class="fexpo" id="expoBox" title="只影响预览">预览曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
+        <details class="ab-more preview-settings" id="previewSettings"><summary class="btn">预览设置</summary><div class="ab-menu">
+          <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="快捷键 B">贴图最新</button><label class="bk-auto" title="停手后自动烘焙"><input type="checkbox" id="autoBakeChk">自动烘焙</label></div>
           <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
-          <label class="expo" id="bloomBox" title="只在烘焙器的画面上加一圈柔光（升空尾缀、地面效果的模板默认开）；导出的贴图、引擎里都没有"><input type="checkbox" id="previewBloomChk">预览泛光（引擎里没有）</label>
+          <label class="expo" id="bloomBox" title="只在预览上，引擎里没有"><input type="checkbox" id="previewBloomChk">预览泛光</label>
           
           
         </div></details>
@@ -204,7 +204,7 @@
       </div>
       <div class="delivview" id="delivView" hidden></div>
       <div class="timeline">
-        <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button><select id="speed" class="btn" aria-label="播放速度">
+        <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播（R）" aria-label="重播">重播</button><select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
         </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><svg class="i" aria-hidden="true"><use href="#i-loop"/></svg><span class="tku">循环</span></label><span class="sp"></span>
         <details class="ab-more timeline-tools" id="timeTools"><summary class="btn btn-icon" aria-label="时间工具" title="时间工具：逐 tick、跳到关键时刻"><svg class="i" aria-hidden="true"><use href="#i-timer"/></svg></summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
@@ -229,7 +229,7 @@
             <button class="typebtn" id="typeBtn" type="button" aria-haspopup="dialog"><span class="tb-img" id="typeThumb"></span><span class="tb-txt"><b id="typeName">菊</b><small id="typeCat">礼花</small></span><em>更换</em></button>
             <select id="type" hidden aria-hidden="true" tabindex="-1"></select>
           </div>
-          <div class="field">英文名<div class="enname" title="这个效果的英文名：素材包、贴图、UE 资产都用它（一个效果只有这一个英文名）"><b id="enName">Kiku_01</b><button class="btn mini ghost" id="enNameEdit" type="button">在交付清单里改</button></div></div>
+          <div class="field">英文名<div class="enname" title="素材包、贴图、UE 资产都用它"><b id="enName">Kiku_01</b><button class="btn mini ghost" id="enNameEdit" type="button" title="在交付清单里改">修改</button></div></div>
         </div>
         <label class="field">产物<select id="x-form"></select></label>
         <p class="note" id="formNote"></p>
@@ -250,18 +250,18 @@
       <div class="actions">
         <div id="specHome"></div>
         <div class="grid2" id="specBox">
-          <label class="field" title="贴图尺寸按效果定（用户 2026-10-02 19:41：不要强制 2048）。规则只有下限：PC 单格 ≥ 512、手机 ≥ 256；引擎里一般用到 2048，4096 是给你自己压缩的高质量来源">贴图宽度 × 高度<span class="pair2"><select id="x-texW" aria-label="贴图宽"></select><span>×</span><select id="x-texH" aria-label="贴图高"></select></span></label>
-          <label class="field">列数 × 行数<span class="pair2"><select id="x-cols" aria-label="列数"></select><span>×</span><select id="x-rows" aria-label="行数"></select></span></label>
+          <label class="field"><span class="fk" title="PC 单格不小于 512，手机不小于 256">贴图尺寸</span><span class="pair2"><select id="x-texW" aria-label="贴图宽"></select><span>×</span><select id="x-texH" aria-label="贴图高"></select></span></label>
+          <label class="field"><span class="fk">列 × 行</span><span class="pair2"><select id="x-cols" aria-label="列数"></select><span>×</span><select id="x-rows" aria-label="行数"></select></span></label>
         </div>
         <div class="grid2" id="specMore">
-          <label class="field">通道接力<select id="x-chans"><option value="4">RGBA 接力（先填满 R）</option><option value="1">单通道（短序列）</option></select></label>
-          <label class="field">星头火花输出<select id="x-out"><option value="combined">星头与火花合并</option><option value="split">星头、火花分开</option></select></label>
-          <label class="field">灰度编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细；UE 材质不还原，没在 UE 验证前别用）</option></select></label>
-          <label class="field">取帧方式<select id="x-frame"><option value="tick30" hidden>30 fps（自动分段）</option><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
-          <label class="field">面片取景<select id="x-zoom"><option value="off">固定大小（5.0 默认：面片不缩放，整段一个取景）</option><option value="on">随开花放大（Zoom：省贴图；最多 12 级大小，靠 Size By Life 补）</option><option value="anchor">随开花放大 · 锚在爆点（面片和固定一样贴着内容，绕爆点按每刻上 / 下 / 左右范围放大；扇形、偏一边的花更满）</option></select></label>
+          <label class="field"><span class="fk" title="RGBA 接力先填满 R">通道接力</span><select id="x-chans"><option value="4">RGBA</option><option value="1">单通道</option></select></label>
+          <label class="field"><span class="fk">星头火花</span><select id="x-out"><option value="combined">合并</option><option value="split">分开</option></select></label>
+          <label class="field"><span class="fk" title="Gamma 2.2 未经 UE 验证">灰度编码</span><select id="x-enc"><option value="1">线性</option><option value="2.2">Gamma 2.2</option></select></label>
+          <label class="field"><span class="fk" title="自动 = 按运动快慢">取帧方式</span><select id="x-frame"><option value="tick30" hidden>30 fps</option><option value="auto">自动</option><option value="uniform">均匀</option></select></label>
+          <label class="field"><span class="fk" title="固定：整段一个取景；放大：随开花放大，省贴图">面片取景</span><select id="x-zoom"><option value="off">固定</option><option value="on">放大</option><option value="anchor">放大 · 锚爆点</option></select></label>
         </div>
-        <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
-        <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
+        <label class="check" id="flipBox" hidden title="引擎里速度对齐方向相反时勾选"><input type="checkbox" id="x-flip"> 星头朝下</label>
+        <label class="check" id="gridBox" hidden title="帧数不变，按内容长宽比挑列 × 行"><input type="checkbox" id="x-autogrid"> 自动选格子</label>
         <div class="stats" id="stats">烘焙中…</div>
         <div class="line pm-btns">
           <button class="btn primary" id="btnExport" title="和顶上「导出素材包」、交付清单的导出同一个：按产物表（PC / 手机各出什么）出包">导出素材包（按交付清单）</button>

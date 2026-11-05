@@ -344,7 +344,8 @@ def run_compare(old_html, new_html, only_ids):
     return ids, rows
 
 def sh(*a, **k):
-    return subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True, encoding='utf-8', errors='replace', **k)
+    # 5.0.0（本机烟花工坊 5.0）：Windows 下子进程的 Python 默认按控制台编码打印，这里按 UTF-8 读会读不出「✅」——统一让子进程用 UTF-8
+    return subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True, encoding='utf-8', errors='replace', env={**os.environ, 'PYTHONIOENCODING': 'utf-8', 'PYTHONUTF8': '1'}, **k)
 
 
 def changed_files(base, head='HEAD', committed_only=False):

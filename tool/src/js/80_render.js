@@ -439,7 +439,7 @@ function renderAtlasFlow(b0, b, show, f, sh) {
   drawFlowCurve(b, f);
   const t = state.t - (b.meta.t0 || 0), ch = L.chans === 4 && f >= 0 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 · ' : '';
   const pg = sh && sh.label ? `${sh.label} · ` : '', spec = `贴图 ${b.N || b.P.texW}×${b.NH || b.P.texH} · ${L.cols}×${L.rows}${L.chans === 4 ? '×RGBA' : ''} 格 · ${L.F} 帧`;     // 看的是哪一张（序列 / 第 n 张 / 单束 / 循环层 / 远段…）一直写在前面
-  hudText = `贴图流转 · ${pg}` + (f < 0 ? `${t < 0 ? '还没开始' : '这一张播完了'} · ${spec}` : `第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s · ${spec}`);
+  hudText = `序列贴图 · ${pg}` + (f < 0 ? `${t < 0 ? '还没开始' : '这一张播完了'} · ${spec}` : `第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s · ${spec}`);
   hudB = '';
 }
 const flowPxCache = new WeakMap();

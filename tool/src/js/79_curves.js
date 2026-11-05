@@ -73,7 +73,7 @@ function panelBake() {
 }
 function trimNoteHTML() {
   const b = panelBake(), tr = b && b.meta && b.meta.trim; if (!tr || !(tr.end < tr.reqEnd - 0.02)) return '';
-  return ` <span class="warn">贴图实际只烘到 <b>${tr.end.toFixed(2)} s</b>：${tr.end.toFixed(2)}–${tr.reqEnd.toFixed(2)} s 全黑（最亮像素 &lt; 2/255）没烘、不导出（时间轴画到序列时长，这段在层轨道上是斜纹）。序列时长再加长，导出也一样长；要更长，调星的燃烧时间或火花寿命，或「整体调整 › 节奏」放慢。</span>`;
+  return ` <span class="warn" title="之后全黑，不烘、不导出；要更长，调燃烧时间、火花寿命或节奏">贴图只烘到 ${tr.end.toFixed(2)} s，之后不导出</span>`;     // 5.0.0：一句，细节进悬停提示
 }
 function endInfoHTML() {
   const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';
@@ -82,9 +82,10 @@ function endInfoHTML() {
   const D = +P.cutOut > 0 ? +P.cutOut : +P.duration, short = e - D;
   const fade = '5.0 起不整体淡出，等火花自然灭完';
   // 4.5.3（用户 10-05 18:02「序列时长填 9 s，图层与时间还是 2.83 s，改不了」）：设了出点时，序列到出点为止，改序列时长不管用 → 说清楚、给一键清除
-  const cut = +P.cutOut > 0 && +P.cutOut < +P.duration - 1e-3 ? ` <span class="warn">出点在 ${(+P.cutOut).toFixed(2)} s：序列时长 ${(+P.duration).toFixed(2)} s 后面那段不导出</span> <button type="button" class="btn mini" data-cutclear="1">清除出点</button>` : '';
-  if (short > 0.04) return `<p class="hint endinfo warn">最后一批火花约 <b>${e.toFixed(2)} s</b> 灭完，序列到 ${D.toFixed(2)} s，差 ${short.toFixed(2)} s（${fade}，看着像被切掉）。${cut ? '' : `<button type="button" class="btn mini" data-endfit="${e}">序列时长设成 ${e.toFixed(2)} s</button>`}${cut}</p>`;
-  return `<p class="hint endinfo${trim ? ' warn' : ''}">最后一批火花约 ${e.toFixed(2)} s 灭完，序列 ${D.toFixed(2)} s 盖得住（${fade}）。${cut}${trim}</p>`;
+  const cut = +P.cutOut > 0 && +P.cutOut < +P.duration - 1e-3 ? ` <span class="warn">出点 ${(+P.cutOut).toFixed(2)} s 后不导出</span> <button type="button" class="btn mini" data-cutclear="1">清除出点</button>` : '';
+  // 5.0.0：没问题时不写（悬停「序列时长」看）；有问题时一句 + 一个操作
+  if (short > 0.04) return `<p class="hint endinfo warn" title="${fade}">火花 ${e.toFixed(2)} s 灭完，序列短 ${short.toFixed(2)} s${cut ? '' : ` <button type="button" class="btn mini" data-endfit="${e}">延长到 ${e.toFixed(2)} s</button>`}${cut}</p>`;
+  return cut || trim ? `<p class="hint endinfo warn">${cut}${trim}</p>` : '';
 }
 async function curveCompute(P0, key, live, tid = '') {
   const t0 = performance.now(), P = derive({ ...structuredClone(fxP(P0)), engine: 'gpu' }), D = Math.max(0.1, +P.duration || 3);
