@@ -85,7 +85,7 @@ svg.i.chevr{transform-origin:8.875px 8.875px}
 .sb-auto.is-scrolling{border-color:var(--g6);transition:none}
 .sb-auto::-webkit-scrollbar{width:6px;height:6px;background:transparent}
 .sb-auto::-webkit-scrollbar-track,.sb-auto::-webkit-scrollbar-corner{background:transparent}
-.sb-auto::-webkit-scrollbar-thumb{border-radius:0;border:0 solid;border-right-width:calc(100vw + 100vh);border-color:inherit;background:transparent;min-height:24px}
+.sb-auto::-webkit-scrollbar-thumb{border-radius:0;border:0 solid;border-right-width:6px;border-bottom-width:6px;border-color:inherit;background:transparent;min-height:24px}
 :focus{outline:none}
 :focus-visible,.is-focus{outline:2px solid var(--focus);outline-offset:1px}
 [hidden]{display:none!important}

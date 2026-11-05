@@ -2,7 +2,8 @@
 
 先合成：python3 ../build.py /tmp/E_A.html
 再截图：python3 shot.py [/tmp/E_A.html] [编号…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）；编号 1–7，不给就全截
-7（v3.4）：悬停态合成一张——结构树层行、参数行、模块标题、导出范围行、效果库标签行用 .is-hover 强制出悬停样子，检查器加 .is-scrolling 出滚动条
+7（v3.4）：悬停态合成一张——结构树层行、参数行、模块标题、导出范围行、效果库标签行用 .is-hover 强制出悬停样子；检查器、结构树、时间轴滚一下出滚动条
+截图不藏滚动条（启动时去掉 Playwright 默认的 --hide-scrollbars），静止的滚动区应当看不到滚动条
 --hide-sample：把样板控制条（左下角那个「样板」小按钮）藏起来——给评委用的截图都加这个（v3.3 第 15 条）。
 不加时截图里留着收起的小按钮，探针另外核对它不盖检查器、不盖任何产品控件。
 探针：文字被截断（overflow 隐藏且放不下、又没有 title 全名）、字号小于下限（1920 下 12 px、1366 下 11 px）、
@@ -85,7 +86,7 @@ def clip(pg, w, h, name, probe=True):
 def main():
     want = lambda n: not NAMES or n in NAMES
     with sync_playwright() as p:
-        b = p.chromium.launch()
+        b = p.chromium.launch(ignore_default_args=['--hide-scrollbars'])   # v3.4 第 13 条：要看得到滚动条（Playwright 默认把滚动条藏起来）
         if want('1'):
             pg = page_for(b, 1920, 1080); clip(pg, 1920, 1080, 'shot_1_main.png'); pg.close()
         if want('2'):
@@ -112,7 +113,7 @@ def main():
                   const nd = q('#pbody .prm.is-nd') || q('#pbody .prm[data-kind=range]'); if (nd) nd.classList.add('is-hover');
                   const mh = q('#pbody .mod.is-closed .mod-h') || q('#pbody .mod-h'); if (mh) mh.classList.add('is-hover');
                   const rr = q('#tlw .rrow'); if (rr) rr.classList.add('is-hover'); const lh = q('.lib-head'); if (lh) lh.classList.add('is-hover');
-                  const pb = q('#pbody'); pb.scrollTop = 40; pb.classList.add('is-scrolling'); const tr = q('#tree'); tr.classList.add('is-scrolling'); }""")
+                  ['#pbody', '#tree', '#tlw .tl'].forEach(s => { const e = q(s); e.classList.add('is-scrolling'); e.scrollTop = 28; }); }""")
                 clip(pg, 1920, 1080, nm, probe=False); pg.close()
         if want('6'):
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.set('view','sheet')"); pg.wait_for_timeout(500)
