@@ -1,8 +1,8 @@
-"""E 样板 v3.4 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、序列贴图、导出浮层都要截图逐张看）。
+"""E 样板 v3.5 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、序列贴图、导出浮层都要截图逐张看）。
 
 先合成：python3 ../build.py /tmp/E_A.html
 再截图：python3 shot.py [/tmp/E_A.html] [编号…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）；编号 1–7，不给就全截
-7（v3.4）：悬停态合成一张——结构树层行、参数行、模块标题、导出范围行、效果库标签行用 .is-hover 强制出悬停样子；检查器、结构树、时间轴滚一下出滚动条
+7（v3.4）：悬停态合成一张——结构树层行、参数行、模块标题、刻度尺行、效果库标签行用 .is-hover 强制出悬停样子（v3.5 起导出范围一行常显，不用悬停）；检查器、结构树、时间轴滚一下出滚动条
 截图不藏滚动条（启动时去掉 Playwright 默认的 --hide-scrollbars），静止的滚动区应当看不到滚动条
 --hide-sample：把样板控制条（左下角那个「样板」小按钮）藏起来——给评委用的截图都加这个（v3.3 第 15 条）。
 不加时截图里留着收起的小按钮，探针另外核对它不盖检查器、不盖任何产品控件。
@@ -36,7 +36,7 @@ PROBE = """(minFs) => {
       if (!el.closest('.ovl') && (r.right > A.right + 1 || r.bottom > A.bottom + 1) && !el.closest('.tl,.pbody,.tree,.lib-list,.tpl-grid,.stage')) out.push(String(el.className.baseVal ?? el.className) + ' | ' + el.textContent.trim().slice(0, 20));
     }
   }
-  for (const bar of document.querySelectorAll('#wsBaker .topbar .tcol, #wsBaker .transport, #wsBaker .insp-h, #wsBaker .insp-tools, #wsBaker .lib-meta, #wsBaker .status, #wsBaker .tree-foot')) {
+  for (const bar of document.querySelectorAll('#wsBaker .topbar .tcol, #wsBaker .transport, #wsBaker .insp-h, #wsBaker .insp-tools, #wsBaker .lib-meta, #wsBaker .lib-cats, #wsBaker .iorow, #wsBaker .status, #wsBaker .tree-foot')) {
     const B = bar.getBoundingClientRect();
     for (const c of bar.querySelectorAll('button, .seg, select, span, label')) {
       const r = c.getBoundingClientRect(); if (!r.width || getComputedStyle(c).visibility === 'hidden') continue;
