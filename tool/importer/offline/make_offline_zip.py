@@ -27,10 +27,22 @@ def main():
     problems = []
     if 'window.FWLImporter' not in text: problems.append('成品里没有导入模块（window.FWLImporter）')
     if '__mock' in text and 'engineVersion: \'mock\'' in text: problems.append('成品里嵌的是导入模块替身，不是真模块')
-    if '127.0.0.1:8034' in text: problems.append('成品还在连 8034 本地服务')
-    drives = sorted(set(re.findall(r"['\"`]([A-Za-z]:[\\/][^'\"`\n]{0,40})", text)))
+    # 8034：烘焙器 4.9 旧「资源交付」（67_delivery.js）里还写着这几处；单文件里外壳接管了交付，这段走不到
+    #   （2026-11-06 本机实测：file:// 打开、开效果、导出菜单、资源交付页，只连 127.0.0.1:17780 = UE）。除这几处以外再出现就不打包
+    LEGACY_8034 = ['本机交付服务（127.0.0.1:8034）', "location.protocol==='file:'?'http://127.0.0.1:8034':location.origin", '或用 http://127.0.0.1:8034/baker 打开烘焙器']
+    rest = text
+    for s in LEGACY_8034: rest = rest.replace(s, '')
+    if '127.0.0.1:8034' in rest: problems.append('成品还在连 8034 本地服务（不是已知的旧交付代码）')
+    # 本机盘符：审阅数据里「参考」「素材在哪」这类记录、旧交付页输入框的占位字不算（只是文字，不读不写）
+    drives = []
+    for m in re.finditer(r"['\"`]([A-Za-z]:[\\/][^'\"`\n]{0,40})", text):
+        ctx = text[max(0, m.start() - 240): m.start()]
+        if re.search(r'"(参考|素材在哪|下一步|交付说明|说明|备注)"\s*:\s*\[?[^\]\}]*$', ctx) or ctx.rstrip().endswith('placeholder='): continue
+        drives.append(m.group(1))
+    drives = sorted(set(drives))
     if drives: problems.append('成品里有本机盘符路径：' + '；'.join(drives[:5]))
-    version = (re.search(r'FireWorksLab 5\.0\.\d+', text) or [None])[0]
+    sv = re.search(r"SHELL_VER\s*=\s*'(5\.0\.\d+)'", text)     # 外壳的版本号；外壳样式注释里有举例的「5.0.3」，不能拿第一个匹配
+    version = ('FireWorksLab ' + sv.group(1)) if sv else (re.search(r'FireWorksLab 5\.0\.\d+', text) or [None])[0]
     if problems:
         raise SystemExit('不打包：\n- ' + '\n- '.join(problems))
     a.out.mkdir(parents=True, exist_ok=True)

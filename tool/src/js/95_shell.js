@@ -818,6 +818,7 @@ function mount() {
   window.addEventListener('resize', () => { placeToast(); closeMenu(); });
   S.gpu = readGPU();
   S.bak = readBak();
+  document.title = '烟花工坊 ' + SHELL_VER;     /* 4.9.134：浏览器标签页写产品名（以前是烘焙器的「烟花烘焙器 · v4.9.x」，和顶栏对不上；烘焙器内部版本在版本号菜单里） */
   if (!IMP()) S.ue = {k: 'none', detail: modWhy()};
   renderAll();
   loadBak().then(() => renderAll());
