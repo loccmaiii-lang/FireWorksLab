@@ -723,7 +723,7 @@ print('FWLB64:' + base64.b64encode(b))
       }
       const sel = snap.rows.filter(r => (r.selected || r.finished) && (!want || want.includes(r.platform)));
       const assets = sel.flatMap(r => r.assets.map(a => ({ key: a.key, platform: r.platform, kind: ({ '颜色 Ramp': 'Ramp', '序列／单帧贴图': '序列贴图', '溶解图（线性）': '溶解图' })[a.type] || a.type, name: a.name, uePath: a.directory + '/' + a.name,
-        action: r.finished ? '不变' : a.action, note: a.selected ? (a.engineAction === a.action ? '' : a.engineAction) : '不导入' })));
+        action: r.finished ? '不变' : a.action, note: a.selected ? (['新增', '同名更新'].includes(a.engineAction) ? '' : a.engineAction) : '不导入' })));
       const issues = [...notes];
       for (const r of sel) for (const e of r.errs) issues.push({ level: r.finished ? 'info' : 'error', platform: r.platform, text: e });
       for (const t of gateInfo.get(pkgId) || []) issues.push({ level: 'info', platform: null, text: t });
