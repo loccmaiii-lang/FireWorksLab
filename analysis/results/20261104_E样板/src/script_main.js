@@ -1079,15 +1079,18 @@ function bakeOf(sc) {
   return {r, o, frames, baked: hit ? Math.min(frames, sc.baked) : 0, imgs: hit ? sc.film : []};
 }
 const frameNo = sc => { const B = bakeOf(sc); if (!B) return '—'; return sc.t < B.o.in - 1e-6 || sc.t >= B.o.out ? '—' : Math.min(B.frames, Math.floor((sc.t - B.o.in) * sc.fps + 1e-6) + 1); };
-/* 胶片条（§8）：28 px 一行，紧贴刻度尺上面，只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮），没烘焙的画成 40 % 透明的空框 */
+/* 胶片条（§8）：28 px 一行，紧贴刻度尺上面，只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮）。
+   v3.2 第 7 条：没烘焙的部分画成一条平的暗轨，不分格子 */
 function filmHTML(sc) {
   const B = bakeOf(sc); if (!B) return '';
   const nC = (sc.film || []).length || 15, fpc = B.frames / nC, dt = (B.o.out - B.o.in) / nC, nb = B.imgs.length ? Math.floor(B.baked / fpc) : 0;
-  return Array.from({length: nC}, (_, i) => {
+  const cells = Array.from({length: nb}, (_, i) => {
     const f0 = Math.round(i * fpc) + 1, f1 = Math.round((i + 1) * fpc), pos = `left:calc(${X(sc, B.o.in + i * dt)} + 1px);width:calc(${(dt / sc.T * 100).toFixed(3)}% - 1px)`;
-    return i < nb ? `<div class="film-c" style="${pos}" data-tip="第 ${f0}–${f1} 帧"><img src="${B.imgs[i % B.imgs.length]}" alt=""></div>`
-      : `<div class="film-c unb" style="${pos}" data-tip="第 ${f0}–${f1} 帧未烘焙"></div>`;
+    return `<div class="film-c" style="${pos}" data-tip="第 ${f0}–${f1} 帧"><img src="${B.imgs[i % B.imgs.length]}" alt=""></div>`;
   }).join('');
+  if (nb >= nC) return cells;
+  const u0 = Math.round(nb * fpc) + 1, a = B.o.in + nb * dt;
+  return cells + `<div class="film-u" style="left:calc(${X(sc, a)} + 1px);width:calc(${((B.o.out - a) / sc.T * 100).toFixed(3)}% - 1px)" data-tip="第 ${u0}–${B.frames} 帧未烘焙"></div>`;
 }
 /* 导出范围（§8）：刻度尺上一段浅底，两端是可拖的把手；范围上方写「0.35–2.85 s」，单击可以输入 */
 const tBox = (cls, v, lab, tip) => `<input class="num tnum ${cls}" type="text" inputmode="decimal" value="${v}" aria-label="${lab}" data-tip="${tip}"${cls === 'now' ? ' id="tNow"' : ''}>`;
@@ -1148,10 +1151,10 @@ function renderTL(sc = cur(), wrap = $('#tlw')) {
   tl.addEventListener('scroll', () => tlMoreHint(wrap));
   placePH(sc, wrap); tlMoreHint(wrap); filmBoost(wrap);
 }
-/* 胶片格按最亮的像素自动提亮（缩略图本身很暗，原样放在 28 px 高的格子里看不清） */
+/* 胶片格、效果库缩略图按最亮的像素自动提亮（缩略图本身很暗，原样放在小格子里看不清；v3.2 第 10 条效果库也用） */
 const FILM_K = new Map();
-function filmBoost(wrap) {
-  $$('.film-c img', wrap).forEach(img => {
+function filmBoost(wrap, sel = '.film-c img') {
+  $$(sel, wrap).forEach(img => {
     const k0 = FILM_K.get(img.src); if (k0) { img.style.filter = `brightness(${k0})`; return; }
     const go = () => { try { const c = document.createElement('canvas'); c.width = c.height = 32; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 32, 32); const d = x.getImageData(0, 0, 32, 32).data; let m = 0; for (let i = 0; i < d.length; i += 4) m = Math.max(m, .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]); const k = +clamp(235 / Math.max(m, 10), 1, 5).toFixed(2); FILM_K.set(img.src, k); img.style.filter = `brightness(${k})`; } catch (_) { /* 读不到像素就不提亮 */ } };
     if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, {once: true});
@@ -1330,7 +1333,7 @@ function renderLib() {
     count = items.length;
     html = items.map(it => `<div class="lib-item${it.id === sc.lib ? ' is-sel' : ''}" role="option" aria-selected="${it.id === sc.lib}" tabindex="${it.id === sc.lib ? 0 : -1}" data-lib="${it.id}">
       <div class="th"><img src="${libImg(it.img)}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div>
-      <div class="li-s">${it.sub.map(s => `<span>${hl(s, q)}</span>`).join('')}<span class="st${['待验收', '新'].includes(it.st) ? ' st-hi' : ''}">${it.st}</span></div></div></div>`).join('');
+      <div class="li-s">${it.sub.map(s => `<span>${hl(s, q)}</span>`).join('')}<span class="st${it.st === '待验收' ? ' st-due' : ''}">${it.st}</span></div></div></div>`).join('');   /* v3.2 第 10 条：「待验收」琥珀（要你处理），其余弱色 */
   } else {
     const mine = UI.libSub === '我的模板', multi = UI.libSub === '多层花型模板';
     const items = mine ? [] : TPL_NAMES.map((nm, i) => ({nm, i, cat: TPL_CAT[i], ly: TPL_LAYERS[i]}))
@@ -1343,7 +1346,7 @@ function renderLib() {
     html = q ? `<div class="empty"><b>没有匹配「${esc(q)}」的${UI.libTab}</b><button class="btn btn-2" data-act="clearLibQ">清除搜索</button></div>`
       : `<div class="empty"><b>没有「${esc(UI.chip)}」${UI.libTab === '效果' ? '效果' : '模板'}</b><button class="btn btn-2" data-act="chipAll">显示全部</button></div>`;
   }
-  list.innerHTML = html;
+  list.innerHTML = html; filmBoost(list, '.th img');
   $('#libCount').textContent = `${count} 个`;
 }
 
@@ -1375,7 +1378,7 @@ function renderStage() {
   /* §7 画面读数：左下一行「平台　fps　tick」；单格、张数、帧数只在检查器「输出」里。
      距离、预览曝光收进「预览设置」，不是默认值时才在右下显示一个小标记 */
   const tick = Math.floor(sc.t * sc.fps + 1e-6);
-  $('#ciBL').innerHTML = `<span>${UI.plat === '手机' ? '手机' : 'PC'}</span><span><b>${sc.fps}</b> fps</span><span>tick <b>${tick}</b></span>`;
+  $('#ciBL').innerHTML = `<span class="cg">${UI.plat === '手机' ? '手机' : 'PC'}</span><span class="cg"><b>${sc.fps}</b><span>fps</span></span><span class="cg"><span>tick</span><b>${tick}</b></span>`;   /* v3.2 第 6 条：每组「标签 数值 单位」紧贴，组和组之间留空 */
   renderViewMarks();
   renderSoloBadge();
   $('#vp').hidden = UI.mode === '贴图与交付'; $('#deliv').hidden = UI.mode !== '贴图与交付';
@@ -1922,8 +1925,14 @@ function exportMenu(btn, focusSel) {
     {t: '导出勾选', k: String(chk.length), exp: 'checked', dis: none || !chk.length, act: () => doExport('checked')},
     {html0: opts}];
   const m = openMenu(btn, items, {align: 'right', headHTML: head, cls: 'wide exp'});
-  /* 左边缘对齐检查器的左栏线，不把下面的参数名切成半截 */
-  const I = $('#insp'); if (I && I.offsetParent && UI.view === 'main') m.style.left = (I.getBoundingClientRect().left + 1) + 'px';
+  /* v3.2 第 5 条：右对齐挂在下拉箭头下面；宽度不超过「箭头右缘 − 参数名一列的右缘 − 8」，参数名不被盖住、也不切半截；
+     面包屑短时也不切它（菜单至少留 220 放得下操作和平台分段，面包屑太长时只保参数名） */
+  const I = $('#insp'), plw = $('#pbody .prm .plw'), crumb = $('#path');
+  if (I && I.offsetParent && plw && UI.view === 'main') {
+    const a = btn.getBoundingClientRect(), cr = crumb ? Math.max(...[...crumb.children].map(c => c.getBoundingClientRect().right)) : 0;
+    const lim = a.right - Math.max(plw.getBoundingClientRect().right, a.right - cr - 8 >= 220 ? cr : 0) - 8, w = Math.min(m.offsetWidth, Math.floor(lim));
+    m.style.width = w + 'px'; m.style.minWidth = '0'; m.style.left = (a.right - w) + 'px';
+  }
   $('#expAlsoWB', m).addEventListener('change', e => { UI.alsoWB[sc.key] = e.target.checked; });
   $$('#expPlat button', m).forEach(c => c.addEventListener('click', e => { P.pc = !!+e.currentTarget.dataset.pc; P.mb = !!+e.currentTarget.dataset.mb; exportMenu(btn, `#expPlat button[data-v="${e.currentTarget.dataset.v}"]`); }));
   $('[data-r="det"]', m).addEventListener('click', e => { UI.expDetail = !UI.expDetail; $('.mdetail', m).hidden = !UI.expDetail; e.currentTarget.setAttribute('aria-expanded', String(UI.expDetail)); });
@@ -2611,7 +2620,7 @@ function staticTree() {
     <div class="trow t-add"><button class="btn btn-text sm" tabindex="-1">${ico('plus')}加层${ico('cd', 'dd')}</button><button class="btn btn-text sm" tabindex="-1">${ico('plus')}加发射器</button></div></div></div>`;
 }
 function libItem(it, cls = '', q = '') {
-  return `<div class="lib-item ${cls}" tabindex="-1"><div class="th"><img src="${libImg(it.img)}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div><div class="li-s">${it.sub.map(s => `<span>${s}</span>`).join('')}<span class="st${['待验收', '新'].includes(it.st) ? ' st-hi' : ''}">${it.st}</span></div></div></div>`;
+  return `<div class="lib-item ${cls}" tabindex="-1"><div class="th"><img src="${libImg(it.img)}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div><div class="li-s">${it.sub.map(s => `<span>${s}</span>`).join('')}<span class="st${it.st === '待验收' ? ' st-due' : ''}">${it.st}</span></div></div></div>`;
 }
 function emptyBox(b, s, a) { return `<div class="ks-frame" style="--pw:300px"><div class="empty" style="padding:16px 12px"><b>${b}</b>${s ? `<span>${s}</span>` : ''}<button class="btn btn-2">${a}</button></div></div>`; }
 function pgraph() {

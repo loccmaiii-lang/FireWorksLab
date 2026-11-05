@@ -27,7 +27,7 @@
   --t1:var(--g9); --t2:var(--g8); --t3:var(--g7); --tDis:color-mix(in srgb, var(--g8) 50%, var(--g1));
   /* 薄荷只用在五处（§5）：导出按钮、播放头、结构树当前行细框、当前页标签下划线、UE 已连接的圆点 */
   --sel:var(--p4);
-  --ov:var(--surf-ov); --ovLine:var(--line);
+  --ov:var(--surf-ov); --ovLine:var(--g6);   /* v3.2 第 5 条：浮层的 1 px 线比面板里的线亮一级，看得出浮在上面 */
   --focus:var(--g8);
   --shadow:0 8px 24px rgba(0,0,0,.45);
 
@@ -256,6 +256,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .st{color:var(--t3);white-space:nowrap}
 .st-new{color:var(--t3)}
 .st.st-hi{color:var(--t1)}
+.st.st-due{color:var(--w3)}   /* v3.2 第 10 条：效果库「待验收」= 要你处理，琥珀；其余状态弱色 */
 .st-warn{display:inline-flex;align-items:center;gap:4px;color:var(--w3)}
 .st-warn svg.i{width:14px;height:14px;color:var(--w3)}
 .st-ok{display:inline-flex;align-items:center;gap:4px;color:var(--t3)}
@@ -454,7 +455,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 /* 胶片：只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮）；没烘焙的画成 40 % 透明的空框 */
 .film-c{position:absolute;top:2px;bottom:2px;background:var(--sky);overflow:hidden;cursor:zoom-in}
 .film-c img{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen}
-.film-c.unb{background:var(--g2);cursor:default}   /* v3.1 第 13 条：平的暗底，不描边；已烘焙的缩略图是这一行最亮的 */
+.film-u{position:absolute;top:2px;bottom:2px;background:var(--g2)}   /* v3.2 第 7 条：没烘焙的部分是一条平的暗轨，不分格子；已烘焙的缩略图是这一行最亮的 */
 /* 刻度尺：刻度挂在下沿，秒数写在刻度右边；导出范围一段浅底，两端把手，上方写「0.35–2.85 s」 */
 .scale{position:absolute;inset:0;isolation:isolate}
 .tick{position:absolute;bottom:0;width:1px;height:3px;background:var(--g6);pointer-events:none}
@@ -499,7 +500,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .kf{position:absolute;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;background:var(--g9);transform:rotate(45deg);box-shadow:0 0 0 2px var(--g2);pointer-events:none}
 .tlrow:not(.is-sel) .kf{display:none}
 /* 播放头：薄荷；头部画在刻度尺上 */
-.ph{position:absolute;width:1px;background:var(--sel);pointer-events:none;z-index:4}
+.ph{position:absolute;width:1px;background:var(--t2);pointer-events:none;z-index:4}   /* v3.2 第 9 条：线是次文字色，只有头部薄荷 */
 .ph i{position:absolute;left:-5px;top:0;width:11px;height:10px;background:var(--sel);clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%);pointer-events:auto;cursor:ew-resize}   /* 头部在刻度数字上方 */
 /* 「还有 N 行」：放在行名列底部，不浮在轨道上 */
 .tl-foot{display:flex;align-items:center;height:20px}
@@ -721,7 +722,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .splitter{position:relative;z-index:3;background:var(--line);cursor:row-resize;touch-action:none}
 .splitter::before{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
 .splitter:hover{background:var(--g6)}
-.splitter.is-active{background:var(--sel)}
+.splitter.is-active{background:var(--g8)}   /* v3.2 第 9 条：薄荷只留给导出、结构树当前行、当前标签（和播放头的头） */
 .splitter:focus-visible{outline:none;background:var(--focus)}
 /* 效果库：大号标签「效果 / 模板」，折叠箭头在标签行右端 */
 .lib-pane{min-height:0}
@@ -750,7 +751,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .vsplit{position:relative;z-index:6;height:1px;outline:none;background:var(--line);cursor:row-resize}
 .vsplit::before{content:"";position:absolute;left:0;right:0;top:-3px;height:7px;cursor:row-resize}
 .vsplit:hover{background:var(--g6)}
-.vsplit.is-active{background:var(--sel)}
+.vsplit.is-active{background:var(--g8)}
 .vsplit:focus-visible{background:var(--focus)}
 /* 画面：全屏最暗 */
 .stage{position:relative;min-height:0;overflow:hidden;background:var(--sky)}
@@ -765,13 +766,14 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .cgrid{position:absolute;inset:0;pointer-events:none}
 .cgrid i{position:absolute;background:var(--g5)}
 /* 画面读数（§7）：左下一行「平台　fps　tick」；距离、预览曝光收进「预览设置」，不是默认值时右下一个小标记 */
-.ci{position:absolute;display:flex;align-items:baseline;gap:12px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);white-space:nowrap;pointer-events:none}
+.ci{position:absolute;display:flex;align-items:baseline;gap:16px;height:var(--lh1);font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);white-space:nowrap;pointer-events:none}   /* v3.2 第 6 条：左下、右下同一条基线；组内紧贴 4 px，组间 16 px */
+.ci .cg{display:inline-flex;align-items:baseline;gap:4px}
 .ci b{font-weight:var(--fw1);color:var(--t2)}
 .ci.c-bl{left:var(--pad);bottom:var(--s2)}
 .ci.c-br{right:var(--pad);bottom:var(--s2);pointer-events:auto}
-.ci .vi{display:inline-flex;align-items:baseline;gap:4px}
+.ci .vi{display:inline-flex;align-items:baseline;gap:4px;min-height:0;height:var(--lh1)}
 .ci .vi .lbl{cursor:help}
-.ci .vi .num{width:auto;field-sizing:content;min-width:3ch;height:20px;padding:0 2px;font-size:var(--fs1);color:var(--t2);text-align:right}
+.ci .vi .num{width:auto;field-sizing:content;min-width:1ch;height:calc(var(--lh1) + 2px);margin:-1px -3px;padding:0 2px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t2);text-align:left}   /* 字框和普通文字一样高，基线和左下对齐 */
 .ci .vi .num:focus{color:var(--t1)}
 .solo-badge{position:absolute;left:var(--pad);top:var(--pad);z-index:2;display:inline-flex;align-items:center;gap:10px;height:var(--h-hit);padding:0 10px;border:1px solid var(--line);border-radius:var(--r2);background:var(--bg);color:var(--t1);font-size:var(--fs2);white-space:nowrap}
 .solo-badge svg.i{width:16px;height:16px}
