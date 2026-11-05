@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31），v3.1 → v3.2（--rows v32），v3.2 → v3.3（--rows v33），v3.3 → v3.4（--rows v34），v3.4 → v3.5（--rows v35）
+"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31），v3.1 → v3.2（--rows v32），v3.2 → v3.3（--rows v33），v3.3 → v3.4（--rows v34），v3.4 → v3.5（--rows v35），v3.5 → v3.6（--rows v36）
 
 每一行对应 E 设计规范 v3 的一节（§1 字号 … §12 浮层，§13 自查的三种画面），外壳顶栏单独一行（用户 2026-11-05 改定，
 另附资源交付页、资源编排页）。两列是 v2.3、v3：同一个状态下截 #app，按同一块区域裁图——区域取两版里那几个元素外框的并集，
@@ -9,7 +9,7 @@
   python3 build.py /tmp/E_v3.html
   python3 checks/compare.py [--base ../E样板_v2.3.html] [--new /tmp/E_v3.html] [--out ../对比_v23_v3.html]
   python3 checks/compare.py --rows v31 --base ../E样板_v3.html --base-label v3 --new ../E样板_v3.1.html --new-label v3.1 --out ../对比_v3_v31.html
-  --rows spec：按设计规范 v3 的节号排；--rows v31 … v35：按 E样板_v3.1 … v3.5_改动单.md 的编号排
+  --rows spec：按设计规范 v3 的节号排；--rows v31 … v36：按 E样板_v3.1 … v3.6_改动单.md 的编号排
 只开一个浏览器。图片用 WebP 内嵌进一个 HTML 文件。
 """
 import argparse, base64, html, io, os, sys, time
@@ -25,7 +25,7 @@ ap.add_argument('--out', default=os.path.join(RES, '对比_v23_v3.html'))
 ap.add_argument('--q', type=int, default=84, help='WebP 质量')
 ap.add_argument('--base-label', default='v2.3')
 ap.add_argument('--new-label', default='v3')
-ap.add_argument('--rows', choices=['spec', 'v31', 'v32', 'v33', 'v34', 'v35'], default='spec')
+ap.add_argument('--rows', choices=['spec', 'v31', 'v32', 'v33', 'v34', 'v35', 'v36'], default='spec')
 A = ap.parse_args()
 
 VERS = [(A.base_label, A.base), (A.new_label, A.new)]
@@ -248,6 +248,26 @@ ROWS_V35 = [
     ('自查', '仙女棒', '第二个场景。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
     ('自查', '导出 ▾ 菜单', '第一项「资源交付」。', [('expmenu', ['.menu', '#expBtn'], '导出 ▾ 菜单', {'pad': 16})]),
 ]
+# v3.5 → v3.6：按 E样板_v3.6_改动单.md 的编号排（用户 17:51 的三处 + v3.5 审查）
+ROWS_V36 = [
+    ('1、8、9、10', '导出范围那一行',
+     '「导出范围」在行名列，数值从刻度 0 s 开始，入点 / 出点 / 恢复跟在后面；「一并移动」「同刻联动」改成勾选框，右对齐到刻度尺末端；和播放条之间不画线。',
+     [('main', ['#transport', '#tlw'], '播放条 + 时间轴（金曜菊-B）', {'h': 140}), ('spk', ['#transport', '#tlw'], '播放条 + 时间轴（仙女棒，选中发射器）', {'h': 140}), ('m1366', ['#transport', '#tlw'], '播放条 + 时间轴（1366）', {'h': 140})]),
+    ('2、11', '导出按钮带上「▲1」，版本记录图标重画',
+     '去掉单独的「⚠ 1 层」；导出主段「导出 ▲1」，琥珀垫深色小块；菜单摘要「▲ 1 层需重新导出」并展开原因；版本记录 = 时钟加逆时针箭头。',
+     [('main', ['#toolRow'], '工具行', {'split': 2, 'pad': 0}), ('expmenu', ['.menu', '#expBtn'], '导出 ▾ 菜单', {'pad': 16}), ('m1366', ['#toolRow'], '工具行（1366）', {'split': 2, 'pad': 0})]),
+    ('3、7', '图标按钮位置、竖线对齐',
+     '画面工具行中段左边只放文字分段，右边只放图标开关；网格在「精简」左边 20 px；序列贴图的格子线用同一个位置；三条竖线 x312 / x468 / x1442。',
+     [('main', 'app', '主屏 1920', {}), ('deliv', 'app', '序列贴图模式', {})]),
+    ('4、10', '检查器：设曝光按钮挪位、基线对齐',
+     '「按最亮时刻设曝光」挪到标签和控件之间，改过曝光后也点得到；折叠模块的标题和摘要按基线对齐。',
+     [('main', ['#insp'], '检查器', {})]),
+    ('5', '画面读数加暗晕', '读数加两层暗晕，花扫过时也看得清。', [('main', ['#ciBL', '#ciView'], '画面下沿读数', {'pad': 16})]),
+    ('6', '1366 下小字不再缩到 11', '小号保持 12，中号、大号各减 1。', [('m1366', 'app', '主屏 1366 × 768', {})]),
+    ('12、13', '资源交付页', '资产表按内容定宽；「UE 路径」写文字；列头「名称」；多行文字行高 1.5。', [('import', 'app', '资源交付页', {})]),
+    ('14', '效果库缩略图', '按花的外接框裁切，再统一曝光。', [('main', ['#libPane'], '效果库', {})]),
+    ('自查', '仙女棒', '第二个场景。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
+]
 if A.rows == 'v31':
     ROWS = ROWS_V31
 elif A.rows == 'v32':
@@ -258,6 +278,8 @@ elif A.rows == 'v34':
     ROWS = ROWS_V34
 elif A.rows == 'v35':
     ROWS = ROWS_V35
+elif A.rows == 'v36':
+    ROWS = ROWS_V36
 
 RECT_JS = """sels => { const A = document.querySelector('#app').getBoundingClientRect();
   return sels.map(s => { const e = [...document.querySelectorAll(s)].find(x => x.getClientRects().length); if (!e) return null; const r = e.getBoundingClientRect();
@@ -405,7 +427,7 @@ def main():
     rel = lambda p: os.path.relpath(os.path.abspath(p), RES) if os.path.abspath(p).startswith(RES) else p
     BL, NL = VERS[0][0], VERS[1][0]
     basis = ('按 <code>协作/方案/E设计规范_v3_2026-11-05.md</code> 的节号排；外壳顶栏按用户 2026-11-05 改定单独一行。' if A.rows == 'spec'
-             else f'按 <code>E样板_{ {"v31": "v3.1", "v32": "v3.2", "v33": "v3.3", "v34": "v3.4", "v35": "v3.5"}[A.rows]}_改动单.md</code> 的编号排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
+             else f'按 <code>E样板_{ {"v31": "v3.1", "v32": "v3.2", "v33": "v3.3", "v34": "v3.4", "v35": "v3.5", "v36": "v3.6"}[A.rows]}_改动单.md</code> 的编号排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
     doc = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E 样板 {BL} → {NL} 对比</title><style>{CSS}</style></head>
