@@ -795,7 +795,6 @@ function mount() {
     if (top && st && top.contains(st) && ![...top.children].some(c => c !== st && !c.classList.contains('sh-dup') && c.getBoundingClientRect().width > 1)) {
       q('#shFbSt .st-r').prepend(st); top.classList.add('sh-dup');
     }
-    if (!q('#ovlApp')) { const o = document.createElement('div'); o.id = 'ovlApp'; o.className = 'ovl'; document.body.appendChild(o); }
     if (!q('[data-exp="deliv"]')) {
       const ex = q('#abExportPack');
       const b = document.createElement('button'); b.type = 'button'; b.className = (ex ? ex.className.replace(/\bprimary\b/, '') : 'btn') + ' sh-delivb'; b.dataset.exp = 'deliv'; b.dataset.tip = '查看导出文件夹里的包，导入 UE';
@@ -804,6 +803,8 @@ function mount() {
     }
     size1366(); window.addEventListener('resize', size1366);
   }
+  /* 外壳的浮层（菜单、对话框、提示条）放在自己的一层里：制作区没有 #ovlApp 时自己建 */
+  if (!q('#ovlApp')) { const o = document.createElement('div'); o.id = 'ovlApp'; o.className = 'ovl'; document.body.appendChild(o); }
   qq('use[data-ic]').forEach(u => u.setAttribute('href', '#' + symId(u.dataset.ic)));
   const wi = q('#wsImport'); if (wi) wi.addEventListener('keydown', listKeys);
   /* 这一版导出写成 ZIP（同事电脑上没有本机交付服务 8034），写完由外壳存进导出文件夹 */

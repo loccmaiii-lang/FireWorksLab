@@ -208,6 +208,11 @@
 
 
 /* ---------- 8 这一版加的（烟花工坊 5.0.0） ---------- */
+/* 顶栏：产品名在左，UE ｜ 显卡 ｜ 编排节目在右（制作区的 .sp 没有全局 flex:1 时也成立） */
+#shell>.sp{flex:1}
+/* v3.7 槽位：资源交付页和制作区占同一格（.app 第 3 行），打开哪页显示哪页 */
+.app>.sh-ws{grid-row:3;grid-column:1;display:grid;grid-template-rows:var(--h-top) minmax(0,1fr) var(--h-status);min-height:0;min-width:0}
+.app>.sh-ws[hidden],.app>#wsBaker[hidden]{display:none!important}
 /* 资源交付工具行中段：页面名（这一版没有「烟花导入 / ResourceFX 配表」切换，配表下一版） */
 .sh-ttl{font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1)}
 /* 「编排节目 →」这一版变灰：停用样子 + 悬停写原因（不用 disabled 属性，悬停才出得了原因） */

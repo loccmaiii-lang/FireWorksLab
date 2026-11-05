@@ -120,7 +120,8 @@ def t_bar(R, pg, kind, sz):
         R.ck(S + '顶栏：替身时 UE 悬停写「导入模块：替身」', '导入模块：替身' in (b['ueTip'] or ''), b['ueTip'])
     R.ck(S + '顶栏：显卡（真实型号，取不到写「未知」）', bool(b['gpu']) and b['gpu'].startswith('显卡'), b['gpu'] or '没有')
     R.ck(S + '顶栏：「编排节目」变灰、悬停写原因', b['wbDis'] == 'true' and b['wbTip'] == '编排节目下一版接入', f"{b['wb']}｜{b['wbDis']}｜{b['wbTip']}")
-    R.ck(S + '顶栏：右侧顺序 UE ｜ 显卡 ｜ 编排节目', b['x'][0] < b['x'][1] < b['x'][2] and min(b['x']) >= 0, str(b['x']))
+    vw = pg.evaluate('innerWidth')
+    R.ck(S + '顶栏：右侧顺序 UE ｜ 显卡 ｜ 编排节目，靠右', b['x'][0] < b['x'][1] < b['x'][2] and min(b['x']) >= vw * 0.5, str(b['x']))
 
 
 def t_folders(R, pg, sz):
@@ -137,10 +138,14 @@ def t_overflow(R, pg, sz):
 
 
 def find_deliv_entry(R, pg):
-    """v3.7：「导出 ▾」菜单第一项；4.9 界面：「导出素材包」旁边的按钮（资产栏要先打开一个效果才出来）"""
+    """v3.7：「导出 ▾」菜单第一项；4.9 界面：「导出素材包」旁边的按钮（导出按钮在资产栏里，要先打开一个效果才出来）"""
+    vis = "(() => { const b = document.querySelector('#abExportPack'); return !!(b && b.getClientRects().length); })()"
+    if not pg.evaluate(vis):
+        pg.evaluate("() => { try { openType(Object.keys(TYPES)[0]); } catch (e) { } }")
+        wait(pg, vis, 20000)
     if pg.evaluate("() => !!document.querySelector('#expBtn')"):
-        pg.evaluate("() => { const b = document.querySelector('#expBtn .btn:last-child') || document.querySelector('#expBtn .btn'); b && b.click(); }")
-        ok = wait(pg, "document.querySelector('.menu .mi[data-exp]')", 4000)
+        click(pg, '#expMenuBtn' if pg.evaluate("!!document.querySelector('#expMenuBtn')") else '#expBtn .btn:last-child')
+        ok = wait(pg, "(() => { const m = document.querySelector('.menu .mi[data-exp]'); return !!(m && m.getClientRects().length); })()", 4000)
         first = pg.evaluate("() => { const m = document.querySelector('.menu'); const it = m && m.querySelector('.mi'); return it ? it.dataset.exp || it.textContent.trim() : ''; }")
         R.ck('「导出 ▾」菜单第一项是「资源交付」', ok and first == 'deliv', first)
         return '.menu .mi[data-exp="deliv"]'
@@ -187,6 +192,9 @@ def t_main(R, b, url, kind):
          pg.evaluate("document.querySelector('#stShell [data-fk=\"exp\"]').textContent"))
     # 资源交付：入口 → 页面 → 列表
     if ent:
+        if ent.startswith('.menu') and not pg.evaluate(f"() => {{ const b = document.querySelector({json.dumps(ent)}); return !!(b && b.getClientRects().length); }}"):
+            click(pg, '#expMenuBtn' if pg.evaluate("!!document.querySelector('#expMenuBtn')") else '#expBtn .btn:last-child')
+            wait(pg, f"(() => {{ const b = document.querySelector({json.dumps(ent)}); return !!(b && b.getClientRects().length); }})()", 4000)
         pg.locator(ent).first.click()
     else:
         R.note('入口不可见，改从状态栏导出文件夹菜单「资源交付」打开')
@@ -206,6 +214,7 @@ def t_main(R, b, url, kind):
     R.ck('预检通过后「导入」可点', not pg.evaluate("document.querySelector('#impGo').getAttribute('aria-disabled') === 'true'"), go_tip or '')
     shot(R, pg, '04_资源交付_选中包_1920')
     t_overflow(R, pg, 1920)
+    pg.evaluate("""() => { window.__toasts = []; new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.classList && n.classList.contains('toast')) window.__toasts.push(n.textContent); }))).observe(document.body, {childList: true, subtree: true}); }""")
     click(pg, '#impGo')
     ov = wait(pg, "document.querySelector('.dialog[data-dlg=\"ov\"]')", 3000)
     if ov:
@@ -219,7 +228,7 @@ def t_main(R, b, url, kind):
         R.note('选中的包没有要覆盖的资产，覆盖确认和备份位置没查')
     saw = wait(pg, "SHELL.state().ue.k === 'write'", 4000)
     if saw: shot(R, pg, '06_导入中')
-    done = wait(pg, "!SHELL.S.imp.writing && [...document.querySelectorAll('.toast')].some(t => t.textContent.includes('已写入'))", 30000)
+    done = wait(pg, "!SHELL.S.imp.writing && window.__toasts.some(t => t.includes('已写入'))", 30000)   # 提示条 12 秒后自己收起，按出现过的记
     st = pg.evaluate(f"(SHELL.S.imp.pkgs.find(p => p.id === {json.dumps(pid)}) || {{}}).state")
     R.ck('导入：写入中进度 → 「已写入 N 个资产」→ 包变「已导入」', saw and done and st == '已导入', f'写入中 {saw}，完成 {done}，状态 {st}')
     # UE 断开 → 原地重新连接；导入变灰写原因

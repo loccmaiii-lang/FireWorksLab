@@ -92,7 +92,7 @@ print(r.stdout.strip()); bad |= r.returncode != 0
 # 烟花工坊 5.0（对话框9 S，2026-11-05）：再合成一个单文件 tool/烟花工坊.html = 烘焙器 + 外壳 + 导入模块。
 #   双击打开（file://）就能用：tool/data/*.js 内嵌进来，不依赖本地服务，不引外网资源。FireworkBaker.html 照旧，不带外壳。
 #   外壳：tool/src/shell/shell.css、shell.html、js/95_shell*.js（单独一个 <script>，在烘焙器脚本后面：一边出错不拖垮另一边）。
-#   制作区还是 4.9 界面（body.html 里没有 v3.7 的 #shell 槽位）时，加上兜底样式 shell/shell_fb.css；外壳在页面上自己搭顶栏和状态栏。
+#   制作区还是 4.9 界面（body.html 里没有 v3.7 的 #shell 槽位）时外壳在页面上自己搭顶栏和状态栏（shell/shell_fb.css 的 body.sh-fb 部分）。
 #   导入模块（接口 tool/importer/API_5.0.md）：tool/importer/dist/fwl-importer.js（真）→ fwl-importer.mock.js（本机替身），有哪个用哪个，都没有时外壳写「导入模块未加载」；
 #   包在一个函数里（顶层名字不和烘焙器撞），window.__FWL_IMPORTER_KIND 告诉外壳用的是哪个（替身时顶栏 UE 的悬停提示写「导入模块：替身」）。
 def _rd(*parts):
@@ -104,7 +104,7 @@ if os.path.isdir(shell_dir):
     imp_dir = os.path.join(here, 'importer', 'dist')
     imp = next(((k, p) for k, p in (('real', os.path.join(imp_dir, 'fwl-importer.js')), ('mock', os.path.join(imp_dir, 'fwl-importer.mock.js'))) if os.path.exists(p)), ('none', ''))
     fb = 'id="shell"' not in body
-    wcss = css + '\n' + (_rd(shell_dir, 'shell_fb.css') + '\n' if fb else '') + _rd(shell_dir, 'shell.css')
+    wcss = css + '\n' + _rd(shell_dir, 'shell_fb.css') + '\n' + _rd(shell_dir, 'shell.css')   # 兜底样式总是带上：布局只在 body.sh-fb 起作用，组件类两种界面都用
     shell_js = ''.join(open(f, encoding='utf-8').read() for f in shell_js_files)
     data_js = ''
     for f in ('review.js', 'standard.js', 'thumbs.js', 'size_spec.js'):

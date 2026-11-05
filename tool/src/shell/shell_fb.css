@@ -1,7 +1,7 @@
 /* =====================================================================
    烟花工坊 5.0 外壳 · 兜底样式（tool/src/shell/shell_fb.css；对话框9 · S，2026-11-05）
-   只在制作区还是旧界面（tool/src/body.html 里没有 v3.7 的 #shell / #wsBaker 槽位）时由 build.py 放进 tool/烟花工坊.html，
-   页面上 95_shell.js 也只在缺槽位时给 body 加 .sh-fb。制作区换成 v3.7 后这份不再进成品。
+   build.py 总是放进 tool/烟花工坊.html：带 body.sh-fb 的布局和 token 只在缺 v3.7 槽位时起作用（95_shell.js 那时才给 body 加 .sh-fb）；
+   组件类一段两种界面都用（制作区 v3.7 还没搬全样板的组件类时，外壳自己的部件也是样板的样子）。
    内容是 E 样板 v3.7 style_main.css 的 token 和外壳用到的组件类（按钮、菜单、对话框、提示、列表条目、状态栏），
    全部限定在外壳自己的容器里（#shell、#shFbSt、.sh-ws、#ovlApp），不碰旧制作区。由 build 时一次性摘出，改 v3.7 样式时不用跟着改这份。
    ===================================================================== */
@@ -15,9 +15,9 @@ body.sh-fb>.sh-ws{grid-row:2/4;grid-column:1;z-index:5;display:grid;grid-templat
 body.sh-fb>.sh-ws[hidden]{display:none}
 body.sh-fb>#shFbSt{grid-row:3;grid-column:1}
 body.sh-fb.sh-on-import>.app{visibility:hidden}
-body.sh-fb>#ovlApp{position:fixed;inset:0;pointer-events:none;z-index:90}
-body.sh-fb>#ovlApp>*{pointer-events:auto}
-body.sh-fb>#ovlApp>.tip{pointer-events:none}
+body>#ovlApp{position:fixed;inset:0;pointer-events:none;z-index:90}
+body>#ovlApp>*{pointer-events:auto}
+body>#ovlApp>.tip{pointer-events:none}
 body.sh-fb :where(#shell,#shFbSt,.sh-ws,#ovlApp){
   --g0:#0c1518; --g1:#111d21; --g2:#16242a; --g3:#1b2a2f; --g4:#24373d;
   --g5:#2b4149; --g6:#39515a; --g7:#8da3ac; --g8:#b4c5cb; --g9:#e4edef;
@@ -71,7 +71,7 @@ body.sh-fb .sh-delivb{display:inline-flex;align-items:center;gap:6px}
 body.sh-fb .sh-delivb .sh-cnt{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border:1px solid currentColor;font-size:12px;line-height:14px;opacity:.8}
 body.sh-fb .sh-delivb .sh-cnt[hidden]{display:none}
 /* 组件类：特异度压到和 v3.7 自己的类一样（:where），后面的 shell.css 同特异度后写、以它为准 */
-:where(body.sh-fb :is(#shell,#shFbSt,.sh-ws,#ovlApp)){
+:where(:is(#shell,#stShell,#shFbSt,.sh-ws,#ovlApp)){
   button,input,select,textarea{font:inherit;color:inherit;background:none;border:0;letter-spacing:inherit;font-variant-numeric:tabular-nums}
   button{cursor:pointer;text-align:inherit}
   button:disabled{cursor:default}
