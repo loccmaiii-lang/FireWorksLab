@@ -46,19 +46,19 @@
   /* 尺寸（§2）：行高 28；控件高 24；可点区域 ≥ 28 */
   --h-shell:40px; --h-top:40px; --h-status:28px;
   --h-row:28px; --h-ctl:24px; --h-hit:28px; --h-sm:24px; --h-bar:28px; --h-prm:30px;   /* v3.4 第 10 条：检查器参数行 30 */
-  --h-tp:36px; --h-film:32px; --h-ruler:28px;   /* v3.3 第 12 条：胶片行 32（1366 下 28），格子 30 × 30 */
+  --h-tp:36px; --h-io:32px; --h-ruler:28px;   /* v3.5 第 5 条：胶片行去掉，原位置是「导出范围」一行，32（1366 下 28） */
   --w-left:300px; --w-right:460px; --w-tlab:160px;
   /* 检查器五列（§2）：参数名 112 ｜ 控件 自适应 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（改动标记在左侧内边距里） */
   --w-lab:112px; --w-val:84px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.2 第 2 条：单值、区间同一个数值格（数值 + 单位两列 112，按最长的「0.012–0.032 s ⌄」定）；数字左对齐，滑杆结束在同一条线上，到数字 8 px */
   --ico:16px; --ico-s:16px; --thumb:40px;
-  --tl-min:6; --indent:16px;
+  --tl-min:6; --indent:16px; --in-prm:12px;
   color-scheme:dark;
 }
 /* 1366 × 768（§1、§2）：字号小一级，栏宽 260 / 380；检查器各列按字号同比收窄 */
 .s1366{
   --fs1:11px; --fs2:12px; --fs3:14px; --fs-tab:var(--fs3);
   --lh1:14px; --lh2:18px; --lh3:20px;
-  --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px; --h-film:28px;
+  --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px; --h-io:28px;
   --w-left:260px; --w-right:380px; --w-tlab:132px;
   --w-lab:96px; --w-val:78px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
   --thumb:36px; --tl-min:4;
@@ -75,8 +75,11 @@ img{display:block}
 /* 图标（§6、v3.3 第 7 条）：16 px 画布，1.5 px 线宽，方头，尖角，只画线框；一律按 16 px 显示（缩小会让线宽变细、光学大小不一），
    小一号的意思（下拉箭头、×、✓）在符号里画小，不在样式里缩 */
 svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}
-/* 折叠箭头（结构树、检查器模块）：转 90° 时绕 (8.875, 8.875) 转，开、合两种状态的左缘都在格子左边 5.2 px 处（v3.3 第 14 条按这个算位置） */
-svg.i.chevr{transform-origin:8.875px 8.875px}
+/* 折叠箭头（结构树、检查器模块）：v3.5 起箭头画在画布正中，转 90° 绕中心转 */
+svg.i.chevr{transform-origin:8px 8px}
+/* v3.5 第 1 条：图标颜色——默认次文字色，悬停主文字色，开着 / 当前薄荷（图标开关 aria-pressed=true；结构树的「显示」按下是常态，不算开着） */
+.btn-icon[aria-pressed="true"]:not(.eye):not(.pnl),.btn-icon[aria-pressed="true"]:not(.eye):not(.pnl):hover{color:var(--sel)}
+
 /* v3.4 第 13 条：滚动条只在滚动时出现（通用类，外壳的滚动区也用）。用法：滚动容器加 class="sb-auto"（不用另写脚本，
    script_main.js 里一段捕获阶段的 scroll 监听会给正在滚的 .sb-auto 加 .is-scrolling，停下 800 ms 后去掉）。
    静止时滑块完全透明；滚动时 6 px 宽、弱色（--g6）；去掉 .is-scrolling 后 .3 s 淡出。滚动条的位置一直留着（scrollbar-gutter:stable），出现、消失时内容不跳。
@@ -260,7 +263,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 
 /* 3.8 下拉：像命令一样静止无底，右侧 ▾；悬停出浮层底色 */
 .sel{appearance:none;display:inline-flex;align-items:center;height:var(--h-hit);max-width:100%;padding:0 20px 0 6px;border:0;border-radius:var(--r2);color:var(--t2);font-size:var(--fs2);cursor:pointer;white-space:nowrap;
-  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='m2.5 4.5 3.5 3.5 3.5-3.5'/%3E%3C/svg%3E") no-repeat right 4px center}
+  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") no-repeat right 4px center}
 .sel:hover,.sel.is-hover{background-color:var(--hov);color:var(--t1)}
 .sel:focus-visible,.sel.is-focus{outline:2px solid var(--focus);outline-offset:1px}
 .sel.is-open{background-color:var(--press);color:var(--t1)}
@@ -273,7 +276,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
   .sel::picker(select){min-width:max(anchor-size(width),120px);margin:2px 0;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);color:var(--t1)}
   .sel option{display:flex;align-items:center;gap:8px;min-height:var(--h-hit);padding:0 12px;font-size:var(--fs2);color:var(--t1);white-space:nowrap}
   .sel option::checkmark{content:"";width:12px}
-  .sel option:checked::checkmark{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none' stroke='%23b4c5cb' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m3.25 8.25 3 3 6.5-6.5'/%3E%3C/svg%3E")}
+  .sel option:checked::checkmark{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23b4c5cb' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.06 7.7 6.56 11.2l6.38-6.38'/%3E%3C/svg%3E")}
   .sel option:hover,.sel option:focus-visible{background:var(--press);outline:none}
 }
 
@@ -310,7 +313,11 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .trow .chev.lno.none{visibility:visible}
 .trow:hover .chev.lno:not(.none) .no,.trow.is-hover .chev.lno:not(.none) .no,.trow:focus-visible .chev.lno:not(.none) .no{visibility:hidden}
 .trow .chev.lno svg.i{position:absolute;inset:0}
-.trow .ty{width:16px;height:16px;color:var(--t3)}
+.trow .ty{width:16px;height:16px;color:var(--t2)}   /* v3.5 第 1 条：图标默认次文字色 */
+/* v3.5 第 11 条：效果最后一层下面「+ 加层」：弱色，「+」在层号那一格、「加层」和层名同一列；悬停出底色 */
+.tnew{display:flex;align-items:center;gap:4px;width:100%;height:var(--h-row);padding:0 2px 0 calc(var(--lv,0) * var(--indent));border-radius:var(--r2);color:var(--t3);font-size:var(--fs2);white-space:nowrap}
+.tnew:hover,.tnew.is-hover{background:var(--g2);color:var(--t1)}
+.tnew:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--focus)}
 .trow .nm{flex:1;min-width:0;display:flex;align-items:center;gap:6px;overflow:hidden}
 .trow .nm .tx{overflow:hidden;text-overflow:ellipsis;color:var(--t2)}
 .trow .no{color:var(--t3);font-size:var(--fs1)}
@@ -331,6 +338,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .trow:hover .acts .adde,.trow.is-hover .acts .adde,.trow:focus-within .acts .adde{display:grid}
 .trow:hover .acts .btn,.trow.is-hover .acts .btn,.trow.is-sel .acts .btn,.trow:focus-within .acts .btn{visibility:visible}
 .trow .acts .solo[aria-pressed="true"],.trow.is-off .acts .eye{visibility:visible;color:var(--t1)}
+.trow .acts .solo[aria-pressed="true"]{color:var(--sel)}   /* v3.5 第 6 条：只看开着时圆圈薄荷 */
 .trow .acts .ph2{width:calc(var(--h-ctl) * 2);flex:none}
 .trow.t-group .acts .ph2{display:none}
 .trow.t-group .acts .addb{visibility:visible}
@@ -418,14 +426,17 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 @keyframes flash{0%{background:var(--g5)}100%{background:transparent}}
 @media (prefers-reduced-motion:reduce){.is-flash{animation:none;background:var(--g4)}}
 
-/* 4.3 检查器模块（§9、v3.4 第 10、15、16、21 条）：标题行 32 px、中号 600、主文字色，上方空 20、下方空 8；模块之间 1 px 线（§0.6）。
-   标题前不画箭头，点标题折叠 / 展开；悬停标题时左边槽位出箭头，标题字和参数名在同一条线上。折叠着的模块在标题行写摘要（展开的不写） */
+/* 4.3 检查器模块（§9、v3.4 第 10、16、21 条，v3.5 第 3 条）：标题行 32 px、中号 600、主文字色，左边缘贴检查器内边距，上方空 20、下方空 8；模块之间 1 px 线（§0.6）。
+   v3.5 第 3 条：参数行整体比标题向右缩进 12（--in-prm）；标题行最右（操作列）常驻一个弱色折叠箭头，展开朝下、折叠朝右；点标题折叠 / 展开。
+   「恢复本模块」挪到单位列（悬停才出），「+N」在数值列右端。折叠着的模块在标题行写摘要（展开的不写） */
 .mod{padding-bottom:var(--s2)}
 .mod+.mod{border-top:1px solid var(--line)}
 .mod.is-closed{padding-bottom:0}
 .mod-h{height:auto;padding:20px 0 8px;grid-template-rows:32px;cursor:pointer;user-select:none}
-.mod-h .chev{position:absolute;left:-13px;top:36px;width:16px;height:16px;margin-top:-8px;color:var(--t3);transition:rotate .12s;visibility:hidden}   /* 箭头在面板左边的内边距里（墨迹离面板边 5 px，离标题字 2.5 px） */
-.mod-h:hover .chev,.mod-h.is-hover .chev,.mod-h:focus-visible .chev{visibility:visible}
+.mod-h .chev{grid-column:5;grid-row:1;justify-self:center;width:16px;height:16px;color:var(--t3);transition:rotate .12s}
+.mod-b{padding-left:var(--in-prm)}
+.mod-b .prm .mk{left:calc(-1 * var(--pad) - var(--in-prm) + 4px)}
+.mod-b .prm.is-ed .mk{left:calc(-1 * var(--pad) - var(--in-prm) + 5px)}
 .mod:not(.is-closed) .mod-h .chev{rotate:90deg}
 .mod-h .mt{grid-column:1/3;grid-row:1;padding-left:0;font-size:var(--fs2);line-height:var(--lh2);font-weight:var(--fw2);color:var(--t1);white-space:nowrap}
 /* v3.4 第 21 条：摘要是连贯的短语（「1024 px　5 张」「风速 0.0 m/s」），组间 16 px，整体右对齐到数值列末端，不拆进列 */
@@ -434,12 +445,12 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .mod-h .ms .msg:first-child{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .mod:not(.is-closed) .mod-h .ms{display:none}
 /* v3.3 第 8 条：收起的依赖参数写成标题行右侧的「+N」，悬停「N 个参数已隐藏，点开显示」；点开后填选中底色 */
-.mod-h .dep-n{grid-column:3/5;grid-row:1;justify-self:end;height:20px;padding:0 4px;font-size:var(--fs1);color:var(--t2)}
+.mod-h .dep-n{grid-column:3;grid-row:1;justify-self:end;height:20px;padding:0 4px;font-size:var(--fs1);color:var(--t2)}
 .mod-h .dep-n:hover{background:var(--hov);color:var(--t1)}
 .mod-h .dep-n[aria-pressed="true"]{background:var(--on);color:var(--t1)}
 .mod.is-closed .mod-h .dep-n{visibility:hidden}
 .mod-h:hover .chev{color:var(--t1)}
-.mod-h .mrst{grid-column:5;grid-row:1;justify-self:end;width:var(--w-act);height:var(--w-act);visibility:hidden}   /* v3.4 第 16 条：「恢复本模块」只在悬停标题时出 */
+.mod-h .mrst{grid-column:4;grid-row:1;justify-self:end;width:var(--w-act);height:var(--w-act);visibility:hidden}   /* v3.4 第 16 条：「恢复本模块」只在悬停标题时出 */
 .mod-h:hover .mrst,.mod-h.is-hover .mrst,.mod-h:focus-within .mrst,.mod-h .mrst.is-open{visibility:visible}
 .mod-h .mrst svg.i{width:16px;height:16px}
 .mod.is-closed .mod-b{display:none}
@@ -493,20 +504,17 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .tpl:hover span{color:var(--t1)}
 .tpl:focus-visible{outline-offset:2px}
 
-/* 4.6 时间轴（§8）：胶片条 28 px 紧贴刻度尺上面；导出范围画在刻度尺上；层行 6 px 实心条、发射器行 2 px 细条 */
-.tl{position:relative;overflow-y:auto;overflow-x:hidden;height:calc(var(--h-film) + var(--h-ruler) + var(--h-row) * var(--tl-n,6))}
-.tl.has-more{height:calc(var(--h-film) + var(--h-ruler) + var(--h-row) * var(--tl-n,6) + 20px)}   /* v3.3 第 4 条：放不下时多留 20 px 给边缘提示，滚到顶 / 滚到底时提示条只盖住半行 */
+/* 4.6 时间轴（§8）：v3.5 第 5 条胶片行去掉，刻度尺上面是「导出范围」一行；导出范围画在刻度尺上；层行 6 px 实心条、发射器行 2 px 细条 */
+.tl{position:relative;overflow-y:auto;overflow-x:hidden;height:calc(var(--h-io) + var(--h-ruler) + var(--h-row) * var(--tl-n,6))}
+.tl.has-more{height:calc(var(--h-io) + var(--h-ruler) + var(--h-row) * var(--tl-n,6) + 20px)}   /* v3.3 第 4 条：放不下时多留 20 px 给边缘提示，滚到顶 / 滚到底时提示条只盖住半行 */
 .tl .fixed{position:sticky;top:0;z-index:3;background:var(--bg)}
-.tl .frow{display:flex;height:var(--h-film)}
 .tl .rrow{display:flex;height:var(--h-ruler);border-bottom:1px solid var(--line)}
 .tl .fixed .lab,.tlrow .lab{width:var(--w-tlab);flex:none;display:flex;align-items:center;gap:6px;padding:0 8px 0 calc(var(--pad) + var(--lv,0) * var(--indent));font-size:var(--fs2);color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tl .fixed .lab{font-size:var(--fs1);color:var(--t3)}
 .fr,.trk{position:relative;flex:1;min-width:0;margin-left:var(--s2);margin-right:var(--pad)}   /* v3.4 第 17 条：刻度尺的「0 s」离行名格至少 8 px */
 .fr{cursor:ew-resize}
-/* 胶片：只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮）；没烘焙的画成 40 % 透明的空框 */
-.film-c{position:absolute;top:1px;background:#000;overflow:hidden;cursor:zoom-in}   /* 正方形格子，整张缩略图（不裁） */
-.film-c img{width:100%;height:100%;object-fit:contain;mix-blend-mode:screen}
-.film-u{position:absolute;top:1px;bottom:1px;background:var(--g2)}   /* v3.2 第 7 条：没烘焙的部分是一条平的暗轨，不分格子；已烘焙的缩略图是这一行最亮的 */
+/* v3.5：胶片行去掉；时间轴里只留一份隐藏的烘焙帧给外壳取（.film-src，不显示） */
+.film-src{display:none!important}
 /* 刻度尺：刻度挂在下沿，秒数写在刻度右边；导出范围一段浅底，两端把手，上方写「0.35–2.85 s」 */
 .scale{position:absolute;inset:0;isolation:isolate}
 .tick{position:absolute;bottom:0;width:1px;height:3px;background:var(--g6);pointer-events:none}
@@ -520,15 +528,19 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .xh::after{content:"";position:absolute;left:3px;top:0;bottom:0;width:2px;background:var(--g8)}
 .xh:hover::after,.xh.is-active::after{background:var(--g9)}
 .tlab.is-hid{visibility:hidden}   /* 播放头经过时让位 */
-/* 「导出范围」行名格：「0.35–2.85 s」可单击输入 + 设为入点、设为出点、恢复（v3.1 第 1、12 条） */
-.tl .rrow .lab.xio{gap:0;padding-right:2px;color:var(--t2);font-size:var(--fs1)}
-.xv{display:inline-flex;align-items:baseline;white-space:nowrap}
+/* v3.5 第 5 条「导出范围」一行（刻度尺上面，整行）：导出范围「0.35 – 2.85 s」+ 三个图标命令（常显）｜ 发射时段（选中发射器时）｜ 两个开关；组间 24，组内 4–8 */
+.tl .iorow{display:flex;align-items:center;gap:var(--s6);height:var(--h-io);padding:0 var(--pad);white-space:nowrap;overflow:hidden}
+.io-g{display:flex;align-items:center;gap:var(--s1);flex:none}
+.io-k{font-size:var(--fs1);color:var(--t3);margin-right:var(--s1)}
+.io-g .xv{margin-right:var(--s1)}
+.io-opts{gap:var(--s4)}
+.io-sw{display:inline-flex;align-items:center;gap:6px;height:24px;font-size:var(--fs1);color:var(--t2);cursor:pointer}
+.io-sw:hover{color:var(--t1)}
+.xv{display:inline-flex;align-items:baseline;white-space:nowrap;font-size:var(--fs1);color:var(--t2)}
 .xv .tnum{width:auto;field-sizing:content;min-width:3ch;height:22px;padding:0 1px;font-size:var(--fs2);color:var(--t1);text-align:center}
 .xv .dash{color:var(--t3);padding:0 3px}
 .xv .u{margin-left:3px}
-.xio .btn-icon.sm{width:24px;height:24px;visibility:hidden}   /* v3.4 第 17 条：设入点、设出点、恢复只在悬停这一行时出（快捷键 [ ]、右键菜单照旧） */
-.rrow:hover .xio .btn-icon.sm,.rrow.is-hover .xio .btn-icon.sm,.xio:focus-within .btn-icon.sm{visibility:visible}
-.s1366 .xio .btn-icon.sm{width:22px}
+.xio .btn-icon.sm{width:24px;height:24px}   /* v3.5 第 5 条：设入点、设出点、恢复常显 */
 /* 轨道 */
 .tlrow{position:relative;display:flex;height:var(--h-row)}
 .tlrow .lab .no{color:var(--t3);font-size:var(--fs1)}
@@ -556,7 +568,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .ph i{position:absolute;left:-5px;top:0;width:11px;height:10px;background:var(--sel);clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%);pointer-events:auto;cursor:ew-resize}   /* 头部在刻度数字上方 */
 /* v3.3 第 4 条：行放不下时，上下边缘各一条「上面还有 N 行」「下面还有 N 行」（不透明、占满一行宽），点一下滚过去 */
 .tl-edge{position:sticky;z-index:2;height:0}
-.tl-edge.up{top:calc(var(--h-film) + var(--h-ruler))}
+.tl-edge.up{top:calc(var(--h-io) + var(--h-ruler))}
 .tl-edge.dn{bottom:0}
 .tl-more{position:absolute;left:0;right:0;display:flex;align-items:center;gap:4px;height:20px;padding:0 0 0 calc(var(--pad) - 2px);background:var(--bg);color:var(--t2);font-size:var(--fs1);white-space:nowrap}
 .tl-edge.up .tl-more{top:0;box-shadow:inset 0 -1px 0 var(--line)}
@@ -743,7 +755,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .tgrp{display:flex;align-items:center;gap:var(--s1);flex:none}
 .tgrp+.tgrp{margin-left:calc(var(--grp) - var(--gin))}
 .vctl{display:flex;align-items:center;gap:var(--gin);min-width:0;flex:1}
-.vctl>.seg+.seg,.vctl>.seg+.btn{margin-left:calc(var(--grp) - var(--gin))}
+.vctl>.seg+.seg{margin-left:calc(var(--grp) - var(--gin))}   /* v3.5：网格紧跟分段（组内 8） */
 .vctl>.tgrp{margin-left:0}
 .vctl>.tgrp+.tgrp{margin-left:calc(12px - var(--gin))}   /* v3.1 第 14 条：画面叠加 ｜ 面板，组间 12 */
 .tcol-m>.vctl{margin-left:calc(var(--grp) - var(--gin))}
@@ -753,14 +765,22 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .brand b{font-size:var(--fs3);font-weight:var(--fw2)}
 .brand span{font-size:var(--fs1);color:var(--t3)}
 .gpu{font-size:var(--fs1);color:var(--t3);white-space:nowrap}
-/* 「⚠ 1」：导出按钮左边的琥珀计数；和导出之间 12 px */
-.exp-st{display:inline-flex;align-items:center;gap:4px;height:var(--h-hit);padding:0 6px;margin-right:4px;border-radius:var(--r2);font-size:var(--fs2);cursor:pointer;flex:none}
+/* 「⚠ 1 层」（v3.5 第 8 条）：紧跟撤销组，后面是「意见」 */
+.exp-st{display:inline-flex;align-items:center;gap:4px;height:var(--h-hit);padding:0 6px;border-radius:var(--r2);font-size:var(--fs2);cursor:pointer;flex:none}
 .exp-st:hover{background:var(--hov)}
 .exp-st.st-ok{display:none}
-.s1366 .exp-st{padding:0 4px;margin-right:2px}   /* 三角图标按 16 px 画以后，1366 右段要省出 4 px */
+.s1366 .exp-st{padding:0 2px}
+.s1366 .tcol-r .bx>.tbtn{padding:0 4px}   /* v3.5 第 8 条：1366 下「保存 •」有未保存点时也放得下 */
+/* v3.5 第 8 条：右段左组「撤销 重做 版本记录」⚠「意见」｜ 空白 ｜ 右组「还原 保存 另存」「导出 ▾」；两组之间至少 12。1366 下「还原」只放图标 */
+.tcol-r>.sp{flex:1;min-width:var(--s3)}
+#bRevert .rv-i{display:none}
+.s1366 #bRevert .rv-i{display:block}
+.s1366 #bRevert .t{display:none}
+.s1366 .tcol-r #bRevert,.s1366 .tcol-r .bx>.btn-icon{width:24px;padding:0;justify-content:center}
+.s1366 .tcol-r>.sp{min-width:var(--s2)}
 .s1366 .tcol-r .btn-text,.s1366 .tcol-r .tbtn{padding:0 6px}
 .s1366 .seg.m button,.s1366 .modeseg button{padding:0 10px}
-.s1366 .vctl>.seg+.seg,.s1366 .vctl>.seg+.btn{margin-left:4px}
+.s1366 .vctl>.seg+.seg{margin-left:4px}
 .s1366 .tgrp+.tgrp{margin-left:8px}
 .s1366 .tcol{gap:4px}
 
@@ -802,6 +822,15 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .s1366 .lib-meta>.seg button{padding:0 10px}
 .s1366 .lib-meta .btn .t{display:none}
 .lib-meta .btn{padding:0 4px}
+/* v3.5 第 2 条（只改烘焙器，编排页的资源库不跟着变）：一级大号标签 → 二级花型筛选（整行等宽分段，高 28，同工作模式分段）→ 三级搜索 + 新建 → 列表。
+   级间 12、级内 8；分段、搜索框、列表缩略图的左边缘都离栏边 12 */
+.lib-b{gap:var(--s3);padding:var(--s3) var(--pad) var(--s2)}
+.lib-b .lib-cats{display:flex;width:100%}
+.lib-b .lib-cats button{flex:1 1 0;min-width:0;padding:0 4px}
+.lib-b .lib-meta{gap:var(--s2)}
+.lib-b .lib-meta .field{flex:1;min-width:0;height:var(--h-hit)}   /* 和上面的分段、右边的「新建」同高 28 */
+.lib-b .lib-new{flex:none;padding:0 8px 0 6px;gap:4px}
+.s1366 .lib-b .lib-meta .lib-new .t{display:inline}
 .lib-list{flex:1;min-height:0;overflow:auto;padding:0 var(--s1) var(--s1)}
 .lib-list .tpl-grid{padding:4px 8px 8px}
 
@@ -856,14 +885,14 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .dwrap{min-width:0;display:flex;flex-direction:column;gap:var(--s2);align-self:start}
 .dwrap .dh{display:flex;align-items:center;gap:var(--s3);height:var(--h-hit)}
 .dwrap .dh .sp{flex:1}
-/* 播放条（v3.4 第 17 条，参照 v1）：左组 ▷ ⏮ 1× ▾ 循环 ｜ 当前时间（大号主文字色）「/ 5.24 s」（次文字色）+ 秒表 ｜ 最右「选项 ▾」+ 小相机；组间至少 24 px */
+/* 播放条（v3.5 第 7 条）：左组 ▷ ⏮ 1× ▾ 循环 ｜ 中间当前时间（大号主文字色）「/ 5.24 s」（次文字色）｜ 最右秒表、相机（间隔 8）；组间至少 24 px */
 .transport{display:flex;align-items:center;gap:0;padding:0 var(--pad) 0 calc(var(--pad) - 6px);min-width:0;white-space:nowrap;overflow:hidden;background:var(--surf-panel)}
 .tpg{display:flex;align-items:center;gap:var(--s1);flex:none}
 .tpg+.tpg{margin-left:var(--s6)}
 .transport>.sp{flex:1;min-width:var(--s6)}
 .transport .play{color:var(--t1)}
 .transport .time{align-items:baseline;gap:4px}
-.transport .time .btn-icon{align-self:center;margin-left:4px}
+.transport .tools{gap:var(--s2)}
 .transport .tnum{width:auto;field-sizing:content;min-width:4ch;height:var(--h-hit);padding:0 2px;cursor:text}
 .time .tnum.now{font-size:var(--fs3);color:var(--t1);height:var(--h-hit)}   /* v3.4 第 20 条：当前时间大号 15、主文字色 */
 .time .tot{font-size:var(--fs2);color:var(--t2)}
@@ -953,10 +982,15 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .ks-it th{font-weight:var(--fw1);color:var(--t3);font-size:12px;border-top:0}
 .ks-it td:first-child{color:var(--t1);white-space:nowrap}
 .ks-it td{color:var(--t2)}
-/* 图标总表（§6） */
-.ks-icons{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:2px;max-width:1200px}
-.ks-icons div{display:flex;align-items:center;gap:10px;height:44px;padding:0 10px;border:1px solid var(--g3)}
-.ks-icons svg.i{color:var(--t1)}
-.ks-icons svg.i.amber{color:var(--w3)}
-.ks-icons span{display:flex;flex-direction:column;font-size:12px;line-height:16px;color:var(--t2)}
-.ks-icons code{font:11px/14px ui-monospace,monospace;color:var(--t3)}
+/* 图标表（v3.5 第 1 条）：每段 13 列，一行 1 倍、一行 4 倍（虚线框 = 12 × 12 可画区域）、一行名称 */
+.ks-ict{display:flex;flex-direction:column;gap:20px;max-width:1240px}
+.ict-b{display:grid;grid-template-columns:40px repeat(13,84px);align-items:center;justify-items:center;row-gap:8px}
+.ict-k{justify-self:start;font-size:12px;color:var(--t3)}
+.ks-ict svg.i{color:var(--t1)}
+.ks-ict svg.i.amber{color:var(--w3)}
+.ks-ict svg.i.on{color:var(--sel)}
+.ks-ict .c4{position:relative;width:64px;height:64px;box-shadow:0 0 0 1px var(--g3)}
+.ks-ict .c4::before{content:"";position:absolute;inset:8px;outline:1px dashed var(--g5)}
+.ks-ict svg.i.x4{width:64px;height:64px;position:relative}
+.ks-ict .cn{display:flex;flex-direction:column;align-items:center;font-size:12px;line-height:16px;color:var(--t2);text-align:center}
+.ks-ict code{font:11px/14px ui-monospace,monospace;color:var(--t3)}

@@ -1,10 +1,10 @@
-"""E 样板 v3.4 制作区走查（v3.4 起加 v34 一节，和用户这次决定冲突的旧检查已改写成新规则，见说明「v3.4 改动」）：规范 v3 第 0–12 节的硬指标（和 v3.1 改动单冲突的按改动单改过）+ 改动单 21 条里归制作区的各条（v3.1-n） + 交互走查过的全部行为（宪章 0.9、走查 P1–P7、只看、撤销提示条、
+"""E 样板 v3.5 制作区走查（v3.5 起加 v35 一节；和 v3.4、v3.5 决定冲突的旧检查都改写成新规则，见说明「v3.4 改动」「v3.5 改动」）：规范 v3 第 0–12 节的硬指标（和 v3.1 改动单冲突的按改动单改过）+ 改动单 21 条里归制作区的各条（v3.1-n） + 交互走查过的全部行为（宪章 0.9、走查 P1–P7、只看、撤销提示条、
 Esc 取消、需重新导出、保存、导出、时间轴、检查器、结构树、效果库、贴图与交付）。每条打印「通过 / 失败」。
 
 先合成：python3 ../build.py /tmp/E_A.html
 再走查：python3 check_main.py [/tmp/E_A.html]
-一次只开一个浏览器进程，页面按顺序开关；外网请求一律拦截。检查名前缀是规范节号（§n）、改动单编号（v3.1-n … v3.4-n）或走查编号（P、Q、W）。
---only=spec,v31,inter,v33,v34 只跑某几节。
+一次只开一个浏览器进程，页面按顺序开关；外网请求一律拦截。检查名前缀是规范节号（§n）、改动单编号（v3.1-n … v3.5-n）或走查编号（P、Q、W）。
+--only=spec,v31,inter,v33,v34,v35 只跑某几节。
 """
 import io
 import re
@@ -22,6 +22,20 @@ OK, BAD, ERR = [], [], []
 MINT, AMBER, LINE = 'rgb(0, 212, 155)', 'rgb(224, 178, 90)', 'rgb(43, 65, 73)'
 T1, T2, T3 = 'rgb(228, 237, 239)', 'rgb(180, 197, 203)', 'rgb(141, 163, 172)'
 G2, G3, G7 = 'rgb(22, 36, 42)', 'rgb(27, 42, 47)', 'rgb(141, 163, 172)'
+
+
+# v3.5 第 1 条：把每个 symbol 单独画到 128 × 128 的画布上（8 倍），量墨迹外框（16 px 坐标）
+INK_JS = r"""async () => {
+  const S = 8, out = {};
+  for (const s of document.querySelectorAll('#iconDefs symbol')) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="${16*S}" height="${16*S}" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">${s.innerHTML.replace(/currentColor/g, '#000')}</svg>`;
+    const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); await im.decode();
+    const c = document.createElement('canvas'); c.width = c.height = 16*S; const g = c.getContext('2d'); g.drawImage(im, 0, 0);
+    const d = g.getImageData(0, 0, 16*S, 16*S).data; let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
+    for (let y = 0; y < 16*S; y++) for (let x = 0; x < 16*S; x++) if (d[(y*16*S + x)*4 + 3] > 127) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    out[s.id] = [x0/S, y0/S, (x1+1)/S, (y1+1)/S];
+  }
+  return out; }"""
 
 
 def check(name, cond, info=''):
@@ -102,7 +116,9 @@ def spec_static(b):
     check('§1 停用文字和面板对比 ≥ 3:1（次文字 × 50 %）', x.C('#pbody .prm[data-lab="湍流尺度"] .plw', 'opacity') == '0.5')
     # §2 网格
     check('§2 栏宽 1920：左 300、右 460', x.R('#left')[4] == 300 and x.R('#insp')[4] == 460)
-    check('§2 / v3.3-1 检查器五列：参数名 112 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 操作 24（数值、单位两列按这一屏的取值范围定宽；单值、停用行同一套）', re.fullmatch(r'112px [\d.]+px [\d.]+px [\d.]+px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') == x.C('#pbody .prm[data-lab="湍流尺度"]', 'gridTemplateColumns') == x.C('#pbody .mod-h', 'gridTemplateColumns'), x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
+    gc = lambda s: [float(v) for v in re.findall(r'[\d.]+', x.C(s, 'gridTemplateColumns') or '')]
+    pcol, mcol = gc('#pbody .prm[data-lab="缩放"]'), gc('#pbody .mod-h')
+    check('§2 / v3.3-1 / v3.5-3 检查器五列：参数名 112 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 操作 24；参数行整体缩进 12（控件列少 12），数值、单位、操作三列和标题行对齐', len(pcol) == 5 and pcol[0] == 112 and pcol[4] == 24 and x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') == x.C('#pbody .prm[data-lab="湍流尺度"]', 'gridTemplateColumns') and pcol[2:] == mcol[2:] and mcol[0] == 112 and abs(mcol[1] - pcol[1] - 12) < .1, [pcol, mcol])
     check('v3.3-1 数值格到滑杆末端至少 8 px', x.R('#pbody .prm[data-lab="缩放"] .vu')[0] - x.R('#pbody .prm[data-lab="缩放"] .sl')[2] == 8)
     check('v3.3-1 小数位最多的数，数字到单位 4 px（单位在固定宽度的单位列里）', all(abs(g - 4) <= 1 for g in x.E("[...document.querySelectorAll('#pbody .prm[data-kind=num]:not(.is-dis):not(.sub)')].filter(r => r.offsetParent && r.querySelector('.u').textContent && /\\.\\d\\d$/.test(r.querySelector('.num').value)).map(r => { const n = r.querySelector('.num'), c = getComputedStyle(n); return r.querySelector('.u').getBoundingClientRect().left - (n.getBoundingClientRect().right - parseFloat(c.borderRightWidth) - parseFloat(c.paddingRight)) })")))
     check('§2 / v3.4-10 行高：结构树、时间轴 28，检查器参数行 30；模块标题行 20 + 32 + 8 = 60', x.R('#tree .trow')[5] == 28 and x.R('#tlw .tlrow')[5] == 28 and x.R('#pbody .prm[data-lab="缩放"]')[5] == 30 and x.R('#pbody .mod-h')[5] == 60, [x.R('#pbody .prm[data-lab="缩放"]')[5], x.R('#pbody .mod-h')[5]])
@@ -112,11 +128,12 @@ def spec_static(b):
     check('§2 时间轴行名和结构树同一套缩进（每级 16）', x.E("(() => { const a = [...document.querySelectorAll('#tlw .tlrow .lab')].map(l => parseFloat(getComputedStyle(l).paddingLeft)); return a[1] === a[0] && a[2] - a[1] === 16 })()"))
     check('§2 结构树每级缩进 16', x.E("(() => { const r = [...document.querySelectorAll('#tree .trow[data-id]')], p = i => parseFloat(getComputedStyle(r[i]).paddingLeft); return p(1) - p(0) === 16 && p(3) - p(2) === 16 && p(1) === p(2) })()"))
     check('§2 组间 20：工作模式和缩放分段之间', 18 <= x.R('#viewbar .seg[data-ui="view3"]')[0] - x.R('#modeTabs')[2] <= 22)
-    check('§2 组间 20：撤销组和保存组之间', 18 <= x.E("(() => { const g = document.querySelectorAll('#toolRow .tcol-r .tgrp'); return g[1].getBoundingClientRect().left - g[0].getBoundingClientRect().right })()") <= 22)
+    check('§2 / v3.5-8 右段左右两组之间靠空白分开（至少 12）', x.E("(() => { const g = document.querySelectorAll('#toolRow .tcol-r .bx'); return g[1].getBoundingClientRect().left - document.getElementById('bNote').getBoundingClientRect().right })()") >= 12)
     # §4 控件语法
-    check('§4 只有一种分段控件：工作模式（M）和缩放、筛选块（S）同一个类，外面 1 px 框', x.E("(() => { const a = document.querySelector('#modeTabs'), b = document.querySelector('#viewbar .seg'), c = document.querySelector('#libChips'); return a.classList.contains('seg') && a.classList.contains('m') && b.classList.contains('sm') && c.classList.contains('seg') && [a, b, c].every(e => getComputedStyle(e).borderTopWidth === '1px') })()"))
+    check('§4 / v3.5-4 只有一种分段控件：工作模式、画面大小、花型筛选都是 .seg.m，外面 1 px 框', x.E("(() => { const a = document.querySelector('#modeTabs'), b = document.querySelector('#viewbar .seg'), c = document.querySelector('#libChips'); return [a, b, c].every(e => e.classList.contains('seg') && e.classList.contains('m') && getComputedStyle(e).borderTopWidth === '1px') })()"))
     check('§4 / v3.1-9 分段选中段只填选中底色，不加粗', x.C('#viewbar .seg button[aria-pressed="true"]', 'backgroundColor') == LINE and x.C('#viewbar .seg button[aria-pressed="true"]', 'fontWeight') == '400')
-    check('§4 M 比 S 高一级（28 / 24）', x.R('#modeTabs')[5] == 28 and x.R('#viewbar .seg')[5] == 24)
+    sg = x.E("['#modeTabs', '#viewbar .seg[data-ui=view3]'].map(s => { const e = document.querySelector(s), b = e.querySelector('button'), c = getComputedStyle(b); return [e.getBoundingClientRect().height, c.paddingLeft, c.paddingRight, c.fontSize] })")
+    check('§4 / v3.5-4 「实时模拟 / 引擎回放 / 序列贴图」和「适应窗口 / 1:1 / 实机窗口」同一个大小：高 28、内边距、字号都一样', sg[0] == sg[1] and sg[0][0] == 28, sg)
     check('§4 「保存」不填底色', x.C('[data-act="save"]', 'backgroundColor') == 'rgba(0, 0, 0, 0)')
     check('§4 主操作只有一个：薄荷实底的按钮只有导出 ▾（v3.4 第 11 条的开关轨道、勾选、滑杆、未保存点不是按钮）', x.E("[...document.querySelectorAll('#wsBaker *')].filter(e => getComputedStyle(e).backgroundColor === 'rgb(0, 212, 155)').every(e => e.closest('#expBtn') || e.closest('.ph') || e.matches('.sl-f, .sw:checked, .chk:checked, .btn .dot'))") and x.E("[...document.querySelectorAll('#wsBaker .btn')].filter(e => getComputedStyle(e).backgroundColor === 'rgb(0, 212, 155)').every(e => e.closest('#expBtn'))"))
     check('§4 命令静止无底，悬停出浮层底色', x.C('[data-act="saveAs"]', 'backgroundColor') == 'rgba(0, 0, 0, 0)' and (x.hover('[data-act="saveAs"]') or x.C('[data-act="saveAs"]', 'backgroundColor') == 'rgb(36, 55, 61)'))
@@ -130,9 +147,9 @@ def spec_static(b):
     check('§4 停用一律降透明度（滑杆照样变暗），悬停写全句原因', x.C('#pbody .prm[data-lab="湍流尺度"] .ctl1', 'opacity') == '0.5' and x.E("document.querySelector('#pbody .prm[data-lab=\"湍流尺度\"]').dataset.tip") == '湍流强度为 0 时无效')
     check('v3.1-6 停用行不用悬停也看得到原因：数值列弱色小字「强度为 0 时无效」，不进控件列', x.T('#pbody .prm[data-lab="湍流尺度"] .vu') == '强度为 0 时无效' and x.C('#pbody .prm[data-lab="湍流尺度"] .dis-why', 'color') == T3 and x.C('#pbody .prm[data-lab="湍流尺度"] .dis-why', 'fontSize') == '12px' and x.N('#pbody .prm[data-lab="湍流尺度"] .ctl1 .dis-why') == 0 and x.R('#pbody .prm[data-lab="湍流尺度"] .dis-why')[0] >= x.R('#pbody .prm[data-lab="湍流尺度"] .sl')[2] + 8)
     # §5 颜色
-    mint = x.E("[...document.querySelectorAll('#wsBaker *')].filter(e => { const c = getComputedStyle(e); return e.getBoundingClientRect().width && [c.color, c.backgroundColor, c.borderTopColor, c.boxShadow].some(v => v && v.includes('0, 212, 155')) }).map(e => e.closest('#expBtn') ? '导出' : e.matches('#tree .trow.is-sel') ? '结构树当前行' : e.matches('#tlw .ph > i') ? '播放头的头' : e.matches('#tlw .ph') ? '播放头' : e.closest('.btn.pnl[aria-pressed=true]') ? '栏开关' : e.matches('.sl-f') ? '滑杆已填' : e.matches('.sw:checked') ? '开关开着' : e.matches('.chk:checked') ? '勾选' : e.matches('.btn .dot') ? '未保存点' : (e.id || String(e.className.baseVal ?? e.className) || e.tagName))")
-    MINT_OK = {'导出', '结构树当前行', '播放头的头', '播放头', '栏开关', '滑杆已填', '开关开着', '勾选', '未保存点'}
-    check('v3.4-11 薄荷只在导出、播放头、标签下划线（已有），和结构树当前行竖线、栏开关、开关轨道、滑杆已填、勾选、未保存点（v3.4 加的小面积）', set(mint) <= MINT_OK and {'导出', '结构树当前行', '播放头的头', '播放头', '栏开关', '滑杆已填', '开关开着'} <= set(mint), sorted(set(mint)))
+    mint = x.E("[...document.querySelectorAll('#wsBaker *')].filter(e => { const c = getComputedStyle(e); return e.getBoundingClientRect().width && [c.color, c.backgroundColor, c.borderTopColor, c.boxShadow].some(v => v && v.includes('0, 212, 155')) }).map(e => e.closest('#expBtn') ? '导出' : e.matches('#tree .trow.is-sel') ? '结构树当前行' : e.matches('#tlw .ph > i') ? '播放头的头' : e.matches('#tlw .ph') ? '播放头' : e.closest('.btn.pnl[aria-pressed=true]') ? '栏开关' : e.matches('.sl-f') ? '滑杆已填' : e.matches('.sw:checked') ? '开关开着' : e.matches('.chk:checked') ? '勾选' : e.matches('.btn .dot') ? '未保存点' : e.closest('.btn-icon[aria-pressed=true]') ? '图标开关开着' : (e.id || String(e.className.baseVal ?? e.className) || e.tagName))")
+    MINT_OK = {'导出', '结构树当前行', '播放头的头', '播放头', '栏开关', '滑杆已填', '开关开着', '勾选', '未保存点', '图标开关开着'}
+    check('v3.4-11 / v3.5-1 薄荷只在导出、播放头、标签下划线（已有），结构树当前行竖线、栏开关、开关轨道、滑杆已填、勾选、未保存点（v3.4），和开着的图标开关（v3.5 第 1 条，如循环）', set(mint) <= MINT_OK and {'导出', '结构树当前行', '播放头的头', '播放头', '栏开关', '滑杆已填', '开关开着', '图标开关开着'} <= set(mint), sorted(set(mint)))
     amber = x.E("[...document.querySelectorAll('#wsBaker *')].filter(e => { const c = getComputedStyle(e); return e.getBoundingClientRect().width && [c.color, c.backgroundColor].some(v => v && v.includes('224, 178, 90')) }).map(e => e.id || String(e.className.baseVal ?? e.className))")
     check('§5 / v3.3-2 琥珀只在结构树层行三角、导出旁的计数（和外壳状态栏的「备份 ● 未选」）', all(re.search(r'stl|expSt|st-warn|^i$|sh-sv is-warn', a) or a == '' for a in amber) and 'expSt' in amber, amber)
     check('v3.3-2 效果库状态词：「待验收」主文字色，制作中、新、已通过弱色', x.E("(() => { const m = {}; document.querySelectorAll('#libList .st').forEach(s => m[s.textContent] = getComputedStyle(s).color); return m['待验收'] === 'rgb(228, 237, 239)' && m['新'] === 'rgb(141, 163, 172)' && m['制作中'] === 'rgb(141, 163, 172)' && m['已通过'] === 'rgb(141, 163, 172)' })()"))
@@ -145,8 +162,8 @@ def spec_static(b):
     check('§6 第 6 节要画的图标都在 symbol 定义里', all(i in ids for i in need), [i for i in need if i not in ids])
     check('§6 图标 16 px 画布、1.5 px 线宽、方头、只画线框', x.E("[...document.querySelectorAll('#iconDefs symbol')].every(s => s.getAttribute('viewBox') === '0 0 16 16')") and x.C('#toolRow svg.i', 'strokeWidth') == '1.5px' and x.C('#toolRow svg.i', 'strokeLinecap') == 'square' and x.C('#toolRow svg.i', 'fill') == 'none')
     check('§6 页面上用到的图标都有定义', x.E("[...document.querySelectorAll('use')].every(u => document.querySelector(u.getAttribute('href')))"))
-    check('§6 一种形状一个意思：版本记录是三张纸、循环是矩形环、「绕一圈的箭头」只有恢复默认', x.E("document.querySelector('#i-history').innerHTML.includes('h7.5v7.5') && !document.querySelector('#i-loop').innerHTML.includes(' a') && document.querySelector('#i-reset').innerHTML.includes('l2 2v5.5') && [...document.querySelectorAll('#iconDefs symbol')].filter(s => s.innerHTML.includes('l2 2v5.5')).length === 1"))
-    check('§6 「需重新导出」图标是琥珀三角加感叹号', x.C('#tree .stl', 'color') == AMBER and 'M8 2.25 14.25 13.25H1.75z' in x.E("document.querySelector('#i-stale').innerHTML"))
+    check('§6 一种形状一个意思：版本记录是三张纸、循环是矩形环、「绕一圈的箭头」（大弧）只有恢复默认', x.E("document.querySelector('#i-history').querySelectorAll('path').length === 2 && document.querySelector('#i-history').innerHTML.includes('h6.5v6.5') && !/ a|A/.test(document.querySelector('#i-loop').innerHTML) && [...document.querySelectorAll('#iconDefs symbol')].filter(s => /a[\\d.]+ [\\d.]+ 0 1 /.test(s.innerHTML)).map(s => s.id).join() === 'i-reset'"))
+    check('§6 「需重新导出」图标是琥珀三角加感叹号（和「警告」同形，颜色分开）', x.C('#tree .stl', 'color') == AMBER and 'M8 4.3 12.7 12.44H3.3z' in x.E("document.querySelector('#i-stale').innerHTML") and x.E("document.querySelector('#i-stale').innerHTML === document.querySelector('#i-alert').innerHTML"))
     # §7 一个信息只出现一次
     check('§7 / v3.4-17 画面读数左下一行：平台、fps、「帧 50 / 75」（帧数从播放条挪到这里）', re.fullmatch(r'PC 30 fps 帧 \d+ / \d+', x.T('#ciBL') or '') is not None, x.T('#ciBL'))
     check('§7 画面读数不再写单格、张数、帧数（「帧 50」是当前帧号，v3.3 第 9 条）', not re.search(r'单格|张|1024|\d+ 帧', x.T('#cell') or ''), x.T('#cell'))
@@ -165,20 +182,21 @@ def spec_static(b):
     g = x.E("[...document.querySelectorAll('#transport .tpg')].map(e => { const r = e.getBoundingClientRect(); return [r.left, r.right] })")
     check('§8 / v3.4-17 播放条一行三组，组间至少 24，最后一组靠最右', len(g) == 3 and all(g[i + 1][0] - g[i][1] >= 24 for i in range(2)) and abs(g[2][1] - (x.R('#transport')[2] - 12)) <= 1, g)
     check('§8 第 1 组：▶ ⏮ 1× 循环', x.E("[...document.querySelectorAll('#transport .tpg')[0].children].map(c => c.dataset.act || c.id).join()") == 'play,restart,speed,loop')
-    check('§8 / v3.4-17 第 2 组：「2.00」大号主文字色、「/ 5.24 s」次文字色、秒表；帧数不在播放条里', x.E("document.querySelector('#tNow').value") == '2.00' and (x.T('#transport .time .tot') or '') == '/ 5.24 s' and x.C('#transport .time .tot', 'color') == T2 and x.N('#transport .time [data-act="timeTools"] use[href="#i-timer"]') == 1 and x.N('#transport .fbk, #transport .fno') == 0 and '帧' not in (x.T('#transport') or ''), x.T('#transport .time'))
-    check('§8 / v3.4-17 第 3 组：「选项 ▾」和只有图标的小相机（悬停写「生成缩略图」）', x.E("[...document.querySelectorAll('#transport .tpg')[2].querySelectorAll('[data-act]')].map(c => c.dataset.act).join()") == 'tlOpts,thumb' and x.T('#transport [data-act="thumb"]') == '' and x.E("document.querySelector('#transport [data-act=thumb]').dataset.tip").startswith('生成缩略图'))
+    check('§8 / v3.5-7 中间一组：「2.00」大号主文字色、「/ 5.24 s」次文字色，只有时间（秒表挪到最右）；帧数不在播放条里', x.E("document.querySelector('#tNow').value") == '2.00' and (x.T('#transport .time .tot') or '') == '/ 5.24 s' and x.C('#transport .time .tot', 'color') == T2 and x.N('#transport .time .btn') == 0 and x.N('#transport .fbk, #transport .fno') == 0 and '帧' not in (x.T('#transport') or ''), x.T('#transport .time'))
+    tg = x.E("(() => { const b = [...document.querySelectorAll('#transport .tpg')[2].querySelectorAll('[data-act]')]; return {a: b.map(c => c.dataset.act).join(), t: b.map(c => c.textContent.trim()).join(''), gap: b.length === 2 ? b[1].getBoundingClientRect().left - b[0].getBoundingClientRect().right : null, opt: document.querySelectorAll('[data-act=tlOpts]').length} })()")
+    check('§8 / v3.5-7 最右一组：秒表、相机两个图标并排，间隔 8；没有「选项 ▾」', tg['a'] == 'timeTools,thumb' and tg['t'] == '' and tg['gap'] == 8 and tg['opt'] == 0 and x.E("document.querySelector('#transport [data-act=thumb]').dataset.tip").startswith('生成缩略图'), tg)
     check('§8 导出范围画在刻度尺上：一段浅底，两端把手', x.N('#tlw .rrow .xrange') == 1 and x.N('#tlw .rrow .xrange .xh') == 2)
-    check('v3.1-12 「0.35–2.85 s」不在刻度尺上，写在「导出范围」那一行的行名格里', re.sub(r'\s', '', x.E("[...document.querySelectorAll('#tlw .rrow .lab.xio .xv > *')].map(e => e.value || e.textContent).join('')")) == '0.35–2.85s' and x.N('#tlw .rrow .fr .xlab, #tlw .rrow .fr .tnum') == 0 and x.R('#tlw .rrow .xio')[2] <= x.R('#tlw .rrow .fr')[0] + 1)
-    check('v3.1-1 行名格里三个图标命令：设为入点、设为出点、恢复，在读数右边', x.E("[...document.querySelectorAll('#tlw .rrow .xio .btn-icon')].map(b => b.dataset.act + ':' + b.querySelector('use').getAttribute('href')).join()") == 'setIn:#i-in,setOut:#i-outp,clearIO:#i-reset' and x.R('#tlw .rrow .xio [data-act="setIn"]')[0] > x.R('#tlw .rrow .xio .xv')[2])
+    check('v3.1-12 / v3.5-5 「0.35 – 2.85 s」不在刻度尺上，写在刻度尺上面「导出范围」一行（原胶片行的位置）', re.sub(r'\s', '', x.E("[...document.querySelectorAll('#tlw .iorow .xv > *')].map(e => e.value || e.textContent).join('')")) == '0.35–2.85s' and x.N('#tlw .rrow .tnum, #tlw .rrow .btn') == 0 and abs(x.R('#tlw .iorow')[3] - x.R('#tlw .rrow')[1]) <= 1 and x.T('#tlw .iorow .io-k') == '导出范围')
+    check('v3.1-1 / v3.5-5 导出范围读数右边三个图标命令：设为入点、设为出点、恢复', x.E("[...document.querySelectorAll('#tlw .iorow .io-range .btn-icon')].map(b => b.dataset.act + ':' + b.querySelector('use').getAttribute('href')).join()") == 'setIn:#i-in,setOut:#i-outp,clearIO:#i-reset' and x.R('#tlw .iorow [data-act="setIn"]')[0] > x.R('#tlw .iorow .xv')[2])
     check('v3.1-12 播放头的头部画在刻度数字上方，不盖住数字', x.R('#tlw .rrow')[1] - 1 <= x.R('#tlw .ph i')[1] and x.R('#tlw .ph i')[3] <= min(r[1] for r in x.E("[...document.querySelectorAll('#tlw .rrow .tlab')].map(t => { const r = t.getBoundingClientRect(); return [r.left, r.top] })")) + 1 and x.C('#tlw .ph i', 'backgroundColor') == MINT)
     check('v3.1-12 时间刻度的数字给播放头让位：播放头 ±7 px 内的刻度数字藏起来，其余照常', x.E("(() => { const p = document.querySelector('#tlw .ph').getBoundingClientRect().left; return [...document.querySelectorAll('#tlw .rrow .tlab')].every(t => { const r = t.getBoundingClientRect(), near = p > r.left - 7 && p < r.right + 7; return near === (getComputedStyle(t).visibility === 'hidden') }) })()") and x.N('#tlw .rrow .tlab.is-hid') == 1)
-    check('§8 / v3.3-12 胶片条不低于 28 px（1920 下 32），紧贴在刻度尺上面', x.R('#tlw .frow')[5] >= 28 and abs(x.R('#tlw .frow')[3] - x.R('#tlw .rrow')[1]) <= 1)
-    fc = x.E("(() => { const c = [...document.querySelectorAll('#tlw .film-c, #tlw .film-u')], r = document.querySelector('#tlw .xrange').getBoundingClientRect(); return [c[0].getBoundingClientRect().left - r.left, r.right - c[c.length - 1].getBoundingClientRect().right] })()")
-    check('§8 胶片只覆盖导出范围', all(-1 <= v <= 2 for v in fc), fc)
-    check('§8 已烘焙的格子有缩略图（按最亮一帧提亮）', x.E("(() => { const i = document.querySelector('#tlw .film-c img'); return !!i && /brightness/.test(i.style.filter) })()"))
-    check('v3.2-7 没烘焙的部分是一条平的暗轨（#16242a），不分格子、不描边', x.N('#tlw .film-u') == 1 and x.N('#tlw .film-c.unb') == 0 and x.C('#tlw .film-u', 'backgroundColor') == G2 and x.C('#tlw .film-u', 'borderTopWidth') == '0px' and 0 <= x.R('#tlw .film-u')[0] - x.E("[...document.querySelectorAll('#tlw .film-c')].pop().getBoundingClientRect().right") <= 6)
-    check('v3.1-13 已烘焙的缩略图是这一行最亮的东西（不降透明度、按最亮一帧提亮）', x.C('#tlw .film-c', 'opacity') == '1' and x.C('#tlw .film-c img', 'opacity') == '1' and x.C('#tlw .frow .lab', 'color') == T3)
-    check('§8 左侧行名列写「烘焙」', x.T('#tlw .frow .lab') == '烘焙')
+    check('§8 / v3.5-5 胶片行去掉：刻度尺上面是「导出范围」一行，1920 下高 32，紧贴刻度尺', x.R('#tlw .iorow')[5] == 32 and abs(x.R('#tlw .iorow')[3] - x.R('#tlw .rrow')[1]) <= 1 and x.N('#tlw .frow, #tlw .film-u') == 0)
+    check('§8 / v3.5-5 时间轴上看不到胶片格（烘焙进度看画面左下「帧 50 / 75」）', x.E("[...document.querySelectorAll('#tlw .film-c')].every(c => !c.getBoundingClientRect().width)") and re.search(r'帧 \d+ / \d+', x.T('#ciBL') or '') is not None)
+    check('§8 / v3.5-5 外壳取烘焙帧用的隐藏帧还在（#tlw .film-src .film-c img，不显示、不占位）', x.N('#tlw .film-src .film-c img') >= 2 and x.C('#tlw .film-src', 'display') == 'none')
+    io = x.E("(() => { const g = [...document.querySelectorAll('#tlw .iorow .io-g')].map(e => e.getBoundingClientRect()); return {gaps: g.slice(1).map((r, i) => Math.round(r.left - g[i].right)), left: Math.round(g[0].left - document.querySelector('#tlw .iorow').getBoundingClientRect().left)} })()")
+    check('v3.5-5 这一行三组：导出范围（读数 + 三个命令）｜ 两个开关，组间至少 24，左端离边 12', all(g >= 24 for g in io['gaps']) and io['left'] == 12 and x.N('#tlw .iorow .io-g') == 2, io)
+    check('v3.5-5 「选项 ▾」里的两个开关露在这一行：「一并移动」「同刻联动」，开着', x.E("[...document.querySelectorAll('#tlw .iorow .io-sw')].map(l => l.textContent.trim() + ':' + l.querySelector('.sw').checked).join()") == '一并移动:true,同刻联动:true')
+    check('v3.5-5 刻度尺的行名格空着（读数挪到上面一行），行名列和下面的轨道行同宽', x.T('#tlw .rrow .lab') == '' and x.R('#tlw .rrow .lab')[4] == x.R('#tlw .tlrow .lab')[4])
     check('§8 层行 6 px 实心条，发射器行 2 px 细条', x.R('#tlw .tlrow.t-layer .bar-e')[5] == 6 and x.R('#tlw .tlrow.t-emitter .bar-e')[5] == 2)
     check('§8 超出导出范围的那一段降到 40 %', x.N('#tlw .tlrow.is-sel .bar-e .xo') >= 1 and abs(float(x.C('#tlw .tlrow.is-sel .bar-e .xo', 'opacity')) - .6) < .01)
     check('§8 当前行底色亮一级、条更亮', x.C('#tlw .tlrow.is-sel', 'backgroundColor') == 'rgb(22, 36, 42)' and x.C('#tlw .tlrow.is-sel .bar-e', 'backgroundColor') == T2)
@@ -190,9 +208,9 @@ def spec_static(b):
     check('v3.1-20 时间轴高度按内容定：最后一行下面不留大块空白（≤ 1 行）', x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = [...document.querySelectorAll('#tlw .tlrow[data-id]')].pop().getBoundingClientRect(); return t.bottom - r.bottom })()") <= 28, x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = [...document.querySelectorAll('#tlw .tlrow[data-id]')].pop().getBoundingClientRect(); return t.bottom - r.bottom })()"))
     # §9 检查器
     check('§9 顶部面包屑；下一行搜索、「筛选 ▾」「全部折叠」', x.E("[...document.querySelector('.insp-tools').children].map(c => c.id).join()") == 'pq,viewOpt,foldAll')
-    check('§9 / v3.4-15 模块标题 600、主文字色；标题前静止时不画箭头，标题字和参数名在同一条线上', x.R('#pbody .mod-h')[5] == 60 and x.C('#pbody .mod-h .mt', 'color') == T1 and x.C('#pbody .mod-h .chev', 'visibility') == 'hidden' and abs(x.R('#pbody .mod-h .mt')[0] - x.R('#pbody .prm[data-lab="缩放"] .pl')[0]) <= 1)
-    x.hover('#pbody .mod[data-mod="出生方式"] .mod-h .mt')
-    check('v3.4-15 悬停标题时左边槽位出箭头（在面板内边距里，不挤标题字）', x.C('#pbody .mod[data-mod="出生方式"] .mod-h .chev', 'visibility') == 'visible' and x.R('#insp')[0] <= x.R('#pbody .mod[data-mod="出生方式"] .mod-h .chev')[0] and x.R('#pbody .mod[data-mod="出生方式"] .mod-h .chev')[2] <= x.R('#pbody .mod[data-mod="出生方式"] .mod-h .mt')[0] + 6)
+    check('§9 / v3.5-3 模块标题 600、主文字色、左边缘贴检查器内边距；参数行比标题向右缩进 12', x.R('#pbody .mod-h')[5] == 60 and x.C('#pbody .mod-h .mt', 'color') == T1 and x.C('#pbody .mod-h .mt', 'fontWeight') == '600' and abs(x.R('#pbody .prm[data-lab="缩放"] .pl')[0] - x.R('#pbody .mod-h .mt')[0] - 12) <= 1)
+    cv = x.E("[...document.querySelectorAll('#pbody .mod')].filter(m => m.offsetParent).map(m => { const h = m.querySelector('.mod-h'), c = h.querySelector('.chev'), r = c.getBoundingClientRect(), H = h.getBoundingClientRect(); return [m.classList.contains('is-closed'), getComputedStyle(c).visibility, getComputedStyle(c).rotate, getComputedStyle(c).color, Math.round(H.right - r.right)] })")
+    check('v3.5-3 每个模块标题行最右（操作列）常驻一个弱色折叠箭头：展开朝下、折叠朝右', len(cv) >= 4 and all(c[1] == 'visible' and c[3] == T3 and 2 <= c[4] <= 6 and c[2] == ('none' if c[0] else '90deg') for c in cv) and any(c[0] for c in cv) and any(not c[0] for c in cv), cv)
     sm = x.E("(() => { const m = document.querySelector('#pbody .mod[data-mod=\"输出\"]'); if (!m || !m.classList.contains('is-closed')) return null; const g = [...m.querySelectorAll('.ms .msg')], z = document.querySelector('#pbody .prm[data-lab=\"缩放\"] .vu'), wv = parseFloat(getComputedStyle(document.getElementById('pbody')).getPropertyValue('--w-val')); return {t: g.map(e => e.textContent), c: getComputedStyle(m.querySelector('.ms')).color, gap: g.length > 1 ? g[1].getBoundingClientRect().left - g[0].getBoundingClientRect().right : null, r: m.querySelector('.ms').getBoundingClientRect().right, r0: z.getBoundingClientRect().left + wv, v: m.querySelectorAll('.ms .num, .ms-v, .ms-u').length} })()")
     check('§9 / v3.4-21 折叠的模块摘要弱色、连贯的短语「1024 px　5 张」；组间 16，整体右对齐到数值列末端，不拆进列', sm and sm['t'] == ['1024 px', '5 张'] and sm['c'] == T3 and abs(sm['gap'] - 16) <= 1 and abs(sm['r'] - sm['r0']) <= 1 and sm['v'] == 0, sm)
     check('§9 只有一个数值参数的模块不做成模块（曝光并进「颜色」）；「轨迹联动」（勾选列表）保留成模块', x.N('#pbody .mod[data-mod="曝光"]') == 0 and x.N('#pbody .mod[data-mod="颜色"] .prm[data-lab="曝光"]') == 1 and x.N('#pbody .mod[data-mod="轨迹联动"] .prm[data-lab="联动的层"]') == 1 and x.E("[...document.querySelectorAll('#pbody .mod')].every(m => m.querySelectorAll('.mod-b > .prm:not(.sub)').length >= 2 || m.dataset.mod === '轨迹联动')"))
@@ -218,7 +236,7 @@ def spec_static(b):
     check('v3.2-8 横轴说明只写一次：悬停读数里的「寿命」写「横轴：寿命 0–100 %」', x.E("document.querySelector('#pbody .prm[data-lab=\"大小曲线\"] .cx .cg .lbl').dataset.tip") == '横轴：寿命 0–100 %')
     check('§9 寿命并进「运动」（单参数模块）', x.N('#pbody .mod[data-mod="寿命"]') == 0 and x.N('#pbody .mod[data-mod="运动"] .prm[data-lab="寿命"]') == 1)
     check('§10 仙女棒子发射器用子发射器图标', x.E("document.querySelector('#tree .trow.is-sel .ty use').getAttribute('href')") == '#i-sub')
-    check('§8 仙女棒导出范围是整个效果（0.00–2.13 s）', re.sub(r'\s', '', x.E("[...document.querySelectorAll('#tlw .rrow .xio .xv > *')].map(e => e.value || e.textContent).join('')")) == '0.00–2.13s')
+    check('§8 仙女棒导出范围是整个效果（0.00–2.13 s）', re.sub(r'\s', '', x.E("[...document.querySelectorAll('#tlw .iorow .xv > *')].map(e => e.value || e.textContent).join('')")) == '0.00–2.13s')
     check('v3.2-1 / v3.3-4 仙女棒 13 行：时间轴最多占中栏 1/3，放不下的写「下面还有 N 行」', x.N('#tlw .tlrow[data-id]') == 13 and x.V('#tlw .tl-edge.dn .tl-more') and (x.R('#mid')[3] - x.R('#transport')[1]) <= x.R('#mid')[5] / 3 + 1, [x.R('#mid')[3] - x.R('#transport')[1], x.R('#mid')[5]])
     check('v3.3-4 默认滚到顶时，当前行（08 二级碎火星）也在可见范围里', x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = document.querySelector('#tlw .tlrow.is-sel').getBoundingClientRect(); return r.top >= t.top - 1 && r.bottom <= t.bottom + 1 })()"))
     pg.close()
@@ -235,7 +253,9 @@ def spec_static(b):
     check('v3.1-7 / v3.4-15 效果库大号标签等宽两半（40 px 高，字号 15，用户定）；「模板」右边静止时不画折叠箭头，收起图标在标签行最右、悬停才出', abs(x.R('#libTabs .tab:first-child')[4] - x.R('#libTabs .tab:last-child')[4]) <= 1 and x.C('#libTabs .tab', 'fontSize') in ('15px', '14px') and x.R('#libTabs .tab')[5] == 40 and x.R('#libToggle')[0] >= x.R('#libTabs .tab:last-child')[2] - 1 and x.R('#left')[2] - x.R('#libToggle')[2] <= 8 and x.R('#libTabs')[0] == x.R('#left')[0] and x.C('#libToggle', 'visibility') == 'hidden' and (x.hover('#libTabs .tab:last-child') or True) and x.C('#libToggle', 'visibility') == 'visible')
     check('v3.1-7 下划线横跨整个标签', x.E("(() => { const t = document.querySelector('#libTabs .tab[aria-selected=\"true\"]'), c = getComputedStyle(t, '::after'); return Math.abs(parseFloat(c.width) - t.getBoundingClientRect().width) <= 1 })()"))
     check('v3.1-8 搜索框静止时画 1 px 线框（效果库、检查器）', all(x.C(s, 'borderTopWidth') == '1px' and x.C(s, 'borderTopColor') == LINE for s in ['#libQ', '#pq']), [x.C('#libQ', 'borderTopColor'), x.C('#pq', 'borderTopColor')])
-    check('§10 / v3.4-18 标签下一行是搜索，再下一行筛选块（高 28、字号 13、左右 12），不写「10 个」，「新建」在这一行最右', x.R('#libQ')[1] > x.R('#libTabs')[3] - 1 and x.R('#libChips')[1] > x.R('#libQ')[3] - 1 and x.N('#libCount') == 0 and '个' not in (x.T('.lib-meta') or '') and x.R('#libChips')[5] == 28 and x.C('#libChips button', 'fontSize') == '13px' and x.C('#libChips button', 'paddingLeft') == '12px' and x.C('#libChips button', 'paddingRight') == '12px' and abs(x.R('.lib-meta [data-act="libNew"]')[2] - x.R('.lib-meta')[2]) <= 1)
+    lb = x.E("(() => { const R = s => document.querySelector(s).getBoundingClientRect(), P = R('#libPane'), t = R('.lib-head'), c = R('#libChips'), q = R('#libQ'), n = R('#libPane [data-act=libNew]'), th = R('#libList .lib-item .th'), bw = [...document.querySelectorAll('#libChips button')].map(b => Math.round(b.getBoundingClientRect().width)); return {order: t.bottom <= c.top && c.bottom <= q.top, h: c.height, full: Math.round(P.right - 12 - c.right), bw, row: Math.abs(n.top - q.top) < 3 && n.left > q.right, g12: Math.round(c.top - t.bottom), g23: Math.round(q.top - c.bottom), gin: Math.round(n.left - q.right), left: [c.left, q.left, th.left].map(v => Math.round(v - P.left)), cnt: document.querySelectorAll('#libCount').length, txt: document.querySelector('#libPane [data-act=libNew]').textContent.trim()} })()")
+    check('§10 / v3.5-2 效果库层级：大号标签 → 花型筛选（整行等宽分段，高 28）→ 搜索 + 新建（同一行）→ 列表', lb['order'] and lb['h'] == 28 and abs(lb['full']) <= 1 and max(lb['bw']) - min(lb['bw']) <= 1 and lb['row'] and lb['txt'] == '新建' and lb['cnt'] == 0, lb)
+    check('v3.5-2 级间 12 大于级内 8；花型筛选、搜索框、列表缩略图的左边缘都离栏边 12', lb['g12'] == 12 and lb['g23'] == 12 and lb['gin'] == 8 and lb['left'] == [12, 12, 12], lb)
     check('§10 列表行：缩略图 40、名称、副信息「代号　N 层」、状态词', x.R('#libList .lib-item .th')[4] == 40 and all(re.fullmatch(r'\S+ \d+ 层', s) for s in x.E("[...document.querySelectorAll('#libList .li-s')].map(e => [...e.children].slice(0, 2).map(c => c.textContent).join(' '))")))
     check('v3.1-18 效果库当前项是很淡的底色（#1b2a2f）+ 主文字色，比结构树当前行（薄荷竖线）弱', x.C('#libList .lib-item.is-sel', 'backgroundColor') == G3 and x.C('#libList .lib-item.is-sel .li-n', 'color') == T1 and MINT in (x.C('#tree .trow.is-sel', 'boxShadow') or '') + (x.C('#tree .trow.is-sel', 'outlineColor') or '') + (x.C('#tree .trow.is-sel', 'borderTopColor') or '') and x.C('#libList .lib-item.is-sel', 'boxShadow') == 'none')
     check('v3.1-20 效果库往下长到栏底（10 个效果）', x.N('#libList .lib-item') == 10 and x.R('#libList')[3] >= x.R('#left')[3] - 1, [x.R('#libList'), x.R('#left')])
@@ -282,23 +302,23 @@ def v31(b):
     check('v3.2-1 选中别的层里的发射器（键盘、面包屑、时间轴同理）：那一层自动展开', rows() == '橙引线层,金锦层,点灭星,星' and x.T('#path') == '金曜菊-B › 点灭星 › 星', rows())
     x.E("KIT.select('金锦层')"); pg.wait_for_timeout(80)
     # 第 1 条：图标命令，悬停写全称和快捷键
-    check('v3.4-17 导出范围行名格只写「0.35 – 2.85 s」：三个图标静止时不出', all(x.C(f'#tlw .rrow .xio [data-act="{k}"]', 'visibility') == 'hidden' for k in ('setIn', 'setOut', 'clearIO')))
-    x.hover('#tlw .rrow .xio .xv'); x.hover('#tlw .rrow .xio [data-act="setIn"]')
+    check('v3.5-5 设为入点、设为出点、恢复三个图标常显（不用悬停）', all(x.C(f'#tlw .iorow [data-act="{k}"]', 'visibility') == 'visible' for k in ('setIn', 'setOut', 'clearIO')))
+    x.hover('#tlw .iorow .xv'); x.hover('#tlw .iorow [data-act="setIn"]')
     check('v3.1-1 悬停「设为入点」写全称和快捷键 [', '入点设到播放头' in (x.tip() or '') and '[' in (x.tip() or ''), x.tip())
-    x.hover('#tlw .rrow .xio [data-act="setOut"]')
+    x.hover('#tlw .iorow [data-act="setOut"]')
     check('v3.1-1 悬停「设为出点」写全称和快捷键 ]', '出点设到播放头' in (x.tip() or '') and ']' in (x.tip() or ''), x.tip())
-    x.hover('#tlw .rrow .xio [data-act="clearIO"]')
+    x.hover('#tlw .iorow [data-act="clearIO"]')
     check('v3.1-1 悬停「恢复」写全称', '恢复' in (x.tip() or '') and '导出范围' in (x.tip() or ''), x.tip())
     pg.mouse.move(900, 400)
-    check('v3.1-1 三个图标命令点击区 24 px，图标 16 px 线框', x.E("[...document.querySelectorAll('#tlw .rrow .xio .btn-icon')].every(b => { const r = b.getBoundingClientRect(); return r.width === 24 && r.height >= 24 })") and x.C('#tlw .rrow .xio .btn-icon svg.i', 'fill') == 'none')
+    check('v3.1-1 三个图标命令点击区 24 px，图标 16 px 线框', x.E("[...document.querySelectorAll('#tlw .iorow .btn-icon')].every(b => { const r = b.getBoundingClientRect(); return r.width === 24 && r.height >= 24 })") and x.C('#tlw .iorow .btn-icon svg.i', 'fill') == 'none')
     x.click('#tNow'); pg.keyboard.press('Control+a'); pg.keyboard.type('1.00'); K('Enter'); pg.mouse.click(900, 400)
-    x.hover('#tlw .rrow .xio .xv'); x.click('#tlw .rrow .xio [data-act="setIn"]')   # v3.4 第 17 条：三个图标悬停这一行才出
-    check('v3.1-1 点「设为入点」：导出范围入点 = 播放头 1.00', x.E("document.querySelector('#tlw .rrow .xio .tnum.in').value") == '1.00' and '入点设为 1.00 s' in (x.T('#ovlApp .tip.hint') or ''), [x.E("document.querySelector('#tlw .rrow .xio .tnum.in').value"), x.T('#ovlApp .tip.hint')])
+    x.hover('#tlw .iorow .xv'); x.click('#tlw .iorow [data-act="setIn"]')   # v3.4 第 17 条：三个图标悬停这一行才出
+    check('v3.1-1 点「设为入点」：导出范围入点 = 播放头 1.00', x.E("document.querySelector('#tlw .iorow .tnum.in').value") == '1.00' and '入点设为 1.00 s' in (x.T('#ovlApp .tip.hint') or ''), [x.E("document.querySelector('#tlw .iorow .tnum.in').value"), x.T('#ovlApp .tip.hint')])
     x.click('#tNow'); pg.keyboard.press('Control+a'); pg.keyboard.type('2.50'); K('Enter'); pg.mouse.click(900, 400)
-    x.hover('#tlw .rrow .xio .xv'); x.click('#tlw .rrow .xio [data-act="setOut"]')
-    check('v3.1-1 点「设为出点」：出点 = 2.50，读数和刻度尺上的浅底一起变', x.E("document.querySelector('#tlw .rrow .xio .tnum.out').value") == '2.50' and x.E("(() => { const r = document.querySelector('#tlw .xrange').getBoundingClientRect(), f = document.querySelector('#tlw .rrow .fr').getBoundingClientRect(); return Math.abs((r.right - f.left) / f.width * 5.24 - 2.50) < .05 })()"))
-    x.hover('#tlw .rrow .xio .xv'); x.click('#tlw .rrow .xio [data-act="clearIO"]')
-    check('v3.1-1 点「恢复」：回到打开时 0.35–2.85', x.E("[...document.querySelectorAll('#tlw .rrow .xio .tnum')].map(i => i.value).join()") == '0.35,2.85' and '已恢复' in (x.T('#ovlApp .tip.hint') or ''))
+    x.hover('#tlw .iorow .xv'); x.click('#tlw .iorow [data-act="setOut"]')
+    check('v3.1-1 点「设为出点」：出点 = 2.50，读数和刻度尺上的浅底一起变', x.E("document.querySelector('#tlw .iorow .tnum.out').value") == '2.50' and x.E("(() => { const r = document.querySelector('#tlw .xrange').getBoundingClientRect(), f = document.querySelector('#tlw .rrow .fr').getBoundingClientRect(); return Math.abs((r.right - f.left) / f.width * 5.24 - 2.50) < .05 })()"))
+    x.hover('#tlw .iorow .xv'); x.click('#tlw .iorow [data-act="clearIO"]')
+    check('v3.1-1 点「恢复」：回到打开时 0.35–2.85', x.E("[...document.querySelectorAll('#tlw .iorow .tnum')].map(i => i.value).join()") == '0.35,2.85' and '已恢复' in (x.T('#ovlApp .tip.hint') or ''))
     # 第 2 条：面包屑
     x.click('#path button')
     check('v3.1-2 点面包屑「金曜菊-B」选中效果，面包屑只剩一项（大号）', x.T('#path') == '金曜菊-B' and x.N('#tree .trow.t-group.is-sel') == 1 and x.C('#path .cur', 'fontSize') == '15px')
@@ -307,13 +327,13 @@ def v31(b):
     x.click('#path button:nth-of-type(2)')
     check('v3.1-2 点面包屑的层跳回层', x.T('#path') == '金曜菊-B › 金锦层')
     # 第 14 条：工具图标
-    g = x.E("[...document.querySelectorAll('#viewbar .tgrp')].map(e => [e.getAttribute('aria-label'), [...e.querySelectorAll('[data-act]')].map(b => b.dataset.act).join(), e.getBoundingClientRect().left, e.getBoundingClientRect().right])")
-    check('v3.1-14 / v3.4-8 画面叠加一组（网格、批注）；面板开关不在中段：左栏开关在工具行最左，精简、右栏开关在画面那一段最右', [r[:2] for r in g] == [['画面叠加', 'grid,note']] and x.E("[...document.querySelector('#toolRow .tcol-m').children].map(c => c.id || c.className).join()").startswith('bLeft,') and x.E("[...document.querySelectorAll('#toolRow .tcol-m .pnls [data-act]')].map(b => b.dataset.act).join()") == 'compact,toggleR' and x.R('#bLeft')[2] <= x.R('#modeTabs')[0] and abs(x.R('#bRight')[2] - (x.R('#toolRow .tcol-m')[2] - 8)) <= 1, g)
+    g = x.E("[...document.querySelector('#viewbar').children].map(c => c.dataset.ui || c.dataset.act)")
+    check('v3.1-14 / v3.4-8 / v3.5-8 画面这一段：画面大小分段后面紧跟网格（8 px），「意见」挪到右栏工具行；左栏开关在最左，精简、右栏开关在最右', g == ['view3', 'grid'] and abs(x.R('#viewbar [data-act="grid"]')[0] - x.R('#viewbar .seg')[2] - 8) <= 1 and x.N('#toolRow .tcol-m [data-act="note"]') == 0 and x.E("[...document.querySelector('#toolRow .tcol-m').children].map(c => c.id || c.className).join()").startswith('bLeft,') and x.E("[...document.querySelectorAll('#toolRow .tcol-m .pnls [data-act]')].map(b => b.dataset.act).join()") == 'compact,toggleR' and x.R('#bLeft')[2] <= x.R('#modeTabs')[0] and abs(x.R('#bRight')[2] - (x.R('#toolRow .tcol-m')[2] - 8)) <= 1, g)
     pnl = x.E("['bLeft', 'bCompact', 'bRight'].map(i => { const b = document.getElementById(i); return [b.getAttribute('aria-pressed'), getComputedStyle(b).color, getComputedStyle(b).backgroundColor, b.textContent.trim()] })")
     check('v3.4-8 栏开关开着（栏显示中）：图标薄荷、填选中底色；精简关着时不填；三个都只放图标、不写字', pnl[0][:3] == ['true', MINT, LINE] and pnl[2][:3] == ['true', MINT, LINE] and pnl[1][0] == 'false' and pnl[1][2] == 'rgba(0, 0, 0, 0)' and all(p[3] == '' for p in pnl), pnl)
     ic = x.E("Object.fromEntries(['grid', 'note', 'compact', 'pl', 'pr', 'solo'].map(k => [k, document.querySelector('#i-' + k).innerHTML]))")
-    check('v3.4-7/8/9 工具图标：网格是方框里横竖各两条线（3 × 3）、精简是贴着画布四角的短直角（臂长 4、中间空）、只看是四边断开的方框加中间 4 × 4 实心块、批注带尾巴、左右栏是窗框加列表短线', 'M2.75 2.75h10.5v10.5H2.75z' in ic['grid'] and 'M6.25 2.75v10.5m3.5-10.5v10.5M2.75 6.25h10.5M2.75 9.75h10.5' in ic['grid'] and 'M.75 3.25V.75h2.5m9.5 0h2.5v2.5m0 9.5v2.5h-2.5m-9.5 0H.75v-2.5' in ic['compact'] and 'M2.75 5.25v-2.5h2.5m5.5 0h2.5v2.5m0 5.5v2.5h-2.5m-5.5 0h-2.5v-2.5' in ic['solo'] and 'M6 6h4v4H6z' in ic['solo'] and 'circle' not in ic['solo'] and 'h-6l-3 3v-3' in ic['note'] and all('h1m-1 2.5h1' in ic[k] for k in ('pl', 'pr')), ic)
-    check('v3.2-3 / v3.3-7 「建议曝光」是一个图标（八边形里一个 A，线框），不是「A.」两个字；悬停写「按最亮时刻设曝光」', x.E("document.querySelector('#pbody .prm[data-lab=\"曝光\"] .sug use').getAttribute('href')") == '#i-auto' and x.E("(() => { const s = document.querySelector('#i-auto'); return s.innerHTML.includes('M5.75 11 8 5l2.25 6') && !s.querySelector('circle') && ![...s.querySelectorAll('path')].some(p => p.getAttribute('fill') === 'currentColor') })()") and x.R('#pbody .prm[data-lab="曝光"] .sug svg')[4] == 16 and x.E("document.querySelector('#pbody .prm[data-lab=\"曝光\"] .sug').dataset.tip") == '按最亮时刻设曝光' and x.N('#iconDefs #i-wand') == 0)
+    check('v3.4-7/8/9 / v3.5-1 工具图标：网格是方框里横竖各两条线（3 × 3）、精简是 12 × 12 区域的四个角（中间空）、只看是一个圆圈（直径 12）、意见是带尾巴的气泡、左右栏是窗框加列表短线', 'M2.75 2.75h10.5v10.5H2.75z' in ic['grid'] and 'M6.25 2.75v10.5m3.5-10.5v10.5M2.75 6.25h10.5M2.75 9.75h10.5' in ic['grid'] and 'M2.75 6V2.75H6m4 0h3.25V6m0 4v3.25H10m-4 0H2.75V10' in ic['compact'] and ic['solo'].strip() == '<circle cx="8" cy="8" r="5.25"></circle>' and 'L2.75 12.5z' in ic['note'] and all('h.5m-.5 2.5h.5' in ic[k] for k in ('pl', 'pr')), ic)
+    check('v3.2-3 / v3.5-1 「建议曝光」是一个图标（圆里一个 A，线框），不是「A.」两个字；悬停写「按最亮时刻设曝光」', x.E("document.querySelector('#pbody .prm[data-lab=\"曝光\"] .sug use').getAttribute('href')") == '#i-auto' and x.E("(() => { const s = document.querySelector('#i-auto'); return s.innerHTML.includes('M5.9 11.1 8 6.25l2.1 4.85') && s.querySelectorAll('circle').length === 1 && ![...s.querySelectorAll('path')].some(p => p.getAttribute('fill') === 'currentColor') })()") and x.R('#pbody .prm[data-lab="曝光"] .sug svg')[4] == 16 and x.E("document.querySelector('#pbody .prm[data-lab=\"曝光\"] .sug').dataset.tip") == '按最亮时刻设曝光' and x.N('#iconDefs #i-wand') == 0)
     x.hover('#pbody .prm[data-lab="曝光"] .sug')
     check('v3.1-14 悬停「建议曝光」出提示', x.tip() == '按最亮时刻设曝光', x.tip())
     pg.mouse.move(900, 400)
@@ -323,7 +343,8 @@ def v31(b):
     # 1366 下同几条
     pg = new_page(b, 1366, 768); x = P(pg)
     check('v3.1-3 1366 右下读数常驻，不压左下读数', x.T('#ciView') == '距离 1000 m 预览曝光 1.00 倍' and x.R('#ciView')[0] > x.R('#ciBL')[2] + 20)
-    check('v3.1-1 / v3.4-17 1366 行名格放得下「0.35 – 2.85 s」和三个图标命令（悬停时出），不溢出；刻度尺离行名格 8 px', x.E("(() => { const l = document.querySelector('#tlw .rrow .xio'); return l.scrollWidth <= l.clientWidth + 1 })()") and x.R('#tlw .rrow .xio [data-act="clearIO"]')[2] <= x.R('#tlw .rrow .fr')[0] - 8 and x.R('#tlw .rrow .fr')[0] - x.R('#tlw .rrow .xio')[2] >= 8)
+    io13 = x.E("(() => { const l = document.querySelector('#tlw .iorow'), g = [...l.querySelectorAll('.io-g')].map(e => e.getBoundingClientRect()); return {fit: l.scrollWidth <= l.clientWidth + 1, gaps: g.slice(1).map((r, i) => Math.round(r.left - g[i].right)), right: Math.round(l.getBoundingClientRect().right - g[g.length - 1].right), cut: [...l.querySelectorAll('.io-sw span')].some(s => s.scrollWidth > s.clientWidth + 1)} })()")
+    check('v3.1-1 / v3.5-5 1366 导出范围一行放得下（读数、三个命令、两个开关），组间 ≥ 24，开关文字不截断', io13['fit'] and all(g >= 24 for g in io13['gaps']) and io13['right'] >= 12 and not io13['cut'], io13)
     check('v3.1-2 1366 面包屑「金曜菊-B › 金锦层」一行放得下', x.T('#path') == '金曜菊-B › 金锦层' and x.R('#path')[5] <= 28)
     check('v3.3-1 1366 检查器五列：96 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 24；滑杆一律结束在同一条线上', re.fullmatch(r'96px [\d.]+px [\d.]+px [\d.]+px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and len(set(round(r) for r in x.E("[...document.querySelectorAll('#pbody .prm:not(.sub) .ctl1 .sl')].filter(s => s.offsetParent).map(s => s.getBoundingClientRect().right)"))) == 1, x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
     x.E("KIT.openExport()"); pg.wait_for_timeout(100)
@@ -468,7 +489,7 @@ def interactions(b):
     check('§0.7 Alt+单击只看这一项', x.E("KIT.solo().join()") == '橙引线层')
     pg.mouse.click(900, 400); K('Escape')
     check('§0.7 Esc 退出只看', x.E("KIT.solo().length") == 0 and x.T('#ovlApp .tip.hint') == '已退出只看')
-    check('§0.7 / v3.4-7 只看图标改成四边断开的方框 + 中间 4 × 4 实心块（用户 11-05 改，不再用 v1 的圆）', 'circle' not in x.E("document.querySelector('#i-solo').innerHTML") and 'M6 6h4v4H6z' in x.E("document.querySelector('#i-solo').innerHTML"))
+    check('§0.7 / v3.5-6 只看图标是一个圆圈（直径 12、线宽 1.5、中间空）', x.E("(() => { const s = document.querySelector('#i-solo'), c = s.querySelector('circle'); return s.children.length === 1 && !!c && c.getAttribute('r') === '5.25' && !c.getAttribute('fill') })()"))
     pg.locator('#tree .trow.is-sel').focus(); K('s')
     check('W S 键加入只看', x.E("KIT.solo().join()") == '金锦层')
     pg.mouse.click(900, 400); K('Escape')
@@ -515,22 +536,22 @@ def interactions(b):
     check('W 拖播放头时 Esc 取消', abs(x.E("KIT.t()") - 2.62) < .05)
     h = pg.locator('#tlw .xh.out').bounding_box()
     pg.mouse.move(h['x'] + 4, h['y'] + 10); pg.mouse.down(); pg.mouse.move(h['x'] + 4 + fr['width'] * .1, h['y'] + 10, steps=5); pg.mouse.up(); pg.wait_for_timeout(80)
-    check('W 拖刻度尺上的把手改导出范围', x.E("document.querySelector('#tlw .rrow .xio .tnum.out').value") != '2.85')
+    check('W 拖刻度尺上的把手改导出范围', x.E("document.querySelector('#tlw .iorow .tnum.out').value") != '2.85')
     check('W 改导出范围后金锦层还是需重新导出，记一步撤销', x.E("KIT.stale().join()") == '金锦层')
     K('Control+z')
-    check('W 撤销导出范围', x.E("document.querySelector('#tlw .rrow .xio .tnum.out').value") == '2.85')
+    check('W 撤销导出范围', x.E("document.querySelector('#tlw .iorow .tnum.out').value") == '2.85')
     # 范围上方的输入（P7）
-    x.click('#tlw .rrow .xio .tnum.in')
+    x.click('#tlw .iorow .tnum.in')
     pg.keyboard.type('0.50'); K('Tab')
     check('P7 从入点框按 Tab 跳到出点框（全选）', x.E("document.activeElement.classList.contains('out')") and x.E("document.activeElement.selectionStart === 0 && document.activeElement.selectionEnd === document.activeElement.value.length"))
-    check('P7 入点已提交', x.E("document.querySelector('#tlw .rrow .xio .tnum.in').value") == '0.50')
+    check('P7 入点已提交', x.E("document.querySelector('#tlw .iorow .tnum.in').value") == '0.50')
     pg.keyboard.type('2.40'); K('Enter')
-    check('W 出点回车生效', x.E("document.querySelector('#tlw .rrow .xio .tnum.out').value") == '2.40')
+    check('W 出点回车生效', x.E("document.querySelector('#tlw .iorow .tnum.out').value") == '2.40')
     t0 = x.E("KIT.t()")
-    x.click('#tlw .rrow .xio .tnum.out'); pg.keyboard.type('.,'); pg.keyboard.press('ArrowLeft'); pg.keyboard.press(' ')
+    x.click('#tlw .iorow .tnum.out'); pg.keyboard.type('.,'); pg.keyboard.press('ArrowLeft'); pg.keyboard.press(' ')
     check('P7 焦点在输入框里时，. , ← 空格等全局快捷键不响应', x.E("KIT.t()") == t0 and not x.E("document.querySelector('#transport [data-act=\"play\"]').getAttribute('aria-label') === '暂停'"))
     K('Escape')
-    x.click('#tlw .rrow .xio .tnum.out'); pg.keyboard.press('Control+a'); pg.keyboard.type('9'); K('Enter')
+    x.click('#tlw .iorow .tnum.out'); pg.keyboard.press('Control+a'); pg.keyboard.type('9'); K('Enter')
     check('W 越界就地报错，有效范围', (x.err() or '').startswith('超出范围'))
     K('Escape')
     x.click('#tNow'); pg.keyboard.press('Control+a'); pg.keyboard.type('1.00'); K('Enter')
@@ -542,18 +563,18 @@ def interactions(b):
     K(','); K('ArrowRight'); K('Shift+ArrowLeft')
     check('W , ← → Shift 走 10 帧', abs(x.E("KIT.t()") - (1.0 + 1 / 30 + 1 / 30 - 10 / 30)) < 1e-3)
     x.E("KIT.select('金锦层')"); pg.mouse.click(900, 400); K('[')
-    check('W [ 把导出范围的入点设到播放头', abs(float(x.E("document.querySelector('#tlw .rrow .xio .tnum.in').value")) - x.E("KIT.t()")) < .02 and '导出范围' in (x.T('#ovlApp .tip.hint') or ''))
+    check('W [ 把导出范围的入点设到播放头', abs(float(x.E("document.querySelector('#tlw .iorow .tnum.in').value")) - x.E("KIT.t()")) < .02 and '导出范围' in (x.T('#ovlApp .tip.hint') or ''))
     K('Control+z')
     x.E("KIT.select('金锦层/星')"); pg.mouse.click(900, 400)
     K(']')
-    check('v3.1-1 选中发射器时 ] 也改导出范围（和行名格的图标命令一致）', abs(float(x.E("document.querySelector('#tlw .rrow .xio .tnum.out').value")) - x.E("KIT.t()")) < .02 and '导出范围' in (x.T('#ovlApp .tip.hint') or ''))
+    check('v3.1-1 选中发射器时 ] 也改导出范围（和行名格的图标命令一致）', abs(float(x.E("document.querySelector('#tlw .iorow .tnum.out').value")) - x.E("KIT.t()")) < .02 and '导出范围' in (x.T('#ovlApp .tip.hint') or ''))
     K('Control+z')
-    x.click('#transport [data-act="tlOpts"]')
-    check('v3.1-1 选中发射器时「选项 ▾」另有「发射时段」一节：设为入点 / 设为出点 / 恢复', x.E("[...document.querySelectorAll('.menu .mh, .menu .mi')].map(m => m.textContent.replace(/[\\[\\]\\s]/g, '')).slice(0, 8).join()").startswith('导出范围,设为入点,设为出点,恢复,发射时段,设为入点,设为出点,恢复'), x.E("[...document.querySelectorAll('.menu .mh, .menu .mi')].map(m => m.textContent.replace(/\\s/g, '')).join()"))
-    K('Escape'); x.E("KIT.select('金锦层')")
-    x.click('#transport [data-act="tlOpts"]')
-    check('§8 「选项 ▾」里有设为入点 / 设为出点 / 恢复', x.E("[...document.querySelectorAll('.menu .mi')].slice(0, 3).map(m => m.textContent.replace(/[\\[\\]\\s]/g, '')).join()") == '设为入点,设为出点,恢复')
-    K('Escape')
+    em = x.E("[...document.querySelectorAll('#tlw .iorow .io-emit .btn-icon')].map(b => b.dataset.act).join()")
+    x.click('#tlw .iorow [data-act="emIn"]')
+    check('v3.1-1 / v3.5-5 选中发射器时导出范围一行多一组「发射时段」：设为入点 / 设为出点 / 恢复（原来在「选项 ▾」里）', em == 'emIn,emOut,emClear' and x.T('#tlw .iorow .io-emit .io-k') == '发射时段' and '发射时段' in (x.T('#ovlApp .tip.hint') or ''), [em, x.T('#ovlApp .tip.hint')])
+    K('Control+z')
+    x.E("KIT.select('金锦层')"); pg.wait_for_timeout(80)
+    check('§8 / v3.5-5 选中层时这一行只有导出范围一组和开关；页面上没有「选项 ▾」', x.N('#tlw .iorow .io-emit') == 0 and x.N('[data-act="tlOpts"]') == 0 and '选项' not in (x.T('#transport') or ''))
     x.pg.locator('#tlw .xrange').click(button='right', position={'x': 12, 'y': 22}); pg.wait_for_timeout(80)
     check('§8 范围的右键菜单：设为入点 / 设为出点 / 恢复', x.E("[...document.querySelectorAll('.menu .mi')].slice(0, 3).map(m => m.textContent.replace(/[\\[\\]\\s]/g, '')).join()") == '设为入点,设为出点,恢复')
     K('Escape')
@@ -573,8 +594,9 @@ def interactions(b):
     x.click('#transport [data-act="loop"]')
     check('W 循环是图标开关', x.E("document.querySelector('#transport [data-act=\"loop\"]').getAttribute('aria-pressed')") == 'false')
     # 胶片悬停放大
-    x.hover('#tlw .film-c:not(.unb)')
-    check('§8 胶片格悬停放大', x.V('#ovlApp .tip.film img'))
+    x.click('#tlw .iorow .io-sw:has([data-opt="optFollow"])'); x.E("KIT.select('橙引线层')"); pg.wait_for_timeout(80)
+    o1 = x.E("document.querySelector('#tlw .iorow [data-opt=optFollow]').checked"); x.click('#tlw .iorow .io-sw:has([data-opt="optFollow"])'); x.E("KIT.select('金锦层')"); pg.wait_for_timeout(80)
+    check('v3.5-5 「一并移动」点一下就关（换一层重画后照样是关）、再点开（不用打开菜单）', o1 is False and x.E("document.querySelector('#tlw .iorow [data-opt=optFollow]').checked") is True)
     pg.mouse.move(900, 400)
     # 分隔条
     v = pg.locator('#vsplit').bounding_box(); n0 = x.E("+document.querySelector('#tlw .tl').style.getPropertyValue('--tl-n')")
@@ -738,7 +760,7 @@ def v33(b):
             x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(150)
         a, c = frames(x)
         check(f'v3.3-9 / v3.4-17 {scene} 默认时刻：画面左下写「帧 N / 总数」，播放条不再写帧', a and a[0] == '帧' and not c, [x.T('#ciBL'), x.T('#transport')])
-        tin =float(x.E("document.querySelector('#tlw .rrow .xio .tnum.in').value"))
+        tin =float(x.E("document.querySelector('#tlw .iorow .tnum.in').value"))
         x.click('#tNow'); pg.keyboard.press('Control+a'); pg.keyboard.type(f'{tin:.2f}'); x.key('Enter'); pg.mouse.click(900, 400)
         a, c = frames(x)
         check(f'v3.3-9 {scene} 播放头在导出范围入点：第 1 帧（从 1 数）', a and a[1] == '1', [x.T('#ciBL')])
@@ -810,8 +832,8 @@ def v33(b):
 
     # 第 8 条：「N 项已隐藏　查看」并进模块标题行
     pg = new_page(b); x = P(pg)
-    h = x.E("(() => { const m = document.querySelector('#pbody .mod[data-mod=\"环境\"]'), d = m.querySelector('.mod-h .dep-n'), mt = m.querySelector('.mt'), z = document.querySelector('#pbody .prm[data-lab=\"风速\"] .vu'); return d && {t: d.textContent, tip: d.dataset.tip, l: d.getBoundingClientRect().left, r: d.getBoundingClientRect().right, mt: mt.getBoundingClientRect().right, vu: z.getBoundingClientRect().right, top: Math.abs(d.getBoundingClientRect().top + d.getBoundingClientRect().height / 2 - mt.getBoundingClientRect().top - mt.getBoundingClientRect().height / 2), rows: [...m.querySelectorAll('.mod-b > *')].filter(__vis).map(e => e.dataset.lab || e.textContent.trim())} })()")
-    check('v3.3-8 标题行右侧写「+4」，和标题同一行，右缘对齐单位列末端', h and h['t'] == '+4' and h['l'] > h['mt'] and abs(h['r'] - h['vu']) <= 1 and h['top'] <= 2, h)
+    h = x.E("(() => { const m = document.querySelector('#pbody .mod[data-mod=\"环境\"]'), d = m.querySelector('.mod-h .dep-n'), mt = m.querySelector('.mt'), z = document.querySelector('#pbody .prm[data-lab=\"风速\"] .vu'); return d && {t: d.textContent, tip: d.dataset.tip, l: d.getBoundingClientRect().left, r: d.getBoundingClientRect().right, mt: mt.getBoundingClientRect().right, vu: z.getBoundingClientRect().left + parseFloat(getComputedStyle(document.getElementById('pbody')).getPropertyValue('--w-val')), top: Math.abs(d.getBoundingClientRect().top + d.getBoundingClientRect().height / 2 - mt.getBoundingClientRect().top - mt.getBoundingClientRect().height / 2), rows: [...m.querySelectorAll('.mod-b > *')].filter(__vis).map(e => e.dataset.lab || e.textContent.trim())} })()")
+    check('v3.3-8 / v3.5-3 标题行右侧写「+4」，和标题同一行，右缘对齐数值列末端（单位列给「恢复本模块」，操作列给折叠箭头）', h and h['t'] == '+4' and h['l'] > h['mt'] and abs(h['r'] - h['vu']) <= 1 and h['top'] <= 2, h)
     check('v3.3-8 悬停写「4 个参数已隐藏，点开显示」；不再单独占一行', h and h['tip'] == '4 个参数已隐藏，点开显示' and h['rows'] == ['风速', '湍流强度', '湍流尺度', '爆后扰动'] and '已隐藏' not in (x.T('#pbody .mod[data-mod="环境"] .mod-b') or ''), h)
     x.click('#pbody .mod[data-mod="环境"] .dep-n')
     check('v3.3-8 点「+4」露出 4 个停用参数，按钮填选中底色，悬停改成「收起这 4 个参数」', x.E("[...document.querySelectorAll('#pbody .mod[data-mod=\"环境\"] .prm.dep-in')].filter(__vis).length") == 4 and x.E("document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').getAttribute('aria-pressed')") == 'true' and x.E("document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').dataset.tip") == '收起这 4 个参数')
@@ -825,14 +847,14 @@ def v33(b):
     check('v3.3-6 / v3.4-20 大号 15 只给面包屑末项、效果名（结构树第一行）、效果库大号标签（用户定）和当前时间', set(big) == {'面包屑末项', '效果名', '效果库大号标签', '当前时间'}, big)
     fs = lambda sel: x.C(sel, 'fontSize')
     check('v3.3-6 中号 13：参数名、数值、总时长、命令', all(fs(s) == '13px' for s in ['#pbody .prm[data-lab="缩放"] .pl', '#pbody .prm[data-lab="缩放"] .num', '#transport .time .tot', '[data-act="saveAs"]', '#tree .trow:not(.t-group) .tx']), [fs(s) for s in ['#transport .time .tot']])
-    check('v3.3-6 小号 12：读数（画面读数、单位、模块摘要）、计数（层号、折叠层的「· 2」）、次要说明', all(fs(s) == '12px' for s in ['#ciBL', '#pbody .prm[data-lab="缩放"] .u', '#tree .trow .no', '#tree .trow .cnt', '#libList .li-s', '#tlw .frow .lab']), [fs(s) for s in ['#ciBL', '#tree .trow .cnt']])
+    check('v3.3-6 / v3.5-5 小号 12：读数（画面读数、单位、模块摘要）、计数（层号、折叠层的「· 2」）、次要说明（「导出范围」一行的名字）', all(fs(s) == '12px' for s in ['#ciBL', '#pbody .prm[data-lab="缩放"] .u', '#tree .trow .no', '#tree .trow .cnt', '#libList .li-s', '#tlw .iorow .io-k']), [fs(s) for s in ['#ciBL', '#tree .trow .cnt', '#tlw .iorow .io-k']])
     mh = x.E("(() => { const m = [...document.querySelectorAll('#pbody .mod')][1], h = m.querySelector('.mod-h'), t = h.querySelector('.mt'), r = m.querySelector('.mod-b > .prm'), lh = parseFloat(getComputedStyle(t).lineHeight), tb = t.getBoundingClientRect(), top = m.getBoundingClientRect().top + parseFloat(getComputedStyle(m).borderTopWidth); return {fs: getComputedStyle(t).fontSize, fw: getComputedStyle(t).fontWeight, above: Math.round(tb.top + (tb.height - lh) / 2 - top), below: Math.round(r.getBoundingClientRect().top - (tb.top + (tb.height + lh) / 2))} })()")
     check('v3.4-10 模块标题中号加粗，标题行 32 px，上方空 20 px、下方空 8 px（标题字在 32 px 行里居中）', mh['fs'] == '13px' and mh['fw'] == '600' and mh['above'] == 20 + 6 and mh['below'] == 8 + 6, mh)
     # v3.4 第 15 条（替换 v3.3 第 14 条）：静止时不画折叠箭头——检查器标题字和参数名在同一条线上（量墨迹）；结构树层行的格子里是层号
     ins = x.R('#insp')[0] + 1
     mo, pl = x.R('#pbody .mod:not(.is-closed) .mod-h .mt'), x.R('#pbody .prm[data-lab="开始时间"] .pl')
     k = {'title': ink_x(pg, ins, mo[1] + 2, ins + 40, mo[3] - 2) - ins, 'label': ink_x(pg, ins, pl[1], ins + 40, pl[3]) - ins}
-    check('v3.4-15 检查器标题前静止时没有箭头，标题字和参数名的字一列（墨迹左缘）', abs(k['title'] - k['label']) <= 1.5 and x.E("[...document.querySelectorAll('#pbody .mod-h .chev')].every(c => getComputedStyle(c).visibility === 'hidden')"), k)
+    check('v3.5-3 检查器参数名的字比标题字向右缩进 12（墨迹左缘）；标题行的折叠箭头不在标题前面', abs(k['label'] - k['title'] - 12) <= 1.5 and x.E("[...document.querySelectorAll('#pbody .mod-h')].filter(h => h.offsetParent).every(h => h.querySelector('.chev').getBoundingClientRect().left > h.querySelector('.mt').getBoundingClientRect().right)"), k)
     tr = x.E("[...document.querySelectorAll('#tree .trow[data-id]')].map(r => { const c = r.querySelector('.chev svg'); return c ? getComputedStyle(c).visibility : 'none' })")
     check('v3.4-15 结构树静止时一个展开箭头都不画；层行格子里写层号', all(v in ('hidden', 'none') for v in tr) and x.E("[...document.querySelectorAll('#tree .trow.t-layer .chev .no')].map(n => n.textContent).join()") == '1,2,3', tr)
     pg.mouse.move(*[v + 5 for v in x.R('#tree .trow.t-layer[aria-expanded="false"] .tx')[:2]]); pg.wait_for_timeout(100)
@@ -857,32 +879,35 @@ def v33(b):
     check('v3.3-13 用户手动折叠后按用户的来（换对象再回来仍是折叠）', x.E("document.querySelector('#pbody .mod[data-mod=\"颜色\"]').classList.contains('is-closed')"))
     pg.close()
 
-    # 第 12 条：胶片条不像加载圆点
+    # 第 12 条（v3.5 第 5 条改写）：胶片行去掉；刻度尺上面是「导出范围」一行
     for w, h in ((1920, 1080), (1366, 768)):
         for scene in ('kiku', 'spk'):
             pg = new_page(b, w, h); x = P(pg)
             if scene == 'spk':
                 x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200)
-            F = x.E("(() => { const c = [...document.querySelectorAll('#tlw .film-c')], r = document.querySelector('#tlw .xrange').getBoundingClientRect(), row = document.querySelector('#tlw .frow').getBoundingClientRect(), u = document.querySelectorAll('#tlw .film-u');"
-                    " const R = c.map(e => e.getBoundingClientRect()); return {row: row.height, n: c.length, sq: R.every(b => Math.abs(b.width - b.height) < .5 && b.height >= 26), img: c.every(e => { const i = e.querySelector('img'); return i && i.complete && i.naturalWidth > 0 && /brightness/.test(i.style.filter) && getComputedStyle(i).objectFit === 'contain' }),"
-                    " gaps: R.slice(1).map((b, i) => +(b.left - R[i].right).toFixed(1)), first: +(R[0].left - r.left).toFixed(1), u: u.length, ubg: u[0] && getComputedStyle(u[0]).backgroundColor, uend: u[0] ? +(r.right - u[0].getBoundingClientRect().right).toFixed(1) : +(r.right - R[R.length - 1].right).toFixed(1), tex: document.querySelector('#pbody') && 1} })()")
-            check(f'v3.3-12 {w} {scene} 已烘焙的格子是真的缩略图：按贴图比例（单格正方形）画成方格，整张不裁，按最亮的一帧提亮', F['n'] >= 2 and F['sq'] and F['img'] and F['row'] >= 28, F)
-            check(f'v3.3-12 {w} {scene} 格子之间留缝、不重叠；第一格左缘对齐入点', all(g >= 2 for g in F['gaps']) and abs(F['first']) <= 1, F)
-            check(f'v3.3-12 {w} {scene} 没烘焙的部分是一条平的暗轨，右缘到出点', F['u'] == 1 and F['ubg'] == G2 and abs(F['uend']) <= 1, F)
+            F = x.E("(() => { const l = document.querySelector('#tlw .iorow'), L = l.getBoundingClientRect(), R = document.querySelector('#tlw .rrow').getBoundingClientRect(), g = [...l.querySelectorAll('.io-g')].map(e => e.getBoundingClientRect());"
+                    " return {h: L.height, touch: Math.abs(L.bottom - R.top), film: [...document.querySelectorAll('#tlw .film-c, #tlw .film-u, #tlw .frow')].filter(e => e.getBoundingClientRect().width).length, fit: l.scrollWidth <= l.clientWidth + 1, gaps: g.slice(1).map((r, i) => Math.round(r.left - g[i].right)), n: g.length,"
+                    " btn: [...l.querySelectorAll('.btn-icon')].every(b => getComputedStyle(b).visibility === 'visible'), frame: document.querySelector('#ciBL .cfno') && document.querySelector('#ciBL .cfno').textContent} })()")
+            check(f'v3.3-12 / v3.5-5 {w} {scene} 胶片行去掉：刻度尺上面是「导出范围」一行（高 {32 if w == 1920 else 28}），紧贴刻度尺，看不到胶片格', F['h'] == (32 if w == 1920 else 28) and F['touch'] <= 1 and F['film'] == 0, F)
+            check(f'v3.3-12 / v3.5-5 {w} {scene} 这一行放得下、组间 ≥ 24，命令常显（{"发射时段一组也在" if scene == "spk" else "导出范围、开关两组"}）', F['fit'] and all(g >= 24 for g in F['gaps']) and F['n'] == (3 if scene == 'spk' else 2) and F['btn'], F)
+            check(f'v3.3-12 / v3.5-5 {w} {scene} 烘焙进度在画面左下「帧 N / M」', bool(re.fullmatch(r'\d+ / \d+|— / \d+', F['frame'] or '')), F)
             pg.close()
 
     # 第 7 条：工具图标重画（自己的画法）
     pg = new_page(b); x = P(pg)
     sy = x.E("[...document.querySelectorAll('#iconDefs symbol')].map(s => ({id: s.id, vb: s.getAttribute('viewBox'), d: [...s.querySelectorAll('path')].map(p => p.getAttribute('d')).join(' '), circ: s.querySelectorAll('circle').length,"
              " fill: [...s.querySelectorAll('*')].filter(e => e.getAttribute('fill') && e.getAttribute('fill') !== 'none').length, round: [...s.querySelectorAll('*')].some(e => /round/.test((e.getAttribute('stroke-linecap') || '') + (e.getAttribute('stroke-linejoin') || ''))), sw: [...s.querySelectorAll('*')].some(e => e.hasAttribute('stroke-width'))}))")
-    odd = [s['id'] for s in sy if s['vb'] != '0 0 16 16' or s['round'] or s['sw'] or re.search(r'[aA]', s['d']) or s['circ'] or (s['fill'] and s['id'] not in ('i-solo', 'i-soloon'))]
-    check('v3.3-7 / v3.4-7 全套 16 × 16 网格、不写自己的线宽、没有圆头 / 圆角、没有圆弧和圆；只有「只看」中间的 4 × 4 小方块是实心', len(sy) >= 51 and not odd, odd)
-    V32 = {'i-search': 'M10 10 3.5 3.5', 'i-undo': 'a3 3', 'i-redo': 'a3 3', 'i-reset': 'a4.75', 'i-timer': None, 'i-eye': 'S3.75', 'i-auto': None, 'i-info': None, 'i-lock': 'a2.25', 'i-grid': 'M5.75 1.75v12.5m4.5-12.5v12.5M1.75 5.75h12.5m-12.5 4.5h12.5', 'i-note': 'm3.25 12.75.75-3.25', 'i-compact': 'M9.75 2.25h4v4', 'i-pause': None, 'i-more': None}
-    S = {s['id']: s for s in sy}
-    changed = [k for k, v in V32.items() if (v is None and S[k]['circ'] == 0 and S[k]['fill'] == 0) or (v and v not in S[k]['d'])]
-    check('v3.3-7 工具栏、传输条、检查器的图标换成新画法（撤销 / 重做 / 恢复 / 搜索 / 秒表 / 显示 / 建议曝光 / 锁 / 网格 / 批注 / 精简布局 / 暂停 / 更多）', set(changed) == set(V32), sorted(set(V32) - set(changed)))
+    odd = [s['id'] for s in sy if s['vb'] != '0 0 16 16' or s['round'] or s['sw'] or s['fill']]
+    check('v3.3-7 / v3.5-1 全套 16 × 16 画布、不写自己的线宽、没有圆头 / 圆角、不填面（v3.5 起圆的东西画真圆，只看不再有实心块）', len(sy) >= 51 and not odd, odd)
+    ink = x.E(INK_JS)
+    def ink_bad(k, v):
+        x0, y0, x1, y1 = v; w, h = x1 - x0, y1 - y0
+        if k == 'i-x': return not (abs(w - 9.5) <= .5 and abs(h - 9.5) <= .5)   # ×：两笔和加号一样长（12），外框约 9.5
+        return x0 < 1.875 or y0 < 1.875 or x1 > 14.125 or y1 > 14.125 or abs(max(w, h) - 12) > .5 or abs((x0 + x1) / 2 - 8) > .6 or abs((y0 + y1) / 2 - 8) > .6
+    bad = {k: v for k, v in ink.items() if ink_bad(k, v)}
+    check('v3.5-1 每个图标的墨迹都在 12 × 12 可画区域里（2–14），长边 12（±0.5），居中（±0.6）；× 按加号的笔画长度画', len(ink) >= 52 and not bad, bad)
     sz = x.E("[...document.querySelectorAll('#wsBaker svg.i, #ovlApp svg.i')].filter(v => v.getBoundingClientRect().width).map(v => { const r = v.getBoundingClientRect(), c = getComputedStyle(v); return [v.querySelector('use').getAttribute('href'), Math.round(r.width), Math.round(r.height), c.strokeWidth, c.strokeLinecap, c.strokeLinejoin, c.fill] }).filter(a => a[1] !== 16 || a[2] !== 16 || a[3] !== '1.5px' || a[4] !== 'square' || a[5] !== 'miter' || a[6] !== 'none')")
-    check('v3.3-7 制作区里的图标一律按 16 px 显示（不缩小，线宽都是 1.5），方头、尖角、不填面', not sz, sz[:6])
+    check('v3.3-7 / v3.5-1 制作区里的图标一律按 16 px 显示（不缩小，线宽都是 1.5），方头、尖角、不填面', not sz, sz[:6])
     x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200)
     sz2 = x.E("[...document.querySelectorAll('#wsBaker svg.i')].filter(v => v.getBoundingClientRect().width && Math.round(v.getBoundingClientRect().width) !== 16).length")
     check('v3.3-7 仙女棒（结构树类型图标、区间展开箭头）也都是 16 px', sz2 == 0, sz2)
@@ -948,7 +973,7 @@ def v34(b):
     st = x.E("[...document.querySelector('#status .st-l').children].map(c => c.id || c.dataset.act)")
     check('v3.4-1 状态栏左端先是外壳的槽位 #stShell，「复制意见」排在后面', st[:2] == ['stShell', 'copyNotes'], st)
     bx = x.E("[...document.querySelectorAll('#toolRow .tcol-r .bx')].map(g => { const c = getComputedStyle(g), r = g.getBoundingClientRect(); return {h: r.height, bw: c.borderTopWidth, bc: c.borderTopColor, rad: parseFloat(c.borderTopLeftRadius), n: g.querySelectorAll('.btn').length, sep: [...g.querySelectorAll('.bx-sep')].map(e => [e.getBoundingClientRect().width, getComputedStyle(e).backgroundColor].join()).filter((v, i, a) => a.indexOf(v) === i)} })")
-    check('v3.4-6 撤销组、保存组各一个 1 px 线框（#2b4149，圆角 ≤ 2），组内 1 px 竖线隔开，高 28', len(bx) == 2 and all(g['h'] == 28 and g['bw'] == '1px' and g['bc'] == LINE and g['rad'] <= 2 and g['sep'] == ['1,' + LINE] for g in bx) and [g['n'] for g in bx] == [4, 2], bx)
+    check('v3.4-6 / v3.5-8 「撤销 重做 版本记录」、「还原 保存 另存」各一个 1 px 线框（#2b4149，圆角 ≤ 2），组内 1 px 竖线隔开，高 28', len(bx) == 2 and all(g['h'] == 28 and g['bw'] == '1px' and g['bc'] == LINE and g['rad'] <= 2 and g['sep'] == ['1,' + LINE] for g in bx) and [g['n'] for g in bx] == [3, 3], bx)
     check('v3.4-6 停用时 40 %（撤销、重做、还原），导出仍是唯一的实心主按钮', x.C('#bUndo', 'opacity') == '0.4' and x.C('#bRevert', 'opacity') == '0.4' and x.C('#bSave', 'backgroundColor') == 'rgba(0, 0, 0, 0)')
     check('v3.4-10 工作模式分段每段左右 16、高 28；「贴图与交付」改名「序列贴图」', all(x.C(f'#modeTabs button:nth-child({i})', 'paddingLeft') == '16px' and x.C(f'#modeTabs button:nth-child({i})', 'paddingRight') == '16px' for i in (1, 2, 3)) and x.R('#modeTabs')[5] == 28 and x.T('#modeTabs') == '实时模拟 引擎回放 序列贴图')
     x.key('?')
@@ -982,6 +1007,51 @@ def v34(b):
     pg.close()
 
 
+def v35(b):
+    """v3.5 改动单里容易回归的几条（和这次决定冲突的旧检查改写在原处，名字里带 v3.5-n）"""
+    pg = new_page(b); x = P(pg)
+    # 第 8 条：右栏工具行顺序
+    od = x.E("[...document.querySelector('#toolRow .tcol-r').children].map(c => c.id || (c.classList.contains('bx') ? '[' + [...c.querySelectorAll('.btn')].map(b => b.id || b.dataset.act).join(' ') + ']' : c.className))")
+    check('v3.5-8 右栏工具行：[撤销 重做 版本记录]「⚠ 1 层」「意见」｜ 空白 ｜ [还原 保存 另存]「导出 ▾」', od == ['[bUndo bRedo bVer]', 'expSt', 'bNote', 'sp', '[bRevert bSave saveAs]', 'expBtn'], od)
+    x.hover('#bNote')
+    check('v3.5-8 「意见」是气泡图标，悬停写「当前画面写进意见」，在「⚠ 1 层」后面', x.tip() == '当前画面写进意见' and x.N('#bNote use[href="#i-note"]') == 1 and x.R('#bNote')[0] > x.R('#expSt')[2], x.tip())
+    pg.mouse.move(900, 400); pg.wait_for_timeout(100)
+    # 第 1 条：图标颜色
+    col = x.E("(() => { const c = s => getComputedStyle(document.querySelector(s)).color; return [c('#bNote'), c('#transport [data-act=restart]'), c('#transport [data-act=loop]'), c('#tree .trow.t-emitter .ty')] })()")
+    x.hover('#bNote'); hv = x.C('#bNote', 'color'); pg.mouse.move(900, 400)
+    check('v3.5-1 图标颜色：默认次文字色、悬停主文字色、开着薄荷（循环）；结构树类型图标也是次文字色', col == [T2, T2, MINT, T2] and hv == T1, [col, hv])
+    # 第 6 条：显示（眼睛）换回圆眼，只看开着薄荷
+    eye = x.E("document.querySelector('#i-eye').innerHTML")
+    check('v3.5-6 显示图标换回圆眼（弧线的眼眶 + 圆瞳孔），不再是六边形', 'Q8' in eye and '<circle' in eye and 'h6L' not in eye, eye)
+    pg.locator('#tree .trow.is-sel').focus(); x.key('s')
+    check('v3.5-6 只看开着时圆圈薄荷', x.C('#tree .trow.is-sel .solo', 'color') == MINT and x.N('#tree .trow.is-sel .solo use[href="#i-soloon"]') == 1)
+    x.key('s')
+    # 第 11 条：「+ 加层」
+    ad = x.E("(() => { const a = document.querySelector('#tree .tnew'), rows = [...document.querySelectorAll('#tree > *')], L = document.querySelector('#tree .trow.t-layer'), no = L.querySelector('.chev').getBoundingClientRect(), tx = L.querySelector('.tx').getBoundingClientRect(), i = a.querySelector('svg').getBoundingClientRect(), t = a.querySelector('span').getBoundingClientRect(); return {last: rows[rows.length - 1] === a, txt: a.textContent.trim(), c: getComputedStyle(a).color, h: a.getBoundingClientRect().height, plus: Math.round(i.left - no.left), name: Math.round(t.left - tx.left)} })()")
+    check('v3.5-11 每个效果的最后一层下面一行「+ 加层」：弱色，「+」在层号那一格，「加层」和层名同一列', ad['last'] and ad['txt'] == '加层' and ad['c'] == T3 and ad['h'] == 28 and ad['plus'] == 0 and ad['name'] == 0, ad)
+    x.hover('#tree .tnew')
+    check('v3.5-11 悬停「+ 加层」出底色', x.C('#tree .tnew', 'backgroundColor') == G2)
+    n0 = x.N('#tree .trow.t-layer'); x.click('#tree .tnew')
+    check('v3.5-11 点「+ 加层」直接加一个空层（进入改名），可撤销', x.N('#tree .trow.t-layer') == n0 + 1 and x.N('#tree input.ren') == 1)
+    x.key('Escape'); x.key('Escape'); pg.mouse.click(900, 400); x.key('Control+z')
+    check('v3.5-11 撤销加层', x.N('#tree .trow.t-layer') == n0, x.N('#tree .trow.t-layer'))
+    # 第 12 条：改名
+    check('v3.5-12 画面大小分段写「适应窗口 / 1:1 / 实机窗口」', x.T('#viewbar .seg[data-ui="view3"]') == '适应窗口 1:1 实机窗口')
+    x.key('?')
+    check('v3.5-12 页面、悬停提示、快捷键表、全表里没有单独的「适应」「游戏内」', not re.search('适应(?!窗口)|游戏内', x.E("document.body.innerText + JSON.stringify(KIT.strings())")))
+    x.key('Escape')
+    # 第 4 条：序列贴图模式的两组分段也同一个大小
+    x.E("KIT.mode('序列贴图')"); pg.wait_for_timeout(150)
+    check('v3.5-4 序列贴图模式下平台、预览方式两组分段和工作模式同高 28', x.R('#viewbar .seg[data-ui="plat"]')[5] == 28 and x.R('#viewbar .seg[data-ui="dview"]')[5] == 28 and x.R('#modeTabs')[5] == 28)
+    pg.close()
+    # 第 8 条：1366 下「还原」变成图标，有未保存改动时也放得下
+    pg = new_page(b, 1366, 768); x = P(pg)
+    x.click('#pbody .prm[data-lab="缩放"] .sl'); pg.wait_for_timeout(100)
+    rv = x.E("(() => { const b = document.getElementById('bRevert'), c = document.querySelector('#toolRow .tcol-r').getBoundingClientRect(), e = document.getElementById('expBtn').getBoundingClientRect(), g = document.querySelectorAll('#toolRow .tcol-r .bx'); return {ico: getComputedStyle(b.querySelector('.rv-i')).display, t: getComputedStyle(b.querySelector('.t')).display, w: b.getBoundingClientRect().width, dot: !!document.querySelector('#bSave .dot'), room: Math.round(c.right - 12 - e.right), gap: Math.round(g[1].getBoundingClientRect().left - document.getElementById('bNote').getBoundingClientRect().right)} })()")
+    check('v3.5-8 1366：「还原」只放图标；「保存 •」有未保存点时右段也放得下，两组之间还有空白', rv['ico'] == 'block' and rv['t'] == 'none' and rv['dot'] and rv['room'] >= 0 and rv['gap'] >= 8, rv)
+    pg.close()
+
+
 def main():
     only = [a[len('--only='):] for a in sys.argv[1:] if a.startswith('--only=')]
     run = lambda name: not only or name in only[0].split(',')
@@ -992,6 +1062,7 @@ def main():
         if run('inter'): interactions(b)
         if run('v33'): v33(b)
         if run('v34'): v34(b)
+        if run('v35'): v35(b)
         b.close()
     print(f'\n通过 {len(OK)}，失败 {len(BAD)}，页面错误 {len(ERR)}')
     for f in BAD: print('  失败：' + f)
