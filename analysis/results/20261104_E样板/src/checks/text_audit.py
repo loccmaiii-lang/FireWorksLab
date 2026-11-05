@@ -1,4 +1,4 @@
-"""E 样板 v3.3 制作区：文案自查（文案规则.md 最后一节）。
+"""E 样板 v3.4 制作区：文案自查（文案规则.md 最后一节）。
 
 把制作区所有可见文字和悬停提示（data-tip / title / placeholder / aria-label 里的说明）、参数说明、菜单、提示条、对话框、空状态
 导出成一张表，逐条核对：1 有没有超出字数上限；2 同一概念有没有用两个词；3 语气和标点（不写「你可以」「请」，不用问句、感叹号、
@@ -61,10 +61,10 @@ def main():
         rows += [('说明行', d) for _, d in S['keys']]
         grab = lambda: rows.extend((k, t) for k, t in pg.evaluate(COLLECT, ''))
         states = [
-            "", "KIT.set('scene','spk')", "KIT.mode('贴图与交付')", "KIT.set('scene','kiku'); KIT.mode('贴图与交付')", "KIT.mode('引擎回放')",
-            "KIT.openExport(); document.querySelector('.menu [data-r=det]').click()", "document.body.click(); document.querySelector('#viewbar [data-act=preview]').click()",
+            "", "KIT.set('scene','spk')", "KIT.mode('序列贴图')", "KIT.set('scene','kiku'); KIT.mode('序列贴图')", "KIT.mode('引擎回放')",
+            "KIT.openExport(); document.querySelector('.menu [data-r=det]').click()", "document.body.click(); document.querySelector('#stage .vp').dispatchEvent(new MouseEvent('contextmenu', {bubbles: true, clientX: 700, clientY: 300}))",   # v3.4 第 5 条：背景、安全框在画面右键菜单
             "document.body.click(); document.querySelector('#transport [data-act=tlOpts]').click()", "document.body.click(); document.querySelector('#viewOpt').click()",
-            "document.body.click(); document.querySelector('[data-act=addLayer]').click()", "document.body.click(); KIT.tip('缩放')",
+            "document.body.click(); document.querySelector('#tree .trow.t-group .addb').click()",   # v3.4 第 14 条：效果名那一行的「+」 "document.body.click(); KIT.tip('缩放')",
             "KIT.del('点灭星')", "KIT.askDeleteEffect()", "document.querySelector('.dialog [data-r=\"0\"]').click(); KIT.set('size','1366')",
             "KIT.set('size','1920'); document.querySelector('#pq input').value = '银柳'; document.querySelector('#pq input').dispatchEvent(new Event('input', {bubbles: true}))",
             "document.querySelector('#pq input').value = ''; document.querySelector('#pq input').dispatchEvent(new Event('input', {bubbles: true})); KIT.set('scene','spk'); document.querySelector('#tlw .tl-edge.dn .tl-more').click()",   # v3.3 第 4 条：「上面还有 N 行」
@@ -75,7 +75,8 @@ def main():
             if js:
                 pg.evaluate(js); pg.wait_for_timeout(200)
             grab()
-        for sel in ['#expSt', '#tree .stl', '#tlw .film-c', '#transport .fbk']:
+        pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
+        for sel in ['#expSt', '#tree .stl', '#tlw .film-c', '#transport [data-act=thumb]', '#bLeft', '#bCompact']:
             loc = pg.locator(sel).first
             if loc.count():
                 loc.hover(); pg.wait_for_timeout(600); grab()
@@ -95,7 +96,7 @@ def main():
                 if w in t:
                     notes.append(f'用词：「{w}」统一写「{use}」')
         for pat, lab in STYLE:
-            if re.search(pat, t) and not (lab == '括号补充' and (re.search(r'^[^（(]*[（(](PC|手机|仙女棒)[）)]', t) or re.fullmatch(r'导出本层（[^（）]+）', t))):   # v3.1 第 21 条：层名放进操作名
+            if re.search(pat, t) and not (lab == '间隔号串联' and re.fullmatch(r'· \d+', t)) and not (lab == '括号补充' and (re.search(r'^[^（(]*[（(](PC|手机|仙女棒)[）)]', t) or re.fullmatch(r'导出本层（[^（）]+）', t))):   # v3.1 第 21 条：层名放进操作名
                 notes.append(lab)
         if k not in ('对话框正文',) and t.endswith('。'):
             notes.append('句末句号')

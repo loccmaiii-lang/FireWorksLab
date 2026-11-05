@@ -1,7 +1,8 @@
-"""E 样板 v3.3 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、贴图与交付、导出浮层都要截图逐张看）。
+"""E 样板 v3.4 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、序列贴图、导出浮层都要截图逐张看）。
 
 先合成：python3 ../build.py /tmp/E_A.html
-再截图：python3 shot.py [/tmp/E_A.html] [名字…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）
+再截图：python3 shot.py [/tmp/E_A.html] [编号…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）；编号 1–7，不给就全截
+7（v3.4）：悬停态合成一张——结构树层行、参数行、模块标题、导出范围行、效果库标签行用 .is-hover 强制出悬停样子，检查器加 .is-scrolling 出滚动条
 --hide-sample：把样板控制条（左下角那个「样板」小按钮）藏起来——给评委用的截图都加这个（v3.3 第 15 条）。
 不加时截图里留着收起的小按钮，探针另外核对它不盖检查器、不盖任何产品控件。
 探针：文字被截断（overflow 隐藏且放不下、又没有 title 全名）、字号小于下限（1920 下 12 px、1366 下 11 px）、
@@ -90,19 +91,29 @@ def main():
         if want('2'):
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.set('scene','spk')"); clip(pg, 1920, 1080, 'shot_2_sparkler.png'); pg.close()
         if want('3'):
-            pg = page_for(b, 1920, 1080); pg.evaluate("KIT.mode('贴图与交付')"); clip(pg, 1920, 1080, 'shot_3_delivery.png')
-            pg.evaluate("KIT.set('scene','spk'); KIT.mode('贴图与交付')"); clip(pg, 1920, 1080, 'shot_3b_delivery_spk.png'); pg.close()
+            pg = page_for(b, 1920, 1080); pg.evaluate("KIT.mode('序列贴图')"); clip(pg, 1920, 1080, 'shot_3_delivery.png')
+            pg.evaluate("KIT.set('scene','spk'); KIT.mode('序列贴图')"); clip(pg, 1920, 1080, 'shot_3b_delivery_spk.png'); pg.close()
         if want('4'):
             pg = page_for(b, 1366, 768); clip(pg, 1366, 768, 'shot_4_1366.png')
             pg.evaluate("KIT.set('scene','spk')"); clip(pg, 1366, 768, 'shot_4b_1366_spk.png')
-            pg.evaluate("KIT.set('scene','kiku'); KIT.mode('贴图与交付')"); clip(pg, 1366, 768, 'shot_4c_1366_delivery.png'); pg.close()
+            pg.evaluate("KIT.set('scene','kiku'); KIT.mode('序列贴图')"); clip(pg, 1366, 768, 'shot_4c_1366_delivery.png'); pg.close()
         if want('5'):
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.openExport()"); clip(pg, 1920, 1080, 'shot_5_export.png', probe=False)
             pg.locator('.menu [data-r="det"]').click(); clip(pg, 1920, 1080, 'shot_5a_export_detail.png', probe=False); pg.close()
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.tip('缩放')"); clip(pg, 1920, 1080, 'shot_5b_tip.png', probe=False); pg.close()
-            pg = page_for(b, 1920, 1080); pg.locator('#viewbar [data-act="preview"]').click(); clip(pg, 1920, 1080, 'shot_5c_preview.png', probe=False); pg.close()
+            pg = page_for(b, 1920, 1080); pg.locator('#stage .vp').click(button='right', position={'x': 700, 'y': 300}); clip(pg, 1920, 1080, 'shot_5c_stage_menu.png', probe=False); pg.close()   # v3.4 第 5 条：背景、安全框在画面右键菜单里
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.del('点灭星')"); pg.evaluate("KIT.askDeleteEffect()"); clip(pg, 1920, 1080, 'shot_5d_dialog_toast.png', probe=False); pg.close()
             pg = page_for(b, 1366, 768); pg.evaluate("KIT.openExport()"); clip(pg, 1366, 768, 'shot_5e_1366_export.png', probe=False); pg.close()
+        if want('7'):
+            for scene, nm in (('kiku', 'shot_7_hover.png'), ('spk', 'shot_7b_hover_spk.png')):
+                pg = page_for(b, 1920, 1080); pg.evaluate(f"KIT.set('scene','{scene}')"); pg.wait_for_timeout(200)
+                pg.evaluate("""() => { const q = s => document.querySelector(s);
+                  const L = [...document.querySelectorAll('#tree .trow.t-layer, #tree .trow[aria-expanded]')].find(r => !r.classList.contains('is-sel') && !r.classList.contains('t-group')); if (L) L.classList.add('is-hover');
+                  const nd = q('#pbody .prm.is-nd') || q('#pbody .prm[data-kind=range]'); if (nd) nd.classList.add('is-hover');
+                  const mh = q('#pbody .mod.is-closed .mod-h') || q('#pbody .mod-h'); if (mh) mh.classList.add('is-hover');
+                  const rr = q('#tlw .rrow'); if (rr) rr.classList.add('is-hover'); const lh = q('.lib-head'); if (lh) lh.classList.add('is-hover');
+                  const pb = q('#pbody'); pb.scrollTop = 40; pb.classList.add('is-scrolling'); const tr = q('#tree'); tr.classList.add('is-scrolling'); }""")
+                clip(pg, 1920, 1080, nm, probe=False); pg.close()
         if want('6'):
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.set('view','sheet')"); pg.wait_for_timeout(500)
             pg.screenshot(path=str(OUT / 'shot_6_sheet.png'), full_page=True)
