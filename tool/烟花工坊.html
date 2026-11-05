@@ -93027,7 +93027,7 @@ function mount() {
   if (FB) {
     document.body.classList.add('sh-fb');
     const h = document.createElement('header'); h.id = 'shell'; h.className = 'shell'; document.body.prepend(h);
-    ['header.top .brand', '#gpu', '#deliveryOpen', '#updBtn'].forEach(s => qq(s).forEach(el => el.classList.add('sh-dup')));
+    ['header.top .brand', '#gpu', 'header.top .delivery-nav', '#updBtn'].forEach(s => qq(s).forEach(el => el.classList.add('sh-dup')));
     if (!q('#stShell')) {
       const f = document.createElement('footer'); f.id = 'shFbSt'; f.className = 'status';
       f.innerHTML = '<div class="st-l"><span id="stShell"></span></div><div class="st-r"><span class="sh-modst"></span></div>';

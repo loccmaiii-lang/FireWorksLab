@@ -4,7 +4,7 @@
 - **外壳**（`tool/src/shell/`、`js/95_shell.js`，按 E 样板 4.0（= v3.7）外壳）：顶栏「烟花工坊 FireWorksLab 5.0.0」（点开更新记录）｜「● UE 已连接」（导入模块 `FWLImporter.status()`，断开原地「重新连接」）｜「显卡 · 型号」（WebGL）｜「编排节目 →」变灰（下一版接入）；状态栏左端「导出 文件夹」「备份 文件夹」；「资源交付」页（包列表、回放缩略图、修订、检查、资产清单、导入）。运行时注入：有 v3.7 槽位就用，现在的 4.9 界面没有槽位就自己搭顶栏、状态栏，并在「导出素材包」旁边加「资源交付」。
 - **导入模块**（接口 `tool/importer/API_5.0.md`）：`tool/importer/dist/fwl-importer.js`（真）→ `fwl-importer.mock.js`（本机替身），有哪个用哪个；替身时 UE 状态悬停写「导入模块：替身」。没加载或出错时资源交付写原因、「导入」变灰，导出照常。
 - **烘焙器只加钩子，不改逻辑**：`67_delivery.js` 导出写完调 `window.shellAfterExport?.(info)`（只在烟花工坊里有），加只读 `deliveryExportRoot()`；`79_repo.js` 加只读 `repoFolderInfo()`。烟花工坊里导出方式设为 ZIP，写完外壳交给导入模块 `publish(导出文件夹, blob, name, metadata)` 写进导出文件夹（浏览器文件夹授权，记在 IndexedDB `fwl-shell`）。备份文件夹：外壳自己选的优先，没选过沿用仓库文件夹。
-- 检查：`analysis/scripts/烟花工坊_外壳检查.py`（Playwright，file://，外网全拦）。**画面变不变**：FireworkBaker.html 除版本号外不变；导出比较见对话记录。
+- 检查：`analysis/scripts/烟花工坊_外壳检查.py`（Playwright，file://，外网全拦；真模块查顶栏和空文件夹，流程另用替身查）47/47；`标准检查.py --ui-state-only` 24/24。**画面变不变**：FireworkBaker.html 除版本号外不变；钩子不改导出用运行时检查证明（`deliverResource` 交给 download / publish 的 blob、名字、返回值照旧，外壳检查一项）；烘焙后逐文件比较在云端 2 核上跑不完（同时有别的检查在跑），没做成。
 
 ## 4.9.129 · 烟花工坊 5.0 制作区 P2：交互细节（对话框9 P）
 
