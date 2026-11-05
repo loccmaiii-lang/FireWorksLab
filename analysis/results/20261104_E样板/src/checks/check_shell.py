@@ -967,6 +967,7 @@ def t_kit_sheet(p):
     p.pg.select_option('#shKit select[data-shk="ue"]', 'write')
     ck('样板-开关「写入中」：停在第 3 个覆盖前', p.ev("SHELL.state().imp && SHELL.state().imp.paused === false && /^UE 写入中 \\d+ \\/ \\d+$/.test(__T.txt('#shell .sh-ue'))"))
     p.pg.select_option('#shKit select[data-shk="ue"]', 'on')
+    p.click('#kitTog')   # 收起样板控制条，别盖住全表
     p.ev("KIT.set('view', 'sheet')")
     p.pg.wait_for_timeout(300)
     s = p.ev("""(() => { const s = __T.q('#sheetShell'); return {n: s ? s.children.length : 0, bars: __T.qq('#sheetShell .sh-sbar').length, live: __T.qq('#sheetShell [data-shlive]').map(x => x.dataset.shlive),
