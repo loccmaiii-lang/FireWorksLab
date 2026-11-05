@@ -1,12 +1,12 @@
 
 </head>
 <body>
-<!-- E 样板 v3 图标（§6）：16 px 画布，1.5 px 线宽，方头，只画线框（开着的状态除外）。一种形状只有一个意思。
-     外壳和制作区共用这一份；id 列表见 说明_v3_制作区.md。 -->
+<!-- E 样板 v3.3 图标（§6、v3.3 第 7 条）：16 × 16 画布、线宽 1.5、方头、尖角、只画线框（只看开着时的中心点除外），一律按 16 px 显示（不缩小，线宽才一致）。
+     外壳和制作区共用这一份；id 不变（外壳用到 i-back、i-search、i-x、i-plus 等）。 -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" id="iconDefs">
-  <!-- 通用 -->
-  <symbol id="i-search" viewBox="0 0 16 16"><circle cx="6.75" cy="6.75" r="4.25"/><path d="m10 10 3.5 3.5"/></symbol>
-  <symbol id="i-filter" viewBox="0 0 16 16"><path d="M2.25 3.25h11.5L9.25 8.5v4.75l-2.5-1.25V8.5z"/></symbol>
+  <!-- 通用（v3.3 第 7 条重画：只用横、竖、45° 线和切角，圆形改成八边形，端点方头、转角尖角，不填面；光学大小统一在 10.5–12 px 的框里，指示用的小箭头、×、✓ 画小一号） -->
+  <symbol id="i-search" viewBox="0 0 16 16"><path d="M5.25 2.75h3.5l2.5 2.5v3.5l-2.5 2.5h-3.5l-2.5-2.5v-3.5z"/><path d="m10.5 10.5 2.75 2.75"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 16 16"><path d="M2.75 3.25h10.5l-4 4.5v4.75l-2.5 1.25v-6z"/></symbol>
   <symbol id="i-x" viewBox="0 0 16 16"><path d="m4.25 4.25 7.5 7.5m0-7.5-7.5 7.5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3.25v9.5M3.25 8h9.5"/></symbol>
   <symbol id="i-cd" viewBox="0 0 16 16"><path d="m4.5 6.25 3.5 3.5 3.5-3.5"/></symbol>
@@ -14,60 +14,60 @@
   <symbol id="i-cr" viewBox="0 0 16 16"><path d="m6.25 4.5 3.5 3.5-3.5 3.5"/></symbol>
   <symbol id="i-cl" viewBox="0 0 16 16"><path d="M9.75 4.5 6.25 8l3.5 3.5"/></symbol>
   <!-- 导出范围：设为入点 / 设为出点（v3.1 第 1 条） -->
-  <symbol id="i-in" viewBox="0 0 16 16"><path d="M6.25 2.75h-3v10.5h3"/><path d="M14 8H7.5m2.5-2.5L7.5 8l2.5 2.5"/></symbol>
-  <symbol id="i-outp" viewBox="0 0 16 16"><path d="M9.75 2.75h3v10.5h-3"/><path d="M2 8h6.5M6 5.5 8.5 8 6 10.5"/></symbol>
-  <!-- 返回（外壳「← 返回制作」；原外壳 i-sh-back） -->
-  <symbol id="i-back" viewBox="0 0 16 16"><path d="M7 3.5 2.5 8 7 12.5"/><path d="M3 8h10.5"/></symbol>
-  <symbol id="i-more" viewBox="0 0 16 16"><path d="M2.75 7.25h1.5v1.5h-1.5zm4.5 0h1.5v1.5h-1.5zm4.5 0h1.5v1.5h-1.5z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-folder" viewBox="0 0 16 16"><path d="M1.75 3.25h4.5l1.5 1.5h6.5v8H1.75z"/><path d="M1.75 6.75h12.5"/></symbol>
-  <symbol id="i-settings" viewBox="0 0 16 16"><path d="M1.75 4.75h3m3.5 0h6m-12.5 6.5h6.5m3.5 0h2.5"/><path d="M4.75 3h3.5v3.5h-3.5zm4 6.5h3.5V13h-3.5z"/></symbol>
-  <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-6.5"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 16 16"><path d="M3.75 7.25h8.5v6.5h-8.5z"/><path d="M5.75 7.25v-2.5a2.25 2.25 0 0 1 4.5 0v2.5"/></symbol>
-  <symbol id="i-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.75"/><path d="M8 7.25v4M8 4.75v.5"/></symbol>
+  <symbol id="i-in" viewBox="0 0 16 16"><path d="M6.25 2.75h-3.5v10.5h3.5"/><path d="M13.25 8h-6m2.5-2.5L7.25 8l2.5 2.5"/></symbol>
+  <symbol id="i-outp" viewBox="0 0 16 16"><path d="M9.75 2.75h3.5v10.5h-3.5"/><path d="M2.75 8h6m-2.5-2.5L8.75 8l-2.5 2.5"/></symbol>
+  <!-- 返回（外壳「← 返回制作」）、更多（三个短横，不再填方块） -->
+  <symbol id="i-back" viewBox="0 0 16 16"><path d="M6.75 3.75 2.5 8l4.25 4.25"/><path d="M3 8h10.5"/></symbol>
+  <symbol id="i-more" viewBox="0 0 16 16"><path d="M3.25 8h.5m3.75 0h.5m3.75 0h.5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 16 16"><path d="M2.25 3.75h4l1.5 1.5h6v7.5H2.25z"/><path d="M2.25 7.25h11.5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 16 16"><path d="M2.25 4.75h2.5m3.5 0h5.5m-11.5 6.5h6m3.5 0h2"/><path d="M4.75 3h3.5v3.5h-3.5zm4 6.5h3.5V13h-3.5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.25 8.25 3 3 6.5-6.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 16 16"><path d="M3.75 7.25h8.5v6.5h-8.5z"/><path d="M5.75 7.25v-3.5h4.5v3.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 16 16"><path d="M5.5 2.25h5l3.25 3.25v5l-3.25 3.25h-5l-3.25-3.25v-5z"/><path d="M8 7.25v4M8 4.75v.5"/></symbol>
   <symbol id="i-alert" viewBox="0 0 16 16"><path d="M8 2.25 14.25 13.25H1.75z"/><path d="M8 6.5v3.25M8 11.25v.5"/></symbol>
   <symbol id="i-keys" viewBox="0 0 16 16"><path d="M1.75 4.25h12.5v8H1.75z"/><path d="M4.25 6.75h.5m2.5 0h.5m2.5 0h.5M5 9.75h6"/></symbol>
   <symbol id="i-file" viewBox="0 0 16 16"><path d="M3.75 1.75h5.5l3 3v9.5h-8.5z"/><path d="M9.25 1.75v3h3"/></symbol>
   <symbol id="i-out" viewBox="0 0 16 16"><path d="M2.75 9.75v3.5h10.5v-3.5"/><path d="M8 2.75v7.5M5.25 5.5 8 2.75l2.75 2.75"/></symbol>
-  <symbol id="i-auto" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25"/><path d="M5.5 11.25 8 4.75l2.5 6.5M6.4 9h3.2"/></symbol>
+  <symbol id="i-auto" viewBox="0 0 16 16"><path d="M5.5 2.25h5l3.25 3.25v5l-3.25 3.25h-5l-3.25-3.25v-5z"/><path d="M5.75 11 8 5l2.25 6M6.5 9h3"/></symbol>
   <!-- 需重新导出：琥珀三角加感叹号（颜色由样式给） -->
   <symbol id="i-stale" viewBox="0 0 16 16"><path d="M8 2.25 14.25 13.25H1.75z"/><path d="M8 6.25V9.5M8 11v.75"/></symbol>
-  <!-- 结构树类型 -->
+  <!-- 结构树类型（尾、子发射器的头改成菱形） -->
   <symbol id="i-group" viewBox="0 0 16 16"><path d="M8 1.75 14 5 8 8.25 2 5z"/><path d="m2 8 6 3.25L14 8M2 11l6 3.25L14 11"/></symbol>
   <symbol id="i-layer" viewBox="0 0 16 16"><path d="M8 2.75 14 6 8 9.25 2 6z"/><path d="m2 10 6 3.25L14 10"/></symbol>
   <symbol id="i-star" viewBox="0 0 16 16"><path d="M6.75 6.75h2.5v2.5h-2.5z"/><path d="M8 1.75v2.5m0 7.5v2.5M1.75 8h2.5m7.5 0h2.5M3.5 3.5l1.5 1.5m6 6 1.5 1.5m0-9L11 5m-6 6-1.5 1.5"/></symbol>
   <symbol id="i-spark" viewBox="0 0 16 16"><path d="m2.75 13.25 6.5-6.5m0 0 1.25-4.5m-1.25 4.5 4.5-1.25M5.75 10.25l-.5 3.5m.5-3.5 3.5.5"/></symbol>
   <symbol id="i-ember" viewBox="0 0 16 16"><path d="M4 4.5h1.5V6H4zm5.5-1.75H11v1.5H9.5zM7.25 8h1.5v1.5h-1.5zm4 3.25h1.5v1.5h-1.5zM3.5 11.5H5V13H3.5z"/></symbol>
   <symbol id="i-frag" viewBox="0 0 16 16"><path d="M2.25 5.25 5.5 2.75l1 3.5zm6.5 3.5 4.75-1.5-1.25 4.5zm-5.5 2.5 3 1-2 2.25z"/></symbol>
-  <symbol id="i-tail" viewBox="0 0 16 16"><circle cx="11.25" cy="4.75" r="2.25"/><path d="M9.5 6.5 2.75 13.25"/></symbol>
+  <symbol id="i-tail" viewBox="0 0 16 16"><path d="m11.25 2.25 2.5 2.5-2.5 2.5-2.5-2.5z"/><path d="M9.5 6.5 2.75 13.25"/></symbol>
   <symbol id="i-trail" viewBox="0 0 16 16"><path d="M11.25 3.25h2.5v2.5h-2.5z"/><path d="M10.75 6.25 3 14M8.5 4.5 4.25 8.75M13.5 7.5l-4.25 4.25"/></symbol>
-  <symbol id="i-sub" viewBox="0 0 16 16"><path d="M2.75 2.75h2.5v2.5h-2.5z"/><path d="M4 5.25v5.5h4.5"/><circle cx="11" cy="10.75" r="2.25"/></symbol>
-  <!-- 结构树行操作 -->
-  <symbol id="i-eye" viewBox="0 0 16 16"><path d="M1.5 8S3.75 3.75 8 3.75 14.5 8 14.5 8 12.25 12.25 8 12.25 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></symbol>
-  <symbol id="i-eyeoff" viewBox="0 0 16 16"><path d="M1.5 8S3.75 3.75 8 3.75 14.5 8 14.5 8 12.25 12.25 8 12.25 1.5 8 1.5 8z"/><path d="m3 13 10-10"/></symbol>
-  <!-- 只看：v1 的形状（圆 + 四个刻度）；开着时中心加实心点 -->
+  <symbol id="i-sub" viewBox="0 0 16 16"><path d="M2.75 2.75h2.5v2.5h-2.5z"/><path d="M4 5.25v5.5h4.25"/><path d="m11 8.25 2.5 2.5-2.5 2.5-2.5-2.5z"/></symbol>
+  <!-- 结构树行操作：显示（六边形的眼） -->
+  <symbol id="i-eye" viewBox="0 0 16 16"><path d="M1.75 8 5 4.25h6L14.25 8 11 11.75H5z"/><path d="M6.75 6.75h2.5v2.5h-2.5z"/></symbol>
+  <symbol id="i-eyeoff" viewBox="0 0 16 16"><path d="M1.75 8 5 4.25h6L14.25 8 11 11.75H5z"/><path d="m3 13 10-10"/></symbol>
+  <!-- 只看：v1 的形状（圆 + 四个刻度，用户已定）；开着时中心加实心点 -->
   <symbol id="i-solo" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.6"/><path d="M8 1.75v2M8 12.25v2M1.75 8h2M12.25 8h2"/></symbol>
   <symbol id="i-soloon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.6"/><path d="M8 1.75v2M8 12.25v2M1.75 8h2M12.25 8h2"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></symbol>
-  <!-- 编辑 -->
-  <symbol id="i-undo" viewBox="0 0 16 16"><path d="m5.5 3.5-3 3 3 3"/><path d="M2.75 6.5h7.5a3 3 0 0 1 0 6H6.5"/></symbol>
-  <symbol id="i-redo" viewBox="0 0 16 16"><path d="m10.5 3.5 3 3-3 3"/><path d="M13.25 6.5h-7.5a3 3 0 0 0 0 6H9.5"/></symbol>
+  <!-- 编辑：撤销 / 重做是折线箭头（不画圆弧） -->
+  <symbol id="i-undo" viewBox="0 0 16 16"><path d="M5.25 3.25 2.25 6.25l3 3"/><path d="M2.75 6.25h7.5l2.5 2.5v1.5l-2.5 2.5h-4"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 16 16"><path d="m10.75 3.25 3 3-3 3"/><path d="M13.25 6.25h-7.5l-2.5 2.5v1.5l2.5 2.5h4"/></symbol>
   <!-- 版本记录：叠在一起的三张纸 -->
   <symbol id="i-history" viewBox="0 0 16 16"><path d="M2.25 6.25h7.5v7.5h-7.5z"/><path d="M4.75 3.75h7.5v7.5M7.25 1.25h7.5v7.5"/></symbol>
-  <!-- 恢复默认：全套唯一的圆箭头 -->
-  <symbol id="i-reset" viewBox="0 0 16 16"><path d="M3.25 8a4.75 4.75 0 1 0 1.4-3.36"/><path d="M3.25 2.25v3h3"/></symbol>
-  <!-- 播放 -->
+  <!-- 恢复默认：全套唯一的「绕一圈的箭头」，切角方环 -->
+  <symbol id="i-reset" viewBox="0 0 16 16"><path d="M3.25 7.25v-2l2-2h5.5l2 2v5.5l-2 2h-5.5l-2-2"/><path d="M1.25 5.25l2 2 2-2"/></symbol>
+  <!-- 播放（暂停是两根线框竖条，线宽和别的图标一样） -->
   <symbol id="i-play" viewBox="0 0 16 16"><path d="M4.75 3v10L12.75 8z"/></symbol>
-  <symbol id="i-pause" viewBox="0 0 16 16"><path d="M5.25 3.25v9.5m5.5-9.5v9.5" stroke-width="2"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 16 16"><path d="M4.75 3.25h1.5v9.5h-1.5zm5 0h1.5v9.5h-1.5z"/></symbol>
   <symbol id="i-restart" viewBox="0 0 16 16"><path d="M3.75 3.25v9.5"/><path d="M12.75 3.5v9L6.25 8z"/></symbol>
   <!-- 循环：首尾相接的矩形环 -->
   <symbol id="i-loop" viewBox="0 0 16 16"><path d="M8.75 4.25h4.5v7.5H2.75v-7.5h3.5"/><path d="m4.75 2.5 1.75 1.75L4.75 6"/></symbol>
   <!-- 缩略图：取景框 -->
   <symbol id="i-camera" viewBox="0 0 16 16"><path d="M2.25 5.25v-3h3m5.5 0h3v3m0 5.5v3h-3m-5.5 0h-3v-3"/><path d="M6.25 6.25h3.5v3.5h-3.5z"/></symbol>
-  <!-- 时间工具：秒表 -->
-  <symbol id="i-timer" viewBox="0 0 16 16"><circle cx="8" cy="9.25" r="4.75"/><path d="M6.25 1.75h3.5M8 1.75v2.75M8 9.25V6.75m4.25-2.5 1-1"/></symbol>
-  <!-- 视图 -->
-  <symbol id="i-grid" viewBox="0 0 16 16"><path d="M5.75 1.75v12.5m4.5-12.5v12.5M1.75 5.75h12.5m-12.5 4.5h12.5"/></symbol>
-  <symbol id="i-note" viewBox="0 0 16 16"><path d="m3.25 12.75.75-3.25 6.75-6.75 2.5 2.5-6.75 6.75z"/><path d="M9.25 4.25l2.5 2.5M2.25 14.25h11.5"/></symbol>
-  <symbol id="i-compact" viewBox="0 0 16 16"><path d="M9.75 2.25h4v4m0-4-4.5 4.5M6.25 13.75h-4v-4m0 4 4.5-4.5"/></symbol>
+  <!-- 时间工具：八边形秒表 -->
+  <symbol id="i-timer" viewBox="0 0 16 16"><path d="M6.25 4.25h3.5l2.5 2.5v4l-2.5 2.5h-3.5l-2.5-2.5v-4z"/><path d="M6 1.75h4M8 1.75v2.5m0 4.5v-2.5m4.75-2.5 1-1"/></symbol>
+  <!-- 视图：构图网格（框 + 三分线）、批注（带尾巴的意见框）、精简布局（框里的左右箭头：画面放宽）、左栏、右栏 -->
+  <symbol id="i-grid" viewBox="0 0 16 16"><path d="M2.25 2.25h11.5v11.5H2.25z"/><path d="M6.25 2.25v11.5m3.5-11.5v11.5M2.25 6.25h11.5M2.25 9.75h11.5"/></symbol>
+  <symbol id="i-note" viewBox="0 0 16 16"><path d="M2.25 2.75h11.5v8h-6l-3 3v-3h-2.5z"/><path d="M5 5.75h6M5 8h3.5"/></symbol>
+  <symbol id="i-compact" viewBox="0 0 16 16"><path d="M2.25 3.25h11.5v9.5H2.25z"/><path d="M4.75 8h6.5M6.5 6.25 4.75 8l1.75 1.75m3-3.5L11.25 8 9.5 9.75"/></symbol>
   <symbol id="i-pl" viewBox="0 0 16 16"><path d="M1.75 2.75h12.5v10.5H1.75zm4.5 0v10.5"/><path d="M3.5 5.75h1m-1 2.5h1"/></symbol>
   <symbol id="i-pr" viewBox="0 0 16 16"><path d="M1.75 2.75h12.5v10.5H1.75zm8 0v10.5"/><path d="M11.5 5.75h1m-1 2.5h1"/></symbol>
 </svg>

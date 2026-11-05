@@ -574,7 +574,7 @@ function modHTML(P, m, idx) {
   const depTip = shown ? `收起这 ${hid} 个参数` : `${hid} 个参数已隐藏${hch ? `，${hch} 个已改` : ''}，点开显示`;
   const depBtn = hid ? `<button class="btn dep-n" data-act="depShow" data-dks="${esc(dks.join(','))}" aria-pressed="${shown}" aria-label="${esc(depTip)}" data-tip="${esc(depTip)}">+${hid}</button>` : '';
   return `<section class="mod${open ? '' : ' is-closed'}" data-mod="${esc(m.t)}" data-mk="${esc(mk)}"${auto ? ` data-auto="${m.closed ? 'closed' : 'open'}"` : ''}>
-    <div class="mod-h" role="button" tabindex="0" aria-expanded="${open}">${ico('cr', 'chev')}<span class="mt">${esc(m.t)}</span>${modSummary(P, m)}${depBtn}<button class="btn btn-icon mrst" ${n ? '' : 'hidden'} aria-haspopup="menu" data-tip="恢复本模块的 ${n} 项" aria-label="恢复本模块">${ico('reset')}</button></div>
+    <div class="mod-h" role="button" tabindex="0" aria-expanded="${open}">${ico('cr', 'chev chevr')}<span class="mt">${esc(m.t)}</span>${modSummary(P, m)}${depBtn}<button class="btn btn-icon mrst" ${n ? '' : 'hidden'} aria-haspopup="menu" data-tip="恢复本模块的 ${n} 项" aria-label="恢复本模块">${ico('reset')}</button></div>
     <div class="mod-b">${body}</div></section>`;
 }
 
@@ -1027,7 +1027,7 @@ function treeHTML(sc, withAdd = true) {
       ? `<button class="btn btn-icon eye" aria-pressed="${n.show}" aria-label="显示" data-tip="${n.show ? '隐藏' : '显示'}" data-key="H">${ico(n.show ? 'eye' : 'eyeoff')}</button><button class="btn btn-icon solo" aria-pressed="${n.solo}" aria-label="只看" data-tip="${n.solo ? '移出只看' : '加入只看'}；Alt+单击只看此项" data-key="S">${ico(n.solo ? 'soloon' : 'solo')}</button>`
       : '<span class="ph2"></span>';
     return `<div class="trow t-${n.type}${sel ? ' is-sel' : ''}${n.show ? '' : ' is-off'}${dim ? ' is-dim' : ''}" role="treeitem" tabindex="${sel ? 0 : -1}" data-id="${n.id}" aria-level="${lv + 1}" aria-selected="${sel}"${has ? ` aria-expanded="${n.open}"` : ''} style="--lv:${lv}">`
-      + `<span class="chev${has ? '' : ' none'}" aria-hidden="true">${ico('cr')}</span>${n.type === 'layer' ? '' : ico(n.icon, 'ty')}<span class="nm">${no}<span class="tx" title="${esc(nmT)}">${esc(nmT)}</span>${cnt}${stl}</span>`
+      + `<span class="chev${has ? '' : ' none'}" aria-hidden="true">${ico('cr', 'chevr')}</span>${n.type === 'layer' ? '' : ico(n.icon, 'ty')}<span class="nm">${no}<span class="tx" title="${esc(nmT)}">${esc(nmT)}</span>${cnt}${stl}</span>`
       + `<span class="acts">${vis}<button class="btn btn-icon more" aria-label="更多操作" aria-haspopup="menu" data-tip="更多操作">${ico('more')}</button></span></div>`;
   }).join('');
   if (UI.treeQ.trim() && sc.key === UI.scene && rows.length === 1) h += `<div class="none-hit">没有匹配「${esc(UI.treeQ.trim())}」的层或发射器</div>`;
@@ -1330,7 +1330,7 @@ function alignNums(root) {
   els.filter(e => !e.closest('.vv')).forEach(e => { wVal = Math.max(wVal, span(e)); });
   /* 单位列：最长的单位 + 展开箭头（分布、随机幅度） */
   let wUnit = 12;
-  $$('.prm .vu', root).forEach(v => { const u = $(':scope > .u', v), x = $(':scope > .exn', v); const uw = u && u.textContent ? fontProbe(u).w(u.textContent) : 0; wUnit = Math.max(wUnit, uw + (x ? 2 + 12 : 0)); });
+  $$('.prm .vu', root).forEach(v => { const u = $(':scope > .u', v), x = $(':scope > .exn', v); const uw = u && u.textContent ? fontProbe(u).w(u.textContent) : 0; wUnit = Math.max(wUnit, uw + (x ? 16 : 0)); });   /* 展开箭头 16 px 格（笔画 7 px，左右各有空，不另加缝） */
   $$('.mod-h .ms-u', root).forEach(u => { if (u.textContent) wUnit = Math.max(wUnit, fontProbe(u).w(u.textContent)); });
   wUnit += 2;
   /* 停用原因写在数值列 + 单位列里，放不下就加宽数值列 */
