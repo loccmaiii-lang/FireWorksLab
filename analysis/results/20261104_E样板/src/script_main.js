@@ -2383,7 +2383,7 @@ const fieldA = (st = '', val = '') => `<label class="field area ${st}" style="wi
 const fieldF = (st = '', fn = '') => `<div class="field file ${st}" style="width:170px"><button class="btn btn-2 sm" ${st.includes('is-disabled') || st.includes('is-readonly') ? 'disabled' : ''}>选择文件</button><span class="fn${fn ? '' : ' none'}">${fn || '未选择'}</span></div>`;
 const err = m => `<div class="f-msg">${m}</div>`;
 const menuStatic = (items, w = 180) => `<div class="menu static" style="min-width:${w}px">${items.map(it => it === '-' ? '<hr>' : it.head ? `<div class="mh">${it.head}</div>` : `<div class="mi${it.h ? ' is-hover' : ''}"${it.dis ? ' style="color:var(--tDis)"' : ''}>${it.ck !== undefined ? `<span class="ck">${it.ck ? ico('check') : ''}</span>` : ''}<span>${it.t}</span>${it.k ? `<span class="k">${it.k}</span>` : ''}</div>`).join('')}</div>`;
-const segH = (opts, on, st = {}, cls = '') => `<div class="seg ${cls}" data-free role="group">${opts.map((o, i) => `<button aria-pressed="${i === on}" class="${st[i] || ''}" ${(st[i] || '').includes('dis') ? 'disabled' : ''}>${o}</button>`).join('')}</div>`;
+const segH = (opts, on, st = {}, cls = 'sm') => `<div class="seg ${cls}" data-free role="group">${opts.map((o, i) => `<button aria-pressed="${i === on}" data-v="${o}" class="${st[i] || ''}" ${(st[i] || '').includes('dis') ? 'disabled' : ''}>${o}</button>`).join('')}</div>`;
 const modeH = (opts, on, st = {}) => segH(opts, on, st).replace('class="seg ', 'class="modeseg ');
 const tabsH = (opts, on, st = {}, cls = '', w = '') => `<div class="tabs ${cls}" data-free role="tablist" ${w ? `style="width:${w}"` : ''}>${opts.map((o, i) => `<button class="tab ${st[i] || ''}" role="tab" data-t="${o}" aria-selected="${i === on}" ${(st[i] || '').includes('dis') ? 'disabled' : ''}>${o}</button>`).join('')}</div>`;
 
@@ -2394,34 +2394,47 @@ function contrast(a, b) {
 function sheetTokens() {
   const css = getComputedStyle(document.documentElement), v = n => css.getPropertyValue(n).trim();
   const sw = (names, roles) => `<div class="ks-sw">${names.map((n, i) => `<div><i style="background:var(${n})"></i><b>${n.slice(2)} ${v(n)}</b>${roles[i] || ''}</div>`).join('')}</div>`;
-  return `<h2>基础 token</h2><p class="lead">颜色、字号、间距、圆角都从文件第一个 &lt;style&gt; 的 :root 取；1366 × 768 用 .s1366 改写字号与间距，不按比例缩。</p>
-  <h3>中性色 10 档<span>界面层级先靠这一组</span></h3>${sw(['--g0', '--g1', '--g2', '--g3', '--g4', '--g5', '--g6', '--g7', '--g8', '--g9'], ['画面、缩略图底', '界面底色', '悬停', '分隔线、输入底', '开启、选中底', '滚动条', '停用文字', '三级文字', '二级文字', '一级文字'])}
-  <h3>主色 5 档<span>只用于：结构树里当前编辑对象的细框、播放头、待办的主按钮、标签下划线</span></h3>${sw(['--p1', '--p2', '--p3', '--p4', '--p5', '--pInk'], ['主按钮文字', '', '主按钮按下', '主色', '主按钮悬停', '浅色字'])}
-  <h3>警告 / 错误 / 成功 各 3 档</h3>${sw(['--w1', '--w2', '--w3', '--e1', '--e2', '--e3', '--k1', '--k2', '--k3'], ['底', '', '需重新导出', '错误底', '危险按下', '错误、危险', '成功底', '', '成功'])}
-  <h3>对比度<span>正文 ≥ 4.5 : 1</span></h3><div class="ks-row">${[['--g9', '--g1', '一级文字'], ['--g8', '--g1', '二级文字'], ['--g7', '--g1', '三级文字'], ['--g7', '--g2', '三级文字在悬停底上'], ['--p1', '--p4', '主按钮'], ['--e1', '--e3', '危险按钮'], ['--g9', '--g4', '提示条']].map(([f, b, n]) => `<div style="display:flex;flex-direction:column;gap:4px;width:150px"><span style="height:40px;display:grid;place-items:center;background:var(${b});color:var(${f})">${contrast(v(f), v(b))} : 1</span><span class="ks-cap">${n}</span></div>`).join('')}</div>
-  <div class="ks-cols" style="--c:2;margin-top:8px"><div class="ks-blk"><h3>字号与字重<span>Noto Sans SC + Inter 等宽数字；字号 12 / 13 / 15，粗体只给当前位置、模块标题、当前工作区</span></h3><div class="ks-type">
-    <span>15 / 600</span><span style="font-size:15px;font-weight:600;color:var(--t1)">金锦层　2.00　当前位置</span>
-    <span>13 / 600</span><span style="font-size:13px;font-weight:600;color:var(--t1)">时间与缩放　大小与亮度　模块标题</span>
-    <span>13 / 400</span><span style="font-size:13px;color:var(--t1)">开始时间　1.10　0.05–0.65　保存　设为入点</span>
-    <span>12 / 400</span><span style="font-size:12px;color:var(--t3)">倍　m/s　KYB　3 层　导出范围　75 帧</span>
-    <span>1366：14 / 12 / 11</span><span style="color:var(--t3);font-size:12px">小屏字号、间距、行高单独定：行高 28 → 24，左栏 300 → 248，右栏 480 → 360</span></div></div>
-    <div class="ks-blk"><h3>间距与圆角<span>组间距大于组内间距；圆角 0–2 px</span></h3><div class="ks-sp">${[4, 8, 12, 16, 24, 32].map(x => `<div><i style="width:${x}px;height:${x}px"></i>${x}</div>`).join('')}
-    <span class="gap"></span>${[0, 1, 2].map(r => `<div><i style="width:40px;height:28px;border-radius:${r}px;background:var(--g4)"></i>${r} px</div>`).join('')}<div><i style="width:12px;height:12px;border-radius:50%;background:var(--g9)"></i>圆形</div></div>
-    <p class="ks-cap" style="margin-top:8px">圆形只用于滑杆圆点、状态点、单选、曲线关键点。</p></div></div>`;
+  return `<h2>基础 token</h2><p class="lead">规范 v3 第 1–3、5 节。颜色、字号、间距从第一个 &lt;style&gt; 的 :root 取；1366 × 768 用 .s1366 改写字号与栏宽。</p>
+  <h3>中性色 10 档<span>面四级：画面 g0 ＜ 面板 g1 ＜ 栏头 g2 ＜ 浮层 g4；线只有一种 g5；选中 / 开着填 g5</span></h3>${sw(['--g0', '--g1', '--g2', '--g3', '--g4', '--g5', '--g6', '--g7', '--g8', '--g9'], ['画面', '面板', '栏头（外壳顶栏、工具行）', '行悬停', '浮层、命令悬停', '线、选中 / 开着', '开关细框', '弱文字', '次文字', '主文字'])}
+  <h3>主色<span>薄荷只用在五处：导出按钮、播放头、结构树当前行细框、当前页标签下划线、UE 已连接的圆点</span></h3>${sw(['--p1', '--p3', '--p4', '--p5', '--pInk'], ['主操作文字', '主操作按下', '主色', '主操作悬停', ''])}
+  <h3>琥珀 / 红<span>琥珀只给「需重新导出」和挡住操作的设置；红色只用在错误</span></h3>${sw(['--w2', '--w3', '--e1', '--e3'], ['', '需重新导出', '错误底', '错误'])}
+  <h3>对比度<span>正文 ≥ 4.5 : 1；停用 ≥ 3 : 1；线和面板 ≥ 1.3 : 1</span></h3><div class="ks-row">${[['--g9', '--g1', '主文字'], ['--g8', '--g1', '次文字'], ['--g7', '--g1', '弱文字'], ['--g7', '--g2', '弱文字在栏头上'], ['--p1', '--p4', '主操作'], ['--g5', '--g1', '线和面板'], ['--g5', '--g2', '线和栏头']].map(([a, b2, t]) => `<div style="display:flex;flex-direction:column;gap:4px;width:120px"><div style="height:40px;display:grid;place-items:center;background:var(${b2});color:var(${a});box-shadow:0 0 0 1px var(--g5)">${contrast(v(a), v(b2))} : 1</div><span class="ks-cap" style="margin:0">${t}</span></div>`).join('')}
+    <div style="display:flex;flex-direction:column;gap:4px;width:120px"><div style="height:40px;display:grid;place-items:center;background:var(--g1);color:var(--tDis);box-shadow:0 0 0 1px var(--g5)">3.4 : 1</div><span class="ks-cap" style="margin:0">停用（次文字 50 %）</span></div></div>
+  <div class="ks-cols" style="--c:2;margin-top:8px"><div class="ks-blk"><h3>字号与字重<span>三级：小 12 / 正文 13 / 大 15（1366：11 / 12 / 14）；字重只有 400 和 600；数值一律等宽数字</span></h3><div class="ks-type">
+    <span>15 / 600</span><span style="font-size:15px;font-weight:600;color:var(--t1)">金锦层　当前位置（面包屑末项）</span>
+    <span>15 / 400</span><span style="font-size:15px;color:var(--t1)">2.00 <span style="color:var(--t3)">/ 5.24</span> <span class="u">s</span>　当前时间码</span>
+    <span>15 / 600</span><span style="font-size:15px;font-weight:600;color:var(--t1)">效果　模板　当前标签</span>
+    <span>13 / 600</span><span style="font-size:13px;font-weight:600;color:var(--t1)">时间与缩放　模块标题</span>
+    <span>13 / 400</span><span style="font-size:13px;color:var(--t2)">开始时间　保存　设为入点　<span style="color:var(--t1)">1.10　0.05–0.65</span></span>
+    <span>12 / 400</span><span style="font-size:12px;color:var(--t3)">倍　m/s　KYB　3 层　6 个　已保存 20:31</span></div>
+    <p class="ks-cap" style="margin-top:8px">600 只用在：当前位置（面包屑末项、结构树当前行）、检查器模块标题、当前标签、分段控件的选中段、产品名。</p></div>
+    <div class="ks-blk"><h3>网格与间距<span>基本单位 4；行高 28；控件高 24；可点区域 ≥ 28；面板内边距 12；组内 8，组间 20；圆角 0–2 px</span></h3><div class="ks-sp">${[4, 8, 12, 16, 20, 24, 28].map(x => `<div><i style="width:${x}px;height:${x}px"></i>${x}</div>`).join('')}
+    <span class="gap"></span>${[0, 1, 2].map(r => `<div><i style="width:40px;height:28px;border-radius:${r}px;background:var(--g4)"></i>${r} px</div>`).join('')}</div>
+    <p class="ks-cap" style="margin-top:8px">栏宽：1920 下左栏 300、右栏 460；1366 下 260、380。检查器五列：参数名 112 ｜ 控件 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（1366 下参数名 96）。</p></div></div>`;
+}
+/* 图标总表（§6）：16 px 画布，1.5 px 线宽，方头，只画线框；一种形状只有一个意思 */
+const ICONS = [['layer', '层'], ['star', '星'], ['spark', '火花'], ['ember', '余烬'], ['tail', '尾'], ['trail', '拖尾'], ['sub', '子发射器'], ['frag', '碎片'],
+  ['group', '效果'], ['out', '输出'], ['eye', '显示'], ['eyeoff', '已隐藏'], ['solo', '只看'], ['soloon', '只看（开）'], ['more', '更多'], ['lock', '锁定'],
+  ['undo', '撤销'], ['redo', '重做'], ['history', '版本记录'], ['reset', '恢复默认'], ['stale', '需重新导出'], ['check', '已完成'], ['alert', '警告'], ['info', '说明'],
+  ['play', '播放'], ['pause', '暂停'], ['restart', '回到开头'], ['loop', '循环'], ['camera', '缩略图'], ['timer', '时间工具'], ['grid', '网格叠加'], ['note', '批注'],
+  ['compact', '精简布局'], ['pl', '左栏'], ['pr', '右栏'], ['folder', '文件夹'], ['settings', '设置'], ['search', '搜索'], ['filter', '筛选'], ['auto', '建议值'],
+  ['cd', '展开'], ['cu', '收起'], ['cr', '向右'], ['cl', '向左'], ['plus', '新建'], ['x', '关闭'], ['keys', '快捷键'], ['file', '文件']];
+function sheetIcons() {
+  return `<h2>图标</h2><p class="lead">规范 v3 第 6 节。专门画的一套，symbol 定义在 body_main.html 开头（外壳共用）。圆箭头只表示「恢复默认」；「循环」是首尾相接的矩形环；「版本记录」是叠在一起的三张纸；「需重新导出」是琥珀色三角加感叹号。</p>
+    <div class="ks-icons">${ICONS.map(([id, t]) => `<div><svg class="i${id === 'stale' ? ' amber' : ''}" aria-hidden="true"><use href="#i-${id}"/></svg><span>${t}<code>i-${id}</code></span></div>`).join('')}</div>`;
 }
 
 function sheetBasic() {
   const S = ['默认', '悬停', '焦点', '按下', '选中 / 开启', '停用', '加载中', '错误 / 失败', '可操作'];
-  const b1 = st => btn('btn-1', '导出', st), b2 = st => btn('btn-2', '存为模板', st), bt = st => btn('btn-text', '保存', st), bd = st => btn('btn-danger', '删除', st);
+  const b1 = st => btn('btn-1', '导出', st), bt = st => btn('tbtn', '另存', st), bs = st => btn('tbtn', '保存<span class="dot" aria-hidden="true"></span>', st);
   const bi = (st, id = 'undo', p = '') => `<button class="btn btn-icon ${st}" ${p} ${st.includes('is-disabled') ? 'disabled' : ''} aria-label="撤销">${ico(id)}</button>`;
   const sp = (st1, st2 = '', c = 'btn-1') => `<div class="split"><button class="btn ${c} ${st1}">导出</button><button class="btn ${c} ${st2}" aria-label="导出选项">${ico('cd')}</button></div>`;
   const as = st => `<button class="btn btn-text ${st}">${ico('camera')}缩略图</button>`;
   const buttons = tbl(S, [
     ['主按钮：实心，一屏一个', [b1(''), b1('is-hover'), b1('is-focus'), b1('is-active'), null, b1('is-disabled'), `<button class="btn btn-1 is-loading"><span class="spin"></span>导出中</button>`, null, btn('btn-1', '导出', '', 'data-demo="toast" data-msg="已导出"')]],
-    ['次按钮：浅底', [b2(''), b2('is-hover'), b2('is-focus'), b2('is-active'), null, b2('is-disabled'), null, null, btn('btn-2', '存为模板', '', 'data-demo="toast" data-msg="已存为我的模板"')]],
-    ['文字按钮', [bt(''), bt('is-hover'), bt('is-focus'), bt('is-active'), `<button class="btn btn-text" aria-pressed="true">循环</button>`, bt('is-disabled'), null, null, btn('btn-text', '保存', '', 'data-demo="toast" data-msg="已保存"')]],
-    ['危险按钮：只在确认时', [bd(''), bd('is-hover'), bd('is-focus'), bd('is-active'), null, bd('is-disabled'), null, null, btn('btn-2', '删除效果…', '', 'data-demo="confirm"')]],
-    ['图标按钮：附悬停提示', [bi(''), bi('is-hover'), bi('is-focus'), bi('is-active'), bi('', 'loop', 'aria-pressed="true"'), bi('is-disabled'), null, null, `<button class="btn btn-icon" data-tip="撤销" data-key="Ctrl+Z" aria-label="撤销">${ico('undo')}</button><button class="btn btn-icon" data-demo="press" aria-pressed="false" data-tip="循环" aria-label="循环">${ico('loop')}</button>`]],
+    ['命令：静止无底', [bt(''), bt('is-hover'), bt('is-focus'), bt('is-active'), null, bt('is-disabled'), null, null, btn('tbtn', '另存', '', 'data-demo="toast" data-msg="已另存"')]],
+    ['命令：有没保存的改动', [bs(''), bs('is-hover'), bs('is-focus'), bs('is-active'), null, null, null, null, btn('tbtn', '保存<span class="dot" aria-hidden="true"></span>', '', 'data-demo="toast" data-msg="已保存"')]],
+    ['图标命令 / 图标开关', [bi(''), bi('is-hover'), bi('is-focus'), bi('is-active'), bi('', 'loop', 'aria-pressed="true"'), bi('is-disabled'), null, null, `<button class="btn btn-icon" data-tip="撤销" data-key="Ctrl+Z" aria-label="撤销">${ico('undo')}</button><button class="btn btn-icon" data-demo="press" aria-pressed="false" data-tip="循环" aria-label="循环">${ico('loop')}</button>`]],
     ['分裂按钮：导出 ▾', [sp(''), sp('', 'is-hover'), sp('', 'is-focus'), sp('is-active'), sp('', 'is-open'), `<div class="split"><button class="btn btn-1" disabled>导出</button><button class="btn btn-1" disabled>${ico('cd')}</button></div>`, null, null, `<div class="split"><button class="btn btn-1" data-demo="toast" data-msg="已导出">导出</button><button class="btn btn-1" data-demo="expMenu" aria-haspopup="menu" aria-label="导出选项">${ico('cd')}</button></div>`]],
     ['异步按钮', [as(''), as('is-hover'), as('is-focus'), as('is-active'), null, as('is-disabled'), `<button class="btn btn-text is-loading"><span class="spin"></span>生成中</button>`, `<button class="btn btn-text is-failed" data-tip="生成失败">${ico('alert')}重试</button>`, `<button class="btn btn-text" data-demo="async">${ico('camera')}缩略图</button>`]]
   ]);
@@ -2458,7 +2471,7 @@ function sheetBasic() {
     ['原生下拉：速度', [nsel(), nsel('is-hover'), nsel('is-focus'), nsel('is-open') + pick(['0.25×', '0.5×', '1×', '2×'], '1×'), nsel('is-disabled'), nsel()]],
     ['原生下拉：参数行内', [nsel('', ['512 px', '1024 px', '2048 px'], '1024 px', 'boxed'), nsel('is-hover', ['1024 px'], '1024 px', 'boxed'), nsel('is-focus', ['1024 px'], '1024 px', 'boxed'), nsel('is-open', ['1024 px'], '1024 px', 'boxed') + pick(['512 px', '1024 px', '2048 px'], '1024 px'), nsel('is-disabled', ['1024 px'], '1024 px', 'boxed'), nsel('', ['256 px', '512 px', '1024 px', '2048 px'], '1024 px', 'boxed')]],
     ['自定义菜单：⋯', [more(''), more('is-hover'), more('is-focus'), `<div>${more('is-active')}<div style="margin-top:4px">${layerMenu}</div></div>`, `<button class="btn btn-icon" disabled aria-label="更多操作">${ico('more')}</button>`, `<button class="btn btn-icon" data-demo="layerMenu" aria-haspopup="menu" aria-label="更多操作" data-tip="更多操作">${ico('more')}</button>`]],
-    ['自定义菜单：导出 ▾', [sp(''), sp('', 'is-hover'), sp('', 'is-focus'), `<div>${sp('', 'is-open')}<div style="margin-top:4px">${menuStatic([{head: '需重新导出 1 层：金锦层'}, {t: '重新导出', k: '1', h: true}, {t: '导出全部', k: '3'}, {t: '导出本层', k: '金锦层'}, '-', {t: '打开文件夹'}], 220)}</div></div>`, `<div class="split"><button class="btn btn-1" disabled>导出</button><button class="btn btn-1" disabled>${ico('cd')}</button></div>`, `<div class="split"><button class="btn btn-1" data-demo="toast" data-msg="已导出">导出</button><button class="btn btn-1" data-demo="expMenu" aria-haspopup="menu" aria-label="导出选项">${ico('cd')}</button></div>`]],
+    ['自定义菜单：导出 ▾', [sp(''), sp('', 'is-hover'), sp('', 'is-focus'), `<div>${sp('', 'is-open')}<div style="margin-top:4px">${menuStatic([{head: '1 层需重新导出'}, {t: '重新导出', k: '1', h: true}, {t: '导出全部', k: '3'}, {t: '导出本层', k: '金锦层'}, {t: '导出勾选', k: '1'}], 200)}</div></div>`, `<div class="split"><button class="btn btn-1" disabled>导出</button><button class="btn btn-1" disabled>${ico('cd')}</button></div>`, `<div class="split"><button class="btn btn-1" data-demo="toast" data-msg="已导出">导出</button><button class="btn btn-1" data-demo="expMenu" aria-haspopup="menu" aria-label="导出选项">${ico('cd')}</button></div>`]],
     ['自定义菜单：加层 ▾', [addl(''), addl('is-hover'), addl('is-focus'), `<div>${addl('is-active')}<div style="margin-top:4px">${menuStatic([{t: '空白层', h: true}, {t: '从模板…'}, {t: '复制本层'}], 150)}</div></div>`, `<button class="btn btn-text sm" disabled>${ico('plus')}加层${ico('cd', 'dd')}</button>`, `<button class="btn btn-text sm" data-demo="addMenu" aria-haspopup="menu">${ico('plus')}加层${ico('cd', 'dd')}</button>`]]
   ]);
   const WS = ['关', '开', '悬停', '焦点', '停用 关', '停用 开', '部分选中', '可操作'];
@@ -2471,10 +2484,10 @@ function sheetBasic() {
   const GS = ['默认', '悬停', '焦点', '停用一项', '整体停用', '可操作'];
   const m3w = ['实时模拟', '引擎回放', '贴图与交付'];
   const segs = tbl(GS, [
-    ['2 项', [segH(['单次', '循环'], 0), segH(['单次', '循环'], 0, {1: 'is-hover'}), segH(['单次', '循环'], 0, {1: 'is-focus'}), segH(['单次', '循环'], 0, {1: 'dis'}), segH(['单次', '循环'], 0, {0: 'dis', 1: 'dis'}), segH(['单次', '循环'], 0)]],
-    ['3 项', [segH(['适应', '1:1', '游戏内'], 0), segH(['适应', '1:1', '游戏内'], 0, {2: 'is-hover'}), segH(['适应', '1:1', '游戏内'], 0, {1: 'is-focus'}), segH(['适应', '1:1', '游戏内'], 0, {2: 'dis'}), segH(['适应', '1:1', '游戏内'], 0, {0: 'dis', 1: 'dis', 2: 'dis'}), segH(['适应', '1:1', '游戏内'], 0)]],
-    ['4 项', [segH(['3 号', '5 号', '尺玉', '2 尺'], 2), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {0: 'is-hover'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {3: 'is-focus'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {3: 'dis'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {0: 'dis', 1: 'dis', 2: 'dis', 3: 'dis'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2)]],
-    ['工作模式：.modeseg', [modeH(m3w, 1), modeH(m3w, 1, {2: 'is-hover'}), modeH(m3w, 1, {0: 'is-focus'}), modeH(m3w, 1, {0: 'dis'}), modeH(m3w, 1, {0: 'dis', 1: 'dis', 2: 'dis'}), modeH(m3w, 1)]]
+    ['S：2 项', [segH(['单次', '循环'], 0), segH(['单次', '循环'], 0, {1: 'is-hover'}), segH(['单次', '循环'], 0, {1: 'is-focus'}), segH(['单次', '循环'], 0, {1: 'dis'}), segH(['单次', '循环'], 0, {0: 'dis', 1: 'dis'}), segH(['单次', '循环'], 0)]],
+    ['S：3 项', [segH(['适应', '1:1', '游戏内'], 0), segH(['适应', '1:1', '游戏内'], 0, {2: 'is-hover'}), segH(['适应', '1:1', '游戏内'], 0, {1: 'is-focus'}), segH(['适应', '1:1', '游戏内'], 0, {2: 'dis'}), segH(['适应', '1:1', '游戏内'], 0, {0: 'dis', 1: 'dis', 2: 'dis'}), segH(['适应', '1:1', '游戏内'], 0)]],
+    ['S：4 项', [segH(['3 号', '5 号', '尺玉', '2 尺'], 2), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {0: 'is-hover'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {3: 'is-focus'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {3: 'dis'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2, {0: 'dis', 1: 'dis', 2: 'dis', 3: 'dis'}), segH(['3 号', '5 号', '尺玉', '2 尺'], 2)]],
+    ['M：工作模式', [segH(m3w, 1, {}, 'm'), segH(m3w, 1, {2: 'is-hover'}, 'm'), segH(m3w, 1, {0: 'is-focus'}, 'm'), segH(m3w, 1, {0: 'dis'}, 'm'), segH(m3w, 1, {0: 'dis', 1: 'dis', 2: 'dis'}, 'm'), segH(m3w, 1, {}, 'm')]]
   ]);
   const TS = ['默认', '悬停', '焦点', '停用一项', '可操作'];
   const m3 = ['实时模拟', '引擎回放', '贴图与交付'];
@@ -2482,16 +2495,16 @@ function sheetBasic() {
     ['效果库：大号', [tabsH(['效果', '模板'], 0, {}, 'tabs-lg', '220px'), tabsH(['效果', '模板'], 0, {1: 'is-hover'}, 'tabs-lg', '220px'), tabsH(['效果', '模板'], 0, {1: 'is-focus'}, 'tabs-lg', '220px'), tabsH(['效果', '模板'], 0, {1: 'dis'}, 'tabs-lg', '220px'), tabsH(['效果', '模板'], 0, {}, 'tabs-lg', '220px')]],
     ['二级标签', [tabsH(['花型', '多层花型'], 0, {}, 'tabs-sub', '220px'), tabsH(['花型', '多层花型'], 0, {1: 'is-hover'}, 'tabs-sub', '220px'), tabsH(['花型', '多层花型'], 0, {1: 'is-focus'}, 'tabs-sub', '220px'), tabsH(['花型', '多层花型'], 0, {1: 'dis'}, 'tabs-sub', '220px'), tabsH(['花型', '多层花型'], 0, {}, 'tabs-sub', '220px')]]
   ]);
-  return `<h2>基础控件</h2><p class="lead">清单第 2 节。8 类控件 × 默认、悬停、焦点、按下、选中 / 开启、停用、错误、只读、加载中；「—」表示该控件没有这一状态。最后一列有浅底，可以真点。</p>
-    <h3>按钮<span>一屏只有一个实心主按钮；次要操作浅底；辅助操作文字按钮；危险操作只在确认时用红色；命令用文字按钮，比标签亮一级，悬停有底</span></h3>${buttons}
+  return `<h2>基础控件</h2><p class="lead">规范 v3 第 4 节：一种意思只有一种样子。状态：默认、悬停、焦点、按下、选中 / 开着、停用、加载中、失败；「—」表示没有这一状态。最后一列有浅底，可以真点。</p>
+    <h3>按钮<span>主操作薄荷实底，全屏只有一个（导出 ▾）；命令静止没有底，悬停出浮层底色，按下更深；图标命令 16 px 图标放在 28 px 方框里；图标开关开着时填选中底色；停用一律降透明度</span></h3>${buttons}
     <h3>输入框<span>文本、搜索含清除、多行、文件选择</span></h3>${inputs}
     <h3>数值框<span>平时不加框，悬停出现细框</span></h3>${nums}${sheetNote}
     <h3>滑杆<span>滑块为竖条，配合直角；已改时出现默认值刻度；随机幅度画成浅带；随机区间拖离鼠标近的一端；最后一列是真参数行</span></h3>${sliders}
     <h3>下拉<span>原生下拉用于选项少的固定值，如速度、单格；带动作的用自定义菜单；两种展开后外观一致</span></h3>${drops}
     <p class="ks-cap" style="margin-top:6px">原生下拉在 Chrome / Edge 135 以上用 appearance: base-select，展开列表在页面内绘制，与自定义菜单同色同字号；更早的浏览器仍是系统弹出层，样式不受控。「展开」一格用同款菜单静态示意。</p>
-    <h3>开关与勾选<span>开关：开为轨道亮一级、方块在右，关为细框、方块在左，停用时整行弱化并写原因；勾选用于多选；单选用于互斥</span></h3>${sws}
-    <h3>分段选择<span>.seg：2–4 项，选中为中性填充，用于筛选块、视图、平台、帧率、枚举值；工作模式用 .modeseg：等宽、细框、选中实底，全屏只此一处</span></h3>${segs}
-    <h3>标签页<span>选中项加粗 + 绿色下划线，与编排资源库一致；效果库的「效果 / 模板」用大号</span></h3>${tabsT}`;
+    <h3>开关与勾选<span>开关轨道 28×16：关只画 1 px 框、方块在左；开填选中底色、方块在右；停用降透明度、悬停写原因。勾选 14 px 方框</span></h3>${sws}
+    <h3>分段控件<span>只有这一种「选一个」：外面 1 px 框，选中段填选中底色并用 600。M：工作模式；S：缩放、单次 / 循环、筛选块、PC / 手机、贴图 / 逐帧</span></h3>${segs}
+    <h3>页面标签<span>文字 + 2 px 下划线；当前项薄荷下划线、600；效果库「效果 / 模板」和外壳「资源交付」「资源编排」</span></h3>${tabsT}`;
 }
 
 /* ---------- 全表：可操作的参数（与主屏同一套引擎，键前缀 sheet） ---------- */
@@ -2546,7 +2559,7 @@ function markPrmStates() {
   r('时间倍率')?.classList.add('is-hover');
   const lk = $('.lk', r('颗粒大小') || document.body); if (lk && !PS['sheet|prm|参数行|颗粒大小'].lock) { PS['sheet|prm|参数行|颗粒大小'].lock = true; lk.setAttribute('aria-pressed', 'true'); }
 }
-const tagFor = {开始时间: '普通', 时间倍率: '本次改过：竖条；悬停出现锁', 颗粒大小: '已锁定', 缩放: '非默认：圆点、默认值刻度、恢复菜单', 寿命: '随机幅度在名称下方', 初速: '随机幅度展开后可调', 湍流尺度: '停用：整行弱化，滑杆位置写原因', 张数: '只读结果与说明', 速度: '随机区间一行，名称后写「分布 1.8」', 方向: '控制锥角；球面时收成一行', 爆后扰动: '关闭时下面 3 项收成一行', 单格: '原生下拉'};
+const tagFor = {开始时间: '普通', 时间倍率: '本次改过：竖条；悬停出现锁', 颗粒大小: '已锁定', 缩放: '非默认：空心圆、默认值刻度、恢复菜单', 寿命: '随机幅度：数值格右边的展开箭头', 初速: '随机幅度展开后可调', 湍流尺度: '停用：整行弱化，滑杆位置写原因', 张数: '只读结果与说明', 速度: '随机区间一行，名称后写「分布 1.8」', 方向: '控制锥角；球面时收成一行', 爆后扰动: '关闭时下面 3 项收成一行', 单格: '原生下拉'};
 
 /* ---------- 全表：组合部件（清单第 3 节） ---------- */
 function staticTree() {
@@ -2588,16 +2601,16 @@ function sheetCombo() {
   const toolbarStatic = `<div class="topbar ks-tool" style="display:flex;height:38px;width:1440px;background:var(--bg)"><div class="tcol tcol-m" style="flex:1">${strip($('#toolRow .tcol-m').innerHTML)}</div><div class="tcol tcol-r" style="flex:none">${strip($('#toolRow .tcol-r').innerHTML)}</div></div>`;
   const transportStatic = `<div class="transport" style="height:36px;width:1440px;background:var(--bg)">${strip($('#transport').innerHTML).replace(/class="num tnum /g, 'readonly tabindex="-1" class="num tnum static ')}</div>`;
   const statusStatic = `<div style="display:flex;flex-direction:column;gap:8px;width:1100px"><div class="status" style="height:28px"><div class="st-l"><button class="btn btn-text tbtn sm">复制意见</button></div><div class="st-r"><button class="btn btn-text tbtn sm">已保存 20:31</button><button class="btn btn-text tbtn sm">快捷键<kbd>?</kbd></button></div></div><div class="status" style="height:28px"><div class="st-l"><button class="btn btn-text tbtn sm">复制意见</button></div><div class="st-r"><button class="btn btn-text tbtn sm" style="color:var(--t1)">未保存 3 项${ico('cd', 'dd')}</button><button class="btn btn-text tbtn sm">快捷键<kbd>?</kbd></button></div></div></div>`;
-  return `<h2>组合部件</h2><p class="lead">清单第 3 节。都由上面的基础控件拼成；当前编辑对象只在结构树里用 1 px 薄荷绿细框；时间轴、效果库、交付表的对应行用浅底。显示 / 只看图标只在悬停、选中或非默认时出现。</p>
+  return `<h2>组合部件</h2><p class="lead">规范 v3 第 7–10 节。都由上面的基础控件拼成；当前编辑对象只在结构树里用 1 px 薄荷细框；时间轴当前行底色亮一级，效果库、交付表的当前项填选中底色。显示 / 只看图标只在悬停、选中或非默认时出现。</p>
   <div class="ks-cols" style="--c:2">
    <div class="ks-blk"><h3>结构树行<span>效果 / 层 / 发射器；展开折叠；显示、只看、⋯；隐藏；只看时其他行变暗；改名；嵌套 3 级</span></h3>
      <div class="ks-row">${staticTree()}<div><span class="ks-cap">可操作：多层花型模板 5 层，展开 ${rowsOf(SC.tpl5).length} 行，可滚动；方向键上下、左右收起展开</span><div class="ks-frame" style="--pw:300px;--ph:420px"><div class="tree" id="sheetTree" data-scene="tpl5" role="tree" aria-label="结构树示例" style="flex:1;min-height:0"></div></div></div></div></div>
-   <div class="ks-blk"><h3>参数行<span>左侧槽位：竖条为本次改过，圆点为非默认；恢复菜单：打开时、默认；锁定悬停出现；依赖行缩进，关闭时收成一行</span></h3>
+   <div class="ks-blk"><h3>参数行<span>五列网格；左侧槽位：竖条为本次改过，空心圆为非默认；恢复按钮只在改过或悬停时出现；锁定悬停出现；依赖行缩进，关闭时收成一行</span></h3>
      <div class="ks-row"><div id="prmTags" style="display:flex;flex-direction:column;width:200px;padding-top:0"></div>${liveMods('prm', 460)}</div>
      <p class="ks-cap" style="margin-top:6px">都可操作：拖动、单击输入、双击名称恢复默认；悬停数值看「打开时 → 现在」；把湍流强度调到 0 以上解除失效；切「方向」为锥形出现锥角；点「查看」看收起的依赖行。</p></div>
   </div>
   <div class="ks-cols" style="--c:3">
-   <div class="ks-blk"><h3>参数模块<span>折叠、摘要右缘对齐数值列、模块内恢复</span></h3>${liveMods('mod', 460)}</div>
+   <div class="ks-blk"><h3>参数模块<span>标题 600、展开箭头在左、摘要右对齐到数值列；模块之间 1 px 线</span></h3>${liveMods('mod', 460)}</div>
    <div class="ks-blk"><h3>曲线编辑<span>仙女棒 08 二级碎火星的真实曲线；拖动关键点，双击空白加点，Delete 删点，下方可输入</span></h3>${liveMods('crv', 460)}</div>
    <div class="ks-blk"><h3>档位切换<span>多档效果打开后，在检查器标题旁</span></h3>
      <span class="ks-cap">3 档：分段选择</span>${header(['升空尾缀', '尾焰'], `<span class="tier">${segH(['小', '中', '大'], 1, {}, 'sm')}</span>`)}
@@ -2605,7 +2618,7 @@ function sheetCombo() {
      <h3>只读结果<span>计算出的值 + 一行说明，不可拖</span></h3><div class="ks-panel" style="--pw:460px">${rowHTML(ctxOf('sheet|prm', SHEET_MODS.prm), SHEET_MODS.prm[0], SHEET_MODS.prm[0].rows.find(r => r.lab === '张数'))}</div></div>
   </div>
   <div class="ks-cols" style="--c:3">
-   <div class="ks-blk"><h3>效果库条目<span>缩略图、名称、副信息、状态文字、档位数；当前效果浅底</span></h3>
+   <div class="ks-blk"><h3>效果库条目<span>缩略图 40、名称、副信息「代号　N 层」、状态词；当前效果填选中底色</span></h3>
      <div class="ks-frame" style="--pw:300px;padding:6px">${libItem(it[0], 'is-sel')}${libItem(it[2], 'is-hover')}${libItem(it[1])}${libItem(it[3])}${libItem(it[5])}</div>
      <span class="ks-cap" style="margin-top:8px">状态只用文字：待验收、新用主文字色，制作中、已通过用次要灰。从上到下：当前、悬停、默认。</span></div>
    <div class="ks-blk"><h3>效果库<span>三个工具同一模式：大标签、二级标签、搜索、筛选块、数量与新建、列表</span></h3>
@@ -2619,11 +2632,11 @@ function sheetCombo() {
      ${emptyBox('没有匹配「银柳」的效果', '', '清除搜索')}<div style="height:12px"></div>
      <div class="ks-panel" style="--pw:300px;box-shadow:0 0 0 1px var(--g3)"><div class="empty" style="padding:16px 12px"><b>没有已改的参数</b><button class="btn btn-2">显示全部</button></div></div></div>
   </div>
-  <h3>胶片条 + 刻度 + 时间轴轨道<span>胶片按最亮帧提亮、悬停放大；刻度尺上的浅底是导出范围，两端可拖；轨道只有时段条和关键帧，当前行亮一级</span></h3>
+  <h3>胶片条 + 刻度 + 时间轴轨道<span>胶片 28 px 只覆盖导出范围，没烘焙的是 40 % 空框；刻度尺上的浅底是导出范围，两端可拖，上方可输入；层 6 px、发射器 2 px，超出范围 40 %；当前行亮一级</span></h3>
   <div class="ks-frame" style="--pw:1100px;padding:4px 0"><div class="tlw" id="sheetTL" style="padding-bottom:4px"></div></div>
-  <h3>制作区工具行 / 时间轴头部 / 状态栏<span>工具行中段对齐画面，右段对齐检查器；组间 20 px、组内 8 px；需重新导出是导出左侧的琥珀计数；播放条三组：播放、时间、导出范围</span></h3><div style="display:flex;flex-direction:column;gap:12px">${toolbarStatic}${transportStatic}${statusStatic}</div>
+  <h3>制作区工具行 / 时间轴头部 / 状态栏<span>工具行中段对齐画面，右段对齐检查器；组间 20 px、组内 8 px；「⚠ 1」在导出左侧；播放条三组：▶ ⏮ 1× 循环 ｜ 时间和烘焙 ｜ 选项和缩略图，组间 20 px</span></h3><div style="display:flex;flex-direction:column;gap:12px">${toolbarStatic}${transportStatic}${statusStatic}</div>
   <div class="ks-cols" style="--c:2">
-   <div class="ks-blk"><h3>交付产物表<span>每层 PC / 手机出什么；每行可勾选；选中行浅底，与结构树同步</span></h3><div class="ks-panel" style="--pw:720px">${delivTableHTML(sc, sc.root.kids[1])}</div></div>
+   <div class="ks-blk"><h3>交付产物表<span>每层 PC / 手机出什么；每行可勾选；选中行填选中底色，与结构树同步</span></h3><div class="ks-panel" style="--pw:720px">${delivTableHTML(sc, sc.root.kids[1])}</div></div>
    <div class="ks-blk"><h3>粒子图结构<span>仙女棒：05 分裂母粒 › 06 一级分叉 › 08 二级碎火星，05 › 07 延迟分叉；其余为顶层发射器</span></h3>${pgraph()}</div>
   </div>
   <div class="ks-cols" style="--c:3">
@@ -2649,14 +2662,10 @@ function sheetCombo() {
 /* ---------- 全表：浮层（清单第 4 节） ---------- */
 function expMenuStatic() {
   const mi = (t, k, h) => `<div class="mi${h ? ' is-hover' : ''}"><span class="mt2"><span>${t}</span></span><span class="k">${k}</span></div>`;
-  return `<div class="menu static wide exp" style="min-width:320px"><div class="msum"><div class="mline"><b>需重新导出 1 层：金锦层</b><button class="btn btn-text tbtn sm mdet" type="button" aria-expanded="true">详情${ico('cd', 'dd')}</button></div>
-    <div class="mdetail"><dl><dt>位置</dt><dd class="mloc"><span>导出文件夹 FWL_Export / 金曜菊-B / 修订 r13</span><button class="btn btn-text tbtn sm" type="button">换文件夹</button></dd>
-    <dt></dt><dd class="mfile">PC：T_金曜菊-B_金锦层_01–05.png</dd><dt></dt><dd class="mfile">手机：T_金曜菊-B_金锦层_Mobile_01–03.png</dd>
-    <dt>格式</dt><dd>灰度 PNG 序列 + cascade.json</dd></dl></div>
-    <div class="mplats"><span class="lbl">平台</span><label class="mplat"><input class="chk" type="checkbox" checked>PC 5 张</label><label class="mplat"><input class="chk" type="checkbox" checked>手机 3 张</label></div>
-    <p class="mnote">含 1 个隐藏层，照常导出</p></div>
-    <label class="mopt"><input class="chk" type="checkbox"><span class="mt2"><span>放进编排</span><span class="ms2">首次新增，之后更新</span></span></label>
-    ${mi('重新导出', '1', true)}${mi('导出全部', '3')}${mi('导出本层', '金锦层')}<hr><div class="mi"><span>贴图与交付</span></div><div class="mi"><span>打开文件夹</span></div></div>`;
+  return `<div class="menu static wide exp" style="min-width:320px"><div class="msum"><div class="mline"><b>1 层需重新导出<span class="lbl">PC + 手机</span><span class="lbl">导出文件夹 FWL_Export</span></b><button class="btn tbtn mdet" type="button" aria-expanded="false">详情${ico('cd', 'dd')}</button></div></div><hr>
+    ${mi('重新导出', '1', true)}${mi('导出全部', '3')}${mi('导出本层', '金锦层')}${mi('导出勾选', '1')}<hr>
+    <div class="mrow"><span class="lbl">平台</span>${segH(['PC + 手机', 'PC', '手机'], 0)}</div>
+    <label class="mopt"><input class="chk" type="checkbox"><span class="mt2"><span>同时放进编排</span></span></label></div>`;
 }
 function sheetOverlays() {
   const live = (act, t) => `<button class="btn btn-2 sm" data-demo="${act}" data-tip="${t}" style="margin-top:8px">试用</button>`;
@@ -2665,17 +2674,17 @@ function sheetOverlays() {
   <div class="ks-cols" style="--c:4">
    ${blk('原生下拉展开', 'base-select；外观同自定义菜单', menuStatic([{t: '0.25×', ck: false}, {t: '0.5×', ck: false}, {t: '1×', ck: true}, {t: '2×', ck: false, h: true}], 140), `<select class="sel" style="margin-top:8px" aria-label="速度"><option>0.5×</option><option selected>1×</option><option>2×</option></select>`)}
    ${blk('⋯ 菜单', '层的操作；删除直接执行，可撤销', menuStatic([{head: '2 金锦层'}, {t: '上移'}, {t: '下移', h: true}, {t: '改名', k: 'F2'}, {t: '复制'}, {t: '加发射器'}, {t: '隐藏', k: 'H'}, {t: '加入只看', k: 'S'}, '-', {t: '删除', k: 'Delete'}], 180), live('layerMenu', '打开 ⋯ 菜单'))}
-   ${blk('分裂按钮菜单', '导出 ▾：一行摘要，位置与文件名收进详情；右侧为层数', expMenuStatic(), live('expMenu', '打开导出菜单'))}
+   ${blk('导出 ▾', '三段：一行摘要（详情点开才出文件清单）；操作右侧写层数；平台、同时放进编排', expMenuStatic(), live('expMenu', '打开导出菜单'))}
    ${blk('勾选菜单', '筛选 ▾', menuStatic([{t: '仅已改', ck: true, h: true}, '-', {t: '全部展开', ck: false}, {t: '全部折叠', ck: false}], 160), live('viewMenu', '打开筛选菜单'))}
   </div>
   <div class="ks-cols" style="--c:4">
    ${blk('悬停提示', '图标按钮；带快捷键', `<div class="tip static sm">撤销<span class="k">Ctrl+Z</span></div>`, `<button class="btn btn-icon" data-tip="撤销" data-key="Ctrl+Z" aria-label="撤销" style="margin-top:8px">${ico('undo')}</button>`)}
-   ${blk('参数说明提示', '出在检查器左侧，不挡同组参数', `<div class="tip static" style="max-width:280px"><b>缩放</b>本层相对整朵的大小倍数<div class="meta"><span>默认 1.00 倍</span><span>范围 0.10–3.00</span></div><div class="meta"><span>打开时 1.10 倍</span><span>现在 1.30 倍</span></div><div class="meta"><span>双击名称恢复默认</span></div></div>`, '')}
-   ${blk('撤销提示条', '显示 12 秒，悬停不消失；出现在操作那一栏底部', `<div class="toast static"><span>已删除「点灭星」</span><button class="btn btn-text sm">撤销</button><button class="btn btn-icon sm" aria-label="关闭">${ico('x')}</button></div>`, live('toast', '显示撤销提示条'))}
+   ${blk('参数说明提示', '浮层面色、6 px 小三角、离触发点 8 px、最宽 260；出在检查器左侧，不挡同组参数', `<div class="tip static" style="max-width:260px"><b>缩放</b>本层相对整朵的大小倍数<div class="meta"><span>默认 1.00 倍</span><span>范围 0.10–3.00</span></div><div class="meta"><span>打开时 1.10 倍</span><span>现在 1.30 倍</span></div><div class="meta"><span>双击名称恢复默认</span></div></div>`, '')}
+   ${blk('撤销提示条', '显示 12 秒，悬停不消失；出在外壳顶栏下方、画面顶部居中', `<div class="toast static"><span>已删除「点灭星」</span><button class="btn btn-text sm">撤销</button><button class="btn btn-icon sm" aria-label="关闭">${ico('x')}</button></div>`, live('toast', '显示撤销提示条'))}
    ${blk('输入建议列表', '见上方编排专用', menuStatic([{t: '<b>金</b>裂星', h: true}, {t: '<b>金</b>曜菊-B'}], 200).replace('class="menu static"', 'class="menu static suggest"'), '')}
   </div>
   <div class="ks-cols" style="--c:2">
-   ${blk('确认弹窗：只用于不能撤销的操作', '能撤销的操作不弹窗，直接执行并给撤销提示条；默认焦点在「取消」，Esc 关闭', `<div class="dialog static"><h2>删除效果「金曜菊-B 稀簇辉闪」</h2><p>效果文件、版本记录和导出记录将一并删除。此操作不能撤销。</p><div class="acts"><button class="btn btn-2">取消</button><button class="btn btn-danger">删除</button></div></div>`, live('confirm', '打开确认弹窗'))}
+   ${blk('确认弹窗：只用于不能撤销的操作', '能撤销的操作不弹窗，直接执行并给撤销提示条；默认焦点在「取消」，Esc 关闭', `<div class="dialog static"><h2>删除效果「金曜菊-B 稀簇辉闪」</h2><p>效果文件、版本记录和导出记录将一并删除。此操作不能撤销。</p><div class="acts"><button class="btn tbtn">取消</button><button class="btn btn-danger">删除</button></div></div>`, live('confirm', '打开确认弹窗'))}
    ${blk('快捷键表', '按 ? 打开', `<div class="keys static">${keysHTML()}</div>`, live('keys', '打开快捷键表'))}
   </div>`;
 }
@@ -2686,13 +2695,13 @@ function sheetInteract() {
     ['数值拖动、Shift 精调', '在数值或滑杆上拖；按住 Shift 变慢，中途按下以当前值为起点；拖动中 Esc 取消', '主屏检查器；全表「数值框」「参数行」'],
     ['单击输入、越界报错', '单击数值输入；越界变红并给出有效范围，离开后复原', '同上'],
     ['双击恢复默认、恢复菜单', '双击参数名；或点行尾恢复按钮，选「打开时」或「默认」', '主屏「缩放」；全表参数行'],
-    ['和打开时比', '竖条为本次改过，圆点为非默认；悬停数值显示「打开时 → 现在」', '主屏检查器；全表参数行'],
+    ['和打开时比', '竖条为本次改过，空心圆为非默认；悬停数值显示「打开时 → 现在」', '主屏检查器；全表参数行'],
     ['滑杆一次撤销一步', '拖滑杆后 Ctrl+Z，整次拖动一步退回；没有变化不记撤销', '主屏检查器；全表「滑杆」'],
     ['撤销反馈', '撤销、重做后在操作处显示「撤销：缩放 1.30 → 1.10」并短暂高亮', '主屏参数、时间轴、结构'],
     ['未保存与保存', '状态栏右侧「未保存 N 项」可展开，逐项恢复；Ctrl+S 后显示「已保存 时间」', '主屏状态栏'],
     ['播放与逐帧', '空格播放，R 重播；, . 逐帧，← → 逐帧，Shift 走 10 帧；胶片条帧号同步', '主屏'],
-    ['时间、入点、出点输入', '单击读数输入秒数，回车生效，Esc 取消，越界就地报错；读数前写「导出范围」或「发射时段」', '主屏时间轴头部'],
-    ['[ ] 设入点、出点', '作用于选中行；层为导出范围，画在刻度尺上；发射器为发射时段；「恢复」回到打开时', '主屏时间轴'],
+    ['时间、导出范围输入', '单击当前时间或刻度尺上方的「0.35–2.85 s」输入秒数，回车生效，Esc 取消，越界就地报错；Tab 从入点跳到出点', '主屏播放条、刻度尺'],
+    ['[ ] 设入点、出点', '作用于选中行：层为导出范围，发射器为发射时段；也在「选项 ▾」和刻度尺的右键菜单里；「恢复」回到打开时', '主屏时间轴'],
     ['胶片悬停放大', '悬停胶片格放大显示这几帧；胶片按最亮帧自动提亮', '主屏时间轴'],
     ['F 精简布局、L / P 左右栏', '或点工具行中段右侧图标', '主屏'],
     ['结构树方向键', '↑ ↓ 选择，← → 收起展开或到上下级，Enter 展开，F2 改名，Delete 删除', '主屏结构树；全表 37 行结构树'],
@@ -2707,12 +2716,12 @@ function sheetInteract() {
     ['分隔条', '左栏分隔条与画面、时间轴之间的分隔条可拖，双击复位', '主屏'],
     ['效果库', '效果 / 模板，二级标签，筛选块，搜索名称、任务号、花型', '主屏左栏'],
     ['档位切换', '分段选择或下拉', '全表「档位切换」'],
-    ['拖播放头、拖时段、拖导出范围', '在胶片刻度条上拖播放头；拖时段条平移，发射器可拖两端；拖刻度尺上浅底的两端改导出范围；拖动中 Esc 取消', '主屏时间轴；全表时间轴'],
+    ['拖播放头、拖时段、拖导出范围', '在胶片刻度条上拖播放头；拖时段条平移，发射器可拖两端；拖刻度尺上浅底的两端改导出范围，右键设入点、出点；拖动中 Esc 取消', '主屏时间轴；全表时间轴'],
     ['参数搜索、仅已改', '检查器搜索框；「筛选 ▾」勾「仅已改」，收起的已改项连同开关一起列出；「全部折叠」', '主屏检查器'],
-    ['锁定、随机、依赖参数', '悬停参数行出现锁；点「随机 ±30%」或「分布 1.8」展开；关「爆后扰动」收成「4 项已隐藏」，点「查看」', '主屏检查器；全表参数行'],
+    ['锁定、随机、依赖参数', '悬停参数行出现锁；点数值格右边的展开箭头，下一行出随机幅度或分布滑杆；关「爆后扰动」收成「4 项已隐藏」，点「查看」', '主屏检查器；全表参数行'],
     ['曲线编辑', '横轴寿命 0–100 %，纵轴倍数；拖关键点，双击加点，Delete 删点，下方可输入', '仙女棒 08；全表「曲线编辑」'],
-    ['导出', '导出按钮导出需重新导出的层；悬停左侧的琥珀计数看原因；菜单一行摘要，详情里是位置与文件名，右侧为层数', '工具行、贴图与交付'],
-    ['模块分界', '样板控制条「模块」切换，默认底色条，可换成分隔线', '主屏检查器'],
+    ['导出', '导出按钮导出需重新导出的层；悬停左侧的「⚠ 1」看原因；菜单三段：摘要、操作、选项', '工具行、贴图与交付'],
+    ['预览设置', '距离、预览曝光、背景、安全框；距离或预览曝光不是默认值时画面右下出小标记，点它打开', '工具行中段、画面右下'],
     ['层的输出', '层参数末尾的「输出」模块；点层行的需重新导出标记跳到这里', '主屏结构树、检查器']
   ];
   return `<h2>交互</h2><p class="lead">清单第 5 节。每项交互的试用位置。</p><table class="ks-it"><thead><tr><th style="width:260px">交互</th><th>怎么操作</th><th style="width:520px">位置</th></tr></thead><tbody>${I.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
@@ -2721,8 +2730,8 @@ function sheetInteract() {
 function buildSheet() {
   ctxOf('sheet|prm', SHEET_MODS.prm); PS['sheet|prm|参数行|初速'].sub = true;
   PS['sheet|prm|参数行|时间倍率'].v = 1.8; PS['sheet|prm|参数行|扰动尺度'].v = 10; ctxOf('sheet|mod', SHEET_MODS.mod); PS['sheet|mod|时间与缩放|开始时间'].v = .45;
-  $('#sheetBody').innerHTML = `<h1>组件全表</h1><p class="lead">E 样板 v2.3。烘焙器、编排工作台、导入器共用同一份样式；主屏只用本表里的组件拼成。</p>`
-    + sheetTokens() + sheetBasic() + sheetCombo() + sheetOverlays() + sheetInteract();
+  $('#sheetBody').innerHTML = `<h1>组件全表</h1><p class="lead">E 样板 v3，按《E 设计规范 v3》整体重画。烘焙器、编排工作台、导入器共用同一份样式和图标；主屏只用本表里的组件拼成。</p>`
+    + sheetTokens() + sheetIcons() + sheetBasic() + sheetCombo() + sheetOverlays() + sheetInteract();
   $$('#kitSheet [data-ind]').forEach(c => { c.indeterminate = true; });
   renderTree(SC.tpl5, $('#sheetTree'));
   SC.kiku2.t = 2.0; renderTL(SC.kiku2, $('#sheetTL'));
@@ -2762,7 +2771,7 @@ document.addEventListener('click', e => {
     toast: () => toast(d.dataset.msg || '已删除「点灭星」', d.dataset.msg ? {near: $('#kitSheet')} : {undo: () => toast('已撤销删除「点灭星」', {near: $('#kitSheet'), ms: 3000}), near: $('#kitSheet')}),
     confirm: () => openDialog({title: '删除效果「金曜菊-B 稀簇辉闪」', body: '效果文件、版本记录和导出记录将一并删除。此操作不能撤销。', ok: '删除', danger: true, onOk: () => toast('样板中不删除效果', {near: $('#kitSheet')})}, $('#kitSheet')),
     press: () => d.setAttribute('aria-pressed', String(d.getAttribute('aria-pressed') !== 'true')),
-    expMenu: () => openMenu(d, [{head: '需重新导出 1 层：金锦层'}, {t: '重新导出', k: '1'}, {t: '导出全部', k: '3'}, {t: '导出本层', k: '金锦层'}, '-', {t: '打开文件夹'}], {align: 'right'}),
+    expMenu: () => openMenu(d, [{head: '1 层需重新导出'}, {t: '重新导出', k: '1'}, {t: '导出全部', k: '3'}, {t: '导出本层', k: '金锦层'}, {t: '导出勾选', k: '1'}], {align: 'right'}),
     layerMenu: () => openMenu(d, [{head: '2 金锦层'}, {t: '上移'}, {t: '下移'}, {t: '改名', k: 'F2'}, {t: '复制'}, {t: '加发射器'}, {t: '隐藏', k: 'H'}, {t: '加入只看', k: 'S'}, '-', {t: '删除', k: 'Delete', act: () => A.toast()}]),
     addMenu: () => openMenu(d, [{t: '空白层'}, {t: '从模板…'}, {t: '复制本层'}]),
     viewMenu: () => { let on = true; openMenu(d, [{t: '仅已改', chk: on, keep: true, act: b => { on = !on; b.setAttribute('aria-checked', on); $('.ck', b).innerHTML = on ? ico('check') : ''; }}, '-', {t: '全部展开'}, {t: '全部折叠'}], {checks: true}); },
