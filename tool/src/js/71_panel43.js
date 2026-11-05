@@ -172,7 +172,7 @@ function p43Legacy() {
   for (const [row, it, , det] of panelRows) {
     const k = Array.isArray(it) ? it[0] : it.sel || ''; const L = k && legacyOf(k); if (!L) continue;
     row._legacy = L; row.classList.add('legacy');
-    const nm = row.querySelector('.k, .fk'); if (nm && !nm.querySelector('.old-tag')) nm.insertAdjacentHTML('afterbegin', `<span class="old-tag" title="5.0 要删：${L[0]}">旧</span>`);
+    const nm = row.querySelector('.k, .fk'); if (nm && !nm.querySelector('.old-tag')) nm.insertAdjacentHTML('afterbegin', `<span class="old-tag" title="5.0 待删&#10;${L[0]}">旧</span>`);
     const g = det.closest('section.egrp'); if (!g) continue;
     if (!g._oldb) { const b = document.createElement('button'); b.type = 'button'; b.className = 'oldb'; b.hidden = true;
       b.addEventListener('click', e => { e.preventDefault(); pview.oopen = pview.oopen || {}; pview.oopen[g.dataset.g] = !pview.oopen[g.dataset.g]; refreshVisibility(); });
@@ -303,7 +303,7 @@ function p43RandSync(P) {
     const txt = [open ? '随机 ▾' : '随机 ▸', vals.length ? ' ' + vals.join(' ') : ''];     // 4.9.14：左「随机」右边随机量（一行子项）
     if (row._rndb.textContent !== txt.join('')) row._rndb.innerHTML = `<span class="rk">随机<span class="ra">${txt[0].slice(2)}</span></span><span class="rv">${txt[1]}</span>`;
     row._rndb.classList.toggle('on', open); row._rndb.classList.toggle('set', !!vals.length);
-    row._rndb.title = row._rands.map(([r]) => r._lab).join('、') + (open ? '（点一下收起）' : '（点一下展开）');
+    row._rndb.title = open ? '收起随机项' : '展开随机项';
   }
 }
 // 空白发射器（4.3；4.4 放在发射器标签下面一行）：没加的部分整块藏起来；「+ 火花」加上，已加的有「去掉」

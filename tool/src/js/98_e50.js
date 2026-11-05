@@ -99,7 +99,7 @@
   if (typeof document === 'undefined') return;
   const $q = s => document.querySelector(s), $a = (s, r = document) => [...r.querySelectorAll(s)];
   const ico = id => `<svg class="i" aria-hidden="true"><use href="#i-${id}"/></svg>`;
-  const first = t => { const s = String(t || '').replace(/\s+/g, ' ').trim(); const m = /^(.{6,60}?[。；;])/.exec(s); return (m ? m[1].replace(/[。；;]$/, '') : s.slice(0, 60)).trim(); };
+  const first = t => { const s = String(t || '').replace(/\s+/g, ' ').trim(); const m = /^(.{4,60}?[。；;])/.exec(s); return (m ? m[1].replace(/[。；;]$/, '') : s.slice(0, 60)).trim(); };
 
   // ---- 搜索行 ----
   function toolbar() {
@@ -189,8 +189,31 @@
     const hide = state.tab === 'combo'; if (it.hidden !== hide) it.hidden = hide; it.disabled = !!src.disabled; it.dataset.tip = src.disabled ? '只有大面片母版能出种子变体' : 'V1–V3 三张贴图';
   }
 
-  // ---- 状态句一行显示，全文进悬停提示；「产物」的说明进它的标签提示 ----
+  // ---- 「恢复本模块」（§10：只在悬停标题时出现；模块里有改过的参数才有）：逐行还原到打开时，每一行都能 Ctrl+Z ----
+  function modReset() {
+    for (const d of $a('#params details.mod')) {
+      const sm = d.querySelector(':scope > summary'); if (!sm) continue;
+      let b = sm.querySelector(':scope > .e50-mrst');
+      const chg = $a(':scope > .sl.chg, :scope > .field.chg', d);
+      if (!b) { b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn-icon e50-mrst'; b.innerHTML = ico('reset'); b.setAttribute('aria-label', '恢复本模块');
+        // 同旧的「↺」（79_assetops.js syncScopeResets → resetScope）：一次还原整个模块，Ctrl+Z 一步撤回；旧的那个常驻琥珀「↺」藏了
+        b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (typeof resetScope === 'function' && d._g) { resetScope(d._g, d._mod); return; } if (typeof resetRow !== 'function') return; for (const r of $a(':scope > .sl.chg, :scope > .field.chg', d)) resetRow(r); });
+        const ms = sm.querySelector('.msum'); ms ? ms.before(b) : sm.appendChild(b); }
+      b.hidden = !chg.length; const t = chg.length ? `恢复本模块（${chg.length} 项）` : ''; if (b.dataset.tip !== t) b.dataset.tip = t;
+    }
+  }
+  // ---- 状态句一行显示，全文进悬停提示；「产物」的说明进它的标签提示；本层颜色里的两段说明进各自标题的悬停提示 ----
   function hintTips() {
+    { const sm = $q('#colorControls details.color-extra > summary'); if (sm && sm.dataset.tip !== '只影响预览，不参与烘焙') sm.dataset.tip = '只影响预览，不参与烘焙'; }
+    // 层的导出方案说明（原「随整包导出 · 方案说明」）→「导出方案」标题的悬停提示；有问题时那一句照样露出来（琥珀色一行）
+    //   标题提示只写下拉里看不出来的那一句：「注意：」后第一句，或手机「自动」为什么不出（「手机不出：和第 1 层同时播」）；全文在琥珀那一行的提示里
+    { const n = $q('#lhOutNote'), sm = $q('#lhOut > summary'); if (n && sm) { const t = n.textContent.trim(), ix = typeof state !== 'undefined' ? state.comboSel : -1;
+        const mp = ix >= 0 && typeof comboMobileNow === 'function' ? comboMobileNow(ix) : null, w = (t.split('注意：')[1] || '').split(/[；。（]/)[0].trim();
+        const tip = w || (mp && mp.auto && mp.kind === 'off' && mp.why ? '手机不出：' + mp.why.split('，')[0] : '');
+        if (tip) { if (sm.dataset.tip !== tip) sm.dataset.tip = tip; } else if (sm.dataset.tip) delete sm.dataset.tip;
+        const p = n.closest('.lh-out-info'); if (p && n.dataset.tip !== t) n.dataset.tip = t; } }
+    // 导出方案那句（「PC：…· 手机：…」）→ 模块标题的悬停提示（下面的 PC 导出、手机导出两行已经写着选了什么）
+    for (const p of $a('#params .infohost[data-info=schemeNote] p.hint')) { const sm = p.closest('details.mod') && p.closest('details.mod').querySelector(':scope > summary'), t = p.textContent.trim(); if (sm && sm.dataset.tip !== t) sm.dataset.tip = t; }
     for (const p of $a('#params .infohost p.hint')) { const t = p.textContent.trim(); if (p.dataset.tip !== t && !p.title) p.dataset.tip = t; }
     const fn = $q('#formNote'), lab = $q('#x-form') && $q('#x-form').closest('.field');
     if (fn && lab) { const t = first(fn.textContent); if (lab.dataset.tip !== t) lab.dataset.tip = t; }
@@ -198,7 +221,7 @@
   let sig = '';
   function run() {
     if (typeof state === 'undefined' || !state || !$q('#params')) return;
-    toolbar(); modules(); exposure(); specBits(); syncFilt(); syncFold(); variantsItem(); hintTips();
+    toolbar(); modules(); exposure(); specBits(); syncFilt(); syncFold(); variantsItem(); hintTips(); modReset();
   }
   const start = () => { if (!$q('#params')) return setTimeout(start, 200);
     new MutationObserver(() => { if (sig) return; sig = 'p'; queueMicrotask(() => { sig = ''; run(); }); }).observe($q('#params'), { childList: true });

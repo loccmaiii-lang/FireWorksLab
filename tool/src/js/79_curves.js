@@ -73,7 +73,7 @@ function panelBake() {
 }
 function trimNoteHTML() {
   const b = panelBake(), tr = b && b.meta && b.meta.trim; if (!tr || !(tr.end < tr.reqEnd - 0.02)) return '';
-  return ` <span class="warn" title="之后全黑，不烘、不导出；要更长，调燃烧时间、火花寿命或节奏">贴图只烘到 ${tr.end.toFixed(2)} s，之后不导出</span>`;     // 5.0.0：一句，细节进悬停提示
+  return ` <span class="warn" title="之后全黑，不导出">贴图只烘到 ${tr.end.toFixed(2)} s，之后不导出</span>`;     // 5.0.0：一句，细节进悬停提示
 }
 function endInfoHTML() {
   const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';

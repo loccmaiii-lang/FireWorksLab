@@ -67,8 +67,9 @@ function rtBallisticPhys(P) {
 function rtBallInfoHTML(P) {
   if (!P || !isEmit(P)) return '';
   const b = rtBallistic(P), sp = t => { const v = b.vel(t); return Math.hypot(v[0], v[2]); };
-  if (!b.quad) return `<p class="hint endinfo">线性阻力：出膛 ${b.v0.toFixed(1)} m/s · 阻力 ${b.k.toFixed(3)} /s · ${b.T.toFixed(2)} s 到 ${b.H.toFixed(0)} m · 1 s 后 ${sp(Math.min(1, b.T)).toFixed(0)} m/s（减速很匀）</p>`;
-  return `<p class="hint endinfo">物理弹道：终端速度 ${b.vt.toFixed(1)} m/s${+P.rtVt > 0 ? '' : `（按弹径 ${P.rtD} m 算）`} · 出膛 <b>${b.v0.toFixed(1)}</b> m/s → 1 s 后 ${sp(Math.min(1, b.T)).toFixed(0)} m/s → 开花 ${b.vb.toFixed(1)} m/s · 升空 <b>${b.T.toFixed(2)}</b> s 到 ${b.H.toFixed(0)} m（升空时间是算出来的）</p>`;
+  // 5.0.0 文案（§4 只读一行）：升空时间、高度一行；速度变化进悬停
+  if (!b.quad) return `<p class="hint endinfo" title="出膛 ${b.v0.toFixed(1)} → 1 s 后 ${sp(Math.min(1, b.T)).toFixed(0)} m/s">升空 <b>${b.T.toFixed(2)}</b> s 到 ${b.H.toFixed(0)} m　阻力 ${b.k.toFixed(3)} /s</p>`;
+  return `<p class="hint endinfo" title="出膛 ${b.v0.toFixed(1)} → 开花 ${b.vb.toFixed(1)} m/s">升空 <b>${b.T.toFixed(2)}</b> s 到 ${b.H.toFixed(0)} m　终端速度 ${b.vt.toFixed(1)} m/s</p>`;
 }
 // 物理弹道导出用：按相对寿命（0–1 = 0–T）的速度曲线（m/s），抽稀到误差 < 0.05 m/s
 function rtVelLife(ball, n = 240) { const k = []; for (let i = 0; i <= n; i++) { const u = i / n, v = ball.vel(u * ball.T); k.push([u, [v[0], 0, v[2]]]); } return esThin(k, 0.05); }
@@ -1459,7 +1460,7 @@ function rtShadeLoop(P, M, t) {
 // ---- 4.5.1 分层看（用户 10-05 17:39「我没法单独看近段、远段和 GPU 粒子层」）：只影响观察，不改参数和导出 ----
 //   工具条上一排：近段 / 远段 / 每个 GPU（和 CPU 软圆点）发射器，后面是此刻的颗数；点一下开 / 关，双击只看这一层，「全部」恢复
 const RT_LAYER_CN = { near: '近段', far: '远段', full: '合成一张', SparksCoarse: '粗火花', SparksTwinkle: '闪烁火花', SparksMid: '中火花', SparksFine: '细火花', Embers: '落火', SparkPops: '末段爆亮',
-  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带', EmbersTex: '落火（合进贴图）' };
+  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带', EmbersTex: '落火贴图' };
 const rtShow = { off: new Set(), sig: '' };
 const rtOn = k => !rtShow.off.has(k);
 function rtAliveCounts(tables, t) { return tables.map(T => { let n = 0; for (const q of T.list) { if (q.t0 > t) break; if (t - q.t0 < q.life) n++; } return n; }); }
@@ -1469,7 +1470,7 @@ function rtLayerBarSync(items) {     // items: [[key, 颗数 | null, GPU?]]
   if (rtShow.sig !== sig) {
     rtShow.sig = sig; for (const k of [...rtShow.off]) if (!items.some(x => x[0] === k)) rtShow.off.delete(k);
     bar.innerHTML = '<button type="button" data-all="1">全部</button><span class="sep"></span>' + items.map(([k, , g], i) => (i && g && !items[i - 1][2] ? '<span class="sep"></span>' : '') +
-      `<button type="button" data-k="${k}" title="${g ? 'GPU 发射器' : k === 'near' ? '近段 = 循环层（跟着弹体走的年轻火花 + 星头 + 白热段）' : k === 'far' ? '远段 = TrailFar（停在空中的老火花，开花后全部火花）' : k === 'full' ? '手机合成一张 = TrailFull（星头 + 全部火花）' : 'CPU 软圆点'}：点一下开 / 关，双击只看这一层">${RT_LAYER_CN[k] || k}<span class="n"></span></button>`).join('');
+      `<button type="button" data-k="${k}" title="${g ? 'GPU 发射器' : k === 'near' ? '近段：跟着弹体走的火花' : k === 'far' ? '远段：停在空中的老火花' : k === 'full' ? '手机合成一张' : 'CPU 软圆点'}&#10;点击开关，双击只看这一段">${RT_LAYER_CN[k] || k}<span class="n"></span></button>`).join('');
     bar.querySelector('[data-all]').addEventListener('click', () => { rtShow.off.clear(); });
     bar.querySelectorAll('[data-k]').forEach(btn => {
       btn.addEventListener('click', () => { const k = btn.dataset.k; if (rtShow.off.has(k)) rtShow.off.delete(k); else rtShow.off.add(k); });

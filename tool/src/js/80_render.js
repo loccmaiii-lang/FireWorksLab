@@ -599,8 +599,8 @@ function updateLabels() {
   if (state.view === 'atlas' && b && flowLayout && state.texSheetNow) {     // 4.9.35 贴图流转：标签跟着布局放（多层也有）
     const lay = flowLayout, W = canvas.width, H = canvas.height, pc = v => (v * 100).toFixed(2) + '%', L = b.meta.L, key = ['flow', lay.prev.x, lay.atl.x, lay.atl.y, L.chans, L.per].join(':');
     if (q.dataset.key !== key) { q.dataset.key = key;
-      q.innerHTML = `<span class="qlabel" style="top:calc(${pc(lay.prev.y / H)} + 6px);left:calc(${pc(lay.prev.x / W)} + 6px);max-width:calc(${pc(lay.prev.w / W)} - 12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">当前格 · 原始灰度 · 最近邻（看得到真实像素）</span>`
-        + `<span class="qlabel" style="top:calc(${pc(lay.atl.y / H)} - 22px);left:${pc(lay.atl.x / W)};max-width:${pc(Math.max(lay.atl.w, lay.crv.w) / W)};white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="整张贴图：金框 = 当前帧、淡框 = 刚走过、红色 = 过曝像素">整张贴图 · 金框当前帧 · 淡框刚走过 · 红色过曝${L.chans === 4 ? ` · 四块 R / G / B / A 各 ${L.per} 帧` : ''}</span>`; }
+      q.innerHTML = `<span class="qlabel" style="top:calc(${pc(lay.prev.y / H)} + 6px);left:calc(${pc(lay.prev.x / W)} + 6px);max-width:calc(${pc(lay.prev.w / W)} - 12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="最近邻放大">当前格 · 原始灰度</span>`
+        + `<span class="qlabel" style="top:calc(${pc(lay.atl.y / H)} - 22px);left:${pc(lay.atl.x / W)};max-width:${pc(Math.max(lay.atl.w, lay.crv.w) / W)};white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="金框当前帧，红色过曝">整张贴图${L.chans === 4 ? ` · RGBA 各 ${L.per} 帧` : ''}</span>`; }
   } else { q.innerHTML = ''; q.dataset.key = ''; }
 }
 

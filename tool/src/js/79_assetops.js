@@ -249,8 +249,8 @@ function syncAssetOps() {
   $('#abDel').hidden = !dl; $('#abDel').textContent = dl ? '删除' : ''; $('#abDel').title = dl ? dl + '（删了 8 秒内能撤销）' : '';
   const why = !combo ? multiLayerBlock(state.P) : '';
   $('#abAddLayer').disabled = !!why || !!wb.saving;
-  $('#abAddLayer').title = why || (lib.my && combo ? '加一层：花型模板、我的模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成多层副本（原来的不动），再加层');
-  $('#abSaveTpl').hidden = combo && state.comboSel < 0; $('#abSaveTpl').textContent = combo ? `把第 ${state.comboSel + 1} 层存为模板` : '把这一层存为模板';
+  $('#abAddLayer').title = why || '加一层';
+  $('#abSaveTpl').hidden = combo && state.comboSel < 0; $('#abSaveTpl').textContent = '存为模板'; $('#abSaveTpl').title = combo ? `第 ${state.comboSel + 1} 层` : '';
   $('#abUpdTpl').hidden = !(lib.tpl && !combo); $('#abUpdTpl').textContent = lib.tpl ? `更新模板「${lib.tpl.name}」` : '';
   $('#abHide').hidden = !lib.effect;
 }

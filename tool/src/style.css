@@ -2442,3 +2442,45 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #pCombo #layers>.card>.head>.lc-edit:hover{color:var(--t1)}
 #pCombo #layers>.card>.head>select,#pCombo #layers>.card>.head>.x{display:none}
 #pCombo .line:has(#btnExportCombo){display:none}
+/* 恢复本模块：只在悬停模块标题时出现 */
+#params details.mod>summary>.e50-mrst{width:24px;height:24px;min-height:0;padding:0;margin-left:auto;color:var(--t3);visibility:hidden}
+#params details.mod>summary:hover>.e50-mrst:not([hidden]),#params details.mod>summary>.e50-mrst:focus-visible{visibility:visible}
+#params details.mod>summary>.e50-mrst[hidden]{display:none}
+#params details.mod>summary>.e50-mrst:hover{color:var(--t1)}
+#params details.mod>summary>.e50-mrst:not([hidden])+.msum{margin-left:8px}
+#params details.mod>summary>.msum{margin-left:auto}
+/* 画面左上标题、画面上的两行说明：进左下读数的悬停提示（§7） */
+.viewframe>.vf-heading,#box>#hud,#box>#hudB{display:none}
+/* 本层颜色：说明段落进标题悬停提示 */
+#colorControls details.color-note>p.hint,#colorControls details.color-extra>p.hint{display:none}
+/* 多层「导出组合素材包」大按钮：导出 ▾ 里有（行内样式 display:flex，要 !important） */
+#pCombo .line:has(#btnExportCombo),#btnExportCombo{display:none!important}
+/* 显示强度与贴图曝光的关系：说明文字（B，参数说明里有）；导出方案那句进模块标题提示 */
+#colorControls details.color-note,#params .infohost[data-info=schemeNote]{display:none}
+/* 层的导出方案说明：平时进标题提示；有问题（注意 / 两边都不出）时露一行琥珀色 */
+#lhOut .lh-out-info:not(.warn){display:none}
+#lhOut .lh-out-info.warn>summary{display:none}
+#lhOut .lh-out-info.warn>#lhOutNote{margin:0;padding-left:calc(var(--pc-name) + 10px);font-size:var(--fs1);line-height:1.5;color:var(--w3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lhOut .lh-out .field{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;padding-left:var(--in-prm);color:var(--t2)}
+#lhOut .lh-out .field>select{grid-column:2 / 4}
+#lhOut .lh-out{display:block}
+/* 导出菜单摘要里的自检警告 */
+#expSum dd.warn{color:var(--w3)}
+/* 模块标题「+N」：规范里 +N 是隐藏参数个数，改过的不再这样标（行左竖条、筛选 › 仅改动、恢复本模块的提示里有） */
+#params details.mod>summary .msum[data-e40n]::before{content:none}
+/* 模块标题：旧的常驻琥珀「↺」藏了（悬停标题出现的「恢复本模块」图标代替）；摘要组间空 16、不用「·」 */
+#params details.mod>summary .mreset{display:none!important}
+#params details.mod>summary .msum>span+span{margin-left:16px}
+/* 效果页顶「花型」名字长时省略号，不压「更换」；「产物」下拉到数值列为止（和参数行同一套五列） */
+#params .pm-ident .typebtn{width:100%;overflow:hidden}
+#params .pm-ident .typebtn .tb-txt{flex:0 1 auto}
+#params .pm-ident .typebtn .tb-txt b{min-width:0}
+#params .pm-ident .typebtn em{flex:none;padding-left:8px}
+#params .pm-ident>label.field{grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act)}
+/* 参数行「本次改过」：左侧槽位一条 2 × 16 竖条（规范 v4 §10「左侧槽位的竖条表示本次改过」，样板 .prm.is-ed .mk：离右栏左缘 5、主文字色） */
+#right #params details.mod>.field.chg{position:relative}
+#right #params details.mod>.sl.chg::before,#right #params details.mod>.field.chg::before{content:'';position:absolute;left:-33px;top:50%;width:2px;height:16px;margin-top:-8px;background:var(--t1);pointer-events:none}
+/* 「输出 › 导出方案」只剩那一句（已进标题悬停）时整块不出现（§10「有参数的模块才出现」；:has 跟着行的 hidden 实时变，不等脚本） */
+#params details.mod:has(> .infohost[data-info=schemeNote]):not(:has(> :not(summary, .infohost[data-info=schemeNote], [hidden]))){display:none}
+/* 多层效果级「各层在整朵里」每层一块：块里的行比块标题右缩，和模块里的参数行同一条左缘 */
+#pCombo #layers>.card>:not(.head){margin-left:34px}

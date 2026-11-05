@@ -2582,6 +2582,48 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #pCombo #layers>.card>.head>.lc-edit:hover{color:var(--t1)}
 #pCombo #layers>.card>.head>select,#pCombo #layers>.card>.head>.x{display:none}
 #pCombo .line:has(#btnExportCombo){display:none}
+/* 恢复本模块：只在悬停模块标题时出现 */
+#params details.mod>summary>.e50-mrst{width:24px;height:24px;min-height:0;padding:0;margin-left:auto;color:var(--t3);visibility:hidden}
+#params details.mod>summary:hover>.e50-mrst:not([hidden]),#params details.mod>summary>.e50-mrst:focus-visible{visibility:visible}
+#params details.mod>summary>.e50-mrst[hidden]{display:none}
+#params details.mod>summary>.e50-mrst:hover{color:var(--t1)}
+#params details.mod>summary>.e50-mrst:not([hidden])+.msum{margin-left:8px}
+#params details.mod>summary>.msum{margin-left:auto}
+/* 画面左上标题、画面上的两行说明：进左下读数的悬停提示（§7） */
+.viewframe>.vf-heading,#box>#hud,#box>#hudB{display:none}
+/* 本层颜色：说明段落进标题悬停提示 */
+#colorControls details.color-note>p.hint,#colorControls details.color-extra>p.hint{display:none}
+/* 多层「导出组合素材包」大按钮：导出 ▾ 里有（行内样式 display:flex，要 !important） */
+#pCombo .line:has(#btnExportCombo),#btnExportCombo{display:none!important}
+/* 显示强度与贴图曝光的关系：说明文字（B，参数说明里有）；导出方案那句进模块标题提示 */
+#colorControls details.color-note,#params .infohost[data-info=schemeNote]{display:none}
+/* 层的导出方案说明：平时进标题提示；有问题（注意 / 两边都不出）时露一行琥珀色 */
+#lhOut .lh-out-info:not(.warn){display:none}
+#lhOut .lh-out-info.warn>summary{display:none}
+#lhOut .lh-out-info.warn>#lhOutNote{margin:0;padding-left:calc(var(--pc-name) + 10px);font-size:var(--fs1);line-height:1.5;color:var(--w3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lhOut .lh-out .field{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;padding-left:var(--in-prm);color:var(--t2)}
+#lhOut .lh-out .field>select{grid-column:2 / 4}
+#lhOut .lh-out{display:block}
+/* 导出菜单摘要里的自检警告 */
+#expSum dd.warn{color:var(--w3)}
+/* 模块标题「+N」：规范里 +N 是隐藏参数个数，改过的不再这样标（行左竖条、筛选 › 仅改动、恢复本模块的提示里有） */
+#params details.mod>summary .msum[data-e40n]::before{content:none}
+/* 模块标题：旧的常驻琥珀「↺」藏了（悬停标题出现的「恢复本模块」图标代替）；摘要组间空 16、不用「·」 */
+#params details.mod>summary .mreset{display:none!important}
+#params details.mod>summary .msum>span+span{margin-left:16px}
+/* 效果页顶「花型」名字长时省略号，不压「更换」；「产物」下拉到数值列为止（和参数行同一套五列） */
+#params .pm-ident .typebtn{width:100%;overflow:hidden}
+#params .pm-ident .typebtn .tb-txt{flex:0 1 auto}
+#params .pm-ident .typebtn .tb-txt b{min-width:0}
+#params .pm-ident .typebtn em{flex:none;padding-left:8px}
+#params .pm-ident>label.field{grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act)}
+/* 参数行「本次改过」：左侧槽位一条 2 × 16 竖条（规范 v4 §10「左侧槽位的竖条表示本次改过」，样板 .prm.is-ed .mk：离右栏左缘 5、主文字色） */
+#right #params details.mod>.field.chg{position:relative}
+#right #params details.mod>.sl.chg::before,#right #params details.mod>.field.chg::before{content:'';position:absolute;left:-33px;top:50%;width:2px;height:16px;margin-top:-8px;background:var(--t1);pointer-events:none}
+/* 「输出 › 导出方案」只剩那一句（已进标题悬停）时整块不出现（§10「有参数的模块才出现」；:has 跟着行的 hidden 实时变，不等脚本） */
+#params details.mod:has(> .infohost[data-info=schemeNote]):not(:has(> :not(summary, .infohost[data-info=schemeNote], [hidden]))){display:none}
+/* 多层效果级「各层在整朵里」每层一块：块里的行比块标题右缩，和模块里的参数行同一条左缘 */
+#pCombo #layers>.card>:not(.head){margin-left:34px}
 </style>
 </head>
 <body>
@@ -2679,7 +2721,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
           <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
           <span class="lowopts" id="rtTiltOpts" hidden><label class="check" title="4.9.69 升空尾缀倾斜预览：整根绕发射点转，看近段（速度朝向）和远段（Rectangle + 锁 Z）接不接得上；只是预览，不进导出、不存档">倾斜 <select id="rtTilt" aria-label="倾斜预览角度"><option value="0">0°</option><option value="15">15°</option><option value="-15">−15°</option></select></label></span><span class="lowopts" id="lowOpts" hidden><label class="check" title="按现有序列母材质的溶解公式画（值大先消失、软过渡）：导入器给单帧开了溶解以后 UE 里就是这样；关掉 = 不开溶解的样子"><input type="checkbox" id="lowDissolve" checked> 溶解预览</label><label class="check" title="序列 | 单帧 · 某一帧 | 单帧 · 长曝光 同一秒并排"><input type="checkbox" id="lowSide"> 并排</label></span>
           <button class="btn btn-icon" id="vtGrid" type="button" aria-pressed="false" aria-label="构图网格" title="构图网格（只影响观察）"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg></button>
-          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="精简布局：收起左右栏和底下的层轨道，画布最大（F，或双击画布；再按一次恢复，会记住）"><svg class="i" aria-hidden="true"><use href="#i-compact"/></svg><span class="tl">精简</span></button>
+          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="精简布局&#10;快捷键 F"><svg class="i" aria-hidden="true"><use href="#i-compact"/></svg><span class="tl">精简</span></button>
           <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg class="i" aria-hidden="true"><use href="#i-pr"/></svg></button>
         </div>
     <div class="tcol tcol-r assetbar" id="assetBar" hidden>
@@ -2691,16 +2733,16 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
           <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
           <button type="button" id="abRename">重命名这个版本</button>
           <button type="button" id="abDelete">删除这个版本</button>
-          <p class="hint">保存的版本、未保存草稿和导出时的恢复点都在这里。</p>
+          <p class="hint">版本与恢复点</p>
         </div>
       </details></div>
-      <button class="btn btn-icon" id="vtNote" type="button" aria-label="写进意见" title="把时间、视图、平台、距离、图层、版本写进意见"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg></button>
+      <button class="btn btn-icon" id="vtNote" type="button" aria-label="写进意见" title="当前画面写进意见"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg></button>
       <span class="sp"></span>
-      <div class="tgrp bx" role="group" aria-label="还原与保存"><details class="ab-more ab-reset" id="abReset"><summary class="btn" title="还原：回到打开时 / 模板默认 / 只还原某个发射器（都能 Ctrl+Z 撤销）"><svg class="i rv-i" aria-hidden="true"><use href="#i-revert"/></svg><span class="t">还原</span></summary><div class="ab-menu" id="abResetMenu"></div></details><i class="bx-sep" aria-hidden="true"></i><button class="btn primary" id="abSave" type="button" title="保存：你的效果直接保存；AI 做的效果 / 花型模板 / 正式库存成你的效果（原来的不动，之后能加层、删除）">保存</button><i class="bx-sep" aria-hidden="true"></i><button class="btn" id="abSaveAs" type="button" title="另存为：存成一个新的我的效果 / 版本">另存</button></div>
+      <div class="tgrp bx" role="group" aria-label="还原与保存"><details class="ab-more ab-reset" id="abReset"><summary class="btn" title="回到打开时或模板默认"><svg class="i rv-i" aria-hidden="true"><use href="#i-revert"/></svg><span class="t">还原</span></summary><div class="ab-menu" id="abResetMenu"></div></details><i class="bx-sep" aria-hidden="true"></i><button class="btn primary" id="abSave" type="button" title="保存：你的效果直接保存；AI 做的效果 / 花型模板 / 正式库存成你的效果（原来的不动，之后能加层、删除）">保存</button><i class="bx-sep" aria-hidden="true"></i><button class="btn" id="abSaveAs" type="button" title="另存为：存成一个新的我的效果 / 版本">另存</button></div>
       <div class="split export-actions" id="expBtn">
-        <button class="btn export-main" id="abExportPack" type="button" title="导出交付清单「产物表」上的东西：每层按 PC / 手机各自出什么（和交付清单的导出按钮同一个）" aria-label="导出素材包">导出</button>
+        <button class="btn export-main" id="abExportPack" type="button" title="按交付清单导出素材包" aria-label="导出素材包">导出</button>
       <button class="btn btn-1 exp-dd" id="expMenuBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="导出选项"><svg class="i" aria-hidden="true"><use href="#i-cd"/></svg></button></div>
-      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack">导出素材包<span class="k">交付清单产物表</span></button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方文件（.json）</button><button class="mi" type="button" role="menuitem" data-exp="folder" hidden>换导出文件夹…</button></div>
+      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack" title="按交付清单导出">导出素材包</button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方</button><button class="mi" type="button" role="menuitem" data-exp="folder" hidden>换导出文件夹…</button></div>
     </div>
   </div>
   <main id="main">
@@ -2708,18 +2750,18 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
       <section class="pane tree-pane" id="treePane" aria-label="结构">
         <div class="tree-head" id="treeHead"><span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span><span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span><span class="sp"></span><button class="btn btn-icon" id="e40Add" type="button" aria-label="加层或加发射器" title="加层、加发射器" aria-haspopup="menu"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
         <span class="menu-label">配方文件</span>
-        <button type="button" id="abExportFile">导出配方文件（.json）</button>
-        <button type="button" id="abImportFile">导入配方文件…</button>
+        <button type="button" id="abExportFile">导出配方</button>
+        <button type="button" id="abImportFile">导入配方…</button>
         <span class="menu-label">保存设置</span>
         <button type="button" id="abRepo">连接仓库文件夹…</button>
-        <button type="button" id="abRepoRead">读取仓库中的我的效果</button>
+        <button type="button" id="abRepoRead">读取仓库</button>
         <span class="menu-label">模板</span>
-        <button type="button" id="abSaveTpl">把这一层存为模板</button>
+        <button type="button" id="abSaveTpl">存为模板</button>
         <button type="button" id="abUpdTpl" hidden>更新模板</button>
         <span class="menu-label">左栏</span>
-        <button type="button" id="abHide" hidden>从左栏隐藏这个效果</button>
+        <button type="button" id="abHide" hidden>从左栏隐藏</button>
         <span class="menu-label">协作</span>
-        <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
+        <button type="button" id="abCopyDiff" title="发给 AI">复制改动</button>
         <button type="button" id="abMyRename" hidden>重命名这个效果</button>
         <button type="button" id="abMyDelete" hidden>删除这个效果</button>
         <button class="ab-del" id="abDel" type="button" hidden>删除</button>
@@ -2732,9 +2774,9 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
       <section class="pane lib-pane" id="libPane" aria-label="效果库">
       <div class="lib-head"><div class="tabs tabs-lg" role="tablist" id="libTabs" aria-label="效果库"><button class="tab" type="button" role="tab" data-lt="效果" aria-selected="true">效果</button><button class="tab" type="button" role="tab" data-lt="模板" aria-selected="false">模板</button></div></div>
       <div class="side-head">
-        <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
+        <input type="search" id="libSearch" placeholder="名字、任务号、花型" aria-label="搜索库">
         <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
-      <button class="btn newrec lib-new" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">新建</span></button></div>
+      <button class="btn newrec lib-new" id="newRecipe" type="button" title="新建效果"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">新建</span></button></div>
       
       <div class="side-body sb-auto" id="libBody"></div>
         <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
@@ -2774,7 +2816,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
         </div>
       </div>
       <div class="preview-controls">
-        <div class="rtlay" id="rtLayerBar" hidden title="升空尾缀分层看（只影响观察，不改参数和导出）：点一层开 / 关，双击只看这一层，「全部」恢复"></div>
+        <div class="rtlay" id="rtLayerBar" hidden title="只看尾缀的某一段&#10;不改参数和导出"></div>
         <div class="seg small texseg" id="texSeg" hidden role="group" aria-label="看哪一张贴图（这一层导出的每一张序列）"></div>
         
         <label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label>
@@ -2794,7 +2836,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
         <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播（R）" aria-label="重播">重播</button><select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
         </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><svg class="i" aria-hidden="true"><use href="#i-loop"/></svg><span class="tku">循环</span></label><span class="sp"></span>
-        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn btn-icon" aria-label="时间工具" title="时间工具：逐 tick、跳到关键时刻"><svg class="i" aria-hidden="true"><use href="#i-timer"/></svg></summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
+        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn btn-icon" aria-label="时间工具" title="时间工具：逐 tick、跳到关键时刻"><svg class="i" aria-hidden="true"><use href="#i-timer"/></svg></summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span></div></details>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
       </div>
       <div class="tlbars" id="tlBars"></div>
@@ -2845,7 +2887,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
           <label class="field"><span class="fk">星头火花</span><select id="x-out"><option value="combined">合并</option><option value="split">分开</option></select></label>
           <label class="field"><span class="fk" title="Gamma 2.2 未经 UE 验证">灰度编码</span><select id="x-enc"><option value="1">线性</option><option value="2.2">Gamma 2.2</option></select></label>
           <label class="field"><span class="fk" title="自动 = 按运动快慢">取帧方式</span><select id="x-frame"><option value="tick30" hidden>30 fps</option><option value="auto">自动</option><option value="uniform">均匀</option></select></label>
-          <label class="field"><span class="fk" title="固定：整段一个取景；放大：随开花放大，省贴图">面片取景</span><select id="x-zoom"><option value="off">固定</option><option value="on">放大</option><option value="anchor">放大 · 锚爆点</option></select></label>
+          <label class="field"><span class="fk" title="放大：随开花放大，省贴图">面片取景</span><select id="x-zoom"><option value="off">固定</option><option value="on">放大</option><option value="anchor">放大 · 锚爆点</option></select></label>
         </div>
         <label class="check" id="flipBox" hidden title="引擎里速度对齐方向相反时勾选"><input type="checkbox" id="x-flip"> 星头朝下</label>
         <label class="check" id="gridBox" hidden title="帧数不变，按内容长宽比挑列 × 行"><input type="checkbox" id="x-autogrid"> 自动选格子</label>
@@ -2928,8 +2970,8 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
     </div>
   </main>
   <footer class="status" id="statusBar">
-    <div class="st-l"><span id="stShell"></span><button class="btn" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制意见</button></div>
-    <div class="st-r"><span id="status" role="status" aria-live="polite"></span><span class="ab-state" id="abState"></span><button class="btn ab-bcancel" id="abBakeCancel" type="button" hidden title="停下这次烘焙：贴图留着上次烘好的（标旧），改参数或按 B 再烘">取消</button><button class="btn" id="saveSt" type="button" hidden></button><span id="sbPreview"></span><button class="btn" id="keysBtn" type="button" title="快捷键表（?）">快捷键<kbd>?</kbd></button></div>
+    <div class="st-l"><span id="stShell"></span><button class="btn" id="rvCopy" type="button" title="复制意见，贴给 AI">复制意见</button></div>
+    <div class="st-r"><span id="status" role="status" aria-live="polite"></span><span class="ab-state" id="abState"></span><button class="btn ab-bcancel" id="abBakeCancel" type="button" hidden title="停下这次烘焙：贴图留着上次烘好的（标旧），改参数或按 B 再烘">取消</button><button class="btn" id="saveSt" type="button" hidden></button><span id="sbPreview"></span><button class="btn" id="keysBtn" type="button" title="快捷键表">快捷键<kbd>?</kbd></button></div>
   </footer>
   </div>
   <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
@@ -3112,7 +3154,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.131';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
+const VERSION = '4.9.132';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
 // 4.9.123（团队版 T3 第 3 批，同上）：粒子层加 / 复制 / 删 / 改母粒 + 路径条与结构弹层（79_graph_tree.js）；粒子图模板默认不过曝；打开 / 新建多层效果可「稍后烘焙」（已有条目、存档不变）。
 // 4.9.122（团队版 T3 第 2 批，同上）：花型模板加「粒子图」分组——仙女棒、窜天猴尾焰、空白粒子图（46_graph_templates.js；SGS1 / SGR1 和旧的 sparkgraph 形态不变）。
 // 4.9.121（团队版 T3 第 1 批，用户 10-25 00:00「全批准」）：修「烘培」错字、新建效果填英文名 + MyFx 导出前拦下、「我的效果」导出全部 / 导入、本机交付服务没连上时的重连对话框（不改画面、不改导出内容）。
@@ -3575,14 +3617,14 @@ const isSeq = P => !isTrail(P) && !isPhys(P) && !isEmit(P);
 const sparkPolyShown = P => isSeq(P) && (familyOf(P.type) === 'ground' || P.engine === 'gpu' || P.form === 'riseLoop');
 // 4.9.50 线条宽度（米）⇄ 火花散开速度（m/s）：每轴正态 σ = 散开速度，线性阻力 k 下横向位移到寿命 L 时 σ·(1 − e^(−kL))/k；宽度 = 2 × 这个（约 2/3 的火花在里面）
 const spreadW = P => { const k = +P.sparkDrag || 0, L = Math.max(0.01, +P.sparkLife || 0.5); return 2 * (k > 1e-4 ? (1 - Math.exp(-k * L)) / k : L); };
-const SPREAD_VIEW = { get: (P, v) => +((+v || 0) * spreadW(P)).toFixed(4), set: (P, w) => +((+w || 0) / spreadW(P)).toFixed(5), note: P => `= 散开速度 ${(+P.sparkSpread || 0).toFixed(2)} m/s（阻力 ${(+P.sparkDrag || 0).toFixed(2)}、寿命 ${(+P.sparkLife || 0).toFixed(2)} s 时）` };
+const SPREAD_VIEW = { get: (P, v) => +((+v || 0) * spreadW(P)).toFixed(4), set: (P, w) => +((+w || 0) / spreadW(P)).toFixed(5), note: P => `= 散开速度 ${(+P.sparkSpread || 0).toFixed(2)} m/s` };
 const frameOn = P => !!P && (P.outPC === 'frame' || P.outMobile === 'frame');     // 4.9.35 单帧的设置：PC 或手机选了单帧才出现
 // 4.4.2：单层效果的「导出方案」只给空中礼花的大面片 / 分段（多层效果在层页头；尾缀、地面、上升循环没有光点 / 单束）
 const singleSchemeOn = P => !!P && familyOf(P.type) === 'aerial' && isSeq(P) && P.form !== 'unit' && (typeof state === 'undefined' || state.tab !== 'combo');   // 普通花型（非尾缀序列、非物理尾缀、非循环层 + 粒子）
-const PATTERNS = [['sphere', '球'], ['half', '半球（贴水面）'], ['ring', '环'], ['saturn', '土星（球 + 环）'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字'], ['cluster', '分簇（几簇对称排列）']];     // 4.9.15 加分簇
+const PATTERNS = [['sphere', '球'], ['half', '半球'], ['ring', '环'], ['saturn', '土星'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字'], ['cluster', '分簇']];     // 4.9.15 加分簇
 // 4.9.15 分簇的排法（20_sim.js clusterCenters；看的方向 = z 轴）
-const CLUSTER_LAYOUTS = [['cube', '立方：6 轴 + 8 角（14 簇）'], ['axes', '6 轴'], ['corners', '8 角'], ['ico', '正二十面体（12 簇）'], ['ring', '一圈 N 簇（画面平面里）'], ['sphere', '球面均匀 N 簇'], ['fan', '扇面 N 簇（画面平面里，扇形组合的一排筒）']];
-const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长火花）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
+const CLUSTER_LAYOUTS = [['cube', '立方 14 簇'], ['axes', '6 轴'], ['corners', '8 角'], ['ico', '二十面体'], ['ring', '一圈'], ['sphere', '球面均匀 N 簇'], ['fan', '扇面']];
+const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜'], ['dark', '暗升'], ['kobana', '昇り小花'], ['bunpo', '分砲'], ['fue', '笛'], ['spiral', '螺旋']];
 const SCHEMA = [
   { sec: '规格', show: isSeq, items: [
     { sel: 'shellNo', label: '号数', show: P => !isGround(P), options: [[0, '手动'], ...SHELL_NO.map(r => [r[0], r[0] === 40 ? '40 号（四尺玉）' : r[0] === 10 ? '10 号（尺玉）' : r[0] + ' 号'])], hint: '按号数自动推算初速、星数、寿命、星头大小（以本花型默认值约 5 号为基准）；节奏默认「游戏紧凑」（整段长了就加快，4.9.30），要号数表写实把「效果 › 整体调整 › 节奏」改回 1' }
@@ -3629,7 +3671,7 @@ const SCHEMA = [
     ['waterRefl', '水面倒影', '', 0, 1, 0.01, isAir]
   ] },
   { sec: '物理扰动', show: P => !isGround(P) && isSeq(P), hint: '风与湍流：星和火花都受影响；GPU 火花用「发射点处的气流」做衰减偏移近似。', items: [
-    { sel: 'burstFlowOn', label: '爆后扰动', options: [[0, '关闭'], [1, '开启（各束共用气流）']], show: isAir },
+    { sel: 'burstFlowOn', label: '爆后扰动', options: [[0, '关闭'], [1, '开启']], show: isAir },
     ['burstFlowStart', '扰动开始时间（开花后）', 's', 0, 10, .05, isAir],
     ['burstFlowFade', '扰动渐入时间', 's', .05, 2, .05, isAir],
     ['burstFlowWind', '扰动气流速度', 'm/s', 0, 6, .1, isAir],
@@ -3710,7 +3752,7 @@ const SCHEMA = [
     ['headHexRot', '六边形转角', '°', 0, 60, 1, P => isAir(P) && +P.headHex > 0],
     ['headBright', '炭头亮度', '×', 0, 3, 0.05],
     // 4.9.58 星头单独光晕（对话框FanGold，用户 10-09 21:48；审查第 4、5 条）：缺省跟「光点与曝光」的光晕（星头、火花、光点共用）；单独设时只管星头，火花照旧用层的
-    { sel: 'headHaloOwn', label: '星头光晕', options: [[0, '跟这一层（光点与曝光，火花也一样）'], [1, '星头单独设（火花照旧）']], show: isAir },
+    { sel: 'headHaloOwn', label: '星头光晕', options: [[0, '跟这一层'], [1, '星头单独设']], show: isAir },
     ['headHaloFrac', '星头光晕占比（光晕分走的光量）', '', 0, 0.85, 0.01, P => isAir(P) && +P.headHaloOwn === 1],
     ['headHaloR', '星头光晕半径（× 亮核半径）', '×', 1, 8, 0.1, P => isAir(P) && +P.headHaloOwn === 1],
     ['flicker', '闪烁强度', '', 0, 1, 0.01],
@@ -3719,7 +3761,7 @@ const SCHEMA = [
   ] },
   { sec: '尾缀（炭火火花）', show: isSeq, hint: '可见尾长由星体运动、火花跟随、寿命和冷却共同决定。末段寿命控制后来出生的火花，不改变已有火花。', items: [
     // 火花发射器补全（对话框FanGold，用户 10-09 21:48，审查 analysis/原理/火花发射审查_2026-10-09.md）：生成方式 每秒 / 每米、起始半径 + 跟星头大小、向后喷 + 锥角；缺省 = 以前（每秒、星心一点、各向同性）
-    { sel: 'sparkRateBy', label: '火花生成方式', options: [['sec', '每秒（燃烧多久出多少，星快的地方稀）'], ['m', '每米（星走多远出多少，线一样密）']], show: isAir },
+    { sel: 'sparkRateBy', label: '火花生成方式', options: [['sec', '每秒'], ['m', '每米']], show: isAir },
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1, P => !(isAir(P) && P.sparkRateBy === 'm')],
     ['sparkPerM', '每米火花数（星每走 1 m 出几颗）', '个/m', 0, 100, 0.1, P => isAir(P) && P.sparkRateBy === 'm'],
     ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01, P => isAir(P) && P.sparkRateBy !== 'm'],
@@ -3737,7 +3779,7 @@ const SCHEMA = [
     ['sparkStretch', '火花拉长（沿飞行方向，1 = 一帧 30 fps 的相机拖影）', '', 0, 3, 0.01, isAir],
     ['sparkStretchJit', '火花拉长随机（每粒长短不同）', '', 0, 1, 0.01, P => isAir(P) && +P.sparkStretch > 0],
     // 4.9.56 火花形状 / 亮度随机（对话框相机渲染，用户 10-09 23:20）：缺省圆、不随机 = 以前逐像素不变
-    { sel: 'sparkShape', label: '火花形状', show: sparkPolyShown, options: [[0,'圆（以前）'],[1,'不规则多边形（每粒形状、朝向不同，边缘锐利）']] },
+    { sel: 'sparkShape', label: '火花形状', show: sparkPolyShown, options: [[0,'圆'],[1,'多边形']] },
     ['sparkShapeIrr', '多边形不规则程度（0 = 正多边形，1 = 顶点远近、间隔差很多）', '', 0, 1, 0.01, P => sparkPolyShown(P) && +P.sparkShape === 1],
     ['sparkShapeSpin', '多边形翻转（每粒随机正反，最快这么多圈 / 秒）', '圈/s', 0, 3, 0.05, P => sparkPolyShown(P) && +P.sparkShape === 1],
     ['sparkBrightJit', '火花亮度随机（每粒一个固定倍数，对数正态，均值 1）', '', 0, 1.5, 0.01, sparkPolyShown],
@@ -3752,7 +3794,7 @@ const SCHEMA = [
     ['sparkLateWind', '燃尽后气流（普通火花与余烬；不影响亮头）', 'm/s', 0, 2, .05, isAir],
     ['sparkLateScale', '末段气流尺度', 'm', .2, 10, .1, P => isAir(P) && +P.sparkLateWind > 0],
     ['sparkLateFade', '燃尽后渐入时间', 's', .05, 2, .05, P => isAir(P) && (+P.sparkLateWind > 0 || +P.sparkTailAfterBurn === 1)],
-    { sel: 'sparkTailAfterBurn', label: '火花与余烬曲线阶段', options: [[0, '全程按粒子寿命'], [1, '母星燃尽后按剩余寿命']], show: isAir },
+    { sel: 'sparkTailAfterBurn', label: '火花与余烬曲线阶段', options: [[0, '全程'], [1, '燃尽后']], show: isAir },
     ['sparkGrav', '火花下坠', '×', 0, 3, 0.05],
     ['T0', '初始温度', 'K', 1500, 2800, 10],
     ['cooling', '冷却速度', '', 0, 0.8, 0.01],
@@ -3801,7 +3843,7 @@ const SCHEMA = [
     ['tailHazeR', '线间底光半径', 'm', 1, 30, 0.5, P => +P.tailHaze > 0]
   ] },
   { sec: '千轮 / 分裂', show: P => P.type === 'senrin' || P.type === 'crossette', items: [
-    { sel: 'subPattern', label: '子星排布', options: [['sphere', '小球（千轮）'], ['cross', '十字（分裂）']] },
+    { sel: 'subPattern', label: '子星排布', options: [['sphere', '小球'], ['cross', '十字']] },
     ['subDelay', '子花开花时刻', 's', 0.2, 8, 0.01],
     ['subJit', '开花时刻离散', '%', 0, 40, 0.5],
     ['subStars', '每朵子花星数', '颗', 2, 120, 1],
@@ -3823,9 +3865,9 @@ const SCHEMA = [
     { curve: 'subBrightCurve', label: '子星亮度随寿命' }     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '自定义发射器 1', show: P => isAir(P) && +P.x1On > 0, hint: '自定义发射器（4.6.0，＋ 加发射器）：挂在星的事件上，生成光点或星；每个模块都在：生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁。颜色跟这一层（灰度贴图 + Ramp），要别的颜色就拆成另一层。', items: [
-    { sel: 'x1Event', label: '什么时候生成', options: [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']] },
+    { sel: 'x1Event', label: '什么时候生成', options: [['death', '熄灭时'], ['birth', '开花时'], ['time', '定时'], ['trail', '沿路']] },
     ['x1T', '开花后第几秒', 's', 0, 10, 0.05, P => P.x1Event === 'time'],
-    { sel: 'x1Kind', label: '生成什么', options: [['dot', '光点（小闪、碎光、落火）'], ['star', '星（会烧、带火花，像子花）']] },
+    { sel: 'x1Kind', label: '生成什么', options: [['dot', '光点'], ['star', '星']] },
     ['x1N', '每颗星生成几个', '个', 0, 200, 1, P => P.x1Event !== 'trail'],
     ['x1Rate', '每颗星每秒生成', '个/秒', 0, 500, 1, P => P.x1Event === 'trail'],
     ['x1Prob', '触发比例', '', 0, 1, 0.01],
@@ -3851,9 +3893,9 @@ const SCHEMA = [
     { info: 'exColor1' }
   ] },
   { sec: '自定义发射器 2', show: P => isAir(P) && +P.x2On > 0, hint: '自定义发射器（4.6.0，＋ 加发射器）：挂在星的事件上，生成光点或星；每个模块都在：生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁。颜色跟这一层（灰度贴图 + Ramp），要别的颜色就拆成另一层。', items: [
-    { sel: 'x2Event', label: '什么时候生成', options: [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']] },
+    { sel: 'x2Event', label: '什么时候生成', options: [['death', '熄灭时'], ['birth', '开花时'], ['time', '定时'], ['trail', '沿路']] },
     ['x2T', '开花后第几秒', 's', 0, 10, 0.05, P => P.x2Event === 'time'],
-    { sel: 'x2Kind', label: '生成什么', options: [['dot', '光点（小闪、碎光、落火）'], ['star', '星（会烧、带火花，像子花）']] },
+    { sel: 'x2Kind', label: '生成什么', options: [['dot', '光点'], ['star', '星']] },
     ['x2N', '每颗星生成几个', '个', 0, 200, 1, P => P.x2Event !== 'trail'],
     ['x2Rate', '每颗星每秒生成', '个/秒', 0, 500, 1, P => P.x2Event === 'trail'],
     ['x2Prob', '触发比例', '', 0, 1, 0.01],
@@ -3962,7 +4004,7 @@ const SCHEMA = [
     ['phCI', '亮度', '', 0, 3, 0.01], ['phCR', '发光半径', 'm', 0.01, 0.3, 0.005]
   ] },
   { sec: '尾缀 · 弹道与规格', show: isEmit, hint: '弹体按 Cascade 的线性阻力飞（和引擎里的循环层粒子同一条弹道，粒子出生位置也取这条）：给定开花高度、升空时间、开花时速度，反解出膛速度和阻力。小 / 中档在还往上冲时开花，大档接近顶点。', items: [
-    { sel: 'rtBall', label: '弹道', options: [[0, '线性阻力（给升空时间反解，旧）'], [1, '物理（弹径定终端速度、平方阻力）']] },
+    { sel: 'rtBall', label: '弹道', options: [[0, '线性（旧）'], [1, '物理']] },
     ['rtH', '开花高度', 'm', 50, 700, 1],
     ['rtT', '升空时间', 's', 1, 12, 0.05, P => +P.rtBall !== 1],
     ['rtVb', '开花时弹体速度', 'm/s', 0.5, 80, 0.5],
@@ -4005,7 +4047,7 @@ const SCHEMA = [
     ['rtCRate', '粗 · 出生率', '颗/秒', 0, 2000, 1], ['rtCLife', '粗 · 寿命', 's', 0.1, 8, 0.01], ['rtCJit', '粗 · 寿命离散', '%', 0, 90, 1], ['rtCSize', '粗 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtCI', '粗 · 亮度', '×', 0, 40, 0.01], ['rtCKd', '粗 · 阻力', '1/s', 0.2, 30, 0.05],
     ['rtSizeJit', '尺寸离散（远处亮度 ∝ 尺寸²）', '±%', 0, 90, 1], ['rtKdJit', '阻力离散', '±%', 0, 90, 1],
     ['rtConeSoft', '散开分布（0 均匀 = 边缘一刀切；1 两个均匀相加 = 中间密、边缘软）', '', 0, 1, 1, P => +P.rtGpuSafe !== 1],
-    { sel: 'rtGpuSafe', label: 'GPU 兼容', options: [[0, '旧（GPU 也写 Acceleration 乱流、软边散开写 2 个）'], [1, 'UE 4.24 实测：GPU 不写 Acceleration、Initial Velocity ≤ 2']] },
+    { sel: 'rtGpuSafe', label: 'GPU 兼容', options: [[0, '旧'], [1, 'UE 4.24 实测']] },
     { curve: 'rtFSizeCurve', label: '细火花大小随寿命', show: P => P.rtFRate > 0 },
     { curve: 'rtFBrightCurve', label: '细火花亮度随寿命', show: P => P.rtFRate > 0 },
     { curve: 'rtMSizeCurve', label: '中火花大小随寿命', show: P => P.rtMRate > 0 },
@@ -4014,7 +4056,7 @@ const SCHEMA = [
     { curve: 'rtCBrightCurve', label: '粗火花亮度随寿命', show: P => P.rtCRate > 0 }     // 4.9.4 按寿命曲线
   ] },
   { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '细火花的一部分烘进循环层贴图（随体坐标，和白热段火花同一套真循环；运动、散开、小涡、拖影和 GPU 细火花同一套公式），其余留在 GPU（细火花出生率 × (1 − 比例)）。细火花寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火花飞得远、留在 GPU。贴图亮度是灰度 + Ramp 口径（暗的是橙红、亮的是金白），和 GPU 的倍数不通用：1 = 一颗细火花是一颗白热段火花光量的 1%。', items: [
-    { sel: 'rtFar', label: '贴图怎么分', options: [[0, '旧：循环层（细 / 中火花按比例进贴图，其余 GPU）'], [1, '近段 + 远段：年轻的进循环层、年老的进远段全程序列，GPU 按档预算再加']] },
+    { sel: 'rtFar', label: '贴图怎么分', options: [[0, '循环层（旧）'], [1, '近段 + 远段']] },
     ['rtFTex', '细火星烘进贴图的比例（0 = 全在 GPU）', '', 0, 1, 0.05, P => +P.rtFar !== 1],
     ['rtMTex', '中火星烘进贴图的比例（0 = 全在 GPU）', '', 0, 1, 0.05, P => +P.rtFar !== 1],
     ['rtNearA0', '近段 → 远段：开始交接的年龄', 's', 0.1, 3, 0.05, P => +P.rtFar === 1],
@@ -4028,11 +4070,11 @@ const SCHEMA = [
     ['rtGpuDisp', 'GPU 火花远看直径（0 = 真实大小；放大时光量不变）', 'm', 0, 6, 0.05],
     ['rtGpuGain', 'GPU 火花远看增益（× 光量不变时的亮度）', '×', 0.1, 20, 0.05, P => P.rtGpuDisp > 0],
     ['rtTexI', '贴图火星亮度', '×', 0, 2000, 0.1, P => P.rtFTex > 0 || P.rtMTex > 0 || +P.rtFar === 1],
-    { sel: 'rtTexCal', label: '贴图火星亮度口径', show: P => P.rtFTex > 0 || P.rtMTex > 0 || +P.rtFar === 1, options: [[0, '旧（温度偏移越低越亮，H4）'], [1, '燃烧温度处 = 1（和温度偏移无关）']] },
+    { sel: 'rtTexCal', label: '贴图火星亮度口径', show: P => P.rtFTex > 0 || P.rtMTex > 0 || +P.rtFar === 1, options: [[0, '旧'], [1, '燃烧温度 = 1']] },
     ['rtGpuMax', 'PC 上 GPU 粒子同时活着上限（0 = 不限）', '颗', 0, 20000, 50]
   ] },
   { sec: '尾缀 · 引擎里加的效果', show: isEmit, hint: '都是软圆点（不新增材质）。星头光晕：星头强光被空气 / 烟散射成的一团柔光，贴图格子窄放不下，引擎里单独一颗跟着弹道走、亮度跟喷射脉动。末段爆亮：木炭 + 硫的熔渣粒烧到最后微爆、闪一下（线香花火「松叶」同一机理），和粗火花同一套运动。发射口：发射药在炮筒口一闪 + 一把向上喷的火花。合成一张（4.9.102）：「合成一张时烘进贴图」开着，这些（连同落火、烟带）按实时模拟里的样子逐像素反推烘进那一张序列——颜色变成 Ramp 色，亮到 253 截顶；关着只在实时模拟里画、导出里没有。', items: [
-    { sel: 'rtFullFx', label: '合成一张时烘进贴图', show: P => emitFullOut(P) && !rtHeadOnly(P), options: [[0, '不烘（只在实时模拟里画）'], [1, '烘进合成一张（光晕 / 爆亮 / 发射口 / 烟带 / 落火）']] },
+    { sel: 'rtFullFx', label: '合成一张时烘进贴图', show: P => emitFullOut(P) && !rtHeadOnly(P), options: [[0, '不烘'], [1, '烘进']] },
     ['rtGlow', '星头光晕亮度（0 关）', '×', 0, 5, 0.01], ['rtGlowSize', '星头光晕直径', 'm', 0.5, 30, 0.1, P => P.rtGlow > 0],
     ['rtPopRate', '末段爆亮 · 出生率（0 关）', '颗/秒', 0, 400, 1], ['rtPopI', '末段爆亮 · 亮度', '×', 0, 80, 0.1, P => P.rtPopRate > 0], ['rtPopSize', '末段爆亮 · 尺寸', 'm', 0.05, 3, 0.01, P => P.rtPopRate > 0], ['rtPopAt', '末段爆亮 · 在寿命的哪里闪', '', 0.2, 0.95, 0.01, P => P.rtPopRate > 0],
     ['rtLaunch', '发射口闪光亮度（0 关）', '×', 0, 10, 0.01], ['rtLaunchSize', '发射口闪光直径', 'm', 1, 40, 0.1, P => P.rtLaunch > 0], ['rtLaunchN', '发射口火星颗数', '颗', 0, 1000, 1, P => P.rtLaunch > 0],
@@ -4059,7 +4101,7 @@ const SCHEMA = [
     ['rtLateWind', '燃尽后气流（合并全程）', 'm/s', 0, 2, 0.05, P => rtFullOnly(P) || +P.rtLateWind > 0],     // 4.9.86：只有两个平台都合成一张（或手机不出）才能烘；不是时开着的照样露出来，好关掉
     ['rtLateScale', '末段气流尺度', 'm', 0.2, 10, 0.1, P => P.rtLateWind > 0],
     ['rtLateFade', '燃尽后渐入时间', 's', 0.05, 2, 0.05, P => P.rtLateWind > 0 || +P.rtTailAfterBurn === 1],
-    { sel: 'rtTailAfterBurn', label: '火星曲线与落火（合并全程）', show: P => rtFullOnly(P) || +P.rtTailAfterBurn === 1, options: [[0, '全程按粒子寿命'], [1, '燃尽后渐入，保留前段']] }
+    { sel: 'rtTailAfterBurn', label: '火星曲线与落火（合并全程）', show: P => rtFullOnly(P) || +P.rtTailAfterBurn === 1, options: [[0, '全程'], [1, '燃尽后渐入']] }
   ] },
   { sec: '尾缀 · 火星颜色与熄灭', show: isEmit, hint: '颜色按黑体温度：出喷口很热（白），约 tc 秒降到空气中的燃烧温度（金），寿命最后一段降到熄灭温度（橙 → 暗）。闪烁写进 Color Over Life，每颗寿命不同所以相位错开。', items: [
     ['rtT0', '出喷口温度', 'K', 1600, 3000, 10],
@@ -4070,7 +4112,7 @@ const SCHEMA = [
     ['rtShrink', '烧到最后的大小（× 出生时）', '×', 0.05, 1.5, 0.01]
   ] },
   { sec: '尾缀 · 落火', show: isEmit, hint: '少量长寿大颗，阻力小、下坠，零星掉在尾迹下方（0 关）。', items: [
-    { sel: 'rtETex', label: '落火进入合并贴图', show: P => rtFullOnly(P) || +P.rtETex === 1, options: [[0, '关闭（原粒子输出）'], [1, '开启（仅合并全程）']] },
+    { sel: 'rtETex', label: '落火进入合并贴图', show: P => rtFullOnly(P) || +P.rtETex === 1, options: [[0, '关闭'], [1, '开启']] },
     ['rtERate', '出生率', '颗/秒', 0, 200, 1], ['rtELife', '寿命', 's', 0.2, 8, 0.05], ['rtESize', '粒子尺寸', 'm', 0.05, 5, 0.01], ['rtEI', '亮度', '×', 0, 10, 0.01], ['rtEKd', '阻力', '1/s', 0.1, 10, 0.05],
     { curve: 'rtESizeCurve', label: '落火大小随寿命', show: P => P.rtERate > 0 },
     { curve: 'rtEBrightCurve', label: '落火亮度随寿命', show: P => P.rtERate > 0 }     // 4.6.0+（5.0）
@@ -4085,10 +4127,10 @@ const SCHEMA = [
     { curve: 'rtSmokeBrightCurve', label: '烟带亮度随寿命', show: P => P.rtSmoke > 0 }     // 4.6.0+（5.0）
   ] },
   { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片上端（Pivot Offset 放在粒子位置，和 V5 尾缀一样），面片只包住看得见的部分；格子按长宽比在 16×1 / 8×2 / 4×4 里挑（单格 = 512² 像素），RGBA 64 帧真循环。开花后换「贴图动态消散」序列（每颗火花 / 火花按自己的寿命熄灭），格子一样大、贴图按帧数挑最小、四个通道用满；另写 dissolve 动态参数。手机贴图边长 × 比例（默认一半 = 单格 256² 像素）。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
-    { sel: 'rtLoopSize', label: '循环层长度', options: [[0, '全程不变（4.4，出场淡入）'], [1, '跟真实尾迹（起步从短长出来、减速变短）']] },
+    { sel: 'rtLoopSize', label: '循环层长度', options: [[0, '全程不变'], [1, '跟真实尾迹']] },
     ['rtLoopMin', '循环层最短（× 面片长）', '×', 0.05, 1, 0.01, P => +P.rtLoopSize === 1],
     // 4.9.89（导出排查 A16）：以前是 0–3 的滑杆，表示不了 −1（按规格框的列 × 行；Comet / Silver 用的就是它），一碰就变成自动、帧数翻倍
-    { sel: 'rtGrid', label: '格子', options: [[0, '自动（按面片长宽比挑）'], [-1, '按规格框的列 × 行'], [1, '16 × 1'], [2, '8 × 2'], [3, '4 × 4']] },
+    { sel: 'rtGrid', label: '格子', options: [[0, '自动'], [-1, '按规格'], [1, '16 × 1'], [2, '8 × 2'], [3, '4 × 4']] },
     ['rtMobileTex', '手机贴图边长比例', '×', 0.25, 1, 0.05],
     ['rtBright', '循环层引擎亮度（Color Over Life）', '×', 0.1, 10, 0.05],
     ['rtDotGain', '粒子层亮度总倍数', '×', 0, 10, 0.01],
@@ -4125,15 +4167,15 @@ const SCHEMA = [
   //   导出时 cascade.json（PC / 手机）里所有长度 × 这个数（面片大小、位置、速度、加速度、球面半径），时间、帧号、贴图都不变 → 同一个效果小一号。
   //   粒子系统名加 _S80 / _S50（贴图名不变、几档共用），素材包也带这个后缀；引擎回放「游戏内大小」按缩放后的画
   { sec: '导出缩放', show: P => isSeq(P) || isEmit(P) || isTrail(P), items: [
-    { sel: 'exportScale', label: '导出缩放（整个效果小一号，时间不变）', options: [[1, '1（原大）'], [0.8, '0.8'], [0.5, '0.5']] },
+    { sel: 'exportScale', label: '导出缩放', options: [[1, '原大'], [0.8, '0.8'], [0.5, '0.5']] },
     // 4.9.32（用户 16:15「2.缩小到0.8/0.5，升空的高度还是之前正确的吗？」→ 选「两种都要，导出时选」）：升空尾缀缩小时，升空高度跟着缩还是不变（只缩粗细，系统名 _W80 / _W50）
-    { sel: 'exportScaleRise', label: '升空高度（缩小时）', options: [['scale', '跟着缩（等比缩小版，高度 × 缩放）'], ['keep', '不变（只缩粗细、火花大小和散开）']], show: P => (isEmit(P) || isTrail(P)) && +P.exportScale > 0 && +P.exportScale < 1 }
+    { sel: 'exportScaleRise', label: '升空高度（缩小时）', options: [['scale', '跟着缩'], ['keep', '不变']], show: P => (isEmit(P) || isTrail(P)) && +P.exportScale > 0 && +P.exportScale < 1 }
   ] },
   { sec: '导出方案', show: P => singleSchemeOn(P), items: [
     // 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里」；18:5x「手机列保留，手机也可以选序列或者单帧或者单束，但没有GPU」）：PC 加单帧，手机加单束 / 单帧；低端导出删了
-    { sel: 'outPC', label: 'PC 导出', optOK: (v, P) => !burstFlowOutputReason(P, v) && (v !== 'dots' || dotsCount(P) > 0), options: [['seq', '序列（大面片）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']] },
-    { sel: 'outMobile', label: '手机导出', optOK: (v, P) => !burstFlowOutputReason(P, v), options: [['seq', '序列'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']] },
-    { sel: 'lowPick', label: '单帧取哪一刻', options: [['frame', '某一帧'], ['expo', '长曝光（入点 → 出点每像素取最亮）']], show: P => frameOn(P) },
+    { sel: 'outPC', label: 'PC 导出', optOK: (v, P) => !burstFlowOutputReason(P, v) && (v !== 'dots' || dotsCount(P) > 0), options: [['seq', '序列'], ['unit', '单束'], ['dots', 'GPU 光点'], ['frame', '单帧'], ['off', '不出']] },
+    { sel: 'outMobile', label: '手机导出', optOK: (v, P) => !burstFlowOutputReason(P, v), options: [['seq', '序列'], ['unit', '单束'], ['frame', '单帧'], ['off', '不出']] },
+    { sel: 'lowPick', label: '单帧取哪一刻', options: [['frame', '某一帧'], ['expo', '长曝光']], show: P => frameOn(P) },
     ['lowAt', '单帧时刻（0 = 自动：花开得最大那一刻）', 's', 0, 30, 0.0333, P => frameOn(P) && P.lowPick !== 'expo'],
     { info: 'lowAtNow', show: P => frameOn(P) && P.lowPick !== 'expo' },
     { sel: 'lowSize', label: '单帧贴图大小', options: [[512, '512'], [1024, '1024'], [2048, '2048']], show: P => frameOn(P) },
@@ -4149,7 +4191,7 @@ const SCHEMA = [
   { sec: '入点与出点（导出）', show: P => usesTickPlan40(P) || emitFullOut(P), hint: '时间轴下面的时段条上有「设为入点 / 设为出点」和白色把手（空中大面片、合成一张的尾缀）：先看整段（全黑帧已剔掉），在想开始、结束的那一刻点一下或拖把手。0 = 自动（第一次 / 最后一次看得见）。纯星头（一颗粒子）没有时段条，用下面两行。礼花设了入点时，入点以前的开花闪光单独导出一颗软圆点（Flash，4.9.96），其余入点前的内容只有「入点之前」这一行管。', items: [
     ['cutIn', '入点（帧从这里开始分配；0 = 第一次看得见）', 's', 0, 30, 0.0333],
     ['cutOut', '出点（0 = 最后一次看得见）', 's', 0, 30, 0.0333],
-    { sel: 'preRoll', label: '入点之前', show: P => +P.cutIn > 0 && !isEmit(P), options: [[1, '用入点那一帧从小放大（Size By Life）'], [0, '不显示（发射器延迟到入点）']] },
+    { sel: 'preRoll', label: '入点之前', show: P => +P.cutIn > 0 && !isEmit(P), options: [[1, '从小放大'], [0, '不显示']] },
     ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0 && !isEmit(P)]
   ] },
   // 4.2.0（用户 2026-10-02 16:22「单层输出成多少总帧数我也无法控制……能不能梳理一下」）：一节里定「多少帧 → 怎么装进贴图」，顶上一行实时显示结果
@@ -4157,17 +4199,17 @@ const SCHEMA = [
     { info: 'outSummary', show: usesTickPlan40 },
     { info: 'specBox', show: P => !isEmit(P) },
     { info: 'specMore', show: P => !isEmit(P) },
-    { sel: 'outMode', label: '星头火花输出', show: emitFullOut, options: [['combined', '星头与火花合并'], ['split', '星头、火花分开（PC 两张、两个发射器；手机仍合一张）']] },     // 4.9.79 和烟花规格框里的「星头火花输出」同一个参数
-    { sel: 'zoom', label: '面片取景', show: emitFullOut, options: [['off', '固定（整段一个面片，装下整条升空路径）'], ['anchor', '随内容放大 · 锚在发射点（早段星头不再缩在面片底部；Size By Life 绕发射点放大）']] },     // 4.9.81 带锚点的 Zoom（用户 10-13 21:36 同意）
+    { sel: 'outMode', label: '星头火花输出', show: emitFullOut, options: [['combined', '合并'], ['split', '分开']] },     // 4.9.79 和烟花规格框里的「星头火花输出」同一个参数
+    { sel: 'zoom', label: '面片取景', show: emitFullOut, options: [['off', '固定'], ['anchor', '锚定']] },     // 4.9.81 带锚点的 Zoom（用户 10-13 21:36 同意）
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P) && !isEmit(P)],
-    { sel: 'frameBudget', label: '帧数', show: P => usesTickPlan40(P) || emitFullOut(P), optOK: (v, P) => !emitFullOut(P) || v === 'motion' || v === 'fixed', options: [['motion','按运动分（默认）：开花段每 tick 一帧（30 fps），慢下来每帧多停几个 tick，先放进一张，放不下自动加张'],['fixed','固定机位 + 匀速帧：整段每帧停一样多 tick，帧号一条直线（一张贴图时开花段常常只有 10 fps）'],['lean','旧（待删）· 最省：只用到最慢帧率需要的帧'],['count','旧（待删）· 手动：自己定总帧数（按运动分配）'],['tiers','旧（待删）· 分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','旧（待删）· 全程 30 fps（每个 tick 一帧，最费贴图）']] },
+    { sel: 'frameBudget', label: '帧数', show: P => usesTickPlan40(P) || emitFullOut(P), optOK: (v, P) => !emitFullOut(P) || v === 'motion' || v === 'fixed', options: [['motion','按运动分'],['fixed','匀速'],['lean','最省（旧）'],['count','手动（旧）'],['tiers','分段（旧）'],['full','全程 30 fps（旧）']] },
     ['frameCount', '总帧数（手动）', '帧', 4, 256, 1, P => usesTickPlan40(P) && P.frameBudget === 'count'],
-    { sel: 'outPack', label: '格子', show: usesTickPlan40, options: [['grid','固定：按贴图尺寸和列 × 行（帧少时空格子留着）'],['fit','按帧数选最小贴图：单格不变，格子 1×1 / 2×1 / 2×2 / 4×2 / 4×4 里挑最小的放得下的']] },
+    { sel: 'outPack', label: '格子', show: usesTickPlan40, options: [['grid','固定'],['fit','最小贴图']] },
     { sel: 'outCell', label: '单格', show: usesTickPlan40, options: [[0,'跟贴图尺寸 ÷ 列数'],[512,'512 px（PC 下限）'],[1024,'1024 px'],[2048,'2048 px']] },
     ['pageTarget', '贴图张数（至少几张；放不下自动加）', '张', 1, 8, 1, P => usesTickPlan40(P) && ['motion', 'fixed'].includes(P.frameBudget || 'motion')],
     ['holdTicks', '每帧停几个 tick（0 = 自动：放得下的最快）', 'tick', 0, 3, 1, P => (usesTickPlan40(P) || emitFullOut(P)) && (P.frameBudget || 'motion') === 'fixed'],     // 4.9.5 输出栏收口：固定机位的帧率可以手动定
-    { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => (usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion')) || (emitFullOut(P) && (P.frameBudget || 'motion') !== 'fixed'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick，默认）'],[4,'7.5 fps（停 4 tick）']] },
-    { sel: 'maxHold', label: '淡出段最慢帧率', show: P => (usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion')) || (emitFullOut(P) && (P.frameBudget || 'motion') !== 'fixed'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
+    { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => (usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion')) || (emitFullOut(P) && (P.frameBudget || 'motion') !== 'fixed'), options: [[2,'15 fps'],[3,'10 fps'],[4,'7.5 fps']] },
+    { sel: 'maxHold', label: '淡出段最慢帧率', show: P => (usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion')) || (emitFullOut(P) && (P.frameBudget || 'motion') !== 'fixed'), options: [[2,'15 fps'],[3,'10 fps'],[4,'7.5 fps'],[5,'6 fps']] },
     { sel: 'fpsBurst', label: '开花段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
     ['burstSec', '开花段时长（这段每 tick 一帧）', 's', 0, 2, 0.05, P => usesTickPlan40(P) && !['fixed', 'full'].includes(P.frameBudget || 'motion')],     // 4.9.13：匀速帧 / 全程 30 fps 不读，不显示
     { sel: 'fpsActive', label: '燃烧段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
@@ -4191,15 +4233,15 @@ const SCHEMA = [
     { sel:'cameraQuality',label:'输出成像质量',show:P=>!!P.sparkGraph&&!!(P.cameraMotion||P.cameraDof),options:[['fast','快速'],['high','高质量'],['reference','加倍精度（核对）']] }
   ] },
   { sec: '光点与曝光（4.0）', show: () => true, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
-    { sel: 'coreProfile', label: '亮核分布', options: [[0,'均匀亮核（兼容）'],[1,'渐变亮核']] },
+    { sel: 'coreProfile', label: '亮核分布', options: [[0,'均匀'],[1,'渐变']] },
     ['exposure', '贴图曝光', '×', .001, 20, .001, P => !P.exposureLock],
     ['exposureTarget', '建议亮部目标', '', .5, .98, .01],
-    { sel: 'exposureLock', label: '锁定曝光', options: [[0,'未锁定（曝光仍固定）'],[1,'已锁定']] },
+    { sel: 'exposureLock', label: '锁定曝光', options: [[0,'未锁定'],[1,'已锁定']] },
     ['haloFrac', '光晕能量占比', '', 0, .85, .01],
     ['haloR', '光晕半径 / 亮核半径', '×', 1, 8, .1],
-    { sel: 'haloShape', label: '光晕形状', options: [[0,'高斯（兼容）'],[1,'幂律（像真实镜头）'],[2,'多层柔光（近晕 + 远晕，像 Blender）']] },
+    { sel: 'haloShape', label: '光晕形状', options: [[0,'高斯'],[1,'幂律'],[2,'多层柔光']] },
     ['haloBeta', '光晕幂律指数（越小尾巴越长）', '', 1.2, 6, .1, P => +P.haloShape === 1],
-    { sel: 'previewBloom', label: '额外预览光晕', options: [[0,'关闭（UE Bloom 另算）'],[1,'开启']] }
+    { sel: 'previewBloom', label: '额外预览光晕', options: [[0,'关闭'],[1,'开启']] }
   ] },
   { sec: '画质（烘焙采样）', show: P => isSeq(P) || isEmit(P), hint: '空间超采样和快门子样本。光点按像素覆盖积分画（亚像素的点总光量也对）。', items: [
     ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
@@ -8067,7 +8109,7 @@ function thUserSync(hidden) {
   const g = $('#thGrab'), r = $('#thRestore'), lb = $('#thRestoreLabel');
   const keys = hidden ? [] : thUserKeys(), u = keys.map(thUserGet).find(Boolean);
   if (g) { g.hidden = !keys.length; g.classList.toggle('on', !!u);
-    g.title = u ? `把现在这一帧截成这一项的缩略图，覆盖 ${u.when || ''} 截的那张（${u.t} s）；⋯ 里能恢复默认` : '把现在这一帧截成这一项在左栏 / 花型库里的缩略图（再点 = 覆盖旧的）'; }
+    g.title = u ? `生成缩略图\n覆盖 ${u.when || ''} 截的那张` : '生成缩略图'; }
   if (r) r.hidden = !u; if (lb) lb.hidden = !u;
   const out = $('#thSaveStatus'); if (out) { out.hidden = !keys.length; const key = keys[0] || ''; if (out.dataset.key !== key) { out.dataset.key = key; out.textContent = ''; } }
 }
@@ -8377,7 +8419,7 @@ function lifeCurveAt(ks, x) {
 }
 // 自定义发射器（＋ 加发射器）：最多 EX_SLOTS 个，每个是同一套模块（生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁），挂在星的事件上
 const EX_SLOTS = 2;
-const EX_EVENTS = [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']];
+const EX_EVENTS = [['death', '熄灭时'], ['birth', '开花时'], ['time', '定时'], ['trail', '沿路']];
 function exSlotsOf(P) {
   const out = [];
   for (let i = 1; i <= EX_SLOTS; i++) {
@@ -11899,8 +11941,9 @@ function rtBallisticPhys(P) {
 function rtBallInfoHTML(P) {
   if (!P || !isEmit(P)) return '';
   const b = rtBallistic(P), sp = t => { const v = b.vel(t); return Math.hypot(v[0], v[2]); };
-  if (!b.quad) return `<p class="hint endinfo">线性阻力：出膛 ${b.v0.toFixed(1)} m/s · 阻力 ${b.k.toFixed(3)} /s · ${b.T.toFixed(2)} s 到 ${b.H.toFixed(0)} m · 1 s 后 ${sp(Math.min(1, b.T)).toFixed(0)} m/s（减速很匀）</p>`;
-  return `<p class="hint endinfo">物理弹道：终端速度 ${b.vt.toFixed(1)} m/s${+P.rtVt > 0 ? '' : `（按弹径 ${P.rtD} m 算）`} · 出膛 <b>${b.v0.toFixed(1)}</b> m/s → 1 s 后 ${sp(Math.min(1, b.T)).toFixed(0)} m/s → 开花 ${b.vb.toFixed(1)} m/s · 升空 <b>${b.T.toFixed(2)}</b> s 到 ${b.H.toFixed(0)} m（升空时间是算出来的）</p>`;
+  // 5.0.0 文案（§4 只读一行）：升空时间、高度一行；速度变化进悬停
+  if (!b.quad) return `<p class="hint endinfo" title="出膛 ${b.v0.toFixed(1)} → 1 s 后 ${sp(Math.min(1, b.T)).toFixed(0)} m/s">升空 <b>${b.T.toFixed(2)}</b> s 到 ${b.H.toFixed(0)} m　阻力 ${b.k.toFixed(3)} /s</p>`;
+  return `<p class="hint endinfo" title="出膛 ${b.v0.toFixed(1)} → 开花 ${b.vb.toFixed(1)} m/s">升空 <b>${b.T.toFixed(2)}</b> s 到 ${b.H.toFixed(0)} m　终端速度 ${b.vt.toFixed(1)} m/s</p>`;
 }
 // 物理弹道导出用：按相对寿命（0–1 = 0–T）的速度曲线（m/s），抽稀到误差 < 0.05 m/s
 function rtVelLife(ball, n = 240) { const k = []; for (let i = 0; i <= n; i++) { const u = i / n, v = ball.vel(u * ball.T); k.push([u, [v[0], 0, v[2]]]); } return esThin(k, 0.05); }
@@ -13291,7 +13334,7 @@ function rtShadeLoop(P, M, t) {
 // ---- 4.5.1 分层看（用户 10-05 17:39「我没法单独看近段、远段和 GPU 粒子层」）：只影响观察，不改参数和导出 ----
 //   工具条上一排：近段 / 远段 / 每个 GPU（和 CPU 软圆点）发射器，后面是此刻的颗数；点一下开 / 关，双击只看这一层，「全部」恢复
 const RT_LAYER_CN = { near: '近段', far: '远段', full: '合成一张', SparksCoarse: '粗火花', SparksTwinkle: '闪烁火花', SparksMid: '中火花', SparksFine: '细火花', Embers: '落火', SparkPops: '末段爆亮',
-  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带', EmbersTex: '落火（合进贴图）' };
+  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带', EmbersTex: '落火贴图' };
 const rtShow = { off: new Set(), sig: '' };
 const rtOn = k => !rtShow.off.has(k);
 function rtAliveCounts(tables, t) { return tables.map(T => { let n = 0; for (const q of T.list) { if (q.t0 > t) break; if (t - q.t0 < q.life) n++; } return n; }); }
@@ -13301,7 +13344,7 @@ function rtLayerBarSync(items) {     // items: [[key, 颗数 | null, GPU?]]
   if (rtShow.sig !== sig) {
     rtShow.sig = sig; for (const k of [...rtShow.off]) if (!items.some(x => x[0] === k)) rtShow.off.delete(k);
     bar.innerHTML = '<button type="button" data-all="1">全部</button><span class="sep"></span>' + items.map(([k, , g], i) => (i && g && !items[i - 1][2] ? '<span class="sep"></span>' : '') +
-      `<button type="button" data-k="${k}" title="${g ? 'GPU 发射器' : k === 'near' ? '近段 = 循环层（跟着弹体走的年轻火花 + 星头 + 白热段）' : k === 'far' ? '远段 = TrailFar（停在空中的老火花，开花后全部火花）' : k === 'full' ? '手机合成一张 = TrailFull（星头 + 全部火花）' : 'CPU 软圆点'}：点一下开 / 关，双击只看这一层">${RT_LAYER_CN[k] || k}<span class="n"></span></button>`).join('');
+      `<button type="button" data-k="${k}" title="${g ? 'GPU 发射器' : k === 'near' ? '近段：跟着弹体走的火花' : k === 'far' ? '远段：停在空中的老火花' : k === 'full' ? '手机合成一张' : 'CPU 软圆点'}&#10;点击开关，双击只看这一段">${RT_LAYER_CN[k] || k}<span class="n"></span></button>`).join('');
     bar.querySelector('[data-all]').addEventListener('click', () => { rtShow.off.clear(); });
     bar.querySelectorAll('[data-k]').forEach(btn => {
       btn.addEventListener('click', () => { const k = btn.dataset.k; if (rtShow.off.has(k)) rtShow.off.delete(k); else rtShow.off.add(k); });
@@ -16649,10 +16692,12 @@ function deliveryMetadata(b = null, job = null, lb = null, unitHolder = null) {
 async function deliverResource(blob, name, metadata, destination) {
   const iterationOf = typeof packIterationInfo !== 'undefined' ? packIterationInfo.get(blob) : null;
   if (iterationOf) metadata = { ...metadata, iterationOf: { ...structuredClone(iterationOf), deliveryName: name.replace(/\.zip$/i, '') } };
-  // 烟花工坊 5.0 外壳钩子（对话框9 S）：导出写完后通知外壳（只有 tool/烟花工坊.html 里有 window.shellAfterExport）；
-  //   写文件的逻辑不变：ZIP 照旧 download，目录照旧 publish，返回值照旧；外壳出错不影响导出
-  const done = destination === 'zip' ? download(blob,name) : DeliveryWorkspace.publish(blob,name,metadata);
-  if (typeof window.shellAfterExport === 'function') Promise.resolve(done).then(receipt => { try { window.shellAfterExport({ name, destination, metadata, blob, receipt }); } catch (e) { } }, () => { });
+  // 烟花工坊 5.0 外壳钩子（对话框9 S）：导出写完后通知外壳（只有 tool/烟花工坊.html 里有 window.shellAfterExport）；目录照旧 publish，返回值照旧；外壳出错不影响导出。
+  // 4.9.132（外壳遗留 1，用户「导出时多下载一份 ZIP」）：外壳选好了导出文件夹、导入模块在时（shellWillPublish），ZIP 方式不再让浏览器下载——
+  //   外壳把同一个 blob 交给导入模块写进导出文件夹；写不进去时外壳再下载这一份（不会丢）。没有外壳 / 没选文件夹时照旧下载。导出的内容一个字节不变。
+  const viaShell = destination === 'zip' && typeof window.shellWillPublish === 'function' && !!window.shellWillPublish();
+  const done = destination === 'zip' ? (viaShell ? undefined : download(blob,name)) : DeliveryWorkspace.publish(blob,name,metadata);
+  if (typeof window.shellAfterExport === 'function') Promise.resolve(done).then(receipt => { try { window.shellAfterExport({ name, destination, metadata, blob, receipt, downloaded: destination === 'zip' && !viaShell }); } catch (e) { } }, () => { });
   return done;
 }
 // 烟花工坊 5.0 外壳钩子（对话框9 S）：只读，导出去向和本机服务给的导出根目录（路径字符串；服务没连上时为空）。
@@ -16773,8 +16818,8 @@ function comboLayerM(L) {
 // 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里……哪一层用单帧，哪一层用序列，哪一层用GPU粒子，哪一层用单束」；
 //   18:5x「手机列保留，手机也可以选序列或者单帧或者单束，但没有GPU」「单帧放主包、名字不加 _MB」）：PC 加单帧，手机 序列 / 单束 / 单帧 / 不出；没有低端列 / cascade_low.json 了
 // 4.9.126（用户 11-03 / 11-04）：合成一张 = 这一层和同平台别的「合成一张」层烘成一个序列、一个发射器，颜色用其中层号最小那一层（67_merge.js）
-const OUT_PC = [['seq', '序列（大面片）'], ['merge', '合成一张（几层合成一个序列）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']],
-  OUT_MOBILE = [['seq', '序列'], ['merge', '合成一张（几层合成一个序列）'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']];
+const OUT_PC = [['seq', '序列'], ['merge', '合成一张'], ['unit', '单束'], ['dots', 'GPU 光点'], ['frame', '单帧'], ['off', '不出']],
+  OUT_MOBILE = [['seq', '序列'], ['merge', '合成一张'], ['unit', '单束'], ['frame', '单帧'], ['off', '不出']];
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
 function layerOut(L, entry) {
@@ -16794,7 +16839,7 @@ function layerOut(L, entry) {
 // 以前手机格缺省每层都出「序列」：多层烟花同一时刻有两张大序列，规范 v1 §6（中低配同一时刻 1 张大序列、≤ 3 个发射器）一律被导出拦截拦下（4.9.69 起，引菊 → 锦就是）。
 // 现在手机格没手动选过的层 = 自动：按层号先后，这一层的大序列和前面已经出手机的层同一时刻都在播、或手机发射器会超过 3 个 → 这一层手机不出；不冲突照旧出序列。
 // 手动选过的照选的出（违规照样拦，拦截写清是哪一层）。以前改 PC 格会顺手把手机写成 seq（存档里 {pc:'dots', mobile:'seq'}），不带 mobileManual 的 seq 当自动
-const OUT_MOBILE_UI = [['auto', '自动（按手游规范）'], ...OUT_MOBILE], MOBILE_EMITTERS_MAX = 3;
+const OUT_MOBILE_UI = [['auto', '自动'], ...OUT_MOBILE], MOBILE_EMITTERS_MAX = 3;
 function layerMobileManual(L) { const o = L && L.out; return !!(o && OUT_MOBILE_KINDS.includes(o.mobile) && (o.mobileManual || o.mobile !== 'seq')); }
 function setLayerOut(L, pf, v) {
   const o = { ...(L.out || {}) };
@@ -18324,6 +18369,9 @@ function showStats(b) {
   const bud = m.plan && m.plan.budget || m.budget; if (bud && bud.strobeAlias) warn.push(`点灭最快约 ${bud.strobeAlias} Hz，30 fps 的序列会混叠（看起来变成慢闪）；要这么快的点灭建议做成粒子层或降低「点灭频率」`);
   rows.push(warn.length ? `<span class="warn">自检：${warn.join('；')}</span>` : '<span class="ok">自检：过曝、边缘、通道布局都正常</span>');
   $('#stats').innerHTML = rows.join('<br>');
+  // 5.0.0：底部统计框不显示了，自检警告（短句）挪到「输出 › 算出来的」和「导出 ▾」摘要
+  window.__e50Warn = warn.map(w => w.replace(/，可缩短到.*$/, '').replace(/：.*；减少.*$/, '').replace(/^点灭最快约 (\S+) Hz.*$/, '点灭约 $1 Hz，30 fps 会混叠'));
+  document.querySelectorAll('#params [data-info=outSummary]').forEach(r => r._refresh && r._refresh());
 }
 const GRID_OPTS = [1, 2, 4, 8, 16, 32];
 function formOptions(P) {
@@ -18335,7 +18383,7 @@ function formOptions(P) {
     const o = [['trail', ALL.trail]]; if (P.form && P.form !== 'trail' && ALL[P.form]) o.push([P.form, ALL[P.form]]); return o;
   }
   // 4.9.25：单束不在这里选了——在「导出方案」（交付清单的产物表 / 输出 › 直接调 / 层页头）里选 PC 单束
-  return [['master', '大面片母版'], ['segments', '分段母版（按实际帧数分配贴图）']];
+  return [['master', '大面片母版'], ['segments', '分段母版']];
 }
 const FORM_NOTES = {
   master: '整朵花烘成一张序列，一个面片播放。远景、大型礼花的主层。',
@@ -18403,7 +18451,7 @@ const autoLinked = (k, v) => { const a = AUTO_DEF[k]; return !!a && (a[4] ? a[4]
 function syncOutCellLabel() {
   const x = panelRows.find(([r, it]) => it.sel === 'outCell'); if (!x) return;
   const o = x[0].querySelector('select option[value="0"]'); if (!o) return;
-  const t = `自动：现在 ${outCalc().cell} px（贴图宽 ÷ 列数，至少 512）`; if (o.textContent !== t) o.textContent = t;
+  const t = `自动（${outCalc().cell} px）`; if (o.textContent !== t) o.textContent = t;
   x[0].classList.toggle('adef-on', !(+state.P.outCell > 0));
 }
 // 4.9.5：这次烘焙实际用的帧率 / 张数 / 单格（没烘好时按参数估：单格 = 贴图宽 ÷ 列，至少 512）
@@ -18428,7 +18476,7 @@ function autoDefRow(row, k, step) {
     const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); row.classList.toggle('adef-off', !on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
     bt.textContent = on ? '跟着算' : '接回';
     bt.setAttribute('aria-label', on ? `跟着算（${a[2]}）：点一下断开，固定在 ${fmtV(v, step)}` : `已断开：点一下接回（${a[2]}，现在算出来是 ${fmtV(v, step)}）`);
-    bt.title = on ? `跟着算：${a[2]}` : `已断开；跟着算是 ${fmtV(v, step)}`;
+    bt.title = on ? `跟着算：${String(a[2]).replace(/（[^）]*）/g, '')}` : `已断开；跟着算是 ${fmtV(v, step)}`;     // 5.0.0 文案：括号里的补充不进悬停（全文在下面那行）
     tx.textContent = on ? `跟着算：${a[2]}` : `已断开：用你填的 ${fmtV(P[k], step)}；跟着算是 ${fmtV(v, step)}（${a[2]}）`;
     if (on) { inp.value = v; num.value = fmtV(v, step); row.classList.remove('over'); num.title = ''; }
   };
@@ -18475,7 +18523,7 @@ function rowStatusSync(row) {
   const s = c.contains('over') ? ['超范围', 'over', (row.querySelector('.num') || {}).title || '超出滑杆的常用范围，照样起作用']
     : c.contains('chg') ? ['改过', 'chg', '和打开时不一样' + (B != null ? `（打开时 ${B}）` : '') + '；Ctrl+Z 撤销，双击参数名恢复默认']
     : c.contains('locked') ? ['锁定', 'lock', '锁定：切换号数、随机微调时不变']
-    : c.contains('inert') ? ['不起作用', 'inert', '现在不起作用：' + (row._inert || '')] : ['', '', ''];
+    : c.contains('inert') ? ['不起作用', 'inert', whyShort(row._inert)] : ['', '', ''];
   if (st.textContent !== s[0]) st.textContent = s[0];
   st.className = 'st' + (s[1] ? ' st-' + s[1] : ''); st.title = s[2];
 }
@@ -18532,8 +18580,8 @@ function stageEditor(host, M, maxT, onChange, compact) {
   const line = document.createElement('div'); line.className = 'line2';
   const add = document.createElement('button'); add.className = 'btn ghost'; add.textContent = '+ 加一段'; add.disabled = M.stages.length >= 5;
   add.addEventListener('click', () => { const last = M.stages[M.stages.length - 1]; M.stages.push([Math.min(maxT, last[0] + 0.5), last[1]]); state.activeStage = M.stages.length - 1; redraw(); onChange && onChange(); });
-  const ign = document.createElement('button'); ign.className = 'btn ghost'; ign.textContent = '开头加点火橙色';
-  ign.title = '实拍里几乎所有星开头都有一段约 10–17% 燃烧时长的橙色点火期';
+  const ign = document.createElement('button'); ign.className = 'btn ghost'; ign.textContent = '加点火色';
+  ign.title = '开头加一段橙色点火期';
   ign.disabled = M.stages.length >= 5 || M.stages[0][1].toLowerCase() === IGNITE_ORANGE;
   ign.addEventListener('click', () => { const tb = Math.max(0.15, (state.P.burn || 2) * 0.13); M.stages.forEach(s => { if (s[0] < tb) s[0] = tb; }); M.stages.unshift([0, IGNITE_ORANGE]); redraw(); onChange && onChange(); });
   line.append(add, ign); host.appendChild(line);
@@ -18707,12 +18755,12 @@ function buildMasterPanel() {
         const vw = it[7];     // 4.9.50 显示换算（线条宽度：存散开速度、按米显示 / 输入）
         row = slider(det, 'p-' + String(k).replace(/[^\w-]/g, '_') + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, shownParam(state.P, k, D)) : shownParam(state.P, k, D), v => { if (isPathKey(k)) { if (!graphSetParam(k, v, it)) setTimeout(() => row && row._refresh && row._refresh(), 0); return; } if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : isPathKey(k) ? pGet(D, k) : D[k], isPathKey(k) ? null : k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
-        const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
+        const kl = row.querySelector('.k'); kl.title = (nm && nm.en ? nm.en : short) + '\n双击恢复默认';     // 5.0.0 文案：英文名一行 + 操作一行
         row._lab = short; row._detail = detail; row._nm = nm;
       } else if (it.sel) {
         const [short0, detail0] = splitLab(it.label), short = nm && !isPathKey(it.sel) ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
+        row.innerHTML = `<span class="fk" title="${(nm && nm.en ? nm.en : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
         row._lab = short; row._detail = detail; row._nm = nm; rrstBind(row);
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         const selVal = Q => { const v = it.sel === '_trailTier' ? Q.type : Q === P ? shownParam(P, it.sel, D) : isPathKey(it.sel) ? pGet(Q, it.sel) : Q[it.sel]; return String(it.io ? it.io.get(v) : v); };
@@ -18741,10 +18789,10 @@ function buildMasterPanel() {
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
         const lab = nm ? p43Label(nm, it.label) : it.label;
-        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="例 0:1, 1:0" title="空 = 不变；时刻 0–1"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
         const cvRaw = () => isPathKey(it.curve) ? graphCurveText(pGet(state.P, it.curve)) : state.P[it.curve];     // 4.9.87 分层粒子图的曲线存成 [[寿命, 倍率], …]，这里按同一种「时刻:值」写法显示
-        const show = () => { const ks = parseCurve(cvRaw()), bad = !ks && !!String(cvRaw() || '').trim(); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (bad ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
+        const show = () => { const ks = parseCurve(cvRaw()), bad = !ks && !!String(cvRaw() || '').trim(); out.textContent = ks ? `关键点 ${ks.length} 个　${+ks[0][1].toFixed(3)} → ${+ks[ks.length - 1][1].toFixed(3)}` : (bad ? '格式不对' : '不变');     // 5.0.0 文案（§10 读数一行）：每个点的值在下面的文本框里 out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
           const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig;
             // 4.9.14（照 01_顺手调参_深化）：图旁边一张小表「寿命 0–1 | 倍率」，就是上面那串数（只读；改还是在输入框里）
             row.querySelector('.cv-tab').innerHTML = ks && !bad ? `<table class="cv-table"><thead><tr><th>寿命 0–1</th><th>倍率</th></tr></thead><tbody>${ks.map(k => `<tr><td>${(+k[0]).toFixed(2)}</td><td>${(+k[1]).toFixed(2)}</td></tr>`).join('')}</tbody></table>` : ''; } };
@@ -18805,6 +18853,14 @@ function panelColorsAndIdent(P) {
   $('#type').value = state.repId ? 'rep:' + state.repId : P.type; syncEnName(); syncExport();
   syncTypeButton();
 }
+// 5.0.0 文案：「「湍流强度」是 0 时不起作用：……」→「湍流强度为 0 时无效」（只写条件，不写建议；全文照旧在参数说明里）
+function whyShort(t) {
+  let s = String(t || '').replace(/[「」]/g, '').replace(/^现在不起作用：/, '');
+  s = s.split(/[；。（(]/)[0];
+  const head = s.split('：')[0]; if (head.length >= 6 || /时不起作用$/.test(head)) s = head;     // 「X 是 0 时不起作用：先把……」只留条件
+  s = s.replace(/是 (\S+?) ?时不起作用$/, '为 $1 时无效').replace(/时不起作用$/, '时无效').replace(/不起作用$/, '无效').trim();
+  return !s ? '现在无效' : s.length > 16 ? s.slice(0, 15) + '…' : s;
+}
 function refreshVisibility() {
   pviewInit();
   const P = state.P, q = (pview.q || '').toLowerCase(), B = panelBaseP(), nChg = {}, appl = {};
@@ -18819,7 +18875,7 @@ function refreshVisibility() {
       if (Array.isArray(it) && it[7] && it[7].note) { let n = row.querySelector(':scope > .vwnote'); if (!n) { n = document.createElement('div'); n.className = 'vwnote'; row.appendChild(n); } n.textContent = it[7].note(P); } }
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
-    row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
+    row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = whyShort(iw); else row.removeAttribute('title');     // 5.0.0 文案：原因一句（全文在参数说明里）
     if (vis && it.sel && it.optOK) { const sl = row.querySelector('select'); if (sl) for (const o of sl.options) { const def = it.options.find(x => String(x[0]) === o.value), ok = !def || !!it.optOK(def[0], P); o.disabled = !ok; o.hidden = !ok && o.value !== sl.value; } }     // 4.9.89 只给这个效果能用的选项（合成一张的帧数、没有星头的 GPU 光点）
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
@@ -18932,10 +18988,10 @@ function colorLinks() {
   for (const g of document.querySelectorAll('#params section.egrp')) {
     const e = g.dataset.g; if (e === '效果' || e === '输出') continue;
     const d = [...g.querySelectorAll(':scope > details.mod')].find(x => x._mod === '颜色'); if (!d || d.querySelector('.clink')) continue;
-    const p = document.createElement('p'); p.className = 'clink'; p.innerHTML = `<span>颜色随本层（这一层所有发射器共用一条）</span><button type="button" class="btn mini ghost" title="滚到下面的「本层颜色」去改；改完点那里的「← 回到」回来">去改</button>`;
+    const p = document.createElement('p'); p.className = 'clink'; p.innerHTML = `<span title="这一层所有发射器共用">颜色随本层</span><button type="button" class="btn mini ghost" title="到本层颜色修改">去改</button>`;
     d.querySelector('summary').after(p); p.querySelector('button').addEventListener('click', ev => { ev.preventDefault(); colorGo(e); });
     // 4.9.14：模块收起时标题这一行就能去（照 01_顺手调参_深化「颜色  跟随金锦层颜色  定位 ↗」）
-    const go = document.createElement('span'); go.className = 'mgo'; go.setAttribute('role', 'button'); go.tabIndex = 0; go.textContent = '定位 ↗'; go.title = '去下面的「本层颜色」改（改完点那里的「← 回到」回来）';
+    const go = document.createElement('span'); go.className = 'mgo'; go.setAttribute('role', 'button'); go.tabIndex = 0; go.textContent = '定位 ↗'; go.title = '到本层颜色修改';
     const goF = ev => { ev.preventDefault(); ev.stopPropagation(); colorGo(e); }; go.addEventListener('click', goF); go.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') goF(ev); });
     d.querySelector('summary').appendChild(go); d._colorLink = true;
   }
@@ -18976,13 +19032,14 @@ function modSummaryText(d) {
 function modSummarySync() {
   for (const d of document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod')) {
     const sm = d.querySelector(':scope > summary'); let sp = sm.querySelector('.msum'); if (!sp) { sp = document.createElement('span'); sp.className = 'msum'; sm.appendChild(sp); }
-    const t = d.open ? '' : modSummaryText(d); if (sp.textContent !== t) { sp.textContent = t; sp.title = t; }
+    // 5.0.0（规范 v4 §10：摘要组间空 16、不用「·」）：每组一个 <span>，间距用样式；文字照旧按「 · 」分组算
+    const t = d.open ? '' : modSummaryText(d); if (sp.dataset.t !== t) { sp.dataset.t = t; const ps = t ? t.split(' · ') : []; sp.innerHTML = ps.map(x => `<span>${String(x).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</span>`).join(''); sp.title = ps.join('　'); }
     const n = [...d.children].filter(r => r._applies && r.classList.contains('chg')).length; sm.classList.toggle('mchg', !!n); sm.dataset.chg = n ? `${n} 项改过` : '';
   }
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」
 // 4.6.0（5.0 第 1 步）：自定义发射器的颜色模块——一层输出只有一条颜色（灰度贴图 + Ramp + Color Over Life），所以跟这一层；要别的颜色就拆层
-function exColorHTML(i) { return `<p class="hint">颜色随本层：灰度贴图越亮越接近渐变图的亮端，再乘本层的颜色曲线。要和星不同的颜色，把它放进另一层（「＋ 加层」后在那一层加这个发射器）。去掉这个发射器：鼠标在发射器框里停 1.5 秒，右上角出现 ×。</p>`; }     // 4.9.8：去掉的入口挪到发射器框右上角（用户 10-06 12:30）
+function exColorHTML(i) { return `<p class="hint">颜色随本层；要别的颜色，放进另一层</p>`; }     // 4.9.8：去掉的入口挪到发射器框右上角（用户 10-06 12:30）
 function exAddSlot() {
   const P = state.P; for (let i = 1; i <= EX_SLOTS; i++) if (!(+P['x' + i + 'On'] > 0)) { P['x' + i + 'On'] = 1; buildMasterPanel(); onParam(); selectEmitTab('自定义 ' + i); flash(`加了「自定义 ${i}」：默认是星熄灭时生成 8 个光点，在右边改`); return i; }
   flash(`最多 ${EX_SLOTS} 个自定义发射器（要更多：「＋ 加层」在另一层里再加）`, true); return 0;
@@ -19461,7 +19518,7 @@ function p43Legacy() {
   for (const [row, it, , det] of panelRows) {
     const k = Array.isArray(it) ? it[0] : it.sel || ''; const L = k && legacyOf(k); if (!L) continue;
     row._legacy = L; row.classList.add('legacy');
-    const nm = row.querySelector('.k, .fk'); if (nm && !nm.querySelector('.old-tag')) nm.insertAdjacentHTML('afterbegin', `<span class="old-tag" title="5.0 要删：${L[0]}">旧</span>`);
+    const nm = row.querySelector('.k, .fk'); if (nm && !nm.querySelector('.old-tag')) nm.insertAdjacentHTML('afterbegin', `<span class="old-tag" title="5.0 待删&#10;${L[0]}">旧</span>`);
     const g = det.closest('section.egrp'); if (!g) continue;
     if (!g._oldb) { const b = document.createElement('button'); b.type = 'button'; b.className = 'oldb'; b.hidden = true;
       b.addEventListener('click', e => { e.preventDefault(); pview.oopen = pview.oopen || {}; pview.oopen[g.dataset.g] = !pview.oopen[g.dataset.g]; refreshVisibility(); });
@@ -19592,7 +19649,7 @@ function p43RandSync(P) {
     const txt = [open ? '随机 ▾' : '随机 ▸', vals.length ? ' ' + vals.join(' ') : ''];     // 4.9.14：左「随机」右边随机量（一行子项）
     if (row._rndb.textContent !== txt.join('')) row._rndb.innerHTML = `<span class="rk">随机<span class="ra">${txt[0].slice(2)}</span></span><span class="rv">${txt[1]}</span>`;
     row._rndb.classList.toggle('on', open); row._rndb.classList.toggle('set', !!vals.length);
-    row._rndb.title = row._rands.map(([r]) => r._lab).join('、') + (open ? '（点一下收起）' : '（点一下展开）');
+    row._rndb.title = open ? '收起随机项' : '展开随机项';
   }
 }
 // 空白发射器（4.3；4.4 放在发射器标签下面一行）：没加的部分整块藏起来；「+ 火花」加上，已加的有「去掉」
@@ -20447,8 +20504,8 @@ function syncAssetOps() {
   $('#abDel').hidden = !dl; $('#abDel').textContent = dl ? '删除' : ''; $('#abDel').title = dl ? dl + '（删了 8 秒内能撤销）' : '';
   const why = !combo ? multiLayerBlock(state.P) : '';
   $('#abAddLayer').disabled = !!why || !!wb.saving;
-  $('#abAddLayer').title = why || (lib.my && combo ? '加一层：花型模板、我的模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成多层副本（原来的不动），再加层');
-  $('#abSaveTpl').hidden = combo && state.comboSel < 0; $('#abSaveTpl').textContent = combo ? `把第 ${state.comboSel + 1} 层存为模板` : '把这一层存为模板';
+  $('#abAddLayer').title = why || '加一层';
+  $('#abSaveTpl').hidden = combo && state.comboSel < 0; $('#abSaveTpl').textContent = '存为模板'; $('#abSaveTpl').title = combo ? `第 ${state.comboSel + 1} 层` : '';
   $('#abUpdTpl').hidden = !(lib.tpl && !combo); $('#abUpdTpl').textContent = lib.tpl ? `更新模板「${lib.tpl.name}」` : '';
   $('#abHide').hidden = !lib.effect;
 }
@@ -20527,7 +20584,7 @@ function panelBake() {
 }
 function trimNoteHTML() {
   const b = panelBake(), tr = b && b.meta && b.meta.trim; if (!tr || !(tr.end < tr.reqEnd - 0.02)) return '';
-  return ` <span class="warn" title="之后全黑，不烘、不导出；要更长，调燃烧时间、火花寿命或节奏">贴图只烘到 ${tr.end.toFixed(2)} s，之后不导出</span>`;     // 5.0.0：一句，细节进悬停提示
+  return ` <span class="warn" title="之后全黑，不导出">贴图只烘到 ${tr.end.toFixed(2)} s，之后不导出</span>`;     // 5.0.0：一句，细节进悬停提示
 }
 function endInfoHTML() {
   const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';
@@ -20574,7 +20631,7 @@ async function curveCompute(P0, key, live, tid = '') {
 function eventInstancePanel(host,L,i){
   const box=document.createElement('details');box.className='sec';box.id='eventInstancePanel';
   box.innerHTML='<summary>出生方式 · '+(EventInstances.on(L)?'飞行结束后绽放':'单次序列')+'</summary>';host.appendChild(box);
-  const label=document.createElement('label');label.className='check';label.innerHTML='<input type="checkbox" data-event-enable> 先飞行，结束后生成本层序列';box.appendChild(label);
+  const label=document.createElement('label');label.className='check';label.innerHTML='<input type="checkbox" data-event-enable> 飞行后出现';box.appendChild(label);
   const cb=label.querySelector('input');cb.checked=EventInstances.on(L);
   cb.addEventListener('change',()=>{if(cb.checked){L.eventSpawn=EventInstances.defaults();L.out={pc:'seq',mobile:'off',mobileManual:true};}else delete L.eventSpawn;buildLayerHead(i);wbSync();});
   if(!EventInstances.on(L))return;
@@ -21630,8 +21687,9 @@ function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第
 //   以前被当成空中大面片烘，画面和导出都不对 → 只拦多层加层；4.9.100 原生单层我的效果不转换形态。
 function multiLayerBlock(P) {
   if (!P || familyOf(P.type) !== 'rise' || (isEmit(P) && rtPcFull(P))) return '';
-  return isEmit(P) ? '这个全套尾缀可以独立保存和导出，但不能放进多层。需要加层时，请另存副本后，在交付清单里将 PC 改为「近段 + 远段合成一张」'
-    : '这种尾缀（V5 / 上升循环 / 物理尾缀）可以独立保存和导出，但多层尚不支持这种形态，暂不能加层';
+  // 5.0.0 文案：第一行一句（悬停、提示条只看第一行），做法写第二行
+  return isEmit(P) ? '全套尾缀不能放进多层\n要加层：另存副本，交付清单里 PC 选「近段 + 远段合成一张」'
+    : '这种尾缀不能放进多层\nV5、上升循环、物理尾缀只能单层保存和导出';
 }
 async function myCreate(key) {
   { const why = multiLayerBlock(mySrc(key).P); if (why) { flash(why, true, 9000); return; } }
@@ -21691,7 +21749,7 @@ async function myRename() {
 }
 function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     // 4.5.0：不弹确认，删了 8 秒内能撤销（79_assetops.js）
 // ---------------- 层：加、删、复制、改名、上下挪 ----------------
-function myAddLayer() { if (state.tab !== 'combo') { flash(multiLayerBlock(state.P) || '请先从资产栏「加层」存成多层副本', true, 10000, true); return; } pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
+function myAddLayer() { if (state.tab !== 'combo') { flash(multiLayerBlock(state.P) || '先「加层」存成多层副本', true, 10000, true); return; } pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
 async function myAddLayerFrom(key) {
   if (state.tab !== 'combo') return;
   const s = mySrc(key); { const why = multiLayerBlock(s.P); if (why) { flash(why, true, 9000); return; } }     // 4.9.89 A12
@@ -21938,7 +21996,7 @@ function repoFolderInfo() { return { handle: repoDir.h, name: repoDir.name, ok: 
 function repoSync() {
   const read = $('#abRepoRead'); if (read) read.disabled = !!repoDir.reading;
   const b = $('#abRepo'); if (!b) return;
-  b.textContent = !repoDir.h ? '连接仓库文件夹（保存时顺便存进 git）…' : repoDir.ok ? `仓库文件夹：${repoDir.name} ✓（保存时顺便写进去；点这里换一个）` : `仓库文件夹：${repoDir.name}（要重新允许：点这里）`;
+  b.textContent = !repoDir.h ? '连接仓库…' : repoDir.ok ? `仓库 ${repoDir.name}` : `仓库 ${repoDir.name} 需允许`; b.title = !repoDir.h ? '保存时同时存进仓库' : repoDir.ok ? '保存时同时写进去；点一下更换' : '点一下允许访问';     // 5.0.0 文案
 }
 async function repoMenu() {
   if (repoDir.h && !repoDir.ok) { if (await repoPerm(true)) { await repoRead({ interactive: true }); return; } }
@@ -22146,7 +22204,7 @@ function buildLayerCard() {
   });
   // 4.9.125（用户 11-03 20:33「同事打开模板无法在图层下面加层，需要先点另存为旁边的加层后才会在图层下面出现加层按钮」）：
   //   以前只在我的效果里画；模板 / AI 效果 / 正式库也画，点了和资产栏「＋ 加层」同一个动作（addLayerAnywhere：先存成我的多层副本、原来的不动，再选层）
-  rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="${lib.my ? '加一层：花型模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成你的多层副本（原来的不动），再选要加的层'}">＋ 加一层</button>`);
+  rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层">＋ 加一层</button>`);
   // 4.9.8：「整体」挪到标题这一行右边（各层的位置、延迟、时间倍率、颜色），省一行给参数
   box.innerHTML = `<summary><span class="lc-t">图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ' · 加层'}</span><span class="lc-chips">${state.layers.map((L, i) => `<button type="button" class="lc-chip${state.comboSel === i ? ' cur' : ''}" data-i="${i}" aria-pressed="${state.comboSel === i}" title="改第 ${i + 1} 层 · ${layerName(i)} 的参数">${i + 1} ${layerName(i)}</button>`).join('')}</span><button type="button" class="lc-whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" title="整体：各层在整朵里的位置、延迟、时间倍率、颜色" aria-pressed="${state.comboSel < 0}">整体</button></summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
     <div class="lc-rows">${rows.join('')}</div>`;
@@ -22211,7 +22269,7 @@ function buildLayerHead(i) {
     <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「序列贴图」显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
     ${lib.my || linkedWith(i).length ? `<details class="lh-link-details sec" id="lhLink"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
   // 4.9.8：「位置与时间」放进这一层的「效果」发射器顶上，默认展开（接力调开始时间常用）；开始时间和图层管理里那一格是同一个值
-  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="开始时间、缩放、时间倍率、水平镜像（这一层在整朵里的位置和时间）">这一层在整朵里</summary>'; host.appendChild(pos);
+  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="这一层的位置和时间">这一层在整朵里</summary>'; host.appendChild(pos);
   pos.addEventListener('toggle', () => store.set('lhPosOpen', pos.open));
   slider(pos, `lh${i}-delay`, '开始时间', 's', 0, 10, 0.01, () => L.delay, v => { L.delay = v; const c = document.querySelector(`#layerCard [data-st="${i}"]`); if (c) c.value = (+v).toFixed(2); stage2.tlSig = ''; }, 0);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
@@ -22221,7 +22279,7 @@ function buildLayerHead(i) {
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
-  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE_UI.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE_UI.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
   host.insertBefore(ex, host.querySelector('.lh-t').nextSibling);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
@@ -22236,12 +22294,12 @@ function buildLayerHead(i) {
   const lsel = (k, lab, opts, d) => { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = `<span class="fk">${lab}</span><select>${opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
     const q = w.querySelector('select'); q.value = String(L[k] == null ? d : L[k]); q.addEventListener('change', () => { lset(k, d)(typeof d === 'number' ? +q.value : q.value); syncOut(); }); lwh.appendChild(w); };
   lsel('lowPick', '单帧取哪一刻', [['frame', '某一帧'], ['expo', '长曝光']], 'frame');
-  slider(lwh, `lh${i}-lowAt`, '单帧时刻（0 = 自动）', 's', 0, 30, 0.0333, () => +L.lowAt || 0, lset('lowAt', 0), 0);
-  { const w = document.createElement('p'); w.className = 'hint'; w.innerHTML = '<button type="button" class="btn mini">用时间轴现在的时刻</button>'; w.querySelector('button').addEventListener('click', () => { L.lowAt = +engineTick(state.t).toFixed(4); buildLayerHead(i); if (stage2.deliv) renderDeliv(); flash(`第 ${i + 1} 层单帧取 ${L.lowAt.toFixed(2)} s`); }); lwh.appendChild(w); }
+  slider(lwh, `lh${i}-lowAt`, '单帧时刻', 's', 0, 30, 0.0333, () => +L.lowAt || 0, lset('lowAt', 0), 0);
+  { const w = document.createElement('p'); w.className = 'hint'; w.innerHTML = '<button type="button" class="btn mini" title="0 = 自动">用播放头</button>'; w.querySelector('button').addEventListener('click', () => { L.lowAt = +engineTick(state.t).toFixed(4); buildLayerHead(i); if (stage2.deliv) renderDeliv(); flash(`第 ${i + 1} 层单帧取 ${L.lowAt.toFixed(2)} s`); }); lwh.appendChild(w); }
   lsel('lowSize', '单帧贴图大小', [[512, '512'], [1024, '1024'], [2048, '2048']], 1024);
   slider(lwh, `lh${i}-lowJit`, '溶解错落', '', 0, 1, 0.05, () => lowOf(L).jit, lset('lowJit', 0.3), 0.3);
   lsel('lowMaps', '功能图', [['DCA', 'D + C + A'], ['DA', 'D + A'], ['DC', 'D + C'], ['D', '只要 D'], ['', '不要']], 'DCA');
-  { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = '<span class="fk">功能图后缀（空 = 按勾的）</span><input type="text" maxlength="8">'; const q = w.querySelector('input'); q.value = L.lowSuffix || '';
+  { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = '<span class="fk" title="空 = 按勾选">功能图后缀</span><input type="text" maxlength="8">'; const q = w.querySelector('input'); q.value = L.lowSuffix || '';
     q.addEventListener('change', () => { const v = q.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); q.value = v; lset('lowSuffix', '')(v); }); lwh.appendChild(w); }
   const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = layerMobileManual(L) ? o.mobile : 'auto'; lwh.hidden = o.pc !== 'frame' && o.mobile !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit' && o.mobile !== 'unit';
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
@@ -22334,7 +22392,7 @@ function wbSync() {
   const changed = !!wb.sig && wbSig() !== wb.sig;
   $('#abChg').hidden = !changed; $('#abChg').textContent = wb.src.kind === 'mine' ? '参数已变 · 未保存到「' + ((list.find(x => x.id === wb.src.id) || {}).name || '') + '」' : '参数已变 · 未保存'; wb.changed = changed;
   $('#abSave').disabled = $('#abSaveAs').disabled = !!wb.saving;
-  $('#abSave').title = lib.my ? '保存当前效果' : '存成你的效果，保留当前形态与参数，原来的不动';
+  $('#abSave').title = lib.my ? '保存当前效果' : '存成我的效果，原来的不动';
   $('#abSaveAs').title = lib.my ? '另存为新效果，保留当前效果' : '存成你的效果（和「保存」一样）';
   if (typeof syncAssetOps === 'function') syncAssetOps();
   $('#versionSummary').textContent = changed ? '未保存' : wb.src.kind === 'mine' ? '我的版本' : lib.my ? '已保存' : '原始版本';
@@ -22352,16 +22410,16 @@ function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
   const name = $('#abName').textContent || wbBaseId();
-  if (changed) chips.push(['● 没保存', 'warn', '参数改过，还没保存（切走 / 刷新会先存成草稿）']);
+  if (changed) chips.push(['● 没保存', 'warn', '切走会先存成草稿']);
   // 素材包：AI 条目看状态清单里的导出（同一指纹 = 一致）；自己的效果 / 模板看这台浏览器里「导出时」存的那份和现在比
   if (ef && e && typeof effReady === 'function' && !changed && wb.src.kind !== 'mine') { const r = effReady(ef);
-    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致（${r.ex.job || ''}，指纹 ${r.ver}）`] : ['素材包过期', 'warn', '导出后参数或烘焙器输出规则改了，素材包要重导']); }
-  else if (ef && e) chips.push(['和 AI 包不同', 'dim', '你改过参数 / 看的是你的版本：和 AI 导出的素材包不一样']);
+    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致\n${r.ex.job || ''}　指纹 ${r.ver}`] : ['素材包过期', 'warn', '参数或规则改过']); }
+  else if (ef && e) chips.push(['和 AI 包不同', 'dim', '和 AI 导出的素材包不一样']);
   else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
-    if (!last) chips.push(['还没导出', 'dim', '这台电脑的浏览器里没导出过这个效果']);
+    if (!last) chips.push(['还没导出', 'dim', '这台电脑上没导出过']);
     else { let same = false; const noPrev = o => JSON.stringify(o, (k, v) => k === 'previewBloom' ? undefined : v);     // 预览泛光只是画面显示，不算改了素材包
       try { same = noPrev(last.snap) === noPrev(wbSnap()) && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
-      chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `素材包导出于 ${last.at}，之后改过参数（或烘焙器输出规则变了）`]); } }
+      chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `导出后参数或规则改过\n导出于 ${last.at}`]); } }
   const src = lib.my ? ['我的效果', '', '我的效果' + (lib.my.from ? '（派生自 ' + lib.my.from.name + '）' : '')] : lib.tpl ? ['我的模板', '', '我的模板'] : mtId ? ['多层模板', '', '多层花型模板'] : ef ? [e ? `AI · ${e.id}` : `AI · ${ef.阶段 || '条目'}`, '', `AI 做的效果 · ${ef.阶段 || ''}${e ? ' · 条目 ' + e.id : ''}`] : e ? ['AI 条目', '', 'AI 条目 ' + e.id] : lib.formal ? ['正式库', 'ok', '正式库 ' + lib.formal.id] : lib.key === 'combo' ? ['组合编辑器', '', '组合编辑器'] : ['花型模板', '', '花型模板'];
   chips.push(src);
   const v = wb.src.kind === 'mine' && list.find(x => x.id === wb.src.id);
@@ -22680,11 +22738,11 @@ function phasesOf(P) {
   if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', row: 's', t: +P.emberEnd, lab: '余烬熄灭时刻', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
   if (+P.sparkRate > 0 || +P.emberFrac > 0) {
     const ss = +P.sparkStart || 0, st = +P.sparkStop || 0, endNow = () => (+P.burn || 0) + (+P.afterBurn > 0 ? +P.afterBurn : 0);
-    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: ss > 0 ? '火花开始时刻' : '火花开始时刻（= 点火，拖动就打开）',
+    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: '火花开始',
       lo: ign, hi: (st > 0 ? ign + st : lifeEnd) - 1 / 15,
       set: t => { const v = t - igOf(); P.sparkStart = v < 1 / 30 ? 0 : r2(Math.min(v, (+P.sparkStop > 0 ? +P.sparkStop : endNow()) - 1 / 15)); } });
     // 火花停：没打开时（空心）只能往前拖；打开以后往后拖过燃烧结束，燃烧结束跟着往后推（保持原来星头比火花多亮的那一小段）
-    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: st > 0 ? '火花停止时刻' : '火花停止时刻（= 寿命结束，拖动就打开）',
+    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: '火花停止',
       lo: ign + ss + 1 / 15, hi: st > 0 ? Infinity : lifeEnd,
       set: t => { const v = t - igOf(), was = +P.sparkStop || 0;
         if (!(was > 0)) { P.sparkStop = v >= endNow() - 1 / 30 ? 0 : r2(Math.max((+P.sparkStart || 0) + 1 / 15, 0.05, v)); return; }
@@ -22791,8 +22849,7 @@ function resetToOpened() {
 // 4.9.36：轨道上「不导出」那段（序列时长里，出点后 / 结尾全黑没烘）说清楚为什么、怎么变长
 function seqVoidText(sp) {
   const a = sp.end.toFixed(2), z = sp.seq.toFixed(2);
-  return sp.cut ? `${a} – ${z} s 不导出：这一层设了出点 ${sp.cutAt.toFixed(2)} s（序列时长 ${z} s 只是时间轴画到这里）。要导出更长：时间轴下面「清除」入出点`
-    : `${a} – ${z} s 全黑（最亮像素 < 2/255），烘焙时不烘、不导出（序列时长 ${z} s 只是时间轴画到这里）。要这一层亮得更久：调燃烧时间 / 火花寿命，或「效果 › 整体调整 › 节奏」放慢`;
+  return sp.cut ? `${a}–${z} s 在出点后，不导出` : `${a}–${z} s 全黑，不导出`;     // 5.0.0 文案：一句
 }
 // 5.0.0 导出范围行（规范 v4 §9）：「导出范围　0.35 – 2.85 s」＋ 设为入点 / 设为出点 / 恢复（图标命令）｜ 一并移动、同刻联动（右对齐）
 function tlRangeRow(rows, P) {
@@ -22826,7 +22883,7 @@ function buildTlBars() {
   const glued = gluedPhases(rows);
   const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
   const step = Math.max(1, Math.ceil(D / 12)), ticks = Array.from({ length: Math.floor(D / step) + 1 }, (_, i) => i * step);
-  const ruler = `<header class="tlr"><span>图层与时间</span><div class="tlr-track" title="点刻度跳到对应时间">${ticks.map(t => `<span style="left:${pct(t)}%">${t}s</span>`).join('')}</div></header>`;
+  const ruler = `<header class="tlr"><span aria-label="图层与时间"></span><div class="tlr-track" title="点刻度跳到对应时间">${ticks.map(t => `<span style="left:${pct(t)}%">${t}s</span>`).join('')}</div></header>`;
   host.innerHTML = ruler + rows.map(x => {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
@@ -22834,12 +22891,12 @@ function buildTlBars() {
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`)
       + (sp.seq > sp.end + 0.02 && pct(sp.at(sp.seq)) > pct(sp.at(sp.end)) ? `<i class="void" style="left:${pct(sp.at(sp.end))}%;width:${Math.max(0.3, pct(sp.at(sp.seq)) - pct(sp.at(sp.end)))}%" title="${seqVoidText(sp)}"><em>${sp.cut ? '出点后 · 不导出' : '全黑 · 不导出'}</em></i>` : '');
     const cutOK = sp && lp && cutsOn(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
-    const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
-    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
+    const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab} ${t.toFixed(2)} s${set ? '' : '，自动'}&#10;拖动修改，拖回尽头即自动"></b>`).join('');
+    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab} ${q.t.toFixed(2)} s&#10;拖动修改${glued.has(x.i + ':' + q.k) ? '，和另一层同刻联动' : ''}"></b>`).join('') : '';
     // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
     const combo = state.tab === 'combo', mute = state.layerView.mute.includes(x.i), solo = state.layerView.solo === x.i;
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="只看第 ${x.i + 1} 层" aria-pressed="${solo}" title="只看这一层">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>';
   host.insertAdjacentHTML('afterbegin', tlRangeRow(rows, P));
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
@@ -22913,7 +22970,7 @@ function outSummaryHTML() {
     + ro('帧率', `${maxF.toFixed(0)}–${minF.toFixed(1)} fps`, `燃烧段最慢 ${burnMin.toFixed(1)} fps`)
     + ro('贴图', `${parts.length} 张 · ${parts.map(sheet).join('；')}`, `单格 ${Math.round(m0.L.cellW)} px，格子用了 ${used} / ${cap}`)
     + (led ? ro('每帧跳动', `${led.maxHeld} px`, `${STEP_REF_DIST} m 外；标定线 ${STEP_REF_PX} px`, led.over ? ' warn' : '') : '')
-    + warn.map(x => `<div class="e50-warn">${x.replace(/：可以把.*$/, '')}</div>`).join('') + '</div>';
+    + [...warn.map(x => x.replace(/：可以把.*$/, '')), ...(window.__e50Warn || [])].map(x => `<div class="e50-warn">${x}</div>`).join('') + '</div>';
 }
 // 4.9.25：单束以前另有资产栏「单束」菜单、交付页「导出单束包」、「把产物改成单束」三处入口，都并进交付清单的产物表（prodTableHTML）
 // 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
@@ -22966,7 +23023,7 @@ function applyCut(P, sp, kind, tl, drag) {
 function stageTick(D) {
   const playing = String(state.playing), play = $('#play');
   if (play.dataset.playing !== playing || !play.querySelector('.ui-icon')) { play.dataset.playing = playing; play.innerHTML = uiIcon(state.playing ? 'player-pause' : 'player-play'); play.setAttribute('aria-label', state.playing ? '暂停' : '播放'); play.title = state.playing ? '暂停（空格）' : '播放（空格）'; }
-  { const tk = `tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`, vs = $('#vfSpec'); if (vs.dataset.tip !== tk) vs.dataset.tip = tk; }     // 5.0.0：tick 收进左下读数的悬停提示
+  stage2.tick = Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6);
   // 4.2.22 播放头：轨道的位置每 1/4 秒量一次（offsetLeft 每帧强制排版），播放头用 transform 挪（不触发排版）
   const now = performance.now(), host = $('#tlBars'), ph = host.querySelector('.tlb-ph');
   if (ph && (!stage2.trBox || now - stage2.last >= 250)) { const tr = host.querySelector('.tlb-t'); stage2.trBox = tr ? [tr.offsetLeft, tr.offsetWidth] : null; }
@@ -22974,6 +23031,8 @@ function stageTick(D) {
   if (now - stage2.last < 250) return; stage2.last = now;
   $('#vfTitle').textContent = `${srcLabel() || (lib.key === 'combo' ? '组合编辑器' : '')}${srcLabel() ? ' · ' : ''}${state.tab === 'asset' ? '贴图回放' : VIEW_NAMES[state.view] || ''}${scopeLabel()}`;
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
+  // 5.0.0（规范 v4 §7：画面读数只在左下、右下）：画面左上的标题、画面上的两行说明（#hud / #hudB）不再画在画面上，内容进左下读数的悬停提示
+  { const vs = $('#vfSpec'), tip = [$('#vfTitle').textContent, $('#hud').textContent, $('#hudB').textContent, 'tick ' + (stage2.tick || 0)].map(x => String(x || '').trim()).filter(Boolean).join('\n'); if (vs.dataset.tip !== tip) vs.dataset.tip = tip; }
   buildTlBars(); syncGate();
   abStateSync();
   if (stage2.deliv && !$('#delivView').hidden && (stage2.delivKey !== wbKey() || (stage2.delivSig !== stage2.tlSig && !document.activeElement?.closest('.dv-names')))) renderDeliv();     // 输入或按保存按钮时不替换节点；换效果始终重绘。
@@ -23964,8 +24023,8 @@ function updateLabels() {
   if (state.view === 'atlas' && b && flowLayout && state.texSheetNow) {     // 4.9.35 贴图流转：标签跟着布局放（多层也有）
     const lay = flowLayout, W = canvas.width, H = canvas.height, pc = v => (v * 100).toFixed(2) + '%', L = b.meta.L, key = ['flow', lay.prev.x, lay.atl.x, lay.atl.y, L.chans, L.per].join(':');
     if (q.dataset.key !== key) { q.dataset.key = key;
-      q.innerHTML = `<span class="qlabel" style="top:calc(${pc(lay.prev.y / H)} + 6px);left:calc(${pc(lay.prev.x / W)} + 6px);max-width:calc(${pc(lay.prev.w / W)} - 12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">当前格 · 原始灰度 · 最近邻（看得到真实像素）</span>`
-        + `<span class="qlabel" style="top:calc(${pc(lay.atl.y / H)} - 22px);left:${pc(lay.atl.x / W)};max-width:${pc(Math.max(lay.atl.w, lay.crv.w) / W)};white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="整张贴图：金框 = 当前帧、淡框 = 刚走过、红色 = 过曝像素">整张贴图 · 金框当前帧 · 淡框刚走过 · 红色过曝${L.chans === 4 ? ` · 四块 R / G / B / A 各 ${L.per} 帧` : ''}</span>`; }
+      q.innerHTML = `<span class="qlabel" style="top:calc(${pc(lay.prev.y / H)} + 6px);left:calc(${pc(lay.prev.x / W)} + 6px);max-width:calc(${pc(lay.prev.w / W)} - 12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="最近邻放大">当前格 · 原始灰度</span>`
+        + `<span class="qlabel" style="top:calc(${pc(lay.atl.y / H)} - 22px);left:${pc(lay.atl.x / W)};max-width:${pc(Math.max(lay.atl.w, lay.crv.w) / W)};white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="金框当前帧，红色过曝">整张贴图${L.chans === 4 ? ` · RGBA 各 ${L.per} 帧` : ''}</span>`; }
   } else { q.innerHTML = ''; q.dataset.key = ''; }
 }
 
@@ -24478,7 +24537,10 @@ window.__fw = {
     if (!ready()) return;
     const m = model(), s = JSON.stringify([m.combo, m.sel, m.layers, m.em.map(x => [x.e, x.on]), m.name, m.tab, !!$q('#assetBar') && $q('#assetBar').hidden]);
     if (!force && s === sig) return; sig = s;
-    const tree = $q('#tree'), emRows = cur => m.em.map(x => `<button type="button" class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span></button>`).join('');
+    // 5.0.0：自定义发射器行尾一个 ×（原来在参数栏发射器框右上角，发射器框的标题藏起来了）
+    const tree = $q('#tree'), emRows = cur => m.em.map(x => { const xi = /^自定义 (\d+)$/.exec(x.e);
+      return `<div class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" tabindex="0" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span>`
+        + (xi ? `<span class="ta"><button type="button" class="btn btn-icon" data-exdel="${xi[1]}" aria-label="去掉「${esc(x.e)}」" title="去掉这个发射器&#10;Ctrl+Z 撤销">${ico('x')}</button></span>` : '') + '</div>'; }).join('');
     let h = '';
     if ($q('#assetBar') && $q('#assetBar').hidden) h = '<div class="tree-empty">在下面的效果库里打开一个效果</div>';
     else if (m.combo) {
@@ -24510,6 +24572,8 @@ window.__fw = {
       if (k === 'more') { e.stopImmediatePropagation(); if (pop && pop.dataset.li === String(i)) closePop(); else layerMenu(ta, i); return; }     // 5.0.0：图层管理卡片去掉，层的操作在这里
       setTimeout(() => render(true), 0); return;
     }
+    const xd = e.target.closest && e.target.closest('#tree [data-exdel]');
+    if (xd) { if (typeof exRemoveSlot === 'function') exRemoveSlot(+xd.dataset.exdel); setTimeout(() => render(true), 0); return; }
     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
     if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
     if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
@@ -24518,13 +24582,13 @@ window.__fw = {
     else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
     setTimeout(() => render(true), 0);
   });
-  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer]')) { e.preventDefault(); e.target.click(); } });
+  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer], #tree .trow[data-em]')) { e.preventDefault(); e.target.click(); } });
   // 5.0.0 层行的悬停提示（原图层管理卡片上的开始、时长）
   function layerDur(i) { const L = state.layers && state.layers[i], x = L && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null; return x && x.bake && typeof bakeTotal === 'function' ? bakeTotal(x.bake) / (L.rate || 1) : null; }
   function layerTip(i) { const L = state.layers && state.layers[i]; if (!L) return ''; const d = layerDur(i); return `开始 ${(+L.delay || 0).toFixed(2)} s，时长 ${d == null ? '—' : d.toFixed(2) + ' s'}`; }
   // 5.0.0 层的「⋯」菜单（原图层管理卡片上的：上移 / 下移 / 改名 / 复制 / 删除只对我的效果；时间与缩放在这一层的「效果」里）
   function layerMenu(btn, i) {
-    closePop(); const my = typeof lib !== 'undefined' && !!lib.my, n = state.layers.length, why = my ? '' : ' disabled data-tip="先另存为我的效果"';
+    closePop(); const my = typeof lib !== 'undefined' && !!lib.my, n = state.layers.length, why = my ? '' : ' disabled data-tip="先存成我的效果"';
     pop = document.createElement('div'); pop.className = 'e40-pop'; pop.setAttribute('role', 'menu');
     pop.innerHTML = `<button type="button" class="mi" role="menuitem" data-lm="time">${ico('timer')}时间与缩放</button><hr>`
       + `<button type="button" class="mi" role="menuitem" data-lm="up"${!my ? why : i === 0 ? ' disabled' : ''}>${ico('cu')}上移</button>`
@@ -24567,7 +24631,7 @@ window.__fw = {
     let dest = ''; try { dest = typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.destination ? DeliveryWorkspace.destination() : ''; } catch (e) { }
     const where = dest === 'zip' ? '打成 ZIP 下载' : dest ? '交到导出根目录（资源交付）' : '';
     el.innerHTML = `<div class="mline"><b>${st ? '<span class="sdot" aria-hidden="true"></span>素材包需重新导出' : ico('check') + (info.some(c => /✓/.test(c.t)) ? '素材包和这一版一致' : '导出交付清单产物表上的东西')}</b></div>`
-      + `<dl>${st && st.d ? `<dt>原因</dt><dd>${esc(st.d)}</dd>` : ''}${where ? `<dt>位置</dt><dd>${esc(where)}</dd>` : ''}<dt>内容</dt><dd>每层按 PC / 手机各自出什么，见「看交付清单」</dd></dl>`;
+      + `<dl>${(window.__e50Warn || []).length ? `<dt>自检</dt><dd class="warn">${esc(window.__e50Warn.join('；'))}</dd>` : ''}${st && st.d ? `<dt>原因</dt><dd>${esc(st.d)}</dd>` : ''}${where ? `<dt>位置</dt><dd>${esc(where)}</dd>` : ''}<dt>内容</dt><dd>按交付清单</dd></dl>`;
   };
 
   // ---- 检查器：改过的模块在摘要前写「+N」（N = 这个模块里改过的参数行） ----
@@ -24607,7 +24671,7 @@ window.__fw = {
     const chg = $q('#abChg'), sv = $q('#abSave'); if (!chg || !sv) return;
     const dirty = !chg.hidden; sv.classList.toggle('e-dirty', dirty);
     const lab = dirty ? '保存（有没保存的改动）' : '保存'; if (sv.getAttribute('aria-label') !== lab) sv.setAttribute('aria-label', lab);
-    const vs = $q('#versionSummary'), vh = vs && vs.parentElement; if (vh) { const t = '版本记录' + (vs.textContent.trim() ? '：现在是「' + vs.textContent.trim() + '」' : '') + '（保存的版本、未保存草稿和导出时的恢复点）'; if (vh.dataset.tip !== t) { vh.dataset.tip = t; vh.removeAttribute('title'); } }
+    const vs = $q('#versionSummary'), vh = vs && vs.parentElement; if (vh) { const t = '版本记录' + (vs.textContent.trim() ? '\n现在：' + vs.textContent.trim() : ''); if (vh.dataset.tip !== t) { vh.dataset.tip = t; vh.removeAttribute('title'); } }
   }
 
   // ---- 导出 ▾：资源交付（外壳接管）、导出素材包、看交付清单、导出配方文件 ----
@@ -24768,7 +24832,7 @@ window.__fw = {
   if (typeof document === 'undefined') return;
   const $q = s => document.querySelector(s), $a = (s, r = document) => [...r.querySelectorAll(s)];
   const ico = id => `<svg class="i" aria-hidden="true"><use href="#i-${id}"/></svg>`;
-  const first = t => { const s = String(t || '').replace(/\s+/g, ' ').trim(); const m = /^(.{6,60}?[。；;])/.exec(s); return (m ? m[1].replace(/[。；;]$/, '') : s.slice(0, 60)).trim(); };
+  const first = t => { const s = String(t || '').replace(/\s+/g, ' ').trim(); const m = /^(.{4,60}?[。；;])/.exec(s); return (m ? m[1].replace(/[。；;]$/, '') : s.slice(0, 60)).trim(); };
 
   // ---- 搜索行 ----
   function toolbar() {
@@ -24858,8 +24922,31 @@ window.__fw = {
     const hide = state.tab === 'combo'; if (it.hidden !== hide) it.hidden = hide; it.disabled = !!src.disabled; it.dataset.tip = src.disabled ? '只有大面片母版能出种子变体' : 'V1–V3 三张贴图';
   }
 
-  // ---- 状态句一行显示，全文进悬停提示；「产物」的说明进它的标签提示 ----
+  // ---- 「恢复本模块」（§10：只在悬停标题时出现；模块里有改过的参数才有）：逐行还原到打开时，每一行都能 Ctrl+Z ----
+  function modReset() {
+    for (const d of $a('#params details.mod')) {
+      const sm = d.querySelector(':scope > summary'); if (!sm) continue;
+      let b = sm.querySelector(':scope > .e50-mrst');
+      const chg = $a(':scope > .sl.chg, :scope > .field.chg', d);
+      if (!b) { b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn-icon e50-mrst'; b.innerHTML = ico('reset'); b.setAttribute('aria-label', '恢复本模块');
+        // 同旧的「↺」（79_assetops.js syncScopeResets → resetScope）：一次还原整个模块，Ctrl+Z 一步撤回；旧的那个常驻琥珀「↺」藏了
+        b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (typeof resetScope === 'function' && d._g) { resetScope(d._g, d._mod); return; } if (typeof resetRow !== 'function') return; for (const r of $a(':scope > .sl.chg, :scope > .field.chg', d)) resetRow(r); });
+        const ms = sm.querySelector('.msum'); ms ? ms.before(b) : sm.appendChild(b); }
+      b.hidden = !chg.length; const t = chg.length ? `恢复本模块（${chg.length} 项）` : ''; if (b.dataset.tip !== t) b.dataset.tip = t;
+    }
+  }
+  // ---- 状态句一行显示，全文进悬停提示；「产物」的说明进它的标签提示；本层颜色里的两段说明进各自标题的悬停提示 ----
   function hintTips() {
+    { const sm = $q('#colorControls details.color-extra > summary'); if (sm && sm.dataset.tip !== '只影响预览，不参与烘焙') sm.dataset.tip = '只影响预览，不参与烘焙'; }
+    // 层的导出方案说明（原「随整包导出 · 方案说明」）→「导出方案」标题的悬停提示；有问题时那一句照样露出来（琥珀色一行）
+    //   标题提示只写下拉里看不出来的那一句：「注意：」后第一句，或手机「自动」为什么不出（「手机不出：和第 1 层同时播」）；全文在琥珀那一行的提示里
+    { const n = $q('#lhOutNote'), sm = $q('#lhOut > summary'); if (n && sm) { const t = n.textContent.trim(), ix = typeof state !== 'undefined' ? state.comboSel : -1;
+        const mp = ix >= 0 && typeof comboMobileNow === 'function' ? comboMobileNow(ix) : null, w = (t.split('注意：')[1] || '').split(/[；。（]/)[0].trim();
+        const tip = w || (mp && mp.auto && mp.kind === 'off' && mp.why ? '手机不出：' + mp.why.split('，')[0] : '');
+        if (tip) { if (sm.dataset.tip !== tip) sm.dataset.tip = tip; } else if (sm.dataset.tip) delete sm.dataset.tip;
+        const p = n.closest('.lh-out-info'); if (p && n.dataset.tip !== t) n.dataset.tip = t; } }
+    // 导出方案那句（「PC：…· 手机：…」）→ 模块标题的悬停提示（下面的 PC 导出、手机导出两行已经写着选了什么）
+    for (const p of $a('#params .infohost[data-info=schemeNote] p.hint')) { const sm = p.closest('details.mod') && p.closest('details.mod').querySelector(':scope > summary'), t = p.textContent.trim(); if (sm && sm.dataset.tip !== t) sm.dataset.tip = t; }
     for (const p of $a('#params .infohost p.hint')) { const t = p.textContent.trim(); if (p.dataset.tip !== t && !p.title) p.dataset.tip = t; }
     const fn = $q('#formNote'), lab = $q('#x-form') && $q('#x-form').closest('.field');
     if (fn && lab) { const t = first(fn.textContent); if (lab.dataset.tip !== t) lab.dataset.tip = t; }
@@ -24867,7 +24954,7 @@ window.__fw = {
   let sig = '';
   function run() {
     if (typeof state === 'undefined' || !state || !$q('#params')) return;
-    toolbar(); modules(); exposure(); specBits(); syncFilt(); syncFold(); variantsItem(); hintTips();
+    toolbar(); modules(); exposure(); specBits(); syncFilt(); syncFold(); variantsItem(); hintTips(); modReset();
   }
   const start = () => { if (!$q('#params')) return setTimeout(start, 200);
     new MutationObserver(() => { if (sig) return; sig = 'p'; queueMicrotask(() => { sig = ''; run(); }); }).observe($q('#params'), { childList: true });

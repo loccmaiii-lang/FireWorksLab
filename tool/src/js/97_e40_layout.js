@@ -22,7 +22,10 @@
     if (!ready()) return;
     const m = model(), s = JSON.stringify([m.combo, m.sel, m.layers, m.em.map(x => [x.e, x.on]), m.name, m.tab, !!$q('#assetBar') && $q('#assetBar').hidden]);
     if (!force && s === sig) return; sig = s;
-    const tree = $q('#tree'), emRows = cur => m.em.map(x => `<button type="button" class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span></button>`).join('');
+    // 5.0.0：自定义发射器行尾一个 ×（原来在参数栏发射器框右上角，发射器框的标题藏起来了）
+    const tree = $q('#tree'), emRows = cur => m.em.map(x => { const xi = /^自定义 (\d+)$/.exec(x.e);
+      return `<div class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" tabindex="0" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span>`
+        + (xi ? `<span class="ta"><button type="button" class="btn btn-icon" data-exdel="${xi[1]}" aria-label="去掉「${esc(x.e)}」" title="去掉这个发射器&#10;Ctrl+Z 撤销">${ico('x')}</button></span>` : '') + '</div>'; }).join('');
     let h = '';
     if ($q('#assetBar') && $q('#assetBar').hidden) h = '<div class="tree-empty">在下面的效果库里打开一个效果</div>';
     else if (m.combo) {
@@ -54,6 +57,8 @@
       if (k === 'more') { e.stopImmediatePropagation(); if (pop && pop.dataset.li === String(i)) closePop(); else layerMenu(ta, i); return; }     // 5.0.0：图层管理卡片去掉，层的操作在这里
       setTimeout(() => render(true), 0); return;
     }
+    const xd = e.target.closest && e.target.closest('#tree [data-exdel]');
+    if (xd) { if (typeof exRemoveSlot === 'function') exRemoveSlot(+xd.dataset.exdel); setTimeout(() => render(true), 0); return; }
     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
     if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
     if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
@@ -62,13 +67,13 @@
     else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
     setTimeout(() => render(true), 0);
   });
-  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer]')) { e.preventDefault(); e.target.click(); } });
+  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer], #tree .trow[data-em]')) { e.preventDefault(); e.target.click(); } });
   // 5.0.0 层行的悬停提示（原图层管理卡片上的开始、时长）
   function layerDur(i) { const L = state.layers && state.layers[i], x = L && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null; return x && x.bake && typeof bakeTotal === 'function' ? bakeTotal(x.bake) / (L.rate || 1) : null; }
   function layerTip(i) { const L = state.layers && state.layers[i]; if (!L) return ''; const d = layerDur(i); return `开始 ${(+L.delay || 0).toFixed(2)} s，时长 ${d == null ? '—' : d.toFixed(2) + ' s'}`; }
   // 5.0.0 层的「⋯」菜单（原图层管理卡片上的：上移 / 下移 / 改名 / 复制 / 删除只对我的效果；时间与缩放在这一层的「效果」里）
   function layerMenu(btn, i) {
-    closePop(); const my = typeof lib !== 'undefined' && !!lib.my, n = state.layers.length, why = my ? '' : ' disabled data-tip="先另存为我的效果"';
+    closePop(); const my = typeof lib !== 'undefined' && !!lib.my, n = state.layers.length, why = my ? '' : ' disabled data-tip="先存成我的效果"';
     pop = document.createElement('div'); pop.className = 'e40-pop'; pop.setAttribute('role', 'menu');
     pop.innerHTML = `<button type="button" class="mi" role="menuitem" data-lm="time">${ico('timer')}时间与缩放</button><hr>`
       + `<button type="button" class="mi" role="menuitem" data-lm="up"${!my ? why : i === 0 ? ' disabled' : ''}>${ico('cu')}上移</button>`
@@ -111,7 +116,7 @@
     let dest = ''; try { dest = typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.destination ? DeliveryWorkspace.destination() : ''; } catch (e) { }
     const where = dest === 'zip' ? '打成 ZIP 下载' : dest ? '交到导出根目录（资源交付）' : '';
     el.innerHTML = `<div class="mline"><b>${st ? '<span class="sdot" aria-hidden="true"></span>素材包需重新导出' : ico('check') + (info.some(c => /✓/.test(c.t)) ? '素材包和这一版一致' : '导出交付清单产物表上的东西')}</b></div>`
-      + `<dl>${st && st.d ? `<dt>原因</dt><dd>${esc(st.d)}</dd>` : ''}${where ? `<dt>位置</dt><dd>${esc(where)}</dd>` : ''}<dt>内容</dt><dd>每层按 PC / 手机各自出什么，见「看交付清单」</dd></dl>`;
+      + `<dl>${(window.__e50Warn || []).length ? `<dt>自检</dt><dd class="warn">${esc(window.__e50Warn.join('；'))}</dd>` : ''}${st && st.d ? `<dt>原因</dt><dd>${esc(st.d)}</dd>` : ''}${where ? `<dt>位置</dt><dd>${esc(where)}</dd>` : ''}<dt>内容</dt><dd>按交付清单</dd></dl>`;
   };
 
   // ---- 检查器：改过的模块在摘要前写「+N」（N = 这个模块里改过的参数行） ----
@@ -151,7 +156,7 @@
     const chg = $q('#abChg'), sv = $q('#abSave'); if (!chg || !sv) return;
     const dirty = !chg.hidden; sv.classList.toggle('e-dirty', dirty);
     const lab = dirty ? '保存（有没保存的改动）' : '保存'; if (sv.getAttribute('aria-label') !== lab) sv.setAttribute('aria-label', lab);
-    const vs = $q('#versionSummary'), vh = vs && vs.parentElement; if (vh) { const t = '版本记录' + (vs.textContent.trim() ? '：现在是「' + vs.textContent.trim() + '」' : '') + '（保存的版本、未保存草稿和导出时的恢复点）'; if (vh.dataset.tip !== t) { vh.dataset.tip = t; vh.removeAttribute('title'); } }
+    const vs = $q('#versionSummary'), vh = vs && vs.parentElement; if (vh) { const t = '版本记录' + (vs.textContent.trim() ? '\n现在：' + vs.textContent.trim() : ''); if (vh.dataset.tip !== t) { vh.dataset.tip = t; vh.removeAttribute('title'); } }
   }
 
   // ---- 导出 ▾：资源交付（外壳接管）、导出素材包、看交付清单、导出配方文件 ----

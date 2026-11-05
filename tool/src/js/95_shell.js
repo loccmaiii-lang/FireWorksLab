@@ -676,6 +676,8 @@ function askExpFolder(then, o = {}) {
 }
 /* 导出写完（67_delivery.js 的钩子调一次）：ZIP 方式时交给导入模块 publish(导出文件夹, blob, name, metadata) 写进导出文件夹（原 8034 的交付），
    再打开资源交付、选中刚导出的包。导入模块没加载或没选文件夹时只有浏览器下载的那份 ZIP */
+/* 4.9.132：导出文件夹选好了（且允许访问）、导入模块在 → 制作区不再下载 ZIP，这里写进文件夹 */
+window.shellWillPublish = () => !!IMP() && S.exp.st === 'ok';
 window.shellAfterExport = async (info = {}) => {
   const name = String(info.name || '').replace(/\.zip$/i, '');
   const I = IMP();
@@ -691,6 +693,8 @@ window.shellAfterExport = async (info = {}) => {
       }
     }
   }
+  /* 没下载过（交给这里写）却没写进去：补下载这一份，不丢导出 */
+  if (bad && info.downloaded === false && info.blob instanceof Blob && typeof window.download === 'function') { try { window.download(info.blob, info.name); } catch (e) { } bad = bad.replace(/^只下载了 ZIP，/, '').replace(/^没写进导出文件夹/, '没写进导出文件夹') + '，已改为下载 ZIP'; }
   const ov = q('#ovlApp'); if (ov) qq(':scope > .toast', ov).forEach(t => t.remove());
   setWS('import');
   if (I && S.exp.st === 'ok') await scan({pick, pickName: name}); else renderAll();

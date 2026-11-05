@@ -244,16 +244,22 @@ def t_main(R, b, url, kind):
     tried = wait(pg, "SHELL.state().ue.k === 'wait'", 3000)
     pg.evaluate("FWLImporter.__mock.scenario('default')")
     R.ck('「重新连接」先试一次（连接中），UE 回来后自动变「已连接」', tried and wait(pg, "SHELL.state().ue.k === 'on' && document.querySelector('#shell .sh-ue').textContent.includes('已连接')", 6000))
-    # 钩子不改导出：deliverResource 把同一个 blob、同名交给 download（ZIP）/ 把同样三样交给 DeliveryWorkspace.publish（目录），返回值照旧
+    # 钩子不改导出内容（4.9.132 起改了去向）：选好导出文件夹（shellWillPublish）时 ZIP 方式不再下载，同一个 blob 交给外壳写进文件夹；
+    #   没选 / 外壳不在时照旧 download 同一个 blob、同名；目录方式照旧交给 DeliveryWorkspace.publish，返回值照旧
     eq = pg.evaluate("""async () => {
-      const blob = new Blob(['PK-eq']), meta = {a: 1}, d0 = window.download, p0 = DeliveryWorkspace.publish, h0 = window.shellAfterExport;
-      let z = null, d = null; const rc = {receipt: 1}; window.shellAfterExport = () => {};
+      const blob = new Blob(['PK-eq']), meta = {a: 1}, d0 = window.download, p0 = DeliveryWorkspace.publish, h0 = window.shellAfterExport, w0 = window.shellWillPublish;
+      let z = null, d = null, hi = null; const rc = {receipt: 1}, tick = () => new Promise(r => setTimeout(r, 0));
+      window.shellAfterExport = i => { hi = {downloaded: i.downloaded, same: i.blob === blob, name: i.name}; };
       window.download = (b, n) => { z = [b === blob, n]; return 'dl'; };
       DeliveryWorkspace.publish = async (b, n, m) => { d = [b === blob, n, m === meta]; return rc; };
-      try { const r1 = await deliverResource(blob, 'eq.zip', meta, 'zip'), r2 = await deliverResource(blob, 'eq2.zip', meta, 'directory');
-            return {zip: z, zipRet: r1, dir: d, dirRet: r2 === rc}; }
-      finally { window.download = d0; DeliveryWorkspace.publish = p0; window.shellAfterExport = h0; } }""")
-    R.ck('钩子不改导出：ZIP / 目录两种方式收到的东西和返回值照旧', eq['zip'] == [True, 'eq.zip'] and eq['zipRet'] == 'dl' and eq['dir'] == [True, 'eq2.zip', True] and eq['dirRet'], json.dumps(eq, ensure_ascii=False))
+      try {
+        window.shellWillPublish = () => true; const r0 = await deliverResource(blob, 'eq0.zip', meta, 'zip'); await tick(); const via = {dl: z, hook: hi, ret: r0 === undefined};
+        z = null; hi = null; window.shellWillPublish = () => false; const r1 = await deliverResource(blob, 'eq.zip', meta, 'zip'); await tick(); const plain = {dl: z, hook: hi, ret: r1};
+        const r2 = await deliverResource(blob, 'eq2.zip', meta, 'directory');
+        return {via, plain, dir: d, dirRet: r2 === rc};
+      } finally { window.download = d0; DeliveryWorkspace.publish = p0; window.shellAfterExport = h0; window.shellWillPublish = w0; } }""")
+    R.ck('选了导出文件夹：不再多下载一份 ZIP，同一个 blob 交给外壳写进文件夹', eq['via']['dl'] is None and eq['via']['hook'] == {'downloaded': False, 'same': True, 'name': 'eq0.zip'} and eq['via']['ret'], json.dumps(eq['via'], ensure_ascii=False))
+    R.ck('没选导出文件夹：照旧下载同一个 ZIP；目录方式照旧，返回值照旧', eq['plain']['dl'] == [True, 'eq.zip'] and eq['plain']['ret'] == 'dl' and eq['plain']['hook']['downloaded'] is True and eq['dir'] == [True, 'eq2.zip', True] and eq['dirRet'], json.dumps({k: eq[k] for k in ('plain', 'dir', 'dirRet')}, ensure_ascii=False))
     # 导出钩子：deliverResource（67_delivery.js）→ shellAfterExport → 导入模块 publish → 打开资源交付、选中刚导出的包
     pg.evaluate("SHELL.ws('baker')")
     pg.evaluate("deliverResource(new Blob(['PK-shell-test']), '外壳检查导出_PC.zip', {}, 'zip')")

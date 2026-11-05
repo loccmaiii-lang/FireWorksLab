@@ -139,8 +139,9 @@ function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第
 //   以前被当成空中大面片烘，画面和导出都不对 → 只拦多层加层；4.9.100 原生单层我的效果不转换形态。
 function multiLayerBlock(P) {
   if (!P || familyOf(P.type) !== 'rise' || (isEmit(P) && rtPcFull(P))) return '';
-  return isEmit(P) ? '这个全套尾缀可以独立保存和导出，但不能放进多层。需要加层时，请另存副本后，在交付清单里将 PC 改为「近段 + 远段合成一张」'
-    : '这种尾缀（V5 / 上升循环 / 物理尾缀）可以独立保存和导出，但多层尚不支持这种形态，暂不能加层';
+  // 5.0.0 文案：第一行一句（悬停、提示条只看第一行），做法写第二行
+  return isEmit(P) ? '全套尾缀不能放进多层\n要加层：另存副本，交付清单里 PC 选「近段 + 远段合成一张」'
+    : '这种尾缀不能放进多层\nV5、上升循环、物理尾缀只能单层保存和导出';
 }
 async function myCreate(key) {
   { const why = multiLayerBlock(mySrc(key).P); if (why) { flash(why, true, 9000); return; } }
@@ -200,7 +201,7 @@ async function myRename() {
 }
 function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     // 4.5.0：不弹确认，删了 8 秒内能撤销（79_assetops.js）
 // ---------------- 层：加、删、复制、改名、上下挪 ----------------
-function myAddLayer() { if (state.tab !== 'combo') { flash(multiLayerBlock(state.P) || '请先从资产栏「加层」存成多层副本', true, 10000, true); return; } pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
+function myAddLayer() { if (state.tab !== 'combo') { flash(multiLayerBlock(state.P) || '先「加层」存成多层副本', true, 10000, true); return; } pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
 async function myAddLayerFrom(key) {
   if (state.tab !== 'combo') return;
   const s = mySrc(key); { const why = multiLayerBlock(s.P); if (why) { flash(why, true, 9000); return; } }     // 4.9.89 A12

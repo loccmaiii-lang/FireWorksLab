@@ -16,8 +16,8 @@ function comboLayerM(L) {
 // 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里……哪一层用单帧，哪一层用序列，哪一层用GPU粒子，哪一层用单束」；
 //   18:5x「手机列保留，手机也可以选序列或者单帧或者单束，但没有GPU」「单帧放主包、名字不加 _MB」）：PC 加单帧，手机 序列 / 单束 / 单帧 / 不出；没有低端列 / cascade_low.json 了
 // 4.9.126（用户 11-03 / 11-04）：合成一张 = 这一层和同平台别的「合成一张」层烘成一个序列、一个发射器，颜色用其中层号最小那一层（67_merge.js）
-const OUT_PC = [['seq', '序列（大面片）'], ['merge', '合成一张（几层合成一个序列）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']],
-  OUT_MOBILE = [['seq', '序列'], ['merge', '合成一张（几层合成一个序列）'], ['unit', '单束'], ['frame', '单帧（一张图 + 功能图）'], ['off', '不出']];
+const OUT_PC = [['seq', '序列'], ['merge', '合成一张'], ['unit', '单束'], ['dots', 'GPU 光点'], ['frame', '单帧'], ['off', '不出']],
+  OUT_MOBILE = [['seq', '序列'], ['merge', '合成一张'], ['unit', '单束'], ['frame', '单帧'], ['off', '不出']];
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
 function layerOut(L, entry) {
@@ -37,7 +37,7 @@ function layerOut(L, entry) {
 // 以前手机格缺省每层都出「序列」：多层烟花同一时刻有两张大序列，规范 v1 §6（中低配同一时刻 1 张大序列、≤ 3 个发射器）一律被导出拦截拦下（4.9.69 起，引菊 → 锦就是）。
 // 现在手机格没手动选过的层 = 自动：按层号先后，这一层的大序列和前面已经出手机的层同一时刻都在播、或手机发射器会超过 3 个 → 这一层手机不出；不冲突照旧出序列。
 // 手动选过的照选的出（违规照样拦，拦截写清是哪一层）。以前改 PC 格会顺手把手机写成 seq（存档里 {pc:'dots', mobile:'seq'}），不带 mobileManual 的 seq 当自动
-const OUT_MOBILE_UI = [['auto', '自动（按手游规范）'], ...OUT_MOBILE], MOBILE_EMITTERS_MAX = 3;
+const OUT_MOBILE_UI = [['auto', '自动'], ...OUT_MOBILE], MOBILE_EMITTERS_MAX = 3;
 function layerMobileManual(L) { const o = L && L.out; return !!(o && OUT_MOBILE_KINDS.includes(o.mobile) && (o.mobileManual || o.mobile !== 'seq')); }
 function setLayerOut(L, pf, v) {
   const o = { ...(L.out || {}) };

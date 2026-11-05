@@ -1154,7 +1154,7 @@ R5_JS = r"""async () => {
     const s = row[0].querySelector('select'); s.value = '1'; s.dispatchEvent(new Event('change')); await new Promise(r => setTimeout(r, 200));
     const vis = k => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === k); return x ? itemVisible(x[1], state.P) : null; };
     out.panel = { rtT: vis('rtT'), rtVt: vis('rtVt'), info: ((document.querySelector('#params [data-info=ballInfo]') || {}).textContent || '').slice(0, 40), dur: state.P.duration };
-    if (out.panel.rtT !== false || out.panel.rtVt !== true || !/物理弹道/.test(out.panel.info)) bad.push('选物理弹道后面板不对：' + JSON.stringify(out.panel));
+    if (out.panel.rtT !== false || out.panel.rtVt !== true || !/升空 .* s 到 .* m　终端速度/.test(out.panel.info)) bad.push('选物理弹道后面板不对：' + JSON.stringify(out.panel));
     s.value = '0'; s.dispatchEvent(new Event('change')); }
   selectEmitTab('星');
   return { ok: !bad.length, bad, out };
@@ -2036,7 +2036,7 @@ async def w2(pg):
       const box = document.querySelector('#params [data-info=endInfo]'), txt = box ? box.textContent : '', btn = box && box.querySelector('[data-cutclear]');
       if (btn) btn.click(); await new Promise(z => setTimeout(z, 100)); return { txt: txt.slice(0, 90), btn: !!btn, after: state.P.cutOut }; })()""")
     info['出点'] = r
-    if not r['btn'] or '出点在 2.83' not in r['txt'] or r['after'] != 0: bad.append(f'设了出点时没说清楚 / 清除不了：{r}')
+    if not r['btn'] or '出点' not in r['txt'] or '2.83' not in r['txt'] or r['after'] != 0: bad.append(f'设了出点时没说清楚 / 清除不了：{r}')     # 4.9.132 改写（烟花工坊 5.0 全新，旧结构不在了，查新结构）：那一句改成「出点 2.83 s 后不导出」
     await idle(pg)
     r = await pg.evaluate("""(() => { setAutoBake(false); const b0 = state.bake ? bakeTotal(state.bake) : null; state.P.duration = 7; onParam();
       const x = curLayerBakes()[0], sp = layerSpans(x); setAutoBake(true); return { bake: b0, end: sp && sp.end }; })()""")
@@ -2240,7 +2240,7 @@ async def w4(pg):
       exRemoveSlot(1); await new Promise(z => setTimeout(z, 200)); const tab = document.querySelector('#params .etabs [data-e="自定义 1"]');
       return { row: true, val: state.P.x1SizeCurve, keys: t, off: state.P.x1On, tab: !!tab && !tab.hidden }; })()""")
     info['曲线 / 去掉'] = r
-    if not r.get('row') or r.get('val') != '0:1, 1:0.2' or '2 个点' not in r.get('keys', ''): bad.append(f'曲线输入不对：{r}')
+    if not r.get('row') or r.get('val') != '0:1, 1:0.2' or '关键点 2 个' not in r.get('keys', ''): bad.append(f'曲线输入不对：{r}')     # 4.9.132 改写：读数一行「关键点 2 个　1 → 0.2」（以前「2 个点：0 → 1，1 → 0.2」）
     if r.get('off') != 0 or r.get('tab'): bad.append(f'「去掉这个发射器」没去掉：{r}')
     # 游戏内大小：真实米数
     r = await pg.evaluate("(() => { const k = gamePixelsPerMeter({}, 300, 1080, 1000), k2 = gamePixelsPerMeter({}, 780, 1080, 1000), old = gamePixelsPerMeter({ screenFrac: 1 / 3 }, 300, 1080, 1000); return { same: Math.abs(k - k2) < 1e-12, yon: +(780 * k2).toFixed(3), d300: +(300 * k).toFixed(3), old300: +(300 * old).toFixed(3) }; })()")
@@ -2409,10 +2409,10 @@ async def w9(pg):
     if '不受力' not in r: bad.append('交付清单的产物表没写明单束贴图里的星不受力、随机关了')
     r = await pg.evaluate("""(() => { const d = $('#previewSettings'), c = $('#previewBloomChk'); if (!c) return null; const g0 = state.gen, b0 = !!+state.P.previewBloom;
       d.open = true; d.dispatchEvent(new Event('toggle')); const shown = c.checked === b0; c.checked = !b0; c.dispatchEvent(new Event('change'));
-      const o = { shown, after: +state.P.previewBloom, want: b0 ? 0 : 1, gen: state.gen - g0, label: c.closest('label').textContent };
+      const lb = c.closest('label'), o = { shown, after: +state.P.previewBloom, want: b0 ? 0 : 1, gen: state.gen - g0, label: lb.textContent + ' ' + (lb.title || lb.dataset.tip || ''), inCtx: !!c.closest('#vfCtx') };     // 4.9.132：在画面右键菜单里，「引擎里没有」写在悬停
       c.checked = b0; c.dispatchEvent(new Event('change')); d.open = false; return o; })()""")
     info['预览泛光'] = r
-    if not r or not r['shown'] or r['after'] != r['want'] or r['gen'] or '引擎里没有' not in r['label']: bad.append(f'预览设置里的「预览泛光」不对（要能开关、不触发烘焙、写明引擎里没有）：{r}')
+    if not r or not r['shown'] or r['after'] != r['want'] or r['gen'] or '引擎里没有' not in r['label'] or not r['inCtx']: bad.append(f'画面右键菜单里的「预览泛光」不对（要能开关、不触发烘焙、悬停写明引擎里没有）：{r}')
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
 
 
@@ -2594,7 +2594,7 @@ W13_JS = r'''async (rec) => {
   out.hold = { linked: hb && hb.getAttribute('aria-pressed') === 'true', gray: hrow.classList.contains('adef-on'), shown: +hrow.querySelector('.num').value, calc: outCalc().hold };
   if (!out.hold.linked || !out.hold.gray || out.hold.shown !== out.hold.calc) bad.push('帧率没有灰字显示算出来的值 / 没链条：' + JSON.stringify(out.hold));
   const oc = panelRows.find(([r, it]) => it.sel === 'outCell')[0].querySelector('option[value="0"]').textContent; out.cellLabel = oc;
-  if (!/自动：现在 \d+ px/.test(oc)) bad.push('单格没写现在算出来的是多少：' + oc);
+  if (!/自动（\d+ px）/.test(oc)) bad.push('单格没写现在算出来的是多少：' + oc);     // 4.9.132 选项写短
   // 填了每帧停几 tick：帧计划照办（k = 2 → 帧号每次跳 2 个 tick）；0 = 自动和以前一样
   { const P0 = derive({ ...structuredClone(state.P), frameBudget: 'fixed' }), fm = measure(P0), p0 = plan(P0, fm), p2 = plan({ ...P0, holdTicks: 2 }, fm);
     const step = pl => pl.ticks && pl.ticks.length > 1 ? pl.ticks[1] - pl.ticks[0] : null; out.plan = { auto: step(p0), two: step(p2), F0: p0.L.F, F2: p2.L.F };
@@ -2637,9 +2637,9 @@ async def w13(pg):
 W14_FS = r'''async () => { await openType('kiku'); await new Promise(r => setTimeout(r, 400)); selectEmitTab('星'); $('#right').scrollTop = 0; $('#libBody').scrollTop = 0;
   const vh = innerHeight, vw = innerWidth, R = el => { if (!el) return null; const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.bottom <= vh + 1 && r.top >= -1 && r.right <= vw + 1 && r.left >= -1; };
   const firstRow = panelRows.map(([r]) => r).find(r => !r.hidden && r.offsetParent && r.closest('section.egrp:not([hidden])') && r.closest('details.mod') && r.closest('details.mod').open);
-  return { name: R($('#abIdName')), save: R($('#abSave')), exportPack: R($('#abExportPack')), more: R(document.querySelector('#abMore > summary')), tabs: R($('#params .etabs')),
+  return { name: R($('#abIdName')), save: R($('#abSave')), exportPack: R($('#abExportPack')), more: R(document.querySelector('#abMore > summary')), tree: R(document.querySelector('#tree .trow[data-em]')),
     firstRow: R(firstRow), review: R(document.querySelector('#libBody .li')), newRecipe: R($('#newRecipe')), canvas: R(document.querySelector('.canvas-wrap')), play: R($('#play')),
-    scope: R($('#params .pscope .ps-path')), search: R($('#params .ptools input[type=search]')), foot: R($('#pFoot')) }; }'''
+    path: R($('#path')), search: R($('#params .ptools input[type=search]')), filt: R(document.querySelector('#params .e50-filt > summary')) }; }'''     # 4.9.132 改写：tabs → 结构树发射器行、scope → 面包屑、foot → 筛选
 # 4.9.14（对话框23，用户 10-06 15:15「回滚再来」，照 01_顺手调参_深化）：第一屏的「舒适」口径——不再数参数行（4.9.8 的「≥ 8 行」把模块全展开往下堆）：
 # 这个发射器的模块一屏看得到几个（收起的都写了摘要）、参数行的滑杆和数值框各在一条竖线上、底部「和打开时比」那一条在
 W14_LAYOUT = r'''(() => { const R = $('#right').getBoundingClientRect(), vh = innerHeight, foot = $('#pFoot'), fb = foot && foot.offsetParent ? foot.getBoundingClientRect().top : Math.min(R.bottom, vh);
@@ -2688,14 +2688,14 @@ async def w14(p, b):
             need = {(1366, 768): (6, 6), (1440, 900): (99, 6), (1920, 1080): (99, 99)}[(vw, vh)]
             l1 = await pg.evaluate(W14_LAYOUT)
             await open_effect(pg, 'hiki_nishiki'); await pg.evaluate("(() => { state.playing = false; selectComboLayer(1); selectEmitTab('火花'); $('#right').scrollTop = 0; return 0; })()"); await pg.wait_for_timeout(300)
-            l2 = await pg.evaluate(W14_LAYOUT); sc = await pg.evaluate("$('#params .pscope .ps-path').textContent")
+            l2 = await pg.evaluate(W14_LAYOUT); sc = await pg.evaluate("$('#path').textContent")     # 4.9.132：面包屑「引菊 → 锦 › 金锦 › 火花」
             info[f'{vw}×{vh} 第一屏'] = {'菊 › 星': l1, '金锦 › 火花': l2, '顶上': sc}
             for nm, l, n in (('菊 › 星', l1, need[0]), ('金锦 › 火花', l2, need[1])):
                 if l['seen'] < min(n, l['mods']): bad.append(f"{vw}×{vh} {nm}：一屏只看得到 {l['seen']} / {l['mods']} 个模块（应 ≥ {min(n, l['mods'])}）")
                 if l['noSum']: bad.append(f"{vw}×{vh} {nm}：收起的模块没写摘要：{l['noSum']}")
                 if len(l['numX']) > 1 or len(l['rangeX']) > 1: bad.append(f"{vw}×{vh} {nm}：参数行没对齐（数值框 x {l['numX']}、滑杆 x {l['rangeX']}）")
                 if not l['rows']: bad.append(f'{vw}×{vh} {nm}：第一屏没有一行参数（默认该展开第一个模块）')
-            if sc.replace(' ', '') != '金锦›火花': bad.append(f'顶上没写「金锦 › 火花」：{sc}')
+            if not sc.replace(' ', '').replace('\u3000', '').endswith('金锦›火花'): bad.append(f'面包屑没写到「金锦 › 火花」：{sc}')
         finally:
             await ctx.close()
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
@@ -2783,15 +2783,15 @@ async def w15(p, b):
         # ---- 4.9.8 引菊 → 锦 六步（提示词验收表；第 5 步「和打开时对比」用户 10-06 12:30 定 5.0 后做，不查）----
         await pg.evaluate("(() => { setAutoBake(false); state.layerView = { solo: -1, mute: [] }; selectComboLayer(0); return 0; })()"); await idle(pg)
         # 1 定位：选金锦层（图层管理那一行 / 收起时的层名按钮），再选火花 → 顶上写「金锦层 › 火花」，画布照常看整体（不独看、不静音）
-        await pg.evaluate("(() => { const b = document.querySelector('#layerCard .lrow[data-i=\"1\"]') && document.querySelector('#layerCard').open ? document.querySelector('#layerCard .lrow[data-i=\"1\"]') : document.querySelector('#layerCard .lc-chip[data-i=\"1\"]'); b.click(); return 0; })()"); await pg.wait_for_timeout(200)
-        await pg.click('#params .etabs [data-e="火花"]'); await pg.wait_for_timeout(200)
-        s1 = await pg.evaluate("({ sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length, sticky: getComputedStyle($('#params .pscope')).position })")
+        # 4.9.132 改写：图层管理卡、发射器标签、「现在改的是」都不在了——在结构树上点层、点发射器；顶上看面包屑，右栏滚到底面包屑照样在原处
+        await pg.click('#tree .trow[data-layer="1"]'); await pg.wait_for_timeout(500)
+        await pg.click('#tree .trow[data-em="火花"]'); await pg.wait_for_timeout(300)
+        s1 = await pg.evaluate("({ sel: state.comboSel, scope: $('#path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length })")
         info['1 定位'] = s1
-        if s1['sel'] != 1 or s1['scope'] != '金锦›火花': bad.append(f'第 1 步定位不对：{s1}')
+        if s1['sel'] != 1 or not s1['scope'].endswith('金锦›火花'): bad.append(f'第 1 步定位不对：{s1}')
         if s1['solo'] != -1 or s1['mute']: bad.append(f'第 1 步选层改了观察（独看 / 静音）：{s1}')
-        if s1['sticky'] != 'sticky': bad.append('顶上那块没固定（滚动时会消失）')
-        sc = await pg.evaluate("(() => { const R = $('#right'); R.scrollTop = R.scrollHeight; const a = $('#params .pscope').getBoundingClientRect(), r = R.getBoundingClientRect(); return a.top >= r.top - 1 && a.bottom <= r.bottom + 1; })()")
-        if not sc: bad.append('右栏滚到底时看不到「现在改的是」')
+        sc = await pg.evaluate("(() => { const R = $('#right'), p = $('#path'); R.scrollTop = 0; const a0 = p.getBoundingClientRect().top; R.scrollTop = R.scrollHeight; const a = p.getBoundingClientRect(); return a.height > 0 && Math.abs(a.top - a0) < 1 && a.top >= 0 && a.bottom <= innerHeight; })()")
+        if not sc: bad.append('右栏滚到底时面包屑看不到 / 跟着滚走了')
         await pg.evaluate("$('#right').scrollTop = 0; 0")
         # 2 改寿命：暂停在 1.2 s，用数值框改火花寿命 → 数值、状态「改过」更新；时间不动；这一层排进重烘、贴图标旧（自动烘焙关）
         r2 = await pg.evaluate("""(() => { state.playing = false; state.t = 1.2; const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0], n = row.querySelector('.num');
@@ -2920,22 +2920,23 @@ async def w16(p, b):
         ok = await click("[...document.querySelectorAll('#libBody .li')].find(x => /引菊/.test(x.textContent))", 'lib')
         await idle(pg); await pg.wait_for_timeout(600); await idle(pg)
         await pg.evaluate("state.playing = false; 0")
-        ok = ok and await click("document.querySelector('#layerCard .lc-chip[data-i=\"1\"]') || document.querySelector('#layerCard .lrow[data-i=\"1\"]')", 'layer')
-        ok = ok and await click("document.querySelector('#params .etabs [data-e=\"火花\"]')", 'tab')
-        s1 = await pg.evaluate("({ key: lib.key, sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length })")
+        ok = ok and await click("document.querySelector('#tree .trow[data-layer=\"1\"]')", 'layer'); await pg.wait_for_timeout(500)     # 4.9.132 改写：结构树点层、点发射器
+        ok = ok and await click("document.querySelector('#tree .trow[data-em=\"火花\"]')", 'tab'); await pg.wait_for_timeout(300)
+        s1 = await pg.evaluate("({ key: lib.key, sel: state.comboSel, scope: $('#path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length })")
         info['1 选效果与图层'] = s1
-        if not ok or s1['sel'] != 1 or s1['scope'] != '金锦›火花': bad.append(f'第 1 步没选到「金锦 › 火花」：{s1}')
+        if not ok or s1['sel'] != 1 or not s1['scope'].endswith('金锦›火花'): bad.append(f'第 1 步没选到「金锦 › 火花」：{s1}')
         if s1['solo'] != -1 or s1['mute']: bad.append('第 1 步选层改了独看 / 静音')
         # 2 调参数：点开「寿命」模块（默认收起），数值框输入
         life0 = await pg.evaluate("layerEntryOf(state.layers[1]).P.sparkLife"); want = round(life0 + 0.4, 2)
         ok = await click("[...document.querySelectorAll('#params section.egrp[data-g=\"火花\"] > details.mod')].find(d => d._mod === '寿命').querySelector(':scope > summary')", 'lifesum')
         ok = ok and await type_num("panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0].querySelector('.num')", 'lifenum', want)
-        s2 = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0];
-          return { life: layerEntryOf(state.layers[1]).P.sparkLife, chg: row.classList.contains('chg'), rr: !row.querySelector('.rrst').hidden, n: +((document.querySelector('#params .etabs [data-e="火花"] .et-n') || {}).textContent || 0),
-            foot: $('#pFoot .pf-chg').textContent, stale: bakeStale() }; })()""")
+        await pg.evaluate("typeof wbSync === 'function' && wbSync(), 0"); await pg.wait_for_timeout(500)     # 4.9.132：检查器的 5.0 收尾每 0.4 s、保存按钮的点每 0.25 s 跟一次（画面循环停着，资产栏状态手动同步一次）
+        s2 = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0], d = row.closest('details.mod'), mr = d && d.querySelector(':scope > summary > .e50-mrst');
+          return { life: layerEntryOf(state.layers[1]).P.sparkLife, chg: row.classList.contains('chg'), bar: getComputedStyle(row, '::before').content !== 'none', rr: !row.querySelector('.rrst').hidden,
+            mod: mr && !mr.hidden ? mr.dataset.tip : '', save: $('#abSave').getAttribute('aria-label') || '', stale: bakeStale() }; })()""")
         info['2 调参数'] = s2
         if not ok or abs(s2['life'] - want) > 1e-6: bad.append(f'第 2 步寿命没改到金锦层：{s2}（应 {want}）')
-        if not (s2['chg'] and s2['rr'] and s2['n'] == 1 and '改过 1 项' in s2['foot']): bad.append(f'第 2 步「改过」没标全（行尾 ↺ / 标签数 / 底部）：{s2}')
+        if not (s2['chg'] and s2['bar'] and s2['rr'] and '1 项' in s2['mod'] and '没保存' in s2['save']): bad.append(f'第 2 步「改过」没标全（行左竖条 / 行尾恢复 / 恢复本模块 / 保存）：{s2}')     # 4.9.132 改写：标签数、底部计数不在了
         # 3 调色并返回
         c0 = await pg.evaluate("[JSON.stringify(state.layers[0].stages), state.layers[1].stages[0][1]]")
         ok = await click("[...document.querySelectorAll('#params section.egrp[data-g=\"火花\"] > details.mod')].find(d => d._mod === '颜色').querySelector('.mgo')", 'mgo')
@@ -2951,7 +2952,7 @@ async def w16(p, b):
         if s3['col'] == c0[1] or s3['other'] != c0[0]: bad.append('第 3 步颜色没改到金锦层 / 改到了别的层')
         if s3['tab'] != '火花' or not s3['back']: bad.append(f"第 3 步「← 回到」没回到火花 › 颜色：{info['3 调色并返回']}")
         # 4 调层延迟
-        ok = await click("document.querySelector('#params .etabs [data-e=\"效果\"]')", 'efftab')
+        ok = await click("document.querySelector('#tree .trow[data-em=\"效果\"]')", 'efftab'); await pg.wait_for_timeout(300)     # 4.9.132 改写：结构树
         d0 = await pg.evaluate("state.layers[1].delay"); dw = round(d0 + 0.5, 2)
         bar = "(() => { stage2.tlSig = ''; buildTlBars(); const m = document.querySelector('#tlBars .tlb-t[data-i=\"1\"] i.main'); return m ? parseFloat(m.style.left) : null; })()"
         b0 = await pg.evaluate(bar)
@@ -3035,7 +3036,7 @@ W17_JS = r"""async () => {
   const want1 = ['自动（跟时间）', '第 1 张 · 星头', '第 1 张 · 尾迹', '第 2 张 · 星头', '第 2 张 · 尾迹'];
   if (JSON.stringify(out.master.list) !== JSON.stringify(want1) || !out.master.shown) bad.push('分两张 + 星头 / 尾迹时清单不对：' + JSON.stringify(out.master));
   await click('第 2 张 · 尾迹'); out.master.pick = { hud: hud().slice(0, 20), sheet: state.texSheetNow && state.texSheetNow.key, isTail: state.texSheetNow && state.texSheetNow.show === b1.tail };
-  if (!out.master.pick.isTail || !/^贴图流转 · 第 2 张 · 尾迹/.test(out.master.pick.hud)) bad.push('点「第 2 张 · 尾迹」没换过去：' + JSON.stringify(out.master.pick));
+  if (!out.master.pick.isTail || !/^序列贴图 · 第 2 张 · 尾迹/.test(out.master.pick.hud)) bad.push('点「第 2 张 · 尾迹」没换过去：' + JSON.stringify(out.master.pick));
   await click('自动（跟时间）'); state.t = 0.2; hud(); out.master.auto0 = state.texSheetNow.key; state.t = b1.meta.t0 + 0.1; hud(); out.master.auto1 = state.texSheetNow.key;
   if (out.master.auto0 !== 'p0h' || out.master.auto1 !== 'p1h') bad.push('「自动」没跟着时间换张：' + JSON.stringify(out.master));
   // 流转动画也按这一张
@@ -3051,7 +3052,7 @@ W17_JS = r"""async () => {
   await click('远段'); state.t = 0.5; out.emitset.before = { hud: hud().slice(0, 30), f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0) };
   state.t = 3.8; out.emitset.mid = { f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0), key: state.texSheetNow.key };
   if (out.emitset.mid.key !== 'far' || out.emitset.before.f !== -1 || !(out.emitset.mid.f > 0)) bad.push('选「远段」没按远段自己的开始时刻 / 帧号走：' + JSON.stringify(out.emitset));
-  if (!/^贴图流转 · 远段/.test(out.emitset.before.hud)) bad.push('选「远段」HUD 没写：' + out.emitset.before.hud);     // 4.9.35 贴图 + 流转合成一页，HUD 先写看的是哪一张
+  if (!/^序列贴图 · 远段/.test(out.emitset.before.hud)) bad.push('选「远段」HUD 没写：' + out.emitset.before.hud);     // 4.9.35 贴图 + 流转合成一页，HUD 先写看的是哪一张
   // 3 只有一张序列：不显示切换
   { const prev = state.bake; await openType('botan'); await baked(prev); } state.bake.head = tex(); state.bake.N = state.bake.NH = 4; state.texSheet = ''; selectStageView('atlas'); await wait(30); hud();
   out.single = { shown: !$('#texSeg').hidden, list: btns() };
@@ -3289,7 +3290,7 @@ W21_JS = r"""async () => {
     singleUnitHolder().unitBake = { sig: unitSigOf(singleUnitHolder()), b: ub }; out.unitOutMode = P.outMode; }
   if (out.unitOutMode !== 'combined') bad.push('单束应该只出合并的一张（outMode combined）：' + out.unitOutMode);
   selectStageView('atlas'); await wait(30); state.t = 0.5; out.atlasUnit = { hud: hud().slice(0, 30), sheet: state.texSheetNow && state.texSheetNow.label };
-  if (out.atlasUnit.sheet !== '单束' || !/^贴图流转 · 单束/.test(out.atlasUnit.hud)) bad.push('PC 单束时「贴图」没看单束那张：' + JSON.stringify(out.atlasUnit));
+  if (out.atlasUnit.sheet !== '单束' || !/^序列贴图 · 单束/.test(out.atlasUnit.hud)) bad.push('PC 单束时「贴图」没看单束那张：' + JSON.stringify(out.atlasUnit));
   selectStageView('export'); await wait(30); out.exportUnit = hud().slice(0, 40);
   if (!/PC 单束/.test(out.exportUnit)) bad.push('单层引擎回放没按单束画：' + out.exportUnit);
   // 手机：看序列
@@ -3339,11 +3340,12 @@ W22_JS = r"""async () => {
   // 2 「输出」顶上：每帧最多跳几像素 + 试算
   { const prev = state.bake; await openType('kiku'); await baked(prev); } state.playing = false;
   const html = outSummaryHTML(), d = document.createElement('div'); d.innerHTML = html;
-  out.sum = { jump: /游戏里每帧最多跳/.test(d.textContent), trial: d.querySelectorAll('.otrial > div').length - 1, btn: d.querySelectorAll('[data-pages]').length };
-  if (!out.sum.jump || out.sum.trial < 2 || !out.sum.btn) bad.push('「输出」没写每帧跳动 / 没有试算几档：' + JSON.stringify(out.sum));
-  { const row = [...document.querySelectorAll('#params [data-info=outSummary]')][0];
-    if (row) { row._refresh(); const b = row.querySelector('[data-pages]'); const want = b && +b.dataset.pages; if (b) { b.click(); await wait(50); out.pick = { want, got: state.P.pageTarget }; if (state.P.pageTarget !== want) bad.push('试算「用这个」没改贴图张数：' + JSON.stringify(out.pick)); undoStep && await undoStep(-1); } }
-    else bad.push('右栏没有「输出」结果行'); }
+  // 4.9.132 改写：试算几档 /「用这个」删了（调试按钮，任务提示 B 类）——张数在「贴图张数」那一行直接改
+  const pr = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'pageTarget');
+  out.sum = { jump: /每帧跳动\s*[\d.]+ px/.test(d.textContent), pageRow: !!pr };
+  if (!out.sum.jump || !out.sum.pageRow) bad.push('「输出」没写每帧跳动 / 没有贴图张数那一行：' + JSON.stringify(out.sum));
+  if (pr) { const n = pr[0].querySelector('.num'), want = Math.max(1, (+state.P.pageTarget || 1) + 1); n.value = String(want); n.dispatchEvent(new Event('input', { bubbles: true })); n.dispatchEvent(new Event('change', { bubbles: true })); await wait(50);
+    out.pick = { want, got: state.P.pageTarget }; if (+state.P.pageTarget !== want) bad.push('「贴图张数」那一行改不了张数：' + JSON.stringify(out.pick)); }
   // 3 RT6 远段
   for (const id of ['RT6L', 'RT6M', 'RT6S']) { const e = entryById(id); if (!e) continue; const P = derive({ ...defaultsFor(e.base).P, ...e.p }), ball = rtBallistic(P), fa = rtLayoutFar(P, ball, rtLoopInfo(P));
     const onTick = fa.times.every((t, f) => Math.abs((t - fa.dur[f] / 2) * 30 - Math.round((t - fa.dur[f] / 2) * 30)) < 1e-6) && Math.abs(fa.t0 * 30 - Math.round(fa.t0 * 30)) < 1e-6;
@@ -3754,7 +3756,7 @@ W30_JS = r"""async () => {
   for (let s = state.bake; s; s = s.next) s.head = new Target(4, 4, gl.RGBA8);     // 假烘焙没有贴图：给一张 4 × 4 的，好让贴图流转画出来
   state.t = 0.5;
   out.tabs = [...$('#viewSeg').querySelectorAll('[data-view]')].map(b => b.dataset.view + ':' + b.textContent.trim());
-  if (out.tabs.join() !== 'live:实时模拟,export:引擎回放,flow:贴图流转,delivery:交付清单' || $('#flowSeg')) bad.push('标签应是 实时模拟 / 引擎回放 / 贴图流转 / 交付清单：' + JSON.stringify(out.tabs));
+  if (out.tabs.join() !== 'live:实时模拟,export:引擎回放,flow:序列贴图,delivery:交付清单' || $('#flowSeg')) bad.push('标签应是 实时模拟 / 引擎回放 / 序列贴图 / 交付清单：' + JSON.stringify(out.tabs));
   selectStageView('atlas'); out.aliasPressed = $('#viewSeg [data-view=flow]').getAttribute('aria-pressed');     // 以前的「贴图」入口也落到这一页
   if (state.view !== 'atlas' || !state.atlasFlow || out.aliasPressed !== 'true') bad.push('切「贴图」没落到贴图流转：' + JSON.stringify([state.view, state.atlasFlow, out.aliasPressed]));
   for (let k = 0; k < 3; k++) { loop(performance.now()); await wait(300); }
@@ -3766,7 +3768,7 @@ W30_JS = r"""async () => {
   const sx = box.width / canvas.width;
   if (out.wide.cvHidden || Math.abs(out.wide.cv[0] - L.crv.x * sx) > 3 || Math.abs(out.wide.cv[2] - L.crv.w * sx) > 3) bad.push('帧号曲线没放到布局里的位置：' + JSON.stringify(out.wide));
   if (out.wide.labels.length !== 2) bad.push('当前格 / 整张贴图两个标签：' + JSON.stringify(out.wide.labels));
-  if (!/^贴图流转 · /.test($('#hud').textContent)) bad.push('HUD 应写贴图流转：' + $('#hud').textContent.slice(0, 40));
+  if (!/^序列贴图 · /.test($('#hud').textContent)) bad.push('HUD 应写序列贴图：' + $('#hud').textContent.slice(0, 40));
   // 离开这一页：画布回正方形、曲线藏起来
   selectStageView('live'); for (let k = 0; k < 2; k++) { loop(performance.now()); await wait(300); }
   out.back = { cls: $('#box').classList.contains('wide'), canvas: [canvas.width, canvas.height], cv: $('#flowCv').hidden };

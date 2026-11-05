@@ -39,16 +39,25 @@ STATES = [
     ('金蕊柠 · 第 2 层效果', "selectComboLayer(1); selectEmitTab('效果'); document.querySelectorAll('#params details').forEach(d => d.open = true);", 2000),
     ('金蕊柠 · 第 2 层输出', "selectEmitTab('输出'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1500),
     ('金蕊柠 · 层菜单', "document.querySelector('#tree .trow[data-layer=\"1\"] [data-ta=more]').click();", 500),
+    # 4.9.132 起加：尾缀、分簇、分层粒子图、自定义发射器（选项最长的几处）
+    ('尾缀 · 星头', "document.body.click(); const ef = EFFS().find(e => (e.名 || '').includes('升空尾缀') && (e.名 || '').includes('循环层')); await openEffect(ef); selectEmitTab('星头'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 15000),
+    ('尾缀 · 火花共用', "selectEmitTab('火花共用'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1000),
+    ('尾缀 · 输出', "selectEmitTab('输出'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1500),
+    ('分簇火星 · 星', "const ef = EFFS().find(e => (e.名 || '').includes('分簇火星')); await openEffect(ef); selectEmitTab('星'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 15000),
+    ('仙女棒 · 分层粒子图', "const ef = EFFS().find(e => (e.名 || '').includes('仙女棒') && (e.名 || '').includes('全形态')); await openEffect(ef); selectEmitTab('分层粒子图'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 12000),
+    ('仙女棒 · 燃烧核心', "selectEmitTab('燃烧核心'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1000),
+    ('金芒菊 · 自定义 1', "const ef = EFFS().find(e => e.名 === '金芒菊'); await openEffect(ef); await new Promise(r => setTimeout(r, 3000)); exAddSlot(); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 3000),
 ]
 
 COLLECT = r"""() => {
   const out = [], vis = e => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return r.width > 0 && r.height > 0 && c.visibility !== 'hidden' && c.display !== 'none' && +c.opacity !== 0; };
   const own = e => [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').replace(/\s+/g, ' ').trim();
-  const kind = e => e.closest('#vfRead, .vf-foot, #tlabel, .tlx-v, #path .cur') ? '读数' : e.closest('summary .msum') ? '摘要' : e.closest('.e40-pop .mi, .ab-menu .mi, .e50-menu .mi, .e50-ctx, .exp .mi') ? '菜单项'
+  const kind = e => e.closest('#vfRead, .vf-foot, #tlabel, .tlx-v, #path .cur, .infohost p.hint') ? '读数' : e.closest('summary .msum') ? '摘要' : e.closest('.e40-pop .mi, .ab-menu .mi, .ab-menu > button, .e50-menu .mi, .e50-ctx, .exp .mi') ? '菜单项'
+    : e.closest('#rtLayerBar button') ? '标签'     /* 尾缀分层看的开关写的是段名（像结构树行名），按标签算 */
     : e.closest('option') ? '选项' : e.closest('.e50-warn, p.hint.warn, .ow') ? '原因' : e.closest('#status, .flash') ? '提示条' : e.closest('summary') ? '标题'
     : e.closest('button, .tab, .seg, .chip, .btn') ? '按钮' : '标签';
   const roots = [...document.querySelectorAll('#wsBaker, #vfCtx, .e40-pop')];
-  const skip = e => e.closest('#shell, .sh-toast, #libBody, #pHelp, script, style, #iconDefs, canvas, .tlb-n, #tree .nm, #abIdName, #path, #enName, .tb-txt');
+  const skip = e => e.closest('#shell, .sh-toast, #libBody, #pHelp, script, style, #iconDefs, canvas, .tlb-n, #tree .nm, #tree .tx, #abName, #abIdName, #path, #enName, .tb-txt');     /* 效果名是专有名词（结构树根行也是），不按标签限长 */
   for (const R of roots) for (const e of R.querySelectorAll('*')) {
     if (skip(e)) continue;
     if (e.tagName === 'SELECT') { if (vis(e)) for (const o of e.options) if (!o.hidden && /[一-鿿]/.test(o.text)) out.push(['选项', o.text.trim()]); continue; }

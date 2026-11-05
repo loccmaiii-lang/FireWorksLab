@@ -406,6 +406,9 @@ function showStats(b) {
   const bud = m.plan && m.plan.budget || m.budget; if (bud && bud.strobeAlias) warn.push(`点灭最快约 ${bud.strobeAlias} Hz，30 fps 的序列会混叠（看起来变成慢闪）；要这么快的点灭建议做成粒子层或降低「点灭频率」`);
   rows.push(warn.length ? `<span class="warn">自检：${warn.join('；')}</span>` : '<span class="ok">自检：过曝、边缘、通道布局都正常</span>');
   $('#stats').innerHTML = rows.join('<br>');
+  // 5.0.0：底部统计框不显示了，自检警告（短句）挪到「输出 › 算出来的」和「导出 ▾」摘要
+  window.__e50Warn = warn.map(w => w.replace(/，可缩短到.*$/, '').replace(/：.*；减少.*$/, '').replace(/^点灭最快约 (\S+) Hz.*$/, '点灭约 $1 Hz，30 fps 会混叠'));
+  document.querySelectorAll('#params [data-info=outSummary]').forEach(r => r._refresh && r._refresh());
 }
 const GRID_OPTS = [1, 2, 4, 8, 16, 32];
 function formOptions(P) {
@@ -417,7 +420,7 @@ function formOptions(P) {
     const o = [['trail', ALL.trail]]; if (P.form && P.form !== 'trail' && ALL[P.form]) o.push([P.form, ALL[P.form]]); return o;
   }
   // 4.9.25：单束不在这里选了——在「导出方案」（交付清单的产物表 / 输出 › 直接调 / 层页头）里选 PC 单束
-  return [['master', '大面片母版'], ['segments', '分段母版（按实际帧数分配贴图）']];
+  return [['master', '大面片母版'], ['segments', '分段母版']];
 }
 const FORM_NOTES = {
   master: '整朵花烘成一张序列，一个面片播放。远景、大型礼花的主层。',
@@ -485,7 +488,7 @@ const autoLinked = (k, v) => { const a = AUTO_DEF[k]; return !!a && (a[4] ? a[4]
 function syncOutCellLabel() {
   const x = panelRows.find(([r, it]) => it.sel === 'outCell'); if (!x) return;
   const o = x[0].querySelector('select option[value="0"]'); if (!o) return;
-  const t = `自动：现在 ${outCalc().cell} px（贴图宽 ÷ 列数，至少 512）`; if (o.textContent !== t) o.textContent = t;
+  const t = `自动（${outCalc().cell} px）`; if (o.textContent !== t) o.textContent = t;
   x[0].classList.toggle('adef-on', !(+state.P.outCell > 0));
 }
 // 4.9.5：这次烘焙实际用的帧率 / 张数 / 单格（没烘好时按参数估：单格 = 贴图宽 ÷ 列，至少 512）
@@ -510,7 +513,7 @@ function autoDefRow(row, k, step) {
     const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); row.classList.toggle('adef-off', !on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
     bt.textContent = on ? '跟着算' : '接回';
     bt.setAttribute('aria-label', on ? `跟着算（${a[2]}）：点一下断开，固定在 ${fmtV(v, step)}` : `已断开：点一下接回（${a[2]}，现在算出来是 ${fmtV(v, step)}）`);
-    bt.title = on ? `跟着算：${a[2]}` : `已断开；跟着算是 ${fmtV(v, step)}`;
+    bt.title = on ? `跟着算：${String(a[2]).replace(/（[^）]*）/g, '')}` : `已断开；跟着算是 ${fmtV(v, step)}`;     // 5.0.0 文案：括号里的补充不进悬停（全文在下面那行）
     tx.textContent = on ? `跟着算：${a[2]}` : `已断开：用你填的 ${fmtV(P[k], step)}；跟着算是 ${fmtV(v, step)}（${a[2]}）`;
     if (on) { inp.value = v; num.value = fmtV(v, step); row.classList.remove('over'); num.title = ''; }
   };
@@ -557,7 +560,7 @@ function rowStatusSync(row) {
   const s = c.contains('over') ? ['超范围', 'over', (row.querySelector('.num') || {}).title || '超出滑杆的常用范围，照样起作用']
     : c.contains('chg') ? ['改过', 'chg', '和打开时不一样' + (B != null ? `（打开时 ${B}）` : '') + '；Ctrl+Z 撤销，双击参数名恢复默认']
     : c.contains('locked') ? ['锁定', 'lock', '锁定：切换号数、随机微调时不变']
-    : c.contains('inert') ? ['不起作用', 'inert', '现在不起作用：' + (row._inert || '')] : ['', '', ''];
+    : c.contains('inert') ? ['不起作用', 'inert', whyShort(row._inert)] : ['', '', ''];
   if (st.textContent !== s[0]) st.textContent = s[0];
   st.className = 'st' + (s[1] ? ' st-' + s[1] : ''); st.title = s[2];
 }
@@ -614,8 +617,8 @@ function stageEditor(host, M, maxT, onChange, compact) {
   const line = document.createElement('div'); line.className = 'line2';
   const add = document.createElement('button'); add.className = 'btn ghost'; add.textContent = '+ 加一段'; add.disabled = M.stages.length >= 5;
   add.addEventListener('click', () => { const last = M.stages[M.stages.length - 1]; M.stages.push([Math.min(maxT, last[0] + 0.5), last[1]]); state.activeStage = M.stages.length - 1; redraw(); onChange && onChange(); });
-  const ign = document.createElement('button'); ign.className = 'btn ghost'; ign.textContent = '开头加点火橙色';
-  ign.title = '实拍里几乎所有星开头都有一段约 10–17% 燃烧时长的橙色点火期';
+  const ign = document.createElement('button'); ign.className = 'btn ghost'; ign.textContent = '加点火色';
+  ign.title = '开头加一段橙色点火期';
   ign.disabled = M.stages.length >= 5 || M.stages[0][1].toLowerCase() === IGNITE_ORANGE;
   ign.addEventListener('click', () => { const tb = Math.max(0.15, (state.P.burn || 2) * 0.13); M.stages.forEach(s => { if (s[0] < tb) s[0] = tb; }); M.stages.unshift([0, IGNITE_ORANGE]); redraw(); onChange && onChange(); });
   line.append(add, ign); host.appendChild(line);
@@ -789,12 +792,12 @@ function buildMasterPanel() {
         const vw = it[7];     // 4.9.50 显示换算（线条宽度：存散开速度、按米显示 / 输入）
         row = slider(det, 'p-' + String(k).replace(/[^\w-]/g, '_') + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, shownParam(state.P, k, D)) : shownParam(state.P, k, D), v => { if (isPathKey(k)) { if (!graphSetParam(k, v, it)) setTimeout(() => row && row._refresh && row._refresh(), 0); return; } if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : isPathKey(k) ? pGet(D, k) : D[k], isPathKey(k) ? null : k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
-        const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
+        const kl = row.querySelector('.k'); kl.title = (nm && nm.en ? nm.en : short) + '\n双击恢复默认';     // 5.0.0 文案：英文名一行 + 操作一行
         row._lab = short; row._detail = detail; row._nm = nm;
       } else if (it.sel) {
         const [short0, detail0] = splitLab(it.label), short = nm && !isPathKey(it.sel) ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
+        row.innerHTML = `<span class="fk" title="${(nm && nm.en ? nm.en : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
         row._lab = short; row._detail = detail; row._nm = nm; rrstBind(row);
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         const selVal = Q => { const v = it.sel === '_trailTier' ? Q.type : Q === P ? shownParam(P, it.sel, D) : isPathKey(it.sel) ? pGet(Q, it.sel) : Q[it.sel]; return String(it.io ? it.io.get(v) : v); };
@@ -823,10 +826,10 @@ function buildMasterPanel() {
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
         const lab = nm ? p43Label(nm, it.label) : it.label;
-        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="例 0:1, 1:0" title="空 = 不变；时刻 0–1"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
         const cvRaw = () => isPathKey(it.curve) ? graphCurveText(pGet(state.P, it.curve)) : state.P[it.curve];     // 4.9.87 分层粒子图的曲线存成 [[寿命, 倍率], …]，这里按同一种「时刻:值」写法显示
-        const show = () => { const ks = parseCurve(cvRaw()), bad = !ks && !!String(cvRaw() || '').trim(); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (bad ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
+        const show = () => { const ks = parseCurve(cvRaw()), bad = !ks && !!String(cvRaw() || '').trim(); out.textContent = ks ? `关键点 ${ks.length} 个　${+ks[0][1].toFixed(3)} → ${+ks[ks.length - 1][1].toFixed(3)}` : (bad ? '格式不对' : '不变');     // 5.0.0 文案（§10 读数一行）：每个点的值在下面的文本框里 out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
           const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig;
             // 4.9.14（照 01_顺手调参_深化）：图旁边一张小表「寿命 0–1 | 倍率」，就是上面那串数（只读；改还是在输入框里）
             row.querySelector('.cv-tab').innerHTML = ks && !bad ? `<table class="cv-table"><thead><tr><th>寿命 0–1</th><th>倍率</th></tr></thead><tbody>${ks.map(k => `<tr><td>${(+k[0]).toFixed(2)}</td><td>${(+k[1]).toFixed(2)}</td></tr>`).join('')}</tbody></table>` : ''; } };
@@ -887,6 +890,14 @@ function panelColorsAndIdent(P) {
   $('#type').value = state.repId ? 'rep:' + state.repId : P.type; syncEnName(); syncExport();
   syncTypeButton();
 }
+// 5.0.0 文案：「「湍流强度」是 0 时不起作用：……」→「湍流强度为 0 时无效」（只写条件，不写建议；全文照旧在参数说明里）
+function whyShort(t) {
+  let s = String(t || '').replace(/[「」]/g, '').replace(/^现在不起作用：/, '');
+  s = s.split(/[；。（(]/)[0];
+  const head = s.split('：')[0]; if (head.length >= 6 || /时不起作用$/.test(head)) s = head;     // 「X 是 0 时不起作用：先把……」只留条件
+  s = s.replace(/是 (\S+?) ?时不起作用$/, '为 $1 时无效').replace(/时不起作用$/, '时无效').replace(/不起作用$/, '无效').trim();
+  return !s ? '现在无效' : s.length > 16 ? s.slice(0, 15) + '…' : s;
+}
 function refreshVisibility() {
   pviewInit();
   const P = state.P, q = (pview.q || '').toLowerCase(), B = panelBaseP(), nChg = {}, appl = {};
@@ -901,7 +912,7 @@ function refreshVisibility() {
       if (Array.isArray(it) && it[7] && it[7].note) { let n = row.querySelector(':scope > .vwnote'); if (!n) { n = document.createElement('div'); n.className = 'vwnote'; row.appendChild(n); } n.textContent = it[7].note(P); } }
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
-    row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
+    row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = whyShort(iw); else row.removeAttribute('title');     // 5.0.0 文案：原因一句（全文在参数说明里）
     if (vis && it.sel && it.optOK) { const sl = row.querySelector('select'); if (sl) for (const o of sl.options) { const def = it.options.find(x => String(x[0]) === o.value), ok = !def || !!it.optOK(def[0], P); o.disabled = !ok; o.hidden = !ok && o.value !== sl.value; } }     // 4.9.89 只给这个效果能用的选项（合成一张的帧数、没有星头的 GPU 光点）
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
@@ -1014,10 +1025,10 @@ function colorLinks() {
   for (const g of document.querySelectorAll('#params section.egrp')) {
     const e = g.dataset.g; if (e === '效果' || e === '输出') continue;
     const d = [...g.querySelectorAll(':scope > details.mod')].find(x => x._mod === '颜色'); if (!d || d.querySelector('.clink')) continue;
-    const p = document.createElement('p'); p.className = 'clink'; p.innerHTML = `<span>颜色随本层（这一层所有发射器共用一条）</span><button type="button" class="btn mini ghost" title="滚到下面的「本层颜色」去改；改完点那里的「← 回到」回来">去改</button>`;
+    const p = document.createElement('p'); p.className = 'clink'; p.innerHTML = `<span title="这一层所有发射器共用">颜色随本层</span><button type="button" class="btn mini ghost" title="到本层颜色修改">去改</button>`;
     d.querySelector('summary').after(p); p.querySelector('button').addEventListener('click', ev => { ev.preventDefault(); colorGo(e); });
     // 4.9.14：模块收起时标题这一行就能去（照 01_顺手调参_深化「颜色  跟随金锦层颜色  定位 ↗」）
-    const go = document.createElement('span'); go.className = 'mgo'; go.setAttribute('role', 'button'); go.tabIndex = 0; go.textContent = '定位 ↗'; go.title = '去下面的「本层颜色」改（改完点那里的「← 回到」回来）';
+    const go = document.createElement('span'); go.className = 'mgo'; go.setAttribute('role', 'button'); go.tabIndex = 0; go.textContent = '定位 ↗'; go.title = '到本层颜色修改';
     const goF = ev => { ev.preventDefault(); ev.stopPropagation(); colorGo(e); }; go.addEventListener('click', goF); go.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') goF(ev); });
     d.querySelector('summary').appendChild(go); d._colorLink = true;
   }
@@ -1058,13 +1069,14 @@ function modSummaryText(d) {
 function modSummarySync() {
   for (const d of document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod')) {
     const sm = d.querySelector(':scope > summary'); let sp = sm.querySelector('.msum'); if (!sp) { sp = document.createElement('span'); sp.className = 'msum'; sm.appendChild(sp); }
-    const t = d.open ? '' : modSummaryText(d); if (sp.textContent !== t) { sp.textContent = t; sp.title = t; }
+    // 5.0.0（规范 v4 §10：摘要组间空 16、不用「·」）：每组一个 <span>，间距用样式；文字照旧按「 · 」分组算
+    const t = d.open ? '' : modSummaryText(d); if (sp.dataset.t !== t) { sp.dataset.t = t; const ps = t ? t.split(' · ') : []; sp.innerHTML = ps.map(x => `<span>${String(x).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</span>`).join(''); sp.title = ps.join('　'); }
     const n = [...d.children].filter(r => r._applies && r.classList.contains('chg')).length; sm.classList.toggle('mchg', !!n); sm.dataset.chg = n ? `${n} 项改过` : '';
   }
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」
 // 4.6.0（5.0 第 1 步）：自定义发射器的颜色模块——一层输出只有一条颜色（灰度贴图 + Ramp + Color Over Life），所以跟这一层；要别的颜色就拆层
-function exColorHTML(i) { return `<p class="hint">颜色随本层：灰度贴图越亮越接近渐变图的亮端，再乘本层的颜色曲线。要和星不同的颜色，把它放进另一层（「＋ 加层」后在那一层加这个发射器）。去掉这个发射器：鼠标在发射器框里停 1.5 秒，右上角出现 ×。</p>`; }     // 4.9.8：去掉的入口挪到发射器框右上角（用户 10-06 12:30）
+function exColorHTML(i) { return `<p class="hint">颜色随本层；要别的颜色，放进另一层</p>`; }     // 4.9.8：去掉的入口挪到发射器框右上角（用户 10-06 12:30）
 function exAddSlot() {
   const P = state.P; for (let i = 1; i <= EX_SLOTS; i++) if (!(+P['x' + i + 'On'] > 0)) { P['x' + i + 'On'] = 1; buildMasterPanel(); onParam(); selectEmitTab('自定义 ' + i); flash(`加了「自定义 ${i}」：默认是星熄灭时生成 8 个光点，在右边改`); return i; }
   flash(`最多 ${EX_SLOTS} 个自定义发射器（要更多：「＋ 加层」在另一层里再加）`, true); return 0;

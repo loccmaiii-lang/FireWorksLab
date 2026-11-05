@@ -289,7 +289,7 @@ function lifeCurveAt(ks, x) {
 }
 // 自定义发射器（＋ 加发射器）：最多 EX_SLOTS 个，每个是同一套模块（生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁），挂在星的事件上
 const EX_SLOTS = 2;
-const EX_EVENTS = [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']];
+const EX_EVENTS = [['death', '熄灭时'], ['birth', '开花时'], ['time', '定时'], ['trail', '沿路']];
 function exSlotsOf(P) {
   const out = [];
   for (let i = 1; i <= EX_SLOTS; i++) {

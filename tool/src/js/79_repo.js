@@ -54,7 +54,7 @@ function repoFolderInfo() { return { handle: repoDir.h, name: repoDir.name, ok: 
 function repoSync() {
   const read = $('#abRepoRead'); if (read) read.disabled = !!repoDir.reading;
   const b = $('#abRepo'); if (!b) return;
-  b.textContent = !repoDir.h ? '连接仓库文件夹（保存时顺便存进 git）…' : repoDir.ok ? `仓库文件夹：${repoDir.name} ✓（保存时顺便写进去；点这里换一个）` : `仓库文件夹：${repoDir.name}（要重新允许：点这里）`;
+  b.textContent = !repoDir.h ? '连接仓库…' : repoDir.ok ? `仓库 ${repoDir.name}` : `仓库 ${repoDir.name} 需允许`; b.title = !repoDir.h ? '保存时同时存进仓库' : repoDir.ok ? '保存时同时写进去；点一下更换' : '点一下允许访问';     // 5.0.0 文案
 }
 async function repoMenu() {
   if (repoDir.h && !repoDir.ok) { if (await repoPerm(true)) { await repoRead({ interactive: true }); return; } }

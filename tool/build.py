@@ -19,7 +19,15 @@ up = os.path.join(here, '..', '更新记录.md')
 if os.path.exists(up):
     for sec in re.split(r'^## ', open(up, encoding='utf-8').read(), flags=re.M)[1:21]:
         title, _, text = sec.partition('\n'); upd.append({'title': title.strip(), 'body': text.strip()})
-js = 'const UPDATES = ' + json.dumps(upd, ensure_ascii=False) + ';\n' + js
+UPDATES_LINE = 'const UPDATES = ' + json.dumps(upd, ensure_ascii=False) + ';\n'
+js = UPDATES_LINE + js
+# 5.0.0（外壳遗留 2，任务提示「更新记录……开头那几条是写给用户本人的待办，改成给同事看的 5.0 更新说明」）：
+#   烟花工坊.html 版本号点开的更新记录用 tool/src/shell/更新说明_5.0.md（同样按「## 标题」分条）；FireworkBaker.html 照旧用 更新记录.md
+WS_UPDATES_LINE = UPDATES_LINE
+_wsu = os.path.join(here, 'src', 'shell', '更新说明_5.0.md')
+if os.path.exists(_wsu):
+    _w = [{'title': t.strip(), 'body': x.strip()} for t, _, x in (s.partition('\n') for s in re.split(r'^## ', open(_wsu, encoding='utf-8').read(), flags=re.M)[1:21])]
+    WS_UPDATES_LINE = 'const UPDATES = ' + json.dumps(_w, ensure_ascii=False) + ';\n'
 # 4.3：参数命名全表（analysis/命名/参数名称表.json，唯一来源）→ PNAMES，参数面板按它显示新名字 / 说明 / 模块
 pn = []
 nf = os.path.join(here, '..', 'analysis', '命名', '参数名称表.json')
@@ -130,7 +138,7 @@ if os.path.isdir(shell_dir):
 {_rd(shell_dir, 'shell.html')}
 {data_js}{imp_block}<script>
 'use strict';
-{_inl(js)}</script>
+{_inl(js.replace(UPDATES_LINE, WS_UPDATES_LINE, 1))}</script>
 <script>
 {_inl(shell_js)}</script>
 </body>

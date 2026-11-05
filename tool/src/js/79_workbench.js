@@ -32,7 +32,7 @@ function buildLayerCard() {
   });
   // 4.9.125（用户 11-03 20:33「同事打开模板无法在图层下面加层，需要先点另存为旁边的加层后才会在图层下面出现加层按钮」）：
   //   以前只在我的效果里画；模板 / AI 效果 / 正式库也画，点了和资产栏「＋ 加层」同一个动作（addLayerAnywhere：先存成我的多层副本、原来的不动，再选层）
-  rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="${lib.my ? '加一层：花型模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成你的多层副本（原来的不动），再选要加的层'}">＋ 加一层</button>`);
+  rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层">＋ 加一层</button>`);
   // 4.9.8：「整体」挪到标题这一行右边（各层的位置、延迟、时间倍率、颜色），省一行给参数
   box.innerHTML = `<summary><span class="lc-t">图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ' · 加层'}</span><span class="lc-chips">${state.layers.map((L, i) => `<button type="button" class="lc-chip${state.comboSel === i ? ' cur' : ''}" data-i="${i}" aria-pressed="${state.comboSel === i}" title="改第 ${i + 1} 层 · ${layerName(i)} 的参数">${i + 1} ${layerName(i)}</button>`).join('')}</span><button type="button" class="lc-whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" title="整体：各层在整朵里的位置、延迟、时间倍率、颜色" aria-pressed="${state.comboSel < 0}">整体</button></summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
     <div class="lc-rows">${rows.join('')}</div>`;
@@ -97,7 +97,7 @@ function buildLayerHead(i) {
     <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「序列贴图」显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
     ${lib.my || linkedWith(i).length ? `<details class="lh-link-details sec" id="lhLink"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
   // 4.9.8：「位置与时间」放进这一层的「效果」发射器顶上，默认展开（接力调开始时间常用）；开始时间和图层管理里那一格是同一个值
-  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="开始时间、缩放、时间倍率、水平镜像（这一层在整朵里的位置和时间）">这一层在整朵里</summary>'; host.appendChild(pos);
+  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="这一层的位置和时间">这一层在整朵里</summary>'; host.appendChild(pos);
   pos.addEventListener('toggle', () => store.set('lhPosOpen', pos.open));
   slider(pos, `lh${i}-delay`, '开始时间', 's', 0, 10, 0.01, () => L.delay, v => { L.delay = v; const c = document.querySelector(`#layerCard [data-st="${i}"]`); if (c) c.value = (+v).toFixed(2); stage2.tlSig = ''; }, 0);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
@@ -107,7 +107,7 @@ function buildLayerHead(i) {
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
-  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE_UI.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE_UI.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
   host.insertBefore(ex, host.querySelector('.lh-t').nextSibling);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
@@ -122,12 +122,12 @@ function buildLayerHead(i) {
   const lsel = (k, lab, opts, d) => { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = `<span class="fk">${lab}</span><select>${opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
     const q = w.querySelector('select'); q.value = String(L[k] == null ? d : L[k]); q.addEventListener('change', () => { lset(k, d)(typeof d === 'number' ? +q.value : q.value); syncOut(); }); lwh.appendChild(w); };
   lsel('lowPick', '单帧取哪一刻', [['frame', '某一帧'], ['expo', '长曝光']], 'frame');
-  slider(lwh, `lh${i}-lowAt`, '单帧时刻（0 = 自动）', 's', 0, 30, 0.0333, () => +L.lowAt || 0, lset('lowAt', 0), 0);
-  { const w = document.createElement('p'); w.className = 'hint'; w.innerHTML = '<button type="button" class="btn mini">用时间轴现在的时刻</button>'; w.querySelector('button').addEventListener('click', () => { L.lowAt = +engineTick(state.t).toFixed(4); buildLayerHead(i); if (stage2.deliv) renderDeliv(); flash(`第 ${i + 1} 层单帧取 ${L.lowAt.toFixed(2)} s`); }); lwh.appendChild(w); }
+  slider(lwh, `lh${i}-lowAt`, '单帧时刻', 's', 0, 30, 0.0333, () => +L.lowAt || 0, lset('lowAt', 0), 0);
+  { const w = document.createElement('p'); w.className = 'hint'; w.innerHTML = '<button type="button" class="btn mini" title="0 = 自动">用播放头</button>'; w.querySelector('button').addEventListener('click', () => { L.lowAt = +engineTick(state.t).toFixed(4); buildLayerHead(i); if (stage2.deliv) renderDeliv(); flash(`第 ${i + 1} 层单帧取 ${L.lowAt.toFixed(2)} s`); }); lwh.appendChild(w); }
   lsel('lowSize', '单帧贴图大小', [[512, '512'], [1024, '1024'], [2048, '2048']], 1024);
   slider(lwh, `lh${i}-lowJit`, '溶解错落', '', 0, 1, 0.05, () => lowOf(L).jit, lset('lowJit', 0.3), 0.3);
   lsel('lowMaps', '功能图', [['DCA', 'D + C + A'], ['DA', 'D + A'], ['DC', 'D + C'], ['D', '只要 D'], ['', '不要']], 'DCA');
-  { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = '<span class="fk">功能图后缀（空 = 按勾的）</span><input type="text" maxlength="8">'; const q = w.querySelector('input'); q.value = L.lowSuffix || '';
+  { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = '<span class="fk" title="空 = 按勾选">功能图后缀</span><input type="text" maxlength="8">'; const q = w.querySelector('input'); q.value = L.lowSuffix || '';
     q.addEventListener('change', () => { const v = q.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); q.value = v; lset('lowSuffix', '')(v); }); lwh.appendChild(w); }
   const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = layerMobileManual(L) ? o.mobile : 'auto'; lwh.hidden = o.pc !== 'frame' && o.mobile !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit' && o.mobile !== 'unit';
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
@@ -220,7 +220,7 @@ function wbSync() {
   const changed = !!wb.sig && wbSig() !== wb.sig;
   $('#abChg').hidden = !changed; $('#abChg').textContent = wb.src.kind === 'mine' ? '参数已变 · 未保存到「' + ((list.find(x => x.id === wb.src.id) || {}).name || '') + '」' : '参数已变 · 未保存'; wb.changed = changed;
   $('#abSave').disabled = $('#abSaveAs').disabled = !!wb.saving;
-  $('#abSave').title = lib.my ? '保存当前效果' : '存成你的效果，保留当前形态与参数，原来的不动';
+  $('#abSave').title = lib.my ? '保存当前效果' : '存成我的效果，原来的不动';
   $('#abSaveAs').title = lib.my ? '另存为新效果，保留当前效果' : '存成你的效果（和「保存」一样）';
   if (typeof syncAssetOps === 'function') syncAssetOps();
   $('#versionSummary').textContent = changed ? '未保存' : wb.src.kind === 'mine' ? '我的版本' : lib.my ? '已保存' : '原始版本';
@@ -238,16 +238,16 @@ function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
   const name = $('#abName').textContent || wbBaseId();
-  if (changed) chips.push(['● 没保存', 'warn', '参数改过，还没保存（切走 / 刷新会先存成草稿）']);
+  if (changed) chips.push(['● 没保存', 'warn', '切走会先存成草稿']);
   // 素材包：AI 条目看状态清单里的导出（同一指纹 = 一致）；自己的效果 / 模板看这台浏览器里「导出时」存的那份和现在比
   if (ef && e && typeof effReady === 'function' && !changed && wb.src.kind !== 'mine') { const r = effReady(ef);
-    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致（${r.ex.job || ''}，指纹 ${r.ver}）`] : ['素材包过期', 'warn', '导出后参数或烘焙器输出规则改了，素材包要重导']); }
-  else if (ef && e) chips.push(['和 AI 包不同', 'dim', '你改过参数 / 看的是你的版本：和 AI 导出的素材包不一样']);
+    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致\n${r.ex.job || ''}　指纹 ${r.ver}`] : ['素材包过期', 'warn', '参数或规则改过']); }
+  else if (ef && e) chips.push(['和 AI 包不同', 'dim', '和 AI 导出的素材包不一样']);
   else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
-    if (!last) chips.push(['还没导出', 'dim', '这台电脑的浏览器里没导出过这个效果']);
+    if (!last) chips.push(['还没导出', 'dim', '这台电脑上没导出过']);
     else { let same = false; const noPrev = o => JSON.stringify(o, (k, v) => k === 'previewBloom' ? undefined : v);     // 预览泛光只是画面显示，不算改了素材包
       try { same = noPrev(last.snap) === noPrev(wbSnap()) && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
-      chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `素材包导出于 ${last.at}，之后改过参数（或烘焙器输出规则变了）`]); } }
+      chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `导出后参数或规则改过\n导出于 ${last.at}`]); } }
   const src = lib.my ? ['我的效果', '', '我的效果' + (lib.my.from ? '（派生自 ' + lib.my.from.name + '）' : '')] : lib.tpl ? ['我的模板', '', '我的模板'] : mtId ? ['多层模板', '', '多层花型模板'] : ef ? [e ? `AI · ${e.id}` : `AI · ${ef.阶段 || '条目'}`, '', `AI 做的效果 · ${ef.阶段 || ''}${e ? ' · 条目 ' + e.id : ''}`] : e ? ['AI 条目', '', 'AI 条目 ' + e.id] : lib.formal ? ['正式库', 'ok', '正式库 ' + lib.formal.id] : lib.key === 'combo' ? ['组合编辑器', '', '组合编辑器'] : ['花型模板', '', '花型模板'];
   chips.push(src);
   const v = wb.src.kind === 'mine' && list.find(x => x.id === wb.src.id);
@@ -566,11 +566,11 @@ function phasesOf(P) {
   if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', row: 's', t: +P.emberEnd, lab: '余烬熄灭时刻', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
   if (+P.sparkRate > 0 || +P.emberFrac > 0) {
     const ss = +P.sparkStart || 0, st = +P.sparkStop || 0, endNow = () => (+P.burn || 0) + (+P.afterBurn > 0 ? +P.afterBurn : 0);
-    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: ss > 0 ? '火花开始时刻' : '火花开始时刻（= 点火，拖动就打开）',
+    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: '火花开始',
       lo: ign, hi: (st > 0 ? ign + st : lifeEnd) - 1 / 15,
       set: t => { const v = t - igOf(); P.sparkStart = v < 1 / 30 ? 0 : r2(Math.min(v, (+P.sparkStop > 0 ? +P.sparkStop : endNow()) - 1 / 15)); } });
     // 火花停：没打开时（空心）只能往前拖；打开以后往后拖过燃烧结束，燃烧结束跟着往后推（保持原来星头比火花多亮的那一小段）
-    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: st > 0 ? '火花停止时刻' : '火花停止时刻（= 寿命结束，拖动就打开）',
+    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: '火花停止',
       lo: ign + ss + 1 / 15, hi: st > 0 ? Infinity : lifeEnd,
       set: t => { const v = t - igOf(), was = +P.sparkStop || 0;
         if (!(was > 0)) { P.sparkStop = v >= endNow() - 1 / 30 ? 0 : r2(Math.max((+P.sparkStart || 0) + 1 / 15, 0.05, v)); return; }
@@ -677,8 +677,7 @@ function resetToOpened() {
 // 4.9.36：轨道上「不导出」那段（序列时长里，出点后 / 结尾全黑没烘）说清楚为什么、怎么变长
 function seqVoidText(sp) {
   const a = sp.end.toFixed(2), z = sp.seq.toFixed(2);
-  return sp.cut ? `${a} – ${z} s 不导出：这一层设了出点 ${sp.cutAt.toFixed(2)} s（序列时长 ${z} s 只是时间轴画到这里）。要导出更长：时间轴下面「清除」入出点`
-    : `${a} – ${z} s 全黑（最亮像素 < 2/255），烘焙时不烘、不导出（序列时长 ${z} s 只是时间轴画到这里）。要这一层亮得更久：调燃烧时间 / 火花寿命，或「效果 › 整体调整 › 节奏」放慢`;
+  return sp.cut ? `${a}–${z} s 在出点后，不导出` : `${a}–${z} s 全黑，不导出`;     // 5.0.0 文案：一句
 }
 // 5.0.0 导出范围行（规范 v4 §9）：「导出范围　0.35 – 2.85 s」＋ 设为入点 / 设为出点 / 恢复（图标命令）｜ 一并移动、同刻联动（右对齐）
 function tlRangeRow(rows, P) {
@@ -712,7 +711,7 @@ function buildTlBars() {
   const glued = gluedPhases(rows);
   const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
   const step = Math.max(1, Math.ceil(D / 12)), ticks = Array.from({ length: Math.floor(D / step) + 1 }, (_, i) => i * step);
-  const ruler = `<header class="tlr"><span>图层与时间</span><div class="tlr-track" title="点刻度跳到对应时间">${ticks.map(t => `<span style="left:${pct(t)}%">${t}s</span>`).join('')}</div></header>`;
+  const ruler = `<header class="tlr"><span aria-label="图层与时间"></span><div class="tlr-track" title="点刻度跳到对应时间">${ticks.map(t => `<span style="left:${pct(t)}%">${t}s</span>`).join('')}</div></header>`;
   host.innerHTML = ruler + rows.map(x => {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
@@ -720,12 +719,12 @@ function buildTlBars() {
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`)
       + (sp.seq > sp.end + 0.02 && pct(sp.at(sp.seq)) > pct(sp.at(sp.end)) ? `<i class="void" style="left:${pct(sp.at(sp.end))}%;width:${Math.max(0.3, pct(sp.at(sp.seq)) - pct(sp.at(sp.end)))}%" title="${seqVoidText(sp)}"><em>${sp.cut ? '出点后 · 不导出' : '全黑 · 不导出'}</em></i>` : '');
     const cutOK = sp && lp && cutsOn(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
-    const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
-    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
+    const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab} ${t.toFixed(2)} s${set ? '' : '，自动'}&#10;拖动修改，拖回尽头即自动"></b>`).join('');
+    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab} ${q.t.toFixed(2)} s&#10;拖动修改${glued.has(x.i + ':' + q.k) ? '，和另一层同刻联动' : ''}"></b>`).join('') : '';
     // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
     const combo = state.tab === 'combo', mute = state.layerView.mute.includes(x.i), solo = state.layerView.solo === x.i;
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="只看第 ${x.i + 1} 层" aria-pressed="${solo}" title="只看这一层">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>';
   host.insertAdjacentHTML('afterbegin', tlRangeRow(rows, P));
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
@@ -799,7 +798,7 @@ function outSummaryHTML() {
     + ro('帧率', `${maxF.toFixed(0)}–${minF.toFixed(1)} fps`, `燃烧段最慢 ${burnMin.toFixed(1)} fps`)
     + ro('贴图', `${parts.length} 张 · ${parts.map(sheet).join('；')}`, `单格 ${Math.round(m0.L.cellW)} px，格子用了 ${used} / ${cap}`)
     + (led ? ro('每帧跳动', `${led.maxHeld} px`, `${STEP_REF_DIST} m 外；标定线 ${STEP_REF_PX} px`, led.over ? ' warn' : '') : '')
-    + warn.map(x => `<div class="e50-warn">${x.replace(/：可以把.*$/, '')}</div>`).join('') + '</div>';
+    + [...warn.map(x => x.replace(/：可以把.*$/, '')), ...(window.__e50Warn || [])].map(x => `<div class="e50-warn">${x}</div>`).join('') + '</div>';
 }
 // 4.9.25：单束以前另有资产栏「单束」菜单、交付页「导出单束包」、「把产物改成单束」三处入口，都并进交付清单的产物表（prodTableHTML）
 // 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
@@ -852,7 +851,7 @@ function applyCut(P, sp, kind, tl, drag) {
 function stageTick(D) {
   const playing = String(state.playing), play = $('#play');
   if (play.dataset.playing !== playing || !play.querySelector('.ui-icon')) { play.dataset.playing = playing; play.innerHTML = uiIcon(state.playing ? 'player-pause' : 'player-play'); play.setAttribute('aria-label', state.playing ? '暂停' : '播放'); play.title = state.playing ? '暂停（空格）' : '播放（空格）'; }
-  { const tk = `tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`, vs = $('#vfSpec'); if (vs.dataset.tip !== tk) vs.dataset.tip = tk; }     // 5.0.0：tick 收进左下读数的悬停提示
+  stage2.tick = Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6);
   // 4.2.22 播放头：轨道的位置每 1/4 秒量一次（offsetLeft 每帧强制排版），播放头用 transform 挪（不触发排版）
   const now = performance.now(), host = $('#tlBars'), ph = host.querySelector('.tlb-ph');
   if (ph && (!stage2.trBox || now - stage2.last >= 250)) { const tr = host.querySelector('.tlb-t'); stage2.trBox = tr ? [tr.offsetLeft, tr.offsetWidth] : null; }
@@ -860,6 +859,8 @@ function stageTick(D) {
   if (now - stage2.last < 250) return; stage2.last = now;
   $('#vfTitle').textContent = `${srcLabel() || (lib.key === 'combo' ? '组合编辑器' : '')}${srcLabel() ? ' · ' : ''}${state.tab === 'asset' ? '贴图回放' : VIEW_NAMES[state.view] || ''}${scopeLabel()}`;
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
+  // 5.0.0（规范 v4 §7：画面读数只在左下、右下）：画面左上的标题、画面上的两行说明（#hud / #hudB）不再画在画面上，内容进左下读数的悬停提示
+  { const vs = $('#vfSpec'), tip = [$('#vfTitle').textContent, $('#hud').textContent, $('#hudB').textContent, 'tick ' + (stage2.tick || 0)].map(x => String(x || '').trim()).filter(Boolean).join('\n'); if (vs.dataset.tip !== tip) vs.dataset.tip = tip; }
   buildTlBars(); syncGate();
   abStateSync();
   if (stage2.deliv && !$('#delivView').hidden && (stage2.delivKey !== wbKey() || (stage2.delivSig !== stage2.tlSig && !document.activeElement?.closest('.dv-names')))) renderDeliv();     // 输入或按保存按钮时不替换节点；换效果始终重绘。

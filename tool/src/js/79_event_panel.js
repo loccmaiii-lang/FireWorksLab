@@ -2,7 +2,7 @@
 function eventInstancePanel(host,L,i){
   const box=document.createElement('details');box.className='sec';box.id='eventInstancePanel';
   box.innerHTML='<summary>出生方式 · '+(EventInstances.on(L)?'飞行结束后绽放':'单次序列')+'</summary>';host.appendChild(box);
-  const label=document.createElement('label');label.className='check';label.innerHTML='<input type="checkbox" data-event-enable> 先飞行，结束后生成本层序列';box.appendChild(label);
+  const label=document.createElement('label');label.className='check';label.innerHTML='<input type="checkbox" data-event-enable> 飞行后出现';box.appendChild(label);
   const cb=label.querySelector('input');cb.checked=EventInstances.on(L);
   cb.addEventListener('change',()=>{if(cb.checked){L.eventSpawn=EventInstances.defaults();L.out={pc:'seq',mobile:'off',mobileManual:true};}else delete L.eventSpawn;buildLayerHead(i);wbSync();});
   if(!EventInstances.on(L))return;

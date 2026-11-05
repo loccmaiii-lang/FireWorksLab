@@ -252,7 +252,7 @@ function thUserSync(hidden) {
   const g = $('#thGrab'), r = $('#thRestore'), lb = $('#thRestoreLabel');
   const keys = hidden ? [] : thUserKeys(), u = keys.map(thUserGet).find(Boolean);
   if (g) { g.hidden = !keys.length; g.classList.toggle('on', !!u);
-    g.title = u ? `把现在这一帧截成这一项的缩略图，覆盖 ${u.when || ''} 截的那张（${u.t} s）；⋯ 里能恢复默认` : '把现在这一帧截成这一项在左栏 / 花型库里的缩略图（再点 = 覆盖旧的）'; }
+    g.title = u ? `生成缩略图\n覆盖 ${u.when || ''} 截的那张` : '生成缩略图'; }
   if (r) r.hidden = !u; if (lb) lb.hidden = !u;
   const out = $('#thSaveStatus'); if (out) { out.hidden = !keys.length; const key = keys[0] || ''; if (out.dataset.key !== key) { out.dataset.key = key; out.textContent = ''; } }
 }
