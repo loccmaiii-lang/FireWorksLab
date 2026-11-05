@@ -1,0 +1,241 @@
+/* 编排工作台 · E 样板 v3.6 组件预览主题（对话框9，2026-11-05）
+   只换组件外观，不动布局：面板位置、大小、分栏、行列结构都不变；控件的外框尺寸尽量保持原值（高度、内边距、边框宽度不改）。
+   颜色、字号、图标规格全部取自 analysis/results/20261104_E样板/src/style_main.css 的 :root（E 样板 v3.6）。
+   由 生成预览.py 注入到 tool/烟花编排工作台.html 的 </body> 前，排在原有样式之后；预览层大量用 !important，正式改源码时不需要。 */
+
+/* ---------- 0 E token（加 e- 前缀，避免和工作台自己的变量撞名） ---------- */
+:root{
+  --e-g0:#0c1518; --e-g1:#111d21; --e-g2:#16242a; --e-g3:#1b2a2f; --e-g4:#24373d;
+  --e-g5:#2b4149; --e-g6:#39515a; --e-g7:#8da3ac; --e-g8:#b4c5cb; --e-g9:#e4edef;
+  --e-p1:#062a23; --e-p3:#1f5b49; --e-p4:#00d49b; --e-p5:#36e4b0; --e-pInk:#a1ded0;
+  --e-w1:#3b3222; --e-w3:#e0b25a; --e-e1:#3f2525; --e-e3:#e8735a;
+  --e-line:var(--e-g5); --e-ovLine:var(--e-g6); --e-hov:var(--e-g4); --e-press:var(--e-g5); --e-on:var(--e-g5);
+  --e-t1:var(--e-g9); --e-t2:var(--e-g8); --e-t3:var(--e-g7); --e-focus:var(--e-g8);
+  --e-shadow:0 8px 24px rgba(0,0,0,.45);
+  --e-sans:"Inter","Segoe UI","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
+  --e-fs1:12px; --e-fs2:13px; --e-fs3:15px; --e-r:2px;
+}
+/* E 的 1366 档：小号保持 12，中号、大号各减 1（v3.6 第 6 条）。工作台自己的窄屏断点在 1450 */
+@media (max-width:1500px){ :root{ --e-fs2:12px; --e-fs3:14px; } }
+
+/* ---------- 1 把工作台的 Material / DF token 换成 E 的值 ---------- */
+:root,.fw-scope{
+  --md-surface:var(--e-g1); --md-surface-lowest:var(--e-g1); --md-surface-low:var(--e-g1);
+  --md-surface-container:var(--e-g3); --md-surface-high:var(--e-g4); --md-surface-highest:var(--e-g4);
+  --md-on-surface:var(--e-g9); --md-on-surface-variant:var(--e-g8);
+  --md-primary:var(--e-p4); --md-on-primary:var(--e-p1);
+  --md-primary-container:var(--e-g5); --md-on-primary-container:var(--e-g9);      /* E 里选中 / 开着 = g5 中性底，不用墨绿底 */
+  --md-secondary:var(--e-g8); --md-secondary-container:var(--e-g5); --md-on-secondary-container:var(--e-g9);
+  --md-tertiary:var(--e-w3); --md-tertiary-container:var(--e-w1);
+  --md-warning:var(--e-w3); --md-warning-container:var(--e-w1);
+  --md-error:var(--e-e3); --md-error-container:var(--e-e1);
+  --md-outline:var(--e-g7); --md-outline-variant:var(--e-g5);
+  --md-inverse-surface:var(--e-g9); --md-inverse-on-surface:var(--e-g1);
+  --md-radius-xs:2px; --md-radius-sm:2px; --md-radius-md:2px; --md-radius-lg:2px;
+  --fw-color-surface:var(--e-g1); --fw-color-surface-low:var(--e-g1); --fw-color-surface-container:var(--e-g3); --fw-color-surface-high:var(--e-g4);
+  --fw-color-on-surface:var(--e-g9); --fw-color-on-surface-muted:var(--e-g8);
+  --fw-color-primary:var(--e-p4); --fw-color-on-primary:var(--e-p1);
+  --fw-color-primary-container:var(--e-g5); --fw-color-on-primary-container:var(--e-g9);
+  --fw-color-outline:var(--e-g7); --fw-color-divider:var(--e-g5);
+  --fw-color-error:var(--e-e3); --fw-color-error-container:var(--e-e1);
+  --fw-color-warning:var(--e-w3); --fw-color-warning-container:var(--e-w1);
+  --fw-color-success:var(--e-pInk); --fw-color-success-container:var(--e-g5);
+  --fw-color-focus:var(--e-focus);
+  --accent-hover:var(--e-p5); --acc2:var(--e-p5); --ok:var(--e-pInk); --warn:var(--e-w3); --danger:var(--e-e3);
+}
+
+/* ---------- 2 基础：字体、焦点、面 ---------- */
+.app{font-family:var(--e-sans)!important;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.app :is(button,input,select,textarea,summary){font-family:inherit!important}
+.app :focus-visible{outline:2px solid var(--e-focus)!important;outline-offset:1px!important}
+/* 面只有四级：画面 g0 ＜ 面板 g1 ＜ 栏头 g2 ＜ 浮层 g4 */
+.app,.app .workspace{background:var(--e-g1)!important}
+.app .app-header,.app .editor-context-bar{background:var(--e-g2)!important}
+.app .library,.app .stage-panel,.app .inspector,.app .panel-heading{background:var(--e-g1)!important}
+.app .transport{background:var(--e-g1)!important}
+.app .app-footer{background:var(--e-g1)!important;color:var(--e-t3)!important}
+/* 线只有一种：1 px #2b4149（工作台原来就是这个值，这里只把少数写死的颜色收回来） */
+.app hr{border-color:var(--e-line)!important}
+
+/* ---------- 3 字号 12 / 13 / 15，字重 400 / 600 ---------- */
+/* 大号 15：项目名、检查器标题（片段名 / 生成交付内容）、当前时间、交付统计数 */
+.app .app-header .project>b{font-size:var(--e-fs3)!important;font-weight:600!important}
+.app .inspector-body>h2{font-size:var(--e-fs3)!important;line-height:22px!important;font-weight:600!important}
+.app .main-time strong{font-size:var(--e-fs3)!important;font-weight:400!important;color:var(--e-t1)!important}
+.app .main-time span{font-size:var(--e-fs2)!important;color:var(--e-t2)!important}
+.app .delivery-summary b{font-size:var(--e-fs3)!important;font-weight:600!important}
+/* 中号 13：标签页、搜索框、数值框、片段名、分组标题、正文 */
+.app .brand-title{font-size:var(--e-fs2)!important;font-weight:600!important}
+.app .tabs button{font-size:var(--e-fs2)!important}
+.app .flower b,.app .template-card b,.app .template-description>b{font-size:var(--e-fs2)!important;font-weight:600!important}
+.app :is(.inspector-section,.flower-layer-group)>h3,.app .display-popover>b{font-size:var(--e-fs2)!important;font-weight:600!important}
+.app .flower-layer>summary b,.app .track-label>b,.app .track-label>div>b{font-weight:600!important}
+.app .snackbar,.app .snackbar>span{font-size:var(--e-fs2)!important}
+.app .inspector-section>p,.app .inspector-body>p{font-size:var(--e-fs2)!important}
+/* 小号 12：读数、计数、次要说明、刻度、片段块 */
+.app :is(.ruler span,.sections button,.sections button span,.playhead-handle,.track-label small,.group-summary,.clip,.clip span,
+  .clip-feedback,.timeline-footer,.timeline-footer span,.app-footer,.app-footer span,.ue-connection small,.point-view-state,
+  .template-description small,.template-description small span,.selected-template-name,.selected-template-name b,.panel-heading>span,
+  .preview-mode>span,.recipe-play output,.beam-timing small,.beam-timing button span,.beam-timing button time,.flower-layer-group h3 small,
+  .flower-layer>summary span,.jitter-actions small,.library-create,.flower small,.subtitle,.field-hint){font-size:var(--e-fs1)!important}
+.app :is(.flower small,.template-description small,.track-label small,.group-summary,.ruler span,.point-view-state,.subtitle,.field-hint,.jitter-actions small,.flower-layer>summary span){color:var(--e-t3)!important}
+.app :is(.selected-template-name b){font-weight:600!important}
+.app .recipe-field{color:var(--e-t2)!important}   /* 原来写死 #a4b9b1 */
+/* 字重：500 / 650 / 700 / 800 一律收成 400 / 600 */
+.app :is(button,label,summary,select,input,small,span,time,output){font-weight:400}
+.app button>span>b,.app button>b{font-weight:600}
+
+/* ---------- 4 按钮 ---------- */
+/* 4.1 次要按钮：1 px 线框、透明底、次文字色；悬停浮层底色 + 主文字色；按下 g5（节目、保存、复制片段、建立段落、显示、返回舞台……） */
+.app :is(button,.file-action,.fw-button):not(.clip,.music-marker,.playhead-handle,.flower,.template-card,.track-label,.deck-point,.icon-button,.quiet-btn,.primary-action,.play-button,.tabs button,.segmented button,.sections button,.point-tags button,.library-category button,.beam-timing button,.snackbar button,[style*="background"]){
+  background:transparent!important;border-color:var(--e-line)!important;border-radius:var(--e-r)!important;color:var(--e-t2)!important;font-weight:400!important;box-shadow:none!important}
+.app :is(button,.file-action,.fw-button):not(.clip,.music-marker,.playhead-handle,.flower,.template-card,.track-label,.deck-point,.icon-button,.quiet-btn,.primary-action,.play-button,.tabs button,.segmented button,.sections button,.point-tags button,.library-category button,.beam-timing button,.snackbar button,[style*="background"]):is(:hover,:focus-visible):not(:disabled){
+  background:var(--e-hov)!important;color:var(--e-t1)!important}
+.app :is(button,.file-action):not(.clip,.music-marker,.playhead-handle,.flower,.template-card,.track-label,.deck-point,.primary-action,.tabs button,.segmented button,.sections button,[style*="background"]):active:not(:disabled){background:var(--e-press)!important;color:var(--e-t1)!important}
+/* 开着 / 按下（aria-pressed）：选中底色 g5 + 主文字色；栏开关（节目、交付）开着时图标薄荷，同 E 的 .btn.pnl */
+.app button[aria-pressed="true"]:not(.clip,.deck-point,.point-tags button,.tabs button,.segmented button,[style*="background"]){background:var(--e-on)!important;color:var(--e-t1)!important;border-color:var(--e-line)!important}
+.app .header-right button[data-panel][aria-pressed="true"] svg{color:var(--e-p4)!important}
+.app button:disabled{opacity:.5!important}
+/* 危险命令（删除片段、删除本层）：同次要按钮，只把文字和图标换成 E 的出错色 e3 */
+.app .danger-action{color:var(--e-e3)!important}
+.app .danger-action:hover:not(:disabled){color:var(--e-e3)!important}
+/* 4.2 文字命令：没有框（重新连接、新建、返回编排、选择导演、看灯光曲线……） */
+.app .quiet-btn{background:transparent!important;border-color:transparent!important;border-radius:var(--e-r)!important;color:var(--e-t2)!important;font-weight:400!important;box-shadow:none!important}
+.app .quiet-btn:hover:not(:disabled){background:var(--e-hov)!important;color:var(--e-t1)!important}
+/* 4.3 图标命令：16 px 图标，没有框，次文字色（撤销、重做、静音、关闭提示……） */
+.app .icon-button{background:transparent!important;border-color:transparent!important;border-radius:var(--e-r)!important;color:var(--e-t2)!important;box-shadow:none!important}
+.app .icon-button:hover:not(:disabled){background:var(--e-hov)!important;color:var(--e-t1)!important}
+.app .icon-button[aria-pressed="true"]{background:var(--e-on)!important;color:var(--e-p4)!important}
+/* 4.4 主操作：薄荷实底，一页只有一个 */
+.app .primary-action:not(.play-button){background:var(--e-p4)!important;color:var(--e-p1)!important;border-color:transparent!important;border-radius:var(--e-r)!important;font-weight:400!important;box-shadow:none!important}
+.app .primary-action:not(.play-button):hover:not(:disabled){background:var(--e-p5)!important}
+.app .primary-action:not(.play-button):active:not(:disabled){background:var(--e-p3)!important;color:var(--e-pInk)!important}
+.app .primary-action:not(.play-button):disabled{opacity:1!important;background:var(--e-g4)!important;color:var(--e-t3)!important}
+/* 一页只有一个薄荷实底：右栏里出现了本栏的主操作（自动导入 UE、下载节目版本文件、保存新版本）时，顶栏「交付」退成次要按钮；
+   「交付」自己开着（交付栏打开）时按开着的样子画（g5 底 + 薄荷图标） */
+.app:has(.inspector .primary-action:not(:disabled)) .header-right .primary-action{background:transparent!important;color:var(--e-t2)!important;border-color:var(--e-line)!important}
+.app:has(.inspector .primary-action:not(:disabled)) .header-right .primary-action:hover{background:var(--e-hov)!important;color:var(--e-t1)!important}
+.app .header-right .primary-action[aria-pressed="true"]{background:var(--e-on)!important;color:var(--e-t1)!important;border-color:var(--e-line)!important}
+.app .header-right .primary-action[aria-pressed="true"] svg{color:var(--e-p4)!important}
+/* 播放按钮：E 的播放条里 ▷ 是图标命令（主文字色），不是薄荷实底 */
+.app .play-button,.app .recipe-play .primary-action{background:transparent!important;color:var(--e-t1)!important;border-color:transparent!important;border-radius:var(--e-r)!important;box-shadow:none!important}
+.app .play-button:hover,.app .recipe-play .primary-action:hover{background:var(--e-hov)!important}
+
+/* ---------- 5 选一个：分段控件、筛选块、点位标签 ---------- */
+.app .segmented{border-color:var(--e-line)!important;border-radius:var(--e-r)!important;background:transparent!important;overflow:hidden}
+.app .segmented button{background:transparent!important;color:var(--e-t2)!important;font-weight:400!important;border-radius:0!important;box-shadow:none!important}
+.app .segmented button+button{box-shadow:inset 1px 0 0 var(--e-line)!important}   /* 段间 1 px 线（用内阴影画，不占宽度） */
+.app .segmented button:hover:not([aria-pressed="true"]){background:var(--e-hov)!important;color:var(--e-t1)!important}
+.app .segmented button[aria-pressed="true"],.app .quality-switch button[aria-pressed="true"]{background:var(--e-on)!important;color:var(--e-t1)!important}
+.app .segmented button[aria-pressed="true"] span{font-weight:400!important}
+/* 筛选块（全部 / 尾缀 / 球花 / 扇形）、参演点（P0 …）、播放范围（播放整场 / 仅播选中片段）：同 S 号分段，选中只靠底色 */
+.app :is(.library-category button,.point-tags button){background:transparent!important;border-color:var(--e-line)!important;border-radius:var(--e-r)!important;color:var(--e-t2)!important;font-weight:400!important;font-family:inherit!important;box-shadow:none!important}
+.app :is(.library-category button,.point-tags button):hover:not([aria-pressed="true"]){background:var(--e-hov)!important;color:var(--e-t1)!important}
+.app :is(.library-category button,.point-tags button,.play-scope-actions button)[aria-pressed="true"]{background:var(--e-on)!important;border-color:var(--e-line)!important;color:var(--e-t1)!important}
+/* 舞台点位块（P0 … F6）：1 px 线框；选中 = g5 底 + 薄荷竖线（同 E 结构树当前行）；单独看 = 薄荷 1 px 内框 */
+.app .deck-point{background:transparent!important;border-color:var(--e-line)!important;border-radius:var(--e-r)!important;color:var(--e-t1)!important;font-weight:400!important;box-shadow:none!important}
+.app .deck-point.front-point{border-color:var(--e-g6)!important}
+.app .deck-point:hover{background:var(--e-hov)!important}
+.app .deck-point.selected{background:var(--e-on)!important;border-color:var(--e-line)!important;color:var(--e-t1)!important;box-shadow:inset 2px 0 0 var(--e-p4)!important}
+.app .deck-point.isolated{box-shadow:inset 2px 0 0 var(--e-p4),inset 0 0 0 1px var(--e-p4)!important}
+/* 资源时序条（1 · 尾缀 0.00 s）：g5 中性底 */
+.app .beam-timing button{background:var(--e-on)!important;color:var(--e-t1)!important;border-radius:var(--e-r)!important}
+
+/* ---------- 6 标签页：文字 + 2 px 下划线；一级（左栏 编排片段 / 交付资源 / 模板库）薄荷，二级主文字色 ---------- */
+.app .tabs button{background:transparent!important;color:var(--e-t2)!important;font-weight:400!important;border-bottom-color:transparent!important;box-shadow:none!important}
+.app .tabs button:hover{color:var(--e-t1)!important}
+.app .tabs button:is(.selected,[aria-selected="true"],[aria-pressed="true"]){background:transparent!important;color:var(--e-t1)!important;font-weight:400!important;border-bottom-color:var(--e-p4)!important}
+.app :is(.library-kinds,.panel-tabs,.preview-mode) button:is(.selected,[aria-selected="true"],[aria-pressed="true"]){border-bottom-color:var(--e-t1)!important}
+
+/* ---------- 7 列表行：效果库 / 模板库 ---------- */
+.app .flower,.app .template-card{border-radius:0!important;border-color:transparent!important;background:transparent!important}
+.app .flower:hover,.app .template-card:hover{background:var(--e-g2)!important}
+.app .flower.chosen,.app .flower.chosen:hover,.app .library .template-card.chosen,.app .library .compact-template-items .template-card.chosen{
+  background:var(--e-g3)!important;box-shadow:inset 2px 0 0 var(--e-p4)!important;border-radius:0!important}
+.app .flower .thumb,.app .template-card .thumb,.app .flower img,.app .template-card img{border-radius:0!important}
+.app .flower svg,.app .template-card svg{color:var(--e-t3)!important}
+.app .template-card.chosen svg[data-e-ico="check"]{color:var(--e-p4)!important}   /* 当前项的勾：薄荷（当前位置） */
+/* 说明行 11 → 12 后在 1366 下会折行、把行撑高：改成单行省略，行高不变 */
+.app :is(.flower small,.template-description small){white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+
+/* ---------- 8 输入框、下拉 ---------- */
+.app :is(input:not([type=checkbox],[type=radio],[type=range],[type=color],[type=file]),select,textarea){
+  background-color:transparent!important;border-color:var(--e-line)!important;border-radius:var(--e-r)!important;color:var(--e-t1)!important;font-size:var(--e-fs2)!important;font-weight:400!important;box-shadow:none!important}
+.app :is(input:not([type=checkbox],[type=radio],[type=range],[type=color],[type=file]),select,textarea):hover{border-color:var(--e-g6)!important}
+.app :is(input:not([type=checkbox],[type=radio],[type=range],[type=color],[type=file]),textarea):focus{border-color:var(--e-g7)!important;background-color:var(--e-hov)!important;outline:none!important}
+.app input::placeholder,.app textarea::placeholder{color:var(--e-t3)!important}
+.app input:disabled,.app select:disabled,.app input[readonly]{color:var(--e-t2)!important}
+/* 搜索框：外层 label 是框（静止就有线框，同 E .field.search） */
+.app label.search{background:transparent!important;border-color:var(--e-line)!important;border-radius:var(--e-r)!important;color:var(--e-t3)!important}
+.app label.search:hover{border-color:var(--e-g6)!important}
+.app label.search:focus-within{border-color:var(--e-g7)!important;background:var(--e-hov)!important}
+.app label.search input{background:transparent!important;border-color:transparent!important}
+/* 下拉：E 的 ▾（16 px、1.5 线宽、次文字色 #8da3ac）；弹出的列表用浮层（g4 底、g6 线、2 px 圆角、阴影） */
+.app select{appearance:base-select;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 4px center!important;padding-right:22px!important;align-items:center;cursor:pointer}
+.app select:hover{background-color:var(--e-hov)!important}
+.app select::picker-icon{display:none}
+.app select:open{background-color:var(--e-press)!important}
+.app select::picker(select){appearance:base-select;min-width:anchor-size(width);margin:2px 0;padding:4px 0;background:var(--e-g4);border:1px solid var(--e-ovLine);border-radius:var(--e-r);box-shadow:var(--e-shadow);color:var(--e-t1)}
+.app select option{display:flex;align-items:center;gap:8px;min-height:28px;padding:0 12px;font-size:var(--e-fs2);color:var(--e-t1);background:transparent;white-space:nowrap}
+.app select option::checkmark{content:"";display:inline-block;flex:none;width:12px;height:12px;background:none}
+.app select option:checked::checkmark{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='2 2 12 12' fill='none' stroke='%23b4c5cb' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.06 7.7 6.56 11.2l6.38-6.38'/%3E%3C/svg%3E") no-repeat center/12px 12px}
+.app select option,.app select option:checked{background:transparent!important;color:var(--e-t1)!important;font-weight:400}
+.app select option:hover,.app select option:focus,.app select option:focus-visible{background:var(--e-press)!important;outline:none}
+
+/* ---------- 9 勾选框、滑杆 ---------- */
+/* 勾选：14 px 方框，1 px #8da3ac；勾上薄荷底 + 深色勾（外边 2 px，占位仍是原来的 18 px） */
+.app input[type=checkbox]{appearance:none!important;-webkit-appearance:none!important;position:relative;flex:none;width:14px!important;height:14px!important;min-width:14px!important;margin:2px!important;padding:0!important;border:1px solid var(--e-g7)!important;border-radius:var(--e-r)!important;background:transparent!important;cursor:pointer;vertical-align:middle}
+.app input[type=checkbox]:hover{border-color:var(--e-g8)!important}
+.app input[type=checkbox]:checked{background:var(--e-p4)!important;border-color:var(--e-p4)!important}
+.app input[type=checkbox]:checked::after{content:"";position:absolute;left:3.5px;top:.5px;width:4px;height:8px;border:solid var(--e-p1);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.app input[type=checkbox]:disabled{opacity:.5}
+/* 滑杆：没填的部分 1 px 线色，已填的部分薄荷 2 px，拖块 4 × 14 主文字色（已填比例由 E主题.js 写进 --e-v） */
+.app input[type=range]{appearance:none!important;-webkit-appearance:none!important;background:linear-gradient(var(--e-p4),var(--e-p4)) 0 50%/var(--e-v,0%) 2px no-repeat,linear-gradient(var(--e-line),var(--e-line)) 0 50%/100% 1px no-repeat!important;border-color:transparent!important;border-radius:0!important;box-shadow:none!important;cursor:pointer}
+.app input[type=range]::-webkit-slider-runnable-track{height:14px;background:transparent}
+.app input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:4px;height:14px;border-radius:1px;background:var(--e-t1);box-shadow:0 0 0 2px var(--e-g1)}
+.app input[type=range]:hover::-webkit-slider-thumb{width:6px}
+.app input[type=range]:active::-webkit-slider-thumb{width:6px;height:16px}
+
+/* ---------- 10 折叠块、浮层、提示条 ---------- */
+.app summary{border-radius:0!important;color:var(--e-t2)!important}
+.app summary:hover{color:var(--e-t1)!important}
+.app .flower-layer{border-color:var(--e-line)!important;border-radius:var(--e-r)!important}
+.app .flower-layer[open]{border-color:var(--e-line)!important;background:var(--e-g2)!important}
+.app :is(.display-popover,[role=menu],[role=dialog]:not(.app)){background:var(--e-g4)!important;border:1px solid var(--e-ovLine)!important;border-radius:var(--e-r)!important;box-shadow:var(--e-shadow)!important}
+.app .display-popover :is(small,p){line-height:1.5!important;color:var(--e-t3)!important}
+.app .snackbar{background:var(--e-g4)!important;border-color:var(--e-ovLine)!important;border-radius:var(--e-r)!important;box-shadow:var(--e-shadow)!important;color:var(--e-t1)!important}
+.app .snackbar>span{line-height:1.5!important}
+.app .snackbar>svg{color:var(--e-t3)!important}
+.app .camera-tools{background:var(--e-g2)!important;border-color:var(--e-line)!important;border-radius:var(--e-r)!important}
+.app .camera-tools button{border-color:transparent!important}
+.app .camera-tools button[aria-pressed="true"]{border-color:transparent!important}
+
+/* ---------- 11 状态：6 px 状态点；警告用琥珀小点，不用三角 ---------- */
+.app .ue-badge{background:transparent!important;border-radius:0!important;color:var(--e-t2)!important;padding-left:0!important;padding-right:0!important;display:inline-flex;align-items:center;gap:6px}
+.app .ue-badge::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--e-t3)}
+.app .ue-badge.offline::before{background:var(--e-w3)}
+.app .ue-badge.connected::before{background:var(--e-p4)}
+.app .draft-badge,.app .draft-badge svg{color:var(--e-t3)!important}
+.app .app-header .project .version{border-color:var(--e-line)!important;border-radius:var(--e-r)!important;color:var(--e-t3)!important;font-size:var(--e-fs1)!important}
+.app .status-dot{width:6px!important;height:6px!important;border-radius:50%!important;background:var(--e-p4)!important}
+.app .brandmark,.app .brand-mark{background:transparent!important;color:var(--e-t1)!important;box-shadow:inset 0 0 0 1px var(--e-line)!important;border-radius:var(--e-r)!important;font-size:var(--e-fs2)!important;font-weight:600!important}
+
+/* ---------- 12 时间轴：只收圆角、字号、字重；片段块和段落块的颜色是数据色，不动 ---------- */
+.app .clip{border-radius:var(--e-r)!important;font-weight:400!important}
+.app .sections button{border-radius:var(--e-r)!important;font-weight:400!important}
+.app .playhead-handle{border-radius:0!important;background:var(--e-p4)!important;color:var(--e-p1)!important}
+.app .track-label{color:var(--e-t2)!important}
+
+/* ---------- 13 图标：16 px 画布，可画区 12 px，线宽 1.5，方头尖角（形状由 E主题.js 换成 E 图标表） ---------- */
+.app svg[data-e-ico]{width:16px!important;height:16px!important;flex:none}
+.app svg[data-e-ico]>:not(.e-ico){display:none!important}
+.app svg[data-e-ico] .e-ico{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}
+.app svg[data-e-ico] .e-ico .e-fill{fill:var(--e-w3);stroke:none}
+.app svg[data-e-ico="wdot"]{color:var(--e-w3)!important}
+
+/* ---------- 14 滚动条：只在滚动时出现（同 E .sb-auto：6 px，弱色 g6；静止透明） ---------- */
+.app *{scrollbar-width:auto!important;scrollbar-color:auto!important}
+.app *::-webkit-scrollbar{width:6px;height:6px;background:transparent}
+.app *::-webkit-scrollbar-track,.app *::-webkit-scrollbar-corner{background:transparent}
+.app *::-webkit-scrollbar-thumb{background:transparent;border-radius:0;min-height:24px}
+.app [data-e-scrolling]::-webkit-scrollbar-thumb{background:var(--e-g6)}
