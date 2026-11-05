@@ -1,0 +1,34 @@
+<!-- ===== 烟花工坊 5.0 外壳（tool/src/shell/shell.html；只进 tool/烟花工坊.html，不进 FireworkBaker.html） =====
+     依据：E 样板 v3.7 外壳（analysis/results/20261104_E样板/src/body_shell.html、说明_v3_外壳.md），交互宪章 0.9。
+     这一版只有「资源交付」一页；「编排节目」入口在顶栏变灰（下一版接入），不带编排页。
+     页面加载后由 js/95_shell.js 搬进制作区的槽位：#wsImport 打开时放在 #wsBaker 后面，没打开时留在 #shParts。
+     制作区还是旧界面（没有 #shell / #wsBaker 槽位）时，外壳自己搭顶栏和状态栏（body.sh-fb，见 shell_fb.css）。 -->
+<div id="shParts" hidden>
+<!-- 外壳自带的三个图标（制作区 #iconDefs 里有同名 i-back / i-x / i-check 时用制作区的） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sh-i-back" viewBox="0 0 16 16"><path d="M7.85 3.25 3.1 8l4.75 4.75"/><path d="M3.6 8h9.65"/></symbol>
+  <symbol id="sh-i-x" viewBox="0 0 16 16"><path d="m4.3 4.3 7.4 7.4m0-7.4-7.4 7.4"/></symbol>
+  <symbol id="sh-i-check" viewBox="0 0 16 16"><path d="M3.06 7.7 6.56 11.2l6.38-6.38"/></symbol>
+</svg>
+
+<!-- 资源交付：工具行「← 返回制作」｜「刷新」「导入」；左栏导出文件夹里的包，右边选中包的回放缩略图、修订、检查摘要、资产清单 -->
+<div class="ws sh-ws" id="wsImport" hidden aria-label="资源交付">
+  <div class="topbar sh-hd" id="impTool" role="toolbar" aria-label="资源交付工具">
+    <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use data-ic="back" href="#sh-i-back"/></svg>返回制作</button></div>
+    <div class="sh-hs sh-hm">
+      <span class="sh-ttl">资源交付</span>
+      <span class="sp"></span>
+      <div class="tgrp"><button class="btn btn-text tbtn" id="impRefresh" data-sh="impRefresh" type="button" data-tip="重读导出文件夹">刷新</button><button class="btn btn-1" id="impGo" data-sh="impGo" type="button">导入</button></div>
+    </div>
+  </div>
+  <section class="sh-left" aria-label="导出文件夹里的包">
+    <div class="sh-lh"><span class="sh-hv" id="impFolder"></span><span class="lbl" id="impCount"></span></div>
+    <div class="lib-list sb-auto" id="impList" role="listbox" aria-label="素材包"></div>
+  </section>
+  <main class="sh-main" id="impMain">
+    <div class="sh-why" id="impWhy" role="status" hidden><span id="impWhyT"></span><button class="btn btn-text tbtn" data-sh="retry" type="button">重新连接</button></div>
+    <div class="sh-mc" id="impMC"></div>
+  </main>
+  <footer class="status"><div class="st-l"><span class="sh-stf"></span></div><div class="st-r"><span class="sh-modst" id="impModSt"></span></div></footer>
+</div>
+</div>

@@ -1,0 +1,236 @@
+/* =====================================================================
+   烟花工坊 5.0 外壳 · 兜底样式（tool/src/shell/shell_fb.css；对话框9 · S，2026-11-05）
+   只在制作区还是旧界面（tool/src/body.html 里没有 v3.7 的 #shell / #wsBaker 槽位）时由 build.py 放进 tool/烟花工坊.html，
+   页面上 95_shell.js 也只在缺槽位时给 body 加 .sh-fb。制作区换成 v3.7 后这份不再进成品。
+   内容是 E 样板 v3.7 style_main.css 的 token 和外壳用到的组件类（按钮、菜单、对话框、提示、列表条目、状态栏），
+   全部限定在外壳自己的容器里（#shell、#shFbSt、.sh-ws、#ovlApp），不碰旧制作区。由 build 时一次性摘出，改 v3.7 样式时不用跟着改这份。
+   ===================================================================== */
+@keyframes spin{to{transform:rotate(360deg)}}
+/* 布局：外壳顶栏 ｜ 旧制作区（或资源交付页，叠在同一格） ｜ 外壳状态栏 */
+body.sh-fb{display:grid;grid-template-rows:40px minmax(0,1fr) 28px;grid-template-columns:minmax(0,1fr);height:100dvh;margin:0;overflow:hidden}
+body.sh-fb>#shell{grid-row:1;grid-column:1}
+body.sh-fb>.app{grid-row:2;grid-column:1;height:auto;min-height:0}
+body.sh-fb>.app:has(>header.top.sh-dup){grid-template-rows:minmax(0,1fr)}
+body.sh-fb>.sh-ws{grid-row:2/4;grid-column:1;z-index:5;display:grid;grid-template-rows:40px minmax(0,1fr) 28px;min-height:0;min-width:0}
+body.sh-fb>.sh-ws[hidden]{display:none}
+body.sh-fb>#shFbSt{grid-row:3;grid-column:1}
+body.sh-fb.sh-on-import>.app{visibility:hidden}
+body.sh-fb>#ovlApp{position:fixed;inset:0;pointer-events:none;z-index:90}
+body.sh-fb>#ovlApp>*{pointer-events:auto}
+body.sh-fb>#ovlApp>.tip{pointer-events:none}
+body.sh-fb :where(#shell,#shFbSt,.sh-ws,#ovlApp){
+  --g0:#0c1518; --g1:#111d21; --g2:#16242a; --g3:#1b2a2f; --g4:#24373d;
+  --g5:#2b4149; --g6:#39515a; --g7:#8da3ac; --g8:#b4c5cb; --g9:#e4edef;
+  --p1:#062a23; --p2:#173d39; --p3:#1f5b49; --p4:#00d49b; --p5:#36e4b0; --pInk:#a1ded0;
+  --w1:#3b3222; --w2:#6b5a3a; --w3:#e0b25a;
+  --e1:#3f2525; --e2:#8a3f33; --e3:#e8735a;
+  --k1:#173d39; --k2:#1f5b49; --k3:#a1ded0;
+  --surf-stage:var(--g0); --surf-panel:var(--g1); --surf-chrome:var(--g2); --surf-ov:var(--g4);
+  --bg:var(--surf-panel); --sky:var(--surf-stage);
+  --line:var(--g5);
+  --seam:var(--line);
+  --hov:var(--surf-ov); --press:var(--g5); --on:var(--g5); --selbg:var(--on);
+  --t1:var(--g9); --t2:var(--g8); --t3:var(--g7); --tDis:color-mix(in srgb, var(--g8) 50%, var(--g1));
+  --sel:var(--p4);
+  --ov:var(--surf-ov); --ovLine:var(--g6);
+  --focus:var(--g8);
+  --shadow:0 8px 24px rgba(0,0,0,.45);
+  --sans:"Inter","Segoe UI","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
+  --fs1:12px; --fs2:13px; --fs3:15px; --fs-tab:var(--fs3);
+  --lh1:16px; --lh2:20px; --lh3:22px;
+  --lh-multi:1.5;
+  --fw1:400; --fw2:600;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px;
+  --pad:12px; --gin:8px; --grp:20px;
+  --r0:0px; --r1:1px; --r2:2px;
+  --h-shell:40px; --h-top:40px; --h-status:28px;
+  --h-row:28px; --h-ctl:24px; --h-hit:28px; --h-sm:24px; --h-bar:28px; --h-prm:30px;
+  --h-tp:36px; --h-io:32px; --h-ruler:28px;
+  --w-left:300px; --w-right:460px; --w-tlab:160px;
+  --w-lab:112px; --w-val:84px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;
+  --ico:16px; --ico-s:16px; --thumb:40px;
+  --tl-min:6; --indent:16px; --in-prm:12px;
+  color-scheme:dark;color:var(--t1);font:var(--fw1) var(--fs2)/var(--lh2) var(--sans);font-variant-numeric:tabular-nums;box-sizing:border-box
+}
+body.sh-fb :where(#shell,#shFbSt,.sh-ws,#ovlApp) *{box-sizing:border-box}
+body.sh-fb #shell{background:var(--surf-chrome)}
+body.sh-fb #shFbSt{display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 6px;box-shadow:inset 0 1px 0 var(--line);background:var(--bg);font-size:var(--fs1);color:var(--t3);min-width:0}
+/* 1366 × 768 档（窗口宽不到 1600 时外壳给 body 加 .s1366，同样板 .s1366） */
+body.sh-fb.s1366{grid-template-rows:36px minmax(0,1fr) 24px}
+body.sh-fb.s1366>.sh-ws{grid-template-rows:36px minmax(0,1fr) 24px}
+body.sh-fb.s1366 :where(#shell,#shFbSt,.sh-ws,#ovlApp){
+  --fs1:12px; --fs2:12px; --fs3:14px; --lh1:16px; --lh2:18px; --lh3:20px;
+  --h-shell:36px; --h-top:36px; --h-status:24px; --w-left:260px; --w-right:380px; --thumb:36px
+}
+/* 旧制作区顶栏里和外壳重复的几样（品牌、显卡、资源交付入口、更新记录）收起；「资源交付」在「导出素材包」旁边 */
+body.sh-fb header.top .sh-dup,body.sh-fb header.top.sh-dup{display:none!important}
+/* 旧顶栏里的提示文字（#status）搬到外壳状态栏右边 */
+body.sh-fb #shFbSt .st-r{display:flex;align-items:center;gap:12px;min-width:0}
+body.sh-fb #shFbSt #status{min-width:0;max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--t2)}
+body.sh-fb .sh-delivb{display:inline-flex;align-items:center;gap:6px}
+body.sh-fb .sh-delivb .sh-cnt{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border:1px solid currentColor;font-size:12px;line-height:14px;opacity:.8}
+body.sh-fb .sh-delivb .sh-cnt[hidden]{display:none}
+/* 组件类：特异度压到和 v3.7 自己的类一样（:where），后面的 shell.css 同特异度后写、以它为准 */
+:where(body.sh-fb :is(#shell,#shFbSt,.sh-ws,#ovlApp)){
+  button,input,select,textarea{font:inherit;color:inherit;background:none;border:0;letter-spacing:inherit;font-variant-numeric:tabular-nums}
+  button{cursor:pointer;text-align:inherit}
+  button:disabled{cursor:default}
+  img{display:block}
+  svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}
+  svg.i.chevr{transform-origin:8px 8px}
+  .sb-auto{scrollbar-gutter:stable;border-color:transparent;transition:border-color .3s}
+  .sb-auto.is-scrolling{border-color:var(--g6);transition:none}
+  .sb-auto::-webkit-scrollbar{width:6px;height:6px;background:transparent}
+  .sb-auto::-webkit-scrollbar-track,.sb-auto::-webkit-scrollbar-corner{background:transparent}
+  .sb-auto::-webkit-scrollbar-thumb{border-radius:0;border:0 solid;border-right-width:6px;border-bottom-width:6px;border-color:inherit;background:transparent;min-height:24px}
+  .sp{flex:1}
+  .gap{flex:none;width:var(--grp)}
+  .mute{color:var(--t3)}
+  .lbl{color:var(--t3);font-weight:var(--fw1);cursor:default;user-select:none;white-space:nowrap}
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:var(--h-hit);padding:0 8px;border:0;border-radius:var(--r2);color:var(--t2);font-size:var(--fs2);line-height:1;white-space:nowrap;user-select:none;flex:none}
+  .btn svg.i{width:var(--ico);height:var(--ico)}
+  .btn .dd{width:16px;height:16px;margin-left:-5px;margin-right:-3px;color:var(--t3)}
+  .tbtn,.btn-text,.btn-2{background:none;color:var(--t2)}
+  .tbtn:hover,.tbtn.is-hover,.btn-text:hover,.btn-text.is-hover,.btn-2:hover,.btn-2.is-hover{background:var(--hov);color:var(--t1)}
+  .tbtn:active,.tbtn.is-active,.btn-text:active,.btn-text.is-active,.btn-2:active,.btn-2.is-active{background:var(--press);color:var(--t1)}
+  .btn.sm{height:var(--h-hit);padding:0 6px;font-size:var(--fs2)}
+  .lnk{height:auto;padding:0 2px;color:var(--t2)}
+  .lnk:hover{background:var(--hov);color:var(--t1)}
+  .btn .dot{width:6px;height:6px;margin-left:-1px;border-radius:50%;background:var(--sel)}
+  .btn-1{background:var(--p4);color:var(--p1)}
+  .btn-1 .dd{color:var(--p1)}
+  .btn-1:hover,.btn-1.is-hover{background:var(--p5)}
+  .btn-1:active,.btn-1.is-active{background:var(--p3);color:var(--pInk)}
+  .btn-danger{background:var(--p4);color:var(--p1)}
+  .btn-danger:hover{background:var(--p5)}
+  .btn-icon{width:var(--h-hit);height:var(--h-hit);padding:0;color:var(--t2)}
+  .btn-icon:hover,.btn-icon.is-hover{background:var(--hov);color:var(--t1)}
+  .btn-icon:active,.btn-icon.is-active{background:var(--press);color:var(--t1)}
+  .btn-icon.sm{width:var(--h-sm);height:var(--h-sm)}
+  .btn[aria-pressed="true"],.btn.is-on{background:var(--on);color:var(--t1)}
+  .btn:disabled,.btn.is-disabled{opacity:.5;background:none;cursor:default}
+  .btn-1:disabled,.btn-1.is-disabled{opacity:1;background:var(--g4);color:var(--t3)}
+  .btn.is-loading{color:var(--t2);cursor:progress;pointer-events:none}
+  .btn-1.is-loading{background:var(--p3);color:var(--pInk)}
+  .btn.is-failed,.btn.is-failed svg.i{color:var(--e3)}
+  .spin{width:12px;height:12px;flex:none;border:1.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+  @media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+  .badge-n{margin-left:2px;color:var(--t3);font-size:var(--fs1)}
+  .seg,.modeseg{display:inline-flex;flex:none;align-items:stretch;border:1px solid var(--line);border-radius:var(--r2)}
+  .seg button,.modeseg button{display:inline-flex;align-items:center;justify-content:center;height:calc(var(--h-ctl) - 2px);padding:0 8px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
+  .seg button+button,.modeseg button+button{border-left:1px solid var(--line)}
+  .seg button:hover,.seg button.is-hover,.modeseg button:hover{background:var(--hov);color:var(--t1)}
+  .seg button[aria-pressed="true"],.modeseg button[aria-pressed="true"]{background:var(--on);color:var(--t1)}   /* v3.1 第 9 条：选中只靠底色，不加粗 */
+  .seg button:disabled{opacity:.5;background:none;cursor:default}
+  .seg button:focus-visible,.modeseg button:focus-visible{outline-offset:-2px}
+  .seg.m,.modeseg{}
+  .seg.m button,.modeseg button{height:calc(var(--h-hit) - 2px);padding:0 16px}   /* v3.4 第 10 条：每段左右 16，高 28 */
+  .seg.sm button{height:calc(var(--h-ctl) - 2px);padding:0 8px}
+  .chk,.rad{appearance:none;position:relative;flex:none;width:14px;height:14px;border:1px solid var(--g7);background:transparent;cursor:pointer;vertical-align:middle}
+  .chk{border-radius:var(--r2)}
+  .rad{border-radius:50%}
+  .chk:hover,.rad:hover,.chk.is-hover{border-color:var(--g8)}
+  .chk:checked,.chk:indeterminate{background:var(--sel);border-color:var(--sel)}   /* v3.4 第 11 条：勾上是薄荷底加深色勾 */
+  .chk:checked::after{content:"";position:absolute;left:3.5px;top:.5px;width:4px;height:8px;border:solid var(--p1);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+  .chk:indeterminate::after{content:"";position:absolute;left:2px;right:2px;top:5px;height:2px;background:var(--p1)}
+  .rad:checked{border-color:var(--g8);background:var(--g8);box-shadow:inset 0 0 0 3px var(--bg)}
+  .chk:focus-visible,.rad:focus-visible,.chk.is-focus{outline:2px solid var(--focus);outline-offset:2px}
+  .chk:disabled,.rad:disabled{opacity:.5;cursor:default}
+  .ckl{display:inline-flex;align-items:center;gap:8px;min-height:var(--h-hit);color:var(--t2);cursor:pointer;white-space:nowrap}
+  .ckl:has(:disabled){opacity:.5;cursor:default}
+  .field{display:flex;align-items:center;gap:6px;height:var(--h-ctl);min-width:0;padding:0 2px 0 6px;background:transparent;border:1px solid transparent;border-radius:var(--r2);color:var(--t3)}
+  .field>svg.i{width:16px;height:16px}   /* v3.3 第 7 条：放大镜按 16 px 画（外壳转来：资源编排的搜索框也是这个组件） */
+  .field input,.field textarea{flex:1;min-width:0;height:100%;color:var(--t1);font-size:var(--fs2)}
+  .field input::placeholder,.field textarea::placeholder{color:var(--t3)}
+  .field:hover,.field.is-hover{border-color:var(--line)}
+  .field.search{border-color:var(--line)}   /* v3.1 第 8 条：搜索框静止时就有线框 */
+  .field.search:hover,.field.search.is-hover{border-color:var(--g6)}
+  .field:focus-within,.field.is-focus{border-color:var(--g7);background:var(--hov);outline:none}
+  .field.is-error{border-color:var(--e3)}
+  .field.is-disabled{opacity:.5}
+  .field.is-readonly{border-color:transparent}
+  .field.is-readonly input{color:var(--t2)}
+  .field .clr{display:none;width:20px;height:20px;place-items:center;border-radius:var(--r2);color:var(--t3);flex:none}
+  .field .clr svg.i{width:16px;height:16px}
+  .field .clr:hover{background:var(--press);color:var(--t1)}
+  .field.has-val .clr{display:grid}
+  .field.area{height:auto;align-items:flex-start;padding:6px 8px;border-color:var(--line)}
+  .field.area textarea{resize:vertical;min-height:52px;line-height:var(--lh2);height:auto}
+  .field.file{padding:0 8px 0 2px;gap:8px;border-color:var(--line)}
+  .field.file .btn{height:calc(var(--h-ctl) - 4px)}
+  .field.file .fn{color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .field.file .fn.none{color:var(--t3)}
+  .empty{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s2);padding:var(--s5) 0;line-height:var(--lh-multi);color:var(--t3)}
+  .empty b{font-weight:var(--fw1);color:var(--t2)}
+  .lib-item{position:relative;display:flex;align-items:center;gap:10px;height:calc(var(--thumb) + 12px);padding:0 8px;border-radius:var(--r2);cursor:pointer}
+  .lib-item:hover,.lib-item.is-hover{background:var(--g2)}
+  .lib-item.is-sel{background:var(--g3)}   /* v3.1 第 18 条：比结构树当前行弱 */
+  .lib-item.is-sel .li-n{color:var(--t1)}
+  .lib-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--focus)}
+  .th{position:relative;width:var(--thumb);height:var(--thumb);flex:none;background:var(--sky);overflow:hidden}
+  .th img{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen}
+  .li-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .li-n{color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .li-s{display:flex;gap:8px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);white-space:nowrap;min-width:0}
+  .li-s .st{margin-left:auto}
+  .li-acts{position:absolute;right:6px;top:6px;display:none}
+  .lib-item:hover .li-acts{display:flex}
+  .menu{position:fixed;z-index:50;min-width:180px;max-width:340px;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);font-size:var(--fs2)}
+  .menu .mi{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--h-hit);padding:0 12px;color:var(--t1);white-space:nowrap}
+  .menu .mi.two{padding-top:4px;padding-bottom:4px}
+  .menu .mi .ck{width:16px;flex:none;color:var(--t2)}
+  .menu .mi .ck svg.i{width:16px;height:16px}
+  .menu .mi .mt2{display:flex;flex-direction:column;min-width:0}
+  .menu .mi .ms2{font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);white-space:normal}
+  .menu .mi:hover,.menu .mi:focus-visible,.menu .mi.is-hover{background:var(--press);outline:none}
+  .menu .mi:disabled{background:none;opacity:.5}
+  .menu .mi .k{margin-left:auto;padding-left:24px;color:var(--t3);font-size:var(--fs1)}
+  .menu .mh{padding:6px 12px 4px;font-size:var(--fs1);color:var(--t3);white-space:nowrap}
+  .menu hr{border:0;border-top:1px solid var(--line);margin:4px 0}
+  .menu .msum{padding:8px 12px;font-size:var(--fs1);line-height:var(--lh-multi);color:var(--t2);white-space:normal}
+  .menu .msum b{font-size:var(--fs2);line-height:var(--lh2);font-weight:var(--fw1);color:var(--t1)}
+  .menu .msum dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px}
+  .menu .msum dt{color:var(--t3)}
+  .tip{position:fixed;z-index:60;max-width:260px;padding:6px 10px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);font-size:var(--fs1);line-height:var(--lh-multi);color:var(--t2);pointer-events:none}
+  .tip::before{content:"";position:absolute;width:8px;height:8px;background:var(--ov);border:solid var(--ovLine);border-width:1px 0 0 1px;left:var(--ax,12px);top:-5px;transform:rotate(45deg)}
+  .tip.at-below::before{top:-5px;bottom:auto}
+  .tip.at-above::before{top:auto;bottom:-5px;border-width:0 1px 1px 0}
+  .tip.at-left::before{left:auto;right:-5px;top:var(--ay,12px);border-width:1px 1px 0 0}
+  .tip.at-right::before{left:-5px;top:var(--ay,12px);border-width:0 0 1px 1px}
+  .tip b{display:block;margin-bottom:2px;font-size:var(--fs2);line-height:var(--lh-multi);font-weight:var(--fw1);color:var(--t1)}
+  .tip .meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;color:var(--t3)}
+  .tip.sm{padding:4px 8px;white-space:nowrap;max-width:none;color:var(--t1)}
+  .tip.hint{background:var(--g5);border-color:var(--g6)}
+  .tip.hint::before{background:var(--g5);border-color:var(--g6)}
+  .tip .k{margin-left:8px;color:var(--t3)}
+  .tip.big{padding:6px;max-width:none}
+  .tip.big img{width:160px;height:160px;background:var(--sky)}
+  .tip.big span{display:block;margin-top:6px;color:var(--t1)}
+  .tip.film{padding:4px;max-width:none}
+  .tip.film img{display:block;width:176px;height:176px;object-fit:cover;background:#000}
+  .tip.film span{display:block;margin-top:4px;color:var(--t3);text-align:center}
+  .tip.why{max-width:300px;color:var(--t1)}
+  .tip.why .why{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+  .tip.why .hint2{display:block;margin-top:4px;color:var(--t3)}
+  .scrim{position:fixed;z-index:70;background:rgba(12,21,24,.72)}
+  .dialog{position:fixed;z-index:71;width:400px;padding:20px 20px 16px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow)}
+  .dialog h2{margin-bottom:8px;font-size:var(--fs2);line-height:var(--lh2);font-weight:var(--fw2);color:var(--t1)}
+  .dialog p{line-height:var(--lh-multi);color:var(--t2)}
+  .dialog .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+  .dialog.static{position:relative;z-index:0;box-shadow:none}
+  .toast{position:fixed;z-index:80;display:flex;align-items:center;gap:10px;min-height:36px;max-width:560px;padding:0 4px 0 12px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);color:var(--t1)}
+  .toast>span:first-child{padding:8px 0;line-height:var(--lh2)}
+  .toast .btn-text{color:var(--t1)}
+  .toast .btn-text:hover{background:var(--press)}
+  .toast.static{position:relative;z-index:0;display:inline-flex;box-shadow:none}
+  .topbar{display:flex;align-items:center;gap:var(--gin);padding:0 var(--pad);min-width:0;white-space:nowrap;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line)}
+  .status{display:flex;align-items:center;justify-content:space-between;padding:0 var(--s2) 0 calc(var(--pad) - 6px);box-shadow:inset 0 1px 0 var(--line);background:var(--bg);font-size:var(--fs1);color:var(--t3);white-space:nowrap}
+  .status .st-r{display:flex;align-items:center;gap:var(--s2)}
+  #sbPreview:empty{display:none}
+  .status .btn{height:calc(var(--h-status) - 2px);font-size:var(--fs1);color:var(--t2)}
+  .status kbd{margin-left:6px;height:16px;min-width:16px}
+  .ovl{position:absolute;inset:0;pointer-events:none;z-index:40}
+  .ovl>*{pointer-events:auto}
+  .ovl>.tip{pointer-events:none}   /* 提示框不挡鼠标 */
+  .lib-list{flex:1;min-height:0;overflow:auto;padding:0 var(--s1) var(--s1)}
+}

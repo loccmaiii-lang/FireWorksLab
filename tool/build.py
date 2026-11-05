@@ -6,7 +6,10 @@ src = os.path.join(here, 'src')
 css = open(os.path.join(src, 'style.css'), encoding='utf-8').read()
 css = ''.join(open(os.path.join(here, 'design-system', f), encoding='utf-8').read() for f in ('tokens.css', 'components.css')) + '\n' + css
 body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
-js = ''.join(open(f, encoding='utf-8').read() for f in sorted(glob.glob(os.path.join(src, 'js', '*.js'))))
+# 烟花工坊 5.0（对话框9 S）：js/95_shell*.js 是外壳，只进 tool/烟花工坊.html，不进 FireworkBaker.html
+_jsf = sorted(glob.glob(os.path.join(src, 'js', '*.js')))
+shell_js_files = [f for f in _jsf if os.path.basename(f).startswith('95_shell')]
+js = ''.join(open(f, encoding='utf-8').read() for f in _jsf if f not in shell_js_files)
 js = open(os.path.join(here, 'shared', 'cascade_events.js'), encoding='utf-8').read() + '\n' + js
 ver = re.search(r"const VERSION = '([^']+)'", js)
 # 仓库根目录的 更新记录.md（最新在上）→ UPDATES，烘焙器顶栏「更新记录」里显示
@@ -84,6 +87,68 @@ else:
     print('⚠ 没有 node：跳过脚本静态检查（云端改 tool/src 时必须有）')
 r = subprocess.run([sys.executable, os.path.join(here, '..', 'analysis', 'scripts', '静态核对.py')], capture_output=True, text=True)
 print(r.stdout.strip()); bad |= r.returncode != 0
+
+# ---------------------------------------------------------------------
+# 烟花工坊 5.0（对话框9 S，2026-11-05）：再合成一个单文件 tool/烟花工坊.html = 烘焙器 + 外壳 + 导入模块。
+#   双击打开（file://）就能用：tool/data/*.js 内嵌进来，不依赖本地服务，不引外网资源。FireworkBaker.html 照旧，不带外壳。
+#   外壳：tool/src/shell/shell.css、shell.html、js/95_shell*.js（单独一个 <script>，在烘焙器脚本后面：一边出错不拖垮另一边）。
+#   制作区还是 4.9 界面（body.html 里没有 v3.7 的 #shell 槽位）时，加上兜底样式 shell/shell_fb.css；外壳在页面上自己搭顶栏和状态栏。
+#   导入模块：tool/importer/dist/fwl-importer.js（真）→ fwl-importer.mock.js（本机替身）→ shell/fwl-importer.shim.js（外壳临时替身），有哪个用哪个；
+#   包在一个函数里（顶层名字不和烘焙器撞），window.__FWL_IMPORTER_KIND 告诉外壳用的是哪个（替身时顶栏 UE 的悬停提示写「导入模块：替身」）。
+def _rd(*parts):
+    return open(os.path.join(*parts), encoding='utf-8').read()
+def _inl(code):     # 内嵌进 <script> 时不能出现 </script 和 <!--
+    return code.replace('</script', '<\\/script').replace('<!--', '<\\!--')
+shell_dir = os.path.join(src, 'shell')
+if os.path.isdir(shell_dir):
+    imp_dir = os.path.join(here, 'importer', 'dist')
+    imp = next(((k, p) for k, p in (('real', os.path.join(imp_dir, 'fwl-importer.js')), ('mock', os.path.join(imp_dir, 'fwl-importer.mock.js')),
+                                    ('shim', os.path.join(shell_dir, 'fwl-importer.shim.js'))) if os.path.exists(p)), ('none', ''))
+    fb = 'id="shell"' not in body
+    wcss = css + '\n' + (_rd(shell_dir, 'shell_fb.css') + '\n' if fb else '') + _rd(shell_dir, 'shell.css')
+    shell_js = ''.join(open(f, encoding='utf-8').read() for f in shell_js_files)
+    data_js = ''
+    for f in ('review.js', 'standard.js', 'thumbs.js', 'size_spec.js'):
+        p = os.path.join(here, 'data', f)
+        if os.path.exists(p):
+            data_js += f'<script>/* tool/data/{f}（内嵌） */\n' + _inl(_rd(p)) + '\n</script>\n'
+    imp_block = ('<!-- FWL-IMPORTER-BEGIN ' + imp[0] + ' -->\n'
+                 + f"<script>window.__FWL_IMPORTER_KIND = '{imp[0]}';</script>\n"
+                 + ('<script>(function () {\n' + _inl(_rd(imp[1])) + '\n}).call(window);</script>\n' if imp[1] else '')
+                 + "<script>if (!window.FWLImporter && !window.__FWL_IMPORTER_ERR) window.__FWL_IMPORTER_ERR = '导入模块未加载';</script>\n"
+                 + '<!-- FWL-IMPORTER-END -->\n')
+    whtml = f'''<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>烟花工坊</title>
+<style>
+{wcss}</style>
+</head>
+<body>
+{body}
+{_rd(shell_dir, 'shell.html')}
+{data_js}{imp_block}<script>
+'use strict';
+{_inl(js)}</script>
+<script>
+{_inl(shell_js)}</script>
+</body>
+</html>
+'''
+    open(os.path.join(here, '烟花工坊.html'), 'w', encoding='utf-8').write(whtml)
+    print('built 烟花工坊.html', len(whtml), 'bytes；导入模块', imp[0], '；制作区', '4.9 界面（外壳兜底样式）' if fb else 'v3.7 槽位')
+    # 外壳脚本也过一遍 lint（和烘焙器脚本接成一段查，外壳读烘焙器的 VERSION、UPDATES、repoDir 等名字要找得到）
+    if node and shell_js:
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            tf = os.path.join(td, 'workshop_lint.html')
+            open(tf, 'w', encoding='utf-8').write('<html><body>\n' + ''.join(f'<script src="data/{f}"></script>\n' for f in ('review.js', 'standard.js', 'thumbs.js', 'size_spec.js')) + "<script>\n'use strict';\n" + js + '\n' + shell_js + '</script>\n</body></html>\n')
+            r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), tf], capture_output=True, text=True)
+            print('外壳 lint：' + (r.stdout.strip() or 'ok')); bad |= r.returncode != 0
+            if r.returncode not in (0, 1): print(r.stderr.strip())
+
 if bad:
     print('构建完成，但静态检查有错误（见上）'); sys.exit(1)
 

@@ -383,7 +383,13 @@ function deliveryMetadata(b = null, job = null, lb = null, unitHolder = null) {
 async function deliverResource(blob, name, metadata, destination) {
   const iterationOf = typeof packIterationInfo !== 'undefined' ? packIterationInfo.get(blob) : null;
   if (iterationOf) metadata = { ...metadata, iterationOf: { ...structuredClone(iterationOf), deliveryName: name.replace(/\.zip$/i, '') } };
-  if (destination === 'zip') return download(blob,name);
-  return DeliveryWorkspace.publish(blob,name,metadata);
+  // 烟花工坊 5.0 外壳钩子（对话框9 S）：导出写完后通知外壳（只有 tool/烟花工坊.html 里有 window.shellAfterExport）；
+  //   写文件的逻辑不变：ZIP 照旧 download，目录照旧 publish，返回值照旧；外壳出错不影响导出
+  const done = destination === 'zip' ? download(blob,name) : DeliveryWorkspace.publish(blob,name,metadata);
+  if (typeof window.shellAfterExport === 'function') Promise.resolve(done).then(receipt => { try { window.shellAfterExport({ name, destination, metadata, blob, receipt }); } catch (e) { } }, () => { });
+  return done;
 }
+// 烟花工坊 5.0 外壳钩子（对话框9 S）：只读，导出去向和本机服务给的导出根目录（路径字符串；服务没连上时为空）。
+//   这一版写目录走本机服务（8034），没有浏览器文件夹句柄；外壳自己的导出文件夹句柄在 js/95_shell.js（window.shellExportFolderHandle）
+function deliveryExportRoot() { const n = document.getElementById('deliveryRoot'); return { destination: DeliveryWorkspace.destination(), path: n ? n.value : '' }; }
 document.addEventListener('DOMContentLoaded',()=>DeliveryWorkspace.init());

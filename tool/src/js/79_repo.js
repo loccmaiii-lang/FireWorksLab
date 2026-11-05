@@ -49,6 +49,8 @@ async function repoWrite(key, item) {
   await w.close();
   return parts.join('/');
 }
+// 烟花工坊 5.0 外壳钩子（对话框9 S）：只读，备份文件夹（就是这里的仓库文件夹）{handle, name, ok}；外壳状态栏「备份」按它显示
+function repoFolderInfo() { return { handle: repoDir.h, name: repoDir.name, ok: !!repoDir.ok }; }
 function repoSync() {
   const read = $('#abRepoRead'); if (read) read.disabled = !!repoDir.reading;
   const b = $('#abRepo'); if (!b) return;
