@@ -1,9 +1,9 @@
 
 /* =====================================================================
-   烟花工坊 5.0 外壳（part_js_shell.js）：交互宪章 0.9 ①–⑧
+   烟花工坊 5.0 外壳（script_shell.js，E 样板 v3）：交互宪章 0.9 ①–⑧ + 用户 2026-11-05 改定；设计规范 v3 第 11、12 节
    单独一个 <script>，不在样板的闭包里：样板的内部函数调不到。菜单、提示条、对话框、操作处提示
    按样板的 DOM 与类名（.menu / .toast / .scrim + .dialog / .tip.sm.hint）另写一份；悬停提示仍用样板的 [data-tip]。
-   1 小工具与浮层  2 状态与数据  3 外壳顶栏  4 导入  5 编排  6 编排预览与另存  7 首次使用  8 样板开关
+   1 小工具与浮层  2 状态与数据  3 外壳顶栏  4 资源交付（导入）  5 资源编排  6 编排预览与另存  7 首次使用  8 样板开关
    9 事件  10 全表一节  11 启动
    ===================================================================== */
 (() => {
@@ -40,17 +40,17 @@ function copyParts(kind, el) {
   return out;
 }
 function logCopy(kind, el) { const L = window.__shCopyLog; if (Array.isArray(L) && el) L.push(...copyParts(kind, el)); }
-const COPY_CLS = [['.sh-brand', '名称'], ['.sh-fold, .sh-ue', '状态'], ['button, .tab', '按钮'], ['.empty b', '空状态'], ['.fb > span, .sh-pv.is-err > span:not(.sh-pvk)', '原因'], ['th', '表头'], ['.sh-st, .st, .st-ok, .conn, .sh-fx, .sh-cd, .sh-pv > span', '状态'], ['.li-n, .sh-mh b, .sh-brand, .gpu', '名称'], ['.lbl, .li-s span, .sh-hv, .sh-mh .mute, .cnt, td', '信息']];
+const COPY_CLS = [['.sh-brand b, .sh-ver', '名称'], ['.sh-fold, .sh-ue', '状态'], ['button, .tab, .sh-pg', '按钮'], ['.empty b', '空状态'], ['.sh-why > span, .sh-pv.is-err > span:not(.sh-pvk)', '原因'], ['th', '表头'], ['.sh-st, .st, .st-ok, .conn, .sh-fx, .sh-cd, .sh-pv > span', '状态'], ['.li-n, .sh-mh b, .sh-brand, .gpu', '名称'], ['.lbl, .li-s span, .sh-hv, .sh-mh .mute, .cnt, td', '信息']];
 function snapCopy() {
   const out = [], add = (w, c, s) => { s = txt1(s); if (s) out.push([w, c, s]); };
-  [['#shell', '顶栏'], ['#wsImport', '导入'], ['#wsWB', '编排'], ['#sbPreview', '状态栏']].forEach(([sel, w]) => {
+  [['#shell', '顶栏'], ['#wsImport', '资源交付'], ['#wsWB', '资源编排'], ['#sbPreview', '状态栏']].forEach(([sel, w]) => {
     const r = q(sel); if (!r || !r.getClientRects().length) return;
     qq('[data-tip]', r).forEach(e => { if (!e.getClientRects().length) return; add(w, isDis(e) ? '原因' : '悬停', e.dataset.tip); if (e.dataset.key) add(w, '悬停（第二行）', e.dataset.key); });
     qq('input[placeholder]', r).forEach(e => add(w, '占位文字', e.placeholder));
     qq('*', r).forEach(e => {
       if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph')) return;
-      if (e.parentElement && e.parentElement.closest('button, .tab, .sh-fold, .sh-ue, .sh-brand')) return;
-      const m = COPY_CLS.find(([s]) => e.matches(s)), whole = m && ['按钮', '名称', '状态'].includes(m[1]) && e.matches('button, .tab, .sh-fold, .sh-ue, .sh-brand');
+      if (e.parentElement && e.parentElement.closest('button, .tab, .sh-fold, .sh-ue')) return;
+      const m = COPY_CLS.find(([s]) => e.matches(s)), whole = m && ['按钮', '名称', '状态'].includes(m[1]) && e.matches('button, .tab, .sh-fold, .sh-ue');
       const own = whole ? e.textContent : [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('');
       if (txt1(own)) add(w, m ? m[1] : '文字', own);
     });
@@ -103,7 +103,7 @@ function openMenu(anchor, html, o = {}) {
 /* 对话框：结构同样板的确认弹窗（.scrim + .dialog，主按钮在右，Esc 关闭，Tab 在框内循环） */
 function dlgHTML(o, live = true) {
   return `<h2${live ? ' id="shDlgT"' : ''}>${esc(o.title)}</h2>${o.body ? `<p>${o.body}</p>` : ''}${o.extra || ''}`
-    + `<div class="sh-dmsg f-msg" role="alert"${o.err ? '' : ' hidden'}>${ic('alert')}<span>${o.err ? esc(o.err) : ''}</span></div>`
+    + `<div class="sh-dmsg f-msg" role="alert"${o.err ? '' : ' hidden'}><span>${o.err ? esc(o.err) : ''}</span></div>`
     + `<div class="acts">${o.kit ? `<button class="btn btn-text tbtn sm sh-kitb" data-r="kit" type="button" data-tip="样板：选到 UE 工程里">${esc(o.kit)}</button>` : ''}<button class="btn btn-2" data-r="0" type="button">${esc(o.cancel || '取消')}</button><button class="btn btn-1" data-r="1" type="button">${esc(o.ok)}</button></div>`;
 }
 function closeDlg() { if (SH.dlg) { SH.dlg.forEach(x => x.remove()); SH.dlg = null; SH.dlgO = null; } }
@@ -149,9 +149,9 @@ function openDlg(o) {
   return d;
 }
 
-/* 提示条（走查 P8）：外壳统一一个提示区，在外壳顶栏下方、当前工作区主区的上沿居中，不出屏；切工作区时跟着挪过去，
-   已经过时的按钮（人已经在那个工作区）收起。跨工作区的结果写明来自哪个工作区：o.from = baker / import / wb →「导入：已写入 14 个资产」。
-   一次只留一条，悬停不消失；全表里出在全表底部 */
+/* 提示条（走查 P8；规范第 12 节）：外壳统一一个提示区，在外壳顶栏下方、当前页面顶部居中，不出屏；切页面时跟着挪过去，
+   已经过时的按钮（人已经在那一页）收起。跨页面的结果写明来自哪里：o.from = baker / import / wb →「导入：已写入 14 个资产」。
+   一次只留一条，悬停不消失；全表里出在全表底部。样板自己的提示条要进同一个提示区时调 window.shellToast(text, o) */
 const WSN = {baker: '制作', import: '导入', wb: '编排'};
 const mainOf = ws => q({baker: '#mid', import: '#impMain', wb: '#wsWB .sh-wbmid'}[ws]);
 function closeToast() { clearTimeout(SH.toastT); if (SH.toast) { SH.toast.remove(); SH.toast = null; SH.toastO = null; } }
@@ -165,9 +165,10 @@ function placeToast() {
     t.style.top = (H.bottom - t.offsetHeight - 12) + 'px';
     return;
   }
-  const A = app().getBoundingClientRect(), sh = q('#shell'), m = mainOf(S.ws);
-  const R = m && m.getClientRects().length ? m.getBoundingClientRect() : A, top = Math.max(R.top, A.top + (sh ? sh.offsetHeight : 0));
-  t.style.left = clamp(R.left + (R.width - t.offsetWidth) / 2, A.left + 8, A.right - t.offsetWidth - 8) + 'px';
+  /* 外壳提示区（规范第 12 节）：外壳顶栏下方、当前页面顶部（工具行下面）居中 */
+  const A = app().getBoundingClientRect(), sh = q('#shell'), ws = curWsEl(), tool = ws && q(':scope > .topbar', ws);
+  const top = Math.max(A.top + (sh ? sh.offsetHeight : 0), tool && tool.getClientRects().length ? tool.getBoundingClientRect().bottom : 0);
+  t.style.left = clamp(A.left + (A.width - t.offsetWidth) / 2, A.left + 8, A.right - t.offsetWidth - 8) + 'px';
   t.style.top = clamp(top + 8, A.top, A.bottom - t.offsetHeight - 8) + 'px';
 }
 function toast(text, o = {}) {
@@ -201,7 +202,18 @@ function hint(el, text) {
   logCopy('操作处提示', text);
 }
 /* 重新授权气泡：文件夹标签下方一次；用到文件夹的按钮旁就地出同一句 */
-const bubHTML = name => `${ic('alert')}<span>浏览器重开后，${esc(name)} 需重新允许访问</span><button class="btn btn-text tbtn sm" data-r="allow" type="button">允许访问</button><button class="btn btn-icon sm" data-r="x" type="button" aria-label="关闭">${ic('x')}</button>`;
+const bubHTML = name => `<span>浏览器重开后，${esc(name)} 需重新允许访问</span><button class="btn btn-text tbtn sm" data-r="allow" type="button">允许访问</button><button class="btn btn-icon sm" data-r="x" type="button" aria-label="关闭">${ic('x')}</button>`;
+/* 气泡（规范第 12 节）：离触发点 8 px，6 px 小三角对着触发点的中线；下面放不下就放上面 */
+function placeBub(el, anchor, align) {
+  const a = anchor.getBoundingClientRect(), H = hostOf(anchor), w = el.offsetWidth, h = el.offsetHeight;
+  let x = align === 'right' ? a.right - w : a.left;
+  x = clamp(x, H.left + 8, H.right - w - 8);
+  let y = a.bottom + 8, up = false;
+  if (y + h > H.bottom - 8) { y = a.top - h - 8; up = true; }
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  el.classList.toggle('is-up', up);
+  el.style.setProperty('--ax', clamp(a.left + a.width / 2 - x - 4, 8, w - 16) + 'px');
+}
 function closeBub(cancel) {
   if (!SH.bub) return;
   const b = SH.bub; SH.bub = null; b.el.remove();
@@ -213,7 +225,7 @@ function bubble(anchor, k, o = {}) {
   const el = document.createElement('div');
   el.className = 'sh-bub'; el.setAttribute('role', 'status'); el.dataset.fk = k;
   el.innerHTML = bubHTML(k === 'exp' ? S.expName : S.bakName);
-  ovlOf(anchor).appendChild(el); placeNear(el, anchor, o.align || 'left');
+  ovlOf(anchor).appendChild(el); placeBub(el, anchor, o.align || 'left');
   el.addEventListener('click', ev => {
     const b = ev.target.closest('[data-r]'); if (!b) return;
     if (b.dataset.r === 'allow') { closeBub(false); allowFolder(k, anchor); if (o.onAllow) o.onAllow(); }
@@ -318,8 +330,12 @@ function setDis(b, why) {
 }
 const isDis = b => b && b.getAttribute('aria-disabled') === 'true';
 
-/* ---------- 3 外壳顶栏 ---------- */
-const WS = [['baker', '制作', '#wsBaker'], ['import', '导入', '#wsImport'], ['wb', '编排', '#wsWB']];
+/* ---------- 3 外壳顶栏（宪章 0.9「用户 2026-11-05 改定」；设计规范 v3 第 11 节） ----------
+   左：「烟花工坊」+「FireWorksLab 5.0.3」，点版本号打开更新记录（有未读时版本号右上角小号数字）。
+   右侧四组，组间 1 px 竖线：UE 状态 ｜ 导出、备份文件夹 ｜「资源交付」「资源编排」 ｜ 显卡。
+   没有工作区切换：默认画面就是制作；页面标签打开那一页，再点一次亮着的标签或页面工具行左端「← 返回制作」回到制作 */
+const WS = [['baker', '制作', '#wsBaker'], ['import', '资源交付', '#wsImport'], ['wb', '资源编排', '#wsWB']];
+const PGN = {import: '资源交付', wb: '资源编排'};
 const FOLD = {exp: '导出文件夹', bak: '备份文件夹'}, FOLDK = {exp: '导出', bak: '备份'};
 const fullPath = name => `D:\\FireWorksLab\\${name}`;
 function ueHTML(v) {
@@ -327,35 +343,34 @@ function ueHTML(v) {
   if (v.k === 'wait') return `<span class="conn wait sh-ue st-cell" data-tip="127.0.0.1:17780"><span class="spin" aria-hidden="true"></span>UE 连接中</span>`;
   if (v.k === 'on') return `<span class="conn on sh-ue st-cell" data-tip="${tip}">UE 已连接</span>`;
   if (v.k === 'off') return `<span class="conn off sh-ue st-cell" data-tip="${tip}">UE 未连接</span><button class="btn btn-text tbtn sh-retry" data-sh="retry" type="button">重试</button><span class="lbl sh-cd st-cell">${v.cd == null ? 12 : v.cd} 秒后自动重试</span>`;
-  if (v.k === 'write' && v.by === 'wb') return `<button class="btn btn-text tbtn conn wait sh-ue st-cell is-write" data-sh="toWB" type="button" data-tip="切到编排"><span class="spin" aria-hidden="true"></span>UE 写入中</button>`;
-  if (v.k === 'write') return `<button class="btn btn-text tbtn conn wait sh-ue st-cell is-write" data-sh="toImport" type="button" data-tip="切到导入"><span class="spin" aria-hidden="true"></span>UE 写入中 <span class="sh-n">${v.n} / ${v.tot}</span></button>`;
+  if (v.k === 'write' && v.by === 'wb') return `<button class="btn btn-text tbtn conn wait sh-ue st-cell is-write" data-sh="toWB" type="button" data-tip="打开资源编排"><span class="spin" aria-hidden="true"></span>UE 写入中</button>`;
+  if (v.k === 'write') return `<button class="btn btn-text tbtn conn wait sh-ue st-cell is-write" data-sh="toImport" type="button" data-tip="打开资源交付"><span class="spin" aria-hidden="true"></span>UE 写入中 <span class="sh-n">${v.n} / ${v.tot}</span></button>`;
   return `<span class="conn off sh-ue st-cell is-na" data-tip="${WHY.brUE}">UE 不可用</span>`;
 }
-/* 「导出 FWL_Export」「备份 未选」：状态是弱色信息；未选 = 琥珀色字，后面跟命令「设置」（导出未选会挡住导出，另带警示图形）；
-   需允许访问 = 琥珀色 + 图形；不画文件夹图标；悬停写全称和完整路径 */
+/* 「导出 FWL_Export」「备份 未选」：标签弱色、值次文字色；未选后面跟命令「设置」。
+   导出未选会挡住导出 → 琥珀色；备份未选不挡操作 → 弱色字；需允许访问 → 琥珀色；都不画图形（琥珀三角只表示「需重新导出」） */
 function foldHTML(k, st, name) {
-  let cls = '', icon = '', v = esc(name), x = '', tip, pop = '';
-  if (st === 'none') { v = '未选'; cls = ' is-warn'; icon = k === 'exp' ? 'alert' : ''; tip = k === 'exp' ? '导出文件夹：导出前需选好' : '备份文件夹：覆盖 UE 资产前需选好'; }
+  let cls = '', v = esc(name), x = '', tip, pop = '';
+  if (st === 'none') { v = '未选'; cls = k === 'exp' ? ' is-warn' : ' is-weak'; tip = k === 'exp' ? '导出文件夹：导出前需选好' : '备份文件夹：覆盖 UE 资产前需选好'; }
   else if (st === 'ok') { tip = `${FOLD[k]}　${fullPath(name)}`; pop = ' aria-haspopup="menu" aria-expanded="false"'; }
-  else if (st === 'perm') { cls = ' is-warn'; icon = 'alert'; x = '<span class="sh-fx">需允许访问</span>'; tip = `${FOLD[k]}　${fullPath(name)}`; }
+  else if (st === 'perm') { cls = ' is-warn'; x = '<span class="sh-fx">需允许访问</span>'; tip = `${FOLD[k]}　${fullPath(name)}`; }
   else { v = '不可用'; cls = ' is-na'; tip = WHY.brFold; }
   const set = st === 'none' ? `<button class="btn btn-text tbtn sh-set" data-sh="foldSet" data-sk="${k}" type="button" data-tip="选择${FOLD[k]}">设置</button>` : '';
-  return `<span class="sh-fp">` + `<button class="btn btn-text tbtn sh-fold st-cell${cls}" data-sh="fold" data-fk="${k}" data-st="${st}" type="button" data-tip="${esc(tip)}" aria-label="${FOLD[k]} ${v}${x ? ' 需允许访问' : ''}"${st === 'na' ? ' aria-disabled="true"' : ''}${pop}>${icon ? ic(icon) : ''}<span class="sh-fk">${FOLDK[k]}</span><span class="sh-fv${st === 'ok' || st === 'perm' ? ' is-name' : ''}">${v}</span>${x}</button>${set}</span>`;
+  return `<span class="sh-fp"><button class="btn btn-text tbtn sh-fold st-cell${cls}" data-sh="fold" data-fk="${k}" data-st="${st}" type="button" data-tip="${esc(tip)}" aria-label="${FOLD[k]} ${v}${x ? ' 需允许访问' : ''}"${st === 'na' ? ' aria-disabled="true"' : ''}${pop}><span class="sh-fk">${FOLDK[k]}</span><span class="sh-fv${st === 'ok' || st === 'perm' ? ' is-name' : ''}">${v}</span>${x}</button>${set}</span>`;
 }
-function tabsHTML(ws, impN, hov) {
-  return WS.map(([k, t]) => {
-    const n = k === 'import' ? impN : 0, lab = n ? `${t} ${n}` : t;
-    return `<button class="tab${hov === k ? ' is-hover' : ''}" role="tab" type="button" data-sh="ws" data-ws="${k}" data-t="${lab}" aria-selected="${ws === k}"${n ? ` aria-label="${t}，${n} 个素材包待导入"` : ''}><span>${t}${n ? `<span class="badge-n">${n}</span>` : ''}</span></button>`;
+/* 页面标签「资源交付 2」「资源编排」：开着的那页 aria-pressed = true（薄荷下划线）；数字是待导入的包数 */
+function pgHTML(cur, impN, hov) {
+  return WS.slice(1).map(([k, t]) => {
+    const n = k === 'import' ? impN : 0, on = cur === k;
+    return `<button class="sh-pg${hov === k ? ' is-hover' : ''}" type="button" data-sh="pg" data-pg="${k}" aria-pressed="${on}" data-tip="${on ? '返回制作' : `打开${t}`}"${n ? ` aria-label="${t}，${n} 个素材包待导入"` : ''}><span data-w="${t}">${t}</span>${n ? `<span class="badge-n">${n}</span>` : ''}</button>`;
   }).join('');
 }
 function barHTML(s) {
-  return `<button class="brand sh-brand tx" data-sh="about" type="button" aria-haspopup="dialog" aria-expanded="false"><b>烟花工坊</b><span>· FireWorksLab ${VER}</span></button>`
-    + `<div class="tabs sh-wtabs" role="tablist" aria-label="工作区">${tabsHTML(s.ws, s.impN)}</div><span class="sp"></span>`
-    /* 右侧三组：UE ｜ 导出、备份文件夹 ｜ 更新记录、显卡（组间 24 px，组内 12 px） */
+  return `<div class="sh-brand"><b class="tx">烟花工坊</b><button class="sh-ver" data-sh="ver" type="button" aria-haspopup="dialog" aria-expanded="false" data-tip="更新记录"${s.upd ? ` data-n="${s.upd}" aria-label="FireWorksLab ${VER}，更新记录 ${s.upd} 条没看过"` : ''}>FireWorksLab ${VER}</button></div><span class="sp"></span>`
     + `<div class="sh-r"><div class="sh-g sh-g-ue"><div class="sh-ueg">${ueHTML(s.ueV)}</div></div>`
     + `<div class="sh-g sh-g-fold">${foldHTML('exp', s.exp, s.expName || S.expName)}${foldHTML('bak', s.bak, s.bakName || S.bakName)}</div>`
-    + `<div class="sh-g sh-g-info"><button class="btn btn-text tbtn sh-upd" data-sh="upd" type="button" aria-haspopup="menu" aria-expanded="false"${s.upd ? ` data-n="${s.upd}" aria-label="更新记录，${s.upd} 条没看过"` : ''}>更新记录</button>`
-    + `<span class="gpu sh-gpu" data-tip="NVIDIA GeForce RTX 4070 Laptop GPU">RTX 4070</span></div></div>`;
+    + `<div class="sh-g sh-g-pg" role="group" aria-label="页面">${pgHTML(s.ws, s.impN)}</div>`
+    + `<div class="sh-g sh-g-gpu"><span class="gpu sh-gpu" data-tip="NVIDIA GeForce RTX 4070 Laptop GPU">RTX 4070</span></div></div>`;
 }
 const liveBar = () => ({ws: S.ws, impN: pendingN(), ueV: liveUE(), exp: S.br === 'other' ? 'na' : S.exp, bak: S.br === 'other' ? 'na' : S.bak, upd: S.upd});
 function renderShell() {
@@ -363,37 +378,34 @@ function renderShell() {
   const keep = SH.menu && SH.anchor && h.contains(SH.anchor) ? SH.anchor.dataset.sh + (SH.anchor.dataset.fk || '') : '';
   h.innerHTML = barHTML(liveBar());
   h.setAttribute('aria-label', '烟花工坊');
-  fitShells();
   if (keep) { const a = qq('[data-sh]', h).find(x => x.dataset.sh + (x.dataset.fk || '') === keep); if (a) { SH.anchor = a; a.setAttribute('aria-expanded', 'true'); } }
 }
 const curWsEl = () => q((WS.find(w => w[0] === S.ws) || WS[0])[2]);
-/* 外壳的工作区切到哪个才搬进 #app（放在 #wsBaker 后面），没切到的放回 #shParts：
-   #app 里只有当前工作区和制作区，样板按 #app 全屏统计的规则（工作模式分段只有一处、悬停提示字数）不会数到藏着的工作区 */
+/* 两页切到哪个才搬进 #app（放在 #wsBaker 后面），没打开的放回 #shParts：
+   #app 里只有制作区和当前页，样板按 #app 全屏统计的规则（分段控件、悬停提示字数）不会数到藏着的页面 */
 function dock(el, on) {
   const b = q('#wsBaker'), parts = q('#shParts');
   if (!b || el === b || !parts) return;
   if (on && el.parentNode !== b.parentNode) b.after(el);
   else if (!on && el.parentNode !== parts) parts.appendChild(el);
 }
+/* 打开一页 / 回到制作：只换显示，不丢参数、草稿、选择和滚动（0.4） */
 function setWS(ws) {
   if (!WS.some(w => w[0] === ws)) return;
   const changed = S.ws !== ws; S.ws = ws;
   WS.forEach(([k, , sel]) => { const el = q(sel); if (el) { el.hidden = k !== ws; dock(el, k === ws); } });
-  qq('#shell [data-sh="ws"]').forEach(t => t.setAttribute('aria-selected', String(t.dataset.ws === ws)));
+  qq('#shell [data-sh="pg"]').forEach(t => { const on = t.dataset.pg === ws; t.setAttribute('aria-pressed', String(on)); t.dataset.tip = on ? '返回制作' : `打开${PGN[t.dataset.pg]}`; });
   if (changed) { closeMenu(); closeBub(false); dropTips(); }
   if (ws === 'baker' && changed) window.dispatchEvent(new Event('resize'));
   if (changed) placeToast();
 }
-function aboutMenu(a) {
-  const br = S.br === 'other' ? 'Firefox 132，不支持' : 'Chrome 131';
-  openMenu(a, `<div class="msum"><span class="tx sh-abn">烟花工坊 · FireWorksLab ${VER}</span><dl><dt>制作</dt><dd>烘焙器 4.9.129</dd><dt>导入</dt><dd>导入器 v2.31</dd><dt>编排</dt><dd>编排工作台 16.0.37</dd><dt>浏览器</dt><dd>${br}</dd><dt>显卡</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></dl></div><button class="mi" data-mi="copy" type="button">复制版本</button>`,
-    {cls: 'sh-about', role: 'dialog', label: '关于', acts: {copy: () => { copyText(`FireWorksLab ${VER}；烘焙器 4.9.129；导入器 v2.31；编排工作台 16.0.37；${br}；RTX 4070`); hint(q('#shell [data-sh="about"]'), '已复制版本'); }}});
-}
+/* 更新记录（点版本号）：新内容、各部分版本号（原「关于」并进来）、「全部记录」「复制版本」；打开过就算看过 */
 const UPD_LOG = '<ul class="sh-log"><li>合并为烟花工坊</li><li>保存时可放进编排</li></ul>';
-function updMenu(a) {
-  const n = S.upd;
-  openMenu(a, `<div class="mh">${VER} ${n ? `新内容 ${n} 条` : '更新记录'}</div>${UPD_LOG}<hr><button class="mi" data-mi="all" type="button">全部记录</button>`,
-    {align: 'right', acts: {all: () => hint(a, '样板不打开全部记录')}, onClose: () => { if (S.upd) { S.upd = 0; renderShell(); } }});
+function verMenu(a) {
+  const n = S.upd, br = S.br === 'other' ? 'Firefox 132，不支持' : 'Chrome 131';
+  openMenu(a, `<div class="mh">${VER}　${n ? `新内容 ${n} 条` : '更新记录'}</div>${UPD_LOG}<div class="msum sh-vers"><dl><dt>制作</dt><dd>烘焙器 4.9.129</dd><dt>资源交付</dt><dd>导入器 v2.31</dd><dt>资源编排</dt><dd>编排工作台 16.0.37</dd><dt>浏览器</dt><dd>${br}</dd><dt>显卡</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></dl></div><button class="mi" data-mi="all" type="button">全部记录</button><button class="mi" data-mi="copy" type="button">复制版本</button>`,
+    {cls: 'sh-about', role: 'dialog', label: '更新记录', acts: {all: () => hint(a, '样板不打开全部记录'), copy: () => { copyText(`FireWorksLab ${VER}；烘焙器 4.9.129；导入器 v2.31；编排工作台 16.0.37；${br}；RTX 4070`); hint(q('#shell [data-sh="ver"]'), '已复制版本'); }},
+     onClose: () => { if (S.upd) { S.upd = 0; renderShell(); } }});
 }
 function folderMenu(a, k) {
   const name = k === 'exp' ? S.expName : S.bakName;
@@ -426,7 +438,7 @@ function tickCD() {
   }, 1000);
 }
 
-/* ---------- 4 导入工作区 ---------- */
+/* ---------- 4 资源交付（原导入工作区） ---------- */
 function pkgHTML(p, sel) {
   const wait = p.st === 'wait';
   return `<div class="lib-item sh-pkg${sel ? ' is-sel' : ''}" role="option" aria-selected="${sel}" tabindex="${sel ? 0 : -1}" data-sh="pkg" data-id="${p.id}">${thumb(p.img)}`
@@ -522,18 +534,18 @@ function upsertPkg(name, pc, mb) {
   return p;
 }
 
-/* ---------- 5 编排工作区 ---------- */
+/* ---------- 5 资源编排（编排工作台入口） ---------- */
 function btStHTML(r) {
   const st = [];
-  if (!r.rfx) st.push(`<span class="sh-st warn" data-tip="未配 ResourceFX 行：导演表、UE 里预览不可用">${ic('alert')}未进 UE</span>`);
+  if (!r.rfx) st.push(`<span class="sh-st warn" data-tip="未配 ResourceFX 行：导演表、UE 里预览不可用">未进 UE</span>`);
   if (r.newVer && !r.gen && !r.fail) st.push(`<span class="sh-st">有新版本<button class="btn btn-text tbtn sh-lnk${r.upd ? ' is-loading' : ''}" data-sh="btUpd" type="button" data-tip="换新预览，引用处同步更新">${r.upd ? '更新中' : '更新'}</button></span>`);
   if (r.gen) st.push('<span class="sh-st"><span class="spin" aria-hidden="true"></span>生成预览中</span>');
-  else if (r.fail) st.push(`<span class="sh-st err" data-tip="${esc(r.fail)}">${ic('alert')}预览没生成<button class="btn btn-text tbtn sh-lnk" data-sh="btRetry" type="button">重试</button></span>`);
+  else if (r.fail) st.push(`<span class="sh-st err" data-tip="${esc(r.fail)}">预览没生成<button class="btn btn-text tbtn sh-lnk" data-sh="btRetry" type="button">重试</button></span>`);
   return st.length ? `<div class="sh-btst">${st.join('')}</div>` : '';
 }
 function btHTML(r, sel) {
   const th = r.img ? thumb(r.img, r.film)
-    : r.fail ? `<div class="th sh-thp is-fail" data-tip="${esc(r.fail)}">${ic('alert')}</div>`
+    : r.fail ? `<div class="th sh-thp is-fail" data-tip="${esc(r.fail)}"></div>`
     : r.gen ? '<div class="th sh-thp" aria-label="生成预览中"><span class="spin" aria-hidden="true"></span></div>' : '<div class="th"></div>';
   const sub = r.fail && !r.img ? `<span class="sh-err" data-tip="${esc(r.rfx || r.en)}">${esc(r.fail)}</span>` : `<span>${esc(r.rfx || r.en)}</span>`;
   return `<div class="lib-item sh-bt${sel ? ' is-sel' : ''}" role="option" aria-selected="${sel}" tabindex="${sel ? 0 : -1}" data-sh="bt" data-id="${r.id}">${th}<div class="li-t"><div class="li-n">${esc(r.name)}</div><div class="li-s">${sub}</div></div>${btStHTML(r)}</div>`;
@@ -590,7 +602,7 @@ function retryBT(r, rerender, outcome) {
 const PCT = [6, 14, 23, 31, 38, 47, 58, 69, 80, 91, 100];
 function pvHTML(job, err) {
   if (job) return `<span class="sh-pv" role="status"><span class="spin" aria-hidden="true"></span><span>生成编排预览 <span class="sh-pvn">${job.pct}%</span></span><button class="btn btn-text tbtn sm" data-sh="pvCancel" type="button">取消</button></span>`;
-  if (err) return `<span class="sh-pv is-err" role="alert">${ic('alert')}<span>编排预览没生成：${esc(err.why || '存储空间不足')}</span><span class="sh-pvk">${err.src === 'export' ? '已导出' : '效果已保存'}</span><button class="btn btn-text tbtn sm" data-sh="pvRetry" type="button">重试</button><button class="btn btn-text tbtn sm lnk" data-sh="pvMore" type="button" aria-haspopup="menu" aria-expanded="false">详情</button><button class="btn btn-icon sm" data-sh="pvX" type="button" aria-label="关掉这条">${ic('x')}</button></span>`;
+  if (err) return `<span class="sh-pv is-err" role="alert"><span>编排预览没生成：${esc(err.why || '存储空间不足')}</span><span class="sh-pvk">${err.src === 'export' ? '已导出' : '效果已保存'}</span><button class="btn btn-text tbtn sm" data-sh="pvRetry" type="button">重试</button><button class="btn btn-text tbtn sm lnk" data-sh="pvMore" type="button" aria-haspopup="menu" aria-expanded="false">详情</button><button class="btn btn-icon sm" data-sh="pvX" type="button" aria-label="关掉这条">${ic('x')}</button></span>`;
   return '';
 }
 function renderPV() {
@@ -693,7 +705,7 @@ function askBackup(n, then, cancel, host) {
 function copyText(s) { try { const p = navigator.clipboard && navigator.clipboard.writeText(s); if (p && p.catch) p.catch(() => {}); } catch (e) { /* 剪贴板不可用时不提示错误 */ } }
 function askBrowser(host) {
   openDlg(Object.assign({id: 'br', host}, DLG.br, {
-    onOk: () => { copyText(location.href); hint(host || q('#shell [data-sh="about"]'), '已复制地址'); }
+    onOk: () => { copyText(location.href); hint(host || q('#shell [data-sh="ver"]'), '已复制地址'); }
   }));
 }
 
@@ -728,7 +740,7 @@ window.shellAfterExport = (a = {}) => {
     /* 同样板的「已导出」提示条：一两层写层名，再多写效果名；没导出的平台不写 */
     const L = Array.isArray(a.layers) ? a.layers : [], who = L.length && L.length <= 2 ? L.join('、') : name;
     const what = [a.pc ? `PC ${a.pc} 张` : '', a.mobile ? `手机 ${a.mobile} 张` : ''].filter(Boolean).join('、');
-    toast(`已导出 ${who}，${what}`, {from: 'baker', action: {label: '回到制作', ws: 'baker', fn: () => setWS('baker')}});
+    toast(`已导出 ${who}，${what}`, {from: 'baker', action: {label: '返回制作', ws: 'baker', fn: () => setWS('baker')}});
     if (a.alsoWB) startPreview(name, 'export', 'kiku'); else markNewVer(name);
   };
   if (S.br === 'other') return;
@@ -736,6 +748,8 @@ window.shellAfterExport = (a = {}) => {
   go();
 };
 window.openSaveDialog = () => { openSaveDialog(); };
+/* 样板调用：提示条进外壳提示区（顶栏下方、当前页面顶部居中）；o 同外壳的 toast：{action: {label, fn, ws}, from, ms} */
+window.shellToast = (text, o = {}) => toast(text, o);
 /* 样板调用：导出摘要里写的导出文件夹名 */
 window.shellExportFolderName = () => (S.br === 'other' ? '不可用' : S.exp === 'none' ? '未选' : S.expName);
 /* 样板调用：导出面板里「换文件夹」。同点外壳顶栏的导出文件夹标签：未选 → 选文件夹；已选 → 标签下面出「换一个文件夹」菜单；要重新授权 → 允许访问 */
@@ -764,34 +778,15 @@ function setKit(k, v) {
   if (k === 'bak') S.bak = v;
   if (k === 'br') { S.br = v; if (v === 'other') { stopT('imp'); S.imp.writing = null; S.wb.busy = null; stopT('cd'); } else if (S.ue === 'off') { S.cd = 12; tickCD(); } }
   if (k === 'pv') S.pv = v;
-  if (k === 'cmpws') { setCmp(v); return; }
   renderAll();
   if ((k === 'exp' || k === 'bak') && v === 'perm' && S.br !== 'other') bubble(q(`#shell [data-fk="${k}"]`), k);
   if (k === 'br' && v === 'other') askBrowser();
 }
 function syncKit() {
-  const v = {ue: S.imp.writing ? 'write' : S.ue, exp: S.exp, bak: S.bak, br: S.br, pv: S.pv, cmpws: document.documentElement.dataset.cmpWs || 'a'};
+  const v = {ue: S.imp.writing ? 'write' : S.ue, exp: S.exp, bak: S.bak, br: S.br, pv: S.pv};
   qq('#shKit select[data-shk]').forEach(s => { if (s.value !== v[s.dataset.shk]) s.value = v[s.dataset.shk]; });
 }
 function renderAll() { renderShell(); renderImport(); renderWB(); renderPV(); patchExport(); syncKit(); }
-/* 工作区切换三种摆法（v2.3 改动单第 9 条，对比用）：根元素 data-cmp-ws = a / b / c，默认 a；地址里 ?cmpws=b 可直接指定 */
-const CMP = ['a', 'b', 'c'];
-function setCmp(v) { if (!CMP.includes(v)) return; document.documentElement.dataset.cmpWs = v; closeMenu(); closeBub(false); dropTips(); syncKit(); fitShells(); }
-/* 方案 b：右边一组放得下半条就居中，放不下就让分段往左（.is-tight） */
-/* 方案 b：工作区切换的中线对齐画面（制作区中栏）的中线，右侧三组只用到切换右边 24 px 为止；
-   右侧按原宽放不下时（1366 + 状态长），切换往左让（is-tight），文件夹名还放不下才截断；不压右侧 */
-function fitShells() {
-  const b = document.documentElement.dataset.cmpWs === 'b';
-  qq('.shell').forEach(s => {
-    s.classList.remove('is-tight');
-    const r = q(':scope > .sh-r', s), tb = q(':scope > .sh-wtabs', s);
-    if (r) r.style.maxWidth = '';
-    if (!b || !r || !tb || !s.offsetWidth) return;
-    r.style.width = 'max-content'; const need = r.getBoundingClientRect().width; r.style.width = '';
-    const fit = () => { const R = s.getBoundingClientRect(), T = tb.getBoundingClientRect(), av = Math.max(0, R.right - (parseFloat(getComputedStyle(r).marginRight) || 0) - T.right - 24); r.style.maxWidth = av + 'px'; return need <= av + 0.5; };
-    if (!fit()) { s.classList.add('is-tight'); r.style.maxWidth = ''; fit(); }
-  });
-}
 
 /* ---------- 9 事件 ---------- */
 /* 导出入口：捕获阶段先看文件夹（样板的导出在冒泡阶段执行） */
@@ -838,9 +833,9 @@ document.addEventListener('click', e => {
   if (isDis(a)) return;
   const act = a.dataset.sh;
   const A = {
-    ws: () => setWS(a.dataset.ws),
-    about: () => (SH.menu && SH.anchor === a ? closeMenu() : aboutMenu(a)),
-    upd: () => (SH.menu && SH.anchor === a ? closeMenu() : updMenu(a)),
+    pg: () => setWS(S.ws === a.dataset.pg ? 'baker' : a.dataset.pg),   /* 再点一次亮着的标签 = 回到制作 */
+    back: () => setWS('baker'),
+    ver: () => (SH.menu && SH.anchor === a ? closeMenu() : verMenu(a)),
     retry: () => retryUE(),
     toImport: () => setWS('import'),
     toWB: () => setWS('wb'),
@@ -921,10 +916,10 @@ const sheetPV = {job: null, err: null, out: 'ok'};
 function sheetHTML() {
   const B = (ueV, o) => Object.assign({ws: 'baker', impN: 2, ueV, exp: 'ok', bak: 'none', upd: 2}, o);
   const bars = [
-    ['UE 连接中　导出已选　备份未选：琥珀色字，后面跟「设置」　当前在「制作」', B({k: 'wait'})],
-    ['UE 已连接　导出、备份都已选　当前在「导入」　更新记录都看过', B({k: 'on'}, {ws: 'import', bak: 'ok', upd: 0})],
-    ['UE 未连接　重试　12 秒后自动重试　导出未选：警告色 + 图形，点了选文件夹', B({k: 'off', cd: 12}, {impN: 0, exp: 'none'})],
-    ['UE 写入中 3 / 12，点一下切到导入　导出、备份都需允许访问：警告色 + 图形，点一下即允许　当前在「编排」', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'wb', impN: 3, exp: 'perm', bak: 'perm'})]
+    ['UE 连接中　导出已选　备份未选：弱色字，后面跟「设置」　版本号右上角 2 = 没看过的更新记录', B({k: 'wait'})],
+    ['UE 已连接　导出、备份都已选　打开着「资源交付」：标签 600 + 薄荷下划线　更新记录都看过', B({k: 'on'}, {ws: 'import', bak: 'ok', upd: 0})],
+    ['UE 未连接　重试　12 秒后自动重试　导出未选：会挡住导出，琥珀色，后面跟「设置」', B({k: 'off', cd: 12}, {impN: 0, exp: 'none'})],
+    ['UE 写入中 3 / 12，点一下打开资源交付　导出、备份都需允许访问：琥珀色，点一下即允许　打开着「资源编排」', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'wb', impN: 3, exp: 'perm', bak: 'perm'})]
   ];
   const b1366 = [
     ['1366：最长的组合，UE 未连接 + 都需允许访问 + 很长的文件夹名；文件夹名截断加省略号，悬停看全称和完整路径', B({k: 'off', cd: 12}, {ws: 'import', impN: 3, exp: 'perm', bak: 'perm', expName: 'Export_NewYear_2026_Final_Review', bakName: 'Backup_NewYear_2026_Final_Review'})],
@@ -941,77 +936,79 @@ function sheetHTML() {
     [['导出文件夹', [fo('exp', 'none'), fo('exp', 'ok'), fo('exp', 'perm'), fo('exp', 'na'), `<div data-shlive="fold" data-fk="exp" data-st="none">${fo('exp', 'none')}</div>`]],
      ['备份文件夹', [fo('bak', 'none'), fo('bak', 'ok'), fo('bak', 'perm'), fo('bak', 'na'), `<div data-shlive="fold" data-fk="bak" data-st="none">${fo('bak', 'none')}</div>`]],
      ['名称过长：170 px 宽', [null, `<div class="sh-lim">${fo('exp', 'ok', 'Export_NewYear_2026')}</div>`, `<div class="sh-lim">${fo('exp', 'perm', 'Export_NewYear_2026')}</div>`, null, null]]]);
-  const tabsStatic = (ws, hov) => `<div class="sh-sbar" style="width:auto;display:inline-block"><header class="shell sh-static sh-tonly"><div class="tabs sh-wtabs" role="tablist">${tabsHTML(ws, 2, hov)}</div></header></div>`;
-  const tabsBlk = `<div class="ks-row"><div><span class="ks-cap">外壳：工作区，无框文字标签，当前项 600 + 2 px 下划线；摆法随样板控制条的「工作区切换」a / b / c。「导入 2」的数字是待导入的包数，小一号弱色</span>${tabsStatic('baker', 'import')}</div>`
-    + `<div><span class="ks-cap">对照：效果库大号标签，面板里，等分，2 px 下划线，常态灰字</span><div class="ks-frame" style="--pw:300px"><div class="tabs tabs-lg" role="tablist"><button class="tab" role="tab" data-t="效果" aria-selected="true" type="button">效果</button><button class="tab" role="tab" data-t="模板" aria-selected="false" type="button">模板</button></div></div></div>`
-    + `<div><span class="ks-cap">可操作</span><div class="sh-sbar" style="width:auto;display:inline-block" data-shlive="tabs"><header class="shell sh-static sh-tonly"><div class="tabs sh-wtabs" role="tablist">${tabsHTML('baker', 2)}</div></header></div></div></div>`;
+  const pgDemo = (cur, hov, live) => `<div class="sh-pgdemo"${live ? ' data-shlive="pg"' : ''}>${pgHTML(cur, 2, hov)}</div>`;
+  const pgT = tbl(['常态：在制作', '悬停', '打开着资源交付', '打开着资源编排', '可操作：点一下打开，再点回到制作'],
+    [['页面标签', [pgDemo('baker'), pgDemo('baker', 'wb'), pgDemo('import'), pgDemo('wb'), pgDemo('baker', '', true)]]]);
 
-  const why = `<div class="fb warn sh-why" style="margin:0">${ic('alert')}<span>${WHY.off}</span><button class="btn btn-text tbtn" type="button">重试</button></div>`;
-  const leftImp = `<section class="sh-left"><div class="sh-lh"><span class="sh-hv">FWL_Export</span><span class="lbl">5 个包</span></div></section>`;
-  const impTool = `<div class="topbar sh-hd"><div class="tcol tcol-m sh-hs"><div class="modeseg" role="group"><button aria-pressed="true" type="button">烟花导入</button><button aria-pressed="false" type="button">ResourceFX 配表</button></div><span class="sp"></span><div class="tgrp"><button class="btn btn-text tbtn" type="button">刷新</button><button class="btn btn-1 is-disabled" aria-disabled="true" data-tip="${esc(WHY.off)}" type="button">导入</button></div></div></div>`;
-  const leftWB = `<section class="sh-left"><div class="tabs tabs-lg" role="tablist"><button class="tab" role="tab" data-t="效果" aria-selected="false" type="button">效果</button><button class="tab" role="tab" data-t="模板" aria-selected="true" type="button">模板</button></div></section>`;
-  const wbTool = `<div class="topbar cols sh-hd" style="grid-template-columns:minmax(0,1fr) var(--w-right)"><div class="tcol tcol-m sh-hs"><i class="sh-ph" style="width:148px"></i><span class="sp"></span><i class="sh-ph" style="width:56px"></i></div><div class="tcol tcol-r sh-hs"><span class="sp"></span><div class="tgrp">${['导演表', '灯光', 'UE 里预览'].map(v => `<button class="btn btn-text tbtn is-disabled" aria-disabled="true" type="button" data-tip="${WHY.impW}">${v}</button>`).join('')}</div></div></div>`;
+  const BACK = `<button class="btn btn-text tbtn sh-back" type="button">${ic('sh-back')}返回制作</button>`;
+  const why = `<div class="sh-why"><span>${WHY.off}</span><button class="btn btn-text tbtn" type="button">重试</button></div>`;
+  const leftImp = `<section class="sh-left" style="grid-column:1;grid-row:2"><div class="sh-lh"><span class="sh-hv">FWL_Export</span><span class="lbl">5 个素材包</span></div></section>`;
+  const impTool = `<div class="topbar sh-hd" style="grid-template-columns:var(--sh-wl) minmax(0,1fr)"><div class="sh-hs sh-hl">${BACK}</div><div class="sh-hs sh-hm"><div class="modeseg" role="group"><button aria-pressed="true" type="button">烟花导入</button><button aria-pressed="false" type="button">ResourceFX 配表</button></div><span class="sp"></span><div class="tgrp"><button class="btn btn-text tbtn" type="button">刷新</button><button class="btn btn-1 is-disabled" aria-disabled="true" data-tip="${esc(WHY.off)}" type="button">导入</button></div></div></div>`;
+  const leftWB = `<section class="sh-left" style="grid-column:1;grid-row:2"><div class="tabs tabs-lg" role="tablist"><button class="tab" role="tab" data-t="效果" aria-selected="false" type="button">效果</button><button class="tab" role="tab" data-t="模板" aria-selected="true" type="button">模板</button></div></section>`;
+  const wbTool = `<div class="topbar sh-hd" style="grid-template-columns:var(--sh-wl) minmax(0,1fr) var(--w-right)"><div class="sh-hs sh-hl">${BACK}</div><div class="sh-hs sh-hm"><i class="sh-ph" style="width:148px"></i><span class="sp"></span><i class="sh-ph" style="width:56px"></i></div><div class="sh-hs sh-hr" style="border-left:1px solid var(--line)"><span class="sp"></span><div class="tgrp">${['导演表', '灯光', 'UE 里预览'].map(v => `<button class="btn btn-text tbtn is-disabled" aria-disabled="true" type="button" data-tip="${WHY.impW}">${v}</button>`).join('')}</div></div></div>`;
   const wsFrame = (cols, rows, inner) => `<div class="ks-frame sh-ws" style="--pw:1366px;display:grid;grid-template-columns:${cols};grid-template-rows:var(--h-top) ${rows}">${inner}</div>`;
   const tipS = s => `<div class="tip static sm" style="margin-top:6px">${esc(s)}</div>`;
-  const disBlk = `<div class="ks-row"><div><span class="ks-cap">导入：UE 未连接</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${esc(WHY.off)}">导入</button>${tipS(WHY.off)}</div>`
-    + `<div><span class="ks-cap">编排：导入正在写 UE，三个按钮一起变灰</span><div style="display:flex;gap:2px">${['导演表', '灯光', 'UE 里预览'].map(v => `<button class="btn btn-text tbtn is-disabled" aria-disabled="true" type="button" data-tip="${WHY.impW}">${v}</button>`).join('')}</div>${tipS(WHY.impW)}</div>`
-    + `<div><span class="ks-cap">导入：编排正在写 UE，双向互锁</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${WHY.wbW}">导入</button>${tipS(WHY.wbW)}</div>`
+  const disBlk = `<div class="ks-row"><div><span class="ks-cap">资源交付：UE 未连接</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${esc(WHY.off)}">导入</button>${tipS(WHY.off)}</div>`
+    + `<div><span class="ks-cap">资源编排：导入正在写 UE，三个按钮一起变灰</span><div style="display:flex;gap:2px">${['导演表', '灯光', 'UE 里预览'].map(v => `<button class="btn btn-text tbtn is-disabled" aria-disabled="true" type="button" data-tip="${WHY.impW}">${v}</button>`).join('')}</div>${tipS(WHY.impW)}</div>`
+    + `<div><span class="ks-cap">资源交付：编排正在写 UE，双向互锁</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${WHY.wbW}">导入</button>${tipS(WHY.wbW)}</div>`
     + `<div><span class="ks-cap">制作：其他浏览器，导出变灰</span><div class="split"><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${WHY.brFold}">导出</button><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" aria-label="导出选项" data-tip="${WHY.brFold}">${ic('cd')}</button></div>${tipS(WHY.brFold)}</div>`
     + `<div><span class="ks-cap">可操作：悬停看原因</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${esc(WHY.off)}">导入</button></div></div>`;
 
   const sd = o => `<div class="dialog static sh-dlg" style="width:400px">${dlgHTML(o, false)}</div>`;
   const dlgs = `<div class="ks-cols" style="--c:3">`
     + blk('第一次导出，还没选导出文件夹', '对话框；选好后接着导出，之后会记住', sd(DLG.exp) + demoBtn('exp', '打开'))
-    + blk('第一次要覆盖 UE 里已有的资产', '导入区的对话框；点「导入」后、写入任何资产之前弹出，取消就一个都不写', sd(DLG.bak(3)) + demoBtn('bak', '打开'))
+    + blk('第一次要覆盖 UE 里已有的资产', '资源交付的对话框；点「导入」后、写入任何资产之前弹出，取消就一个都不写', sd(DLG.bak(3)) + demoBtn('bak', '打开'))
     + blk('选到 UE 工程里面', '就地报错，对话框不关；打开后点「模拟误选」', sd(Object.assign({err: DLG.bakErr}, DLG.bak(3))) + demoBtn('bak', '打开'))
     + blk('用 Chrome / Edge 以外的浏览器打开', '打开时一次对话框；之后文件夹标签写「不可用」，用到文件夹和 UE 的按钮变灰写原因', sd(DLG.br) + demoBtn('br', '打开'))
-    + blk('重开浏览器后要重新允许访问', '不弹框：标签变「需允许访问」，标签下方一次小气泡；导出、导入、刷新时按钮旁出同一句', `<div>${fo('exp', 'perm')}</div><div class="sh-bub static" style="margin-top:4px">${bubHTML('FWL_Export')}</div><div data-shlive="bub" style="margin-top:12px">${fo('exp', 'perm')}</div><span class="sh-cell-n">可操作：点标签或气泡里的「允许访问」</span>`)
+    + blk('重开浏览器后要重新允许访问', '不弹框：标签变「需允许访问」，标签下方 8 px 一次小气泡，小三角对着标签；导出、导入、刷新时按钮旁出同一句', `<div>${fo('exp', 'perm')}</div><div class="sh-bub static">${bubHTML('FWL_Export')}</div><div data-shlive="bub" style="margin-top:12px">${fo('exp', 'perm')}</div><span class="sh-cell-n">可操作：点标签或气泡里的「允许访问」</span>`)
     + blk('另存、第一次保存', '名称下面一行勾选；第一次不勾，已放进编排的默认勾上，按效果记住', sd({title: '另存为', extra: saveExtra('金曜菊-B 副本', false), ok: '保存'}) + demoBtn('save', '打开'))
     + `</div>`;
 
   const st = inner => `<footer class="status sh-sstat"><div class="st-l"></div><div class="st-r"><button class="btn btn-text tbtn sm" type="button">已保存 20:31</button><span>${inner}</span></div></footer>`;
+  const toastS = (t, act) => `<div class="toast static"><span>${t}</span><button class="btn btn-text tbtn sm" type="button">${act}</button><button class="btn btn-icon sm" type="button" aria-label="关闭">${ic('x')}</button></div>`;
   const pvBlk = `<div class="ks-cols" style="--c:2"><div class="ks-blk"><h3>编排预览：进度、失败、成功<span>状态栏右侧、紧跟保存状态；对话框关掉后不挡操作；失败一直留到重试成功或关掉</span></h3>`
     + `<span class="ks-cap">生成中：约 4 秒，可取消</span>${st(pvHTML({pct: 38}))}`
-    + `<span class="ks-cap" style="margin-top:14px">失败：另存后</span>${st(pvHTML(null, {src: 'save'}))}`
+    + `<span class="ks-cap" style="margin-top:14px">失败：另存后；红色字，不填底色</span>${st(pvHTML(null, {src: 'save'}))}`
     + `<span class="ks-cap" style="margin-top:14px">失败：导出后</span>${st(pvHTML(null, {src: 'export'}))}`
-    + `<span class="ks-cap" style="margin-top:14px">成功：短提示，10 秒后消失；「去编排看」切到编排并高亮那一行</span><div class="toast static"><span>已放进编排：金曜菊-B</span><button class="btn btn-text tbtn sm" type="button">去编排看</button><button class="btn btn-icon sm" type="button" aria-label="关闭">${ic('x')}</button></div>`
-    + `<span class="ks-cap" style="margin-top:14px">导出后切到导入的提示条</span><div class="toast static"><span>已导出 金曜菊-B：PC 3 张、手机 3 张</span><button class="btn btn-text tbtn sm" type="button">回到制作</button><button class="btn btn-icon sm" type="button" aria-label="关闭">${ic('x')}</button></div>`
+    + `<span class="ks-cap" style="margin-top:14px">成功：第一次放进编排；10 秒后消失；「去编排看」打开资源编排并高亮那一行</span>${toastS('已放进编排：金曜菊-B', '去编排看')}`
+    + `<span class="ks-cap" style="margin-top:14px">成功：已在编排里的直接更新那一项，不标「有新版本」</span>${toastS('已更新编排：金曜菊-B', '去编排看')}`
+    + `<span class="ks-cap" style="margin-top:14px">导出后自动打开资源交付；提示条在外壳提示区，写明来自制作</span>${toastS('制作：已导出 金锦层，PC 5 张、手机 3 张', '返回制作')}`
+    + `<span class="ks-cap" style="margin-top:14px">人在别的页面时导入写完：提示条出在当前页面顶部</span>${toastS('导入：已写入 14 个资产，覆盖的 3 个已备份', '查看')}`
     + `</div><div class="ks-blk"><h3>可操作<span>按下面的按钮在这条状态栏里跑一次</span></h3><div data-shlive="pv">${st('')}</div><div style="display:flex;gap:8px;margin-top:8px">${demoBtn('pvOk', '演示成功')}${demoBtn('pvFail', '演示失败')}</div></div></div>`;
 
   const frame = (rows, w, cls = '', live = '') => `<div class="ks-frame${cls}" style="--pw:${w}px"${live}><div class="lib-list" style="padding:4px 6px">${rows}</div></div>`;
   const statRows = mkBT().map((r, i) => btHTML(r, i === 0)).join('');
   const btBlk = `<div class="ks-row"><div><span class="ks-cap">1920，372 px：正常 / 正常 / 未进 UE / 有新版本 / 生成预览中 / 预览没生成 / 未进 UE + 有新版本</span>${frame(statRows, 372)}</div>`
-    + `<div><span class="ks-cap">1366，320 px</span>${frame(statRows, 320, ' s1366')}</div>`
+    + `<div><span class="ks-cap">1366，332 px</span>${frame(statRows, 332, ' s1366')}</div>`
     + `<div><span class="ks-cap">可操作：点「更新」「重试」，悬停金曜菊-B 的缩略图播放</span>${frame(LBT.map((r, i) => btHTML(r, i === 0)).join(''), 372, '', ' data-shlive="bt"')}</div></div>`;
 
   const p1 = Object.assign({}, PKG[2], {st: 'wait', t: '22:41', just: true}), p2 = PKG[0], p3 = PKG[3];
   const A = assetsOf(p1);
-  const pkgBlk = `<div class="ks-row"><div><span class="ks-cap">包列表：刚导出的包浅底高亮，不用绿框</span>${frame([pkgHTML(p1, true), pkgHTML(p2, false), pkgHTML(p3, false)].join(''), 372)}</div>`
-    + `<div style="flex:1;min-width:0"><span class="ks-cap">逐资产清单：写入中 3 / 12；要覆盖的资产照样逐行写，备份在点「导入」时就选好了</span><div class="ks-frame" style="--pw:100%;max-width:980px;padding:0 12px 8px">${assetTable(p1, A, {pkg: p1.id, i: 3, tot: A.length})}</div></div></div>`;
+  const pkgBlk = `<div class="ks-row"><div><span class="ks-cap">包列表：刚导出的包用选中底色，不用绿框</span>${frame([pkgHTML(p1, true), pkgHTML(p2, false), pkgHTML(p3, false)].join(''), 372)}</div>`
+    + `<div style="flex:1;min-width:0"><span class="ks-cap">逐资产清单：写入中 3 / 12；备份在点「导入」时就选好了</span><div class="ks-frame" style="--pw:100%;max-width:980px;padding:0 12px 8px">${assetTable(p1, A, {pkg: p1.id, i: 3, tot: A.length})}</div></div></div>`;
 
-  const menus = `<div class="ks-row"><div><span class="ks-cap">关于：点产品名</span><div class="menu static sh-about"><div class="msum"><span class="tx sh-abn">烟花工坊 · FireWorksLab ${VER}</span><dl><dt>制作</dt><dd>烘焙器 4.9.129</dd><dt>导入</dt><dd>导入器 v2.31</dd><dt>编排</dt><dd>编排工作台 16.0.37</dd><dt>浏览器</dt><dd>Chrome 131</dd><dt>显卡</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></dl></div><div class="mi">复制版本</div></div></div>`
-    + `<div><span class="ks-cap">更新记录 2：数字 = 没看过的条数，看过就消失</span><div class="menu static" style="min-width:220px"><div class="mh">${VER} 新内容 2 条</div>${UPD_LOG}<hr><div class="mi">全部记录</div></div></div>`
+  const br = 'Chrome 131';
+  const menus = `<div class="ks-row"><div><span class="ks-cap">更新记录：点版本号；2 = 没看过的条数，看过就消失；各部分版本号也在这里</span><div class="menu static sh-about"><div class="mh">${VER}　新内容 2 条</div>${UPD_LOG}<div class="msum sh-vers"><dl><dt>制作</dt><dd>烘焙器 4.9.129</dd><dt>资源交付</dt><dd>导入器 v2.31</dd><dt>资源编排</dt><dd>编排工作台 16.0.37</dd><dt>浏览器</dt><dd>${br}</dd><dt>显卡</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></dl></div><div class="mi">全部记录</div><div class="mi">复制版本</div></div></div>`
     + `<div><span class="ks-cap">导出文件夹已选：点开</span><div class="menu static" style="min-width:240px"><div class="mh">导出文件夹　D:\\FireWorksLab\\FWL_Export</div><div class="mi is-hover">换文件夹…</div></div></div>`
     + `<div><span class="ks-cap">编排预览没生成：详情</span><div class="menu static" style="max-width:340px"><div class="msum"><b>编排预览没生成：金曜菊-B 副本</b><dl><dt>原因</dt><dd>存储已用 4.8 / 5 GB</dd><dt>效果</dt><dd>已保存</dd></dl></div><div class="mi">重试</div><div class="mi">去编排看</div></div></div></div>`;
 
-  return `<h2>外壳与 5.0 入口</h2><p class="lead">烟花工坊 5.0，交互宪章 0.9：三个工作区共用的外壳顶栏，导出、另存、导入、编排之间的新入口，首次使用。静态画出每个状态；带底色的一列和「打开」按钮可以真点。主屏的状态用样板控制条里的「工作区切换 / UE / 导出文件夹 / 备份文件夹 / 浏览器 / 预览结果」切换。</p>`
-    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px；左边产品名，点开「关于」，后面是工作区；右侧三组：UE ｜ 导出、备份文件夹 ｜ 更新记录、显卡，组间 24 px；显卡悬停看全名</span></h3>${barsHTML}`
-    + blk('UE 状态标签', '图形 + 文字，不只靠颜色；悬停写地址和上次连上时间；写入中点一下切到导入', ueT, 'margin-top:8px')
-    + blk('文件夹标签', '「导出 / 备份 + 文件夹名」，弱色信息，不画文件夹图标；未选：琥珀色字，后面跟命令「设置」，导出未选另带警示图形；已选：点开换文件夹；需允许访问：琥珀色 + 图形，点一下即允许；悬停写全称和完整路径', foT)
-    + `<h3>工作区标签<span>全屏只有这一组是一级导航，用无框文字标签；带框分段只给工作模式；切换只换显示，不丢参数、草稿、选择和滚动</span></h3>${tabsBlk}`
-    + blk('工作区工具行：导入、编排', '左栏从外壳顶栏下面直接开始，第一行写这一栏是什么；工具行只在中栏、右栏上方：工作模式 → 命令，分段和下面的栏对齐，栏之间是 4 px 的缝。命令用文字按钮，标签最暗', `${wsFrame('calc(var(--w-left) + 72px) minmax(0,1fr)', '24px', leftImp + impTool + '<div style="grid-column:2"></div>')}<div style="height:12px"></div>${wsFrame('calc(var(--w-left) + 72px) minmax(0,1fr) var(--w-right)', '24px', leftWB + wbTool + '<div style="grid-column:2"></div>')}`)
-    + blk('原因条', '导入区右栏最上面，「导入」按钮下方；UE 未连接时出现，包列表、逐资产清单和预检照常', wsFrame('calc(var(--w-left) + 72px) minmax(0,1fr)', 'auto', leftImp + impTool + `<div class="sh-main" style="grid-column:2;grid-row:2;padding-bottom:12px">${why.replace(' style="margin:0"', '')}</div>`))
-    + blk('变灰按钮 + 原因', '变灰一律写原因，悬停可见；按钮不隐藏；同一时间只一处写 UE', disBlk)
+  return `<h2>外壳与 5.0 入口</h2><p class="lead">烟花工坊 5.0，交互宪章 0.9（含用户 2026-11-05 改定）、设计规范 v3 第 11、12 节：外壳顶栏、资源交付和资源编排两页、导出和另存之后的去向、首次使用。没有工作区切换，默认画面就是制作。静态画出每个状态；带底色的一列和「打开」按钮可以真点。主屏的状态用样板控制条里的「UE / 导出文件夹 / 备份文件夹 / 浏览器 / 预览结果」切换。</p>`
+    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3」小号弱色，点版本号打开更新记录；右侧四组，组间 1 px 竖线：UE ｜ 导出、备份 ｜ 资源交付、资源编排 ｜ 显卡</span></h3>${barsHTML}`
+    + blk('UE 状态', '圆点 + 文字，不只靠颜色；已连接的圆点是薄荷；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
+    + blk('文件夹', '标签弱色、值次文字色，不画图形；未选：导出会挡住导出，琥珀色，备份不挡操作，弱色字，后面都跟命令「设置」；已选：点开换文件夹；需允许访问：琥珀色，点一下即允许；悬停写全称和完整路径', foT)
+    + blk('页面标签', '文字 + 2 px 下划线；打开着的那页 600 + 薄荷下划线；「资源交付 2」的数字是待导入的包数，小一号弱色；再点一次亮着的标签回到制作', pgT)
+    + blk('页面工具行：资源交付、资源编排', '工具行占满宽，栏头面色，底边一条线；左段「← 返回制作」，分段和下面的栏对齐，栏与栏之间是同一条 1 px 线；命令用文字按钮，标签弱色', `${wsFrame('var(--sh-wl) minmax(0,1fr)', '28px', impTool + leftImp + '<div style="grid-column:2;grid-row:2"></div>')}<div style="height:12px"></div>${wsFrame('var(--sh-wl) minmax(0,1fr) var(--w-right)', '28px', wbTool + leftWB + '<div style="grid-column:2;grid-row:2"></div>')}`)
+    + blk('原因', '资源交付主区最上面一行，琥珀色字，不填底色；UE 未连接时出现，包列表、逐资产清单和预检照常', wsFrame('var(--sh-wl) minmax(0,1fr)', 'auto', impTool + leftImp + `<div class="sh-main" style="grid-column:2;grid-row:2;padding-bottom:12px">${why}</div>`))
+    + blk('变灰按钮 + 原因', '停用一律降透明度，悬停写原因；按钮不隐藏；同一时间只一处写 UE', disBlk)
     + `<h3>首次使用与另存对话框<span>同一份对话框样式；默认焦点在主按钮，Esc 关闭</span></h3>${dlgs}`
     + pvBlk
-    + `<h3>编排「基础模板」条目<span>一行依次是缩略图、名称、副信息、右侧状态；缩略图是真实效果，悬停播放；副信息写 ResourceFX 行名，没配的写英文名；「未进 UE」悬停写能做什么、不能做什么；两种状态同时出现时「未进 UE」在上</span></h3>${btBlk}`
-    + `<h3>导入区：包列表与逐资产清单<span>导出后自动切到导入并选中刚导出的包；导入写到第一个要覆盖的资产前，没选备份位置就停下来问</span></h3>${pkgBlk}`
-    + `<h3>外壳浮层<span>同样板的菜单样式</span></h3>${menus}`;
+    + `<h3>资源编排「基础模板」条目<span>一行依次是缩略图、名称、副信息、右侧状态；「未进 UE」会挡住导演表、UE 里预览，琥珀色字；「预览没生成」是错误，红色字；都不画图形；两种状态同时出现时「未进 UE」在上</span></h3>${btBlk}`
+    + `<h3>资源交付：包列表与逐资产清单<span>导出后自动打开资源交付并选中刚导出的包；点「导入」先预检，要覆盖又没选备份位置时，写之前先问</span></h3>${pkgBlk}`
+    + `<h3>外壳浮层<span>同样板的菜单样式：浮层面色、1 px 线、阴影</span></h3>${menus}`;
 }
 function renderSheet() {
   const s = q('#sheetShell'); if (!s) return;
   s.innerHTML = sheetHTML();
-  fitShells();
 }
 /* 全表的可操作实例：各自一份状态，不动主屏 */
 function sheetLive(box, t, e) {
@@ -1033,9 +1030,10 @@ function sheetLive(box, t, e) {
     else { box.dataset.st = 'ok'; box.innerHTML = foldHTML(k, 'ok', nm); hint(q('.sh-fold', box), `已允许访问 ${nm}`); }
     return;
   }
-  if (kind === 'tabs') {
-    const tb = t.closest('.tab'); if (!tb) return;
-    qq('.tab', box).forEach(x => x.setAttribute('aria-selected', String(x === tb)));
+  if (kind === 'pg') {
+    const tb = t.closest('.sh-pg'); if (!tb) return;
+    const on = tb.getAttribute('aria-pressed') !== 'true';
+    qq('.sh-pg', box).forEach(x => x.setAttribute('aria-pressed', String(on && x === tb)));
     return;
   }
   if (kind === 'bt') {
@@ -1057,7 +1055,7 @@ function sheetLive(box, t, e) {
 function bubbleSheet(anchor, box) {
   closeBub(false);
   const el = document.createElement('div'); el.className = 'sh-bub'; el.innerHTML = bubHTML('FWL_Export');
-  ovlOf(anchor).appendChild(el); placeNear(el, anchor);
+  ovlOf(anchor).appendChild(el); placeBub(el, anchor, 'left');
   el.addEventListener('click', ev => { const b = ev.target.closest('[data-r]'); if (!b) return; closeBub(false); if (b.dataset.r === 'allow') { box.innerHTML = foldHTML('exp', 'ok', 'FWL_Export'); hint(q('.sh-fold', box), '已允许访问 FWL_Export'); } });
   SH.bub = {el, anchor, sticky: false};
 }
@@ -1067,7 +1065,7 @@ function runSheetPV(out) {
   const step = () => {
     const j = sheetPV.job; if (!j) return;
     j.k += 1; j.pct = PCT[Math.min(j.k, PCT.length - 1)];
-    if (j.k >= PCT.length - 1) { sheetPV.job = null; if (out === 'ok') { renderSheetPV(); toast('已放进编排：金曜菊-B 副本', {ms: 10000, near: q('#kitSheet'), action: {label: '去编排看', fn: () => toast('样板全表里不切换工作区', {near: q('#kitSheet')})}}); } else { sheetPV.err = {src: 'save'}; renderSheetPV(); } return; }
+    if (j.k >= PCT.length - 1) { sheetPV.job = null; if (out === 'ok') { renderSheetPV(); toast('已放进编排：金曜菊-B 副本', {ms: 10000, near: q('#kitSheet'), action: {label: '去编排看', fn: () => toast('样板全表里不切换页面', {near: q('#kitSheet')})}}); } else { sheetPV.err = {src: 'save'}; renderSheetPV(); } return; }
     renderSheetPV(); later('sheetPV', step, 360);
   };
   later('sheetPV', step, 360);
@@ -1090,8 +1088,6 @@ function mount() {
   FILM = qq('#tlw .film-c img').map(i => i.src).filter(Boolean);
   /* 导入、编排先留在 #shParts，切过去时再搬进 #app（dock） */
   [q('#wsImport'), q('#wsWB')].forEach(w => { if (w) w.addEventListener('keydown', listKeys); });
-  const want = new URLSearchParams(location.search).get('cmpws');
-  document.documentElement.dataset.cmpWs = CMP.includes(want) ? want : (CMP.includes(document.documentElement.dataset.cmpWs) ? document.documentElement.dataset.cmpWs : 'a');
   const sbar = q('#sbarShell'), kit = q('#shKit');
   if (sbar && kit) sbar.appendChild(kit);
   if (parts && !parts.children.length) parts.remove();
@@ -1100,13 +1096,12 @@ function mount() {
   /* 浏览器不支持时：样板重画导出按钮后再变灰一次 */
   ['#expBtn', '#deliv'].forEach(s => { const el = q(s); if (el) new MutationObserver(patchExport).observe(el, {childList: true}); });
   renderAll();
-  const sh = q('#shell'); if (sh && window.ResizeObserver) new ResizeObserver(() => fitShells()).observe(sh);   /* 1920 / 1366 切换后重新量 */
   /* 全表一节在第一次切到全表时才生成（同样板的全表正文），主屏时页面里没有这些静态样子 */
   const ks = q('#kitSheet');
   if (ks && !ks.hidden) renderSheet();
   else if (ks) { const mo = new MutationObserver(() => { if (!ks.hidden) { mo.disconnect(); renderSheet(); } }); mo.observe(ks, {attributes: true, attributeFilter: ['hidden']}); }
   window.SHELL = {
-    S, BT, PKG, set: setKit, ws: setWS, cmp: setCmp, speed: k => { SH.scale = k; }, render: renderAll,
+    S, BT, PKG, set: setKit, ws: setWS, speed: k => { SH.scale = k; }, render: renderAll,
     save: () => openSaveDialog(), copy: snapCopy, state: () => ({ws: S.ws, ue: liveUE(), exp: S.exp, bak: S.bak, br: S.br, pv: S.pv, job: S.job && S.job.pct, err: !!S.pvErr, imp: S.imp.writing && {i: S.imp.writing.i, tot: S.imp.writing.tot, paused: !!S.imp.writing.paused}})
   };
 }
