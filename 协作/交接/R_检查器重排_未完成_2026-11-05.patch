@@ -1,0 +1,352 @@
+diff --git a/tool/src/body.html b/tool/src/body.html
+index bc51b039..4094f3cf 100644
+--- a/tool/src/body.html
++++ b/tool/src/body.html
+@@ -250,15 +250,17 @@
+       <div class="actions">
+         <div id="specHome"></div>
+         <div class="grid2" id="specBox">
+-          <label class="field" title="贴图尺寸按效果定（用户 2026-10-02 19:41：不要强制 2048）。规则只有下限：PC 单格 ≥ 512、手机 ≥ 256；引擎里一般用到 2048，4096 是给你自己压缩的高质量来源">贴图宽度 × 高度<span class="pair2"><select id="x-texW" aria-label="贴图宽"></select><span>×</span><select id="x-texH" aria-label="贴图高"></select></span></label>
+-          <label class="field">列数 × 行数<span class="pair2"><select id="x-cols" aria-label="列数"></select><span>×</span><select id="x-rows" aria-label="行数"></select></span></label>
++          <label class="field" title="贴图尺寸按效果定（用户 2026-10-02 19:41：不要强制 2048）。规则只有下限：PC 单格 ≥ 512、手机 ≥ 256；引擎里一般用到 2048，4096 是给你自己压缩的高质量来源"><span class="fk">贴图宽度</span><select id="x-texW" aria-label="贴图宽"></select></label>
++          <label class="field" title="贴图尺寸按效果定（用户 2026-10-02 19:41：不要强制 2048）。规则只有下限：PC 单格 ≥ 512、手机 ≥ 256；引擎里一般用到 2048，4096 是给你自己压缩的高质量来源"><span class="fk">贴图高度</span><select id="x-texH" aria-label="贴图高"></select></label>
++          <label class="field"><span class="fk">列数</span><select id="x-cols" aria-label="列数"></select></label>
++          <label class="field"><span class="fk">行数</span><select id="x-rows" aria-label="行数"></select></label>
+         </div>
+         <div class="grid2" id="specMore">
+-          <label class="field">通道接力<select id="x-chans"><option value="4">RGBA 接力（先填满 R）</option><option value="1">单通道（短序列）</option></select></label>
+-          <label class="field">星头火花输出<select id="x-out"><option value="combined">星头与火花合并</option><option value="split">星头、火花分开</option></select></label>
+-          <label class="field">灰度编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细；UE 材质不还原，没在 UE 验证前别用）</option></select></label>
+-          <label class="field">取帧方式<select id="x-frame"><option value="tick30" hidden>30 fps（自动分段）</option><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
+-          <label class="field">面片取景<select id="x-zoom"><option value="off">固定大小（5.0 默认：面片不缩放，整段一个取景）</option><option value="on">随开花放大（Zoom：省贴图；最多 12 级大小，靠 Size By Life 补）</option><option value="anchor">随开花放大 · 锚在爆点（面片和固定一样贴着内容，绕爆点按每刻上 / 下 / 左右范围放大；扇形、偏一边的花更满）</option></select></label>
++          <label class="field"><span class="fk">通道接力</span><select id="x-chans"><option value="4">RGBA 接力（先填满 R）</option><option value="1">单通道（短序列）</option></select></label>
++          <label class="field"><span class="fk">星头火花输出</span><select id="x-out"><option value="combined">星头与火花合并</option><option value="split">星头、火花分开</option></select></label>
++          <label class="field"><span class="fk">灰度编码</span><select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细；UE 材质不还原，没在 UE 验证前别用）</option></select></label>
++          <label class="field"><span class="fk">取帧方式</span><select id="x-frame"><option value="tick30" hidden>30 fps（自动分段）</option><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
++          <label class="field"><span class="fk">面片取景</span><select id="x-zoom"><option value="off">固定大小（5.0 默认：面片不缩放，整段一个取景）</option><option value="on">随开花放大（Zoom：省贴图；最多 12 级大小，靠 Size By Life 补）</option><option value="anchor">随开花放大 · 锚在爆点（面片和固定一样贴着内容，绕爆点按每刻上 / 下 / 左右范围放大；扇形、偏一边的花更满）</option></select></label>
+         </div>
+         <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
+         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
+diff --git a/tool/src/js/70_ui.js b/tool/src/js/70_ui.js
+index b27db732..5af565e9 100644
+--- a/tool/src/js/70_ui.js
++++ b/tool/src/js/70_ui.js
+@@ -765,13 +765,21 @@ function buildMasterPanel() {
+   // 下面一行搜索框 + 仅改动 + 英文名（总看得见，跟着内容滚；4.9.8 收在「搜索」按钮里，要多点一下）
+   host.insertAdjacentHTML('beforeend', `<div class="pscope" role="group" aria-label="现在改的是"><div class="ps-row"><span class="ps-lab">现在改的是</span><b class="ps-path"></b>`
+     + `<span class="ps-view" hidden><button type="button" class="ps-solo" aria-pressed="false" title="只看这一层（不改参数、不影响导出）">独看</button><button type="button" class="ps-mute" aria-pressed="false" title="先不看这一层（不改参数、不影响导出）">静音</button></span></div></div>`
+-    + `<div class="ptools ps-search"><input type="search" placeholder="搜索当前层参数…" aria-label="搜参数（名字 / 英文名 / 说明里的字）" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 仅改动</label>`
+-    + `<label class="pchg pen" title="参数名显示英文名（Cascade / Niagara 的叫法；说明第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label></div>`);
++    // 4.9.130（E 4.0 §10）：搜索框（静止 1 px 线框）＋「筛选 ▾」（仅改动 / 英文名 / 全部发射器一起看）＋「全部折叠」；发射器标签、「现在改的是」由左栏结构树和右栏面包屑代替（DOM 留着、不显示）
++    + `<div class="ptools ps-search"><span class="ps-q"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="参数名" aria-label="搜参数（名字 / 英文名 / 说明里的字）" value="${pview.q.replace(/"/g, '&quot;')}"></span>`
++    + `<details class="ab-more pfilt"><summary class="btn" title="仅改动、英文名、全部发射器一起看">筛选<svg class="i dd" aria-hidden="true"><use href="#i-cd"/></svg></summary><div class="ab-menu" role="menu">`
++    + `<label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 仅改动</label>`
++    + `<label class="pchg pen" title="参数名显示英文名（Cascade / Niagara 的叫法；说明第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label>`
++    + `<label class="pchg pall" title="所有发射器排在一起看（原发射器标签的「全部」）"><input type="checkbox" data-pall> 全部发射器一起看</label></div></details>`
++    + `<button type="button" class="btn pfold" title="收起 / 展开这一页的全部模块">全部折叠</button></div>`);
+   const scope = host.querySelector('.pscope'), qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input');
+   qi.addEventListener('input', () => { pview.q = qi.value.trim(); refreshVisibility(); });
+   qi.addEventListener('keydown', e => { if (e.key === 'Escape') { if (qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); } else qi.blur(); e.stopPropagation(); } });
+   ci.addEventListener('change', () => { pview.changed = ci.checked; store.set('pChanged', pview.changed); refreshVisibility(); });
+   host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
++  { const pa = host.querySelector('[data-pall]'); pa.checked = pview.tabNow === '全部';
++    pa.addEventListener('change', () => { if (pa.checked) { if (pview.tabNow !== '全部') pview.tabPrev = pview.tabNow; selectEmitTab('全部'); } else selectEmitTab(pview.tabPrev && pview.tabPrev !== '全部' ? pview.tabPrev : ''); });
++    host.querySelector('.pfold').addEventListener('click', () => { const ds = [...host.querySelectorAll('section.egrp:not([hidden]) > details.mod, section.egrp:not([hidden]) > details.sec')].filter(d => !d.hidden && d.offsetParent), any = ds.some(d => d.open); ds.forEach(d => { d.open = !any; }); if (typeof window.pfoldSync === 'function') window.pfoldSync(); }); }
+   scope.querySelector('.ps-solo').addEventListener('click', () => scopeView('solo')); scope.querySelector('.ps-mute').addEventListener('click', () => scopeView('mute'));
+   // 发射器标签（一次看一个发射器；refreshVisibility 按适用的行显示 / 隐藏、标改过几项）
+   const tabs = document.createElement('div'); tabs.className = 'etabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '发射器'); scope.appendChild(tabs);
+@@ -1133,7 +1141,7 @@ function selectEmitTab(e) {
+   if (pview.q || pview.changed) { pview.q = ''; pview.changed = false; store.set('pChanged', false); const i = $('#params .ptools input[type=search]'); if (i) i.value = ''; const c = $('#params .ptools .pchg input'); if (c) c.checked = false; }
+   refreshVisibility();
+   // 4.9.8：顶上那块固定着；换了发射器、而页面已经往下滚过，就滚回这个发射器的开头（紧贴在顶上那块下面）；选中的标签横着滚进视野
+-  const sc = $('#params .pscope'), right = $('#right'), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);
++  const sc = $('#params .ps-search') || $('#params .pscope'), right = $('#right'), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);
+   if (sc && right && g && !g.hidden) { const d = g.getBoundingClientRect().top - sc.getBoundingClientRect().bottom; if (d < 0) right.scrollTop += d - 4; }
+   const tb = document.querySelector(`#params .etabs [data-e="${e}"]`); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+ }
+diff --git a/tool/src/js/79_event_panel.js b/tool/src/js/79_event_panel.js
+index 95aa4ab3..7c714737 100644
+--- a/tool/src/js/79_event_panel.js
++++ b/tool/src/js/79_event_panel.js
+@@ -1,6 +1,6 @@
+ // 4.9.111 图层「这一层在整朵里」的CPU事件实例参数。沿用现有滑杆/撤销/保存。
+ function eventInstancePanel(host,L,i){
+-  const box=document.createElement('details');box.className='sec';box.id='eventInstancePanel';
++  const box=document.createElement('details');box.className='sec';box.id='eventInstancePanel';box.open=true;     /* 4.9.130：放在「时间与缩放」里当分组标题，一直展开 */
+   box.innerHTML='<summary>出生方式 · '+(EventInstances.on(L)?'飞行结束后绽放':'单次序列')+'</summary>';host.appendChild(box);
+   const label=document.createElement('label');label.className='check';label.innerHTML='<input type="checkbox" data-event-enable> 先飞行，结束后生成本层序列';box.appendChild(label);
+   const cb=label.querySelector('input');cb.checked=EventInstances.on(L);
+diff --git a/tool/src/js/79_workbench.js b/tool/src/js/79_workbench.js
+index 7456d28d..d2f3b3a4 100644
+--- a/tool/src/js/79_workbench.js
++++ b/tool/src/js/79_workbench.js
+@@ -97,9 +97,10 @@ function buildLayerHead(i) {
+     <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图流转」显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
+     ${lib.my || linkedWith(i).length ? `<details class="lh-link-details sec" id="lhLink"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
+   // 4.9.8：「位置与时间」放进这一层的「效果」发射器顶上，默认展开（接力调开始时间常用）；开始时间和图层管理里那一格是同一个值
+-  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="开始时间、缩放、时间倍率、水平镜像（这一层在整朵里的位置和时间）">这一层在整朵里</summary>'; host.appendChild(pos);
++  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="这一层在整朵里的开始时间、时长、缩放、时间倍率、水平镜像（原「图层管理」的开始 / 时长也在这里；时间轴上拖这一层的条也能改开始时间）">时间与缩放</summary>'; host.appendChild(pos);     // 4.9.130：原「这一层在整朵里」
+   pos.addEventListener('toggle', () => store.set('lhPosOpen', pos.open));
+   slider(pos, `lh${i}-delay`, '开始时间', 's', 0, 10, 0.01, () => L.delay, v => { L.delay = v; const c = document.querySelector(`#layerCard [data-st="${i}"]`); if (c) c.value = (+v).toFixed(2); stage2.tlSig = ''; }, 0);
++  { const dr = document.createElement('div'); dr.className = 'field ro lh-dur'; dr.innerHTML = '<span class="fk" title="这一层贴图播多久（烘焙时长 ÷ 时间倍率；原图层管理卡片上的「时长」）">时长</span><output class="rov"></output><span class="punit">s</span>'; pos.appendChild(dr); }     // 4.9.130：原图层管理卡片的「时长」（只读）
+   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
+   slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
+   if(typeof eventInstancePanel==='function')eventInstancePanel(pos,L,i);
+@@ -716,7 +717,17 @@ function buildTlBars() {
+       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') + (familyOf(P.type) === 'aerial' && +fxP(P).flash > 0 ? '，开花闪光单独导出一颗软圆点（Flash）' : '') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
+       <label class="check tlopt" title="开：拖 / 改点火、燃烧结束这些时间点时，序列时长跟着这一层最后看得见的时刻伸缩，入点跟着点火平移。关：只改你动的那个参数"><input type="checkbox" data-tlopt="follow"${state.followOff ? '' : ' checked'}> 时长 / 入点跟着走</label>${state.tab === 'combo' && (state.links || []).length ? `<label class="check tlopt" title="开：同一批星的几层在同一时刻的点（例：引线火花停 = 锦点火）粘在一起，动一个另一个跟着动（轨道上带链条的点）。关：各改各的"><input type="checkbox" data-tlopt="glue"${state.glueOff ? '' : ' checked'}> 同一时刻的点一起动</label>` : ''}</div>` : '');
+   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
+-  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
++  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration();
++    // 4.9.130（E 4.0：图层管理卡片去掉后，层的开始时间在「时间与缩放」里改，也能在这里拖层的条）：多层时按住层的条左右拖 = 改这一层的开始时间（松手才改，和「时间与缩放 › 开始时间」同一个值）
++    const li = +t.dataset.i, L = state.tab === 'combo' && ev.button === 0 && ev.target.matches('i.vis, i.main, i.pre, i.fc, .fcs') ? state.layers[li] : null;
++    if (L) { stage2.drag = true; const x0 = ev.clientX, d0 = +L.delay || 0, D = curDuration(), w = r.width; let dt = 0, moved = false; try { t.setPointerCapture(ev.pointerId); } catch (e) { }
++      const kids = () => t.querySelectorAll(':scope > i, :scope > .fcs, :scope > b');
++      const mv = e => { const dx = e.clientX - x0; if (!moved && Math.abs(dx) < 4) return; moved = true; dt = Math.round(clamp(d0 + dx / w * D, 0, 10) * 100) / 100 - d0; const px = dt / D * w; kids().forEach(k => k.style.transform = `translateX(${px}px)`); setStatus(`第 ${li + 1} 层开始时间 ${d0.toFixed(2)} → ${(d0 + dt).toFixed(2)} s（松手后改）`); };
++      const up = () => { t.removeEventListener('pointermove', mv); t.removeEventListener('pointerup', up); t.removeEventListener('pointercancel', up); stage2.drag = false; setStatus(''); stage2.tlSig = '';
++        if (moved && Math.abs(dt) > 1e-6) { L.delay = +(d0 + dt).toFixed(2); if (state.comboSel === li) buildLayerHead(li); else if (state.comboSel < 0) buildComboPanel(); buildLayerCard(); flash(`第 ${li + 1} 层开始时间 ${d0.toFixed(2)} → ${L.delay.toFixed(2)} s`); }
++        else kids().forEach(k => k.style.transform = ''); };
++      t.addEventListener('pointermove', mv); t.addEventListener('pointerup', up); t.addEventListener('pointercancel', up); }
++    if (state.tab === 'combo' && state.comboSel !== li) selectComboLayer(li); }));
+   host.querySelectorAll('.tlb-n[data-i]').forEach(n => n.addEventListener('click', () => { if (state.tab === 'combo') selectComboLayer(state.comboSel === +n.dataset.i ? -1 : +n.dataset.i); }));
+   host.querySelector('.tlr-track').addEventListener('pointerdown', ev => { const r = ev.currentTarget.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); });
+   host.querySelectorAll('[data-track-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.trackMute, v = state.layerView; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
+diff --git a/tool/src/js/97_e40_layout.js b/tool/src/js/97_e40_layout.js
+index 4124ce40..48526d79 100644
+--- a/tool/src/js/97_e40_layout.js
++++ b/tool/src/js/97_e40_layout.js
+@@ -11,6 +11,10 @@
+   // ---- 结构树 + 面包屑：效果 › 层 › 发射器（发射器 = 参数栏里的发射器标签） ----
+   const emitters = () => [...document.querySelectorAll('#params .etabs .et[data-e]')].filter(b => b.dataset.e !== '全部' && !b.hidden)
+     .map(b => ({ e: b.dataset.e, on: b.classList.contains('on') || b.getAttribute('aria-selected') === 'true', b }));
++  // 4.9.130（E 4.0）：发射器标签不显示了，结构树代替。「效果」发射器 = 层这一行（多层）/ 效果名这一行（单层），不单列；「全部」在「筛选 ▾」里
++  const treeEms = em => em.filter(x => x.e !== '效果');
++  const emWhat = e => { const d = typeof EMIT_DEF !== 'undefined' && EMIT_DEF[e]; return d ? (d.lv ? d.lv + '：' : '') + (d.what || '') : ''; };
++  const tabNow = () => (typeof pview !== 'undefined' && pview && pview.tabNow) || '';
+   const effName = () => { const n = $q('#abIdName'); return (n && n.textContent.trim()) || (typeof safeName === 'function' ? '' : ''); };
+   function model() {
+     const combo = state.tab === 'combo' && Array.isArray(state.layers) && state.layers.length > 0;
+@@ -20,19 +24,21 @@
+   let sig = '';
+   function render(force) {
+     if (!ready()) return;
+-    const m = model(), s = JSON.stringify([m.combo, m.sel, m.layers, m.em.map(x => [x.e, x.on]), m.name, m.tab, !!$q('#assetBar') && $q('#assetBar').hidden]);
++    const m = model(), s = JSON.stringify([m.combo, m.sel, m.layers, m.em.map(x => [x.e, x.on]), m.name, m.tab, !!$q('#assetBar') && $q('#assetBar').hidden, tabNow(), typeof lib !== 'undefined' && !!lib.my]);
+     if (!force && s === sig) return; sig = s;
+-    const tree = $q('#tree'), emRows = cur => m.em.map(x => `<button type="button" class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span></button>`).join('');
++    const tree = $q('#tree'), emRows = cur => treeEms(m.em).map(x => { const xi = /^自定义 (\d+)$/.exec(x.e);
++      return `<div class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" tabindex="0" data-em="${esc(x.e)}" data-tip="${esc(emWhat(x.e))}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span>`
++        + (xi ? `<span class="ta"><button type="button" class="btn btn-icon" data-exdel="${xi[1]}" aria-label="去掉「${esc(x.e)}」" title="去掉「${esc(x.e)}」（Ctrl+Z 能撤回）">${ico('x')}</button></span>` : '') + '</div>'; }).join('');
+     let h = '';
+     if ($q('#assetBar') && $q('#assetBar').hidden) h = '<div class="tree-empty">在下面的效果库里打开一个效果</div>';
+     else if (m.combo) {
+       for (const L of m.layers) {
+         const cur = L.i === m.sel;
+         const solo = state.layerView && state.layerView.solo === L.i;
+-        h += `<div class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
++        h += `<div class="trow lv1${cur ? ' cur' : ''}${cur && tabNow() === '效果' ? ' here' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}" data-tip="${esc(layerTip(L.i))}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
+           + `<span class="ta${L.off || solo ? ' keep' : ''}"><button type="button" class="btn btn-icon eye" data-ta="mute" aria-pressed="${!L.off}" aria-label="显示第 ${L.i + 1} 层" title="${L.off ? '显示' : '隐藏'}这一层（只影响观察）">${ico(L.off ? 'eyeoff' : 'eye')}</button>`
+           + `<button type="button" class="btn btn-icon solo" data-ta="solo" aria-pressed="${solo}" aria-label="只看第 ${L.i + 1} 层" title="${solo ? '取消只看' : '只看这一层'}（只影响观察）">${ico(solo ? 'soloon' : 'solo')}</button>`
+-          + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" title="层的开始时间、时长、改名、复制、删除（图层管理）">${ico('more')}</button></span></div>`;
++          + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" aria-haspopup="menu" title="时间与缩放、上移 / 下移、改名、复制、删除">${ico('more')}</button></span></div>`;
+         if (cur) h += emRows(true);
+       }
+     } else h = emRows(true);
+@@ -40,9 +46,12 @@
+     // 面包屑：效果 › 层 › 发射器（末项大号 600）
+     const parts = [{ t: m.name || '效果', act: m.combo ? 'root' : '' }];
+     if (m.combo && m.sel >= 0 && m.layers[m.sel]) parts.push({ t: m.layers[m.sel].name, act: 'layer' });
+-    const ce = m.em.find(x => x.on); if (ce && !(m.combo && m.sel < 0)) parts.push({ t: ce.e, act: '' });
+-    const th = $q('#treeHead'); if (th) th.classList.toggle('cur', m.combo && m.sel < 0);
+-    $q('#path').innerHTML = parts.map((p, i) => i === parts.length - 1 ? `<span class="cur">${esc(p.t)}</span>` : `<button type="button" data-path="${p.act}">${esc(p.t)}</button><span class="sep" aria-hidden="true">›</span>`).join('');
++    const ce = m.em.find(x => x.on); if (ce && ce.e !== '效果' && !(m.combo && m.sel < 0)) parts.push({ t: ce.e, act: '', tip: emWhat(ce.e) });
++    if (!ce && tabNow() === '全部' && !(m.combo && m.sel < 0)) parts.push({ t: '全部发射器', act: '', tip: '所有发射器排在一起（筛选 ▾ 里关掉）' });
++    if (parts.length > 1 && parts[1].act === 'layer') parts[1].tip = layerTip(m.sel);
++    if (ce && ce.e === '效果') parts[parts.length - 1].tip = (parts[parts.length - 1].tip ? parts[parts.length - 1].tip + '\n' : '') + emWhat('效果');
++    const th = $q('#treeHead'); if (th) th.classList.toggle('cur', (m.combo && m.sel < 0) || (!m.combo && tabNow() === '效果'));
++    $q('#path').innerHTML = parts.map((p, i) => i === parts.length - 1 ? `<span class="cur"${p.tip ? ` data-tip="${esc(p.tip)}"` : ''}>${esc(p.t)}</span>` : `<button type="button" data-path="${p.act}"${p.tip ? ` data-tip="${esc(p.tip)}"` : ''}>${esc(p.t)}</button><span class="sep" aria-hidden="true">›</span>`).join('');
+   }
+   document.addEventListener('click', e => {
+     const ta = e.target.closest && e.target.closest('#tree .ta [data-ta]');
+@@ -51,19 +60,48 @@
+       if (k === 'mute' && v) v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i];
+       else if (k === 'solo' && v) v.solo = v.solo === i ? -1 : i;
+       if ((k === 'mute' || k === 'solo') && typeof buildLayerCard === 'function') buildLayerCard();
+-      if (k === 'more') { if (state.comboSel !== i && typeof selectComboLayer === 'function') selectComboLayer(i); const lc = $q('#layerCard'); if (lc) { lc.open = true; setTimeout(() => lc.scrollIntoView({ block: 'nearest' }), 0); } }
++      if (k === 'more') { e.stopImmediatePropagation(); if (pop && pop.dataset.li === String(i)) closePop(); else layerMenu(ta, i); return; }
+       setTimeout(() => render(true), 0); return;
+     }
++    const xd = e.target.closest && e.target.closest('#tree [data-exdel]');
++    if (xd) { if (typeof exRemoveSlot === 'function') exRemoveSlot(+xd.dataset.exdel); setTimeout(() => render(true), 0); return; }
+     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
+-    if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
+-    if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
++    if (t.id === 'abId') { if (state.tab === 'combo') { if (typeof selectComboLayer === 'function') selectComboLayer(-1); } else if (typeof selectEmitTab === 'function') selectEmitTab('效果'); setTimeout(() => render(true), 0); return; }
++    if (t.dataset.layer != null && typeof selectComboLayer === 'function') { selectComboLayer(+t.dataset.layer); if (typeof selectEmitTab === 'function') selectEmitTab('效果'); }     // 4.9.130：点层 = 这一层的层级参数（时间与缩放、导出方案…）
+     else if (t.dataset.em && typeof selectEmitTab === 'function') selectEmitTab(t.dataset.em);
+     else if (t.dataset.path === 'root' && typeof selectComboLayer === 'function') selectComboLayer(-1);
+     else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
+     setTimeout(() => render(true), 0);
+   });
+-  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer]')) { e.preventDefault(); e.target.click(); } });
+-  setInterval(() => { if (!document.hidden) { render(); syncSave(); syncStale(); syncMods(); syncIcons(); } }, 250);
++  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer], #tree .trow[data-em]')) { e.preventDefault(); e.target.click(); } });
++  // 层的提示：第几层 · 名字 · 开始 · 时长（原图层管理卡片上的字）
++  function layerDur(i) { const L = state.layers && state.layers[i], e = L && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null; return e && e.bake && typeof bakeTotal === 'function' ? bakeTotal(e.bake) / (L.rate || 1) : null; }
++  function layerTip(i) { const L = state.layers && state.layers[i]; if (!L) return ''; const d = layerDur(i), e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null;
++    return `第 ${i + 1} 层 · ${typeof layerName === 'function' ? layerName(i) : ''}\n开始 ${(+L.delay || 0).toFixed(2)} s · 时长 ${d == null ? '—' : d.toFixed(2) + ' s'}${e && e.editSig ? ' · 已调' : ''}`; }
++  // 层的「⋯」菜单（原图层管理卡片上的 上移 / 下移 / 改名 / 复制 / 删；只有我的效果能改层）
++  function layerMenu(btn, i) {
++    closePop(); const my = typeof lib !== 'undefined' && !!lib.my, n = state.layers.length, why = my ? '' : ' disabled title="AI 效果 / 模板的层不能直接改：先「另存」成我的效果"';
++    pop = document.createElement('div'); pop.className = 'e40-pop'; pop.setAttribute('role', 'menu');
++    pop.innerHTML = `<button type="button" class="mi" role="menuitem" data-lm="time">${ico('timer')}时间与缩放</button><hr>`
++      + `<button type="button" class="mi" role="menuitem" data-lm="up"${!my ? why : i === 0 ? ' disabled title="已经是第一层"' : ''}>${ico('cu')}上移</button>`
++      + `<button type="button" class="mi" role="menuitem" data-lm="down"${!my ? why : i === n - 1 ? ' disabled title="已经是最后一层"' : ''}>${ico('cd')}下移</button>`
++      + `<button type="button" class="mi" role="menuitem" data-lm="ren"${why}>${ico('file')}改名…</button>`
++      + `<button type="button" class="mi" role="menuitem" data-lm="dup"${why}>${ico('plus')}复制这一层</button>`
++      + `<button type="button" class="mi" role="menuitem" data-lm="del"${why}>${ico('x')}删掉这一层</button>`;
++    let r = btn.getBoundingClientRect(); if (!r.width) r = btn.closest('.trow').getBoundingClientRect(); const side = $q('#side').getBoundingClientRect();
++    pop.style.left = Math.max(4, r.right - side.left - 180) + 'px'; pop.style.top = (r.bottom - side.top + 2) + 'px'; pop.dataset.li = i;
++    $q('#side').append(pop); const f = pop.querySelector('.mi:not(:disabled)'); if (f) f.focus({ preventScroll: true });
++  }
++  document.addEventListener('click', e => {
++    const it = e.target.closest && e.target.closest('.e40-pop [data-lm]'); if (!it) return;
++    const i = +it.closest('.e40-pop').dataset.li, k = it.dataset.lm; closePop();
++    if (k === 'time') { if (typeof selectComboLayer === 'function' && state.comboSel !== i) selectComboLayer(i); if (typeof selectEmitTab === 'function') selectEmitTab('效果');
++      setTimeout(() => { const p = $q('#lhPos'); if (p) { p.open = true; p.scrollIntoView({ block: 'nearest' }); const n = p.querySelector('input.num'); if (n) n.focus({ preventScroll: true }); } }, 30); }
++    else if (k === 'up' && typeof myMoveLayer === 'function') myMoveLayer(i, -1); else if (k === 'down' && typeof myMoveLayer === 'function') myMoveLayer(i, 1);
++    else if (k === 'ren' && typeof myRenameLayer === 'function') myRenameLayer(i); else if (k === 'dup' && typeof myDupLayer === 'function') myDupLayer(i); else if (k === 'del' && typeof myDelLayer === 'function') myDelLayer(i);
++    setTimeout(() => render(true), 0);
++  });
++  setInterval(() => { if (!document.hidden) { render(); syncSave(); syncStale(); syncMods(); syncIcons(); syncInsp(); } }, 250);
+ 
+   // ---- 需重新导出（v3.7 第 1 条）：资产栏「素材包过期 / 要重导」→ 效果名后、导出按钮里各一个琥珀小点；原因写在悬停提示和导出菜单里 ----
+   const chipInfo = () => [...document.querySelectorAll('#abIdChips .idc')].map(c => ({ t: c.textContent.trim(), warn: c.classList.contains('warn'), d: c.getAttribute('title') || c.dataset.tipT || '' }));
+@@ -96,6 +134,20 @@
+       const v = n ? String(n) : null; if (ms.getAttribute('data-e40n') !== v) { if (v) ms.setAttribute('data-e40n', v); else ms.removeAttribute('data-e40n'); }
+     }
+   }
++  // ---- 检查器 4.0（4.9.130）：筛选 ▾ 的状态、全部折叠 / 展开、发射器说明进悬停提示、时间与缩放的「时长」、导出方案说明进标题提示 ----
++  window.pfoldSync = () => { const b = $q('#params .pfold'); if (!b) return; const ds = [...document.querySelectorAll('#params section.egrp:not([hidden]) > details:is(.mod,.sec)')].filter(d => !d.hidden && d.offsetParent);
++    const t = ds.some(d => d.open) || !ds.length ? '全部折叠' : '全部展开'; if (b.textContent !== t) b.textContent = t; };
++  function syncInsp() {
++    const pf = $q('#params .pfilt'); if (!pf) return;
++    const pa = pf.querySelector('[data-pall]'), all = tabNow() === '全部'; if (pa && pa.checked !== all) pa.checked = all;
++    const n = [...pf.querySelectorAll('input[type=checkbox]')].filter(c => c.checked).length, sm = pf.querySelector('summary'); sm.classList.toggle('on', n > 0);
++    const lab = n ? `筛选 · ${n} 项开着` : '筛选：仅改动、英文名、全部发射器一起看'; if (sm.dataset.tip !== lab) { sm.dataset.tip = lab; sm.removeAttribute('title'); }
++    window.pfoldSync();
++    for (const h of document.querySelectorAll('#params section.egrp > .ehead')) { const w = h.querySelector('.ewhat'), lv = h.querySelector('.elv'), en = h.querySelector('.men');
++      const t = [h.querySelector('.pg-t') && h.querySelector('.pg-t').textContent, en && en.textContent].filter(Boolean).join(' · ') + '\n' + (lv ? lv.textContent + '：' : '') + (w ? w.textContent : ''); if (h.dataset.tip !== t) h.dataset.tip = t; }
++    const pos = $q('#lhPos'); if (pos && state.tab === 'combo' && state.comboSel >= 0) { const o = pos.querySelector('.lh-dur .rov'), d = layerDur(state.comboSel), v = d == null ? '—' : d.toFixed(2); if (o && o.textContent !== v) o.textContent = v; }
++    const out = $q('#lhOut'), note = $q('#lhOutNote'); if (out && note) { const sm2 = out.querySelector(':scope > summary'), t = '导出方案：这一层 PC / 手机各出什么\n' + note.textContent; if (sm2 && sm2.dataset.tip !== t) sm2.dataset.tip = t; }
++  }
+   // ---- 播放条上的「生成缩略图」画成相机图标（文字收进悬停提示） ----
+   function syncIcons() {
+     const g = $q('#thGrab'); if (g && !g.querySelector('svg')) { g.innerHTML = ico('camera'); g.classList.add('btn-icon'); g.setAttribute('aria-label', '生成缩略图'); }
+diff --git a/tool/src/style.css b/tool/src/style.css
+index ae575d3c..783eb5df 100644
+--- a/tool/src/style.css
++++ b/tool/src/style.css
+@@ -2307,3 +2307,102 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
+   #right>.right-head{min-height:36px}
+   #right>.right-head .ptabs>button{min-height:35px}
+ }
++
++/* ===== 4.9.130 检查器 4.0（E 规范 §2、§4、§10）：图层管理卡片、发射器标签、「现在改的是」、发射器长说明不显示（DOM 留着，功能挪到结构树 / 面包屑 / 悬停提示）；
++   搜索框 + 筛选 ▾ + 全部折叠；模块标题 32、600、贴左、右端弱色箭头；参数缩进 12；五列 参数名 112 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 操作 ===== */
++#right #layerCard{display:none!important}
++#right #params>.pscope{position:relative;top:auto;z-index:6;margin:0;padding:0;border:0;background:none;min-height:0}
++#right #params>.pscope :is(.ps-lab,.ps-path,.ps-view,.etabs){display:none!important}
++#right #params>.pscope .ps-row{display:none;margin:0}
++#right #params>.pscope .ps-row:has(.ps-tree:not([hidden])){display:flex;justify-content:flex-end;padding:8px 0 0}
++#right{--pc-name:112px;--pc-num:76px;--pc-unit:28px;--pc-act:24px}
++/* 搜索行：贴在面包屑下面，滚动时留在顶上 */
++#right #params>.ptools.ps-search{position:sticky;top:var(--rhH,40px);z-index:6;display:flex;align-items:center;gap:4px;margin:0 calc(-1 * var(--pad));padding:8px var(--pad);background:var(--panel);border-bottom:1px solid var(--line)}
++#right #params .ps-q{flex:1;min-width:0;display:flex;align-items:center;gap:6px;height:28px;margin-right:8px;padding:0 8px;border:1px solid var(--line);border-radius:var(--r2);color:var(--t3)}
++#right #params .ps-q:hover{border-color:var(--t3)}
++#right #params .ps-q:focus-within{border-color:var(--p4)}
++#right #params .ps-q svg.i{flex:none;width:16px;height:16px}
++#right #params .ps-q input[type=search]{flex:1;min-width:0;width:auto;height:26px;margin:0;padding:0;border:0;outline:0;background:none;box-shadow:none;color:var(--t1);font-size:var(--fs2)}
++#right #params .ps-q input[type=search]::placeholder{color:var(--t3)}
++#right #params .pfilt{position:relative;flex:none}
++#right #params .pfilt>summary,#right #params .pfold{display:inline-flex;align-items:center;gap:2px;height:28px;min-height:28px;padding:0 6px;border:0;border-radius:var(--r2);background:none;color:var(--t2);font-size:var(--fs2);font-weight:var(--fw1);white-space:nowrap;list-style:none;cursor:pointer}
++#right #params .pfilt>summary::-webkit-details-marker{display:none}
++#right #params .pfilt>summary::before{content:none}
++#right #params .pfilt>summary svg.i{width:16px;height:16px}
++#right #params .pfilt>summary:hover,#right #params .pfold:hover,#right #params .pfilt[open]>summary{background:var(--hov);color:var(--t1)}
++#right #params .pfilt>summary.on{color:var(--t1)}
++#right #params .pfilt>summary.on::after{content:"";width:6px;height:6px;margin-left:2px;border-radius:50%;background:var(--p4)}
++#right #params .pfold{flex:none}
++#right #params .pfilt>.ab-menu{position:absolute;right:0;left:auto;top:calc(100% + 4px);z-index:30;display:flex;flex-direction:column;min-width:200px}
++#right #params .pfilt>.ab-menu>label.pchg{display:flex;align-items:center;gap:8px;min-height:28px;margin:0;padding:0 12px;color:var(--t1);font-size:var(--fs2);white-space:nowrap;cursor:pointer}
++#right #params .pfilt>.ab-menu>label.pchg:hover{background:var(--press)}
++/* 发射器标题行：一次看一个发射器时不显示（面包屑写着）；一起看 / 搜索时只写名字，说明进悬停提示 */
++#right #params:not(.multi)>section.egrp>.ehead{display:none}
++#right #params>section.egrp>.ehead :is(.ewhat,.elv,.men,.pg-n){display:none!important}
++#right #params.multi>section.egrp>.ehead{display:flex;align-items:center;gap:8px;min-height:32px;margin:0;padding:12px 0 0}
++#right #params.multi>section.egrp>.ehead .pg-t{font-size:var(--fs3);font-weight:var(--fw2);color:var(--t1)}
++#right #params.multi>.egrp{margin-top:8px;padding-top:0;border-top:1px solid var(--line)}
++/* 模块：上一条 1 px 线；标题 32、600、贴左；右端常驻弱色箭头；收起时标题行右侧写摘要 */
++#right #params>.egrp>details.sec{margin:0;padding:0 0 8px;border:0;border-top:1px solid var(--line);border-radius:0;background:none}
++#right #params>.egrp>details.sec:first-of-type,#right #params:not(.multi)>.egrp>.ehead+details.sec{border-top:0}
++#right #params>.egrp>details.sec:not([open]){padding-bottom:0}
++#right #params>.egrp>details.sec>summary{display:flex;align-items:center;gap:8px;min-height:32px;margin:8px 0 0;padding:0;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);list-style:none;cursor:pointer}
++#right #params>.egrp>details.sec:not([open])>summary{margin:4px 0 4px}
++#right #params>.egrp>details.sec>summary::-webkit-details-marker{display:none}
++#right #params>.egrp>details.sec>summary::before{display:none}
++#right #params>.egrp>details.sec>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:auto;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
++  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
++  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
++#right #params>.egrp>details.sec[open]>summary::after{transform:none}
++#right #params>.egrp>details.sec>summary:hover{color:var(--t1)}
++#right #params>.egrp>details.sec>summary:hover::after{background:var(--t1)}
++#right #params>.egrp>details.sec>summary .msum{flex:0 1 auto;min-width:0;margin-left:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3)}
++#right #params>.egrp>details.sec>summary .msum:empty{display:none}
++#right #params>.egrp>details.sec>summary .msum~.mgo,#right #params>.egrp>details.sec>summary .msum~.mreset{margin-left:0}
++#right #params>.egrp>details.sec>summary:has(.msum:not(:empty))::after{margin-left:4px}
++#right #params>.egrp>details.sec>summary .shelp{display:none}
++/* 参数：比标题右缩 12；五列网格 */
++#right #params>.egrp>details.sec>:is(.sl,.field,.spechost,.infohost,.hint,.note,.clink,p,.lh-out,div:not(.sl):not(.field)){margin-left:var(--in-prm)}
++#right #params>.egrp>details.sec>:is(.sl,.field){padding-left:0}
++#right #params>.egrp>details.sec .field.ro{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:8px;align-items:center;min-height:var(--h-prm)}
++#right #params>.egrp>details.sec .field.ro>.fk{grid-column:1;color:var(--t2);font-size:var(--fs2)}
++#right #params>.egrp>details.sec .field.ro>.rov{grid-column:3;text-align:right;font:var(--fs2) var(--mono);color:var(--t2)}
++#right #params>.egrp>details.sec .field.ro>.punit{grid-column:4;font-size:var(--fs1);color:var(--t3)}
++#right .sl,#right .sl.nolock,#right #params .sl,#right #params .sl.nolock,#right #matSliders .sl,#right #lhPos .sl,#right #lhDots .sl{column-gap:8px}
++#right #params details.sec>.field:not(.ro){grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-act);column-gap:8px}
++/* 整行的下拉（规格框、导出方案）放进网格：参数名在左，下拉在控件列；成对的拆成一行一个 */
++#right #params .spechost .grid2,#right #params .lh-out{display:block;margin:0}
++#right #params :is(.spechost .field,.lh-out>.field){display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-act);column-gap:8px;align-items:center;min-height:var(--h-prm);margin:0;padding:0;font-size:var(--fs2);color:var(--t2)}
++#right #params :is(.spechost .field,.lh-out>.field)>.fk{grid-column:1;color:var(--t2)}
++#right #params :is(.spechost .field,.lh-out>.field)>select{grid-column:2;width:100%;min-width:0}
++#right #params .lh-out-info:not(.warn){display:none}
++#right #params .lh-out-info>summary{display:none}
++#right #params .lh-out-info.warn{margin:4px 0 0;padding:0;border:0;background:none}
++#right #params .lh-out-info.warn #lhOutNote{margin:0;font-size:var(--fs1);line-height:var(--lh-multi);color:var(--w3,var(--amber))}
++/* 层的「⋯」菜单里的分隔线 */
++.e40-pop hr{height:1px;margin:4px 0;border:0;background:var(--ovLine)}
++/* 结构树：发射器行可聚焦（行里有「去掉」按钮）；层这一行就是「效果」那一页（4.9.130） */
++#tree .trow.lv2{position:relative}
++#tree .trow.lv2 .ta{visibility:hidden}
++#tree .trow.lv2:hover .ta,#tree .trow.lv2:focus-within .ta{visibility:visible}
++@media (max-width:1599px){ #right{--pc-name:96px;--pc-num:70px} }
++/* 时间与缩放里的「出生方式」= 模块里的分组标题（不再是整行带箭头）；水平镜像放进网格 */
++#right #lhPos>#eventInstancePanel{margin:8px 0 0 var(--in-prm);padding:0;border:0;background:none}
++#right #lhPos>#eventInstancePanel>summary{display:block;min-height:0;margin:0;padding:4px 0;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3);pointer-events:none;list-style:none}
++#right #lhPos>#eventInstancePanel>summary::before,#right #lhPos>#eventInstancePanel>summary::after{display:none;content:none}
++#right #lhPos>#eventInstancePanel>summary::-webkit-details-marker{display:none}
++#right #lhPos>#eventInstancePanel>label.check,#right #lhPos>label.check{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr);column-gap:8px;align-items:center;min-height:var(--h-prm);margin:0 0 0 var(--in-prm);padding:0;font-size:var(--fs2);color:var(--t2)}
++#right #lhPos>#eventInstancePanel>label.check{margin-left:0}
++#right #lhPos label.check>input{grid-column:2;grid-row:1;justify-self:start;margin:0}
++/* 本层颜色：和检查器模块同一种写法 */
++#right #pMaster>#colorControls{margin:0;padding:0 0 8px;border:0;border-top:1px solid var(--line);border-radius:0;background:none}
++#right #pMaster>#colorControls>summary{display:flex;align-items:center;gap:8px;min-height:32px;margin:8px 0 0;padding:0;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);list-style:none;cursor:pointer}
++#right #pMaster>#colorControls>summary::-webkit-details-marker{display:none}
++#right #pMaster>#colorControls>summary::before{display:none}
++#right #pMaster>#colorControls>summary .scope-caption{margin-left:auto;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3)}
++#right #pMaster>#colorControls>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:4px;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
++  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
++  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
++#right #pMaster>#colorControls[open]>summary::after{transform:none}
++#right #pMaster>#colorControls>summary:hover::after{background:var(--t1)}
++#right #pMaster>#colorControls>:not(summary){margin-left:var(--in-prm)}
