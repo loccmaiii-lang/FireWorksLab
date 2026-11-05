@@ -32,10 +32,10 @@
   --shadow:0 8px 24px rgba(0,0,0,.45);
 
   /* 字号三级（§1、v3.3 第 6 条：每级用途分开）：大 15 只给面包屑末项和效果名；中 13 给参数名、数值、正文、命令、标签；小 12 给读数、计数、单位、次要说明。
-     字重只有 400 和 600。--fs-tab 保留成 --fs2 的别名（效果库标签从 15 降到 13）。
+     字重只有 400 和 600。效果库大号标签「效果 / 模板」是用户定的（规范 §0 第 4 条），仍用大号：--fs-tab = --fs3（对话框9 在 v3.3 合成时改回）。
      字体：Inter 带 tnum，tabular-nums 下「1」「8」等宽（v3.3 第 1 条实测）；Inter 没加载上时，Windows 上落到 Segoe UI（数字默认等宽），中文落到 Noto Sans SC / 微软雅黑 */
   --sans:"Inter","Segoe UI","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
-  --fs1:12px; --fs2:13px; --fs3:15px; --fs-tab:var(--fs2);
+  --fs1:12px; --fs2:13px; --fs3:15px; --fs-tab:var(--fs3);
   --lh1:16px; --lh2:20px; --lh3:22px;
   --fw1:400; --fw2:600;
   /* 间距（§2）：基本单位 4；面板内边距 12；组内 8，组间 20 */
@@ -55,7 +55,7 @@
 }
 /* 1366 × 768（§1、§2）：字号小一级，栏宽 260 / 380；检查器各列按字号同比收窄 */
 .s1366{
-  --fs1:11px; --fs2:12px; --fs3:14px; --fs-tab:var(--fs2);
+  --fs1:11px; --fs2:12px; --fs3:14px; --fs-tab:var(--fs3);
   --lh1:14px; --lh2:18px; --lh3:20px;
   --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px; --h-film:28px;
   --w-left:260px; --w-right:380px; --w-tlab:132px;
