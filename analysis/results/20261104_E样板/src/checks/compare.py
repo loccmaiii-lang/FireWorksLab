@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31），v3.1 → v3.2（--rows v32），v3.2 → v3.3（--rows v33），v3.3 → v3.4（--rows v34）
+"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31），v3.1 → v3.2（--rows v32），v3.2 → v3.3（--rows v33），v3.3 → v3.4（--rows v34），v3.4 → v3.5（--rows v35）
 
 每一行对应 E 设计规范 v3 的一节（§1 字号 … §12 浮层，§13 自查的三种画面），外壳顶栏单独一行（用户 2026-11-05 改定，
 另附资源交付页、资源编排页）。两列是 v2.3、v3：同一个状态下截 #app，按同一块区域裁图——区域取两版里那几个元素外框的并集，
@@ -9,7 +9,7 @@
   python3 build.py /tmp/E_v3.html
   python3 checks/compare.py [--base ../E样板_v2.3.html] [--new /tmp/E_v3.html] [--out ../对比_v23_v3.html]
   python3 checks/compare.py --rows v31 --base ../E样板_v3.html --base-label v3 --new ../E样板_v3.1.html --new-label v3.1 --out ../对比_v3_v31.html
-  --rows spec：按设计规范 v3 的节号排；--rows v31 / v32 / v33 / v34：按 E样板_v3.1 / v3.2 / v3.3 / v3.4_改动单.md 的编号排
+  --rows spec：按设计规范 v3 的节号排；--rows v31 … v35：按 E样板_v3.1 … v3.5_改动单.md 的编号排
 只开一个浏览器。图片用 WebP 内嵌进一个 HTML 文件。
 """
 import argparse, base64, html, io, os, sys, time
@@ -25,7 +25,7 @@ ap.add_argument('--out', default=os.path.join(RES, '对比_v23_v3.html'))
 ap.add_argument('--q', type=int, default=84, help='WebP 质量')
 ap.add_argument('--base-label', default='v2.3')
 ap.add_argument('--new-label', default='v3')
-ap.add_argument('--rows', choices=['spec', 'v31', 'v32', 'v33', 'v34'], default='spec')
+ap.add_argument('--rows', choices=['spec', 'v31', 'v32', 'v33', 'v34', 'v35'], default='spec')
 A = ap.parse_args()
 
 VERS = [(A.base_label, A.base), (A.new_label, A.new)]
@@ -223,6 +223,31 @@ ROWS_V34 = [
     ('自查', '序列贴图', '原「贴图与交付」模式。', [('deliv', 'app', '主屏，「序列贴图」', {})]),
     ('自查', '资源交付页', '从「导出 ▾」进入。', [('import', 'app', '资源交付页', {})]),
 ]
+# v3.4 → v3.5：按 E样板_v3.5_改动单.md 的编号排（用户 17:05 的 12 条）
+ROWS_V35 = [
+    ('9、10', '外壳顶栏：显卡写法、UE 已连接高亮、「编排节目」加框',
+     '「显卡 · GeForce RTX 5080」；UE 已连接前面薄荷圆点；「编排节目 →」1 px 线框，悬停箭头右移变薄荷。',
+     [('main', ['#shell'], '顶栏', {'split': 2, 'pad': 0}), ('worst', ['#shell'], '顶栏（UE 断开）', {'split': 2, 'pad': 0}), ('wb', 'app', '编排节目页', {})]),
+    ('1、4、8、12', '工具行：图标统一、两组分段一样大、右栏工具行重排、改名',
+     '图标 16 px 画布、12 px 可画区、1.5 线、方头；两组分段同高同内边距；「适应窗口 / 1:1 / 实机窗口」；右栏：撤销 重做 版本记录 ⚠ 意见 …… 还原 保存 另存 导出。',
+     [('main', ['#toolRow'], '工具行', {'split': 2, 'pad': 0}), ('m1366', ['#toolRow'], '工具行（1366）', {'split': 2, 'pad': 0})]),
+    ('1、6、11', '结构树：眼睛换回、只看改圆圈、最后一层下面「+ 加层」',
+     '显示用 v3.3 的眼睛；只看是一个圆圈；每个效果最后一层下面留「+ 加层」。',
+     [('main', ['#treePane'], '结构树（金曜菊-B）', {}), ('spk', ['#treePane'], '结构树（仙女棒）', {})]),
+    ('2', '效果库层级',
+     '一级「效果 / 模板」；二级花型筛选一整行等宽分段；三级搜索 + 新建；左边缘对齐。',
+     [('main', ['#libPane'], '效果库', {})]),
+    ('3', '检查器：不悬停也看得出层级和能折叠',
+     '模块标题 600、贴左；参数行缩进 12；标题行最右常驻弱色折叠箭头。',
+     [('main', ['#insp'], '检查器（金曜菊-B）', {}), ('spk', ['#insp'], '检查器（仙女棒）', {})]),
+    ('5、7', '播放条与导出范围行：去掉胶片行，出入点设置露出来，秒表和相机放最右',
+     '没有「烘焙」胶片行；导出范围那一行放范围、入点出点恢复图标和原「选项」里的开关；播放条最右是秒表和相机。',
+     [('main', ['#transport', '#tlw'], '播放条 + 时间轴', {'h': 200}), ('m1366', ['#transport', '#tlw'], '播放条 + 时间轴（1366）', {'h': 200})]),
+    ('自查', '主屏 1920 × 1080', '整屏。', [('main', 'app', '主屏 1920 × 1080', {})]),
+    ('自查', '1366 × 768', '字号小一级。', [('m1366', 'app', '主屏 1366 × 768', {})]),
+    ('自查', '仙女棒', '第二个场景。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
+    ('自查', '导出 ▾ 菜单', '第一项「资源交付」。', [('expmenu', ['.menu', '#expBtn'], '导出 ▾ 菜单', {'pad': 16})]),
+]
 if A.rows == 'v31':
     ROWS = ROWS_V31
 elif A.rows == 'v32':
@@ -231,6 +256,8 @@ elif A.rows == 'v33':
     ROWS = ROWS_V33
 elif A.rows == 'v34':
     ROWS = ROWS_V34
+elif A.rows == 'v35':
+    ROWS = ROWS_V35
 
 RECT_JS = """sels => { const A = document.querySelector('#app').getBoundingClientRect();
   return sels.map(s => { const e = [...document.querySelectorAll(s)].find(x => x.getClientRects().length); if (!e) return null; const r = e.getBoundingClientRect();
@@ -378,7 +405,7 @@ def main():
     rel = lambda p: os.path.relpath(os.path.abspath(p), RES) if os.path.abspath(p).startswith(RES) else p
     BL, NL = VERS[0][0], VERS[1][0]
     basis = ('按 <code>协作/方案/E设计规范_v3_2026-11-05.md</code> 的节号排；外壳顶栏按用户 2026-11-05 改定单独一行。' if A.rows == 'spec'
-             else f'按 <code>E样板_{ {"v31": "v3.1", "v32": "v3.2", "v33": "v3.3", "v34": "v3.4"}[A.rows]}_改动单.md</code> 的编号排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
+             else f'按 <code>E样板_{ {"v31": "v3.1", "v32": "v3.2", "v33": "v3.3", "v34": "v3.4", "v35": "v3.5"}[A.rows]}_改动单.md</code> 的编号排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
     doc = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E 样板 {BL} → {NL} 对比</title><style>{CSS}</style></head>
