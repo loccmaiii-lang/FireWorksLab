@@ -288,6 +288,8 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .trow.is-sel .tx{color:var(--t1);font-weight:var(--fw2)}
 .trow .acts{display:flex;align-items:center;flex:none}
 .trow .acts .btn-icon{width:var(--h-ctl);height:var(--h-ctl)}
+.s1366 .trow .acts .btn-icon{width:20px}
+.s1366 .trow .acts .ph2{width:40px}
 .trow .acts .btn[aria-pressed]{background:none}
 .trow .acts .btn[aria-pressed]:hover{background:var(--hov)}
 /* 显示 / 只看 / ⋯：只在悬停、当前行或不是默认状态时出现 */
@@ -705,9 +707,10 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .left.tree-closed .tree,.left.lib-closed .lib-body,.left.tree-closed #treeQ{display:none}
 .pane{display:flex;flex-direction:column;min-height:0;min-width:0}
 .tree-pane .tree{flex:1;min-height:0}
-.tree-foot{flex:none;display:flex;align-items:center;gap:var(--s1);height:36px;padding:0 var(--s2) 0 4px}
+.tree-foot{flex:none;display:flex;align-items:center;gap:var(--s1);height:36px;padding:0 var(--s2) 0 4px;min-width:0}
+.s1366 .tree-foot .btn{padding:0 4px}
 .tree-foot .sp{flex:1}
-.field.sm{height:var(--h-ctl);width:112px;flex:none}
+.field.sm{height:var(--h-ctl);width:112px;flex:0 1 112px;min-width:64px}
 /* 分隔条：看起来就是那条 1 px 线；可拖的热区 6 px 透明；拖动时线变成薄荷色 */
 .splitter{position:relative;z-index:3;background:var(--line);cursor:row-resize;touch-action:none}
 .splitter::before{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
@@ -726,13 +729,13 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .lib-body{flex:1;min-height:0;display:flex;flex-direction:column}
 .lib-tools{flex:none;display:flex;flex-direction:column;gap:var(--s2);padding:var(--s2) var(--pad)}
 .lib-tools>.field{margin:0 -6px}
-.lib-meta{display:flex;align-items:center;gap:var(--gin);min-width:0}
-.lib-meta>.seg{margin-right:calc(var(--grp) - var(--gin))}
+.lib-meta{display:flex;align-items:center;gap:0;min-width:0}
+.lib-meta>.seg{margin-right:var(--grp)}
 .lib-meta>.seg button{padding:0 7px}
 .s1366 .lib-meta>.seg button{padding:0 6px}
 .s1366 .lib-meta .btn .t{display:none}
-.lib-meta .cnt{font-size:var(--fs1);color:var(--t3);white-space:nowrap}
-.lib-meta .btn{margin-right:-6px}
+.lib-meta .cnt{margin-right:var(--s1);font-size:var(--fs1);color:var(--t3);white-space:nowrap}
+.lib-meta .btn{padding:0 4px}
 .lib-list{flex:1;min-height:0;overflow:auto;padding:0 var(--s1) var(--s1)}
 .lib-list .tpl-grid{padding:4px 8px 8px}
 

@@ -1003,7 +1003,7 @@ function treeHTML(sc, withAdd = true) {
       ? `<button class="btn btn-icon eye" aria-pressed="${n.show}" aria-label="显示" data-tip="${n.show ? '隐藏' : '显示'}" data-key="H">${ico(n.show ? 'eye' : 'eyeoff')}</button><button class="btn btn-icon solo" aria-pressed="${n.solo}" aria-label="只看" data-tip="${n.solo ? '移出只看' : '加入只看'}；Alt+单击只看此项" data-key="S">${ico(n.solo ? 'soloon' : 'solo')}</button>`
       : '<span class="ph2"></span>';
     return `<div class="trow t-${n.type}${sel ? ' is-sel' : ''}${n.show ? '' : ' is-off'}${dim ? ' is-dim' : ''}" role="treeitem" tabindex="${sel ? 0 : -1}" data-id="${n.id}" aria-level="${lv + 1}" aria-selected="${sel}"${has ? ` aria-expanded="${n.open}"` : ''} style="--lv:${lv}">`
-      + `<span class="chev${has ? '' : ' none'}" aria-hidden="true">${ico('cr')}</span>${ico(n.icon, 'ty')}<span class="nm">${no}<span class="tx">${esc(nmT)}</span>${cnt}${stl}</span>`
+      + `<span class="chev${has ? '' : ' none'}" aria-hidden="true">${ico('cr')}</span>${ico(n.icon, 'ty')}<span class="nm">${no}<span class="tx" title="${esc(nmT)}">${esc(nmT)}</span>${cnt}${stl}</span>`
       + `<span class="acts">${vis}<button class="btn btn-icon more" aria-label="更多操作" aria-haspopup="menu" data-tip="更多操作">${ico('more')}</button></span></div>`;
   }).join('');
   if (UI.treeQ.trim() && sc.key === UI.scene && rows.length === 1) h += `<div class="none-hit">没有匹配「${esc(UI.treeQ.trim())}」的层或发射器</div>`;
