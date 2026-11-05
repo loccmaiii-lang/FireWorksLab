@@ -1,7 +1,9 @@
-"""E 样板 v3.2 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、贴图与交付、导出浮层都要截图逐张看）。
+"""E 样板 v3.3 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、贴图与交付、导出浮层都要截图逐张看）。
 
 先合成：python3 ../build.py /tmp/E_A.html
-再截图：python3 shot.py [/tmp/E_A.html] [名字…]      截图写到 /tmp/E_A_shots/（不进仓库）
+再截图：python3 shot.py [/tmp/E_A.html] [名字…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）
+--hide-sample：把样板控制条（左下角那个「样板」小按钮）藏起来——给评委用的截图都加这个（v3.3 第 15 条）。
+不加时截图里留着收起的小按钮，探针另外核对它不盖检查器、不盖任何产品控件。
 探针：文字被截断（overflow 隐藏且放不下、又没有 title 全名）、字号小于下限（1920 下 12 px、1366 下 11 px）、
      超出主屏、条带里的控件被裁掉、文档宽高不等于视口；另外打印页面错误和控制台报错。外网请求一律拦截。
 一次只开一个浏览器进程。
@@ -13,7 +15,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ARGS = [a for a in sys.argv[1:] if a.endswith('.html')]
-NAMES = [a for a in sys.argv[1:] if not a.endswith('.html')]
+NAMES = [a for a in sys.argv[1:] if not a.endswith('.html') and not a.startswith('--')]
+HIDE = '--hide-sample' in sys.argv[1:]
 URL = Path(ARGS[0] if ARGS else '/tmp/E_A.html').resolve().as_uri()
 OUT = Path('/tmp/E_A_shots')
 OUT.mkdir(parents=True, exist_ok=True)
@@ -38,7 +41,15 @@ PROBE = """(minFs) => {
       if (r.right > B.right + 1 || r.left < B.left - 1) clipped.push((bar.id || bar.className) + ' > ' + String(c.className.baseVal ?? c.className) + ' ' + c.textContent.trim().slice(0, 12));
     }
   }
-  return {app: [A.width, A.height], doc: [document.documentElement.scrollWidth, document.documentElement.scrollHeight], over: over.slice(0, 20), small: [...small].slice(0, 20), out: out.slice(0, 20), clipped: clipped.slice(0, 20)};
+  /* 样板控制条（收起时）：只许是一个小按钮，不盖检查器、不盖任何产品控件 */
+  const kit = [], kb = document.getElementById('sampleBar'), kt = document.getElementById('kitTog');
+  if (kb && getComputedStyle(kb).display !== 'none' && getComputedStyle(kb).visibility !== 'hidden' && !kb.classList.contains('is-open')) {
+    const K = kt.getBoundingClientRect(), hit = r => !(r.right <= K.left || r.left >= K.right || r.bottom <= K.top || r.top >= K.bottom);
+    if (K.width > 64 || K.height > 24) kit.push('按钮太大 ' + Math.round(K.width) + '×' + Math.round(K.height));
+    if (hit(document.getElementById('insp').getBoundingClientRect())) kit.push('盖住检查器');
+    for (const c of document.querySelectorAll('#wsBaker button, #wsBaker input, #wsBaker select, #wsBaker .seg, #shell button')) { const r = c.getBoundingClientRect(); if (r.width && hit(r)) kit.push('盖住 ' + (c.id || c.dataset.act || c.textContent.trim().slice(0, 8))); }
+  }
+  return {app: [A.width, A.height], doc: [document.documentElement.scrollWidth, document.documentElement.scrollHeight], over: over.slice(0, 20), small: [...small].slice(0, 20), out: out.slice(0, 20), clipped: clipped.slice(0, 20), kit};
 }"""
 MSGS = []
 
@@ -49,7 +60,8 @@ def page_for(b, w, h):
     pg.on('pageerror', lambda e: MSGS.append(f'pageerror: {e}'))
     pg.on('console', lambda m: m.type == 'error' and 'net::ERR_FAILED' not in m.text and MSGS.append('console: ' + m.text))
     pg.goto(URL, wait_until='load')
-    pg.add_style_tag(content='#sampleBar{display:none!important}')
+    if HIDE:
+        pg.add_style_tag(content='#sampleBar{display:none!important}')
     pg.wait_for_timeout(300)
     if w == 1366:
         pg.evaluate("KIT.set('size','1366')")
@@ -62,7 +74,7 @@ def clip(pg, w, h, name, probe=True):
     pg.screenshot(path=str(OUT / name), clip={'x': 0, 'y': 0, 'width': w, 'height': h})
     if probe:
         info = pg.evaluate(PROBE, 11 if w == 1366 else 12)
-        bad = {k: v for k, v in info.items() if k in ('over', 'small', 'out', 'clipped') and v}
+        bad = {k: v for k, v in info.items() if k in ('over', 'small', 'out', 'clipped', 'kit') and v}
         ok = info['doc'] == [w, h] and not bad
         print(name, '探针通过' if ok else '探针：' + json.dumps({**bad, 'doc': info['doc']}, ensure_ascii=False))
     else:

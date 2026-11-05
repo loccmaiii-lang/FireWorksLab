@@ -870,13 +870,14 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .ovl>.tip{pointer-events:none}   /* 提示框不挡鼠标 */
 
 /* ---------- 7 样板页（非产品界面） ---------- */
-.kit-bar{position:fixed;bottom:30px;right:0;z-index:95;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;max-width:720px;padding:12px 14px 34px;background:var(--g0);border:1px solid var(--g5);border-right:0;box-shadow:var(--shadow);font-size:13px;white-space:nowrap}   /* 样板控制条：右下角、状态栏上方，不盖外壳顶栏最右的显卡 */
-.kit-bar:not(.is-open){padding:0;border:0;background:none;box-shadow:none}
+.kit-bar{position:fixed;bottom:30px;left:0;z-index:95;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;max-width:720px;padding:12px 14px 34px;background:var(--g0);border:1px solid var(--g5);border-left:0;box-shadow:var(--shadow);font-size:13px;white-space:nowrap}   /* 样板控制条（不属于产品界面）：打开时从左下角往上长 */
+/* v3.3 第 15 条：收起时只留左下角一个小按钮，放在状态栏「复制意见」右边的空处，不盖检查器、不盖任何产品控件 */
+.kit-bar:not(.is-open){left:84px;bottom:4px;padding:0;border:0;background:none;box-shadow:none}
 .kit-bar:not(.is-open)>:not(.kit-tog){display:none}
-.kit-tog{position:absolute;bottom:0;right:0;display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 6px 0 8px;border:1px solid var(--g5);border-bottom:0;border-right:0;background:var(--g0);color:var(--t2);font-size:11px;line-height:16px;opacity:.85}
+.kit-tog{position:absolute;bottom:6px;left:14px;display:inline-flex;align-items:center;gap:2px;height:20px;padding:0 2px 0 6px;border:1px dashed var(--g6);border-radius:var(--r2);background:var(--g0);color:var(--t3);font-size:11px;line-height:16px}
 .kit-bar:not(.is-open) .kit-tog{position:static}
-.kit-tog:hover{opacity:1;color:var(--t1);background:var(--g2)}
-.kit-tog svg.i{width:12px;height:12px;transform:rotate(180deg)}
+.kit-tog:hover{color:var(--t1);background:var(--g2)}
+.kit-tog svg.i{width:16px;height:16px;transform:rotate(180deg)}
 .kit-bar.is-open .kit-tog svg.i{transform:none}
 .kit-bar .kn{font-weight:var(--fw2);color:var(--t1)}
 .kit-bar .kg{display:flex;align-items:center;gap:8px;color:var(--t3);font-size:12px}

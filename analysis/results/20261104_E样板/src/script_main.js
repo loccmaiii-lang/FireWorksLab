@@ -2485,7 +2485,7 @@ document.addEventListener('keydown', e => {
 /* ---------- 样板控制条 ---------- */
 function kitOpen(on) {
   const b = $('#sampleBar'), tg = $('#kitTog'); b.classList.toggle('is-open', on); tg.setAttribute('aria-expanded', String(on));
-  tg.firstChild.textContent = on ? '收起' : '样板控制';
+  tg.firstChild.textContent = on ? '收起' : '样板';   /* v3.3 第 15 条：收起时只留一个小按钮 */
   try { localStorage.setItem('fwl.e21.kitOpen', on ? '1' : '0'); } catch (_) { /* 无痕窗口等：不记 */ }
 }
 (() => { let on = false; try { on = localStorage.getItem('fwl.e21.kitOpen') === '1'; } catch (_) { on = false; } kitOpen(on); })();

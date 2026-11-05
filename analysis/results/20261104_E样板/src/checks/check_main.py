@@ -866,6 +866,25 @@ def v33(b):
     check('v3.3-7 搜索框的放大镜按 16 px 画（外壳转来：资源编排搜索框同一个组件）', x.R('#pq > svg.i')[4] == 16 and x.R('#libQ > svg.i')[4] == 16)
     pg.close()
 
+    # 第 15 条：样板控制条不压界面（这一页不藏样板控制条）
+    for w, h in ((1920, 1080), (1366, 768)):
+        pg = b.new_page(viewport={'width': w, 'height': h}, device_scale_factor=1)
+        pg.route('**/*', lambda r: r.continue_() if r.request.url.startswith(('file:', 'data:')) else r.abort())
+        pg.on('pageerror', lambda e: ERR.append(str(e)))
+        pg.goto(URL, wait_until='load'); pg.wait_for_timeout(300)
+        if w == 1366:
+            pg.evaluate("KIT.set('size','1366')"); pg.wait_for_timeout(200)
+        x = P(pg)
+        k = x.E("(() => { const t = document.getElementById('kitTog').getBoundingClientRect(), I = document.getElementById('insp').getBoundingClientRect(), hit = r => !(r.right <= t.left || r.left >= t.right || r.bottom <= t.top || r.top >= t.bottom);"
+                " return {open: document.getElementById('sampleBar').classList.contains('is-open'), w: t.width, h: t.height, left: t.left, bottom: innerHeight - t.bottom, insp: hit(I), ctl: [...document.querySelectorAll('#app button, #app input, #app select, #app .seg')].filter(c => { const r = c.getBoundingClientRect(); return r.width && hit(r) }).map(c => c.id || c.dataset.act || c.textContent.trim())} })()")
+        check(f'v3.3-15 {w} 样板控制条收起时只留左下角一个小按钮，不盖检查器、不盖产品控件', not k['open'] and k['w'] <= 64 and k['h'] <= 24 and k['left'] < 200 and k['bottom'] <= 8 and not k['insp'] and not k['ctl'], k)
+        x.click('#kitTog')
+        o = x.E("(() => { const b = document.getElementById('sampleBar').getBoundingClientRect(); return {open: document.getElementById('sampleBar').classList.contains('is-open'), left: b.left, segs: document.querySelectorAll('#sampleBar .seg').length} })()")
+        check(f'v3.3-15 {w} 点开以后从左下角往上长，三组切换都在；再点收起', o['open'] and o['left'] <= 1 and o['segs'] >= 3 and (x.click('#kitTog') or True) and not x.E("document.getElementById('sampleBar').classList.contains('is-open')"), o)
+        pg.close()
+    sh = (SRC / 'checks' / 'shot.py').read_text(encoding='utf-8')
+    check('v3.3-15 shot.py 有 --hide-sample，给评委的截图把样板控制条藏起来', "--hide-sample" in sh and "if HIDE:" in sh)
+
     # 第 4 条：时间轴不悄悄藏行
     pg = new_page(b); x = P(pg)
     x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200)
