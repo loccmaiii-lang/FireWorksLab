@@ -1,11 +1,12 @@
 
 /* =====================================================================
-   烟花工坊 5.0 外壳（script_shell.js，E 样板 v3.4）：交互宪章 0.9 ①–⑧ + 用户 2026-11-05 改定、15:50 再改；设计规范 v3 第 11、12 节；
+   烟花工坊 5.0 外壳（script_shell.js，E 样板 v3.5）：交互宪章 0.9 ①–⑧ + 用户 2026-11-05 改定、15:50 再改、17:05 补充；设计规范 v3 第 11、12 节；
    E样板_v3.3_改动单.md 第 16–19 条；E样板_v3.4_改动单.md 第 1–3 条（导出、备份文件夹放到状态栏左端 #stShell；「资源交付」从顶栏
-   去掉，改由「导出 ▾」菜单第一项 [data-exp=deliv] 打开；顶栏右侧只放「UE」｜显卡全名｜「编排工作台 →」），第 13 条（滚动区加 .sb-auto）
+   去掉，改由「导出 ▾」菜单第一项 [data-exp=deliv] 打开；顶栏右侧只放「UE」｜显卡全名｜入口），第 13 条（滚动区加 .sb-auto）；
+   E样板_v3.5_改动单.md 第 9 条（「显卡 · GeForce RTX 5080」；UE 前面 6 px 状态圆点，已连接薄荷、未连接琥珀）、第 10 条（「编排工作台」改名「编排节目」，入口画 1 px 线框）
    单独一个 <script>，不在样板的闭包里：样板的内部函数调不到。菜单、提示条、对话框、操作处提示
    按样板的 DOM 与类名（.menu / .toast / .scrim + .dialog / .tip.sm.hint）另写一份；悬停提示仍用样板的 [data-tip]。
-   1 小工具与浮层  2 状态与数据  3 外壳顶栏与状态栏左端  4 资源交付（导入）  5 编排工作台  6 编排预览与另存  7 首次使用  8 样板开关
+   1 小工具与浮层  2 状态与数据  3 外壳顶栏与状态栏左端  4 资源交付（导入）  5 编排节目  6 编排预览与另存  7 首次使用  8 样板开关
    9 事件  10 全表一节  11 启动
    ===================================================================== */
 (() => {
@@ -46,15 +47,15 @@ function copyParts(kind, el) {
   return out;
 }
 function logCopy(kind, el) { const L = window.__shCopyLog; if (Array.isArray(L) && el) L.push(...copyParts(kind, el)); }
-const COPY_CLS = [['.sh-mt, .sh-dl dt', '标签'], ['.sh-dl dd, .sh-cap', '信息'], ['.sh-pass, .sh-pvi span', '状态'], ['.sh-brand b, .sh-ver', '名称'], ['.sh-fold, .sh-ue', '状态'], ['button, .tab, .sh-pg', '按钮'], ['.empty b', '空状态'], ['.sh-why > span, .sh-pv.is-err > span:not(.sh-pvk)', '原因'], ['th', '表头'], ['.sh-st, .st, .st-ok, .conn, .sh-fx, .sh-cd, .sh-pv > span', '状态'], ['.li-n, .sh-mh b, .sh-brand, .gpu', '名称'], ['.lbl, .li-s span, .sh-hv, .sh-mh .mute, .cnt, td', '信息']];
+const COPY_CLS = [['.sh-mt, .sh-dl dt, .sh-gk', '标签'], ['.sh-dl dd, .sh-cap', '信息'], ['.sh-pass, .sh-pvi span', '状态'], ['.sh-brand b, .sh-ver', '名称'], ['.sh-fold, .sh-ue', '状态'], ['button, .tab, .sh-pg', '按钮'], ['.empty b', '空状态'], ['.sh-why > span, .sh-pv.is-err > span:not(.sh-pvk)', '原因'], ['th', '表头'], ['.sh-st, .st, .st-ok, .conn, .sh-fx, .sh-cd, .sh-pv > span', '状态'], ['.li-n, .sh-mh b, .sh-brand, .gpu, .sh-gv', '名称'], ['.lbl, .li-s span, .sh-hv, .sh-mh .mute, .cnt, td', '信息']];
 function snapCopy() {
   const out = [], add = (w, c, s) => { s = txt1(s); if (s) out.push([w, c, s]); };
-  [['#shell', '顶栏'], ['#stShell', '状态栏'], ['#wsImport', '资源交付'], ['#wsWB', '编排工作台'], ['#sbPreview', '状态栏']].forEach(([sel, w]) => {
+  [['#shell', '顶栏'], ['#stShell', '状态栏'], ['#wsImport', '资源交付'], ['#wsWB', '编排节目'], ['#sbPreview', '状态栏']].forEach(([sel, w]) => {
     const r = q(sel); if (!r || !r.getClientRects().length) return;
     qq('[data-tip]', r).forEach(e => { if (!e.getClientRects().length) return; add(w, isDis(e) ? '原因' : '悬停', e.dataset.tip); if (e.dataset.key) add(w, '悬停（第二行）', e.dataset.key); });
     qq('input[placeholder]', r).forEach(e => add(w, '占位文字', e.placeholder));
     qq('*', r).forEach(e => {
-      if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph, .sh-at tbody td:first-child')) return;   /* 逐资产清单的资产名是数据，不是文案 */
+      if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph, .sh-at tbody td:first-child, .sh-gd')) return;   /* 逐资产清单的资产名是数据，不是文案；「显卡 · 型号」的间隔点是排版 */
       if (e.parentElement && e.parentElement.closest('button, .tab, .sh-fold, .sh-ue')) return;
       const m = COPY_CLS.find(([s]) => e.matches(s)), whole = m && ['按钮', '名称', '状态'].includes(m[1]) && e.matches('button, .tab, .sh-fold, .sh-ue');
       const own = whole ? txtSp(e) : [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('');
@@ -350,26 +351,27 @@ const isDis = b => b && b.getAttribute('aria-disabled') === 'true';
 
 /* ---------- 3 外壳顶栏与状态栏左端（宪章 0.9「用户 2026-11-05 15:50 再改」；设计规范 v3 第 11 节；v3.4 改动单第 1–3 条） ----------
    顶栏左：「烟花工坊」+「FireWorksLab 5.0.3 [2]」，点版本号打开更新记录（有未读时后面跟计数框）。
-   顶栏右只放三项，组间 24 px、正中 1 px 竖线（高 16）：「UE 已连接」｜「GeForce RTX 5080」｜「编排工作台 →」（v3.4 第 3 条）。
-   UE 断开：原地「UE ● 未连接」+ 命令「重新连接」，不挪到别处。
+   顶栏右只放三项，组间 24 px、正中 1 px 竖线（高 16）：「● UE 已连接」｜「显卡 · GeForce RTX 5080」｜「编排节目 →」（v3.4 第 3 条，v3.5 第 9、10 条）。
+   UE 前面一个 6 px 状态圆点：已连接薄荷、「已连接」主文字色；断开时圆点琥珀，原地「● UE 未连接」+ 命令「重新连接」，不挪到别处（v3.5 第 9 条）。
    导出、备份文件夹在状态栏左端（v3.4 第 1 条）：制作区 #status 里的槽位 #stShell，两页自己的状态栏 .sh-stf；槽位不在时安静跳过。
    「资源交付」不在顶栏（v3.4 第 2 条）：「导出 ▾」菜单第一项 [data-exp=deliv] 打开，计数 #expDelivN 是待导入的包数（0 个时隐藏）。
-   再点一次亮着的「编排工作台」或页面工具行左端「← 返回制作」回到制作 */
-const WS = [['baker', '制作', '#wsBaker'], ['import', '资源交付', '#wsImport'], ['wb', '编排工作台', '#wsWB']];
-const PGN = {import: '资源交付', wb: '编排工作台'};
+   再点一次框线亮着的「编排节目」或页面工具行左端「← 返回制作」回到制作 */
+const WS = [['baker', '制作', '#wsBaker'], ['import', '资源交付', '#wsImport'], ['wb', '编排节目', '#wsWB']];
+const PGN = {import: '资源交付', wb: '编排节目'};
 const FOLD = {exp: '导出文件夹', bak: '备份文件夹'}, FOLDK = {exp: '导出', bak: '备份'};
-const GPU = 'GeForce RTX 5080';   /* v1 的样板数据；写全名（v3.4 第 3 条） */
+const GPU = 'GeForce RTX 5080';   /* v1 的样板数据；写全名（v3.4 第 3 条）；顶栏前面加弱色「显卡 ·」（v3.5 第 9 条，照用户的参考图） */
 const fullPath = name => `D:\\FireWorksLab\\${name}`;
-/* 状态：弱色字；只有要处理的（未连接、未选、需允许访问）在那个词前面画琥珀圆点、那个词用琥珀（v3.2 第 11 条；v3.4 第 1 条写法「备份 ● 未选」）；
-   进行中（连接中、写入中）前面是转圈。data-tone：ok = 正常，warn = 要处理 */
+/* 状态：弱色字；只有要处理的（未选、需允许访问）在那个词前面画琥珀圆点、那个词用琥珀（v3.2 第 11 条；v3.4 第 1 条写法「备份 ● 未选」）；
+   UE 例外（v3.5 第 9 条）：整项前面一个 6 px 状态圆点，已连接薄荷、「已连接」主文字色；未连接琥珀、「未连接」琥珀；
+   进行中（连接中、写入中）圆点的位置换成转圈。data-tone：ok = 正常，warn = 要处理 */
 const SPIN = '<span class="spin" aria-hidden="true"></span>';
 const retryTip = cd => `${cd == null ? 12 : cd} 秒后自动重新连接`;
 function ueHTML(v) {
   const tip = `127.0.0.1:17780　上次连上 ${S.lastUE}`;   /* 一行写完：样板的提示第二行 data-key 只给快捷键 */
   if (v.k === 'wait') return `<span class="sh-stat sh-ue st-cell is-busy" data-tip="127.0.0.1:17780">${SPIN}UE <span class="sh-sv">连接中</span></span>`;
-  if (v.k === 'on') return `<span class="sh-stat sh-ue st-cell" data-tone="ok" data-tip="${tip}">UE <span class="sh-sv">已连接</span></span>`;
-  if (v.k === 'off') return `<span class="sh-stat sh-ue st-cell" data-tone="warn" data-tip="${tip}">UE <span class="sh-sv is-warn">未连接</span></span><button class="btn btn-text tbtn sh-retry" data-sh="retry" type="button" data-tip="${retryTip(v.cd)}">重新连接</button>`;
-  if (v.k === 'write' && v.by === 'wb') return `<button class="btn btn-text tbtn sh-stat sh-ue st-cell is-write is-busy" data-sh="toWB" type="button" data-tip="打开编排工作台">${SPIN}UE <span class="sh-sv">写入中</span></button>`;
+  if (v.k === 'on') return `<span class="sh-stat sh-ue st-cell is-dot" data-tone="ok" data-tip="${tip}">UE <span class="sh-sv is-on">已连接</span></span>`;
+  if (v.k === 'off') return `<span class="sh-stat sh-ue st-cell is-dot" data-tone="warn" data-tip="${tip}">UE <span class="sh-sv is-off">未连接</span></span><button class="btn btn-text tbtn sh-retry" data-sh="retry" type="button" data-tip="${retryTip(v.cd)}">重新连接</button>`;
+  if (v.k === 'write' && v.by === 'wb') return `<button class="btn btn-text tbtn sh-stat sh-ue st-cell is-write is-busy" data-sh="toWB" type="button" data-tip="打开编排节目">${SPIN}UE <span class="sh-sv">写入中</span></button>`;
   if (v.k === 'write') return `<button class="btn btn-text tbtn sh-stat sh-ue st-cell is-write is-busy" data-sh="toImport" type="button" data-tip="打开资源交付">${SPIN}UE <span class="sh-sv">写入中 <span class="sh-n">${v.n} / ${v.tot}</span></span></button>`;
   return `<span class="sh-stat sh-ue st-cell is-na" data-tip="${WHY.brUE}">UE <span class="sh-sv">不可用</span></span>`;
 }
@@ -392,8 +394,9 @@ function foldHTML(k, st, name) {
 const stFoldHTML = s => foldHTML('exp', s.exp, s.expName || S.expName) + foldHTML('bak', s.bak, s.bakName || S.bakName);
 /* 计数（方框只表示数量，v3.2 第 13 条）：小号数字放在 1 px 方框里，跟在名称后面；悬停写它数的是什么 */
 const cntHTML = (n, tip) => `<span class="sh-cnt"${tip ? ` data-tip="${tip}"` : ''}>${n}</span>`;
-/* 「编排工作台 →」（v3.4 第 3 条）：进入另一个工作台的入口。次文字色、正文字号；悬停出底色、字亮一级，箭头右移 2 px、变薄荷；
-   打开着编排工作台时薄荷下划线 + 600（预留 600 的宽度，换字重不挤动顶栏）。箭头 = 样板 #i-back 左右翻转（16 px 网格、线宽 1.5、方头、尖角） */
+/* 「编排节目 →」（v3.4 第 3 条；v3.5 第 10 条改名、加框）：进入另一个工作区的入口。1 px 线框，高 28，圆角 2，左右内边距 12；次文字色、正文字号；
+   悬停出浮层底色、字亮一级，箭头右移 2 px、变薄荷；打开着编排节目时框线薄荷 + 600（预留 600 的宽度，换字重不挤动顶栏）。
+   箭头 = 样板 #i-back 左右翻转（16 px 画布，按 v3.5 第 1 条的规格画） */
 function wbEntryHTML(cur, hov) {
   const on = cur === 'wb', t = PGN.wb;
   return `<button class="sh-pg sh-go${hov ? ' is-hover' : ''}" type="button" data-sh="pg" data-pg="wb" aria-pressed="${on}" data-tip="${on ? '返回制作' : `打开${t}`}"><span data-w="${t}">${t}</span><svg class="i sh-arr" aria-hidden="true"><use href="#i-back"/></svg></button>`;
@@ -401,7 +404,7 @@ function wbEntryHTML(cur, hov) {
 function barHTML(s) {
   return `<div class="sh-brand"><b class="tx">烟花工坊</b><button class="sh-ver" data-sh="ver" type="button" aria-haspopup="dialog" aria-expanded="false" data-tip="更新记录"${s.upd ? ` aria-label="FireWorksLab ${VER}，更新记录 ${s.upd} 条没看过"` : ''}>FireWorksLab ${VER}${s.upd ? cntHTML(s.upd, `${s.upd} 条未读更新`) : ''}</button></div><span class="sp"></span>`
     + `<div class="sh-r"><div class="sh-g sh-g-st" role="group" aria-label="UE"><div class="sh-ueg">${ueHTML(s.ueV)}</div></div>`
-    + `<div class="sh-g sh-g-gpu"><span class="gpu sh-gpu" aria-label="显卡 ${GPU}">${GPU}</span></div>`
+    + `<div class="sh-g sh-g-gpu"><span class="gpu sh-gpu" aria-label="显卡 ${GPU}"><span class="sh-gk">显卡</span><span class="sh-gd" aria-hidden="true">·</span><span class="sh-gv">${GPU}</span></span></div>`
     + `<div class="sh-g sh-g-pg">${wbEntryHTML(s.ws)}</div></div>`;
 }
 const liveBar = () => ({ws: S.ws, impN: pendingN(), ueV: liveUE(), exp: S.br === 'other' ? 'na' : S.exp, bak: S.br === 'other' ? 'na' : S.bak, upd: S.upd});
@@ -445,11 +448,11 @@ function setWS(ws) {
 }
 /* 更新记录（点版本号）：新内容、各部分版本号（原「关于」并进来）、「全部记录」「复制版本」；打开过就算看过 */
 const UPD_LOG = '<ul class="sh-log"><li>合并为烟花工坊</li><li>保存时可放进编排</li></ul>';
-const versDL = br => `<dl><dt>制作</dt><dd>烘焙器 4.9.129</dd><dt>资源交付</dt><dd>导入器 v2.31</dd><dt>编排工作台</dt><dd>16.0.37</dd><dt>浏览器</dt><dd>${br}</dd><dt>显卡</dt><dd>${GPU}</dd></dl>`;
+const versDL = br => `<dl><dt>制作</dt><dd>烘焙器 4.9.129</dd><dt>资源交付</dt><dd>导入器 v2.31</dd><dt>编排节目</dt><dd>16.0.37</dd><dt>浏览器</dt><dd>${br}</dd><dt>显卡</dt><dd>${GPU}</dd></dl>`;
 function verMenu(a) {
   const n = S.upd, br = S.br === 'other' ? 'Firefox 132，不支持' : 'Chrome 131';
   openMenu(a, `<div class="mh">${VER}　${n ? `新内容 ${n} 条` : '更新记录'}</div>${UPD_LOG}<div class="msum sh-vers">${versDL(br)}</div><button class="mi" data-mi="all" type="button">全部记录</button><button class="mi" data-mi="copy" type="button">复制版本</button>`,
-    {cls: 'sh-about', role: 'dialog', label: '更新记录', acts: {all: () => hint(a, '样板不打开全部记录'), copy: () => { copyText(`FireWorksLab ${VER}；烘焙器 4.9.129；导入器 v2.31；编排工作台 16.0.37；${br}；${GPU}`); hint(q('#shell [data-sh="ver"]'), '已复制版本'); }},
+    {cls: 'sh-about', role: 'dialog', label: '更新记录', acts: {all: () => hint(a, '样板不打开全部记录'), copy: () => { copyText(`FireWorksLab ${VER}；烘焙器 4.9.129；导入器 v2.31；编排节目 16.0.37；${br}；${GPU}`); hint(q('#shell [data-sh="ver"]'), '已复制版本'); }},
      onClose: () => { if (S.upd) { S.upd = 0; renderShell(); } }});
 }
 function folderMenu(a, k) {
@@ -596,7 +599,7 @@ function upsertPkg(name, pc, mb) {
   return p;
 }
 
-/* ---------- 5 编排工作台（v3.4 第 3 条由「资源编排」改名） ---------- */
+/* ---------- 5 编排节目（v3.4 第 3 条由「资源编排」改名「编排工作台」，v3.5 第 10 条再改名「编排节目」） ---------- */
 function btStHTML(r) {
   const st = [];
   if (!r.rfx) st.push(`<span class="sh-st warn" data-tip="未配 ResourceFX 行：导演表、UE 里预览不可用">未进 UE</span>`);
@@ -985,10 +988,10 @@ const sheetPV = {job: null, err: null, out: 'ok'};
 function sheetHTML() {
   const B = (ueV, o) => Object.assign({ws: 'baker', impN: 2, ueV, exp: 'ok', bak: 'none', upd: 2}, o);
   const bars = [
-    ['UE 连接中（转圈）　显卡写全名　「编排工作台 →」　版本号后面的 [2] = 未读更新条数', B({k: 'wait'})],
-    ['UE 已连接　打开着「编排工作台」：600 + 薄荷下划线　更新记录都看过', B({k: 'on'}, {ws: 'wb', upd: 0})],
-    ['UE 未连接：原地「UE ● 未连接」+ 命令「重新连接」；自动重试的倒计时写在「重新连接」的悬停提示里', B({k: 'off', cd: 12})],
-    ['UE 写入中 3 / 12，点一下打开资源交付（资源交付页不在顶栏，顶栏不带下划线）', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'import'})]
+    ['UE 连接中（转圈在圆点的位置）　「显卡 · GeForce RTX 5080」　「编排节目 →」线框　版本号后面的 [2] = 未读更新条数', B({k: 'wait'})],
+    ['UE 已连接：薄荷圆点、「已连接」主文字色　打开着「编排节目」：框线薄荷 + 600　更新记录都看过', B({k: 'on'}, {ws: 'wb', upd: 0})],
+    ['UE 未连接：圆点琥珀，原地「UE 未连接」+ 命令「重新连接」；自动重试的倒计时写在「重新连接」的悬停提示里', B({k: 'off', cd: 12})],
+    ['UE 写入中 3 / 12，点一下打开资源交付（资源交付页不在顶栏，顶栏入口不亮）', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'import'})]
   ];
   const b1366 = [
     ['1366：最长的组合，UE 未连接 + 重新连接', B({k: 'off', cd: 12})],
@@ -1018,11 +1021,11 @@ function sheetHTML() {
      ['备份文件夹', [fo('bak', 'none'), fo('bak', 'ok'), fo('bak', 'perm'), fo('bak', 'na'), `<div data-shlive="fold" data-fk="bak" data-st="none">${fo('bak', 'none')}</div>`]],
      ['名称过长：170 px 宽', [null, `<div class="sh-lim">${fo('exp', 'ok', 'Export_NewYear_2026')}</div>`, `<div class="sh-lim">${fo('exp', 'perm', 'Export_NewYear_2026')}</div>`, null, null]]]);
   const pgDemo = (cur, hov, live) => `<div class="sh-pgdemo"${live ? ' data-shlive="pg"' : ''}>${wbEntryHTML(cur, hov)}</div>`;
-  const pgT = tbl(['常态：在制作或资源交付', '悬停：底色，箭头右移 2 px、变薄荷', '打开着编排工作台', '可操作：点一下打开，再点回到制作'],
-    [['编排工作台 →', [pgDemo('baker'), pgDemo('baker', true), pgDemo('wb'), pgDemo('baker', false, true)]]]);
+  const pgT = tbl(['常态：在制作或资源交付', '悬停：浮层底色，箭头右移 2 px、变薄荷', '打开着编排节目：框线、箭头薄荷', '可操作：点一下打开，再点回到制作'],
+    [['编排节目 →', [pgDemo('baker'), pgDemo('baker', true), pgDemo('wb'), pgDemo('baker', false, true)]]]);
 
   const BACK = `<button class="btn btn-text tbtn sh-back" type="button">${ic('back')}返回制作</button>`;
-  const why = `<div class="sh-why"><span>${WHY.off}</span><button class="btn btn-text tbtn" type="button">重试</button></div>`;
+  const why = `<div class="sh-why"><span>${WHY.off}</span><button class="btn btn-text tbtn" type="button">重新连接</button></div>`;
   const leftImp = `<section class="sh-left" style="grid-column:1;grid-row:2"><div class="sh-lh"><span class="sh-hv">FWL_Export</span><span class="lbl">5 个素材包</span></div></section>`;
   const impTool = `<div class="topbar sh-hd" style="grid-template-columns:var(--sh-wl) minmax(0,1fr)"><div class="sh-hs sh-hl">${BACK}</div><div class="sh-hs sh-hm"><div class="modeseg" role="group"><button aria-pressed="true" type="button">烟花导入</button><button aria-pressed="false" type="button">ResourceFX 配表</button></div><span class="sp"></span><div class="tgrp"><button class="btn btn-text tbtn" type="button">刷新</button><button class="btn btn-1 is-disabled" aria-disabled="true" data-tip="${esc(WHY.off)}" type="button">导入</button></div></div></div>`;
   const leftWB = `<section class="sh-left" style="grid-column:1;grid-row:2"><div class="tabs tabs-lg" role="tablist"><button class="tab" role="tab" data-t="效果" aria-selected="false" type="button">效果</button><button class="tab" role="tab" data-t="模板" aria-selected="true" type="button">模板</button></div></section>`;
@@ -1030,7 +1033,7 @@ function sheetHTML() {
   const wsFrame = (cols, rows, inner) => `<div class="ks-frame sh-ws" style="--pw:1366px;display:grid;grid-template-columns:${cols};grid-template-rows:var(--h-top) ${rows}">${inner}</div>`;
   const tipS = s => `<div class="tip static sm" style="margin-top:6px">${esc(s)}</div>`;
   const disBlk = `<div class="ks-row"><div><span class="ks-cap">资源交付：UE 未连接</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${esc(WHY.off)}">导入</button>${tipS(WHY.off)}</div>`
-    + `<div><span class="ks-cap">编排工作台：导入正在写 UE，三个按钮一起变灰</span><div style="display:flex;gap:2px">${['导演表', '灯光', 'UE 里预览'].map(v => `<button class="btn btn-text tbtn is-disabled" aria-disabled="true" type="button" data-tip="${WHY.impW}">${v}</button>`).join('')}</div>${tipS(WHY.impW)}</div>`
+    + `<div><span class="ks-cap">编排节目：导入正在写 UE，三个按钮一起变灰</span><div style="display:flex;gap:2px">${['导演表', '灯光', 'UE 里预览'].map(v => `<button class="btn btn-text tbtn is-disabled" aria-disabled="true" type="button" data-tip="${WHY.impW}">${v}</button>`).join('')}</div>${tipS(WHY.impW)}</div>`
     + `<div><span class="ks-cap">资源交付：编排正在写 UE，双向互锁</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${WHY.wbW}">导入</button>${tipS(WHY.wbW)}</div>`
     + `<div><span class="ks-cap">制作：其他浏览器，导出变灰</span><div class="split"><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${WHY.brFold}">导出</button><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" aria-label="导出选项" data-tip="${WHY.brFold}">${ic('cd')}</button></div>${tipS(WHY.brFold)}</div>`
     + `<div><span class="ks-cap">可操作：悬停看原因</span><button class="btn btn-1 is-disabled" aria-disabled="true" type="button" data-tip="${esc(WHY.off)}">导入</button></div></div>`;
@@ -1051,7 +1054,7 @@ function sheetHTML() {
     + `<span class="ks-cap">生成中：约 4 秒，可取消</span>${st(pvHTML({pct: 38}))}`
     + `<span class="ks-cap" style="margin-top:14px">失败：另存后；红色字，不填底色</span>${st(pvHTML(null, {src: 'save'}))}`
     + `<span class="ks-cap" style="margin-top:14px">失败：导出后</span>${st(pvHTML(null, {src: 'export'}))}`
-    + `<span class="ks-cap" style="margin-top:14px">成功：第一次放进编排；10 秒后消失；「去编排看」打开编排工作台并高亮那一行</span>${toastS('已放进编排：金曜菊-B', '去编排看')}`
+    + `<span class="ks-cap" style="margin-top:14px">成功：第一次放进编排；10 秒后消失；「去编排看」打开编排节目并高亮那一行</span>${toastS('已放进编排：金曜菊-B', '去编排看')}`
     + `<span class="ks-cap" style="margin-top:14px">成功：已在编排里的直接更新那一项，不标「有新版本」</span>${toastS('已更新编排：金曜菊-B', '去编排看')}`
     + `<span class="ks-cap" style="margin-top:14px">导出后自动打开资源交付；提示条在外壳提示区，写明来自制作</span>${toastS('制作：已导出 金锦层，PC 5 张、手机 3 张', '返回制作')}`
     + `<span class="ks-cap" style="margin-top:14px">人在别的页面时导入写完：提示条出在当前页面顶部</span>${toastS('导入：已写入 14 个资产，覆盖的 3 个已备份', '查看')}`
@@ -1074,18 +1077,18 @@ function sheetHTML() {
     + `<div><span class="ks-cap">导出文件夹已选：点开</span><div class="menu static" style="min-width:240px"><div class="mh">导出文件夹　D:\\FireWorksLab\\FWL_Export</div><div class="mi is-hover">换文件夹…</div></div></div>`
     + `<div><span class="ks-cap">编排预览没生成：详情</span><div class="menu static" style="max-width:340px"><div class="msum"><b>编排预览没生成：金曜菊-B 副本</b><dl><dt>原因</dt><dd>存储已用 4.8 / 5 GB</dd><dt>效果</dt><dd>已保存</dd></dl></div><div class="mi">重试</div><div class="mi">去编排看</div></div></div></div>`;
 
-  return `<h2>外壳与 5.0 入口</h2><p class="lead">烟花工坊 5.0，交互宪章 0.9（以「用户 2026-11-05 15:50 再改」为准）、设计规范 v3 第 11、12 节、v3.4 改动单第 1–3 条：外壳顶栏、状态栏左端的导出和备份文件夹、资源交付和编排工作台两页、导出和另存之后的去向、首次使用。没有工作区切换，默认画面就是制作；资源交付由「导出 ▾」菜单第一项打开（有待导入的包时带数字），导出完成后也自动打开。静态画出每个状态；带底色的一列和「打开」按钮可以真点。主屏的状态用样板控制条里的「UE / 导出文件夹 / 备份文件夹 / 浏览器 / 预览结果」切换。</p>`
-    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3 [2]」小号弱色，点版本号打开更新记录；右侧只放三项，组间 24 px、正中 1 px 竖线（高 16）：「UE 已连接」｜「GeForce RTX 5080」｜「编排工作台 →」；方框只表示数量，悬停写数的是什么</span></h3>${barsHTML}`
-    + blk('UE 状态', '状态样子：弱色字；正常的不画圆点，只有要处理的（未连接）在那个词前面画琥珀圆点、那个词琥珀，后面紧跟命令「重新连接」；进行中前面是转圈；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
-    + blk('编排工作台入口', '次文字色、正文字号，名称后面一个向右的箭头（16 px 网格、线宽 1.5、方头）；悬停出底色，箭头右移 2 px、变薄荷；打开着编排工作台时 600 + 薄荷下划线；再点一次回到制作', pgT)
-    + `<h3>状态栏左端：导出、备份文件夹<span>v3.4 第 1 条：从顶栏搬到状态栏最左边，「复制意见」排在后面；制作、资源交付、编排工作台三页的状态栏都有；样子和点法同 v3.3 第 16 条</span></h3>${stHTML}`
+  return `<h2>外壳与 5.0 入口</h2><p class="lead">烟花工坊 5.0，交互宪章 0.9（以「用户 2026-11-05 15:50 再改」「17:05 补充」为准）、设计规范 v3 第 11、12 节、v3.4 改动单第 1–3 条、v3.5 改动单第 9、10 条：外壳顶栏、状态栏左端的导出和备份文件夹、资源交付和编排节目两页、导出和另存之后的去向、首次使用。没有工作区切换，默认画面就是制作；资源交付由「导出 ▾」菜单第一项打开（有待导入的包时带数字），导出完成后也自动打开。静态画出每个状态；带底色的一列和「打开」按钮可以真点。主屏的状态用样板控制条里的「UE / 导出文件夹 / 备份文件夹 / 浏览器 / 预览结果」切换。</p>`
+    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3 [2]」小号弱色，点版本号打开更新记录；右侧只放三项，组间 24 px、正中 1 px 竖线（高 16）：「● UE 已连接」｜「显卡 · GeForce RTX 5080」｜「编排节目 →」；方框只表示数量，悬停写数的是什么</span></h3>${barsHTML}`
+    + blk('UE 状态', '前面一个 6 px 状态圆点，「UE」弱色：已连接薄荷圆点、「已连接」主文字色；未连接琥珀圆点、「未连接」琥珀，后面紧跟命令「重新连接」；进行中圆点的位置是转圈；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
+    + blk('编排节目入口', '1 px 线框，高 28 px，圆角 2 px，左右内边距 12 px；次文字色、正文字号，名称后面一个向右的箭头（16 px 画布）；悬停出浮层底色，箭头右移 2 px、变薄荷；打开着编排节目时框线、箭头薄荷 + 600；再点一次回到制作', pgT)
+    + `<h3>状态栏左端：导出、备份文件夹<span>v3.4 第 1 条：从顶栏搬到状态栏最左边，「复制意见」排在后面；制作、资源交付、编排节目三页的状态栏都有；样子和点法同 v3.3 第 16 条</span></h3>${stHTML}`
     + blk('文件夹', '状态样子（小号弱色字），整项是命令：悬停出底色，悬停写点了做什么。未选（导出、备份都是）「备份 ● 未选」琥珀点 + 琥珀词，悬停「选择导出文件夹」，点了直接选；已选不画圆点，悬停「更换导出文件夹」+ 完整路径，点开「换文件夹…」；需允许访问：琥珀，点一下即允许', foT, 'margin-top:8px')
-    + blk('页面工具行：资源交付、编排工作台', '工具行占满宽，栏头面色，底边一条线；左段「← 返回制作」，分段和下面的栏对齐，栏与栏之间是同一条 1 px 线；命令用文字按钮，标签弱色', `${wsFrame('var(--sh-wl) minmax(0,1fr)', '28px', impTool + leftImp + '<div style="grid-column:2;grid-row:2"></div>')}<div style="height:12px"></div>${wsFrame('var(--sh-wl) minmax(0,1fr) var(--w-right)', '28px', wbTool + leftWB + '<div style="grid-column:2;grid-row:2"></div>')}`)
+    + blk('页面工具行：资源交付、编排节目', '工具行占满宽，栏头面色，底边一条线；左段「← 返回制作」，分段和下面的栏对齐，栏与栏之间是同一条 1 px 线；命令用文字按钮，标签弱色', `${wsFrame('var(--sh-wl) minmax(0,1fr)', '28px', impTool + leftImp + '<div style="grid-column:2;grid-row:2"></div>')}<div style="height:12px"></div>${wsFrame('var(--sh-wl) minmax(0,1fr) var(--w-right)', '28px', wbTool + leftWB + '<div style="grid-column:2;grid-row:2"></div>')}`)
     + blk('原因', '资源交付主区最上面一行，主文字色，不填底色；UE 未连接时出现，包列表、逐资产清单和预检照常', wsFrame('var(--sh-wl) minmax(0,1fr)', 'auto', impTool + leftImp + `<div class="sh-main" style="grid-column:2;grid-row:2;padding-bottom:12px">${why}</div>`))
     + blk('变灰按钮 + 原因', '停用一律降透明度，悬停写原因；按钮不隐藏；同一时间只一处写 UE', disBlk)
     + `<h3>首次使用与另存对话框<span>同一份对话框样式；默认焦点在主按钮，Esc 关闭</span></h3>${dlgs}`
     + pvBlk
-    + `<h3>编排工作台「基础模板」条目<span>一行依次是缩略图、名称、副信息、右侧状态；「未进 UE」会挡住导演表、UE 里预览，琥珀色字；「预览没生成」是错误，红色字；都不画图形；两种状态同时出现时「未进 UE」在上</span></h3>${btBlk}`
+    + `<h3>编排节目「基础模板」条目<span>一行依次是缩略图、名称、副信息、右侧状态；「未进 UE」会挡住导演表、UE 里预览，琥珀色字；「预览没生成」是错误，红色字；都不画图形；两种状态同时出现时「未进 UE」在上</span></h3>${btBlk}`
     + `<h3>资源交付：包列表与主区<span>导出后自动打开资源交付并选中刚导出的包；主区放大显示选中的包（v3.3 第 17 条），没选中写一行「选一个包查看」；点「导入」先预检，要覆盖又没选备份位置时，写之前先问</span></h3>${pkgBlk}`
     + `<h3>外壳浮层<span>同样板的菜单样式：浮层面色、1 px 线、阴影</span></h3>${menus}`;
 }

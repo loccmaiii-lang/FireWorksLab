@@ -1,7 +1,7 @@
-<!-- ===== 烟花工坊 5.0 外壳（body_shell.html，E 样板 v3.4） =====
-     宪章 0.9「用户 2026-11-05 15:50 再改」：没有工作区切换，默认画面就是制作；顶栏右侧「UE」｜显卡｜「编排工作台 →」；
+<!-- ===== 烟花工坊 5.0 外壳（body_shell.html，E 样板 v3.5） =====
+     宪章 0.9「用户 2026-11-05 15:50 再改」「17:05 补充」：没有工作区切换，默认画面就是制作；顶栏右侧「● UE 已连接」｜「显卡 · 型号」｜「编排节目 →」；
      「资源交付」由「导出 ▾」菜单第一项打开；导出、备份文件夹在状态栏左端（制作区 #stShell、两页的 .sh-stf）。
-     页面加载后由 script_shell.js 搬进样板的槽位：#wsImport（资源交付）、#wsWB（编排工作台）打开哪个才搬进 #app（放在 #wsBaker 后面），
+     页面加载后由 script_shell.js 搬进样板的槽位：#wsImport（资源交付）、#wsWB（编排节目）打开哪个才搬进 #app（放在 #wsBaker 后面），
      没打开的留在这里；#shKit 放进 #sbarShell。#shell 的内容、两个列表、全表 #sheetShell 一节由脚本按状态生成。槽位不在时，这一块留在原处、保持隐藏。 -->
 <!-- 图标一律用样板 body_main.html 开头的 SVG symbol（「← 返回制作」= i-back）；外壳不再自带图标 -->
 <div id="shParts" hidden>
@@ -29,10 +29,10 @@
   <footer class="status"><div class="st-l"><span class="sh-stf"></span></div><div class="st-r"><span data-pvm></span></div></footer>
 </div>
 
-<!-- 编排工作台（v3.4 第 3 条由「资源编排」改名）：工具行占满宽：「← 返回制作」｜编排原有的工具（低对比占位块）｜会写 UE 的三个命令；
+<!-- 编排节目（v3.4 第 3 条由「资源编排」改名「编排工作台」，v3.5 第 10 条再改名）：工具行占满宽：「← 返回制作」｜编排原有的工具（低对比占位块）｜会写 UE 的三个命令；
      左栏「效果 / 模板」大号标签 → 基础模板列表（列表加 .sb-auto）；中栏画面和时间轴（占位）；右栏检查器（占位）；状态栏左端同制作区放导出、备份 -->
-<div class="ws sh-ws" id="wsWB" hidden aria-label="编排工作台">
-  <div class="topbar sh-hd" id="wbTool" role="toolbar" aria-label="编排工作台工具">
+<div class="ws sh-ws" id="wsWB" hidden aria-label="编排节目">
+  <div class="topbar sh-hd" id="wbTool" role="toolbar" aria-label="编排节目工具">
     <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>返回制作</button></div>
     <div class="sh-hs sh-hm"><i class="sh-ph" style="width:148px" aria-hidden="true"></i><i class="sh-ph" style="width:24px;margin-left:12px" aria-hidden="true"></i><i class="sh-ph" style="width:24px" aria-hidden="true"></i><i class="sh-ph" style="width:88px;margin-left:12px" aria-hidden="true"></i><span class="sp"></span><i class="sh-ph" style="width:56px" aria-hidden="true"></i><i class="sh-ph" style="width:56px" aria-hidden="true"></i></div>
     <div class="sh-hs sh-hr"><span class="sp"></span>

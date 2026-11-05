@@ -1,12 +1,14 @@
 /* ---------- 外壳（style_shell.css） ---------- */
 /* =====================================================================
-   烟花工坊 5.0 外壳，E 样板 v3.4（对话框9，2026-11-05）
-   依据：交互宪章 0.9（以「用户 2026-11-05 15:50 再改」为准）、协作/方案/E设计规范_v3_2026-11-05.md 第 1–6、11、12 节；
-   E样板_v3.1_改动单.md 第 4、9、10、11 条、v3.2 第 11–13 条、v3.3 第 16–19 条、v3.4 第 1–3、13 条（和规范冲突处以改动单为准，后一份为准）。
-   v3.4：顶栏右侧只放「UE」｜显卡全名｜「编排工作台 →」；导出、备份文件夹搬到状态栏左端（#stShell / .sh-stf）；滚动区用制作区的通用类 .sb-auto。
+   烟花工坊 5.0 外壳，E 样板 v3.5（对话框9，2026-11-05）
+   依据：交互宪章 0.9（以「用户 2026-11-05 15:50 再改」和「17:05 补充」为准）、协作/方案/E设计规范_v3_2026-11-05.md 第 1–6、11、12 节；
+   E样板_v3.1_改动单.md 第 4、9、10、11 条、v3.2 第 11–13 条、v3.3 第 16–19 条、v3.4 第 1–3、13 条、v3.5 第 9、10 条（和规范冲突处以改动单为准，后一份为准）。
+   v3.4：顶栏右侧只放「UE」｜显卡全名｜入口；导出、备份文件夹搬到状态栏左端（#stShell / .sh-stf）；滚动区用制作区的通用类 .sb-auto。
+   v3.5：「● UE 已连接」（6 px 状态圆点，已连接薄荷、未连接琥珀）｜「显卡 · GeForce RTX 5080」｜「编排节目 →」（1 px 线框，高 28）。
    字号三级分用途（v3.3 第 6、19 条）：大号只给产品名和当前位置（资源交付选中的包名）；中号给命令、名称、数值、正文；小号给状态读数、计数、次要说明。
-   图标（v3.3 第 7、19 条）：一律用样板 #iconDefs 的 16 px 符号，按 16 px 画（不缩成 12 / 14 px，线宽才一致），线宽 1.5、方头、尖角、不填面。
-   0 兜底  1 外壳顶栏与状态栏左端  2 资源交付 / 编排工作台两页  3 列表条目  4 浮层补充  5 编排预览（状态栏）  6 样板开关  7 全表一节
+   图标（v3.3 第 7、19 条；v3.5 第 1 条）：一律用样板 #iconDefs 的符号，16 px 画布按 16 px 显示（不缩成 12 / 14 px），线宽 1.5、方头、尖角、不填面；
+   颜色跟所在命令走：默认次文字色，悬停主文字色，开着或当前薄荷。外壳自己不画图标。
+   0 兜底  1 外壳顶栏与状态栏左端  2 资源交付 / 编排节目两页  3 列表条目  4 浮层补充  5 编排预览（状态栏）  6 样板开关  7 全表一节
    颜色、字号、间距一律取样板 style_main.css 的 token；样板还没有的写成 var(--新, 旧值)；
    组件类（.btn / .tbtn / .modeseg / .seg / .tab / .menu / .dialog / .toast）以样板为准，这里只补外壳自己的部件（sh-*）。
    线只有一种：1 px 的 var(--line)；填底色只表示「选中 / 开着」，标题、原因条、错误条都不填底色。
@@ -17,7 +19,7 @@
 
 /* ---------- 1 外壳顶栏（规范第 11 节） ---------- */
 /* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线（同样板 .app>.shell 用内阴影画，两边叠在一起不会变成 2 px）。左：产品名 + 版本号；
-   右：只放三项（v3.4 第 3 条）「UE」｜显卡｜「编排工作台 →」，组间 24 px，组间正中 1 px 竖线、高 16（v3.2 第 12 条） */
+   右：只放三项（v3.4 第 3 条）「UE」｜显卡｜「编排节目 →」，组间 24 px，组间正中 1 px 竖线、高 16（v3.2 第 12 条） */
 .shell{--sh-gi:12px;--sh-gg:24px;display:flex;align-items:center;min-width:0;height:var(--h-shell);padding:0 var(--s3);box-shadow:inset 0 -1px 0 var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
 .shell.sh-static{overflow:hidden}
 /* 产品名「烟花工坊」大号 600；版本号「FireWorksLab 5.0.3」小号弱色，是打开更新记录的命令（点击区 28 px）；未读数跟在后面，计数框（v3.1 改动单第 11 条） */
@@ -28,7 +30,7 @@
 .sh-ver:active{background:var(--press, var(--g5))}
 /* 计数只有一种写法（第 11 条）：小号数字放在 1 px 方框里，跟在名称后面 */
 .sh-cnt{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:16px;height:16px;margin:0;padding:0 3px;border:1px solid var(--g6);border-radius:0;color:var(--t2);font-size:var(--fs1);line-height:14px;font-weight:var(--fw1);font-variant-numeric:tabular-nums}
-/* 右侧三项（v3.4 第 3 条）：UE ｜ 显卡 ｜ 编排工作台 →；组间 24 px，正中一条 1 px 竖线 */
+/* 右侧三项（v3.4 第 3 条）：UE ｜ 显卡 ｜ 编排节目 →；组间 24 px，正中一条 1 px 竖线 */
 .sh-r{flex:0 1 auto;align-self:stretch;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
 .sh-g{position:relative;display:flex;align-items:center;gap:var(--sh-gi);min-width:0}
 .sh-g+.sh-g::before{content:"";position:absolute;left:calc(var(--sh-gg) / -2);top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
@@ -48,6 +50,12 @@
 .sh-ue.is-write{padding:0 6px}
 .sh-ue.is-write:hover{color:var(--t2)}
 .sh-ue.is-na{opacity:.5}
+/* UE（v3.5 第 9 条）：整项前面一个 6 px 状态圆点（转圈占同一个位置），「UE」弱色；已连接：薄荷圆点、「已连接」主文字色；
+   未连接：琥珀圆点、「未连接」琥珀，后面紧跟命令「重新连接」 */
+.sh-ue.is-dot::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--p4)}
+.sh-ue.is-dot[data-tone="warn"]::before{background:var(--w3)}
+.sh-stat .sh-sv.is-on{color:var(--t1)}
+.sh-stat .sh-sv.is-off{color:var(--w3)}
 /* 文件夹（v3.3 第 16 条：没有单独的「设置」；v3.4 第 1 条：放在状态栏左端）：「导出 …」「备份 …」整项是命令，静止时和其他状态一样是小号弱色字；
    悬停出底色、字亮一级（看得出能点；「UE 已连接」不能点，悬停不变），悬停提示写点了做什么；名字过长省略号，完整路径写在悬停提示里。
    未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词 */
@@ -59,10 +67,11 @@
 .sh-fold.is-na{opacity:.5;cursor:default;background:none}
 /* 命令「重新连接」（v3.4 第 3 条，原地紧跟「UE ● 未连接」）：命令样式（次文字色、静止无底、悬停出底色），和状态的弱色字分开 */
 .sh-retry{flex:none;padding:0 6px;color:var(--t2)}
-/* 「编排工作台 →」（v3.4 第 3 条）：入口样式，次文字色、正文字号，悬停出底色、主文字色；打开着编排工作台时薄荷下划线 + 600（预留 600 的宽度，换字重不挤动顶栏）。
-   箭头：样板 #i-back 左右翻转（16 px 网格、线宽 1.5、方头、尖角）；悬停右移 2 px、变薄荷 */
-.sh-g-pg{align-self:stretch;gap:2px}
-.sh-pg{position:relative;display:inline-flex;align-items:center;gap:6px;height:100%;padding:0 10px;color:var(--t2);font-size:var(--fs2);white-space:nowrap;cursor:pointer}
+/* 「编排节目 →」（v3.4 第 3 条；v3.5 第 10 条改名、加框，让人看得出能点）：1 px 线框（同制作区命令组 .bx 的线），高 28，圆角 2，左右内边距 12；
+   次文字色、正文字号；悬停出浮层底色、主文字色；打开着编排节目时框线和箭头薄荷 + 600（预留 600 的宽度，换字重不挤动顶栏）。v3.4 的薄荷下划线去掉（框线代替）。
+   箭头：样板 #i-back 左右翻转（16 px 画布）；悬停右移 2 px、变薄荷 */
+.sh-g-pg{gap:2px}
+.sh-pg{position:relative;display:inline-flex;align-items:center;gap:6px;height:var(--h-hit, 28px);padding:0 12px;border:1px solid var(--line);border-radius:var(--r2);color:var(--t2);font-size:var(--fs2);white-space:nowrap;cursor:pointer}
 .sh-go .sh-arr{width:var(--ico, 16px);height:var(--ico, 16px);transform:scaleX(-1);transition:translate .12s ease-out}
 .sh-go:hover .sh-arr,.sh-go.is-hover .sh-arr{translate:2px 0;color:var(--p4)}
 @media (prefers-reduced-motion:reduce){.sh-go .sh-arr{transition:none}}
@@ -70,10 +79,11 @@
 .sh-pg>span:first-child::after{content:attr(data-w);height:0;overflow:hidden;visibility:hidden;font-weight:var(--fw2)}
 .sh-pg:hover,.sh-pg.is-hover{background:var(--hov);color:var(--t1)}
 .sh-pg:active{background:var(--press)}
-.sh-pg[aria-pressed="true"]{color:var(--t1);font-weight:var(--fw2)}
-.sh-pg[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--p4)}
-.sh-pg:focus-visible{outline-offset:-2px}
-.shell .sh-gpu{flex:none;margin:0;color:var(--t3);font-size:var(--fs1);cursor:default}
+.sh-pg[aria-pressed="true"]{border-color:var(--p4);color:var(--t1);font-weight:var(--fw2)}
+.sh-go[aria-pressed="true"] .sh-arr{color:var(--p4)}   /* v3.5 第 1 条：当前的图标用薄荷 */
+/* 显卡（v3.5 第 9 条，照用户的参考图）：「显卡 · GeForce RTX 5080」，「显卡」和间隔点弱色，型号次文字色；小号 */
+.shell .sh-gpu{flex:none;display:inline-flex;align-items:center;gap:4px;margin:0;color:var(--t3);font-size:var(--fs1);cursor:default}
+.sh-gpu .sh-gv{color:var(--t2)}
 /* 状态栏左端的导出、备份（v3.4 第 1 条）：制作区槽位 #stShell、两页的 .sh-stf；组内 12，「复制意见」排在后面。
    按钮高度同状态栏里的命令（样板 .status .btn）；静止弱色、悬停出底色字亮一级（v3.3 第 16 条）；文件夹名过长截断，完整路径在悬停提示里 */
 .sh-stg{display:inline-flex;align-items:center;gap:12px;min-width:0;flex:0 1 auto;margin-right:12px}   /* 和后面的「复制意见」也隔 12（样板 .st-l 自己不留间距） */
@@ -86,7 +96,7 @@
    那个按钮在样板 body_main.html 里，样板去掉 <kbd> 以后这一条可以删 */
 #status [data-act="keys"] kbd{display:none}
 
-/* ---------- 2 页面：资源交付（#wsImport）、资源编排（#wsWB）（规范第 2、3 节） ---------- */
+/* ---------- 2 页面：资源交付（#wsImport）、编排节目（#wsWB）（规范第 2、3 节） ---------- */
 /* 右栏同制作区（460 / 1366 下 380）；左栏比制作区宽 72 px（--sh-wl）：素材包、基础模板一行要放下名称、副信息和右侧状态（编排资源库原来约 410 px）。
    栏与栏之间、画面和时间轴之间、工具行底边都是同一条 1 px 线。工具行占满宽，分段和下面的栏对齐：左段放「← 返回制作」，左栏从工具行下开始 */
 .sh-ws{--sh-wl:calc(var(--w-left) + 72px)}
@@ -170,7 +180,7 @@
 .sh-phrow>div{flex:1;display:flex;flex-direction:column;gap:6px}
 .sh-phrow .sh-ph:first-child{width:var(--thumb);height:var(--thumb)}
 [data-pvm]:empty{display:none}
-/* 资源编排的中栏：画面和时间轴之间是同一条线 */
+/* 编排节目的中栏：画面和时间轴之间是同一条线 */
 .sh-wbmid{display:grid;grid-template-rows:minmax(0,1fr) auto;min-width:0;min-height:0}
 .sh-stage{position:relative;background:var(--surf-stage, var(--sky))}
 .sh-stage .sh-ph{position:absolute;background:var(--g1)}
@@ -257,4 +267,4 @@
 .ks-t td .sh-ueg,.ks-t td .sh-fp{vertical-align:middle}
 .ks-t td .sh-fp{display:inline-flex}
 .sh-lim{display:flex;width:170px}
-.sh-pgdemo{display:inline-flex;align-items:stretch;gap:12px;height:40px;padding:0 12px;background:var(--surf-chrome, var(--bg));border-bottom:1px solid var(--line)}
+.sh-pgdemo{display:inline-flex;align-items:center;gap:12px;height:40px;padding:0 12px;background:var(--surf-chrome, var(--bg));border-bottom:1px solid var(--line)}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E 样板 v3 外壳走查（对话框9，2026-11-05；v3.3 外壳第 16–19 条；v3.4 外壳第 1–3 条和第 13 条）
+"""E 样板 v3 外壳走查（对话框9，2026-11-05；v3.3 外壳第 16–19 条；v3.4 外壳第 1–3 条和第 13 条；v3.5 外壳第 9、10 条和外壳页面里的第 1 条）
 
 覆盖：交互宪章 0.9 的全部入口和状态（含「用户 2026-11-05 改定」第 1–7 条）、交互走查 P4 / P8 / P9、
 设计规范 v3 第 3–6、11、12 节里外壳能量的部分（尺寸、线、面、颜色用途、字号字重、浮层位置），
@@ -9,6 +9,10 @@ v3.4（宪章 0.9「15:50 再改」）：顶栏右侧只放「UE」｜显卡全�
 「资源交付」是「导出 ▾」菜单第一项（制作区画 [data-exp=deliv] 和计数位 #expDelivN）。和这次决定冲突的旧检查（顶栏里的资源交付、
 设置、显卡在最右、文件夹在顶栏、顶栏不画图标）改写成新规则，没有删。
 制作区还没合入这两处时，走查在合成出来的临时文件里补上（只改 /tmp 的合成结果，不改制作区源码），并在结果里写一行「注意」；--no-shim 不补。
+v3.5（宪章 0.9「17:05 补充」）：「● UE 已连接」（6 px 状态圆点，已连接薄荷、未连接琥珀，「已连接」主文字色）｜「显卡 · GeForce RTX 5080」（「显卡」弱色、
+型号次文字色）｜「编排节目 →」（改名；1 px 线框、高 28、圆角 ≤ 2、左右内边距 12；悬停浮层底色；在编排节目时框线薄荷）。和这次决定冲突的旧检查
+（「UE 已连接」不画圆点、弱色字；显卡只写型号、弱色；入口下划线；「编排工作台」这个名字）改写成新规则，没有删。外壳页面里的图标按第 1 条查：16 px 显示、
+符号来自 #iconDefs、16 px 画布、线宽 1.5、方头尖角、不填面，外壳自己的图标默认次文字色。
 
 用法（在 src/ 下）：
   python3 checks/check_shell.py                    # 先跑 build.py 合成 /tmp/E_B.html，再走查
@@ -301,10 +305,10 @@ def t_bar(p, size):
     ck(f'改定1-没有工作区切换{S}', p.ev("""(() => { const b = __T.qq('#shell button, #shell [role=tab]').map(x => __T.txt(x));
         return !__T.q('#shell [data-sh="ws"], #shell .sh-ws-tabs, #shell [role=tablist]') && !b.some(t => ['制作', '导入', '编排'].includes(t)); })()"""))
     ck(f'改定6-顶栏没有「更新记录」一项{S}', p.ev("!__T.qq('#shell button, #shell span').some(x => __T.txt(x) === '更新记录' || /^更新记录 ?\\d*$/.test(__T.txt(x)))"))
-    # v3.4 第 3 条：右侧只放三项「UE 已连接」｜「GeForce RTX 5080」｜「编排工作台 →」（原来的规则「状态｜页面入口｜显卡在最右」改写成这条）
+    # v3.4 第 3 条：右侧只放三项（原来的规则「状态｜页面入口｜显卡在最右」改写成这条）；v3.5 第 9、10 条：「UE 已连接」｜「显卡 · GeForce RTX 5080」｜「编排节目 →」
     g = p.ev("""__T.qq('#shell .sh-r > .sh-g').map(x => ({c: x.className, x: __T.rect(x).x, r: __T.rect(x).r, t: __T.txt(x)}))""")
-    ok = len(g) == 3 and [x['t'] for x in g] == ['UE 已连接', 'GeForce RTX 5080', '编排工作台'] and all(g[i]['r'] <= g[i + 1]['x'] for i in range(2))
-    ck(f'v3.4-3 顶栏右侧只放三项：UE 已连接｜GeForce RTX 5080｜编排工作台 →{S}', ok, [x['t'] for x in g])
+    ok = len(g) == 3 and [x['t'] for x in g] == ['UE 已连接', '显卡 · GeForce RTX 5080', '编排节目'] and all(g[i]['r'] <= g[i + 1]['x'] for i in range(2))
+    ck(f'v3.4-3 / v3.5-9、10 顶栏右侧只放三项：UE 已连接｜显卡 · GeForce RTX 5080｜编排节目 →{S}', ok, [x['t'] for x in g])
     nf = p.ev("""({fold: __T.qq('#shell [data-sh=fold], #shell .sh-fold, #shell [data-fk]').length, deliv: __T.qq('#shell button, #shell span').filter(x => /^资源交付/.test(__T.txt(x))).length,
         set: __T.qq('#shell .sh-set, #shell [data-sh=foldSet]').length + __T.qq('#shell button, #shell span, #status button, #status span').filter(__T.vis).filter(x => __T.txt(x) === '设置').length})""")
     ck(f'v3.4-1 顶栏没有导出、备份文件夹（搬到状态栏左端）{S}', nf['fold'] == 0, nf)
@@ -312,9 +316,13 @@ def t_bar(p, size):
     ck(f'v3.3-16 顶栏和状态栏都没有单独的「设置」{S}', nf['set'] == 0, nf)
     sh = p.ev("__T.rect('#shell')")
     pos = p.ev("({ue: __T.rect('#shell .sh-g-st'), gpu: __T.rect('#shell .sh-gpu'), ent: __T.rect('#shell .sh-go'), pad: parseFloat(__T.cs('#shell', 'paddingRight'))})")
-    ck(f'v3.4-3「编排工作台 →」在最右，显卡在 UE 和它之间（原「显卡在最右」改写）{S}', near(pos['ent']['r'], sh['r'] - pos['pad'], 1.5) and pos['ue']['r'] < pos['gpu']['x'] < pos['gpu']['r'] < pos['ent']['x'], pos)
-    gt = p.ev("({t: __T.txt('#shell .sh-gpu'), tip: __T.q('#shell .sh-gpu').dataset.tip || ''})")
-    ck(f'v3.4-3 显卡写全名「GeForce RTX 5080」（v1 的样板数据，不缩写）{S}', gt['t'] == 'GeForce RTX 5080', gt)
+    ck(f'v3.4-3「编排节目 →」在最右，显卡在 UE 和它之间（原「显卡在最右」改写）{S}', near(pos['ent']['r'], sh['r'] - pos['pad'], 1.5) and pos['ue']['r'] < pos['gpu']['x'] < pos['gpu']['r'] < pos['ent']['x'], pos)
+    # v3.5 第 9 条（照用户的参考图）：「显卡 · GeForce RTX 5080」——「显卡」弱色，中间一个间隔点，型号次文字色、写全名（原「只写型号」改写）
+    gt = p.ev("""(() => { const g = __T.q('#shell .sh-gpu'), k = g.querySelector('.sh-gk'), d = g.querySelector('.sh-gd'), v = g.querySelector('.sh-gv');
+        return {t: __T.txt(g), k: k && [__T.txt(k), __T.cs(k, 'color')], d: d && [__T.txt(d), __T.cs(d, 'color'), d.getAttribute('aria-hidden')], v: v && [__T.txt(v), __T.cs(v, 'color')],
+                order: k && d && v ? __T.rect(k).r <= __T.rect(d).x && __T.rect(d).r <= __T.rect(v).x : false, label: g.getAttribute('aria-label'), t2: __T.tok('--t2'), t3: __T.tok('--t3')}; })()""")
+    ck(f'v3.5-9 显卡写「显卡 · GeForce RTX 5080」：「显卡」弱色、间隔点、型号次文字色（v3.4「写全名」保留）{S}', gt['t'] == '显卡 · GeForce RTX 5080' and gt['order'] and gt['k'] == ['显卡', gt['t3']]
+       and gt['d'] and gt['d'][0] == '·' and gt['d'][1] == gt['t3'] and gt['v'] == ['GeForce RTX 5080', gt['t2']] and gt['label'] == '显卡 GeForce RTX 5080', gt)
     # 第 11 节：高度、面、底线
     H = 40 if size == 1920 else 36
     ck(f'规范11-顶栏高 {H}{S}', near(sh['h'], H), sh['h'])
@@ -354,7 +362,13 @@ def t_bar(p, size):
     st = p.ev(f"""(() => {{ const one = {one_st};
         return {{ue: one(__T.q('#shell .sh-ue')), slot: !!__T.q('#stShell'), exp: __T.q('#stShell [data-fk=exp]') && one(__T.q('#stShell [data-fk=exp]')), bak: __T.q('#stShell [data-fk=bak]') && one(__T.q('#stShell [data-fk=bak]')),
                 w3: __T.tok('--w3'), t2: __T.tok('--t2'), t3: __T.tok('--t3')}}; }})()""")
-    ck(f'v3.2-11「UE 已连接」：正常，不画圆点，弱色字{S}', st['ue']['t'] == 'UE 已连接' and not st['ue']['dot'] and st['ue']['before'] in ('none', 'normal') and st['ue']['c'] == st['t3'] and all(c == st['t3'] for _, c in st['ue']['v']), st['ue'])
+    # v3.5 第 9 条：「UE 已连接」要亮一点——前面 6 px 薄荷圆点，「UE」弱色，「已连接」主文字色（原 v3.2-11「不画圆点、弱色字」改写成这条）
+    ud = p.ev("""(() => { const e = __T.q('#shell .sh-ue'), b = getComputedStyle(e, '::before'), v = e.querySelector('.sh-sv'), r = __T.rect(e), vr = __T.rect(v);
+        const rg = document.createRange(); rg.setStart(e.firstChild.nodeType === 3 ? e.firstChild : e, 0); rg.setEnd(e.firstChild.nodeType === 3 ? e.firstChild : e, e.firstChild.nodeType === 3 ? 2 : 0); const ur = rg.getBoundingClientRect();
+        return {t: __T.txt(e), w: b.width, h: b.height, r: b.borderTopLeftRadius, bg: b.backgroundColor, c: __T.cs(e, 'color'), v: __T.cs(v, 'color'), dotFirst: b.content !== 'none' && ur.left - r.x >= 6 + 4 - 0.5,
+                p4: __T.tok('--p4'), t1: __T.tok('--t1'), t3: __T.tok('--t3')}; })()""")
+    ck(f'v3.5-9「UE 已连接」：前面一个 6 px 薄荷圆点，「UE」弱色，「已连接」主文字色{S}', ud['t'] == 'UE 已连接' and ud['w'] == '6px' and ud['h'] == '6px' and ud['r'] == '50%' and ud['bg'] == ud['p4'] and ud['dotFirst']
+       and ud['c'] == ud['t3'] and ud['v'] == ud['t1'], ud)
     # v3.4 第 1 条：状态栏左端（制作区留的槽位 #stShell）：「导出 FWL_Export」「备份 ● 未选」，「复制意见」排在后面
     sb = p.ev("""(() => { const s = __T.q('#stShell'); if (!s) return null; const l = __T.q('#status .st-l'), cp = __T.q('#status [data-act=copyNotes]'), e = __T.q('#stShell [data-fk=exp]'), k = __T.q('#stShell [data-fk=bak]');
         return {first: l.firstElementChild === s, x: __T.rect(e).x - __T.rect('#status').x, order: [...s.querySelectorAll('[data-fk]')].map(x => x.dataset.fk), cpAfter: cp ? __T.rect(cp).x > __T.rect(k).r : null,
@@ -383,36 +397,38 @@ def t_bar(p, size):
         ck(f'v3.3-16 {nm}悬停出底色、标签亮一级{S}', x['hov']['bg'] == tk['hov'] and x['hov']['k'] == tk['t2'] and x['rest']['k'] == tk['t3'], x)
         ck(f'v3.3-16 {nm}悬停写「{tip.split("　")[0]}」{S}', x['rest']['tip'] == tip and x['tipShown'], x['rest']['tip'])
     ck(f'v3.3-16「UE 已连接」不能点：悬停不出底色，和能点的分得开{S}', hv['ue']['rest']['tag'] != 'BUTTON' and hv['ue']['hov']['bg'] in TR and hv['ue']['rest']['cur'] != 'pointer', hv['ue'])
-    # v3.4 第 3 条：「编排工作台 →」
-    ent = """() => { const x = __T.q('#shell .sh-go'), s = x.querySelector('svg.sh-arr'), u = s && s.querySelector('use'), cs = s && getComputedStyle(s), t = x.querySelector('span');
+    # v3.4 第 3 条：入口；v3.5 第 10 条：改名「编排节目」，1 px 线框、高 28、圆角 ≤ 2、左右内边距 12
+    ent = """() => { const x = __T.q('#shell .sh-go'), s = x.querySelector('svg.sh-arr'), u = s && s.querySelector('use'), cs = s && getComputedStyle(s), t = x.querySelector('span'), xs = getComputedStyle(x);
         return {t: __T.txt(x), on: x.getAttribute('aria-pressed'), fw: +__T.cs(x, 'fontWeight'), fs: parseFloat(__T.cs(x, 'fontSize')), c: __T.cs(x, 'color'), u: getComputedStyle(x, '::after').content, bg: __T.cs(x, 'backgroundColor'), h: __T.rect(x).h, tip: x.dataset.tip,
+                bd: ['Top', 'Right', 'Bottom', 'Left'].map(d => [xs[`border${d}Width`], xs[`border${d}Style`], xs[`border${d}Color`]]), rad: parseFloat(xs.borderTopLeftRadius), pl: parseFloat(xs.paddingLeft), pr: parseFloat(xs.paddingRight),
                 svg: s && {href: u && u.getAttribute('href'), w: __T.rect(s).w, h: __T.rect(s).h, tf: cs.transform, sw: cs.strokeWidth, cap: cs.strokeLinecap, join: cs.strokeLinejoin, fill: cs.fill, c: cs.color, tr: cs.translate, after: __T.rect(s).x - __T.rect(t).r}}; }"""
     e0 = p.ev(f'({ent})()')
-    tk = p.ev("({hov: __T.tok('--hov'), t1: __T.tok('--t1'), t2: __T.tok('--t2'), p4: __T.tok('--p4')})")
-    ck(f'v3.4-3「资源编排」改名「编排工作台」，静止：次文字色、正文字号、400、无下划线、无底{S}', e0['t'] == '编排工作台' and e0['on'] == 'false' and e0['fw'] == 400 and e0['fs'] == fs[1] and e0['c'] == tk['t2'] and e0['u'] in ('none', 'normal') and e0['bg'] in TR, e0)
+    tk = p.ev("({hov: __T.tok('--hov'), ov: __T.tok('--ov'), t1: __T.tok('--t1'), t2: __T.tok('--t2'), p4: __T.tok('--p4'), line: __T.tok('--line')})")
+    ck(f'v3.5-10「编排工作台」改名「编排节目」，静止：次文字色、正文字号、400、无下划线、无底{S}', e0['t'] == '编排节目' and e0['on'] == 'false' and e0['fw'] == 400 and e0['fs'] == fs[1] and e0['c'] == tk['t2'] and e0['u'] in ('none', 'normal') and e0['bg'] in TR, e0)
+    ck(f'v3.5-10「编排节目 →」画 1 px 线框（同制作区命令组的线），高 28，圆角 ≤ 2，左右内边距 12{S}', all(b == ['1px', 'solid', tk['line']] for b in e0['bd']) and near(e0['h'], 28, 0.3) and e0['rad'] <= 2 and e0['pl'] == 12 and e0['pr'] == 12, e0)
     sv = e0['svg'] or {}
     ck(f'v3.4-3 名称后面向右的箭头：样板 #i-back 左右翻转，16 × 16，线宽 1.5，方头尖角，不填面{S}', sv.get('href') == '#i-back' and near(sv['w'], 16, 0.3) and near(sv['h'], 16, 0.3) and sv['tf'] == 'matrix(-1, 0, 0, 1, 0, 0)'
        and sv['sw'] == '1.5px' and sv['cap'] == 'square' and sv['join'] == 'miter' and sv['fill'] == 'none' and 0 <= sv['after'] <= 8, sv)
-    ck(f'规范2-「编排工作台 →」可点区域 ≥ 28，悬停写「打开编排工作台」{S}', e0['h'] >= 28 and e0['tip'] == '打开编排工作台', e0)
+    ck(f'规范2-「编排节目 →」可点区域 ≥ 28，悬停写「打开编排节目」{S}', e0['h'] >= 28 - 0.3 and e0['tip'] == '打开编排节目', e0)
     p.pg.hover('#shell .sh-go')
     p.pg.wait_for_timeout(220)
     e1 = p.ev(f'({ent})()')
-    ck(f'v3.4-3「编排工作台 →」悬停：出底色、主文字色，箭头右移 2 px、变薄荷{S}', e1['bg'] == tk['hov'] and e1['c'] == tk['t1'] and e1['svg']['tr'] == '2px' and e1['svg']['c'] == tk['p4'] and sv.get('tr') in ('none', '0px'), (e1, sv.get('tr')))
+    ck(f'v3.4-3 / v3.5-10「编排节目 →」悬停：出浮层底色、主文字色，框线不变，箭头右移 2 px、变薄荷{S}', e1['bg'] == tk['hov'] == tk['ov'] and e1['c'] == tk['t1'] and e1['bd'] == e0['bd'] and e1['svg']['tr'] == '2px' and e1['svg']['c'] == tk['p4'] and sv.get('tr') in ('none', '0px'), (e1, sv.get('tr')))
     p.pg.mouse.move(5, 600)
-    # 粗体只给当前位置和标题（v3.1 第 9 条）：顶栏里 600 只有产品名（打开着编排工作台时在 t_pages 里查）
+    # 粗体只给当前位置和标题（v3.1 第 9 条）：顶栏里 600 只有产品名（打开着编排节目时在 t_pages 里查）
     bold = p.ev("__T.fonts(['#shell']).filter(x => x.fw >= 600).map(x => x.t)")
     ck(f'v3.1-9 顶栏粗体只有产品名{S}', bold == ['烟花工坊'], bold)
-    gp2 = p.ev("({fs: parseFloat(__T.cs('#shell .sh-gpu', 'fontSize')), c: __T.cs('#shell .sh-gpu', 'color'), t3: __T.tok('--t3')})")
-    ck(f'规范11-显卡小号弱色{S}', gp2['fs'] == fs[0] and gp2['c'] == gp2['t3'], gp2)
+    gp2 = p.ev("({fs: __T.qq('#shell .sh-gpu, #shell .sh-gpu *').map(e => parseFloat(__T.cs(e, 'fontSize'))), c: __T.cs('#shell .sh-gpu', 'color'), t3: __T.tok('--t3')})")
+    ck(f'规范11 / v3.5-9 显卡小号；底色弱色（型号次文字色见上一项）{S}', all(x == fs[0] for x in gp2['fs']) and gp2['c'] == gp2['t3'], gp2)
     fo = p.ev("__T.fonts(['#shell', '#stShell'])")
     ck(f'规范1-顶栏、状态栏左端字重只有 400 / 600{S}', all(x['fw'] in (400, 600) for x in fo), [x for x in fo if x['fw'] not in (400, 600)])
     ck(f'规范1-顶栏、状态栏左端字号只用三级{S}', all(x['fs'] in fs for x in fo), [x for x in fo if x['fs'] not in fs])
-    # v3.3 第 19 条（按第 6 条分用途）：大号只给产品名；中号给命令（编排工作台入口）；小号给读数和计数（版本号、UE、显卡、计数，状态栏的导出、备份）
+    # v3.3 第 19 条（按第 6 条分用途）：大号只给产品名；中号给命令（编排节目入口）；小号给读数和计数（版本号、UE、显卡、计数，状态栏的导出、备份）
     use = p.ev("""(() => { const f = s => __T.qq(s).filter(__T.vis).map(e => parseFloat(__T.cs(e, 'fontSize')));
         return {big: __T.fonts(['#shell']).filter(x => x.fs === %d).map(x => x.t), mid: f('#shell .sh-pg'), small: f('#shell .sh-ver, #shell .sh-ue, #shell .sh-cnt, #shell .sh-gpu, #stShell .sh-fold')}; })()""" % fs[2])
     ck(f'v3.3-19 字号分用途：大号只给产品名、入口中号、状态读数和计数小号{S}', use['big'] == ['烟花工坊'] and use['mid'] and all(x == fs[1] for x in use['mid']) and use['small'] and all(x == fs[0] for x in use['small']), use)
     ic = p.ev("__T.qq('#shell svg').filter(__T.vis).map(s => s.getAttribute('class'))")
-    ck(f'v3.4-3 顶栏只有一个图标：「编排工作台」后面的箭头（状态只用文字、圆点、转圈；原「顶栏不画图标」改写）{S}', ic == ['i sh-arr'], ic)
+    ck(f'v3.4-3 顶栏只有一个图标：「编排节目」后面的箭头（状态只用文字、圆点、转圈；原「顶栏不画图标」改写）{S}', ic == ['i sh-arr'], ic)
     p.shot(f'shell_1_bar_{size}.png', clip={'x': 0, 'y': 0, 'width': size, 'height': H + 8})
     if not A.no_shots:
         p.pg.hover('#shell .sh-go')
@@ -441,7 +457,7 @@ def t_version(p):
     if m:
         ck('改定6-标题写新内容条数', m['head'] == '5.0.3 新内容 2 条', m['head'])
         ck('改定6-列出新内容', m['log'] == ['合并为烟花工坊', '保存时可放进编排'], m['log'])
-        ck('改定6 / v3.4-3 各部分版本号（原「关于」并进来）；编排工作台改名、显卡写全名', all(s in m['dl'] for s in ('制作', '烘焙器 4.9.129', '资源交付', '导入器 v2.31', '编排工作台', '16.0.37', '浏览器', '显卡', 'GeForce RTX 5080')) and '资源编排' not in m['dl'], m['dl'])
+        ck('改定6 / v3.4-3 / v3.5-10 各部分版本号（原「关于」并进来）；编排节目改名、显卡写全名', all(s in m['dl'] for s in ('制作', '烘焙器 4.9.129', '资源交付', '导入器 v2.31', '编排节目', '16.0.37', '浏览器', '显卡', 'GeForce RTX 5080')) and '资源编排' not in m['dl'] and '编排工作台' not in m['dl'], m['dl'])
         ck('改定6-「全部记录」「复制版本」', m['items'] == ['全部记录', '复制版本'], m['items'])
         ck('规范12-更新记录浮层：浮层面色 + 1 px 线 + 阴影，在版本号下方', m['bg'] == m['ov'] and m['bw'] == '1px' and m['sh'] != 'none' and 0 <= m['top'] <= 9, m)
     p.shot('shell_7_version_menu.png', clip={'x': 0, 'y': 0, 'width': 700, 'height': 360})
@@ -461,7 +477,7 @@ def t_version(p):
 
 
 def t_pages(p, size):
-    """改定 3、4、5 + v3.4 第 2、3 条：「导出 ▾」第一项打开资源交付、「编排工作台 →」打开编排、回到制作（两种方式）；只换显示不丢状态；规范第 11 节下划线"""
+    """改定 3、4、5 + v3.4 第 2、3 条 + v3.5 第 10 条：「导出 ▾」第一项打开资源交付、「编排节目 →」打开编排、回到制作（两种方式）；只换显示不丢状态；当前页入口框线薄荷"""
     S = f'@{size}'
     p.fresh(size)
     logon(p)
@@ -500,32 +516,32 @@ def t_pages(p, size):
     ck(f'改定5-点「← 返回制作」回到制作{S}', st['ws'] == 'baker' and st['bk'] and not st['imp'] and not st['inApp'], st)
     after = p.ev("({sel: KIT.sel(), t: KIT.t(), sc: (__T.q('#pbody') || {}).scrollTop || 0})")
     ck(f'0.4-切页只换显示：选择、时间、滚动都在{S}', after['sel'] == mid['sel'] and after['t'] == mid['t'] and abs(after['sc'] - mid['sc']) <= 1, (mid, after))
-    # 编排工作台 + 「← 返回制作」
+    # 编排节目 + 「← 返回制作」
     w0 = p.ev("__T.rect('#shell .sh-go').w")
     p.click('#shell .sh-go')
     st = p.ev("({ws: SHELL.state().ws, wb: __T.vis('#wsWB'), bk: __T.vis('#wsBaker'), on: __T.q('#shell .sh-go').getAttribute('aria-pressed'), tip: __T.q('#shell .sh-go').dataset.tip, back: __T.vis('#wbTool .sh-back')})")
-    ck(f'v3.4-3 点「编排工作台 →」打开编排工作台，页面左上「← 返回制作」保留{S}', st['ws'] == 'wb' and st['wb'] and not st['bk'] and st['back'], st)
+    ck(f'v3.4-3 点「编排节目 →」打开编排节目，页面左上「← 返回制作」保留{S}', st['ws'] == 'wb' and st['wb'] and not st['bk'] and st['back'], st)
     ck(f'改定5-亮着的入口悬停写「返回制作」{S}', st['on'] == 'true' and st['tip'] == '返回制作', st)
-    u = p.ev("""(() => { const x = __T.q('#shell .sh-go[aria-pressed=true]'), a = getComputedStyle(x, '::after'), r = __T.rect(x), sh = __T.rect('#shell');
-        return {h: a.height, bg: a.backgroundColor, p4: __T.tok('--p4'), fw: +__T.cs(x, 'fontWeight'), c: __T.cs(x, 'color'), t1: __T.tok('--t1'), bottom: r.b, shb: sh.b, w: parseFloat(a.width), tw: r.w}; })()""")
-    ck(f'v3.4-3 在编排工作台时入口加薄荷下划线（2 px，压在顶栏底线上）{S}', u['h'] == '2px' and u['bg'] == u['p4'] and near(u['bottom'], u['shb'], 0.6) and near(u['w'], u['tw'], 0.6), u)
+    u = p.ev("""(() => { const x = __T.q('#shell .sh-go[aria-pressed=true]'), a = getComputedStyle(x, '::after'), xs = getComputedStyle(x);
+        return {after: a.content, bd: ['Top', 'Right', 'Bottom', 'Left'].map(d => [xs[`border${d}Width`], xs[`border${d}Color`]]), h: __T.rect(x).h, p4: __T.tok('--p4'), fw: +__T.cs(x, 'fontWeight'), c: __T.cs(x, 'color'), t1: __T.tok('--t1')}; })()""")
+    ck(f'v3.5-10 在编排节目时入口框线变薄荷（原 v3.4「薄荷下划线」改写：框线代替下划线，不再画下划线）{S}', all(b == ['1px', u['p4']] for b in u['bd']) and u['after'] in ('none', 'normal') and near(u['h'], 28, 0.3), u)
     ck(f'规范4-当前页入口 600 + 主文字色{S}', u['fw'] == 600 and u['c'] == u['t1'], u)
     bold = p.ev("__T.fonts(['#shell']).filter(x => x.fw >= 600).map(x => x.t)")
-    ck(f'v3.1-9 打开编排工作台时顶栏粗体只有产品名和当前页入口{S}', bold == ['烟花工坊', '编排工作台'], bold)
+    ck(f'v3.1-9 打开编排节目时顶栏粗体只有产品名和当前页入口{S}', bold == ['烟花工坊', '编排节目'], bold)
     ck(f'规范11-入口换 600 不挤动顶栏{S}', near(p.ev("__T.rect('#shell .sh-go').w"), w0, 0.5))
     sf = p.ev("""(() => { const s = __T.q('#wsWB .status .st-l .sh-stf'); return s && __T.qq('[data-fk]', s).map(__T.txt); })()""")
-    ck(f'v3.4-1 编排工作台状态栏最左边也是「导出」「备份」{S}', sf == ['导出 FWL_Export', '备份 未选'], sf)
+    ck(f'v3.4-1 编排节目状态栏最左边也是「导出」「备份」{S}', sf == ['导出 FWL_Export', '备份 未选'], sf)
     p.shot(f'shell_4_wb_on_{size}.png', clip={'x': size - 520, 'y': 0, 'width': 520, 'height': (40 if size == 1920 else 36) + 8})
     # 再点一次亮着的入口 → 回到制作
     p.click('#shell .sh-go')
     st = p.ev("({ws: SHELL.state().ws, bk: __T.vis('#wsBaker'), wb: __T.vis('#wsWB'), inApp: !!__T.q('#app #wsWB'), on: __T.qq('#shell .sh-pg[aria-pressed=true]').length})")
-    ck(f'改定5-再点亮着的「编排工作台」回到制作{S}', st['ws'] == 'baker' and st['bk'] and not st['wb'] and not st['inApp'] and st['on'] == 0, st)
-    # 资源交付页上直接点「编排工作台 →」
+    ck(f'改定5-再点亮着的「编排节目」回到制作{S}', st['ws'] == 'baker' and st['bk'] and not st['wb'] and not st['inApp'] and st['on'] == 0, st)
+    # 资源交付页上直接点「编排节目 →」
     open_deliv(p)
     p.click('#shell .sh-go')
-    ck(f'v3.4-3 资源交付页直接点「编排工作台 →」换过去{S}', p.ev("SHELL.state().ws === 'wb' && __T.vis('#wsWB') && !__T.vis('#wsImport') && !__T.q('#app #wsImport')"))
+    ck(f'v3.4-3 资源交付页直接点「编排节目 →」换过去{S}', p.ev("SHELL.state().ws === 'wb' && __T.vis('#wsWB') && !__T.vis('#wsImport') && !__T.q('#app #wsImport')"))
     p.click('#wbTool .sh-back')
-    ck(f'改定5-编排工作台点「← 返回制作」回到制作{S}', p.ev("SHELL.state().ws === 'baker' && __T.vis('#wsBaker') && !__T.vis('#wsWB')"))
+    ck(f'改定5-编排节目点「← 返回制作」回到制作{S}', p.ev("SHELL.state().ws === 'baker' && __T.vis('#wsBaker') && !__T.vis('#wsWB')"))
     # 键盘：菜单里 Enter 也能打开资源交付
     p.ev('KIT.openExport()')
     p.pg.wait_for_selector('.menu [data-exp="deliv"]', timeout=3000)
@@ -652,8 +668,9 @@ def t_import(p):
     colors = p.ev("({p4: __T.tok('--p4'), p5: __T.tok('--p5'), w3: __T.tok('--w3'), e3: __T.tok('--e3')})")
     hits = p.ev("c => __T.scan(['#shell', '#wsImport'], c)", colors)
     mint = [h for h in hits if h['c'] in ('p4', 'p5')]
-    bad = [h for h in mint if not re.search(r'sh-pg.*::after|sh-stat.*::before|#impGo', h['el'])]
-    ck('规范5-资源交付页薄荷只在：当前页下划线、UE 圆点、本页主操作「导入」', not bad, bad or mint)
+    cur_ent = lambda h: re.search(r'sh-pg\.sh-go$', h['el']) and h['p'].startswith('border')   # v3.5 第 10 条：当前页入口的框线（原「当前页下划线」）
+    bad = [h for h in mint if not (cur_ent(h) or re.search(r'sh-stat.*::before|#impGo', h['el']))]
+    ck('规范5-资源交付页薄荷只在：当前页入口框线、UE 圆点、本页主操作「导入」', not bad, bad or mint)
     shell_warn = lambda h: re.search(r'sh-stat.*::before|sh-sv\.is-warn', h['el'])   # 顶栏要处理的状态（备份 未选）：琥珀点 + 琥珀词
     ck('规范5-资源交付页（正常状态）没有琥珀和红色（顶栏要处理的状态除外）', not [h for h in hits if h['c'] in ('w3', 'e3') and not (h['c'] == 'w3' and shell_warn(h))], [h for h in hits if h['c'] in ('w3', 'e3')])
     fo = p.ev("__T.fonts(['#wsImport'])")
@@ -768,7 +785,7 @@ def t_interlock(p):
     p.ev("SHELL.ws('wb')")
     p.ev("SHELL.ws('baker')")
     p.click('#shell .sh-ue')
-    ck('①-编排写入中点 UE 状态打开编排工作台', p.ev('SHELL.state().ws') == 'wb')
+    ck('①-编排写入中点 UE 状态打开编排节目', p.ev('SHELL.state().ws') == 'wb')
     ok = p.wait("!SHELL.S.wb.busy", 3000)
     ck('⑦-编排写完：命令恢复、操作处写结果', ok and p.wait("__T.ovl('.sh-hint').map(__T.txt).includes('已写入 UE：导演表')", 1500))
     # 导出文件夹未选 / 需允许 / 浏览器不支持
@@ -855,10 +872,10 @@ def t_folders_ue(p):
     grab(p)
     x0 = p.ev("__T.rect('#shell .sh-g-st').x")
     p.ev("SHELL.set('ue', 'off')")
-    r = p.ev("""(() => { const w = __T.q('#shell .sh-ue .sh-sv.is-warn'), rb = __T.q('#shell .sh-retry');
-        return {t: __T.txt('#shell .sh-ueg'), g: __T.txt('#shell .sh-g-st'), tip: __T.q('#shell .sh-ue').dataset.tip, dot: w && getComputedStyle(w, '::before').backgroundColor, w3: __T.tok('--w3'), v: __T.cs('#shell .sh-ue .sh-sv', 'color'),
+    r = p.ev("""(() => { const u = __T.q('#shell .sh-ue'), b = getComputedStyle(u, '::before'), rb = __T.q('#shell .sh-retry');
+        return {t: __T.txt('#shell .sh-ueg'), g: __T.txt('#shell .sh-g-st'), tip: u.dataset.tip, dot: b.content !== 'none' && b.width === '6px' && b.backgroundColor, w3: __T.tok('--w3'), v: __T.cs('#shell .sh-ue .sh-sv', 'color'), between: !!u.querySelector('.sh-sv.is-warn'),
                 rc: __T.cs(rb, 'color'), t2: __T.tok('--t2'), tag: rb.tagName, h: __T.rect(rb).h, rtip: rb.dataset.tip, x: __T.rect('#shell .sh-g-st').x, after: __T.rect(rb).x - __T.rect('#shell .sh-ue').r, inShell: __T.q('#shell').contains(rb)}; })()""")
-    ck('v3.4-3 UE 未连接：原地「UE ● 未连接」+ 紧跟命令「重新连接」，不挪到别处', r['t'] == 'UE 未连接 重新连接' and r['g'] == r['t'] and r['inShell'] and r['tag'] == 'BUTTON' and 0 <= r['after'] <= 16 and r['dot'] == r['w3'] and r['v'] == r['w3'] and r['rc'] == r['t2'], r)
+    ck('v3.4-3 / v3.5-9 UE 未连接：前面的圆点变琥珀（同一个位置），原地「UE 未连接」+ 紧跟命令「重新连接」，不挪到别处', r['t'] == 'UE 未连接 重新连接' and r['g'] == r['t'] and r['inShell'] and r['tag'] == 'BUTTON' and 0 <= r['after'] <= 16 and r['dot'] == r['w3'] and not r['between'] and r['v'] == r['w3'] and r['rc'] == r['t2'], r)
     ck('v3.4-3「重新连接」：命令点击区 ≥ 28；悬停写自动重试的倒计时', r['h'] >= 27.5 and r['rtip'] == '12 秒后自动重新连接', r)
     ck('①-UE 悬停写地址和上次连上的时间（一行）', bool(re.match(r'^127\.0\.0\.1:17780　上次连上 \d\d:\d\d$', r['tip'])), r['tip'])
     p.pg.hover('#shell .sh-retry')
@@ -948,7 +965,7 @@ def t_export(p):
     ck('P8 / 规范12-提示条在外壳提示区：当前页工具行下方 8 px、居中', near(pos['top'], 8, 1) and near(pos['cx'], 0, 1.5), pos)
     p.shot('shell_8_after_export.png')
     grab(p)
-    # 切到编排工作台：提示条跟过去；回到制作：「返回制作」收起
+    # 切到编排节目：提示条跟过去；回到制作：「返回制作」收起
     p.click('#shell .sh-go')
     pos = p.ev("""(() => { const t = __T.ovl('.sh-toast')[0]; if (!t) return null; const r = __T.rect(t), tb = __T.rect('#wbTool'); return {top: r.y - tb.b, act: __T.vis(t.querySelector('[data-r=act]'))}; })()""")
     ck('P8-切页时提示条跟着挪到当前页顶部', pos and near(pos['top'], 8, 1) and pos['act'], pos)
@@ -978,7 +995,7 @@ def t_export(p):
     r = p.ev("({t: __T.ovl('.sh-toast > span').map(__T.txt), act: __T.ovl('.sh-toast [data-r=act]').map(__T.txt), nv: SHELL.BT.find(r => r.name === '金曜菊-B').newVer || false})")
     ck('P4-勾了、已在编排里：「已更新编排：金曜菊-B」，不标「有新版本」', ok and r['t'] == ['已更新编排：金曜菊-B'] and r['act'] == ['去编排看'] and not r['nv'], r)
     p.click('.sh-toast [data-r="act"]')
-    ck('④-「去编排看」打开编排工作台、选中那一行', p.ev("SHELL.state().ws === 'wb' && __T.q('#wbList [aria-selected=true]').dataset.id === 'kiku'"))
+    ck('④-「去编排看」打开编排节目、选中那一行', p.ev("SHELL.state().ws === 'wb' && __T.q('#wbList [aria-selected=true]').dataset.id === 'kiku'"))
     # P4：没勾、已在编排里 → 编排那一项「有新版本　更新」
     p.ev("SHELL.ws('baker')")
     p.ev("SHELL.speed(0.15)")
@@ -1088,7 +1105,7 @@ def t_save(p):
 
 
 def t_wb(p, size):
-    """⑥ 基础模板条目；编排工作台页的线、面、颜色；搜索、筛选、空状态"""
+    """⑥ 基础模板条目；编排节目页的线、面、颜色；搜索、筛选、空状态"""
     S = f'@{size}'
     p.fresh(size)
     logon(p)
@@ -1124,12 +1141,13 @@ def t_wb(p, size):
     comp = [h for h in mint if 'tabs-sub' in h['el']]
     for h in comp:
         info(f'规范5：样板 .tabs-sub 当前项下划线是薄荷（{h["el"]}），薄荷五处里没有二级标签')
-    bad = [h for h in mint if h not in comp and not re.search(r'sh-pg.*::after|sh-stat.*::before|tabs-lg.*\.tab.*::after', h['el'])]
-    ck(f'规范5-资源编排页薄荷只在：当前页下划线、UE 圆点、「效果 / 模板」下划线{S}', not bad, bad or mint)
+    bad = [h for h in mint if h not in comp and not ((re.search(r'sh-pg\.sh-go$', h['el']) and h['p'].startswith('border')) or re.search(r'sh-go > svg\.i\.sh-arr$|sh-stat.*::before|tabs-lg.*\.tab.*::after', h['el']))]
+    ck(f'规范5-编排节目页薄荷只在：当前页入口框线和箭头、UE 圆点、「效果 / 模板」下划线{S}', not bad, bad or mint)
+    ck(f'v3.5-10 编排节目页：入口框线是薄荷（扫描里看得到）{S}', any(re.search(r'sh-pg\.sh-go$', h['el']) and h['p'].startswith('border') for h in mint), mint)
     amb = [h for h in hits if h['c'] == 'w3' and not re.search(r'sh-st\.warn|sh-stat.*::before|sh-sv\.is-warn', h['el'])]
-    ck(f'规范5-资源编排页琥珀只给「未进 UE」和顶栏要处理的状态{S}', not amb, amb)
+    ck(f'规范5-编排节目页琥珀只给「未进 UE」和顶栏要处理的状态{S}', not amb, amb)
     red = [h for h in hits if h['c'] == 'e3' and not re.search(r'sh-st|sh-err', h['el'])]
-    ck(f'规范5-资源编排页红色只给错误{S}', not red, red)
+    ck(f'规范5-编排节目页红色只给错误{S}', not red, red)
     fs = (12, 13, 15) if size == 1920 else (11, 12, 14)
     fo = p.ev("__T.fonts(['#wsWB'])")
     ck(f'规范1-资源编排页字号三级、字重 400 / 600{S}', all(x['fs'] in fs and x['fw'] in (400, 600) for x in fo), [x for x in fo if x['fs'] not in fs or x['fw'] not in (400, 600)][:5])
@@ -1205,7 +1223,7 @@ def t_sweep(p, size):
             p.ev("(() => { SHELL.S.imp.sel = 'mang'; SHELL.render(); })()")
         r = p.ev(f"""(() => {{ const w = __T.q('{root}'), c = __T.clip(['{root} > .topbar', '{root} > .sh-left', '{root} .sh-mh', '{root} .sh-hero']); return {{sw: w.scrollWidth - w.clientWidth, sh: w.scrollHeight - w.clientHeight, cut: c.cut, ell: c.ell, out: c.out,
             segs: __T.qq('{root} .sh-hs').map(s => s.scrollWidth - s.clientWidth)}}; }})()""")
-        ck(f'溢出-{"资源交付" if ws == "import" else "编排工作台"}不溢出、不截断{S}', r['sw'] <= 0 and r['sh'] <= 0 and not r['cut'] and not r['out'] and all(x <= 0 for x in r['segs']), r)
+        ck(f'溢出-{"资源交付" if ws == "import" else "编排节目"}不溢出、不截断{S}', r['sw'] <= 0 and r['sh'] <= 0 and not r['cut'] and not r['out'] and all(x <= 0 for x in r['segs']), r)
     if size == 1366:
         p.ev("SHELL.ws('import')")
         p.shot('shell_10_import_1366.png')
@@ -1232,13 +1250,13 @@ def t_kit_sheet(p):
     p.pg.wait_for_timeout(300)
     s = p.ev("""(() => { const s = __T.q('#sheetShell'); return {n: s ? s.children.length : 0, bars: __T.qq('#sheetShell .sh-sbar').length, live: __T.qq('#sheetShell [data-shlive]').map(x => x.dataset.shlive),
         h: __T.qq('#sheetShell h2, #sheetShell h3').slice(0, 3).map(__T.txt), ws: __T.qq('#sheetShell .sh-pg').length, st: __T.qq('#shSheetSt .status').length,
-        pg: __T.qq('#sheetShell .sh-sbar .sh-pg').map(__T.txt).every(t => t === '编排工作台'), old: /资源编排|RTX 4070/.test(s.textContent)}; })()""")
-    ck('全表-外壳一节生成（顶栏、状态栏左端、编排工作台入口）', s['n'] > 0 and s['bars'] >= 4 and s['ws'] >= 2 and s['st'] == 5 and s['pg'] and not s['old'], s)
+        pg: __T.qq('#sheetShell .sh-sbar .sh-pg').map(__T.txt).every(t => t === '编排节目'), old: /资源编排|编排工作台|RTX 4070/.test(s.textContent)}; })()""")
+    ck('全表-外壳一节生成（顶栏、状态栏左端、编排节目入口）；没有旧名「编排工作台」', s['n'] > 0 and s['bars'] >= 4 and s['ws'] >= 2 and s['st'] == 5 and s['pg'] and not s['old'], s)
     ck('全表-可操作实例（页面标签、预览、列表）', all(k in s['live'] for k in ('pg',)), s['live'])
     # 全表里点页面标签实例：切换下划线，不切真页面
     p.ev("__T.q('#sheetShell [data-shlive=pg] .sh-pg[data-pg=wb]').scrollIntoView({block: 'center'})")
     p.click('#sheetShell [data-shlive="pg"] .sh-pg[data-pg="wb"]')
-    ck('全表-「编排工作台 →」实例可点（只换样子）', p.ev("__T.q('#sheetShell [data-shlive=pg] .sh-pg[data-pg=wb]').getAttribute('aria-pressed') === 'true' && SHELL.state().ws === 'baker'"))
+    ck('全表-「编排节目 →」实例可点（只换样子）', p.ev("__T.q('#sheetShell [data-shlive=pg] .sh-pg[data-pg=wb]').getAttribute('aria-pressed') === 'true' && SHELL.state().ws === 'baker'"))
     if not A.no_shots:
         top = p.ev("__T.q('#sheetShell').getBoundingClientRect().top + scrollY")
         p.ev(f"scrollTo(0, {top})")
@@ -1279,8 +1297,37 @@ def t_hooks(p):
     p.fresh(url=p.url)
 
 
+def t_icons(p):
+    """v3.5 第 1 条（外壳页面里的图标）+ 第 10 条（改名）：外壳用的图标都是样板 #iconDefs 的符号，16 px 画布、按 16 px 显示，线宽 1.5、方头尖角、不填面；
+    外壳自己的图标（返回、进入箭头、写入完成的勾）静止时次文字色。外壳的文字、悬停提示、无障碍名称里没有「编排工作台」"""
+    p.fresh()
+    one = """() => __T.qq('#shell svg.i, #stShell svg.i, #wsImport svg.i, #wsWB svg.i').filter(__T.vis).map(s => { const u = s.querySelector('use'), h = u && u.getAttribute('href'), sym = h && document.querySelector('#iconDefs ' + h), c = getComputedStyle(s);
+        return {id: h, def: !!sym, vb: sym && sym.getAttribute('viewBox'), w: __T.rect(s).w, h: __T.rect(s).h, sw: c.strokeWidth, cap: c.strokeLinecap, join: c.strokeLinejoin, fill: c.fill, c: c.color,
+                own: !!s.closest('.sh-back, .sh-wr') || s.classList.contains('sh-arr'), cur: !!s.closest('[aria-pressed=true]'), where: __T.path(s)}; })"""
+    seen = []
+    for ws in ('baker', 'import', 'wb'):
+        if ws != 'baker':
+            p.ev(f"SHELL.ws('{ws}')")
+            p.pg.wait_for_timeout(80)
+        seen += p.ev(f'({one})()')
+    t2, p4 = p.ev("[__T.tok('--t2'), __T.tok('--p4')]")
+    ids = sorted({x['id'] for x in seen if x['id']})
+    ck('v3.5-1 外壳里的图标都用样板 #iconDefs 的符号、16 px 画布（' + ' '.join(ids) + '）', seen and all(x['def'] and x['vb'] == '0 0 16 16' for x in seen), [x for x in seen if not (x['def'] and x['vb'] == '0 0 16 16')][:4])
+    ck('v3.5-1 外壳里的图标一律按 16 px 显示（不缩到 14 / 12）', all(near(x['w'], 16, 0.3) and near(x['h'], 16, 0.3) for x in seen), [x for x in seen if not near(x['w'], 16, 0.3)][:4])
+    ck('v3.5-1 外壳里的图标线宽 1.5、方头、尖角、不填面', all(x['sw'] == '1.5px' and x['cap'] == 'square' and x['join'] == 'miter' and x['fill'] == 'none' for x in seen), [x for x in seen if x['sw'] != '1.5px' or x['cap'] != 'square'][:4])
+    own = [x for x in seen if x['own']]
+    ck('v3.5-1 外壳自己的图标（返回、进入箭头）静止时次文字色；当前页入口的箭头薄荷', own and all(x['c'] == (p4 if x['cur'] else t2) for x in own) and any(x['cur'] for x in own), own)
+    p.ev("SHELL.ws('baker')")
+    # 第 10 条：所有出现「编排工作台」的地方一起改名（文字、悬停提示、无障碍名称、更新记录、全表一节）
+    old = p.ev("""(() => { const rs = ['#shell', '#stShell', '#shParts', '#wsImport', '#wsWB', '#sheetShell', '#sbPreview'].map(s => __T.q(s)).filter(Boolean), out = [];
+        rs.forEach(r => [r, ...__T.qq('*', r)].forEach(e => { const t = [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('') + ' ' + ['aria-label', 'data-tip', 'title', 'placeholder'].map(a => e.getAttribute(a) || '').join(' ');
+            if (/编排工作台|资源编排/.test(t)) out.push(__T.path(e)); }));
+        return out; })()""")
+    ck('v3.5-10 外壳的文字、悬停提示、无障碍名称里没有「编排工作台」「资源编排」', not old, old[:6])
+
+
 def t_scroll(p):
-    """v3.4 第 13 条：外壳的滚动区（资源交付的包列表和主区、编排工作台的列表、外壳的浮层）加制作区的通用类 .sb-auto；外壳不再自己写 scrollbar-*"""
+    """v3.4 第 13 条：外壳的滚动区（资源交付的包列表和主区、编排节目的列表、外壳的浮层）加制作区的通用类 .sb-auto；外壳不再自己写 scrollbar-*"""
     p.fresh()
     css = open(os.path.join(SRC, 'style_shell.css'), encoding='utf-8').read()
     css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
@@ -1310,8 +1357,8 @@ def t_scroll(p):
 # ================================================================= 文案自查表
 HAN = re.compile(r'[\u4e00-\u9fff]')
 WORD = re.compile(r'[A-Za-z0-9_][A-Za-z0-9_.:\\/\-]*')
-PROPER = ['烟花工坊', '编排工作台', 'FireWorksLab', 'ResourceFX', 'GPUECli', 'Chrome', 'Edge', 'UE', 'RTX', 'NVIDIA', 'GeForce']
-# 「编排工作台」是工作台的名字（v3.4 第 3 条用户定的入口名，同「烟花工坊」），按专有名词不计字数
+PROPER = ['烟花工坊', 'FireWorksLab', 'ResourceFX', 'GPUECli', 'Chrome', 'Edge', 'UE', 'RTX', 'NVIDIA', 'GeForce']
+# v3.4 把「编排工作台」按专有名词不计字数；v3.5 第 10 条改名「编排节目」（4 个字，按钮上限内），不再按专有名词放宽
 LIM = {'按钮': ('≤ 4（汉字）', 4, 'han'), '菜单项': ('≤ 6（汉字）', 6, 'han'), '标签': ('≤ 6（汉字）', 6, 'han'),   # 菜单项、标签同制作区 text_audit.py '表头': ('≤ 4（汉字）', 4, 'han'),
        '悬停': ('≤ 16', 16, 'all'), '悬停（第二行）': ('≤ 16', 16, 'all'), '原因': ('≤ 16', 16, 'all'), '提示条': ('≤ 20', 20, 'all'), '状态': ('≤ 8', 8, 'all'),
        '空状态': ('≤ 16', 16, 'all'), '菜单标题': ('≤ 16', 16, 'all'), '对话框标题': ('≤ 16', 16, 'all'), '占位文字': ('≤ 16', 16, 'all'), '信息': ('≤ 16', 16, 'all')}
@@ -1411,7 +1458,7 @@ def main():
         steps = [('顶栏 1920', lambda: t_bar(p, 1920)), ('顶栏 1366', lambda: t_bar(p, 1366)), ('更新记录', lambda: t_version(p)),
                  ('两页 1920', lambda: t_pages(p, 1920)), ('两页 1366', lambda: t_pages(p, 1366)), ('资源交付', lambda: t_import(p)),
                  ('变灰与互锁', lambda: t_interlock(p)), ('文件夹与 UE', lambda: t_folders_ue(p)), ('其他浏览器', lambda: t_browser(p)),
-                 ('导出', lambda: t_export(p)), ('另存与预览', lambda: t_save(p)), ('编排工作台 1920', lambda: t_wb(p, 1920)), ('编排工作台 1366', lambda: t_wb(p, 1366)), ('滚动条', lambda: t_scroll(p)),
+                 ('导出', lambda: t_export(p)), ('另存与预览', lambda: t_save(p)), ('编排节目 1920', lambda: t_wb(p, 1920)), ('编排节目 1366', lambda: t_wb(p, 1366)), ('图标与改名', lambda: t_icons(p)), ('滚动条', lambda: t_scroll(p)),
                  ('溢出 1920', lambda: t_sweep(p, 1920)), ('溢出 1366', lambda: t_sweep(p, 1366)), ('样板开关与全表', lambda: t_kit_sheet(p)), ('挂钩', lambda: t_hooks(p))]
         for name, fn in steps:
             n0 = len(p.errs)
@@ -1424,6 +1471,7 @@ def main():
     rows = copy_table()
     bad_copy = [r for r in rows if not r[5]]
     ck('文案-自查表全部在上限内、无禁用写法', not bad_copy, bad_copy[:6])
+    ck('v3.5-10 文案自查表里没有「编排工作台」', not [r for r in rows if '编排工作台' in r[2]], [r for r in rows if '编排工作台' in r[2]][:4])
     write_table(rows)
     ok = [r for r in RES if r[1]]
     bad = [r for r in RES if not r[1]]
