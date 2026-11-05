@@ -4,7 +4,7 @@
   'use strict';
   if (window.FWLImporter && !window.FWLImporter.__mock) return;   // 真模块已在，替身让路
 
-  const listeners = { status: new Set(), progress: new Set(), packages: new Set() };
+  const listeners = { status: new Set(), progress: new Set(), packages: new Set(), log: new Set() };
   const emit = (ev, v) => listeners[ev].forEach(cb => { try { cb(v); } catch (e) { console.error(e); } });
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const iso = (minAgo) => new Date(Date.now() - minAgo * 60000).toISOString().replace(/\.\d+Z$/, 'Z');
@@ -161,12 +161,13 @@
   }
 
   window.FWLImporter = {
+    configure() { return {}; },
     version: '5.0.0', engineVersion: 'mock', __mock: {
       scenario(name) { scenario = name; seed(); plans.clear(); emit('packages', packages.map(pub)); return reconnect().then(() => name); },   // 等连接状态落定再返回
       get name() { return scenario; },
     },
     status, reconnect, publish, scan, precheck, importPkg,
-    thumbnailURL(pkgId) { const p = packages.find(x => x.id === pkgId); return p ? p.__thumb : null; },
+    async thumbnailURL(pkgId) { const p = packages.find(x => x.id === pkgId); return p ? p.__thumb : null; },   // 和真模块一样要 await
     on(event, cb) { if (!listeners[event]) throw err('BAD_EVENT', '没有这个事件：' + event); listeners[event].add(cb); return () => listeners[event].delete(cb); },
   };
 })();

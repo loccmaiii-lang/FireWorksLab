@@ -36,7 +36,7 @@ def sync_file_runtime(shared,output=OUTPUT,setup=None):
 
 def main():
     args=argparse.ArgumentParser()
-    args.add_argument("--design-system",default=Path("F:/FireWorksLab/tool/design-system"),type=Path)
+    args.add_argument("--design-system",default=Path(__file__).resolve().parents[1]/"design-system",type=Path)
     shared=args.parse_args().design_system
     assert (shared/"tokens.css").is_file() and (shared/"components.css").is_file()
     originals={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in [build.SOURCE,build.OUTPUT]}

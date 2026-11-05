@@ -72,7 +72,7 @@ def build():
     preview='\n'.join((HERE/name).read_text(encoding='utf-8') for name in ['show-bp-data.js','show-text.js','show-resource-data.js','show-resources.js','show-catalog.js','show-fan.js','show-plan.js','show-sequence.js','show-sequence-scene.js','show-ui.js','show-project.js','show-project-sample.js','show-project-import.js','show-project-store.js','show-project-export.js','show-project-scene.js','show-project-ui.js'])
     s=replace_once(s,'checkConn();\n</script>',preview+'\nWorkbench.init();\nWorkbenchPresentation.init();\nWorkbenchScroll.init();\nMaterialWorkbench.init();\ncheckConn();\n</script>')
     # 颜色和烘焙器/编排器同源；只注入颜色，不改变本构建器的功能或布局。
-    theme_path=Path('F:/FireWorksLab/tool/design-system/sync_importer_colors.py')
+    theme_path=Path(__file__).resolve().parents[1]/'design-system'/'sync_importer_colors.py'   # 仓库内 tool/design-system（5.0 起不写死 F 盘）
     spec=importlib.util.spec_from_file_location('df_importer_colors',theme_path)
     theme=importlib.util.module_from_spec(spec);spec.loader.exec_module(theme)
     s=theme.apply_theme(s)

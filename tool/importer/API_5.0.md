@@ -9,7 +9,7 @@
 | 文件 | 用途 |
 | --- | --- |
 | `tool/importer/dist/fwl-importer.mock.js` | **替身**：接口相同，返回假数据，不连 UE、不写文件夹。今晚就能接页面 |
-| `tool/importer/dist/fwl-importer.js` | **真模块**（11-06 早上前推）：一个 JS 文件，不依赖 8034 / local_http / Python，能直接内联进单文件 |
+| `tool/importer/dist/fwl-importer.js` | **真模块**（约 570 KB）：一个 JS 文件，不依赖 8034 / local_http / Python，能直接内联进单文件。由 `python -X utf8 -B tool/importer/build-5.0.py` 生成，源码是 `tool/importer/fwl50/host.js` + 原导入器源码 |
 
 两份都只做一件事：在 `window` 上挂 `FWLImporter`，不碰页面 DOM、不加样式、不占别的全局名。合成时内联进 `<script>` 即可；放在主文档或 iframe srcdoc 里都行（阶段 0 实测两种都能直连 UE、共用存储）。
 
@@ -48,21 +48,25 @@ window.FWLImporter = {
   // → receipt（df.firework-resource/1 完整回执，和原 8034 返回的同形，另加 pkgId = deliveryId）
   // 同内容重复导出：不建新修订，只在 ZIP/ 下多一个 _v00N.zip，返回同一 deliveryId。
 
-  scan(dirHandle),                 // 读导出文件夹 → 包列表（只读，不连 UE）
+  scan(dirHandle),                 // 读导出文件夹 → 包列表（只读，不连 UE）；precheck / importPkg 用最近一次 scan 的文件夹
   // → [Package]，按导出时间新→旧；每个资源只列最新修订，旧修订在 revisions 里
+  // 文件夹里还没有 workspace-resources.json（新文件夹、还没导出过）→ 返回 []，不报错
 
-  precheck(pkgId, { platforms }),  // 导入前检查（要 UE 连着）；platforms 默认 ['pc','mobile'] 里包内有的
+  precheck(pkgId, { platforms, onProgress }),  // 导入前检查（要 UE 连着）；不传 platforms 就按导出时选的导入范围（默认包里有的全部）
+  // 导出文件夹要有读写权限（检查会更新贴图登记缓存）
   // → Precheck
 
-  importPkg(pkgId, { planToken, platforms, onProgress, backupDir }),
+  importPkg(pkgId, { planToken, onProgress, backupDir }),   // 平台在 precheck 时就定了
   // 用户点「导入」才调。planToken 必须是最近一次 precheck 给的；期间文件夹或 UE 有变化就拒绝（code PLAN_STALE），外壳重新 precheck。
   // 点「导入」即视为用户已核对资产表里的名称和写入方式（原导入器的「确认名称无误」）。
   // backupDir：备份文件夹句柄；有「覆盖」的资产时必须给，没给就拒绝（code NEED_BACKUP_DIR），外壳弹窗选（写明不要选 UE 工程里的目录）。
   // → ImportResult
 
-  thumbnailURL(pkgId),             // → 'blob:…' | null（回放缩略图；外壳用完不必释放，模块换文件夹时统一释放）
+  thumbnailURL(pkgId),             // → Promise<'blob:…' | null>（回放缩略图；要 await；外壳用完不必释放，模块换文件夹时统一释放）
 
-  on(event, cb),                   // 'status' | 'progress' | 'packages'；返回取消订阅函数
+  on(event, cb),                   // 'status' | 'progress' | 'packages' | 'log'；返回取消订阅函数
+
+  configure({ sandbox }),          // 只给开发和沙盒验收：第一次用之前设，写入目录整体挪到 sandbox 下（例 '/Game/FWL50_Sandbox'）
 };
 ```
 
@@ -141,7 +145,8 @@ window.FWLImporter = {
 | --- | --- | --- |
 | `status` | `status()` 的返回值 | UE 连接状态或 busy 变化 |
 | `progress` | `{ pkgId, phase, done, total, text }`；phase = `upload` / `check` / `backup` / `import` / `register` | precheck 和 importPkg 期间，按块 / 按资产 |
-| `packages` | `[Package]` | publish 或 importPkg 后，列表有变化 |
+| `packages` | `[Package]` | scan、publish 或 importPkg 后，列表有变化 |
+| `log` | `{ at, text, kind }`；kind = `ok` / `warn` / `err` / `` | 导入引擎的操作记录（原导入器日志），资源交付页想放「操作记录」时用 |
 
 ### error.code
 
@@ -149,7 +154,7 @@ window.FWLImporter = {
 | --- | --- | --- |
 | `UE_DISCONNECTED` | UE 没开或 GPUECli 没响应 | 「导入」变灰，悬停「UE 未连接」，顶栏原地「重新连接」 |
 | `NO_PERMISSION` | 文件夹句柄没有读写权限 | 左下「导出 … 需允许访问」 |
-| `NOT_EXPORT_ROOT` | 句柄里没有 `workspace-resources.json` 也不是空文件夹 | 提示「这不是烟花工坊的导出文件夹」 |
+| `NOT_EXPORT_ROOT` | `workspace-resources.json` 读得到但格式不对 | 提示「这不是烟花工坊的导出文件夹」 |
 | `FILES_CHANGED` | 文件夹里的文件和索引对不上 | 「文件已缺失或被改过：…」 |
 | `PLAN_STALE` | 检查后有变化 | 自动重新 precheck |
 | `NEED_BACKUP_DIR` | 有覆盖但没选备份文件夹 | 弹窗选备份文件夹 |
@@ -169,3 +174,24 @@ FWLImporter.__mock.scenario('default');
 ```
 
 替身的 `scan(dirHandle)` 不读句柄，传 `null` 也行；`publish` 会把传入的包名加进假列表（state 待导入）并发 `packages` 事件。
+
+## 真模块怎么生成、怎么检查（本机或云端都能跑）
+
+```bash
+python -X utf8 -B tool/importer/build-5.0.py                 # 生成 dist/fwl-importer.js（先按原流程重建交付版，核对和 reference/ 一致，再做 5.0 改动）
+node tool/importer/check-api-5.0.cjs                          # 替身接口 10 项
+node tool/importer/check-api-5.0.cjs dist/fwl-importer.js     # 真模块离线 3 项
+NODE_PATH=<装了 jsdom 的 node_modules> node tool/importer/check-fwl-importer.cjs   # 真模块 21 项：内存文件夹 + 模拟 UE + 真引擎
+```
+
+`build-5.0.py` 对原交付版只做这些改动（构建时逐行核对：贴图规范和导入逻辑的源码行一行不少）：
+
+| 改动 | 内容 |
+| --- | --- |
+| 导入前拦截 | 原来经 UE 起本机 `python.exe` 跑 `delivery-preflight.py`（写死 C:/、D:/）；改为宿主在网页里跑 `fx_gate.py` 的同一套规则（`fwl50/host.js` 的 `gateCheck`，和 `fx_gate.py` 逐条对照检查过） |
+| 覆盖前备份 | 原来写 `D:/FXTools/…/asset-backups`；改为 UE 先写系统临时目录，网页读回（4 MB 一块）写进用户选的备份文件夹（`.uasset.bak` + `manifest.json`，哈希核对），再删临时副本；写不成就停，资产不改 |
+| 存储键 | `fwl50.importer.v1`（第一次从旧交付页 `fwimp.delivery.v1` 只读带过来） |
+| 去掉 | 特效资产复制、材质实例复制、整枪配表、母材质映射、ResourceFX 配表、旧烟花编排、8034 交付桥（共约 317 KB） |
+| 沙盒 | `configure({sandbox})` 时所有写入目录挪到沙盒根下 |
+
+原导入器的交付检查（`check-delivery-*.cjs` 等 11 项）在 5.0 引擎上和原交付版结果逐项相同（8 过；3 项原来就超时 / 失败，见 README）。

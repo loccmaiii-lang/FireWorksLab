@@ -23,7 +23,7 @@ const isMock = !!(api && api.__mock);
   await check('挂上 window.FWLImporter，接口版本 5.0.x', () => {
     assert(api, '没有 window.FWLImporter');
     assert.match(api.version, /^5\.0\.\d+$/);
-    for (const k of ['status', 'reconnect', 'publish', 'scan', 'precheck', 'importPkg', 'thumbnailURL', 'on']) assert.equal(typeof api[k], 'function', k);
+    for (const k of ['status', 'reconnect', 'publish', 'scan', 'precheck', 'importPkg', 'thumbnailURL', 'on', 'configure']) assert.equal(typeof api[k], 'function', k);
   });
   await check('status() 同步返回，字段齐全', () => {
     const s = api.status();
@@ -46,7 +46,7 @@ const isMock = !!(api && api.__mock);
       assert.equal(p.id, p.resourceId + '-' + p.revisionId);
       assert(['待导入', '有新版本', '已导入', '部分导入', '导入失败'].includes(p.state));
       for (const a of p.assets) { assert(['ps', 'tex:main', 'tex:ramp', 'mat:M0'].includes(a.key)); assert.equal(a.action, null); assert(a.uePath.startsWith('/Game/')); }
-      assert(api.thumbnailURL(p.id));
+      assert(await api.thumbnailURL(p.id));
     }
   });
   await check('precheck → importPkg 走通，progress 有事件', async () => {
