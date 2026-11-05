@@ -52,14 +52,14 @@ const N = o => Object.assign({id: 'n' + (++UID), show: true, solo: false, open: 
 function mkKiku(key = 'kiku') {
   const em = (icon, name, tl) => N({type: 'emitter', icon, name, data: name, tl});
   const out = tl => N({type: 'output', icon: 'out', name: '输出', tl});
-  const L1 = N({type: 'layer', icon: 'layer', no: 1, name: '橙引线层', open: true, tl: {in: 0, out: 1.55, keys: [0, .75, 2.2], hatch: 2.45}});
+  const L1 = N({type: 'layer', icon: 'layer', no: 1, name: '橙引线层', tl: {in: 0, out: 1.55, keys: [0, .75, 2.2], hatch: 2.45}});
   L1.kids = [em('star', '星', {in: 0, out: 1.55}), em('spark', '火花', {in: .1, out: 1.55}), out({in: 0, out: 1.55, cells: 3, per: 16})];
   const L2 = N({type: 'layer', icon: 'layer', no: 2, name: '金锦层', open: true, tl: {in: .35, out: 3.70, keys: [.35, 1.7, 2.0]}});
   L2.kids = [em('star', '星', {in: .35, out: 3.7}), em('spark', '火花', {in: .45, out: 3.7}), em('ember', '余烬', {in: .9, out: 3.7}), out({in: .35, out: 2.85, cells: 5, per: 15})];
-  const L3 = N({type: 'layer', icon: 'layer', no: 3, name: '点灭星', open: true, tl: {in: .6, out: 4.5, keys: [.1, .6, 3.9]}});
+  const L3 = N({type: 'layer', icon: 'layer', no: 3, name: '点灭星', tl: {in: .6, out: 4.5, keys: [.1, .6, 3.9]}});
   L3.kids = [em('star', '星', {in: .6, out: 4.5}), out({in: .6, out: 4.5, cells: 2, per: 64, cell: '512 px'})];
   const root = N({type: 'group', icon: 'group', name: '整体', open: true, kids: [L1, L2, L3], tl: {in: 0, out: 5.24}});
-  return {key, lib: 'kiku', name: '金曜菊-B 稀簇辉闪', short: '金曜菊-B', T: 5.24, fps: 30, frames: 75, baked: 45, t: 2.0, root, sel: L2.id,
+  return {key, lib: 'kiku', name: '金曜菊-B 稀簇辉闪', short: '金曜菊-B', T: 5.24, fps: 30, frames: 75, baked: 45, t: 2.0, root, sel: L2.id, focusL: L2.id,
     film: IMG.film_kiku, initStale: new Set([L2.id]), savedAt: '20:31', H: {u: [], r: []},
     /* 导出相关的示例数据：修订号；上次导出时与现在不同的值（用来写「为什么需重新导出」） */
     bake: {in: .35, out: 2.85}, bakeL: L2.id,   /* 烘焙过的是金锦层（导出范围 0.35–2.85 s，75 帧，烘焙了 45 帧） */
@@ -1128,12 +1128,12 @@ function tlHTML(sc) {
 }
 /* 默认行数：1920 下至少 6 行、1366 下至少 4 行（行少时按实际行数）；拖过分隔条的按拖的算 */
 const tlDefRows = (sc, wrap) => { const n = rowsOf(sc).filter(r => r.n.type !== 'group').length; return wrap.id === 'tlw' ? (UI.tlRows[UI.size] || Math.min(n, Math.max(+getComputedStyle($('#app')).getPropertyValue('--tl-min'), tlFitRows()))) : Math.min(n, 8); };
-/* 时间轴最多能放几行：1920 下画面至少留一半高，1366 下留 60 % */
+/* 时间轴最多能放几行：播放条 + 胶片 + 刻度尺 + 行，合起来最多占中栏的 1/3 */
 function tlFitRows() {
   const app = $('#app'), cs = getComputedStyle(app), rh = parseFloat(cs.getPropertyValue('--h-row')) || 28;
   const mid = $('#mid'), H = mid && mid.clientHeight ? mid.clientHeight : (UI.size === 1366 ? 676 : 980);
   const fixed = parseFloat(cs.getPropertyValue('--h-tp')) + parseFloat(cs.getPropertyValue('--h-film')) + parseFloat(cs.getPropertyValue('--h-ruler')) + 24;
-  return Math.max(1, Math.floor((H * (UI.size === 1366 ? .4 : .5) - fixed) / rh));   /* v3.1 第 20 条：按内容定高；1920 下画面至少留一半，1366 下留 60 % */
+  return Math.max(1, Math.floor((H / 3 - fixed) / rh));   /* v3.2 第 1 条：按内容定高，最多占中栏的 1/3（v3.1 是一半 / 40 %） */
 }
 function renderTL(sc = cur(), wrap = $('#tlw')) {
   const old = $('.tl', wrap), top = old ? old.scrollTop : 0;
@@ -1561,10 +1561,21 @@ function bindSync() {
 $('#tree').addEventListener('scroll', () => { const tl = $('#tlw .tl'); if (lockSync || !tl) return; lockSync = true; tl.scrollTop = $('#tree').scrollTop; requestAnimationFrame(() => { lockSync = false; tlMoreHint($('#tlw')); }); });
 new MutationObserver(bindSync).observe($('#tlw'), {childList: true});
 
+/* v3.2 第 1 条：只展开当前编辑的层及其上级，其余层折成一行。手动点开的层照常展开，换到别的层时再收起 */
+function focusOpen(sc, id) {
+  const chain = ancestors(sc, id), L = chain.find(n => n.type === 'layer');
+  let ch = false;
+  const set = (n, v) => { if (n.kids.length && n.open !== v) { n.open = v; ch = true; } };
+  if (L && L.id !== sc.focusL) { layersOf(sc).forEach(l => { if (l !== L) set(l, false); }); sc.focusL = L.id; }
+  chain.forEach(n => { if (n !== chain[chain.length - 1] || n.type === 'layer') set(n, true); });
+  return ch;
+}
 function select(id, focusTree = false) {
   const sc = cur(); if (!find(sc, id)) return;
   sc.sel = id;
+  const re = focusOpen(sc, id);
   renderTree(sc, $('#tree'), focusTree);
+  if (re) { renderTL(); layoutLeft(); }
   $$('#tlw .tlrow').forEach(r => r.classList.toggle('is-sel', r.dataset.id === id));
   renderInsp(false); renderTransport(); placePH(sc, $('#tlw'));
   if (UI.mode === '贴图与交付') renderDeliv();
