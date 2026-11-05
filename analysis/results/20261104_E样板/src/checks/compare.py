@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31），v3.1 → v3.2（--rows v32）
+"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31），v3.1 → v3.2（--rows v32），v3.2 → v3.3（--rows v33）
 
 每一行对应 E 设计规范 v3 的一节（§1 字号 … §12 浮层，§13 自查的三种画面），外壳顶栏单独一行（用户 2026-11-05 改定，
 另附资源交付页、资源编排页）。两列是 v2.3、v3：同一个状态下截 #app，按同一块区域裁图——区域取两版里那几个元素外框的并集，
@@ -9,7 +9,7 @@
   python3 build.py /tmp/E_v3.html
   python3 checks/compare.py [--base ../E样板_v2.3.html] [--new /tmp/E_v3.html] [--out ../对比_v23_v3.html]
   python3 checks/compare.py --rows v31 --base ../E样板_v3.html --base-label v3 --new ../E样板_v3.1.html --new-label v3.1 --out ../对比_v3_v31.html
-  --rows spec：按设计规范 v3 的节号排；--rows v31 / v32：按 E样板_v3.1 / v3.2_改动单.md 的编号排
+  --rows spec：按设计规范 v3 的节号排；--rows v31 / v32 / v33：按 E样板_v3.1 / v3.2 / v3.3_改动单.md 的编号排
 只开一个浏览器。图片用 WebP 内嵌进一个 HTML 文件。
 """
 import argparse, base64, html, io, os, sys, time
@@ -25,7 +25,7 @@ ap.add_argument('--out', default=os.path.join(RES, '对比_v23_v3.html'))
 ap.add_argument('--q', type=int, default=84, help='WebP 质量')
 ap.add_argument('--base-label', default='v2.3')
 ap.add_argument('--new-label', default='v3')
-ap.add_argument('--rows', choices=['spec', 'v31', 'v32'], default='spec')
+ap.add_argument('--rows', choices=['spec', 'v31', 'v32', 'v33'], default='spec')
 A = ap.parse_args()
 
 VERS = [(A.base_label, A.base), (A.new_label, A.new)]
@@ -42,6 +42,7 @@ STATES = {
     'spk': {'js': "KIT.set('scene', 'spk')", 'wait': 600},
     'deliv': {'js': "KIT.mode('贴图与交付')", 'wait': 600},
     'm1366': {'size': 1366, 'wait': 400},
+    'kit': {'kit': True, 'wait': 300},          # 样板控制条不藏（v3.3 第 15 条）
 }
 
 # ---------------------------------------------------------------- 行：(编号, 标题, 规范要点, [(状态, 区域, 图注, 选项)])
@@ -161,10 +162,46 @@ ROWS_V32 = [
     ('自查', '仙女棒', '第二个场景（发射器多、层少）。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
     ('自查', '贴图与交付', '工作模式「贴图与交付」。', [('deliv', 'app', '主屏，「贴图与交付」', {})]),
 ]
+# v3.2 → v3.3：按 E样板_v3.3_改动单.md 的编号排（同一块区域的几条并成一行）
+ROWS_V33 = [
+    ('1、5、8、10、11、14', '检查器参数行：数字对齐、颜色模块对列、隐藏项进标题行、开关、滑杆拖块、折叠箭头',
+     '数值右对齐、小数点对齐、数字等宽；曝光数值和色带落在同一套 5 列网格；「N 项已隐藏」变成标题行右侧「+N」；开关 26 × 14 以上，开 = 实心轨道、关 = 线框、停用 40 %；滑杆拖块 4 × 14 实心；折叠箭头离面板边 12 px。',
+     [('main', ['#pbody'], '检查器参数行（金曜菊-B）', {'h': 760}), ('spk', ['#pbody'], '检查器参数行（仙女棒）', {'h': 760})]),
+    ('6、13', '字号层级、检查器不留空',
+     '三个字号分用途：大号只给面包屑末项和效果名，中号给参数和正文，小号给读数和计数；模块标题上空 16、下空 6；1920 下常用模块按「运动 → 颜色 → 寿命」默认展开到放满。',
+     [('main', ['#insp'], '检查器整列（金曜菊-B）', {}), ('spk', ['#insp'], '检查器整列（仙女棒）', {})]),
+    ('2', '效果库：「待验收」不用琥珀',
+     '「待验收」改成主文字色，琥珀只给异常和要处理的警告。',
+     [('main', ['#libPane'], '效果库', {})]),
+    ('3、4、12', '时间轴：播放头一个颜色、不悄悄藏行、胶片条',
+     '播放头头和线都是薄荷、线宽 1 px；默认滚到顶，放不下时上下边缘写「上面还有 N 行」「下面还有 N 行」；已烘焙的格子显示真缩略图（行高 ≥ 28），没烘焙的是平的暗轨。',
+     [('main', ['#transport', '#tlw'], '播放条 + 时间轴（金曜菊-B）', {}), ('spk', ['#transport', '#tlw'], '播放条 + 时间轴（仙女棒）', {})]),
+    ('7', '工具图标重画',
+     '16 px 网格、1.5 px 线、方头方角、光学大小一致；制作区工具行、画面叠加与面板、播放条都换掉。',
+     [('main', ['#toolRow'], '制作区工具行', {'split': 2, 'pad': 0}), ('main', ['#viewbar'], '画面叠加与面板', {'pad': 8}), ('main', ['#transport'], '播放条', {'split': 2, 'pad': 0})]),
+    ('9', '帧计数一致',
+     '界面上的帧号一律从 1 数，「烘焙」和画面读数用同一个词，同一时刻两个数不矛盾。',
+     [('main', ['#transport'], '播放条', {'split': 2, 'pad': 0}), ('main', ['#ciBL', '#ciView'], '画面下沿的读数', {'pad': 16})]),
+    ('15', '样板控制条',
+     '收起时只留左下角一个小按钮，不盖住检查器（这一格不藏样板控制条）。',
+     [('kit', 'app', '主屏 1920 × 1080（显示样板控制条）', {})]),
+    ('16、19', '外壳顶栏：「设置」并进状态项、图标',
+     '删掉单独的「设置」；「备份 未选」「导出 …」整项可点，悬停出底色；顶栏图标按第 7 条画法。',
+     [('main', ['#shell'], '顶栏（正常 + 备份未选）', {'split': 2, 'pad': 0}), ('worst', ['#shell'], '顶栏（UE 未连接、导出和备份都需允许访问）', {'split': 2, 'pad': 0})]),
+    ('17、18', '资源交付页',
+     '选中的包在中间放大显示回放缩略图、修订和检查摘要；没选中时写一行「选一个包查看」；「待验收」主文字色。',
+     [('import', 'app', '资源交付页', {}), ('wb', 'app', '资源编排页', {})]),
+    ('自查', '主屏 1920 × 1080', '整屏。', [('main', 'app', '主屏 1920 × 1080', {})]),
+    ('自查', '1366 × 768', '字号小一级，栏宽 260 / 380。', [('m1366', 'app', '主屏 1366 × 768', {})]),
+    ('自查', '仙女棒', '第二个场景（发射器多、层少）。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
+    ('自查', '贴图与交付', '工作模式「贴图与交付」。', [('deliv', 'app', '主屏，「贴图与交付」', {})]),
+]
 if A.rows == 'v31':
     ROWS = ROWS_V31
 elif A.rows == 'v32':
     ROWS = ROWS_V32
+elif A.rows == 'v33':
+    ROWS = ROWS_V33
 
 RECT_JS = """sels => { const A = document.querySelector('#app').getBoundingClientRect();
   return sels.map(s => { const e = [...document.querySelectorAll(s)].find(x => x.getClientRects().length); if (!e) return null; const r = e.getBoundingClientRect();
@@ -194,7 +231,8 @@ def shoot(pw):
             pg.set_viewport_size({'width': 1920 if size == 1920 else 1366, 'height': 1200 if size == 1920 else 860})
             pg.goto(url)
             pg.wait_for_function('window.SHELL && window.KIT', timeout=15000)
-            pg.add_style_tag(content='#sampleBar{visibility:hidden!important}')
+            if not cfg.get('kit'):
+                pg.add_style_tag(content='#sampleBar{visibility:hidden!important}')
             if size == 1366:
                 pg.evaluate("KIT.set('size', '1366')")
             pg.mouse.move(600, 1180 if size == 1920 else 840)   # 停在 #app 外面，不出悬停
@@ -311,7 +349,7 @@ def main():
     rel = lambda p: os.path.relpath(os.path.abspath(p), RES) if os.path.abspath(p).startswith(RES) else p
     BL, NL = VERS[0][0], VERS[1][0]
     basis = ('按 <code>协作/方案/E设计规范_v3_2026-11-05.md</code> 的节号排；外壳顶栏按用户 2026-11-05 改定单独一行。' if A.rows == 'spec'
-             else f'按 <code>E样板_{ {"v31": "v3.1", "v32": "v3.2"}[A.rows]}_改动单.md</code> 的编号排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
+             else f'按 <code>E样板_{ {"v31": "v3.1", "v32": "v3.2", "v33": "v3.3"}[A.rows]}_改动单.md</code> 的编号排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
     doc = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E 样板 {BL} → {NL} 对比</title><style>{CSS}</style></head>
