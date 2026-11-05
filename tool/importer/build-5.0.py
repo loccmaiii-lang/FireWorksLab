@@ -170,6 +170,11 @@ def patch_engine(s):
     # P11 原交付页缩略图兜底会去 8034 取图；5.0 缩略图由外壳显示，引擎不取。
     s = once(s, "(receipt.thumbnailURL||(location.protocol==='file:'?'http://127.0.0.1:8034':location.origin)+'/api/deliveries/'+encodeURIComponent(receipt.deliveryId)+'/'+receipt.thumbnail.file.split('/').map(encodeURIComponent).join('/'))",
              "(receipt.thumbnailURL||'')", 'P11')
+    # P12 原交付页向 8034 宿主页回报界面状态；5.0 引擎在 srcdoc 里，location.origin 是 'null'，postMessage 会抛错（真 UE 沙盒导入时实测），5.0 也没人收。
+    s = once(s, "if(parent!==window)parent.postMessage({type:'workspace-view-state',busy:view.busy,current:view.current},location.origin);", '', 'P12')
+    # P13 第一次复制材质实例会编译 shader：真 UE 沙盒导入实测超过原来的 120 秒，导入中止（UE 里其实还在复制）。只放宽这一个等待时间。
+    s = once(s, "await call(ASSET_LIB, 'DuplicateAsset', { SourceAssetPath: role.template, DestinationAssetPath: pkg }, 120000);",
+             "await call(ASSET_LIB, 'DuplicateAsset', { SourceAssetPath: role.template, DestinationAssetPath: pkg }, 600000);", 'P13')
     return s, report
 
 
@@ -179,6 +184,7 @@ POLICY_FILES = ['fireworks-policy.js', 'fireworks-resource-rules.js', 'fireworks
 ALLOWED_CHANGED = {
     'fireworks-policy.js': ["const HD_TEXTURE_DIR = '/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD';"],
     'delivery-contract.js': ["Object.assign(MAP.dirs,{mobile_ps:'/Game/Effects/Props/FireWorks',mobile_mi:'/Game/Effects/Common/MaterialInstance/Fireworks'});"],
+    'fireworks-import.js': ["if(!exists)await call(ASSET_LIB, 'DuplicateAsset', { SourceAssetPath: role.template, DestinationAssetPath: pkg }, 120000);"],
 }
 
 

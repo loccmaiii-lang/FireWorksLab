@@ -193,5 +193,13 @@ NODE_PATH=<装了 jsdom 的 node_modules> node tool/importer/check-fwl-importer.
 | 存储键 | `fwl50.importer.v1`（第一次从旧交付页 `fwimp.delivery.v1` 只读带过来） |
 | 去掉 | 特效资产复制、材质实例复制、整枪配表、母材质映射、ResourceFX 配表、旧烟花编排、8034 交付桥（共约 317 KB） |
 | 沙盒 | `configure({sandbox})` 时所有写入目录挪到沙盒根下 |
+| 去掉向 8034 页回报 | 原交付页把界面状态 postMessage 给 8034 宿主页；srcdoc 里 origin 是 `null` 会抛错，5.0 没人收，删掉 |
+| 复制材质实例等待 | 第一次复制会编译 shader，真 UE 实测超过原来的 120 秒（导入中止、UE 里其实还在复制）；只把这一处放宽到 600 秒 |
 
-原导入器的交付检查（`check-delivery-*.cjs` 等 11 项）在 5.0 引擎上和原交付版结果逐项相同（8 过；3 项原来就超时 / 失败，见 README）。
+原导入器的交付检查（`check-delivery-*.cjs` 等 11 项）在 5.0 引擎上和原交付版结果逐项相同（8 过；3 项原来就超时 / 失败，见 README）：`python -X utf8 -B tool/importer/check-5.0-legacy.py <jsdom 的 node_modules>`，全部「=」退出 0。
+
+## 真 UE 实测（本机 11-05，沙盒，用户同意后）
+
+- 只读冒烟：真导出 RocketDot（1.7 MB）publish 225 ms、precheck 2.0 s（传 1.4 MB 进 UE 临时目录）。
+- 沙盒导入 `/Game/Effects_HD/_Sandbox/FWL50_20261105`：修订 1 贴图 3 张写好，贴图规范读回全对（PC 主序列 NoMip / 2048、轮廓图按贴图组 / 1024、Ramp Clamp + NoMip，全部 DistantVFX、NeverStream 关）；复制材质实例超时中止（已放宽，见上表）。修订 2（同名更新）PC + 手机共 10 项写完，覆盖前备份 2 份写进备份文件夹、哈希一致，P4「添加」正常。用时：检查 7.3 s、导入 87 s。
+- 没测：GPU 发射器、已有正式资产的覆盖、低配包。
