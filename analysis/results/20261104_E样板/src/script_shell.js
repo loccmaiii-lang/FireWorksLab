@@ -493,7 +493,7 @@ const fmtPlat = p => [p.pc ? `PC ${p.pc} 张` : '', p.mb ? `手机 ${p.mb} 张` 
 const factsHTML = (t, rows, cls = '') => `<section class="sh-mod${cls}" aria-label="${t}"><h3 class="sh-mt">${t}</h3><dl class="sh-dl">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></section>`;
 function pkgDetailHTML(p, w) {
   const A = assetsOf(p), nOv = A.filter(a => a.act === '覆盖').length;
-  const st = w ? `<span class="st"><span class="spin" aria-hidden="true"></span>写入中 <span class="sh-n">${w.i} / ${w.tot}</span></span>`
+  const st = w ? `<span class="st"><span class="spin" aria-hidden="true"></span>写入中 ${w.i} / ${w.tot}</span>`
     : p.st === 'done' ? `<span class="st">已导入 ${esc(p.imp || '')}</span>` : '<span class="st is-wait">待导入</span>';
   const im = IMGS[p.img];
   return `<div class="sh-mh"><b>${esc(p.name)}</b>${st}</div>`

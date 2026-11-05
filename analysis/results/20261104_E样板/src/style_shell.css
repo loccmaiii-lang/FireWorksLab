@@ -112,10 +112,9 @@
 /* 标题行：包名是当前位置（大号 600，同效果名），后面紧跟状态（小号）：待导入主文字色（要你处理），已导入、写入中弱色 */
 .sh-mh{flex:none;display:flex;align-items:center;gap:var(--s3);height:calc(var(--h-row) + 8px);padding:0 var(--s3);min-width:0;white-space:nowrap}
 .sh-mh b{font-size:var(--fs3);line-height:var(--lh3);font-weight:var(--fw2);color:var(--t1);overflow:hidden;text-overflow:ellipsis}
-.sh-mh .st{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1);color:var(--t3)}
+.sh-mh .st{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1);color:var(--t3);font-variant-numeric:tabular-nums}
 .sh-mh .st.is-wait{color:var(--t1)}
 .sh-mh .st .spin{width:10px;height:10px}
-.sh-mh .sh-n{font-variant-numeric:tabular-nums}
 /* 下面整块一起滚（包里的资产多时）；左右内边距 12 */
 .sh-det{flex:1;min-height:0;overflow:auto;padding:0 var(--s3) var(--s3);scrollbar-width:thin;scrollbar-color:var(--g6) transparent}
 /* 第一段：回放缩略图（放大，方形，画面面色）｜「修订」｜「检查」，组间 20，顶端对齐 */
