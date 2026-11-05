@@ -323,7 +323,9 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .trow .nm .tx{overflow:hidden;text-overflow:ellipsis;color:var(--t2)}
 .trow .no{color:var(--t3);font-size:var(--fs1)}
 .trow .cnt{flex:none;font-size:var(--fs1);color:var(--t3)}   /* 折叠着的行：名字后面弱色写下级数「· 3」 */
-.trow .stl{flex:none;width:16px;height:16px;color:var(--w3);cursor:pointer}
+/* v3.7 第 1 条（用户 20:17）：「需重新导出」不用三角，用 6 px 琥珀小点，和「保存」的未保存点同一种记号；可悬停区 16 × 16，悬停写原因 */
+.trow .stl{flex:none;width:6px;height:6px;padding:5px;margin-left:-1px;border-radius:50%;background:var(--w3);background-clip:content-box;box-sizing:content-box;cursor:pointer}
+.sdot{display:inline-block;flex:none;width:6px;height:6px;margin-right:6px;border-radius:50%;background:var(--w3);vertical-align:1px}
 .trow.t-group .tx,.trow.t-layer .tx{color:var(--t1)}
 .trow.t-group .tx{font-size:var(--fs3)}   /* v3.3 第 6 条：大号只给效果名（结构树第一行）和面包屑末项 */
 .trow.is-sel .tx{color:var(--t1);font-weight:var(--fw2)}
@@ -780,8 +782,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .brand span{font-size:var(--fs1);color:var(--t3)}
 .gpu{font-size:var(--fs1);color:var(--t3);white-space:nowrap}
 /* v3.6 第 2 条：导出按钮里的「▲1」——深色小块（p1，对薄荷 7.99 : 1）里放琥珀三角和数字（对小块 7.84 : 1）；形状 + 数字，不只靠颜色 */
-.exb{display:inline-flex;align-items:center;gap:1px;height:18px;margin-left:6px;padding:0 4px 0 1px;border-radius:var(--r1);background:var(--p1);color:var(--w3);font-size:var(--fs1);line-height:18px;font-weight:var(--fw1)}   /* 字重只有 400 和 600，600 只给当前位置和模块标题 */
-.btn-1:active .exb,.btn-1.is-active .exb{color:var(--w3)}
+.exb{display:inline-block;flex:none;width:6px;height:6px;margin-left:6px;border-radius:50%;background:var(--w3);box-shadow:0 0 0 1.5px var(--p1)}   /* v3.7 第 1 条：导出按钮只带一个琥珀小点（深色 1.5 px 描边，薄荷实底上也看得见），和「保存 •」同一种写法；数字和原因在悬停提示和导出 ▾ 菜单里 */   /* 字重只有 400 和 600，600 只给当前位置和模块标题 */
+.btn-1:active .exb,.btn-1.is-active .exb{background:var(--w3)}
 .s1366 .exb{margin-left:4px}
 .s1366 #expBtn>.btn:first-child{padding:0 10px}   /* 1366：「保存 •」有未保存点时右段也放得下 */
 .s1366 .tcol-r .bx>.tbtn{padding:0 4px}   /* v3.5 第 8 条：1366 下「保存 •」有未保存点时也放得下 */

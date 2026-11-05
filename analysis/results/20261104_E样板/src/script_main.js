@@ -1020,7 +1020,7 @@ function treeHTML(sc, withAdd = true) {
     const kn = n.kids.filter(k => k.type !== 'output').length;
     const cnt = has && !n.open && kn ? `<span class="cnt" aria-label="${kn} 个发射器">· ${kn}</span>` : '';
     const nmT = n.type === 'group' ? sc.name : n.name;   /* 第一行就是效果本身：写效果名，选中它就是整体参数 */
-    const stl = stale.has(n.id) ? `<svg class="i stl" aria-label="需重新导出" data-why="${n.id}"><use href="#i-stale"/></svg>` : '';
+    const stl = stale.has(n.id) ? `<span class="stl" role="img" aria-label="需重新导出" data-why="${n.id}"></span>` : '';   // v3.7 第 1 条：三角改成琥珀小点（同「保存」的未保存点），悬停仍写原因
     const vis = (n.type === 'layer' || n.type === 'emitter')
       ? `<button class="btn btn-icon eye" aria-pressed="${n.show}" aria-label="显示" data-tip="${n.show ? '隐藏' : '显示'}" data-key="H">${ico(n.show ? 'eye' : 'eyeoff')}</button><button class="btn btn-icon solo" aria-pressed="${n.solo}" aria-label="只看" data-tip="${n.solo ? '移出只看' : '加入只看'}；Alt+单击只看此项" data-key="S">${ico(n.solo ? 'soloon' : 'solo')}</button>`
       : '<span class="ph2"></span>';
@@ -1411,7 +1411,7 @@ function renderExport() {
   /* v3.6 第 2 条：「⚠ 1 层」并进导出按钮——主段写「导出 ▲1」：三角和数字用琥珀，垫在深色小块（p1）上（琥珀直接放薄荷上只有 1.02 : 1）；
      悬停两行：「重新导出 1 层」＋ 每层原因；没有要重新导出的层时只写「导出」。计数和结构树层行的三角同一个口径（staleLayers） */
   const n = st.size;
-  b.innerHTML = `<button class="btn btn-1" data-act="export"${need ? ` data-why="exp" aria-label="导出，${n} 层需重新导出"` : ' data-tip="全部已导出"'}>导出${need ? `<span class="exb" aria-hidden="true">${ico('stale')}<span>${n}</span></span>` : ''}</button><button class="btn btn-1" data-act="exportMenu" aria-haspopup="menu" aria-label="导出选项" data-tip="导出选项">${ico('cd')}</button>`;
+  b.innerHTML = `<button class="btn btn-1" data-act="export"${need ? ` data-why="exp" aria-label="导出，${n} 层需重新导出"` : ' data-tip="全部已导出"'}>导出${need ? '<span class="exb" aria-hidden="true"></span>' : ''}</button><button class="btn btn-1" data-act="exportMenu" aria-haspopup="menu" aria-label="导出选项" data-tip="导出选项">${ico('cd')}</button>`;
 }
 function onHist() {
   if (UI.view !== 'main') return;
@@ -1442,7 +1442,7 @@ function refreshStaleMarks() {
   const sc = cur(), st = staleLayers(sc);
   $$('#tree .trow[data-id]').forEach(r => {
     const has = st.has(r.dataset.id), el = $('.stl', r);
-    if (has && !el) $('.nm', r).insertAdjacentHTML('beforeend', `<svg class="i stl" aria-label="需重新导出" data-why="${r.dataset.id}"><use href="#i-stale"/></svg>`);
+    if (has && !el) $('.nm', r).insertAdjacentHTML('beforeend', `<span class="stl" role="img" aria-label="需重新导出" data-why="${r.dataset.id}"></span>`);
     if (!has && el) el.remove();
   });
   if (UI.mode === '序列贴图') renderDeliv();
@@ -2067,7 +2067,7 @@ function exportMenu(btn, focusSel) {
   const S = exportSummary(sc, st.length ? st : all), nm = L => L.map(l => l === sc.root ? sc.short : l.name).join('、'), det = !!UI.expDetail;
   /* v3.6 第 2 条：摘要「▲ 1 层需重新导出」（琥珀三角 + 数字，和按钮上同一个记号）；3 层以内直接列出每层原因；全部已导出写「✓ 全部已导出」 */
   const W = st.length && st.length <= 3 ? staleWhy(sc) : [];
-  const head = `<div class="msum"><div class="mline"><b class="${st.length ? 'is-warn' : 'is-ok'}">${st.length ? `${ico('stale')}${st.length} 层需重新导出` : `${ico('check')}全部已导出`}</b><button class="btn tbtn mdet" data-r="det" type="button" aria-expanded="${det}">详情${ico('cd', 'dd')}</button></div>${W.length ? `<ul class="mwhy">${W.map(r => `<li><span class="mn">${esc(r.name)}</span><span>${esc(r.list.slice(0, 2).join('；'))}${r.list.length > 2 ? ` 等 ${r.list.length} 项` : ''}</span></li>`).join('')}</ul>` : ''}
+  const head = `<div class="msum"><div class="mline"><b class="${st.length ? 'is-warn' : 'is-ok'}">${st.length ? `<span class="sdot" aria-hidden="true"></span>${st.length} 层需重新导出` : `${ico('check')}全部已导出`}</b><button class="btn tbtn mdet" data-r="det" type="button" aria-expanded="${det}">详情${ico('cd', 'dd')}</button></div>${W.length ? `<ul class="mwhy">${W.map(r => `<li><span class="mn">${esc(r.name)}</span><span>${esc(r.list.slice(0, 2).join('；'))}${r.list.length > 2 ? ` 等 ${r.list.length} 项` : ''}</span></li>`).join('')}</ul>` : ''}
       <div class="mdetail"${det ? '' : ' hidden'}><dl>
       <dt>${st.length ? '需重新导出' : '层'}</dt><dd>${esc(nm(st.length ? st : all))}</dd>
       <dt>平台</dt><dd>${platTxt(P)}</dd>

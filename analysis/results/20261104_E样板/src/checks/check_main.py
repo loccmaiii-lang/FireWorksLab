@@ -181,9 +181,9 @@ def spec_static(b):
     fit = x.E(THUMB_JS)
     check('v3.2-10 / v3.6-14 效果库缩略图都按外接框裁切、统一曝光（千轮、柳这类暗图也提亮：亮部 98 % 分位 ≥ 200）', fit and all(f['fit'] for f in fit) and all(f['p98'] >= 200 for f in fit), fit)
     # v3.6 第 2 条改写：单独的「⚠ 1 层」去掉，并进导出按钮——主段「导出 ▲1」，三角 + 数字琥珀，垫深色小块（p1）
-    eb = x.E("(() => { const b = document.querySelector('#expBtn .exb'); if (!b) return null; const c = getComputedStyle(b); return {t: b.textContent.trim(), ic: !!b.querySelector('use[href=\"#i-stale\"]'), col: c.color, bg: c.backgroundColor, inMain: !!b.closest('[data-act=export]'), old: !!document.getElementById('expSt'), lab: b.closest('button').getAttribute('aria-label')}; })()")
-    check('§5 / v3.1-5 / v3.6-2 「⚠ 1 层」并进导出按钮：主段「导出 ▲1」，三角 + 数字（形状 + 数字，不只靠颜色），没有单独的「⚠ 1 层」按钮', bool(eb) and eb['t'] == '1' and eb['ic'] and eb['inMain'] and not eb['old'] and eb['lab'] == '导出，1 层需重新导出', eb)
-    check('v3.6-2 「▲1」琥珀垫在深色小块上：琥珀对小块 ≥ 4.5 : 1，小块对薄荷 ≥ 4.5 : 1（琥珀直接放薄荷上只有 1.02 : 1）', bool(eb) and eb['col'] == AMBER and eb['bg'] == 'rgb(6, 42, 35)' and cr(eb['col'], eb['bg']) >= 4.5 and cr(eb['bg'], MINT) >= 4.5, eb)
+    eb = x.E("(() => { const b = document.querySelector('#expBtn .exb'); if (!b) return null; const c = getComputedStyle(b); return {t: b.textContent.trim(), w: b.getBoundingClientRect().width, h: b.getBoundingClientRect().height, col: c.backgroundColor, ring: c.boxShadow, inMain: !!b.closest('[data-act=export]'), old: !!document.getElementById('expSt'), lab: b.closest('button').getAttribute('aria-label')}; })()")
+    check('§5 / v3.6-2 / v3.7-1 「⚠ 1 层」并进导出按钮，只带一个 6 px 琥珀小点（用户 20:17：像保存那样的点），没有单独的「⚠ 1 层」按钮；无障碍名称写清楚', bool(eb) and eb['t'] == '' and round(eb['w']) == 6 and round(eb['h']) == 6 and eb['inMain'] and not eb['old'] and eb['lab'] == '导出，1 层需重新导出', eb)
+    check('v3.7-1 导出按钮上的小点：琥珀，外圈 1.5 px 深色描边（薄荷实底上看得见：深色对薄荷 ≥ 4.5 : 1）', bool(eb) and eb['col'] == AMBER and 'rgb(6, 42, 35)' in eb['ring'] and cr('rgb(6, 42, 35)', MINT) >= 4.5, eb)
     x.hover('#expBtn [data-act="export"]')
     check('§5 / v3.6-2 悬停导出：第一行「重新导出 1 层」，下面一行写原因「金锦层：缩放 1.00 倍 → 1.10 倍」', (x.T('#ovlApp .tip.why b') or '') == '重新导出 1 层' and (x.T('#ovlApp .tip.why .hint2') or '').startswith('金锦层：缩放'), x.tip())
     # §6 图标
@@ -194,7 +194,7 @@ def spec_static(b):
     check('§6 页面上用到的图标都有定义', x.E("[...document.querySelectorAll('use')].every(u => document.querySelector(u.getAttribute('href')))"))
     # v3.6 第 11 条改写：版本记录不再是「三张纸」（看着像复制），改成时钟加逆时针箭头——大弧 + 左侧向下的箭头 + 指针；恢复只有大弧和箭头、没有指针
     check('§6 / v3.6-11 一种形状一个意思：版本记录是时钟加逆时针箭头（有指针），恢复是一个圆弧箭头（没有指针），循环是矩形环；画大弧的只有这两个', x.E("(() => { const h = document.querySelector('#i-history').innerHTML, r = document.querySelector('#i-reset').innerHTML; return document.querySelector('#i-history').querySelectorAll('path').length === 2 && /a4\\.5 4\\.5 0 1 1/.test(h) && h.includes('V8h2') && !/V8h2|h2\\b/.test(r) && !/ a|A/.test(document.querySelector('#i-loop').innerHTML) && [...document.querySelectorAll('#iconDefs symbol')].filter(s => /a[\\d.]+ [\\d.]+ 0 1 /.test(s.innerHTML)).map(s => s.id).join() === 'i-history,i-reset'; })()"))
-    check('§6 「需重新导出」图标是琥珀三角加感叹号（和「警告」同形，颜色分开）', x.C('#tree .stl', 'color') == AMBER and 'M8 4.3 12.7 12.44H3.3z' in x.E("document.querySelector('#i-stale').innerHTML") and x.E("document.querySelector('#i-stale').innerHTML === document.querySelector('#i-alert').innerHTML"))
+    check('§6 / v3.7-1 结构树「需重新导出」是 6 px 琥珀小点（用户 20:17：用点提示），可悬停区 16 × 16', x.C('#tree .stl', 'backgroundColor') == AMBER and x.E("(() => { const r = document.querySelector('#tree .stl').getBoundingClientRect(); return Math.round(r.width) === 16 && Math.round(r.height) === 16; })()") and x.C('#tree .stl', 'borderTopLeftRadius') == '50%')
     # §7 一个信息只出现一次
     check('§7 / v3.4-17 画面读数左下一行：平台、fps、「帧 50 / 75」（帧数从播放条挪到这里）', re.fullmatch(r'PC 30 fps 帧 \d+ / \d+', x.T('#ciBL') or '') is not None, x.T('#ciBL'))
     check('§7 画面读数不再写单格、张数、帧数（「帧 50」是当前帧号，v3.3 第 9 条）', not re.search(r'单格|张|1024|\d+ 帧', x.T('#cell') or ''), x.T('#cell'))
@@ -444,7 +444,7 @@ def interactions(b):
     x.click(dn); pg.keyboard.press('Control+a'); pg.keyboard.type('0.9'); K('Enter')
     x.click('#pbody .prm[data-lab="爆后扰动"] .sw')
     x.hover('#expBtn [data-act="export"]')
-    check('P3 被开关收起的项改了只算未保存，不算需重新导出', x.E("KIT.changes()") >= 1 and '扰动开始时间' not in (x.tip() or '') and x.T('#expBtn .exb') == '1', x.tip())
+    check('P3 被开关收起的项改了只算未保存，不算需重新导出', x.E("KIT.changes()") >= 1 and '扰动开始时间' not in (x.tip() or '') and x.V('#expBtn .exb'), x.tip())
     check('P3 变灰的已改行保留恢复按钮', x.E("(() => { const r = document.querySelector('#pbody .prm[data-lab=\"扰动开始时间\"]'); return !!r && r.classList.contains('is-ed') && !!r.querySelector('.rst') })()"))
     x.click('#pbody .prm[data-lab="湍流强度"] .num'); pg.keyboard.press('Control+a'); pg.keyboard.type('2'); K('Enter')
     x.click('#pbody .prm[data-lab="湍流尺度"] .num'); pg.keyboard.press('Control+a'); pg.keyboard.type('80'); K('Enter')
@@ -1115,8 +1115,8 @@ def v36(b):
         pg = new_page(b, w, h); x = P(pg)
         # 第 2 条：导出按钮「导出 ▲1」、菜单摘要；导出以后只写「导出」、摘要「✓ 全部已导出」
         x.click('#expBtn [data-act="exportMenu"]')
-        m = x.E("(() => { const b = document.querySelector('.menu.exp .msum .mline b'); const u = b && b.querySelector('use'); return b && {t: b.textContent.trim(), ic: u && u.getAttribute('href'), col: u && getComputedStyle(b.querySelector('svg')).color, why: [...document.querySelectorAll('.menu.exp .mwhy li')].map(l => l.textContent.trim())}; })()")
-        check(f'v3.6-2 {w} 导出 ▾ 菜单摘要「▲ 1 层需重新导出」（琥珀三角，和按钮同一个记号），3 层以内直接列出每层原因', bool(m) and m['t'] == '1 层需重新导出' and m['ic'] == '#i-stale' and m['col'] == AMBER and len(m['why']) == 1 and m['why'][0].startswith('金锦层') and '缩放' in m['why'][0], m)
+        m = x.E("(() => { const b = document.querySelector('.menu.exp .msum .mline b'); const d = b && b.querySelector('.sdot'); return b && {t: b.textContent.trim(), ic: d ? 'dot' : null, col: d && getComputedStyle(d).backgroundColor, why: [...document.querySelectorAll('.menu.exp .mwhy li')].map(l => l.textContent.trim())}; })()")
+        check(f'v3.6-2 / v3.7-1 {w} 导出 ▾ 菜单摘要「● 1 层需重新导出」（琥珀小点，和按钮、结构树同一个记号），3 层以内直接列出每层原因', bool(m) and m['t'] == '1 层需重新导出' and m['ic'] == 'dot' and m['col'] == AMBER and len(m['why']) == 1 and m['why'][0].startswith('金锦层') and '缩放' in m['why'][0], m)
         x.key('Escape')
         x.click('#expBtn [data-act="export"]')
         pg.wait_for_function("!document.querySelector('#expBtn .exb') && !document.querySelector('#expBtn .is-loading')", timeout=8000); pg.wait_for_timeout(200)
