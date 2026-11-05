@@ -1125,22 +1125,28 @@ function tlHTML(sc) {
   return `<div class="tl" data-scene="${sc.key}"><div class="fixed">
       <div class="frow"><div class="lab">烘焙</div><div class="fr" data-scrub>${filmHTML(sc)}</div></div>
       <div class="rrow"><div class="lab xio">${xioHTML(sc)}</div><div class="fr" data-scrub><div class="scale">${scaleHTML(sc)}${rangeHTML(sc)}</div></div></div></div>
-    <div class="tl-rows">${tlRowsHTML(sc)}</div></div><div class="ph"><i data-scrub-ph></i></div><div class="tl-foot" hidden><button class="tl-more" data-act="tlMore"></button></div>`;
+    <div class="tl-edge up"><button class="tl-more" data-act="tlUp" hidden></button></div><div class="tl-rows">${tlRowsHTML(sc)}</div><div class="tl-edge dn"><button class="tl-more" data-act="tlDn" hidden></button></div></div><div class="ph"><i data-scrub-ph></i></div>`;
 }
 /* 默认行数：1920 下至少 6 行、1366 下至少 4 行（行少时按实际行数）；拖过分隔条的按拖的算 */
-const tlDefRows = (sc, wrap) => { const n = rowsOf(sc).filter(r => r.n.type !== 'group').length; return wrap.id === 'tlw' ? (UI.tlRows[UI.size] || Math.min(n, Math.max(+getComputedStyle($('#app')).getPropertyValue('--tl-min'), tlFitRows()))) : Math.min(n, 8); };
+const tlDefRows = (sc, wrap) => { const n = rowsOf(sc).filter(r => r.n.type !== 'group').length; return wrap.id === 'tlw' ? Math.min(n, UI.tlRows[UI.size] || Math.max(+getComputedStyle($('#app')).getPropertyValue('--tl-min'), tlFitRows())) : Math.min(n, 8); };
+/* v3.3 第 4 条：行数定下来以后，放不下就在下面留 20 px 给「下面还有 N 行」（滚到底时这 20 px 在上面，给「上面还有 N 行」） */
+function applyTlRows(wrap = $('#tlw')) {
+  const tl = $('.tl', wrap); if (!tl) return;
+  const sc = SC[wrap.dataset.scene] || cur(), n = tlDefRows(sc, wrap), all = $$('.tlrow[data-id]', tl).length;
+  tl.style.setProperty('--tl-n', n); tl.classList.toggle('has-more', all > n);
+}
 /* 时间轴最多能放几行：播放条 + 胶片 + 刻度尺 + 行，合起来最多占中栏的 1/3 */
 function tlFitRows() {
   const app = $('#app'), cs = getComputedStyle(app), rh = parseFloat(cs.getPropertyValue('--h-row')) || 28;
   const mid = $('#mid'), H = mid && mid.clientHeight ? mid.clientHeight : (UI.size === 1366 ? 676 : 980);
-  const fixed = parseFloat(cs.getPropertyValue('--h-tp')) + parseFloat(cs.getPropertyValue('--h-film')) + parseFloat(cs.getPropertyValue('--h-ruler')) + 24;
+  const fixed = parseFloat(cs.getPropertyValue('--h-tp')) + parseFloat(cs.getPropertyValue('--h-film')) + parseFloat(cs.getPropertyValue('--h-ruler')) + 20;   /* 20：放不下时「下面还有 N 行」那一条 */
   return Math.max(1, Math.floor((H / 3 - fixed) / rh));   /* v3.2 第 1 条：按内容定高，最多占中栏的 1/3（v3.1 是一半 / 40 %） */
 }
 function renderTL(sc = cur(), wrap = $('#tlw')) {
   const old = $('.tl', wrap), top = old ? old.scrollTop : 0;
   wrap.dataset.scene = sc.key; wrap.innerHTML = tlHTML(sc);
   const tl = $('.tl', wrap);
-  tl.style.setProperty('--tl-n', tlDefRows(sc, wrap));
+  applyTlRows(wrap);
   tl.scrollTop = top;
   /* 行名一列和结构树同宽（放得下最长的名字） */
   wrap.style.removeProperty('--w-tlab');
@@ -1160,13 +1166,17 @@ function filmBoost(wrap, sel = '.film-c img') {
     if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, {once: true});
   });
 }
-/* 行多时（§8）：出滚动条，行名列底部写「还有 N 行」，不浮在轨道上；点一下展开 */
+/* v3.3 第 4 条：行放不下时不悄悄藏行——上下边缘各一条「上面还有 N 行」「下面还有 N 行」，点一下滚过去。
+   N = 中线落在可见区外（或被这条提示盖住）的行数；提示条占满一行宽、不透明，盖住的只是半行 */
 function tlMoreHint(wrap) {
-  const tl = $('.tl', wrap), foot = $('.tl-foot', wrap), b = $('.tl-more', wrap); if (!tl || !b) return;
-  const lim = tl.scrollTop + tl.clientHeight, rows = $$('.tlrow[data-id]', tl);
-  const below = rows.filter(r => r.offsetTop + r.offsetHeight > lim + 1).length;
-  foot.hidden = !below;
-  if (below) { b.innerHTML = `${ico('cd')}还有 ${below} 行`; b.dataset.tip = '点击展开'; b.setAttribute('aria-label', `还有 ${below} 行，点击展开`); }
+  const tl = $('.tl', wrap); if (!tl) return;
+  const up = $('.tl-edge.up .tl-more', tl), dn = $('.tl-edge.dn .tl-more', tl); if (!up || !dn) return;
+  const T = tl.getBoundingClientRect(), top = $('.fixed', tl).getBoundingClientRect().bottom, bot = T.bottom, E = 20;
+  const max = tl.scrollHeight - tl.clientHeight, rows = $$('.tlrow[data-id]', tl).map(r => { const b = r.getBoundingClientRect(); return (b.top + b.bottom) / 2; });
+  const nUp = tl.scrollTop > 0.5 ? rows.filter(c => c < top + E).length : 0;
+  const nDn = tl.scrollTop < max - 0.5 ? rows.filter(c => c > bot - E).length : 0;
+  const set = (b, n, word, icon) => { b.hidden = !n; if (n) { b.innerHTML = `${ico(icon)}${word}还有 ${n} 行`; b.dataset.tip = word === '上面' ? '滚到最上面' : '滚到最下面'; b.setAttribute('aria-label', `${word}还有 ${n} 行，点击滚过去`); } };
+  set(up, nUp, '上面', 'cu'); set(dn, nDn, '下面', 'cd');
 }
 /* 播放头（§8）：薄荷；头部画在刻度尺上，线穿过轨道 */
 function placePH(sc, wrap) {
@@ -1179,7 +1189,11 @@ function placePH(sc, wrap) {
   ph.style.height = Math.max(r.height, rb - r.top) + 'px';
   const px = sc.t / sc.T * r.width;
   $$('.rrow .tlab', tl).forEach(l => { const a = l.offsetLeft, b = a + l.offsetWidth; l.classList.toggle('is-hid', px > a - 7 && px < b + 7); });
-  const fno = wrap.id === 'tlw' ? $('#transport .fno') : null; if (fno) { const B = bakeOf(sc); fno.textContent = `${frameNo(sc)} / ${B ? B.frames : sc.frames}`; }
+  if (wrap.id === 'tlw') {   /* v3.3 第 9 条：播放条和画面读数用同一个函数算帧号 */
+    const fno = $('#transport .fno'), cf = $('#ciBL .cfno'), f = frameNo(sc);
+    if (fno) { const B = bakeOf(sc); fno.textContent = `${f} / ${B ? B.frames : sc.frames}`; }
+    if (cf) cf.textContent = f;
+  }
 }
 
 /* ---------- 主屏：检查器（只放参数） ---------- */
@@ -1375,10 +1389,9 @@ function renderStage() {
     B.style.opacity = 0;
   }
   $('#cgrid').hidden = !UI.grid;
-  /* §7 画面读数：左下一行「平台　fps　tick」；单格、张数、帧数只在检查器「输出」里。
-     距离、预览曝光收进「预览设置」，不是默认值时才在右下显示一个小标记 */
-  const tick = Math.floor(sc.t * sc.fps + 1e-6);
-  $('#ciBL').innerHTML = `<span class="cg">${UI.plat === '手机' ? '手机' : 'PC'}</span><span class="cg"><b>${sc.fps}</b><span>fps</span></span><span class="cg"><span>tick</span><b>${tick}</b></span>`;   /* v3.2 第 6 条：每组「标签 数值 单位」紧贴，组和组之间留空 */
+  /* §7 画面读数：左下一行「平台　fps　帧」；单格、张数、帧数只在检查器「输出」里。
+     v3.3 第 9 条：帧号一律从 1 数、只有一个词「帧」——和播放条同一个数（导出范围里的第几帧，范围外写「—」） */
+  $('#ciBL').innerHTML = `<span class="cg">${UI.plat === '手机' ? '手机' : 'PC'}</span><span class="cg"><b>${sc.fps}</b><span>fps</span></span><span class="cg"><span>帧</span><b class="cfno">${frameNo(sc)}</b></span>`;   /* v3.2 第 6 条：每组「标签 数值 单位」紧贴，组和组之间留空 */
   renderViewMarks();
   renderSoloBadge();
   $('#vp').hidden = UI.mode === '贴图与交付'; $('#deliv').hidden = UI.mode !== '贴图与交付';
@@ -1408,8 +1421,8 @@ function renderTransport() {
     <select class="sel" id="speed" aria-label="播放速度" data-tip="播放速度">${[.25, .5, 1, 2].map(v => `<option value="${v}"${v === UI.speed ? ' selected' : ''}>${v}×</option>`).join('')}</select>
     <button class="btn btn-icon" data-act="loop" aria-pressed="${UI.loop}" aria-label="循环" data-tip="循环播放">${ico('loop')}</button></div>
     <div class="tpg time" role="group" aria-label="时间">${tBox('now', t, '当前时间', '当前时间，单击输入')}<span class="tot">/ ${sc.T.toFixed(2)}</span><span class="u">s</span>
-      <span class="fbk" data-tip="${B ? `${esc(rangeName(sc, B.r))}：当前帧 / 导出范围帧数，已烘焙 ${B.baked} 帧` : ''}"><span class="lbl">烘焙</span><span class="fno">${frameNo(sc)} / ${B ? B.frames : sc.frames}</span></span>
-      <button class="btn btn-icon" data-act="timeTools" aria-haspopup="menu" aria-label="时间工具" data-tip="逐 tick、跳到标记">${ico('timer')}</button></div>
+      <span class="fbk" data-tip="${B ? `${esc(rangeName(sc, B.r))}：当前帧 / 导出范围帧数，已烘焙 ${B.baked} 帧` : ''}"><span class="lbl">帧</span><span class="fno">${frameNo(sc)} / ${B ? B.frames : sc.frames}</span></span>
+      <button class="btn btn-icon" data-act="timeTools" aria-haspopup="menu" aria-label="时间工具" data-tip="逐帧、跳到标记">${ico('timer')}</button></div>
     <div class="tpg" role="group" aria-label="选项"><button class="btn tbtn" data-act="tlOpts" aria-haspopup="menu">选项${ico('cd', 'dd')}</button>
       <button class="btn tbtn" data-act="thumb" data-tip="当前帧作缩略图">${ico('camera')}<span class="thumb-t">缩略图</span></button></div>`;
   syncRange(sc);
@@ -1531,35 +1544,35 @@ function layoutLeft() {
   const h = UI.treeH[UI.scene + UI.size] || Math.min(want, Math.round(colH * .55));
   L.style.setProperty('--tree-h', Math.round(clamp(h, rowH * 2, colH - barH - 8)) + 'px');
 }
-function renderAll() {
+function renderAll(toTop = false) {
   applyLayout();
   $('#effName').textContent = cur().name;
   $('#treeQ input').value = UI.treeQ; $('#treeQ').classList.toggle('has-val', !!UI.treeQ);
   $$('#modeTabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === UI.mode)));
   renderViewbar(); renderTree(); renderTransport(); renderTL(); renderInsp(false); renderLib(); renderStage(); renderStatus(); onHist();
-  ensureVisible();
+  /* v3.3 第 4 条：打开效果、换屏幕尺寸时结构树和时间轴都滚到顶（第一行看得见）；放不下的行由上下边缘的提示写出来 */
+  if (toTop) { const tl = $('#tlw .tl'); lockSync = true; if (tl) tl.scrollTop = 0; $('#tree').scrollTop = 0; requestAnimationFrame(() => { lockSync = false; placePH(cur(), $('#tlw')); tlMoreHint($('#tlw')); }); }
 }
+/* 选中一行（结构树、键盘、面包屑、时间轴）时：那一行在时间轴里看不见才滚，滚到刚好露出来（不压在上下边缘的提示条下面） */
 function ensureVisible() {
-  const sc = cur(), tree = $('#tree'), tl = $('#tlw .tl'), rows = rowsOf(sc), i = rows.findIndex(r => r.n.id === sc.sel);
-  if (i < 0) return;
-  const h = parseFloat(getComputedStyle($('#app')).getPropertyValue('--h-row'));
-  const head = tl ? $('.fixed', tl).offsetHeight : 0;   /* 胶片刻度条（v2.3 起时间轴不再有效果本身那一行） */
-  const vT = UI.treeClosed || !UI.left || UI.compact ? Infinity : tree.clientHeight - h, vL = tl ? tl.clientHeight - head : Infinity;
-  const vis = Math.min(vT, vL); if (!isFinite(vis) || i === 0) return;
-  let top = vL <= vT && tl ? tl.scrollTop : tree.scrollTop;
-  const y = (i - 1) * h;
-  if (y < top + h || y + 2 * h > top + vis) top = Math.max(0, Math.round((y - vis / 2 + h / 2) / h) * h);
-  lockSync = true; tree.scrollTop = top; tree.scrollTop = Math.floor(tree.scrollTop / h) * h; if (tl) tl.scrollTop = top;
+  const sc = cur(), tl = $('#tlw .tl'), row = tl && $(`.tlrow[data-id="${sc.sel}"]`, tl); if (!row) return;
+  const hd = $('.fixed', tl).offsetHeight, E = 20, y = row.offsetTop, h = row.offsetHeight, max = tl.scrollHeight - tl.clientHeight;
+  let top = tl.scrollTop;
+  if (y < top + hd + (top > 0 ? E : 0)) top = y - hd - E;
+  else if (y + h > top + tl.clientHeight - (top < max ? E : 0)) top = y + h - tl.clientHeight + E;
+  top = Math.round(clamp(top, 0, max)); if (top === tl.scrollTop) return;
+  lockSync = true; tl.scrollTop = top; $('#tree').scrollTop = top;
   requestAnimationFrame(() => { lockSync = false; placePH(sc, $('#tlw')); tlMoreHint($('#tlw')); });
 }
-/* 结构树与时间轴各自滚动、滚动同步 */
+/* 结构树与时间轴各自滚动、滚动同步。v3.3：两边能滚的距离不一样（结构树多一行效果名和「加层」），
+   程序设过去的值会再触发一次对方的滚动事件，用 _echo 认出这一次回声，不再反过来改回去 */
 let lockSync = false;
 function bindSync() {
   const tl = $('#tlw .tl'), tr = $('#tree');
   if (!tl || tl.dataset.sync) return; tl.dataset.sync = 1;
-  tl.addEventListener('scroll', () => { if (lockSync) return; lockSync = true; tr.scrollTop = tl.scrollTop; requestAnimationFrame(() => lockSync = false); });
+  tl.addEventListener('scroll', () => { if (lockSync || Math.abs(tl.scrollTop - (tl._echo ?? -1)) < 1) return; tr.scrollTop = tl.scrollTop; tr._echo = tr.scrollTop; });
 }
-$('#tree').addEventListener('scroll', () => { const tl = $('#tlw .tl'); if (lockSync || !tl) return; lockSync = true; tl.scrollTop = $('#tree').scrollTop; requestAnimationFrame(() => { lockSync = false; tlMoreHint($('#tlw')); }); });
+$('#tree').addEventListener('scroll', () => { const tl = $('#tlw .tl'), tr = $('#tree'); if (lockSync || !tl || Math.abs(tr.scrollTop - (tr._echo ?? -1)) < 1) return; tl.scrollTop = tr.scrollTop; tl._echo = tl.scrollTop; tlMoreHint($('#tlw')); });
 new MutationObserver(bindSync).observe($('#tlw'), {childList: true});
 
 /* v3.2 第 1 条：只展开当前编辑的层及其上级，其余层折成一行。手动点开的层照常展开，换到别的层时再收起 */
@@ -1984,7 +1997,7 @@ const scOfWrap = w => SC[w.dataset.scene];
 function tlSelect(w, id) { if (w.id === 'tlw') select(id); else { const sc = scOfWrap(w); sc.sel = id; $$('.tlrow', w).forEach(r => r.classList.toggle('is-sel', r.dataset.id === id)); } }
 document.addEventListener('pointerdown', e => {
   if (e.button !== 0) return;
-  const w = e.target.closest('.tlw'); if (!w || e.target.closest('.tl-more, .xio')) return;   /* 「导出范围」行名格里的输入框和命令 */
+  const w = e.target.closest('.tlw'); if (!w || e.target.closest('.tl-edge, .xio')) return;   /* 「导出范围」行名格里的输入框和命令 */
   const sc = scOfWrap(w), t = e.target;
   const h = t.closest('[data-drag]');
   const scrub = !h && t.closest('[data-scrub], [data-scrub-ph]');
@@ -2115,15 +2128,14 @@ document.addEventListener('focusout', e => {
 function setTlRows(n) {
   const tl = $('#tlw .tl'); if (!tl) return;
   if (n === null) delete UI.tlRows[UI.size]; else UI.tlRows[UI.size] = n;
-  tl.style.setProperty('--tl-n', UI.tlRows[UI.size] || Math.min($$('#tlw .tlrow[data-id]').length, +getComputedStyle($('#app')).getPropertyValue('--tl-max')));
+  applyTlRows();
   requestAnimationFrame(() => { placePH(cur(), $('#tlw')); tlMoreHint($('#tlw')); });
 }
-/* 「还有 N 行」：点一下展开（时间轴拉高到放得下为止，画面至少留 140 px；再放不下就往下翻） */
-function tlExpand() {
+/* 「上面还有 N 行」「下面还有 N 行」：点一下滚到那一头（结构树跟着滚） */
+function tlScrollEnd(down) {
   const tl = $('#tlw .tl'); if (!tl) return;
-  const rh = parseFloat(getComputedStyle($('#app')).getPropertyValue('--h-row')), cn = +(tl.style.getPropertyValue('--tl-n')) || 3, rows = $$('#tlw .tlrow[data-id]').length;
-  const n = Math.max(cn, Math.min(rows, cn + Math.floor(($('#stage').clientHeight - 140) / rh)));
-  if (n > cn) setTlRows(n); else tl.scrollBy({top: tl.clientHeight - parseFloat(getComputedStyle(tl).getPropertyValue('--h-fr')) - rh});
+  tl.scrollTop = down ? tl.scrollHeight - tl.clientHeight : 0;
+  requestAnimationFrame(() => { placePH(cur(), $('#tlw')); tlMoreHint($('#tlw')); });
 }
 (() => {
   const v = $('#vsplit'); let y0 = 0, n0 = 0, rh = 28, maxN = 8;
@@ -2223,7 +2235,7 @@ document.addEventListener('click', e => {
     export: () => doExport('stale'), exportMenu: () => exportMenu(a), exportChecked: () => doExport('checked'),
     expStMenu: () => { const b = $('#expBtn .btn + .btn'); if (b && !b.disabled) exportMenu(b); },
     play: () => play(), restart: () => { setTime(0); play(true); }, loop: () => { UI.loop = !UI.loop; renderTransport(); },
-    timeTools: () => openMenu(a, [{t: '上一 tick', k: '←', act: () => stepTick(-1)}, {t: '下一 tick', k: '→', act: () => stepTick(1)}, '-', ...sc.marks.map(([nm, v]) => ({t: `跳到${nm}`, k: v.toFixed(2) + ' s', act: () => setTime(v)}))]),
+    timeTools: () => openMenu(a, [{t: '上一帧', k: '←', act: () => stepTick(-1)}, {t: '下一帧', k: '→', act: () => stepTick(1)}, '-', ...sc.marks.map(([nm, v]) => ({t: `跳到${nm}`, k: v.toFixed(2) + ' s', act: () => setTime(v)}))]),
     tlOpts: () => openMenu(a, [
       {head: '导出范围'},
       {t: '设为入点', k: '[', act: () => setIO('in', undefined, rangeNode())}, {t: '设为出点', k: ']', act: () => setIO('out', undefined, rangeNode())}, {t: '恢复', act: () => setIO('clear', undefined, rangeNode())}, '-',
@@ -2254,7 +2266,7 @@ document.addEventListener('click', e => {
     openFolder: () => toast('已打开导出文件夹'), pg: () => { if (UI.dview === '逐帧') UI.frameNo = (UI.frameNo || 1) + +a.dataset.d; else UI.sheetPage += +a.dataset.d; renderDeliv(); },
     unhide: () => { const f = find(sc, a.dataset.id); if (f) toggleShow(f.n); },
     soloExit: () => soloClear(),
-    tlMore: () => tlExpand()
+    tlUp: () => tlScrollEnd(false), tlDn: () => tlScrollEnd(true)
   };
   if (A[act]) A[act]();
 });
@@ -2380,7 +2392,7 @@ function kitSet(g, v) {
   $$('.kit-bar .seg').forEach(s => $$('button', s).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === String({view: UI.view, scene: UI.scene, size: UI.size}[s.dataset.kit])))));
   $('#kitMain').hidden = UI.view !== 'main'; $('#kitSheet').hidden = UI.view !== 'sheet';
   if (UI.view === 'sheet') { if (!$('#sheetBody').children.length) buildSheet(); }
-  else renderAll();
+  else renderAll(g === 'scene' || g === 'size' || g === 'view');
 }
 window.addEventListener('resize', () => { if (UI.view === 'main') placePH(cur(), $('#tlw')); });
 /* 画面变小时（窄屏、时间轴拉高），左下读数和右下读数一左一右放不下，就上下错开一行，不叠在一起 */
@@ -2851,6 +2863,6 @@ document.addEventListener('keydown', e => {
 
 /* ---------- 启动 ---------- */
 document.title = 'E 样板 v3';
-renderAll();
+renderAll(true);
 
 })();

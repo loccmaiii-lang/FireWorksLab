@@ -137,8 +137,8 @@ def spec_static(b):
     check('§6 一种形状一个意思：版本记录不是沙漏、循环不是圆箭头', x.E("document.querySelector('#i-history').innerHTML.includes('h7.5v7.5') && !document.querySelector('#i-loop').innerHTML.includes(' a') && document.querySelector('#i-reset').innerHTML.includes('a4.75')"))
     check('§6 「需重新导出」图标是琥珀三角加感叹号', x.C('#tree .stl', 'color') == AMBER and 'M8 2.25 14.25 13.25H1.75z' in x.E("document.querySelector('#i-stale').innerHTML"))
     # §7 一个信息只出现一次
-    check('§7 画面读数左下一行：平台、fps、tick', re.fullmatch(r'PC 30 fps tick \d+', x.T('#ciBL') or '') is not None, x.T('#ciBL'))
-    check('§7 画面读数不再写单格、张数、帧数', not any(w in (x.T('#cell') or '') for w in ['单格', '张', '帧', '1024']))
+    check('§7 / v3.3-9 画面读数左下一行：平台、fps、帧（和播放条同一个词）', re.fullmatch(r'PC 30 fps 帧 \d+', x.T('#ciBL') or '') is not None, x.T('#ciBL'))
+    check('§7 画面读数不再写单格、张数、帧数（「帧 50」是当前帧号，v3.3 第 9 条）', not re.search(r'单格|张|1024|\d+ 帧', x.T('#cell') or ''), x.T('#cell'))
     check('v3.1-3 画面右下常驻「距离 1000 m　预览曝光 1.00 倍」，弱色', x.T('#ciView') == '距离 1000 m 预览曝光 1.00 倍' and x.C('#ciView .vi .lbl', 'color') == T3 and x.C('#ciView .vi .num', 'color') == T2, x.T('#ciView'))
     check('v3.1-3 读数是数值框（可拖、可单击输入），不是只读文字', x.N('#ciView .vi input.num') == 2 and x.C('#ciView .vi .num', 'cursor') == 'ew-resize')
     bl = x.E("(() => { const g = id => [...document.getElementById(id).querySelectorAll('*')].filter(x => x.firstChild && x.firstChild.nodeType === 3 && x.firstChild.textContent.trim()).map(t => { const r = document.createRange(); r.selectNodeContents(t.firstChild); return r.getBoundingClientRect().bottom }); return [...g('ciBL'), ...g('ciView')] })()")
@@ -154,7 +154,7 @@ def spec_static(b):
     g = x.E("[...document.querySelectorAll('#transport .tpg')].map(e => { const r = e.getBoundingClientRect(); return [r.left, r.right] })")
     check('§8 播放条一行三组，组间 20', len(g) == 3 and all(19 <= g[i + 1][0] - g[i][1] <= 21 for i in range(2)), g)
     check('§8 第 1 组：▶ ⏮ 1× 循环', x.E("[...document.querySelectorAll('#transport .tpg')[0].children].map(c => c.dataset.act || c.id).join()") == 'play,restart,speed,loop')
-    check('§8 第 2 组：「2.00 / 5.24 s」大号等宽、「烘焙 50 / 75」', x.E("document.querySelector('#tNow').value") == '2.00' and (x.T('#transport .time .tot') or '') == '/ 5.24' and x.T('#transport .fbk') == '烘焙 50 / 75', [x.T('#transport .fbk')])
+    check('§8 / v3.3-9 第 2 组：「2.00 / 5.24 s」等宽、「帧 50 / 75」', x.E("document.querySelector('#tNow').value") == '2.00' and (x.T('#transport .time .tot') or '') == '/ 5.24' and x.T('#transport .fbk') == '帧 50 / 75', [x.T('#transport .fbk')])
     check('§8 第 3 组：「选项 ▾」和缩略图', x.E("[...document.querySelectorAll('#transport .tpg')[2].querySelectorAll('[data-act]')].map(c => c.dataset.act).join()") == 'tlOpts,thumb')
     check('§8 导出范围画在刻度尺上：一段浅底，两端把手', x.N('#tlw .rrow .xrange') == 1 and x.N('#tlw .rrow .xrange .xh') == 2)
     check('v3.1-12 「0.35–2.85 s」不在刻度尺上，写在「导出范围」那一行的行名格里', re.sub(r'\s', '', x.E("[...document.querySelectorAll('#tlw .rrow .lab.xio .xv > *')].map(e => e.value || e.textContent).join('')")) == '0.35–2.85s' and x.N('#tlw .rrow .fr .xlab, #tlw .rrow .fr .tnum') == 0 and x.R('#tlw .rrow .xio')[2] <= x.R('#tlw .rrow .fr')[0] + 1)
@@ -202,14 +202,14 @@ def spec_static(b):
     check('§9 寿命并进「运动」（单参数模块）', x.N('#pbody .mod[data-mod="寿命"]') == 0 and x.N('#pbody .mod[data-mod="运动"] .prm[data-lab="寿命"]') == 1)
     check('§10 仙女棒子发射器用子发射器图标', x.E("document.querySelector('#tree .trow.is-sel .ty use').getAttribute('href')") == '#i-sub')
     check('§8 仙女棒导出范围是整个效果（0.00–2.13 s）', re.sub(r'\s', '', x.E("[...document.querySelectorAll('#tlw .rrow .xio .xv > *')].map(e => e.value || e.textContent).join('')")) == '0.00–2.13s')
-    check('v3.2-1 仙女棒 13 行：时间轴最多占中栏 1/3，放不下的写「还有 N 行」', x.N('#tlw .tlrow[data-id]') == 13 and x.V('#tlw .tl-more') and (x.R('#mid')[3] - x.R('#transport')[1]) <= x.R('#mid')[5] / 3 + 1, [x.R('#mid')[3] - x.R('#transport')[1], x.R('#mid')[5]])
-    check('v3.2-1 当前行（08 二级碎火星）滚进时间轴可见范围', x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = document.querySelector('#tlw .tlrow.is-sel').getBoundingClientRect(); return r.top >= t.top - 1 && r.bottom <= t.bottom + 1 })()"))
+    check('v3.2-1 / v3.3-4 仙女棒 13 行：时间轴最多占中栏 1/3，放不下的写「下面还有 N 行」', x.N('#tlw .tlrow[data-id]') == 13 and x.V('#tlw .tl-edge.dn .tl-more') and (x.R('#mid')[3] - x.R('#transport')[1]) <= x.R('#mid')[5] / 3 + 1, [x.R('#mid')[3] - x.R('#transport')[1], x.R('#mid')[5]])
+    check('v3.3-4 默认滚到顶时，当前行（08 二级碎火星）也在可见范围里', x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = document.querySelector('#tlw .tlrow.is-sel').getBoundingClientRect(); return r.top >= t.top - 1 && r.bottom <= t.bottom + 1 })()"))
     pg.close()
     # §8 放不下时才出「还有 N 行」：1366 下仙女棒
     pg = new_page(b, 1366, 768); x = P(pg); x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(150)
-    check('§8 / v3.1-20 放不下时才出「还有 N 行」，写在行名列底部，不浮在轨道上', x.V('#tlw .tl-more') and re.fullmatch(r'还有 \d+ 行', x.T('#tlw .tl-more') or '') is not None and x.R('#tlw .tl-foot')[1] >= x.R('#tlw .tl')[3] - 1, x.T('#tlw .tl-more'))
-    x.click('#tlw .tl-more')
-    check('§8 点「还有 N 行」展开', x.E("+document.querySelector('#tlw .tl').style.getPropertyValue('--tl-n')") > 9 or not x.V('#tlw .tl-more'))
+    check('§8 / v3.3-4 放不下时才出「下面还有 N 行」，贴在时间轴下边缘', x.V('#tlw .tl-edge.dn .tl-more') and re.fullmatch(r'下面还有 \d+ 行', x.T('#tlw .tl-edge.dn .tl-more') or '') is not None and abs(x.R('#tlw .tl-edge.dn .tl-more')[3] - x.R('#tlw .tl')[3]) <= 1, x.T('#tlw .tl-edge.dn .tl-more'))
+    x.click('#tlw .tl-edge.dn .tl-more'); pg.wait_for_timeout(200)
+    check('§8 / v3.3-4 点「下面还有 N 行」滚到底', x.E("(() => { const t = document.querySelector('#tlw .tl'); return Math.abs(t.scrollTop - (t.scrollHeight - t.clientHeight)) <= 1 })()") and not x.V('#tlw .tl-edge.dn .tl-more'))
     pg.close()
     # §10 左栏
     pg = new_page(b); x = P(pg)
@@ -683,12 +683,78 @@ def interactions(b):
     pc.close()
 
 
+def frames(x):
+    """画面读数里的帧号和播放条里的帧号：返回 [(词, 数), (词, 数, 总数)]"""
+    bl = re.search(r'(\S+) (\d+|—)$', x.T('#ciBL') or '')
+    tp = re.fullmatch(r'(\S+) (\d+|—) / (\d+)', x.T('#transport .fbk') or '')
+    return (bl.groups() if bl else None, tp.groups() if tp else None)
+
+
+def v33(b):
+    """v3.3 改动单制作区第 1–15 条（修 bug 的条目先写成能复现的检查）"""
+    # 第 9 条：帧计数一致——画面读数和播放条同一时刻同一个数、同一个词，从 1 数
+    for scene, t in (('kiku', None), ('spk', None)):
+        pg = new_page(b); x = P(pg)
+        if scene == 'spk':
+            x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(150)
+        a, c = frames(x)
+        check(f'v3.3-9 {scene} 默认时刻：画面读数和播放条的帧号同一个词、同一个数', a and c and a[0] == c[0] and a[1] == c[1], [x.T('#ciBL'), x.T('#transport .fbk')])
+        tin =float(x.E("document.querySelector('#tlw .rrow .xio .tnum.in').value"))
+        x.click('#tNow'); pg.keyboard.press('Control+a'); pg.keyboard.type(f'{tin:.2f}'); x.key('Enter'); pg.mouse.click(900, 400)
+        a, c = frames(x)
+        check(f'v3.3-9 {scene} 播放头在导出范围入点：两处都是第 1 帧（从 1 数）', a and c and a[1] == '1' and c[1] == '1', [x.T('#ciBL'), x.T('#transport .fbk')])
+        x.key('.'); x.key('.')
+        a, c = frames(x)
+        check(f'v3.3-9 {scene} 逐帧往后两帧：两处一起变成 3', a and c and a[1] == c[1] == '3', [x.T('#ciBL'), x.T('#transport .fbk')])
+        pg.close()
+    pg = new_page(b); x = P(pg)
+    check('v3.3-9 「上一 tick」「下一 tick」改成「上一帧」「下一帧」，时间工具悬停不写 tick', 'tick' not in (x.E("document.querySelector('#transport [data-act=\"timeTools\"]').dataset.tip") or '') and (x.click('#transport [data-act="timeTools"]') or True) and 'tick' not in (x.T('.menu') or '') and '上一帧' in (x.T('.menu') or ''), x.T('.menu'))
+    x.key('Escape')
+    pg.close()
+
+    # 第 4 条：时间轴不悄悄藏行
+    pg = new_page(b); x = P(pg)
+    x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200)
+    st = lambda: x.E("""(() => { const tl = document.querySelector('#tlw .tl'), r = [...tl.querySelectorAll('.tlrow[data-id]')], T = tl.getBoundingClientRect(), hd = tl.querySelector('.fixed').getBoundingClientRect().bottom;
+      const up = tl.querySelector('.tl-edge.up .tl-more'), dn = tl.querySelector('.tl-edge.dn .tl-more'), vis = e => !!e && e.offsetParent !== null && getComputedStyle(e).visibility !== 'hidden';
+      const ub = vis(up) ? up.getBoundingClientRect().bottom : hd, db = vis(dn) ? dn.getBoundingClientRect().top : T.bottom;
+      const full = r.filter(x => { const b = x.getBoundingClientRect(); return b.top >= ub - 1 && b.bottom <= db + 1 }).map(x => x.querySelector('.lab').textContent);
+      return {top: tl.scrollTop, n: r.length, full, up: vis(up) ? up.textContent.trim() : null, dn: vis(dn) ? dn.textContent.trim() : null, first: r[0].querySelector('.lab').textContent} })()""")
+    s = st()
+    check('v3.3-4 仙女棒默认滚到顶，第一行「01 燃烧核心」完整看得见', s['top'] == 0 and s['first'] in s['full'], s)
+    check('v3.3-4 放不下时下边缘写「下面还有 N 行」，N 和实际藏着的行数一样；上边缘不写', s['dn'] is not None and re.fullmatch(r'下面还有 (\d+) 行', s['dn']) is not None and int(re.fullmatch(r'下面还有 (\d+) 行', s['dn']).group(1)) == s['n'] - len(s['full']) and s['up'] is None, s)
+    if s['dn']:
+        x.click('#tlw .tl-edge.dn .tl-more'); pg.wait_for_timeout(250)
+    s2 = st()
+    check('v3.3-4 点「下面还有 N 行」滚过去：最后一行看得见，上边缘写「上面还有 N 行」', s2['top'] > 0 and '13燃烧头炽热点' in s2['full'] and s2['up'] is not None and int(re.fullmatch(r'上面还有 (\d+) 行', s2['up']).group(1)) == s2['n'] - len(s2['full']) and s2['dn'] is None, s2)
+    if s2['up']:
+        x.click('#tlw .tl-edge.up .tl-more'); pg.wait_for_timeout(250)
+    s3 = st()
+    check('v3.3-4 点「上面还有 N 行」滚回顶', s3['top'] == 0 and s3['up'] is None and s3['dn'] is not None, s3)
+    check('v3.3-4 边缘提示占一条，不叠在别的行的字上', x.E("(() => { const e = document.querySelector('#tlw .tl-edge.dn .tl-more'); if (!e) return false; const b = e.getBoundingClientRect(); return [...document.querySelectorAll('#tlw .tlrow[data-id] .lab')].every(l => { const r = l.getBoundingClientRect(); return r.bottom <= b.top + 1 || r.top >= b.bottom - 1 || (r.top + r.bottom) / 2 > b.top }) })()"))
+    pg.close()
+    pg = new_page(b); x = P(pg)
+    s = st()
+    check('v3.3-4 金曜菊-B 1920：6 行都放得下，上下都不写', s['up'] is None and s['dn'] is None and len(s['full']) == s['n'] == 6, s)
+    pg.close()
+    pg = new_page(b, 1366, 768); x = P(pg)
+    s = st()
+    check('v3.3-4 1366 金曜菊-B 放不下：滚到顶，写「下面还有 N 行」', s['top'] == 0 and s['dn'] is not None and int(re.sub(r'\D', '', s['dn'])) == s['n'] - len(s['full']), s)
+    x.E("KIT.select('金锦层/余烬')"); pg.wait_for_timeout(200)
+    s = st()
+    check('v3.3-4 选中看不见的行时滚过去，当前行看得见，上边缘写「上面还有 N 行」', '余烬' in s['full'] and s['top'] > 0 and s['up'] is not None, s)
+    pg.close()
+
+
 def main():
+    only = [a[len('--only='):] for a in sys.argv[1:] if a.startswith('--only=')]
+    run = lambda name: not only or name in only[0].split(',')
     with sync_playwright() as p:
         b = p.chromium.launch()
-        spec_static(b)
-        v31(b)
-        interactions(b)
+        if run('spec'): spec_static(b)
+        if run('v31'): v31(b)
+        if run('inter'): interactions(b)
+        if run('v33'): v33(b)
         b.close()
     print(f'\n通过 {len(OK)}，失败 {len(BAD)}，页面错误 {len(ERR)}')
     for f in BAD: print('  失败：' + f)
