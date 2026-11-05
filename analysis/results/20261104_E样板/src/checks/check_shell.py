@@ -236,13 +236,15 @@ def t_bar(p, size):
     ck(f'改定1-没有工作区切换{S}', p.ev("""(() => { const b = __T.qq('#shell button, #shell [role=tab]').map(x => __T.txt(x));
         return !__T.q('#shell [data-sh="ws"], #shell .sh-ws-tabs, #shell [role=tablist]') && !b.some(t => ['制作', '导入', '编排'].includes(t)); })()"""))
     ck(f'改定6-顶栏没有「更新记录」一项{S}', p.ev("!__T.qq('#shell button, #shell span').some(x => __T.txt(x) === '更新记录' || /^更新记录 ?\\d*$/.test(__T.txt(x)))"))
-    # 分组顺序：UE ｜ 导出、备份 ｜ 资源交付、资源编排 ｜ 显卡
+    # 分组（v3.2 第 12 条）：状态（UE、导出、备份、设置）｜ 资源交付、资源编排 ｜ 显卡
     g = p.ev("""__T.qq('#shell .sh-r > .sh-g').map(x => ({c: x.className, x: __T.rect(x).x, r: __T.rect(x).r, t: __T.txt(x)}))""")
-    order = [('sh-g-ue', 'UE'), ('sh-g-fold', '导出'), ('sh-g-pg', '资源交付'), ('sh-g-gpu', 'RTX')]
-    ok = len(g) == 4 and all(o[0] in gi['c'] and o[1] in gi['t'] for o, gi in zip(order, g)) and all(g[i]['r'] <= g[i + 1]['x'] for i in range(3))
-    ck(f'改定2-右侧顺序 UE｜文件夹｜页面｜显卡{S}', ok, [x['t'] for x in g])
-    fold = p.ev("__T.qq('#shell .sh-g-fold .sh-fold').map(x => __T.txt(x))")
-    ck(f'改定2-文件夹组先导出后备份{S}', len(fold) == 2 and fold[0].startswith('导出') and fold[1].startswith('备份'), fold)
+    order = [('sh-g-st', 'UE'), ('sh-g-pg', '资源交付'), ('sh-g-gpu', 'RTX')]
+    ok = len(g) == 3 and all(o[0] in gi['c'] and o[1] in gi['t'] for o, gi in zip(order, g)) and all(g[i]['r'] <= g[i + 1]['x'] for i in range(2))
+    ck(f'改定2 / v3.2-12 右侧三组：状态｜页面入口｜显卡{S}', ok, [x['t'] for x in g])
+    seq = p.ev("""[...__T.q('#shell .sh-g-st').children].map(x => x.matches('.sh-ueg') ? 'UE' : x.querySelector('[data-fk=exp]') ? '导出' : x.querySelector('[data-fk=bak]') ? '备份' : x.matches('.sh-set') ? '设置' : x.className)""")
+    ck(f'v3.2-12 状态组：UE、导出、备份，「设置」在末尾{S}', seq == ['UE', '导出', '备份', '设置'], seq)
+    sg = p.ev("""(() => { const s = __T.q('#shell .sh-g-st .sh-set'), b = __T.q('#shell [data-fk=bak]').closest('.sh-fp'); return {gap: __T.rect(s).x - __T.rect(b).r, last: s === __T.q('#shell .sh-g-st').lastElementChild, sk: s.dataset.sk, tip: s.dataset.tip}; })()""")
+    ck(f'v3.2-12「设置」前面空 12 px、悬停写选哪个文件夹{S}', near(sg['gap'], 12, 0.6) and sg['last'] and sg['sk'] == 'bak' and sg['tip'] == '选择备份文件夹', sg)
     pgs = p.ev("__T.qq('#shell .sh-pg').map(x => __T.txt(x))")
     ck(f'改定2-页面组「资源交付 2」「资源编排」{S}', pgs == ['资源交付 2', '资源编排'], pgs)
     sh = p.ev("__T.rect('#shell')")
@@ -270,21 +272,22 @@ def t_bar(p, size):
     # 分组（v3.1 第 10 条）：组间只靠 24 px 间距，没有竖线；组内 12
     gp = p.ev("""(() => { const r = __T.q('#shell .sh-r'), gs = __T.qq('.sh-g', r);
         return {gap: getComputedStyle(r).columnGap, gi: gs.filter(x => !x.classList.contains('sh-g-pg')).map(x => getComputedStyle(x).columnGap),
-                seps: gs.map(x => getComputedStyle(x, '::before').content).filter(c => c !== 'none' && c !== 'normal').length,
+                seps: gs.slice(1).map(x => { const s = getComputedStyle(x, '::before'); return {w: s.width, h: s.height, bg: s.backgroundColor, left: parseFloat(s.left)}; }), line: __T.tok('--line'),
                 dist: gs.slice(1).map((x, i) => __T.rect(x).x - __T.rect(gs[i]).r)}; })()""")
     ck(f'v3.1-10 组间 24{S}', gp['gap'] == '24px' and all(near(d, 24, 0.6) for d in gp['dist']), gp['dist'])
-    ck(f'v3.1-10 组间不画竖线{S}', gp['seps'] == 0, gp)
+    ck(f'v3.2-12 三组之间各一条 1 px 竖线，在组间正中{S}', len(gp['seps']) == 2 and all(x['w'] == '1px' and x['bg'] == gp['line'] and near(x['left'], -12, 0.6) for x in gp['seps']), gp['seps'])
     ck(f'规范11-组内 12{S}', all(x == '12px' for x in gp['gi']), gp['gi'])
     # 状态（v3.1 第 10 条）：小圆点 + 弱色字；好 = 薄荷，要处理 = 琥珀（第 4 条：备份未选也是）
     st = p.ev("""(() => { const one = e => { const b = getComputedStyle(e, '::before'); return {t: __T.txt(e), dot: b.backgroundColor, dw: b.width, dr: b.borderTopLeftRadius, c: __T.cs(e, 'color'),
             k: e.querySelector('.sh-fk') ? __T.cs(e.querySelector('.sh-fk'), 'color') : null, v: [...e.querySelectorAll('.sh-sv')].map(x => [__T.txt(x), __T.cs(x, 'color')])}; };
-        return {ue: one(__T.q('#shell .sh-ue')), exp: one(__T.q('#shell [data-fk=exp]')), bak: one(__T.q('#shell [data-fk=bak]')), set: __T.q('#shell [data-fk=bak]').parentElement.querySelector('.sh-set'),
+        return {ue: one(__T.q('#shell .sh-ue')), exp: one(__T.q('#shell [data-fk=exp]')), bak: one(__T.q('#shell [data-fk=bak]')), 
                 p4: __T.tok('--p4'), w3: __T.tok('--w3'), t2: __T.tok('--t2'), t3: __T.tok('--t3')}; })()""")
-    ok_dot = lambda x, c: x['dot'] == c and x['dw'] == '6px' and x['dr'] == '50%'
-    ck(f'v3.1-10「UE 已连接」：薄荷圆点 + 弱色字{S}', st['ue']['t'] == 'UE 已连接' and ok_dot(st['ue'], st['p4']) and st['ue']['c'] == st['t3'] and all(c == st['t3'] for _, c in st['ue']['v']), st['ue'])
-    ck(f'v3.1-10「导出 FWL_Export」：薄荷圆点，标签和值都是弱色{S}', st['exp']['t'] == '导出 FWL_Export' and ok_dot(st['exp'], st['p4']) and st['exp']['k'] == st['t3'] and all(c == st['t3'] for _, c in st['exp']['v']), st['exp'])
-    ck(f'v3.1-4「备份 未选」：琥珀圆点 + 琥珀词，后面跟「设置」{S}', st['bak']['t'] == '备份 未选' and ok_dot(st['bak'], st['w3']) and st['bak']['k'] == st['t3'] and st['bak']['v'] == [['未选', st['w3']]], st['bak'])
-    cmd = p.ev("""(() => { const s = __T.q('#shell [data-fk=bak]').parentElement.querySelector('.sh-set'); return {t: __T.txt(s), c: __T.cs(s, 'color'), bg: __T.cs(s, 'backgroundColor'), h: __T.rect(s).h, tag: s.tagName, cls: s.className, t2: __T.tok('--t2')}; })()""")
+    no_dot = lambda x: x['dot'] in ('rgba(0, 0, 0, 0)', 'transparent') and x['dw'] in ('auto', '0px')
+    ok_dot = lambda x, c: x['dot'] == c and x['dw'] == '7px' and x['dr'] == '50%'
+    ck(f'v3.2-11「UE 已连接」：正常，不画圆点，弱色字{S}', st['ue']['t'] == 'UE 已连接' and no_dot(st['ue']) and st['ue']['c'] == st['t3'] and all(c == st['t3'] for _, c in st['ue']['v']), st['ue'])
+    ck(f'v3.2-11「导出 FWL_Export」：正常，不画圆点，标签和值都是弱色{S}', st['exp']['t'] == '导出 FWL_Export' and no_dot(st['exp']) and st['exp']['k'] == st['t3'] and all(c == st['t3'] for _, c in st['exp']['v']), st['exp'])
+    ck(f'v3.1-4 / v3.2-11「备份 未选」：要处理，琥珀圆点 + 琥珀词{S}', st['bak']['t'] == '备份 未选' and ok_dot(st['bak'], st['w3']) and st['bak']['k'] == st['t3'] and st['bak']['v'] == [['未选', st['w3']]], st['bak'])
+    cmd = p.ev("""(() => { const s = __T.q('#shell .sh-set'); return {t: __T.txt(s), c: __T.cs(s, 'color'), bg: __T.cs(s, 'backgroundColor'), h: __T.rect(s).h, tag: s.tagName, cls: s.className, t2: __T.tok('--t2')}; })()""")
     ck(f'v3.1-10「设置」是命令：次文字色、静止无底、点击区 28{S}', cmd['t'] == '设置' and cmd['tag'] == 'BUTTON' and 'tbtn' in cmd['cls'] and cmd['c'] == cmd['t2'] and cmd['bg'] in ('rgba(0, 0, 0, 0)', 'transparent') and cmd['h'] >= 27.5, cmd)
     p.pg.hover('#shell .sh-set')
     ck(f'v3.1-10「设置」悬停出底色{S}', p.ev("__T.cs('#shell .sh-set', 'backgroundColor') === __T.tok('--hov')"), p.ev("[__T.cs('#shell .sh-set', 'backgroundColor'), __T.tok('--hov')]"))
@@ -595,12 +598,18 @@ def t_folders_ue(p):
     tok = p.ev("({w3: __T.tok('--w3'), t2: __T.tok('--t2'), t3: __T.tok('--t3')})")
     # 导出未选：琥珀 +「设置」；点「设置」选好
     p.ev("SHELL.set('exp', 'none')")
-    r = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'); return {t: __T.txt(e), k: getComputedStyle(e, '::before').backgroundColor, v: __T.cs(e.querySelector('.sh-sv'), 'color'), set: __T.txt(e.parentElement.querySelector('.sh-set')), tip: e.dataset.tip, ic: !!e.querySelector('svg')}; })()""")
-    ck('①-导出未选：琥珀圆点 + 琥珀词（会挡住导出）+「设置」，不画图形', r['t'] == '导出 未选' and r['k'] == tok['w3'] and r['v'] == tok['w3'] and r['set'] == '设置' and not r['ic'], r)
+    r = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'); return {t: __T.txt(e), k: getComputedStyle(e, '::before').backgroundColor, v: __T.cs(e.querySelector('.sh-sv'), 'color'), set: __T.txt('#shell .sh-set'), sk: __T.q('#shell .sh-set').dataset.sk, stip: __T.q('#shell .sh-set').dataset.tip, tip: e.dataset.tip, ic: !!e.querySelector('svg')}; })()""")
+    ck('①-导出未选：琥珀圆点 + 琥珀词（会挡住导出），不画图形', r['t'] == '导出 未选' and r['k'] == tok['w3'] and r['v'] == tok['w3'] and not r['ic'], r)
+    ck('v3.2-12 导出、备份都没选：状态组末尾只有一个「设置」，悬停写「选择导出、备份文件夹」', r['set'] == '设置' and r['sk'] == 'both' and r['stip'] == '选择导出、备份文件夹' and p.ev("__T.qq('#shell .sh-set').length") == 1, r)
     ck('①-导出未选：悬停写「导出前需选好」', r['tip'] == '导出文件夹：导出前需选好', r)
     grab(p)
-    p.click('#shell .sh-set[data-sk="exp"]')
+    p.click('#shell .sh-set')
+    m = p.ev("__T.ovl('.menu [data-mi]').map(__T.txt)")
+    ck('v3.2-12 两个都没选：点「设置」出菜单（导出文件夹…、备份文件夹…）', m == ['导出文件夹…', '备份文件夹…'], m)
+    grab(p)
+    p.click('.menu [data-mi="exp"]')
     ck('①-点「设置」选好导出文件夹，标签旁写结果', p.ev("SHELL.state().exp === 'ok'") and p.ev("__T.ovl('.sh-hint').map(__T.txt)") == ['已选择 FWL_Export'])
+    ck('v3.2-12 只差备份：「设置」直接选备份', p.ev("__T.q('#shell .sh-set').dataset.sk") == 'bak')
     p.ev("SHELL.set('exp', 'none')")
     p.click('#shell [data-fk="exp"]')
     ck('①-导出未选：点标签直接选文件夹', p.ev("SHELL.state().exp") == 'ok')
@@ -623,12 +632,12 @@ def t_folders_ue(p):
     ck('①-需允许访问：点标签即允许', p.ev("SHELL.state().exp === 'ok' && __T.ovl('.sh-bub').length === 0"))
     # 备份三态
     p.ev("SHELL.set('bak', 'ok')")
-    ck('①-备份已选：薄荷圆点 + 弱色字', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup' && __T.cs('#shell [data-fk=bak] .sh-sv', 'color') === __T.tok('--t3') && getComputedStyle(__T.q('#shell [data-fk=bak]'), '::before').backgroundColor === __T.tok('--p4')"))
+    ck('①-备份已选：不画圆点 + 弱色字；没有要选的文件夹时不出「设置」', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup' && __T.cs('#shell [data-fk=bak] .sh-sv', 'color') === __T.tok('--t3') && ['none', 'normal'].includes(getComputedStyle(__T.q('#shell [data-fk=bak]'), '::before').content) && !__T.q('#shell .sh-set')"))
     p.ev("SHELL.set('bak', 'perm')")
     ck('①-备份需允许访问：琥珀词 + 气泡', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup 需允许访问' && __T.ovl('.sh-bub').length === 1"))
     p.ev("SHELL.set('bak', 'none')")
     ck('①-备份未选：悬停写「覆盖 UE 资产前需选好」', p.ev("__T.q('#shell [data-fk=bak]').dataset.tip") == '备份文件夹：覆盖 UE 资产前需选好')
-    p.click('#shell .sh-set[data-sk="bak"]')
+    p.click('#shell .sh-set[data-sk="bak"]')   # 导出已选，只差备份
     ck('①-备份「设置」选好', p.ev("SHELL.state().bak") == 'ok')
     # 长名字：省略号 + 悬停全称
     p.ev("SHELL.S.expName = 'FWL_Export_Project03_Fireworks_Long'; SHELL.render()")

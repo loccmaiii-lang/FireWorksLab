@@ -346,13 +346,14 @@ const isDis = b => b && b.getAttribute('aria-disabled') === 'true';
 
 /* ---------- 3 外壳顶栏（宪章 0.9「用户 2026-11-05 改定」；设计规范 v3 第 11 节） ----------
    左：「烟花工坊」+「FireWorksLab 5.0.3 [2]」，点版本号打开更新记录（有未读时后面跟计数框）。
-   右侧四组，组间 24 px、不画竖线（v3.1 第 10 条）：UE 状态 ｜ 导出、备份文件夹 ｜「资源交付」「资源编排」 ｜ 显卡。
+   右侧三组，组间 24 px、正中 1 px 竖线（v3.2 第 12 条）：状态（UE、导出、备份、设置）｜「资源交付」「资源编排」 ｜ 显卡。
    没有工作区切换：默认画面就是制作；页面标签打开那一页，再点一次亮着的标签或页面工具行左端「← 返回制作」回到制作 */
 const WS = [['baker', '制作', '#wsBaker'], ['import', '资源交付', '#wsImport'], ['wb', '资源编排', '#wsWB']];
 const PGN = {import: '资源交付', wb: '资源编排'};
 const FOLD = {exp: '导出文件夹', bak: '备份文件夹'}, FOLDK = {exp: '导出', bak: '备份'};
 const fullPath = name => `D:\\FireWorksLab\\${name}`;
-/* 状态（v3.1 改动单第 10 条）：小圆点（好 = 薄荷，要处理 = 琥珀，其他 = 灰）+ 弱色字；要处理的那个词琥珀；进行中把圆点换成转圈 */
+/* 状态：弱色字；只有要处理的（未连接、未选、需允许访问）画琥珀圆点、那个词用琥珀（v3.2 改动单第 11 条）；进行中（连接中、写入中）前面是转圈。
+   data-tone：ok = 正常，warn = 要处理 */
 const SPIN = '<span class="spin" aria-hidden="true"></span>';
 function ueHTML(v) {
   const tip = `127.0.0.1:17780　上次连上 ${S.lastUE}`;   /* 一行写完：样板的提示第二行 data-key 只给快捷键 */
@@ -363,31 +364,38 @@ function ueHTML(v) {
   if (v.k === 'write') return `<button class="btn btn-text tbtn sh-stat sh-ue st-cell is-write is-busy" data-sh="toImport" type="button" data-tip="打开资源交付">${SPIN}UE <span class="sh-sv">写入中 <span class="sh-n">${v.n} / ${v.tot}</span></span></button>`;
   return `<span class="sh-stat sh-ue st-cell is-na" data-tip="${WHY.brUE}">UE <span class="sh-sv">不可用</span></span>`;
 }
-/* 「导出 FWL_Export」「备份 未选　设置」：状态样子（圆点 + 弱色字），点开换文件夹。
-   已选 → 薄荷圆点；未选（导出、备份都是，第 4 条）、需允许访问 → 琥珀圆点 + 琥珀词，未选后面跟命令「设置」；不可用 → 灰点、停用 */
-function foldHTML(k, st, name) {
+/* 「导出 FWL_Export」「备份 未选」：状态样子（弱色字），点开换文件夹。
+   已选 → 不画圆点；未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词；不可用 → 停用。
+   顶栏里「设置」不跟在文件夹后面，放在状态组末尾（setHTML，v3.2 第 12 条）；withSet 只给全表里单独摆一个文件夹时用 */
+function foldHTML(k, st, name, withSet) {
   let tone = 'warn', cls = '', v, tip, pop = '';
   if (st === 'none') { v = '<span class="sh-sv is-warn">未选</span>'; tip = k === 'exp' ? '导出文件夹：导出前需选好' : '备份文件夹：覆盖 UE 资产前需选好'; }
   else if (st === 'ok') { tone = 'ok'; v = `<span class="sh-sv is-name">${esc(name)}</span>`; tip = `${FOLD[k]}　${fullPath(name)}`; pop = ' aria-haspopup="menu" aria-expanded="false"'; }
   else if (st === 'perm') { v = `<span class="sh-sv is-name">${esc(name)}</span><span class="sh-sv is-warn">需允许访问</span>`; tip = `${FOLD[k]}　${fullPath(name)}`; }
   else { tone = ''; cls = ' is-na'; v = '<span class="sh-sv">不可用</span>'; tip = WHY.brFold; }
   const lab = `${FOLD[k]} ${st === 'none' ? '未选' : st === 'na' ? '不可用' : esc(name)}${st === 'perm' ? ' 需允许访问' : ''}`;
-  const set = st === 'none' ? `<button class="btn btn-text tbtn sh-set" data-sh="foldSet" data-sk="${k}" type="button" data-tip="选择${FOLD[k]}">设置</button>` : '';
+  const set = withSet && st === 'none' ? setBtn(k) : '';
   return `<span class="sh-fp"><button class="btn btn-text tbtn sh-stat sh-fold st-cell${cls}"${tone ? ` data-tone="${tone}"` : ''} data-sh="fold" data-fk="${k}" data-st="${st}" type="button" data-tip="${esc(tip)}" aria-label="${lab}"${st === 'na' ? ' aria-disabled="true"' : ''}${pop}><span class="sh-fk">${FOLDK[k]}</span>${v}</button>${set}</span>`;
 }
-/* 计数（第 11 条）：小号数字放在 1 px 方框里，跟在名称后面 */
-const cntHTML = n => `<span class="sh-cnt">${n}</span>`;
+const setBtn = k => `<button class="btn btn-text tbtn sh-set" data-sh="foldSet" data-sk="${k}" type="button" data-tip="${k === 'both' ? '选择导出、备份文件夹' : `选择${FOLD[k]}`}">设置</button>`;
+/* 状态组末尾的「设置」：有文件夹没选时才出现；只差一个 → 直接选那一个；两个都没选 → 出菜单 */
+function setHTML(s) {
+  const un = ['exp', 'bak'].filter(k => s[k] === 'none');
+  return un.length ? setBtn(un.length === 2 ? 'both' : un[0]) : '';
+}
+/* 计数（方框只表示数量，v3.2 第 13 条）：小号数字放在 1 px 方框里，跟在名称后面；悬停写它数的是什么 */
+const cntHTML = (n, tip) => `<span class="sh-cnt"${tip ? ` data-tip="${tip}"` : ''}>${n}</span>`;
 /* 页面入口「资源交付 [2]」「资源编排」：标签样式；开着的那页 aria-pressed = true（薄荷下划线 + 600）；数字是待导入的包数 */
 function pgHTML(cur, impN, hov) {
   return WS.slice(1).map(([k, t]) => {
     const n = k === 'import' ? impN : 0, on = cur === k;
-    return `<button class="sh-pg${hov === k ? ' is-hover' : ''}" type="button" data-sh="pg" data-pg="${k}" aria-pressed="${on}" data-tip="${on ? '返回制作' : `打开${t}`}"${n ? ` aria-label="${t}，${n} 个素材包待导入"` : ''}><span data-w="${t}">${t}</span>${n ? cntHTML(n) : ''}</button>`;
+    return `<button class="sh-pg${hov === k ? ' is-hover' : ''}" type="button" data-sh="pg" data-pg="${k}" aria-pressed="${on}" data-tip="${on ? '返回制作' : `打开${t}`}"${n ? ` aria-label="${t}，${n} 个素材包待导入"` : ''}><span data-w="${t}">${t}</span>${n ? cntHTML(n, `${n} 个素材包待导入`) : ''}</button>`;
   }).join('');
 }
 function barHTML(s) {
-  return `<div class="sh-brand"><b class="tx">烟花工坊</b><button class="sh-ver" data-sh="ver" type="button" aria-haspopup="dialog" aria-expanded="false" data-tip="更新记录"${s.upd ? ` aria-label="FireWorksLab ${VER}，更新记录 ${s.upd} 条没看过"` : ''}>FireWorksLab ${VER}${s.upd ? cntHTML(s.upd) : ''}</button></div><span class="sp"></span>`
-    + `<div class="sh-r"><div class="sh-g sh-g-ue"><div class="sh-ueg">${ueHTML(s.ueV)}</div></div>`
-    + `<div class="sh-g sh-g-fold">${foldHTML('exp', s.exp, s.expName || S.expName)}${foldHTML('bak', s.bak, s.bakName || S.bakName)}</div>`
+  return `<div class="sh-brand"><b class="tx">烟花工坊</b><button class="sh-ver" data-sh="ver" type="button" aria-haspopup="dialog" aria-expanded="false" data-tip="更新记录"${s.upd ? ` aria-label="FireWorksLab ${VER}，更新记录 ${s.upd} 条没看过"` : ''}>FireWorksLab ${VER}${s.upd ? cntHTML(s.upd, `${s.upd} 条未读更新`) : ''}</button></div><span class="sp"></span>`
+    + `<div class="sh-r"><div class="sh-g sh-g-st" role="group" aria-label="状态"><div class="sh-ueg">${ueHTML(s.ueV)}</div>`
+    + `${foldHTML('exp', s.exp, s.expName || S.expName)}${foldHTML('bak', s.bak, s.bakName || S.bakName)}${setHTML(s)}</div>`
     + `<div class="sh-g sh-g-pg" role="group" aria-label="页面">${pgHTML(s.ws, s.impN)}</div>`
     + `<div class="sh-g sh-g-gpu"><span class="gpu sh-gpu" data-tip="NVIDIA GeForce RTX 4070 Laptop GPU">RTX 4070</span></div></div>`;
 }
@@ -864,7 +872,13 @@ document.addEventListener('click', e => {
       else if (st === 'perm') { closeBub(false); allowFolder(k, a); }
       else if (st === 'ok') { if (SH.menu && SH.anchor === a) closeMenu(); else folderMenu(a, k); }
     },
-    foldSet: () => pickFolder(a.dataset.sk, q(`#shell [data-fk="${a.dataset.sk}"]`) || a),
+    foldSet: () => {
+      const k = a.dataset.sk;
+      if (k !== 'both') { pickFolder(k, q(`#shell [data-fk="${k}"]`) || a); return; }
+      if (SH.menu && SH.anchor === a) { closeMenu(); return; }
+      openMenu(a, '<button class="mi" data-mi="exp" type="button">导出文件夹…</button><button class="mi" data-mi="bak" type="button">备份文件夹…</button>',
+        {align: 'right', acts: {exp: () => pickFolder('exp', a), bak: () => pickFolder('bak', a)}});
+    },
     impSub: () => { S.imp.sub = a.dataset.v; renderImport(); },
     impRefresh: () => {
       if (S.exp === 'perm') { bubble(a, 'exp', {align: 'right'}); return; }
@@ -935,9 +949,9 @@ const sheetPV = {job: null, err: null, out: 'ok'};
 function sheetHTML() {
   const B = (ueV, o) => Object.assign({ws: 'baker', impN: 2, ueV, exp: 'ok', bak: 'none', upd: 2}, o);
   const bars = [
-    ['UE 连接中（转圈）　导出已选（薄荷点）　备份未选：琥珀点 + 琥珀词，后面跟命令「设置」　版本号后面的 [2] = 没看过的更新记录', B({k: 'wait'})],
+    ['UE 连接中（转圈）　导出已选（正常：不画圆点）　备份未选：琥珀点 + 琥珀词；状态组末尾是命令「设置」　版本号后面的 [2] = 未读更新条数', B({k: 'wait'})],
     ['UE 已连接　导出、备份都已选　打开着「资源交付」：标签 600 + 薄荷下划线　更新记录都看过', B({k: 'on'}, {ws: 'import', bak: 'ok', upd: 0})],
-    ['UE 未连接（琥珀点）　重试　12 秒后自动重试　导出未选：琥珀点 + 琥珀词，后面跟「设置」', B({k: 'off', cd: 12}, {impN: 0, exp: 'none'})],
+    ['UE 未连接（琥珀点）　重试　12 秒后自动重试　导出未选：琥珀点 + 琥珀词；「设置」在状态组末尾', B({k: 'off', cd: 12}, {impN: 0, exp: 'none'})],
     ['UE 写入中 3 / 12，点一下打开资源交付　导出、备份都需允许访问：琥珀点 + 琥珀词，点一下即允许　打开着「资源编排」：薄荷下划线 + 600', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'wb', impN: 3, exp: 'perm', bak: 'perm'})]
   ];
   const b1366 = [
@@ -950,7 +964,7 @@ function sheetHTML() {
   const ue = v => `<div class="sh-ueg">${ueHTML(v)}</div>`;
   const ueT = tbl(['连接中', '已连接', '未连接', '写入中', '不可用：其他浏览器', '可操作：点状态换下一种'],
     [['UE 状态', [ue({k: 'wait'}), ue({k: 'on'}), ue({k: 'off', cd: 12}), ue({k: 'write', n: 3, tot: 12, by: 'import'}) + '<span class="sh-cell-n">编排写时只写「UE 写入中」</span>', ue({k: 'na'}), `<div data-shlive="ue" data-st="on">${ue({k: 'on'})}</div>`]]]);
-  const fo = (k, st, nm) => foldHTML(k, st, nm || (k === 'exp' ? 'FWL_Export' : 'FWL_Backup'));
+  const fo = (k, st, nm) => foldHTML(k, st, nm || (k === 'exp' ? 'FWL_Export' : 'FWL_Backup'), true);
   const foT = tbl(['未选', '已选', '需允许访问', '不可用：其他浏览器', '可操作：点了照产品行为走'],
     [['导出文件夹', [fo('exp', 'none'), fo('exp', 'ok'), fo('exp', 'perm'), fo('exp', 'na'), `<div data-shlive="fold" data-fk="exp" data-st="none">${fo('exp', 'none')}</div>`]],
      ['备份文件夹', [fo('bak', 'none'), fo('bak', 'ok'), fo('bak', 'perm'), fo('bak', 'na'), `<div data-shlive="fold" data-fk="bak" data-st="none">${fo('bak', 'none')}</div>`]],
@@ -1012,9 +1026,9 @@ function sheetHTML() {
     + `<div><span class="ks-cap">编排预览没生成：详情</span><div class="menu static" style="max-width:340px"><div class="msum"><b>编排预览没生成：金曜菊-B 副本</b><dl><dt>原因</dt><dd>存储已用 4.8 / 5 GB</dd><dt>效果</dt><dd>已保存</dd></dl></div><div class="mi">重试</div><div class="mi">去编排看</div></div></div></div>`;
 
   return `<h2>外壳与 5.0 入口</h2><p class="lead">烟花工坊 5.0，交互宪章 0.9（含用户 2026-11-05 改定）、设计规范 v3 第 11、12 节：外壳顶栏、资源交付和资源编排两页、导出和另存之后的去向、首次使用。没有工作区切换，默认画面就是制作。静态画出每个状态；带底色的一列和「打开」按钮可以真点。主屏的状态用样板控制条里的「UE / 导出文件夹 / 备份文件夹 / 浏览器 / 预览结果」切换。</p>`
-    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3 [2]」小号弱色，点版本号打开更新记录；右侧四组，组间 24 px、不画竖线：状态（UE ｜ 导出、备份）｜ 页面入口（资源交付、资源编排）｜ 显卡</span></h3>${barsHTML}`
-    + blk('UE 状态', '状态样子：小圆点 + 弱色字（好 = 薄荷，要处理 = 琥珀，其他 = 灰），进行中把圆点换成转圈；要处理的词琥珀；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
-    + blk('文件夹', '状态样子：已选薄荷点，点开换文件夹；未选（导出、备份都是）琥珀点 + 琥珀词，后面跟命令「设置」（命令样子：次文字色，悬停出底色）；需允许访问：琥珀，点一下即允许；悬停写全称和完整路径', foT)
+    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3 [2]」小号弱色，点版本号打开更新记录；右侧三组，组间 24 px、正中 1 px 竖线：状态（UE、导出、备份、设置）｜ 页面入口（资源交付、资源编排）｜ 显卡；方框只表示数量，悬停写数的是什么</span></h3>${barsHTML}`
+    + blk('UE 状态', '状态样子：弱色字；正常的不画圆点，只有要处理的（未连接）画琥珀圆点、那个词琥珀；进行中前面是转圈；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
+    + blk('文件夹', '状态样子：已选不画圆点，点开换文件夹；未选（导出、备份都是）琥珀点 + 琥珀词，顶栏里命令「设置」放在状态组末尾（这里单独摆时跟在后面）；需允许访问：琥珀，点一下即允许；悬停写全称和完整路径', foT)
     + blk('页面入口', '标签样子：次文字色、正文字号，悬停出底色；打开着的那页 600 + 薄荷下划线；「资源交付 [2]」的计数框是待导入的包数；再点一次亮着的标签回到制作', pgT)
     + blk('页面工具行：资源交付、资源编排', '工具行占满宽，栏头面色，底边一条线；左段「← 返回制作」，分段和下面的栏对齐，栏与栏之间是同一条 1 px 线；命令用文字按钮，标签弱色', `${wsFrame('var(--sh-wl) minmax(0,1fr)', '28px', impTool + leftImp + '<div style="grid-column:2;grid-row:2"></div>')}<div style="height:12px"></div>${wsFrame('var(--sh-wl) minmax(0,1fr) var(--w-right)', '28px', wbTool + leftWB + '<div style="grid-column:2;grid-row:2"></div>')}`)
     + blk('原因', '资源交付主区最上面一行，主文字色，不填底色；UE 未连接时出现，包列表、逐资产清单和预检照常', wsFrame('var(--sh-wl) minmax(0,1fr)', 'auto', impTool + leftImp + `<div class="sh-main" style="grid-column:2;grid-row:2;padding-bottom:12px">${why}</div>`))
@@ -1044,9 +1058,9 @@ function sheetLive(box, t, e) {
     const b = t.closest('.sh-fold, .sh-set'); if (!b) return;
     const k = box.dataset.fk || 'exp', st = kind === 'bub' ? 'perm' : box.dataset.st, nm = k === 'exp' ? 'FWL_Export' : 'FWL_Backup';
     if (kind === 'bub') { bubbleSheet(b, box); return; }
-    if (st === 'none') { box.dataset.st = 'ok'; box.innerHTML = foldHTML(k, 'ok', nm); hint(q('.sh-fold', box), `已选择 ${nm}`); }
-    else if (st === 'ok') openMenu(b, `<div class="mh">${FOLD[k]}　${nm}</div><button class="mi two" data-mi="perm" type="button"><span class="mt2"><span>换文件夹…</span><span class="ms2">样板：改成需允许访问</span></span></button>`, {acts: {perm: () => { box.dataset.st = 'perm'; box.innerHTML = foldHTML(k, 'perm', nm); }}});
-    else { box.dataset.st = 'ok'; box.innerHTML = foldHTML(k, 'ok', nm); hint(q('.sh-fold', box), `已允许访问 ${nm}`); }
+    if (st === 'none') { box.dataset.st = 'ok'; box.innerHTML = foldHTML(k, 'ok', nm, true); hint(q('.sh-fold', box), `已选择 ${nm}`); }
+    else if (st === 'ok') openMenu(b, `<div class="mh">${FOLD[k]}　${nm}</div><button class="mi two" data-mi="perm" type="button"><span class="mt2"><span>换文件夹…</span><span class="ms2">样板：改成需允许访问</span></span></button>`, {acts: {perm: () => { box.dataset.st = 'perm'; box.innerHTML = foldHTML(k, 'perm', nm, true); }}});
+    else { box.dataset.st = 'ok'; box.innerHTML = foldHTML(k, 'ok', nm, true); hint(q('.sh-fold', box), `已允许访问 ${nm}`); }
     return;
   }
   if (kind === 'pg') {
@@ -1075,7 +1089,7 @@ function bubbleSheet(anchor, box) {
   closeBub(false);
   const el = document.createElement('div'); el.className = 'sh-bub'; el.innerHTML = bubHTML('FWL_Export');
   ovlOf(anchor).appendChild(el); placeBub(el, anchor, 'left');
-  el.addEventListener('click', ev => { const b = ev.target.closest('[data-r]'); if (!b) return; closeBub(false); if (b.dataset.r === 'allow') { box.innerHTML = foldHTML('exp', 'ok', 'FWL_Export'); hint(q('.sh-fold', box), '已允许访问 FWL_Export'); } });
+  el.addEventListener('click', ev => { const b = ev.target.closest('[data-r]'); if (!b) return; closeBub(false); if (b.dataset.r === 'allow') { box.innerHTML = foldHTML('exp', 'ok', 'FWL_Export', true); hint(q('.sh-fold', box), '已允许访问 FWL_Export'); } });
   SH.bub = {el, anchor, sticky: false};
 }
 function renderSheetPV() { const b = q('#sheetShell [data-shlive="pv"] .st-r > span'); if (b) b.innerHTML = pvHTML(sheetPV.job, sheetPV.err); }

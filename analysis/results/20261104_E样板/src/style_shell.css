@@ -1,8 +1,8 @@
 /* ---------- 外壳（style_shell.css） ---------- */
 /* =====================================================================
-   烟花工坊 5.0 外壳，E 样板 v3.1（对话框9，2026-11-05）
+   烟花工坊 5.0 外壳，E 样板 v3.2（对话框9，2026-11-05）
    依据：交互宪章 0.9（含「用户 2026-11-05 改定」）、协作/方案/E设计规范_v3_2026-11-05.md 第 1–6、11、12 节；
-   E样板_v3.1_改动单.md 第 4、9、10、11 条（和规范冲突处以改动单为准）。
+   E样板_v3.1_改动单.md 第 4、9、10、11 条、E样板_v3.2_改动单.md 第 11–13 条（和规范冲突处以改动单为准，后一份为准）。
    0 兜底  1 外壳顶栏  2 资源交付 / 资源编排两页  3 列表条目  4 浮层补充  5 编排预览（状态栏）  6 样板开关  7 全表一节
    颜色、字号、间距一律取样板 style_main.css 的 token；样板还没有的写成 var(--新, 旧值)；
    组件类（.btn / .tbtn / .modeseg / .seg / .tab / .menu / .dialog / .toast）以样板为准，这里只补外壳自己的部件（sh-*）。
@@ -13,7 +13,7 @@
 :where(.tgrp){display:flex;align-items:center;gap:var(--s1, 4px);flex:none}
 
 /* ---------- 1 外壳顶栏（规范第 11 节） ---------- */
-/* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线（同样板 .app>.shell 用内阴影画，两边叠在一起不会变成 2 px）。左：产品名 + 版本号；右：四组，组内 12 px、组间 24 px，不画竖线（v3.1 第 10 条） */
+/* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线（同样板 .app>.shell 用内阴影画，两边叠在一起不会变成 2 px）。左：产品名 + 版本号；右：三组，组内 12 px、组间 24 px，组间正中 1 px 竖线（v3.2 第 12 条） */
 .shell{--sh-gi:12px;--sh-gg:24px;display:flex;align-items:center;min-width:0;height:var(--h-shell);padding:0 var(--s3);box-shadow:inset 0 -1px 0 var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
 .shell.sh-static{overflow:hidden}
 /* 产品名「烟花工坊」大号 600；版本号「FireWorksLab 5.0.3」小号弱色，是打开更新记录的命令（点击区 28 px）；未读数跟在后面，计数框（v3.1 改动单第 11 条） */
@@ -24,18 +24,16 @@
 .sh-ver:active{background:var(--press, var(--g5))}
 /* 计数只有一种写法（第 11 条）：小号数字放在 1 px 方框里，跟在名称后面 */
 .sh-cnt{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:16px;height:16px;margin:0;padding:0 3px;border:1px solid var(--g6);border-radius:0;color:var(--t2);font-size:var(--fs1);line-height:14px;font-weight:var(--fw1);font-variant-numeric:tabular-nums}
-/* 右侧分组（第 10 条）：状态（UE、导出、备份）｜ 页面入口（资源交付、资源编排）｜ 显卡；组间只靠 24 px 间距分开，没有竖线 */
+/* 右侧三组（v3.2 改动单第 12 条）：状态（UE、导出、备份、设置）｜ 页面入口（资源交付、资源编排）｜ 显卡；组间 24 px，正中一条 1 px 竖线 */
 .sh-r{flex:0 1 auto;align-self:stretch;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
 .sh-g{position:relative;display:flex;align-items:center;gap:var(--sh-gi);min-width:0}
-.sh-g-ue,.sh-g-pg,.sh-g-gpu{flex:none}
-.sh-g-fold{flex:0 1 auto}
-/* 状态：前面一个小圆点（好 = 薄荷，要处理 = 琥珀，其他 = 灰），文字弱色；要处理的那个词（未选、未连接、需允许访问）用琥珀。
-   连接中、写入中是进行中：圆点的位置换成转圈 */
+.sh-g+.sh-g::before{content:"";position:absolute;left:calc(var(--sh-gg) / -2);top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
+.sh-g-pg,.sh-g-gpu{flex:none}
+.sh-g-st{flex:0 1 auto}
+/* 状态：文字弱色，正常的不画圆点（v3.2 第 11 条）；只有要处理的（未连接、未选、需允许访问）前面一个琥珀圆点、那个词用琥珀。
+   连接中、写入中是进行中：前面一个转圈 */
 .sh-stat{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1);color:var(--t3);white-space:nowrap}
-.sh-stat::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--t3)}
-.sh-stat[data-tone="ok"]::before{background:var(--p4)}
-.sh-stat[data-tone="warn"]::before{background:var(--w3)}
-.sh-stat.is-busy::before{display:none}
+.sh-stat[data-tone="warn"]::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--w3)}
 .sh-stat .spin{width:8px;height:8px;border-width:1.5px;color:var(--t3)}
 .sh-stat .sh-sv{color:var(--t3)}
 .sh-stat .sh-sv.is-warn{color:var(--w3)}
@@ -46,14 +44,14 @@
 .sh-ue.is-write:hover{color:var(--t2)}
 .sh-ue.is-na{opacity:.5}
 .sh-cd{flex:none;font-size:var(--fs1);color:var(--t3)}
-/* 文件夹：点开换文件夹，悬停写全称和完整路径；名字过长省略号。未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词，后面跟命令「设置」 */
+/* 文件夹：点开换文件夹，悬停写全称和完整路径；名字过长省略号。未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词；「设置」在状态组末尾 */
 .sh-fp{display:flex;align-items:center;gap:2px;min-width:0;flex:0 1 auto}
 .sh-fp:has(.sh-set){flex:none}
 .sh-fold{flex:0 1 auto;min-width:0;padding:0 6px;overflow:hidden}
 .sh-fold .sh-fk,.sh-fold .sh-sv{flex:none}
 .sh-fold .sh-sv.is-name{flex:0 1 auto;min-width:3.2em;overflow:hidden;text-overflow:ellipsis}
 .sh-fold.is-na{opacity:.5;cursor:default;background:none}
-/* 操作：命令样式（次文字色、静止无底、悬停出底色），和状态的弱色字分开 */
+/* 操作：命令样式（次文字色、静止无底、悬停出底色），和状态的弱色字分开；「设置」是状态组最后一项，前面 12 px（组内间距） */
 .sh-set,.sh-retry{flex:none;padding:0 6px;color:var(--t2)}
 /* 页面入口「资源交付 [2]」「资源编排」：标签样式，次文字色、正文字号，悬停出底色；当前页薄荷下划线 + 600（预留 600 的宽度，换字重不挤动顶栏） */
 .sh-g-pg{align-self:stretch;gap:2px}
