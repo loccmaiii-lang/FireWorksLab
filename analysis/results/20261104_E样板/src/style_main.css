@@ -327,17 +327,20 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .prm .lk[aria-pressed="true"]{color:var(--t1)}
 .ctl1{display:flex;align-items:center;gap:4px;min-width:0}
 .ctl1 .sl{flex:1}
-.vu{display:flex;align-items:baseline;justify-content:flex-start;gap:0;min-width:0;white-space:nowrap}   /* v3.2 第 2 条：数值 + 单位成一组，从数值格左缘起 */
-.vu>.num{margin-left:-4px;text-align:left}   /* 数字的字从格子左缘起；框线和内边距借滑杆后面的 8 px */
-.vu>.u{display:flex;align-items:center;gap:0;padding-left:0;line-height:var(--lh2)}   /* 数字框右内边距 4 px 就是数字到单位的间距 */
-.vu .num{width:auto;field-sizing:content;min-width:1ch}
-/* 区间：数值格写「0.30–1.65」；放不下 72 时向左借控件列和数值列之间的空白 */
-.vv{display:inline-flex;align-items:center;white-space:nowrap}
-.vv+.u{padding-left:4px}
-.vv .num{width:auto;field-sizing:content;min-width:0;padding:0}
+/* v3.3 第 1 条：数值格右对齐、同一列小数点对齐（右边补的空由 alignNums() 写成 margin-right）；单位放在后面一个固定宽度的单位列。
+   --w-val、--w-unit 由 alignNums() 按这一屏的取值范围和单位算好写在 #pbody 上；滑杆仍在同一条线结束 */
+.vu{display:grid;grid-template-columns:var(--w-val) var(--w-unit);align-items:center;min-width:0;white-space:nowrap}
+.vu>.num,.vu>.vv{grid-column:1;grid-row:1;justify-self:end}
+.vu>.u{grid-column:2;grid-row:1;justify-self:start;padding-left:0;line-height:var(--lh2)}   /* 数字框右边 1 + 3 px 就是数字到单位的 4 px */
+.vu>.exn{grid-column:2;grid-row:1;justify-self:end}
+.vu>.dis-why{grid-column:1/3;grid-row:1;justify-self:start}
+.vu .num{width:auto;field-sizing:content;min-width:1ch;text-align:right}
+/* 区间「0.30–1.65」：下限、上限各占一个等宽的槽（--lo-slot、--hi-slot），各自按小数点对齐 */
+.vv{display:grid;grid-template-columns:var(--lo-slot,auto) auto var(--hi-slot,auto);align-items:center;white-space:nowrap}
+.vv .num{width:auto;field-sizing:content;min-width:0;padding:0;justify-self:end}
 .vv .dash{padding:0 1px;color:var(--t3)}
 /* 展开箭头（分布、随机幅度）：在数值格右边，点开在下一行出滑杆 */
-.exn{display:inline-grid;place-items:center;align-self:center;width:12px;height:20px;margin-left:2px;border-radius:var(--r2);color:var(--t3);flex:none}
+.exn{display:inline-grid;place-items:center;align-self:center;width:12px;height:20px;border-radius:var(--r2);color:var(--t3);flex:none}
 .exn svg.i{width:12px;height:12px;transition:rotate .12s}
 .exn:hover{background:var(--hov);color:var(--t1)}
 .exn[aria-expanded="true"] svg.i{rotate:180deg}
@@ -369,11 +372,8 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .prm .clist{display:flex;flex-direction:column}
 .prm .ro-n{grid-column:2;font-size:var(--fs1);color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:var(--gap-val)}
 .prm .ro-t{grid-column:2/5;color:var(--t1)}
-.prm .num.is-ro{padding-right:3px}
+.prm .num.is-ro{padding:0 3px}
 .prm.hit .plt{color:var(--t1)}
-.dep-t{grid-column:1/-1;display:flex;align-items:center;gap:8px;font-size:var(--fs1);color:var(--t3)}
-.dep-t .dep-c{color:var(--t2)}
-.dep-t .btn{height:var(--h-ctl)}
 .empty{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s2);padding:var(--s5) 0;color:var(--t3)}
 .empty b{font-weight:var(--fw1);color:var(--t2)}
 .is-flash{animation:flash 1s ease-out}
@@ -388,9 +388,21 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .mod-h .chev{position:absolute;left:calc(-1 * var(--pad) + 1px);top:50%;width:10px;height:10px;margin-top:-5px;color:var(--t3);transition:rotate .12s}
 .mod:not(.is-closed) .mod-h .chev{rotate:90deg}
 .mod-h .mt{grid-column:1/3;grid-row:1;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);white-space:nowrap}
-.mod-h .ms{grid-column:2/5;grid-row:1;justify-self:end;min-width:calc(var(--w-val) + var(--w-unit));max-width:100%;padding-left:var(--s3);margin-left:calc(-1 * var(--s3));font-size:var(--fs1);color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;box-sizing:content-box}   /* v3.2：摘要左缘对齐数值列，放不下时向左长 */
-.mod-h .ms .u{font-size:inherit}
+/* v3.3 第 5 条：摘要落在五列网格里——前面的字在控件列右对齐（色带靠控件列左缘，和滑杆同一个起点），最后一个数值在数值列（小数点对齐），单位在单位列 */
+.mod-h .ms{grid-row:1;min-width:0;font-size:var(--fs1);color:var(--t3);white-space:nowrap}
+.mod-h .ms-l{grid-column:2;display:flex;align-items:center;justify-content:flex-end;gap:var(--s2);overflow:hidden;padding-right:0}
+.mod-h .ms-l.wide{grid-column:2/4;padding-right:4px}   /* 最后一项不是数值：整句右对齐到数值列末端 */
+.mod-h .ms-l .mst{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.mod-h .ms-l .band{margin-right:auto}
+.mod-h .ms-v{grid-column:3;justify-self:end}
+.mod-h .ms-v .num{display:inline-block;width:auto;height:auto;padding:0 3px;border:1px solid transparent;font-size:var(--fs1);line-height:var(--lh1);color:var(--t2);cursor:inherit;text-align:right}
+.mod-h .ms-u{grid-column:4;justify-self:start}
 .mod:not(.is-closed) .mod-h .ms{visibility:hidden}
+/* v3.3 第 8 条：收起的依赖参数写成标题行右侧的「+N」，悬停「N 个参数已隐藏，点开显示」；点开后填选中底色 */
+.mod-h .dep-n{grid-column:3/5;grid-row:1;justify-self:end;height:20px;padding:0 4px;font-size:var(--fs1);color:var(--t2)}
+.mod-h .dep-n:hover{background:var(--hov);color:var(--t1)}
+.mod-h .dep-n[aria-pressed="true"]{background:var(--on);color:var(--t1)}
+.mod.is-closed .mod-h .dep-n{visibility:hidden}
 .mod-h:hover .chev{color:var(--t1)}
 .mod-h .mrst{grid-column:5;grid-row:1;justify-self:end;width:var(--w-act);height:var(--w-act)}
 .mod-h .mrst svg.i{width:14px;height:14px}

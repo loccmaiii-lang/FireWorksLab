@@ -209,7 +209,8 @@ function layerMods(sc, n) {
       {lab: '扰动气流速度', unit: 'm/s', min: 0, max: 5, step: .1, v: 1.2, if: dist, dep: '爆后扰动'},
       {lab: '扰动尺度', unit: 'm', min: 1, max: 50, step: .1, v: 8, if: dist, dep: '爆后扰动'}]},
     /* §9：只有一个参数的「曝光」不做成模块，放进相近的「颜色」 */
-    {t: '颜色', sumHTML: P => `曝光 ${fmt(P.get('曝光'), .01)} <span class="u">倍</span>　${P.get('发射器共用') ? bandHTML() : '分开设置'}`, rows: [
+    /* v3.3 第 5 条：折叠后的摘要也落在五列网格里——色带在控件列（和滑杆同一个起点），曝光的数值在数值列、单位在单位列 */
+    {t: '颜色', sumParts: P => ({band: P.get('发射器共用') ? bandHTML() : '', lead: P.get('发射器共用') ? '曝光' : '分开设置　曝光', v: fmt(P.get('曝光'), .01), u: '倍'}), rows: [
       {lab: '曝光', unit: '倍', min: .1, max: 4, step: .01, v: 1, sug: {act: 'suggestExp', tip: '按最亮时刻设曝光', v: '0.85 倍'}},
       {k: 'sw', lab: '发射器共用', v: true, affects: true},
       {lab: '色温', unit: 'K', min: 1500, max: 6500, step: 10, v: 2400, if: P => P.get('发射器共用'), dep: '发射器共用'},
@@ -259,8 +260,8 @@ function spkRootMods() {
       f('响应', '', 0, 30, .1, S.fieldResponse), f('开始时间', 's', 0, .5, .001, S.fieldStart), f('渐入时间', 's', 0, .5, .001, S.fieldRamp),
       f('水平风', 'm/s', -1, 1, .01, S.fieldWindX), f('上升气流', 'm/s', -1, 1, .01, S.fieldWindZ), f('湍流', '', 0, 1, .01, S.fieldTurbulence),
       f('湍流尺度', 'm', .01, 1, .01, S.fieldScale), f('随机种子', '', 0, 999, 1, S.fieldSeed)]},
-    {t: '整体倍率', closed: true, sum: () => '全部 1.00', rows: ones(['锥角', '数量', '线宽', '寿命', '亮度', '速度', '重力'])},
-    {t: '分叉倍率', closed: true, sum: () => '全部 1.00', rows: ones(['寿命', '角度', '数量', '线宽', '速度', '重力'])}
+    {t: '整体倍率', closed: true, sumParts: () => ({lead: '全部', v: '1.00', u: '倍'}), rows: ones(['锥角', '数量', '线宽', '寿命', '亮度', '速度', '重力'])},
+    {t: '分叉倍率', closed: true, sumParts: () => ({lead: '全部', v: '1.00', u: '倍'}), rows: ones(['寿命', '角度', '数量', '线宽', '速度', '重力'])}
   ];
 }
 function spkEmitMods(sc, n) {
@@ -317,7 +318,7 @@ function spkEmitMods(sc, n) {
 function outModule(sc, n) {
   const o = n.kids.find(k => k.type === 'output'); if (!o) return [];
   const rows = outMods(sc, o).flatMap(m => m.rows);
-  return [{t: '输出', closed: true, rows, sum: P => `${P.get('单格')}　${Math.ceil(Math.round((o.tl.out - o.tl.in) * (sc.fps || 30)) / P.get('每张'))} 张`}];
+  return [{t: '输出', closed: true, rows, sumParts: P => ({lead: P.get('单格'), v: String(Math.ceil(Math.round((o.tl.out - o.tl.in) * (sc.fps || 30)) / P.get('每张'))), u: '张'})}];
 }
 /* §9：只有一个参数的模块不做成模块，并进前面那个模块（第一个就并进后面那个）；整个对象只有一个模块时照旧 */
 function mergeSingles(mods) {
@@ -450,7 +451,7 @@ function rowHTML(P, m, r, o = {}) {
   const lab = esc(r.lab);
   const why = o.inert || (r.dis ? r.dis(P) : null), whyS = why ? (o.inertS || (r.disS && r.dis(P) ? r.disS : why)) : '';
   const dep = (o.dep ? ' is-dep' : '') + (o.depIn ? ' dep-in' : '');
-  const dkA = o.depIn ? ` data-dk="${esc(o.depIn)}"` : '';
+  const dkA = o.depIn ? ` data-dk="${esc(o.depIn)}" data-dep="${esc(r.dep)}"` : '';
   const pl = `<span class="pl" data-help="${k}"><span class="plt">${lab}</span></span>`;
   const base = `prm${stCls(s)}${dep}${why ? ' is-dis' : ''}`;
   /* 停用：整行降透明度，悬停写原因（原因不塞进控件列） */
@@ -527,39 +528,53 @@ function curveInner(s) {
   return `<svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="gl" d="M25 0V100M50 0V100M75 0V100M0 50H100M0 0H100"/><path class="ax" d="M0 0V100H100"/><polyline class="ln" points="${pts}"/></svg>`
     + s.v.map((p, i) => `<button class="crv-p${i === s.ci ? ' is-sel' : ''}" data-i="${i}" style="left:${(p[0] * 100).toFixed(2)}%;top:${Y(p[1])}%" aria-label="关键点 ${i + 1}"></button>`).join('');
 }
-/* 摘要：数值用主文字色、单位弱色小一级 */
+/* 摘要（v3.3 第 5 条）：拆成三段落进五列网格——前面的字在控件列（右对齐，色带靠左），最后一个数值在数值列（和上下行的小数点对齐），单位在单位列。
+   最后一项不是数值（「单次」「第 3 层」）时，整句右对齐到数值列末端 */
+function modSummaryParts(P, m) {
+  if (m.sumParts) return m.sumParts(P);
+  if (m.sum) return {lead: m.sum(P)};
+  const items = m.rows.filter(r => !r.if || r.if(P)).slice(0, UI.size === 1366 && !P.prefix.startsWith('sheet') ? 1 : 2).map(r => {
+    const s = PS[`${P.prefix}|${m.t}|${r.lab}`]; if (!s || s.kind === 'ro' || s.kind === 'curve' || s.kind === 'chk') return null;
+    return {lab: r.lab, v: fmtS(s, s.v), u: s.unit && typeof s.v !== 'boolean' ? s.unit : ''};
+  }).filter(Boolean);
+  if (!items.length) return {lead: ''};
+  const last = items[items.length - 1], num = NUMRE.test(last.v) || /^-?\d+(\.\d+)?–-?\d+(\.\d+)?$/.test(last.v);
+  const head = items.slice(0, -1).map(i => `${i.lab} ${i.v}${i.u ? ' ' + i.u : ''}`).join('　');
+  return num ? {lead: (head ? head + '　' : '') + last.lab, v: last.v, u: last.u} : {lead: (head ? head + '　' : '') + `${last.lab} ${last.v}${last.u ? ' ' + last.u : ''}`};
+}
 function modSummary(P, m) {
-  if (m.sum) return esc(m.sum(P));
-  if (m.sumHTML) return m.sumHTML(P);
-  return m.rows.filter(r => !r.if || r.if(P)).slice(0, UI.size === 1366 && !P.prefix.startsWith('sheet') ? 1 : 2).map(r => {
-    const s = PS[`${P.prefix}|${m.t}|${r.lab}`]; if (!s || s.kind === 'ro' || s.kind === 'curve' || s.kind === 'chk') return '';
-    return `${esc(r.lab)} ${esc(fmtS(s, s.v))}${s.unit && typeof s.v !== 'boolean' ? ` <span class="u">${esc(s.unit)}</span>` : ''}`;
-  }).filter(Boolean).join('　');
+  const S = modSummaryParts(P, m), wide = S.v === undefined || S.v === null;
+  return `<span class="ms ms-l${wide ? ' wide' : ''}">${S.band || ''}<span class="mst">${esc(S.lead || '')}</span></span>`
+    + (wide ? '' : `<span class="ms ms-v"><span class="num is-ro">${esc(S.v)}</span></span><span class="ms ms-u">${esc(S.u || '')}</span>`);
 }
 function modKeys(P, m) { return m.rows.map(r => `${P.prefix}|${m.t}|${r.lab}`).filter(k => PS[k] && PS[k].kind !== 'ro'); }
 function modHTML(P, m, idx) {
   const mk = P.prefix + '|' + m.t, ks = modKeys(P, m), n = ks.filter(k => isChg(PS[k])).length;
-  /* 1366：默认只展开当前对象最常用的那个模块和有改动的模块，其余折叠；展开 / 折叠按模块名记住，换一个对象照样有效 */
-  if (!(mk in MO)) MO[mk] = idx === undefined || UI.size !== 1366 ? !m.closed : (m.t in MOG ? MOG[m.t] : m.t === mainMod(P) || n > 0);
-  const open = MO[mk];
-  let body = '', i = 0;
+  /* 1366：默认只展开当前对象最常用的那个模块和有改动的模块，其余折叠；展开 / 折叠按模块名记住，换一个对象照样有效。
+     1920（v3.3 第 13 条）：没记过的模块先画成展开，renderInsp 量过高度以后按「运动 → 颜色 → 寿命 → 其余」展开到放满 */
+  if (!(mk in MO) && !(idx !== undefined && UI.size !== 1366)) MO[mk] = idx === undefined ? !m.closed : (m.t in MOG ? MOG[m.t] : m.t === mainMod(P) || n > 0);
+  const open = mk in MO ? MO[mk] : true, auto = !(mk in MO);
+  let body = '', i = 0, hid = 0, hch = 0; const dks = [];
   while (i < m.rows.length) {
     const r = m.rows[i];
     if (r.dep) {
       const grp = []; while (i < m.rows.length && m.rows[i].dep === r.dep) grp.push(m.rows[i++]);
       if (grp[0].if(P)) { body += grp.map(x => rowHTML(P, m, x, {dep: true})).join(''); continue; }
-      const gk = grp.map(x => `${P.prefix}|${m.t}|${x.lab}`), ch = gk.filter(k => isChg(PS[k])).length, dk = mk + '|dep|' + r.dep, show = !!MO[dk];
+      const gk = grp.map(x => `${P.prefix}|${m.t}|${x.lab}`), dk = mk + '|dep|' + r.dep, show = !!MO[dk];
       const why = r.depWhy || `「${r.dep}」关闭时无效`, whyS = r.depWhyS || `${r.dep}已关`;
-      body += `<div class="prm dep-off" data-dk="${esc(dk)}" data-dep="${esc(r.dep)}"><div class="dep-t"><span>${grp.length} 项已隐藏</span>${ch ? `<span class="dep-c">其中 ${ch} 项已改</span>` : ''}<button class="btn lnk" data-act="depShow" aria-expanded="${show}">${show ? '收起' : '查看'}</button></div></div>`;
-      /* 收起的依赖行也画出来（隐藏）：「仅已改」和搜索时可以露出已改的那几项 */
+      hid += grp.length; hch += gk.filter(k => isChg(PS[k])).length; dks.push(dk);
+      /* v3.3 第 8 条：不再单独占一行「N 项已隐藏　查看」，改成标题行右侧的「+N」；收起的行照样画出来（隐藏），「仅已改」和搜索时可以露出已改的那几项 */
       body += grp.map(x => { const h = rowHTML(P, m, x, {dep: true, inert: why, inertS: whyS, depIn: dk}); return show ? h : h.replace('<div ', '<div hidden '); }).join('');
       continue;
     }
     if (!r.if || r.if(P)) body += rowHTML(P, m, r);
     i++;
   }
-  return `<section class="mod${open ? '' : ' is-closed'}" data-mod="${esc(m.t)}" data-mk="${esc(mk)}">
-    <div class="mod-h" role="button" tabindex="0" aria-expanded="${open}">${ico('cr', 'chev')}<span class="mt">${esc(m.t)}</span><span class="ms">${modSummary(P, m)}</span><button class="btn btn-icon mrst" ${n ? '' : 'hidden'} aria-haspopup="menu" data-tip="恢复本模块的 ${n} 项" aria-label="恢复本模块">${ico('reset')}</button></div>
+  const shown = dks.length && dks.every(dk => MO[dk]);
+  const depTip = shown ? `收起这 ${hid} 个参数` : `${hid} 个参数已隐藏${hch ? `，${hch} 个已改` : ''}，点开显示`;
+  const depBtn = hid ? `<button class="btn dep-n" data-act="depShow" data-dks="${esc(dks.join(','))}" aria-pressed="${shown}" aria-label="${esc(depTip)}" data-tip="${esc(depTip)}">+${hid}</button>` : '';
+  return `<section class="mod${open ? '' : ' is-closed'}" data-mod="${esc(m.t)}" data-mk="${esc(mk)}"${auto ? ' data-auto=""' : ''}>
+    <div class="mod-h" role="button" tabindex="0" aria-expanded="${open}">${ico('cr', 'chev')}<span class="mt">${esc(m.t)}</span>${modSummary(P, m)}${depBtn}<button class="btn btn-icon mrst" ${n ? '' : 'hidden'} aria-haspopup="menu" data-tip="恢复本模块的 ${n} 项" aria-label="恢复本模块">${ico('reset')}</button></div>
     <div class="mod-b">${body}</div></section>`;
 }
 
@@ -1225,34 +1240,110 @@ function renderInsp(keepScroll = true) {
   const mods = paramsFor(sc, n), P = ctxOf(`${sc.key}|${n.id}`, mods);
   INSP = {sc, n, mods, P};
   pb.innerHTML = mods.map((m, i) => modHTML(P, m, i)).join('');
+  alignNums(pb);
+  if (!(UI.pq.trim() || UI.onlyChg)) autoFit(pb);
   applyFilter();
   pb.scrollTop = keepScroll ? top : 0;
 }
+/* v3.3 第 13 条：1920 下检查器不留一大块空——没记过展开状态的模块，按「运动 → 颜色 → 寿命 → 其余（原顺序）」依次展开，
+   放得下就展开，放不下就折叠；用户手动折叠 / 展开过的（MO 里有记录）按用户的来 */
+const FIT_ORDER = ['运动', '颜色', '寿命'];
+function autoFit(pb) {
+  const auto = $$('.mod[data-auto]', pb); if (!auto.length) return;
+  const H = pb.clientHeight - parseFloat(getComputedStyle(pb).paddingBottom || 0);
+  const hOpen = new Map(auto.map(m => [m, m.offsetHeight]));
+  auto.forEach(m => m.classList.add('is-closed'));
+  const hClosed = new Map(auto.map(m => [m, m.offsetHeight]));
+  let used = $$('.mod', pb).reduce((a, m) => a + m.offsetHeight, 0);
+  const rank = m => { const i = FIT_ORDER.indexOf(m.dataset.mod); return i < 0 ? FIT_ORDER.length + auto.indexOf(m) : i; };
+  [...auto].sort((a, b) => rank(a) - rank(b)).forEach(m => {
+    const d = hOpen.get(m) - hClosed.get(m), fits = used + d <= H;
+    MO[m.dataset.mk] = fits; if (fits) { used += d; m.classList.remove('is-closed'); }
+    $('.mod-h', m).setAttribute('aria-expanded', String(fits)); delete m.dataset.auto;
+  });
+}
+
+/* ---------- v3.3 第 1、5 条：数字竖向对齐 ----------
+   数值格右对齐，同一列的小数点对齐：按这一屏参数里最多的小数位 D 定一个「小数点位置」，小数位少的数在右边补空（用 margin，悬停的框贴着数字）；
+   区间的下限、上限各自对齐（各占一个等宽的槽）；单位放在数值后面一个固定宽度的单位列。
+   数值列、单位列的宽度按这一屏所有参数的取值范围（最小值、最大值、当前值）和单位算，所以拖到最大值也不会挤出格子；滑杆仍在同一条线结束。
+   宽度用等宽数字的实测字宽算（tabular-nums 下「1」和「8」一样宽），不依赖量取被折叠起来的行 */
+const NUMRE = /^-?\d+(\.\d+)?$/;
+const decOf = t => { const i = t.indexOf('.'); return i < 0 ? 0 : t.length - i - 1; };
+const NUMM = {};
+function fontProbe(el) {
+  const cs = getComputedStyle(el), key = [cs.fontSize, cs.fontFamily, cs.fontWeight].join('|');
+  if (NUMM[key]) return NUMM[key];
+  const pr = document.createElement('span');
+  pr.style.cssText = `position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre;font-family:${cs.fontFamily};font-size:${cs.fontSize};font-weight:${cs.fontWeight};font-variant-numeric:tabular-nums`;
+  document.body.appendChild(pr);
+  const w = t => { pr.textContent = t; return pr.getBoundingClientRect().width; };
+  const M = {d: w('0123456789') / 10, p: w('.'), minus: w('-'), dash: w('–'), w: t => { pr.textContent = t; const x = pr.getBoundingClientRect().width; return x; }, pr};
+  M.d1 = w('1'); M.d8 = w('8');
+  return (NUMM[key] = M);
+}
+const textW = (M, t) => [...t].reduce((a, c) => a + (c === '.' ? M.p : c === '-' ? M.minus : M.d), 0);
+function alignNums(root) {
+  if (!root) return;
+  const els = $$('.prm .vu > .num, .prm .vv > .num, .mod-h .ms-v > .num', root); if (!els.length) return;
+  const C = fontProbe(els.find(e => !e.closest('.mod-h')) || els[0]);   /* 这一列的字（13 px）：小数点位置按它算 */
+  const shown = e => (e.value !== undefined ? e.value : e.textContent).trim();
+  const D = Math.min(3, Math.max(0, ...els.map(shown).filter(t => NUMRE.test(t)).map(decOf)));
+  const T = D ? C.p + D * C.d : 0;   /* 小数点（含）右边的宽度 */
+  const R = 4;   /* 数字右缘到数值列右缘：1 px 框线 + 3 px 内边距（区间的输入框没有内边距，用 margin 补齐） */
+  const box = new Map(), cs = e => box.get(e) || (box.set(e, getComputedStyle(e)), box.get(e));
+  const insR = e => parseFloat(cs(e).borderRightWidth) + parseFloat(cs(e).paddingRight), insL = e => parseFloat(cs(e).borderLeftWidth) + parseFloat(cs(e).paddingLeft);
+  const rp = (M, t) => decOf(t) ? M.p + decOf(t) * M.d : 0;
+  /* 取值范围：拖到最大、最小值时也放得下 */
+  const cands = e => {
+    const t = shown(e), row = e.closest('.prm[data-k]'), s = row && PS[row.dataset.k];
+    if (!s || e.classList.contains('is-ro') || e.closest('.mod-h')) return [t];
+    const part = row.dataset.part;
+    if (part === 'rnd' || part === 'ex') { const sl = $('.sl', row); return [t, part === 'ex' ? fmt(+sl.dataset.max, .01) : String(+sl.dataset.max)]; }
+    return [t, fmt(s.min, s.step), fmt(s.max, s.step)];
+  };
+  /* 每个数：右边补多少（margin-right），从框左缘到列右缘要多宽 */
+  const span = e => { const M = fontProbe(e); return Math.max(...cands(e).map(t => NUMRE.test(t) ? insL(e) + textW(M, t) - rp(M, t) + T + R : insL(e) + M.w(t) + R)); };
+  els.forEach(e => { const M = fontProbe(e), t = shown(e); e.style.marginRight = (NUMRE.test(t) ? T - rp(M, t) + R - insR(e) : R - insR(e)).toFixed(2) + 'px'; });
+  const lo = els.filter(e => e.matches('.vv > .num.lo')), hi = els.filter(e => e.matches('.vv > .num:not(.lo)'));
+  let wVal = 0;
+  if (lo.length) {
+    const ls = Math.max(...lo.map(span)), hs = Math.max(...hi.map(span));
+    root.style.setProperty('--lo-slot', ls.toFixed(2) + 'px'); root.style.setProperty('--hi-slot', hs.toFixed(2) + 'px');
+    const dash = $('.vv .dash', root), dw = dash ? fontProbe(dash).w('–') + 2 : C.dash + 2;
+    wVal = ls + dw + hs;
+  }
+  els.filter(e => !e.closest('.vv')).forEach(e => { wVal = Math.max(wVal, span(e)); });
+  /* 单位列：最长的单位 + 展开箭头（分布、随机幅度） */
+  let wUnit = 12;
+  $$('.prm .vu', root).forEach(v => { const u = $(':scope > .u', v), x = $(':scope > .exn', v); const uw = u && u.textContent ? fontProbe(u).w(u.textContent) : 0; wUnit = Math.max(wUnit, uw + (x ? 2 + 12 : 0)); });
+  $$('.mod-h .ms-u', root).forEach(u => { if (u.textContent) wUnit = Math.max(wUnit, fontProbe(u).w(u.textContent)); });
+  wUnit += 2;
+  /* 停用原因写在数值列 + 单位列里，放不下就加宽数值列 */
+  $$('.prm .vu > .dis-why', root).forEach(e => { wVal = Math.max(wVal, fontProbe(e).w(e.textContent) + 2 - wUnit); });
+  root.style.setProperty('--w-val', Math.ceil(wVal) + 'px'); root.style.setProperty('--w-unit', Math.ceil(wUnit) + 'px');
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { Object.keys(NUMM).forEach(k => { NUMM[k].pr.remove(); delete NUMM[k]; }); if (UI.view === 'main') alignNums($('#pbody')); $$('.ks-panel').forEach(alignNums); });
 function applyFilter() {
   const pb = $('#pbody'), q = UI.pq.trim(), only = UI.onlyChg, F = !!(q || only);
   $('.empty', pb)?.remove();
   const vo = $('#viewOpt'); vo.classList.toggle('is-on', only); vo.firstChild.textContent = only ? '仅已改' : '筛选';
   let any = false;
   $$('.mod', pb).forEach(m => {
-    $$('.prm:not(.sub):not(.dep-off)', m).forEach(r => {
+    $$('.prm:not(.sub)', m).forEach(r => {
       const lab = r.dataset.lab || '';
       const okQ = !q || lab.includes(q), okC = !only || r.classList.contains('is-nd') || r.classList.contains('is-ed');
       r.hidden = F ? !(okQ && okC) : (r.classList.contains('dep-in') ? !MO[r.dataset.dk] : false);
       r.classList.toggle('hit', !!q && okQ);
       const t = $('.plt', r); if (t) t.innerHTML = q && okQ ? esc(lab).replace(esc(q), `<mark>${esc(q)}</mark>`) : esc(lab);
     });
-    /* 收起的依赖组：筛选时只要组里有一项露出来，就同时露出摘要行和控制它的开关行（开关的关闭状态照样看得到） */
-    $$('.prm.dep-off', m).forEach(d => {
-      if (!F) { d.hidden = false; return; }
-      const shown = $$('.prm.dep-in', m).some(r => r.dataset.dk === d.dataset.dk && !r.hidden);
-      d.hidden = !shown;
-      if (shown) { const sw = $$('.prm:not(.dep-in):not(.sub):not(.dep-off)', m).find(r => r.dataset.lab === d.dataset.dep); if (sw) sw.hidden = false; }
-    });
+    /* 收起的依赖行：筛选时只要露出一项，就同时露出控制它的开关行（开关的关闭状态照样看得到） */
+    if (F) $$('.prm.dep-in', m).filter(r => !r.hidden).forEach(r => { const sw = $$('.prm:not(.dep-in):not(.sub)', m).find(x => x.dataset.lab === r.dataset.dep); if (sw) sw.hidden = false; });
     $$('.prm.sub', m).forEach(r => { r.hidden = F && !!r.previousElementSibling?.hidden; });
-    const hits = $$('.prm:not(.sub):not(.dep-off)', m).filter(r => !r.hidden).length;
+    const hits = $$('.prm:not(.sub)', m).filter(r => !r.hidden).length;
     m.hidden = F && !hits;
     if (F && hits) m.classList.remove('is-closed');
-    else if (!F && !m.classList.contains('mod-one')) m.classList.toggle('is-closed', !MO[m.dataset.mk]);
+    else if (!F && !m.classList.contains('mod-one')) m.classList.toggle('is-closed', !(MO[m.dataset.mk] ?? true));
     if (!m.hidden) any = true;
   });
   if (!any) {
@@ -1304,7 +1395,7 @@ function onParamChange(k) {
     if (m && INSP) {
       const def = INSP.mods.find(x => x.t === mod);
       if (def) {
-        const ms = $('.ms', m); if (ms) ms.innerHTML = modSummary(INSP.P, def);
+        const h = $('.mod-h', m); if (h) { $$('.ms', h).forEach(e => e.remove()); $('.mt', h).insertAdjacentHTML('afterend', modSummary(INSP.P, def)); alignNums($('#pbody')); }
         const cnt = modKeys(INSP.P, def).filter(x => isChg(PS[x])).length, mr = $('.mrst', m);
         if (mr) { mr.hidden = !cnt; mr.dataset.tip = `恢复本模块的 ${cnt} 项`; }
       }
@@ -2173,8 +2264,8 @@ document.addEventListener('click', e => {
     const pl = t.closest('.pl[data-help]');
     if (pl && e.detail === 1) { clearTimeout(OV.tipT); setTimeout(() => { if (!OV.tip) showTip(pl, helpHTML(k)).classList.add('pin'); }, 220); return; }
   }
-  const dep = t.closest('.dep-off [data-act="depShow"]');
-  if (dep) { const dk = dep.closest('.dep-off').dataset.dk; MO[dk] = !MO[dk]; rerenderFor(dk); return; }
+  const dep = t.closest('.mod-h [data-act="depShow"]');
+  if (dep) { const dks = dep.dataset.dks.split(','), on = !dks.every(dk => MO[dk]); dks.forEach(dk => { MO[dk] = on; }); hideTip(); rerenderFor(dks[0]); return; }
   const mh = t.closest('.mod-h');
   if (mh) {
     const mod = mh.closest('.mod');
@@ -2605,6 +2696,7 @@ function rerenderSheetParams(k) {
   $$(`[data-sheetp="${g}"]`).forEach(c => {
     if (c.dataset.lab) { const m = mods.find(x => x.rows.some(r => r.lab === c.dataset.lab)); c.innerHTML = rowHTML(P, m, m.rows.find(r => r.lab === c.dataset.lab)); }
     else c.innerHTML = mods.map(m => modHTML(P, m)).join('');
+    alignNums(c);
     if (g === 'prm') markPrmStates();
   });
 }
@@ -2790,6 +2882,7 @@ function buildSheet() {
   $$('#kitSheet [data-ind]').forEach(c => { c.indeterminate = true; });
   renderTree(SC.tpl5, $('#sheetTree'));
   SC.kiku2.t = 2.0; renderTL(SC.kiku2, $('#sheetTL'));
+  $$('#kitSheet .ks-panel').forEach(alignNums);   /* v3.3 第 1 条：全表里的参数面板也按小数点对齐 */
   markPrmStates();
   const tags = $('#prmTags'), p = $('[data-sheetp="prm"]');
   if (tags && p) {

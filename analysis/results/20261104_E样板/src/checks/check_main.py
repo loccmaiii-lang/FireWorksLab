@@ -35,11 +35,20 @@ def new_page(b, w=1920, h=1080, clock=False):
         pg.clock.install()
     pg.goto(URL, wait_until='load')
     pg.add_style_tag(content='#sampleBar{display:none!important}')
+    pg.evaluate(DOT_JS)
     pg.wait_for_timeout(300)
     if w == 1366:
         pg.evaluate("KIT.set('size','1366')")
         pg.wait_for_timeout(200)
     return pg
+
+
+DOT_JS = """window.__dot = e => { const c = getComputedStyle(e), r = e.getBoundingClientRect(), t = (e.value ?? e.textContent).trim();
+  const right = r.right - parseFloat(c.borderRightWidth) - parseFloat(c.paddingRight), i = t.indexOf('.');
+  if (i < 0) return right;
+  const pr = document.createElement('span'); pr.style.cssText = `position:absolute;visibility:hidden;white-space:pre;font-family:${c.fontFamily};font-size:${c.fontSize};font-weight:${c.fontWeight};font-variant-numeric:tabular-nums`;
+  document.body.appendChild(pr); pr.textContent = t.slice(i); const w = pr.getBoundingClientRect().width; pr.remove(); return right - w; };
+window.__vis = e => !!e.offsetParent && getComputedStyle(e).visibility !== 'hidden'; void 0;"""
 
 
 class P:
@@ -89,9 +98,9 @@ def spec_static(b):
     check('§1 停用文字和面板对比 ≥ 3:1（次文字 × 50 %）', x.C('#pbody .prm[data-lab="湍流尺度"] .plw', 'opacity') == '0.5')
     # §2 网格
     check('§2 栏宽 1920：左 300、右 460', x.R('#left')[4] == 300 and x.R('#insp')[4] == 460)
-    check('§2 / v3.2-2 检查器五列：参数名 112 ｜ 控件 ｜ 数值 84 ｜ 单位 28 ｜ 操作 24（单值、区间同一个数值格）', re.fullmatch(r'112px [\d.]+px 84px 28px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') == x.C('#pbody .prm[data-lab="湍流尺度"]', 'gridTemplateColumns'), x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
-    check('v3.2-2 数字左对齐：每一行的数字都从滑杆末端 + 8 px 起（框线和内边距借这 8 px）', all(abs(g - 8) <= 1 for g in x.E("[...document.querySelectorAll('#pbody .prm[data-kind=num]:not(.is-dis):not(.sub)')].filter(r => r.offsetParent).map(r => { const n = r.querySelector('.num'), c = getComputedStyle(n); return n.getBoundingClientRect().left + parseFloat(c.borderLeftWidth) + parseFloat(c.paddingLeft) - r.querySelector('.sl').getBoundingClientRect().right })")) and x.R('#pbody .prm[data-lab="缩放"] .vu')[0] - x.R('#pbody .prm[data-lab="缩放"] .sl')[2] == 8, x.E("[...document.querySelectorAll('#pbody .prm[data-kind=num]:not(.is-dis):not(.sub)')].filter(r => r.offsetParent).map(r => [r.dataset.lab, Math.round(r.querySelector('.num').getBoundingClientRect().left - r.querySelector('.sl').getBoundingClientRect().right)])"))
-    check('v3.2-2 单位紧跟数字（4 px），不再单独一列', all(abs(g - 4) <= 1 for g in x.E("[...document.querySelectorAll('#pbody .prm[data-kind=num]:not(.is-dis):not(.sub)')].filter(r => r.offsetParent && r.querySelector('.u').textContent).map(r => { const n = r.querySelector('.num'), c = getComputedStyle(n); return r.querySelector('.u').getBoundingClientRect().left - (n.getBoundingClientRect().right - parseFloat(c.borderRightWidth) - parseFloat(c.paddingRight)) })")))
+    check('§2 / v3.3-1 检查器五列：参数名 112 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 操作 24（数值、单位两列按这一屏的取值范围定宽；单值、停用行同一套）', re.fullmatch(r'112px [\d.]+px [\d.]+px [\d.]+px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') == x.C('#pbody .prm[data-lab="湍流尺度"]', 'gridTemplateColumns') == x.C('#pbody .mod-h', 'gridTemplateColumns'), x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
+    check('v3.3-1 数值格到滑杆末端至少 8 px', x.R('#pbody .prm[data-lab="缩放"] .vu')[0] - x.R('#pbody .prm[data-lab="缩放"] .sl')[2] == 8)
+    check('v3.3-1 小数位最多的数，数字到单位 4 px（单位在固定宽度的单位列里）', all(abs(g - 4) <= 1 for g in x.E("[...document.querySelectorAll('#pbody .prm[data-kind=num]:not(.is-dis):not(.sub)')].filter(r => r.offsetParent && r.querySelector('.u').textContent && /\\.\\d\\d$/.test(r.querySelector('.num').value)).map(r => { const n = r.querySelector('.num'), c = getComputedStyle(n); return r.querySelector('.u').getBoundingClientRect().left - (n.getBoundingClientRect().right - parseFloat(c.borderRightWidth) - parseFloat(c.paddingRight)) })")))
     check('§2 行高 28（结构树、时间轴、参数、模块标题）', x.R('#tree .trow')[5] == 28 and x.R('#tlw .tlrow')[5] == 28 and x.R('#pbody .prm[data-lab="缩放"]')[5] == 28 and x.R('#pbody .mod-h')[5] == 28)
     check('§2 可点区域 ≥ 28（命令、图标命令）', all(r[5] >= 28 for r in x.E("[...document.querySelectorAll('#toolRow .btn, #transport .btn')].filter(b => b.offsetParent).map(b => { const r = b.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom, r.width, r.height] })")))
     check('§2 / v3.2-2 所有滑杆（单值、停用）结束在同一条线上', len(set(round(r) for r in x.E("[...document.querySelectorAll('#pbody .prm:not(.sub) .ctl1 .sl')].filter(s => s.offsetParent).map(s => s.getBoundingClientRect().right)"))) == 1 and x.N('#pbody .prm.is-dis .ctl1 .sl') >= 1)
@@ -177,7 +186,8 @@ def spec_static(b):
     # §9 检查器
     check('§9 顶部面包屑；下一行搜索、「筛选 ▾」「全部折叠」', x.E("[...document.querySelector('.insp-tools').children].map(c => c.id).join()") == 'pq,viewOpt,foldAll')
     check('§9 模块标题 28、600、主文字色，左边展开箭头', x.R('#pbody .mod-h')[5] == 28 and x.C('#pbody .mod-h .mt', 'color') == T1 and x.R('#pbody .mod-h .chev')[2] <= x.R('#pbody .mod-h .mt')[0])
-    check('§9 / v3.2-2 摘要弱色；短的左缘对齐数值列（和数字一条线），长的右缘对齐数值格末端、向左长', x.C('#pbody .mod.is-closed .ms', 'color') == T3 and abs(x.E("(() => { const m = document.querySelector('#pbody .mod[data-mod=\"轨迹联动\"] .ms'), c = getComputedStyle(m); return m.getBoundingClientRect().left + parseFloat(c.paddingLeft) })()") - x.R('#pbody .prm[data-lab="缩放"] .vu')[0]) <= 1 and abs(x.R('#pbody .mod[data-mod="规格"] .ms')[2] - x.R('#pbody .prm[data-lab="缩放"] .vu')[2]) <= 1)
+    sm = x.E("(() => { const m = document.querySelector('#pbody .mod.is-closed'); if (!m) return null; const v = m.querySelector('.ms-v .num'), u = m.querySelector('.ms-u'), z = document.querySelector('#pbody .prm[data-lab=\"缩放\"]'); return {mod: m.dataset.mod, c: getComputedStyle(m.querySelector('.ms-l')).color, dot: v && __dot(v), dot0: __dot(z.querySelector('.num')), u: u && u.getBoundingClientRect().left, u0: z.querySelector('.u').getBoundingClientRect().left} })()")
+    check('§9 / v3.3-5 折叠的模块摘要弱色；最后一个数值落在数值列（小数点和上下行对齐），单位在单位列', sm and sm['c'] == T3 and sm['dot'] is not None and abs(sm['dot'] - sm['dot0']) <= 1 and abs(sm['u'] - sm['u0']) <= 1, sm)
     check('§9 只有一个数值参数的模块不做成模块（曝光并进「颜色」）；「轨迹联动」（勾选列表）保留成模块', x.N('#pbody .mod[data-mod="曝光"]') == 0 and x.N('#pbody .mod[data-mod="颜色"] .prm[data-lab="曝光"]') == 1 and x.N('#pbody .mod[data-mod="轨迹联动"] .prm[data-lab="联动的层"]') == 1 and x.E("[...document.querySelectorAll('#pbody .mod')].every(m => m.querySelectorAll('.mod-b > .prm:not(.sub)').length >= 2 || m.dataset.mod === '轨迹联动')"))
     check('v3.1-16 不是默认值：不画空心圆，只靠操作列常显的恢复按钮', x.C('#pbody .prm[data-lab="缩放"] .mk', 'boxShadow') == 'none' and x.C('#pbody .prm[data-lab="缩放"] .mk', 'backgroundColor') == 'rgba(0, 0, 0, 0)' and x.C('#pbody .prm[data-lab="缩放"] .rst', 'visibility') == 'visible')
     check('v3.1-16 默认值的行没有恢复按钮，悬停也不出（一行最多一个标记）', x.C('#pbody .prm[data-lab="开始时间"] .rst', 'visibility') == 'hidden' and (x.hover('#pbody .prm[data-lab="开始时间"] .pl') or True) and x.C('#pbody .prm[data-lab="开始时间"] .rst', 'visibility') == 'hidden')
@@ -302,7 +312,7 @@ def v31(b):
     check('v3.1-3 1366 右下读数常驻，不压左下读数', x.T('#ciView') == '距离 1000 m 预览曝光 1.00 倍' and x.R('#ciView')[0] > x.R('#ciBL')[2] + 20)
     check('v3.1-1 1366 行名格放得下「0.35–2.85 s」和三个图标命令，不溢出', x.E("(() => { const l = document.querySelector('#tlw .rrow .xio'); return l.scrollWidth <= l.clientWidth + 1 })()") and x.R('#tlw .rrow .xio [data-act="clearIO"]')[2] <= x.R('#tlw .rrow .fr')[0])
     check('v3.1-2 1366 面包屑「金曜菊-B › 金锦层」一行放得下', x.T('#path') == '金曜菊-B › 金锦层' and x.R('#path')[5] <= 28)
-    check('v3.2-2 1366 检查器五列：96 ｜ 控件 ｜ 78 ｜ 28 ｜ 24；滑杆一律结束在同一条线上', re.fullmatch(r'96px [\d.]+px 78px 28px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and len(set(round(r) for r in x.E("[...document.querySelectorAll('#pbody .prm:not(.sub) .ctl1 .sl')].filter(s => s.offsetParent).map(s => s.getBoundingClientRect().right)"))) == 1, x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
+    check('v3.3-1 1366 检查器五列：96 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 24；滑杆一律结束在同一条线上', re.fullmatch(r'96px [\d.]+px [\d.]+px [\d.]+px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and len(set(round(r) for r in x.E("[...document.querySelectorAll('#pbody .prm:not(.sub) .ctl1 .sl')].filter(s => s.offsetParent).map(s => s.getBoundingClientRect().right)"))) == 1, x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
     x.E("KIT.openExport()"); pg.wait_for_timeout(100)
     check('v3.2-5 1366 导出浮层也不盖参数名、不切面包屑', x.R('.menu.exp')[0] >= x.R('#pbody .prm .plw')[2] + 8 and x.R('.menu.exp')[0] >= max(r for r in x.E("[...document.querySelectorAll('#path > *')].map(e => e.getBoundingClientRect().right)")) + 8, [x.R('.menu.exp'), x.R('#pbody .prm .plw')])
     x.key('Escape')
@@ -348,9 +358,9 @@ def interactions(b):
     x.click('.menu .mi[data-i="1"]')
     check('W 恢复到打开时', x.val('缩放') == '1.10')
     # 依赖、停用
-    check('W 关着的开关下面的参数收成「4 项已隐藏　查看」', x.T('#pbody .mod[data-mod="环境"] .dep-t') == '4 项已隐藏 查看')
+    check('W / v3.3-8 关着的开关下面的参数收成标题行右侧的「+4」', x.T('#pbody .mod[data-mod="环境"] .mod-h .dep-n') == '+4')
     x.click('#pbody .mod[data-mod="环境"] [data-act="depShow"]')
-    check('W 点「查看」露出收起的依赖行（停用、降透明度）', x.E("[...document.querySelectorAll('#pbody .prm.dep-in')].filter(r => !r.hidden).length") == 4 and x.C('#pbody .prm.dep-in .plw', 'opacity') == '0.5')
+    check('W 点「+4」露出收起的依赖行（停用、降透明度）', x.E("[...document.querySelectorAll('#pbody .prm.dep-in')].filter(r => !r.hidden).length") == 4 and x.C('#pbody .prm.dep-in .plw', 'opacity') == '0.5')
     x.click('#pbody .prm[data-lab="爆后扰动"] .sw')
     check('W 打开开关，依赖参数可用', x.N('#pbody .mod[data-mod="环境"] .prm.is-dep:not(.is-dis)') == 4)
     x.click('#pbody .prm[data-lab="爆后扰动"] .sw')
@@ -727,6 +737,50 @@ def v33(b):
     check('v3.3-11 滑杆拖块 4 × 14 实心、主文字色', sl['kw'] == 4 and sl['kh'] == 14 and sl['kbg'] == T1, sl)
     check('v3.3-11 轨道已填的部分次文字色 2 px，没填的部分 1 px 线色', sl['fh'] == 2 and sl['fbg'] == T2 and sl['th'] == 1 and sl['tbg'] == LINE, sl)
     check('v3.3-11 滑杆可点区域高度不小于 20 px', sl['hit'] >= 20, sl)
+    pg.close()
+
+    # 第 1 条：数字竖向对齐
+    for w, h in ((1920, 1080), (1366, 768)):
+        pg = new_page(b, w, h); x = P(pg); S = f'{w}'
+        eq = x.E("[12, 13, 11].map(fs => { const s = document.createElement('span'), n = document.querySelector('#pbody .num'); s.style.cssText = `position:absolute;white-space:pre;font-family:${getComputedStyle(n).fontFamily};font-size:${fs}px;font-variant-numeric:tabular-nums`; document.body.appendChild(s); s.textContent = '1'; const a = s.getBoundingClientRect().width; s.textContent = '8'; const b = s.getBoundingClientRect().width; s.remove(); return [fs, a, b] })")
+        check(f'v3.3-1 {S} 实测等宽数字：同一字号下「1」和「8」一样宽（11 / 12 / 13 px）', all(abs(a - b) < .01 for _, a, b in eq) and x.C('#pbody .num', 'fontVariantNumeric') == 'tabular-nums', eq)
+        for scene in ('kiku', 'spk'):
+            if scene == 'spk':
+                x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200); x.E(DOT_JS)
+            A = x.E("(() => { const rows = [...document.querySelectorAll('#pbody .prm')].filter(__vis); const v = rows.filter(r => r.matches('[data-kind=num]:not(.is-dis), .ro') && r.querySelector('.vu .num')), g = rows.filter(r => r.matches('.range'));"
+                    " return {dots: v.map(r => [r.dataset.lab, __dot(r.querySelector('.vu .num'))]), hi: g.map(r => [r.dataset.lab, __dot(r.querySelector('.vv .num:not(.lo)'))]), lo: g.map(r => [r.dataset.lab, __dot(r.querySelector('.vv .num.lo'))]),"
+                    " units: rows.filter(r => r.querySelector('.vu > .u') && r.querySelector('.vu > .u').textContent).map(r => [r.dataset.lab, r.querySelector('.vu > .u').getBoundingClientRect().left]),"
+                    " right: [...new Set(v.map(r => Math.round(r.querySelector('.vu').getBoundingClientRect().right)))], sl: [...new Set(rows.filter(r => r.querySelector(':scope > .ctl1 .sl')).map(r => Math.round(r.querySelector('.ctl1 .sl').getBoundingClientRect().right)))]} })()")
+            d = [p[1] for p in A['dots']] + [p[1] for p in A['hi']]
+            check(f'v3.3-1 {S} {scene} 数值格右对齐，同一列小数点对齐（整数按个位后面对齐）', len(d) >= 3 and max(d) - min(d) <= 1, A['dots'] + A['hi'])
+            u = [p[1] for p in A['units']]
+            check(f'v3.3-1 {S} {scene} 单位放在数值后面一个固定宽度的位置：每行单位左缘一条线', len(u) >= 2 and max(u) - min(u) <= 1, A['units'])
+            check(f'v3.3-1 {S} {scene} 滑杆仍在同一条线结束（v3.2 第 2 条）', len(A['sl']) == 1, A['sl'])
+            if scene == 'spk':
+                lo = [p[1] for p in A['lo']]
+                check(f'v3.3-1 {S} 区间值的两段各自对齐：下限一列小数点对齐，上限和单值同一列', len(lo) >= 2 and max(lo) - min(lo) <= 1 and len(A['hi']) >= 2, [A['lo'], A['hi']])
+                x.E("KIT.select('01 燃烧核心')"); pg.wait_for_timeout(150)
+                big = x.E("(() => { const r = [...document.querySelectorAll('#pbody .prm[data-kind=num]')].filter(__vis); return r.map(e => { const n = e.querySelector('.num'), v = e.querySelector('.vu'); return n.getBoundingClientRect().left >= v.getBoundingClientRect().left - 0.5 }) })()")
+                check(f'v3.3-1 {S} 五位数（数量 14933、随机种子 501937）也放在数值列里，不压滑杆', all(big), big)
+        pg.close()
+
+    # 第 5 条：颜色模块对列（1366 下「颜色」默认折叠，看摘要）
+    pg = new_page(b, 1366, 768); x = P(pg)
+    C5 = x.E("(() => { const m = document.querySelector('#pbody .mod[data-mod=\"颜色\"]'), z = document.querySelector('#pbody .prm[data-lab=\"时间倍率\"]'); return {closed: m.classList.contains('is-closed'), band: m.querySelector('.ms-l .band').getBoundingClientRect().left, sl: z.querySelector('.sl').getBoundingClientRect().left,"
+             " dot: __dot(m.querySelector('.ms-v .num')), dot0: __dot(z.querySelector('.num')), u: m.querySelector('.ms-u').getBoundingClientRect().left, u0: z.querySelector('.vu > .u').getBoundingClientRect().left, lead: m.querySelector('.ms-l .mst').textContent, lr: m.querySelector('.ms-l').getBoundingClientRect().right, ctl: z.querySelector('.ctl1').getBoundingClientRect().right} })()")
+    check('v3.3-5 颜色折叠时：色带在控件列、左缘和滑杆同一个起点', C5['closed'] and abs(C5['band'] - C5['sl']) <= 1, C5)
+    check('v3.3-5 曝光的数值在数值列（小数点和上下行对齐），「倍」在单位列', abs(C5['dot'] - C5['dot0']) <= 1 and abs(C5['u'] - C5['u0']) <= 1 and C5['lead'] == '曝光' and C5['lr'] <= C5['ctl'] + 1, C5)
+    pg.close()
+
+    # 第 8 条：「N 项已隐藏　查看」并进模块标题行
+    pg = new_page(b); x = P(pg)
+    h = x.E("(() => { const m = document.querySelector('#pbody .mod[data-mod=\"环境\"]'), d = m.querySelector('.mod-h .dep-n'), mt = m.querySelector('.mt'), z = document.querySelector('#pbody .prm[data-lab=\"风速\"] .vu'); return d && {t: d.textContent, tip: d.dataset.tip, l: d.getBoundingClientRect().left, r: d.getBoundingClientRect().right, mt: mt.getBoundingClientRect().right, vu: z.getBoundingClientRect().right, top: Math.abs(d.getBoundingClientRect().top + d.getBoundingClientRect().height / 2 - mt.getBoundingClientRect().top - mt.getBoundingClientRect().height / 2), rows: [...m.querySelectorAll('.mod-b > *')].filter(__vis).map(e => e.dataset.lab || e.textContent.trim())} })()")
+    check('v3.3-8 标题行右侧写「+4」，和标题同一行，右缘对齐单位列末端', h and h['t'] == '+4' and h['l'] > h['mt'] and abs(h['r'] - h['vu']) <= 1 and h['top'] <= 2, h)
+    check('v3.3-8 悬停写「4 个参数已隐藏，点开显示」；不再单独占一行', h and h['tip'] == '4 个参数已隐藏，点开显示' and h['rows'] == ['风速', '湍流强度', '湍流尺度', '爆后扰动'] and '已隐藏' not in (x.T('#pbody .mod[data-mod="环境"] .mod-b') or ''), h)
+    x.click('#pbody .mod[data-mod="环境"] .dep-n')
+    check('v3.3-8 点「+4」露出 4 个停用参数，按钮填选中底色，悬停改成「收起这 4 个参数」', x.E("[...document.querySelectorAll('#pbody .mod[data-mod=\"环境\"] .prm.dep-in')].filter(__vis).length") == 4 and x.E("document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').getAttribute('aria-pressed')") == 'true' and x.E("document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').dataset.tip") == '收起这 4 个参数')
+    x.click('#pbody .mod[data-mod="环境"] .dep-n')
+    check('v3.3-8 再点一次收起', x.E("[...document.querySelectorAll('#pbody .mod[data-mod=\"环境\"] .prm.dep-in')].filter(__vis).length") == 0)
     pg.close()
 
     # 第 4 条：时间轴不悄悄藏行
