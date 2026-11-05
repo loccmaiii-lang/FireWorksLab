@@ -573,7 +573,7 @@ function modHTML(P, m, idx) {
   const shown = dks.length && dks.every(dk => MO[dk]);
   const depTip = shown ? `收起这 ${hid} 个参数` : `${hid} 个参数已隐藏${hch ? `，${hch} 个已改` : ''}，点开显示`;
   const depBtn = hid ? `<button class="btn dep-n" data-act="depShow" data-dks="${esc(dks.join(','))}" aria-pressed="${shown}" aria-label="${esc(depTip)}" data-tip="${esc(depTip)}">+${hid}</button>` : '';
-  return `<section class="mod${open ? '' : ' is-closed'}" data-mod="${esc(m.t)}" data-mk="${esc(mk)}"${auto ? ' data-auto=""' : ''}>
+  return `<section class="mod${open ? '' : ' is-closed'}" data-mod="${esc(m.t)}" data-mk="${esc(mk)}"${auto ? ` data-auto="${m.closed ? 'closed' : 'open'}"` : ''}>
     <div class="mod-h" role="button" tabindex="0" aria-expanded="${open}">${ico('cr', 'chev')}<span class="mt">${esc(m.t)}</span>${modSummary(P, m)}${depBtn}<button class="btn btn-icon mrst" ${n ? '' : 'hidden'} aria-haspopup="menu" data-tip="恢复本模块的 ${n} 项" aria-label="恢复本模块">${ico('reset')}</button></div>
     <div class="mod-b">${body}</div></section>`;
 }
@@ -1245,22 +1245,27 @@ function renderInsp(keepScroll = true) {
   applyFilter();
   pb.scrollTop = keepScroll ? top : 0;
 }
-/* v3.3 第 13 条：1920 下检查器不留一大块空——没记过展开状态的模块，按「运动 → 颜色 → 寿命 → 其余（原顺序）」依次展开，
-   放得下就展开，放不下就折叠；用户手动折叠 / 展开过的（MO 里有记录）按用户的来 */
+/* v3.3 第 13 条：1920 下检查器不留一大块空——没记过展开状态的模块，按「运动 → 颜色 → 寿命 → 这类对象最常用的模块 → 其余常用模块 → 平时折叠的模块」
+   依次展开，放得下就展开，放不下就折叠；用户手动折叠 / 展开过的（MO 里有记录）按用户的来。
+   「最常用的模块」排在「其余」前面：仙女棒的发射器只按原顺序排时，带两条曲线的「大小与亮度」差 26 px 放不下，反倒展开了「外形」「气流」 */
 const FIT_ORDER = ['运动', '颜色', '寿命'];
 function autoFit(pb) {
   const auto = $$('.mod[data-auto]', pb); if (!auto.length) return;
   const H = pb.clientHeight - parseFloat(getComputedStyle(pb).paddingBottom || 0);
   const hOpen = new Map(auto.map(m => [m, m.offsetHeight]));
   auto.forEach(m => m.classList.add('is-closed'));
-  const hClosed = new Map(auto.map(m => [m, m.offsetHeight]));
+  const hClosed = new Map(auto.map(m => [m, m.offsetHeight])), dOf = m => hOpen.get(m) - hClosed.get(m);
   let used = $$('.mod', pb).reduce((a, m) => a + m.offsetHeight, 0);
-  const rank = m => { const i = FIT_ORDER.indexOf(m.dataset.mod); return i < 0 ? FIT_ORDER.length + auto.indexOf(m) : i; };
-  [...auto].sort((a, b) => rank(a) - rank(b)).forEach(m => {
-    const d = hOpen.get(m) - hClosed.get(m), fits = used + d <= H;
-    MO[m.dataset.mk] = fits; if (fits) { used += d; m.classList.remove('is-closed'); }
-    $('.mod-h', m).setAttribute('aria-expanded', String(fits)); delete m.dataset.auto;
-  });
+  const main = INSP && pb.id === 'pbody' ? mainMod(INSP.P) : '';
+  const rank = m => { const i = FIT_ORDER.indexOf(m.dataset.mod); return i >= 0 ? i : m.dataset.mod === main ? 3 : (m.dataset.auto === 'closed' ? 100 : 10) + auto.indexOf(m); };
+  const order = [...auto].sort((a, b) => rank(a) - rank(b)), open = new Set();
+  /* 常用的几级按顺序放，放得下就展开 */
+  order.filter(m => rank(m) < 100).forEach(m => { if (used + dOf(m) <= H) { used += dOf(m); open.add(m); } });
+  /* 平时折叠的模块：挑一组刚好放得最满的（模块很少，逐个组合试；一样满时先挑排在前面的） */
+  const rest = order.filter(m => rank(m) >= 100), room = H - used; let best = 0, bestSet = 0;
+  for (let k = 1; k < (1 << rest.length); k++) { let h = 0; rest.forEach((m, i) => { if (k & (1 << i)) h += dOf(m); }); if (h <= room && h > best + 0.5) { best = h; bestSet = k; } }
+  rest.forEach((m, i) => { if (bestSet & (1 << i)) open.add(m); });
+  auto.forEach(m => { const on = open.has(m); MO[m.dataset.mk] = on; m.classList.toggle('is-closed', !on); $('.mod-h', m).setAttribute('aria-expanded', String(on)); delete m.dataset.auto; });
 }
 
 /* ---------- v3.3 第 1、5 条：数字竖向对齐 ----------

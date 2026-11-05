@@ -91,7 +91,7 @@ def spec_static(b):
     check('v3.1-9 600 只用在当前位置（面包屑末项、结构树当前行）和模块标题', all(re.search(r'\b(cur|tx|mt)\b', c) for c in w600) and x.E("[...document.querySelectorAll('#tree .trow:not(.is-sel) .tx')].every(t => getComputedStyle(t).fontWeight === '400')"), w600)
     check('v3.1-9 600 的文字：面包屑末项、结构树当前行、模块标题都在', x.C('#path .cur', 'fontWeight') == '600' and x.C('#tree .trow.is-sel .tx', 'fontWeight') == '600' and x.C('#pbody .mod-h .mt', 'fontWeight') == '600')
     check('v3.1-9 选中的分段、标签页、筛选块、时间轴层名都不加粗', all(x.C(s, 'fontWeight') == '400' for s in ['#libTabs .tab[aria-selected="true"]', '#modeTabs button[aria-pressed="true"]', '#viewbar .seg button[aria-pressed="true"]', '#libChips button[aria-pressed="true"]', '#tlw .tlrow.t-layer .lab', '#tlw .tlrow.is-sel .lab']) and x.E("[...document.querySelectorAll('#tlw *')].every(e => getComputedStyle(e).fontWeight === '400')"), [x.C(s, 'fontWeight') for s in ['#libTabs .tab[aria-selected="true"]', '#modeTabs button[aria-pressed="true"]', '#tlw .tlrow.t-layer .lab']])
-    check('§1 大号 15：面包屑末项、当前时间、效果库标签', x.C('#path .cur', 'fontSize') == '15px' and x.C('#tNow', 'fontSize') == '15px' and x.C('#libTabs .tab', 'fontSize') == '15px')
+    check('§1 / v3.3-6 大号 15：面包屑末项、效果名；当前时间、效果库标签降到中号 13', x.C('#path .cur', 'fontSize') == '15px' and x.C('#tree .trow.t-group .tx', 'fontSize') == '15px' and x.C('#tNow', 'fontSize') == '13px' and x.C('#libTabs .tab', 'fontSize') == '13px')
     check('§1 数值用等宽数字', x.E("[...document.querySelectorAll('#wsBaker .num')].every(n => getComputedStyle(n).fontVariantNumeric.includes('tabular-nums'))"))
     check('§1 数值主文字色，单位弱色且小一级', x.C('#pbody .prm[data-lab="缩放"] .num', 'color') == T1 and x.C('#pbody .prm[data-lab="缩放"] .u', 'color') == T3 and x.C('#pbody .prm[data-lab="缩放"] .u', 'fontSize') == '12px')
     check('§1 参数名、命令是次文字色', x.C('#pbody .prm[data-lab="缩放"] .pl', 'color') == T2 and x.C('[data-act="saveAs"]', 'color') == T2)
@@ -101,7 +101,7 @@ def spec_static(b):
     check('§2 / v3.3-1 检查器五列：参数名 112 ｜ 控件 ｜ 数值 ｜ 单位 ｜ 操作 24（数值、单位两列按这一屏的取值范围定宽；单值、停用行同一套）', re.fullmatch(r'112px [\d.]+px [\d.]+px [\d.]+px 24px', x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') or '') is not None and x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns') == x.C('#pbody .prm[data-lab="湍流尺度"]', 'gridTemplateColumns') == x.C('#pbody .mod-h', 'gridTemplateColumns'), x.C('#pbody .prm[data-lab="缩放"]', 'gridTemplateColumns'))
     check('v3.3-1 数值格到滑杆末端至少 8 px', x.R('#pbody .prm[data-lab="缩放"] .vu')[0] - x.R('#pbody .prm[data-lab="缩放"] .sl')[2] == 8)
     check('v3.3-1 小数位最多的数，数字到单位 4 px（单位在固定宽度的单位列里）', all(abs(g - 4) <= 1 for g in x.E("[...document.querySelectorAll('#pbody .prm[data-kind=num]:not(.is-dis):not(.sub)')].filter(r => r.offsetParent && r.querySelector('.u').textContent && /\\.\\d\\d$/.test(r.querySelector('.num').value)).map(r => { const n = r.querySelector('.num'), c = getComputedStyle(n); return r.querySelector('.u').getBoundingClientRect().left - (n.getBoundingClientRect().right - parseFloat(c.borderRightWidth) - parseFloat(c.paddingRight)) })")))
-    check('§2 行高 28（结构树、时间轴、参数、模块标题）', x.R('#tree .trow')[5] == 28 and x.R('#tlw .tlrow')[5] == 28 and x.R('#pbody .prm[data-lab="缩放"]')[5] == 28 and x.R('#pbody .mod-h')[5] == 28)
+    check('§2 行高 28（结构树、时间轴、参数）；模块标题行 16 + 20 + 6 = 42（v3.3 第 6 条）', x.R('#tree .trow')[5] == 28 and x.R('#tlw .tlrow')[5] == 28 and x.R('#pbody .prm[data-lab="缩放"]')[5] == 28 and x.R('#pbody .mod-h')[5] == 42)
     check('§2 可点区域 ≥ 28（命令、图标命令）', all(r[5] >= 28 for r in x.E("[...document.querySelectorAll('#toolRow .btn, #transport .btn')].filter(b => b.offsetParent).map(b => { const r = b.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom, r.width, r.height] })")))
     check('§2 / v3.2-2 所有滑杆（单值、停用）结束在同一条线上', len(set(round(r) for r in x.E("[...document.querySelectorAll('#pbody .prm:not(.sub) .ctl1 .sl')].filter(s => s.offsetParent).map(s => s.getBoundingClientRect().right)"))) == 1 and x.N('#pbody .prm.is-dis .ctl1 .sl') >= 1)
     check('§2 面板内边距 12：检查器、结构树文字左缘', x.R('#pbody .mod-h .mt')[0] - x.R('#insp')[0] in (12, 13) and abs(x.E("(() => { const e = document.querySelector('#path > :first-child'); return e.getBoundingClientRect().left + parseFloat(getComputedStyle(e).paddingLeft) })()") - x.R('#pbody .mod-h .mt')[0]) <= 1)
@@ -185,7 +185,7 @@ def spec_static(b):
     check('v3.1-20 时间轴高度按内容定：最后一行下面不留大块空白（≤ 1 行）', x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = [...document.querySelectorAll('#tlw .tlrow[data-id]')].pop().getBoundingClientRect(); return t.bottom - r.bottom })()") <= 28, x.E("(() => { const t = document.querySelector('#tlw .tl').getBoundingClientRect(), r = [...document.querySelectorAll('#tlw .tlrow[data-id]')].pop().getBoundingClientRect(); return t.bottom - r.bottom })()"))
     # §9 检查器
     check('§9 顶部面包屑；下一行搜索、「筛选 ▾」「全部折叠」', x.E("[...document.querySelector('.insp-tools').children].map(c => c.id).join()") == 'pq,viewOpt,foldAll')
-    check('§9 模块标题 28、600、主文字色，左边展开箭头', x.R('#pbody .mod-h')[5] == 28 and x.C('#pbody .mod-h .mt', 'color') == T1 and x.R('#pbody .mod-h .chev')[2] <= x.R('#pbody .mod-h .mt')[0])
+    check('§9 / v3.3-6 模块标题 600、主文字色，左边展开箭头', x.R('#pbody .mod-h')[5] == 42 and x.C('#pbody .mod-h .mt', 'color') == T1 and x.R('#pbody .mod-h .chev')[2] <= x.R('#pbody .mod-h .mt')[0] + float(x.C('#pbody .mod-h .mt', 'paddingLeft')[:-2]))
     sm = x.E("(() => { const m = document.querySelector('#pbody .mod.is-closed'); if (!m) return null; const v = m.querySelector('.ms-v .num'), u = m.querySelector('.ms-u'), z = document.querySelector('#pbody .prm[data-lab=\"缩放\"]'); return {mod: m.dataset.mod, c: getComputedStyle(m.querySelector('.ms-l')).color, dot: v && __dot(v), dot0: __dot(z.querySelector('.num')), u: u && u.getBoundingClientRect().left, u0: z.querySelector('.u').getBoundingClientRect().left} })()")
     check('§9 / v3.3-5 折叠的模块摘要弱色；最后一个数值落在数值列（小数点和上下行对齐），单位在单位列', sm and sm['c'] == T3 and sm['dot'] is not None and abs(sm['dot'] - sm['dot0']) <= 1 and abs(sm['u'] - sm['u0']) <= 1, sm)
     check('§9 只有一个数值参数的模块不做成模块（曝光并进「颜色」）；「轨迹联动」（勾选列表）保留成模块', x.N('#pbody .mod[data-mod="曝光"]') == 0 and x.N('#pbody .mod[data-mod="颜色"] .prm[data-lab="曝光"]') == 1 and x.N('#pbody .mod[data-mod="轨迹联动"] .prm[data-lab="联动的层"]') == 1 and x.E("[...document.querySelectorAll('#pbody .mod')].every(m => m.querySelectorAll('.mod-b > .prm:not(.sub)').length >= 2 || m.dataset.mod === '轨迹联动')"))
@@ -222,7 +222,7 @@ def spec_static(b):
     pg = new_page(b); x = P(pg)
     check('v3.1-19 层行去掉叠层图标（有层号），根行、发射器行保留类型图标', x.N('#tree .trow.t-layer .ty') == 0 and x.N('#tree .trow.t-layer .no') == 3 and x.N('#tree .trow.t-group .ty') == 1 and x.E("[...document.querySelectorAll('#tree .trow.t-emitter')].every(r => r.querySelector('.ty'))"))
     check('§10 显示 / 只看 / ⋯ 只在悬停、当前行或者不是默认状态时出现', x.C('#tree .trow[data-id]:not(.is-sel):not(.t-group) .eye', 'visibility') == 'hidden' and x.C('#tree .trow.is-sel .eye', 'visibility') == 'visible')
-    check('v3.1-7 效果库大号标签等宽两半，字号 15，折叠箭头在标签行最右', abs(x.R('#libTabs .tab:first-child')[4] - x.R('#libTabs .tab:last-child')[4]) <= 1 and x.C('#libTabs .tab', 'fontSize') == '15px' and x.R('#libToggle')[0] >= x.R('#libTabs .tab:last-child')[2] - 1 and x.R('#left')[2] - x.R('#libToggle')[2] <= 8 and x.R('#libTabs')[0] == x.R('#left')[0])
+    check('v3.1-7 / v3.3-6 效果库大号标签等宽两半（40 px 高，字号按第 6 条降到 13），折叠箭头在标签行最右', abs(x.R('#libTabs .tab:first-child')[4] - x.R('#libTabs .tab:last-child')[4]) <= 1 and x.C('#libTabs .tab', 'fontSize') == '13px' and x.R('#libTabs .tab')[5] == 40 and x.R('#libToggle')[0] >= x.R('#libTabs .tab:last-child')[2] - 1 and x.R('#left')[2] - x.R('#libToggle')[2] <= 8 and x.R('#libTabs')[0] == x.R('#left')[0])
     check('v3.1-7 下划线横跨整个标签', x.E("(() => { const t = document.querySelector('#libTabs .tab[aria-selected=\"true\"]'), c = getComputedStyle(t, '::after'); return Math.abs(parseFloat(c.width) - t.getBoundingClientRect().width) <= 1 })()"))
     check('v3.1-8 搜索框静止时画 1 px 线框（效果库、检查器）', all(x.C(s, 'borderTopWidth') == '1px' and x.C(s, 'borderTopColor') == LINE for s in ['#libQ', '#pq']), [x.C('#libQ', 'borderTopColor'), x.C('#pq', 'borderTopColor')])
     check('§10 标签下一行是搜索，再下一行分段 S + 「10 个」+「新建」，两组之间 20', x.R('#libQ')[1] > x.R('#libTabs')[3] - 1 and x.R('#libChips')[1] > x.R('#libQ')[3] - 1 and x.T('#libCount') == '10 个' and x.R('#libCount')[0] - x.R('#libChips')[2] >= 20)
@@ -781,6 +781,40 @@ def v33(b):
     check('v3.3-8 点「+4」露出 4 个停用参数，按钮填选中底色，悬停改成「收起这 4 个参数」', x.E("[...document.querySelectorAll('#pbody .mod[data-mod=\"环境\"] .prm.dep-in')].filter(__vis).length") == 4 and x.E("document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').getAttribute('aria-pressed')") == 'true' and x.E("document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').dataset.tip") == '收起这 4 个参数')
     x.click('#pbody .mod[data-mod="环境"] .dep-n')
     check('v3.3-8 再点一次收起', x.E("[...document.querySelectorAll('#pbody .mod[data-mod=\"环境\"] .prm.dep-in')].filter(__vis).length") == 0)
+    pg.close()
+
+    # 第 6 条：字号层级——大号只给面包屑末项和效果名；中号给参数名、数值、正文；小号给读数、计数、次要说明；模块标题中号加粗，上 16 下 6
+    pg = new_page(b); x = P(pg)
+    big = x.E("[...document.querySelectorAll('#wsBaker *')].filter(e => [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) && e.getBoundingClientRect().width && getComputedStyle(e).visibility !== 'hidden' && getComputedStyle(e).fontSize === '15px').map(e => e.matches('#path .cur') ? '面包屑末项' : e.matches('#tree .trow.t-group .tx') ? '效果名' : (e.id || String(e.className.baseVal ?? e.className)))")
+    check('v3.3-6 大号 15 只给面包屑末项和效果名（结构树第一行）', set(big) == {'面包屑末项', '效果名'}, big)
+    fs = lambda sel: x.C(sel, 'fontSize')
+    check('v3.3-6 中号 13：参数名、数值、当前时间、效果库标签、命令', all(fs(s) == '13px' for s in ['#pbody .prm[data-lab="缩放"] .pl', '#pbody .prm[data-lab="缩放"] .num', '#tNow', '#transport .time .tot', '#libTabs .tab', '[data-act="saveAs"]', '#tree .trow:not(.t-group) .tx']), [fs(s) for s in ['#tNow', '#libTabs .tab', '#transport .time .tot']])
+    check('v3.3-6 小号 12：读数（画面读数、帧号、单位、模块摘要）、计数（10 个、层号）、次要说明', all(fs(s) == '12px' for s in ['#ciBL', '#transport .fno', '#transport .fbk .lbl', '#pbody .prm[data-lab="缩放"] .u', '#libCount', '#tree .trow .no', '#libList .li-s', '#tlw .frow .lab']), [fs(s) for s in ['#ciBL', '#transport .fno', '#libCount']])
+    mh = x.E("(() => { const m = [...document.querySelectorAll('#pbody .mod')][1], h = m.querySelector('.mod-h'), t = h.querySelector('.mt'), r = m.querySelector('.mod-b > .prm'), lh = parseFloat(getComputedStyle(t).lineHeight), tb = t.getBoundingClientRect(), top = m.getBoundingClientRect().top + parseFloat(getComputedStyle(m).borderTopWidth); return {fs: getComputedStyle(t).fontSize, fw: getComputedStyle(t).fontWeight, above: Math.round(tb.top + (tb.height - lh) / 2 - top), below: Math.round(r.getBoundingClientRect().top - (tb.top + (tb.height + lh) / 2))} })()")
+    check('v3.3-6 模块标题中号加粗，上方空 16 px、下方空 6 px（量到标题行框）', mh['fs'] == '13px' and mh['fw'] == '600' and mh['above'] == 16 and mh['below'] == 6, mh)
+    # 第 14 条：折叠箭头离面板边 12 px，和结构树、检查器的文字列对齐
+    a14 = x.E("(() => { const ins = document.querySelector('#insp').getBoundingClientRect().left + 1, lp = document.querySelector('#left').getBoundingClientRect().left;"
+              " return {mod: [...document.querySelectorAll('#pbody .mod-h .chev')].map(c => Math.round(c.getBoundingClientRect().left - ins)), lab: Math.round(document.querySelector('#pbody .prm .pl').getBoundingClientRect().left - ins),"
+              " tree: [...document.querySelectorAll('#tree .trow.t-group .chev svg, #tree .trow.t-layer .chev svg')].map(c => Math.round(c.getBoundingClientRect().left - lp - parseFloat(getComputedStyle(c.closest('.trow')).paddingLeft)))} })()")
+    check('v3.3-14 检查器折叠箭头离面板边 12 px，和参数名一列对齐', set(a14['mod']) == {12} and a14['lab'] == 12, a14)
+    check('v3.3-14 结构树折叠箭头离面板边 12 px（每级再缩进 16）', set(a14['tree']) == {12}, a14)
+    pg.close()
+
+    # 第 13 条：1920 下检查器不留一大块空
+    for scene, sel, want_open in (('kiku', None, '颜色'), ('spk', None, '大小与亮度'), ('kiku', '金锦层/星', '寿命')):
+        pg = new_page(b); x = P(pg)
+        if scene == 'spk':
+            x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200)
+        if sel:
+            x.E(f"KIT.select('{sel}')"); pg.wait_for_timeout(200)
+        f = x.E("(() => { const pb = document.querySelector('#pbody'), ms = [...pb.querySelectorAll('.mod')], used = ms.reduce((a, m) => a + m.offsetHeight, 0), H = pb.clientHeight - parseFloat(getComputedStyle(pb).paddingBottom);"
+                " const nextGap = Math.min(...ms.filter(m => m.classList.contains('is-closed')).map(m => { m.classList.remove('is-closed'); const h = m.offsetHeight; m.classList.add('is-closed'); return h - 43 }), 9999);"
+                " return {H, used, free: H - used, nextGap, open: ms.filter(m => !m.classList.contains('is-closed')).map(m => m.dataset.mod), scroll: pb.scrollHeight > pb.clientHeight + 1} })()")
+        check(f'v3.3-13 {sel or scene} 默认展开到放满：没有滚动条，剩下的空比最小的折叠模块展开要的高度小', not f['scroll'] and f['free'] < f['nextGap'] and want_open in f['open'], f)
+        pg.close()
+    pg = new_page(b); x = P(pg)
+    x.click('#pbody .mod[data-mod="颜色"] .mod-h'); x.E("KIT.select('橙引线层')"); pg.wait_for_timeout(100); x.E("KIT.select('金锦层')"); pg.wait_for_timeout(150)
+    check('v3.3-13 用户手动折叠后按用户的来（换对象再回来仍是折叠）', x.E("document.querySelector('#pbody .mod[data-mod=\"颜色\"]').classList.contains('is-closed')"))
     pg.close()
 
     # 第 4 条：时间轴不悄悄藏行
