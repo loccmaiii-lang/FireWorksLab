@@ -1,12 +1,14 @@
-<!-- ===== 烟花工坊 5.0 外壳（body_shell.html，E 样板 v3） =====
-     宪章 0.9「用户 2026-11-05 改定」：没有工作区切换，默认画面就是制作；右上角「资源交付」「资源编排」两个页面标签。
-     页面加载后由 script_shell.js 搬进样板的槽位：#wsImport（资源交付）、#wsWB（资源编排）打开哪个才搬进 #app（放在 #wsBaker 后面），
+<!-- ===== 烟花工坊 5.0 外壳（body_shell.html，E 样板 v3.4） =====
+     宪章 0.9「用户 2026-11-05 15:50 再改」：没有工作区切换，默认画面就是制作；顶栏右侧「UE」｜显卡｜「编排工作台 →」；
+     「资源交付」由「导出 ▾」菜单第一项打开；导出、备份文件夹在状态栏左端（制作区 #stShell、两页的 .sh-stf）。
+     页面加载后由 script_shell.js 搬进样板的槽位：#wsImport（资源交付）、#wsWB（编排工作台）打开哪个才搬进 #app（放在 #wsBaker 后面），
      没打开的留在这里；#shKit 放进 #sbarShell。#shell 的内容、两个列表、全表 #sheetShell 一节由脚本按状态生成。槽位不在时，这一块留在原处、保持隐藏。 -->
 <!-- 图标一律用样板 body_main.html 开头的 SVG symbol（「← 返回制作」= i-back）；外壳不再自带图标 -->
 <div id="shParts" hidden>
 
 <!-- 资源交付（原导入工作区）：工具行占满宽：「← 返回制作」｜「烟花导入 / ResourceFX 配表」…「刷新」「导入」；
-     左栏第一行「FWL_Export　5 个素材包」+ 包列表；右边是原因（UE 未连接时）+ 逐资产清单 -->
+     左栏第一行「FWL_Export　5 个素材包」+ 包列表；右边是原因（UE 未连接时）+ 逐资产清单；
+     滚动区（包列表、主区）加制作区的通用类 .sb-auto：滚动条只在滚动时出现（v3.4 第 13 条） -->
 <div class="ws sh-ws" id="wsImport" hidden aria-label="资源交付">
   <div class="topbar sh-hd" id="impTool" role="toolbar" aria-label="资源交付工具">
     <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>返回制作</button></div>
@@ -18,19 +20,19 @@
   </div>
   <section class="sh-left" aria-label="导出文件夹里的包">
     <div class="sh-lh"><span class="sh-hv" id="impFolder"></span><span class="lbl" id="impCount"></span></div>
-    <div class="lib-list" id="impList" role="listbox" aria-label="素材包"></div>
+    <div class="lib-list sb-auto" id="impList" role="listbox" aria-label="素材包"></div>
   </section>
   <main class="sh-main" id="impMain">
-    <div class="sh-why" id="impWhy" role="status" hidden><span>UE 未连接，GPUECli 启动后自动连上</span><button class="btn btn-text tbtn" data-sh="retry">重试</button></div>
+    <div class="sh-why" id="impWhy" role="status" hidden><span>UE 未连接，GPUECli 启动后自动连上</span><button class="btn btn-text tbtn" data-sh="retry">重新连接</button></div>
     <div class="sh-mc" id="impMC"></div>
   </main>
-  <footer class="status"><div class="st-l"><i class="sh-ph" style="width:96px" aria-hidden="true"></i></div><div class="st-r"><span data-pvm></span></div></footer>
+  <footer class="status"><div class="st-l"><span class="sh-stf"></span></div><div class="st-r"><span data-pvm></span></div></footer>
 </div>
 
-<!-- 资源编排（编排工作台入口）：工具行占满宽：「← 返回制作」｜编排原有的工具（低对比占位块）｜会写 UE 的三个命令；
-     左栏「效果 / 模板」大号标签 → 基础模板列表；中栏画面和时间轴（占位）；右栏检查器（占位） -->
-<div class="ws sh-ws" id="wsWB" hidden aria-label="资源编排">
-  <div class="topbar sh-hd" id="wbTool" role="toolbar" aria-label="资源编排工具">
+<!-- 编排工作台（v3.4 第 3 条由「资源编排」改名）：工具行占满宽：「← 返回制作」｜编排原有的工具（低对比占位块）｜会写 UE 的三个命令；
+     左栏「效果 / 模板」大号标签 → 基础模板列表（列表加 .sb-auto）；中栏画面和时间轴（占位）；右栏检查器（占位）；状态栏左端同制作区放导出、备份 -->
+<div class="ws sh-ws" id="wsWB" hidden aria-label="编排工作台">
+  <div class="topbar sh-hd" id="wbTool" role="toolbar" aria-label="编排工作台工具">
     <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>返回制作</button></div>
     <div class="sh-hs sh-hm"><i class="sh-ph" style="width:148px" aria-hidden="true"></i><i class="sh-ph" style="width:24px;margin-left:12px" aria-hidden="true"></i><i class="sh-ph" style="width:24px" aria-hidden="true"></i><i class="sh-ph" style="width:88px;margin-left:12px" aria-hidden="true"></i><span class="sp"></span><i class="sh-ph" style="width:56px" aria-hidden="true"></i><i class="sh-ph" style="width:56px" aria-hidden="true"></i></div>
     <div class="sh-hs sh-hr"><span class="sp"></span>
@@ -43,9 +45,9 @@
       <div class="tabs tabs-sub" role="tablist" id="wbSub"><button class="tab" role="tab" data-sh="wbSub" data-t="基础模板" data-v="基础模板" aria-selected="true">基础模板</button><button class="tab" role="tab" data-sh="wbSub" data-t="花型模板" data-v="花型模板" aria-selected="false">花型模板</button><button class="tab" role="tab" data-sh="wbSub" data-t="编排模板" data-v="编排模板" aria-selected="false">编排模板</button></div>
       <div class="lib-tools">
         <label class="field search" id="wbQ"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="名称、行名" aria-label="搜索基础模板"><button class="clr" type="button" aria-label="清除搜索"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></label>
-        <div class="lib-meta"><div class="seg sm" id="wbChips" role="group" aria-label="花型筛选"><button data-sh="wbChip" data-v="全部" aria-pressed="true">全部</button><button data-sh="wbChip" data-v="球花" aria-pressed="false">球花</button><button data-sh="wbChip" data-v="尾缀" aria-pressed="false">尾缀</button><button data-sh="wbChip" data-v="扇形" aria-pressed="false">扇形</button></div><span class="sp"></span><span class="cnt" id="wbCount"></span><button class="btn btn-text tbtn sm" data-sh="wbNew" data-tip="新建基础模板" aria-label="新建"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">新建</span></button></div>
+        <div class="lib-meta"><div class="seg sm" id="wbChips" role="group" aria-label="花型筛选"><button data-sh="wbChip" data-v="全部" aria-pressed="true">全部</button><button data-sh="wbChip" data-v="球花" aria-pressed="false">球花</button><button data-sh="wbChip" data-v="尾缀" aria-pressed="false">尾缀</button><button data-sh="wbChip" data-v="扇形" aria-pressed="false">扇形</button></div><span class="sp"></span><button class="btn btn-text tbtn sm" data-sh="wbNew" data-tip="新建基础模板" aria-label="新建"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">新建</span></button></div>
       </div>
-      <div class="lib-list" id="wbList" role="listbox" aria-label="基础模板"></div>
+      <div class="lib-list sb-auto" id="wbList" role="listbox" aria-label="基础模板"></div>
     </div>
   </section>
   <main class="sh-wbmid" aria-hidden="true">
@@ -58,7 +60,7 @@
     </div>
   </main>
   <aside class="sh-wbright" aria-hidden="true"><i class="sh-ph" style="width:46%;height:14px"></i><i class="sh-ph" style="width:100%;height:var(--h-ctl)"></i><i class="sh-ph" style="width:72%"></i><i class="sh-ph" style="width:88%"></i><i class="sh-ph" style="width:64%"></i><i class="sh-ph" style="width:40%;height:14px;margin-top:12px"></i><i class="sh-ph" style="width:82%"></i><i class="sh-ph" style="width:70%"></i></aside>
-  <footer class="status"><div class="st-l"><i class="sh-ph" style="width:120px" aria-hidden="true"></i></div><div class="st-r"><span data-pvm></span></div></footer>
+  <footer class="status"><div class="st-l"><span class="sh-stf"></span></div><div class="st-r"><span data-pvm></span></div></footer>
 </div>
 
 <!-- 样板开关：放进 #sbarShell；不属于产品界面 -->
