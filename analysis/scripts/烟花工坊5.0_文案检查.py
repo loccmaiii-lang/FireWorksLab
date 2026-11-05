@@ -32,6 +32,7 @@ STATES = [
     ('金芒菊 · 全部参数', "selectEmitTab('全部'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1500),
     ('金芒菊 · 序列贴图', "selectEmitTab('星'); document.querySelector('#viewSeg [data-view=flow]').click();", 2500),
     ('金芒菊 · 引擎回放', "document.querySelector('#viewSeg [data-view=export]').click();", 2500),
+    ('金芒菊 · 交付清单', "document.querySelector('#viewSeg [data-view=delivery]').click();", 2500),
     ('金芒菊 · 导出菜单', "document.querySelector('#viewSeg [data-view=live]').click(); document.querySelector('#expMenuBtn').click();", 800),
     ('金芒菊 · 右键菜单', "document.body.click(); const b = document.getElementById('box').getBoundingClientRect(); document.getElementById('box').dispatchEvent(new MouseEvent('contextmenu', {bubbles: true, clientX: b.left + 200, clientY: b.top + 200}));", 500),
     ('金芒菊 · 筛选与⋯', "document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'})); const f = document.querySelector('#params .e50-filt'); if (f) f.open = true; const m = document.querySelector('#params .e50-more'); if (m) m.open = true;", 500),
@@ -50,14 +51,16 @@ STATES = [
 ]
 
 COLLECT = r"""() => {
-  const out = [], vis = e => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return r.width > 0 && r.height > 0 && c.visibility !== 'hidden' && c.display !== 'none' && +c.opacity !== 0; };
+  // 收起的 details 里的东西在 Chromium 里照样有位置（W15 也踩过）：不在 summary 里的都算看不见
+  const shut = e => { for (let d = e.closest('details:not([open])'); d; d = d.parentElement && d.parentElement.closest('details:not([open])')) { const s = d.querySelector(':scope > summary'); if (!s || !s.contains(e)) return true; } return false; };
+  const out = [], vis = e => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return r.width > 0 && r.height > 0 && c.visibility !== 'hidden' && c.display !== 'none' && +c.opacity !== 0 && !shut(e); };
   const own = e => [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').replace(/\s+/g, ' ').trim();
-  const kind = e => e.closest('#vfRead, .vf-foot, #tlabel, .tlx-v, #path .cur, .infohost p.hint') ? '读数' : e.closest('summary .msum') ? '摘要' : e.closest('.e40-pop .mi, .ab-menu .mi, .ab-menu > button, .e50-menu .mi, .e50-ctx, .exp .mi') ? '菜单项'
+  const kind = e => e.closest('#vfRead, .vf-foot, #tlabel, .tlx-v, #path .cur, .infohost p.hint, #delivView small, #delivView p.hint, #delivView td, #dvSizeLine') ? '读数' : e.closest('summary .msum') ? '摘要' : e.closest('.e40-pop .mi, .ab-menu .mi, .ab-menu > button, .e50-menu .mi, .e50-ctx, .exp .mi') ? '菜单项'
     : e.closest('#rtLayerBar button') ? '标签'     /* 尾缀分层看的开关写的是段名（像结构树行名），按标签算 */
     : e.closest('option') ? '选项' : e.closest('.e50-warn, p.hint.warn, .ow') ? '原因' : e.closest('#status, .flash') ? '提示条' : e.closest('summary') ? '标题'
     : e.closest('button, .tab, .seg, .chip, .btn') ? '按钮' : '标签';
   const roots = [...document.querySelectorAll('#wsBaker, #vfCtx, .e40-pop')];
-  const skip = e => e.closest('#shell, .sh-toast, #libBody, #pHelp, script, style, #iconDefs, canvas, .tlb-n, #tree .nm, #tree .tx, #abName, #abIdName, #path, #enName, .tb-txt');     /* 效果名是专有名词（结构树根行也是），不按标签限长 */
+  const skip = e => e.closest('#shell, .sh-toast, #libBody, #pHelp, script, style, #iconDefs, canvas, .tlb-n, #tree .nm, #tree .tx, #abName, #abIdName, #path, #enName, .tb-txt, .dv-prod td:first-child, .dv-prod td small, #dvSizeSpec');     /* 交付清单产物表的规格读数、尺寸档名（spec/尺寸标定.json 的名字）不按文案限长：盘点表偏离 D14 */     /* 效果名是专有名词（结构树根行也是），不按标签限长 */
   for (const R of roots) for (const e of R.querySelectorAll('*')) {
     if (skip(e)) continue;
     if (e.tagName === 'SELECT') { if (vis(e)) for (const o of e.options) if (!o.hidden && /[一-鿿]/.test(o.text)) out.push(['选项', o.text.trim()]); continue; }

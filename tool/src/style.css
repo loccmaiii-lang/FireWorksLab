@@ -2484,3 +2484,6 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #params details.mod:has(> .infohost[data-info=schemeNote]):not(:has(> :not(summary, .infohost[data-info=schemeNote], [hidden]))){display:none}
 /* 多层效果级「各层在整朵里」每层一块：块里的行比块标题右缩，和模块里的参数行同一条左缘 */
 #pCombo #layers>.card>:not(.head){margin-left:34px}
+/* 交付清单：单束怎么选的长说明收起来 */
+#delivView details.dv-more{margin:4px 0 8px}
+#delivView details.dv-more>summary{cursor:pointer;color:var(--t3);font-size:var(--fs1)}

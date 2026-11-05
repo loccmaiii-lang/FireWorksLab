@@ -329,7 +329,7 @@ function sizeSpecLine(isCombo) {
   if (!sp) return `导出尺寸：原大${now ? '（' + now + '）' : ''}——要匹配编排的大小，在右边选一档`;
   if (sp.off) return `导出尺寸：这次不按标定（原大 / 手动导出缩放${now ? '；' + now : ''}）`;
   const r = sizeSpecScale(sp, sz); if (!r) return `导出尺寸「${sp.name}」：${sz ? (sz.what === 'height' ? '这一档没有开花高度' : '这一档没有花径') : '量不出这个效果的大小'}，照原大导出`;
-  return `导出尺寸「${r.name}」${sp.picked ? '' : '（表里配的）'}：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.tk && r.tk !== 1 ? `、时间 × ${r.tk}${r.rise ? '（升空 ' + r.rise + ' s，原 ' + r.riseSrc + ' s）' : ''}，只有「合成一张」按时间缩` : ''}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
+  return `导出尺寸「${r.name}」：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.tk && r.tk !== 1 ? `、时间 × ${r.tk}${r.rise ? '（升空 ' + r.rise + ' s，原 ' + r.riseSrc + ' s）' : ''}，只有「合成一张」按时间缩` : ''}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
 }
 // 交付清单的下拉：自动（表里配的 / 原大）、同效果配的其他规格、按口径列的档、这次不按标定
 function sizeSpecSelectHTML(isCombo) {
