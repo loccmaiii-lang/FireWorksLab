@@ -1445,6 +1445,24 @@ def write_table(rows):
     open(NOTE, 'w', encoding='utf-8').write(doc)
 
 
+def t_v36(p):
+    """v3.6 改动单里归外壳的两条：第 12 条资源交付的资产表（按内容定宽、「UE 路径」写文字、列头「名称」），第 7 条「← 返回制作」的箭头起在 x12"""
+    for size in (1920, 1366):
+        S = f'@{size}'
+        p.fresh(size)
+        p.ev("SHELL.ws('import')"); p.pg.wait_for_timeout(250)
+        t = p.ev("""(() => { const tb = __T.q('#impMC .sh-at'); if (!tb) return null; const r = tb.getBoundingClientRect(), m = __T.q('#impMain').getBoundingClientRect();
+            return {w: Math.round(r.width), mainW: Math.round(m.width), th: __T.qq('thead th', tb).map(__T.txt), ph: __T.qq('.sh-path .sh-ph', tb).length,
+                    path: __T.qq('td.sh-path', tb).map(__T.txt), pc: getComputedStyle(__T.q('td.sh-path', tb)).color}; })()""")
+        ck(f'v3.6-12 资产表按内容定宽（≤ 1150，不撑满主区），列头第一列「名称」{S}', bool(t) and t['w'] <= 1150 and t['w'] < t['mainW'] - 40 and t['th'][0] == '名称' and t['th'][4] == 'UE 路径', t)
+        ck(f'v3.6-12 「UE 路径」写成文字（/Game/VFX/Fireworks/包名/子目录），不再画灰条；次文字色{S}', bool(t) and t['ph'] == 0 and all(x.startswith('/Game/VFX/Fireworks/Comet30_RedGold/') for x in t['path']) and t['pc'] == 'rgb(180, 197, 203)', t and t['path'][:3])
+        for ws, sel in (('import', '#impTool'), ('wb', '#wbTool')):
+            p.ev(f"SHELL.ws('{ws}')"); p.pg.wait_for_timeout(200)
+            b = p.ev(f"""(() => {{ const s = __T.q('{sel} .sh-back svg'); return s && Math.round(s.getBoundingClientRect().left); }})()""")
+            ck(f'v3.6-7 「← 返回制作」的箭头起在 x12，和顶栏「烟花工坊」、下面的列表同一条线（{ws}）{S}', b == 12, b)
+        p.ev("SHELL.ws('baker')")
+
+
 # ================================================================= 主程序
 def main():
     build()
@@ -1459,7 +1477,7 @@ def main():
                  ('两页 1920', lambda: t_pages(p, 1920)), ('两页 1366', lambda: t_pages(p, 1366)), ('资源交付', lambda: t_import(p)),
                  ('变灰与互锁', lambda: t_interlock(p)), ('文件夹与 UE', lambda: t_folders_ue(p)), ('其他浏览器', lambda: t_browser(p)),
                  ('导出', lambda: t_export(p)), ('另存与预览', lambda: t_save(p)), ('编排节目 1920', lambda: t_wb(p, 1920)), ('编排节目 1366', lambda: t_wb(p, 1366)), ('图标与改名', lambda: t_icons(p)), ('滚动条', lambda: t_scroll(p)),
-                 ('溢出 1920', lambda: t_sweep(p, 1920)), ('溢出 1366', lambda: t_sweep(p, 1366)), ('样板开关与全表', lambda: t_kit_sheet(p)), ('挂钩', lambda: t_hooks(p))]
+                 ('溢出 1920', lambda: t_sweep(p, 1920)), ('溢出 1366', lambda: t_sweep(p, 1366)), ('样板开关与全表', lambda: t_kit_sheet(p)), ('挂钩', lambda: t_hooks(p)), ('v3.6', lambda: t_v36(p))]
         for name, fn in steps:
             n0 = len(p.errs)
             try:

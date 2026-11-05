@@ -113,7 +113,7 @@
 #wbTool{grid-template-columns:var(--sh-wl) minmax(0,1fr) var(--w-right)}
 .sh-hs{display:flex;align-items:center;gap:var(--gin, 8px);height:100%;min-width:0;padding:0 var(--s3);overflow:hidden}
 .sh-hs .sp{flex:1}
-.sh-hs.sh-hl{padding-left:calc(var(--s3) - 6px);border-right:1px solid var(--line)}   /* v3.6 第 7 条：「← 返回制作」的箭头起在 x12（按钮自带 6 px 内边距），和下面列表、顶栏同一条线 */
+.sh-hs.sh-hl{padding-left:calc(var(--s3) - 8px);border-right:1px solid var(--line)}   /* v3.6 第 7 条：「← 返回制作」的箭头起在 x12（按钮自带 8 px 内边距），和下面列表、顶栏同一条线 */
 #wbTool .sh-hs.sh-hr{border-left:1px solid var(--line)}
 .sh-back{flex:none}
 .sh-back svg.i{width:var(--ico, 16px);height:var(--ico, 16px)}

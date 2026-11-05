@@ -1,7 +1,9 @@
-"""E 样板 v3.5 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、序列贴图、导出浮层都要截图逐张看）。
+"""E 样板 v3.6 制作区：截图 + 溢出探针（规范 v3 第 13 节：1920 / 1366、金曜菊-B / 仙女棒、序列贴图、导出浮层都要截图逐张看）。
 
 先合成：python3 ../build.py /tmp/E_A.html
-再截图：python3 shot.py [/tmp/E_A.html] [编号…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）；编号 1–7，不给就全截
+再截图：python3 shot.py [/tmp/E_A.html] [编号…] [--hide-sample]      截图写到 /tmp/E_A_shots/（不进仓库）；编号 1–8，不给就全截
+5（v3.6）：导出菜单有「需重新导出」（5、5e）和没有（5f、5g：导出完以后）两种状态都截
+8（v3.6）：资源交付页 1920 / 1366（资产表按内容定宽、UE 路径写文字）
 7（v3.4）：悬停态合成一张——结构树层行、参数行、模块标题、刻度尺行、效果库标签行用 .is-hover 强制出悬停样子（v3.5 起导出范围一行常显，不用悬停）；检查器、结构树、时间轴滚一下出滚动条
 截图不藏滚动条（启动时去掉 Playwright 默认的 --hide-scrollbars），静止的滚动区应当看不到滚动条
 --hide-sample：把样板控制条（左下角那个「样板」小按钮）藏起来——给评委用的截图都加这个（v3.3 第 15 条）。
@@ -105,6 +107,10 @@ def main():
             pg = page_for(b, 1920, 1080); pg.locator('#stage .vp').click(button='right', position={'x': 700, 'y': 300}); clip(pg, 1920, 1080, 'shot_5c_stage_menu.png', probe=False); pg.close()   # v3.4 第 5 条：背景、安全框在画面右键菜单里
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.del('点灭星')"); pg.evaluate("KIT.askDeleteEffect()"); clip(pg, 1920, 1080, 'shot_5d_dialog_toast.png', probe=False); pg.close()
             pg = page_for(b, 1366, 768); pg.evaluate("KIT.openExport()"); clip(pg, 1366, 768, 'shot_5e_1366_export.png', probe=False); pg.close()
+            for w, h, nm in ((1920, 1080, 'shot_5f_export_none.png'), (1366, 768, 'shot_5g_1366_export_none.png')):   # v3.6 第 2 条：没有要重新导出的层时按钮只写「导出」、摘要「✓ 全部已导出」
+                pg = page_for(b, w, h); pg.locator('#expBtn [data-act="export"]').click()
+                pg.wait_for_function("!document.querySelector('#expBtn .exb') && !document.querySelector('#expBtn .is-loading')", timeout=8000)
+                pg.evaluate("window.SHELL && SHELL.ws('baker')"); pg.wait_for_timeout(300); pg.evaluate("KIT.openExport()"); clip(pg, w, h, nm, probe=False); pg.close()
         if want('7'):
             for scene, nm in (('kiku', 'shot_7_hover.png'), ('spk', 'shot_7b_hover_spk.png')):
                 pg = page_for(b, 1920, 1080); pg.evaluate(f"KIT.set('scene','{scene}')"); pg.wait_for_timeout(200)
@@ -115,6 +121,9 @@ def main():
                   const rr = q('#tlw .rrow'); if (rr) rr.classList.add('is-hover'); const lh = q('.lib-head'); if (lh) lh.classList.add('is-hover');
                   ['#pbody', '#tree', '#tlw .tl'].forEach(s => { const e = q(s); e.classList.add('is-scrolling'); e.scrollTop = 28; }); }""")
                 clip(pg, 1920, 1080, nm, probe=False); pg.close()
+        if want('8'):
+            for w, h, nm in ((1920, 1080, 'shot_8_deliv.png'), (1366, 768, 'shot_8b_1366_deliv.png')):
+                pg = page_for(b, w, h); pg.evaluate("SHELL.ws('import')"); clip(pg, w, h, nm, probe=False); pg.close()
         if want('6'):
             pg = page_for(b, 1920, 1080); pg.evaluate("KIT.set('view','sheet')"); pg.wait_for_timeout(500)
             pg.screenshot(path=str(OUT / 'shot_6_sheet.png'), full_page=True)

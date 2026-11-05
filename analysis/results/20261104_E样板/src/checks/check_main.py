@@ -1110,6 +1110,68 @@ def v36(b):
             check(f'v3.6-4 {w} 改过以后仍能一键设成 0.85', x.val('曝光') == '0.85', x.val('曝光'))
         pg.close()
 
+    BASE = """el => { const p = document.createElement('i'); p.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline'; el.appendChild(p); const y = p.getBoundingClientRect().top; p.remove(); return y; }"""
+    for w, h in ((1920, 1080), (1366, 768)):
+        pg = new_page(b, w, h); x = P(pg)
+        # 第 2 条：导出按钮「导出 ▲1」、菜单摘要；导出以后只写「导出」、摘要「✓ 全部已导出」
+        x.click('#expBtn [data-act="exportMenu"]')
+        m = x.E("(() => { const b = document.querySelector('.menu.exp .msum .mline b'); const u = b && b.querySelector('use'); return b && {t: b.textContent.trim(), ic: u && u.getAttribute('href'), col: u && getComputedStyle(b.querySelector('svg')).color, why: [...document.querySelectorAll('.menu.exp .mwhy li')].map(l => l.textContent.trim())}; })()")
+        check(f'v3.6-2 {w} 导出 ▾ 菜单摘要「▲ 1 层需重新导出」（琥珀三角，和按钮同一个记号），3 层以内直接列出每层原因', bool(m) and m['t'] == '1 层需重新导出' and m['ic'] == '#i-stale' and m['col'] == AMBER and len(m['why']) == 1 and m['why'][0].startswith('金锦层') and '缩放' in m['why'][0], m)
+        x.key('Escape')
+        x.click('#expBtn [data-act="export"]')
+        pg.wait_for_function("!document.querySelector('#expBtn .exb') && !document.querySelector('#expBtn .is-loading')", timeout=8000); pg.wait_for_timeout(200)
+        x.E("window.SHELL && SHELL.state().ws !== 'baker' && SHELL.ws('baker')"); pg.wait_for_timeout(200)   # 导出完成后外壳会打开资源交付页，回到制作再看菜单
+        x.click('#expBtn [data-act="exportMenu"]')
+        m2 = x.E("(() => { const b = document.querySelector('.menu.exp .msum .mline b'); const u = b && b.querySelector('use'); return b && {t: b.textContent.trim(), ic: u && u.getAttribute('href'), amber: [...document.querySelectorAll('.menu.exp *')].some(e => getComputedStyle(e).color === 'rgb(224, 178, 90)'), btn: document.querySelector('#expBtn [data-act=export]').textContent.trim()}; })()")
+        check(f'v3.6-2 {w} 没有要重新导出的层：按钮只写「导出」，菜单摘要「✓ 全部已导出」，没有琥珀', bool(m2) and m2['t'] == '全部已导出' and m2['ic'] == '#i-check' and not m2['amber'] and m2['btn'] == '导出', m2)
+        x.key('Escape'); pg.close()
+
+        pg = new_page(b, w, h); x = P(pg)
+        # 第 7 条：竖线对齐
+        al = x.E("""(() => { const R = s => document.querySelector(s).getBoundingClientRect(); const tw = s => { const w = document.createTreeWalker(document.querySelector(s), NodeFilter.SHOW_TEXT, {acceptNode: n => n.textContent.trim() && n.parentElement.getClientRects().length ? 1 : 3}); const n = w.nextNode(), r = document.createRange(); r.selectNodeContents(n); return Math.round(r.getBoundingClientRect().left); };
+          return {rightGlyph: Math.round(R('#bRight').right - 6), tpGlyph: Math.round(R('#transport [data-act=thumb]').right - 6), fr: Math.round(R('#tlw .rrow .fr').right), pq: Math.round(R('#pq').left), mt: Math.round(R('#pbody .mod-h .mt').left), st: tw('#status'), brand: tw('#shell')}; })()""")
+        check(f'v3.6-7 {w} 画面工具行右端图标笔画、播放条右组、刻度尺末端同一条线', al['rightGlyph'] == al['tpGlyph'] == al['fr'], al)
+        check(f'v3.6-7 {w} 检查器搜索框左缘和模块标题同一条线；状态栏第一项文字和顶栏「烟花工坊」同一条起线（x12）', al['pq'] == al['mt'] and al['st'] == al['brand'] == 12, al)
+        # 第 8 条：结构树行内图标按钮 24 × 28
+        x.E("document.querySelector('#tree .trow.is-sel').classList.add('is-hover')")   # 悬停才出的「+」也量
+        ac = x.E("[...document.querySelectorAll('#tree .trow.is-sel .acts .btn-icon')].filter(b => b.getClientRects().length).map(b => { const r = b.getBoundingClientRect(), i = b.querySelector('svg').getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height), Math.round(i.width)]; })")
+        check(f'v3.6-8 {w} 结构树行内图标按钮（加、显示、只看、更多）可点区域 24 × 28，图标仍是 16', len(ac) == 4 and all(a == [24, 28, 16] for a in ac), ac)
+        x.E("document.querySelector('#tree .trow.is-sel').classList.remove('is-hover')")
+        # 第 5 条：画面读数两层暗晕
+        sh = x.E("[getComputedStyle(document.getElementById('ciBL')).textShadow, getComputedStyle(document.querySelector('#ciView .num')).textShadow, getComputedStyle(document.getElementById('ciBL')).color]")
+        check(f'v3.6-5 {w} 画面读数（左下、右下，含可输入的数）有两层暗晕，颜色不变', all(t.count('rgb(12, 21, 24)') == 2 for t in sh[:2]) and sh[2] == T3, sh)
+        # 第 6 条：1366 下小号不再缩到 11
+        fsz = x.E("(() => { const s = new Set(); for (const e of document.querySelectorAll('#wsBaker *, #shell *')) { if (![...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) || !e.getClientRects().length) continue; s.add(getComputedStyle(e).fontSize); } return [...s].sort(); })()")
+        check(f'v3.6-6 {w} 字号只有三档；1366 下小号保持 12（没有 11 px），中号、大号各减 1', fsz == (['12px', '13px', '15px'] if w == 1920 else ['12px', '14px']), fsz)
+        # 第 10 条：基线对齐（折叠模块的标题和摘要、导出范围一行的标签和数值）
+        bl = x.E("(B => { const base = eval(B); const m = document.querySelector('#pbody .mod.is-closed'); const io = document.querySelector('#tlw .iorow');"
+                 " return {mod: m ? Math.abs(base(m.querySelector('.mod-h .mt')) - base(m.querySelector('.mod-h .ms .msg') || m.querySelector('.mod-h .ms'))) : null, io: Math.abs(base(io.querySelector('.io-k')) - base(io.querySelector('.xv .u')))}; })", BASE)
+        check(f'v3.6-10 {w} 折叠模块的标题和摘要、导出范围一行的标签和数值按基线对齐（差 ≤ 0.5 px）', bl['mod'] is not None and bl['mod'] <= .5 and bl['io'] <= .5, bl)
+        # 第 13 条：多行文字行高 1.5
+        x.hover('#bNote'); t1 = x.E("(() => { const t = document.querySelector('#ovlApp .tip'); const c = getComputedStyle(t); return parseFloat(c.lineHeight) / parseFloat(c.fontSize); })()")
+        pg.locator('#libQ input').fill('zzzz'); pg.wait_for_timeout(150)
+        t2 = x.E("(() => { const c = getComputedStyle(document.querySelector('#libList .empty')); return parseFloat(c.lineHeight) / parseFloat(c.fontSize); })()")
+        pg.locator('#libQ input').fill(''); pg.wait_for_timeout(100)
+        x.E("KIT.askDeleteEffect()"); pg.wait_for_timeout(150)
+        t3 = x.E("(() => { const p = document.querySelector('.dialog p'); if (!p) return 0; const c = getComputedStyle(p); return parseFloat(c.lineHeight) / parseFloat(c.fontSize); })()")
+        check(f'v3.6-13 {w} 悬停提示、空状态、对话框正文行高 ≥ 1.5', all(v and v >= 1.49 for v in (t1, t2, t3)), [t1, t2, t3])
+        x.key('Escape'); pg.close()
+
+    # 第 3 条：网格在中段右端固定槽位，换模式不跳位；左边只放文字分段
+    pg = new_page(b); x = P(pg)
+    g1 = x.R('#viewbar [data-act="grid"]'); x.E("KIT.mode('序列贴图')"); pg.wait_for_timeout(150); g2 = x.R('#viewbar [data-act="atlasGrid"]')
+    lefts = x.E("[...document.querySelectorAll('#toolRow .tcol-m .seg')].map(e => e.getBoundingClientRect().left)")
+    check('v3.6-3 构图网格（回放 / 实时）和格子线（序列贴图）在同一个槽位，换模式不跳；分段都在它左边', g1 and g2 and abs(g1[0] - g2[0]) <= .5 and all(l < g1[0] for l in lefts), [g1, g2])
+    gaps = x.E("(() => { const r = s => document.querySelector(s).getBoundingClientRect(); const sg = [...document.querySelectorAll('#toolRow .tcol-m .seg')].map(e => e.getBoundingClientRect()); return [Math.round(sg[0].left - r('#bLeft').right), ...sg.slice(1).map((e, i) => Math.round(e.left - sg[i].right))]; })()")
+    check('v3.6-3 画面工具行组间一律 20：左栏开关 → 工作模式 → 各分段', all(abs(g - 20) <= 1 for g in gaps), gaps)
+    pg.close()
+    # 第 11 条：版本记录图标——时钟加逆时针箭头，和恢复、秒表、复制都不同
+    pg = new_page(b); x = P(pg)
+    ink = x.E(INK_JS)
+    hv = ink.get('i-history')
+    check('v3.6-11 版本记录图标在 12 × 12 可画区域里，长边 12、居中（16 / 12 / 1.5）', bool(hv) and hv[0] >= 1.875 and hv[2] <= 14.125 and abs(max(hv[2] - hv[0], hv[3] - hv[1]) - 12) <= .5, hv)
+    pg.close()
+
 
 def main():
     only = [a[len('--only='):] for a in sys.argv[1:] if a.startswith('--only=')]
