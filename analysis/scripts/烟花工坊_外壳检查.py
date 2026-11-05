@@ -5,9 +5,10 @@
 
 - file:// 打开 tool/烟花工坊.html，外网一律拦截（只放行 file: / data: / blob:）。
 - 浏览器的「选文件夹」窗口自动化点不了：页面里换成一个内存里的假文件夹（名字「FWL_Export_测试」），其余都走真代码。
+- 导入模块用成品里合进去的那个（替身 fwl-importer.mock.js 时按它的 __mock.scenario() 切 UE 断开；真模块时跳过要替身的几项）。
 - 查：顶栏三项（UE、显卡、变灰的「编排节目」+ 原因）和版本号 / 更新记录；状态栏左端导出、备份两个文件夹；首次导出没选文件夹先问；
   「资源交付」入口（v3.7 = 导出菜单第一项；4.9 界面 = 「导出素材包」旁边）打开资源交付页；替身数据下列表 → 预检 → 覆盖确认 → 导入 → 已导入；
-  UE 断开 → 原地「重新连接」、导入变灰写原因 → 重新连上；导出钩子（67_delivery.js deliverResource → shellAfterExport）→ ZIP 存进导出文件夹、
+  覆盖前先选备份位置；UE 断开 → 原地「重新连接」、导入变灰写原因 → 重新连上；导出钩子（67_delivery.js deliverResource → shellAfterExport → 导入模块 publish）→ 写进导出文件夹、
   自动打开资源交付并选中刚导出的包；导入模块缺失时的兜底（拿成品去掉导入模块那一段另存一份查）；1920 × 1080、1366 × 768 没有横向溢出、外壳文字不被截断。
 - 截图写到 --out（默认 analysis/local/20261105_对话框9_烟花工坊外壳/，不进 Git），要亲眼看。
 - 烘焙器的画面循环停掉（requestAnimationFrame 换成空函数，同合入门禁的导出比较）：软件渲染下画面循环一直占着，截图等不到帧；外壳不用它。
@@ -141,8 +142,7 @@ def find_deliv_entry(R, pg):
         R.ck('「导出 ▾」菜单第一项是「资源交付」', ok and first == 'deliv', first)
         return '.menu .mi[data-exp="deliv"]'
     if not pg.evaluate("() => { const b = document.querySelector('[data-exp=\"deliv\"]'); return !!(b && b.getClientRects().length); }"):
-        pg.evaluate("""() => { const it = [...document.querySelectorAll('#side *')].find(e => e.querySelector && e.querySelector('img, canvas') && e.offsetHeight > 40 && e.offsetHeight < 140 && getComputedStyle(e).cursor === 'pointer');
-                               if (it) it.click(); }""")
+        pg.evaluate("() => { try { openType(Object.keys(TYPES)[0]); } catch (e) { } }")
         wait(pg, "(() => { const b = document.querySelector('[data-exp=\"deliv\"]'); return !!(b && b.getClientRects().length); })()", 20000)
     pos = pg.evaluate("""() => { const b = document.querySelector('[data-exp="deliv"]'), x = document.querySelector('#abExportPack');
         return {vis: !!(b && b.getClientRects().length), after: !!(b && x && x.nextElementSibling === b), t: b ? b.textContent.trim() : ''}; }""")
@@ -194,7 +194,7 @@ def t_main(R, b, url, kind):
     n = pg.evaluate("document.querySelector('#expDelivN') ? document.querySelector('#expDelivN').textContent : ''")
     R.ck('「资源交付」计数 = 待导入的包数', n == str(pg.evaluate("SHELL.S.imp.pkgs.filter(p => p.state !== '已导入').length")), n)
     # 选一个要覆盖的包：预检 → 导入
-    pid = pg.evaluate("(SHELL.S.imp.pkgs.find(p => (p.assets || []).some(a => a.action === '覆盖')) || SHELL.S.imp.pkgs[0]).id")
+    pid = pg.evaluate("(SHELL.S.imp.pkgs.find(p => p.state === '有新版本') || SHELL.S.imp.pkgs.find(p => p.state !== '已导入') || SHELL.S.imp.pkgs[0]).id")
     pg.locator(f'#impList [data-id="{pid}"]').click()
     ok = wait(pg, f"(() => {{ const r = SHELL.S.imp.pre[{json.dumps(pid)}]; return r && !r.loading; }})()", 8000)
     det = pg.evaluate("() => { const m = document.querySelector('#impMC'); return {t: m.innerText.slice(0, 400), rows: m.querySelectorAll('.sh-at tbody tr').length, img: !!m.querySelector('.sh-pvi')}; }")
@@ -204,30 +204,41 @@ def t_main(R, b, url, kind):
     shot(R, pg, '04_资源交付_选中包_1920')
     t_overflow(R, pg, 1920)
     click(pg, '#impGo')
-    if wait(pg, "document.querySelector('.dialog[data-dlg=\"ov\"]')", 3000):
+    ov = wait(pg, "document.querySelector('.dialog[data-dlg=\"ov\"]')", 3000)
+    if ov:
         shot(R, pg, '05_覆盖确认')
         pg.locator('.dialog[data-dlg="ov"] [data-r="1"]').click()
+        bk = wait(pg, "document.querySelector('.dialog[data-dlg=\"bak\"]')", 3000)
+        if bk: shot(R, pg, '05b_选备份位置')
+        R.ck('有覆盖：先确认，再选备份位置（不能在 UE 工程里）', bk and '不能在 UE 工程里' in pg.evaluate("document.querySelector('.dialog[data-dlg=\"bak\"]').innerText"))
+        if bk: pg.locator('.dialog[data-dlg="bak"] [data-r="1"]').click()
+    else:
+        R.note('选中的包没有要覆盖的资产，覆盖确认和备份位置没查')
     saw = wait(pg, "SHELL.state().ue.k === 'write'", 4000)
     if saw: shot(R, pg, '06_导入中')
-    done = wait(pg, "!SHELL.S.imp.writing && [...document.querySelectorAll('.toast')].some(t => t.textContent.includes('已写入'))", 20000)
+    done = wait(pg, "!SHELL.S.imp.writing && [...document.querySelectorAll('.toast')].some(t => t.textContent.includes('已写入'))", 30000)
     st = pg.evaluate(f"(SHELL.S.imp.pkgs.find(p => p.id === {json.dumps(pid)}) || {{}}).state")
     R.ck('导入：写入中进度 → 「已写入 N 个资产」→ 包变「已导入」', saw and done and st == '已导入', f'写入中 {saw}，完成 {done}，状态 {st}')
     # UE 断开 → 原地重新连接；导入变灰写原因
-    pg.evaluate("FWLImporter.__mock && FWLImporter.__mock.set({ue: 'disconnected'})")
-    ok = wait(pg, "!!document.querySelector('#shell .sh-retry') && document.querySelector('#shell .sh-ue').textContent.includes('未连接')", 4000)
+    if kind != 'mock':
+        R.note('不是替身：UE 断开 / 重新连接、导出钩子两项要替身，跳过'); pg.close(); return
+    pg.evaluate("FWLImporter.__mock.scenario('ue-down')")
+    ok = wait(pg, "!!document.querySelector('#shell .sh-retry') && document.querySelector('#shell .sh-ue').textContent.includes('未连接')", 6000)
     pg.wait_for_timeout(400)
     why = tip(pg, '#impGo')
     R.ck('UE 断开：顶栏原地「UE 未连接」+「重新连接」，导入变灰写原因', ok and 'UE 未连接' in (why or '') and pg.evaluate("!document.querySelector('#impWhy').hidden"), why or '')
     shot(R, pg, '07_UE断开')
     click(pg, '#shell .sh-retry')
-    R.ck('「重新连接」连回来', wait(pg, "SHELL.state().ue.k === 'on'", 6000))
+    tried = wait(pg, "SHELL.state().ue.k === 'wait'", 3000)
+    pg.evaluate("FWLImporter.__mock.scenario('default')")
+    R.ck('「重新连接」先试一次（连接中），UE 回来后自动变「已连接」', tried and wait(pg, "SHELL.state().ue.k === 'on' && document.querySelector('#shell .sh-ue').textContent.includes('已连接')", 6000))
     # 导出钩子：deliverResource（67_delivery.js）→ shellAfterExport → ZIP 存进导出文件夹 → 打开资源交付、选中刚导出的包
     pg.evaluate("SHELL.ws('baker')")
     pg.evaluate("deliverResource(new Blob(['PK-shell-test']), '外壳检查导出_PC.zip', {}, 'zip')")
     ok = wait(pg, "SHELL.state().ws === 'import' && (SHELL.S.imp.pkgs || []).some(p => p.name === '外壳检查导出_PC') && SHELL.S.imp.sel === (SHELL.S.imp.pkgs.find(p => p.name === '外壳检查导出_PC') || {}).id", 10000)
-    saved = pg.evaluate("(async () => { try { const f = await (await window.__fakeDir.getFileHandle('外壳检查导出_PC.zip')).getFile(); return f.size; } catch (e) { return -1; } })()")
     just = pg.evaluate("document.querySelector('#impList .sh-pkg.is-sel .li-s') ? document.querySelector('#impList .sh-pkg.is-sel .li-s').textContent : ''")
-    R.ck('导出钩子：ZIP 存进导出文件夹，自动打开资源交付并选中刚导出的包', ok and saved == 13 and '刚导出' in just, f'文件 {saved} 字节；{just}')
+    to = pg.evaluate("[...document.querySelectorAll('.toast')].map(t => t.textContent).join('｜')")
+    R.ck('导出钩子：交给导入模块 publish 写进导出文件夹，自动打开资源交付并选中刚导出的包', ok and '刚导出' in just and '写进 FWL_Export_测试' in to, f'{just}；{to}')
     shot(R, pg, '08_导出后自动打开资源交付')
     # 返回制作
     click(pg, '#wsImport [data-sh="back"]')

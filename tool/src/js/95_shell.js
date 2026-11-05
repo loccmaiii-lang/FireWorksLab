@@ -5,7 +5,7 @@
    依据：E 样板 v3.7（= E 样板 4.0）外壳 script_shell.js、说明_v3_外壳.md；交互宪章 0.9。这一版：
    - 顶栏「烟花工坊」+「FireWorksLab 5.0.0」（点开更新记录）｜「● UE 已连接」（FWLImporter.status()，断开原地「重新连接」）｜「显卡 · 型号」（WebGL）｜「编排节目 →」变灰
    - 状态栏左端「导出 文件夹名」「备份 ● 未选」：导出文件夹是外壳自己的浏览器文件夹授权（IndexedDB 记住）；备份 = 烘焙器 79_repo.js 的仓库文件夹
-   - 资源交付页：FWLImporter.scan / precheck / importPkg；导入模块没加载或出错时写原因、「导入」变灰，导出照常
+   - 资源交付页：FWLImporter（tool/importer/API_5.0.md）publish / scan / precheck / importPkg；导入模块没加载或出错时写原因、「导入」变灰，导出照常
    - 运行时注入：页面里有 v3.7 的槽位（#shell、#stShell、#wsBaker、#ovlApp、[data-exp=deliv]）就用；没有（现在的 4.9 界面）就自己搭（body.sh-fb）
    1 小工具与浮层  2 状态  3 导入模块与 UE  4 文件夹  5 顶栏与状态栏  6 资源交付  7 导出  8 事件  9 启动
    ===================================================================== */
@@ -186,16 +186,17 @@ const S = {
   ue: {k: 'wait', detail: ''}, cd: 0, retrying: false, lastOn: '',
   exp: {st: 'none', name: '', h: null},
   bak: {st: 'none', name: ''},
-  imp: {pkgs: null, sel: null, loading: false, err: '', pre: {}, writing: null, just: null, failed: {}},
+  imp: {pkgs: null, sel: null, loading: false, err: '', errCode: '', pre: {}, writing: null, just: null, failed: {}, written: {}, thumbs: {}},
+  bakOwn: null,
   gpu: {raw: '', model: '未知'}
 };
 const WS = [['baker', '#wsBaker'], ['import', '#wsImport']];
 const curWsEl = () => q((WS.find(w => w[0] === S.ws) || WS[0])[1]);
 
 /* ---------- 3 导入模块与 UE ---------- */
-/* build.py 写 window.__FWL_IMPORTER_KIND：real = tool/importer/dist/fwl-importer.js；mock = 本机替身 fwl-importer.mock.js；shim = 外壳临时替身 */
+/* build.py 写 window.__FWL_IMPORTER_KIND：real = tool/importer/dist/fwl-importer.js；mock = 本机替身 fwl-importer.mock.js；none = 都没有 */
 const MOD = {kind: String(window.__FWL_IMPORTER_KIND || 'none'), err: String(window.__FWL_IMPORTER_ERR || '')};
-const KIND_TXT = {real: '', mock: '导入模块：替身', shim: '导入模块：替身'};
+const KIND_TXT = {real: '', mock: '导入模块：替身'};
 function modWhy() {
   if (MOD.err) return MOD.err;
   if (!window.FWLImporter) return '导入模块未加载';
@@ -203,14 +204,15 @@ function modWhy() {
 }
 const IMP = () => (modWhy() ? null : window.FWLImporter);
 const modVer = () => { const I = IMP(); return I ? `${I.version || '?'}${KIND_TXT[MOD.kind] ? '（替身）' : ''}` : modWhy(); };
-const UE_MAP = {connected: 'on', disconnected: 'off', unavailable: 'na', connecting: 'wait'};
+const UE_MAP = {connected: 'on', disconnected: 'off', unavailable: 'na', checking: 'wait', connecting: 'wait'};
 function applyUE(s) {
   if (!s || typeof s !== 'object') return;
-  const k = UE_MAP[s.ue] || 'na';
-  if (k === 'on') S.lastOn = hhmm();
-  S.ue = {k, detail: String(s.detail || '')};
+  const k = UE_MAP[s.ue] || 'na', was = S.ue.k;
+  if (s.lastConnectedAt) S.lastOn = fmtTime(s.lastConnectedAt); else if (k === 'on' && !S.lastOn) S.lastOn = hhmm();
+  S.ue = {k, detail: String(s.detail || ''), endpoint: String(s.endpoint || ''), busy: !!s.busy};
   if (k === 'off') S.cd = Number(s.retryInSec) > 0 ? Math.round(Number(s.retryInSec)) : 0;
   renderAll();
+  if (k === 'on' && was !== 'on' && S.ws === 'import') precheck();   /* 连上了：选中的包补做预检 */
 }
 async function readUE() {
   const I = IMP(); if (!I) { S.ue = {k: 'none', detail: modWhy()}; return; }
@@ -236,8 +238,8 @@ const retryTip = () => (S.cd > 0 ? `${S.cd} 秒后自动重新连接` : '重新�
 
 /* ---------- 4 文件夹 ---------- */
 /* 导出文件夹：外壳自己的浏览器文件夹授权，记在 IndexedDB「fwl-shell」（和烘焙器的「fwl」分开）。
-   这一版烘焙器写目录还走本机服务（8034）；同事电脑上没有服务，外壳把导出方式设为 ZIP，导出写完后把同一个 ZIP 存进这里（见第 7 节）。
-   备份文件夹：烘焙器 79_repo.js 的仓库文件夹（钩子 repoFolderInfo()；没有钩子时读 repoDir） */
+   这一版烘焙器写目录还走本机服务（8034）；同事电脑上没有服务，外壳把导出方式设为 ZIP，导出写完后交给导入模块 publish 写进这里（见第 7 节）。
+   备份文件夹：见 loadBak（外壳自己选的优先，没有就用烘焙器 79_repo.js 的仓库文件夹） */
 const FS_OK = typeof window.showDirectoryPicker === 'function';
 const FOLD = {exp: '导出文件夹', bak: '备份文件夹'}, FOLDK = {exp: '导出', bak: '备份'};
 const DB = {
@@ -257,6 +259,7 @@ async function loadExp() {
   S.exp = {st: (await permOf(h, false)) ? 'ok' : 'perm', name: h.name, h};
 }
 function readBak() {
+  if (S.bakOwn) return {st: S.bakOwnOk ? 'ok' : 'perm', name: S.bakOwn.name, own: true};
   let o = null;
   try {
     if (typeof repoFolderInfo === 'function') o = repoFolderInfo();   // eslint-disable-line no-undef
@@ -279,7 +282,24 @@ async function pickFolder(k, anchor) {
   if (S.ws === 'import') scan();
   return true;
 }
+/* 备份文件夹（导入覆盖前的备份位置，API importPkg 的 backupDir）：外壳自己选的（IndexedDB「fwl-shell」backupDir）优先；
+   没选过就沿用烘焙器的仓库文件夹（79_repo.js 钩子 repoFolderInfo()）。点「备份」选的是外壳自己的：同事电脑上没有仓库，仓库文件夹要求是 FireWorksLab 根目录 */
+async function loadBak() {
+  if (!FS_OK) return;
+  let h = null; try { h = await DB.get('backupDir'); } catch (e) { h = null; }
+  if (h) { S.bakOwn = h; S.bakOwnOk = await permOf(h, false); }
+  S.bak = readBak();
+}
+async function pickOwnBak(anchor) {
+  if (!FS_OK) { hint(anchor, '仅 Chrome、Edge 能读写文件夹'); return false; }
+  let h; try { h = await window.showDirectoryPicker({id: 'fwlBackup', mode: 'readwrite'}); } catch (e) { return false; }
+  try { await DB.set('backupDir', h); } catch (e) { /* 记不住也照用这一次 */ }
+  S.bakOwn = h; S.bakOwnOk = true; S.bak = readBak(); renderAll();
+  hint(foldEl('bak') || anchor, `已选择 ${h.name}`);
+  return true;
+}
 async function pickBak(anchor) {
+  if (S.bakOwn || FS_OK) return pickOwnBak(anchor);
   /* 备份 = 烘焙器的仓库文件夹：选法、核对（要是 FireWorksLab 仓库根目录）都按烘焙器 79_repo.js 原样 */
   const before = readBak().st;
   try {
@@ -292,7 +312,12 @@ async function pickBak(anchor) {
   return S.bak.st === 'ok';
 }
 async function allowFolder(k, anchor) {
-  if (k === 'bak') return pickBak(anchor);
+  if (k === 'bak') {
+    if (!S.bakOwn) return pickBak(anchor);
+    S.bakOwnOk = await permOf(S.bakOwn, true); S.bak = readBak(); renderAll();
+    if (S.bakOwnOk) hint(foldEl('bak') || anchor, `已允许访问 ${S.bakOwn.name}`);
+    return S.bakOwnOk;
+  }
   const ok = await permOf(S.exp.h, true);
   S.exp.st = ok ? 'ok' : 'perm'; renderAll();
   if (ok) { hint(foldEl('exp') || anchor, `已允许访问 ${S.exp.name}`); if (S.ws === 'import') scan(); }
@@ -301,7 +326,7 @@ async function allowFolder(k, anchor) {
 function folderMenu(a, k) {
   const f = folderOf(k);
   openMenu(a, `<div class="mh">${FOLD[k]}　${esc(f.name)}</div>${k === 'exp' ? '<button class="mi" data-mi="deliv" type="button">资源交付</button>' : ''}<button class="mi" data-mi="change" type="button">换文件夹…</button>`,
-    {acts: {deliv: () => openDeliv(), change: () => (k === 'exp' ? pickFolder('exp', a) : (typeof repoPick === 'function' ? Promise.resolve(repoPick()).then(() => { S.bak = readBak(); renderAll(); }) : hint(a, '备份文件夹不可用')))}});   // eslint-disable-line no-undef
+    {acts: {deliv: () => openDeliv(), change: () => (k === 'exp' ? pickFolder('exp', a) : pickOwnBak(a))}});
 }
 /* 外壳给制作区用：导出文件夹句柄（已授权时），没选 / 没授权返回 null */
 async function expHandle(ask) {
@@ -321,7 +346,7 @@ function unread() {
 const cntHTML = (n, tip) => `<span class="sh-cnt"${tip ? ` data-tip="${esc(tip)}"` : ''}>${n > 9 ? '9+' : n}</span>`;
 function ueTip(base) { const m = KIND_TXT[MOD.kind] || ''; return [base, m].filter(Boolean).join('　'); }
 function ueHTML(v) {
-  const addr = v.detail || '127.0.0.1:17780';
+  const addr = [S.ue.endpoint || '127.0.0.1:17780', v.detail].filter(Boolean).join('　');
   const tip = ueTip(`${addr}${S.lastOn ? `　上次连上 ${S.lastOn}` : ''}`);
   if (v.k === 'wait') return `<span class="sh-stat sh-ue st-cell is-busy" data-tip="${esc(ueTip(addr))}">${SPIN}UE <span class="sh-sv">连接中</span></span>`;
   if (v.k === 'on') return `<span class="sh-stat sh-ue st-cell is-dot" data-tone="ok" data-tip="${esc(tip)}">UE <span class="sh-sv is-on">已连接</span></span>`;
@@ -422,53 +447,67 @@ function readGPU() {
   return {raw, model: model || '未知'};
 }
 
-/* ---------- 6 资源交付（样板 v3.3 第 17 条；数据来自 FWLImporter） ---------- */
+/* ---------- 6 资源交付（样板 v3.3 第 17 条；数据来自 FWLImporter，接口见 tool/importer/API_5.0.md） ---------- */
 const STATE_WAIT = s => s !== '已导入';
+const PLAT = {pc: 'PC', mobile: '手机'};
 const pkgById = id => (S.imp.pkgs || []).find(p => p.id === id);
-const fmtPlat = p => (Array.isArray(p.platform) ? p.platform.join('、') : String(p.platform || ''));
-function thumbURL(t) {
-  if (!t) return '';
-  if (typeof t === 'string') return t;
-  try { if (t instanceof Blob) { if (!t.__shURL) t.__shURL = URL.createObjectURL(t); return t.__shURL; } } catch (e) { return ''; }
-  return '';
+const fmtPlat = p => (Array.isArray(p.platforms) ? p.platforms.map(x => PLAT[x] || x).join('、') : String(p.platform || ''));
+const fmtTime = t => { const d = new Date(t); return isNaN(d) ? String(t || '') : `${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`; };
+const errCode = e => (e && e.code) || '';
+const errMsg = e => String((e && e.message) || e || '');
+/* 回放缩略图：thumbnailURL(pkgId)（同步或 Promise 都接），按包缓存 */
+function thumbOf(p) {
+  const T = S.imp.thumbs; if (p.id in T) return T[p.id] || '';
+  T[p.id] = '';
+  const I = IMP(); if (!I || !p.hasThumb || typeof I.thumbnailURL !== 'function') return '';
+  try {
+    const r = I.thumbnailURL(p.id);
+    if (r && typeof r.then === 'function') r.then(u => { T[p.id] = u || ''; if (u) renderImport(); }, () => {});
+    else T[p.id] = r || '';
+  } catch (e) { T[p.id] = ''; }
+  return T[p.id];
 }
 const emptyHTML = (b, s, btn, act) => `<div class="empty"><b>${esc(b)}</b>${s ? `<span>${esc(s)}</span>` : ''}${btn ? `<button class="btn btn-2" data-sh="${act}" type="button">${esc(btn)}</button>` : ''}</div>`;
 function pkgHTML(p, sel) {
-  const im = thumbURL(p.thumb), just = S.imp.just && S.imp.just.id === p.id;
-  return `<div class="lib-item sh-pkg${sel ? ' is-sel' : ''}" role="option" aria-selected="${sel}" tabindex="${sel ? 0 : -1}" data-sh="pkg" data-id="${esc(p.id)}"><div class="th">${im ? `<img src="${esc(im)}" alt="">` : ''}</div>`
+  const im = thumbOf(p), just = S.imp.just && S.imp.just.id === p.id;
+  return `<div class="lib-item sh-pkg${sel ? ' is-sel' : ''}" role="option" aria-selected="${sel}" tabindex="${sel ? 0 : -1}" data-sh="pkg" data-id="${esc(p.id)}"${p.stateDetail ? ` data-tip="${esc(p.stateDetail)}"` : ''}><div class="th">${im ? `<img src="${esc(im)}" alt="">` : ''}</div>`
     + `<div class="li-t"><div class="sh-l1"><span class="li-n">${esc(p.name)}</span><span class="st${STATE_WAIT(p.state) ? ' is-wait' : ''}">${esc(p.state || '')}</span></div>`
-    + `<div class="li-s"><span>${just ? `刚导出 ${S.imp.just.t}` : `${esc(p.exportedAt || '')} 导出`}</span><span>${esc(fmtPlat(p))}</span></div></div></div>`;
+    + `<div class="li-s"><span>${just ? `刚导出 ${S.imp.just.t}` : `${esc(fmtTime(p.exportedAt))} 导出`}</span><span>${esc(fmtPlat(p))}</span></div></div></div>`;
 }
 const factsHTML = (t, rows) => `<section class="sh-mod" aria-label="${t}"><h3 class="sh-mt">${t}</h3><dl class="sh-dl">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></section>`;
+const assetKey = a => `${a.platform || ''}|${a.key || a.name}`;
 function assetTable(p, w) {
-  const A = Array.isArray(p.assets) ? p.assets : [], fail = S.imp.failed[p.id] || {};
-  const rows = A.map((a, i) => {
-    const s = w ? (i < w.i ? 'done' : i === w.i ? 'run' : '') : (p.state === '已导入' && !fail[a.name]) ? 'done' : '';
-    const c0 = fail[a.name] ? '' : s === 'done' ? `<span aria-label="已写入">${ic('check')}</span>` : s === 'run' ? '<span class="spin" aria-label="写入中"></span>' : '';
-    return `<tr><td>${esc(a.name)}</td><td>${esc(a.kind || '')}</td><td${a.action === '新建' ? ' class="sh-new"' : ''}>${esc(a.action || '')}</td><td class="sh-path">${esc(a.uePath || '')}</td>${fail[a.name] ? `<td class="sh-fail">${esc(fail[a.name])}</td>` : '<td></td>'}<td class="sh-wr">${c0}</td></tr>`;
+  const r = S.imp.pre[p.id], A = r && Array.isArray(r.assets) ? r.assets : Array.isArray(p.assets) ? p.assets : [], fail = S.imp.failed[p.id] || {}, done = S.imp.written[p.id] || {};
+  const rows = A.map(a => {
+    const k = assetKey(a), f = fail[k];
+    const s = f ? '' : done[k] ? 'done' : (w && w.cur === a.name) ? 'run' : (!w && p.state === '已导入') ? 'done' : '';
+    const c0 = s === 'done' ? `<span aria-label="已写入">${ic('check')}</span>` : s === 'run' ? '<span class="spin" aria-label="写入中"></span>' : '';
+    return `<tr><td>${esc(a.name)}</td><td>${esc(a.kind || '')}</td><td>${esc(PLAT[a.platform] || a.platform || '')}</td><td${a.action === '新建' || !a.action ? ' class="sh-new"' : ''}>${esc(a.action || '—')}</td><td class="sh-path">${esc(a.uePath || '')}</td>${f ? `<td class="sh-fail">${esc(f)}</td>` : `<td class="sh-new">${esc(a.note || '')}</td>`}<td class="sh-wr">${c0}</td></tr>`;
   }).join('');
-  return `<table class="sh-at"><thead><tr><th>名称</th><th>类型</th><th>动作</th><th>UE 路径</th><th>说明</th><th class="sh-wr">写入</th></tr></thead><tbody>${rows}</tbody></table>`;
+  return `<table class="sh-at"><thead><tr><th>名称</th><th>类型</th><th>平台</th><th>动作</th><th>UE 路径</th><th>说明</th><th class="sh-wr">写入</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 function preRows(p) {
   const r = S.imp.pre[p.id];
   if (!r) return [['预检', '还没做']];
-  if (r.loading) return [['预检', `${SPIN} 预检中`]];
-  if (r.err) return [['预检', `<span class="sh-fail">出错：${esc(r.err)}</span>`]];
-  return [['预检', r.ok ? '通过' : '没通过'], ['新建', `${Number(r.newCount) || 0} 个`], ['覆盖', `${Number(r.overwriteCount) || 0} 个`]];
+  if (r.loading) return [['预检', `${SPIN} ${esc(r.text || '预检中')}`]];
+  if (r.err) return [['预检', `<span class="sh-fail">没做成：${esc(r.err)}</span>`]];
+  const n = k => Number(r[k]) || 0;
+  return [['预检', r.ok ? '通过' : '没通过'], ['新建', `${n('newCount')} 个`], ['覆盖', `${n('overwriteCount')} 个`]].concat(n('reuseCount') ? [['复用', `${n('reuseCount')} 个`]] : [], n('unchangedCount') ? [['不变', `${n('unchangedCount')} 个`]] : []);
 }
 function issuesHTML(p) {
   const r = S.imp.pre[p.id], L = r && Array.isArray(r.issues) ? r.issues : [];
   if (!L.length) return '';
-  return `<ul class="sh-iss">${L.map(x => `<li class="${x.level === 'error' ? 'is-error' : x.level === 'warn' ? 'is-warn' : ''}">${esc(x.text || '')}</li>`).join('')}</ul>`;
+  return `<ul class="sh-iss">${L.map(x => `<li class="${x.level === 'error' ? 'is-error' : x.level === 'warn' ? 'is-warn' : ''}">${x.platform ? esc(PLAT[x.platform] || x.platform) + '：' : ''}${esc(x.text || '')}</li>`).join('')}</ul>`;
 }
 function pkgDetailHTML(p) {
-  const w = S.imp.writing && S.imp.writing.pkg === p.id ? S.imp.writing : null, A = Array.isArray(p.assets) ? p.assets : [];
-  const st = w ? `<span class="st">${SPIN}写入中 ${w.i} / ${w.tot}</span>` : `<span class="st${STATE_WAIT(p.state) ? ' is-wait' : ''}">${esc(p.state || '')}</span>`;
-  const im = thumbURL(p.thumb);
+  const w = S.imp.writing && S.imp.writing.pkg === p.id ? S.imp.writing : null, r = S.imp.pre[p.id];
+  const A = r && Array.isArray(r.assets) ? r.assets : Array.isArray(p.assets) ? p.assets : [];
+  const st = w ? `<span class="st">${SPIN}${esc(w.text || '写入中')} ${w.i} / ${w.tot}</span>` : `<span class="st${STATE_WAIT(p.state) ? ' is-wait' : ''}"${p.stateDetail ? ` data-tip="${esc(p.stateDetail)}"` : ''}>${esc(p.state || '')}</span>`;
+  const im = thumbOf(p), tt = Number(p.thumbTime);
   return `<div class="sh-mh"><b>${esc(p.name)}</b>${st}</div>`
     + `<div class="sh-det sb-auto"><div class="sh-hero">`
-    + `<figure class="sh-pvw"><div class="sh-pvi${im ? '' : ' is-none'}">${im ? `<img src="${esc(im)}" alt="${esc(p.name)} 回放缩略图">` : '<span>回放缩略图没生成</span>'}</div><figcaption class="sh-cap">引擎回放</figcaption></figure>`
-    + factsHTML('修订', [['编号', esc(String(p.revision || '').slice(0, 10))], ['导出', esc(p.exportedAt || '')], ['烘焙器', esc(p.bakerVersion || '')], ['平台', esc(fmtPlat(p))]])
+    + `<figure class="sh-pvw"><div class="sh-pvi${im ? '' : ' is-none'}">${im ? `<img src="${esc(im)}" alt="${esc(p.name)} 回放缩略图">` : '<span>回放缩略图没生成</span>'}</div><figcaption class="sh-cap">引擎回放${Number.isFinite(tt) && p.thumbTime != null ? ` ${tt.toFixed(2)} s` : ''}</figcaption></figure>`
+    + factsHTML('修订', [['编号', esc(String(p.revisionId || p.revision || '').slice(0, 10))], ['导出', esc(fmtTime(p.exportedAt))], ['烘焙器', esc(p.bakerVersion || '')], ['平台', esc(fmtPlat(p))]])
     + `<div>${factsHTML('检查', preRows(p))}${issuesHTML(p)}</div>`
     + `</div><section class="sh-mod sh-assets" aria-label="资产"><h3 class="sh-mt">资产<span class="cnt">${A.length} 个</span></h3><div class="sh-tblw">${assetTable(p, w)}</div></section></div>`;
 }
@@ -481,11 +520,12 @@ function importWhy() {
   if (k === 'off') return 'UE 未连接，GPUECli 启动后自动连上';
   if (k === 'wait') return 'UE 连接中';
   if (k === 'na' || k === 'none') return S.ue.detail || 'UE 不可用';
+  if (S.ue.busy) return '正在导入另一个包';
   const p = pkgById(S.imp.sel); if (!p) return '未选素材包';
   const r = S.imp.pre[p.id];
   if (!r || r.loading) return '预检中';
-  if (r.err) return '预检出错：' + r.err;
-  if (!r.ok) return '预检没通过';
+  if (r.err) return '预检没做成：' + r.err;
+  if (!r.ok) { const e = (r.issues || []).find(x => x.level === 'error'); return e ? e.text : '预检没通过'; }
   return '';
 }
 function renderImport() {
@@ -510,7 +550,7 @@ function renderImport() {
   if (S.exp.st === 'na') { list.innerHTML = emptyHTML('仅 Chrome、Edge 能读写文件夹', '', '复制地址', 'copyUrl'); mc.innerHTML = ''; return; }
   if (S.exp.st === 'none') { list.innerHTML = emptyHTML('未选导出文件夹', '导出的素材包写在这里，资源交付也从这里读。', '选择…', 'pickExp'); mc.innerHTML = ''; return; }
   if (S.exp.st === 'perm') { list.innerHTML = emptyHTML(`浏览器重开后，${S.exp.name} 需重新允许访问`, '', '允许访问', 'allowExp'); mc.innerHTML = ''; return; }
-  if (S.imp.err) { list.innerHTML = emptyHTML('读不到导出文件夹', S.imp.err, '重试', 'impRefresh'); mc.innerHTML = ''; return; }
+  if (S.imp.err) { list.innerHTML = emptyHTML(S.imp.err, '', S.imp.errCode === 'NOT_EXPORT_ROOT' ? '换文件夹…' : '重试', S.imp.errCode === 'NOT_EXPORT_ROOT' ? 'pickExp' : 'impRefresh'); mc.innerHTML = ''; return; }
   if (!Array.isArray(S.imp.pkgs)) { list.innerHTML = `<div class="empty"><b>${SPIN} 读取中</b></div>`; mc.innerHTML = ''; return; }
   const P = S.imp.pkgs;
   cnt.textContent = `${P.length} 个素材包`;
@@ -519,77 +559,103 @@ function renderImport() {
   const p = pkgById(S.imp.sel);
   mc.innerHTML = p ? pkgDetailHTML(p) : `<div class="sh-none">${emptyHTML('选一个包查看')}</div>`;
 }
-/* 读导出文件夹：刚导出的排最前，其余按待导入、已导入 */
+/* 列表：刚导出的排最前，其余按要处理的、已导入，再按导出时间新→旧 */
 function sortPkgs(P) {
   const j = S.imp.just && S.imp.just.id;
   return P.slice().sort((a, b) => (b.id === j ? 1 : 0) - (a.id === j ? 1 : 0) || (STATE_WAIT(a.state) ? 0 : 1) - (STATE_WAIT(b.state) ? 0 : 1) || String(b.exportedAt || '').localeCompare(String(a.exportedAt || '')));
+}
+function setPkgs(L, o = {}) {
+  const P = (Array.isArray(L) ? L : []).filter(p => p && p.id != null).map(p => Object.assign({}, p, {id: String(p.id)}));
+  if (o.pick) { const hit = P.find(p => p.id === o.pick) || P.find(p => p.name === o.pickName); if (hit) { S.imp.sel = hit.id; S.imp.just = {id: hit.id, t: hhmm()}; } }
+  const old = S.imp.pkgs || [];
+  P.forEach(p => { const q0 = old.find(x => x.id === p.id); if (q0 && (q0.revisionId !== p.revisionId || q0.state !== p.state)) delete S.imp.pre[p.id]; });
+  S.imp.pkgs = sortPkgs(P);
+  if (!pkgById(S.imp.sel)) S.imp.sel = (S.imp.pkgs.find(p => STATE_WAIT(p.state)) || S.imp.pkgs[0] || {}).id || null;
 }
 let scanN = 0;
 async function scan(o = {}) {
   const I = IMP(); if (!I || S.exp.st !== 'ok') { renderAll(); return; }
   const my = ++scanN;
-  S.imp.loading = true; S.imp.err = ''; renderAll();
+  S.imp.loading = true; S.imp.err = ''; S.imp.errCode = ''; renderAll();
   try {
     const L = await I.scan(S.exp.h);
     if (my !== scanN) return;
-    const P = (Array.isArray(L) ? L : []).filter(p => p && p.id != null).map(p => Object.assign({}, p, {id: String(p.id)}));
-    if (o.pick) {
-      const nm = String(o.pick).replace(/\.zip$/i, ''), hit = P.find(p => p.id === nm || p.name === nm) || P.find(p => nm.startsWith(p.name) || String(p.name).startsWith(nm));
-      if (hit) { S.imp.sel = hit.id; S.imp.just = {id: hit.id, t: hhmm()}; }
-    }
-    S.imp.pkgs = sortPkgs(P);
-    if (!pkgById(S.imp.sel)) S.imp.sel = (S.imp.pkgs.find(p => STATE_WAIT(p.state)) || S.imp.pkgs[0] || {}).id || null;
     S.imp.pre = {};
+    setPkgs(L, o);
   } catch (e) {
     if (my !== scanN) return;
-    S.imp.err = String(e && e.message || e); S.imp.pkgs = null;
+    S.imp.errCode = errCode(e);
+    if (S.imp.errCode === 'NO_PERMISSION') { S.exp.st = 'perm'; S.imp.err = ''; }
+    else S.imp.err = S.imp.errCode === 'NOT_EXPORT_ROOT' ? `${S.exp.name} 不是烟花工坊的导出文件夹` : '读不到导出文件夹：' + errMsg(e);
+    S.imp.pkgs = null;
   } finally { if (my === scanN) S.imp.loading = false; }
   renderAll();
   if (o.say) hint(q('#impRefresh'), S.imp.err ? '没读到' : `已刷新：${(S.imp.pkgs || []).length} 个素材包`);
   precheck();
 }
-async function precheck() {
-  const I = IMP(), p = pkgById(S.imp.sel); if (!I || !p || S.imp.pre[p.id]) return;
+/* 预检（API：precheck(pkgId, {platforms}) → {ok, planToken, needBackup, assets, issues, …}）；要 UE 连着 */
+async function precheck(force) {
+  const I = IMP(), p = pkgById(S.imp.sel); if (!I || !p || (S.imp.pre[p.id] && !force)) return;
+  if (S.ue.k !== 'on') { delete S.imp.pre[p.id]; renderAll(); return; }
   S.imp.pre[p.id] = {loading: true}; renderAll();
-  try { const r = await I.precheck(p.id); S.imp.pre[p.id] = Object.assign({}, r || {ok: false, issues: [{level: 'error', text: '预检没有结果'}]}); }
-  catch (e) { S.imp.pre[p.id] = {err: String(e && e.message || e)}; }
+  try { const r = await I.precheck(p.id, {platforms: p.platforms}); S.imp.pre[p.id] = Object.assign({}, r || {ok: false, issues: [{level: 'error', text: '预检没有结果'}]}); }
+  catch (e) { S.imp.pre[p.id] = errCode(e) === 'UE_DISCONNECTED' ? undefined : {err: errMsg(e)}; if (!S.imp.pre[p.id]) delete S.imp.pre[p.id]; }
   renderAll();
+}
+/* 备份文件夹：导入要覆盖 UE 里已有的资产时要（API：importPkg 的 backupDir）。外壳自己选过的优先，没有就用烘焙器的仓库文件夹（79_repo.js） */
+async function backupHandle() {
+  if (S.bakOwn && await permOf(S.bakOwn, true)) return S.bakOwn;
+  let o = null; try { if (typeof repoFolderInfo === 'function') o = repoFolderInfo(); } catch (e) { o = null; }   // eslint-disable-line no-undef
+  return o && o.ok && o.handle ? o.handle : null;
+}
+function askBackup(n, then, cancel) {
+  openDlg({id: 'bak', title: '覆盖前选择备份位置', body: `将覆盖 UE 里已有的 ${n} 个资产，原文件先存进备份文件夹。<b>备份位置不能在 UE 工程里。</b>`, ok: '选择…', cancel: '取消导入',
+    onOk: () => pickOwnBak(q('#impGo')).then(ok => (ok ? then() : cancel && cancel())), onCancel: () => cancel && cancel()});
 }
 function startImport() {
   const p = pkgById(S.imp.sel); if (!p) return;
   const r = S.imp.pre[p.id] || {}, nOv = Number(r.overwriteCount) || 0;
-  const go = () => doImport(p);
+  const no = () => toast('已取消，没有写入任何资产', {from: 'import'});
+  const go = async () => {
+    const bak = r.needBackup || nOv ? await backupHandle() : null;
+    if ((r.needBackup || nOv) && !bak) { askBackup(nOv, () => doImport(p), no); return; }
+    doImport(p, bak);
+  };
   if (!nOv) { go(); return; }
-  openDlg({id: 'ov', title: '覆盖 UE 里已有的资产', body: `「${esc(p.name)}」会覆盖 UE 里已有的 ${nOv} 个资产。`, ok: '导入', cancel: '取消', onOk: go, onCancel: () => toast('已取消，没有写入任何资产', {from: 'import'})});
+  openDlg({id: 'ov', title: '覆盖 UE 里已有的资产', body: `「${esc(p.name)}」会覆盖 UE 里已有的 ${nOv} 个资产，覆盖前先备份。`, ok: '导入', cancel: '取消', onOk: go, onCancel: no});
 }
-async function doImport(p) {
+async function doImport(p, bak) {
   const I = IMP(); if (!I || S.imp.writing) return;
-  const A = Array.isArray(p.assets) ? p.assets : [];
-  S.imp.writing = {pkg: p.id, i: 0, tot: A.length || 1}; S.imp.failed[p.id] = {};
+  const r = S.imp.pre[p.id] || {};
+  if (bak === undefined && (r.needBackup || Number(r.overwriteCount))) bak = await backupHandle();
+  S.imp.writing = {pkg: p.id, i: 0, tot: 1, text: '写入中', cur: ''}; S.imp.failed[p.id] = {}; S.imp.written[p.id] = {};
   renderAll();
   const onProgress = ev => {
-    const w = S.imp.writing; if (!w || !ev) return;
-    const i = ev.done != null ? ev.done : ev.i != null ? ev.i : ev.index; const t = ev.total != null ? ev.total : ev.tot;
-    if (Number.isFinite(+i)) w.i = +i; if (Number.isFinite(+t) && +t > 0) w.tot = +t;
+    const w = S.imp.writing; if (!w || !ev || (ev.pkgId && ev.pkgId !== p.id)) return;
+    if (Number.isFinite(+ev.done)) w.i = +ev.done; if (Number.isFinite(+ev.total) && +ev.total > 0) w.tot = +ev.total;
+    w.text = ev.phase === 'import' ? '写入中' : (ev.text || '写入中'); w.cur = ev.phase === 'import' ? String(ev.text || '').replace(/^\S+\s/, '') : '';
     renderShell(); renderImport(); tipSync();
   };
-  let res = null, err = '';
-  try { res = await I.importPkg(p.id, {onProgress}); } catch (e) { err = String(e && e.message || e); }
-  const w = S.imp.writing; S.imp.writing = null;
-  const failed = res && Array.isArray(res.failed) ? res.failed : [];
-  failed.forEach(f => { S.imp.failed[p.id][f.name] = f.reason || '没写进'; });
-  const written = res && Number.isFinite(+res.written) ? +res.written : 0;
-  if (err) toast(`没导入：${err}`, {from: 'import'});
-  else if (failed.length) toast(`已写入 ${written} 个资产，${failed.length} 个没写进：${failed[0].name} ${failed[0].reason || ''}`, {from: 'import', action: {label: '查看', ws: 'import', fn: () => setWS('import')}});
-  else toast(`已写入 ${written || (w && w.tot) || 0} 个资产`, {from: 'import', action: {label: '查看', ws: 'import', fn: () => { S.imp.sel = p.id; setWS('import'); renderAll(); }}});
-  const keepFail = S.imp.failed[p.id];
+  let res = null, err = null;
+  try { res = await I.importPkg(p.id, {planToken: r.planToken, platforms: p.platforms, onProgress, backupDir: bak || undefined}); } catch (e) { err = e; }
+  S.imp.writing = null;
+  const c = errCode(err);
+  if (c === 'PLAN_STALE') { await precheck(true); toast('检查结果过期了，已重新检查，请再点「导入」', {from: 'import'}); return; }
+  if (c === 'NEED_BACKUP_DIR') { renderAll(); askBackup(Number(r.overwriteCount) || 0, () => doImport(p), () => toast('已取消，没有写入任何资产', {from: 'import'})); return; }
+  const failed = res && Array.isArray(res.failed) ? res.failed : [], written = res && Array.isArray(res.written) ? res.written : [];
+  failed.forEach(f => { S.imp.failed[p.id][assetKey(f)] = f.reason || '没写进'; });
+  written.forEach(x => { S.imp.written[p.id][assetKey(x)] = true; });
+  if (err) toast(c === 'BUSY' ? '正在导入另一个包，写完再试' : `没导入：${errMsg(err)}`, {from: 'import'});
+  else if (failed.length) toast(`已写入 ${written.length} 个资产，${failed.length} 个没写进：${failed[0].name} ${failed[0].reason || ''}`, {from: 'import', action: {label: '查看', ws: 'import', fn: () => setWS('import')}});
+  else toast(`已写入 ${written.length} 个资产${res && res.backup ? `，覆盖的 ${res.backup.files} 个已备份` : ''}${res && res.gpuRestartNeeded ? '；要重启 UE 编辑器后再收尾一次' : ''}`, {from: 'import', action: {label: '查看', ws: 'import', fn: () => { S.imp.sel = p.id; setWS('import'); renderAll(); }}});
+  const keepF = S.imp.failed[p.id], keepW = S.imp.written[p.id];
   await scan();
-  S.imp.failed[p.id] = keepFail;
+  S.imp.failed[p.id] = keepF; S.imp.written[p.id] = keepW;
   renderAll();
 }
 const openDeliv = (o = {}) => {
   setWS('import'); renderAll();
-  if (IMP() && S.exp.st === 'ok' && (o.pick || !Array.isArray(S.imp.pkgs))) scan(o);
+  if (IMP() && S.exp.st === 'ok' && !Array.isArray(S.imp.pkgs)) scan(o);
   const row = q(`#impList [data-id="${S.imp.sel}"]`); if (row) row.scrollIntoView({block: 'nearest'});
 };
 
@@ -608,27 +674,28 @@ function askExpFolder(then, o = {}) {
     onOk: () => { pickFolder('exp', o.anchor).then(ok => { if (ok && then) then(); else if (!ok && o.cancelMsg) hint(o.anchor, o.cancelMsg); }); },
     onCancel: () => { if (o.cancelMsg) hint(o.anchor, o.cancelMsg); }});
 }
-/* 导出写完（67_delivery.js 的钩子调一次）：ZIP 方式时把同一个 ZIP 存进导出文件夹 → 打开资源交付、选中刚导出的包 */
-async function saveToFolder(info) {
-  if (!info || info.destination !== 'zip' || !(info.blob instanceof Blob) || !info.name) return '';
-  const h = await expHandle(false); if (!h) return S.exp.st === 'na' ? '' : '没写进导出文件夹：' + (S.exp.st === 'none' ? '未选导出文件夹' : '导出文件夹需允许访问');
-  try {
-    const nm = String(info.name).replace(/[\\/:*?"<>|]+/g, '_');
-    const fh = await h.getFileHandle(nm, {create: true}), wr = await fh.createWritable();
-    await wr.write(info.blob); await wr.close();
-    const back = await fh.getFile();
-    if (back.size !== info.blob.size) return `没写完：${nm} 读回 ${back.size} 字节，应为 ${info.blob.size}`;
-    return '';
-  } catch (e) { return '没写进导出文件夹：' + (e && e.message || e); }
-}
+/* 导出写完（67_delivery.js 的钩子调一次）：ZIP 方式时交给导入模块 publish(导出文件夹, blob, name, metadata) 写进导出文件夹（原 8034 的交付），
+   再打开资源交付、选中刚导出的包。导入模块没加载或没选文件夹时只有浏览器下载的那份 ZIP */
 window.shellAfterExport = async (info = {}) => {
   const name = String(info.name || '').replace(/\.zip$/i, '');
-  const bad = await saveToFolder(info);
-  try { const I = IMP(); if (I && I.__mock && typeof I.__mock.noteExport === 'function') I.__mock.noteExport(info); } catch (e) { /* 替身记不住不影响导出 */ }
+  const I = IMP();
+  let pick = '', bad = '';
+  if (info.destination === 'zip' && info.blob instanceof Blob) {
+    if (!I) bad = `${modWhy()}：只下载了 ZIP，没写进导出文件夹`;
+    else {
+      const h = await expHandle(false);
+      if (!h) bad = S.exp.st === 'na' ? '' : `只下载了 ZIP，没写进导出文件夹：${S.exp.st === 'none' ? '未选导出文件夹' : '导出文件夹需允许访问'}`;
+      else {
+        try { const rc = await I.publish(h, info.blob, info.name, info.metadata || {}); pick = String((rc && (rc.pkgId || rc.deliveryId)) || ''); }
+        catch (e) { bad = errCode(e) === 'NOT_EXPORT_ROOT' ? `${S.exp.name} 不是烟花工坊的导出文件夹，没写进去` : '没写进导出文件夹：' + errMsg(e); }
+      }
+    }
+  }
   const ov = q('#ovlApp'); if (ov) qq(':scope > .toast', ov).forEach(t => t.remove());
-  openDeliv({pick: name});
+  setWS('import');
+  if (I && S.exp.st === 'ok') await scan({pick, pickName: name}); else renderAll();
   if (bad) toast(bad, {from: 'baker'});
-  else toast(`已导出 ${name}${S.exp.st === 'ok' && info.destination === 'zip' ? `，存进 ${S.exp.name}` : ''}`, {from: 'baker', action: {label: '返回制作', ws: 'baker', fn: () => setWS('baker')}});
+  else toast(`已导出 ${name}${pick ? `，写进 ${S.exp.name}` : ''}`, {from: 'baker', action: {label: '返回制作', ws: 'baker', fn: () => setWS('baker')}});
 };
 window.shellOpenDelivery = () => openDeliv();
 window.shellToast = (text, o = {}) => toast(text, o);
@@ -725,7 +792,7 @@ function mount() {
     }
     /* 旧顶栏收掉重复的几样后只剩提示文字 #status：把它搬到外壳状态栏右边（烘焙器按 id 写字，照常），整条旧顶栏收起 */
     const top = q('header.top'), st = q('#status');
-    if (top && st && top.contains(st) && ![...top.children].some(c => c !== st && !c.classList.contains('sh-dup') && !c.hidden && getComputedStyle(c).display !== 'none')) {
+    if (top && st && top.contains(st) && ![...top.children].some(c => c !== st && !c.classList.contains('sh-dup') && c.getBoundingClientRect().width > 1)) {
       q('#shFbSt .st-r').prepend(st); top.classList.add('sh-dup');
     }
     if (!q('#ovlApp')) { const o = document.createElement('div'); o.id = 'ovlApp'; o.className = 'ovl'; document.body.appendChild(o); }
@@ -748,15 +815,20 @@ function mount() {
   S.bak = readBak();
   if (!IMP()) S.ue = {k: 'none', detail: modWhy()};
   renderAll();
+  loadBak().then(() => renderAll());
   loadExp().then(() => { renderAll(); if (IMP() && S.exp.st === 'ok') scan(); });
   const I = IMP();
   if (I) {
-    try { if (typeof I.on === 'function') { I.on('status', s => applyUE(s)); I.on('progress', () => {}); } } catch (e) { /* 没有事件就靠轮询 */ }
+    const sub = (ev, f) => { try { if (typeof I.on === 'function') I.on(ev, f); } catch (e) { /* 没有这个事件就靠轮询 */ } };
+    sub('status', s => applyUE(s));
+    sub('packages', L => { if (S.exp.st === 'ok' && Array.isArray(L)) { setPkgs(L); renderAll(); precheck(); } });
+    sub('progress', ev => { if (!ev || S.imp.writing) return; const r = S.imp.pre[ev.pkgId]; if (r && r.loading) { r.text = ev.text || '预检中'; renderImport(); } });
     readUE();
     setInterval(() => { if (!S.retrying && !S.imp.writing) readUE(); }, 5000);
   }
   /* 备份文件夹（烘焙器的仓库文件夹）是烘焙器自己读的：隔一会儿看一次，变了才重画 */
   setInterval(() => { const b = readBak(); if (b.st !== S.bak.st || b.name !== S.bak.name) { S.bak = b; renderAll(); } }, 2000);
+  /* 浏览器的提示（file:// 页面第一次连本机 UE 时 Chrome 可能问一次「允许访问本机设备」）由导入模块处理，外壳只显示状态 */
   window.SHELL = {S, MOD, ws: setWS, render: renderAll, scan, openDeliv, state: () => ({ws: S.ws, fb: FB, ue: liveUE(), exp: S.exp.st, bak: S.bak.st, mod: MOD.kind, modWhy: modWhy(), n: (S.imp.pkgs || []).length, sel: S.imp.sel, writing: S.imp.writing && {i: S.imp.writing.i, tot: S.imp.writing.tot}})};
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();

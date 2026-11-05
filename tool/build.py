@@ -93,7 +93,7 @@ print(r.stdout.strip()); bad |= r.returncode != 0
 #   双击打开（file://）就能用：tool/data/*.js 内嵌进来，不依赖本地服务，不引外网资源。FireworkBaker.html 照旧，不带外壳。
 #   外壳：tool/src/shell/shell.css、shell.html、js/95_shell*.js（单独一个 <script>，在烘焙器脚本后面：一边出错不拖垮另一边）。
 #   制作区还是 4.9 界面（body.html 里没有 v3.7 的 #shell 槽位）时，加上兜底样式 shell/shell_fb.css；外壳在页面上自己搭顶栏和状态栏。
-#   导入模块：tool/importer/dist/fwl-importer.js（真）→ fwl-importer.mock.js（本机替身）→ shell/fwl-importer.shim.js（外壳临时替身），有哪个用哪个；
+#   导入模块（接口 tool/importer/API_5.0.md）：tool/importer/dist/fwl-importer.js（真）→ fwl-importer.mock.js（本机替身），有哪个用哪个，都没有时外壳写「导入模块未加载」；
 #   包在一个函数里（顶层名字不和烘焙器撞），window.__FWL_IMPORTER_KIND 告诉外壳用的是哪个（替身时顶栏 UE 的悬停提示写「导入模块：替身」）。
 def _rd(*parts):
     return open(os.path.join(*parts), encoding='utf-8').read()
@@ -102,8 +102,7 @@ def _inl(code):     # 内嵌进 <script> 时不能出现 </script 和 <!--
 shell_dir = os.path.join(src, 'shell')
 if os.path.isdir(shell_dir):
     imp_dir = os.path.join(here, 'importer', 'dist')
-    imp = next(((k, p) for k, p in (('real', os.path.join(imp_dir, 'fwl-importer.js')), ('mock', os.path.join(imp_dir, 'fwl-importer.mock.js')),
-                                    ('shim', os.path.join(shell_dir, 'fwl-importer.shim.js'))) if os.path.exists(p)), ('none', ''))
+    imp = next(((k, p) for k, p in (('real', os.path.join(imp_dir, 'fwl-importer.js')), ('mock', os.path.join(imp_dir, 'fwl-importer.mock.js'))) if os.path.exists(p)), ('none', ''))
     fb = 'id="shell"' not in body
     wcss = css + '\n' + (_rd(shell_dir, 'shell_fb.css') + '\n' if fb else '') + _rd(shell_dir, 'shell.css')
     shell_js = ''.join(open(f, encoding='utf-8').read() for f in shell_js_files)
