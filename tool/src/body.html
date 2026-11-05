@@ -113,14 +113,13 @@
       <div class="split export-actions" id="expBtn">
         <button class="btn export-main" id="abExportPack" type="button" title="导出交付清单「产物表」上的东西：每层按 PC / 手机各自出什么（和交付清单的导出按钮同一个）" aria-label="导出素材包">导出</button>
       <button class="btn btn-1 exp-dd" id="expMenuBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="导出选项"><svg class="i" aria-hidden="true"><use href="#i-cd"/></svg></button></div>
-      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack">导出素材包<span class="k">交付清单产物表</span></button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方文件（.json）</button></div>
-      <span class="ab-stash" hidden><button class="btn ghost ab-del" id="abDel" type="button" hidden>删除</button></span>
+      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack">导出素材包<span class="k">交付清单产物表</span></button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方文件（.json）</button><button class="mi" type="button" role="menuitem" data-exp="folder" hidden>换导出文件夹…</button></div>
     </div>
   </div>
   <main id="main">
     <aside class="side left" id="side" aria-label="结构与效果库">
       <section class="pane tree-pane" id="treePane" aria-label="结构">
-        <div class="tree-head" id="treeHead"><span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span><span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span><span class="sp"></span><details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
+        <div class="tree-head" id="treeHead"><span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span><span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span><span class="sp"></span><button class="btn btn-icon" id="e40Add" type="button" aria-label="加层或加发射器" title="加层、加发射器" aria-haspopup="menu"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
         <span class="menu-label">配方文件</span>
         <button type="button" id="abExportFile">导出配方文件（.json）</button>
         <button type="button" id="abImportFile">导入配方文件…</button>
@@ -136,6 +135,7 @@
         <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
         <button type="button" id="abMyRename" hidden>重命名这个效果</button>
         <button type="button" id="abMyDelete" hidden>删除这个效果</button>
+        <button class="ab-del" id="abDel" type="button" hidden>删除</button>
         <input type="file" id="abFile" accept=".json,application/json" hidden>
       </div></details></div>
         <div class="tree" id="tree" role="tree" aria-label="结构树"></div>
@@ -143,6 +143,7 @@
       </section>
       <div class="splitter" id="splitter" role="separator" aria-orientation="horizontal" aria-label="调整结构与效果库高度" tabindex="0" title="拖动调整高度，双击收起效果库"></div>
       <section class="pane lib-pane" id="libPane" aria-label="效果库">
+      <div class="lib-head"><div class="tabs tabs-lg" role="tablist" id="libTabs" aria-label="效果库"><button class="tab" type="button" role="tab" data-lt="效果" aria-selected="true">效果</button><button class="tab" type="button" role="tab" data-lt="模板" aria-selected="false">模板</button></div></div>
       <div class="side-head">
         <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
         <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
@@ -205,8 +206,8 @@
       <div class="timeline">
         <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button><select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
-        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><span class="tku">循环</span></label><span class="sp"></span>
-        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn">时间工具</summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
+        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><svg class="i" aria-hidden="true"><use href="#i-loop"/></svg><span class="tku">循环</span></label><span class="sp"></span>
+        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn btn-icon" aria-label="时间工具" title="时间工具：逐 tick、跳到关键时刻"><svg class="i" aria-hidden="true"><use href="#i-timer"/></svg></summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
       </div>
       <div class="tlbars" id="tlBars"></div>

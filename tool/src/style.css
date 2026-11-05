@@ -2129,21 +2129,18 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #expMenu .msum{padding:8px 12px;font-size:var(--fs1);line-height:var(--lh-multi);color:var(--t2);white-space:normal}
 #expMenu .msum:empty,#expMenu .msum:empty+hr{display:none}
 #expMenu .msum b{display:flex;align-items:center;gap:6px;font-size:var(--fs2);font-weight:var(--fw1);color:var(--t1)}
-/* 资产栏里不放在工具行的东西 */
-.tcol-r .ab-stash{display:none}
 
 /* 左栏：上结构树、下效果库，中间 1 px 线（可拖、双击收起效果库） */
-#main>#side{display:grid;grid-template-rows:var(--tree-h,300px) 1px minmax(0,1fr);min-height:0;min-width:0;background:var(--bg);border:0}
+#main>#side{display:grid;grid-template-rows:var(--tree-h,clamp(240px,42vh,460px)) 1px minmax(0,1fr);min-height:0;min-width:0;background:var(--bg);border:0}
 #side.lib-closed{grid-template-rows:minmax(0,1fr) 1px auto}
-#side.lib-closed .lib-pane>:not(.side-head){display:none}
 .pane{display:flex;flex-direction:column;min-height:0;min-width:0}
 .tree-head{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-top);padding:0 var(--s1) 0 var(--pad);min-width:0}
 .tree-head{position:relative}
 .tree-head.cur::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--sel)}
 .tree-head .ab-id{cursor:pointer}
 .tree-head .ab-th{display:none}
-.tree-head .ab-id{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:var(--s2);min-width:0;flex:1;max-width:none;overflow:hidden}
-.tree-head .id-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs3);font-weight:var(--fw2);line-height:var(--lh3);color:var(--t1)}
+.tree-head .ab-id{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;align-items:baseline;gap:var(--s2);min-width:0;flex:1;max-width:none;overflow:hidden}
+.tree-head .id-name{max-width:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs3);font-weight:var(--fw2);line-height:var(--lh3);color:var(--t1)}
 .tree-head .id-chips{display:flex;gap:6px;flex:none;min-width:0;overflow:hidden}
 .tree-head .id-chips .idc{padding:0;border:0;background:none;color:var(--t3);font-size:var(--fs1);line-height:var(--lh1);white-space:nowrap}
 .tree-head>.sp{display:none}
@@ -2224,3 +2221,89 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #statusBar #status{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs1);color:var(--e3)}
 #statusBar #status.on{color:var(--t1)}
 #statusBar #status:empty{display:none}
+
+/* =====================================================================
+   E 4.0 P2：交互细节（4.9.129）
+   ===================================================================== */
+/* 结构树：悬停出「显示 / 只看 / ⋯」（只影响观察）；需重新导出 = 6 px 琥珀小点（v3.7 第 1 条，和未保存点同一种记号） */
+.trow .ta{display:none;align-items:center;gap:0;margin-left:auto;flex:none}
+.trow:hover .ta,.trow:focus-within .ta,.trow .ta.keep{display:inline-flex}
+.trow .ta .btn-icon{width:24px;height:24px;min-height:0;color:var(--t3)}
+.trow .ta .btn-icon:hover{background:var(--press);color:var(--t1)}
+.trow .ta .btn-icon[aria-pressed="true"].solo{color:var(--sel)}
+.trow .ta .btn-icon.eye[aria-pressed="false"]{color:var(--t1)}
+.trow .stl{margin-left:6px}
+.stl-hit{display:inline-grid;place-items:center;width:16px;height:16px;flex:none;cursor:help}
+.tree-head .stl-hit{margin-left:2px}
+/* 效果名行：去掉小标签（内容在悬停提示里）；「＋」= 加层 / 加发射器 */
+.tree-head .id-chips{display:none}
+#main>#side{position:relative}
+.tree-head #e40Add{width:var(--h-hit);padding:0}
+.e40-pop{position:absolute;z-index:60;min-width:160px;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow)}
+.e40-pop .mi{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--h-hit);padding:0 12px;border:0;background:none;color:var(--t1);font-size:var(--fs2);text-align:left;white-space:nowrap;cursor:pointer}
+.e40-pop .mi:hover{background:var(--press)}
+.e40-pop .mi:disabled{opacity:.5;background:none;cursor:default}
+/* 导出按钮：需重新导出时「导出」后面一个琥珀小点，1.5 px 深色描边（薄荷实底上也看得见） */
+#abExportPack .exb{margin-left:6px;box-shadow:0 0 0 1.5px var(--p1)}
+#expMenu .msum .sdot{margin-right:2px}
+#expMenu .msum .mline{display:flex;align-items:center;gap:8px}
+#expMenu .msum dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:6px}
+#expMenu .msum dt{color:var(--t3)}
+#expMenu .msum dd{margin:0;color:var(--t2);overflow-wrap:anywhere}
+
+/* 检查器（§9）：模块标题常驻折叠箭头（右端，收起时朝右）、参数缩进一级、恢复按钮只在悬停时出现、改过的模块写「+N」 */
+#params details.mod>summary{display:flex;align-items:center;gap:8px;min-height:36px;padding:0 4px 0 0;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);list-style:none}
+#params details.mod>summary::before{display:none}
+#params details.mod>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:4px;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
+#params details.mod[open]>summary::after{transform:none}
+#params details.mod>summary:hover::after{background:var(--t1)}
+#params details.mod>summary .msum{font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3)}
+#params details.mod>summary.mchg .msum::before{content:none}
+#params details.mod>summary .msum[data-e40n]::before{content:"+" attr(data-e40n);display:inline;width:auto;height:auto;margin:0 10px 0 0;border-radius:0;background:none;color:var(--t2);font-size:var(--fs1)}
+#params details.mod>.sl,#params details.mod>.field{padding-left:var(--in-prm)}
+#right .sl>.rrst,#right .field>.rrst{visibility:hidden;color:var(--t3);background:none}
+#right .sl:hover>.rrst,#right .field:hover>.rrst,#right .rrst:focus-visible{visibility:visible}
+#right .sl>.rrst:hover,#right .field>.rrst:hover{background:var(--hov);color:var(--t1)}
+#right .sl>.k,#right #params details.mod>.field>.fk{color:var(--t2);font-weight:var(--fw1)}
+#right .sl.chg>.k,#right .field.chg>.fk{color:var(--t1)}
+.sl.chg .k::before,.field.chg .fk::before{content:none}
+
+/* 播放条（v3.5 第 7 条 / v3.6）：▷ ⏮ 1× ▾ 循环 ｜ 当前时间（大号）｜ 缩略图、时间工具（图标） */
+#main>.stage>.timeline #play,#main>.stage>.timeline #replay{width:var(--h-hit);padding:0}
+#main>.stage>.timeline #speed{min-height:var(--h-hit)}
+#main>.stage>.timeline .tlloop{position:relative;display:inline-flex;align-items:center;justify-content:center;width:var(--h-hit);height:var(--h-hit);border-radius:var(--r2);color:var(--t2);cursor:pointer}
+#main>.stage>.timeline .tlloop>input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;pointer-events:auto}
+#main>.stage>.timeline .tlloop::before{content:none}
+#main>.stage>.timeline .tlloop .tku{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#main>.stage>.timeline .tlloop:hover{background:var(--hov);color:var(--t1)}
+#main>.stage>.timeline .tlloop:has(input:checked){background:var(--on);color:var(--t1)}
+#main>.stage>.timeline .tlloop:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:1px}
+#main>.stage>.timeline #tlabel{margin-left:var(--s4);margin-right:var(--s4)}
+#main>.stage>.timeline #thGrab{order:6;width:var(--h-hit);padding:0}
+#main>.stage>.timeline #timeTools>summary{width:var(--h-hit);padding:0}
+#main>.stage>.timeline #timeTools .ab-menu{top:auto;bottom:calc(100% + 4px)}
+
+/* 效果库：一级大号标签「效果 / 模板」（v3.1 第 7 条，等宽两半、下划线横跨）；搜索时两边都列出来 */
+.lib-head{flex:none;display:flex;align-items:stretch;min-width:0;border-bottom:1px solid var(--line)}
+.lib-head .tabs-lg{flex:1;display:flex;min-width:0}
+.lib-head .tab{position:relative;flex:1;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 8px;border:0;border-radius:0;background:none;color:var(--t2);font-size:var(--fs-tab);font-weight:var(--fw1);cursor:pointer}
+.lib-head .tab:hover{color:var(--t1)}
+.lib-head .tab[aria-selected="true"]{color:var(--t1)}
+.lib-head .tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--p4)}
+#libPane[data-lt="效果"]:has(#libSearch:placeholder-shown) #libBody :is(.lg-mytpl,.lg-types,.lg-mtypes){display:none}
+#libPane[data-lt="模板"]:has(#libSearch:placeholder-shown) #libBody :is(.lg-review,.lg-wip,.lg-myfx,.lg-tools){display:none}
+#side.lib-closed .lib-pane>:not(.lib-head){display:none}
+/* 播放条顺序（v3.6）：▷ ⏮ 1× 循环 ｜ 当前时间 ｜ 时间条 ｜ 缩略图、时间工具 */
+#main>.stage>.timeline #play{order:1}#main>.stage>.timeline #replay{order:2}#main>.stage>.timeline #speed{order:3}
+#main>.stage>.timeline .tlloop{order:4}#main>.stage>.timeline #tlabel{order:5}#main>.stage>.timeline #scrub{order:6}
+#main>.stage>.timeline #thGrab{order:7}#main>.stage>.timeline #timeTools{order:8}
+/* 参数行高（v3.4 第 10 条）：1920 下 30，1366 下 28；栏头 1366 下 36 */
+#right #params .sl,#right #matSliders .sl{min-height:var(--h-prm);padding-top:1px;padding-bottom:1px}
+@media (max-width:1599px){
+  :root{--h-prm:28px}
+  #params details.mod>summary{min-height:28px}
+  #right>.right-head{min-height:36px}
+  #right>.right-head .ptabs>button{min-height:35px}
+}

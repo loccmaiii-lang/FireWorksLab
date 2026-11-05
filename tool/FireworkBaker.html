@@ -2269,21 +2269,18 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #expMenu .msum{padding:8px 12px;font-size:var(--fs1);line-height:var(--lh-multi);color:var(--t2);white-space:normal}
 #expMenu .msum:empty,#expMenu .msum:empty+hr{display:none}
 #expMenu .msum b{display:flex;align-items:center;gap:6px;font-size:var(--fs2);font-weight:var(--fw1);color:var(--t1)}
-/* 资产栏里不放在工具行的东西 */
-.tcol-r .ab-stash{display:none}
 
 /* 左栏：上结构树、下效果库，中间 1 px 线（可拖、双击收起效果库） */
-#main>#side{display:grid;grid-template-rows:var(--tree-h,300px) 1px minmax(0,1fr);min-height:0;min-width:0;background:var(--bg);border:0}
+#main>#side{display:grid;grid-template-rows:var(--tree-h,clamp(240px,42vh,460px)) 1px minmax(0,1fr);min-height:0;min-width:0;background:var(--bg);border:0}
 #side.lib-closed{grid-template-rows:minmax(0,1fr) 1px auto}
-#side.lib-closed .lib-pane>:not(.side-head){display:none}
 .pane{display:flex;flex-direction:column;min-height:0;min-width:0}
 .tree-head{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-top);padding:0 var(--s1) 0 var(--pad);min-width:0}
 .tree-head{position:relative}
 .tree-head.cur::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--sel)}
 .tree-head .ab-id{cursor:pointer}
 .tree-head .ab-th{display:none}
-.tree-head .ab-id{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:var(--s2);min-width:0;flex:1;max-width:none;overflow:hidden}
-.tree-head .id-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs3);font-weight:var(--fw2);line-height:var(--lh3);color:var(--t1)}
+.tree-head .ab-id{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;align-items:baseline;gap:var(--s2);min-width:0;flex:1;max-width:none;overflow:hidden}
+.tree-head .id-name{max-width:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs3);font-weight:var(--fw2);line-height:var(--lh3);color:var(--t1)}
 .tree-head .id-chips{display:flex;gap:6px;flex:none;min-width:0;overflow:hidden}
 .tree-head .id-chips .idc{padding:0;border:0;background:none;color:var(--t3);font-size:var(--fs1);line-height:var(--lh1);white-space:nowrap}
 .tree-head>.sp{display:none}
@@ -2364,6 +2361,92 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #statusBar #status{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs1);color:var(--e3)}
 #statusBar #status.on{color:var(--t1)}
 #statusBar #status:empty{display:none}
+
+/* =====================================================================
+   E 4.0 P2：交互细节（4.9.129）
+   ===================================================================== */
+/* 结构树：悬停出「显示 / 只看 / ⋯」（只影响观察）；需重新导出 = 6 px 琥珀小点（v3.7 第 1 条，和未保存点同一种记号） */
+.trow .ta{display:none;align-items:center;gap:0;margin-left:auto;flex:none}
+.trow:hover .ta,.trow:focus-within .ta,.trow .ta.keep{display:inline-flex}
+.trow .ta .btn-icon{width:24px;height:24px;min-height:0;color:var(--t3)}
+.trow .ta .btn-icon:hover{background:var(--press);color:var(--t1)}
+.trow .ta .btn-icon[aria-pressed="true"].solo{color:var(--sel)}
+.trow .ta .btn-icon.eye[aria-pressed="false"]{color:var(--t1)}
+.trow .stl{margin-left:6px}
+.stl-hit{display:inline-grid;place-items:center;width:16px;height:16px;flex:none;cursor:help}
+.tree-head .stl-hit{margin-left:2px}
+/* 效果名行：去掉小标签（内容在悬停提示里）；「＋」= 加层 / 加发射器 */
+.tree-head .id-chips{display:none}
+#main>#side{position:relative}
+.tree-head #e40Add{width:var(--h-hit);padding:0}
+.e40-pop{position:absolute;z-index:60;min-width:160px;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow)}
+.e40-pop .mi{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--h-hit);padding:0 12px;border:0;background:none;color:var(--t1);font-size:var(--fs2);text-align:left;white-space:nowrap;cursor:pointer}
+.e40-pop .mi:hover{background:var(--press)}
+.e40-pop .mi:disabled{opacity:.5;background:none;cursor:default}
+/* 导出按钮：需重新导出时「导出」后面一个琥珀小点，1.5 px 深色描边（薄荷实底上也看得见） */
+#abExportPack .exb{margin-left:6px;box-shadow:0 0 0 1.5px var(--p1)}
+#expMenu .msum .sdot{margin-right:2px}
+#expMenu .msum .mline{display:flex;align-items:center;gap:8px}
+#expMenu .msum dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:6px}
+#expMenu .msum dt{color:var(--t3)}
+#expMenu .msum dd{margin:0;color:var(--t2);overflow-wrap:anywhere}
+
+/* 检查器（§9）：模块标题常驻折叠箭头（右端，收起时朝右）、参数缩进一级、恢复按钮只在悬停时出现、改过的模块写「+N」 */
+#params details.mod>summary{display:flex;align-items:center;gap:8px;min-height:36px;padding:0 4px 0 0;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);list-style:none}
+#params details.mod>summary::before{display:none}
+#params details.mod>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:4px;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
+#params details.mod[open]>summary::after{transform:none}
+#params details.mod>summary:hover::after{background:var(--t1)}
+#params details.mod>summary .msum{font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3)}
+#params details.mod>summary.mchg .msum::before{content:none}
+#params details.mod>summary .msum[data-e40n]::before{content:"+" attr(data-e40n);display:inline;width:auto;height:auto;margin:0 10px 0 0;border-radius:0;background:none;color:var(--t2);font-size:var(--fs1)}
+#params details.mod>.sl,#params details.mod>.field{padding-left:var(--in-prm)}
+#right .sl>.rrst,#right .field>.rrst{visibility:hidden;color:var(--t3);background:none}
+#right .sl:hover>.rrst,#right .field:hover>.rrst,#right .rrst:focus-visible{visibility:visible}
+#right .sl>.rrst:hover,#right .field>.rrst:hover{background:var(--hov);color:var(--t1)}
+#right .sl>.k,#right #params details.mod>.field>.fk{color:var(--t2);font-weight:var(--fw1)}
+#right .sl.chg>.k,#right .field.chg>.fk{color:var(--t1)}
+.sl.chg .k::before,.field.chg .fk::before{content:none}
+
+/* 播放条（v3.5 第 7 条 / v3.6）：▷ ⏮ 1× ▾ 循环 ｜ 当前时间（大号）｜ 缩略图、时间工具（图标） */
+#main>.stage>.timeline #play,#main>.stage>.timeline #replay{width:var(--h-hit);padding:0}
+#main>.stage>.timeline #speed{min-height:var(--h-hit)}
+#main>.stage>.timeline .tlloop{position:relative;display:inline-flex;align-items:center;justify-content:center;width:var(--h-hit);height:var(--h-hit);border-radius:var(--r2);color:var(--t2);cursor:pointer}
+#main>.stage>.timeline .tlloop>input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;pointer-events:auto}
+#main>.stage>.timeline .tlloop::before{content:none}
+#main>.stage>.timeline .tlloop .tku{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#main>.stage>.timeline .tlloop:hover{background:var(--hov);color:var(--t1)}
+#main>.stage>.timeline .tlloop:has(input:checked){background:var(--on);color:var(--t1)}
+#main>.stage>.timeline .tlloop:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:1px}
+#main>.stage>.timeline #tlabel{margin-left:var(--s4);margin-right:var(--s4)}
+#main>.stage>.timeline #thGrab{order:6;width:var(--h-hit);padding:0}
+#main>.stage>.timeline #timeTools>summary{width:var(--h-hit);padding:0}
+#main>.stage>.timeline #timeTools .ab-menu{top:auto;bottom:calc(100% + 4px)}
+
+/* 效果库：一级大号标签「效果 / 模板」（v3.1 第 7 条，等宽两半、下划线横跨）；搜索时两边都列出来 */
+.lib-head{flex:none;display:flex;align-items:stretch;min-width:0;border-bottom:1px solid var(--line)}
+.lib-head .tabs-lg{flex:1;display:flex;min-width:0}
+.lib-head .tab{position:relative;flex:1;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 8px;border:0;border-radius:0;background:none;color:var(--t2);font-size:var(--fs-tab);font-weight:var(--fw1);cursor:pointer}
+.lib-head .tab:hover{color:var(--t1)}
+.lib-head .tab[aria-selected="true"]{color:var(--t1)}
+.lib-head .tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--p4)}
+#libPane[data-lt="效果"]:has(#libSearch:placeholder-shown) #libBody :is(.lg-mytpl,.lg-types,.lg-mtypes){display:none}
+#libPane[data-lt="模板"]:has(#libSearch:placeholder-shown) #libBody :is(.lg-review,.lg-wip,.lg-myfx,.lg-tools){display:none}
+#side.lib-closed .lib-pane>:not(.lib-head){display:none}
+/* 播放条顺序（v3.6）：▷ ⏮ 1× 循环 ｜ 当前时间 ｜ 时间条 ｜ 缩略图、时间工具 */
+#main>.stage>.timeline #play{order:1}#main>.stage>.timeline #replay{order:2}#main>.stage>.timeline #speed{order:3}
+#main>.stage>.timeline .tlloop{order:4}#main>.stage>.timeline #tlabel{order:5}#main>.stage>.timeline #scrub{order:6}
+#main>.stage>.timeline #thGrab{order:7}#main>.stage>.timeline #timeTools{order:8}
+/* 参数行高（v3.4 第 10 条）：1920 下 30，1366 下 28；栏头 1366 下 36 */
+#right #params .sl,#right #matSliders .sl{min-height:var(--h-prm);padding-top:1px;padding-bottom:1px}
+@media (max-width:1599px){
+  :root{--h-prm:28px}
+  #params details.mod>summary{min-height:28px}
+  #right>.right-head{min-height:36px}
+  #right>.right-head .ptabs>button{min-height:35px}
+}
 </style>
 </head>
 <body>
@@ -2482,14 +2565,13 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
       <div class="split export-actions" id="expBtn">
         <button class="btn export-main" id="abExportPack" type="button" title="导出交付清单「产物表」上的东西：每层按 PC / 手机各自出什么（和交付清单的导出按钮同一个）" aria-label="导出素材包">导出</button>
       <button class="btn btn-1 exp-dd" id="expMenuBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="导出选项"><svg class="i" aria-hidden="true"><use href="#i-cd"/></svg></button></div>
-      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack">导出素材包<span class="k">交付清单产物表</span></button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方文件（.json）</button></div>
-      <span class="ab-stash" hidden><button class="btn ghost ab-del" id="abDel" type="button" hidden>删除</button></span>
+      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack">导出素材包<span class="k">交付清单产物表</span></button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方文件（.json）</button><button class="mi" type="button" role="menuitem" data-exp="folder" hidden>换导出文件夹…</button></div>
     </div>
   </div>
   <main id="main">
     <aside class="side left" id="side" aria-label="结构与效果库">
       <section class="pane tree-pane" id="treePane" aria-label="结构">
-        <div class="tree-head" id="treeHead"><span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span><span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span><span class="sp"></span><details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
+        <div class="tree-head" id="treeHead"><span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span><span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span><span class="sp"></span><button class="btn btn-icon" id="e40Add" type="button" aria-label="加层或加发射器" title="加层、加发射器" aria-haspopup="menu"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
         <span class="menu-label">配方文件</span>
         <button type="button" id="abExportFile">导出配方文件（.json）</button>
         <button type="button" id="abImportFile">导入配方文件…</button>
@@ -2505,6 +2587,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
         <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
         <button type="button" id="abMyRename" hidden>重命名这个效果</button>
         <button type="button" id="abMyDelete" hidden>删除这个效果</button>
+        <button class="ab-del" id="abDel" type="button" hidden>删除</button>
         <input type="file" id="abFile" accept=".json,application/json" hidden>
       </div></details></div>
         <div class="tree" id="tree" role="tree" aria-label="结构树"></div>
@@ -2512,6 +2595,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
       </section>
       <div class="splitter" id="splitter" role="separator" aria-orientation="horizontal" aria-label="调整结构与效果库高度" tabindex="0" title="拖动调整高度，双击收起效果库"></div>
       <section class="pane lib-pane" id="libPane" aria-label="效果库">
+      <div class="lib-head"><div class="tabs tabs-lg" role="tablist" id="libTabs" aria-label="效果库"><button class="tab" type="button" role="tab" data-lt="效果" aria-selected="true">效果</button><button class="tab" type="button" role="tab" data-lt="模板" aria-selected="false">模板</button></div></div>
       <div class="side-head">
         <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
         <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
@@ -2574,8 +2658,8 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
       <div class="timeline">
         <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button><select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
-        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><span class="tku">循环</span></label><span class="sp"></span>
-        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn">时间工具</summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
+        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><svg class="i" aria-hidden="true"><use href="#i-loop"/></svg><span class="tku">循环</span></label><span class="sp"></span>
+        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn btn-icon" aria-label="时间工具" title="时间工具：逐 tick、跳到关键时刻"><svg class="i" aria-hidden="true"><use href="#i-timer"/></svg></summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
       </div>
       <div class="tlbars" id="tlBars"></div>
@@ -2893,7 +2977,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.128';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
+const VERSION = '4.9.129';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
 // 4.9.123（团队版 T3 第 3 批，同上）：粒子层加 / 复制 / 删 / 改母粒 + 路径条与结构弹层（79_graph_tree.js）；粒子图模板默认不过曝；打开 / 新建多层效果可「稍后烘焙」（已有条目、存档不变）。
 // 4.9.122（团队版 T3 第 2 批，同上）：花型模板加「粒子图」分组——仙女棒、窜天猴尾焰、空白粒子图（46_graph_templates.js；SGS1 / SGR1 和旧的 sparkgraph 形态不变）。
 // 4.9.121（团队版 T3 第 1 批，用户 10-25 00:00「全批准」）：修「烘培」错字、新建效果填英文名 + MyFx 导出前拦下、「我的效果」导出全部 / 导入、本机交付服务没连上时的重连对话框（不改画面、不改导出内容）。
@@ -24222,7 +24306,7 @@ window.__fw = {
   const ready = () => typeof state !== 'undefined' && state && document.getElementById('tree');
 
   // ---- 结构树 + 面包屑：效果 › 层 › 发射器（发射器 = 参数栏里的发射器标签） ----
-  const emitters = () => [...document.querySelectorAll('#params .etabs .et[data-e]')].filter(b => b.dataset.e !== '全部')
+  const emitters = () => [...document.querySelectorAll('#params .etabs .et[data-e]')].filter(b => b.dataset.e !== '全部' && !b.hidden)
     .map(b => ({ e: b.dataset.e, on: b.classList.contains('on') || b.getAttribute('aria-selected') === 'true', b }));
   const effName = () => { const n = $q('#abIdName'); return (n && n.textContent.trim()) || (typeof safeName === 'function' ? '' : ''); };
   function model() {
@@ -24241,7 +24325,11 @@ window.__fw = {
     else if (m.combo) {
       for (const L of m.layers) {
         const cur = L.i === m.sel;
-        h += `<button type="button" class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span></button>`;
+        const solo = state.layerView && state.layerView.solo === L.i;
+        h += `<div class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
+          + `<span class="ta${L.off || solo ? ' keep' : ''}"><button type="button" class="btn btn-icon eye" data-ta="mute" aria-pressed="${!L.off}" aria-label="显示第 ${L.i + 1} 层" title="${L.off ? '显示' : '隐藏'}这一层（只影响观察）">${ico(L.off ? 'eyeoff' : 'eye')}</button>`
+          + `<button type="button" class="btn btn-icon solo" data-ta="solo" aria-pressed="${solo}" aria-label="只看第 ${L.i + 1} 层" title="${solo ? '取消只看' : '只看这一层'}（只影响观察）">${ico(solo ? 'soloon' : 'solo')}</button>`
+          + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" title="层的开始时间、时长、改名、复制、删除（图层管理）">${ico('more')}</button></span></div>`;
         if (cur) h += emRows(true);
       }
     } else h = emRows(true);
@@ -24254,6 +24342,15 @@ window.__fw = {
     $q('#path').innerHTML = parts.map((p, i) => i === parts.length - 1 ? `<span class="cur">${esc(p.t)}</span>` : `<button type="button" data-path="${p.act}">${esc(p.t)}</button><span class="sep" aria-hidden="true">›</span>`).join('');
   }
   document.addEventListener('click', e => {
+    const ta = e.target.closest && e.target.closest('#tree .ta [data-ta]');
+    if (ta) {
+      const i = +ta.closest('.trow').dataset.layer, v = state.layerView, k = ta.dataset.ta;
+      if (k === 'mute' && v) v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i];
+      else if (k === 'solo' && v) v.solo = v.solo === i ? -1 : i;
+      if ((k === 'mute' || k === 'solo') && typeof buildLayerCard === 'function') buildLayerCard();
+      if (k === 'more') { if (state.comboSel !== i && typeof selectComboLayer === 'function') selectComboLayer(i); const lc = $q('#layerCard'); if (lc) { lc.open = true; setTimeout(() => lc.scrollIntoView({ block: 'nearest' }), 0); } }
+      setTimeout(() => render(true), 0); return;
+    }
     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
     if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
     if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
@@ -24262,13 +24359,70 @@ window.__fw = {
     else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
     setTimeout(() => render(true), 0);
   });
-  setInterval(() => { if (!document.hidden) { render(); syncSave(); } }, 250);
+  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer]')) { e.preventDefault(); e.target.click(); } });
+  setInterval(() => { if (!document.hidden) { render(); syncSave(); syncStale(); syncMods(); syncIcons(); } }, 250);
+
+  // ---- 需重新导出（v3.7 第 1 条）：资产栏「素材包过期 / 要重导」→ 效果名后、导出按钮里各一个琥珀小点；原因写在悬停提示和导出菜单里 ----
+  const chipInfo = () => [...document.querySelectorAll('#abIdChips .idc')].map(c => ({ t: c.textContent.trim(), warn: c.classList.contains('warn'), d: c.getAttribute('title') || c.dataset.tipT || '' }));
+  const staleChip = () => chipInfo().find(c => c.warn && /过期|重导/.test(c.t));
+  let staleSig = '';
+  function syncStale() {
+    const st = staleChip(), info = chipInfo(), id = $q('#abId'), ex = $q('#abExportPack'); if (!id || !ex) return;
+    const tip = info.map(c => c.t + (c.d && c.d !== c.t ? '：' + c.d : '')).join('\n'); if (id.dataset.tip !== tip) id.dataset.tip = tip;
+    const sig = st ? st.t + '|' + st.d : ''; if (sig === staleSig && !!$q('#e40Stale') === !!st && !!ex.querySelector('.exb') === !!st) return; staleSig = sig;
+    let hit = $q('#e40Stale');
+    if (st && !hit) { hit = document.createElement('span'); hit.id = 'e40Stale'; hit.className = 'stl-hit'; hit.innerHTML = '<span class="stl" aria-hidden="true"></span>'; id.after(hit); }
+    if (hit) { hit.hidden = !st; if (st) { hit.dataset.tip = st.t + '：' + st.d; hit.setAttribute('aria-label', '需重新导出'); } }
+    const dot = ex.querySelector('.exb');
+    if (st && !dot) ex.insertAdjacentHTML('beforeend', '<span class="exb" aria-hidden="true"></span>'); else if (!st && dot) dot.remove();
+    ex.setAttribute('aria-label', st ? '导出素材包，需重新导出' : '导出素材包');
+  }
+  window.e40ExpSummary = el => {
+    if (!el) return; const st = staleChip(), info = chipInfo();
+    let dest = ''; try { dest = typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.destination ? DeliveryWorkspace.destination() : ''; } catch (e) { }
+    const where = dest === 'zip' ? '打成 ZIP 下载' : dest ? '交到导出根目录（资源交付）' : '';
+    el.innerHTML = `<div class="mline"><b>${st ? '<span class="sdot" aria-hidden="true"></span>素材包需重新导出' : ico('check') + (info.some(c => /✓/.test(c.t)) ? '素材包和这一版一致' : '导出交付清单产物表上的东西')}</b></div>`
+      + `<dl>${st && st.d ? `<dt>原因</dt><dd>${esc(st.d)}</dd>` : ''}${where ? `<dt>位置</dt><dd>${esc(where)}</dd>` : ''}<dt>内容</dt><dd>每层按 PC / 手机各自出什么，见「看交付清单」</dd></dl>`;
+  };
+
+  // ---- 检查器：改过的模块在摘要前写「+N」（N = 这个模块里改过的参数行） ----
+  function syncMods() {
+    for (const sm of document.querySelectorAll('#params details.mod>summary')) {
+      const ms = sm.querySelector('.msum'); if (!ms) continue;
+      const n = sm.classList.contains('mchg') ? sm.parentElement.querySelectorAll(':scope > .sl.chg, :scope > .field.chg').length : 0;
+      const v = n ? String(n) : null; if (ms.getAttribute('data-e40n') !== v) { if (v) ms.setAttribute('data-e40n', v); else ms.removeAttribute('data-e40n'); }
+    }
+  }
+  // ---- 播放条上的「生成缩略图」画成相机图标（文字收进悬停提示） ----
+  function syncIcons() {
+    const g = $q('#thGrab'); if (g && !g.querySelector('svg')) { g.innerHTML = ico('camera'); g.classList.add('btn-icon'); g.setAttribute('aria-label', '生成缩略图'); }
+  }
+
+  // ---- 效果名行「＋」：加层 / 加发射器 ----
+  let pop = null;
+  const closePop = () => { if (pop) { pop.remove(); pop = null; } };
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('#e40Add');
+    if (b) {
+      if (pop) { closePop(); return; }
+      const al = $q('#abAddLayer'), ex = $q('#exAdd');
+      pop = document.createElement('div'); pop.className = 'e40-pop'; pop.setAttribute('role', 'menu');
+      pop.innerHTML = `<button type="button" class="mi" role="menuitem" data-a="layer"${!al || al.disabled || al.hidden ? ' disabled' : ''}>${ico('layer')}加层</button><button type="button" class="mi" role="menuitem" data-a="emit"${ex ? '' : ' disabled title="这一层不能加发射器"'}>${ico('star')}加发射器</button>`;
+      const r = b.getBoundingClientRect(), side = $q('#side').getBoundingClientRect();
+      pop.style.left = Math.max(4, r.right - side.left - 160) + 'px'; pop.style.top = (r.bottom - side.top + 2) + 'px';
+      $q('#side').append(pop); return;
+    }
+    const it = e.target.closest && e.target.closest('.e40-pop .mi');
+    if (it) { const a = it.dataset.a; closePop(); if (a === 'layer') $q('#abAddLayer').click(); else if (a === 'emit' && $q('#exAdd')) $q('#exAdd').click(); return; }
+    if (pop && !(e.target.closest && e.target.closest('.e40-pop'))) closePop();
+  });
 
   // ---- 「保存」后的未保存点（v3.4 第 4 条）：资产栏「参数已变 · 未保存」亮着时 ----
   function syncSave() {
     const chg = $q('#abChg'), sv = $q('#abSave'); if (!chg || !sv) return;
     const dirty = !chg.hidden; sv.classList.toggle('e-dirty', dirty);
     const lab = dirty ? '保存（有没保存的改动）' : '保存'; if (sv.getAttribute('aria-label') !== lab) sv.setAttribute('aria-label', lab);
+    const vs = $q('#versionSummary'), vh = vs && vs.parentElement; if (vh) { const t = '版本记录' + (vs.textContent.trim() ? '：现在是「' + vs.textContent.trim() + '」' : '') + '（保存的版本、未保存草稿和导出时的恢复点）'; if (vh.dataset.tip !== t) { vh.dataset.tip = t; vh.removeAttribute('title'); } }
   }
 
   // ---- 导出 ▾：资源交付（外壳接管）、导出素材包、看交付清单、导出配方文件 ----
@@ -24277,6 +24431,7 @@ window.__fw = {
   function openExp() {
     const m = menu(); if (!m) return;
     if (typeof window.e40ExpSummary === 'function') { try { window.e40ExpSummary($q('#expSum')); } catch (err) { console.error(err); } }
+    const fo = m.querySelector('[data-exp="folder"]'); if (fo) fo.hidden = typeof window.shellPickExportFolder !== 'function';     // 外壳提供时才有
     m.hidden = false; dd().setAttribute('aria-expanded', 'true');
   }
   document.addEventListener('click', e => {
@@ -24289,6 +24444,7 @@ window.__fw = {
       else if (k === 'pack') $q('#abExportPack').click();
       else if (k === 'list') $q('#abDeliv').click();
       else if (k === 'recipe') $q('#abExportFile').click();
+      else if (k === 'folder' && typeof window.shellPickExportFolder === 'function') window.shellPickExportFolder();
       return;
     }
     if (menu() && !menu().hidden && !(e.target.closest && e.target.closest('#expMenu'))) closeExp();
@@ -24315,7 +24471,16 @@ window.__fw = {
     sp.addEventListener('dblclick', () => { const c = !side.classList.contains('lib-closed'); side.classList.toggle('lib-closed', c); put('libClosed', c); });
     sp.addEventListener('keydown', e => { if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); const h = $q('#treePane').offsetHeight + (e.key === 'ArrowUp' ? -16 : 16); apply(Math.max(80, h)); put('treeH', Math.max(80, h)); } });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSplit); else initSplit();
+  // ---- 效果库一级标签「效果 / 模板」（记住）----
+  function initLibTabs() {
+    const pane = $q('#libPane'), tabs = $q('#libTabs'); if (!pane || !tabs) return;
+    let cur = '效果'; try { cur = JSON.parse(localStorage.getItem('fw.e40.libTab')) || '效果'; } catch (e) { }
+    const set = v => { pane.dataset.lt = v; for (const b of tabs.children) b.setAttribute('aria-selected', String(b.dataset.lt === v)); try { localStorage.setItem('fw.e40.libTab', JSON.stringify(v)); } catch (e) { } };
+    set(cur === '模板' ? '模板' : '效果');
+    tabs.addEventListener('click', e => { const b = e.target.closest('[data-lt]'); if (!b) return; set(b.dataset.lt); $q('#side').classList.remove('lib-closed'); });
+  }
+  const init = () => { initSplit(); initLibTabs(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
 </body>

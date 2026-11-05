@@ -9,7 +9,7 @@
   const ready = () => typeof state !== 'undefined' && state && document.getElementById('tree');
 
   // ---- 结构树 + 面包屑：效果 › 层 › 发射器（发射器 = 参数栏里的发射器标签） ----
-  const emitters = () => [...document.querySelectorAll('#params .etabs .et[data-e]')].filter(b => b.dataset.e !== '全部')
+  const emitters = () => [...document.querySelectorAll('#params .etabs .et[data-e]')].filter(b => b.dataset.e !== '全部' && !b.hidden)
     .map(b => ({ e: b.dataset.e, on: b.classList.contains('on') || b.getAttribute('aria-selected') === 'true', b }));
   const effName = () => { const n = $q('#abIdName'); return (n && n.textContent.trim()) || (typeof safeName === 'function' ? '' : ''); };
   function model() {
@@ -28,7 +28,11 @@
     else if (m.combo) {
       for (const L of m.layers) {
         const cur = L.i === m.sel;
-        h += `<button type="button" class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span></button>`;
+        const solo = state.layerView && state.layerView.solo === L.i;
+        h += `<div class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
+          + `<span class="ta${L.off || solo ? ' keep' : ''}"><button type="button" class="btn btn-icon eye" data-ta="mute" aria-pressed="${!L.off}" aria-label="显示第 ${L.i + 1} 层" title="${L.off ? '显示' : '隐藏'}这一层（只影响观察）">${ico(L.off ? 'eyeoff' : 'eye')}</button>`
+          + `<button type="button" class="btn btn-icon solo" data-ta="solo" aria-pressed="${solo}" aria-label="只看第 ${L.i + 1} 层" title="${solo ? '取消只看' : '只看这一层'}（只影响观察）">${ico(solo ? 'soloon' : 'solo')}</button>`
+          + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" title="层的开始时间、时长、改名、复制、删除（图层管理）">${ico('more')}</button></span></div>`;
         if (cur) h += emRows(true);
       }
     } else h = emRows(true);
@@ -41,6 +45,15 @@
     $q('#path').innerHTML = parts.map((p, i) => i === parts.length - 1 ? `<span class="cur">${esc(p.t)}</span>` : `<button type="button" data-path="${p.act}">${esc(p.t)}</button><span class="sep" aria-hidden="true">›</span>`).join('');
   }
   document.addEventListener('click', e => {
+    const ta = e.target.closest && e.target.closest('#tree .ta [data-ta]');
+    if (ta) {
+      const i = +ta.closest('.trow').dataset.layer, v = state.layerView, k = ta.dataset.ta;
+      if (k === 'mute' && v) v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i];
+      else if (k === 'solo' && v) v.solo = v.solo === i ? -1 : i;
+      if ((k === 'mute' || k === 'solo') && typeof buildLayerCard === 'function') buildLayerCard();
+      if (k === 'more') { if (state.comboSel !== i && typeof selectComboLayer === 'function') selectComboLayer(i); const lc = $q('#layerCard'); if (lc) { lc.open = true; setTimeout(() => lc.scrollIntoView({ block: 'nearest' }), 0); } }
+      setTimeout(() => render(true), 0); return;
+    }
     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
     if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
     if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
@@ -49,13 +62,70 @@
     else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
     setTimeout(() => render(true), 0);
   });
-  setInterval(() => { if (!document.hidden) { render(); syncSave(); } }, 250);
+  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer]')) { e.preventDefault(); e.target.click(); } });
+  setInterval(() => { if (!document.hidden) { render(); syncSave(); syncStale(); syncMods(); syncIcons(); } }, 250);
+
+  // ---- 需重新导出（v3.7 第 1 条）：资产栏「素材包过期 / 要重导」→ 效果名后、导出按钮里各一个琥珀小点；原因写在悬停提示和导出菜单里 ----
+  const chipInfo = () => [...document.querySelectorAll('#abIdChips .idc')].map(c => ({ t: c.textContent.trim(), warn: c.classList.contains('warn'), d: c.getAttribute('title') || c.dataset.tipT || '' }));
+  const staleChip = () => chipInfo().find(c => c.warn && /过期|重导/.test(c.t));
+  let staleSig = '';
+  function syncStale() {
+    const st = staleChip(), info = chipInfo(), id = $q('#abId'), ex = $q('#abExportPack'); if (!id || !ex) return;
+    const tip = info.map(c => c.t + (c.d && c.d !== c.t ? '：' + c.d : '')).join('\n'); if (id.dataset.tip !== tip) id.dataset.tip = tip;
+    const sig = st ? st.t + '|' + st.d : ''; if (sig === staleSig && !!$q('#e40Stale') === !!st && !!ex.querySelector('.exb') === !!st) return; staleSig = sig;
+    let hit = $q('#e40Stale');
+    if (st && !hit) { hit = document.createElement('span'); hit.id = 'e40Stale'; hit.className = 'stl-hit'; hit.innerHTML = '<span class="stl" aria-hidden="true"></span>'; id.after(hit); }
+    if (hit) { hit.hidden = !st; if (st) { hit.dataset.tip = st.t + '：' + st.d; hit.setAttribute('aria-label', '需重新导出'); } }
+    const dot = ex.querySelector('.exb');
+    if (st && !dot) ex.insertAdjacentHTML('beforeend', '<span class="exb" aria-hidden="true"></span>'); else if (!st && dot) dot.remove();
+    ex.setAttribute('aria-label', st ? '导出素材包，需重新导出' : '导出素材包');
+  }
+  window.e40ExpSummary = el => {
+    if (!el) return; const st = staleChip(), info = chipInfo();
+    let dest = ''; try { dest = typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.destination ? DeliveryWorkspace.destination() : ''; } catch (e) { }
+    const where = dest === 'zip' ? '打成 ZIP 下载' : dest ? '交到导出根目录（资源交付）' : '';
+    el.innerHTML = `<div class="mline"><b>${st ? '<span class="sdot" aria-hidden="true"></span>素材包需重新导出' : ico('check') + (info.some(c => /✓/.test(c.t)) ? '素材包和这一版一致' : '导出交付清单产物表上的东西')}</b></div>`
+      + `<dl>${st && st.d ? `<dt>原因</dt><dd>${esc(st.d)}</dd>` : ''}${where ? `<dt>位置</dt><dd>${esc(where)}</dd>` : ''}<dt>内容</dt><dd>每层按 PC / 手机各自出什么，见「看交付清单」</dd></dl>`;
+  };
+
+  // ---- 检查器：改过的模块在摘要前写「+N」（N = 这个模块里改过的参数行） ----
+  function syncMods() {
+    for (const sm of document.querySelectorAll('#params details.mod>summary')) {
+      const ms = sm.querySelector('.msum'); if (!ms) continue;
+      const n = sm.classList.contains('mchg') ? sm.parentElement.querySelectorAll(':scope > .sl.chg, :scope > .field.chg').length : 0;
+      const v = n ? String(n) : null; if (ms.getAttribute('data-e40n') !== v) { if (v) ms.setAttribute('data-e40n', v); else ms.removeAttribute('data-e40n'); }
+    }
+  }
+  // ---- 播放条上的「生成缩略图」画成相机图标（文字收进悬停提示） ----
+  function syncIcons() {
+    const g = $q('#thGrab'); if (g && !g.querySelector('svg')) { g.innerHTML = ico('camera'); g.classList.add('btn-icon'); g.setAttribute('aria-label', '生成缩略图'); }
+  }
+
+  // ---- 效果名行「＋」：加层 / 加发射器 ----
+  let pop = null;
+  const closePop = () => { if (pop) { pop.remove(); pop = null; } };
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('#e40Add');
+    if (b) {
+      if (pop) { closePop(); return; }
+      const al = $q('#abAddLayer'), ex = $q('#exAdd');
+      pop = document.createElement('div'); pop.className = 'e40-pop'; pop.setAttribute('role', 'menu');
+      pop.innerHTML = `<button type="button" class="mi" role="menuitem" data-a="layer"${!al || al.disabled || al.hidden ? ' disabled' : ''}>${ico('layer')}加层</button><button type="button" class="mi" role="menuitem" data-a="emit"${ex ? '' : ' disabled title="这一层不能加发射器"'}>${ico('star')}加发射器</button>`;
+      const r = b.getBoundingClientRect(), side = $q('#side').getBoundingClientRect();
+      pop.style.left = Math.max(4, r.right - side.left - 160) + 'px'; pop.style.top = (r.bottom - side.top + 2) + 'px';
+      $q('#side').append(pop); return;
+    }
+    const it = e.target.closest && e.target.closest('.e40-pop .mi');
+    if (it) { const a = it.dataset.a; closePop(); if (a === 'layer') $q('#abAddLayer').click(); else if (a === 'emit' && $q('#exAdd')) $q('#exAdd').click(); return; }
+    if (pop && !(e.target.closest && e.target.closest('.e40-pop'))) closePop();
+  });
 
   // ---- 「保存」后的未保存点（v3.4 第 4 条）：资产栏「参数已变 · 未保存」亮着时 ----
   function syncSave() {
     const chg = $q('#abChg'), sv = $q('#abSave'); if (!chg || !sv) return;
     const dirty = !chg.hidden; sv.classList.toggle('e-dirty', dirty);
     const lab = dirty ? '保存（有没保存的改动）' : '保存'; if (sv.getAttribute('aria-label') !== lab) sv.setAttribute('aria-label', lab);
+    const vs = $q('#versionSummary'), vh = vs && vs.parentElement; if (vh) { const t = '版本记录' + (vs.textContent.trim() ? '：现在是「' + vs.textContent.trim() + '」' : '') + '（保存的版本、未保存草稿和导出时的恢复点）'; if (vh.dataset.tip !== t) { vh.dataset.tip = t; vh.removeAttribute('title'); } }
   }
 
   // ---- 导出 ▾：资源交付（外壳接管）、导出素材包、看交付清单、导出配方文件 ----
@@ -64,6 +134,7 @@
   function openExp() {
     const m = menu(); if (!m) return;
     if (typeof window.e40ExpSummary === 'function') { try { window.e40ExpSummary($q('#expSum')); } catch (err) { console.error(err); } }
+    const fo = m.querySelector('[data-exp="folder"]'); if (fo) fo.hidden = typeof window.shellPickExportFolder !== 'function';     // 外壳提供时才有
     m.hidden = false; dd().setAttribute('aria-expanded', 'true');
   }
   document.addEventListener('click', e => {
@@ -76,6 +147,7 @@
       else if (k === 'pack') $q('#abExportPack').click();
       else if (k === 'list') $q('#abDeliv').click();
       else if (k === 'recipe') $q('#abExportFile').click();
+      else if (k === 'folder' && typeof window.shellPickExportFolder === 'function') window.shellPickExportFolder();
       return;
     }
     if (menu() && !menu().hidden && !(e.target.closest && e.target.closest('#expMenu'))) closeExp();
@@ -102,5 +174,14 @@
     sp.addEventListener('dblclick', () => { const c = !side.classList.contains('lib-closed'); side.classList.toggle('lib-closed', c); put('libClosed', c); });
     sp.addEventListener('keydown', e => { if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); const h = $q('#treePane').offsetHeight + (e.key === 'ArrowUp' ? -16 : 16); apply(Math.max(80, h)); put('treeH', Math.max(80, h)); } });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSplit); else initSplit();
+  // ---- 效果库一级标签「效果 / 模板」（记住）----
+  function initLibTabs() {
+    const pane = $q('#libPane'), tabs = $q('#libTabs'); if (!pane || !tabs) return;
+    let cur = '效果'; try { cur = JSON.parse(localStorage.getItem('fw.e40.libTab')) || '效果'; } catch (e) { }
+    const set = v => { pane.dataset.lt = v; for (const b of tabs.children) b.setAttribute('aria-selected', String(b.dataset.lt === v)); try { localStorage.setItem('fw.e40.libTab', JSON.stringify(v)); } catch (e) { } };
+    set(cur === '模板' ? '模板' : '效果');
+    tabs.addEventListener('click', e => { const b = e.target.closest('[data-lt]'); if (!b) return; set(b.dataset.lt); $q('#side').classList.remove('lib-closed'); });
+  }
+  const init = () => { initSplit(); initLibTabs(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
