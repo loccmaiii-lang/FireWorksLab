@@ -1,7 +1,8 @@
 /* ---------- 外壳（style_shell.css） ---------- */
 /* =====================================================================
-   烟花工坊 5.0 外壳，E 样板 v3（对话框9，2026-11-05）
-   依据：交互宪章 0.9（含「用户 2026-11-05 改定」）、协作/方案/E设计规范_v3_2026-11-05.md 第 1–6、11、12 节。
+   烟花工坊 5.0 外壳，E 样板 v3.1（对话框9，2026-11-05）
+   依据：交互宪章 0.9（含「用户 2026-11-05 改定」）、协作/方案/E设计规范_v3_2026-11-05.md 第 1–6、11、12 节；
+   E样板_v3.1_改动单.md 第 4、9、10、11 条（和规范冲突处以改动单为准）。
    0 兜底  1 外壳顶栏  2 资源交付 / 资源编排两页  3 列表条目  4 浮层补充  5 编排预览（状态栏）  6 样板开关  7 全表一节
    颜色、字号、间距一律取样板 style_main.css 的 token；样板还没有的写成 var(--新, 旧值)；
    组件类（.btn / .tbtn / .modeseg / .seg / .tab / .menu / .dialog / .toast）以样板为准，这里只补外壳自己的部件（sh-*）。
@@ -12,55 +13,57 @@
 :where(.tgrp){display:flex;align-items:center;gap:var(--s1, 4px);flex:none}
 
 /* ---------- 1 外壳顶栏（规范第 11 节） ---------- */
-/* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线（同样板 .app>.shell 用内阴影画，两边叠在一起不会变成 2 px）。左：产品名 + 版本号；右：四组，组间 1 px 竖线、组内 12 px、组间 20 px */
-.shell{--sh-gi:12px;--sh-gg:20px;display:flex;align-items:center;min-width:0;height:var(--h-shell);padding:0 var(--s3);box-shadow:inset 0 -1px 0 var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
+/* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线（同样板 .app>.shell 用内阴影画，两边叠在一起不会变成 2 px）。左：产品名 + 版本号；右：四组，组内 12 px、组间 24 px，不画竖线（v3.1 第 10 条） */
+.shell{--sh-gi:12px;--sh-gg:24px;display:flex;align-items:center;min-width:0;height:var(--h-shell);padding:0 var(--s3);box-shadow:inset 0 -1px 0 var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
 .shell.sh-static{overflow:hidden}
-/* 产品名「烟花工坊」大号 600；版本号「FireWorksLab 5.0.3」小号弱色，是打开更新记录的命令（点击区 28 px）；未读数小号、在版本号右上角 */
+/* 产品名「烟花工坊」大号 600；版本号「FireWorksLab 5.0.3」小号弱色，是打开更新记录的命令（点击区 28 px）；未读数跟在后面，计数框（v3.1 改动单第 11 条） */
 .sh-brand{flex:none;display:flex;align-items:center;gap:4px;min-width:0}
 .sh-brand b{font-size:var(--fs3);line-height:var(--lh3);font-weight:var(--fw2);color:var(--t1)}
-.sh-ver{position:relative;display:inline-flex;align-items:center;height:var(--h-hit, var(--h-ctl));padding:0 6px;border-radius:var(--r2);font-size:var(--fs1);color:var(--t3);white-space:nowrap}
-.sh-ver[data-n]{padding-right:16px}
-.sh-ver[data-n]::after{content:attr(data-n);position:absolute;top:3px;right:5px;font-size:var(--fs1);line-height:1;color:var(--t2)}
+.sh-ver{position:relative;display:inline-flex;align-items:center;gap:6px;height:var(--h-hit, var(--h-ctl));padding:0 6px;border-radius:var(--r2);font-size:var(--fs1);color:var(--t3);white-space:nowrap}
 .sh-ver:hover,.sh-ver.is-hover,.sh-ver[aria-expanded="true"]{background:var(--hov, var(--ov));color:var(--t2)}
 .sh-ver:active{background:var(--press, var(--g5))}
+/* 计数只有一种写法（第 11 条）：小号数字放在 1 px 方框里，跟在名称后面 */
+.sh-cnt{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:16px;height:16px;margin:0;padding:0 3px;border:1px solid var(--g6);border-radius:0;color:var(--t2);font-size:var(--fs1);line-height:14px;font-weight:var(--fw1);font-variant-numeric:tabular-nums}
+/* 右侧分组（第 10 条）：状态（UE、导出、备份）｜ 页面入口（资源交付、资源编排）｜ 显卡；组间只靠 24 px 间距分开，没有竖线 */
 .sh-r{flex:0 1 auto;align-self:stretch;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
 .sh-g{position:relative;display:flex;align-items:center;gap:var(--sh-gi);min-width:0}
-.sh-g+.sh-g::before{content:"";position:absolute;left:calc(var(--sh-gg) / -2);top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
 .sh-g-ue,.sh-g-pg,.sh-g-gpu{flex:none}
 .sh-g-fold{flex:0 1 auto}
-/* UE 状态：圆点 + 文字（状态是弱色信息）；已连接的圆点是薄荷；未连接是空心圈 +「重试」+ 倒计时；写入中是转圈，能点（去那一页） */
+/* 状态：前面一个小圆点（好 = 薄荷，要处理 = 琥珀，其他 = 灰），文字弱色；要处理的那个词（未选、未连接、需允许访问）用琥珀。
+   连接中、写入中是进行中：圆点的位置换成转圈 */
+.sh-stat{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1);color:var(--t3);white-space:nowrap}
+.sh-stat::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--t3)}
+.sh-stat[data-tone="ok"]::before{background:var(--p4)}
+.sh-stat[data-tone="warn"]::before{background:var(--w3)}
+.sh-stat.is-busy::before{display:none}
+.sh-stat .spin{width:8px;height:8px;border-width:1.5px;color:var(--t3)}
+.sh-stat .sh-sv{color:var(--t3)}
+.sh-stat .sh-sv.is-warn{color:var(--w3)}
+.sh-stat .sh-n{font-variant-numeric:tabular-nums}
 .sh-ueg{flex:none;display:flex;align-items:center;gap:4px}
-.sh-ue{display:inline-flex;align-items:center;gap:6px;height:var(--h-hit, var(--h-ctl));padding:0 4px;border-radius:var(--r2);font-size:var(--fs1);color:var(--t3)}
-.sh-ue.on::before{background:var(--p4)}
-.sh-ue .spin{width:10px;height:10px}
-.sh-ue.is-write{padding:0 6px;color:var(--t2)}
-.sh-ue.is-write:hover{color:var(--t1)}
-.sh-ue.is-na{color:var(--tDis)}
-.sh-ue.is-na::before{border-color:var(--g6)}
-.sh-ue .sh-n{font-variant-numeric:tabular-nums}
+.sh-ue{height:var(--h-hit, var(--h-ctl));padding:0 4px;border-radius:var(--r2)}
+.sh-ue.is-write{padding:0 6px}
+.sh-ue.is-write:hover{color:var(--t2)}
+.sh-ue.is-na{opacity:.5}
 .sh-cd{flex:none;font-size:var(--fs1);color:var(--t3)}
-/* 文件夹：「导出 FWL_Export」标签弱色、值次文字色；点开换文件夹，悬停写全称和完整路径。
-   未选：导出会挡住导出 → 琥珀色；备份不挡操作 → 弱色字；两者后面都跟命令「设置」。需允许访问：琥珀色。不可用：停用 */
+/* 文件夹：点开换文件夹，悬停写全称和完整路径；名字过长省略号。未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词，后面跟命令「设置」 */
 .sh-fp{display:flex;align-items:center;gap:2px;min-width:0;flex:0 1 auto}
 .sh-fp:has(.sh-set){flex:none}
-.sh-fold{flex:0 1 auto;min-width:0;gap:6px;padding:0 6px;overflow:hidden;font-size:var(--fs1)}
-.sh-fold .sh-fk{flex:none;color:var(--t3)}
-.sh-fold .sh-fv{flex:none;color:var(--t2)}
-.sh-fold .sh-fv.is-name{flex:0 1 auto;min-width:3.2em;overflow:hidden;text-overflow:ellipsis}
-.sh-fold .sh-fx{flex:none}
-.sh-fold.is-weak .sh-fv{color:var(--t3)}
-.sh-fold.is-warn .sh-fk,.sh-fold.is-warn .sh-fv,.sh-fold.is-warn .sh-fx{color:var(--w3)}
+.sh-fold{flex:0 1 auto;min-width:0;padding:0 6px;overflow:hidden}
+.sh-fold .sh-fk,.sh-fold .sh-sv{flex:none}
+.sh-fold .sh-sv.is-name{flex:0 1 auto;min-width:3.2em;overflow:hidden;text-overflow:ellipsis}
 .sh-fold.is-na{opacity:.5;cursor:default;background:none}
-.sh-set{flex:none;padding:0 6px}
-/* 「资源交付 2」「资源编排」：页面标签 = 文字 + 2 px 下划线；当前打开的那页 600 + 薄荷下划线（压在顶栏底线上）；计数小一号弱色、隔 4 px */
-.sh-g-pg{align-self:stretch}
-.sh-pg{position:relative;display:inline-flex;align-items:center;height:100%;padding:0 2px;color:var(--t2);font-size:var(--fs2);white-space:nowrap;cursor:pointer}
+/* 操作：命令样式（次文字色、静止无底、悬停出底色），和状态的弱色字分开 */
+.sh-set,.sh-retry{flex:none;padding:0 6px;color:var(--t2)}
+/* 页面入口「资源交付 [2]」「资源编排」：标签样式，次文字色、正文字号，悬停出底色；当前页薄荷下划线 + 600（预留 600 的宽度，换字重不挤动顶栏） */
+.sh-g-pg{align-self:stretch;gap:2px}
+.sh-pg{position:relative;display:inline-flex;align-items:center;gap:6px;height:100%;padding:0 10px;color:var(--t2);font-size:var(--fs2);white-space:nowrap;cursor:pointer}
 .sh-pg>span:first-child{display:inline-grid}
 .sh-pg>span:first-child::after{content:attr(data-w);height:0;overflow:hidden;visibility:hidden;font-weight:var(--fw2)}
-.sh-pg:hover,.sh-pg.is-hover{color:var(--t1)}
+.sh-pg:hover,.sh-pg.is-hover{background:var(--hov);color:var(--t1)}
+.sh-pg:active{background:var(--press)}
 .sh-pg[aria-pressed="true"]{color:var(--t1);font-weight:var(--fw2)}
 .sh-pg[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--p4)}
-.sh-pg .badge-n{margin-left:4px;color:var(--t3);font-size:var(--fs1);font-weight:var(--fw1)}
 .sh-pg:focus-visible{outline-offset:-2px}
 .shell .sh-gpu{flex:none;margin:0;color:var(--t3);font-size:var(--fs1);cursor:default}
 
@@ -162,7 +165,7 @@
 .th.sh-thp.is-fail{background:none;box-shadow:inset 0 0 0 1px var(--line)}
 
 /* ---------- 4 浮层补充（规范第 12 节） ---------- */
-.dialog p b{font-weight:var(--fw2);color:var(--t1)}
+.dialog p b{font-weight:var(--fw1);color:var(--t1)}   /* 粗体只给当前位置和标题（v3.1 第 9 条）：正文里要强调的那句只换主文字色 */
 .sh-dlg .sh-fl{display:flex;flex-direction:column;gap:4px}
 .sh-dlg p+.sh-fl{margin-top:var(--s3)}
 .sh-lab{font-size:var(--fs1);line-height:var(--lh1)}

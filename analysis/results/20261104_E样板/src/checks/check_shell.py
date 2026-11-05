@@ -93,7 +93,7 @@ window.__T = (() => {
       const s = n.textContent.replace(/\s+/g, ' ').trim(); if (!s) continue;
       if (out && !/[（「：，、]$/.test(out) && !/^[，。：、）」]/.test(s)) out += ' '; out += s; }
     return out; };
-  const desc = e => (e.id ? '#' + e.id : e.tagName.toLowerCase()) + [...e.classList].slice(0, 3).map(c => '.' + c).join('');
+  const desc = e => (e.id ? '#' + e.id : e.tagName.toLowerCase()) + [...e.classList].slice(0, 6).map(c => '.' + c).join('');
   const path = e => { const a = []; for (let x = e; x && x.id !== 'app' && x.id !== 'ovlApp' && a.length < 3; x = x.parentElement) a.unshift(desc(x)); return a.join(' > '); };
   const ownText = e => [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
   /* 颜色用途扫描：roots 里所有看得见的元素（含 ::before / ::after），文字色、底色、边框、阴影、描边里出现了哪些指定颜色 */
@@ -261,34 +261,50 @@ def t_bar(p, size):
     fs = {1920: (12, 13, 15), 1366: (11, 12, 14)}[size]
     b = p.ev("({t: __T.txt('#shell .sh-brand b'), fs: parseFloat(__T.cs('#shell .sh-brand b', 'fontSize')), fw: +__T.cs('#shell .sh-brand b', 'fontWeight'), c: __T.cs('#shell .sh-brand b', 'color'), t1: __T.tok('--t1')})")
     ck(f'规范11-「烟花工坊」大号 600{S}', b['t'] == '烟花工坊' and b['fs'] == fs[2] and b['fw'] == 600 and b['c'] == b['t1'], b)
-    v = p.ev("""(() => { const v = __T.q('#shell .sh-ver'); return {t: __T.txt(v), fs: parseFloat(__T.cs(v, 'fontSize')), c: __T.cs(v, 'color'), t3: __T.tok('--t3'), n: v.dataset.n, after: getComputedStyle(v, '::after').content, afs: parseFloat(getComputedStyle(v, '::after').fontSize), h: __T.rect(v).h, tag: v.tagName}; })()""")
-    ck(f'规范11-版本号小号弱色{S}', v['t'] == 'FireWorksLab 5.0.3' and v['fs'] == fs[0] and v['c'] == v['t3'], v)
-    ck(f'改定6-未读数在版本号右上角（小号）{S}', v['n'] == '2' and v['after'] == '"2"' and v['afs'] == fs[0], v)
+    v = p.ev("""(() => { const v = __T.q('#shell .sh-ver'), c = v.querySelector('.sh-cnt'), cs = c && getComputedStyle(c);
+        return {t: __T.txt(v), fs: parseFloat(__T.cs(v, 'fontSize')), c: __T.cs(v, 'color'), t3: __T.tok('--t3'), after: getComputedStyle(v, '::after').content, h: __T.rect(v).h, tag: v.tagName,
+                n: c && {t: __T.txt(c), bw: cs.borderTopWidth, bs: cs.borderTopStyle, r: cs.borderTopLeftRadius, fs: parseFloat(cs.fontSize), fw: +cs.fontWeight, after: __T.rect(c).x >= __T.rect(v).x + 40}}; })()""")
+    ck(f'规范11-版本号小号弱色{S}', v['t'] == 'FireWorksLab 5.0.3 2' and v['fs'] == fs[0] and v['c'] == v['t3'], v)
+    ck(f'v3.1-11 未读数：跟在版本号后面的计数框（1 px 方框、小号），没有右上角的「²」{S}', v['n'] and v['n']['t'] == '2' and v['n']['bw'] == '1px' and v['n']['bs'] == 'solid' and v['n']['r'] == '0px' and v['n']['fs'] == fs[0] and v['n']['after'] and v['after'] in ('none', 'normal'), v)
     ck(f'规范2-版本号可点区域 ≥ 28{S}', v['tag'] == 'BUTTON' and v['h'] >= 28 - 0.5, v['h'])
-    # 分组：组间 20、组内 12、1 px 竖线在组间正中
+    # 分组（v3.1 第 10 条）：组间只靠 24 px 间距，没有竖线；组内 12
     gp = p.ev("""(() => { const r = __T.q('#shell .sh-r'), gs = __T.qq('.sh-g', r);
-        const seps = gs.slice(1).map(x => { const s = getComputedStyle(x, '::before'); return {w: s.width, h: s.height, bg: s.backgroundColor, left: parseFloat(s.left)}; });
-        return {gap: getComputedStyle(r).columnGap, gi: gs.map(x => getComputedStyle(x).columnGap), seps, line: __T.tok('--line'),
+        return {gap: getComputedStyle(r).columnGap, gi: gs.filter(x => !x.classList.contains('sh-g-pg')).map(x => getComputedStyle(x).columnGap),
+                seps: gs.map(x => getComputedStyle(x, '::before').content).filter(c => c !== 'none' && c !== 'normal').length,
                 dist: gs.slice(1).map((x, i) => __T.rect(x).x - __T.rect(gs[i]).r)}; })()""")
-    ck(f'规范11-组间 20{S}', gp['gap'] == '20px' and all(near(d, 20, 0.6) for d in gp['dist']), gp['dist'])
+    ck(f'v3.1-10 组间 24{S}', gp['gap'] == '24px' and all(near(d, 24, 0.6) for d in gp['dist']), gp['dist'])
+    ck(f'v3.1-10 组间不画竖线{S}', gp['seps'] == 0, gp)
     ck(f'规范11-组内 12{S}', all(x == '12px' for x in gp['gi']), gp['gi'])
-    ck(f'规范11-组间 1 px 竖线（线色）{S}', len(gp['seps']) == 3 and all(s['w'] == '1px' and s['bg'] == gp['line'] and near(s['left'], -10, 0.6) for s in gp['seps']), gp['seps'])
-    # UE 已连接：圆点薄荷 + 文字弱色
-    ue = p.ev("({t: __T.txt('#shell .sh-ue'), dot: getComputedStyle(__T.q('#shell .sh-ue'), '::before').backgroundColor, p4: __T.tok('--p4'), c: __T.cs('#shell .sh-ue', 'color'), t3: __T.tok('--t3'), fs: parseFloat(__T.cs('#shell .sh-ue', 'fontSize'))})")
-    ck(f'规范11-「UE 已连接」圆点 + 文字{S}', ue['t'] == 'UE 已连接' and ue['dot'] == ue['p4'] and ue['c'] == ue['t3'], ue)
-    # 文件夹：标签弱色、值次文字色；备份未选 = 弱色字 +「设置」
-    f = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'), b = __T.q('#shell [data-fk=bak]');
-        return {ek: __T.cs(e.querySelector('.sh-fk'), 'color'), ev: __T.cs(e.querySelector('.sh-fv'), 'color'), bk: __T.cs(b.querySelector('.sh-fk'), 'color'), bv: __T.cs(b.querySelector('.sh-fv'), 'color'),
-                set: __T.txt(b.parentElement.querySelector('.sh-set')), et: __T.txt(e), bt: __T.txt(b), t2: __T.tok('--t2'), t3: __T.tok('--t3')}; })()""")
-    ck(f'规范11-「导出 FWL_Export」标签弱色、值次文字色{S}', f['et'] == '导出 FWL_Export' and f['ek'] == f['t3'] and f['ev'] == f['t2'], f)
-    ck(f'规范5-「备份 未选　设置」弱色字 + 命令{S}', f['bt'] == '备份 未选' and f['bv'] == f['t3'] and f['set'] == '设置', f)
-    # 页面标签：文字 + 下划线；没打开时没有下划线、400；计数小号弱色
+    # 状态（v3.1 第 10 条）：小圆点 + 弱色字；好 = 薄荷，要处理 = 琥珀（第 4 条：备份未选也是）
+    st = p.ev("""(() => { const one = e => { const b = getComputedStyle(e, '::before'); return {t: __T.txt(e), dot: b.backgroundColor, dw: b.width, dr: b.borderTopLeftRadius, c: __T.cs(e, 'color'),
+            k: e.querySelector('.sh-fk') ? __T.cs(e.querySelector('.sh-fk'), 'color') : null, v: [...e.querySelectorAll('.sh-sv')].map(x => [__T.txt(x), __T.cs(x, 'color')])}; };
+        return {ue: one(__T.q('#shell .sh-ue')), exp: one(__T.q('#shell [data-fk=exp]')), bak: one(__T.q('#shell [data-fk=bak]')), set: __T.q('#shell [data-fk=bak]').parentElement.querySelector('.sh-set'),
+                p4: __T.tok('--p4'), w3: __T.tok('--w3'), t2: __T.tok('--t2'), t3: __T.tok('--t3')}; })()""")
+    ok_dot = lambda x, c: x['dot'] == c and x['dw'] == '6px' and x['dr'] == '50%'
+    ck(f'v3.1-10「UE 已连接」：薄荷圆点 + 弱色字{S}', st['ue']['t'] == 'UE 已连接' and ok_dot(st['ue'], st['p4']) and st['ue']['c'] == st['t3'] and all(c == st['t3'] for _, c in st['ue']['v']), st['ue'])
+    ck(f'v3.1-10「导出 FWL_Export」：薄荷圆点，标签和值都是弱色{S}', st['exp']['t'] == '导出 FWL_Export' and ok_dot(st['exp'], st['p4']) and st['exp']['k'] == st['t3'] and all(c == st['t3'] for _, c in st['exp']['v']), st['exp'])
+    ck(f'v3.1-4「备份 未选」：琥珀圆点 + 琥珀词，后面跟「设置」{S}', st['bak']['t'] == '备份 未选' and ok_dot(st['bak'], st['w3']) and st['bak']['k'] == st['t3'] and st['bak']['v'] == [['未选', st['w3']]], st['bak'])
+    cmd = p.ev("""(() => { const s = __T.q('#shell [data-fk=bak]').parentElement.querySelector('.sh-set'); return {t: __T.txt(s), c: __T.cs(s, 'color'), bg: __T.cs(s, 'backgroundColor'), h: __T.rect(s).h, tag: s.tagName, cls: s.className, t2: __T.tok('--t2')}; })()""")
+    ck(f'v3.1-10「设置」是命令：次文字色、静止无底、点击区 28{S}', cmd['t'] == '设置' and cmd['tag'] == 'BUTTON' and 'tbtn' in cmd['cls'] and cmd['c'] == cmd['t2'] and cmd['bg'] in ('rgba(0, 0, 0, 0)', 'transparent') and cmd['h'] >= 27.5, cmd)
+    p.pg.hover('#shell .sh-set')
+    ck(f'v3.1-10「设置」悬停出底色{S}', p.ev("__T.cs('#shell .sh-set', 'backgroundColor') === __T.tok('--hov')"), p.ev("[__T.cs('#shell .sh-set', 'backgroundColor'), __T.tok('--hov')]"))
+    p.pg.mouse.move(5, 600)
+    # 页面入口（v3.1 第 10 条）：标签样子，和状态分开：次文字色、正文字号、没有圆点；悬停出底色；计数框
     tb = p.ev("""__T.qq('#shell .sh-pg').map(x => ({t: __T.txt(x), on: x.getAttribute('aria-pressed'), fw: +__T.cs(x, 'fontWeight'), fs: parseFloat(__T.cs(x, 'fontSize')), c: __T.cs(x, 'color'), u: getComputedStyle(x, '::after').content,
-        n: x.querySelector('.badge-n') && {fs: parseFloat(__T.cs(x.querySelector('.badge-n'), 'fontSize')), c: __T.cs(x.querySelector('.badge-n'), 'color')}, h: __T.rect(x).h}))""")
+        dot: getComputedStyle(x, '::before').content, bg: __T.cs(x, 'backgroundColor'),
+        n: x.querySelector('.sh-cnt') && {t: __T.txt(x.querySelector('.sh-cnt')), fs: parseFloat(__T.cs(x.querySelector('.sh-cnt'), 'fontSize')), bw: __T.cs(x.querySelector('.sh-cnt'), 'borderTopWidth'), r: __T.cs(x.querySelector('.sh-cnt'), 'borderTopLeftRadius')}, h: __T.rect(x).h}))""")
     t2, t3 = p.ev("[__T.tok('--t2'), __T.tok('--t3')]")
-    ck(f'规范4-页面标签静止：次文字色、400、无下划线{S}', all(x['on'] == 'false' and x['fw'] == 400 and x['fs'] == fs[1] and x['c'] == t2 and x['u'] in ('none', 'normal') for x in tb), tb)
-    ck(f'规范11-「资源交付 2」计数小号弱色{S}', tb[0]['n'] and tb[0]['n']['fs'] == fs[0] and tb[0]['n']['c'] == t3, tb[0])
-    ck(f'规范2-页面标签可点区域 ≥ 28{S}', all(x['h'] >= 28 for x in tb), [x['h'] for x in tb])
+    ck(f'v3.1-10 页面入口静止：次文字色、正文字号、400、无下划线、无圆点、无底{S}', all(x['on'] == 'false' and x['fw'] == 400 and x['fs'] == fs[1] and x['c'] == t2 and x['u'] in ('none', 'normal') and x['dot'] in ('none', 'normal') and x['bg'] in ('rgba(0, 0, 0, 0)', 'transparent') for x in tb), tb)
+    ck(f'v3.1-10 状态和页面入口长得不一样（字号、颜色、圆点）{S}', st['ue']['c'] != tb[0]['c'] and fs[0] != tb[0]['fs'] and tb[0]['dot'] in ('none', 'normal'), (st['ue']['c'], tb[0]['c']))
+    ck(f'v3.1-11「资源交付 [2]」计数框{S}', tb[0]['n'] and tb[0]['n']['t'] == '2' and tb[0]['n']['fs'] == fs[0] and tb[0]['n']['bw'] == '1px' and tb[0]['n']['r'] == '0px', tb[0])
+    ck(f'规范2-页面入口可点区域 ≥ 28{S}', all(x['h'] >= 28 for x in tb), [x['h'] for x in tb])
+    p.pg.hover('#shell .sh-pg[data-pg=wb]')
+    hv = p.ev("({bg: __T.cs('#shell .sh-pg[data-pg=wb]', 'backgroundColor'), hov: __T.tok('--hov'), c: __T.cs('#shell .sh-pg[data-pg=wb]', 'color'), t1: __T.tok('--t1')})")
+    ck(f'v3.1-10 页面入口悬停出底色、主文字色{S}', hv['bg'] == hv['hov'] and hv['c'] == hv['t1'], hv)
+    p.pg.mouse.move(5, 600)
+    # 粗体只给当前位置和标题（v3.1 第 9 条）：顶栏里 600 只有产品名（打开着的页面入口在 t_pages 里查）
+    bold = p.ev("__T.fonts(['#shell']).filter(x => x.fw >= 600).map(x => x.t)")
+    ck(f'v3.1-9 顶栏粗体只有产品名{S}', bold == ['烟花工坊'], bold)
     gp2 = p.ev("({fs: parseFloat(__T.cs('#shell .sh-gpu', 'fontSize')), c: __T.cs('#shell .sh-gpu', 'color'), t3: __T.tok('--t3')})")
     ck(f'规范11-显卡小号弱色{S}', gp2['fs'] == fs[0] and gp2['c'] == gp2['t3'], gp2)
     # 顶栏只有 400 / 600，字号只有三级；不画警示图形
@@ -359,6 +375,8 @@ def t_pages(p, size):
         return {h: a.height, bg: a.backgroundColor, p4: __T.tok('--p4'), fw: +__T.cs(x, 'fontWeight'), c: __T.cs(x, 'color'), t1: __T.tok('--t1'), bottom: r.b, shb: sh.b, w: parseFloat(a.width), tw: r.w}; })()""")
     ck(f'规范11-当前页标签：薄荷 2 px 下划线压在顶栏底线上{S}', u['h'] == '2px' and u['bg'] == u['p4'] and near(u['bottom'], u['shb'], 0.6) and near(u['w'], u['tw'], 0.6), u)
     ck(f'规范4-当前页标签 600 + 主文字色{S}', u['fw'] == 600 and u['c'] == u['t1'], u)
+    bold = p.ev("__T.fonts(['#shell']).filter(x => x.fw >= 600).map(x => x.t)")
+    ck(f'v3.1-9 打开一页时顶栏粗体只有产品名和当前页入口{S}', bold == ['烟花工坊', '资源交付'], bold)
     w0 = p.ev("__T.rect('#shell .sh-pg[data-pg=import]').w")
     # 「← 返回制作」在页面工具行左端
     bk = p.ev("""(() => { const b = __T.q('#impTool .sh-back'), t = __T.rect('#impTool'), r = __T.rect(b), i = b.querySelector('svg.i use');
@@ -406,7 +424,7 @@ def t_import(p):
     ck('规范3-工具行占满宽、栏头面色、底边 1 px 线', near(t['w'], t['ww']) and t['bg'] == t['chrome'] and t['line'] in t['sh'] and t['bw'] == '0px', t)
     ck('规范2-工具行分段和下面的栏对齐', near(t['segX'], t['colX'], 1), t)
     L = p.ev("""({folder: __T.txt('#impFolder'), cnt: __T.txt('#impCount'), rows: __T.qq('#impList .lib-item').map(x => ({id: x.dataset.id, n: __T.txt(x.querySelector('.li-n')), st: __T.txt(x.querySelector('.st')), sel: x.getAttribute('aria-selected')})),
-        badge: __T.txt('#shell .sh-pg[data-pg=import] .badge-n')})""")
+        badge: __T.txt('#shell .sh-pg[data-pg=import] .sh-cnt')})""")
     waits = [r for r in L['rows'] if r['st'] == '待导入']
     ck('改定3-左栏：导出文件夹里的包', L['folder'] == 'FWL_Export' and L['cnt'] == '5 个素材包' and len(L['rows']) == 5, L)
     ck('改定3-待导入的排在前面', [r['st'] for r in L['rows']][:2] == ['待导入', '待导入'], L['rows'])
@@ -433,9 +451,10 @@ def t_import(p):
     colors = p.ev("({p4: __T.tok('--p4'), p5: __T.tok('--p5'), w3: __T.tok('--w3'), e3: __T.tok('--e3')})")
     hits = p.ev("c => __T.scan(['#shell', '#wsImport'], c)", colors)
     mint = [h for h in hits if h['c'] in ('p4', 'p5')]
-    bad = [h for h in mint if not re.search(r'sh-pg.*::after|sh-ue.*::before|conn\.on.*::before|#impGo', h['el'])]
+    bad = [h for h in mint if not re.search(r'sh-pg.*::after|sh-stat.*::before|#impGo', h['el'])]
     ck('规范5-资源交付页薄荷只在：当前页下划线、UE 圆点、本页主操作「导入」', not bad, bad or mint)
-    ck('规范5-资源交付页（正常状态）没有琥珀和红色', not [h for h in hits if h['c'] in ('w3', 'e3')], [h for h in hits if h['c'] in ('w3', 'e3')])
+    shell_warn = lambda h: re.search(r'sh-stat.*::before|sh-sv\.is-warn', h['el'])   # 顶栏要处理的状态（备份 未选）：琥珀点 + 琥珀词
+    ck('规范5-资源交付页（正常状态）没有琥珀和红色（顶栏要处理的状态除外）', not [h for h in hits if h['c'] in ('w3', 'e3') and not (h['c'] == 'w3' and shell_warn(h))], [h for h in hits if h['c'] in ('w3', 'e3')])
     fo = p.ev("__T.fonts(['#wsImport'])")
     ck('规范1-资源交付页字重只有 400 / 600', all(x['fw'] in (400, 600) for x in fo), [x for x in fo if x['fw'] not in (400, 600)][:5])
     ck('规范1-资源交付页字号三级', all(x['fs'] in (12, 13, 15) for x in fo), [x for x in fo if x['fs'] not in (12, 13, 15)][:5])
@@ -487,7 +506,7 @@ def t_import(p):
     ck('①-写入中点 UE 状态打开资源交付', p.ev("SHELL.state().ws") == 'import')
     ok = p.wait("!SHELL.state().imp && __T.ovl('.sh-toast > span').length", 8000)
     p.ev('SHELL.speed(0.15)')
-    t2 = p.ev("""({t: __T.ovl('.sh-toast > span').map(__T.txt), act: __T.ovl('.sh-toast [data-r=act]').map(__T.txt), st: __T.txt('#impList [data-id=cs3c] .st'), badge: __T.txt('#shell .sh-pg[data-pg=import] .badge-n'),
+    t2 = p.ev("""({t: __T.ovl('.sh-toast > span').map(__T.txt), act: __T.ovl('.sh-toast [data-r=act]').map(__T.txt), st: __T.txt('#impList [data-id=cs3c] .st'), badge: __T.txt('#shell .sh-pg[data-pg=import] .sh-cnt'),
         ticks: __T.qq('#impMC .sh-at td:first-child [aria-label="已写入"]').length})""")
     ck('⑦-写完：每行打勾、包变「已导入」、计数减一', ok and t2['ticks'] == 10 and t2['st'] == '已导入' and t2['badge'] == '1', t2)
     ck('P8-写完的提示条写明来自导入；人在资源交付时不出「查看」', t2['t'] == ['导入：已写入 10 个资产，覆盖的 3 个已备份'] and t2['act'] == [], t2)
@@ -551,7 +570,7 @@ def t_interlock(p):
     ck('⑦-编排写完：命令恢复、操作处写结果', ok and p.wait("__T.ovl('.sh-hint').map(__T.txt).includes('已写入 UE：导演表')", 1500))
     # 导出文件夹未选 / 需允许 / 浏览器不支持
     p.ev("SHELL.set('exp', 'none'); SHELL.ws('import')")
-    r = p.ev("({e: __T.txt('#impList .empty b'), b: __T.txt('#impList .empty button'), go: __T.q('#impGo').dataset.tip, rf: __T.q('#impRefresh').dataset.tip, badge: !!__T.q('#shell .sh-pg[data-pg=import] .badge-n'), f: __T.txt('#impFolder')})")
+    r = p.ev("({e: __T.txt('#impList .empty b'), b: __T.txt('#impList .empty button'), go: __T.q('#impGo').dataset.tip, rf: __T.q('#impRefresh').dataset.tip, badge: !!__T.q('#shell .sh-pg[data-pg=import] .sh-cnt'), f: __T.txt('#impFolder')})")
     ck('⑦-导出文件夹未选：列表空状态「未选导出文件夹　选择…」', r['e'] == '未选导出文件夹' and r['b'] == '选择…', r)
     ck('⑦-导出文件夹未选：导入、刷新变灰写原因，标签不带数字', r['go'] == '未选导出文件夹' and r['rf'] == '未选导出文件夹' and not r['badge'], r)
     grab(p)
@@ -559,7 +578,7 @@ def t_interlock(p):
     ck('⑤-空状态「选择…」选好文件夹，列表回来', p.ev("SHELL.state().exp === 'ok' && __T.qq('#impList .lib-item').length === 5"))
     p.ev("SHELL.set('exp', 'perm')")
     p.ev("document.body.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}))")
-    r = p.ev("({e: __T.txt('#impList .empty b'), b: __T.txt('#impList .empty button'), badge: !!__T.q('#shell .sh-pg[data-pg=import] .badge-n')})")
+    r = p.ev("({e: __T.txt('#impList .empty b'), b: __T.txt('#impList .empty button'), badge: !!__T.q('#shell .sh-pg[data-pg=import] .sh-cnt')})")
     ck('⑤-导出要重新允许：左栏就地写同一句 +「允许访问」', r['e'] == '浏览器重开后，FWL_Export 需重新允许访问' and r['b'] == '允许访问' and not r['badge'], r)
     grab(p)
     p.click('#impRefresh')
@@ -576,8 +595,8 @@ def t_folders_ue(p):
     tok = p.ev("({w3: __T.tok('--w3'), t2: __T.tok('--t2'), t3: __T.tok('--t3')})")
     # 导出未选：琥珀 +「设置」；点「设置」选好
     p.ev("SHELL.set('exp', 'none')")
-    r = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'); return {t: __T.txt(e), k: __T.cs(e.querySelector('.sh-fk'), 'color'), v: __T.cs(e.querySelector('.sh-fv'), 'color'), set: __T.txt(e.parentElement.querySelector('.sh-set')), tip: e.dataset.tip, ic: !!e.querySelector('svg')}; })()""")
-    ck('①-导出未选：琥珀字（会挡住导出）+「设置」，不画图形', r['t'] == '导出 未选' and r['k'] == tok['w3'] and r['v'] == tok['w3'] and r['set'] == '设置' and not r['ic'], r)
+    r = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'); return {t: __T.txt(e), k: getComputedStyle(e, '::before').backgroundColor, v: __T.cs(e.querySelector('.sh-sv'), 'color'), set: __T.txt(e.parentElement.querySelector('.sh-set')), tip: e.dataset.tip, ic: !!e.querySelector('svg')}; })()""")
+    ck('①-导出未选：琥珀圆点 + 琥珀词（会挡住导出）+「设置」，不画图形', r['t'] == '导出 未选' and r['k'] == tok['w3'] and r['v'] == tok['w3'] and r['set'] == '设置' and not r['ic'], r)
     ck('①-导出未选：悬停写「导出前需选好」', r['tip'] == '导出文件夹：导出前需选好', r)
     grab(p)
     p.click('#shell .sh-set[data-sk="exp"]')
@@ -594,8 +613,8 @@ def t_folders_ue(p):
     ck('①-换文件夹后标签跟着变', p.ev("__T.txt('#shell [data-fk=exp]')") == '导出 FWL_Export_2')
     # 需允许访问：琥珀 +「需允许访问」+ 气泡一次
     p.ev("SHELL.set('exp', 'perm')")
-    r = p.ev("({t: __T.txt('#shell [data-fk=exp]'), c: __T.cs('#shell [data-fk=exp] .sh-fx', 'color'), bub: __T.ovl('.sh-bub').map(b => __T.txt(b.querySelector('span')))})")
-    ck('①-导出需允许访问：琥珀字 + 标签下方一次气泡', r['t'] == '导出 FWL_Export_2 需允许访问' and r['c'] == tok['w3'] and r['bub'] == ['浏览器重开后，FWL_Export_2 需重新允许访问'], r)
+    r = p.ev("({t: __T.txt('#shell [data-fk=exp]'), c: __T.cs('#shell [data-fk=exp] .sh-sv.is-warn', 'color'), bub: __T.ovl('.sh-bub').map(b => __T.txt(b.querySelector('span')))})")
+    ck('①-导出需允许访问：琥珀词 + 标签下方一次气泡', r['t'] == '导出 FWL_Export_2 需允许访问' and r['c'] == tok['w3'] and r['bub'] == ['浏览器重开后，FWL_Export_2 需重新允许访问'], r)
     bb = p.ev("""(() => { const b = __T.ovl('.sh-bub')[0], a = __T.rect('#shell [data-fk=exp]'), r = __T.rect(b); return {gap: r.y - a.b, ax: parseFloat(b.style.getPropertyValue('--ax')) + r.x + 4, mid: a.x + a.w / 2, up: b.classList.contains('is-up')}; })()""")
     ck('规范12-标签下方气泡：离 8 px，三角对着标签中线', near(bb['gap'], 8, 1) and near(bb['ax'], bb['mid'], 2) and not bb['up'], bb)
     p.shot('shell_5_perm_bubble.png', clip={'x': 900, 'y': 0, 'width': 1020, 'height': 120})
@@ -604,16 +623,16 @@ def t_folders_ue(p):
     ck('①-需允许访问：点标签即允许', p.ev("SHELL.state().exp === 'ok' && __T.ovl('.sh-bub').length === 0"))
     # 备份三态
     p.ev("SHELL.set('bak', 'ok')")
-    ck('①-备份已选：标签弱色 + 值次文字色', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup' && __T.cs('#shell [data-fk=bak] .sh-fv', 'color') === __T.tok('--t2')"))
+    ck('①-备份已选：薄荷圆点 + 弱色字', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup' && __T.cs('#shell [data-fk=bak] .sh-sv', 'color') === __T.tok('--t3') && getComputedStyle(__T.q('#shell [data-fk=bak]'), '::before').backgroundColor === __T.tok('--p4')"))
     p.ev("SHELL.set('bak', 'perm')")
-    ck('①-备份需允许访问：琥珀字 + 气泡', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup 需允许访问' && __T.ovl('.sh-bub').length === 1"))
+    ck('①-备份需允许访问：琥珀词 + 气泡', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup 需允许访问' && __T.ovl('.sh-bub').length === 1"))
     p.ev("SHELL.set('bak', 'none')")
     ck('①-备份未选：悬停写「覆盖 UE 资产前需选好」', p.ev("__T.q('#shell [data-fk=bak]').dataset.tip") == '备份文件夹：覆盖 UE 资产前需选好')
     p.click('#shell .sh-set[data-sk="bak"]')
     ck('①-备份「设置」选好', p.ev("SHELL.state().bak") == 'ok')
     # 长名字：省略号 + 悬停全称
     p.ev("SHELL.S.expName = 'FWL_Export_Project03_Fireworks_Long'; SHELL.render()")
-    r = p.ev("""(() => { const v = __T.q('#shell [data-fk=exp] .sh-fv'); return {cut: v.scrollWidth > v.clientWidth, ell: __T.cs(v, 'textOverflow'), w: __T.rect(v).w, tip: __T.q('#shell [data-fk=exp]').dataset.tip, over: __T.clip(['#shell']).out}; })()""")
+    r = p.ev("""(() => { const v = __T.q('#shell [data-fk=exp] .sh-sv.is-name'); return {cut: v.scrollWidth > v.clientWidth, ell: __T.cs(v, 'textOverflow'), w: __T.rect(v).w, tip: __T.q('#shell [data-fk=exp]').dataset.tip, over: __T.clip(['#shell']).out}; })()""")
     ck('①-文件夹名过长：省略号 + 悬停全称、不挤出顶栏', r['ell'] == 'ellipsis' and r['tip'].endswith('FWL_Export_Project03_Fireworks_Long') and not r['over'], r)
     p.ev("SHELL.S.expName = 'FWL_Export'; SHELL.render()")
     # UE：已连接 / 连接中 / 未连接（倒计时、重试）
@@ -621,8 +640,8 @@ def t_folders_ue(p):
     ck('①-UE 连接中：转圈 + 文字', p.ev("__T.txt('#shell .sh-ue') === 'UE 连接中' && !!__T.q('#shell .sh-ue .spin')"))
     grab(p)
     p.ev("SHELL.set('ue', 'off')")
-    r = p.ev("({t: __T.txt('#shell .sh-ueg'), tip: __T.q('#shell .sh-ue').dataset.tip, dot: getComputedStyle(__T.q('#shell .sh-ue'), '::before').borderTopStyle})")
-    ck('①-UE 未连接：空心圈 +「重试」+「12 秒后自动重试」', r['t'] == 'UE 未连接 重试 12 秒后自动重试' and r['dot'] == 'solid', r)
+    r = p.ev("({t: __T.txt('#shell .sh-ueg'), tip: __T.q('#shell .sh-ue').dataset.tip, dot: getComputedStyle(__T.q('#shell .sh-ue'), '::before').backgroundColor, w3: __T.tok('--w3'), v: __T.cs('#shell .sh-ue .sh-sv', 'color'), rc: __T.cs('#shell .sh-retry', 'color'), t2: __T.tok('--t2')})")
+    ck('①-UE 未连接：琥珀圆点 + 琥珀词 +「重试」（命令）+「12 秒后自动重试」', r['t'] == 'UE 未连接 重试 12 秒后自动重试' and r['dot'] == r['w3'] and r['v'] == r['w3'] and r['rc'] == r['t2'], r)
     ck('①-UE 悬停写地址和上次连上的时间（一行）', bool(re.match(r'^127\.0\.0\.1:17780　上次连上 \d\d:\d\d$', r['tip'])), r['tip'])
     ok = p.wait("/^(1[01]) 秒后自动重试$/.test(__T.txt('#shell .sh-cd'))", 2500)
     ck('①-倒计时真在走', ok, p.ev("__T.txt('#shell .sh-cd')"))
@@ -643,7 +662,7 @@ def t_browser(p):
     ck('⑤-其他浏览器：弹「仅支持 Chrome、Edge」', d and d['h'] == '仅支持 Chrome、Edge' and d['a'] == ['继续查看', '复制地址'], d)
     grab(p, '对话框')
     p.click('.dialog[data-dlg=br] [data-r="0"]')
-    r = p.ev("""({ue: __T.txt('#shell .sh-ue'), f: __T.qq('#shell .sh-fold').map(x => [__T.txt(x), x.getAttribute('aria-disabled'), x.dataset.tip]), badge: !!__T.q('#shell .sh-pg .badge-n'),
+    r = p.ev("""({ue: __T.txt('#shell .sh-ue'), f: __T.qq('#shell .sh-fold').map(x => [__T.txt(x), x.getAttribute('aria-disabled'), x.dataset.tip]), badge: !!__T.q('#shell .sh-pg .sh-cnt'),
         exp: __T.qq('#expBtn .btn').map(b => [b.getAttribute('aria-disabled'), b.dataset.tip])})""")
     ck('⑤-其他浏览器：UE「不可用」', r['ue'] == 'UE 不可用', r)
     ck('⑤-其他浏览器：两个文件夹「不可用」、变灰写原因', all(x[0].endswith('不可用') and x[1] == 'true' and x[2] == '仅 Chrome、Edge 能读写文件夹' for x in r['f']), r)
@@ -698,7 +717,7 @@ def t_export(p):
     # ③：打开资源交付、选中刚导出的包，提示条在外壳提示区
     r = p.ev("""(() => { const s = __T.q('#impList [aria-selected=true]'); return {ws: SHELL.state().ws, sel: s && __T.txt(s.querySelector('.li-n')), sub: s && __T.txt(s.querySelector('.li-s')), first: __T.qq('#impList .lib-item')[0] === s,
         mh: __T.txt('#impMC .sh-mh b'), toast: __T.ovl('.sh-toast > span').map(__T.txt), act: __T.ovl('.sh-toast [data-r=act]').filter(__T.vis).map(__T.txt), bakerToast: __T.ovl('.toast:not(.sh-toast)').length,
-        badge: __T.txt('#shell .sh-pg[data-pg=import] .badge-n')}; })()""")
+        badge: __T.txt('#shell .sh-pg[data-pg=import] .sh-cnt')}; })()""")
     ck('改定3-导出完成后自动打开资源交付', r['ws'] == 'import', r)
     ck('改定3-选中刚导出的包（排在最前，副信息「刚导出 hh:mm」）', r['sel'] and r['sel'].startswith('金曜菊-B') and r['first'] and r['sub'].startswith('刚导出') and r['mh'] == r['sel'], r)
     ck('改定3-标签上的数字跟着加', r['badge'] == '3', r['badge'])
@@ -879,10 +898,10 @@ def t_wb(p, size):
     comp = [h for h in mint if 'tabs-sub' in h['el']]
     for h in comp:
         info(f'规范5：样板 .tabs-sub 当前项下划线是薄荷（{h["el"]}），薄荷五处里没有二级标签')
-    bad = [h for h in mint if h not in comp and not re.search(r'sh-pg.*::after|sh-ue.*::before|conn\.on.*::before|tabs-lg.*\.tab.*::after', h['el'])]
+    bad = [h for h in mint if h not in comp and not re.search(r'sh-pg.*::after|sh-stat.*::before|tabs-lg.*\.tab.*::after', h['el'])]
     ck(f'规范5-资源编排页薄荷只在：当前页下划线、UE 圆点、「效果 / 模板」下划线{S}', not bad, bad or mint)
-    amb = [h for h in hits if h['c'] == 'w3' and 'sh-st' not in h['el']]
-    ck(f'规范5-资源编排页琥珀只给「未进 UE」{S}', not amb, amb)
+    amb = [h for h in hits if h['c'] == 'w3' and not re.search(r'sh-st\.warn|sh-stat.*::before|sh-sv\.is-warn', h['el'])]
+    ck(f'规范5-资源编排页琥珀只给「未进 UE」和顶栏要处理的状态{S}', not amb, amb)
     red = [h for h in hits if h['c'] == 'e3' and not re.search(r'sh-st|sh-err', h['el'])]
     ck(f'规范5-资源编排页红色只给错误{S}', not red, red)
     fs = (12, 13, 15) if size == 1920 else (11, 12, 14)
@@ -945,7 +964,7 @@ def t_sweep(p, size):
                         S.ue = ue === 'write' || ue === 'wbw' || ue === 'na' ? 'on' : ue; if (ue === 'write') S.imp.writing = {pkg: 'cs3c', i: 12, tot: 14, nOv: 3, held: true};
                         if (ue === 'wbw') S.wb.busy = 'UE 里预览'; S.exp = ex; S.bak = bk; S.upd = 12; S.expName = 'FWL_Export_Project03'; SHELL.render(); SHELL.ws(ws); }""", [ue, ex, bk, ws])
                     r = p.ev("""(() => { const sh = __T.q('#shell'), c = __T.clip(['#shell']); const b = __T.rect('#shell .sh-brand'), g = __T.rect('#shell .sh-r');
-                        return {sw: sh.scrollWidth - sh.clientWidth, cut: c.cut, out: c.out, ov: b.r > g.x, min: __T.qq('#shell .sh-fv.is-name').map(v => __T.rect(v).w)}; })()""")
+                        return {sw: sh.scrollWidth - sh.clientWidth, cut: c.cut, out: c.out, ov: b.r > g.x, min: __T.qq('#shell .sh-sv.is-name').map(v => __T.rect(v).w)}; })()""")
                     combos += 1
                     ell_ok = all(w >= 30 for w in r['min'])
                     if r['sw'] > 0 or r['cut'] or r['out'] or r['ov'] or not ell_ok:

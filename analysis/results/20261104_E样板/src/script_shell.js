@@ -345,42 +345,47 @@ function setDis(b, why) {
 const isDis = b => b && b.getAttribute('aria-disabled') === 'true';
 
 /* ---------- 3 外壳顶栏（宪章 0.9「用户 2026-11-05 改定」；设计规范 v3 第 11 节） ----------
-   左：「烟花工坊」+「FireWorksLab 5.0.3」，点版本号打开更新记录（有未读时版本号右上角小号数字）。
-   右侧四组，组间 1 px 竖线：UE 状态 ｜ 导出、备份文件夹 ｜「资源交付」「资源编排」 ｜ 显卡。
+   左：「烟花工坊」+「FireWorksLab 5.0.3 [2]」，点版本号打开更新记录（有未读时后面跟计数框）。
+   右侧四组，组间 24 px、不画竖线（v3.1 第 10 条）：UE 状态 ｜ 导出、备份文件夹 ｜「资源交付」「资源编排」 ｜ 显卡。
    没有工作区切换：默认画面就是制作；页面标签打开那一页，再点一次亮着的标签或页面工具行左端「← 返回制作」回到制作 */
 const WS = [['baker', '制作', '#wsBaker'], ['import', '资源交付', '#wsImport'], ['wb', '资源编排', '#wsWB']];
 const PGN = {import: '资源交付', wb: '资源编排'};
 const FOLD = {exp: '导出文件夹', bak: '备份文件夹'}, FOLDK = {exp: '导出', bak: '备份'};
 const fullPath = name => `D:\\FireWorksLab\\${name}`;
+/* 状态（v3.1 改动单第 10 条）：小圆点（好 = 薄荷，要处理 = 琥珀，其他 = 灰）+ 弱色字；要处理的那个词琥珀；进行中把圆点换成转圈 */
+const SPIN = '<span class="spin" aria-hidden="true"></span>';
 function ueHTML(v) {
   const tip = `127.0.0.1:17780　上次连上 ${S.lastUE}`;   /* 一行写完：样板的提示第二行 data-key 只给快捷键 */
-  if (v.k === 'wait') return `<span class="conn wait sh-ue st-cell" data-tip="127.0.0.1:17780"><span class="spin" aria-hidden="true"></span>UE 连接中</span>`;
-  if (v.k === 'on') return `<span class="conn on sh-ue st-cell" data-tip="${tip}">UE 已连接</span>`;
-  if (v.k === 'off') return `<span class="conn off sh-ue st-cell" data-tip="${tip}">UE 未连接</span><button class="btn btn-text tbtn sh-retry" data-sh="retry" type="button">重试</button><span class="lbl sh-cd st-cell">${v.cd == null ? 12 : v.cd} 秒后自动重试</span>`;
-  if (v.k === 'write' && v.by === 'wb') return `<button class="btn btn-text tbtn conn wait sh-ue st-cell is-write" data-sh="toWB" type="button" data-tip="打开资源编排"><span class="spin" aria-hidden="true"></span>UE 写入中</button>`;
-  if (v.k === 'write') return `<button class="btn btn-text tbtn conn wait sh-ue st-cell is-write" data-sh="toImport" type="button" data-tip="打开资源交付"><span class="spin" aria-hidden="true"></span>UE 写入中 <span class="sh-n">${v.n} / ${v.tot}</span></button>`;
-  return `<span class="conn off sh-ue st-cell is-na" data-tip="${WHY.brUE}">UE 不可用</span>`;
+  if (v.k === 'wait') return `<span class="sh-stat sh-ue st-cell is-busy" data-tip="127.0.0.1:17780">${SPIN}UE <span class="sh-sv">连接中</span></span>`;
+  if (v.k === 'on') return `<span class="sh-stat sh-ue st-cell" data-tone="ok" data-tip="${tip}">UE <span class="sh-sv">已连接</span></span>`;
+  if (v.k === 'off') return `<span class="sh-stat sh-ue st-cell" data-tone="warn" data-tip="${tip}">UE <span class="sh-sv is-warn">未连接</span></span><button class="btn btn-text tbtn sh-retry" data-sh="retry" type="button">重试</button><span class="lbl sh-cd st-cell">${v.cd == null ? 12 : v.cd} 秒后自动重试</span>`;
+  if (v.k === 'write' && v.by === 'wb') return `<button class="btn btn-text tbtn sh-stat sh-ue st-cell is-write is-busy" data-sh="toWB" type="button" data-tip="打开资源编排">${SPIN}UE <span class="sh-sv">写入中</span></button>`;
+  if (v.k === 'write') return `<button class="btn btn-text tbtn sh-stat sh-ue st-cell is-write is-busy" data-sh="toImport" type="button" data-tip="打开资源交付">${SPIN}UE <span class="sh-sv">写入中 <span class="sh-n">${v.n} / ${v.tot}</span></span></button>`;
+  return `<span class="sh-stat sh-ue st-cell is-na" data-tip="${WHY.brUE}">UE <span class="sh-sv">不可用</span></span>`;
 }
-/* 「导出 FWL_Export」「备份 未选」：标签弱色、值次文字色；未选后面跟命令「设置」。
-   导出未选会挡住导出 → 琥珀色；备份未选不挡操作 → 弱色字；需允许访问 → 琥珀色；都不画图形（琥珀三角只表示「需重新导出」） */
+/* 「导出 FWL_Export」「备份 未选　设置」：状态样子（圆点 + 弱色字），点开换文件夹。
+   已选 → 薄荷圆点；未选（导出、备份都是，第 4 条）、需允许访问 → 琥珀圆点 + 琥珀词，未选后面跟命令「设置」；不可用 → 灰点、停用 */
 function foldHTML(k, st, name) {
-  let cls = '', v = esc(name), x = '', tip, pop = '';
-  if (st === 'none') { v = '未选'; cls = k === 'exp' ? ' is-warn' : ' is-weak'; tip = k === 'exp' ? '导出文件夹：导出前需选好' : '备份文件夹：覆盖 UE 资产前需选好'; }
-  else if (st === 'ok') { tip = `${FOLD[k]}　${fullPath(name)}`; pop = ' aria-haspopup="menu" aria-expanded="false"'; }
-  else if (st === 'perm') { cls = ' is-warn'; x = '<span class="sh-fx">需允许访问</span>'; tip = `${FOLD[k]}　${fullPath(name)}`; }
-  else { v = '不可用'; cls = ' is-na'; tip = WHY.brFold; }
+  let tone = 'warn', cls = '', v, tip, pop = '';
+  if (st === 'none') { v = '<span class="sh-sv is-warn">未选</span>'; tip = k === 'exp' ? '导出文件夹：导出前需选好' : '备份文件夹：覆盖 UE 资产前需选好'; }
+  else if (st === 'ok') { tone = 'ok'; v = `<span class="sh-sv is-name">${esc(name)}</span>`; tip = `${FOLD[k]}　${fullPath(name)}`; pop = ' aria-haspopup="menu" aria-expanded="false"'; }
+  else if (st === 'perm') { v = `<span class="sh-sv is-name">${esc(name)}</span><span class="sh-sv is-warn">需允许访问</span>`; tip = `${FOLD[k]}　${fullPath(name)}`; }
+  else { tone = ''; cls = ' is-na'; v = '<span class="sh-sv">不可用</span>'; tip = WHY.brFold; }
+  const lab = `${FOLD[k]} ${st === 'none' ? '未选' : st === 'na' ? '不可用' : esc(name)}${st === 'perm' ? ' 需允许访问' : ''}`;
   const set = st === 'none' ? `<button class="btn btn-text tbtn sh-set" data-sh="foldSet" data-sk="${k}" type="button" data-tip="选择${FOLD[k]}">设置</button>` : '';
-  return `<span class="sh-fp"><button class="btn btn-text tbtn sh-fold st-cell${cls}" data-sh="fold" data-fk="${k}" data-st="${st}" type="button" data-tip="${esc(tip)}" aria-label="${FOLD[k]} ${v}${x ? ' 需允许访问' : ''}"${st === 'na' ? ' aria-disabled="true"' : ''}${pop}><span class="sh-fk">${FOLDK[k]}</span><span class="sh-fv${st === 'ok' || st === 'perm' ? ' is-name' : ''}">${v}</span>${x}</button>${set}</span>`;
+  return `<span class="sh-fp"><button class="btn btn-text tbtn sh-stat sh-fold st-cell${cls}"${tone ? ` data-tone="${tone}"` : ''} data-sh="fold" data-fk="${k}" data-st="${st}" type="button" data-tip="${esc(tip)}" aria-label="${lab}"${st === 'na' ? ' aria-disabled="true"' : ''}${pop}><span class="sh-fk">${FOLDK[k]}</span>${v}</button>${set}</span>`;
 }
-/* 页面标签「资源交付 2」「资源编排」：开着的那页 aria-pressed = true（薄荷下划线）；数字是待导入的包数 */
+/* 计数（第 11 条）：小号数字放在 1 px 方框里，跟在名称后面 */
+const cntHTML = n => `<span class="sh-cnt">${n}</span>`;
+/* 页面入口「资源交付 [2]」「资源编排」：标签样式；开着的那页 aria-pressed = true（薄荷下划线 + 600）；数字是待导入的包数 */
 function pgHTML(cur, impN, hov) {
   return WS.slice(1).map(([k, t]) => {
     const n = k === 'import' ? impN : 0, on = cur === k;
-    return `<button class="sh-pg${hov === k ? ' is-hover' : ''}" type="button" data-sh="pg" data-pg="${k}" aria-pressed="${on}" data-tip="${on ? '返回制作' : `打开${t}`}"${n ? ` aria-label="${t}，${n} 个素材包待导入"` : ''}><span data-w="${t}">${t}</span>${n ? `<span class="badge-n">${n}</span>` : ''}</button>`;
+    return `<button class="sh-pg${hov === k ? ' is-hover' : ''}" type="button" data-sh="pg" data-pg="${k}" aria-pressed="${on}" data-tip="${on ? '返回制作' : `打开${t}`}"${n ? ` aria-label="${t}，${n} 个素材包待导入"` : ''}><span data-w="${t}">${t}</span>${n ? cntHTML(n) : ''}</button>`;
   }).join('');
 }
 function barHTML(s) {
-  return `<div class="sh-brand"><b class="tx">烟花工坊</b><button class="sh-ver" data-sh="ver" type="button" aria-haspopup="dialog" aria-expanded="false" data-tip="更新记录"${s.upd ? ` data-n="${s.upd}" aria-label="FireWorksLab ${VER}，更新记录 ${s.upd} 条没看过"` : ''}>FireWorksLab ${VER}</button></div><span class="sp"></span>`
+  return `<div class="sh-brand"><b class="tx">烟花工坊</b><button class="sh-ver" data-sh="ver" type="button" aria-haspopup="dialog" aria-expanded="false" data-tip="更新记录"${s.upd ? ` aria-label="FireWorksLab ${VER}，更新记录 ${s.upd} 条没看过"` : ''}>FireWorksLab ${VER}${s.upd ? cntHTML(s.upd) : ''}</button></div><span class="sp"></span>`
     + `<div class="sh-r"><div class="sh-g sh-g-ue"><div class="sh-ueg">${ueHTML(s.ueV)}</div></div>`
     + `<div class="sh-g sh-g-fold">${foldHTML('exp', s.exp, s.expName || S.expName)}${foldHTML('bak', s.bak, s.bakName || S.bakName)}</div>`
     + `<div class="sh-g sh-g-pg" role="group" aria-label="页面">${pgHTML(s.ws, s.impN)}</div>`
@@ -930,10 +935,10 @@ const sheetPV = {job: null, err: null, out: 'ok'};
 function sheetHTML() {
   const B = (ueV, o) => Object.assign({ws: 'baker', impN: 2, ueV, exp: 'ok', bak: 'none', upd: 2}, o);
   const bars = [
-    ['UE 连接中　导出已选　备份未选：弱色字，后面跟「设置」　版本号右上角 2 = 没看过的更新记录', B({k: 'wait'})],
+    ['UE 连接中（转圈）　导出已选（薄荷点）　备份未选：琥珀点 + 琥珀词，后面跟命令「设置」　版本号后面的 [2] = 没看过的更新记录', B({k: 'wait'})],
     ['UE 已连接　导出、备份都已选　打开着「资源交付」：标签 600 + 薄荷下划线　更新记录都看过', B({k: 'on'}, {ws: 'import', bak: 'ok', upd: 0})],
-    ['UE 未连接　重试　12 秒后自动重试　导出未选：会挡住导出，琥珀色，后面跟「设置」', B({k: 'off', cd: 12}, {impN: 0, exp: 'none'})],
-    ['UE 写入中 3 / 12，点一下打开资源交付　导出、备份都需允许访问：琥珀色，点一下即允许　打开着「资源编排」', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'wb', impN: 3, exp: 'perm', bak: 'perm'})]
+    ['UE 未连接（琥珀点）　重试　12 秒后自动重试　导出未选：琥珀点 + 琥珀词，后面跟「设置」', B({k: 'off', cd: 12}, {impN: 0, exp: 'none'})],
+    ['UE 写入中 3 / 12，点一下打开资源交付　导出、备份都需允许访问：琥珀点 + 琥珀词，点一下即允许　打开着「资源编排」：薄荷下划线 + 600', B({k: 'write', n: 3, tot: 12, by: 'import'}, {ws: 'wb', impN: 3, exp: 'perm', bak: 'perm'})]
   ];
   const b1366 = [
     ['1366：最长的组合，UE 未连接 + 都需允许访问 + 很长的文件夹名；文件夹名截断加省略号，悬停看全称和完整路径', B({k: 'off', cd: 12}, {ws: 'import', impN: 3, exp: 'perm', bak: 'perm', expName: 'Export_NewYear_2026_Final_Review', bakName: 'Backup_NewYear_2026_Final_Review'})],
@@ -1007,12 +1012,12 @@ function sheetHTML() {
     + `<div><span class="ks-cap">编排预览没生成：详情</span><div class="menu static" style="max-width:340px"><div class="msum"><b>编排预览没生成：金曜菊-B 副本</b><dl><dt>原因</dt><dd>存储已用 4.8 / 5 GB</dd><dt>效果</dt><dd>已保存</dd></dl></div><div class="mi">重试</div><div class="mi">去编排看</div></div></div></div>`;
 
   return `<h2>外壳与 5.0 入口</h2><p class="lead">烟花工坊 5.0，交互宪章 0.9（含用户 2026-11-05 改定）、设计规范 v3 第 11、12 节：外壳顶栏、资源交付和资源编排两页、导出和另存之后的去向、首次使用。没有工作区切换，默认画面就是制作。静态画出每个状态；带底色的一列和「打开」按钮可以真点。主屏的状态用样板控制条里的「UE / 导出文件夹 / 备份文件夹 / 浏览器 / 预览结果」切换。</p>`
-    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3」小号弱色，点版本号打开更新记录；右侧四组，组间 1 px 竖线：UE ｜ 导出、备份 ｜ 资源交付、资源编排 ｜ 显卡</span></h3>${barsHTML}`
-    + blk('UE 状态', '圆点 + 文字，不只靠颜色；已连接的圆点是薄荷；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
-    + blk('文件夹', '标签弱色、值次文字色，不画图形；未选：导出会挡住导出，琥珀色，备份不挡操作，弱色字，后面都跟命令「设置」；已选：点开换文件夹；需允许访问：琥珀色，点一下即允许；悬停写全称和完整路径', foT)
-    + blk('页面标签', '文字 + 2 px 下划线；打开着的那页 600 + 薄荷下划线；「资源交付 2」的数字是待导入的包数，小一号弱色；再点一次亮着的标签回到制作', pgT)
+    + `<h3>外壳顶栏<span>1920 高 40 px、1366 高 36 px，栏头面色，底边一条 1 px 线；左边「烟花工坊」大号 600 +「FireWorksLab 5.0.3 [2]」小号弱色，点版本号打开更新记录；右侧四组，组间 24 px、不画竖线：状态（UE ｜ 导出、备份）｜ 页面入口（资源交付、资源编排）｜ 显卡</span></h3>${barsHTML}`
+    + blk('UE 状态', '状态样子：小圆点 + 弱色字（好 = 薄荷，要处理 = 琥珀，其他 = 灰），进行中把圆点换成转圈；要处理的词琥珀；悬停写地址和上次连上时间；写入中点一下打开那一页', ueT, 'margin-top:8px')
+    + blk('文件夹', '状态样子：已选薄荷点，点开换文件夹；未选（导出、备份都是）琥珀点 + 琥珀词，后面跟命令「设置」（命令样子：次文字色，悬停出底色）；需允许访问：琥珀，点一下即允许；悬停写全称和完整路径', foT)
+    + blk('页面入口', '标签样子：次文字色、正文字号，悬停出底色；打开着的那页 600 + 薄荷下划线；「资源交付 [2]」的计数框是待导入的包数；再点一次亮着的标签回到制作', pgT)
     + blk('页面工具行：资源交付、资源编排', '工具行占满宽，栏头面色，底边一条线；左段「← 返回制作」，分段和下面的栏对齐，栏与栏之间是同一条 1 px 线；命令用文字按钮，标签弱色', `${wsFrame('var(--sh-wl) minmax(0,1fr)', '28px', impTool + leftImp + '<div style="grid-column:2;grid-row:2"></div>')}<div style="height:12px"></div>${wsFrame('var(--sh-wl) minmax(0,1fr) var(--w-right)', '28px', wbTool + leftWB + '<div style="grid-column:2;grid-row:2"></div>')}`)
-    + blk('原因', '资源交付主区最上面一行，琥珀色字，不填底色；UE 未连接时出现，包列表、逐资产清单和预检照常', wsFrame('var(--sh-wl) minmax(0,1fr)', 'auto', impTool + leftImp + `<div class="sh-main" style="grid-column:2;grid-row:2;padding-bottom:12px">${why}</div>`))
+    + blk('原因', '资源交付主区最上面一行，主文字色，不填底色；UE 未连接时出现，包列表、逐资产清单和预检照常', wsFrame('var(--sh-wl) minmax(0,1fr)', 'auto', impTool + leftImp + `<div class="sh-main" style="grid-column:2;grid-row:2;padding-bottom:12px">${why}</div>`))
     + blk('变灰按钮 + 原因', '停用一律降透明度，悬停写原因；按钮不隐藏；同一时间只一处写 UE', disBlk)
     + `<h3>首次使用与另存对话框<span>同一份对话框样式；默认焦点在主按钮，Esc 关闭</span></h3>${dlgs}`
     + pvBlk
