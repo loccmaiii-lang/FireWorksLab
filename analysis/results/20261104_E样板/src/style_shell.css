@@ -1,0 +1,248 @@
+/* ---------- 外壳（part_css_shell.css） ---------- */
+/* =====================================================================
+   烟花工坊 5.0 外壳（part_css_shell.css）
+   0 控件分级的兜底  1 外壳顶栏  2 工作区（导入 / 编排）  3 编排「基础模板」条目  4 浮层补充（对话框、气泡）
+   5 编排预览（状态栏）  6 样板开关（非产品）  7 全表一节（非产品）
+   只用 part_css1 的 token 与已有组件类；颜色一律取 token，不写新色值。
+   v2.2 的三级底色 --surf-chrome / --surf-panel / --surf-stage 和控件类 .modeseg / .tbtn / .lbl 由样板定义；
+   样板还没有时用这里的兜底：token 写 var(--surf-*, 现在的值)，类写在 :where() 里（特异度 0，样板的定义一律优先）。
+   ===================================================================== */
+
+/* ---------- 0 控件分级的兜底（v2.2 改动单第 3 条） ---------- */
+/* 工作模式级：等宽分段、细框、选中实底 */
+:where(.modeseg){display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;flex:none;border:1px solid var(--g5);border-radius:var(--r2);overflow:hidden}
+:where(.modeseg)>button{height:calc(var(--h-ctl) - 2px);padding:0 14px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
+:where(.modeseg)>button+button{border-left:1px solid var(--g5)}
+:where(.modeseg)>button:hover{background:var(--g3);color:var(--t1)}
+:where(.modeseg)>button[aria-pressed="true"]{background:var(--g6);color:var(--t1)}
+/* 命令：文字按钮，比标签亮一级，悬停有底；写成 class="btn btn-text tbtn"（同样板），尺寸和变灰沿用 .btn */
+/* 工具行里的一组命令（样板 v2.3 的 .tgrp：组内 8 px，组间 20 px） */
+:where(.tgrp){display:flex;align-items:center;gap:var(--gin, 8px);flex:none}
+/* 标签和摘要：最暗，不能点 */
+.shell .lbl,.sh-hd .lbl,.sh-dlg .lbl{min-height:0;color:var(--t3);cursor:default}
+
+/* ---------- 1 外壳顶栏：三个工作区共用一条（v2.3 改动单第 1、2、9、10 条） ---------- */
+/* --sh-gg 组间距（≥ 24 px，1366 也不缩）；--sh-seam 面板缝宽（同工作区三栏之间的缝，方案 b 按它对齐画面）；--sh-tp 工作区标签左右内距 */
+.shell{--sh-gg:24px;--sh-seam:4px;--sh-tp:12px;display:flex;align-items:center;min-width:0;padding:0 var(--s3) 0 var(--s1);border-bottom:1px solid var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
+.s1366 .shell,.shell.s1366{--sh-tp:10px}
+.shell.sh-static{height:var(--h-shell);overflow:hidden}
+/* 产品名：点开「关于」。「烟花工坊」15 px 常规字重，比工作区标签大一号；后半段小一号弱色 */
+.sh-brand{flex:none;display:inline-flex;align-items:baseline;gap:6px;height:var(--h-hit, var(--h-ctl));padding:0 6px;border-radius:var(--r2);line-height:var(--h-hit, var(--h-ctl))}
+.sh-brand b{font-size:var(--fs3);font-weight:var(--fw1);color:var(--t1)}
+.sh-brand span{font-size:var(--fs1);color:var(--t3)}
+.sh-brand:hover,.sh-brand.is-hover,.sh-brand[aria-expanded="true"]{background:var(--g3)}
+/* 工作区：无框文字标签，贴满顶栏高；常态次色，当前项 600 + 底边 2 px 薄荷线；不和工作模式的带框分段 .modeseg 长得像。
+   方案 a：紧跟产品名，文字到文字 32 px */
+.sh-wtabs{flex:none;align-self:stretch;margin-left:calc(32px - 6px - var(--sh-tp))}
+.sh-wtabs .tab{height:100%;padding:0 var(--sh-tp);font-size:var(--fs2);color:var(--t2)}
+.sh-wtabs .tab:hover,.sh-wtabs .tab.is-hover{color:var(--t1)}
+.sh-wtabs .tab[aria-selected="true"],.sh-wtabs .tab::before{font-weight:var(--fw2)}
+.sh-wtabs .tab[aria-selected="true"]{color:var(--t1)}
+.sh-wtabs .tab[aria-selected="true"]::after{left:var(--sh-tp);right:var(--sh-tp);height:2px;background:var(--p4)}
+/* 计数（导入 2）：小一号弱色数字，和名称隔 4 px；当前项也不变亮 */
+.sh-wtabs .tab .badge-n,.sh-wtabs .tab[aria-selected="true"] .badge-n{margin-left:4px;color:var(--t3);font-size:var(--fs1);font-weight:var(--fw1)}
+/* 右侧三组：UE ｜ 导出、备份 ｜ 更新记录、显卡。组间 --sh-gg，组内 12 px；不画分隔线 */
+.sh-r{flex:0 1 auto;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
+.sh-g{display:flex;align-items:center;gap:var(--s3);min-width:0}
+.sh-g-ue,.sh-g-info{flex:none}
+.sh-g-fold{flex:0 1 auto}
+.sh-fp{display:flex;align-items:center;gap:2px;min-width:0;flex:0 1 auto}
+.sh-fp:has(.sh-set){flex:none}
+/* 状态是纯信息：弱色（12 px）；要处理的才亮：UE 未连接 = 次色，写入中能点 = 命令色 */
+.sh-ueg{flex:none;display:flex;align-items:center;gap:2px}
+.sh-ue{padding:0 6px;border-radius:var(--r2);color:var(--t3)}
+.sh-ue.off{color:var(--t2)}
+.sh-ue .spin{width:10px;height:10px}
+.sh-ue.is-write{height:var(--h-hit, var(--h-ctl));color:var(--t2);font-size:var(--fs1)}
+.sh-ue.is-write:hover{color:var(--t1)}
+.sh-ue.is-na{color:var(--tDis)}
+.sh-ue.is-na::before{border-color:var(--g6)}
+.sh-ue .sh-n{font-variant-numeric:tabular-nums}
+.sh-cd{flex:none;margin-left:2px;font-size:var(--fs1);color:var(--t3)}
+/* 文件夹标签「导出 FWL_Export」「备份 未选」：弱色信息（点开换文件夹，悬停写全称和完整路径）；
+   未选 = 琥珀色字 + 后面的命令「设置」（导出未选会挡住导出，另带警示图形）；需允许访问 = 琥珀色 + 图形；不可用 = 变灰；不画文件夹图标 */
+.sh-fold{flex:0 1 auto;min-width:0;gap:5px;padding:0 6px;overflow:hidden;color:var(--t3);font-size:var(--fs1)}
+.sh-fold svg.i{width:var(--ico-s);height:var(--ico-s);color:var(--t3)}
+.sh-fold .sh-fk{flex:none}
+.sh-fold .sh-fv{flex:none;line-height:var(--lh1)}
+.sh-fold .sh-fv.is-name{flex:0 1 auto;min-width:3.2em;overflow:hidden;text-overflow:ellipsis}
+.sh-fold .sh-fx{flex:none}
+.sh-fold.is-warn,.sh-fold.is-warn:hover,.sh-fold.is-warn svg.i{color:var(--w3)}
+.sh-fold.is-na,.sh-fold.is-na:hover,.sh-fold.is-na svg.i{color:var(--tDis);background:none;cursor:default}
+.sh-set{flex:none;padding:0 6px}
+.sh-upd{flex:none}
+/* 更新记录的未读数：角标，小一号弱色，和名称隔 4 px；不算按钮文字 */
+.sh-upd[data-n]::after{content:attr(data-n);margin-left:4px;color:var(--t3);font-size:var(--fs1);font-weight:var(--fw1)}
+.shell .sh-gpu{flex:none;margin:0;color:var(--t3);font-size:var(--fs1);cursor:default}
+
+/* ---------- 1b 工作区切换三种摆法（改动单第 9 条；根元素 data-cmp-ws，默认 a；样板控制条「工作区切换」） ---------- */
+/* 三种都用上面的无框文字标签。a：紧跟产品名（上面的默认样式） */
+/* b：顶栏按制作区三栏分列（左栏宽 / 中栏 / 右栏宽，栏间同一条缝），切换放在中栏正中 = 画面中线；产品名在左栏；右侧三组靠右，最多用到切换右边 24 px */
+:root[data-cmp-ws="b"] .shell{display:grid;grid-template-columns:var(--w-left) minmax(0,1fr) var(--w-right);column-gap:0;padding:0}
+:root[data-cmp-ws="b"][data-cmp-bound="frame"] .shell{column-gap:var(--sh-seam)}
+:root[data-cmp-ws="b"] .app.no-left .shell{grid-template-columns:0 minmax(0,1fr) var(--w-right)}
+:root[data-cmp-ws="b"] .app.no-right .shell{grid-template-columns:var(--w-left) minmax(0,1fr) 0}
+:root[data-cmp-ws="b"] .app.no-left.no-right .shell{grid-template-columns:0 minmax(0,1fr) 0}
+:root[data-cmp-ws="b"] .shell>.sh-brand{grid-column:1;grid-row:1;justify-self:start;margin-left:var(--s1)}
+:root[data-cmp-ws="b"] .shell>.sh-wtabs{grid-column:2;grid-row:1;justify-self:center;margin:0}
+:root[data-cmp-ws="b"] .shell>.sp{display:none}
+:root[data-cmp-ws="b"] .shell>.sh-r{grid-column:2/4;grid-row:1;justify-self:end;margin:0 var(--s3) 0 0}
+:root[data-cmp-ws="b"] .shell.is-tight>.sh-wtabs{justify-self:start;margin-left:calc(32px - var(--sh-tp))}
+/* 全表里只画工作区标签的那几条：不分列 */
+:root[data-cmp-ws] .shell.sh-tonly{display:inline-flex;padding:0 var(--s4) 0 0}
+:root[data-cmp-ws] .shell.sh-tonly>.sh-wtabs{margin-left:0}
+/* c：切换放最左，作为顶栏第一组；产品名挪到右侧三组前面，小号弱色 */
+:root[data-cmp-ws="c"] .shell{padding-left:var(--s1)}
+:root[data-cmp-ws="c"] .shell>.sh-wtabs{order:1;margin-left:0}
+:root[data-cmp-ws="c"] .shell>.sp{order:2}
+:root[data-cmp-ws="c"] .shell>.sh-brand{order:3;height:var(--h-sm);padding:0 4px;line-height:var(--h-sm);margin-left:var(--sh-gg)}
+:root[data-cmp-ws="c"] .shell>.sh-r{order:4}
+:root[data-cmp-ws="c"] .sh-brand b,:root[data-cmp-ws="c"] .sh-brand span{font-size:var(--fs1);color:var(--t3)}
+
+/* ---------- 2 工作区：导入、编排 ---------- */
+/* 面板之间的缝（v2.3 改动单第 5 条）：跟样板的模块边界方案（根元素 data-cmp-bound，默认 frame）走。
+   frame：栏与栏之间、编排的画面和时间轴之间、工具行两段之间，统一 4 px 宽、--seam（#24373d）的缝，缝两侧是面板底色，不画栏线；
+   其他方案（v2、tone）：照旧画 1 px 栏线 */
+.sh-ws{--sh-seam:4px}
+.sh-ws>.sh-left,.sh-ws>.sh-main,.sh-ws>.sh-wbright,.sh-hd .sh-hs{background:var(--surf-panel, var(--bg))}
+:root[data-cmp-bound="frame"] .sh-ws,:root[data-cmp-bound="frame"] #wbTool{column-gap:var(--sh-seam);background:var(--seam, var(--g4))}
+:root[data-cmp-bound="frame"] .sh-wbmid{row-gap:var(--sh-seam);background:var(--seam, var(--g4))}
+:root[data-cmp-bound="frame"] #wbTool .sh-hs:last-child{border-left:0}
+:root:not([data-cmp-bound="frame"]) .sh-left{border-right:1px solid var(--line)}
+:root:not([data-cmp-bound="frame"]) .sh-wbright{border-left:1px solid var(--line)}
+:root:not([data-cmp-bound="frame"]) .sh-tlph{border-top:1px solid var(--line)}
+/* 左栏从外壳顶栏下面直接开始，一直到状态栏；工具行只在中栏、右栏上方，分段和下面的栏对齐；栏线一直通到顶，工具行不另画底线 */
+#wsImport.ws{grid-template-columns:calc(var(--w-left) + 72px) minmax(0,1fr)}
+#wsWB.ws{grid-template-columns:calc(var(--w-left) + 72px) minmax(0,1fr) var(--w-right)}
+.sh-ws>.sh-left{grid-column:1;grid-row:1/3}
+.sh-ws>.sh-hd{grid-column:2/-1;grid-row:1}
+.sh-ws>.sh-main,.sh-ws>.sh-wbmid{grid-column:2;grid-row:2}
+.sh-ws>.sh-wbright{grid-column:3;grid-row:2}
+.sh-ws>.status{grid-column:1/-1;grid-row:3}
+/* 导入、编排的左列表比制作区效果库宽一些（编排资源库原来约 410 px）：名称和状态并排放得下，不截断 */
+.sh-left{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--surf-panel, var(--bg))}
+.sh-lh{flex:none;display:flex;align-items:center;gap:var(--s3);height:var(--h-top);padding:0 var(--s3);white-space:nowrap}
+.sh-lh .lbl{font-size:var(--fs1)}
+.sh-hv{min-width:0;color:var(--t2);overflow:hidden;text-overflow:ellipsis}
+/* 工具行用样板的 .topbar / .tcol-m / .tcol-r（同制作区工具行）；导入只有中段，编排中段 + 右段，右段宽 = 右栏，两段之间是同一条缝 */
+.sh-hd{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding:0;min-width:0;background:var(--surf-panel, var(--bg));white-space:nowrap}
+#wbTool{grid-template-columns:minmax(0,1fr) var(--w-right)}
+:where(.sh-hs){display:flex;align-items:center;gap:2px;height:100%;min-width:0;padding:0 var(--s3)}
+.sh-hs .sh-ph{height:calc(var(--h-ctl) - 10px)}
+.sh-why{flex:none;margin:var(--s2) var(--s3) 0}
+.sh-l1{display:flex;align-items:baseline;gap:var(--s2);min-width:0}
+.sh-l1 .li-n{flex:1;min-width:0}
+.sh-l1 .st{flex:none;font-size:var(--fs1)}
+/* 列表状态词：要处理的（待导入）用主文字色，其余弱色 */
+.sh-pkg .st{color:var(--t3)}
+.sh-pkg .st.is-wait{color:var(--t1)}
+.sh-main,.sh-mc{display:flex;flex-direction:column;min-width:0;min-height:0}
+.sh-mc{flex:1}
+.sh-mh{flex:none;display:flex;align-items:center;gap:var(--s3);height:var(--h-bar);padding:0 var(--s3);min-width:0;white-space:nowrap}
+.sh-mh b{font-size:var(--fs3);font-weight:var(--fw2);overflow:hidden;text-overflow:ellipsis}
+.sh-mh .mute{font-size:var(--fs1)}
+.sh-mh .st{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1)}
+.sh-mh .st .spin{width:10px;height:10px}
+.sh-mgrid{flex:1;display:grid;grid-template-columns:minmax(0,1fr) var(--w-left);gap:var(--s5);min-height:0;padding:0 var(--s3) var(--s3)}
+.sh-tblw{min-width:0;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--g5) transparent}
+/* 逐资产清单：外观同交付产物表 .dtable（同一组 token）；另起类名，因为样板走查脚本按 .dtable 全局取交付表 */
+.sh-at{width:100%;border-collapse:collapse;font-size:var(--fs2)}
+/* 表头是标签：弱色、小一号、常规字重（同交付表的列名） */
+.sh-at th{height:var(--h-row);padding:0 10px;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3);text-align:left;white-space:nowrap}
+.sh-at td{height:calc(var(--h-row) + 4px);padding:0 10px;color:var(--t1);text-align:left;white-space:nowrap}
+.sh-at th:first-child,.sh-at td:first-child{width:28px;padding-right:0}
+.sh-at tbody tr:hover td{background:var(--g2)}
+.sh-at td:first-child{color:var(--t3)}
+.sh-at td:first-child .spin{width:10px;height:10px}
+.sh-at td:first-child svg.i{width:12px;height:12px;color:var(--k3)}
+.sh-at .sh-new{color:var(--t3)}
+.sh-at .sh-path{width:28%}
+.sh-at .st-ok{font-size:var(--fs2)}
+.sh-side{display:flex;flex-direction:column;gap:var(--s3);min-width:0}
+/* 低对比占位块：不是这次要画的部分，不写字 */
+.sh-ph{display:block;flex:none;height:10px;background:var(--g2);border-radius:var(--r1)}
+.sh-ph.dk{background:var(--sky)}
+.status .sh-ph{height:calc(var(--h-ctl) - 10px)}
+.sh-phrow{display:flex;align-items:center;gap:10px;height:calc(var(--thumb) + 14px);padding:0 8px}
+.sh-phrow>div{flex:1;display:flex;flex-direction:column;gap:6px}
+.sh-phrow .sh-ph:first-child{width:var(--thumb);height:var(--thumb)}
+[data-pvm]:empty{display:none}
+.sh-wbmid{display:grid;grid-template-rows:minmax(0,1fr) auto;min-width:0;min-height:0}
+.sh-stage{position:relative;background:var(--surf-stage, var(--sky))}
+.sh-stage .sh-ph{position:absolute;background:var(--g1)}
+.sh-tlph{display:flex;flex-direction:column;gap:10px;padding:var(--s3);background:var(--surf-panel, var(--bg))}
+.sh-tlph>div{display:flex;align-items:center;gap:var(--s3)}
+.sh-wbright{display:flex;flex-direction:column;gap:12px;min-width:0;padding:var(--s3)}
+
+/* ---------- 3 编排「基础模板」条目：缩略图、名称、副信息、右侧状态 ---------- */
+.sh-bt{gap:10px}
+.sh-bt .li-s span{overflow:hidden;text-overflow:ellipsis}
+.sh-bt .li-s .sh-err{color:var(--t2)}
+.sh-btst{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.sh-st{display:inline-flex;align-items:center;gap:4px;height:var(--lh2);font-size:var(--fs1);color:var(--t3);white-space:nowrap}
+.sh-st svg.i{width:12px;height:12px}
+.sh-st .spin{width:10px;height:10px}
+.sh-st.warn,.sh-st.warn svg.i{color:var(--w3)}
+.sh-st.err svg.i{color:var(--e3)}
+.sh-st.err{color:var(--t2)}
+/* 条目里的「更新」「重试」：命令色文字按钮，点击区同全屏 28 px 高（上下负边距，不撑高这一行） */
+.sh-lnk.btn{height:var(--h-hit, var(--h-ctl));margin:-4px 0 -4px 2px;padding:0 6px;font-size:var(--fs1)}
+.th.sh-thp{display:grid;place-items:center;color:var(--t3)}
+.th.sh-thp.is-fail{background:var(--g2)}
+.th.sh-thp.is-fail svg.i{width:var(--ico);height:var(--ico);color:var(--e3)}
+
+/* ---------- 4 浮层补充：对话框正文、命名框、勾选说明、就地报错、样板专用按钮；重新授权气泡 ---------- */
+.dialog p b{font-weight:var(--fw2);color:var(--t1)}
+.sh-dlg .sh-fl{display:flex;flex-direction:column;gap:4px}
+.sh-dlg p+.sh-fl{margin-top:var(--s3)}
+.sh-lab{font-size:var(--fs1);line-height:var(--lh1)}
+/* 「放进编排」用样板的勾选框标签 .ckl；说明另起一段，和勾选框后的文字左对齐 */
+.sh-opt{display:flex;width:max-content;margin-top:var(--s2)}
+.dialog .sh-optd{margin:0 0 0 22px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3)}
+.sh-dmsg{display:flex;align-items:flex-start;gap:6px;margin-top:var(--s3)}
+.sh-dmsg svg.i{flex:none;width:13px;height:13px;margin-top:1px}
+.sh-dlg .acts .sh-kitb{margin-right:auto}
+.sh-kitb,.sh-kitb:hover{border:1px dashed var(--g6);color:var(--t3)}
+.sh-bub{position:fixed;z-index:55;display:flex;align-items:center;gap:var(--s2);padding:3px 3px 3px 10px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);font-size:var(--fs1);line-height:var(--lh1);color:var(--t1);white-space:nowrap}
+.sh-bub>svg.i{width:13px;height:13px;color:var(--w3)}
+.sh-bub .tbtn:hover{background:var(--g5)}
+.sh-bub.static{position:relative;z-index:0;display:inline-flex;box-shadow:none}
+.menu .msum dd{color:var(--t2)}
+.menu.sh-about{min-width:280px}
+.menu .sh-abn{display:block;margin-bottom:4px;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1)}
+/* 更新记录的条目是内容，不能点：同菜单项的位置，次亮字，没有悬停底 */
+.sh-log{margin:0;padding:0 0 2px;list-style:none}
+.sh-log li{display:flex;align-items:center;min-height:var(--h-ctl);padding:0 12px;color:var(--t2);white-space:nowrap}
+
+/* 外壳提示区里的提示条：人已经在那个工作区时，按钮收起 */
+.sh-toast .btn[hidden]{display:none}
+
+/* ---------- 5 编排预览：状态栏右侧，紧跟保存状态 ---------- */
+.sh-pv{display:inline-flex;align-items:center;gap:var(--s2);height:calc(var(--h-status) - 4px);padding:0 2px 0 6px;border-radius:var(--r2);color:var(--t2);white-space:nowrap}
+.sh-pv .spin{width:10px;height:10px}
+.sh-pv .sh-pvn{display:inline-block;min-width:3ch;color:var(--t1);text-align:right}
+.sh-pv>svg.i{width:12px;height:12px}
+.sh-pv .btn.sm{height:calc(var(--h-status) - 8px);padding:0 5px}
+.sh-pv .btn-icon.sm{width:calc(var(--h-status) - 8px)}
+.sh-pv.is-err{background:var(--e1);color:var(--t1)}
+.sh-pv.is-err>svg.i{color:var(--e3)}
+.sh-pv.is-err .sh-pvk{color:var(--t2)}
+.sh-pv.is-err .tbtn:hover,.sh-pv.is-err .btn-icon:hover{background:var(--e2);color:var(--t1)}
+.sh-pv.is-err .btn-icon{color:var(--t2)}
+
+/* ---------- 6 样板开关（#sbarShell；不属于产品界面） ---------- */
+.sh-kit{display:flex;align-items:center;gap:var(--s4)}
+.kit-bar .sh-kit .kg{gap:6px}
+.kit-bar .sh-kit .sel{height:28px;font-size:13px;padding-right:20px}
+
+/* ---------- 7 全表「外壳与 5.0 入口」（非产品） ---------- */
+#sheetShell>h2{margin:48px 0 4px;font-size:18px;line-height:26px;font-weight:var(--fw2)}
+#sheetShell>h2+.lead{margin:0 0 16px;color:var(--t3);font-size:12px}
+.sh-sbar{width:100%;max-width:1840px;box-shadow:0 0 0 1px var(--g3)}
+.sh-sbar.s1366{width:1366px}
+.sh-sbars{display:flex;flex-direction:column;gap:14px}
+.sh-sbars .ks-cap{margin-bottom:4px}
+.sh-sstat{width:760px;height:var(--h-status);box-shadow:0 0 0 1px var(--g3)}
+.sh-cell-n{display:block;margin-top:6px;font-size:12px;color:var(--t3)}
+.ks-t td .sh-ueg,.ks-t td .sh-fold{vertical-align:middle}
+.sh-lim{display:flex;width:170px}

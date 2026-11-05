@@ -2,23 +2,23 @@
  "order": [
   [
    "html",
-   "body_1.html"
+   "body_main.html"
   ],
   [
    "js",
-   "script_1.js"
+   "script_main.js"
   ],
   [
    "html",
-   "body_2.html"
+   "body_shell.html"
   ],
   [
    "js",
-   "script_2.js"
+   "script_shell.js"
   ],
   [
    "html",
-   "body_3.html"
+   "body_end.html"
   ]
  ],
  "assets": {
@@ -104,5 +104,9 @@
   "1cb807cc6d.jpg": "image/jpeg",
   "1bcb363729.jpg": "image/jpeg",
   "3162c86457.jpg": "image/jpeg"
- }
+ },
+ "css": [
+  "style_main.css",
+  "style_shell.css"
+ ]
 }
