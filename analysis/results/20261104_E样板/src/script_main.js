@@ -52,11 +52,11 @@ const N = o => Object.assign({id: 'n' + (++UID), show: true, solo: false, open: 
 function mkKiku(key = 'kiku') {
   const em = (icon, name, tl) => N({type: 'emitter', icon, name, data: name, tl});
   const out = tl => N({type: 'output', icon: 'out', name: '输出', tl});
-  const L1 = N({type: 'layer', icon: 'layer', no: 1, name: '橙引线层', tl: {in: 0, out: 1.55, keys: [0, .75, 2.2], hatch: 2.45}});
+  const L1 = N({type: 'layer', icon: 'layer', no: 1, name: '橙引线层', open: true, tl: {in: 0, out: 1.55, keys: [0, .75, 2.2], hatch: 2.45}});
   L1.kids = [em('star', '星', {in: 0, out: 1.55}), em('spark', '火花', {in: .1, out: 1.55}), out({in: 0, out: 1.55, cells: 3, per: 16})];
   const L2 = N({type: 'layer', icon: 'layer', no: 2, name: '金锦层', open: true, tl: {in: .35, out: 3.70, keys: [.35, 1.7, 2.0]}});
   L2.kids = [em('star', '星', {in: .35, out: 3.7}), em('spark', '火花', {in: .45, out: 3.7}), em('ember', '余烬', {in: .9, out: 3.7}), out({in: .35, out: 2.85, cells: 5, per: 15})];
-  const L3 = N({type: 'layer', icon: 'layer', no: 3, name: '点灭星', tl: {in: .6, out: 4.5, keys: [.1, .6, 3.9]}});
+  const L3 = N({type: 'layer', icon: 'layer', no: 3, name: '点灭星', open: true, tl: {in: .6, out: 4.5, keys: [.1, .6, 3.9]}});
   L3.kids = [em('star', '星', {in: .6, out: 4.5}), out({in: .6, out: 4.5, cells: 2, per: 64, cell: '512 px'})];
   const root = N({type: 'group', icon: 'group', name: '整体', open: true, kids: [L1, L2, L3], tl: {in: 0, out: 5.24}});
   return {key, lib: 'kiku', name: '金曜菊-B 稀簇辉闪', short: '金曜菊-B', T: 5.24, fps: 30, frames: 75, baked: 45, t: 2.0, root, sel: L2.id,
@@ -166,8 +166,13 @@ const LIB = [
   {id: 'rt6', name: '升空尾缀 RT6', sub: ['RT6', '1 层'], st: '新', cat: '尾缀', img: 't_rise', tiers: ['小', '中', '大']},
   {id: 'cs3c', name: 'Comet 3.0 红头金尾', sub: ['CS3C', '2 层'], st: '已通过', cat: '尾缀', img: 't_comet'},
   {id: 'cs3s', name: 'Silver 3.0 银白长尾', sub: ['CS3S', '1 层'], st: '已通过', cat: '尾缀', img: 't_silver'},
-  {id: 'mang', name: '金芒菊 规格', sub: ['KM06', '2 层'], st: '制作中', cat: '球花', img: 't_mang'}
+  {id: 'mang', name: '金芒菊 规格', sub: ['KM06', '2 层'], st: '制作中', cat: '球花', img: 't_mang'},
+  {id: 'fan5', name: '扇形 五连发', sub: ['FN05', '2 层'], st: '制作中', cat: '扇形', img: 't_fan'},
+  {id: 'senrin', name: '千轮 小花', sub: ['SR03', '3 层'], st: '已通过', cat: '球花', img: 'tpl:6'},
+  {id: 'yanagi', name: '柳 金色长垂', sub: ['YN01', '2 层'], st: '新', cat: '尾缀', img: 'tpl:11'},
+  {id: 'mange', name: '万华镜 变色', sub: ['MK08', '5 层'], st: '制作中', cat: '球花', img: 'tpl:7'}
 ];
+const libImg = k => k.startsWith('tpl:') ? IMG.tpl[+k.slice(4)] : IMG[k];
 const TPL_NAMES = ['芯入菊', '芯入牡丹', '八重芯', '八重芯变化', '三重芯', '银冠', '千轮', '万华镜', '引先菊', '椰子', '冠菊', '柳'];
 const TPL_CAT = ['球花', '球花', '球花', '球花', '球花', '尾缀', '球花', '球花', '球花', '扇形', '球花', '尾缀'];
 const TPL_LAYERS = [2, 2, 3, 3, 4, 2, 3, 5, 2, 2, 3, 2];
@@ -193,11 +198,11 @@ function layerMods(sc, n) {
       sum: P => (P.get('联动的层') || []).map((on, i) => on && others[i] ? `第 ${others[i].no} 层` : '').filter(Boolean).join('  ') || '未联动'},
     {t: '规格', closed: true, rows: [
       {k: 'sel', lab: '号数', opts: ['手动', '3 号', '4 号', '5 号', '尺玉'], v: '手动', affects: true},
-      {lab: '序列时长', unit: 's', min: 1, max: 15, step: .01, v: 7.56, dis: P => P.get('号数') !== '手动' ? '号数不是「手动」时无效' : null}]},
+      {lab: '序列时长', unit: 's', min: 1, max: 15, step: .01, v: 7.56, dis: P => P.get('号数') !== '手动' ? '号数不是「手动」时无效' : null, disS: '号数非手动时无效'}]},
     {t: '环境', rows: [
       {lab: '风速', unit: 'm/s', min: 0, max: 20, step: .1, v: 0},
       {lab: '湍流强度', unit: 'm/s', min: 0, max: 10, step: .1, v: 0, affects: true},
-      {lab: '湍流尺度', unit: 'm', min: 1, max: 200, step: 1, v: 60, dis: P => +P.get('湍流强度') === 0 ? '湍流强度为 0 时无效' : null},
+      {lab: '湍流尺度', unit: 'm', min: 1, max: 200, step: 1, v: 60, dis: P => +P.get('湍流强度') === 0 ? '湍流强度为 0 时无效' : null, disS: '强度为 0 时无效'},
       {k: 'sw', lab: '爆后扰动', v: false, affects: true},
       {lab: '扰动开始时间', unit: 's', min: 0, max: 3, step: .01, v: .4, if: dist, dep: '爆后扰动'},
       {lab: '扰动渐入时间', unit: 's', min: 0, max: 3, step: .01, v: .3, if: dist, dep: '爆后扰动'},
@@ -205,7 +210,7 @@ function layerMods(sc, n) {
       {lab: '扰动尺度', unit: 'm', min: 1, max: 50, step: .1, v: 8, if: dist, dep: '爆后扰动'}]},
     /* §9：只有一个参数的「曝光」不做成模块，放进相近的「颜色」 */
     {t: '颜色', sumHTML: P => `曝光 ${fmt(P.get('曝光'), .01)} <span class="u">倍</span>　${P.get('发射器共用') ? bandHTML() : '分开设置'}`, rows: [
-      {lab: '曝光', unit: '倍', min: .1, max: 4, step: .01, v: 1, sug: {act: 'suggestExp', tip: '按最亮时刻 2.00 s 建议曝光', v: '0.85 倍'}},
+      {lab: '曝光', unit: '倍', min: .1, max: 4, step: .01, v: 1, sug: {act: 'suggestExp', tip: '按最亮时刻设曝光', v: '0.85 倍'}},
       {k: 'sw', lab: '发射器共用', v: true, affects: true},
       {lab: '色温', unit: 'K', min: 1500, max: 6500, step: 10, v: 2400, if: P => P.get('发射器共用'), dep: '发射器共用'},
       {lab: '饱和度', unit: '', min: 0, max: 1, step: .01, v: .85, if: P => P.get('发射器共用'), dep: '发射器共用'}]}
@@ -280,7 +285,7 @@ function spkEmitMods(sc, n) {
     {lab: '阻力', unit: '1/s', min: 0, max: 30, step: .1, v: +e.drag.toFixed(1)},
     {lab: '重力', unit: 'm/s²', min: -10, max: 10, step: .01, v: +e.gravity[2].toFixed(2)},
     {k: 'seg', lab: '方向', opts: ['球面', '锥形'], v: e.directionMode === 'sphere' ? '球面' : '锥形', affects: true},
-    {lab: '锥角', unit: '°', min: 0, max: 180, step: 1, v: e.cone, if: P => P.get('方向') === '锥形', dep: '方向', depWhy: '方向不是「锥形」时无效'}]});
+    {lab: '锥角', unit: '°', min: 0, max: 180, step: 1, v: e.cone, if: P => P.get('方向') === '锥形', dep: '方向', depWhy: '方向不是「锥形」时无效', depWhyS: '方向非锥形时无效'}]});
   mods.push({t: '大小与亮度', rows: [
     R('大小', e.size, 0, 3, .01, '倍'),
     R('亮度', e.power, 0, 4, .01, '倍'),
@@ -288,12 +293,12 @@ function spkEmitMods(sc, n) {
     {k: 'curve', lab: '大小曲线', v: e.sizeCurve.map(p => [+p[0].toFixed(2), +p[1].toFixed(2)])},
     {k: 'curve', lab: '亮度曲线', v: e.brightCurve.map(p => [+p[0].toFixed(2), +p[1].toFixed(3)])}]});
   const shp = {line: '线条', point: '点', fragment: '碎片'}[e.shape];
-  const frag = P => P.get('形状') === '碎片', fw = '形状不是「碎片」时无效';
+  const frag = P => P.get('形状') === '碎片', fw = '形状不是「碎片」时无效', fs = '形状非碎片时无效';
   mods.push({t: '外形', rows: [
     {k: 'seg', lab: '形状', opts: ['线条', '点', '碎片'], v: shp, affects: true},
-    {lab: '长宽比', unit: '', min: 1, max: 10, step: .1, v: +e.aspect.toFixed(1), if: frag, dep: '形状', depWhy: fw},
-    {lab: '旋转', unit: '°/s', min: 0, max: 360, step: 1, v: e.spin, if: frag, dep: '形状', depWhy: fw},
-    {lab: '扭转', unit: '°', min: 0, max: 180, step: 1, v: e.twist, if: frag, dep: '形状', depWhy: fw},
+    {lab: '长宽比', unit: '', min: 1, max: 10, step: .1, v: +e.aspect.toFixed(1), if: frag, dep: '形状', depWhy: fw, depWhyS: fs},
+    {lab: '旋转', unit: '°/s', min: 0, max: 360, step: 1, v: e.spin, if: frag, dep: '形状', depWhy: fw, depWhyS: fs},
+    {lab: '扭转', unit: '°', min: 0, max: 180, step: 1, v: e.twist, if: frag, dep: '形状', depWhy: fw, depWhyS: fs},
     {lab: '线宽', unit: 'mm', min: 0, max: 10, step: .01, v: +(e.width * 1000).toFixed(2)},
     {lab: '收尖', unit: '', min: 0, max: 1, step: .01, v: +e.taper.toFixed(2)},
     {lab: '拖尾时长', unit: 's', min: 0, max: .1, step: .001, v: +e.history.toFixed(3)}]});
@@ -319,7 +324,7 @@ function mergeSingles(mods) {
   if (mods.length < 2) return mods;
   const out = mods.map(m => ({...m, rows: [...m.rows]}));
   for (let i = 0; i < out.length; i++) {
-    if (out.length < 2 || out[i].rows.length !== 1) continue;
+    if (out.length < 2 || out[i].rows.length !== 1 || !['num', 'range', undefined].includes(out[i].rows[0].k)) continue;   /* 轨迹联动（勾选列表）保留成模块：评审把它当成了功能缺失 */
     const host = out[i - 1] || out[i + 1];
     if (out[i - 1]) host.rows.push(out[i].rows[0]); else host.rows.unshift(out[i].rows[0]);
     out.splice(i, 1); i--;
@@ -432,7 +437,7 @@ function undo(sc) { const H = sc ? sc.H : (UI.view === 'sheet' ? SHEET_H : cur()
 function redo(sc) { const H = sc ? sc.H : (UI.view === 'sheet' ? SHEET_H : cur().H); const e = H.r.pop(); if (!e) return false; applyHist(e, false); H.u.push(e); onHist(); undoFeedback(e, false); return true; }
 
 /* ---------- 参数行 HTML（§2 五列、§9） ---------- */
-/* 改动标记在左侧内边距：竖条 = 本次改过，空心圆 = 不是默认值；恢复按钮在操作列，只在改过或悬停时出现 */
+/* v3.1 第 16 条：一行最多一个改动标记——本次改过在左侧槽位画竖条；不是默认值只靠操作列常显的恢复按钮 */
 const markHTML = '<span class="mk" aria-hidden="true"></span>';
 const rstHTML = lab => `<button class="btn btn-icon rst" aria-haspopup="menu" aria-label="恢复 ${lab}" data-tip="恢复到打开时或默认">${ico('reset')}</button>`;
 const lkHTML = (s, lab) => `<button class="lk" aria-pressed="${s.lock}" aria-label="锁定 ${lab}" data-tip="${s.lock ? '取消锁定' : '锁定，随机与套用模板时不改'}">${ico('lock')}</button>`;
@@ -443,7 +448,7 @@ const stCls = s => `${isND(s) ? ' is-nd' : ''}${isEd(s) ? ' is-ed' : ''}`;
 function rowHTML(P, m, r, o = {}) {
   const k = `${P.prefix}|${m.t}|${r.lab}`, s = PS[k], kind = r.k || 'num';
   const lab = esc(r.lab);
-  const why = o.inert || (r.dis ? r.dis(P) : null);
+  const why = o.inert || (r.dis ? r.dis(P) : null), whyS = why ? (o.inertS || (r.disS && r.dis(P) ? r.disS : why)) : '';
   const dep = (o.dep ? ' is-dep' : '') + (o.depIn ? ' dep-in' : '');
   const dkA = o.depIn ? ` data-dk="${esc(o.depIn)}"` : '';
   const pl = `<span class="pl" data-help="${k}"><span class="plt">${lab}</span></span>`;
@@ -457,7 +462,7 @@ function rowHTML(P, m, r, o = {}) {
     return `<div class="${base}${s.rnd ? ' has-sub' : ''}${sug ? ' has-sug' : ''}" data-k="${k}" data-lab="${lab}" data-kind="num"${tipAttr}>
       ${markHTML}<div class="plw"><span class="nl">${pl}${lkHTML(s, lab)}</span></div>
       <div class="ctl1"><div class="sl${why ? ' is-disabled' : ''}" role="slider" tabindex="${why ? -1 : 0}" aria-label="${lab}" aria-valuemin="${s.min}" aria-valuemax="${s.max}" aria-valuenow="${s.v}" style="--v:${pc(s.v, s.min, s.max)};--d:${pc(s.def, s.min, s.max)};${band}">${band ? '<i class="sl-rb"></i>' : ''}<i class="sl-f"></i>${!same(s.v, s.def) ? '<i class="sl-d"></i>' : ''}<i class="sl-k"></i></div></div>
-      <div class="vu">${s.rnd && !why ? `<span class="vv">${num}${exnHTML(s, 'rnd')}</span>` : num}<span class="u">${esc(s.unit)}</span></div>
+      <div class="vu">${why ? `<span class="dis-why">${esc(whyS)}</span>` : s.rnd ? `<span class="vv">${num}${exnHTML(s, 'rnd')}</span><span class="u">${esc(s.unit)}</span>` : `${num}<span class="u">${esc(s.unit)}</span>`}</div>
       ${sug ? `<span class="actc">${rstHTML(lab)}${sug}</span>` : rstHTML(lab)}</div>${s.sub && s.rnd && !why ? subHTML(k, s, 'rnd') : ''}`;
   }
   if (kind === 'range') {
@@ -546,10 +551,10 @@ function modHTML(P, m, idx) {
       const grp = []; while (i < m.rows.length && m.rows[i].dep === r.dep) grp.push(m.rows[i++]);
       if (grp[0].if(P)) { body += grp.map(x => rowHTML(P, m, x, {dep: true})).join(''); continue; }
       const gk = grp.map(x => `${P.prefix}|${m.t}|${x.lab}`), ch = gk.filter(k => isChg(PS[k])).length, dk = mk + '|dep|' + r.dep, show = !!MO[dk];
-      const why = r.depWhy || `「${r.dep}」关闭时无效`;
+      const why = r.depWhy || `「${r.dep}」关闭时无效`, whyS = r.depWhyS || `${r.dep}已关`;
       body += `<div class="prm dep-off" data-dk="${esc(dk)}" data-dep="${esc(r.dep)}"><div class="dep-t"><span>${grp.length} 项已隐藏</span>${ch ? `<span class="dep-c">其中 ${ch} 项已改</span>` : ''}<button class="btn lnk" data-act="depShow" aria-expanded="${show}">${show ? '收起' : '查看'}</button></div></div>`;
       /* 收起的依赖行也画出来（隐藏）：「仅已改」和搜索时可以露出已改的那几项 */
-      body += grp.map(x => { const h = rowHTML(P, m, x, {dep: true, inert: why, depIn: dk}); return show ? h : h.replace('<div ', '<div hidden '); }).join('');
+      body += grp.map(x => { const h = rowHTML(P, m, x, {dep: true, inert: why, inertS: whyS, depIn: dk}); return show ? h : h.replace('<div ', '<div hidden '); }).join('');
       continue;
     }
     if (!r.if || r.if(P)) body += rowHTML(P, m, r);
@@ -968,7 +973,7 @@ function toast(text, o = {}) {
   return t;
 }
 function closeToast() { clearTimeout(OV.toastT); if (OV.toast) { OV.toast.remove(); OV.toast = null; } }
-const KEYS = [['空格', '播放 / 暂停'], ['R', '重播'], [', .', '上一帧 / 下一帧'], ['← →', '逐帧；结构树中收起展开'], ['Shift ← →', '走 10 帧'], ['[ ]', '入点 / 出点设到播放头'], ['Esc', '取消拖动；退出只看'],
+const KEYS = [['空格', '播放 / 暂停'], ['R', '重播'], [', .', '上一帧 / 下一帧'], ['← →', '逐帧；结构树中收起展开'], ['Shift ← →', '走 10 帧'], ['[ ]', '导出范围入点 / 出点'], ['Esc', '取消拖动；退出只看'],
   ['S', '加入 / 移出只看'], ['Alt 单击', '只看此项'], ['H', '隐藏 / 显示'], ['F', '精简布局'], ['L', '显示 / 隐藏左栏'], ['P', '显示 / 隐藏右栏'],
   ['Ctrl S', '保存'], ['Ctrl Z', '撤销'], ['Ctrl Y', '重做'], ['↑ ↓', '上一行 / 下一行'], ['F2', '改名'], ['Delete', '删除选中的层或发射器'], ['Shift', '拖动时精调'], ['?', '快捷键表']];
 const keysHTML = () => `<h2>快捷键<span class="sp"></span><button class="btn btn-icon sm" data-r="x" aria-label="关闭">${ico('x')}</button></h2><dl>${KEYS.map(([k, d]) => `<dt>${k.split(' ').map(x => `<kbd>${x}</kbd>`).join('')}</dt><dd>${d}</dd>`).join('')}</dl>`;
@@ -1009,7 +1014,7 @@ function treeHTML(sc, withAdd = true) {
       ? `<button class="btn btn-icon eye" aria-pressed="${n.show}" aria-label="显示" data-tip="${n.show ? '隐藏' : '显示'}" data-key="H">${ico(n.show ? 'eye' : 'eyeoff')}</button><button class="btn btn-icon solo" aria-pressed="${n.solo}" aria-label="只看" data-tip="${n.solo ? '移出只看' : '加入只看'}；Alt+单击只看此项" data-key="S">${ico(n.solo ? 'soloon' : 'solo')}</button>`
       : '<span class="ph2"></span>';
     return `<div class="trow t-${n.type}${sel ? ' is-sel' : ''}${n.show ? '' : ' is-off'}${dim ? ' is-dim' : ''}" role="treeitem" tabindex="${sel ? 0 : -1}" data-id="${n.id}" aria-level="${lv + 1}" aria-selected="${sel}"${has ? ` aria-expanded="${n.open}"` : ''} style="--lv:${lv}">`
-      + `<span class="chev${has ? '' : ' none'}" aria-hidden="true">${ico('cr')}</span>${ico(n.icon, 'ty')}<span class="nm">${no}<span class="tx" title="${esc(nmT)}">${esc(nmT)}</span>${cnt}${stl}</span>`
+      + `<span class="chev${has ? '' : ' none'}" aria-hidden="true">${ico('cr')}</span>${n.type === 'layer' ? '' : ico(n.icon, 'ty')}<span class="nm">${no}<span class="tx" title="${esc(nmT)}">${esc(nmT)}</span>${cnt}${stl}</span>`
       + `<span class="acts">${vis}<button class="btn btn-icon more" aria-label="更多操作" aria-haspopup="menu" data-tip="更多操作">${ico('more')}</button></span></div>`;
   }).join('');
   if (UI.treeQ.trim() && sc.key === UI.scene && rows.length === 1) h += `<div class="none-hit">没有匹配「${esc(UI.treeQ.trim())}」的层或发射器</div>`;
@@ -1091,20 +1096,26 @@ const tBox = (cls, v, lab, tip) => `<input class="num tnum ${cls}" type="text" i
 function rangeHTML(sc) {
   const r = rangeOut(sc); if (!r || !r.o) return '';
   const o = r.o.tl, nm = rangeName(sc, r);
-  return `<div class="xrange" data-node="${r.o.id}" style="left:${X(sc, o.in)};width:${X(sc, o.out - o.in)}" data-ctx="range" data-tip="${esc(nm)} 导出范围 ${o.in.toFixed(2)}–${o.out.toFixed(2)} s，右键设入点、出点"><i class="xh in" data-drag="in" data-node="${r.o.id}" data-row="${r.L.id}" data-tip="${esc(nm)} 导出范围入点 ${o.in.toFixed(2)} s"></i><i class="xh out" data-drag="out" data-node="${r.o.id}" data-row="${r.L.id}" data-tip="${esc(nm)} 导出范围出点 ${o.out.toFixed(2)} s"></i></div>`
-    + `<div class="xlab" style="left:${X(sc, (o.in + o.out) / 2)}">${tBox('in', o.in.toFixed(2), '导出范围入点', `${nm} 导出范围入点，单击输入`)}<span class="dash">–</span>${tBox('out', o.out.toFixed(2), '导出范围出点', `${nm} 导出范围出点，单击输入`)}<span class="u">s</span></div>`;
+  return `<div class="xrange" data-node="${r.o.id}" style="left:${X(sc, o.in)};width:${X(sc, o.out - o.in)}" data-ctx="range" data-tip="${esc(nm)} 导出范围 ${o.in.toFixed(2)}–${o.out.toFixed(2)} s，右键设入点、出点"><i class="xh in" data-drag="in" data-node="${r.o.id}" data-row="${r.L.id}" data-tip="${esc(nm)} 导出范围入点 ${o.in.toFixed(2)} s"></i><i class="xh out" data-drag="out" data-node="${r.o.id}" data-row="${r.L.id}" data-tip="${esc(nm)} 导出范围出点 ${o.out.toFixed(2)} s"></i></div>`;
+}
+/* 「导出范围」那一行的行名格（v3.1 第 1、12 条）：「0.35–2.85 s」可单击输入，右边三个图标命令：设为入点、设为出点、恢复 */
+function xioHTML(sc) {
+  const r = rangeOut(sc); if (!r || !r.o) return '';
+  const o = r.o.tl, nm = rangeName(sc, r);
+  return `<span class="xv" data-tip="${esc(nm)} 导出范围">${tBox('in', o.in.toFixed(2), '导出范围入点', `${nm} 导出范围入点，单击输入`)}<span class="dash">–</span>${tBox('out', o.out.toFixed(2), '导出范围出点', `${nm} 导出范围出点，单击输入`)}<span class="u">s</span></span>`
+    + `<span class="sp"></span><button class="btn btn-icon sm" data-act="setIn" aria-label="设为入点" data-tip="${esc(nm)} 导出范围：入点设到播放头" data-key="[">${ico('in')}</button><button class="btn btn-icon sm" data-act="setOut" aria-label="设为出点" data-tip="${esc(nm)} 导出范围：出点设到播放头" data-key="]">${ico('outp')}</button><button class="btn btn-icon sm" data-act="clearIO" aria-label="恢复导出范围" data-tip="${esc(nm)} 导出范围：恢复到打开时">${ico('reset')}</button>`;
 }
 /* 导出范围、胶片、轨道就地更新：不重建刻度尺上的入点 / 出点框（Tab 从入点跳到出点时焦点不丢，走查 P7） */
 function syncRange(sc = cur(), wrap = $('#tlw')) {
   const sc_ = $('.rrow .scale', wrap); if (!sc_) return;
-  const r = rangeOut(sc), xr = $('.xrange', sc_), xl = $('.xlab', sc_);
+  const r = rangeOut(sc), xr = $('.xrange', sc_), xl = $('.rrow .xio', wrap);
   if (r && r.o && xr && xl && xr.dataset.node === r.o.id) {
     const o = r.o.tl, nm = rangeName(sc, r);
     xr.style.left = X(sc, o.in); xr.style.width = X(sc, o.out - o.in); xl.style.left = X(sc, (o.in + o.out) / 2);
     xr.dataset.tip = `${nm} 导出范围 ${o.in.toFixed(2)}–${o.out.toFixed(2)} s，右键设入点、出点`;
     $('.xh.in', xr).dataset.tip = `${nm} 导出范围入点 ${o.in.toFixed(2)} s`; $('.xh.out', xr).dataset.tip = `${nm} 导出范围出点 ${o.out.toFixed(2)} s`;
     $$('.tnum', xl).forEach(i => { if (document.activeElement !== i) { i.value = (i.classList.contains('in') ? o.in : o.out).toFixed(2); i.classList.remove('is-error'); } });
-  } else { $$('.xrange, .xlab', sc_).forEach(x => x.remove()); sc_.insertAdjacentHTML('beforeend', rangeHTML(sc)); }
+  } else { $$('.xrange', sc_).forEach(x => x.remove()); sc_.insertAdjacentHTML('beforeend', rangeHTML(sc)); const xi = $('.rrow .xio', wrap); if (xi) xi.innerHTML = xioHTML(sc); }
   const fr = $('.frow .fr', wrap); if (fr) { fr.innerHTML = filmHTML(sc); filmBoost(wrap); }
   $$('.tlrow[data-id] .trk', wrap).forEach(t => { const f = find(sc, t.parentElement.dataset.id); if (f) t.innerHTML = trackHTML(sc, f.n); });
   placePH(sc, wrap);
@@ -1112,17 +1123,17 @@ function syncRange(sc = cur(), wrap = $('#tlw')) {
 function tlHTML(sc) {
   return `<div class="tl" data-scene="${sc.key}"><div class="fixed">
       <div class="frow"><div class="lab">烘焙</div><div class="fr" data-scrub>${filmHTML(sc)}</div></div>
-      <div class="rrow"><div class="lab">导出范围</div><div class="fr" data-scrub><div class="scale">${scaleHTML(sc)}${rangeHTML(sc)}</div></div></div></div>
+      <div class="rrow"><div class="lab xio">${xioHTML(sc)}</div><div class="fr" data-scrub><div class="scale">${scaleHTML(sc)}${rangeHTML(sc)}</div></div></div></div>
     <div class="tl-rows">${tlRowsHTML(sc)}</div></div><div class="ph"><i data-scrub-ph></i></div><div class="tl-foot" hidden><button class="tl-more" data-act="tlMore"></button></div>`;
 }
 /* 默认行数：1920 下至少 6 行、1366 下至少 4 行（行少时按实际行数）；拖过分隔条的按拖的算 */
 const tlDefRows = (sc, wrap) => { const n = rowsOf(sc).filter(r => r.n.type !== 'group').length; return wrap.id === 'tlw' ? (UI.tlRows[UI.size] || Math.min(n, Math.max(+getComputedStyle($('#app')).getPropertyValue('--tl-min'), tlFitRows()))) : Math.min(n, 8); };
-/* 画面至少留 60 % 高时，时间轴还放得下几行（左右栏下面不空着） */
+/* 时间轴最多能放几行：1920 下画面至少留一半高，1366 下留 60 % */
 function tlFitRows() {
   const app = $('#app'), cs = getComputedStyle(app), rh = parseFloat(cs.getPropertyValue('--h-row')) || 28;
   const mid = $('#mid'), H = mid && mid.clientHeight ? mid.clientHeight : (UI.size === 1366 ? 676 : 980);
   const fixed = parseFloat(cs.getPropertyValue('--h-tp')) + parseFloat(cs.getPropertyValue('--h-film')) + parseFloat(cs.getPropertyValue('--h-ruler')) + 24;
-  return Math.max(1, Math.floor((H * .4 - fixed) / rh));
+  return Math.max(1, Math.floor((H * (UI.size === 1366 ? .4 : .5) - fixed) / rh));   /* v3.1 第 20 条：按内容定高；1920 下画面至少留一半，1366 下留 60 % */
 }
 function renderTL(sc = cur(), wrap = $('#tlw')) {
   const old = $('.tl', wrap), top = old ? old.scrollTop : 0;
@@ -1134,7 +1145,8 @@ function renderTL(sc = cur(), wrap = $('#tlw')) {
   wrap.style.removeProperty('--w-tlab');
   const labs = $$('.tlrow[data-id] .lab', tl); let wmax = 0;
   labs.forEach(l => { const w = [...l.childNodes].reduce((a, c) => a + (c.nodeType === 3 ? (() => { const r = document.createRange(); r.selectNodeContents(c); return r.getBoundingClientRect().width; })() : c.getBoundingClientRect().width + 6), 0) + parseFloat(getComputedStyle(l).paddingLeft) + 12; wmax = Math.max(wmax, w); });
-  if (wmax) wrap.style.setProperty('--w-tlab', Math.ceil(Math.max(wmax, UI.size === 1366 ? 96 : 120)) + 'px');
+  /* 至少放得下「导出范围」行名格：「0.35–2.85 s」+ 三个图标命令 */
+  if (wmax) wrap.style.setProperty('--w-tlab', Math.ceil(Math.max(wmax, UI.size === 1366 ? 168 : 196)) + 'px');
   tl.addEventListener('scroll', () => tlMoreHint(wrap));
   placePH(sc, wrap); tlMoreHint(wrap); filmBoost(wrap);
 }
@@ -1161,17 +1173,17 @@ function placePH(sc, wrap) {
   const trk = $('.rrow .fr', tl), w = wrap.getBoundingClientRect(), r = trk.getBoundingClientRect(), ph = $('.ph', wrap);
   const rows = $('.tl-rows', tl), rb = rows.offsetHeight && getComputedStyle(rows).display !== 'none' ? Math.min(rows.getBoundingClientRect().bottom, tl.getBoundingClientRect().bottom) : r.bottom;
   ph.style.left = Math.round(r.left - w.left + sc.t / sc.T * r.width) + 'px';
-  /* 头部画在刻度尺的下半段（上半段写导出范围「0.35–2.85 s」，不互相挡），线往下穿过轨道 */
-  const hy = r.top + Math.max(0, r.height - 12);
-  ph.style.top = (hy - w.top) + 'px';
-  ph.style.height = Math.max(12, rb - hy) + 'px';
+  /* v3.1 第 12 条：头部画在刻度数字上方（刻度尺上沿），不盖住数字；播放头经过的刻度数字让位 */
+  ph.style.top = (r.top - w.top) + 'px';
+  ph.style.height = Math.max(r.height, rb - r.top) + 'px';
+  const px = sc.t / sc.T * r.width;
+  $$('.rrow .tlab', tl).forEach(l => { const a = l.offsetLeft, b = a + l.offsetWidth; l.classList.toggle('is-hid', px > a - 7 && px < b + 7); });
   const fno = wrap.id === 'tlw' ? $('#transport .fno') : null; if (fno) { const B = bakeOf(sc); fno.textContent = `${frameNo(sc)} / ${B ? B.frames : sc.frames}`; }
 }
 
 /* ---------- 主屏：检查器（只放参数） ---------- */
-/* §7：效果名只在结构树第一行；面包屑从层写起（选中效果本身时写「整体」） */
-const pathChain = (sc, n) => n === sc.root ? [n] : ancestors(sc, n.id).filter(a => a !== sc.root);
-const pathLab = (sc, a) => a === sc.root ? a.name : label(sc, a);
+const pathChain = (sc, n) => ancestors(sc, n.id);   /* v3.1 第 2 条：面包屑从效果写起「金曜菊-B › 金锦层」 */
+const pathLab = (sc, a) => label(sc, a);
 function pathHTML(sc, n) {
   const chain = pathChain(sc, n);
   return chain.map((a, i) => i === chain.length - 1
@@ -1256,7 +1268,7 @@ function renderExport() {
   /* §5：导出按钮左边的琥珀计数「⚠ 1」；悬停写「金锦层需重新导出：缩放 1.10 → 1.30」，点开导出菜单 */
   const es = $('#expSt');
   es.className = 'exp-st ' + (need ? 'st-warn' : 'st-ok'); es.hidden = !need;
-  es.innerHTML = need ? `${ico('stale')}<span>${st.size}</span>` : '';
+  es.innerHTML = need ? `${ico('stale')}<span>${st.size} 层</span>` : '';
   es.setAttribute('aria-label', need ? `${st.size} 层需重新导出` : '已导出');
   if (need) es.dataset.why = 'all'; else delete es.dataset.why;
   /* 主操作：薄荷实底，全屏只有这一个 */
@@ -1319,7 +1331,7 @@ function renderLib() {
     const items = LIB.filter(it => catOk(it.cat) && (!q || [it.name, ...it.sub, it.cat].some(x => x.includes(q))));
     count = items.length;
     html = items.map(it => `<div class="lib-item${it.id === sc.lib ? ' is-sel' : ''}" role="option" aria-selected="${it.id === sc.lib}" tabindex="${it.id === sc.lib ? 0 : -1}" data-lib="${it.id}">
-      <div class="th"><img src="${IMG[it.img]}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div>
+      <div class="th"><img src="${libImg(it.img)}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div>
       <div class="li-s">${it.sub.map(s => `<span>${hl(s, q)}</span>`).join('')}<span class="st${['待验收', '新'].includes(it.st) ? ' st-hi' : ''}">${it.st}</span></div></div></div>`).join('');
   } else {
     const mine = UI.libSub === '我的模板', multi = UI.libSub === '多层花型模板';
@@ -1410,11 +1422,10 @@ function viewIn(lab) {
   const k = `view|视图|${lab}`, s = viewS(lab);
   return `<div class="prm vrow" data-k="${k}" data-kind="num" data-lab="${lab}"><span class="lbl" data-tip="${VIEW_TIP[lab]}">${lab}</span><input class="num" value="${fmt(s.v, s.step)}" aria-label="${lab}"><span class="u">${s.unit}</span></div>`;
 }
-/* 右下小标记：只有不是默认值的那一项，例如「距离 1500 m」；点一下打开预览设置 */
+/* v3.1 第 3 条：右下常驻「距离 1000 m　预览曝光 1.00 倍」，弱色；和参数数值框同一套交互（拖动、单击输入、越界报错、Esc） */
 function renderViewMarks() {
-  const el = $('#ciView'); if (!el) return;
-  const h = ['距离', '预览曝光'].map(lab => { const s = viewS(lab); return same(s.v, s.def) ? '' : `<button class="vmk" data-act="preview" data-tip="${VIEW_TIP[lab]}">${lab} <b>${fmt(s.v, s.step)}</b> ${s.unit}</button>`; }).join('');
-  if (el.innerHTML !== h) el.innerHTML = h;
+  const el = $('#ciView'); if (!el || el.children.length) return;
+  el.innerHTML = ['距离', '预览曝光'].map(lab => { const s = viewS(lab), k = `view|视图|${lab}`; return `<span class="prm vrow vi" data-k="${k}" data-kind="num" data-lab="${lab}"><span class="lbl" data-tip="${VIEW_TIP[lab]}">${lab}</span><input class="num" value="${fmt(s.v, s.step)}" aria-label="${lab}"><span class="u">${s.unit}</span></span>`; }).join('');
 }
 /* 标题行中段：工作模式后面的视图控件（贴图与交付时换成平台、预览方式、网格、缩放比例） */
 function renderViewbar() {
@@ -1430,13 +1441,14 @@ function renderViewbar() {
   }
   const VT = {'适应': '整朵放进画面', '1:1': '按贴图像素 1:1 显示', '游戏内': '按距离换算游戏内大小'};
   vb.innerHTML = `<div class="seg sm" data-ui="view3" role="group" aria-label="画面大小">${['适应', '1:1', '游戏内'].map(v => `<button data-v="${v}" aria-pressed="${UI.view3 === v}" data-tip="${VT[v]}">${v}</button>`).join('')}</div>
-    <span class="sp"></span><div class="tgrp" role="group" aria-label="视图">
+    <span class="sp"></span><div class="tgrp" role="group" aria-label="画面叠加">
     <button class="btn btn-icon" data-act="grid" aria-pressed="${UI.grid}" aria-label="构图网格" data-tip="构图网格">${ico('grid')}</button>
-    <button class="btn btn-icon" data-act="note" aria-label="批注" data-tip="当前画面写进意见">${ico('note')}</button>
+    <button class="btn btn-icon" data-act="note" aria-label="批注" data-tip="当前画面写进意见">${ico('note')}</button></div>
+    <div class="tgrp" role="group" aria-label="面板">
     <button class="btn btn-icon" data-act="compact" aria-pressed="${UI.compact}" aria-label="精简布局" data-tip="精简布局，收起左右栏" data-key="F">${ico('compact')}</button>
     <button class="btn btn-icon" data-act="toggleL" aria-label="${UI.left ? '隐藏左栏' : '显示左栏'}" data-tip="${UI.left ? '隐藏左栏' : '显示左栏'}" data-key="L">${ico('pl')}</button>
-    <button class="btn btn-icon" data-act="toggleR" aria-label="${UI.right ? '隐藏右栏' : '显示右栏'}" data-tip="${UI.right ? '隐藏右栏' : '显示右栏'}" data-key="P">${ico('pr')}</button>
-    <button class="btn tbtn" data-act="preview" aria-haspopup="menu" data-tip="距离、预览曝光、背景">预览设置</button></div>`;
+    <button class="btn btn-icon" data-act="toggleR" aria-label="${UI.right ? '隐藏右栏' : '显示右栏'}" data-tip="${UI.right ? '隐藏右栏' : '显示右栏'}" data-key="P">${ico('pr')}</button></div>
+    <button class="btn tbtn" data-act="preview" aria-haspopup="menu" data-tip="背景、安全框">预览设置</button>`;
 }
 function applyView() { if (UI.view === 'main' && UI.mode !== '贴图与交付') renderStage(); }
 /* 每层输出的设置：检查器「输出」模块里改过就用改过的值，没打开过就用文件里的值 */
@@ -1883,9 +1895,10 @@ const platTxt = P => P.pc && P.mb ? 'PC + 手机' : P.pc ? 'PC' : P.mb ? '手机
 function exportMenu(btn, focusSel) {
   const sc = cur(), st = exportScope(sc, 'stale'), all = layersOf(sc), curL = exportScope(sc, 'current'), chk = exportScope(sc, 'checked'), P = platsOf(sc), none = !P.pc && !P.mb;
   const S = exportSummary(sc, st.length ? st : all), nm = L => L.map(l => l === sc.root ? sc.short : l.name).join('、'), det = !!UI.expDetail;
-  const head = `<div class="msum"><div class="mline"><b>${st.length ? `${st.length} 层需重新导出` : '全部已导出'}<span class="lbl">${platTxt(P)}</span><span class="lbl">导出文件夹 ${esc(expFolder())}</span></b><button class="btn tbtn mdet" data-r="det" type="button" aria-expanded="${det}">详情${ico('cd', 'dd')}</button></div>
+  const head = `<div class="msum"><div class="mline"><b>${st.length ? `${st.length} 层需重新导出` : '全部已导出'}</b><button class="btn tbtn mdet" data-r="det" type="button" aria-expanded="${det}">详情${ico('cd', 'dd')}</button></div>
       <div class="mdetail"${det ? '' : ' hidden'}><dl>
       <dt>${st.length ? '需重新导出' : '层'}</dt><dd>${esc(nm(st.length ? st : all))}</dd>
+      <dt>平台</dt><dd>${platTxt(P)}</dd>
       <dt>位置</dt><dd class="mloc"><span>${esc(S.path)}</span></dd>
       <dt></dt><dd class="mloc"><button class="btn lnk" data-r="open" type="button">打开</button><button class="btn lnk" data-r="folder" type="button">换文件夹</button></dd>
       <dt>PC</dt><dd class="mfile${P.pc ? '' : ' off'}">${esc(S.filesPC)}</dd>
@@ -1896,10 +1909,12 @@ function exportMenu(btn, focusSel) {
   const items = [
     {t: '重新导出', k: String(st.length), exp: 'stale', dis: none || !st.length, act: () => doExport('stale')},
     {t: '导出全部', k: String(all.length), exp: 'all', dis: none, act: () => doExport('all')},
-    {t: '导出本层', k: nm(curL), exp: 'current', dis: none, act: () => doExport('current')},
+    {t: `导出本层（${nm(curL)}）`, k: String(curL.length), exp: 'current', dis: none, act: () => doExport('current')},
     {t: '导出勾选', k: String(chk.length), exp: 'checked', dis: none || !chk.length, act: () => doExport('checked')},
     {html0: opts}];
   const m = openMenu(btn, items, {align: 'right', headHTML: head, cls: 'wide exp'});
+  /* 左边缘对齐检查器的左栏线，不把下面的参数名切成半截 */
+  const I = $('#insp'); if (I && I.offsetParent && UI.view === 'main') m.style.left = (I.getBoundingClientRect().left + 1) + 'px';
   $('#expAlsoWB', m).addEventListener('change', e => { UI.alsoWB[sc.key] = e.target.checked; });
   $$('#expPlat button', m).forEach(c => c.addEventListener('click', e => { P.pc = !!+e.currentTarget.dataset.pc; P.mb = !!+e.currentTarget.dataset.mb; exportMenu(btn, `#expPlat button[data-v="${e.currentTarget.dataset.v}"]`); }));
   $('[data-r="det"]', m).addEventListener('click', e => { UI.expDetail = !UI.expDetail; $('.mdetail', m).hidden = !UI.expDetail; e.currentTarget.setAttribute('aria-expanded', String(UI.expDetail)); });
@@ -1951,7 +1966,7 @@ const scOfWrap = w => SC[w.dataset.scene];
 function tlSelect(w, id) { if (w.id === 'tlw') select(id); else { const sc = scOfWrap(w); sc.sel = id; $$('.tlrow', w).forEach(r => r.classList.toggle('is-sel', r.dataset.id === id)); } }
 document.addEventListener('pointerdown', e => {
   if (e.button !== 0) return;
-  const w = e.target.closest('.tlw'); if (!w || e.target.closest('.tl-more, .xlab')) return;   /* 刻度尺上方的入点 / 出点框：点它是输入，不是拖播放头 */
+  const w = e.target.closest('.tlw'); if (!w || e.target.closest('.tl-more, .xio')) return;   /* 「导出范围」行名格里的输入框和命令 */
   const sc = scOfWrap(w), t = e.target;
   const h = t.closest('[data-drag]');
   const scrub = !h && t.closest('[data-scrub], [data-scrub-ph]');
@@ -2017,7 +2032,7 @@ function setIO(kind, at, node) {
   if (kind === 'clear') { const e = sc.saveSnap && sc.saveSnap.get(n.id); Object.assign(b, e ? e.tl : a); }
   const isOut = n.type === 'output', L = isOut ? rangeOut(sc) : null, rowId = isOut && L ? L.L.id : sc.sel;
   const nm = isOut && L ? rangeName(sc, L) : label(sc, find(sc, sc.sel).n), what = isOut ? '导出范围' : '发射时段';
-  const at0 = () => isOut ? ($('#tlw .xlab') || $('#tlw .rrow .fr')) : $(`#tlw .tlrow[data-id="${rowId}"]`);
+  const at0 = () => isOut ? ($('#tlw .rrow .xv') || $('#tlw .rrow .fr')) : $(`#tlw .tlrow[data-id="${rowId}"]`);
   if (same(a, b)) { flashHint(at0(), '无变化'); return true; }
   const set = v => { n.tl = clone(v); syncRange(sc); renderStatus(); refreshStaleMarks(); };
   set(b); pushH({fn: true, desc: `${nm} ${what} ${a.in.toFixed(2)}–${a.out.toFixed(2)} → ${b.in.toFixed(2)}–${b.out.toFixed(2)} s`, tlNode: rowId, node: rowId, undo: () => set(a), redo: () => set(b)}, sc.key);
@@ -2036,7 +2051,8 @@ document.addEventListener('contextmenu', e => {
 });
 
 /* ---------- 时间、入点、出点读数：单击输入，回车生效，Esc 取消，越界就地报错 ---------- */
-const tnTarget = el => { const sc = cur(); if (el.closest('.xlab')) { const r = rangeOut(sc); return r && r.o; } return curTarget(sc); };
+const tnTarget = el => { const sc = cur(); if (el.closest('.xio')) { const r = rangeOut(sc); return r && r.o; } return curTarget(sc); };
+const rangeNode = () => { const r = rangeOut(cur()); return r && r.o; };
 function tnumRange(el) {
   const sc = cur(), n = tnTarget(el), f = 1 / sc.fps;
   if (el.classList.contains('now') || !n) return [0, sc.T];
@@ -2191,20 +2207,21 @@ document.addEventListener('click', e => {
     play: () => play(), restart: () => { setTime(0); play(true); }, loop: () => { UI.loop = !UI.loop; renderTransport(); },
     timeTools: () => openMenu(a, [{t: '上一 tick', k: '←', act: () => stepTick(-1)}, {t: '下一 tick', k: '→', act: () => stepTick(1)}, '-', ...sc.marks.map(([nm, v]) => ({t: `跳到${nm}`, k: v.toFixed(2) + ' s', act: () => setTime(v)}))]),
     tlOpts: () => openMenu(a, [
-      {head: tgtWhat(sc)},
-      {t: '设为入点', k: '[', dis: !curTarget(sc), act: () => setIO('in')}, {t: '设为出点', k: ']', dis: !curTarget(sc), act: () => setIO('out')}, {t: '恢复', dis: !curTarget(sc), act: () => setIO('clear')}, '-',
+      {head: '导出范围'},
+      {t: '设为入点', k: '[', act: () => setIO('in', undefined, rangeNode())}, {t: '设为出点', k: ']', act: () => setIO('out', undefined, rangeNode())}, {t: '恢复', act: () => setIO('clear', undefined, rangeNode())}, '-',
+      ...(tgtWhat(sc) === '发射时段' ? [{head: '发射时段'}, {t: '设为入点', act: () => setIO('in')}, {t: '设为出点', act: () => setIO('out')}, {t: '恢复', act: () => setIO('clear')}, '-'] : []),
       {t: '一并移动', sub: '拖层入点时发射器同移', chk: UI.optFollow, keep: true, act: b => { UI.optFollow = !UI.optFollow; b.setAttribute('aria-checked', UI.optFollow); $('.ck', b).innerHTML = UI.optFollow ? ico('check') : ''; }},
       {t: '同刻联动', sub: '同一时刻的关键点同移', chk: UI.optSync, keep: true, act: b => { UI.optSync = !UI.optSync; b.setAttribute('aria-checked', UI.optSync); $('.ck', b).innerHTML = UI.optSync ? ico('check') : ''; }}], {checks: true}),
     thumb: () => { a.classList.add('is-loading'); a.innerHTML = '<span class="spin"></span><span class="thumb-t">生成中</span>'; setTimeout(() => { renderTransport(); toast(`缩略图已更新，取 ${sc.t.toFixed(2)} s`); }, 900); },
-    setIn: () => setIO('in'), setOut: () => setIO('out'), clearIO: () => setIO('clear'),
+    setIn: () => setIO('in', undefined, rangeNode()), setOut: () => setIO('out', undefined, rangeNode()), clearIO: () => setIO('clear', undefined, rangeNode()),
     grid: () => { UI.grid = !UI.grid; renderViewbar(); renderStage(); },
     atlasGrid: () => { UI.atlasGrid = !UI.atlasGrid; renderViewbar(); renderDeliv(); }, note: () => toast(`已写进意见，${sc.t.toFixed(2)} s`),
     compact: () => { UI.compact = !UI.compact; renderAll(); }, toggleL: () => { UI.left = !UI.left; UI.compact = false; renderAll(); }, toggleR: () => { UI.right = !UI.right; UI.compact = false; renderAll(); },
     keys: () => openKeys(), changelog: () => openMenu(a, [{head: 'v4.9.129 新内容 2 条'}, {t: '效果库改为标签式', sub: '同编排工作台'}, {t: '结构树移到左栏', sub: '层多不占时间轴'}], {align: 'right'}),
     deliverAll: () => setMode('贴图与交付'),
-    /* 预览设置（§7）：距离、预览曝光在这里改，不再常驻画面 */
+    /* 预览设置：背景、安全框（距离、预览曝光常驻画面右下） */
     preview: () => openMenu(a, [{head: '背景'}, {t: '夜空', chk: true, keep: true}, {t: '纯黑', chk: false, keep: true}, '-', {t: '安全框', chk: false, keep: true, act: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); $('.ck', b).innerHTML = on ? ico('check') : ''; }}],
-      {align: 'right', checks: true, cls: 'pv', headHTML: `<div class="mh">预览</div>${viewIn('距离')}${viewIn('预览曝光')}<hr>`, noFocus: true}),
+      {align: 'right', checks: true}),
     viewOpt: () => openMenu(a, [{t: '仅已改', sub: '非默认或本次改过', chk: UI.onlyChg, act: () => { UI.onlyChg = !UI.onlyChg; applyFilter(); }}, '-', {t: '全部展开', act: () => foldAll(true)}, {t: '全部折叠', act: () => foldAll(false)}, '-',
       {html0: '<div class="mlegend" role="note"><span><i class="bar"></i>本次改过</span><span><i class="dot"></i>非默认</span></div>'}], {align: 'right', checks: true}),
     foldAll: () => foldAll(!$$('#pbody .mod:not(.mod-one)').some(m => !m.hidden && !m.classList.contains('is-closed'))),
@@ -2321,7 +2338,7 @@ document.addEventListener('keydown', e => {
   /* 快捷键作用于「选中」的对象：时间轴、画面里选中后按 Delete / F2 与结构树里一样 */
   if (k === 'Delete' || k === 'Backspace') { e.preventDefault(); doDelete(selN); return; }
   if (k === 'F2') { e.preventDefault(); if (selN && selN.type !== 'group' && selN.type !== 'output') rename(selN); return; }
-  if (k === '[' || k === ']') { e.preventDefault(); setIO(k === '[' ? 'in' : 'out'); return; }
+  if (k === '[' || k === ']') { e.preventDefault(); setIO(k === '[' ? 'in' : 'out', undefined, rangeNode()); return; }
   if (k === 's' || k === 'S') { soloToggle(selN); return; }
   if (k === 'h' || k === 'H') { toggleShow(selN); return; }
   if (k === 'f' || k === 'F') { UI.compact = !UI.compact; renderAll(); return; }
@@ -2411,11 +2428,11 @@ function sheetTokens() {
   <div class="ks-cols" style="--c:2;margin-top:8px"><div class="ks-blk"><h3>字号与字重<span>三级：小 12 / 正文 13 / 大 15（1366：11 / 12 / 14）；字重只有 400 和 600；数值一律等宽数字</span></h3><div class="ks-type">
     <span>15 / 600</span><span style="font-size:15px;font-weight:600;color:var(--t1)">金锦层　当前位置（面包屑末项）</span>
     <span>15 / 400</span><span style="font-size:15px;color:var(--t1)">2.00 <span style="color:var(--t3)">/ 5.24</span> <span class="u">s</span>　当前时间码</span>
-    <span>15 / 600</span><span style="font-size:15px;font-weight:600;color:var(--t1)">效果　模板　当前标签</span>
+    <span>15 / 400</span><span style="font-size:15px;color:var(--t1)">效果　模板　效果库大号标签（当前项只靠下划线）</span>
     <span>13 / 600</span><span style="font-size:13px;font-weight:600;color:var(--t1)">时间与缩放　模块标题</span>
     <span>13 / 400</span><span style="font-size:13px;color:var(--t2)">开始时间　保存　设为入点　<span style="color:var(--t1)">1.10　0.05–0.65</span></span>
     <span>12 / 400</span><span style="font-size:12px;color:var(--t3)">倍　m/s　KYB　3 层　6 个　已保存 20:31</span></div>
-    <p class="ks-cap" style="margin-top:8px">600 只用在：当前位置（面包屑末项、结构树当前行）、检查器模块标题、当前标签、分段控件的选中段、产品名。</p></div>
+    <p class="ks-cap" style="margin-top:8px">600 只用在：面包屑末项、结构树当前行、检查器模块标题、产品名。选中的分段、标签不加粗，只靠底色或下划线。</p></div>
     <div class="ks-blk"><h3>网格与间距<span>基本单位 4；行高 28；控件高 24；可点区域 ≥ 28；面板内边距 12；组内 8，组间 20；圆角 0–2 px</span></h3><div class="ks-sp">${[4, 8, 12, 16, 20, 24, 28].map(x => `<div><i style="width:${x}px;height:${x}px"></i>${x}</div>`).join('')}
     <span class="gap"></span>${[0, 1, 2].map(r => `<div><i style="width:40px;height:28px;border-radius:${r}px;background:var(--g4)"></i>${r} px</div>`).join('')}</div>
     <p class="ks-cap" style="margin-top:8px">栏宽：1920 下左栏 300、右栏 460；1366 下 260、380。检查器五列：参数名 112 ｜ 控件 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（1366 下参数名 96）。</p></div></div>`;
@@ -2425,8 +2442,8 @@ const ICONS = [['layer', '层'], ['star', '星'], ['spark', '火花'], ['ember',
   ['group', '效果'], ['out', '输出'], ['eye', '显示'], ['eyeoff', '已隐藏'], ['solo', '只看'], ['soloon', '只看（开）'], ['more', '更多'], ['lock', '锁定'],
   ['undo', '撤销'], ['redo', '重做'], ['history', '版本记录'], ['reset', '恢复默认'], ['stale', '需重新导出'], ['check', '已完成'], ['alert', '警告'], ['info', '说明'],
   ['play', '播放'], ['pause', '暂停'], ['restart', '回到开头'], ['loop', '循环'], ['camera', '缩略图'], ['timer', '时间工具'], ['grid', '网格叠加'], ['note', '批注'],
-  ['compact', '精简布局'], ['pl', '左栏'], ['pr', '右栏'], ['folder', '文件夹'], ['settings', '设置'], ['search', '搜索'], ['filter', '筛选'], ['auto', '建议值'],
-  ['cd', '展开'], ['cu', '收起'], ['cr', '向右'], ['cl', '向左'], ['back', '返回'], ['plus', '新建'], ['x', '关闭'], ['keys', '快捷键'], ['file', '文件']];
+  ['compact', '精简布局'], ['pl', '左栏'], ['pr', '右栏'], ['folder', '文件夹'], ['settings', '设置'], ['search', '搜索'], ['filter', '筛选'], ['auto', '自动曝光'],
+  ['cd', '展开'], ['cu', '收起'], ['cr', '向右'], ['cl', '向左'], ['back', '返回'], ['in', '设为入点'], ['outp', '设为出点'], ['plus', '新建'], ['x', '关闭'], ['keys', '快捷键'], ['file', '文件']];
 function sheetIcons() {
   return `<h2>图标</h2><p class="lead">规范 v3 第 6 节。专门画的一套，symbol 定义在 body_main.html 开头（外壳共用）。圆箭头只表示「恢复默认」；「循环」是首尾相接的矩形环；「版本记录」是叠在一起的三张纸；「需重新导出」是琥珀色三角加感叹号。</p>
     <div class="ks-icons">${ICONS.map(([id, t]) => `<div><svg class="i${id === 'stale' ? ' amber' : ''}" aria-hidden="true"><use href="#i-${id}"/></svg><span>${t}<code>i-${id}</code></span></div>`).join('')}</div>`;
@@ -2479,7 +2496,7 @@ function sheetBasic() {
     ['原生下拉：速度', [nsel(), nsel('is-hover'), nsel('is-focus'), nsel('is-open') + pick(['0.25×', '0.5×', '1×', '2×'], '1×'), nsel('is-disabled'), nsel()]],
     ['原生下拉：参数行内', [nsel('', ['512 px', '1024 px', '2048 px'], '1024 px', 'boxed'), nsel('is-hover', ['1024 px'], '1024 px', 'boxed'), nsel('is-focus', ['1024 px'], '1024 px', 'boxed'), nsel('is-open', ['1024 px'], '1024 px', 'boxed') + pick(['512 px', '1024 px', '2048 px'], '1024 px'), nsel('is-disabled', ['1024 px'], '1024 px', 'boxed'), nsel('', ['256 px', '512 px', '1024 px', '2048 px'], '1024 px', 'boxed')]],
     ['自定义菜单：⋯', [more(''), more('is-hover'), more('is-focus'), `<div>${more('is-active')}<div style="margin-top:4px">${layerMenu}</div></div>`, `<button class="btn btn-icon" disabled aria-label="更多操作">${ico('more')}</button>`, `<button class="btn btn-icon" data-demo="layerMenu" aria-haspopup="menu" aria-label="更多操作" data-tip="更多操作">${ico('more')}</button>`]],
-    ['自定义菜单：导出 ▾', [sp(''), sp('', 'is-hover'), sp('', 'is-focus'), `<div>${sp('', 'is-open')}<div style="margin-top:4px">${menuStatic([{head: '1 层需重新导出'}, {t: '重新导出', k: '1', h: true}, {t: '导出全部', k: '3'}, {t: '导出本层', k: '金锦层'}, {t: '导出勾选', k: '1'}], 200)}</div></div>`, `<div class="split"><button class="btn btn-1" disabled>导出</button><button class="btn btn-1" disabled>${ico('cd')}</button></div>`, `<div class="split"><button class="btn btn-1" data-demo="toast" data-msg="已导出">导出</button><button class="btn btn-1" data-demo="expMenu" aria-haspopup="menu" aria-label="导出选项">${ico('cd')}</button></div>`]],
+    ['自定义菜单：导出 ▾', [sp(''), sp('', 'is-hover'), sp('', 'is-focus'), `<div>${sp('', 'is-open')}<div style="margin-top:4px">${menuStatic([{head: '1 层需重新导出'}, {t: '重新导出', k: '1', h: true}, {t: '导出全部', k: '3'}, {t: '导出本层（金锦层）', k: '1'}, {t: '导出勾选', k: '1'}], 200)}</div></div>`, `<div class="split"><button class="btn btn-1" disabled>导出</button><button class="btn btn-1" disabled>${ico('cd')}</button></div>`, `<div class="split"><button class="btn btn-1" data-demo="toast" data-msg="已导出">导出</button><button class="btn btn-1" data-demo="expMenu" aria-haspopup="menu" aria-label="导出选项">${ico('cd')}</button></div>`]],
     ['自定义菜单：加层 ▾', [addl(''), addl('is-hover'), addl('is-focus'), `<div>${addl('is-active')}<div style="margin-top:4px">${menuStatic([{t: '空白层', h: true}, {t: '从模板…'}, {t: '复制本层'}], 150)}</div></div>`, `<button class="btn btn-text sm" disabled>${ico('plus')}加层${ico('cd', 'dd')}</button>`, `<button class="btn btn-text sm" data-demo="addMenu" aria-haspopup="menu">${ico('plus')}加层${ico('cd', 'dd')}</button>`]]
   ]);
   const WS = ['关', '开', '悬停', '焦点', '停用 关', '停用 开', '部分选中', '可操作'];
@@ -2567,7 +2584,7 @@ function markPrmStates() {
   r('时间倍率')?.classList.add('is-hover');
   const lk = $('.lk', r('颗粒大小') || document.body); if (lk && !PS['sheet|prm|参数行|颗粒大小'].lock) { PS['sheet|prm|参数行|颗粒大小'].lock = true; lk.setAttribute('aria-pressed', 'true'); }
 }
-const tagFor = {开始时间: '普通', 时间倍率: '本次改过：竖条；悬停出现锁', 颗粒大小: '已锁定', 缩放: '非默认：空心圆、默认值刻度、恢复菜单', 寿命: '随机幅度：数值格右边的展开箭头', 初速: '随机幅度展开后可调', 湍流尺度: '停用：整行弱化，滑杆位置写原因', 张数: '只读结果与说明', 速度: '随机区间一行，名称后写「分布 1.8」', 方向: '控制锥角；球面时收成一行', 爆后扰动: '关闭时下面 3 项收成一行', 单格: '原生下拉'};
+const tagFor = {开始时间: '普通', 时间倍率: '本次改过：竖条；悬停出现锁', 颗粒大小: '已锁定', 缩放: '非默认：恢复按钮常显、默认值刻度', 寿命: '随机幅度：数值格右边的展开箭头', 初速: '随机幅度展开后可调', 湍流尺度: '停用：整行弱化，滑杆位置写原因', 张数: '只读结果与说明', 速度: '随机区间一行，名称后写「分布 1.8」', 方向: '控制锥角；球面时收成一行', 爆后扰动: '关闭时下面 3 项收成一行', 单格: '原生下拉'};
 
 /* ---------- 全表：组合部件（清单第 3 节） ---------- */
 function staticTree() {
@@ -2585,7 +2602,7 @@ function staticTree() {
     <div class="trow t-add"><button class="btn btn-text sm" tabindex="-1">${ico('plus')}加层${ico('cd', 'dd')}</button><button class="btn btn-text sm" tabindex="-1">${ico('plus')}加发射器</button></div></div></div>`;
 }
 function libItem(it, cls = '', q = '') {
-  return `<div class="lib-item ${cls}" tabindex="-1"><div class="th"><img src="${IMG[it.img]}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div><div class="li-s">${it.sub.map(s => `<span>${s}</span>`).join('')}<span class="st${['待验收', '新'].includes(it.st) ? ' st-hi' : ''}">${it.st}</span></div></div></div>`;
+  return `<div class="lib-item ${cls}" tabindex="-1"><div class="th"><img src="${libImg(it.img)}" alt=""></div><div class="li-t"><div class="li-n">${hl(it.name, q)}</div><div class="li-s">${it.sub.map(s => `<span>${s}</span>`).join('')}<span class="st${['待验收', '新'].includes(it.st) ? ' st-hi' : ''}">${it.st}</span></div></div></div>`;
 }
 function emptyBox(b, s, a) { return `<div class="ks-frame" style="--pw:300px"><div class="empty" style="padding:16px 12px"><b>${b}</b>${s ? `<span>${s}</span>` : ''}<button class="btn btn-2">${a}</button></div></div>`; }
 function pgraph() {
@@ -2613,7 +2630,7 @@ function sheetCombo() {
   <div class="ks-cols" style="--c:2">
    <div class="ks-blk"><h3>结构树行<span>效果 / 层 / 发射器；展开折叠；显示、只看、⋯；隐藏；只看时其他行变暗；改名；嵌套 3 级</span></h3>
      <div class="ks-row">${staticTree()}<div><span class="ks-cap">可操作：多层花型模板 5 层，展开 ${rowsOf(SC.tpl5).length} 行，可滚动；方向键上下、左右收起展开</span><div class="ks-frame" style="--pw:300px;--ph:420px"><div class="tree" id="sheetTree" data-scene="tpl5" role="tree" aria-label="结构树示例" style="flex:1;min-height:0"></div></div></div></div></div>
-   <div class="ks-blk"><h3>参数行<span>五列网格；左侧槽位：竖条为本次改过，空心圆为非默认；恢复按钮只在改过或悬停时出现；锁定悬停出现；依赖行缩进，关闭时收成一行</span></h3>
+   <div class="ks-blk"><h3>参数行<span>五列网格；左侧槽位竖条为本次改过；不是默认值时操作列的恢复按钮常显；停用行在数值列写原因；锁定悬停出现；依赖行缩进，关闭时收成一行</span></h3>
      <div class="ks-row"><div id="prmTags" style="display:flex;flex-direction:column;width:200px;padding-top:0"></div>${liveMods('prm', 460)}</div>
      <p class="ks-cap" style="margin-top:6px">都可操作：拖动、单击输入、双击名称恢复默认；悬停数值看「打开时 → 现在」；把湍流强度调到 0 以上解除失效；切「方向」为锥形出现锥角；点「查看」看收起的依赖行。</p></div>
   </div>
@@ -2670,8 +2687,8 @@ function sheetCombo() {
 /* ---------- 全表：浮层（清单第 4 节） ---------- */
 function expMenuStatic() {
   const mi = (t, k, h) => `<div class="mi${h ? ' is-hover' : ''}"><span class="mt2"><span>${t}</span></span><span class="k">${k}</span></div>`;
-  return `<div class="menu static wide exp" style="min-width:320px"><div class="msum"><div class="mline"><b>1 层需重新导出<span class="lbl">PC + 手机</span><span class="lbl">导出文件夹 FWL_Export</span></b><button class="btn tbtn mdet" type="button" aria-expanded="false">详情${ico('cd', 'dd')}</button></div></div><hr>
-    ${mi('重新导出', '1', true)}${mi('导出全部', '3')}${mi('导出本层', '金锦层')}${mi('导出勾选', '1')}<hr>
+  return `<div class="menu static wide exp" style="min-width:300px"><div class="msum"><div class="mline"><b>1 层需重新导出</b><button class="btn tbtn mdet" type="button" aria-expanded="false">详情${ico('cd', 'dd')}</button></div></div><hr>
+    ${mi('重新导出', '1', true)}${mi('导出全部', '3')}${mi('导出本层（金锦层）', '1')}${mi('导出勾选', '1')}<hr>
     <div class="mrow"><span class="lbl">平台</span>${segH(['PC + 手机', 'PC', '手机'], 0)}</div>
     <label class="mopt"><input class="chk" type="checkbox"><span class="mt2"><span>同时放进编排</span></span></label></div>`;
 }
@@ -2703,13 +2720,13 @@ function sheetInteract() {
     ['数值拖动、Shift 精调', '在数值或滑杆上拖；按住 Shift 变慢，中途按下以当前值为起点；拖动中 Esc 取消', '主屏检查器；全表「数值框」「参数行」'],
     ['单击输入、越界报错', '单击数值输入；越界变红并给出有效范围，离开后复原', '同上'],
     ['双击恢复默认、恢复菜单', '双击参数名；或点行尾恢复按钮，选「打开时」或「默认」', '主屏「缩放」；全表参数行'],
-    ['和打开时比', '竖条为本次改过，空心圆为非默认；悬停数值显示「打开时 → 现在」', '主屏检查器；全表参数行'],
+    ['和打开时比', '竖条为本次改过，恢复按钮常显为非默认；悬停数值显示「打开时 → 现在」', '主屏检查器；全表参数行'],
     ['滑杆一次撤销一步', '拖滑杆后 Ctrl+Z，整次拖动一步退回；没有变化不记撤销', '主屏检查器；全表「滑杆」'],
     ['撤销反馈', '撤销、重做后在操作处显示「撤销：缩放 1.30 → 1.10」并短暂高亮', '主屏参数、时间轴、结构'],
     ['未保存与保存', '状态栏右侧「未保存 N 项」可展开，逐项恢复；Ctrl+S 后显示「已保存 时间」', '主屏状态栏'],
     ['播放与逐帧', '空格播放，R 重播；, . 逐帧，← → 逐帧，Shift 走 10 帧；胶片条帧号同步', '主屏'],
-    ['时间、导出范围输入', '单击当前时间或刻度尺上方的「0.35–2.85 s」输入秒数，回车生效，Esc 取消，越界就地报错；Tab 从入点跳到出点', '主屏播放条、刻度尺'],
-    ['[ ] 设入点、出点', '作用于选中行：层为导出范围，发射器为发射时段；也在「选项 ▾」和刻度尺的右键菜单里；「恢复」回到打开时', '主屏时间轴'],
+    ['时间、导出范围输入', '单击当前时间或「导出范围」行名格里的「0.35–2.85 s」输入秒数，回车生效，Esc 取消，越界就地报错；Tab 从入点跳到出点', '主屏播放条、时间轴'],
+    ['[ ] 设入点、出点', '导出范围行名格里三个图标命令：设为入点、设为出点、恢复；也在「选项 ▾」、刻度尺右键菜单和快捷键 [ ] 里；发射时段在「选项 ▾」里', '主屏时间轴'],
     ['胶片悬停放大', '悬停胶片格放大显示这几帧；胶片按最亮帧自动提亮', '主屏时间轴'],
     ['F 精简布局、L / P 左右栏', '或点工具行中段右侧图标', '主屏'],
     ['结构树方向键', '↑ ↓ 选择，← → 收起展开或到上下级，Enter 展开，F2 改名，Delete 删除', '主屏结构树；全表 37 行结构树'],
@@ -2729,7 +2746,7 @@ function sheetInteract() {
     ['锁定、随机、依赖参数', '悬停参数行出现锁；点数值格右边的展开箭头，下一行出随机幅度或分布滑杆；关「爆后扰动」收成「4 项已隐藏」，点「查看」', '主屏检查器；全表参数行'],
     ['曲线编辑', '横轴寿命 0–100 %，纵轴倍数；拖关键点，双击加点，Delete 删点，下方可输入', '仙女棒 08；全表「曲线编辑」'],
     ['导出', '导出按钮导出需重新导出的层；悬停左侧的「⚠ 1」看原因；菜单三段：摘要、操作、选项', '工具行、贴图与交付'],
-    ['预览设置', '距离、预览曝光、背景、安全框；距离或预览曝光不是默认值时画面右下出小标记，点它打开', '工具行中段、画面右下'],
+    ['距离、预览曝光', '画面右下常驻，拖动或单击输入；背景、安全框在「预览设置」里', '画面右下、工具行中段'],
     ['层的输出', '层参数末尾的「输出」模块；点层行的需重新导出标记跳到这里', '主屏结构树、检查器']
   ];
   return `<h2>交互</h2><p class="lead">清单第 5 节。每项交互的试用位置。</p><table class="ks-it"><thead><tr><th style="width:260px">交互</th><th>怎么操作</th><th style="width:520px">位置</th></tr></thead><tbody>${I.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
@@ -2779,7 +2796,7 @@ document.addEventListener('click', e => {
     toast: () => toast(d.dataset.msg || '已删除「点灭星」', d.dataset.msg ? {near: $('#kitSheet')} : {undo: () => toast('已撤销删除「点灭星」', {near: $('#kitSheet'), ms: 3000}), near: $('#kitSheet')}),
     confirm: () => openDialog({title: '删除效果「金曜菊-B 稀簇辉闪」', body: '效果文件、版本记录和导出记录将一并删除。此操作不能撤销。', ok: '删除', danger: true, onOk: () => toast('样板中不删除效果', {near: $('#kitSheet')})}, $('#kitSheet')),
     press: () => d.setAttribute('aria-pressed', String(d.getAttribute('aria-pressed') !== 'true')),
-    expMenu: () => openMenu(d, [{head: '1 层需重新导出'}, {t: '重新导出', k: '1'}, {t: '导出全部', k: '3'}, {t: '导出本层', k: '金锦层'}, {t: '导出勾选', k: '1'}], {align: 'right'}),
+    expMenu: () => openMenu(d, [{head: '1 层需重新导出'}, {t: '重新导出', k: '1'}, {t: '导出全部', k: '3'}, {t: '导出本层（金锦层）', k: '1'}, {t: '导出勾选', k: '1'}], {align: 'right'}),
     layerMenu: () => openMenu(d, [{head: '2 金锦层'}, {t: '上移'}, {t: '下移'}, {t: '改名', k: 'F2'}, {t: '复制'}, {t: '加发射器'}, {t: '隐藏', k: 'H'}, {t: '加入只看', k: 'S'}, '-', {t: '删除', k: 'Delete', act: () => A.toast()}]),
     addMenu: () => openMenu(d, [{t: '空白层'}, {t: '从模板…'}, {t: '复制本层'}]),
     viewMenu: () => { let on = true; openMenu(d, [{t: '仅已改', chk: on, keep: true, act: b => { on = !on; b.setAttribute('aria-checked', on); $('.ck', b).innerHTML = on ? ico('check') : ''; }}, '-', {t: '全部展开'}, {t: '全部折叠'}], {checks: true}); },

@@ -46,7 +46,7 @@
   --h-tp:36px; --h-film:28px; --h-ruler:28px;
   --w-left:300px; --w-right:460px; --w-tlab:160px;
   /* 检查器五列（§2）：参数名 112 ｜ 控件 自适应 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（改动标记在左侧内边距里） */
-  --w-lab:112px; --w-val:72px; --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:30px;   /* 控件列和数值列之间留 30：最长的区间「0.012–0.032 ⌄」（100 px）放不下 72 时向左借这一段 */
+  --w-lab:112px; --w-val:44px; --w-valr:100px; --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.1 第 15 条：滑杆到数值 8 px；单值数值格 44，区间（含展开箭头）100 */
   --ico:16px; --ico-s:16px; --thumb:40px;
   --tl-min:6; --indent:16px;
   color-scheme:dark;
@@ -57,7 +57,7 @@
   --lh1:14px; --lh2:18px; --lh3:20px;
   --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px;
   --w-left:260px; --w-right:380px; --w-tlab:132px;
-  --w-lab:96px; --w-val:72px; --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:24px;
+  --w-lab:96px; --w-val:40px; --w-valr:92px; --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
   --thumb:36px; --tl-min:4;
 }
 
@@ -78,7 +78,7 @@ svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor
 .gap{flex:none;width:var(--grp)}
 .mute{color:var(--t3)}
 .scroll,.tree,.lib-list,.pbody,.tl,.tpl-grid{scrollbar-width:thin;scrollbar-color:var(--g6) transparent}
-mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:underline;text-decoration-color:var(--g6);text-underline-offset:2px}
+mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:underline;text-decoration-color:var(--g6);text-underline-offset:2px}
 .u{font-size:var(--fs1);color:var(--t3);white-space:nowrap;font-weight:var(--fw1)}
 .lbl{color:var(--t3);font-weight:var(--fw1);cursor:default;user-select:none;white-space:nowrap}
 
@@ -132,28 +132,24 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .seg button,.modeseg button{display:inline-flex;align-items:center;justify-content:center;height:calc(var(--h-ctl) - 2px);padding:0 8px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
 .seg button+button,.modeseg button+button{border-left:1px solid var(--line)}
 .seg button:hover,.seg button.is-hover,.modeseg button:hover{background:var(--hov);color:var(--t1)}
-.seg button[aria-pressed="true"],.modeseg button[aria-pressed="true"]{background:var(--on);color:var(--t1);font-weight:var(--fw2)}
+.seg button[aria-pressed="true"],.modeseg button[aria-pressed="true"]{background:var(--on);color:var(--t1)}   /* v3.1 第 9 条：选中只靠底色，不加粗 */
 .seg button:disabled{opacity:.5;background:none;cursor:default}
 .seg button:focus-visible,.modeseg button:focus-visible{outline-offset:-2px}
 /* M：工作模式；S：缩放、单次 / 循环、筛选块、PC / 手机、贴图 / 逐帧 */
 .seg.m,.modeseg{}
 .seg.m button,.modeseg button{height:calc(var(--h-hit) - 2px);padding:0 14px}
 .seg.sm button{height:calc(var(--h-ctl) - 2px);padding:0 8px}
-/* 选中段宽度不跳：每段预留 600 字重的宽度 */
-.seg button::after,.modeseg button::after{content:attr(data-v);display:block;height:0;overflow:hidden;visibility:hidden;font-weight:var(--fw2)}
-.seg button,.modeseg button{flex-direction:column}
 
 /* 3.3 页面标签：文字 + 2 px 下划线（效果 / 模板；外壳「资源交付」「资源编排」） */
 .tabs{display:flex;align-items:stretch;min-width:0}
 .tab{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;height:var(--h-hit);padding:0 12px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
-.tab::before{content:attr(data-t);height:0;overflow:hidden;visibility:hidden;font-weight:var(--fw2)}
 .tab:hover,.tab.is-hover{color:var(--t1)}
-.tab[aria-selected="true"]{color:var(--t1);font-weight:var(--fw2)}
+.tab[aria-selected="true"]{color:var(--t1)}   /* 当前标签只靠下划线 */
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:2px;background:var(--p4)}
 .tab:disabled{opacity:.5;cursor:default}
 .tab:focus-visible,.tab.is-focus{outline-offset:-2px}
-.tabs-lg .tab{height:40px;padding:0 16px;font-size:var(--fs-tab)}
-.tabs-lg .tab[aria-selected="true"]::after{left:16px;right:16px}
+.tabs-lg .tab{flex:1;height:40px;padding:0 8px;font-size:var(--fs-tab)}   /* v3.1 第 7 条：等宽两半，下划线横跨整个标签 */
+.tabs-lg .tab[aria-selected="true"]::after{left:0;right:0}
 .tabs-sub{gap:4px;padding:0 var(--pad)}
 .tabs-sub .tab{height:var(--h-hit);padding:0 6px}
 .tabs-sub .tab[aria-selected="true"]::after{left:6px;right:6px;background:var(--t1)}   /* 二级标签不在薄荷五处里：主文字色下划线 */
@@ -162,15 +158,15 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .chip{height:calc(var(--h-ctl) - 2px);padding:0 8px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
 .chip+.chip{border-left:1px solid var(--line)}
 .chip:hover{background:var(--hov);color:var(--t1)}
-.chip[aria-pressed="true"]{background:var(--on);color:var(--t1);font-weight:var(--fw2)}
+.chip[aria-pressed="true"]{background:var(--on);color:var(--t1)}
 
 /* 3.4 开关：轨道 28×16。关：只画 1 px 框，方块在左、灰色；开：轨道填选中底色，方块在右、主文字色 */
 .sw{appearance:none;position:relative;flex:none;width:28px;height:16px;border:1px solid var(--g6);border-radius:var(--r2);background:transparent;cursor:pointer;vertical-align:middle;transition:background .12s,border-color .12s}
 .sw::after{content:"";position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:1px;background:var(--g7);transition:left .12s,background .12s}
-.sw:checked{background:var(--on);border-color:var(--on)}
-.sw:checked::after{left:14px;background:var(--t1)}
+.sw:checked{background:var(--g7);border-color:var(--g7)}   /* v3.1 第 17 条：开 = 轨道明显更亮的中性色 */
+.sw:checked::after{left:14px;background:var(--g9)}
 .sw:hover,.sw.is-hover{border-color:var(--g7)}
-.sw:checked:hover{border-color:var(--g6);background:var(--g6)}
+.sw:checked:hover{border-color:var(--g8);background:var(--g8)}
 .sw:focus-visible,.sw.is-focus{outline:2px solid var(--focus);outline-offset:2px}
 .sw:disabled{opacity:.5;cursor:default}
 /* 3.5 勾选：14 px 方框 */
@@ -193,6 +189,8 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .field input,.field textarea{flex:1;min-width:0;height:100%;color:var(--t1);font-size:var(--fs2)}
 .field input::placeholder,.field textarea::placeholder{color:var(--t3)}
 .field:hover,.field.is-hover{border-color:var(--line)}
+.field.search{border-color:var(--line)}   /* v3.1 第 8 条：搜索框静止时就有线框 */
+.field.search:hover,.field.search.is-hover{border-color:var(--g6)}
 .field:focus-within,.field.is-focus{border-color:var(--g7);background:var(--hov);outline:none}
 .field.is-error{border-color:var(--e3)}
 .field.is-disabled{opacity:.5}
@@ -252,7 +250,6 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
   .sel option::checkmark{content:"";width:12px}
   .sel option:checked::checkmark{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none' stroke='%23b4c5cb' stroke-width='1.6'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E")}
   .sel option:hover,.sel option:focus-visible{background:var(--press);outline:none}
-  .sel option:checked{font-weight:var(--fw2)}
 }
 
 /* 3.9 状态词（§5）：要你处理的用主文字色；其余弱色；琥珀只给「需重新导出」和挡住操作的设置 */
@@ -312,9 +309,11 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .prm>.plw{grid-column:1;padding-right:var(--gap-prm)}
 .prm>.ctl1{grid-column:2;padding-right:var(--gap-val)}
 .prm>.vu{grid-column:3/5}
+/* 区间行、停用行：数值格加宽（区间写「0.30–1.65 ⌄」，停用写原因） */
+.prm.range,.prm.is-dis:not(.crow){grid-template-columns:var(--w-lab) minmax(0,1fr) var(--w-valr) var(--w-unit) var(--w-act)}
+.prm.range>.vu,.prm.is-dis:not(.crow)>.vu{grid-template-columns:var(--w-valr) var(--w-unit)}
 .prm>.rst,.prm>.actc,.prm>.ra{grid-column:5;justify-self:end}
 .prm .mk{position:absolute;left:calc(-1 * var(--pad) + 4px);top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:transparent}
-.prm.is-nd .mk{box-shadow:inset 0 0 0 1px var(--g7)}
 .prm.is-ed .mk{left:calc(-1 * var(--pad) + 5px);width:2px;height:16px;margin-top:-8px;border-radius:0;background:var(--t1);box-shadow:none}
 .plw{display:flex;flex-direction:column;justify-content:center;min-width:0}
 .nl{position:relative;display:flex;align-items:center;min-width:0}
@@ -344,7 +343,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .exn[aria-expanded="true"]{color:var(--t1)}
 .prm .rst{width:var(--w-act);height:var(--w-act);visibility:hidden}
 .prm .rst svg.i{width:14px;height:14px}
-.prm:hover .rst,.prm.is-hover .rst,.prm:focus-within .rst,.prm.is-nd .rst,.prm.is-ed .rst{visibility:visible}
+.prm.is-nd .rst,.prm.is-ed .rst{visibility:visible}   /* v3.1 第 16 条：恢复按钮常显 = 不是默认值 */
 .prm .actc{display:grid;place-items:center;width:var(--w-act);height:var(--w-act)}
 .prm .actc>*{grid-area:1/1}
 .prm .actc .sug{width:var(--w-act);height:var(--w-act);color:var(--t2)}
@@ -354,9 +353,10 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .prm.has-sug.is-nd .actc .rst,.prm.has-sug.is-ed .actc .rst{visibility:visible}
 .prm.has-sug.is-nd .actc .sug,.prm.has-sug.is-ed .actc .sug{visibility:hidden}
 /* 停用：整行降透明度；悬停写原因（不把整句塞进控件列） */
-.prm.is-dis .plw,.prm.is-dis .ctl1,.prm.is-dis .vu,.prm.is-dis .ctl{opacity:.5}
+.prm.is-dis .plw,.prm.is-dis .ctl1,.prm.is-dis .ctl{opacity:.5}
 .prm.is-dis .lk{visibility:hidden}
-.dis-why{display:none}
+.vu>.dis-why{grid-column:1/3;justify-self:end;font-size:var(--fs1);color:var(--t3);white-space:nowrap;line-height:var(--lh2)}   /* v3.1 第 6 条：不用悬停也看得到原因 */
+.prm.is-dis .vu{opacity:1}
 /* 依赖项：缩进一级，左边一条线 */
 .prm.is-dep .plw{padding-left:var(--s3)}
 .prm.is-dep .plw::before{content:"";position:absolute;left:3px;top:4px;bottom:4px;width:1px;background:var(--line)}
@@ -426,7 +426,8 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 /* 4.5 效果库（§10）：缩略图 40、名称、副信息「代号　N 层」、状态词；当前项填选中底色 */
 .lib-item{position:relative;display:flex;align-items:center;gap:10px;height:calc(var(--thumb) + 12px);padding:0 8px;border-radius:var(--r2);cursor:pointer}
 .lib-item:hover,.lib-item.is-hover{background:var(--g2)}
-.lib-item.is-sel{background:var(--on)}
+.lib-item.is-sel{background:var(--g3)}   /* v3.1 第 18 条：比结构树当前行弱 */
+.lib-item.is-sel .li-n{color:var(--t1)}
 .lib-item:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--focus)}
 .th{position:relative;width:var(--thumb);height:var(--thumb);flex:none;background:var(--sky);overflow:hidden}
 .th img{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen}
@@ -457,7 +458,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 /* 胶片：只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮）；没烘焙的画成 40 % 透明的空框 */
 .film-c{position:absolute;top:2px;bottom:2px;background:var(--sky);overflow:hidden;cursor:zoom-in}
 .film-c img{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen}
-.film-c.unb{background:none;box-shadow:inset 0 0 0 1px var(--g7);opacity:.4;cursor:default}
+.film-c.unb{background:var(--g2);cursor:default}   /* v3.1 第 13 条：平的暗底，不描边；已烘焙的缩略图是这一行最亮的 */
 /* 刻度尺：刻度挂在下沿，秒数写在刻度右边；导出范围一段浅底，两端把手，上方写「0.35–2.85 s」 */
 .scale{position:absolute;inset:0;isolation:isolate}
 .tick{position:absolute;bottom:0;width:1px;height:3px;background:var(--g6);pointer-events:none}
@@ -470,10 +471,15 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .xh.out{left:100%}
 .xh::after{content:"";position:absolute;left:3px;top:0;bottom:0;width:2px;background:var(--g8)}
 .xh:hover::after,.xh.is-active::after{background:var(--g9)}
-.xlab{position:absolute;top:1px;display:flex;align-items:baseline;gap:0;transform:translateX(-50%);padding:0 4px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t2);white-space:nowrap;z-index:1;background:var(--g3)}
-.xlab .tnum{width:auto;field-sizing:content;min-width:3ch;height:var(--lh1);padding:0 1px;font-size:var(--fs1);color:var(--t1);text-align:center}
-.xlab .dash,.xlab .u{color:var(--t3);font-size:var(--fs1)}
-.xlab .u{margin-left:3px}
+.tlab.is-hid{visibility:hidden}   /* 播放头经过时让位 */
+/* 「导出范围」行名格：「0.35–2.85 s」可单击输入 + 设为入点、设为出点、恢复（v3.1 第 1、12 条） */
+.tl .rrow .lab.xio{gap:0;padding-right:2px;color:var(--t2);font-size:var(--fs1)}
+.xv{display:inline-flex;align-items:baseline;white-space:nowrap}
+.xv .tnum{width:auto;field-sizing:content;min-width:3ch;height:22px;padding:0 1px;font-size:var(--fs2);color:var(--t1);text-align:center}
+.xv .dash{color:var(--t3);padding:0 1px}
+.xv .u{margin-left:3px}
+.xio .btn-icon.sm{width:24px;height:24px}
+.s1366 .xio .btn-icon.sm{width:22px}
 /* 轨道 */
 .tlrow{position:relative;display:flex;height:var(--h-row)}
 .tlrow .lab .no{color:var(--t3);font-size:var(--fs1)}
@@ -498,7 +504,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .tlrow:not(.is-sel) .kf{display:none}
 /* 播放头：薄荷；头部画在刻度尺上 */
 .ph{position:absolute;width:1px;background:var(--sel);pointer-events:none;z-index:4}
-.ph i{position:absolute;left:-5px;top:0;width:11px;height:12px;background:var(--sel);clip-path:polygon(0 0,100% 0,100% 58%,50% 100%,0 58%);pointer-events:auto;cursor:ew-resize}
+.ph i{position:absolute;left:-5px;top:0;width:11px;height:10px;background:var(--sel);clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%);pointer-events:auto;cursor:ew-resize}   /* 头部在刻度数字上方 */
 /* 「还有 N 行」：放在行名列底部，不浮在轨道上 */
 .tl-foot{display:flex;align-items:center;height:20px}
 .tl-more{display:inline-flex;align-items:center;gap:4px;height:20px;margin-left:calc(var(--pad) - 4px);padding:0 4px;border-radius:var(--r2);color:var(--t2);font-size:var(--fs1)}
@@ -533,7 +539,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .pts{display:grid;grid-template-columns:repeat(8,auto);gap:4px;justify-content:start}
 .pts button{width:44px;height:var(--h-ctl);border:1px solid var(--line);border-radius:var(--r2);color:var(--t2);font-size:var(--fs1)}
 .pts button:hover{background:var(--hov);color:var(--t1)}
-.pts button[aria-pressed="true"]{background:var(--on);color:var(--t1);font-weight:var(--fw2)}
+.pts button[aria-pressed="true"]{background:var(--on);color:var(--t1)}
 .pts button:disabled{opacity:.5}
 .bgrid{position:relative;height:120px;background:var(--g0)}
 .bgrid .bl{position:absolute;top:0;bottom:0;width:1px;background:var(--g4)}
@@ -542,7 +548,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .bgrid .cue{position:absolute;height:24px;padding:0 6px;background:var(--g4);border-radius:var(--r2);font-size:var(--fs1);line-height:24px;color:var(--t1);white-space:nowrap;overflow:hidden;cursor:grab}
 .bgrid .cue.is-sel{background:var(--g6)}
 .suggest{min-width:220px}
-.suggest .mi b{font-weight:var(--fw2)}
+.suggest .mi b{font-weight:var(--fw1);color:var(--t1);text-decoration:underline;text-underline-offset:2px}
 .fb{display:flex;align-items:center;gap:8px;min-height:var(--h-hit);padding:4px 8px 4px 10px;border:1px solid var(--line);border-radius:var(--r2);font-size:var(--fs2);color:var(--t1)}
 .fb>svg.i{width:14px;height:14px;color:var(--t2)}
 .fb.warn{border-color:var(--w2)}
@@ -613,7 +619,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .tip.at-above::before{top:auto;bottom:-5px;border-width:0 1px 1px 0}
 .tip.at-left::before{left:auto;right:-5px;top:var(--ay,12px);border-width:1px 1px 0 0}
 .tip.at-right::before{left:-5px;top:var(--ay,12px);border-width:0 0 1px 1px}
-.tip b{display:block;margin-bottom:2px;font-size:var(--fs2);line-height:var(--lh2);font-weight:var(--fw2);color:var(--t1)}
+.tip b{display:block;margin-bottom:2px;font-size:var(--fs2);line-height:var(--lh2);font-weight:var(--fw1);color:var(--t1)}
 .tip .meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;color:var(--t3)}
 .tip.sm{padding:4px 8px;white-space:nowrap;max-width:none;color:var(--t1)}
 .tip.hint{background:var(--g5);border-color:var(--g6)}
@@ -632,7 +638,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .tip.static::before{display:none}
 .scrim{position:fixed;z-index:70;background:rgba(12,21,24,.72)}
 .dialog{position:fixed;z-index:71;width:400px;padding:20px 20px 16px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow)}
-.dialog h2{margin-bottom:8px;font-size:var(--fs3);line-height:var(--lh3);font-weight:var(--fw2);color:var(--t1)}
+.dialog h2{margin-bottom:8px;font-size:var(--fs3);line-height:var(--lh3);font-weight:var(--fw1);color:var(--t1)}
 .dialog p{color:var(--t2)}
 .dialog .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
 .dialog.static{position:relative;z-index:0;box-shadow:none}
@@ -643,7 +649,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .toast .btn-text:hover{background:var(--press)}
 .toast.static{position:relative;z-index:0;display:inline-flex;box-shadow:none}
 .keys{position:fixed;z-index:71;width:560px;padding:20px;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow)}
-.keys h2{display:flex;align-items:center;margin-bottom:12px;font-size:var(--fs3);font-weight:var(--fw2)}
+.keys h2{display:flex;align-items:center;margin-bottom:12px;font-size:var(--fs3);font-weight:var(--fw1)}
 .keys dl{display:grid;grid-template-columns:130px 1fr;gap:6px 16px;align-items:center}
 .keys dt{display:flex;gap:4px;flex-wrap:wrap}
 .keys dd{color:var(--t2)}
@@ -683,6 +689,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .vctl{display:flex;align-items:center;gap:var(--gin);min-width:0;flex:1}
 .vctl>.seg+.seg,.vctl>.seg+.btn{margin-left:calc(var(--grp) - var(--gin))}
 .vctl>.tgrp{margin-left:0}
+.vctl>.tgrp+.tgrp{margin-left:calc(12px - var(--gin))}   /* v3.1 第 14 条：画面叠加 ｜ 面板，组间 12 */
+.vctl>.tgrp+[data-act="preview"]{margin-left:calc(var(--grp) - var(--gin))}
 .tcol-m>.vctl{margin-left:calc(var(--grp) - var(--gin))}
 .s1366 .tcol-m>.vctl{margin-left:4px}
 #effName{display:none}
@@ -721,7 +729,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .splitter:focus-visible{outline:none;background:var(--focus)}
 /* 效果库：大号标签「效果 / 模板」，折叠箭头在标签行右端 */
 .lib-pane{min-height:0}
-.lib-head{flex:none;display:flex;align-items:stretch;min-width:0;padding:0 var(--s2) 0 0;border-bottom:1px solid var(--line)}
+.lib-head{flex:none;display:flex;align-items:stretch;min-width:0;padding:0 4px 0 0;border-bottom:1px solid var(--line)}
 .lib-head .tabs-lg{flex:1;min-width:0}
 .lib-head .pane-t{align-self:center}
 .pane-t{display:inline-grid;place-items:center;width:var(--h-hit);height:var(--h-hit);border-radius:var(--r2);color:var(--t3);flex:none}
@@ -730,7 +738,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .pane-t:hover{background:var(--hov);color:var(--t1)}
 .lib-body{flex:1;min-height:0;display:flex;flex-direction:column}
 .lib-tools{flex:none;display:flex;flex-direction:column;gap:var(--s2);padding:var(--s2) var(--pad)}
-.lib-tools>.field{margin:0 -6px}
+
 .lib-meta{display:flex;align-items:center;gap:0;min-width:0}
 .lib-meta>.seg{margin-right:var(--grp)}
 .lib-meta>.seg button{padding:0 7px}
@@ -765,9 +773,10 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .ci b{font-weight:var(--fw1);color:var(--t2)}
 .ci.c-bl{left:var(--pad);bottom:var(--s2)}
 .ci.c-br{right:var(--pad);bottom:var(--s2);pointer-events:auto}
-.ci.c-br .vmk{display:inline-flex;align-items:baseline;gap:4px;height:20px;padding:0 6px;border:1px solid var(--line);border-radius:var(--r2);color:var(--t2);cursor:pointer}
-.ci.c-br .vmk:hover{background:var(--hov);color:var(--t1)}
-.ci.c-br .vmk b{color:var(--t1)}
+.ci .vi{display:inline-flex;align-items:baseline;gap:4px}
+.ci .vi .lbl{cursor:help}
+.ci .vi .num{width:auto;field-sizing:content;min-width:3ch;height:20px;padding:0 2px;font-size:var(--fs1);color:var(--t2);text-align:right}
+.ci .vi .num:focus{color:var(--t1)}
 .solo-badge{position:absolute;left:var(--pad);top:var(--pad);z-index:2;display:inline-flex;align-items:center;gap:10px;height:var(--h-hit);padding:0 10px;border:1px solid var(--line);border-radius:var(--r2);background:var(--bg);color:var(--t1);font-size:var(--fs2);white-space:nowrap}
 .solo-badge svg.i{width:16px;height:16px}
 .solo-badge .k{color:var(--t3);font-size:var(--fs1)}
