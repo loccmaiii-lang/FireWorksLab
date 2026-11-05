@@ -1,4 +1,4 @@
-"""E 样板 v3.2 制作区：文案自查（文案规则.md 最后一节）。
+"""E 样板 v3.3 制作区：文案自查（文案规则.md 最后一节）。
 
 把制作区所有可见文字和悬停提示（data-tip / title / placeholder / aria-label 里的说明）、参数说明、菜单、提示条、对话框、空状态
 导出成一张表，逐条核对：1 有没有超出字数上限；2 同一概念有没有用两个词；3 语气和标点（不写「你可以」「请」，不用问句、感叹号、
@@ -30,7 +30,7 @@ COLLECT = r"""(cat) => {
   const out = [], vis = e => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return r.width > 0 && r.height > 0 && c.visibility !== 'hidden' && c.display !== 'none'; };
   const own = e => [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').replace(/\s+/g, ' ').trim();
   const roots = [...document.querySelectorAll('#wsBaker, #ovlApp')];
-  const kind = e => e.closest('.dis-why') ? '原因' : e.closest('#saveSt, .mod-h .ms, .msum .mline, .ci, .fbk, .time, .cnt, .pager, #delivZoom, .dh .lbl') ? '读数' : e.closest('#modeTabs') ? '标签' : e.closest('.toast') ? '提示条' : e.closest('.dialog p') ? '对话框正文' : e.closest('.dialog h2, .keys h2, .tip b') ? '标题' : e.closest('.empty') ? (e.closest('button') ? '按钮' : '空状态')
+  const kind = e => e.closest('.dis-why') ? '原因' : e.closest('#saveSt, .mod-h .ms, .mod-h .dep-n, .tl-more, .msum .mline, .ci, .fbk, .time, .cnt, .pager, #delivZoom, .dh .lbl') ? '读数' : e.closest('#modeTabs') ? '标签' : e.closest('.toast') ? '提示条' : e.closest('.dialog p') ? '对话框正文' : e.closest('.dialog h2, .keys h2, .tip b') ? '标题' : e.closest('.empty') ? (e.closest('button') ? '按钮' : '空状态')
     : e.closest('.ms2, .mnote, .hint2, .dep-t') ? '说明行' : e.closest('.menu .mi, .menu .mh') ? '菜单项' : e.closest('.tip') ? '悬停提示' : e.closest('button, .tab, .seg, .chip') ? '按钮'
     : e.closest('.ci, .fbk, .time, #saveSt, .cnt, .pager, #delivZoom, .dh .lbl') ? '读数' : '标签';
   for (const R of roots) for (const e of R.querySelectorAll('*')) {
@@ -67,6 +67,9 @@ def main():
             "document.body.click(); document.querySelector('[data-act=addLayer]').click()", "document.body.click(); KIT.tip('缩放')",
             "KIT.del('点灭星')", "KIT.askDeleteEffect()", "document.querySelector('.dialog [data-r=\"0\"]').click(); KIT.set('size','1366')",
             "KIT.set('size','1920'); document.querySelector('#pq input').value = '银柳'; document.querySelector('#pq input').dispatchEvent(new Event('input', {bubbles: true}))",
+            "document.querySelector('#pq input').value = ''; document.querySelector('#pq input').dispatchEvent(new Event('input', {bubbles: true})); KIT.set('scene','spk'); document.querySelector('#tlw .tl-edge.dn .tl-more').click()",   # v3.3 第 4 条：「上面还有 N 行」
+            "KIT.set('scene','kiku'); document.querySelector('#transport [data-act=timeTools]').click()",   # v3.3 第 9 条：「上一帧」「下一帧」
+            "document.body.click(); document.querySelector('#pbody .mod[data-mod=\"环境\"] .dep-n').click()",   # v3.3 第 8 条：「+4」点开后
         ]
         for js in states:
             if js:

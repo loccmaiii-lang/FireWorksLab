@@ -2556,8 +2556,8 @@ function sheetTokens() {
   const sw = (names, roles) => `<div class="ks-sw">${names.map((n, i) => `<div><i style="background:var(${n})"></i><b>${n.slice(2)} ${v(n)}</b>${roles[i] || ''}</div>`).join('')}</div>`;
   return `<h2>基础 token</h2><p class="lead">规范 v3 第 1–3、5 节。颜色、字号、间距从第一个 &lt;style&gt; 的 :root 取；1366 × 768 用 .s1366 改写字号与栏宽。</p>
   <h3>中性色 10 档<span>面四级：画面 g0 ＜ 面板 g1 ＜ 栏头 g2 ＜ 浮层 g4；线只有一种 g5；选中 / 开着填 g5</span></h3>${sw(['--g0', '--g1', '--g2', '--g3', '--g4', '--g5', '--g6', '--g7', '--g8', '--g9'], ['画面', '面板', '栏头（外壳顶栏、工具行）', '行悬停', '浮层、命令悬停', '线、选中 / 开着', '开关细框', '弱文字', '次文字', '主文字'])}
-  <h3>主色<span>薄荷只用在五处：导出按钮、播放头、结构树当前行细框、当前页标签下划线、UE 已连接的圆点</span></h3>${sw(['--p1', '--p3', '--p4', '--p5', '--pInk'], ['主操作文字', '主操作按下', '主色', '主操作悬停', ''])}
-  <h3>琥珀 / 红<span>琥珀只给「需重新导出」和挡住操作的设置；红色只用在错误</span></h3>${sw(['--w2', '--w3', '--e1', '--e3'], ['', '需重新导出', '错误底', '错误'])}
+  <h3>主色<span>薄荷 = 当前位置 + 唯一主操作：导出按钮、结构树当前行细框、当前标签下划线、播放头（头和线）</span></h3>${sw(['--p1', '--p3', '--p4', '--p5', '--pInk'], ['主操作文字', '主操作按下', '主色', '主操作悬停', ''])}
+  <h3>琥珀 / 红<span>琥珀只给异常和要处理的警告（需重新导出、挡住操作的设置）；「待验收」用主文字色；红色只用在错误</span></h3>${sw(['--w2', '--w3', '--e1', '--e3'], ['', '需重新导出', '错误底', '错误'])}
   <h3>对比度<span>正文 ≥ 4.5 : 1；停用 ≥ 3 : 1；线和面板 ≥ 1.3 : 1</span></h3><div class="ks-row">${[['--g9', '--g1', '主文字'], ['--g8', '--g1', '次文字'], ['--g7', '--g1', '弱文字'], ['--g7', '--g2', '弱文字在栏头上'], ['--p1', '--p4', '主操作'], ['--g5', '--g1', '线和面板'], ['--g5', '--g2', '线和栏头']].map(([a, b2, t]) => `<div style="display:flex;flex-direction:column;gap:4px;width:120px"><div style="height:40px;display:grid;place-items:center;background:var(${b2});color:var(${a});box-shadow:0 0 0 1px var(--g5)">${contrast(v(a), v(b2))} : 1</div><span class="ks-cap" style="margin:0">${t}</span></div>`).join('')}
     <div style="display:flex;flex-direction:column;gap:4px;width:120px"><div style="height:40px;display:grid;place-items:center;background:var(--g1);color:var(--tDis);box-shadow:0 0 0 1px var(--g5)">3.4 : 1</div><span class="ks-cap" style="margin:0">停用（次文字 50 %）</span></div></div>
   <div class="ks-cols" style="--c:2;margin-top:8px"><div class="ks-blk"><h3>字号与字重<span>三级：小 12 / 正文 13 / 大 15（1366：11 / 12 / 14）；字重只有 400 和 600；数值一律等宽数字</span></h3><div class="ks-type">
@@ -2580,7 +2580,7 @@ const ICONS = [['layer', '层'], ['star', '星'], ['spark', '火花'], ['ember',
   ['compact', '精简布局'], ['pl', '左栏'], ['pr', '右栏'], ['folder', '文件夹'], ['settings', '设置'], ['search', '搜索'], ['filter', '筛选'], ['auto', '自动曝光'],
   ['cd', '展开'], ['cu', '收起'], ['cr', '向右'], ['cl', '向左'], ['back', '返回'], ['in', '设为入点'], ['outp', '设为出点'], ['plus', '新建'], ['x', '关闭'], ['keys', '快捷键'], ['file', '文件']];
 function sheetIcons() {
-  return `<h2>图标</h2><p class="lead">规范 v3 第 6 节。专门画的一套，symbol 定义在 body_main.html 开头（外壳共用）。圆箭头只表示「恢复默认」；「循环」是首尾相接的矩形环；「版本记录」是叠在一起的三张纸；「需重新导出」是琥珀色三角加感叹号。</p>
+  return `<h2>图标</h2><p class="lead">规范 v3 第 6 节、v3.3 第 7 条。专门画的一套：16 px 网格、线宽 1.5、方头尖角，只用横竖 45° 线和切角（圆改八边形），一律按 16 px 显示；symbol 定义在 body_main.html 开头（外壳共用）。绕一圈的箭头只表示「恢复默认」；「循环」是首尾相接的矩形环；「版本记录」是叠在一起的三张纸；「需重新导出」是琥珀色三角加感叹号。</p>
     <div class="ks-icons">${ICONS.map(([id, t]) => `<div><svg class="i${id === 'stale' ? ' amber' : ''}" aria-hidden="true"><use href="#i-${id}"/></svg><span>${t}<code>i-${id}</code></span></div>`).join('')}</div>`;
 }
 
@@ -2659,10 +2659,10 @@ function sheetBasic() {
     <h3>按钮<span>主操作薄荷实底，全屏只有一个（导出 ▾）；命令静止没有底，悬停出浮层底色，按下更深；图标命令 16 px 图标放在 28 px 方框里；图标开关开着时填选中底色；停用一律降透明度</span></h3>${buttons}
     <h3>输入框<span>文本、搜索含清除、多行、文件选择</span></h3>${inputs}
     <h3>数值框<span>平时不加框，悬停出现细框</span></h3>${nums}${sheetNote}
-    <h3>滑杆<span>滑块为竖条，配合直角；已改时出现默认值刻度；随机幅度画成浅带；随机区间拖离鼠标近的一端；最后一列是真参数行</span></h3>${sliders}
+    <h3>滑杆<span>拖块 4 × 14 实心主文字色；已填的部分次文字色 2 px，没填的 1 px 线色；已改时出现默认值刻度；随机幅度画成浅带；随机区间拖离鼠标近的一端；最后一列是真参数行</span></h3>${sliders}
     <h3>下拉<span>原生下拉用于选项少的固定值，如速度、单格；带动作的用自定义菜单；两种展开后外观一致</span></h3>${drops}
     <p class="ks-cap" style="margin-top:6px">原生下拉在 Chrome / Edge 135 以上用 appearance: base-select，展开列表在页面内绘制，与自定义菜单同色同字号；更早的浏览器仍是系统弹出层，样式不受控。「展开」一格用同款菜单静态示意。</p>
-    <h3>开关与勾选<span>开关轨道 28×16：关只画 1 px 框、方块在左；开填选中底色、方块在右；停用降透明度、悬停写原因。勾选 14 px 方框</span></h3>${sws}
+    <h3>开关与勾选<span>开关 28×16：开 = 轨道主文字色实心、方块底色在右；关 = 1 px 线框、方块次文字色在左；停用整体 40 %、悬停写原因。勾选 14 px 方框</span></h3>${sws}
     <h3>分段控件<span>只有这一种「选一个」：外面 1 px 框，选中段填选中底色并用 600。M：工作模式；S：缩放、单次 / 循环、筛选块、PC / 手机、贴图 / 逐帧</span></h3>${segs}
     <h3>页面标签<span>文字 + 2 px 下划线；当前项薄荷下划线、600；效果库「效果 / 模板」和外壳「资源交付」「资源编排」</span></h3>${tabsT}`;
 }
@@ -2771,7 +2771,7 @@ function sheetCombo() {
      <p class="ks-cap" style="margin-top:6px">都可操作：拖动、单击输入、双击名称恢复默认；悬停数值看「打开时 → 现在」；把湍流强度调到 0 以上解除失效；切「方向」为锥形出现锥角；点「查看」看收起的依赖行。</p></div>
   </div>
   <div class="ks-cols" style="--c:3">
-   <div class="ks-blk"><h3>参数模块<span>标题 600、展开箭头在左、摘要右对齐到数值列；模块之间 1 px 线</span></h3>${liveMods('mod', 460)}</div>
+   <div class="ks-blk"><h3>参数模块<span>标题中号 600，上空 16、下空 6；展开箭头离面板边 12 px；折叠后摘要落在五列网格里（数值对小数点）；收起的依赖参数写成标题右侧「+N」；模块之间 1 px 线</span></h3>${liveMods('mod', 460)}</div>
    <div class="ks-blk"><h3>曲线编辑<span>仙女棒 08 二级碎火星的真实曲线；拖动关键点，双击空白加点，Delete 删点，下方可输入</span></h3>${liveMods('crv', 460)}</div>
    <div class="ks-blk"><h3>档位切换<span>多档效果打开后，在检查器标题旁</span></h3>
      <span class="ks-cap">3 档：分段选择</span>${header(['升空尾缀', '尾焰'], `<span class="tier">${segH(['小', '中', '大'], 1, {}, 'sm')}</span>`)}
