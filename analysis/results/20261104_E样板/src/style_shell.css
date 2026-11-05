@@ -8,16 +8,12 @@
    线只有一种：1 px 的 var(--line)；填底色只表示「选中 / 开着」，标题、原因条、错误条都不填底色。
    ===================================================================== */
 
-/* ---------- 0 兜底（特异度 0，样板有定义时一律以样板为准） ---------- */
-:where(.modeseg){display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;flex:none;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden}
-:where(.modeseg)>button{height:calc(var(--h-ctl) - 2px);padding:0 14px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
-:where(.modeseg)>button+button{border-left:1px solid var(--line)}
-:where(.modeseg)>button[aria-pressed="true"]{background:var(--selbg, var(--g4));color:var(--t1);font-weight:var(--fw2)}
-:where(.tgrp){display:flex;align-items:center;gap:var(--gin, 8px);flex:none}
+/* ---------- 0 兜底（特异度 0，样板有定义时一律以样板为准；样板 v3 已有 .modeseg、.tgrp，这里只防样板改名时整块散掉） ---------- */
+:where(.tgrp){display:flex;align-items:center;gap:var(--s1, 4px);flex:none}
 
 /* ---------- 1 外壳顶栏（规范第 11 节） ---------- */
-/* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线。左：产品名 + 版本号；右：四组，组间 1 px 竖线、组内 12 px、组间 20 px */
-.shell{--sh-gi:12px;--sh-gg:20px;display:flex;align-items:center;min-width:0;height:var(--h-shell);padding:0 var(--s3);border-bottom:1px solid var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
+/* 高 40 px（1366 下 36 px），栏头面色，底边一条 1 px 线（同样板 .app>.shell 用内阴影画，两边叠在一起不会变成 2 px）。左：产品名 + 版本号；右：四组，组间 1 px 竖线、组内 12 px、组间 20 px */
+.shell{--sh-gi:12px;--sh-gg:20px;display:flex;align-items:center;min-width:0;height:var(--h-shell);padding:0 var(--s3);box-shadow:inset 0 -1px 0 var(--line);background:var(--surf-chrome, var(--bg));color:var(--t1);font-size:var(--fs2);line-height:var(--lh2);white-space:nowrap}
 .shell.sh-static{overflow:hidden}
 /* 产品名「烟花工坊」大号 600；版本号「FireWorksLab 5.0.3」小号弱色，是打开更新记录的命令（点击区 28 px）；未读数小号、在版本号右上角 */
 .sh-brand{flex:none;display:flex;align-items:center;gap:4px;min-width:0}
@@ -25,9 +21,9 @@
 .sh-ver{position:relative;display:inline-flex;align-items:center;height:var(--h-hit, var(--h-ctl));padding:0 6px;border-radius:var(--r2);font-size:var(--fs1);color:var(--t3);white-space:nowrap}
 .sh-ver[data-n]{padding-right:16px}
 .sh-ver[data-n]::after{content:attr(data-n);position:absolute;top:3px;right:5px;font-size:var(--fs1);line-height:1;color:var(--t2)}
-.sh-ver:hover,.sh-ver.is-hover,.sh-ver[aria-expanded="true"]{background:var(--ov);color:var(--t2)}
-.sh-ver:active{background:var(--g5)}
-.sh-r{flex:0 1 auto;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
+.sh-ver:hover,.sh-ver.is-hover,.sh-ver[aria-expanded="true"]{background:var(--hov, var(--ov));color:var(--t2)}
+.sh-ver:active{background:var(--press, var(--g5))}
+.sh-r{flex:0 1 auto;align-self:stretch;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
 .sh-g{position:relative;display:flex;align-items:center;gap:var(--sh-gi);min-width:0}
 .sh-g+.sh-g::before{content:"";position:absolute;left:calc(var(--sh-gg) / -2);top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
 .sh-g-ue,.sh-g-pg,.sh-g-gpu{flex:none}
@@ -54,7 +50,7 @@
 .sh-fold .sh-fx{flex:none}
 .sh-fold.is-weak .sh-fv{color:var(--t3)}
 .sh-fold.is-warn .sh-fk,.sh-fold.is-warn .sh-fv,.sh-fold.is-warn .sh-fx{color:var(--w3)}
-.sh-fold.is-na{opacity:.45;cursor:default;background:none}
+.sh-fold.is-na{opacity:.5;cursor:default;background:none}
 .sh-set{flex:none;padding:0 6px}
 /* 「资源交付 2」「资源编排」：页面标签 = 文字 + 2 px 下划线；当前打开的那页 600 + 薄荷下划线（压在顶栏底线上）；计数小一号弱色、隔 4 px */
 .sh-g-pg{align-self:stretch}
@@ -63,7 +59,7 @@
 .sh-pg>span:first-child::after{content:attr(data-w);height:0;overflow:hidden;visibility:hidden;font-weight:var(--fw2)}
 .sh-pg:hover,.sh-pg.is-hover{color:var(--t1)}
 .sh-pg[aria-pressed="true"]{color:var(--t1);font-weight:var(--fw2)}
-.sh-pg[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--p4)}
+.sh-pg[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--p4)}
 .sh-pg .badge-n{margin-left:4px;color:var(--t3);font-size:var(--fs1);font-weight:var(--fw1)}
 .sh-pg:focus-visible{outline-offset:-2px}
 .shell .sh-gpu{flex:none;margin:0;color:var(--t3);font-size:var(--fs1);cursor:default}
@@ -80,7 +76,7 @@
 .sh-ws>.sh-wbright{grid-column:3;grid-row:2}
 .sh-ws>.status{grid-column:1/-1;grid-row:3}
 .sh-ws>.sh-left,.sh-ws>.sh-main,.sh-ws>.sh-wbright{background:var(--surf-panel, var(--bg))}
-.sh-hd{display:grid;min-width:0;background:var(--surf-chrome, var(--bg));border-bottom:1px solid var(--line);white-space:nowrap}
+.sh-hd{display:grid;gap:0;min-width:0;padding:0;background:var(--surf-chrome, var(--bg));box-shadow:inset 0 -1px 0 var(--line);white-space:nowrap}
 #impTool{grid-template-columns:var(--sh-wl) minmax(0,1fr)}
 #wbTool{grid-template-columns:var(--sh-wl) minmax(0,1fr) var(--w-right)}
 .sh-hs{display:flex;align-items:center;gap:var(--gin, 8px);height:100%;min-width:0;padding:0 var(--s3);overflow:hidden}
@@ -96,8 +92,8 @@
 .sh-lh{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-row);padding:0 var(--s3);white-space:nowrap}
 .sh-lh .lbl{font-size:var(--fs1);color:var(--t3)}
 .sh-hv{min-width:0;color:var(--t2);overflow:hidden;text-overflow:ellipsis}
-/* 原因条：一行字，不填底色；会挡住导入，所以琥珀色；右端「重试」 */
-.sh-why{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-row);padding:0 var(--s3);border-bottom:1px solid var(--line);color:var(--w3);font-size:var(--fs2);white-space:nowrap}
+/* 原因条：一行字，不填底色；主文字色（琥珀只给「需重新导出」和会挡住操作的设置，UE 连接是状态不是设置，规范第 5 节）；右端「重试」 */
+.sh-why{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-row);padding:0 var(--s3);border-bottom:1px solid var(--line);color:var(--t1);font-size:var(--fs2);white-space:nowrap}
 .sh-why .tbtn{margin-left:auto}
 .sh-main,.sh-mc{display:flex;flex-direction:column;min-width:0;min-height:0}
 .sh-mc{flex:1}
@@ -108,13 +104,13 @@
 .sh-mh .st{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1);color:var(--t3)}
 .sh-mh .st .spin{width:10px;height:10px}
 .sh-mgrid{flex:1;display:grid;grid-template-columns:minmax(0,1fr) var(--w-left);gap:20px;min-height:0;padding:0 var(--s3) var(--s3)}
-.sh-tblw{min-width:0;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--g5) transparent}
+.sh-tblw{min-width:0;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--g6) transparent}
 /* 逐资产清单：表头是标签（小号弱色），行高 28；数值等宽 */
 .sh-at{width:100%;border-collapse:collapse;font-size:var(--fs2);font-variant-numeric:tabular-nums}
 .sh-at th{height:var(--h-row);padding:0 10px;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3);text-align:left;white-space:nowrap}
 .sh-at td{height:var(--h-row);padding:0 10px;color:var(--t1);text-align:left;white-space:nowrap}
 .sh-at th:first-child,.sh-at td:first-child{width:28px;padding-right:0}
-.sh-at tbody tr:hover td{background:var(--g2)}
+.sh-at tbody tr:hover td{background:var(--hov, var(--g2))}
 .sh-at td:first-child{color:var(--t3)}
 .sh-at td:first-child .spin{width:10px;height:10px}
 .sh-at td:first-child svg.i{width:12px;height:12px;color:var(--t2)}
@@ -129,6 +125,8 @@
 .sh-ph{display:block;flex:none;height:10px;background:var(--g2);border-radius:var(--r1)}
 .sh-ph.dk{background:var(--sky)}
 .status .sh-ph{height:calc(var(--h-ctl) - 10px)}
+/* 栏头面（工具行）上的占位块亮一级，不然和栏头同色看不见 */
+.sh-hd .sh-ph{background:var(--g3)}
 .sh-phrow{display:flex;align-items:center;gap:10px;height:calc(var(--thumb) + 14px);padding:0 8px}
 .sh-phrow>div{flex:1;display:flex;flex-direction:column;gap:6px}
 .sh-phrow .sh-ph:first-child{width:var(--thumb);height:var(--thumb)}
@@ -155,6 +153,8 @@
 .sh-st .spin{width:10px;height:10px}
 /* 「未进 UE」会挡住导演表、UE 里预览：琥珀色字；「预览没生成」是错误：红色字。都不画图形（琥珀三角只表示「需重新导出」） */
 .sh-st.warn{color:var(--w3)}
+/* 「有新版本」要你处理：主文字色（同规范第 5 节效果库「新」）；「生成预览中」弱色 */
+.sh-st.is-new{color:var(--t1)}
 .sh-st.err{color:var(--e3)}
 /* 条目里的「更新」「重试」：命令，点击区 28 px（上下负边距，不撑高这一行） */
 .sh-lnk.btn{height:var(--h-hit, var(--h-ctl));margin:-4px 0 -4px 2px;padding:0 6px;font-size:var(--fs1)}
@@ -173,11 +173,11 @@
 .sh-dmsg{margin-top:var(--s3);color:var(--e3);font-size:var(--fs2)}
 .sh-dlg .acts .sh-kitb{margin-right:auto}
 .sh-kitb,.sh-kitb:hover{border:1px dashed var(--g6);color:var(--t3)}
-/* 重新授权气泡：浮层面色 + 1 px 线 + 阴影，带 6 px 小三角，离标签 8 px */
+/* 重新授权气泡：浮层面色 + 1 px 线 + 阴影，带 6 px 小三角（同样板 .tip::before 的画法），离标签 8 px */
 .sh-bub{position:fixed;z-index:55;display:flex;align-items:center;gap:var(--s2);padding:2px 2px 2px 10px;background:var(--ov);border:1px solid var(--ovLine, var(--line));border-radius:var(--r2);box-shadow:var(--shadow);font-size:var(--fs1);line-height:var(--lh1);color:var(--t1);white-space:nowrap}
-.sh-bub::before{content:"";position:absolute;top:-4px;left:var(--ax, 16px);width:7px;height:7px;background:var(--ov);border-left:1px solid var(--ovLine, var(--line));border-top:1px solid var(--ovLine, var(--line));transform:rotate(45deg)}
-.sh-bub.is-up::before{top:auto;bottom:-4px;transform:rotate(225deg)}
-.sh-bub .tbtn:hover{background:var(--g5)}
+.sh-bub::before{content:"";position:absolute;top:-5px;left:var(--ax, 16px);width:8px;height:8px;background:var(--ov);border:solid var(--ovLine, var(--line));border-width:1px 0 0 1px;transform:rotate(45deg)}
+.sh-bub.is-up::before{top:auto;bottom:-5px;border-width:0 1px 1px 0}
+.sh-bub .tbtn:hover{background:var(--press, var(--g5))}
 .sh-bub.static{position:relative;z-index:0;display:inline-flex;box-shadow:none;margin-top:8px}
 /* 更新记录（点版本号）：新内容条目 + 各部分版本号 + 「全部记录」「复制版本」 */
 .menu.sh-about{min-width:300px}

@@ -31,6 +31,10 @@ const stopT = key => { clearTimeout(SH.timers[key]); delete SH.timers[key]; };
 
 /* 文案自查（走查脚本用）：window.__shCopyLog 是数组时，浮层出现时把文字按类别记下来；SHELL.copy() 取当前可见文字和悬停提示 */
 const txt1 = s => (s || '').replace(/\s+/g, ' ').trim();
+/* 整个元素看得见的文字：各段之间按排版补一个空格（「资源交付 2」「导出 FWL_Export」），标点前后不补 */
+const txtSp = e => { const w = document.createTreeWalker(e, NodeFilter.SHOW_TEXT); let out = '', n;
+  while ((n = w.nextNode())) { const s = txt1(n.textContent); if (!s) continue; if (out && !/[（「：，、]$/.test(out) && !/^[，。：、）」]/.test(s)) out += ' '; out += s; }
+  return out; };
 function copyParts(kind, el) {
   const out = [], add = (c, s) => { s = txt1(s); if (s) out.push([kind, c, s]); };
   if (typeof el === 'string') add(kind === '就地报错' ? '原因' : '提示条', el);
@@ -48,10 +52,10 @@ function snapCopy() {
     qq('[data-tip]', r).forEach(e => { if (!e.getClientRects().length) return; add(w, isDis(e) ? '原因' : '悬停', e.dataset.tip); if (e.dataset.key) add(w, '悬停（第二行）', e.dataset.key); });
     qq('input[placeholder]', r).forEach(e => add(w, '占位文字', e.placeholder));
     qq('*', r).forEach(e => {
-      if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph')) return;
+      if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph, .sh-at tbody td:nth-child(2)')) return;   /* 逐资产清单的资产名是数据，不是文案 */
       if (e.parentElement && e.parentElement.closest('button, .tab, .sh-fold, .sh-ue')) return;
       const m = COPY_CLS.find(([s]) => e.matches(s)), whole = m && ['按钮', '名称', '状态'].includes(m[1]) && e.matches('button, .tab, .sh-fold, .sh-ue');
-      const own = whole ? e.textContent : [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('');
+      const own = whole ? txtSp(e) : [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('');
       if (txt1(own)) add(w, m ? m[1] : '文字', own);
     });
   });
@@ -71,9 +75,12 @@ const dropTips = () => qq('.ovl > .tip:not(.hint)').forEach(t => t.remove());
 function closeMenu(refocus) {
   if (!SH.menu) return;
   SH.menu.remove(); SH.menu = null;
-  const a = SH.anchor; SH.anchor = null;
-  if (a) { a.setAttribute('aria-expanded', 'false'); if (refocus && a.isConnected) a.focus(); }
+  let a = SH.anchor; SH.anchor = null;
+  if (a) a.setAttribute('aria-expanded', 'false');
   const f = SH.onMenuClose; SH.onMenuClose = null; if (f) f(a);
+  /* onClose 可能重画了顶栏（看过更新记录后去掉未读数）：焦点回到重画后的同一个入口 */
+  if (a && !a.isConnected && a.dataset.sh) a = q(`#shell [data-sh="${a.dataset.sh}"]${a.dataset.fk ? `[data-fk="${a.dataset.fk}"]` : ''}`) || a;
+  if (refocus && a && a.isConnected) a.focus();
 }
 function openMenu(anchor, html, o = {}) {
   closeMenu(); dropTips();
@@ -197,7 +204,7 @@ function hint(el, text) {
   const anchor = el && el.isConnected && el.getClientRects().length ? el : (mainOf(S.ws) || app()); if (!anchor) return;
   const t = document.createElement('div');
   t.className = 'tip sm hint sh-hint'; t.setAttribute('role', 'status'); t.textContent = text;
-  ovlOf(anchor).appendChild(t); placeNear(t, anchor);
+  ovlOf(anchor).appendChild(t); placeTip(t, anchor);
   SH.hint = t; SH.hintT = setTimeout(() => { t.remove(); if (SH.hint === t) SH.hint = null; }, 1800);
   logCopy('操作处提示', text);
 }
@@ -214,6 +221,12 @@ function placeBub(el, anchor, align) {
   el.classList.toggle('is-up', up);
   el.style.setProperty('--ax', clamp(a.left + a.width / 2 - x - 4, 8, w - 16) + 'px');
 }
+/* 操作处短提示：同样板的提示框（规范第 12 节）：离触发点 8 px，小三角对着触发点中线；下面放不下放上面 */
+function placeTip(el, anchor) {
+  placeBub(el, anchor, 'left');
+  const up = el.classList.contains('is-up'); el.classList.remove('is-up');
+  el.classList.toggle('below', !up); el.classList.toggle('above', up);
+}
 function closeBub(cancel) {
   if (!SH.bub) return;
   const b = SH.bub; SH.bub = null; b.el.remove();
@@ -222,6 +235,7 @@ function closeBub(cancel) {
 function bubble(anchor, k, o = {}) {
   if (!anchor || !anchor.isConnected) return;
   closeBub(false);
+  clearTimeout(SH.hintT); if (SH.hint) { SH.hint.remove(); SH.hint = null; }   /* 同一处的操作提示收掉，不叠在气泡上 */
   const el = document.createElement('div');
   el.className = 'sh-bub'; el.setAttribute('role', 'status'); el.dataset.fk = k;
   el.innerHTML = bubHTML(k === 'exp' ? S.expName : S.bakName);
@@ -538,7 +552,7 @@ function upsertPkg(name, pc, mb) {
 function btStHTML(r) {
   const st = [];
   if (!r.rfx) st.push(`<span class="sh-st warn" data-tip="未配 ResourceFX 行：导演表、UE 里预览不可用">未进 UE</span>`);
-  if (r.newVer && !r.gen && !r.fail) st.push(`<span class="sh-st">有新版本<button class="btn btn-text tbtn sh-lnk${r.upd ? ' is-loading' : ''}" data-sh="btUpd" type="button" data-tip="换新预览，引用处同步更新">${r.upd ? '更新中' : '更新'}</button></span>`);
+  if (r.newVer && !r.gen && !r.fail) st.push(`<span class="sh-st is-new">有新版本<button class="btn btn-text tbtn sh-lnk${r.upd ? ' is-loading' : ''}" data-sh="btUpd" type="button" data-tip="换新预览，引用处同步更新">${r.upd ? '更新中' : '更新'}</button></span>`);
   if (r.gen) st.push('<span class="sh-st"><span class="spin" aria-hidden="true"></span>生成预览中</span>');
   else if (r.fail) st.push(`<span class="sh-st err" data-tip="${esc(r.fail)}">预览没生成<button class="btn btn-text tbtn sh-lnk" data-sh="btRetry" type="button">重试</button></span>`);
   return st.length ? `<div class="sh-btst">${st.join('')}</div>` : '';
