@@ -269,6 +269,13 @@ def t_bar(p, size):
     ck(f'规范11-版本号小号弱色{S}', v['t'] == 'FireWorksLab 5.0.3 2' and v['fs'] == fs[0] and v['c'] == v['t3'], v)
     ck(f'v3.1-11 未读数：跟在版本号后面的计数框（1 px 方框、小号），没有右上角的「²」{S}', v['n'] and v['n']['t'] == '2' and v['n']['bw'] == '1px' and v['n']['bs'] == 'solid' and v['n']['r'] == '0px' and v['n']['fs'] == fs[0] and v['n']['after'] and v['after'] in ('none', 'normal'), v)
     ck(f'规范2-版本号可点区域 ≥ 28{S}', v['tag'] == 'BUTTON' and v['h'] >= 28 - 0.5, v['h'])
+    p.pg.hover('#shell .sh-ver .sh-cnt')
+    ck(f'v3.2-13 版本号后的计数悬停写「2 条未读更新」{S}', p.wait("__T.tipText() === '2 条未读更新'", 2500), p.ev('__T.tipText()'))
+    p.pg.mouse.move(5, 600)
+    kb = p.ev("""(() => { const b = __T.q('#status [data-act=keys]'); return b && {t: __T.txt(b), kbd: [...b.querySelectorAll('kbd')].filter(__T.vis).length}; })()""")
+    ck(f'v3.2-13 状态栏「快捷键」后面不加方框{S}', kb and kb['t'].startswith('快捷键') and kb['kbd'] == 0, kb)
+    boxes = p.ev("""__T.qq('#app .sh-cnt, #app kbd').filter(__T.vis).map(x => __T.txt(x))""")
+    ck(f'v3.2-13 方框里只有数字{S}', all(re.fullmatch(r'\d+', x or '') for x in boxes), boxes)
     # 分组（v3.1 第 10 条）：组间只靠 24 px 间距，没有竖线；组内 12
     gp = p.ev("""(() => { const r = __T.q('#shell .sh-r'), gs = __T.qq('.sh-g', r);
         return {gap: getComputedStyle(r).columnGap, gi: gs.filter(x => !x.classList.contains('sh-g-pg')).map(x => getComputedStyle(x).columnGap),

@@ -65,6 +65,10 @@
 .sh-pg:focus-visible{outline-offset:-2px}
 .shell .sh-gpu{flex:none;margin:0;color:var(--t3);font-size:var(--fs1);cursor:default}
 
+/* 方框只表示数量（v3.2 第 13 条）：状态栏「快捷键」后面的「?」键帽不显示（「?」写在快捷键表里）。
+   那个按钮在样板 body_main.html 里，样板去掉 <kbd> 以后这一条可以删 */
+#status [data-act="keys"] kbd{display:none}
+
 /* ---------- 2 页面：资源交付（#wsImport）、资源编排（#wsWB）（规范第 2、3 节） ---------- */
 /* 右栏同制作区（460 / 1366 下 380）；左栏比制作区宽 72 px（--sh-wl）：素材包、基础模板一行要放下名称、副信息和右侧状态（编排资源库原来约 410 px）。
    栏与栏之间、画面和时间轴之间、工具行底边都是同一条 1 px 线。工具行占满宽，分段和下面的栏对齐：左段放「← 返回制作」，左栏从工具行下开始 */
