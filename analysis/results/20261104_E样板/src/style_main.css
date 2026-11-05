@@ -46,7 +46,7 @@
   --h-tp:36px; --h-film:28px; --h-ruler:28px;
   --w-left:300px; --w-right:460px; --w-tlab:160px;
   /* 检查器五列（§2）：参数名 112 ｜ 控件 自适应 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（改动标记在左侧内边距里） */
-  --w-lab:112px; --w-val:40px; --w-valr:100px; --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.1 第 15 条：滑杆到数值 8 px；单值数值格 40，区间（含展开箭头）100 */
+  --w-lab:112px; --w-val:84px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.2 第 2 条：单值、区间同一个数值格（数值 + 单位两列 112，按最长的「0.012–0.032 s ⌄」定）；数字左对齐，滑杆结束在同一条线上，到数字 8 px */
   --ico:16px; --ico-s:16px; --thumb:40px;
   --tl-min:6; --indent:16px;
   color-scheme:dark;
@@ -57,7 +57,7 @@
   --lh1:14px; --lh2:18px; --lh3:20px;
   --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px;
   --w-left:260px; --w-right:380px; --w-tlab:132px;
-  --w-lab:96px; --w-val:36px; --w-valr:92px; --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
+  --w-lab:96px; --w-val:78px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
   --thumb:36px; --tl-min:4;
 }
 
@@ -163,12 +163,12 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 /* 3.4 开关：轨道 28×16。关：只画 1 px 框，方块在左、灰色；开：轨道填选中底色，方块在右、主文字色 */
 .sw{appearance:none;position:relative;flex:none;width:28px;height:16px;border:1px solid var(--g6);border-radius:var(--r2);background:transparent;cursor:pointer;vertical-align:middle;transition:background .12s,border-color .12s}
 .sw::after{content:"";position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:1px;background:var(--g7);transition:left .12s,background .12s}
-.sw:checked{background:var(--g7);border-color:var(--g7)}   /* v3.1 第 17 条：开 = 轨道明显更亮的中性色 */
-.sw:checked::after{left:14px;background:var(--g9)}
+.sw:checked{background:var(--g8);border-color:var(--g8)}   /* v3.2 第 4 条：开 = 轨道接近次文字色，方块主文字色、外圈一道暗线隔开 */
+.sw:checked::after{left:14px;background:var(--g9);box-shadow:0 0 0 1px var(--g2)}
 .sw:hover,.sw.is-hover{border-color:var(--g7)}
-.sw:checked:hover{border-color:var(--g8);background:var(--g8)}
+.sw:checked:hover{border-color:var(--g9);background:var(--g9)}
 .sw:focus-visible,.sw.is-focus{outline:2px solid var(--focus);outline-offset:2px}
-.sw:disabled{opacity:.5;cursor:default}
+.sw:disabled{opacity:.35;cursor:default;border-style:dashed}   /* 停用：再暗一级、虚线框，和「关」分得开 */
 /* 3.5 勾选：14 px 方框 */
 .chk,.rad{appearance:none;position:relative;flex:none;width:14px;height:14px;border:1px solid var(--g7);background:transparent;cursor:pointer;vertical-align:middle}
 .chk{border-radius:var(--r2)}
@@ -309,9 +309,6 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .prm>.plw{grid-column:1;padding-right:var(--gap-prm)}
 .prm>.ctl1{grid-column:2;padding-right:var(--gap-val)}
 .prm>.vu{grid-column:3/5}
-/* 区间行、停用行：数值格加宽（区间写「0.30–1.65 ⌄」，停用写原因） */
-.prm.range,.prm.is-dis:not(.crow){grid-template-columns:var(--w-lab) minmax(0,1fr) var(--w-valr) var(--w-unit) var(--w-act)}
-.prm.range>.vu,.prm.is-dis:not(.crow)>.vu{grid-template-columns:var(--w-valr) var(--w-unit)}
 .prm>.rst,.prm>.actc,.prm>.ra{grid-column:5;justify-self:end}
 .prm .mk{position:absolute;left:calc(-1 * var(--pad) + 4px);top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:transparent}
 .prm.is-ed .mk{left:calc(-1 * var(--pad) + 5px);width:2px;height:16px;margin-top:-8px;border-radius:0;background:var(--t1);box-shadow:none}
@@ -327,16 +324,17 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .prm .lk[aria-pressed="true"]{color:var(--t1)}
 .ctl1{display:flex;align-items:center;gap:4px;min-width:0}
 .ctl1 .sl{flex:1}
-.vu{display:grid;grid-template-columns:var(--w-val) var(--w-unit);align-items:baseline;min-width:0}
-.vu>.num,.vu>.vv{grid-column:1;justify-self:end}
-.vu>.u{grid-column:2;display:flex;align-items:center;gap:0;padding-left:4px;line-height:var(--lh2)}
-.vu .num{width:auto;field-sizing:content;min-width:3ch}
+.vu{display:flex;align-items:baseline;justify-content:flex-start;gap:0;min-width:0;white-space:nowrap}   /* v3.2 第 2 条：数值 + 单位成一组，从数值格左缘起 */
+.vu>.num{margin-left:-4px;text-align:left}   /* 数字的字从格子左缘起；框线和内边距借滑杆后面的 8 px */
+.vu>.u{display:flex;align-items:center;gap:0;padding-left:0;line-height:var(--lh2)}   /* 数字框右内边距 4 px 就是数字到单位的间距 */
+.vu .num{width:auto;field-sizing:content;min-width:1ch}
 /* 区间：数值格写「0.30–1.65」；放不下 72 时向左借控件列和数值列之间的空白 */
-.vv{display:inline-flex;align-items:center;justify-content:flex-end;white-space:nowrap}
+.vv{display:inline-flex;align-items:center;white-space:nowrap}
+.vv+.u{padding-left:4px}
 .vv .num{width:auto;field-sizing:content;min-width:0;padding:0}
 .vv .dash{padding:0 1px;color:var(--t3)}
 /* 展开箭头（分布、随机幅度）：在数值格右边，点开在下一行出滑杆 */
-.exn{display:inline-grid;place-items:center;width:12px;height:20px;margin-left:1px;border-radius:var(--r2);color:var(--t3);flex:none}
+.exn{display:inline-grid;place-items:center;align-self:center;width:12px;height:20px;margin-left:2px;border-radius:var(--r2);color:var(--t3);flex:none}
 .exn svg.i{width:12px;height:12px;transition:rotate .12s}
 .exn:hover{background:var(--hov);color:var(--t1)}
 .exn[aria-expanded="true"] svg.i{rotate:180deg}
@@ -347,7 +345,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .prm .actc{display:grid;place-items:center;width:var(--w-act);height:var(--w-act)}
 .prm .actc>*{grid-area:1/1}
 .prm .actc .sug{width:var(--w-act);height:var(--w-act);color:var(--t2)}
-.prm .actc .sug svg.i{width:14px;height:14px}
+.prm .actc .sug svg.i{width:16px;height:16px}
 /* 有建议值的行（曝光）：没改过时操作列放「建议」，改过以后放恢复（建议值也在恢复菜单里） */
 .prm.has-sug .actc .rst{visibility:hidden}
 .prm.has-sug.is-nd .actc .rst,.prm.has-sug.is-ed .actc .rst{visibility:visible}
@@ -355,7 +353,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 /* 停用：整行降透明度；悬停写原因（不把整句塞进控件列） */
 .prm.is-dis .plw,.prm.is-dis .ctl1,.prm.is-dis .ctl{opacity:.5}
 .prm.is-dis .lk{visibility:hidden}
-.vu>.dis-why{grid-column:1/3;justify-self:end;font-size:var(--fs1);color:var(--t3);white-space:nowrap;line-height:var(--lh2)}   /* v3.1 第 6 条：不用悬停也看得到原因 */
+.vu>.dis-why{font-size:var(--fs1);color:var(--t3);white-space:nowrap;line-height:var(--lh2)}   /* v3.1 第 6 条：不用悬停也看得到原因 */
 .prm.is-dis .vu{opacity:1}
 /* 依赖项：缩进一级，左边一条线 */
 .prm.is-dep .plw{padding-left:var(--s3)}
@@ -387,7 +385,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .mod-h .chev{position:absolute;left:calc(-1 * var(--pad) + 1px);top:50%;width:10px;height:10px;margin-top:-5px;color:var(--t3);transition:rotate .12s}
 .mod:not(.is-closed) .mod-h .chev{rotate:90deg}
 .mod-h .mt{grid-column:1/3;grid-row:1;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);white-space:nowrap}
-.mod-h .ms{grid-column:2/4;grid-row:1;justify-self:end;max-width:100%;padding-left:var(--s3);font-size:var(--fs1);color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod-h .ms{grid-column:2/5;grid-row:1;justify-self:end;min-width:calc(var(--w-val) + var(--w-unit));max-width:100%;padding-left:var(--s3);margin-left:calc(-1 * var(--s3));font-size:var(--fs1);color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;box-sizing:content-box}   /* v3.2：摘要左缘对齐数值列，放不下时向左长 */
 .mod-h .ms .u{font-size:inherit}
 .mod:not(.is-closed) .mod-h .ms{visibility:hidden}
 .mod-h:hover .chev{color:var(--t1)}
@@ -404,19 +402,17 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .prm.curve>.crv-w{grid-row:1;grid-column:2/5}
 .prm.curve>.rst{grid-row:1}
 .prm.curve>.mk{top:14px}
-.prm.curve>.cp{grid-row:2;grid-column:1;align-self:center;font-size:var(--fs1);color:var(--t3);white-space:nowrap}
-.prm.curve>.cx{grid-row:2;grid-column:2;align-self:center;display:flex;align-items:baseline;gap:4px;padding:0 0 0 20px;white-space:nowrap}
-.prm.curve>.cx .num{width:auto;field-sizing:content;min-width:3ch}
-.prm.curve>.cx .cyl{margin-left:auto;padding-right:var(--s2)}
-.prm.curve>.vu{grid-row:2;align-self:center}
-.crv-w{display:grid;grid-template-columns:20px minmax(0,1fr);min-width:0}
+.prm.curve>.cx{grid-row:2;grid-column:2/5;align-self:center;display:flex;align-items:baseline;gap:16px;padding-left:24px;white-space:nowrap;min-width:0}   /* v3.2 第 8 条：读数一行「关键点 2/5　寿命 15 %　大小 0.90 倍」，从曲线左缘起 */
+.prm.curve>.cx .cp{font-size:var(--fs1);color:var(--t3)}
+.prm.curve>.cx .cg{display:inline-flex;align-items:baseline;gap:4px}
+.prm.curve>.cx .cg .num{width:auto;field-sizing:content;min-width:1ch;margin:0 -4px;text-align:left}
+.crv-w{display:grid;grid-template-columns:24px minmax(0,1fr);min-width:0}
 .crv-yl{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:space-between;height:calc(96px + var(--lh1));margin:calc(var(--lh1) / -2) 0;padding-right:4px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);text-align:right}
 .crv{grid-column:2;grid-row:1;position:relative;height:96px;touch-action:none;cursor:crosshair}
 .crv svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .crv .gl{stroke:var(--g4);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
 .crv .ax{stroke:var(--g6);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
 .crv .ln{stroke:var(--g8);stroke-width:1.5;vector-effect:non-scaling-stroke;fill:none}
-.crv-xl{grid-column:2;grid-row:2;padding-top:2px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);text-align:right}
 .crv-p{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:transparent;cursor:grab}
 .crv-p::before{content:"";position:absolute;left:4.5px;top:4.5px;width:9px;height:9px;box-sizing:border-box;border-radius:50%;background:var(--g1);border:1.5px solid var(--g8)}
 .crv-p:hover::before{border-color:var(--g9);background:var(--g4)}

@@ -462,7 +462,7 @@ function rowHTML(P, m, r, o = {}) {
     return `<div class="${base}${s.rnd ? ' has-sub' : ''}${sug ? ' has-sug' : ''}" data-k="${k}" data-lab="${lab}" data-kind="num"${tipAttr}>
       ${markHTML}<div class="plw"><span class="nl">${pl}${lkHTML(s, lab)}</span></div>
       <div class="ctl1"><div class="sl${why ? ' is-disabled' : ''}" role="slider" tabindex="${why ? -1 : 0}" aria-label="${lab}" aria-valuemin="${s.min}" aria-valuemax="${s.max}" aria-valuenow="${s.v}" style="--v:${pc(s.v, s.min, s.max)};--d:${pc(s.def, s.min, s.max)};${band}">${band ? '<i class="sl-rb"></i>' : ''}<i class="sl-f"></i>${!same(s.v, s.def) ? '<i class="sl-d"></i>' : ''}<i class="sl-k"></i></div></div>
-      <div class="vu">${why ? `<span class="dis-why">${esc(whyS)}</span>` : s.rnd ? `<span class="vv">${num}${exnHTML(s, 'rnd')}</span><span class="u">${esc(s.unit)}</span>` : `${num}<span class="u">${esc(s.unit)}</span>`}</div>
+      <div class="vu">${why ? `<span class="dis-why">${esc(whyS)}</span>` : s.rnd ? `${num}<span class="u">${esc(s.unit)}</span>${exnHTML(s, 'rnd')}` : `${num}<span class="u">${esc(s.unit)}</span>`}</div>
       ${sug ? `<span class="actc">${rstHTML(lab)}${sug}</span>` : rstHTML(lab)}</div>${s.sub && s.rnd && !why ? subHTML(k, s, 'rnd') : ''}`;
   }
   if (kind === 'range') {
@@ -470,7 +470,7 @@ function rowHTML(P, m, r, o = {}) {
     return `<div class="${base} range" data-k="${k}" data-lab="${lab}" data-kind="range"${tipAttr}>
       ${markHTML}<div class="plw"><span class="nl">${pl}${lkHTML(s, lab)}</span></div>
       <div class="ctl1"><div class="sl range" role="group" aria-label="${lab} 区间" style="--lo:${posPc(s, s.v[0])};--hi:${posPc(s, s.v[1])}"><i class="sl-f"></i><i class="sl-k lo" role="slider" tabindex="0" aria-label="${lab} 下限"></i><i class="sl-k hi" role="slider" tabindex="0" aria-label="${lab} 上限"></i></div></div>
-      <div class="vu"><span class="vv"><input class="num lo" data-part="lo" type="text" value="${fmt(s.v[0], s.step)}" aria-label="${lab} 下限"><span class="dash">–</span><input class="num" data-part="hi" type="text" value="${fmt(s.v[1], s.step)}" aria-label="${lab} 上限">${exnHTML(s, 'ex')}</span><span class="u">${esc(s.unit)}</span></div>
+      <div class="vu"><span class="vv"><input class="num lo" data-part="lo" type="text" value="${fmt(s.v[0], s.step)}" aria-label="${lab} 下限"><span class="dash">–</span><input class="num" data-part="hi" type="text" value="${fmt(s.v[1], s.step)}" aria-label="${lab} 上限"></span><span class="u">${esc(s.unit)}</span>${exnHTML(s, 'ex')}</div>
       ${rstHTML(lab)}</div>${s.sub ? subHTML(k, s, 'ex') : ''}`;
   }
   const crow = (inner, cls = '') => `<div class="${base} crow${cls}" data-k="${k}" data-lab="${lab}" data-kind="${kind}"${tipAttr}>${markHTML}<div class="plw"><span class="nl">${pl}</span></div><div class="ctl">${inner}</div>${rstHTML(lab)}</div>`;
@@ -498,17 +498,15 @@ function subHTML(k, s, part) {
 }
 const crvY = s => s.lab.replace('曲线', '');      /* 大小曲线 → 大小 */
 const crvMax = s => Math.max(1, ...s.v.map(p => p[1]));
-/* 曲线：横跨「控件 + 数值 + 单位」三列，高 96；纵轴刻度 0 和最大值，横轴「寿命 0–100 %」；
-   读数在曲线下面，和参数行同一套列：「寿命 15 %」在控件列，「大小」的值在数值列、「倍」在单位列 */
+/* 曲线：横跨「控件 + 数值 + 单位」三列，高 96；纵轴刻度 0 和最大值。
+   v3.2 第 8 条：横轴说明不再写在图里，读数一行「关键点 2/5　寿命 15 %　大小 0.90 倍」（「寿命」就是横轴，悬停写 0–100 %） */
 function curveRowHTML(k, s, r) {
   const ci = clamp(s.ci, 0, s.v.length - 1), p = s.v[ci], y = crvY(s);
   return `<div class="prm curve${stCls(s)}" data-k="${k}" data-lab="${esc(r.lab)}" data-kind="curve">
     ${markHTML}<div class="plw"><span class="nl"><span class="pl" data-help="${k}"><span class="plt">${esc(r.lab)}</span></span></span></div>
-    <div class="crv-w"><div class="crv-yl" aria-hidden="true"><span>${fmt(crvMax(s), .1)}</span><span>0</span></div><div class="crv" data-tip="拖动关键点，双击空白处加点" data-key="Delete 删点">${curveInner(s)}</div><div class="crv-xl">寿命 0–100 %</div></div>
+    <div class="crv-w"><div class="crv-yl" aria-hidden="true"><span>${fmt(crvMax(s), .1)}</span><span>0</span></div><div class="crv" data-tip="拖动关键点，双击空白处加点" data-key="Delete 删点">${curveInner(s)}</div></div>
     ${rstHTML(esc(r.lab))}
-    <span class="cp">关键点 ${ci + 1} / ${s.v.length}</span>
-    <div class="cx"><span class="lbl">寿命</span><input class="num cf" data-f="0" value="${fmt(p[0] * 100, 1)}" aria-label="关键点在寿命中的位置"><span class="u">%</span><span class="lbl cyl">${esc(y)}</span></div>
-    <div class="vu"><input class="num cf" data-f="1" value="${fmt(p[1], .01)}" aria-label="关键点${esc(y)}倍数"><span class="u">倍</span></div></div>`;
+    <div class="cx"><span class="cp">关键点 ${ci + 1}/${s.v.length}</span><span class="cg"><span class="lbl" data-tip="横轴：寿命 0–100 %">寿命</span><input class="num cf" data-f="0" value="${fmt(p[0] * 100, 1)}" aria-label="关键点在寿命中的位置"><span class="u">%</span></span><span class="cg"><span class="lbl">${esc(y)}</span><input class="num cf" data-f="1" value="${fmt(p[1], .01)}" aria-label="关键点${esc(y)}倍数"><span class="u">倍</span></span></div></div>`;
 }
 /* 曲线改动写成「关键点 3 大小 0.60 → 0.80」 */
 function curveDiff(s, a, b) {
@@ -602,7 +600,7 @@ function syncRow(k) {
     else if (kind === 'curve') {
       $('.crv', row).innerHTML = curveInner(s);
       const ci = clamp(s.ci, 0, s.v.length - 1), p = s.v[ci];
-      $('.cp', row).textContent = `关键点 ${ci + 1} / ${s.v.length}`;
+      $('.cp', row).textContent = `关键点 ${ci + 1}/${s.v.length}`;
       $$('.cf', row).forEach(c => { if (document.activeElement !== c) c.value = c.dataset.f === '0' ? fmt(p[0] * 100, 1) : fmt(p[1], .01); });
     }
   });
