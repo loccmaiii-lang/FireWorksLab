@@ -1,8 +1,10 @@
 /* ---------- 外壳（style_shell.css） ---------- */
 /* =====================================================================
-   烟花工坊 5.0 外壳，E 样板 v3.2（对话框9，2026-11-05）
+   烟花工坊 5.0 外壳，E 样板 v3.3（对话框9，2026-11-05）
    依据：交互宪章 0.9（含「用户 2026-11-05 改定」）、协作/方案/E设计规范_v3_2026-11-05.md 第 1–6、11、12 节；
-   E样板_v3.1_改动单.md 第 4、9、10、11 条、E样板_v3.2_改动单.md 第 11–13 条（和规范冲突处以改动单为准，后一份为准）。
+   E样板_v3.1_改动单.md 第 4、9、10、11 条、v3.2 第 11–13 条、v3.3 第 16–19 条（和规范冲突处以改动单为准，后一份为准）。
+   字号三级分用途（v3.3 第 6、19 条）：大号只给产品名和当前位置（资源交付选中的包名）；中号给命令、名称、数值、正文；小号给状态读数、计数、次要说明。
+   图标（v3.3 第 7、19 条）：一律用样板 #iconDefs 的 16 px 符号，按 16 px 画（不缩成 12 / 14 px，线宽才一致），线宽 1.5、方头、尖角、不填面。
    0 兜底  1 外壳顶栏  2 资源交付 / 资源编排两页  3 列表条目  4 浮层补充  5 编排预览（状态栏）  6 样板开关  7 全表一节
    颜色、字号、间距一律取样板 style_main.css 的 token；样板还没有的写成 var(--新, 旧值)；
    组件类（.btn / .tbtn / .modeseg / .seg / .tab / .menu / .dialog / .toast）以样板为准，这里只补外壳自己的部件（sh-*）。
@@ -24,7 +26,7 @@
 .sh-ver:active{background:var(--press, var(--g5))}
 /* 计数只有一种写法（第 11 条）：小号数字放在 1 px 方框里，跟在名称后面 */
 .sh-cnt{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:16px;height:16px;margin:0;padding:0 3px;border:1px solid var(--g6);border-radius:0;color:var(--t2);font-size:var(--fs1);line-height:14px;font-weight:var(--fw1);font-variant-numeric:tabular-nums}
-/* 右侧三组（v3.2 改动单第 12 条）：状态（UE、导出、备份、设置）｜ 页面入口（资源交付、资源编排）｜ 显卡；组间 24 px，正中一条 1 px 竖线 */
+/* 右侧三组（v3.2 改动单第 12 条）：状态（UE、导出、备份）｜ 页面入口（资源交付、资源编排）｜ 显卡；组间 24 px，正中一条 1 px 竖线 */
 .sh-r{flex:0 1 auto;align-self:stretch;display:flex;align-items:center;gap:var(--sh-gg);min-width:0;margin-left:var(--sh-gg)}
 .sh-g{position:relative;display:flex;align-items:center;gap:var(--sh-gi);min-width:0}
 .sh-g+.sh-g::before{content:"";position:absolute;left:calc(var(--sh-gg) / -2);top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
@@ -44,15 +46,17 @@
 .sh-ue.is-write:hover{color:var(--t2)}
 .sh-ue.is-na{opacity:.5}
 .sh-cd{flex:none;font-size:var(--fs1);color:var(--t3)}
-/* 文件夹：点开换文件夹，悬停写全称和完整路径；名字过长省略号。未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词；「设置」在状态组末尾 */
-.sh-fp{display:flex;align-items:center;gap:2px;min-width:0;flex:0 1 auto}
-.sh-fp:has(.sh-set){flex:none}
+/* 文件夹（v3.3 第 16 条：没有单独的「设置」）：「导出 …」「备份 …」整项是命令，静止时和其他状态一样是小号弱色字；
+   悬停出底色、字亮一级（看得出能点；「UE 已连接」不能点，悬停不变），悬停提示写点了做什么；名字过长省略号，完整路径写在悬停提示里。
+   未选（导出、备份都是）、需允许访问 → 琥珀圆点 + 琥珀词 */
+.sh-fp{display:flex;align-items:center;min-width:0;flex:0 1 auto}
 .sh-fold{flex:0 1 auto;min-width:0;padding:0 6px;overflow:hidden}
+.sh-fold:hover:not(.is-na) .sh-fk,.sh-fold.is-hover .sh-fk,.sh-fold:hover:not(.is-na) .sh-sv:not(.is-warn),.sh-fold.is-hover .sh-sv:not(.is-warn){color:var(--t2)}
 .sh-fold .sh-fk,.sh-fold .sh-sv{flex:none}
 .sh-fold .sh-sv.is-name{flex:0 1 auto;min-width:3.2em;overflow:hidden;text-overflow:ellipsis}
 .sh-fold.is-na{opacity:.5;cursor:default;background:none}
-/* 操作：命令样式（次文字色、静止无底、悬停出底色），和状态的弱色字分开；「设置」是状态组最后一项，前面 12 px（组内间距） */
-.sh-set,.sh-retry{flex:none;padding:0 6px;color:var(--t2)}
+/* 操作「重试」：命令样式（次文字色、静止无底、悬停出底色），和状态的弱色字分开 */
+.sh-retry{flex:none;padding:0 6px;color:var(--t2)}
 /* 页面入口「资源交付 [2]」「资源编排」：标签样式，次文字色、正文字号，悬停出底色；当前页薄荷下划线 + 600（预留 600 的宽度，换字重不挤动顶栏） */
 .sh-g-pg{align-self:stretch;gap:2px}
 .sh-pg{position:relative;display:inline-flex;align-items:center;gap:6px;height:100%;padding:0 10px;color:var(--t2);font-size:var(--fs2);white-space:nowrap;cursor:pointer}
@@ -102,33 +106,51 @@
 .sh-why .tbtn{margin-left:auto}
 .sh-main,.sh-mc{display:flex;flex-direction:column;min-width:0;min-height:0}
 .sh-mc{flex:1}
-/* 素材包标题行：名称是当前位置（大号 600），其余弱色 */
+/* 资源交付主区（v3.3 第 17 条）：选中的包 → 标题行 + 回放缩略图放大 +「修订」「检查」摘要 +「资产」逐资产清单；没选中 → 中间一行「选一个包查看」 */
+.sh-ws{--sh-pv:288px}
+.s1366 .sh-ws{--sh-pv:216px}
+/* 标题行：包名是当前位置（大号 600，同效果名），后面紧跟状态（小号）：待导入主文字色（要你处理），已导入、写入中弱色 */
 .sh-mh{flex:none;display:flex;align-items:center;gap:var(--s3);height:calc(var(--h-row) + 8px);padding:0 var(--s3);min-width:0;white-space:nowrap}
-.sh-mh b{font-size:var(--fs3);font-weight:var(--fw2);color:var(--t1);overflow:hidden;text-overflow:ellipsis}
-.sh-mh .mute{font-size:var(--fs1);color:var(--t3)}
+.sh-mh b{font-size:var(--fs3);line-height:var(--lh3);font-weight:var(--fw2);color:var(--t1);overflow:hidden;text-overflow:ellipsis}
 .sh-mh .st{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs1);color:var(--t3)}
+.sh-mh .st.is-wait{color:var(--t1)}
 .sh-mh .st .spin{width:10px;height:10px}
-.sh-mgrid{flex:1;display:grid;grid-template-columns:minmax(0,1fr) var(--w-left);gap:20px;min-height:0;padding:0 var(--s3) var(--s3)}
-.sh-tblw{min-width:0;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--g6) transparent}
+.sh-mh .sh-n{font-variant-numeric:tabular-nums}
+/* 下面整块一起滚（包里的资产多时）；左右内边距 12 */
+.sh-det{flex:1;min-height:0;overflow:auto;padding:0 var(--s3) var(--s3);scrollbar-width:thin;scrollbar-color:var(--g6) transparent}
+/* 第一段：回放缩略图（放大，方形，画面面色）｜「修订」｜「检查」，组间 20，顶端对齐 */
+.sh-hero{display:flex;align-items:flex-start;gap:var(--s5);min-width:0}
+.sh-pvw{flex:none;width:var(--sh-pv);margin:16px 0 0}
+.sh-pvi{width:var(--sh-pv);height:var(--sh-pv);background:var(--surf-stage, var(--sky));overflow:hidden}
+.sh-pvi img{display:block;width:100%;height:100%;object-fit:cover;mix-blend-mode:screen}
+.sh-pvi.is-none{display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line);background:none;color:var(--t3);font-size:var(--fs1)}
+.sh-cap{margin-top:6px;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);font-variant-numeric:tabular-nums}
+.sh-hero .sh-mod{flex:none;min-width:200px}
+/* 模块标题（v3.3 第 6 条）：中号 600、主文字色，上空 16、下空 6，不填底色、不画线，靠空白分组；后面的计数小号弱色 */
+.sh-mt{display:flex;align-items:baseline;gap:var(--s2);margin:16px 0 6px;font-size:var(--fs2);line-height:var(--lh2);font-weight:var(--fw2);color:var(--t1)}
+.sh-mt .cnt{font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3)}
+/* 摘要：名称 + 数值两列，行高 28；名称次文字色（同参数名），数值主文字色、等宽数字（v3.3 第 6 条：都是中号） */
+.sh-dl{display:grid;grid-template-columns:56px auto;column-gap:var(--s3);margin:0;font-size:var(--fs2);line-height:var(--h-row);white-space:nowrap}
+.sh-dl dt{color:var(--t2)}
+.sh-dl dd{margin:0;color:var(--t1);font-variant-numeric:tabular-nums}
+.sh-tblw{min-width:0}
+/* 没选中包：主区正中一行 */
+.sh-none{flex:1;display:grid;place-items:center;min-height:0}
+.sh-none .empty{align-items:center;padding:0}
 /* 逐资产清单：表头是标签（小号弱色），行高 28；数值等宽 */
-.sh-at{width:100%;border-collapse:collapse;font-size:var(--fs2);font-variant-numeric:tabular-nums}
+.sh-at{width:calc(100% + 20px);margin:0 -10px;border-collapse:collapse;font-size:var(--fs2);font-variant-numeric:tabular-nums}   /* 单元格左右各 10，整表往外挪 10：文字和「资产」标题左对齐，悬停底色伸出文字 */
 .sh-at th{height:var(--h-row);padding:0 10px;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3);text-align:left;white-space:nowrap}
 .sh-at td{height:var(--h-row);padding:0 10px;color:var(--t1);text-align:left;white-space:nowrap}
-.sh-at th:first-child,.sh-at td:first-child{width:28px;padding-right:0}
 .sh-at tbody tr:hover td{background:var(--hov, var(--g2))}
-.sh-at td:first-child{color:var(--t3)}
-.sh-at td:first-child .spin{width:10px;height:10px}
-.sh-at td:first-child svg.i{width:12px;height:12px;color:var(--t2)}
-.sh-at .sh-new{color:var(--t3)}
+/* 「写入」列：勾、转圈居中；图标按 16 px 画（v3.3 第 19 条：16 px 网格不缩小，线宽才一致） */
+.sh-at .sh-wr{width:52px;padding:0 10px;text-align:center;color:var(--t2)}
+.sh-at td.sh-wr>span{display:inline-flex;vertical-align:middle}
+.sh-at td.sh-wr .spin{width:10px;height:10px}
+.sh-at td.sh-wr svg.i{width:var(--ico, 16px);height:var(--ico, 16px)}
+.sh-at .sh-new,.sh-at .sh-pass{color:var(--t3)}
 .sh-at .sh-path{width:28%}
-.sh-at .st-ok{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs2);color:var(--t3)}
-.sh-at .st-ok svg.i{width:12px;height:12px}
-.sh-mh .st-ok{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs1);color:var(--t3)}
-.sh-mh .st-ok svg.i{width:12px;height:12px}
-.sh-side{display:flex;flex-direction:column;gap:var(--s3);min-width:0}
 /* 低对比占位块：不是这次要画的部分，不写字 */
 .sh-ph{display:block;flex:none;height:10px;background:var(--g2);border-radius:var(--r1)}
-.sh-ph.dk{background:var(--sky)}
 .status .sh-ph{height:calc(var(--h-ctl) - 10px)}
 /* 栏头面（工具行）上的占位块亮一级，不然和栏头同色看不见 */
 .sh-hd .sh-ph{background:var(--g3)}

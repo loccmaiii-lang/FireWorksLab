@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""E 样板 v3 外壳走查（对话框9，2026-11-05）
+"""E 样板 v3 外壳走查（对话框9，2026-11-05；v3.3 外壳第 16–19 条）
 
 覆盖：交互宪章 0.9 的全部入口和状态（含「用户 2026-11-05 改定」第 1–7 条）、交互走查 P4 / P8 / P9、
 设计规范 v3 第 3–6、11、12 节里外壳能量的部分（尺寸、线、面、颜色用途、字号字重、浮层位置），
+v3.1 / v3.2 / v3.3 改动单的外壳条目（v3.3：「设置」并进状态项、资源交付主区、「待验收」主文字色、图标画法与字号分用途），
 1920 / 1366 下顶栏各状态组合和两页不溢出、不截断，样板挂钩缺失时不报错，以及文案自查表。
 
 用法（在 src/ 下）：
@@ -242,9 +243,11 @@ def t_bar(p, size):
     ok = len(g) == 3 and all(o[0] in gi['c'] and o[1] in gi['t'] for o, gi in zip(order, g)) and all(g[i]['r'] <= g[i + 1]['x'] for i in range(2))
     ck(f'改定2 / v3.2-12 右侧三组：状态｜页面入口｜显卡{S}', ok, [x['t'] for x in g])
     seq = p.ev("""[...__T.q('#shell .sh-g-st').children].map(x => x.matches('.sh-ueg') ? 'UE' : x.querySelector('[data-fk=exp]') ? '导出' : x.querySelector('[data-fk=bak]') ? '备份' : x.matches('.sh-set') ? '设置' : x.className)""")
-    ck(f'v3.2-12 状态组：UE、导出、备份，「设置」在末尾{S}', seq == ['UE', '导出', '备份', '设置'], seq)
-    sg = p.ev("""(() => { const s = __T.q('#shell .sh-g-st .sh-set'), b = __T.q('#shell [data-fk=bak]').closest('.sh-fp'); return {gap: __T.rect(s).x - __T.rect(b).r, last: s === __T.q('#shell .sh-g-st').lastElementChild, sk: s.dataset.sk, tip: s.dataset.tip}; })()""")
-    ck(f'v3.2-12「设置」前面空 12 px、悬停写选哪个文件夹{S}', near(sg['gap'], 12, 0.6) and sg['last'] and sg['sk'] == 'bak' and sg['tip'] == '选择备份文件夹', sg)
+    ck(f'v3.3-16 状态组只有 UE、导出、备份（「设置」并进状态项）{S}', seq == ['UE', '导出', '备份'], seq)
+    ns = p.ev("""({set: __T.qq('#shell .sh-set, #shell [data-sh=foldSet]').length, txt: __T.qq('#shell button, #shell span').filter(__T.vis).filter(x => __T.txt(x) === '设置').length,
+        gap: __T.rect('#shell [data-fk=bak]').x - __T.rect('#shell [data-fk=exp]').r})""")
+    ck(f'v3.3-16 顶栏没有单独的「设置」{S}', ns['set'] == 0 and ns['txt'] == 0, ns)
+    ck(f'v3.3-16 导出、备份之间仍是组内 12{S}', near(ns['gap'], 12, 0.6), ns)
     pgs = p.ev("__T.qq('#shell .sh-pg').map(x => __T.txt(x))")
     ck(f'改定2-页面组「资源交付 2」「资源编排」{S}', pgs == ['资源交付 2', '资源编排'], pgs)
     sh = p.ev("__T.rect('#shell')")
@@ -294,11 +297,25 @@ def t_bar(p, size):
     ck(f'v3.2-11「UE 已连接」：正常，不画圆点，弱色字{S}', st['ue']['t'] == 'UE 已连接' and no_dot(st['ue']) and st['ue']['c'] == st['t3'] and all(c == st['t3'] for _, c in st['ue']['v']), st['ue'])
     ck(f'v3.2-11「导出 FWL_Export」：正常，不画圆点，标签和值都是弱色{S}', st['exp']['t'] == '导出 FWL_Export' and no_dot(st['exp']) and st['exp']['k'] == st['t3'] and all(c == st['t3'] for _, c in st['exp']['v']), st['exp'])
     ck(f'v3.1-4 / v3.2-11「备份 未选」：要处理，琥珀圆点 + 琥珀词{S}', st['bak']['t'] == '备份 未选' and ok_dot(st['bak'], st['w3']) and st['bak']['k'] == st['t3'] and st['bak']['v'] == [['未选', st['w3']]], st['bak'])
-    cmd = p.ev("""(() => { const s = __T.q('#shell .sh-set'); return {t: __T.txt(s), c: __T.cs(s, 'color'), bg: __T.cs(s, 'backgroundColor'), h: __T.rect(s).h, tag: s.tagName, cls: s.className, t2: __T.tok('--t2')}; })()""")
-    ck(f'v3.1-10「设置」是命令：次文字色、静止无底、点击区 28{S}', cmd['t'] == '设置' and cmd['tag'] == 'BUTTON' and 'tbtn' in cmd['cls'] and cmd['c'] == cmd['t2'] and cmd['bg'] in ('rgba(0, 0, 0, 0)', 'transparent') and cmd['h'] >= 27.5, cmd)
-    p.pg.hover('#shell .sh-set')
-    ck(f'v3.1-10「设置」悬停出底色{S}', p.ev("__T.cs('#shell .sh-set', 'backgroundColor') === __T.tok('--hov')"), p.ev("[__T.cs('#shell .sh-set', 'backgroundColor'), __T.tok('--hov')]"))
-    p.pg.mouse.move(5, 600)
+    # v3.3 第 16 条：「导出 FWL_Export」「备份 未选」整项是命令：静止无底，悬停出底色、字亮一级，悬停写点了做什么；「UE 已连接」不能点，悬停不变
+    one = """k => { const e = k === 'ue' ? __T.q('#shell .sh-ue') : __T.q(`#shell [data-fk=${k}]`), f = e.querySelector('.sh-fk');
+        return {tag: e.tagName, bg: __T.cs(e, 'backgroundColor'), k: f ? __T.cs(f, 'color') : __T.cs(e, 'color'), h: __T.rect(e).h, tip: e.dataset.tip, cur: __T.cs(e, 'cursor')}; }"""
+    TR = ('rgba(0, 0, 0, 0)', 'transparent')
+    hv = {}
+    for k in ('exp', 'bak', 'ue'):
+        rest = p.ev(f'({one})', k)
+        p.pg.hover('#shell .sh-ue' if k == 'ue' else f'#shell [data-fk="{k}"]')
+        p.pg.wait_for_timeout(60)
+        want = json.dumps(re.sub(r'[\s\u3000]+', ' ', rest['tip']))   # 提示框里的文字按排版取，全角空格算空白
+        hv[k] = {'rest': rest, 'hov': p.ev(f'({one})', k), 'tipShown': p.wait(f"__T.tipText() === {want}", 2500)}
+        p.pg.mouse.move(5, 600)
+    tk = p.ev("({hov: __T.tok('--hov'), t2: __T.tok('--t2'), t3: __T.tok('--t3')})")
+    for k, nm, tip in (('exp', '「导出 FWL_Export」', '更换导出文件夹　D:\\FireWorksLab\\FWL_Export'), ('bak', '「备份 未选」', '选择备份文件夹')):
+        x = hv[k]
+        ck(f'v3.3-16 {nm}整项可点：按钮、静止无底、点击区 ≥ 28{S}', x['rest']['tag'] == 'BUTTON' and x['rest']['bg'] in TR and x['rest']['h'] >= 27.5 and x['rest']['cur'] == 'pointer', x['rest'])
+        ck(f'v3.3-16 {nm}悬停出底色、标签亮一级{S}', x['hov']['bg'] == tk['hov'] and x['hov']['k'] == tk['t2'] and x['rest']['k'] == tk['t3'], x)
+        ck(f'v3.3-16 {nm}悬停写「{tip.split("　")[0]}」{S}', x['rest']['tip'] == tip and x['tipShown'], x['rest']['tip'])
+    ck(f'v3.3-16「UE 已连接」不能点：悬停不出底色，和能点的分得开{S}', hv['ue']['rest']['tag'] != 'BUTTON' and hv['ue']['hov']['bg'] in TR and hv['ue']['rest']['cur'] != 'pointer', hv['ue'])
     # 页面入口（v3.1 第 10 条）：标签样子，和状态分开：次文字色、正文字号、没有圆点；悬停出底色；计数框
     tb = p.ev("""__T.qq('#shell .sh-pg').map(x => ({t: __T.txt(x), on: x.getAttribute('aria-pressed'), fw: +__T.cs(x, 'fontWeight'), fs: parseFloat(__T.cs(x, 'fontSize')), c: __T.cs(x, 'color'), u: getComputedStyle(x, '::after').content,
         dot: getComputedStyle(x, '::before').content, bg: __T.cs(x, 'backgroundColor'),
@@ -321,6 +338,12 @@ def t_bar(p, size):
     fo = p.ev("__T.fonts(['#shell'])")
     ck(f'规范1-顶栏字重只有 400 / 600{S}', all(x['fw'] in (400, 600) for x in fo), [x for x in fo if x['fw'] not in (400, 600)])
     ck(f'规范1-顶栏字号只用三级{S}', all(x['fs'] in fs for x in fo), [x for x in fo if x['fs'] not in fs])
+    # v3.3 第 19 条（按第 6 条分用途）：大号只给产品名；中号给命令（页面入口、重试）；小号给读数和计数（版本号、UE、导出、备份、计数、显卡）
+    use = p.ev("""(() => { const f = s => __T.qq(s).filter(__T.vis).map(e => parseFloat(__T.cs(e, 'fontSize')));
+        return {big: __T.fonts(['#shell']).filter(x => x.fs === %d).map(x => x.t), mid: f('#shell .sh-pg'), small: f('#shell .sh-ver, #shell .sh-ue, #shell .sh-fold, #shell .sh-cnt, #shell .sh-gpu')}; })()""" % fs[2])
+    ck(f'v3.3-19 顶栏字号分用途：大号只给产品名、页面入口中号、状态读数和计数小号{S}', use['big'] == ['烟花工坊'] and use['mid'] and all(x == fs[1] for x in use['mid']) and use['small'] and all(x == fs[0] for x in use['small']), use)
+    ic = p.ev("__T.qq('#shell svg').filter(__T.vis).length")
+    ck(f'v3.3-19 顶栏不画图标（状态只用文字、圆点、转圈）{S}', ic == 0, ic)
     p.shot(f'shell_1_bar_{size}.png', clip={'x': 0, 'y': 0, 'width': size, 'height': H + 8})
     # 悬停：版本号 → 「更新记录」（样板的提示框）
     p.pg.hover('#shell .sh-ver')
@@ -421,6 +444,68 @@ def t_pages(p, size):
     p.ev("SHELL.ws('baker')")
 
 
+def t_import_main(p, size=1920):
+    """v3.3 第 17 条：资源交付主区放大显示选中的包（回放缩略图、修订、检查摘要），没选中写一行「选一个包查看」；
+    第 18 条：外壳里要你处理的状态词用主文字色、不用琥珀；第 19 条：图标按 16 px 网格画、字号分用途（模块标题中号 600，上 16 下 6）"""
+    S = f'@{size}'
+    pv = {1920: 288, 1366: 216}[size]
+    fs = (12, 13, 15) if size == 1920 else (11, 12, 14)
+    r = p.ev("""(() => { const m = __T.rect('#impMain'), f = __T.q('#impMC .sh-pvw'), i = __T.q('#impMC .sh-pvi'), im = i && i.querySelector('img'), t = __T.q('#impMC .sh-assets');
+        const mod = n => { const e = __T.q(`#impMC .sh-mod[aria-label=${n}]`); return e && {dt: __T.qq('dt', e).map(__T.txt), dd: __T.qq('dd', e).map(__T.txt), x: __T.rect(e).x, y: __T.rect(e.querySelector('.sh-mt')).y}; };
+        return {img: !!(im && im.complete && im.naturalWidth), w: i && __T.rect(i).w, h: i && __T.rect(i).h, ix: i && __T.rect(i).x - m.x, iy: i && __T.rect(i).y, ib: i && __T.rect(i).b, cap: __T.txt('#impMC .sh-cap'),
+                rev: mod('修订'), chk: mod('检查'), tableY: t && __T.rect(t).y, inMain: i && __T.rect(i).x >= m.x && __T.rect(i).r <= m.r,
+                ph: __T.qq('#impMC .sh-ph').filter(x => !x.closest('.sh-path')).length, mh: __T.txt('#impMC .sh-mh')}; })()""")
+    ck(f'v3.3-17 选中的包：回放缩略图放大（{pv} px 方形，在主区里、清单上面）{S}', r['img'] and near(r['w'], pv, 0.6) and near(r['h'], pv, 0.6) and r['inMain'] and r['tableY'] and r['tableY'] > r['ib'], r)
+    ck(f'v3.3-17 缩略图下写取的是引擎回放哪一刻{S}', bool(re.fullmatch(r'引擎回放 \d\.\d\d s', r['cap'] or '')), r['cap'])
+    ck(f'v3.3-17「修订」摘要：编号、导出、烘焙器、平台{S}', r['rev'] and r['rev']['dt'] == ['编号', '导出', '烘焙器', '平台'] and re.fullmatch(r'[0-9a-f]{10}', r['rev']['dd'][0]) and re.fullmatch(r'4\.9\.\d+', r['rev']['dd'][2]) and r['rev']['dd'][3].startswith('PC '), r['rev'])
+    ck(f'v3.3-17「检查」摘要：预检、新建、覆盖{S}', r['chk'] and r['chk']['dt'] == ['预检', '新建', '覆盖'] and re.fullmatch(r'通过 (\d+) / \1', r['chk']['dd'][0]), r['chk'])
+    ck(f'v3.3-17 摘要和缩略图并排、顶端对齐，主区不再有占位块{S}', r['rev'] and r['chk'] and r['rev']['x'] > r['ix'] and r['chk']['x'] > r['rev']['x'] and near(r['rev']['y'], r['iy'], 1) and near(r['chk']['y'], r['iy'], 1) and r['ph'] == 0, r)
+    # 模块标题：中号 600 主文字色，上空 16、下空 6（第 6 条）
+    mt = p.ev("""__T.qq('#impMC .sh-mt').map(e => { const c = getComputedStyle(e); return {t: __T.txt(e).split(' ')[0], fs: parseFloat(c.fontSize), fw: +c.fontWeight, c: c.color, mt: c.marginTop, mb: c.marginBottom}; })""")
+    t1 = p.ev("__T.tok('--t1')")
+    ck(f'v3.3-6 / 19 模块标题「修订」「检查」「资产」：中号 600，上空 16、下空 6{S}', [x['t'] for x in mt] == ['修订', '检查', '资产'] and all(x['fs'] == fs[1] and x['fw'] == 600 and x['c'] == t1 and x['mt'] == '16px' and x['mb'] == '6px' for x in mt), mt)
+    # 字号分用途：大号只给包名；600 只给包名和模块标题；摘要的名称、数值中号；读数（缩略图说明、状态、表头、计数）小号
+    fo = p.ev("""(() => { const f = s => __T.qq(s).filter(__T.vis).map(e => parseFloat(__T.cs(e, 'fontSize')));
+        return {big: __T.fonts(['#impMC']).filter(x => x.fs === %d).map(x => x.t), bold: __T.fonts(['#impMC']).filter(x => x.fw >= 600).map(x => x.t),
+                mid: f('#impMC .sh-dl dt, #impMC .sh-dl dd, #impMC .sh-at td'), small: f('#impMC .sh-cap, #impMC .sh-mh .st, #impMC .sh-at th, #impMC .sh-mt .cnt')}; })()""" % fs[2])
+    ck(f'v3.3-19 资源交付主区字号分用途：大号只给包名，摘要和清单中号，读数和计数小号{S}', fo['big'] == [r['mh'].split(' 待导入')[0].split(' 已导入')[0]] and [x.split(' ')[0] for x in fo['bold'][1:]] == ['修订', '检查', '资产'] and all(x == fs[1] for x in fo['mid']) and all(x == fs[0] for x in fo['small']), fo)
+    # 第 18 条：外壳里要你处理的状态词（待导入、有新版本）主文字色，不用琥珀；外壳没有「待验收」
+    st = p.ev("""(() => { const t1 = __T.tok('--t1'), w3 = __T.tok('--w3'), roots = ['#shell', '#wsImport', '#wsWB'].map(s => __T.q(s)).filter(Boolean);
+        const words = []; roots.forEach(r => __T.qq('.st, .sh-st', r).filter(__T.vis).forEach(e => { const t = __T.txt(e); if (/^(待导入|有新版本|待验收)/.test(t)) words.push([t.split(' ')[0], __T.cs(e, 'color') === t1, __T.cs(e, 'color') === w3]); }));
+        return {words, due: roots.some(r => /待验收/.test(r.textContent))}; })()""")
+    ck(f'v3.3-18 外壳里要处理的状态词（待导入）主文字色、不用琥珀；外壳没有「待验收」{S}', st['words'] and all(x[1] and not x[2] for x in st['words']) and not st['due'], st)
+    # 第 19 条：图标一律用 #iconDefs 的符号，16 px 画布按 16 px 画，线宽 1.5、方头、尖角、不填面
+    icons_check(p, ['#wsImport'], S)
+    # 没选中：一行「选一个包查看」，在主区正中；不出清单和缩略图
+    p.ev("SHELL.S.imp.sel = null; SHELL.render()")
+    n = p.ev("""(() => { const e = __T.q('#impMC .empty'), m = __T.rect('#impMain'), r = e && __T.rect(e);
+        return {t: __T.txt('#impMC'), cx: r && r.x + r.w / 2 - (m.x + m.w / 2), cy: r && r.y + r.h / 2 - (m.y + m.h / 2), tbl: !!__T.q('#impMC .sh-at'), pv: !!__T.q('#impMC .sh-pvi'), go: __T.q('#impGo').dataset.tip}; })()""")
+    ck(f'v3.3-17 没选中：主区正中一行「选一个包查看」，不出清单{S}', n['t'] == '选一个包查看' and near(n['cx'], 0, 2) and near(n['cy'], 0, 2) and not n['tbl'] and not n['pv'], n)
+    ck(f'v3.3-17 没选中：「导入」变灰写「未选素材包」{S}', n['go'] == '未选素材包', n)
+    p.shot(f'shell_2c_import_none_{size}.png')
+    grab(p)
+    p.ev("SHELL.S.imp.sel = 'cs3c'; SHELL.render()")
+
+
+def icons_check(p, roots, S=''):
+    """v3.3 第 19 条：外壳里的图标都用样板 #iconDefs 的 16 px 符号；外壳自己定尺寸的（返回制作、写入列）按 16 px 画；
+    全部线宽 1.5、方头、尖角、不填面。样板组件里缩小的图标（搜索框 14、清除 12）只记下来转给制作区"""
+    r = p.ev("""roots => { const out = []; roots.forEach(s => __T.qq(`${s} svg.i`).filter(__T.vis).forEach(v => { const u = v.querySelector('use'), id = u && u.getAttribute('href'), sym = id && document.querySelector(id), c = getComputedStyle(v);
+        const own = !!v.closest('.sh-back, .sh-at, .sh-mh, .sh-det, .sh-bub, .sh-hd .sh-hs:not(.sh-hm)');
+        out.push({id, sym: !!(sym && sym.closest('#iconDefs')), vb: sym && sym.getAttribute('viewBox'), w: __T.rect(v).w, h: __T.rect(v).h, sw: c.strokeWidth, cap: c.strokeLinecap, join: c.strokeLinejoin, fill: c.fill, own,
+            symFill: sym ? [...sym.querySelectorAll('*')].some(x => { const f = x.getAttribute('fill'); return f && f !== 'none'; }) : false,
+            round: sym ? [...sym.querySelectorAll('*')].some(x => /round/.test((x.getAttribute('stroke-linecap') || '') + (x.getAttribute('stroke-linejoin') || ''))) : false}); })); return out; }""", roots)
+    bad = [x for x in r if not x['sym'] or x['vb'] != '0 0 16 16' or x['sw'] != '1.5px' or x['cap'] != 'square' or x['join'] != 'miter' or x['fill'] != 'none']
+    ck(f'v3.3-19 图标画法：#iconDefs 的 16 × 16 符号，线宽 1.5、方头、尖角、不填面{S}', r and not bad, bad[:4] or len(r))
+    own_bad = [x for x in r if x['own'] and not (near(x['w'], 16, 0.5) and near(x['h'], 16, 0.5))]
+    ck(f'v3.3-19 外壳自己定尺寸的图标按 16 px 画（光学大小一致）{S}', not own_bad, own_bad[:4])
+    for x in r:
+        if not x['own'] and not near(x['w'], 16, 0.5):
+            info(f'v3.3 第 19 条：样板组件里的图标 {x["id"]} 画成 {x["w"]:.0f} px（16 px 网格缩小后线宽不一致），在 {", ".join(roots)}')
+        if x['symFill'] or x['round']:
+            info(f'v3.3 第 7 条：符号 {x["id"]} 里有填充或圆头 / 圆角属性')
+
+
 def t_import(p):
     """改定 3、7；②（资源交付工具行）；⑦ 变灰与互锁；P9 覆盖前先问备份；导入进度"""
     p.fresh()
@@ -441,14 +526,15 @@ def t_import(p):
     ck('改定3-标签上的数字 = 待导入的包数', L['badge'] == str(len(waits)) == '2', (L['badge'], len(waits)))
     # 选一个包 → 逐资产清单
     p.click('#impList .lib-item[data-id="rt6"]')
-    h = p.ev("({n: __T.txt('#impMC .sh-mh b'), rows: __T.qq('#impMC .sh-at tbody tr').length, sel: __T.q('#impList [data-id=rt6]').getAttribute('aria-selected'), hd: __T.txt('#impMC .sh-mh')})")
-    ck('改定3-选包 → 右边逐资产清单（Ramp + PC 3 + 手机 1 + 材质实例 3 + 粒子系统 2）', h['n'] == '升空尾缀 RT6' and h['rows'] == 10 and h['sel'] == 'true' and '10 个资产：新建 7、覆盖 3' in h['hd'], h)
+    h = p.ev("({n: __T.txt('#impMC .sh-mh b'), rows: __T.qq('#impMC .sh-at tbody tr').length, sel: __T.q('#impList [data-id=rt6]').getAttribute('aria-selected'), hd: __T.txt('#impMC .sh-mh'), chk: __T.txt('#impMC .sh-mod[aria-label=检查] dl')})")
+    ck('改定3-选包 → 右边逐资产清单（Ramp + PC 3 + 手机 1 + 材质实例 3 + 粒子系统 2）', h['n'] == '升空尾缀 RT6' and h['rows'] == 10 and h['sel'] == 'true' and h['hd'] == '升空尾缀 RT6 待导入' and h['chk'] == '预检 通过 10 / 10 新建 7 个 覆盖 3 个', h)
     p.pg.keyboard.press('ArrowDown')
     ck('改定3-列表 ↓ 换行', p.ev("__T.q('#impList [aria-selected=true]').dataset.id") != 'rt6')
     p.click('#impSub button[data-v="ResourceFX 配表"]')
     ck('②-切到 ResourceFX 配表', p.ev("__T.q('#impSub [data-v=\"ResourceFX 配表\"]').getAttribute('aria-pressed') === 'true' && !__T.q('#impMC .sh-at')"))
     p.click('#impSub button[data-v="烟花导入"]')
     p.click('#impList .lib-item[data-id="cs3c"]')
+    t_import_main(p)
     # 刷新
     p.click('#impRefresh')
     ok = p.wait("__T.ovl('.sh-hint').some(x => __T.txt(x) === '已刷新：5 个素材包')", 3000)
@@ -474,7 +560,7 @@ def t_import(p):
 
     # ---- P9：备份未选 + 要覆盖 → 先问，一个都不写；取消 → 什么都不写
     p.click('#impGo')
-    d = p.ev("""(() => { const d = __T.ovl('.dialog[data-dlg=bak]')[0]; return d && {h: __T.txt(d.querySelector('h2')), p: __T.txt(d.querySelector('p')), acts: __T.qq('.acts button', d).map(__T.txt), imp: SHELL.state().imp, ticks: __T.qq('#impMC .sh-at td:first-child [aria-label]').length}; })()""")
+    d = p.ev("""(() => { const d = __T.ovl('.dialog[data-dlg=bak]')[0]; return d && {h: __T.txt(d.querySelector('h2')), p: __T.txt(d.querySelector('p')), acts: __T.qq('.acts button', d).map(__T.txt), imp: SHELL.state().imp, ticks: __T.qq('#impMC .sh-at td.sh-wr [aria-label]').length}; })()""")
     ck('P9-点「导入」先弹「覆盖前选择备份位置」', d and d['h'] == '覆盖前选择备份位置' and '3 个资产' in d['p'], d)
     ck('P9-弹出时一个资产都没写', d and d['imp'] is None and d['ticks'] == 0, d)
     ck('⑤-备份对话框：取消导入 / 选择…', d and d['acts'][-2:] == ['取消导入', '选择…'], d)
@@ -485,7 +571,7 @@ def t_import(p):
     p.shot('shell_4b_backup_dialog_error.png')
     grab(p, '对话框')
     p.click('.dialog[data-dlg=bak] [data-r="0"]')
-    r = p.ev("({imp: SHELL.state().imp, bak: SHELL.state().bak, toast: __T.ovl('.sh-toast > span').map(__T.txt), ticks: __T.qq('#impMC .sh-at td:first-child [aria-label]').length})")
+    r = p.ev("({imp: SHELL.state().imp, bak: SHELL.state().bak, toast: __T.ovl('.sh-toast > span').map(__T.txt), ticks: __T.qq('#impMC .sh-at td.sh-wr [aria-label]').length})")
     ck('P9-取消：什么都不写，备份仍未选', r['imp'] is None and r['bak'] == 'none' and r['ticks'] == 0, r)
     ck('P8-取消的提示条写明来自导入', r['toast'] == ['导入：已取消，没有写入任何资产'], r['toast'])
     # 备份「需允许访问」→ 按钮旁气泡（不写）；× 关掉 = 取消
@@ -506,9 +592,10 @@ def t_import(p):
     p.ev('SHELL.speed(1)')   # 写入按真实节奏走（约 3 秒），好在写的过程中看顶栏、点 UE 状态
     p.click('.sh-bub [data-r="allow"]')
     ok = p.wait("SHELL.state().imp && SHELL.state().imp.i >= 1", 3000)
-    w = p.ev("({ue: __T.txt('#shell .sh-ue'), go: __T.txt('#impGo'), wb: __T.q('#wbTool [data-sh=wbUE]').getAttribute('aria-disabled'), wbTip: __T.q('#wbTool [data-sh=wbUE]').dataset.tip, bak: SHELL.state().bak})")
+    w = p.ev("({ue: __T.txt('#shell .sh-ue'), go: __T.txt('#impGo'), wb: __T.q('#wbTool [data-sh=wbUE]').getAttribute('aria-disabled'), wbTip: __T.q('#wbTool [data-sh=wbUE]').dataset.tip, bak: SHELL.state().bak, st: __T.txt('#impMC .sh-mh .st'), spin: !!__T.q('#impMC .sh-at td.sh-wr .spin')})")
     ck('P9-允许访问后才开始写', ok and w['bak'] == 'ok', w)
     ck('⑦-导入写 UE：顶栏「UE 写入中 n / N」', bool(re.match(r'^UE 写入中 \d+ / 10$', w['ue'] or '')), w)
+    ck('v3.3-17 写入中：标题行写「写入中 n / N」，「写入」列正在写的那行转圈', bool(re.match(r'^写入中 \d+ / 10$', w['st'] or '')) and w['spin'], w)
     ck('⑦-导入写 UE：编排的写 UE 命令变灰写原因', w['wb'] == 'true' and w['wbTip'] == '导入正在写 UE，写完后可用', w)
     grab(p)
     p.ev("SHELL.ws('baker')")
@@ -517,8 +604,8 @@ def t_import(p):
     ok = p.wait("!SHELL.state().imp && __T.ovl('.sh-toast > span').length", 8000)
     p.ev('SHELL.speed(0.15)')
     t2 = p.ev("""({t: __T.ovl('.sh-toast > span').map(__T.txt), act: __T.ovl('.sh-toast [data-r=act]').map(__T.txt), st: __T.txt('#impList [data-id=cs3c] .st'), badge: __T.txt('#shell .sh-pg[data-pg=import] .sh-cnt'),
-        ticks: __T.qq('#impMC .sh-at td:first-child [aria-label="已写入"]').length})""")
-    ck('⑦-写完：每行打勾、包变「已导入」、计数减一', ok and t2['ticks'] == 10 and t2['st'] == '已导入' and t2['badge'] == '1', t2)
+        ticks: __T.qq('#impMC .sh-at td.sh-wr [aria-label="已写入"]').length, hd: __T.txt('#impMC .sh-mh')})""")
+    ck('⑦-写完：「写入」列每行打勾、包变「已导入」、计数减一', ok and t2['ticks'] == 10 and t2['st'] == '已导入' and t2['badge'] == '1' and bool(re.fullmatch(r'Comet 3\.0 红头金尾 已导入 \d\d:\d\d', t2['hd'] or '')), t2)
     ck('P8-写完的提示条写明来自导入；人在资源交付时不出「查看」', t2['t'] == ['导入：已写入 10 个资产，覆盖的 3 个已备份'] and t2['act'] == [], t2)
     grab(p)
     # 备份已选 → 直接写（不再问）
@@ -599,27 +686,20 @@ def t_interlock(p):
 
 
 def t_folders_ue(p):
-    """① 顶栏：UE 四种状态 + 不可用；文件夹三种状态 × 2 + 不可用；「设置」；倒计时与重试"""
+    """① 顶栏：UE 四种状态 + 不可用；文件夹三种状态 × 2 + 不可用（v3.3 第 16 条：没有「设置」，点文件夹这一项）；倒计时与重试"""
     p.fresh()
     logon(p)
     tok = p.ev("({w3: __T.tok('--w3'), t2: __T.tok('--t2'), t3: __T.tok('--t3')})")
-    # 导出未选：琥珀 +「设置」；点「设置」选好
+    # 导出、备份都没选：两项都是琥珀点 + 琥珀词，没有「设置」；点哪一项就选哪个文件夹（v3.3 第 16 条）
     p.ev("SHELL.set('exp', 'none')")
-    r = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'); return {t: __T.txt(e), k: getComputedStyle(e, '::before').backgroundColor, v: __T.cs(e.querySelector('.sh-sv'), 'color'), set: __T.txt('#shell .sh-set'), sk: __T.q('#shell .sh-set').dataset.sk, stip: __T.q('#shell .sh-set').dataset.tip, tip: e.dataset.tip, ic: !!e.querySelector('svg')}; })()""")
+    r = p.ev("""(() => { const e = __T.q('#shell [data-fk=exp]'); return {t: __T.txt(e), k: getComputedStyle(e, '::before').backgroundColor, v: __T.cs(e.querySelector('.sh-sv'), 'color'), tip: e.dataset.tip, ic: !!e.querySelector('svg'),
+        set: __T.qq('#shell .sh-set').length, btip: __T.q('#shell [data-fk=bak]').dataset.tip}; })()""")
     ck('①-导出未选：琥珀圆点 + 琥珀词（会挡住导出），不画图形', r['t'] == '导出 未选' and r['k'] == tok['w3'] and r['v'] == tok['w3'] and not r['ic'], r)
-    ck('v3.2-12 导出、备份都没选：状态组末尾只有一个「设置」，悬停写「选择导出、备份文件夹」', r['set'] == '设置' and r['sk'] == 'both' and r['stip'] == '选择导出、备份文件夹' and p.ev("__T.qq('#shell .sh-set').length") == 1, r)
-    ck('①-导出未选：悬停写「导出前需选好」', r['tip'] == '导出文件夹：导出前需选好', r)
+    ck('v3.3-16 导出、备份都没选：没有「设置」，两项悬停各写「选择导出文件夹」「选择备份文件夹」', r['set'] == 0 and r['tip'] == '选择导出文件夹' and r['btip'] == '选择备份文件夹', r)
+    p.shot('shell_1c_bar_none_1920.png', clip={'x': 1000, 'y': 0, 'width': 920, 'height': 48})
     grab(p)
-    p.click('#shell .sh-set')
-    m = p.ev("__T.ovl('.menu [data-mi]').map(__T.txt)")
-    ck('v3.2-12 两个都没选：点「设置」出菜单（导出文件夹…、备份文件夹…）', m == ['导出文件夹…', '备份文件夹…'], m)
-    grab(p)
-    p.click('.menu [data-mi="exp"]')
-    ck('①-点「设置」选好导出文件夹，标签旁写结果', p.ev("SHELL.state().exp === 'ok'") and p.ev("__T.ovl('.sh-hint').map(__T.txt)") == ['已选择 FWL_Export'])
-    ck('v3.2-12 只差备份：「设置」直接选备份', p.ev("__T.q('#shell .sh-set').dataset.sk") == 'bak')
-    p.ev("SHELL.set('exp', 'none')")
     p.click('#shell [data-fk="exp"]')
-    ck('①-导出未选：点标签直接选文件夹', p.ev("SHELL.state().exp") == 'ok')
+    ck('v3.3-16 导出未选：点这一项直接选文件夹，标签旁写结果', p.ev("SHELL.state().exp === 'ok'") and p.ev("__T.ovl('.sh-hint').map(__T.txt)") == ['已选择 FWL_Export'] and p.ev("SHELL.state().bak") == 'none')
     # 已选：点开「换文件夹…」
     p.click('#shell [data-fk="exp"]')
     m = p.ev("({h: __T.txt(__T.ovl('.menu .mh')[0]), it: __T.ovl('.menu [data-mi]').map(__T.txt), ex: __T.q('#shell [data-fk=exp]').getAttribute('aria-expanded')})")
@@ -631,6 +711,7 @@ def t_folders_ue(p):
     p.ev("SHELL.set('exp', 'perm')")
     r = p.ev("({t: __T.txt('#shell [data-fk=exp]'), c: __T.cs('#shell [data-fk=exp] .sh-sv.is-warn', 'color'), bub: __T.ovl('.sh-bub').map(b => __T.txt(b.querySelector('span')))})")
     ck('①-导出需允许访问：琥珀词 + 标签下方一次气泡', r['t'] == '导出 FWL_Export_2 需允许访问' and r['c'] == tok['w3'] and r['bub'] == ['浏览器重开后，FWL_Export_2 需重新允许访问'], r)
+    ck('v3.3-16 需允许访问：悬停写「允许访问导出文件夹」+ 完整路径（点一下即允许）', p.ev("__T.q('#shell [data-fk=exp]').dataset.tip") == '允许访问导出文件夹　D:\\FireWorksLab\\FWL_Export_2', p.ev("__T.q('#shell [data-fk=exp]').dataset.tip"))
     bb = p.ev("""(() => { const b = __T.ovl('.sh-bub')[0], a = __T.rect('#shell [data-fk=exp]'), r = __T.rect(b); return {gap: r.y - a.b, ax: parseFloat(b.style.getPropertyValue('--ax')) + r.x + 4, mid: a.x + a.w / 2, up: b.classList.contains('is-up')}; })()""")
     ck('规范12-标签下方气泡：离 8 px，三角对着标签中线', near(bb['gap'], 8, 1) and near(bb['ax'], bb['mid'], 2) and not bb['up'], bb)
     p.shot('shell_5_perm_bubble.png', clip={'x': 900, 'y': 0, 'width': 1020, 'height': 120})
@@ -639,13 +720,13 @@ def t_folders_ue(p):
     ck('①-需允许访问：点标签即允许', p.ev("SHELL.state().exp === 'ok' && __T.ovl('.sh-bub').length === 0"))
     # 备份三态
     p.ev("SHELL.set('bak', 'ok')")
-    ck('①-备份已选：不画圆点 + 弱色字；没有要选的文件夹时不出「设置」', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup' && __T.cs('#shell [data-fk=bak] .sh-sv', 'color') === __T.tok('--t3') && ['none', 'normal'].includes(getComputedStyle(__T.q('#shell [data-fk=bak]'), '::before').content) && !__T.q('#shell .sh-set')"))
+    ck('①-备份已选：不画圆点 + 弱色字；悬停写「更换备份文件夹」+ 完整路径', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup' && __T.cs('#shell [data-fk=bak] .sh-sv', 'color') === __T.tok('--t3') && ['none', 'normal'].includes(getComputedStyle(__T.q('#shell [data-fk=bak]'), '::before').content) && __T.q('#shell [data-fk=bak]').dataset.tip === '更换备份文件夹　D:\\\\FireWorksLab\\\\FWL_Backup'"), p.ev("__T.q('#shell [data-fk=bak]').dataset.tip"))
     p.ev("SHELL.set('bak', 'perm')")
     ck('①-备份需允许访问：琥珀词 + 气泡', p.ev("__T.txt('#shell [data-fk=bak]') === '备份 FWL_Backup 需允许访问' && __T.ovl('.sh-bub').length === 1"))
     p.ev("SHELL.set('bak', 'none')")
-    ck('①-备份未选：悬停写「覆盖 UE 资产前需选好」', p.ev("__T.q('#shell [data-fk=bak]').dataset.tip") == '备份文件夹：覆盖 UE 资产前需选好')
-    p.click('#shell .sh-set[data-sk="bak"]')   # 导出已选，只差备份
-    ck('①-备份「设置」选好', p.ev("SHELL.state().bak") == 'ok')
+    ck('v3.3-16 备份未选：悬停写「选择备份文件夹」', p.ev("__T.q('#shell [data-fk=bak]').dataset.tip") == '选择备份文件夹')
+    p.click('#shell [data-fk="bak"]')
+    ck('v3.3-16 备份未选：点这一项直接选好', p.ev("SHELL.state().bak") == 'ok' and p.ev("__T.ovl('.sh-hint').map(__T.txt)") == ['已选择 FWL_Backup'])
     # 长名字：省略号 + 悬停全称
     p.ev("SHELL.S.expName = 'FWL_Export_Project03_Fireworks_Long'; SHELL.render()")
     r = p.ev("""(() => { const v = __T.q('#shell [data-fk=exp] .sh-sv.is-name'); return {cut: v.scrollWidth > v.clientWidth, ell: __T.cs(v, 'textOverflow'), w: __T.rect(v).w, tip: __T.q('#shell [data-fk=exp]').dataset.tip, over: __T.clip(['#shell']).out}; })()""")
@@ -924,6 +1005,7 @@ def t_wb(p, size):
     fo = p.ev("__T.fonts(['#wsWB'])")
     ck(f'规范1-资源编排页字号三级、字重 400 / 600{S}', all(x['fs'] in fs and x['fw'] in (400, 600) for x in fo), [x for x in fo if x['fs'] not in fs or x['fw'] not in (400, 600)][:5])
     ck(f'⑥-搜索框占位「名称、行名」{S}', p.ev("__T.q('#wbQ input').placeholder") == '名称、行名')
+    icons_check(p, ['#wsWB'], S)
     p.shot(f'shell_3_wb_{size}.png')
     if size != 1920:
         return
@@ -991,12 +1073,14 @@ def t_sweep(p, size):
         p.ev(f"SHELL.ws('{ws}')")
         if ws == 'import':
             p.ev("(() => { SHELL.S.imp.sel = 'mang'; SHELL.render(); })()")
-        r = p.ev(f"""(() => {{ const w = __T.q('{root}'), c = __T.clip(['{root} > .topbar', '{root} > .sh-left', '{root} .sh-mh']); return {{sw: w.scrollWidth - w.clientWidth, sh: w.scrollHeight - w.clientHeight, cut: c.cut, ell: c.ell, out: c.out,
+        r = p.ev(f"""(() => {{ const w = __T.q('{root}'), c = __T.clip(['{root} > .topbar', '{root} > .sh-left', '{root} .sh-mh', '{root} .sh-hero']); return {{sw: w.scrollWidth - w.clientWidth, sh: w.scrollHeight - w.clientHeight, cut: c.cut, ell: c.ell, out: c.out,
             segs: __T.qq('{root} .sh-hs').map(s => s.scrollWidth - s.clientWidth)}}; }})()""")
         ck(f'溢出-{"资源交付" if ws == "import" else "资源编排"}不溢出、不截断{S}', r['sw'] <= 0 and r['sh'] <= 0 and not r['cut'] and not r['out'] and all(x <= 0 for x in r['segs']), r)
     if size == 1366:
         p.ev("SHELL.ws('import')")
         p.shot('shell_10_import_1366.png')
+        p.ev("SHELL.S.imp.sel = 'cs3c'; SHELL.render()")
+        t_import_main(p, 1366)
         p.ev("SHELL.ws('baker')")
         p.shot('shell_1b_bar_1366_full.png', clip={'x': 0, 'y': 0, 'width': 1366, 'height': 80})
 
