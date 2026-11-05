@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E 样板 v2.3 → v3 对比页（对话框9，2026-11-05）
+"""E 样板对比页（对话框9，2026-11-05）：v2.3 → v3（--rows spec），v3 → v3.1（--rows v31）
 
 每一行对应 E 设计规范 v3 的一节（§1 字号 … §12 浮层，§13 自查的三种画面），外壳顶栏单独一行（用户 2026-11-05 改定，
 另附资源交付页、资源编排页）。两列是 v2.3、v3：同一个状态下截 #app，按同一块区域裁图——区域取两版里那几个元素外框的并集，
@@ -8,6 +8,8 @@
 用法（在 src/ 下）：
   python3 build.py /tmp/E_v3.html
   python3 checks/compare.py [--base ../E样板_v2.3.html] [--new /tmp/E_v3.html] [--out ../对比_v23_v3.html]
+  python3 checks/compare.py --rows v31 --base ../E样板_v3.html --base-label v3 --new ../E样板_v3.1.html --new-label v3.1 --out ../对比_v3_v31.html
+  --rows spec：按设计规范 v3 的节号排；--rows v31：按 E样板_v3.1_改动单.md 的条目排
 只开一个浏览器。图片用 WebP 内嵌进一个 HTML 文件。
 """
 import argparse, base64, html, io, os, sys, time
@@ -21,9 +23,12 @@ ap.add_argument('--base', default=os.path.join(RES, 'E样板_v2.3.html'))
 ap.add_argument('--new', default='/tmp/E_v3.html')
 ap.add_argument('--out', default=os.path.join(RES, '对比_v23_v3.html'))
 ap.add_argument('--q', type=int, default=84, help='WebP 质量')
+ap.add_argument('--base-label', default='v2.3')
+ap.add_argument('--new-label', default='v3')
+ap.add_argument('--rows', choices=['spec', 'v31'], default='spec')
 A = ap.parse_args()
 
-VERS = [('v2.3', A.base), ('v3', A.new)]
+VERS = [(A.base_label, A.base), (A.new_label, A.new)]
 
 # ---------------------------------------------------------------- 状态：每个状态重新载入一次，再做这一步
 CLOSE_POP = "document.body.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}))"
@@ -44,7 +49,7 @@ STATES = {
 ROWS = [
     ('改定', '外壳顶栏（用户 2026-11-05 改定）',
      '去掉「制作 / 导入 / 编排」切换，默认就是制作；右上角 UE ｜ 导出、备份 ｜「资源交付」「资源编排」 ｜ 显卡；更新记录放到版本号上；两页工具行左端「← 返回制作」，再点亮着的标签也回到制作。',
-     [('main', ['#shell'], '顶栏', {'split': 2, 'pad': 0}), ('import', 'app', '资源交付页（v2.3 是「导入」工作区）', {}), ('wb', 'app', '资源编排页（v2.3 是「编排」工作区）', {})]),
+     [('main', ['#shell'], '顶栏', {'split': 2, 'pad': 0}), ('import', 'app', '资源交付页' + ('（v2.3 是「导入」工作区）' if A.base_label == 'v2.3' else ''), {}), ('wb', 'app', '资源编排页' + ('（v2.3 是「编排」工作区）' if A.base_label == 'v2.3' else ''), {})]),
     ('§1', '字号与字重',
      '三级字号 12 / 13 / 15（1366 下 11 / 12 / 14），效果库大号标签 15；字重只有 400 和 600，600 只给当前位置、模块标题、当前标签、产品名；数值主文字色，单位弱色小一级。',
      [('main', ['#insp'], '检查器上半', {'h': 330})]),
@@ -86,6 +91,45 @@ ROWS = [
     ('§13', '自查：贴图与交付', '工作模式「贴图与交付」：交付表 PC / 手机两格、胶片、导出浮层的入口。', [('deliv', 'app', '主屏，「贴图与交付」', {})]),
 ]
 
+# v3 → v3.1：按改动单条目排（E样板_v3.1_改动单.md）；同一块区域放在一起看的几条并成一行
+ROWS_V31 = [
+    ('4、10、11', '外壳顶栏：状态、命令、页面入口分开样子；计数框',
+     '状态（UE、导出、备份）前面小圆点（好 = 薄荷、要处理 = 琥珀、其他 = 灰）、文字弱色；「备份 未选」琥珀 +「设置」（命令样子）；页面入口是标签样子，悬停出底色，当前页薄荷下划线 + 加粗；组间只靠 24 px 间距；计数一律是 1 px 方框里的小号数字。',
+     [('main', ['#shell'], '顶栏（制作）', {'split': 2, 'pad': 0}), ('import', ['#shell'], '顶栏（打开着资源交付）', {'split': 2, 'pad': 0}), ('import', 'app', '资源交付页', {}), ('wb', 'app', '资源编排页', {})]),
+    ('1、12、13', '时间轴：入点出点、刻度尺、胶片条',
+     '「导出范围」那一行行名格里放设为入点 / 设为出点 / 恢复三个图标命令，范围数字写在它们左边；刻度尺上不压字，播放头头部在刻度数字上方；没烘焙的胶片格是平的暗底，已烘焙的缩略图最亮。',
+     [('main', ['#transport', '#tlw'], '播放条 + 时间轴', {})]),
+    ('2、3', '面包屑、画面读数',
+     '面包屑恢复「金曜菊-B › 金锦层」，末项大号；画面右下角常驻「距离 1000 m　预览曝光 1.00 倍」（弱色、可拖可输入），左下角「PC　30 fps　tick 60」。',
+     [('main', ['#path'], '面包屑', {'pad': 8}), ('main', ['#stage'], '画面下沿的读数', {'y0': 600, 'pad': 0})]),
+    ('5、11', '导出按钮旁的计数',
+     '「⚠ 1」改成「⚠ 1 层」，计数写法和顶栏一致。',
+     [('main', ['#expBtn'], '导出按钮和需重新导出计数', {'x0': -300, 'pad': 6})]),
+    ('6、15、16、17', '检查器参数行',
+     '停用参数的原因用弱色小字写在数值列；滑杆到数值的空隙 8 px（区间数值格加宽、单值滑杆向右延伸）；一行最多一个改动标记（左侧竖条），非默认值只靠常显的恢复按钮；开关「开」轨道明显更亮。',
+     [('main', ['#pbody'], '检查器参数行', {'h': 620})]),
+    ('7、8、18', '效果库',
+     '大号标签「效果 / 模板」等宽两半，下划线横跨整个标签，折叠箭头在标签行最右；搜索框静止时就有 1 px 线框；当前项很淡的底色 + 主文字色，比结构树当前行弱。',
+     [('main', ['#libPane'], '效果库', {})]),
+    ('9、19', '粗体与结构树',
+     '粗体只给当前位置和模块标题：选中的分段、筛选块、标签页、时间轴层名都不加粗；层行去掉叠层图标（根行保留）。',
+     [('main', ['#treePane'], '结构树', {}), ('main', ['#toolRow'], '工具行（分段不加粗）', {'split': 2, 'pad': 0})]),
+    ('14', '工具图标',
+     '网格、批注、精简布局、左栏、右栏重画，分成「画面叠加」「面板」两组，组间 12 px；「建议曝光」改成「A」加小三角。',
+     [('main', ['#viewbar'], '画面叠加与面板', {'pad': 8})]),
+    ('20', '空白',
+     '时间轴高度按内容定，1920 下金曜菊-B 三层和所有发射器放得下；左栏效果库往下长，占满空白。',
+     [('main', 'app', '主屏 1920 × 1080', {})]),
+    ('21', '导出 ▾ 菜单',
+     '摘要只留「1 层需重新导出　详情」；右列只放数字，层名进操作名「导出本层（金锦层）」；菜单左边缘对齐检查器左栏线。',
+     [('expmenu', ['.menu', '#expBtn'], '导出 ▾ 菜单', {'pad': 16})]),
+    ('自查', '1366 × 768', '字号小一级，栏宽 260 / 380。', [('m1366', 'app', '主屏 1366 × 768', {})]),
+    ('自查', '仙女棒', '第二个场景（发射器多、层少）。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
+    ('自查', '贴图与交付', '工作模式「贴图与交付」。', [('deliv', 'app', '主屏，「贴图与交付」', {})]),
+]
+if A.rows == 'v31':
+    ROWS = ROWS_V31
+
 RECT_JS = """sels => { const A = document.querySelector('#app').getBoundingClientRect();
   return sels.map(s => { const e = [...document.querySelectorAll(s)].find(x => x.getClientRects().length); if (!e) return null; const r = e.getBoundingClientRect();
     return [r.left - A.left, r.top - A.top, r.right - A.left, r.bottom - A.top]; }); }"""
@@ -108,6 +152,8 @@ def shoot(pw):
         url = 'file://' + os.path.abspath(path)
         out[ver] = {}
         for st, cfg in STATES.items():
+            if st not in need:
+                continue
             size = cfg.get('size', 1920)
             pg.set_viewport_size({'width': 1920 if size == 1920 else 1366, 'height': 1200 if size == 1920 else 860})
             pg.goto(url)
@@ -227,13 +273,16 @@ def main():
         body.append(f'<tr><th scope="row"><span class="no">{html.escape(no)}</span><b>{html.escape(title)}</b><p>{html.escape(desc)}</p></th>'
                     + ''.join(f'<td data-v="{v}">{"".join(col[v])}</td>' for v, _ in VERS) + '</tr>')
     rel = lambda p: os.path.relpath(os.path.abspath(p), RES) if os.path.abspath(p).startswith(RES) else p
+    BL, NL = VERS[0][0], VERS[1][0]
+    basis = ('按 <code>协作/方案/E设计规范_v3_2026-11-05.md</code> 的节号排；外壳顶栏按用户 2026-11-05 改定单独一行。' if A.rows == 'spec'
+             else '按 <code>E样板_v3.1_改动单.md</code> 的条目排，同一块区域的几条并成一行；最后三行是自查用的整屏。')
     doc = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>E 样板 v2.3 → v3 对比</title><style>{CSS}</style></head>
-<body><header><h1>E 样板 v2.3 → v3 对比</h1>
-<p class="lead">按 <code>协作/方案/E设计规范_v3_2026-11-05.md</code> 的节号排；外壳顶栏按用户 2026-11-05 改定单独一行。左列 v2.3（<code>{html.escape(rel(A.base))}</code>），右列 v3（<code>{html.escape(rel(A.new))}</code>）。
+<title>E 样板 {BL} → {NL} 对比</title><style>{CSS}</style></head>
+<body><header><h1>E 样板 {BL} → {NL} 对比</h1>
+<p class="lead">{basis}左列 {BL}（<code>{html.escape(rel(A.base))}</code>），右列 {NL}（<code>{html.escape(rel(A.new))}</code>）。
 同一格两张图是同一个状态、同一块区域、同样大小（区域取两版元素外框的并集）；点图看原尺寸，Esc 或再点一下关掉。由 <code>src/checks/compare.py</code> 生成，{time.strftime('%Y-%m-%d %H:%M')}。</p></header>
-<table><thead><tr><th>规范</th>{''.join(f'<th>{v}</th>' for v, _ in VERS)}</tr></thead><tbody>
+<table><thead><tr><th>{'规范' if A.rows == 'spec' else '改动单'}</th>{''.join(f'<th>{v}</th>' for v, _ in VERS)}</tr></thead><tbody>
 {chr(10).join(body)}
 </tbody></table>
 <div id="zoom" role="dialog" aria-label="原尺寸"><img alt=""></div>
