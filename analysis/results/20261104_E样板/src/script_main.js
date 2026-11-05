@@ -1094,18 +1094,27 @@ function bakeOf(sc) {
   return {r, o, frames, baked: hit ? Math.min(frames, sc.baked) : 0, imgs: hit ? sc.film : []};
 }
 const frameNo = sc => { const B = bakeOf(sc); if (!B) return '—'; return sc.t < B.o.in - 1e-6 || sc.t >= B.o.out ? '—' : Math.min(B.frames, Math.floor((sc.t - B.o.in) * sc.fps + 1e-6) + 1); };
-/* 胶片条（§8）：28 px 一行，紧贴刻度尺上面，只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮）。
-   v3.2 第 7 条：没烘焙的部分画成一条平的暗轨，不分格子 */
-function filmHTML(sc) {
-  const B = bakeOf(sc); if (!B) return '';
-  const nC = (sc.film || []).length || 15, fpc = B.frames / nC, dt = (B.o.out - B.o.in) / nC, nb = B.imgs.length ? Math.floor(B.baked / fpc) : 0;
-  const cells = Array.from({length: nb}, (_, i) => {
-    const f0 = Math.round(i * fpc) + 1, f1 = Math.round((i + 1) * fpc), pos = `left:calc(${X(sc, B.o.in + i * dt)} + 1px);width:calc(${(dt / sc.T * 100).toFixed(3)}% - 1px)`;
-    return `<div class="film-c" style="${pos}" data-tip="第 ${f0}–${f1} 帧"><img src="${B.imgs[i % B.imgs.length]}" alt=""></div>`;
-  }).join('');
-  if (nb >= nC) return cells;
-  const u0 = Math.round(nb * fpc) + 1, a = B.o.in + nb * dt;
-  return cells + `<div class="film-u" style="left:calc(${X(sc, a)} + 1px);width:calc(${((B.o.out - a) / sc.T * 100).toFixed(3)}% - 1px)" data-tip="第 ${u0}–${B.frames} 帧未烘焙"></div>`;
+/* 胶片条（§8）：紧贴刻度尺上面，只覆盖导出范围。v3.3 第 12 条：不像加载圆点——
+   已烘焙的格子按贴图比例画（单格是正方形，格子就是正方形，边长 = 行高 − 2），显示那几帧中间那一帧的整张缩略图（按最亮的一帧提亮），格子之间留 2 px 以上的缝，
+   第一格左缘对齐入点、最后一格右缘对齐出点；没烘焙的部分是一条平的暗轨（v3.2 第 7 条）。格子数按轨道宽度算，所以要在排版以后画（syncFilm） */
+function filmHTML(sc, W, rowH) {
+  const B = bakeOf(sc); if (!B || !W) return '';
+  const a = B.o.in / sc.T * W, b = B.o.out / sc.T * W, c = Math.max(8, rowH - 2), g = 2;
+  const n = Math.max(1, Math.floor((b - a + g) / (c + g))), p = n > 1 ? (b - a - c) / (n - 1) : 0, F = B.frames;
+  const cells = [];
+  for (let i = 0; i < n; i++) {
+    const f0 = Math.round(i * F / n) + 1, f1 = Math.max(f0, Math.round((i + 1) * F / n));
+    if (!B.imgs.length || f1 > B.baked) break;
+    const k = clamp(Math.floor(((f0 + f1) / 2 - 1) / F * B.imgs.length), 0, B.imgs.length - 1), x = n > 1 ? a + i * p : (a + b - c) / 2;
+    cells.push(`<div class="film-c" style="left:${x.toFixed(1)}px;width:${c}px;height:${c}px" data-tip="第 ${f0}–${f1} 帧"><img src="${B.imgs[k]}" alt=""></div>`);
+  }
+  if (cells.length >= n) return cells.join('');
+  const u = cells.length, u0 = Math.round(u * F / n) + 1, x0 = u ? a + (u - 1) * p + c + g : a;
+  return cells.join('') + `<div class="film-u" style="left:${x0.toFixed(1)}px;width:${Math.max(0, b - x0).toFixed(1)}px" data-tip="第 ${u0}–${F} 帧未烘焙"></div>`;
+}
+function syncFilm(sc, wrap) {
+  const fr = $('.frow .fr', wrap); if (!fr) return;
+  fr.innerHTML = filmHTML(sc, fr.clientWidth, fr.clientHeight); filmBoost(wrap);
 }
 /* 导出范围（§8）：刻度尺上一段浅底，两端是可拖的把手；范围上方写「0.35–2.85 s」，单击可以输入 */
 const tBox = (cls, v, lab, tip) => `<input class="num tnum ${cls}" type="text" inputmode="decimal" value="${v}" aria-label="${lab}" data-tip="${tip}"${cls === 'now' ? ' id="tNow"' : ''}>`;
@@ -1132,13 +1141,13 @@ function syncRange(sc = cur(), wrap = $('#tlw')) {
     $('.xh.in', xr).dataset.tip = `${nm} 导出范围入点 ${o.in.toFixed(2)} s`; $('.xh.out', xr).dataset.tip = `${nm} 导出范围出点 ${o.out.toFixed(2)} s`;
     $$('.tnum', xl).forEach(i => { if (document.activeElement !== i) { i.value = (i.classList.contains('in') ? o.in : o.out).toFixed(2); i.classList.remove('is-error'); } });
   } else { $$('.xrange', sc_).forEach(x => x.remove()); sc_.insertAdjacentHTML('beforeend', rangeHTML(sc)); const xi = $('.rrow .xio', wrap); if (xi) xi.innerHTML = xioHTML(sc); }
-  const fr = $('.frow .fr', wrap); if (fr) { fr.innerHTML = filmHTML(sc); filmBoost(wrap); }
+  syncFilm(sc, wrap);
   $$('.tlrow[data-id] .trk', wrap).forEach(t => { const f = find(sc, t.parentElement.dataset.id); if (f) t.innerHTML = trackHTML(sc, f.n); });
   placePH(sc, wrap);
 }
 function tlHTML(sc) {
   return `<div class="tl" data-scene="${sc.key}"><div class="fixed">
-      <div class="frow"><div class="lab">烘焙</div><div class="fr" data-scrub>${filmHTML(sc)}</div></div>
+      <div class="frow"><div class="lab">烘焙</div><div class="fr" data-scrub></div></div>
       <div class="rrow"><div class="lab xio">${xioHTML(sc)}</div><div class="fr" data-scrub><div class="scale">${scaleHTML(sc)}${rangeHTML(sc)}</div></div></div></div>
     <div class="tl-edge up"><button class="tl-more" data-act="tlUp" hidden></button></div><div class="tl-rows">${tlRowsHTML(sc)}</div><div class="tl-edge dn"><button class="tl-more" data-act="tlDn" hidden></button></div></div><div class="ph"><i data-scrub-ph></i></div>`;
 }
@@ -1170,7 +1179,7 @@ function renderTL(sc = cur(), wrap = $('#tlw')) {
   /* 至少放得下「导出范围」行名格：「0.35–2.85 s」+ 三个图标命令 */
   if (wmax) wrap.style.setProperty('--w-tlab', Math.ceil(Math.max(wmax, UI.size === 1366 ? 168 : 196)) + 'px');
   tl.addEventListener('scroll', () => tlMoreHint(wrap));
-  placePH(sc, wrap); tlMoreHint(wrap); filmBoost(wrap);
+  syncFilm(sc, wrap); placePH(sc, wrap); tlMoreHint(wrap);
 }
 /* 胶片格、效果库缩略图按最亮的像素自动提亮（缩略图本身很暗，原样放在小格子里看不清；v3.2 第 10 条效果库也用） */
 const FILM_K = new Map();

@@ -45,7 +45,7 @@
   /* 尺寸（§2）：行高 28；控件高 24；可点区域 ≥ 28 */
   --h-shell:40px; --h-top:40px; --h-status:28px;
   --h-row:28px; --h-ctl:24px; --h-hit:28px; --h-sm:24px; --h-bar:28px;
-  --h-tp:36px; --h-film:28px; --h-ruler:28px;
+  --h-tp:36px; --h-film:32px; --h-ruler:28px;   /* v3.3 第 12 条：胶片行 32（1366 下 28），格子 30 × 30 */
   --w-left:300px; --w-right:460px; --w-tlab:160px;
   /* 检查器五列（§2）：参数名 112 ｜ 控件 自适应 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24（改动标记在左侧内边距里） */
   --w-lab:112px; --w-val:84px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:8px; --gap-val:8px;   /* v3.2 第 2 条：单值、区间同一个数值格（数值 + 单位两列 112，按最长的「0.012–0.032 s ⌄」定）；数字左对齐，滑杆结束在同一条线上，到数字 8 px */
@@ -57,7 +57,7 @@
 .s1366{
   --fs1:11px; --fs2:12px; --fs3:14px; --fs-tab:var(--fs2);
   --lh1:14px; --lh2:18px; --lh3:20px;
-  --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px;
+  --h-shell:36px; --h-top:36px; --h-status:24px; --h-tp:32px; --h-film:28px;
   --w-left:260px; --w-right:380px; --w-tlab:132px;
   --w-lab:96px; --w-val:78px; --w-valr:var(--w-val); --w-unit:28px; --w-act:24px; --gap-prm:6px; --gap-val:8px;
   --thumb:36px; --tl-min:4;
@@ -473,9 +473,9 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .fr,.trk{position:relative;flex:1;min-width:0;margin-right:var(--pad)}
 .fr{cursor:ew-resize}
 /* 胶片：只覆盖导出范围；已烘焙的格子显示缩略图（按最亮的一帧提亮）；没烘焙的画成 40 % 透明的空框 */
-.film-c{position:absolute;top:2px;bottom:2px;background:var(--sky);overflow:hidden;cursor:zoom-in}
-.film-c img{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen}
-.film-u{position:absolute;top:2px;bottom:2px;background:var(--g2)}   /* v3.2 第 7 条：没烘焙的部分是一条平的暗轨，不分格子；已烘焙的缩略图是这一行最亮的 */
+.film-c{position:absolute;top:1px;background:#000;overflow:hidden;cursor:zoom-in}   /* 正方形格子，整张缩略图（不裁） */
+.film-c img{width:100%;height:100%;object-fit:contain;mix-blend-mode:screen}
+.film-u{position:absolute;top:1px;bottom:1px;background:var(--g2)}   /* v3.2 第 7 条：没烘焙的部分是一条平的暗轨，不分格子；已烘焙的缩略图是这一行最亮的 */
 /* 刻度尺：刻度挂在下沿，秒数写在刻度右边；导出范围一段浅底，两端把手，上方写「0.35–2.85 s」 */
 .scale{position:absolute;inset:0;isolation:isolate}
 .tick{position:absolute;bottom:0;width:1px;height:3px;background:var(--g6);pointer-events:none}

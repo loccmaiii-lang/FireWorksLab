@@ -167,11 +167,11 @@ def spec_static(b):
     check('v3.1-1 行名格里三个图标命令：设为入点、设为出点、恢复，在读数右边', x.E("[...document.querySelectorAll('#tlw .rrow .xio .btn-icon')].map(b => b.dataset.act + ':' + b.querySelector('use').getAttribute('href')).join()") == 'setIn:#i-in,setOut:#i-outp,clearIO:#i-reset' and x.R('#tlw .rrow .xio [data-act="setIn"]')[0] > x.R('#tlw .rrow .xio .xv')[2])
     check('v3.1-12 播放头的头部画在刻度数字上方，不盖住数字', x.R('#tlw .rrow')[1] - 1 <= x.R('#tlw .ph i')[1] and x.R('#tlw .ph i')[3] <= min(r[1] for r in x.E("[...document.querySelectorAll('#tlw .rrow .tlab')].map(t => { const r = t.getBoundingClientRect(); return [r.left, r.top] })")) + 1 and x.C('#tlw .ph i', 'backgroundColor') == MINT)
     check('v3.1-12 时间刻度的数字给播放头让位：播放头 ±7 px 内的刻度数字藏起来，其余照常', x.E("(() => { const p = document.querySelector('#tlw .ph').getBoundingClientRect().left; return [...document.querySelectorAll('#tlw .rrow .tlab')].every(t => { const r = t.getBoundingClientRect(), near = p > r.left - 7 && p < r.right + 7; return near === (getComputedStyle(t).visibility === 'hidden') }) })()") and x.N('#tlw .rrow .tlab.is-hid') == 1)
-    check('§8 胶片条 28 px，紧贴在刻度尺上面', x.R('#tlw .frow')[5] == 28 and abs(x.R('#tlw .frow')[3] - x.R('#tlw .rrow')[1]) <= 1)
+    check('§8 / v3.3-12 胶片条不低于 28 px（1920 下 32），紧贴在刻度尺上面', x.R('#tlw .frow')[5] >= 28 and abs(x.R('#tlw .frow')[3] - x.R('#tlw .rrow')[1]) <= 1)
     fc = x.E("(() => { const c = [...document.querySelectorAll('#tlw .film-c, #tlw .film-u')], r = document.querySelector('#tlw .xrange').getBoundingClientRect(); return [c[0].getBoundingClientRect().left - r.left, r.right - c[c.length - 1].getBoundingClientRect().right] })()")
     check('§8 胶片只覆盖导出范围', all(-1 <= v <= 2 for v in fc), fc)
     check('§8 已烘焙的格子有缩略图（按最亮一帧提亮）', x.E("(() => { const i = document.querySelector('#tlw .film-c img'); return !!i && /brightness/.test(i.style.filter) })()"))
-    check('v3.2-7 没烘焙的部分是一条平的暗轨（#16242a），不分格子、不描边', x.N('#tlw .film-u') == 1 and x.N('#tlw .film-c.unb') == 0 and x.C('#tlw .film-u', 'backgroundColor') == G2 and x.C('#tlw .film-u', 'borderTopWidth') == '0px' and abs(x.R('#tlw .film-u')[0] - x.E("[...document.querySelectorAll('#tlw .film-c')].pop().getBoundingClientRect().right")) <= 2)
+    check('v3.2-7 没烘焙的部分是一条平的暗轨（#16242a），不分格子、不描边', x.N('#tlw .film-u') == 1 and x.N('#tlw .film-c.unb') == 0 and x.C('#tlw .film-u', 'backgroundColor') == G2 and x.C('#tlw .film-u', 'borderTopWidth') == '0px' and 0 <= x.R('#tlw .film-u')[0] - x.E("[...document.querySelectorAll('#tlw .film-c')].pop().getBoundingClientRect().right") <= 6)
     check('v3.1-13 已烘焙的缩略图是这一行最亮的东西（不降透明度、按最亮一帧提亮）', x.C('#tlw .film-c', 'opacity') == '1' and x.C('#tlw .film-c img', 'opacity') == '1' and x.C('#tlw .frow .lab', 'color') == T3)
     check('§8 左侧行名列写「烘焙」', x.T('#tlw .frow .lab') == '烘焙')
     check('§8 层行 6 px 实心条，发射器行 2 px 细条', x.R('#tlw .tlrow.t-layer .bar-e')[5] == 6 and x.R('#tlw .tlrow.t-emitter .bar-e')[5] == 2)
@@ -816,6 +816,20 @@ def v33(b):
     x.click('#pbody .mod[data-mod="颜色"] .mod-h'); x.E("KIT.select('橙引线层')"); pg.wait_for_timeout(100); x.E("KIT.select('金锦层')"); pg.wait_for_timeout(150)
     check('v3.3-13 用户手动折叠后按用户的来（换对象再回来仍是折叠）', x.E("document.querySelector('#pbody .mod[data-mod=\"颜色\"]').classList.contains('is-closed')"))
     pg.close()
+
+    # 第 12 条：胶片条不像加载圆点
+    for w, h in ((1920, 1080), (1366, 768)):
+        for scene in ('kiku', 'spk'):
+            pg = new_page(b, w, h); x = P(pg)
+            if scene == 'spk':
+                x.E("KIT.set('scene','spk')"); pg.wait_for_timeout(200)
+            F = x.E("(() => { const c = [...document.querySelectorAll('#tlw .film-c')], r = document.querySelector('#tlw .xrange').getBoundingClientRect(), row = document.querySelector('#tlw .frow').getBoundingClientRect(), u = document.querySelectorAll('#tlw .film-u');"
+                    " const R = c.map(e => e.getBoundingClientRect()); return {row: row.height, n: c.length, sq: R.every(b => Math.abs(b.width - b.height) < .5 && b.height >= 26), img: c.every(e => { const i = e.querySelector('img'); return i && i.complete && i.naturalWidth > 0 && /brightness/.test(i.style.filter) && getComputedStyle(i).objectFit === 'contain' }),"
+                    " gaps: R.slice(1).map((b, i) => +(b.left - R[i].right).toFixed(1)), first: +(R[0].left - r.left).toFixed(1), u: u.length, ubg: u[0] && getComputedStyle(u[0]).backgroundColor, uend: u[0] ? +(r.right - u[0].getBoundingClientRect().right).toFixed(1) : +(r.right - R[R.length - 1].right).toFixed(1), tex: document.querySelector('#pbody') && 1} })()")
+            check(f'v3.3-12 {w} {scene} 已烘焙的格子是真的缩略图：按贴图比例（单格正方形）画成方格，整张不裁，按最亮的一帧提亮', F['n'] >= 2 and F['sq'] and F['img'] and F['row'] >= 28, F)
+            check(f'v3.3-12 {w} {scene} 格子之间留缝、不重叠；第一格左缘对齐入点', all(g >= 2 for g in F['gaps']) and abs(F['first']) <= 1, F)
+            check(f'v3.3-12 {w} {scene} 没烘焙的部分是一条平的暗轨，右缘到出点', F['u'] == 1 and F['ubg'] == G2 and abs(F['uend']) <= 1, F)
+            pg.close()
 
     # 第 4 条：时间轴不悄悄藏行
     pg = new_page(b); x = P(pg)
