@@ -2035,3 +2035,192 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
 /* 状态词：琥珀只给「需重新导出」和挡住操作的设置 */
 .stl,.sdot,.exb{display:inline-block;flex:none;width:6px;height:6px;border-radius:50%;background:var(--w3)}
 
+/* =====================================================================
+   E 4.0 P1：v3.7 骨架（4.9.128）。外壳顶栏 #shell ｜ 制作区 #wsBaker = 工具行（中栏 + 右栏上方）+ 三栏 + 状态栏。
+   旧的 main#main 留着（脚本在它上面切 noside / noright / compact），这里 display:contents，三栏直接排进 #wsBaker 的网格。
+   ===================================================================== */
+.app{position:relative;display:grid;grid-template-rows:auto auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);height:100dvh;background:var(--bg);color:var(--t1)}
+/* 外壳顶栏：内容和样式由外壳提供（S）；没有外壳时（FireworkBaker.html 单独打开）用旧顶栏，样子照外壳 */
+.app>.shell{grid-row:2;height:var(--h-shell);min-width:0;overflow:hidden;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line)}
+.app>.shell:empty{display:none}
+.app:has(>.shell:not(:empty))>header.top{display:none}
+.app>header.top{grid-row:1;display:flex;align-items:center;gap:var(--s4);height:var(--h-shell);min-height:0;padding:0 var(--pad);border:0;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line)}
+header.top .brand{align-items:baseline;gap:8px}
+header.top .brand .mark{font-size:var(--fs3);font-weight:var(--fw2);color:var(--t1)}
+header.top .brand>b{font-size:var(--fs3);font-weight:var(--fw2)}
+header.top .brand-tool,header.top .brand small{font-size:var(--fs1);color:var(--t3);margin:0}
+header.top .gpu{font-size:var(--fs1);color:var(--t3)}
+header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
+.app>#wsBaker{grid-row:3}
+
+#wsBaker{--sw:var(--sideW,var(--w-left));--rw:var(--rightW,var(--w-right));--gl:1px;--gr:1px;position:relative;display:grid;
+  grid-template-columns:var(--sw) var(--gl) minmax(0,1fr) var(--gr) var(--rw);grid-template-rows:var(--h-top) minmax(0,1fr) var(--h-status);min-height:0;min-width:0;background:var(--bg)}
+#wsBaker:has(>#main.noside){--sw:0px;--gl:0px}
+#wsBaker:has(>#main.noright),#wsBaker:has(>#main.showcase){--rw:0px;--gr:0px}
+#wsBaker:has(>#main.drawer-side){--sw:0px;--gl:0px}
+#wsBaker:has(>#main.drawer-right){--rw:0px;--gr:0px}
+#wsBaker>#main{display:contents}
+#wsBaker>#toolRow{grid-column:3/6;grid-row:1}
+#main>#side{grid-column:1;grid-row:1/3}
+#main>#gutL{grid-column:2;grid-row:1/3}
+#main>.stage{grid-column:3;grid-row:2}
+#main>#gutR{grid-column:4;grid-row:2}
+#main>#right{grid-column:5;grid-row:2}
+#wsBaker>#statusBar{grid-column:1/-1;grid-row:3}
+#main.noside>#side,#main.noside>#gutL,#main.noright>#right,#main.noright>#gutR,#main.showcase>#right,#main.showcase>#gutR,#main.drawer-side>#gutL,#main.drawer-right>#gutR{display:none}
+#main.drawer-side.noside>#side,#main.drawer-right.noright>#right{display:none}
+#main.drawer-side>#side{position:absolute;left:0;top:0;bottom:var(--h-status);z-index:30;width:min(var(--sideW,var(--w-left)),80vw);box-shadow:var(--shadow)}
+#main.drawer-right>#right{position:absolute;right:0;top:var(--h-top);bottom:var(--h-status);z-index:30;width:min(var(--rightW,var(--w-right)),92vw);box-shadow:var(--shadow)}
+/* 栏与栏之间：看起来就是 1 px 线；拖的热区 7 px 透明（拖动改宽度，双击复位） */
+#main>.gutter{position:relative;z-index:4;width:1px;min-width:1px;border:0;background:var(--line);cursor:col-resize}
+#main>.gutter::before{content:"";position:absolute;top:0;bottom:0;left:-3px;width:7px}
+#main>.gutter:hover{background:var(--g6)}
+#main>.gutter.drag{background:var(--g8)}
+
+/* 工具行（栏头 chrome）：中段起点对齐画面左边，右段起点对齐检查器左边 */
+#toolRow{display:grid;grid-template-columns:minmax(0,1fr) calc(var(--rw) + var(--gr));min-width:0;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line);white-space:nowrap}
+#wsBaker:has(>#main.noright) #toolRow,#wsBaker:has(>#main.showcase) #toolRow,#wsBaker:has(>#main.drawer-right) #toolRow{grid-template-columns:minmax(0,1fr) auto}
+.tcol{display:flex;align-items:center;gap:var(--gin);height:100%;min-width:0;overflow:hidden}
+.tcol-m{padding:0 var(--pad) 0 6px;margin:0;border:0;background:none;flex-wrap:nowrap}
+.tcol-m>#btnSide{margin-right:calc(var(--grp) - var(--gin))}
+.tcol-m>#dispSeg{margin-left:calc(var(--grp) - var(--gin))}
+.tcol-m>#btnFocus{margin-left:calc(var(--grp) - var(--gin))}
+.tcol-m>.sp{flex:1;min-width:var(--s3)}
+.tcol-m .tgl .tl{display:none}
+.tcol-m .tgl{width:var(--h-hit);padding:0;justify-content:center}
+.tcol-m #btnRef{width:auto;padding:0 6px}
+.tcol-m #btnRef .tl{display:inline}
+.tcol-m .seg.small button{min-height:calc(var(--h-ctl) - 2px)}
+.tcol-r{padding:0 var(--pad) 0 8px;box-shadow:inset 1px 0 0 var(--line);background:none;border:0;margin:0;min-height:0;flex-wrap:nowrap;overflow:visible;position:relative}
+.tcol-r[hidden]{display:none}
+.tcol-r>.sp{flex:1;min-width:var(--s3)}
+.tgrp{display:flex;align-items:center;gap:var(--s1);flex:none}
+.bx{gap:0;height:var(--h-hit);border:1px solid var(--line);border-radius:var(--r2)}
+.bx>.btn,.bx>details>summary.btn{height:calc(var(--h-hit) - 2px);min-height:0;border-radius:0}
+.bx>.btn.ab-ur,.bx>details>summary.btn-icon{width:calc(var(--h-hit) - 2px);padding:0}
+.bx>.btn:not(.ab-ur),.bx>details>summary.btn:not(.btn-icon){padding:0 10px}
+.bx>.btn:disabled{opacity:.4}
+.bx-sep{flex:none;align-self:stretch;width:1px;background:var(--line)}
+.bx>details{position:relative;display:flex}
+#abUndo .ui-icon,#abRedo .ui-icon{width:16px;height:16px}
+#abReset .rv-i{display:none}
+@media (max-width:1599px){
+  #abReset .rv-i{display:block}
+  #abReset .t{display:none}
+  .bx>details#abReset>summary.btn{width:24px;padding:0;justify-content:center}
+  .bx>.btn:not(.ab-ur){padding:0 5px}
+  .tcol-r>.sp{min-width:var(--s2)}
+  #expBtn>.btn:first-child{padding:0 10px}
+  .tcol-m #btnRef .tl{display:none}
+}
+/* 「保存」后的未保存点（v3.4 第 4 条）：6 px 薄荷 */
+#abSave.e-dirty::after{content:"";display:inline-block;width:6px;height:6px;margin-left:6px;border-radius:50%;background:var(--sel)}
+/* 导出 ▾：主按钮 + 下拉箭头（薄荷实底，全屏唯一） */
+#expBtn{display:inline-flex;flex:none;position:relative;gap:0}
+#expBtn>.btn:first-child{border-radius:var(--r2) 0 0 var(--r2);padding:0 12px}
+#expBtn>.exp-dd{width:24px;min-width:0;padding:0;border-radius:0 var(--r2) var(--r2) 0;border-left:1px solid var(--p3);background:var(--p4);color:var(--p1)}
+#expBtn>.exp-dd:hover{background:var(--p5);color:var(--p1)}
+#expBtn>.exp-dd[aria-expanded="true"]{background:var(--p3);color:var(--pInk)}
+#expMenu{position:absolute;right:var(--pad);top:calc(100% + 2px);left:auto;z-index:60;min-width:300px;max-width:400px}
+#expMenu .mi{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--h-hit);padding:0 12px;color:var(--t1)}
+#expMenu .mi .k{margin-left:auto;padding-left:24px;color:var(--t3);font-size:var(--fs1)}
+#expMenu .mi[data-exp="deliv"] .sh-cnt{margin-left:8px}
+#expMenu hr{margin:4px 0;border:0;border-top:1px solid var(--line)}
+#expMenu .msum{padding:8px 12px;font-size:var(--fs1);line-height:var(--lh-multi);color:var(--t2);white-space:normal}
+#expMenu .msum:empty,#expMenu .msum:empty+hr{display:none}
+#expMenu .msum b{display:flex;align-items:center;gap:6px;font-size:var(--fs2);font-weight:var(--fw1);color:var(--t1)}
+/* 资产栏里不放在工具行的东西 */
+.tcol-r .ab-stash{display:none}
+
+/* 左栏：上结构树、下效果库，中间 1 px 线（可拖、双击收起效果库） */
+#main>#side{display:grid;grid-template-rows:var(--tree-h,300px) 1px minmax(0,1fr);min-height:0;min-width:0;background:var(--bg);border:0}
+#side.lib-closed{grid-template-rows:minmax(0,1fr) 1px auto}
+#side.lib-closed .lib-pane>:not(.side-head){display:none}
+.pane{display:flex;flex-direction:column;min-height:0;min-width:0}
+.tree-head{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-top);padding:0 var(--s1) 0 var(--pad);min-width:0}
+.tree-head{position:relative}
+.tree-head.cur::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--sel)}
+.tree-head .ab-id{cursor:pointer}
+.tree-head .ab-th{display:none}
+.tree-head .ab-id{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:var(--s2);min-width:0;flex:1;max-width:none;overflow:hidden}
+.tree-head .id-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs3);font-weight:var(--fw2);line-height:var(--lh3);color:var(--t1)}
+.tree-head .id-chips{display:flex;gap:6px;flex:none;min-width:0;overflow:hidden}
+.tree-head .id-chips .idc{padding:0;border:0;background:none;color:var(--t3);font-size:var(--fs1);line-height:var(--lh1);white-space:nowrap}
+.tree-head>.sp{display:none}
+.tree-head #abMore>summary{width:var(--h-hit);padding:0}
+.tree-head #abMore .ab-menu{left:auto;right:0}
+.tree{flex:1;min-height:0;overflow:auto;padding:0 var(--s1) var(--s1)}
+.tree-foot{flex:none;display:flex;align-items:center;padding:0 var(--s1) var(--s2) 22px}
+.tree-foot .btn{padding:0 6px;color:var(--t2);gap:4px}
+.tree-foot .btn[hidden]{display:none}
+.splitter{position:relative;z-index:3;background:var(--line);cursor:row-resize;touch-action:none}
+.splitter::before{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
+.splitter:hover{background:var(--g6)}
+.splitter.is-active{background:var(--g8)}
+.splitter:focus-visible{outline:none;background:var(--focus)}
+/* 结构树一行（§10）：高 28；当前层左边 2 px 薄荷竖线；层号弱色；发射器缩进一级 */
+.trow{position:relative;display:flex;border:0;background:none;align-items:center;gap:6px;width:100%;height:var(--h-row);padding:0 var(--s1) 0 var(--s2);border-radius:var(--r2);color:var(--t2);white-space:nowrap;cursor:pointer;text-align:left}
+.trow:hover{background:var(--hov);color:var(--t1)}
+.trow.cur{background:var(--on);color:var(--t1)}
+.trow.cur::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--sel)}
+.trow .no{flex:none;min-width:12px;color:var(--t3);font-size:var(--fs1)}
+.trow .nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.trow .n{flex:none;color:var(--t3);font-size:var(--fs1)}
+.trow.lv2{padding-left:calc(var(--s2) + var(--indent) + 6px)}
+.trow.lv2 svg.i{color:var(--t3)}
+.trow.lv2.cur{background:var(--on)}
+.trow.off .nm{color:var(--t3);text-decoration:line-through}
+.trow .sp{flex:1}
+.tree-empty{padding:8px 12px;color:var(--t3);font-size:var(--fs1)}
+/* 效果库（下半）：搜索 + 新建一行，列表 */
+.lib-pane{min-height:0}
+.lib-pane>.side-head{flex:none;display:flex;align-items:center;gap:var(--s2);padding:var(--s3) var(--pad) var(--s2);border:0;background:none}
+.lib-pane>.side-head input[type=search]{flex:1;min-width:0;height:var(--h-hit);padding:0 8px 0 28px;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Ccircle cx='6.75' cy='6.75' r='4'/%3E%3Cpath d='m9.9 9.9 3 3'/%3E%3C/svg%3E") no-repeat 6px 50%}
+.lib-pane>.side-head .lib-new{flex:none;padding:0 8px 0 6px;gap:4px;min-height:var(--h-hit)}
+.lib-pane>.side-head .side-x{display:none}
+#main.drawer-side .lib-pane>.side-head .side-x{display:inline-flex}
+.lib-pane>.side-body{flex:1;min-height:0;overflow-y:auto;padding:0 var(--s1) var(--s1)}
+
+/* 中栏：画面（全屏最暗）+ 播放条 + 时间轴 */
+#main>.stage{display:flex;flex-direction:column;gap:0;padding:0;min-width:0;min-height:0;background:var(--sky)}
+#main>.stage>.viewframe{flex:1;min-height:0;border:0;border-radius:0;background:var(--sky);box-shadow:none}
+#main>.stage>.showcase-bar,#main>.stage>.mig-note,#main>.stage>.bake-error{margin:var(--s2) var(--pad) 0}
+#main>.stage>.delivview{flex:1;min-height:0;background:var(--bg)}
+#main>.stage>.timeline{flex:none;display:flex;align-items:center;gap:var(--s1);min-height:var(--h-tp);padding:0 var(--pad) 0 6px;flex-wrap:nowrap;background:var(--bg);box-shadow:inset 0 1px 0 var(--line);border:0;border-radius:0}
+#main>.stage>.timeline #scrub{flex:1;min-width:80px;order:5}
+#main>.stage>.timeline>.sp{display:none}
+#main>.stage>.timeline #timeTools{order:6}
+#main>.stage>.timeline #tlabel{font-size:var(--fs3);color:var(--t1);min-width:4.5em;padding:0 4px}
+#main>.stage>.timeline #play{color:var(--t1)}
+#main>.stage>.tlbars{flex:none;background:var(--bg);padding-left:var(--s1);padding-right:var(--s1)}
+.viewframe .vf-foot{color:var(--t3);font-size:var(--fs1);text-shadow:0 0 2px var(--g0),0 0 6px var(--g0)}
+.viewframe .vf-heading{color:var(--t2);font-size:var(--fs1);text-shadow:0 0 2px var(--g0),0 0 6px var(--g0)}
+.viewframe .preview-controls{background:color-mix(in srgb,var(--g1) 86%,transparent);border:1px solid var(--line);border-radius:var(--r2);box-shadow:none}
+
+/* 右栏检查器：顶部面包屑（末项大号 600）+「参数 / 审阅 / 工具」 */
+#main>#right{background:var(--bg);border:0;box-shadow:none}
+#right>.right-head{display:flex;align-items:center;gap:var(--s2);min-height:40px;padding:0 var(--s1) 0 var(--pad);background:var(--bg);border:0;box-shadow:inset 0 -1px 0 var(--line)}
+#right>.right-head .ptabs{flex:none;padding:0;border:0;background:none;position:static}
+#right>.right-head .ptabs>button{min-height:39px;padding:0 8px;font-size:var(--fs2)}
+#right>.right-head .ptabs>button[aria-selected="true"]::after{left:8px;right:8px}
+#right>.right-head .ptabs[hidden]{display:none}
+#right>.right-head .right-close{display:none}
+#main.drawer-right #right>.right-head .right-close{display:inline-flex}
+.path{display:flex;align-items:baseline;min-width:0;flex:1;overflow:hidden;white-space:nowrap}
+.path button{flex:none;padding:2px 4px;margin:0 -4px;border:0;border-radius:var(--r2);background:none;font-size:var(--fs2);color:var(--t2);cursor:pointer}
+.path button:hover{background:var(--hov);color:var(--t1)}
+.path .cur{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs3);font-weight:var(--fw2);color:var(--t1)}
+.path .sep{flex:none;padding:0 8px;color:var(--t3);font-size:var(--fs2)}
+
+/* 状态栏：左外壳文件夹（#stShell）+ 复制意见；右烘焙状态、保存状态、外壳预览进度、快捷键 */
+#statusBar{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);min-width:0;padding:0 var(--s2) 0 6px;background:var(--bg);box-shadow:inset 0 1px 0 var(--line);font-size:var(--fs1);color:var(--t3);white-space:nowrap;overflow:hidden}
+#statusBar .st-l,#statusBar .st-r{display:flex;align-items:center;gap:var(--s2);min-width:0}
+#statusBar .btn{min-height:0;height:calc(var(--h-status) - 4px);padding:0 6px;font-size:var(--fs1);color:var(--t2)}
+#statusBar .btn[hidden]{display:none}
+#statusBar kbd{margin-left:6px;height:16px;min-width:16px}
+#statusBar .ab-state{max-width:none;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);white-space:nowrap}
+#sbPreview:empty,#stShell:empty{display:none}
+/* 提示文字（旧顶栏的 #status：烘焙进度、「已导出 …」）放在状态栏右边；出错用红色 */
+#statusBar #status{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs1);color:var(--e3)}
+#statusBar #status.on{color:var(--t1)}
+#statusBar #status:empty{display:none}

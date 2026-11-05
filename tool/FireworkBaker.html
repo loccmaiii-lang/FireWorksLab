@@ -2175,6 +2175,195 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
 /* 状态词：琥珀只给「需重新导出」和挡住操作的设置 */
 .stl,.sdot,.exb{display:inline-block;flex:none;width:6px;height:6px;border-radius:50%;background:var(--w3)}
 
+/* =====================================================================
+   E 4.0 P1：v3.7 骨架（4.9.128）。外壳顶栏 #shell ｜ 制作区 #wsBaker = 工具行（中栏 + 右栏上方）+ 三栏 + 状态栏。
+   旧的 main#main 留着（脚本在它上面切 noside / noright / compact），这里 display:contents，三栏直接排进 #wsBaker 的网格。
+   ===================================================================== */
+.app{position:relative;display:grid;grid-template-rows:auto auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);height:100dvh;background:var(--bg);color:var(--t1)}
+/* 外壳顶栏：内容和样式由外壳提供（S）；没有外壳时（FireworkBaker.html 单独打开）用旧顶栏，样子照外壳 */
+.app>.shell{grid-row:2;height:var(--h-shell);min-width:0;overflow:hidden;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line)}
+.app>.shell:empty{display:none}
+.app:has(>.shell:not(:empty))>header.top{display:none}
+.app>header.top{grid-row:1;display:flex;align-items:center;gap:var(--s4);height:var(--h-shell);min-height:0;padding:0 var(--pad);border:0;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line)}
+header.top .brand{align-items:baseline;gap:8px}
+header.top .brand .mark{font-size:var(--fs3);font-weight:var(--fw2);color:var(--t1)}
+header.top .brand>b{font-size:var(--fs3);font-weight:var(--fw2)}
+header.top .brand-tool,header.top .brand small{font-size:var(--fs1);color:var(--t3);margin:0}
+header.top .gpu{font-size:var(--fs1);color:var(--t3)}
+header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
+.app>#wsBaker{grid-row:3}
+
+#wsBaker{--sw:var(--sideW,var(--w-left));--rw:var(--rightW,var(--w-right));--gl:1px;--gr:1px;position:relative;display:grid;
+  grid-template-columns:var(--sw) var(--gl) minmax(0,1fr) var(--gr) var(--rw);grid-template-rows:var(--h-top) minmax(0,1fr) var(--h-status);min-height:0;min-width:0;background:var(--bg)}
+#wsBaker:has(>#main.noside){--sw:0px;--gl:0px}
+#wsBaker:has(>#main.noright),#wsBaker:has(>#main.showcase){--rw:0px;--gr:0px}
+#wsBaker:has(>#main.drawer-side){--sw:0px;--gl:0px}
+#wsBaker:has(>#main.drawer-right){--rw:0px;--gr:0px}
+#wsBaker>#main{display:contents}
+#wsBaker>#toolRow{grid-column:3/6;grid-row:1}
+#main>#side{grid-column:1;grid-row:1/3}
+#main>#gutL{grid-column:2;grid-row:1/3}
+#main>.stage{grid-column:3;grid-row:2}
+#main>#gutR{grid-column:4;grid-row:2}
+#main>#right{grid-column:5;grid-row:2}
+#wsBaker>#statusBar{grid-column:1/-1;grid-row:3}
+#main.noside>#side,#main.noside>#gutL,#main.noright>#right,#main.noright>#gutR,#main.showcase>#right,#main.showcase>#gutR,#main.drawer-side>#gutL,#main.drawer-right>#gutR{display:none}
+#main.drawer-side.noside>#side,#main.drawer-right.noright>#right{display:none}
+#main.drawer-side>#side{position:absolute;left:0;top:0;bottom:var(--h-status);z-index:30;width:min(var(--sideW,var(--w-left)),80vw);box-shadow:var(--shadow)}
+#main.drawer-right>#right{position:absolute;right:0;top:var(--h-top);bottom:var(--h-status);z-index:30;width:min(var(--rightW,var(--w-right)),92vw);box-shadow:var(--shadow)}
+/* 栏与栏之间：看起来就是 1 px 线；拖的热区 7 px 透明（拖动改宽度，双击复位） */
+#main>.gutter{position:relative;z-index:4;width:1px;min-width:1px;border:0;background:var(--line);cursor:col-resize}
+#main>.gutter::before{content:"";position:absolute;top:0;bottom:0;left:-3px;width:7px}
+#main>.gutter:hover{background:var(--g6)}
+#main>.gutter.drag{background:var(--g8)}
+
+/* 工具行（栏头 chrome）：中段起点对齐画面左边，右段起点对齐检查器左边 */
+#toolRow{display:grid;grid-template-columns:minmax(0,1fr) calc(var(--rw) + var(--gr));min-width:0;background:var(--surf-chrome);box-shadow:inset 0 -1px 0 var(--line);white-space:nowrap}
+#wsBaker:has(>#main.noright) #toolRow,#wsBaker:has(>#main.showcase) #toolRow,#wsBaker:has(>#main.drawer-right) #toolRow{grid-template-columns:minmax(0,1fr) auto}
+.tcol{display:flex;align-items:center;gap:var(--gin);height:100%;min-width:0;overflow:hidden}
+.tcol-m{padding:0 var(--pad) 0 6px;margin:0;border:0;background:none;flex-wrap:nowrap}
+.tcol-m>#btnSide{margin-right:calc(var(--grp) - var(--gin))}
+.tcol-m>#dispSeg{margin-left:calc(var(--grp) - var(--gin))}
+.tcol-m>#btnFocus{margin-left:calc(var(--grp) - var(--gin))}
+.tcol-m>.sp{flex:1;min-width:var(--s3)}
+.tcol-m .tgl .tl{display:none}
+.tcol-m .tgl{width:var(--h-hit);padding:0;justify-content:center}
+.tcol-m #btnRef{width:auto;padding:0 6px}
+.tcol-m #btnRef .tl{display:inline}
+.tcol-m .seg.small button{min-height:calc(var(--h-ctl) - 2px)}
+.tcol-r{padding:0 var(--pad) 0 8px;box-shadow:inset 1px 0 0 var(--line);background:none;border:0;margin:0;min-height:0;flex-wrap:nowrap;overflow:visible;position:relative}
+.tcol-r[hidden]{display:none}
+.tcol-r>.sp{flex:1;min-width:var(--s3)}
+.tgrp{display:flex;align-items:center;gap:var(--s1);flex:none}
+.bx{gap:0;height:var(--h-hit);border:1px solid var(--line);border-radius:var(--r2)}
+.bx>.btn,.bx>details>summary.btn{height:calc(var(--h-hit) - 2px);min-height:0;border-radius:0}
+.bx>.btn.ab-ur,.bx>details>summary.btn-icon{width:calc(var(--h-hit) - 2px);padding:0}
+.bx>.btn:not(.ab-ur),.bx>details>summary.btn:not(.btn-icon){padding:0 10px}
+.bx>.btn:disabled{opacity:.4}
+.bx-sep{flex:none;align-self:stretch;width:1px;background:var(--line)}
+.bx>details{position:relative;display:flex}
+#abUndo .ui-icon,#abRedo .ui-icon{width:16px;height:16px}
+#abReset .rv-i{display:none}
+@media (max-width:1599px){
+  #abReset .rv-i{display:block}
+  #abReset .t{display:none}
+  .bx>details#abReset>summary.btn{width:24px;padding:0;justify-content:center}
+  .bx>.btn:not(.ab-ur){padding:0 5px}
+  .tcol-r>.sp{min-width:var(--s2)}
+  #expBtn>.btn:first-child{padding:0 10px}
+  .tcol-m #btnRef .tl{display:none}
+}
+/* 「保存」后的未保存点（v3.4 第 4 条）：6 px 薄荷 */
+#abSave.e-dirty::after{content:"";display:inline-block;width:6px;height:6px;margin-left:6px;border-radius:50%;background:var(--sel)}
+/* 导出 ▾：主按钮 + 下拉箭头（薄荷实底，全屏唯一） */
+#expBtn{display:inline-flex;flex:none;position:relative;gap:0}
+#expBtn>.btn:first-child{border-radius:var(--r2) 0 0 var(--r2);padding:0 12px}
+#expBtn>.exp-dd{width:24px;min-width:0;padding:0;border-radius:0 var(--r2) var(--r2) 0;border-left:1px solid var(--p3);background:var(--p4);color:var(--p1)}
+#expBtn>.exp-dd:hover{background:var(--p5);color:var(--p1)}
+#expBtn>.exp-dd[aria-expanded="true"]{background:var(--p3);color:var(--pInk)}
+#expMenu{position:absolute;right:var(--pad);top:calc(100% + 2px);left:auto;z-index:60;min-width:300px;max-width:400px}
+#expMenu .mi{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--h-hit);padding:0 12px;color:var(--t1)}
+#expMenu .mi .k{margin-left:auto;padding-left:24px;color:var(--t3);font-size:var(--fs1)}
+#expMenu .mi[data-exp="deliv"] .sh-cnt{margin-left:8px}
+#expMenu hr{margin:4px 0;border:0;border-top:1px solid var(--line)}
+#expMenu .msum{padding:8px 12px;font-size:var(--fs1);line-height:var(--lh-multi);color:var(--t2);white-space:normal}
+#expMenu .msum:empty,#expMenu .msum:empty+hr{display:none}
+#expMenu .msum b{display:flex;align-items:center;gap:6px;font-size:var(--fs2);font-weight:var(--fw1);color:var(--t1)}
+/* 资产栏里不放在工具行的东西 */
+.tcol-r .ab-stash{display:none}
+
+/* 左栏：上结构树、下效果库，中间 1 px 线（可拖、双击收起效果库） */
+#main>#side{display:grid;grid-template-rows:var(--tree-h,300px) 1px minmax(0,1fr);min-height:0;min-width:0;background:var(--bg);border:0}
+#side.lib-closed{grid-template-rows:minmax(0,1fr) 1px auto}
+#side.lib-closed .lib-pane>:not(.side-head){display:none}
+.pane{display:flex;flex-direction:column;min-height:0;min-width:0}
+.tree-head{flex:none;display:flex;align-items:center;gap:var(--s2);height:var(--h-top);padding:0 var(--s1) 0 var(--pad);min-width:0}
+.tree-head{position:relative}
+.tree-head.cur::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--sel)}
+.tree-head .ab-id{cursor:pointer}
+.tree-head .ab-th{display:none}
+.tree-head .ab-id{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:var(--s2);min-width:0;flex:1;max-width:none;overflow:hidden}
+.tree-head .id-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs3);font-weight:var(--fw2);line-height:var(--lh3);color:var(--t1)}
+.tree-head .id-chips{display:flex;gap:6px;flex:none;min-width:0;overflow:hidden}
+.tree-head .id-chips .idc{padding:0;border:0;background:none;color:var(--t3);font-size:var(--fs1);line-height:var(--lh1);white-space:nowrap}
+.tree-head>.sp{display:none}
+.tree-head #abMore>summary{width:var(--h-hit);padding:0}
+.tree-head #abMore .ab-menu{left:auto;right:0}
+.tree{flex:1;min-height:0;overflow:auto;padding:0 var(--s1) var(--s1)}
+.tree-foot{flex:none;display:flex;align-items:center;padding:0 var(--s1) var(--s2) 22px}
+.tree-foot .btn{padding:0 6px;color:var(--t2);gap:4px}
+.tree-foot .btn[hidden]{display:none}
+.splitter{position:relative;z-index:3;background:var(--line);cursor:row-resize;touch-action:none}
+.splitter::before{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
+.splitter:hover{background:var(--g6)}
+.splitter.is-active{background:var(--g8)}
+.splitter:focus-visible{outline:none;background:var(--focus)}
+/* 结构树一行（§10）：高 28；当前层左边 2 px 薄荷竖线；层号弱色；发射器缩进一级 */
+.trow{position:relative;display:flex;border:0;background:none;align-items:center;gap:6px;width:100%;height:var(--h-row);padding:0 var(--s1) 0 var(--s2);border-radius:var(--r2);color:var(--t2);white-space:nowrap;cursor:pointer;text-align:left}
+.trow:hover{background:var(--hov);color:var(--t1)}
+.trow.cur{background:var(--on);color:var(--t1)}
+.trow.cur::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--sel)}
+.trow .no{flex:none;min-width:12px;color:var(--t3);font-size:var(--fs1)}
+.trow .nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.trow .n{flex:none;color:var(--t3);font-size:var(--fs1)}
+.trow.lv2{padding-left:calc(var(--s2) + var(--indent) + 6px)}
+.trow.lv2 svg.i{color:var(--t3)}
+.trow.lv2.cur{background:var(--on)}
+.trow.off .nm{color:var(--t3);text-decoration:line-through}
+.trow .sp{flex:1}
+.tree-empty{padding:8px 12px;color:var(--t3);font-size:var(--fs1)}
+/* 效果库（下半）：搜索 + 新建一行，列表 */
+.lib-pane{min-height:0}
+.lib-pane>.side-head{flex:none;display:flex;align-items:center;gap:var(--s2);padding:var(--s3) var(--pad) var(--s2);border:0;background:none}
+.lib-pane>.side-head input[type=search]{flex:1;min-width:0;height:var(--h-hit);padding:0 8px 0 28px;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Ccircle cx='6.75' cy='6.75' r='4'/%3E%3Cpath d='m9.9 9.9 3 3'/%3E%3C/svg%3E") no-repeat 6px 50%}
+.lib-pane>.side-head .lib-new{flex:none;padding:0 8px 0 6px;gap:4px;min-height:var(--h-hit)}
+.lib-pane>.side-head .side-x{display:none}
+#main.drawer-side .lib-pane>.side-head .side-x{display:inline-flex}
+.lib-pane>.side-body{flex:1;min-height:0;overflow-y:auto;padding:0 var(--s1) var(--s1)}
+
+/* 中栏：画面（全屏最暗）+ 播放条 + 时间轴 */
+#main>.stage{display:flex;flex-direction:column;gap:0;padding:0;min-width:0;min-height:0;background:var(--sky)}
+#main>.stage>.viewframe{flex:1;min-height:0;border:0;border-radius:0;background:var(--sky);box-shadow:none}
+#main>.stage>.showcase-bar,#main>.stage>.mig-note,#main>.stage>.bake-error{margin:var(--s2) var(--pad) 0}
+#main>.stage>.delivview{flex:1;min-height:0;background:var(--bg)}
+#main>.stage>.timeline{flex:none;display:flex;align-items:center;gap:var(--s1);min-height:var(--h-tp);padding:0 var(--pad) 0 6px;flex-wrap:nowrap;background:var(--bg);box-shadow:inset 0 1px 0 var(--line);border:0;border-radius:0}
+#main>.stage>.timeline #scrub{flex:1;min-width:80px;order:5}
+#main>.stage>.timeline>.sp{display:none}
+#main>.stage>.timeline #timeTools{order:6}
+#main>.stage>.timeline #tlabel{font-size:var(--fs3);color:var(--t1);min-width:4.5em;padding:0 4px}
+#main>.stage>.timeline #play{color:var(--t1)}
+#main>.stage>.tlbars{flex:none;background:var(--bg);padding-left:var(--s1);padding-right:var(--s1)}
+.viewframe .vf-foot{color:var(--t3);font-size:var(--fs1);text-shadow:0 0 2px var(--g0),0 0 6px var(--g0)}
+.viewframe .vf-heading{color:var(--t2);font-size:var(--fs1);text-shadow:0 0 2px var(--g0),0 0 6px var(--g0)}
+.viewframe .preview-controls{background:color-mix(in srgb,var(--g1) 86%,transparent);border:1px solid var(--line);border-radius:var(--r2);box-shadow:none}
+
+/* 右栏检查器：顶部面包屑（末项大号 600）+「参数 / 审阅 / 工具」 */
+#main>#right{background:var(--bg);border:0;box-shadow:none}
+#right>.right-head{display:flex;align-items:center;gap:var(--s2);min-height:40px;padding:0 var(--s1) 0 var(--pad);background:var(--bg);border:0;box-shadow:inset 0 -1px 0 var(--line)}
+#right>.right-head .ptabs{flex:none;padding:0;border:0;background:none;position:static}
+#right>.right-head .ptabs>button{min-height:39px;padding:0 8px;font-size:var(--fs2)}
+#right>.right-head .ptabs>button[aria-selected="true"]::after{left:8px;right:8px}
+#right>.right-head .ptabs[hidden]{display:none}
+#right>.right-head .right-close{display:none}
+#main.drawer-right #right>.right-head .right-close{display:inline-flex}
+.path{display:flex;align-items:baseline;min-width:0;flex:1;overflow:hidden;white-space:nowrap}
+.path button{flex:none;padding:2px 4px;margin:0 -4px;border:0;border-radius:var(--r2);background:none;font-size:var(--fs2);color:var(--t2);cursor:pointer}
+.path button:hover{background:var(--hov);color:var(--t1)}
+.path .cur{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs3);font-weight:var(--fw2);color:var(--t1)}
+.path .sep{flex:none;padding:0 8px;color:var(--t3);font-size:var(--fs2)}
+
+/* 状态栏：左外壳文件夹（#stShell）+ 复制意见；右烘焙状态、保存状态、外壳预览进度、快捷键 */
+#statusBar{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);min-width:0;padding:0 var(--s2) 0 6px;background:var(--bg);box-shadow:inset 0 1px 0 var(--line);font-size:var(--fs1);color:var(--t3);white-space:nowrap;overflow:hidden}
+#statusBar .st-l,#statusBar .st-r{display:flex;align-items:center;gap:var(--s2);min-width:0}
+#statusBar .btn{min-height:0;height:calc(var(--h-status) - 4px);padding:0 6px;font-size:var(--fs1);color:var(--t2)}
+#statusBar .btn[hidden]{display:none}
+#statusBar kbd{margin-left:6px;height:16px;min-width:16px}
+#statusBar .ab-state{max-width:none;font-size:var(--fs1);line-height:var(--lh1);color:var(--t3);white-space:nowrap}
+#sbPreview:empty,#stShell:empty{display:none}
+/* 提示文字（旧顶栏的 #status：烘焙进度、「已导出 …」）放在状态栏右边；出错用红色 */
+#statusBar #status{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs1);color:var(--e3)}
+#statusBar #status.on{color:var(--t1)}
+#statusBar #status:empty{display:none}
 </style>
 </head>
 <body>
@@ -2240,8 +2429,9 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
     <div class="gpu" id="gpu"></div>
     <nav class="delivery-nav" aria-label="烘焙器工作区"><button class="btn ghost" id="deliveryMake" type="button" hidden>返回效果制作</button><button class="btn ghost" id="deliveryOpen" type="button">资源交付</button></nav>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
-    <div id="status" role="status" aria-live="polite"></div>
+    
   </header>
+  <header id="shell" class="shell"></header>
   <section id="deliveryWorkspace" class="delivery-workspace fw-scope" aria-labelledby="deliveryTitle" tabindex="-1" hidden>
     <div class="delivery-heading">
       <div class="delivery-identity"><img id="deliveryThumbnail" alt="当前修订引擎回放缩略图" hidden><span id="deliveryThumbnailMissing" hidden>缩略图待生成</span><div><small>当前交付</small><h1 id="deliveryTitle">资源交付</h1></div><span id="deliveryContext">选择已交付修订，核对后导入。</span></div>
@@ -2255,15 +2445,28 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
     <div class="delivery-status-bar"><p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite">首次使用请选择资源导出目录。</p><button id="deliveryRetry" class="btn ghost" type="button" hidden>重试连接</button></div>
     <div class="delivery-content"><p id="deliveryLoading" role="status">正在准备导入工作区…</p><p id="deliveryImporterMissing" hidden>本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><div id="deliveryBlocked" class="delivery-blocked" hidden><h2>本次未导出，导入尚未开始</h2><p id="deliveryBlockedReason"></p><div class="delivery-recovery"><button id="deliveryReturn" class="btn primary" type="button">返回效果制作</button><button id="deliveryHistory" class="btn ghost" type="button">查看已有交付</button></div></div><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
   </section>
-  <main id="main">
-    <aside class="side" id="side" aria-label="库">
-      <div class="side-head">
-        <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
-        <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
-      </div>
-      <div class="side-body" id="libBody"></div>
-      <details class="ab-more version-history" id="versionHistory" hidden>
-        <summary class="btn">版本记录<span class="version-summary" id="versionSummary"></span></summary>
+  <div class="ws" id="wsBaker">
+  <div class="topbar cols" id="toolRow" role="toolbar" aria-label="制作区工具">
+    <div class="tcol tcol-m viewbar" id="viewbar">
+          <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg class="i" aria-hidden="true"><use href="#i-pl"/></svg><span class="tl">库</span></button>
+          <div class="seg m" id="viewSeg" role="group" aria-label="工作模式">
+            <button data-view="live" aria-pressed="true">实时模拟</button>
+            <button data-view="export" aria-pressed="false">引擎回放</button>
+            <button data-view="flow" aria-pressed="false" title="左：当前帧放大（最近邻，看得到真实像素）；右：整张贴图（金框 = 当前帧）+ 帧号曲线">贴图流转</button>
+            <button id="abDeliv" type="button" data-view="delivery" aria-pressed="false" title="查看完整素材包的文件、平台、规格和延迟">交付清单</button>
+          </div>
+          <div class="seg m" id="dispSeg" hidden role="group" aria-label="画面大小"><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true" title="真实米数（4.6.0）：相机按「四尺玉在 1000 m 占屏高 1/3」定一次，别的号数、升空尾缀都按自己的真实大小显示">游戏内大小</button></div>
+          <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+          <span class="sp"></span>
+          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
+          <span class="lowopts" id="rtTiltOpts" hidden><label class="check" title="4.9.69 升空尾缀倾斜预览：整根绕发射点转，看近段（速度朝向）和远段（Rectangle + 锁 Z）接不接得上；只是预览，不进导出、不存档">倾斜 <select id="rtTilt" aria-label="倾斜预览角度"><option value="0">0°</option><option value="15">15°</option><option value="-15">−15°</option></select></label></span><span class="lowopts" id="lowOpts" hidden><label class="check" title="按现有序列母材质的溶解公式画（值大先消失、软过渡）：导入器给单帧开了溶解以后 UE 里就是这样；关掉 = 不开溶解的样子"><input type="checkbox" id="lowDissolve" checked> 溶解预览</label><label class="check" title="序列 | 单帧 · 某一帧 | 单帧 · 长曝光 同一秒并排"><input type="checkbox" id="lowSide"> 并排</label></span>
+          <button class="btn btn-icon" id="vtGrid" type="button" aria-pressed="false" aria-label="构图网格" title="构图网格（只影响观察）"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg></button>
+          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="精简布局：收起左右栏和底下的层轨道，画布最大（F，或双击画布；再按一次恢复，会记住）"><svg class="i" aria-hidden="true"><use href="#i-compact"/></svg><span class="tl">精简</span></button>
+          <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg class="i" aria-hidden="true"><use href="#i-pr"/></svg></button>
+        </div>
+    <div class="tcol tcol-r assetbar" id="assetBar" hidden>
+      <div class="tgrp bx" role="group" aria-label="撤销、重做与版本记录"><button class="btn ab-ur" id="abUndo" type="button" aria-label="撤销" title="撤销（Ctrl+Z）" disabled><svg class="i" aria-hidden="true"><use href="#i-undo"/></svg></button><i class="bx-sep" aria-hidden="true"></i><button class="btn ab-ur" id="abRedo" type="button" aria-label="重做" title="重做（Ctrl+Shift+Z）" disabled><svg class="i" aria-hidden="true"><use href="#i-redo"/></svg></button><i class="bx-sep" aria-hidden="true"></i><details class="ab-more version-history" id="versionHistory" hidden>
+        <summary class="btn btn-icon" aria-label="版本记录" title="版本记录：保存的版本、未保存草稿和导出时的恢复点"><svg class="i" aria-hidden="true"><use href="#i-history"/></svg><span class="version-summary" id="versionSummary" hidden></span></summary>
         <div class="ab-menu">
           <div class="version-current"><span class="ab-th" id="abThumb"></span><span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span></div>
           <label class="ab-src">查看版本<select id="abSrc" aria-label="查看版本"></select></label>
@@ -2272,28 +2475,21 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
           <button type="button" id="abDelete">删除这个版本</button>
           <p class="hint">保存的版本、未保存草稿和导出时的恢复点都在这里。</p>
         </div>
-      </details>
-      <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数">＋ 新建效果</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
-        <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div></div>
-    </aside>
-    <div class="gutter" id="gutL" title="拖动调整宽度；双击恢复自适应宽度"></div>
-    <section class="stage">
-    <div class="assetbar" id="assetBar" hidden>
-      <span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span>
-      <span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span>
-      <span class="ab-state" id="abState"></span><button class="btn ab-bcancel" id="abBakeCancel" type="button" hidden title="停下这次烘焙：贴图留着上次烘好的（标旧），改参数或按 B 再烘">取消</button>
+      </details></div>
+      <button class="btn btn-icon" id="vtNote" type="button" aria-label="写进意见" title="把时间、视图、平台、距离、图层、版本写进意见"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg></button>
       <span class="sp"></span>
-      <button class="btn ab-ur" id="abUndo" type="button" aria-label="撤销" title="撤销（Ctrl+Z）" disabled><svg class="i" aria-hidden="true"><use href="#i-undo"/></svg></button><button class="btn ab-ur" id="abRedo" type="button" aria-label="重做" title="重做（Ctrl+Shift+Z）" disabled><svg class="i" aria-hidden="true"><use href="#i-redo"/></svg></button>
-      <details class="ab-more ab-reset" id="abReset"><summary class="btn" title="还原：回到打开时 / 模板默认 / 只还原某个发射器（都能 Ctrl+Z 撤销）">还原</summary><div class="ab-menu" id="abResetMenu"></div></details>
-      <button class="btn primary" id="abSave" type="button" title="保存：你的效果直接保存；AI 做的效果 / 花型模板 / 正式库存成你的效果（原来的不动，之后能加层、删除）">保存</button>
-      <button class="btn" id="abSaveAs" type="button">另存为…</button>
-      <button class="btn" id="abAddLayer" type="button">＋ 加层</button>
-      <button class="btn ghost ab-del" id="abDel" type="button" hidden>删除</button>
-      <span class="ab-divider" aria-hidden="true"></span>
-      <div class="export-actions">
-        <button class="btn export-main" id="abExportPack" type="button" title="导出交付清单「产物表」上的东西：每层按 PC / 手机各自出什么（和交付清单的导出按钮同一个）">导出素材包</button>
-      </div>
-      <details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
+      <div class="tgrp bx" role="group" aria-label="还原与保存"><details class="ab-more ab-reset" id="abReset"><summary class="btn" title="还原：回到打开时 / 模板默认 / 只还原某个发射器（都能 Ctrl+Z 撤销）"><svg class="i rv-i" aria-hidden="true"><use href="#i-revert"/></svg><span class="t">还原</span></summary><div class="ab-menu" id="abResetMenu"></div></details><i class="bx-sep" aria-hidden="true"></i><button class="btn primary" id="abSave" type="button" title="保存：你的效果直接保存；AI 做的效果 / 花型模板 / 正式库存成你的效果（原来的不动，之后能加层、删除）">保存</button><i class="bx-sep" aria-hidden="true"></i><button class="btn" id="abSaveAs" type="button" title="另存为：存成一个新的我的效果 / 版本">另存</button></div>
+      <div class="split export-actions" id="expBtn">
+        <button class="btn export-main" id="abExportPack" type="button" title="导出交付清单「产物表」上的东西：每层按 PC / 手机各自出什么（和交付清单的导出按钮同一个）" aria-label="导出素材包">导出</button>
+      <button class="btn btn-1 exp-dd" id="expMenuBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="导出选项"><svg class="i" aria-hidden="true"><use href="#i-cd"/></svg></button></div>
+      <div class="ab-menu menu exp" id="expMenu" role="menu" aria-label="导出" hidden><button class="mi" type="button" role="menuitem" data-exp="deliv">资源交付<span class="sh-cnt" id="expDelivN" hidden></span></button><hr><div class="msum" id="expSum"></div><hr><button class="mi" type="button" role="menuitem" data-exp="pack">导出素材包<span class="k">交付清单产物表</span></button><button class="mi" type="button" role="menuitem" data-exp="list">看交付清单</button><button class="mi" type="button" role="menuitem" data-exp="recipe">导出配方文件（.json）</button></div>
+      <span class="ab-stash" hidden><button class="btn ghost ab-del" id="abDel" type="button" hidden>删除</button></span>
+    </div>
+  </div>
+  <main id="main">
+    <aside class="side left" id="side" aria-label="结构与效果库">
+      <section class="pane tree-pane" id="treePane" aria-label="结构">
+        <div class="tree-head" id="treeHead"><span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span><span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span><span class="sp"></span><details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作"><svg class="i" aria-hidden="true"><use href="#i-more"/></svg></summary><div class="ab-menu">
         <span class="menu-label">配方文件</span>
         <button type="button" id="abExportFile">导出配方文件（.json）</button>
         <button type="button" id="abImportFile">导入配方文件…</button>
@@ -2310,27 +2506,29 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
         <button type="button" id="abMyRename" hidden>重命名这个效果</button>
         <button type="button" id="abMyDelete" hidden>删除这个效果</button>
         <input type="file" id="abFile" accept=".json,application/json" hidden>
-      </div></details>
-    </div>
-
+      </div></details></div>
+        <div class="tree" id="tree" role="tree" aria-label="结构树"></div>
+        <div class="tree-foot"><button class="btn tree-add" id="abAddLayer" type="button"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">加层</span></button></div>
+      </section>
+      <div class="splitter" id="splitter" role="separator" aria-orientation="horizontal" aria-label="调整结构与效果库高度" tabindex="0" title="拖动调整高度，双击收起效果库"></div>
+      <section class="pane lib-pane" id="libPane" aria-label="效果库">
+      <div class="side-head">
+        <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
+        <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+      <button class="btn newrec lib-new" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">新建</span></button></div>
+      
+      <div class="side-body sb-auto" id="libBody"></div>
+        <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
+      </section>
+      
+      
+    </aside>
+    <div class="gutter" id="gutL" title="拖动调整宽度；双击恢复自适应宽度"></div>
+    <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">云端配方预览</b><select id="showcaseType" aria-label="云端配方"></select><select id="cloudLayer" aria-label="查看配方图层"></select><button id="showcaseParams" class="btn ghost">保存完整配方</button><button id="showcaseClose" class="btn ghost">退出预览</button><p id="showcaseNote">正在烘焙配方…</p><details id="cloudPending"></details></div>
       <div id="migNote" class="mig-note" role="status" hidden><span id="migNoteText"></span><button class="btn" id="migNoteOk" type="button">知道了</button></div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
-        <div class="viewbar" id="viewbar">
-          <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg class="i" aria-hidden="true"><use href="#i-pl"/></svg><span class="tl">库</span></button>
-          <div class="seg" id="viewSeg">
-            <button data-view="live" aria-pressed="true">实时模拟</button>
-            <button data-view="export" aria-pressed="false">引擎回放</button>
-            <button data-view="flow" aria-pressed="false" title="左：当前帧放大（最近邻，看得到真实像素）；右：整张贴图（金框 = 当前帧）+ 帧号曲线">贴图流转</button>
-            <button id="abDeliv" type="button" data-view="delivery" aria-pressed="false" title="查看完整素材包的文件、平台、规格和延迟">交付清单</button>
-          </div>
-          <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
-          <span class="sp"></span>
-          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
-          <span class="lowopts" id="rtTiltOpts" hidden><label class="check" title="4.9.69 升空尾缀倾斜预览：整根绕发射点转，看近段（速度朝向）和远段（Rectangle + 锁 Z）接不接得上；只是预览，不进导出、不存档">倾斜 <select id="rtTilt" aria-label="倾斜预览角度"><option value="0">0°</option><option value="15">15°</option><option value="-15">−15°</option></select></label></span><span class="lowopts" id="lowOpts" hidden><label class="check" title="按现有序列母材质的溶解公式画（值大先消失、软过渡）：导入器给单帧开了溶解以后 UE 里就是这样；关掉 = 不开溶解的样子"><input type="checkbox" id="lowDissolve" checked> 溶解预览</label><label class="check" title="序列 | 单帧 · 某一帧 | 单帧 · 长曝光 同一秒并排"><input type="checkbox" id="lowSide"> 并排</label></span>
-          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="精简布局：收起左右栏和底下的层轨道，画布最大（F，或双击画布；再按一次恢复，会记住）"><svg class="i" aria-hidden="true"><use href="#i-compact"/></svg><span class="tl">精简</span></button>
-          <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg class="i" aria-hidden="true"><use href="#i-pr"/></svg></button>
-        </div>
+        
       <div class="viewframe" id="viewFrame">
       <div class="vf-heading"><span id="vfTitle"></span></div>
       <div class="canvas-wrap">
@@ -2359,15 +2557,15 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
       <div class="preview-controls">
         <div class="rtlay" id="rtLayerBar" hidden title="升空尾缀分层看（只影响观察，不改参数和导出）：点一层开 / 关，双击只看这一层，「全部」恢复"></div>
         <div class="seg small texseg" id="texSeg" hidden role="group" aria-label="看哪一张贴图（这一层导出的每一张序列）"></div>
-        <div class="seg small" id="dispSeg" hidden><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true" title="真实米数（4.6.0）：相机按「四尺玉在 1000 m 占屏高 1/3」定一次，别的号数、升空尾缀都按自己的真实大小显示">游戏内大小</button></div>
+        
         <label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label>
         <label class="fexpo" title="显示曝光（只影响预览，不改素材）">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
         <details class="ab-more preview-settings" id="previewSettings"><summary class="btn" title="烘焙、贴图图层、构图网格、记录当前帧">预览设置</summary><div class="ab-menu">
           <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动烘焙</label></div>
           <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
           <label class="expo" id="bloomBox" title="只在烘焙器的画面上加一圈柔光（升空尾缀、地面效果的模板默认开）；导出的贴图、引擎里都没有"><input type="checkbox" id="previewBloomChk">预览泛光（引擎里没有）</label>
-          <button id="vtGrid" type="button" aria-pressed="false" title="只影响观察">构图网格</button>
-          <button id="vtNote" type="button" title="把时间、视图、平台、距离、图层、版本写进意见">记录当前帧到意见</button>
+          
+          
         </div></details>
       </div>
       <div class="vf-foot"><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
@@ -2384,7 +2582,7 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
     </section>
     <div class="gutter" id="gutR" title="拖动调整宽度；双击恢复自适应宽度"></div>
     <div class="right" id="right">
-    <div class="right-head"><div class="ptabs" id="ptabs" role="tablist">
+    <div class="right-head insp-h" id="inspHead"><nav class="path" id="path" aria-label="当前对象路径"></nav><div class="ptabs" id="ptabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true">参数</button>
       <button role="tab" data-tab="review" aria-selected="false">审阅<i class="dot" id="rvDot" hidden></i></button>
       <button role="tab" data-tab="iter" aria-selected="false">工具</button>
@@ -2510,6 +2708,11 @@ dialog::backdrop{background:rgba(12,21,24,.72)}
     </aside>
     </div>
   </main>
+  <footer class="status" id="statusBar">
+    <div class="st-l"><span id="stShell"></span><button class="btn" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制意见</button></div>
+    <div class="st-r"><span id="status" role="status" aria-live="polite"></span><span class="ab-state" id="abState"></span><button class="btn ab-bcancel" id="abBakeCancel" type="button" hidden title="停下这次烘焙：贴图留着上次烘好的（标旧），改参数或按 B 再烘">取消</button><button class="btn" id="saveSt" type="button" hidden></button><span id="sbPreview"></span><button class="btn" id="keysBtn" type="button" title="快捷键表（?）">快捷键<kbd>?</kbd></button></div>
+  </footer>
+  </div>
   <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
     <div class="pk-head"><b>更新记录</b><span class="hint">每次改动都会推到仓库，pull 后这里就是最新的</span><button class="btn ghost" id="updClose" type="button">关闭（Esc）</button></div>
     <div class="upd-list" id="updList"></div>
@@ -2690,7 +2893,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.127';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
+const VERSION = '4.9.128';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23；4.9.86 审查 4.9.82–4.9.85 先止血（用户 10-14 10:29）：分层火星面板不再删右栏共用块（W7）、不再关自动烘焙 / 强切视图、换效果不带「只看这一层」、仙女棒回模板默认不变窜天猴；镜头成像尾缀不给开、补默认值（N3）；尾缀合成一张时只在实时模拟里画 / 不起作用的行变灰写原因，燃尽后几项只在能烘时出现；曲线行也认 INERT，对话框23；4.9.87 仙女棒 / 尾焰（分层粒子图）的参数并回统一右栏：每层一个发射器标签，路径键读写 P.sparkGraph，改过 / 还原 / 撤销 / 保存同一套，独立面板去掉；镜头成像进「输出」；一层的我的效果（循环效果）导出一直循环（用户 10-14 10:29，对话框23）；4.9.88 右栏「不起作用」规则补全：4.9.50 以后的星头 / 火花参数跟「星头亮度 0」「火花生成率 0」走（火花节按节取），光晕被「星头单独」盖住时变灰写原因（用户 10-14 13:09，对话框相机渲染）；4.9.89 导出接线（导出排查 A1–A17 / B4 / B7 / B13，用户 10-14 13:12）：多层锚点取景 / 通道数照这一层、合成一张时间轴有入出点、纯星头读入出点、合成一张帧数只留按运动分 / 固定机位、手动格子按每帧停几 tick 加行、统计写帧数模式、多层星头火花一律合并、尾缀层产物格只给能出的、空壳发射器拦下、格子改下拉、锚点进重导指纹、PC 合成一张时实时只画导出里有的、V5 实时消散和亮度跟回放；合入门禁快检 analysis/scripts/合入门禁.py，对话框23；4.9.96 纯星头 PC「CPU 粒子（星头）」、入点前开花闪光 / 单束 / 光点的闪光单独导出（Flash）、多层尾缀层产物表下拉、尺寸档按时间缩认 Size By Life / Velocity Over Life（导出排查 H1 / B1 / B2 / A11 / A14）；4.9.97 分层粒子图画面：镜头核 σ 下限 0.55 像素、镜头关也走镜头的核（世界等比、光量和开时一样）、松叶分叉接燃尽后气流（导出排查 V2 / V3 / V1 / V4）；4.9.102 合成一张补效果（原定 4.9.98，4.9.100 / 4.9.101 特效工作台5 先发）：开关 rtFullFx（RT6 缺省关、画面不变，新建尾缀开）把星头光晕 / 末段爆亮 / 发射口 / 烟带 / 落火按材质反推烘进那一张、落火按 GPU 亮度 / 大小、燃尽门只作用在曲线上（落火上升段照常可见）（导出排查 V5）；4.9.103 爆裂小闪 / 子花闪光 / 辉星短闪按这一帧停留时段积分、单束时长含余烬、手机预览按 _M、多层尾缀层实时 = 单层、锚点 Zoom 前段余量按时间长、状态栏 / 产物表标注（导出排查 B3 / B5 / B6 / B8 / B9–B12 / A18，原定 4.9.99）
 // 4.9.123（团队版 T3 第 3 批，同上）：粒子层加 / 复制 / 删 / 改母粒 + 路径条与结构弹层（79_graph_tree.js）；粒子图模板默认不过曝；打开 / 新建多层效果可「稍后烘焙」（已有条目、存档不变）。
 // 4.9.122（团队版 T3 第 2 批，同上）：花型模板加「粒子图」分组——仙女棒、窜天猴尾焰、空白粒子图（46_graph_templates.js；SGS1 / SGR1 和旧的 sparkgraph 形态不变）。
 // 4.9.121（团队版 T3 第 1 批，用户 10-25 00:00「全批准」）：修「烘培」错字、新建效果填英文名 + MyFx 导出前拦下、「我的效果」导出全部 / 导入、本机交付服务没连上时的重连对话框（不改画面、不改导出内容）。
@@ -24007,6 +24210,112 @@ window.__fw = {
   document.addEventListener('keydown', hide, true);
   window.addEventListener('blur', hide);
   document.addEventListener('pointerleave', hide);
+})();
+// E 4.0（= E 样板 v3.7）P1：骨架上的新部件（4.9.128，对话框9 P）——结构树、面包屑、导出 ▾、状态栏、左栏上下分隔。
+// 只读状态、调用已有的函数（selectComboLayer / selectEmitTab / keysShow / 按钮 click），不碰参数、烘焙、导出。
+(function e40Layout() {
+  if (typeof document === 'undefined') return;
+  const $q = s => document.querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const ico = id => `<svg class="i" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+  const EMIT_ICO = { '星': 'star', '火花': 'spark', '余烬': 'ember', '分叉火花': 'frag', '爆裂': 'frag', '尾迹': 'trail', '尾缀': 'tail', '效果': 'layer', '输出': 'out', '开花闪光': 'star' };
+  const ready = () => typeof state !== 'undefined' && state && document.getElementById('tree');
+
+  // ---- 结构树 + 面包屑：效果 › 层 › 发射器（发射器 = 参数栏里的发射器标签） ----
+  const emitters = () => [...document.querySelectorAll('#params .etabs .et[data-e]')].filter(b => b.dataset.e !== '全部')
+    .map(b => ({ e: b.dataset.e, on: b.classList.contains('on') || b.getAttribute('aria-selected') === 'true', b }));
+  const effName = () => { const n = $q('#abIdName'); return (n && n.textContent.trim()) || (typeof safeName === 'function' ? '' : ''); };
+  function model() {
+    const combo = state.tab === 'combo' && Array.isArray(state.layers) && state.layers.length > 0;
+    const layers = combo ? state.layers.map((L, i) => ({ i, name: typeof layerName === 'function' ? layerName(i) : 'L' + (i + 1), off: !!(state.layerView && state.layerView.mute && state.layerView.mute.includes(i)) })) : [];
+    return { combo, sel: combo ? state.comboSel : -2, layers, em: emitters(), name: effName(), tab: state.tab };
+  }
+  let sig = '';
+  function render(force) {
+    if (!ready()) return;
+    const m = model(), s = JSON.stringify([m.combo, m.sel, m.layers, m.em.map(x => [x.e, x.on]), m.name, m.tab, !!$q('#assetBar') && $q('#assetBar').hidden]);
+    if (!force && s === sig) return; sig = s;
+    const tree = $q('#tree'), emRows = cur => m.em.map(x => `<button type="button" class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span></button>`).join('');
+    let h = '';
+    if ($q('#assetBar') && $q('#assetBar').hidden) h = '<div class="tree-empty">在下面的效果库里打开一个效果</div>';
+    else if (m.combo) {
+      for (const L of m.layers) {
+        const cur = L.i === m.sel;
+        h += `<button type="button" class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" aria-selected="${cur}" data-layer="${L.i}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span></button>`;
+        if (cur) h += emRows(true);
+      }
+    } else h = emRows(true);
+    tree.innerHTML = h;
+    // 面包屑：效果 › 层 › 发射器（末项大号 600）
+    const parts = [{ t: m.name || '效果', act: m.combo ? 'root' : '' }];
+    if (m.combo && m.sel >= 0 && m.layers[m.sel]) parts.push({ t: m.layers[m.sel].name, act: 'layer' });
+    const ce = m.em.find(x => x.on); if (ce && !(m.combo && m.sel < 0)) parts.push({ t: ce.e, act: '' });
+    const th = $q('#treeHead'); if (th) th.classList.toggle('cur', m.combo && m.sel < 0);
+    $q('#path').innerHTML = parts.map((p, i) => i === parts.length - 1 ? `<span class="cur">${esc(p.t)}</span>` : `<button type="button" data-path="${p.act}">${esc(p.t)}</button><span class="sep" aria-hidden="true">›</span>`).join('');
+  }
+  document.addEventListener('click', e => {
+    const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
+    if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
+    if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
+    else if (t.dataset.em && typeof selectEmitTab === 'function') selectEmitTab(t.dataset.em);
+    else if (t.dataset.path === 'root' && typeof selectComboLayer === 'function') selectComboLayer(-1);
+    else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
+    setTimeout(() => render(true), 0);
+  });
+  setInterval(() => { if (!document.hidden) { render(); syncSave(); } }, 250);
+
+  // ---- 「保存」后的未保存点（v3.4 第 4 条）：资产栏「参数已变 · 未保存」亮着时 ----
+  function syncSave() {
+    const chg = $q('#abChg'), sv = $q('#abSave'); if (!chg || !sv) return;
+    const dirty = !chg.hidden; sv.classList.toggle('e-dirty', dirty);
+    const lab = dirty ? '保存（有没保存的改动）' : '保存'; if (sv.getAttribute('aria-label') !== lab) sv.setAttribute('aria-label', lab);
+  }
+
+  // ---- 导出 ▾：资源交付（外壳接管）、导出素材包、看交付清单、导出配方文件 ----
+  const menu = () => $q('#expMenu'), dd = () => $q('#expMenuBtn');
+  function closeExp() { const m = menu(); if (m && !m.hidden) { m.hidden = true; dd().setAttribute('aria-expanded', 'false'); } }
+  function openExp() {
+    const m = menu(); if (!m) return;
+    if (typeof window.e40ExpSummary === 'function') { try { window.e40ExpSummary($q('#expSum')); } catch (err) { console.error(err); } }
+    m.hidden = false; dd().setAttribute('aria-expanded', 'true');
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('#expMenuBtn');
+    if (b) { if (menu().hidden) openExp(); else closeExp(); return; }
+    const it = e.target.closest && e.target.closest('#expMenu [data-exp]');
+    if (it) {
+      const k = it.dataset.exp; closeExp();
+      if (k === 'deliv') { const sh = $q('#shell'); if (!(sh && sh.children.length)) { const o = $q('#deliveryOpen'); if (o) o.click(); } }     // 有外壳时外壳按 data-exp="deliv" 接管
+      else if (k === 'pack') $q('#abExportPack').click();
+      else if (k === 'list') $q('#abDeliv').click();
+      else if (k === 'recipe') $q('#abExportFile').click();
+      return;
+    }
+    if (menu() && !menu().hidden && !(e.target.closest && e.target.closest('#expMenu'))) closeExp();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExp(); }, true);
+
+  // ---- 状态栏：快捷键 ----
+  document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#keysBtn') && typeof keysShow === 'function') keysShow(); });
+
+  // ---- 左栏上下分隔：拖动改结构树高度、双击收起 / 展开效果库（记住） ----
+  function initSplit() {
+    const sp = $q('#splitter'), side = $q('#side'); if (!sp || !side) return;
+    const get = (k, d) => { try { const v = localStorage.getItem('fw.e40.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } };
+    const put = (k, v) => { try { localStorage.setItem('fw.e40.' + k, JSON.stringify(v)); } catch (e) { } };
+    const apply = h => { if (h) side.style.setProperty('--tree-h', Math.round(h) + 'px'); };
+    apply(get('treeH', 0)); side.classList.toggle('lib-closed', !!get('libClosed', false));
+    sp.addEventListener('pointerdown', e0 => {
+      e0.preventDefault(); sp.setPointerCapture(e0.pointerId); sp.classList.add('is-active');
+      const top = side.getBoundingClientRect().top, max = side.clientHeight - 120;
+      const mv = e => apply(Math.max(80, Math.min(max, e.clientY - top)));
+      const up = e => { sp.classList.remove('is-active'); sp.removeEventListener('pointermove', mv); sp.removeEventListener('pointerup', up); const h = parseFloat(side.style.getPropertyValue('--tree-h')); if (h) put('treeH', h); };
+      sp.addEventListener('pointermove', mv); sp.addEventListener('pointerup', up);
+    });
+    sp.addEventListener('dblclick', () => { const c = !side.classList.contains('lib-closed'); side.classList.toggle('lib-closed', c); put('libClosed', c); });
+    sp.addEventListener('keydown', e => { if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); const h = $q('#treePane').offsetHeight + (e.key === 'ArrowUp' ? -16 : 16); apply(Math.max(80, h)); put('treeH', Math.max(80, h)); } });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSplit); else initSplit();
 })();
 </script>
 </body>
