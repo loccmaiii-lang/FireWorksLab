@@ -944,6 +944,12 @@ function closeDialog() { if (OV.dlg) { OV.dlg.forEach(x => x.remove()); OV.dlg =
 function toast(text, o = {}) {
   closeToast();
   if (typeof o === 'function') o = {undo: o};
+  /* 外壳提供 window.shellToast：所有提示条进同一个提示区（一次一条）；「撤销」作为提示条上的命令 */
+  if (typeof window.shellToast === 'function') {
+    const t = window.shellToast(text, {ms: o.ms, near: o.near, action: o.undo ? {label: '撤销', fn: o.undo} : o.action});
+    if (t) { t._entry = o.entry || null; OV.toast = t; }
+    return t;
+  }
   const near = UI.view === 'sheet' ? (o.near && o.near.closest && o.near.closest('#kitSheet') ? o.near : $('#kitSheet')) : $('#mid');
   const t = document.createElement('div');
   t.className = 'toast'; t.setAttribute('role', 'status'); t._entry = o.entry || null;
@@ -2418,7 +2424,7 @@ const ICONS = [['layer', '层'], ['star', '星'], ['spark', '火花'], ['ember',
   ['undo', '撤销'], ['redo', '重做'], ['history', '版本记录'], ['reset', '恢复默认'], ['stale', '需重新导出'], ['check', '已完成'], ['alert', '警告'], ['info', '说明'],
   ['play', '播放'], ['pause', '暂停'], ['restart', '回到开头'], ['loop', '循环'], ['camera', '缩略图'], ['timer', '时间工具'], ['grid', '网格叠加'], ['note', '批注'],
   ['compact', '精简布局'], ['pl', '左栏'], ['pr', '右栏'], ['folder', '文件夹'], ['settings', '设置'], ['search', '搜索'], ['filter', '筛选'], ['auto', '建议值'],
-  ['cd', '展开'], ['cu', '收起'], ['cr', '向右'], ['cl', '向左'], ['plus', '新建'], ['x', '关闭'], ['keys', '快捷键'], ['file', '文件']];
+  ['cd', '展开'], ['cu', '收起'], ['cr', '向右'], ['cl', '向左'], ['back', '返回'], ['plus', '新建'], ['x', '关闭'], ['keys', '快捷键'], ['file', '文件']];
 function sheetIcons() {
   return `<h2>图标</h2><p class="lead">规范 v3 第 6 节。专门画的一套，symbol 定义在 body_main.html 开头（外壳共用）。圆箭头只表示「恢复默认」；「循环」是首尾相接的矩形环；「版本记录」是叠在一起的三张纸；「需重新导出」是琥珀色三角加感叹号。</p>
     <div class="ks-icons">${ICONS.map(([id, t]) => `<div><svg class="i${id === 'stale' ? ' amber' : ''}" aria-hidden="true"><use href="#i-${id}"/></svg><span>${t}<code>i-${id}</code></span></div>`).join('')}</div>`;

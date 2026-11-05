@@ -156,7 +156,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .tabs-lg .tab[aria-selected="true"]::after{left:16px;right:16px}
 .tabs-sub{gap:4px;padding:0 var(--pad)}
 .tabs-sub .tab{height:var(--h-hit);padding:0 6px}
-.tabs-sub .tab[aria-selected="true"]::after{left:6px;right:6px}
+.tabs-sub .tab[aria-selected="true"]::after{left:6px;right:6px;background:var(--t1)}   /* 二级标签不在薄荷五处里：主文字色下划线 */
 /* 筛选块：同分段控件（S） */
 .chips{display:inline-flex;flex:none;border:1px solid var(--line);border-radius:var(--r2)}
 .chip{height:calc(var(--h-ctl) - 2px);padding:0 8px;color:var(--t2);font-size:var(--fs2);white-space:nowrap}
@@ -349,8 +349,10 @@ mark{background:none;color:var(--t1);font-weight:var(--fw2);text-decoration:unde
 .prm .actc>*{grid-area:1/1}
 .prm .actc .sug{width:var(--w-act);height:var(--w-act);color:var(--t2)}
 .prm .actc .sug svg.i{width:14px;height:14px}
-.prm.has-sug:not(.is-nd):not(.is-ed):not(:hover) .actc .rst{visibility:hidden}
-.prm.has-sug:hover .actc .sug,.prm.has-sug.is-nd .actc .sug,.prm.has-sug.is-ed .actc .sug{visibility:hidden}
+/* 有建议值的行（曝光）：没改过时操作列放「建议」，改过以后放恢复（建议值也在恢复菜单里） */
+.prm.has-sug .actc .rst{visibility:hidden}
+.prm.has-sug.is-nd .actc .rst,.prm.has-sug.is-ed .actc .rst{visibility:visible}
+.prm.has-sug.is-nd .actc .sug,.prm.has-sug.is-ed .actc .sug{visibility:hidden}
 /* 停用：整行降透明度；悬停写原因（不把整句塞进控件列） */
 .prm.is-dis .plw,.prm.is-dis .ctl1,.prm.is-dis .vu,.prm.is-dis .ctl{opacity:.5}
 .prm.is-dis .lk{visibility:hidden}
@@ -832,14 +834,14 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 .ovl>*{pointer-events:auto}
 
 /* ---------- 7 样板页（非产品界面） ---------- */
-.kit-bar{position:fixed;top:0;right:0;z-index:95;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;max-width:720px;padding:34px 14px 12px;background:var(--g0);border:1px solid var(--g5);border-top:0;border-right:0;box-shadow:var(--shadow);font-size:13px;white-space:nowrap}
+.kit-bar{position:fixed;bottom:30px;right:0;z-index:95;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;max-width:720px;padding:12px 14px 34px;background:var(--g0);border:1px solid var(--g5);border-right:0;box-shadow:var(--shadow);font-size:13px;white-space:nowrap}   /* 样板控制条：右下角、状态栏上方，不盖外壳顶栏最右的显卡 */
 .kit-bar:not(.is-open){padding:0;border:0;background:none;box-shadow:none}
 .kit-bar:not(.is-open)>:not(.kit-tog){display:none}
-.kit-tog{position:absolute;top:0;right:0;display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 6px 0 8px;border:1px solid var(--g5);border-top:0;border-right:0;background:var(--g0);color:var(--t2);font-size:11px;line-height:16px;opacity:.85}
+.kit-tog{position:absolute;bottom:0;right:0;display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 6px 0 8px;border:1px solid var(--g5);border-bottom:0;border-right:0;background:var(--g0);color:var(--t2);font-size:11px;line-height:16px;opacity:.85}
 .kit-bar:not(.is-open) .kit-tog{position:static}
 .kit-tog:hover{opacity:1;color:var(--t1);background:var(--g2)}
-.kit-tog svg.i{width:12px;height:12px}
-.kit-bar.is-open .kit-tog svg.i{transform:rotate(180deg)}
+.kit-tog svg.i{width:12px;height:12px;transform:rotate(180deg)}
+.kit-bar.is-open .kit-tog svg.i{transform:none}
 .kit-bar .kn{font-weight:var(--fw2);color:var(--t1)}
 .kit-bar .kg{display:flex;align-items:center;gap:8px;color:var(--t3);font-size:12px}
 .kit-bar .seg button{height:26px;font-size:13px}
