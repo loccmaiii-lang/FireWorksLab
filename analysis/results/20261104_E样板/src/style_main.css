@@ -25,7 +25,7 @@
   --hov:var(--surf-ov); --press:var(--g5); --on:var(--g5); --selbg:var(--on);
   /* 文字三级 + 停用（§1）：停用 = 次文字色 50 %（和面板 3.4:1） */
   --t1:var(--g9); --t2:var(--g8); --t3:var(--g7); --tDis:color-mix(in srgb, var(--g8) 50%, var(--g1));
-  /* 薄荷只用在五处（§5）：导出按钮、播放头、结构树当前行细框、当前页标签下划线、UE 已连接的圆点 */
+  /* 薄荷（v3.3 第 3 条）= 当前位置 + 唯一主操作：导出按钮、结构树当前行细框、当前标签下划线、播放头（头和线） */
   --sel:var(--p4);
   --ov:var(--surf-ov); --ovLine:var(--g6);   /* v3.2 第 5 条：浮层的 1 px 线比面板里的线亮一级，看得出浮在上面 */
   --focus:var(--g8);
@@ -160,15 +160,17 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .chip:hover{background:var(--hov);color:var(--t1)}
 .chip[aria-pressed="true"]{background:var(--on);color:var(--t1)}
 
-/* 3.4 开关：轨道 28×16。关：只画 1 px 框，方块在左、灰色；开：轨道填选中底色，方块在右、主文字色 */
-.sw{appearance:none;position:relative;flex:none;width:28px;height:16px;border:1px solid var(--g6);border-radius:var(--r2);background:transparent;cursor:pointer;vertical-align:middle;transition:background .12s,border-color .12s}
-.sw::after{content:"";position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:1px;background:var(--g7);transition:left .12s,background .12s}
-.sw:checked{background:var(--g8);border-color:var(--g8)}   /* v3.2 第 4 条：开 = 轨道接近次文字色，方块主文字色、外圈一道暗线隔开 */
-.sw:checked::after{left:14px;background:var(--g9);box-shadow:0 0 0 1px var(--g2)}
-.sw:hover,.sw.is-hover{border-color:var(--g7)}
-.sw:checked:hover{border-color:var(--g9);background:var(--g9)}
+/* 3.4 开关（v3.3 第 10 条，三态一眼分开）：轨道 28×16（不小于 26×14），圆角 2 px 以内。
+   开：轨道主文字色实心，方块用底色、在右；关：轨道只画 1 px 线框，方块次文字色、在左；停用：整体 40 % */
+.sw{appearance:none;position:relative;flex:none;width:28px;height:16px;border:1px solid var(--t3);border-radius:var(--r2);background:transparent;cursor:pointer;vertical-align:middle;transition:background .12s,border-color .12s}
+.sw::after{content:"";position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:var(--r1);background:var(--t2);transition:left .12s,background .12s}
+.sw:checked{background:var(--t1);border-color:var(--t1)}
+.sw:checked::after{left:14px;background:var(--bg)}
+.sw:hover,.sw.is-hover{border-color:var(--t2)}
+.sw:not(:checked):hover::after,.sw:not(:checked).is-hover::after{background:var(--t1)}
+.sw:checked:hover,.sw:checked.is-hover{border-color:var(--t1)}
 .sw:focus-visible,.sw.is-focus{outline:2px solid var(--focus);outline-offset:2px}
-.sw:disabled{opacity:.35;cursor:default;border-style:dashed}   /* 停用：再暗一级、虚线框，和「关」分得开 */
+.sw:disabled{opacity:.4;cursor:default}
 /* 3.5 勾选：14 px 方框 */
 .chk,.rad{appearance:none;position:relative;flex:none;width:14px;height:14px;border:1px solid var(--g7);background:transparent;cursor:pointer;vertical-align:middle}
 .chk{border-radius:var(--r2)}
@@ -218,16 +220,16 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 
 /* 3.7 滑杆：细轨、中性填充、默认值刻度、随机幅度带、区间 */
 .sl{position:relative;height:var(--h-row);min-width:32px;cursor:pointer;touch-action:none;--v:0%}
-.sl::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--g5)}
-.sl-f{position:absolute;left:0;top:50%;width:var(--v);height:2px;margin-top:-1px;background:var(--g7)}
+.sl::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;margin-top:0;background:var(--line)}   /* v3.3 第 11 条：没填的部分 1 px 线色 */
+.sl-f{position:absolute;left:0;top:50%;width:var(--v);height:2px;margin-top:-1px;background:var(--t2)}   /* 已填的部分次文字色 2 px */
 .sl-rb{position:absolute;top:50%;left:var(--ra);width:calc(var(--rz) - var(--ra));height:6px;margin-top:-3px;background:var(--g5)}
 .sl-d{position:absolute;left:var(--d);top:50%;width:1px;height:10px;margin-top:-5px;background:var(--g7)}
-.sl-k{position:absolute;left:var(--v);top:50%;width:4px;height:14px;margin:-7px 0 0 -2px;border-radius:var(--r1);background:var(--g9);box-shadow:0 0 0 2px var(--bg)}
+.sl-k{position:absolute;left:var(--v);top:50%;width:4px;height:14px;margin:-7px 0 0 -2px;border-radius:var(--r1);background:var(--t1);box-shadow:0 0 0 2px var(--bg)}   /* 拖块 4×14 实心、主文字色；滑杆整行 28 px 可点 */
 .sl:hover .sl-k,.sl.is-hover .sl-k{width:6px;margin-left:-3px}
 .sl:focus-visible,.sl.is-focus{outline:none}
 .sl:focus-visible .sl-k,.sl.is-focus .sl-k{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--focus)}
 .sl.is-active .sl-k{width:6px;height:16px;margin:-8px 0 0 -3px}
-.sl.is-active .sl-f{background:var(--g8)}
+.sl.is-active .sl-f{background:var(--t1)}
 .sl.range .sl-f{left:var(--lo);width:calc(var(--hi) - var(--lo))}
 .sl.range .sl-k.lo{left:var(--lo)}
 .sl.range .sl-k.hi{left:var(--hi)}
@@ -252,11 +254,11 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
   .sel option:hover,.sel option:focus-visible{background:var(--press);outline:none}
 }
 
-/* 3.9 状态词（§5）：要你处理的用主文字色；其余弱色；琥珀只给「需重新导出」和挡住操作的设置 */
+/* 3.9 状态词（§5、v3.3 第 2 条）：「待验收」用主文字色；其余弱色；琥珀只给「需重新导出」和挡住操作的设置 */
 .st{color:var(--t3);white-space:nowrap}
 .st-new{color:var(--t3)}
 .st.st-hi{color:var(--t1)}
-.st.st-due{color:var(--w3)}   /* v3.2 第 10 条：效果库「待验收」= 要你处理，琥珀；其余状态弱色 */
+.st.st-due{color:var(--t1)}   /* v3.3 第 2 条：「待验收」用主文字色；琥珀只给异常和要处理的警告 */
 .st-warn{display:inline-flex;align-items:center;gap:4px;color:var(--w3)}
 .st-warn svg.i{width:14px;height:14px;color:var(--w3)}
 .st-ok{display:inline-flex;align-items:center;gap:4px;color:var(--t3)}
@@ -500,8 +502,8 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 .bar-e:hover .bh::after,.bar-e .bh:hover::after{background:var(--g9)}
 .kf{position:absolute;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;background:var(--g9);transform:rotate(45deg);box-shadow:0 0 0 2px var(--g2);pointer-events:none}
 .tlrow:not(.is-sel) .kf{display:none}
-/* 播放头：薄荷；头部画在刻度尺上 */
-.ph{position:absolute;width:1px;background:var(--t2);pointer-events:none;z-index:4}   /* v3.2 第 9 条：线是次文字色，只有头部薄荷 */
+/* 播放头：头和线都是薄荷；头部画在刻度尺上 */
+.ph{position:absolute;width:1px;background:var(--sel);pointer-events:none;z-index:4}   /* v3.3 第 3 条：播放头一个颜色——头和线都是薄荷，线宽 1 px（薄荷 = 当前位置 + 唯一主操作） */
 .ph i{position:absolute;left:-5px;top:0;width:11px;height:10px;background:var(--sel);clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%);pointer-events:auto;cursor:ew-resize}   /* 头部在刻度数字上方 */
 /* v3.3 第 4 条：行放不下时，上下边缘各一条「上面还有 N 行」「下面还有 N 行」（不透明、占满一行宽），点一下滚过去 */
 .tl-edge{position:sticky;z-index:2;height:0}
