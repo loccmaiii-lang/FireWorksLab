@@ -1,0 +1,9 @@
+crit_s1: nonce=cr-d34e09
+crit_s2: nonce=cr-6f609d
+crit_s3: nonce=cr-82f3c9
+crit_s4: nonce=cr-39ac94
+crit_s5: nonce=cr-fb9d5b
+ab_1(main): A=v32 B=v33 nonce=ab-07e97d
+ab_2(spk): A=v32 B=v33 nonce=ab-21fa97
+ab_3(m1366): A=v33 B=v32 nonce=ab-3bec39
+rules: nonce=ru-93984d
