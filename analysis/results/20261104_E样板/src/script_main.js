@@ -2944,7 +2944,7 @@ function sheetInteract() {
 function buildSheet() {
   ctxOf('sheet|prm', SHEET_MODS.prm); PS['sheet|prm|参数行|初速'].sub = true;
   PS['sheet|prm|参数行|时间倍率'].v = 1.8; PS['sheet|prm|参数行|扰动尺度'].v = 10; ctxOf('sheet|mod', SHEET_MODS.mod); PS['sheet|mod|时间与缩放|开始时间'].v = .45;
-  $('#sheetBody').innerHTML = `<h1>组件全表</h1><p class="lead">E 样板 v3，按《E 设计规范 v3》整体重画。烘焙器、编排节目、导入器共用同一份样式和图标；主屏只用本表里的组件拼成。</p>`
+  $('#sheetBody').innerHTML = `<h1>组件全表</h1><p class="lead">E 样板 4.0（v3 到 v3.7 合成的定版），按《E 设计规范 v4》。烘焙器、编排节目、导入器共用同一份样式和图标；主屏只用本表里的组件拼成。</p>`
     + sheetTokens() + sheetIcons() + sheetBasic() + sheetCombo() + sheetOverlays() + sheetInteract();
   $$('#kitSheet [data-ind]').forEach(c => { c.indeterminate = true; });
   renderTree(SC.tpl5, $('#sheetTree'));
@@ -3022,7 +3022,7 @@ document.addEventListener('keydown', e => {
 });
 
 /* ---------- 启动 ---------- */
-document.title = 'E 样板 v3';
+document.title = 'E 样板 4.0';
 renderAll(true);
 
 })();
