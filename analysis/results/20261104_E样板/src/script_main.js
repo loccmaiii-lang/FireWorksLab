@@ -968,7 +968,7 @@ function toast(text, o = {}) {
   return t;
 }
 function closeToast() { clearTimeout(OV.toastT); if (OV.toast) { OV.toast.remove(); OV.toast = null; } }
-const KEYS = [['空格', '播放 / 暂停'], ['R', '重播'], [', .', '上一帧 / 下一帧'], ['← →', '逐帧；结构树中为收起 / 展开'], ['Shift ← →', '走 10 帧'], ['[ ]', '入点 / 出点设到播放头'], ['Esc', '取消拖动；退出只看'],
+const KEYS = [['空格', '播放 / 暂停'], ['R', '重播'], [', .', '上一帧 / 下一帧'], ['← →', '逐帧；结构树中收起展开'], ['Shift ← →', '走 10 帧'], ['[ ]', '入点 / 出点设到播放头'], ['Esc', '取消拖动；退出只看'],
   ['S', '加入 / 移出只看'], ['Alt 单击', '只看此项'], ['H', '隐藏 / 显示'], ['F', '精简布局'], ['L', '显示 / 隐藏左栏'], ['P', '显示 / 隐藏右栏'],
   ['Ctrl S', '保存'], ['Ctrl Z', '撤销'], ['Ctrl Y', '重做'], ['↑ ↓', '上一行 / 下一行'], ['F2', '改名'], ['Delete', '删除选中的层或发射器'], ['Shift', '拖动时精调'], ['?', '快捷键表']];
 const keysHTML = () => `<h2>快捷键<span class="sp"></span><button class="btn btn-icon sm" data-r="x" aria-label="关闭">${ico('x')}</button></h2><dl>${KEYS.map(([k, d]) => `<dt>${k.split(' ').map(x => `<kbd>${x}</kbd>`).join('')}</dt><dd>${d}</dd>`).join('')}</dl>`;
@@ -1161,8 +1161,10 @@ function placePH(sc, wrap) {
   const trk = $('.rrow .fr', tl), w = wrap.getBoundingClientRect(), r = trk.getBoundingClientRect(), ph = $('.ph', wrap);
   const rows = $('.tl-rows', tl), rb = rows.offsetHeight && getComputedStyle(rows).display !== 'none' ? Math.min(rows.getBoundingClientRect().bottom, tl.getBoundingClientRect().bottom) : r.bottom;
   ph.style.left = Math.round(r.left - w.left + sc.t / sc.T * r.width) + 'px';
-  ph.style.top = (r.top - w.top) + 'px';
-  ph.style.height = Math.max(r.height, rb - r.top) + 'px';
+  /* 头部画在刻度尺的下半段（上半段写导出范围「0.35–2.85 s」，不互相挡），线往下穿过轨道 */
+  const hy = r.top + Math.max(0, r.height - 12);
+  ph.style.top = (hy - w.top) + 'px';
+  ph.style.height = Math.max(12, rb - hy) + 'px';
   const fno = wrap.id === 'tlw' ? $('#transport .fno') : null; if (fno) { const B = bakeOf(sc); fno.textContent = `${frameNo(sc)} / ${B ? B.frames : sc.frames}`; }
 }
 
@@ -1949,7 +1951,7 @@ const scOfWrap = w => SC[w.dataset.scene];
 function tlSelect(w, id) { if (w.id === 'tlw') select(id); else { const sc = scOfWrap(w); sc.sel = id; $$('.tlrow', w).forEach(r => r.classList.toggle('is-sel', r.dataset.id === id)); } }
 document.addEventListener('pointerdown', e => {
   if (e.button !== 0) return;
-  const w = e.target.closest('.tlw'); if (!w || e.target.closest('.tl-more')) return;
+  const w = e.target.closest('.tlw'); if (!w || e.target.closest('.tl-more, .xlab')) return;   /* 刻度尺上方的入点 / 出点框：点它是输入，不是拖播放头 */
   const sc = scOfWrap(w), t = e.target;
   const h = t.closest('[data-drag]');
   const scrub = !h && t.closest('[data-scrub], [data-scrub-ph]');

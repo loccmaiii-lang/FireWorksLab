@@ -832,6 +832,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px
 #saveSt svg.i{width:12px;height:12px}
 .ovl{position:absolute;inset:0;pointer-events:none;z-index:40}
 .ovl>*{pointer-events:auto}
+.ovl>.tip{pointer-events:none}   /* 提示框不挡鼠标 */
 
 /* ---------- 7 样板页（非产品界面） ---------- */
 .kit-bar{position:fixed;bottom:30px;right:0;z-index:95;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;max-width:720px;padding:12px 14px 34px;background:var(--g0);border:1px solid var(--g5);border-right:0;box-shadow:var(--shadow);font-size:13px;white-space:nowrap}   /* 样板控制条：右下角、状态栏上方，不盖外壳顶栏最右的显卡 */

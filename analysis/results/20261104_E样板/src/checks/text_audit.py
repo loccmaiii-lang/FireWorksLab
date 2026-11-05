@@ -30,7 +30,7 @@ COLLECT = r"""(cat) => {
   const out = [], vis = e => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return r.width > 0 && r.height > 0 && c.visibility !== 'hidden' && c.display !== 'none'; };
   const own = e => [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').replace(/\s+/g, ' ').trim();
   const roots = [...document.querySelectorAll('#wsBaker, #ovlApp')];
-  const kind = e => e.closest('.toast') ? '提示条' : e.closest('.dialog p') ? '对话框正文' : e.closest('.dialog h2, .keys h2, .tip b') ? '标题' : e.closest('.empty') ? (e.closest('button') ? '按钮' : '空状态')
+  const kind = e => e.closest('#saveSt, .mod-h .ms, .msum .mline, .ci, .fbk, .time, .cnt, .pager, #delivZoom, .dh .lbl') ? '读数' : e.closest('#modeTabs') ? '标签' : e.closest('.toast') ? '提示条' : e.closest('.dialog p') ? '对话框正文' : e.closest('.dialog h2, .keys h2, .tip b') ? '标题' : e.closest('.empty') ? (e.closest('button') ? '按钮' : '空状态')
     : e.closest('.ms2, .mnote, .hint2, .dep-t') ? '说明行' : e.closest('.menu .mi, .menu .mh') ? '菜单项' : e.closest('.tip') ? '悬停提示' : e.closest('button, .tab, .seg, .chip') ? '按钮'
     : e.closest('.ci, .fbk, .time, #saveSt, .cnt, .pager, #delivZoom, .dh .lbl') ? '读数' : '标签';
   for (const R of roots) for (const e of R.querySelectorAll('*')) {
