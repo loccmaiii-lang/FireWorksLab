@@ -5,7 +5,8 @@
 
 - file:// 打开 tool/烟花工坊.html，外网一律拦截（只放行 file: / data: / blob:）。
 - 浏览器的「选文件夹」窗口自动化点不了：页面里换成一个内存里的假文件夹（名字「FWL_Export_测试」），其余都走真代码。
-- 导入模块用成品里合进去的那个（替身 fwl-importer.mock.js 时按它的 __mock.scenario() 切 UE 断开；真模块时跳过要替身的几项）。
+- 成品合的是真导入模块时：真模块查顶栏、空导出文件夹、导入变灰（云端连不上 UE）；列表 → 预检 → 导入的流程拿成品把导入模块那一段换成
+  本机替身 tool/importer/dist/fwl-importer.mock.js 另存一份查（同一份烘焙器和外壳），用 __mock.scenario() 切 UE 断开。
 - 查：顶栏三项（UE、显卡、变灰的「编排节目」+ 原因）和版本号 / 更新记录；状态栏左端导出、备份两个文件夹；首次导出没选文件夹先问；
   「资源交付」入口（v3.7 = 导出菜单第一项；4.9 界面 = 「导出素材包」旁边）打开资源交付页；替身数据下列表 → 预检 → 覆盖确认 → 导入 → 已导入；
   覆盖前先选备份位置；UE 断开 → 原地「重新连接」、导入变灰写原因 → 重新连上；导出钩子（67_delivery.js deliverResource → shellAfterExport → 导入模块 publish）→ 写进导出文件夹、
@@ -21,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 ARGS = ['--ignore-gpu-blocklist', '--disable-background-timer-throttling', '--disable-renderer-backgrounding',
         '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader']
 FAKE_DIR = r"""(() => {
-  const mk = name => { const files = new Map(); return {
+  const mk = name => { const files = new Map(), dirs = new Map(); return {
     kind: 'directory', name, __files: files,
     async queryPermission() { return 'granted'; }, async requestPermission() { return 'granted'; },
     async getFileHandle(n, o) {
@@ -30,6 +31,8 @@ FAKE_DIR = r"""(() => {
       return {kind: 'file', name: n, async createWritable() { const parts = []; return {async write(d) { parts.push(d); }, async close() { ent.blob = new Blob(parts); }}; },
               async getFile() { return new File([ent.blob], n); }};
     },
+    async getDirectoryHandle(n, o) { if (!dirs.has(n)) { if (!(o && o.create)) throw new DOMException('没有这个文件夹', 'NotFoundError'); dirs.set(n, mk(n)); } return dirs.get(n); },
+    async removeEntry(n) { files.delete(n); dirs.delete(n); }, async isSameEntry(x) { return x === this; },
     async *values() {}, async *entries() {}, async *keys() {}
   }; };
   window.__fakeDir = mk('FWL_Export_测试');
@@ -232,7 +235,17 @@ def t_main(R, b, url, kind):
     tried = wait(pg, "SHELL.state().ue.k === 'wait'", 3000)
     pg.evaluate("FWLImporter.__mock.scenario('default')")
     R.ck('「重新连接」先试一次（连接中），UE 回来后自动变「已连接」', tried and wait(pg, "SHELL.state().ue.k === 'on' && document.querySelector('#shell .sh-ue').textContent.includes('已连接')", 6000))
-    # 导出钩子：deliverResource（67_delivery.js）→ shellAfterExport → ZIP 存进导出文件夹 → 打开资源交付、选中刚导出的包
+    # 钩子不改导出：deliverResource 把同一个 blob、同名交给 download（ZIP）/ 把同样三样交给 DeliveryWorkspace.publish（目录），返回值照旧
+    eq = pg.evaluate("""async () => {
+      const blob = new Blob(['PK-eq']), meta = {a: 1}, d0 = window.download, p0 = DeliveryWorkspace.publish, h0 = window.shellAfterExport;
+      let z = null, d = null; const rc = {receipt: 1}; window.shellAfterExport = () => {};
+      window.download = (b, n) => { z = [b === blob, n]; return 'dl'; };
+      DeliveryWorkspace.publish = async (b, n, m) => { d = [b === blob, n, m === meta]; return rc; };
+      try { const r1 = await deliverResource(blob, 'eq.zip', meta, 'zip'), r2 = await deliverResource(blob, 'eq2.zip', meta, 'directory');
+            return {zip: z, zipRet: r1, dir: d, dirRet: r2 === rc}; }
+      finally { window.download = d0; DeliveryWorkspace.publish = p0; window.shellAfterExport = h0; } }""")
+    R.ck('钩子不改导出：ZIP / 目录两种方式收到的东西和返回值照旧', eq['zip'] == [True, 'eq.zip'] and eq['zipRet'] == 'dl' and eq['dir'] == [True, 'eq2.zip', True] and eq['dirRet'], json.dumps(eq, ensure_ascii=False))
+    # 导出钩子：deliverResource（67_delivery.js）→ shellAfterExport → 导入模块 publish → 打开资源交付、选中刚导出的包
     pg.evaluate("SHELL.ws('baker')")
     pg.evaluate("deliverResource(new Blob(['PK-shell-test']), '外壳检查导出_PC.zip', {}, 'zip')")
     ok = wait(pg, "SHELL.state().ws === 'import' && (SHELL.S.imp.pkgs || []).some(p => p.name === '外壳检查导出_PC') && SHELL.S.imp.sel === (SHELL.S.imp.pkgs.find(p => p.name === '外壳检查导出_PC') || {}).id", 10000)
@@ -263,9 +276,29 @@ def t_1366(R, b, url, kind):
     pg.close()
 
 
-def t_missing(R, b, html):
+def t_real(R, b, url):
+    """真导入模块：云端连不上 UE。查顶栏不写「替身」、空的新导出文件夹列 0 个包、导入变灰写原因"""
+    pg, errs = open_page(b, url, 1920, 1080)
+    ue = pg.evaluate("() => { const e = document.querySelector('#shell .sh-ue'); return e ? [e.textContent.replace(/\\s+/g, ' ').trim(), e.dataset.tip || ''] : null; }")
+    R.ck('真模块：顶栏 UE 状态来自导入模块，悬停不写「替身」', bool(ue) and ue[0].startswith('UE') and '替身' not in ue[1], json.dumps(ue, ensure_ascii=False))
+    click(pg, '#stShell [data-fk="exp"]'); wait(pg, "SHELL.state().exp === 'ok'", 5000)
+    pg.evaluate('SHELL.openDeliv()')
+    ok = wait(pg, "!SHELL.S.imp.loading && (Array.isArray(SHELL.S.imp.pkgs) || SHELL.S.imp.err)", 15000)
+    st = pg.evaluate("({n: (SHELL.S.imp.pkgs || []).length, err: SHELL.S.imp.err, list: document.querySelector('#impList').innerText, go: document.querySelector('#impGo').dataset.tip || ''})")
+    R.ck('真模块：新导出文件夹读出 0 个包，导入变灰写原因', ok and st['n'] == 0 and not st['err'] and '还没有素材包' in st['list'] and bool(st['go']), json.dumps(st, ensure_ascii=False))
+    shot(R, pg, '31_真模块_空导出文件夹')
+    R.ck('页面没有脚本错误（真模块）', not errs, '；'.join(errs[:3]))
+    pg.close()
+
+
+def swap_importer(html, code, kind):
     src = html.read_text(encoding='utf-8')
-    new, n = re.subn(r'<!-- FWL-IMPORTER-BEGIN [\s\S]*?<!-- FWL-IMPORTER-END -->', "<script>window.__FWL_IMPORTER_KIND = 'none';</script>", src)
+    rpl = f"<script>window.__FWL_IMPORTER_KIND = '{kind}';</script>" + (('<script>(function () {\n' + code.replace('</script', '<\\/script') + '\n}).call(window);</script>') if code else '')
+    return re.subn(r'<!-- FWL-IMPORTER-BEGIN [\s\S]*?<!-- FWL-IMPORTER-END -->', lambda m: rpl, src)
+
+
+def t_missing(R, b, html):
+    new, n = swap_importer(html, '', 'none')
     if not n:
         R.ck('导入模块缺失：成品里找得到导入模块那一段', False); return
     with tempfile.TemporaryDirectory() as td:
@@ -290,7 +323,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--html', default=str(ROOT / 'tool' / '烟花工坊.html'))
     ap.add_argument('--out', default=str(ROOT / 'analysis' / 'local' / '20261105_对话框9_烟花工坊外壳'))
-    ap.add_argument('--only', default='1920,1366,missing')
+    ap.add_argument('--only', default='real,1920,1366,missing')
     a = ap.parse_args()
     html = Path(a.html).resolve(); out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     if not html.exists():
@@ -302,13 +335,22 @@ def main():
     only = set(a.only.split(','))
     with sync_playwright() as p:
         b = p.chromium.launch(args=ARGS)
+        td = tempfile.TemporaryDirectory()
         try:
-            url = html.as_uri() + '?fast'
-            if '1920' in only: t_main(R, b, url, kind)
-            if '1366' in only: t_1366(R, b, url, kind)
+            url, fk = html.as_uri() + '?fast', kind
+            mock = ROOT / 'tool' / 'importer' / 'dist' / 'fwl-importer.mock.js'
+            if kind == 'real':
+                if 'real' in only: t_real(R, b, url)
+                if mock.exists():
+                    new, n = swap_importer(html, mock.read_text(encoding='utf-8'), 'mock')
+                    mp = Path(td.name) / '烟花工坊_替身.html'; mp.write_text(new, encoding='utf-8')
+                    url, fk = mp.as_uri() + '?fast', 'mock'
+                    R.note('流程项用替身：成品里的真导入模块换成 fwl-importer.mock.js 另存一份')
+            if '1920' in only: t_main(R, b, url, fk)
+            if '1366' in only: t_1366(R, b, url, fk)
             if 'missing' in only: t_missing(R, b, html)
         finally:
-            b.close()
+            b.close(); td.cleanup()
     bad = [r for r in R.rows if not r['ok']]
     (out / '结果.json').write_text(json.dumps({'html': str(html), 'importer': kind, 'rows': R.rows, 'notes': R.notes}, ensure_ascii=False, indent=1), encoding='utf-8')
     print(f"\n{len(R.rows) - len(bad)} / {len(R.rows)} 通过" + (f"；不过：{'、'.join(r['id'] for r in bad)}" if bad else ''))
