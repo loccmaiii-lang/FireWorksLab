@@ -331,7 +331,7 @@ def t_bar(p, size):
     one = (bl['bw'] == '1px') != ('0px -1px 0px' in bl['sh'] and bl['line'] in bl['sh'])
     ck(f'规范11-底边一条 1 px 线（不叠成 2 px）{S}', one and (bl['line'] in bl['sh'] or bl['bw'] == '1px'), bl)
     # 产品名、版本号（版本号照旧在最左边，点开更新记录）
-    fs = {1920: (12, 13, 15), 1366: (11, 12, 14)}[size]
+    fs = {1920: (12, 13, 15), 1366: (12, 12, 14)}[size]   # v3.6 第 6 条：1366 下小号保持 12（不缩到 11），中号、大号各减 1
     b = p.ev("({t: __T.txt('#shell .sh-brand b'), fs: parseFloat(__T.cs('#shell .sh-brand b', 'fontSize')), fw: +__T.cs('#shell .sh-brand b', 'fontWeight'), c: __T.cs('#shell .sh-brand b', 'color'), t1: __T.tok('--t1')})")
     ck(f'规范11-「烟花工坊」大号 600{S}', b['t'] == '烟花工坊' and b['fs'] == fs[2] and b['fw'] == 600 and b['c'] == b['t1'], b)
     v = p.ev("""(() => { const v = __T.q('#shell .sh-ver'), c = v.querySelector('.sh-cnt'), cs = c && getComputedStyle(c);
@@ -491,7 +491,7 @@ def t_pages(p, size):
     mid = p.ev("({sel: KIT.sel(), t: KIT.t(), sc: (__T.q('#pbody') || {}).scrollTop || 0})")
     # v3.4 第 2 条：「导出 ▾」菜单第一项「资源交付」+ 待导入的包数（计数框同版本号后面的）
     d = deliv_menu(p)
-    fs = {1920: (12, 13, 15), 1366: (11, 12, 14)}[size]
+    fs = {1920: (12, 13, 15), 1366: (12, 12, 14)}[size]   # v3.6 第 6 条：1366 下小号保持 12（不缩到 11），中号、大号各减 1
     ck(f'v3.4-2「导出 ▾」菜单第一项「资源交付 2」：计数 = 待导入的包数{S}', d['first'] and d['t'] == '资源交付 2' and d['n'] == '2' and d['label'] == '资源交付，2 个素材包待导入', d)
     ck(f'v3.1-11 / v3.4-2 计数框：1 px 方框、直角、小号（同版本号后面的）{S}', d['bw'] == '1px' and d['bs'] == 'solid' and d['r'] == '0px' and d['fs'] == fs[0], d)
     p.shot(f'shell_3_export_menu_{size}.png', clip=p.ev("(() => { const r = __T.rect(__T.ovl('.menu')[0]); return {x: Math.max(0, r.x - 16), y: Math.max(0, r.y - 48), width: Math.min(r.w + 32, 700), height: Math.min(r.h + 64, 700)}; })()"))
@@ -570,7 +570,7 @@ def t_import_main(p, size=1920):
     第 18 条：外壳里要你处理的状态词用主文字色、不用琥珀；第 19 条：图标按 16 px 网格画、字号分用途（模块标题中号 600，上 16 下 6）"""
     S = f'@{size}'
     pv = {1920: 288, 1366: 216}[size]
-    fs = (12, 13, 15) if size == 1920 else (11, 12, 14)
+    fs = (12, 13, 15) if size == 1920 else (12, 12, 14)   # v3.6 第 6 条：1366 小号保持 12
     r = p.ev("""(() => { const m = __T.rect('#impMain'), f = __T.q('#impMC .sh-pvw'), i = __T.q('#impMC .sh-pvi'), im = i && i.querySelector('img'), t = __T.q('#impMC .sh-assets');
         const mod = n => { const e = __T.q(`#impMC .sh-mod[aria-label=${n}]`); return e && {dt: __T.qq('dt', e).map(__T.txt), dd: __T.qq('dd', e).map(__T.txt), x: __T.rect(e).x, y: __T.rect(e.querySelector('.sh-mt')).y}; };
         return {img: !!(im && im.complete && im.naturalWidth), w: i && __T.rect(i).w, h: i && __T.rect(i).h, ix: i && __T.rect(i).x - m.x, iy: i && __T.rect(i).y, ib: i && __T.rect(i).b, cap: __T.txt('#impMC .sh-cap'),
@@ -1148,7 +1148,7 @@ def t_wb(p, size):
     ck(f'规范5-编排节目页琥珀只给「未进 UE」和顶栏要处理的状态{S}', not amb, amb)
     red = [h for h in hits if h['c'] == 'e3' and not re.search(r'sh-st|sh-err', h['el'])]
     ck(f'规范5-编排节目页红色只给错误{S}', not red, red)
-    fs = (12, 13, 15) if size == 1920 else (11, 12, 14)
+    fs = (12, 13, 15) if size == 1920 else (12, 12, 14)   # v3.6 第 6 条：1366 小号保持 12
     fo = p.ev("__T.fonts(['#wsWB'])")
     ck(f'规范1-资源编排页字号三级、字重 400 / 600{S}', all(x['fs'] in fs and x['fw'] in (400, 600) for x in fo), [x for x in fo if x['fs'] not in fs or x['fw'] not in (400, 600)][:5])
     ck(f'⑥-搜索框占位「名称、行名」{S}', p.ev("__T.q('#wbQ input').placeholder") == '名称、行名')

@@ -113,7 +113,7 @@
 #wbTool{grid-template-columns:var(--sh-wl) minmax(0,1fr) var(--w-right)}
 .sh-hs{display:flex;align-items:center;gap:var(--gin, 8px);height:100%;min-width:0;padding:0 var(--s3);overflow:hidden}
 .sh-hs .sp{flex:1}
-.sh-hs.sh-hl{padding-left:var(--s2);border-right:1px solid var(--line)}
+.sh-hs.sh-hl{padding-left:calc(var(--s3) - 6px);border-right:1px solid var(--line)}   /* v3.6 第 7 条：「← 返回制作」的箭头起在 x12（按钮自带 6 px 内边距），和下面列表、顶栏同一条线 */
 #wbTool .sh-hs.sh-hr{border-left:1px solid var(--line)}
 .sh-back{flex:none}
 .sh-back svg.i{width:var(--ico, 16px);height:var(--ico, 16px)}
@@ -160,7 +160,8 @@
 .sh-none{flex:1;display:grid;place-items:center;min-height:0}
 .sh-none .empty{align-items:center;padding:0}
 /* 逐资产清单：表头是标签（小号弱色），行高 28；数值等宽 */
-.sh-at{width:calc(100% + 20px);margin:0 -10px;border-collapse:collapse;font-size:var(--fs2);font-variant-numeric:tabular-nums}   /* 单元格左右各 10，整表往外挪 10：文字和「资产」标题左对齐，悬停底色伸出文字 */
+.sh-at{width:auto;margin:0 -10px;   /* v3.6 第 12 条：按内容定宽（约 1100 px），不撑满整页 */
+  border-collapse:collapse;font-size:var(--fs2);font-variant-numeric:tabular-nums}   /* 单元格左右各 10，整表往外挪 10：文字和「资产」标题左对齐，悬停底色伸出文字 */
 .sh-at th{height:var(--h-row);padding:0 10px;font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3);text-align:left;white-space:nowrap}
 .sh-at td{height:var(--h-row);padding:0 10px;color:var(--t1);text-align:left;white-space:nowrap}
 .sh-at tbody tr:hover td{background:var(--hov, var(--g2))}
@@ -170,7 +171,7 @@
 .sh-at td.sh-wr .spin{width:10px;height:10px}
 .sh-at td.sh-wr svg.i{width:var(--ico, 16px);height:var(--ico, 16px)}
 .sh-at .sh-new,.sh-at .sh-pass{color:var(--t3)}
-.sh-at .sh-path{width:28%}
+.sh-at td.sh-path{color:var(--t2)}   /* v3.6 第 12 条：路径是文字（次文字色，清单中号），不画灰条 */
 /* 低对比占位块：不是这次要画的部分，不写字 */
 .sh-ph{display:block;flex:none;height:10px;background:var(--g2);border-radius:var(--r1)}
 .status .sh-ph{height:calc(var(--h-ctl) - 10px)}

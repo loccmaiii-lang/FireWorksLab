@@ -76,7 +76,7 @@ def main():
                 pg.evaluate(js); pg.wait_for_timeout(200)
             grab()
         pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
-        for sel in ['#expSt', '#tree .stl', '#bNote', '#transport [data-act=thumb]', '#bLeft', '#bCompact', '#tree .tnew']:   # v3.5：胶片格去掉，换成「意见」「+ 加层」
+        for sel in ['#expBtn [data-act=export]', '#tree .stl', '#bNote', '#transport [data-act=thumb]', '#bLeft', '#bCompact', '#tree .tnew']:   # v3.5：胶片格去掉，换成「意见」「+ 加层」
             loc = pg.locator(sel).first
             if loc.count():
                 loc.hover(); pg.wait_for_timeout(600); grab()

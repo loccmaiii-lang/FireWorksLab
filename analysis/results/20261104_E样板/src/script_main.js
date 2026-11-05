@@ -463,10 +463,10 @@ function rowHTML(P, m, r, o = {}) {
     const sug = r.sug ? `<button class="btn btn-icon sug" data-act="${r.sug.act}" aria-label="${esc(r.sug.tip)}" data-tip="${esc(r.sug.tip)}">${ico('auto')}</button>` : '';
     const num = `<input class="num" type="text" inputmode="decimal" value="${fmt(s.v, s.step)}" aria-label="${lab} 数值"${why ? ' disabled' : ''}>`;
     return `<div class="${base}${s.rnd ? ' has-sub' : ''}${sug ? ' has-sug' : ''}" data-k="${k}" data-lab="${lab}" data-kind="num"${tipAttr}>
-      ${markHTML}<div class="plw"><span class="nl">${pl}${lkHTML(s, lab)}</span></div>
+      ${markHTML}<div class="plw"><span class="nl">${pl}${sug}${lkHTML(s, lab)}</span></div>
       <div class="ctl1"><div class="sl${why ? ' is-disabled' : ''}" role="slider" tabindex="${why ? -1 : 0}" aria-label="${lab}" aria-valuemin="${s.min}" aria-valuemax="${s.max}" aria-valuenow="${s.v}" style="--v:${pc(s.v, s.min, s.max)};--d:${pc(s.def, s.min, s.max)};${band}">${band ? '<i class="sl-rb"></i>' : ''}<i class="sl-f"></i>${!same(s.v, s.def) ? '<i class="sl-d"></i>' : ''}<i class="sl-k"></i></div></div>
       <div class="vu">${why ? `<span class="dis-why">${esc(whyS)}</span>` : s.rnd ? `${num}<span class="u">${esc(s.unit)}</span>${exnHTML(s, 'rnd')}` : `${num}<span class="u">${esc(s.unit)}</span>`}</div>
-      ${sug ? `<span class="actc">${rstHTML(lab)}${sug}</span>` : rstHTML(lab)}</div>${s.sub && s.rnd && !why ? subHTML(k, s, 'rnd') : ''}`;
+      ${rstHTML(lab)}</div>${s.sub && s.rnd && !why ? subHTML(k, s, 'rnd') : ''}`;   /* v3.6 第 4 条：「按最亮时刻设曝光」在标签和控件之间的槽位（和「锁定」同一处），操作列只给「恢复」 */
   }
   if (kind === 'range') {
     /* 区间：数值格写「0.30–1.65」；「分布」改成数值格右边的展开箭头 */
@@ -1111,14 +1111,20 @@ function rangeHTML(sc) {
 }
 /* v3.5 第 5 条：「导出范围」一行（原胶片行的位置，刻度尺上面），出入点设置全部露出来，不再收在「选项 ▾」里。从左到右：
    导出范围「0.35 – 2.85 s」（单击输入）＋ 设为入点、设为出点、恢复（图标命令，常显）｜ 选中发射器时：发射时段 ＋ 同样三个命令 ｜ 两个开关「一并移动」「同刻联动」。组间 24 */
-const ioBtns = (nm, what, acts) => `<button class="btn btn-icon sm" data-act="${acts[0]}" aria-label="${what}：设为入点" data-tip="${esc(nm)} ${what}：入点设到播放头"${what === '导出范围' ? ' data-key="["' : ''}>${ico('in')}</button><button class="btn btn-icon sm" data-act="${acts[1]}" aria-label="${what}：设为出点" data-tip="${esc(nm)} ${what}：出点设到播放头"${what === '导出范围' ? ' data-key="]"' : ''}>${ico('outp')}</button><button class="btn btn-icon sm" data-act="${acts[2]}" aria-label="恢复${what}" data-tip="${esc(nm)} ${what}：恢复到打开时">${ico('reset')}</button>`;
-const IO_OPT = [['optFollow', '一并移动', '拖层入点时发射器同移'], ['optSync', '同刻联动', '同一时刻的关键点同移']];
+const ioBtns = (nm, what, acts, clean) => `<button class="btn btn-icon sm" data-act="${acts[0]}" aria-label="${what}：设为入点" data-tip="${esc(nm)} ${what}：入点设到播放头"${what === '导出范围' ? ' data-key="["' : ''}>${ico('in')}</button><button class="btn btn-icon sm" data-act="${acts[1]}" aria-label="${what}：设为出点" data-tip="${esc(nm)} ${what}：出点设到播放头"${what === '导出范围' ? ' data-key="]"' : ''}>${ico('outp')}</button><button class="btn btn-icon sm" data-act="${acts[2]}" aria-label="恢复${what}" data-tip="${esc(nm)} ${what}：恢复到打开时"${clean ? ' disabled' : ''}>${ico('reset')}</button>`;
+/* v3.6 第 1 条：两个拖动偏好改成勾选框（勾上薄荷），右对齐到刻度尺末端 */
+const IO_OPT = [['optFollow', '一并移动', '拖层的入点时，发射器一起移动'], ['optSync', '同刻联动', '拖关键点时，同一时刻的点一起动']];
+/* 范围和打开时（上次保存）一样时，「恢复」停用（仍然显示） */
+const ioClean = (sc, n) => { const e = sc.saveSnap && sc.saveSnap.get(n.id); return !n.tl || !e || !e.tl || same(n.tl, e.tl); };
+/* v3.6 第 1 条：这一行按时间轴自己的网格排——「导出范围」在行名列（和轨道名同一条起线 x312），数值从刻度「0 s」那条线开始（x468），
+   三个图标跟在数值后 12、图标之间 4；选中发射器时「发射时段」一组隔 32；两个勾选框右对齐到刻度尺末端（x1442），和播放条右组一条线 */
 function xioHTML(sc) {
   const r = rangeOut(sc); if (!r || !r.o) return '';
   const o = r.o.tl, nm = rangeName(sc, r), f = find(sc, sc.sel), em = tgtWhat(sc) === '发射时段' && f ? f.n : null;
-  return `<div class="io-g io-range" role="group" aria-label="导出范围"><span class="io-k">导出范围</span><span class="xv" data-tip="${esc(nm)} 导出范围">${tBox('in', o.in.toFixed(2), '导出范围入点', `${nm} 导出范围入点，单击输入`)}<span class="dash">–</span>${tBox('out', o.out.toFixed(2), '导出范围出点', `${nm} 导出范围出点，单击输入`)}<span class="u">s</span></span>${ioBtns(nm, '导出范围', ['setIn', 'setOut', 'clearIO'])}</div>`
-    + (em ? `<div class="io-g io-emit" role="group" aria-label="发射时段"><span class="io-k">发射时段</span>${ioBtns(label(sc, em), '发射时段', ['emIn', 'emOut', 'emClear'])}</div>` : '')
-    + `<div class="io-g io-opts" role="group" aria-label="拖动选项">${IO_OPT.map(([k, t, tip]) => `<label class="io-sw" data-tip="${tip}"><input class="sw" type="checkbox" role="switch" data-opt="${k}" aria-label="${t}"${UI[k] ? ' checked' : ''}><span>${t}</span></label>`).join('')}</div>`;
+  return `<div class="lab io-name"><span class="io-k">导出范围</span></div><div class="io-body">`
+    + `<div class="io-g io-range" role="group" aria-label="导出范围"><span class="xv" data-tip="${esc(nm)} 导出范围">${tBox('in', o.in.toFixed(2), '导出范围入点', `${nm} 导出范围入点，单击输入`)}<span class="dash">–</span>${tBox('out', o.out.toFixed(2), '导出范围出点', `${nm} 导出范围出点，单击输入`)}<span class="u">s</span></span><span class="io-bs">${ioBtns(nm, '导出范围', ['setIn', 'setOut', 'clearIO'], ioClean(sc, r.o))}</span></div>`
+    + (em ? `<div class="io-g io-emit" role="group" aria-label="发射时段"><span class="io-k">发射时段</span><span class="io-bs">${ioBtns(label(sc, em), '发射时段', ['emIn', 'emOut', 'emClear'], ioClean(sc, em))}</span></div>` : '')
+    + `<span class="sp"></span><div class="io-g io-opts" role="group" aria-label="拖动选项">${IO_OPT.map(([k, t, tip]) => `<label class="io-ck" data-tip="${tip}"><input class="chk" type="checkbox" data-opt="${k}"${UI[k] ? ' checked' : ''}><span>${t}</span></label>`).join('')}</div></div>`;
 }
 /* 导出范围、轨道就地更新：不重建刻度尺上的入点 / 出点框（Tab 从入点跳到出点时焦点不丢，走查 P7） */
 function syncRange(sc = cur(), wrap = $('#tlw')) {
@@ -1130,6 +1136,8 @@ function syncRange(sc = cur(), wrap = $('#tlw')) {
     xr.dataset.tip = `${nm} 导出范围 ${o.in.toFixed(2)}${DASH}${o.out.toFixed(2)} s，右键设入点、出点`;
     $('.xh.in', xr).dataset.tip = `${nm} 导出范围入点 ${o.in.toFixed(2)} s`; $('.xh.out', xr).dataset.tip = `${nm} 导出范围出点 ${o.out.toFixed(2)} s`;
     $$('.tnum', xl).forEach(i => { if (document.activeElement !== i) { i.value = (i.classList.contains('in') ? o.in : o.out).toFixed(2); i.classList.remove('is-error'); } });
+    const ci = $('[data-act="clearIO"]', xl); if (ci) ci.disabled = ioClean(sc, r.o);
+    const ce = $('[data-act="emClear"]', xl), fe = find(sc, sc.sel); if (ce && fe) ce.disabled = ioClean(sc, fe.n);
   } else { $$('.xrange', sc_).forEach(x => x.remove()); sc_.insertAdjacentHTML('beforeend', rangeHTML(sc)); if (xl) xl.innerHTML = xioHTML(sc); }
   $$('.tlrow[data-id] .trk', wrap).forEach(t => { const f = find(sc, t.parentElement.dataset.id); if (f) t.innerHTML = trackHTML(sc, f.n); });
   placePH(sc, wrap);
@@ -1176,6 +1184,34 @@ function filmBoost(wrap, sel = '.film-c img') {
   $$(sel, wrap).forEach(img => {
     const k0 = FILM_K.get(img.src); if (k0) { img.style.filter = `brightness(${k0})`; return; }
     const go = () => { try { const c = document.createElement('canvas'); c.width = c.height = 32; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 32, 32); const d = x.getImageData(0, 0, 32, 32).data; let m = 0; for (let i = 0; i < d.length; i += 4) m = Math.max(m, .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]); const k = +clamp(235 / Math.max(m, 10), 1, 5).toFixed(2); FILM_K.set(img.src, k); img.style.filter = `brightness(${k})`; } catch (_) { /* 读不到像素就不提亮 */ } };
+    if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, {once: true});
+  });
+}
+/* v3.6 第 14 条：效果库缩略图按花的外接框裁切，再统一曝光——找亮于最亮处 25 % 的像素外接框，取正方形（留 6 %），按亮部 98 % 分位（取 RGB 最亮的通道）提到 235；
+   结果按原图缓存，重画列表时直接换上；读不到像素时照旧用原图 */
+const THUMB_FIT = new Map();
+function thumbFit(wrap, sel = '.th img') {
+  $$(sel, wrap).forEach(img => {
+    if (img.dataset.fit) return;
+    const src0 = img.getAttribute('src'), hit = THUMB_FIT.get(src0);
+    if (hit) { img.src = hit; img.dataset.fit = '1'; return; }
+    const go = () => { try {
+      const N = 96, c = document.createElement('canvas'); c.width = c.height = N; const x = c.getContext('2d'); x.drawImage(img, 0, 0, N, N);
+      const d = x.getImageData(0, 0, N, N).data, L = new Float32Array(N * N); let m = 0;
+      for (let i = 0; i < N * N; i++) { L[i] = Math.max(d[i * 4], d[i * 4 + 1], d[i * 4 + 2]); if (L[i] > m) m = L[i]; }   /* 按最亮的通道算：紫、红这类彩色的花也能提到位 */
+      const th = Math.max(m * .25, 10); let x0 = N, y0 = N, x1 = -1, y1 = -1;
+      for (let y = 0; y < N; y++) for (let k = 0; k < N; k++) { const v = L[y * N + k]; if (v >= th) { x0 = Math.min(x0, k); x1 = Math.max(x1, k); y0 = Math.min(y0, y); y1 = Math.max(y1, y); } }
+      if (x1 < 0) return;
+      const side = Math.min(N, Math.max(x1 - x0 + 1, y1 - y0 + 1) * 1.06 + 2), sx = clamp((x0 + x1 + 1) / 2 - side / 2, 0, N - side), sy = clamp((y0 + y1 + 1) / 2 - side / 2, 0, N - side), fx = img.naturalWidth / N, fy = img.naturalHeight / N;
+      /* 先裁好画一遍量亮部，再按量出来的倍数提亮重画（在最后这张图上量，才准） */
+      const o = document.createElement('canvas'); o.width = o.height = 96; const ox = o.getContext('2d', {willReadFrequently: true});
+      ox.drawImage(img, sx * fx, sy * fy, side * fx, side * fy, 0, 0, 96, 96);
+      const od = ox.getImageData(0, 0, 96, 96).data, V = []; let om = 0;
+      for (let i = 0; i < od.length; i += 4) { const v = Math.max(od[i], od[i + 1], od[i + 2]); V.push(v); if (v > om) om = v; }
+      const lit = V.filter(v => v >= om * .25).sort((a, b) => a - b), p98 = lit[Math.floor((lit.length - 1) * .98)] || om, gain = clamp(235 / Math.max(p98, 10), 1, 8);
+      ox.clearRect(0, 0, 96, 96); ox.filter = `brightness(${gain.toFixed(2)})`; ox.drawImage(img, sx * fx, sy * fy, side * fx, side * fy, 0, 0, 96, 96);
+      const url = o.toDataURL('image/jpeg', .9); THUMB_FIT.set(src0, url); img.style.filter = ''; img.src = url; img.dataset.fit = '1';
+    } catch (_) { /* 读不到像素就用原图 */ } };
     if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, {once: true});
   });
 }
@@ -1372,14 +1408,10 @@ function renderExport() {
   const sc = cur(), st = staleLayers(sc), b = $('#expBtn');
   if (b.querySelector('.is-loading')) return;
   const need = st.size > 0, multi = layersOf(sc).length > 1;
-  /* §5：导出按钮左边的琥珀计数「⚠ 1」；悬停写「金锦层需重新导出：缩放 1.10 → 1.30」，点开导出菜单 */
-  const es = $('#expSt');
-  es.className = 'exp-st ' + (need ? 'st-warn' : 'st-ok'); es.hidden = !need;
-  es.innerHTML = need ? `${ico('stale')}<span>${st.size} 层</span>` : '';
-  es.setAttribute('aria-label', need ? `${st.size} 层需重新导出` : '已导出');
-  if (need) es.dataset.why = 'all'; else delete es.dataset.why;
-  /* 主操作：薄荷实底，全屏只有这一个 */
-  b.innerHTML = `<button class="btn btn-1" data-act="export" data-tip="${need ? '导出需重新导出的层' : '全部已导出'}">导出</button><button class="btn btn-1" data-act="exportMenu" aria-haspopup="menu" aria-label="导出选项" data-tip="导出选项">${ico('cd')}</button>`;
+  /* v3.6 第 2 条：「⚠ 1 层」并进导出按钮——主段写「导出 ▲1」：三角和数字用琥珀，垫在深色小块（p1）上（琥珀直接放薄荷上只有 1.02 : 1）；
+     悬停两行：「重新导出 1 层」＋ 每层原因；没有要重新导出的层时只写「导出」。计数和结构树层行的三角同一个口径（staleLayers） */
+  const n = st.size;
+  b.innerHTML = `<button class="btn btn-1" data-act="export"${need ? ` data-why="exp" aria-label="导出，${n} 层需重新导出"` : ' data-tip="全部已导出"'}>导出${need ? `<span class="exb" aria-hidden="true">${ico('stale')}<span>${n}</span></span>` : ''}</button><button class="btn btn-1" data-act="exportMenu" aria-haspopup="menu" aria-label="导出选项" data-tip="导出选项">${ico('cd')}</button>`;
 }
 function onHist() {
   if (UI.view !== 'main') return;
@@ -1452,7 +1484,7 @@ function renderLib() {
     html = q ? `<div class="empty"><b>没有匹配「${esc(q)}」的${UI.libTab}</b><button class="btn btn-2" data-act="clearLibQ">清除搜索</button></div>`
       : `<div class="empty"><b>没有「${esc(UI.chip)}」${UI.libTab === '效果' ? '效果' : '模板'}</b><button class="btn btn-2" data-act="chipAll">显示全部</button></div>`;
   }
-  list.innerHTML = html; filmBoost(list, '.th img');
+  list.innerHTML = html; thumbFit(list);
   /* v3.4 第 18 条：不写「10 个」 */
 }
 
@@ -1534,20 +1566,20 @@ function renderViewMarks() {
 /* 标题行中段：工作模式后面的视图控件（序列贴图时换成平台、预览方式、网格、缩放比例） */
 function renderViewbar() {
   const vb = $('#viewbar');
+  /* v3.6 第 3 条：中段左边只放文字分段（模式、看什么），右边只放图标开关（画面叠加、面板）。网格在中段右端、「精简」左边 20 px 的固定槽位：
+     引擎回放 / 实时模拟是「构图网格」，序列贴图是「格子线」，同一个位置、同一个图标，换模式不跳。
+     序列贴图的「显示 16 %」挪到贴图右下（和画面读数同一处），「文件夹」挪到交付表表头（悬停写「打开导出文件夹」） */
   if (UI.mode === '序列贴图') {
     const DT = {PC: 'PC 产物', '手机': '手机产物：单格、帧数减半', '贴图': '整张查看', '逐帧': '单帧放大'};
     vb.innerHTML = `<div class="seg m" data-ui="plat" role="group" aria-label="平台">${['PC', '手机'].map(v => `<button data-v="${v}" aria-pressed="${UI.plat === v}" data-tip="${DT[v]}">${v}</button>`).join('')}</div>
       <div class="seg m" data-ui="dview" role="group" aria-label="预览方式">${['贴图', '逐帧'].map(v => `<button data-v="${v}" aria-pressed="${UI.dview === v}" data-tip="${DT[v]}">${v}</button>`).join('')}</div>
-      <button class="btn btn-icon" data-act="atlasGrid" aria-pressed="${!!UI.atlasGrid}" aria-label="格子线" data-tip="${UI.dview === '逐帧' ? '逐帧时没有格子线' : UI.atlasGrid ? '隐藏格子线' : '显示格子线'}"${UI.dview === '逐帧' ? ' disabled' : ''}>${ico('grid')}</button>
-      <span class="lbl" id="delivZoom"></span>
-      <span class="sp"></span><button class="btn tbtn" data-act="openFolder" data-tip="打开导出文件夹">${ico('folder')}文件夹</button>`;
+      <span class="sp"></span><button class="btn btn-icon ov-grid" data-act="atlasGrid" aria-pressed="${!!UI.atlasGrid}" aria-label="格子线" data-tip="${UI.dview === '逐帧' ? '逐帧时没有格子线' : UI.atlasGrid ? '隐藏格子线' : '显示格子线'}"${UI.dview === '逐帧' ? ' disabled' : ''}>${ico('grid')}</button>`;
     return;
   }
-  /* v3.5 第 4、12 条：和工作模式同一个分段（高 28、同内边距、同字号）；「适应」改「适应窗口」、「游戏内」改「实机窗口」。
-     v3.5 第 8 条：「意见」挪到右栏工具行，网格紧跟画面大小（都是画面的选项），后面不留空 */
+  /* v3.5 第 4、12 条：和工作模式同一个分段（高 28、同内边距、同字号）；「适应」改「适应窗口」、「游戏内」改「实机窗口」 */
   const VT = {'适应窗口': '整朵放进画面', '1:1': '按贴图像素 1:1 显示', '实机窗口': '按距离换算实机里的大小'};
   vb.innerHTML = `<div class="seg m" data-ui="view3" role="group" aria-label="画面大小">${['适应窗口', '1:1', '实机窗口'].map(v => `<button data-v="${v}" aria-pressed="${UI.view3 === v}" data-tip="${VT[v]}">${v}</button>`).join('')}</div>
-    <button class="btn btn-icon" data-act="grid" aria-pressed="${UI.grid}" aria-label="构图网格" data-tip="构图网格">${ico('grid')}</button>`;
+    <span class="sp"></span><button class="btn btn-icon ov-grid" data-act="grid" aria-pressed="${UI.grid}" aria-label="构图网格" data-tip="构图网格">${ico('grid')}</button>`;
 }
 /* v3.4 第 8 条：左栏开关在工具行最左，精简、右栏开关在画面那一段的最右；开着（栏显示中、精简开着）时图标薄荷、填选中底色 */
 function renderPanels() {
@@ -1623,8 +1655,8 @@ function renderDeliv() {
     pager = `${pgBtn(-1, UI.sheetPage <= 1, '上一张')}<span class="pg-t"><span class="lbl">${esc(V.name)}</span><b>${UI.sheetPage}</b><span class="lbl">/ ${V.pages}</span></span>${pgBtn(1, UI.sheetPage >= V.pages, '下一张')}`;
     px = V.cell * g;
   }
-  $('#deliv').innerHTML = `<div class="atlas">${view}<div class="pager">${pager}</div></div>
-    <div class="dwrap"><div class="dh"><span class="lbl">勾选 ${nChk} 层</span><span class="sp"></span><button class="btn tbtn" data-act="exportChecked" ${nChk ? '' : 'disabled data-tip="未勾选层"'}>导出勾选</button></div>${delivTableHTML(sc, selLayer)}</div>`;
+  $('#deliv').innerHTML = `<div class="atlas">${view}<div class="pager">${pager}<span class="sp"></span><span class="lbl dz" id="delivZoom"></span></div></div>
+    <div class="dwrap"><div class="dh"><span class="lbl">勾选 ${nChk} 层</span><span class="sp"></span><button class="btn tbtn" data-act="openFolder" data-tip="打开导出文件夹">文件夹</button><button class="btn tbtn" data-act="exportChecked" ${nChk ? '' : 'disabled data-tip="未勾选层"'}>导出勾选</button></div>${delivTableHTML(sc, selLayer)}</div>`;
   /* 缩放比例：屏幕上显示的宽度 ÷ 实际像素 */
   const z = $('#delivZoom'), sh = $('#deliv .sheet');
   if (z && sh) requestAnimationFrame(() => { z.textContent = `显示 ${Math.max(1, Math.round(sh.clientWidth / px * 100))} %`; z.dataset.tip = `${UI.dview === '逐帧' ? '单格' : '整张'} ${px} px 显示成 ${sh.clientWidth} px`; });
@@ -1762,8 +1794,10 @@ function staleWhy(sc) {
   return [...why].filter(([id]) => st.has(id)).map(([id, list]) => ({l: find(sc, id).n, name: lname(find(sc, id).n), list}));
 }
 function staleWhyHTML(which) {
-  const sc = cur(), all = staleWhy(sc), rows = which === 'all' ? all : all.filter(x => x.l.id === which);
+  const sc = cur(), all = staleWhy(sc), rows = which === 'all' || which === 'exp' ? all : all.filter(x => x.l.id === which);
   if (!rows.length) return '已导出，之后没有改动';
+  /* v3.6 第 2 条：导出按钮的悬停——第一行「重新导出 N 层」，下面每层一行原因（最多 3 层） */
+  if (which === 'exp') return `<b>重新导出 ${rows.length} 层</b>${rows.slice(0, 3).map(r => `<span class="hint2">${esc(r.name)}：${esc(r.list.slice(0, 2).join('；'))}${r.list.length > 2 ? ` 等 ${r.list.length} 项` : ''}</span>`).join('')}${rows.length > 3 ? `<span class="hint2">还有 ${rows.length - 3} 层，见导出选项</span>` : ''}`;
   /* 一层一行：「金锦层需重新导出：缩放 1.10 → 1.30」 */
   const lines = rows.map(r => `<span>${esc(r.name)}需重新导出：${esc(r.list.slice(0, 3).join('；'))}${r.list.length > 3 ? ` 等 ${r.list.length} 项` : ''}</span>`);
   return `<span class="why">${lines.join('')}</span>${which === 'all' ? '<span class="hint2">点击打开导出选项</span>' : ''}`;
@@ -2031,7 +2065,9 @@ const platTxt = P => P.pc && P.mb ? 'PC + 手机' : P.pc ? 'PC' : P.mb ? '手机
 function exportMenu(btn, focusSel) {
   const sc = cur(), st = exportScope(sc, 'stale'), all = layersOf(sc), curL = exportScope(sc, 'current'), chk = exportScope(sc, 'checked'), P = platsOf(sc), none = !P.pc && !P.mb;
   const S = exportSummary(sc, st.length ? st : all), nm = L => L.map(l => l === sc.root ? sc.short : l.name).join('、'), det = !!UI.expDetail;
-  const head = `<div class="msum"><div class="mline"><b>${st.length ? `${st.length} 层需重新导出` : '全部已导出'}</b><button class="btn tbtn mdet" data-r="det" type="button" aria-expanded="${det}">详情${ico('cd', 'dd')}</button></div>
+  /* v3.6 第 2 条：摘要「▲ 1 层需重新导出」（琥珀三角 + 数字，和按钮上同一个记号）；3 层以内直接列出每层原因；全部已导出写「✓ 全部已导出」 */
+  const W = st.length && st.length <= 3 ? staleWhy(sc) : [];
+  const head = `<div class="msum"><div class="mline"><b class="${st.length ? 'is-warn' : 'is-ok'}">${st.length ? `${ico('stale')}${st.length} 层需重新导出` : `${ico('check')}全部已导出`}</b><button class="btn tbtn mdet" data-r="det" type="button" aria-expanded="${det}">详情${ico('cd', 'dd')}</button></div>${W.length ? `<ul class="mwhy">${W.map(r => `<li><span class="mn">${esc(r.name)}</span><span>${esc(r.list.slice(0, 2).join('；'))}${r.list.length > 2 ? ` 等 ${r.list.length} 项` : ''}</span></li>`).join('')}</ul>` : ''}
       <div class="mdetail"${det ? '' : ' hidden'}><dl>
       <dt>${st.length ? '需重新导出' : '层'}</dt><dd>${esc(nm(st.length ? st : all))}</dd>
       <dt>平台</dt><dd>${platTxt(P)}</dd>
@@ -2349,7 +2385,6 @@ document.addEventListener('click', e => {
     saveAs: () => { if (typeof window.openSaveDialog === 'function') { window.openSaveDialog(); return; } toast(`已另存为「${sc.short} 副本」`); },
     versions: () => openMenu(a, [{head: '版本记录'}, {t: `今天 ${sc.savedAt}`, k: '保存　当前'}, {t: '今天 19:46', k: '导出'}, {t: '今天 18:23', k: '保存'}, '-', {t: '全部版本', act: () => toast('样板中不打开版本列表')}], {align: 'right'}),
     export: () => doExport('stale'), exportMenu: () => exportMenu(a), exportChecked: () => doExport('checked'),
-    expStMenu: () => { const b = $('#expBtn .btn + .btn'); if (b && !b.disabled) exportMenu(b); },
     play: () => play(), restart: () => { setTime(0); play(true); }, loop: () => { UI.loop = !UI.loop; renderTransport(); },
     timeTools: () => openMenu(a, [{t: '上一帧', k: '←', act: () => stepTick(-1)}, {t: '下一帧', k: '→', act: () => stepTick(1)}, '-', ...sc.marks.map(([nm, v]) => ({t: `跳到${nm}`, k: v.toFixed(2) + ' s', act: () => setTime(v)}))]),
     emIn: () => setIO('in'), emOut: () => setIO('out'), emClear: () => setIO('clear'),
@@ -2410,7 +2445,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target, prm = t.closest('.prm[data-k]');
-  if (t.matches('.iorow .sw[data-opt]')) { UI[t.dataset.opt] = t.checked; return; }   /* v3.5 第 5 条：原「选项 ▾」里的两个开关 */
+  if (t.matches('.iorow [data-opt]')) { UI[t.dataset.opt] = t.checked; return; }   /* v3.5 第 5 条：原「选项 ▾」里的两个开关；v3.6 第 1 条改成勾选框 */
   if (prm) {
     const k = prm.dataset.k, kind = prm.dataset.kind;
     if (kind === 'sw') { change(k, 'v', t.checked); afterCommit(k); }

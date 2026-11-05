@@ -55,7 +55,7 @@ function snapCopy() {
     qq('[data-tip]', r).forEach(e => { if (!e.getClientRects().length) return; add(w, isDis(e) ? '原因' : '悬停', e.dataset.tip); if (e.dataset.key) add(w, '悬停（第二行）', e.dataset.key); });
     qq('input[placeholder]', r).forEach(e => add(w, '占位文字', e.placeholder));
     qq('*', r).forEach(e => {
-      if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph, .sh-at tbody td:first-child, .sh-gd')) return;   /* 逐资产清单的资产名是数据，不是文案；「显卡 · 型号」的间隔点是排版 */
+      if (!e.getClientRects().length || e.closest('#saveSt, .sh-ph, .sh-at tbody td:first-child, .sh-at td.sh-path, .sh-gd')) return;   /* 逐资产清单的资产名是数据，不是文案；「显卡 · 型号」的间隔点是排版 */
       if (e.parentElement && e.parentElement.closest('button, .tab, .sh-fold, .sh-ue')) return;
       const m = COPY_CLS.find(([s]) => e.matches(s)), whole = m && ['按钮', '名称', '状态'].includes(m[1]) && e.matches('button, .tab, .sh-fold, .sh-ue');
       const own = whole ? txtSp(e) : [...e.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('');
@@ -498,14 +498,17 @@ const emptyHTML = (b, s, btn, act) => `<div class="empty"><b>${esc(b)}</b>${s ? 
 function sortPkgs() { PKG.sort((a, b) => (b.just ? 1 : 0) - (a.just ? 1 : 0) || (a.st === 'wait' ? 0 : 1) - (b.st === 'wait' ? 0 : 1) || (b.t > a.t ? 1 : b.t < a.t ? -1 : 0)); }
 /* 逐资产清单：资产名在第一列，和「资产」标题左对齐；「预检」正常写「通过」弱色字，不再每行一个勾（只标例外，v3.2 第 11 条的做法）；
    最后一列「写入」：写完打勾、正在写转圈，没开始写空着（先预检、再写入，从左往右读） */
+/* v3.6 第 12 条：「UE 路径」写成文字（样板数据：/Game/VFX/Fireworks/<包名>/<按类型分的子目录>），不再画灰条；列头「资产」改「名称」；表按内容定宽 */
+const UE_SUB = {'贴图': 'Textures', '材质实例': 'Materials', '粒子系统': 'Particles'};
+const uePath = (A, a) => `/Game/VFX/Fireworks/${(A.find(x => /_Ramp$/.test(x.nm)) || A[0]).nm.replace(/^[A-Z]+_/, '').replace(/_(Ramp|M_\d+|M|\d+)$/, '')}/${UE_SUB[a.ty] || 'Misc'}`;
 function assetTable(p, A, w) {
   const done = p.st === 'done' && !w;
   const rows = A.map((a, i) => {
     const s = w ? (i < w.i ? 'done' : i === w.i ? 'run' : '') : done ? 'done' : '';
     const c0 = s === 'done' ? `<span aria-label="已写入">${ic('check')}</span>` : s === 'run' ? '<span class="spin" aria-label="写入中"></span>' : '';
-    return `<tr><td>${esc(a.nm)}</td><td>${a.ty}</td><td>${a.pl}</td><td${a.act === '新建' ? ' class="sh-new"' : ''}>${a.act}</td><td class="sh-path"><i class="sh-ph" style="width:${58 + (i * 37) % 34}%"></i></td><td class="sh-pass">通过</td><td class="sh-wr">${c0}</td></tr>`;
+    return `<tr><td>${esc(a.nm)}</td><td>${a.ty}</td><td>${a.pl}</td><td${a.act === '新建' ? ' class="sh-new"' : ''}>${a.act}</td><td class="sh-path">${esc(uePath(A, a))}</td><td class="sh-pass">通过</td><td class="sh-wr">${c0}</td></tr>`;
   }).join('');
-  return `<table class="sh-at"><thead><tr><th>资产</th><th>类型</th><th>平台</th><th>动作</th><th>UE 路径</th><th>预检</th><th class="sh-wr">写入</th></tr></thead><tbody>${rows}</tbody></table>`;
+  return `<table class="sh-at"><thead><tr><th>名称</th><th>类型</th><th>平台</th><th>动作</th><th>UE 路径</th><th>预检</th><th class="sh-wr">写入</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 /* 资源交付主区（v3.3 第 17 条）：只用已有的信息排版。
    选中一个包：标题行（包名大号 600 + 右端状态）→ 回放缩略图放大（同制作的「引擎回放」画面，下面小字写取的时刻）+「修订」「检查」两组摘要 →「资产」逐资产清单。

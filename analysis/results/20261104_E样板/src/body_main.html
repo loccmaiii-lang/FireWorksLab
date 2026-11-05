@@ -55,7 +55,7 @@
   <symbol id="i-undo" viewBox="0 0 16 16"><path d="M5.8 3.05 3.1 5.75l2.7 2.7"/><path d="M3.6 5.75h5.9a3.75 3.75 0 0 1 0 7.5H5.25"/></symbol>
   <symbol id="i-redo" viewBox="0 0 16 16"><path d="m10.2 3.05 2.7 2.7-2.7 2.7"/><path d="M12.4 5.75H6.5a3.75 3.75 0 0 0 0 7.5h4.25"/></symbol>
   <!-- 版本记录：叠在一起的三张纸 -->
-  <symbol id="i-history" viewBox="0 0 16 16"><path d="M2.75 6.75h6.5v6.5h-6.5z"/><path d="M4.75 4.75h6.5v6.5M6.75 2.75h6.5v6.5"/></symbol>
+  <symbol id="i-history" viewBox="0 0 16 16"><path d="M4.25 8a4.5 4.5 0 1 1 1.32 3.18"/><path d="M3 6.75 4.25 8l1.25-1.25M8.75 5.25V8h2"/></symbol>
   <!-- 恢复默认：全套唯一的「绕一圈的箭头」 -->
   <symbol id="i-reset" viewBox="0 0 16 16"><path d="M2.75 8a5.25 5.25 0 1 0 5.25-5.25 5.7 5.7 0 0 0-3.95 1.6L3.3 5.2"/><path d="M2.75 2.75v3h3"/></symbol>
   <!-- 播放 -->
@@ -92,7 +92,7 @@
   <header id="shell" class="shell"></header>
   <div class="ws" id="wsBaker">
   <!-- 制作区工具行（栏头 chrome）：只在中栏、右栏上方。中段起点对齐画面左边：左栏开关、工作模式（分段 M）、画面大小（分段 M，v3.5 第 4 条同高）、网格 ｜ 精简、右栏开关；
-       右段起点对齐检查器左边（v3.5 第 8 条）：左组「撤销 重做 版本记录」（一个框）「⚠ 1 层」「意见」 ｜ 右组「还原 保存 另存」（一个框）「导出 ▾」；两组之间靠空白分开 -->
+       右段起点对齐检查器左边（v3.5 第 8 条）：左组「撤销 重做 版本记录」（一个框）「意见」（v3.6 第 2 条：「⚠ 1 层」并进导出按钮） ｜ 右组「还原 保存 另存」（一个框）「导出 ▾」；两组之间靠空白分开 -->
   <div class="topbar cols" id="toolRow" role="toolbar" aria-label="制作区工具">
     <div class="tcol tcol-m">
       <button class="btn btn-icon pnl" id="bLeft" data-act="toggleL" aria-pressed="true" aria-label="左栏" data-tip="隐藏左栏" data-key="L"><svg class="i"><use href="#i-pl"/></svg></button>
@@ -102,7 +102,6 @@
     </div>
     <div class="tcol tcol-r">
       <div class="tgrp bx" role="group" aria-label="撤销、重做与版本记录"><button class="btn btn-icon" id="bUndo" data-act="undo" data-tip="撤销" data-key="Ctrl+Z" aria-label="撤销"><svg class="i"><use href="#i-undo"/></svg></button><i class="bx-sep" aria-hidden="true"></i><button class="btn btn-icon" id="bRedo" data-act="redo" data-tip="重做" data-key="Ctrl+Y" aria-label="重做"><svg class="i"><use href="#i-redo"/></svg></button><i class="bx-sep" aria-hidden="true"></i><button class="btn btn-icon" id="bVer" data-act="versions" data-tip="版本记录" aria-label="版本记录" aria-haspopup="menu"><svg class="i"><use href="#i-history"/></svg></button></div>
-      <button class="exp-st" id="expSt" type="button" data-act="expStMenu"></button>
       <button class="btn btn-icon" id="bNote" data-act="note" aria-label="写进意见" data-tip="当前画面写进意见"><svg class="i"><use href="#i-note"/></svg></button>
       <span class="sp"></span>
       <div class="tgrp bx" role="group" aria-label="还原与保存"><button class="btn tbtn" id="bRevert" data-act="revert" data-tip="还原，回到上次保存" aria-label="还原"><svg class="i rv-i" aria-hidden="true"><use href="#i-revert"/></svg><span class="t">还原</span></button><i class="bx-sep" aria-hidden="true"></i><button class="btn tbtn" id="bSave" data-act="save" data-tip="保存" data-key="Ctrl+S">保存</button><i class="bx-sep" aria-hidden="true"></i><button class="btn tbtn" data-act="saveAs" data-tip="存成新效果">另存</button></div>
