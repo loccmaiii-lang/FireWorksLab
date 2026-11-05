@@ -1,0 +1,71 @@
+
+
+<!-- ===== 烟花工坊 5.0 外壳（part_body_shell.html） =====
+     页面加载后由 part_js_shell.js 搬进样板的槽位：#wsImport、#wsWB 切到哪个才搬进 #app（放在 #wsBaker 后面），没切到的留在这里；#shKit 放进 #sbarShell。
+     #shell 的内容、两个列表、全表 #sheetShell 一节由脚本按状态生成。槽位不在时，这一块留在原处、保持隐藏。 -->
+<div id="shParts" hidden>
+
+<!-- 导入工作区：左栏从外壳顶栏下面直接开始（第一行「FWL_Export　5 个包」+ 包列表）；工具行只在右边：工作模式 → 刷新 → 导入；右边是原因条 + 逐资产清单 -->
+<div class="ws sh-ws" id="wsImport" hidden aria-label="导入">
+  <section class="sh-left" aria-label="导出文件夹里的包">
+    <div class="sh-lh"><span class="sh-hv" id="impFolder"></span><span class="lbl" id="impCount"></span></div>
+    <div class="lib-list" id="impList" role="listbox" aria-label="素材包"></div>
+  </section>
+  <div class="topbar sh-hd" id="impTool" role="toolbar" aria-label="导入区工具">
+    <div class="tcol tcol-m sh-hs">
+      <div class="modeseg" id="impSub" role="group" aria-label="导入内容"><button data-sh="impSub" data-v="烟花导入" aria-pressed="true">烟花导入</button><button data-sh="impSub" data-v="ResourceFX 配表" aria-pressed="false">ResourceFX 配表</button></div>
+      <span class="sp"></span>
+      <div class="tgrp"><button class="btn btn-text tbtn" id="impRefresh" data-sh="impRefresh" data-tip="重读导出文件夹">刷新</button><button class="btn btn-1" id="impGo" data-sh="impGo">导入</button></div>
+    </div>
+  </div>
+  <main class="sh-main" id="impMain">
+    <div class="fb warn sh-why" id="impWhy" role="status" hidden><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg><span>UE 未连接，GPUECli 启动后自动连上</span><button class="btn btn-text tbtn" data-sh="retry">重试</button></div>
+    <div class="sh-mc" id="impMC"></div>
+  </main>
+  <footer class="status"><div class="st-l"><i class="sh-ph" style="width:96px" aria-hidden="true"></i></div><div class="st-r"><span data-pvm></span></div></footer>
+</div>
+
+<!-- 编排工作区：左栏从外壳顶栏下面直接开始（「效果 / 模板」大号标签 → 基础模板列表）；工具行在中栏、右栏上方：中栏是编排原有的工具（低对比占位块），右栏是会写 UE 的三个命令 -->
+<div class="ws sh-ws" id="wsWB" hidden aria-label="编排">
+  <section class="sh-left" aria-label="资源库">
+    <div class="lib-body">
+      <div class="tabs tabs-lg" role="tablist" id="wbBig"><button class="tab" role="tab" data-sh="wbBig" data-t="效果" data-v="效果" aria-selected="false">效果</button><button class="tab" role="tab" data-sh="wbBig" data-t="模板" data-v="模板" aria-selected="true">模板</button></div>
+      <div class="tabs tabs-sub" role="tablist" id="wbSub"><button class="tab" role="tab" data-sh="wbSub" data-t="基础模板" data-v="基础模板" aria-selected="true">基础模板</button><button class="tab" role="tab" data-sh="wbSub" data-t="花型模板" data-v="花型模板" aria-selected="false">花型模板</button><button class="tab" role="tab" data-sh="wbSub" data-t="编排模板" data-v="编排模板" aria-selected="false">编排模板</button></div>
+      <div class="lib-tools">
+        <label class="field search" id="wbQ"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="名称、行名" aria-label="搜索基础模板"><button class="clr" type="button" aria-label="清除搜索"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></label>
+        <div class="lib-meta"><div class="seg sm" id="wbChips" role="group" aria-label="花型筛选"><button data-sh="wbChip" data-v="全部" aria-pressed="true">全部</button><button data-sh="wbChip" data-v="球花" aria-pressed="false">球花</button><button data-sh="wbChip" data-v="尾缀" aria-pressed="false">尾缀</button><button data-sh="wbChip" data-v="扇形" aria-pressed="false">扇形</button></div><span class="sp"></span><span class="cnt" id="wbCount"></span><button class="btn btn-text tbtn sm" data-sh="wbNew" data-tip="新建基础模板" aria-label="新建"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg><span class="t">新建</span></button></div>
+      </div>
+      <div class="lib-list" id="wbList" role="listbox" aria-label="基础模板"></div>
+    </div>
+  </section>
+  <div class="topbar cols sh-hd" id="wbTool" role="toolbar" aria-label="编排工具">
+    <div class="tcol tcol-m sh-hs"><i class="sh-ph" style="width:148px" aria-hidden="true"></i><span class="gap"></span><i class="sh-ph" style="width:24px" aria-hidden="true"></i><i class="sh-ph" style="width:24px;margin-left:4px" aria-hidden="true"></i><i class="sh-ph" style="width:88px;margin-left:12px" aria-hidden="true"></i><span class="sp"></span><i class="sh-ph" style="width:56px" aria-hidden="true"></i><i class="sh-ph" style="width:56px;margin-left:8px" aria-hidden="true"></i></div>
+    <div class="tcol tcol-r sh-hs"><span class="sp"></span>
+      <div class="tgrp"><button class="btn btn-text tbtn" data-sh="wbUE" data-v="导演表">导演表</button><button class="btn btn-text tbtn" data-sh="wbUE" data-v="灯光">灯光</button><button class="btn btn-text tbtn" data-sh="wbUE" data-v="UE 里预览">UE 里预览</button></div>
+    </div>
+  </div>
+  <main class="sh-wbmid" aria-hidden="true">
+    <div class="sh-stage"><i class="sh-ph" style="left:6%;top:8%;width:30%;height:10px"></i><i class="sh-ph" style="left:18%;bottom:18%;width:64%;height:2px"></i><i class="sh-ph" style="left:30%;top:34%;width:12%;height:24%"></i><i class="sh-ph" style="left:56%;top:26%;width:16%;height:30%"></i></div>
+    <div class="sh-tlph">
+      <div><i class="sh-ph" style="width:var(--w-tlab)"></i><i class="sh-ph" style="width:22%;margin-left:4%"></i><i class="sh-ph" style="width:14%"></i></div>
+      <div><i class="sh-ph" style="width:var(--w-tlab)"></i><i class="sh-ph" style="width:30%;margin-left:12%"></i></div>
+      <div><i class="sh-ph" style="width:var(--w-tlab)"></i><i class="sh-ph" style="width:18%;margin-left:24%"></i><i class="sh-ph" style="width:10%"></i></div>
+      <div><i class="sh-ph" style="width:var(--w-tlab)"></i><i class="sh-ph" style="width:40%;margin-left:2%"></i></div>
+    </div>
+  </main>
+  <aside class="sh-wbright" aria-hidden="true"><i class="sh-ph" style="width:46%;height:14px"></i><i class="sh-ph" style="width:100%;height:var(--h-ctl)"></i><i class="sh-ph" style="width:72%"></i><i class="sh-ph" style="width:88%"></i><i class="sh-ph" style="width:64%"></i><i class="sh-ph" style="width:40%;height:14px;margin-top:12px"></i><i class="sh-ph" style="width:82%"></i><i class="sh-ph" style="width:70%"></i></aside>
+  <footer class="status"><div class="st-l"><i class="sh-ph" style="width:120px" aria-hidden="true"></i></div><div class="st-r"><span data-pvm></span></div></footer>
+</div>
+
+<!-- 样板开关：放进 #sbarShell；不属于产品界面 -->
+<span class="sh-kit" id="shKit" role="group" aria-label="外壳状态（样板开关）">
+  <label class="kg">工作区切换<select class="sel boxed" data-shk="cmpws" aria-label="工作区切换方案"><option value="a" selected>a 紧跟产品名</option><option value="b">b 对齐画面中线</option><option value="c">c 放最左</option></select></label>
+  <label class="kg">UE<select class="sel boxed" data-shk="ue" aria-label="UE 状态"><option value="wait">连接中</option><option value="on" selected>已连接</option><option value="off">未连接</option><option value="write">写入中</option></select></label>
+  <label class="kg">导出文件夹<select class="sel boxed" data-shk="exp" aria-label="导出文件夹"><option value="none">未选</option><option value="ok" selected>已选</option><option value="perm">需允许</option></select></label>
+  <label class="kg">备份文件夹<select class="sel boxed" data-shk="bak" aria-label="备份文件夹"><option value="none" selected>未选</option><option value="ok">已选</option><option value="perm">需允许</option></select></label>
+  <label class="kg">浏览器<select class="sel boxed" data-shk="br" aria-label="浏览器"><option value="chrome" selected>Chrome</option><option value="other">其他</option></select></label>
+  <label class="kg">预览结果<select class="sel boxed" data-shk="pv" aria-label="编排预览结果"><option value="ok" selected>成功</option><option value="fail">失败</option></select></label>
+</span>
+
+</div>
+
