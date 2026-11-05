@@ -1298,11 +1298,12 @@ def t_scroll(p):
     if not has:
         info('v3.4-13：合成里还没有 .sb-auto 的样式和脚本（制作区第 13 条），外壳的滚动区已经加了这个类，制作区合入后自动生效')
     else:
-        # 制作区合入后：静止时滚动条完全透明（按 Chrome、Edge 的 scrollbar-color 读）
+        # 制作区合入后：静止时滚动条完全透明。制作区的 .sb-auto 用 ::-webkit-scrollbar 画 6 px，滑块颜色继承元素的 border-color，
+        # 所以读 borderTopColor，并确认静止时没有 .is-scrolling（对话框9 合成时按制作区说明「交给外壳」改）
         p.ev("SHELL.ws('import')")
         p.pg.wait_for_timeout(900)
-        sc = p.ev("['#impList', '#impMC .sh-det'].map(s => __T.cs(s, 'scrollbarColor'))")
-        ck('v3.4-13 资源交付页的滚动区静止时滚动条透明', all('rgba(0, 0, 0, 0)' in (x or '') or 'transparent' in (x or '') for x in sc), sc)
+        sc = p.ev("['#impList', '#impMC .sh-det'].map(s => { const e = document.querySelector(s); return e && [getComputedStyle(e).borderTopColor, e.classList.contains('is-scrolling')]; })")
+        ck('v3.4-13 资源交付页的滚动区静止时滚动条透明', all(x and ('rgba(0, 0, 0, 0)' in x[0] or 'transparent' in x[0]) and not x[1] for x in sc), sc)
     p.ev("SHELL.ws('baker')")
 
 
