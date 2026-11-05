@@ -674,12 +674,12 @@ function pvMoreMenu(a) {
     {align: 'center', acts: {retry: () => startPreview(e.name, e.src), wb: () => revealBT(e.name)}});
 }
 const saveExtra = (name, chk) => `<label class="sh-fl"><span class="lbl sh-lab">名称</span><span class="field"><input type="text" value="${esc(name)}" aria-label="名称" maxlength="40"></span></label>`
-  + `<label class="ckl sh-opt"><input class="chk" type="checkbox" data-sh="saveWB"${chk ? ' checked' : ''}><span>放进编排</span></label><p class="sh-optd">第一次新增，之后直接更新编排里的这一项。生成预览约 10 秒。未配 ResourceFX 行的先用英文名，标「未进 UE」。</p>`;
+  + `<label class="ckl sh-opt"><input class="chk" type="checkbox" data-sh="saveWB"${chk ? ' checked' : ''}><span>同时放进编排</span></label><p class="sh-optd">第一次新增，之后直接更新编排里的这一项。生成预览约 10 秒。未配 ResourceFX 行的先用英文名，标「未进 UE」。</p>`;
 function openSaveDialog(o = {}) {
   const name0 = `${shortOf()} 副本`;
   const chk0 = name0 in S.remember ? S.remember[name0] : !!btByName(name0);   /* 第一次不勾；已放进编排的默认勾上，按效果记住（待裁决 4） */
   const names = qq('#libList .lib-item .li-n').map(e => e.textContent.trim());
-  return openDlg({id: 'save', title: '另存为', extra: saveExtra(name0, chk0), ok: '保存', cancel: '取消', focus: 'input[type=text]', host: o.host,
+  return openDlg({id: 'save', title: '另存', extra: saveExtra(name0, chk0), ok: '保存', cancel: '取消', focus: 'input[type=text]', host: o.host,
     check: (d, me) => {
       const inp = q('input[type=text]', d), v = inp.value.trim(), f = inp.closest('.field');
       const err = !v ? '名称为空' : names.includes(v) ? '已有同名效果' : '';
@@ -691,7 +691,7 @@ function openSaveDialog(o = {}) {
     onOk: v => {
       if (o.onOk) { o.onOk(v); return; }
       S.remember[v.name] = v.wb;
-      hint(q('#saveSt'), `已另存为「${v.name}」 ${hhmm()}`);
+      hint(q('#saveSt'), `已另存「${v.name}」 ${hhmm()}`);
       if (v.wb) startPreview(v.name, 'save', 'kiku'); else markNewVer(v.name);
     }});
 }
@@ -954,7 +954,7 @@ function sheetHTML() {
   const pgT = tbl(['常态：在制作', '悬停', '打开着资源交付', '打开着资源编排', '可操作：点一下打开，再点回到制作'],
     [['页面标签', [pgDemo('baker'), pgDemo('baker', 'wb'), pgDemo('import'), pgDemo('wb'), pgDemo('baker', '', true)]]]);
 
-  const BACK = `<button class="btn btn-text tbtn sh-back" type="button">${ic('sh-back')}返回制作</button>`;
+  const BACK = `<button class="btn btn-text tbtn sh-back" type="button">${ic('back')}返回制作</button>`;
   const why = `<div class="sh-why"><span>${WHY.off}</span><button class="btn btn-text tbtn" type="button">重试</button></div>`;
   const leftImp = `<section class="sh-left" style="grid-column:1;grid-row:2"><div class="sh-lh"><span class="sh-hv">FWL_Export</span><span class="lbl">5 个素材包</span></div></section>`;
   const impTool = `<div class="topbar sh-hd" style="grid-template-columns:var(--sh-wl) minmax(0,1fr)"><div class="sh-hs sh-hl">${BACK}</div><div class="sh-hs sh-hm"><div class="modeseg" role="group"><button aria-pressed="true" type="button">烟花导入</button><button aria-pressed="false" type="button">ResourceFX 配表</button></div><span class="sp"></span><div class="tgrp"><button class="btn btn-text tbtn" type="button">刷新</button><button class="btn btn-1 is-disabled" aria-disabled="true" data-tip="${esc(WHY.off)}" type="button">导入</button></div></div></div>`;
@@ -975,7 +975,7 @@ function sheetHTML() {
     + blk('选到 UE 工程里面', '就地报错，对话框不关；打开后点「模拟误选」', sd(Object.assign({err: DLG.bakErr}, DLG.bak(3))) + demoBtn('bak', '打开'))
     + blk('用 Chrome / Edge 以外的浏览器打开', '打开时一次对话框；之后文件夹标签写「不可用」，用到文件夹和 UE 的按钮变灰写原因', sd(DLG.br) + demoBtn('br', '打开'))
     + blk('重开浏览器后要重新允许访问', '不弹框：标签变「需允许访问」，标签下方 8 px 一次小气泡，小三角对着标签；导出、导入、刷新时按钮旁出同一句', `<div>${fo('exp', 'perm')}</div><div class="sh-bub static">${bubHTML('FWL_Export')}</div><div data-shlive="bub" style="margin-top:12px">${fo('exp', 'perm')}</div><span class="sh-cell-n">可操作：点标签或气泡里的「允许访问」</span>`)
-    + blk('另存、第一次保存', '名称下面一行勾选；第一次不勾，已放进编排的默认勾上，按效果记住', sd({title: '另存为', extra: saveExtra('金曜菊-B 副本', false), ok: '保存'}) + demoBtn('save', '打开'))
+    + blk('另存、第一次保存', '名称下面一行勾选；第一次不勾，已放进编排的默认勾上，按效果记住', sd({title: '另存', extra: saveExtra('金曜菊-B 副本', false), ok: '保存'}) + demoBtn('save', '打开'))
     + `</div>`;
 
   const st = inner => `<footer class="status sh-sstat"><div class="st-l"></div><div class="st-r"><button class="btn btn-text tbtn sm" type="button">已保存 20:31</button><span>${inner}</span></div></footer>`;
@@ -1089,7 +1089,7 @@ function sheetDemo(d) {
   if (id === 'exp') askExpFolder(() => hint(d, '已选择 FWL_Export'), {host});
   if (id === 'bak') askBackup(3, () => hint(d, '已选择 FWL_Backup'), () => hint(d, '已取消，没有写入任何资产'), host);
   if (id === 'br') askBrowser(host);
-  if (id === 'save') openSaveDialog({host, onOk: v => hint(d, `已另存为「${v.name}」`)});
+  if (id === 'save') openSaveDialog({host, onOk: v => hint(d, `已另存「${v.name}」`)});
   if (id === 'pvOk') runSheetPV('ok');
   if (id === 'pvFail') runSheetPV('fail');
 }

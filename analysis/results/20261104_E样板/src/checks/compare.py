@@ -1,0 +1,250 @@
+#!/usr/bin/env python3
+"""E 样板 v2.3 → v3 对比页（对话框9，2026-11-05）
+
+每一行对应 E 设计规范 v3 的一节（§1 字号 … §12 浮层，§13 自查的三种画面），外壳顶栏单独一行（用户 2026-11-05 改定，
+另附资源交付页、资源编排页）。两列是 v2.3、v3：同一个状态下截 #app，按同一块区域裁图——区域取两版里那几个元素外框的并集，
+所以同一格两张图的位置和尺寸完全一样。
+
+用法（在 src/ 下）：
+  python3 build.py /tmp/E_v3.html
+  python3 checks/compare.py [--base ../E样板_v2.3.html] [--new /tmp/E_v3.html] [--out ../对比_v23_v3.html]
+只开一个浏览器。图片用 WebP 内嵌进一个 HTML 文件。
+"""
+import argparse, base64, html, io, os, sys, time
+from PIL import Image
+from playwright.sync_api import sync_playwright
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+RES = os.path.dirname(os.path.dirname(HERE))
+ap = argparse.ArgumentParser()
+ap.add_argument('--base', default=os.path.join(RES, 'E样板_v2.3.html'))
+ap.add_argument('--new', default='/tmp/E_v3.html')
+ap.add_argument('--out', default=os.path.join(RES, '对比_v23_v3.html'))
+ap.add_argument('--q', type=int, default=84, help='WebP 质量')
+A = ap.parse_args()
+
+VERS = [('v2.3', A.base), ('v3', A.new)]
+
+# ---------------------------------------------------------------- 状态：每个状态重新载入一次，再做这一步
+CLOSE_POP = "document.body.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}))"
+STATES = {
+    'main': {},
+    'import': {'js': "SHELL.ws('import')"},
+    'wb': {'js': "SHELL.ws('wb')"},
+    'worst': {'js': f"SHELL.set('ue', 'off'); SHELL.set('exp', 'perm'); SHELL.set('bak', 'perm'); {CLOSE_POP}"},
+    'expmenu': {'js': 'KIT.openExport()', 'wait': 400},
+    'tip': {'hover': '#pbody .pl[data-help]', 'wait': 900},
+    'spk': {'js': "KIT.set('scene', 'spk')", 'wait': 600},
+    'deliv': {'js': "KIT.mode('贴图与交付')", 'wait': 600},
+    'm1366': {'size': 1366, 'wait': 400},
+}
+
+# ---------------------------------------------------------------- 行：(编号, 标题, 规范要点, [(状态, 区域, 图注, 选项)])
+# 区域：'app' = 整屏；选择器列表 = 两版外框的并集（pad 外扩）；split = 横向切成几段（太宽的条）
+ROWS = [
+    ('改定', '外壳顶栏（用户 2026-11-05 改定）',
+     '去掉「制作 / 导入 / 编排」切换，默认就是制作；右上角 UE ｜ 导出、备份 ｜「资源交付」「资源编排」 ｜ 显卡；更新记录放到版本号上；两页工具行左端「← 返回制作」，再点亮着的标签也回到制作。',
+     [('main', ['#shell'], '顶栏', {'split': 2, 'pad': 0}), ('import', 'app', '资源交付页（v2.3 是「导入」工作区）', {}), ('wb', 'app', '资源编排页（v2.3 是「编排」工作区）', {})]),
+    ('§1', '字号与字重',
+     '三级字号 12 / 13 / 15（1366 下 11 / 12 / 14），效果库大号标签 15；字重只有 400 和 600，600 只给当前位置、模块标题、当前标签、产品名；数值主文字色，单位弱色小一级。',
+     [('main', ['#insp'], '检查器上半', {'h': 330})]),
+    ('§2', '网格与间距',
+     '基本单位 4；行高 28、控件 24、点击区 ≥ 28；面板内边距 12，组内 8、组间 20；栏宽 300 / 460（1366 下 260 / 380）；检查器五列：参数名 112 ｜ 控件 ｜ 数值 72 ｜ 单位 28 ｜ 操作 24，滑杆结束在同一条线上。',
+     [('main', ['#pbody'], '检查器参数行', {'y0': 120, 'h': 420})]),
+    ('§3', '面与线',
+     '面四级：画面 ＜ 面板 ＜ 栏头 ＜ 浮层；线只有一种：1 px、亮一级；不用底色条做标题，也不用 4 px 的缝；填底色只表示「选中 / 开着」。',
+     [('main', 'app', '主屏 1920 × 1080', {})]),
+    ('§4', '控件语法',
+     '一种意思一种样子：主操作薄荷实底，每页一个；命令静止无底、悬停出浮层底色；分段控件只有一种（M / S）；「保存 •」不填底色。',
+     [('main', ['#toolRow'], '制作区工具行', {'split': 2, 'pad': 0})]),
+    ('§5', '状态与颜色',
+     '薄荷只给每页唯一的主操作、播放头、结构树当前行细框、一级标签和当前页标签下划线、UE 已连接圆点；琥珀只给「需重新导出」和会挡住操作的设置；红只给错误；效果库状态词要处理的主文字色，其余弱色。',
+     [('main', ['#left'], '左栏：结构树（需重新导出三角）+ 效果库状态词', {'h': 560}), ('main', ['#expBtn'], '导出按钮和「⚠ 1」', {'x0': -300, 'pad': 6})]),
+    ('§6', '图标',
+     '16 px 画布、1.5 px 线、方头、只画线框；一种形状一个意思：圆箭头只表示恢复默认，循环是首尾相接的矩形环，版本记录是三张纸，需重新导出是琥珀三角。',
+     [('main', ['#tree'], '结构树类型图标', {}), ('main', ['#transport'], '播放条', {'split': 2, 'pad': 0})]),
+    ('§7', '一个信息只出现一次',
+     '当前层名只在结构树和面包屑；单格大小、张数、帧数只在检查器「输出」；画面读数只留平台、fps、tick，距离和曝光收进「预览设置」，不是默认值时才在右下出小标记。',
+     [('main', ['#stage'], '画面与读数', {})]),
+    ('§8', '时间轴',
+     '播放条三组；导出范围画在刻度尺上（浅底 + 两端把手，上方写范围）；胶片条 28 px 只覆盖导出范围；层行 6 px、发射器行 2 px，超出范围降到 40 %；1920 下至少 6 行。',
+     [('main', ['#transport', '#tlw'], '播放条 + 时间轴', {})]),
+    ('§9', '检查器',
+     '顶部面包屑（末项大号 600），下一行搜索、「筛选 ▾」「全部折叠」；模块标题行 28 px、600，摘要右对齐到数值列，模块之间 1 px 线；改动标记在左边槽位；区间写「1.2–2.0」，分布收进展开箭头。',
+     [('main', ['#insp'], '检查器整列', {})]),
+    ('§10', '左栏',
+     '结构树第一行是效果名，行高 28，显示 / 只看 / ⋯ 只在悬停、当前行或非默认时出现；效果库大号标签「效果 / 模板」→ 搜索 → 筛选块 + 「6 个」+「新建」；列表行缩略图 40、副信息「代号　N 层」。',
+     [('main', ['#left'], '左栏整列', {})]),
+    ('§11', '外壳顶栏的状态',
+     '高 40（1366 下 36），栏头面色、底边 1 px 线；四组之间 1 px 竖线，组内 12、组间 20；「导出 未选」「需允许访问」琥珀，「备份 未选」弱色 +「设置」；当前页标签薄荷下划线。',
+     [('worst', ['#shell'], '1920：UE 未连接，导出、备份都需允许访问', {'split': 2, 'pad': 0}), ('m1366', ['#shell'], '1366 × 768：正常状态', {'split': 2, 'pad': 0})]),
+    ('§12', '浮层与提示',
+     '提示框浮层面色、6 px 小三角、离触发点 8 px、最宽 260；导出 ▾ 菜单分三段：一行摘要（详情点开）→ 操作（右侧写数字）→ 选项（平台分段、「同时放进编排」）；提示条统一出在外壳提示区。',
+     [('expmenu', ['.menu', '#expBtn'], '导出 ▾ 菜单', {'pad': 16}), ('tip', ['.ovl > .tip', '#pbody .pl[data-help]'], '参数说明提示框', {'pad': 20})]),
+    ('§13', '自查：1366 × 768', '字号小一级，栏宽 260 / 380；时间轴至少 4 行。', [('m1366', 'app', '主屏 1366 × 768', {})]),
+    ('§13', '自查：仙女棒', '第二个场景（发射器多、层少）。', [('spk', 'app', '主屏，场景「仙女棒」', {})]),
+    ('§13', '自查：贴图与交付', '工作模式「贴图与交付」：交付表 PC / 手机两格、胶片、导出浮层的入口。', [('deliv', 'app', '主屏，「贴图与交付」', {})]),
+]
+
+RECT_JS = """sels => { const A = document.querySelector('#app').getBoundingClientRect();
+  return sels.map(s => { const e = [...document.querySelectorAll(s)].find(x => x.getClientRects().length); if (!e) return null; const r = e.getBoundingClientRect();
+    return [r.left - A.left, r.top - A.top, r.right - A.left, r.bottom - A.top]; }); }"""
+
+
+def shoot(pw):
+    """两版各走一遍所有状态：返回 {版本: {状态: (PIL 图, {选择器: 外框})}}"""
+    need = {}
+    for _, _, _, items in ROWS:
+        for st, reg, _, _ in items:
+            need.setdefault(st, set())
+            if reg != 'app':
+                need[st].update(reg)
+    out, errs = {}, []
+    b = pw.chromium.launch()
+    for ver, path in VERS:
+        pg = b.new_page(viewport={'width': 1920, 'height': 1200}, device_scale_factor=1)
+        pg.on('pageerror', lambda e, v=ver: errs.append(f'{v}: {e}'))
+        pg.route('**/*', lambda r: r.continue_() if r.request.url.startswith(('file:', 'data:')) else r.abort())
+        url = 'file://' + os.path.abspath(path)
+        out[ver] = {}
+        for st, cfg in STATES.items():
+            size = cfg.get('size', 1920)
+            pg.set_viewport_size({'width': 1920 if size == 1920 else 1366, 'height': 1200 if size == 1920 else 860})
+            pg.goto(url)
+            pg.wait_for_function('window.SHELL && window.KIT', timeout=15000)
+            pg.add_style_tag(content='#sampleBar{visibility:hidden!important}')
+            if size == 1366:
+                pg.evaluate("KIT.set('size', '1366')")
+            pg.mouse.move(600, 1180 if size == 1920 else 840)   # 停在 #app 外面，不出悬停
+            pg.wait_for_timeout(250)
+            if cfg.get('js'):
+                pg.evaluate(f"(() => {{ {cfg['js']}; }})()")
+            if cfg.get('hover'):
+                pg.hover(cfg['hover'])
+            pg.wait_for_timeout(cfg.get('wait', 250))
+            img = Image.open(io.BytesIO(pg.locator('#app').screenshot())).convert('RGB')
+            sels = sorted(need[st])
+            rects = dict(zip(sels, pg.evaluate(RECT_JS, sels))) if sels else {}
+            out[ver][st] = (img, rects)
+        pg.close()
+    b.close()
+    return out, errs
+
+
+def region(shots, st, sels, o):
+    """两版外框的并集，外扩 pad，按 x0 / y0 / h 调整，夹在 #app 里"""
+    boxes = [shots[v][st][1].get(s) for v, _ in VERS for s in sels]
+    boxes = [x for x in boxes if x]
+    W = min(shots[v][st][0].width for v, _ in VERS)
+    H = min(shots[v][st][0].height for v, _ in VERS)
+    if not boxes:
+        return None
+    pad = o.get('pad', 8)
+    l, t = min(b[0] for b in boxes) - pad, min(b[1] for b in boxes) - pad
+    r, bt = max(b[2] for b in boxes) + pad, max(b[3] for b in boxes) + pad
+    l += o.get('x0', 0)
+    t += o.get('y0', 0)
+    if o.get('h'):
+        bt = t + o['h']
+    l, t, r, bt = max(0, round(l)), max(0, round(t)), min(W, round(r)), min(H, round(bt))
+    return (l, t, r, bt)
+
+
+def webp(im):
+    buf = io.BytesIO()
+    im.save(buf, 'WEBP', quality=A.q, method=6)
+    return 'data:image/webp;base64,' + base64.b64encode(buf.getvalue()).decode()
+
+
+def cells(shots, items):
+    """每个版本一串 <figure>；同一项两版裁同一块"""
+    col = {v: [] for v, _ in VERS}
+    for st, reg, cap, o in items:
+        if reg == 'app':
+            boxes = [(0, 0, min(shots[v][st][0].width for v, _ in VERS), min(shots[v][st][0].height for v, _ in VERS))]
+        else:
+            box = region(shots, st, reg, o)
+            if not box:
+                for v, _ in VERS:
+                    col[v].append(f'<figure><figcaption>{html.escape(cap)}：没找到 {html.escape(" ".join(reg))}</figcaption></figure>')
+                continue
+            n = o.get('split', 1)
+            l, t, r, b = box
+            w = (r - l) / n
+            boxes = [(round(l + i * w), t, round(l + (i + 1) * w), b) for i in range(n)]
+        for v, _ in VERS:
+            imgs = ''.join(f'<img src="{webp(shots[v][st][0].crop(bx))}" width="{bx[2] - bx[0]}" height="{bx[3] - bx[1]}" alt="{html.escape(v + " " + cap)}" loading="lazy">' for bx in boxes)
+            size = f'{boxes[0][2] - boxes[0][0]} × {boxes[0][3] - boxes[0][1]}' + (f' × {len(boxes)} 段' if len(boxes) > 1 else '')
+            col[v].append(f'<figure>{imgs}<figcaption>{html.escape(cap)}<span>{size}</span></figcaption></figure>')
+    return col
+
+
+CSS = """
+:root{--bg:#0c1518;--panel:#111d21;--chrome:#16242a;--line:#2b4149;--t1:#e4edef;--t2:#b4c5cb;--t3:#8da3ac;--p4:#00d49b;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t1);font:13px/20px Inter,"Noto Sans SC","Noto Sans CJK SC",sans-serif;font-variant-numeric:tabular-nums}
+header{padding:24px 32px 16px;background:var(--chrome);border-bottom:1px solid var(--line)}
+h1{margin:0 0 6px;font-size:20px;line-height:28px;font-weight:600}
+.lead{margin:0;max-width:1180px;color:var(--t2)}
+.lead code{color:var(--t1)}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+thead th{position:sticky;top:0;z-index:2;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--line);text-align:left;font-weight:600}
+thead th:first-child{width:260px}
+tbody th{padding:16px;text-align:left;vertical-align:top;font-weight:400}
+tbody th .no{display:block;color:var(--t3);font-size:12px}
+tbody th b{display:block;margin-bottom:6px;font-size:15px;line-height:22px;font-weight:600}
+tbody th p{margin:0;color:var(--t2)}
+td{padding:16px;vertical-align:top;border-left:1px solid var(--line)}
+tbody tr>*{border-top:1px solid var(--line)}
+figure{margin:0 0 16px}
+figure:last-child{margin-bottom:0}
+figure img{display:block;max-width:100%;height:auto;margin-bottom:4px;background:#000;outline:1px solid var(--line);cursor:zoom-in}
+figcaption{display:flex;gap:12px;color:var(--t3);font-size:12px;line-height:16px}
+figcaption span{margin-left:auto}
+#zoom{position:fixed;inset:0;z-index:9;display:none;overflow:auto;background:rgba(0,0,0,.88);cursor:zoom-out}
+#zoom.on{display:block}
+#zoom img{display:block;margin:24px auto;max-width:none}
+@media (max-width:900px){thead{display:none}table,tbody,tr,th,td{display:block;width:auto}td{border-left:0}td::before{content:attr(data-v);display:block;margin-bottom:8px;color:var(--t3);font-weight:600}header{padding:16px}tbody th,td{padding:12px 16px}}
+"""
+
+JS = """
+const z = document.getElementById('zoom'), zi = z.querySelector('img');
+document.addEventListener('click', e => { const im = e.target.closest('figure img'); if (im) { zi.src = im.src; zi.alt = im.alt; z.classList.add('on'); } else if (e.target.closest('#zoom')) z.classList.remove('on'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') z.classList.remove('on'); });
+"""
+
+
+def main():
+    for v, p in VERS:
+        if not os.path.exists(p):
+            sys.exit(f'找不到 {v}：{p}')
+    t0 = time.time()
+    with sync_playwright() as pw:
+        shots, errs = shoot(pw)
+    body = []
+    for no, title, desc, items in ROWS:
+        col = cells(shots, items)
+        body.append(f'<tr><th scope="row"><span class="no">{html.escape(no)}</span><b>{html.escape(title)}</b><p>{html.escape(desc)}</p></th>'
+                    + ''.join(f'<td data-v="{v}">{"".join(col[v])}</td>' for v, _ in VERS) + '</tr>')
+    rel = lambda p: os.path.relpath(os.path.abspath(p), RES) if os.path.abspath(p).startswith(RES) else p
+    doc = f"""<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E 样板 v2.3 → v3 对比</title><style>{CSS}</style></head>
+<body><header><h1>E 样板 v2.3 → v3 对比</h1>
+<p class="lead">按 <code>协作/方案/E设计规范_v3_2026-11-05.md</code> 的节号排；外壳顶栏按用户 2026-11-05 改定单独一行。左列 v2.3（<code>{html.escape(rel(A.base))}</code>），右列 v3（<code>{html.escape(rel(A.new))}</code>）。
+同一格两张图是同一个状态、同一块区域、同样大小（区域取两版元素外框的并集）；点图看原尺寸，Esc 或再点一下关掉。由 <code>src/checks/compare.py</code> 生成，{time.strftime('%Y-%m-%d %H:%M')}。</p></header>
+<table><thead><tr><th>规范</th>{''.join(f'<th>{v}</th>' for v, _ in VERS)}</tr></thead><tbody>
+{chr(10).join(body)}
+</tbody></table>
+<div id="zoom" role="dialog" aria-label="原尺寸"><img alt=""></div>
+<script>{JS}</script></body></html>
+"""
+    open(A.out, 'w', encoding='utf-8').write(doc)
+    print(f'写了 {A.out}（{len(doc) / 1e6:.1f} MB，{len(ROWS)} 行，{time.time() - t0:.0f} 秒）')
+    if errs:
+        print('页面报错：', *errs[:5], sep='\n  ')
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

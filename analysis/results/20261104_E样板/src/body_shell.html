@@ -2,17 +2,14 @@
      宪章 0.9「用户 2026-11-05 改定」：没有工作区切换，默认画面就是制作；右上角「资源交付」「资源编排」两个页面标签。
      页面加载后由 script_shell.js 搬进样板的槽位：#wsImport（资源交付）、#wsWB（资源编排）打开哪个才搬进 #app（放在 #wsBaker 后面），
      没打开的留在这里；#shKit 放进 #sbarShell。#shell 的内容、两个列表、全表 #sheetShell 一节由脚本按状态生成。槽位不在时，这一块留在原处、保持隐藏。 -->
-<!-- 外壳自己的图标（规范第 6 节：16 px 画布、1.5 px 线、方头、只画线框）；样板的图标表里没有的才放这里 -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-  <symbol id="i-sh-back" viewBox="0 0 16 16"><path d="M7 3.5 2.5 8 7 12.5"/><path d="M3 8h10.5"/></symbol>
-</defs></svg>
+<!-- 图标一律用样板 body_main.html 开头的 SVG symbol（「← 返回制作」= i-back）；外壳不再自带图标 -->
 <div id="shParts" hidden>
 
 <!-- 资源交付（原导入工作区）：工具行占满宽：「← 返回制作」｜「烟花导入 / ResourceFX 配表」…「刷新」「导入」；
      左栏第一行「FWL_Export　5 个素材包」+ 包列表；右边是原因（UE 未连接时）+ 逐资产清单 -->
 <div class="ws sh-ws" id="wsImport" hidden aria-label="资源交付">
   <div class="topbar sh-hd" id="impTool" role="toolbar" aria-label="资源交付工具">
-    <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-sh-back"/></svg>返回制作</button></div>
+    <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>返回制作</button></div>
     <div class="sh-hs sh-hm">
       <div class="modeseg" id="impSub" role="group" aria-label="资源交付内容"><button data-sh="impSub" data-v="烟花导入" aria-pressed="true">烟花导入</button><button data-sh="impSub" data-v="ResourceFX 配表" aria-pressed="false">ResourceFX 配表</button></div>
       <span class="sp"></span>
@@ -34,7 +31,7 @@
      左栏「效果 / 模板」大号标签 → 基础模板列表；中栏画面和时间轴（占位）；右栏检查器（占位） -->
 <div class="ws sh-ws" id="wsWB" hidden aria-label="资源编排">
   <div class="topbar sh-hd" id="wbTool" role="toolbar" aria-label="资源编排工具">
-    <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-sh-back"/></svg>返回制作</button></div>
+    <div class="sh-hs sh-hl"><button class="btn btn-text tbtn sh-back" data-sh="back" type="button"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>返回制作</button></div>
     <div class="sh-hs sh-hm"><i class="sh-ph" style="width:148px" aria-hidden="true"></i><i class="sh-ph" style="width:24px;margin-left:12px" aria-hidden="true"></i><i class="sh-ph" style="width:24px" aria-hidden="true"></i><i class="sh-ph" style="width:88px;margin-left:12px" aria-hidden="true"></i><span class="sp"></span><i class="sh-ph" style="width:56px" aria-hidden="true"></i><i class="sh-ph" style="width:56px" aria-hidden="true"></i></div>
     <div class="sh-hs sh-hr"><span class="sp"></span>
       <div class="tgrp"><button class="btn btn-text tbtn" data-sh="wbUE" data-v="导演表">导演表</button><button class="btn btn-text tbtn" data-sh="wbUE" data-v="灯光">灯光</button><button class="btn btn-text tbtn" data-sh="wbUE" data-v="UE 里预览">UE 里预览</button></div>

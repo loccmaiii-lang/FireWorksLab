@@ -363,7 +363,7 @@ def t_pages(p, size):
     # 「← 返回制作」在页面工具行左端
     bk = p.ev("""(() => { const b = __T.q('#impTool .sh-back'), t = __T.rect('#impTool'), r = __T.rect(b), i = b.querySelector('svg.i use');
         return {t: __T.txt(b), x: r.x - t.x, h: r.h, icon: i && i.getAttribute('href'), iw: __T.rect(b.querySelector('svg.i')).w, first: __T.qq('#impTool button').filter(__T.vis)[0] === b}; })()""")
-    ck(f'改定5-工具行左端「← 返回制作」{S}', bk['t'] == '返回制作' and bk['first'] and bk['x'] <= 12 and bk['icon'] == '#i-sh-back', bk)
+    ck(f'改定5-工具行左端「← 返回制作」{S}', bk['t'] == '返回制作' and bk['first'] and bk['x'] <= 12 and bk['icon'] == '#i-back', bk)
     ck(f'规范6-返回箭头 16 px、命令点击区 28{S}', near(bk['iw'], 16, 0.5) and bk['h'] >= 28 - 0.5, bk)
     # 再点一次亮着的标签 → 回到制作
     p.click('#shell .sh-pg[data-pg="import"]')
@@ -714,6 +714,17 @@ def t_export(p):
     p.click('#wbTool .sh-back')
     pos = p.ev("""(() => { const t = __T.ovl('.sh-toast')[0]; if (!t) return null; const r = __T.rect(t), tb = __T.rect('#wsBaker > .topbar'); return {top: r.y - tb.b, act: __T.vis(t.querySelector('[data-r=act]'))}; })()""")
     ck('P8-人已经在制作：「返回制作」收起', pos and not pos['act'] and near(pos['top'], 8, 1), pos)
+    # 导出一次：挂钩只调一次（样板调，外壳不另调）、只切一次页面、最后只留一条提示条（样板的「已导出」经 shellToast 进来后被外壳这一条换掉）
+    p.ev("""(() => { const o = window.shellAfterExport; window.__sae = []; window.shellAfterExport = a => { window.__sae.push(a === undefined ? 'undefined' : a && a.name); return o(a); };
+        window.__sw = 0; window.__mo = new MutationObserver(() => { const on = !__T.q('#wsImport').hidden; if (on && !window.__on) window.__sw++; window.__on = on; });
+        window.__on = !__T.q('#wsImport').hidden; window.__mo.observe(__T.q('#wsImport'), {attributes: true, attributeFilter: ['hidden']}); })()""")
+    export_all(p)
+    p.wait("SHELL.state().ws === 'import'", 4000)
+    p.pg.wait_for_timeout(600)
+    r = p.ev("""(() => { window.__mo.disconnect(); return {calls: window.__sae, sw: window.__sw, toasts: __T.ovl('.toast').map(__T.txt)}; })()""")
+    ck('③-导出一次：shellAfterExport 只调一次（样板调，外壳不另调）', r['calls'] == ['金曜菊-B'], r)
+    ck('③-导出一次：只切一次页面、只留一条提示条', r['sw'] == 1 and len(r['toasts']) == 1 and r['toasts'][0].startswith('制作：已导出 '), r)
+    p.ev("SHELL.ws('baker')")
     # P4：导出时勾了「放进编排」，金曜菊-B 已在编排里 → 直接更新，不标「有新版本」
     p.ev("SHELL.speed(0.4)")
     export_all(p, also_wb=True)
@@ -750,7 +761,7 @@ def t_save(p):
     p.ev('window.openSaveDialog()')
     d = p.ev("""(() => { const d = __T.ovl('.dialog[data-dlg=save]')[0]; return d && {h: __T.txt(d.querySelector('h2')), v: d.querySelector('input[type=text]').value, chk: d.querySelector('[data-sh=saveWB]').checked,
         lab: __T.txt(d.querySelector('.sh-opt')), note: __T.txt(d.querySelector('.sh-optd')), a: __T.qq('.acts button', d).map(__T.txt), focus: document.activeElement === d.querySelector('input[type=text]')}; })()""")
-    ck('④-另存为：名称 + 名称下面一行「放进编排」', d and d['h'] == '另存为' and d['v'] == '金曜菊-B 副本' and d['lab'] == '放进编排' and d['a'] == ['取消', '保存'] and d['focus'], d)
+    ck('④-另存：名称 + 名称下面一行「同时放进编排」（同导出菜单的词）', d and d['h'] == '另存' and d['v'] == '金曜菊-B 副本' and d['lab'] == '同时放进编排' and d['a'] == ['取消', '保存'] and d['focus'], d)
     ck('④-第一次不勾', d and not d['chk'], d)
     ck('④-下一行小字写约 10 秒和「未进 UE」', d and '约 10 秒' in d['note'] and '未进 UE' in d['note'], d)
     p.shot('shell_9_save_dialog.png')
@@ -1005,7 +1016,7 @@ def t_hooks(p):
 HAN = re.compile(r'[\u4e00-\u9fff]')
 WORD = re.compile(r'[A-Za-z0-9_][A-Za-z0-9_.:\\/\-]*')
 PROPER = ['烟花工坊', 'FireWorksLab', 'ResourceFX', 'GPUECli', 'Chrome', 'Edge', 'UE', 'RTX', 'NVIDIA', 'GeForce']
-LIM = {'按钮': ('≤ 4（汉字）', 4, 'han'), '菜单项': ('≤ 4（汉字）', 4, 'han'), '标签': ('≤ 4（汉字）', 4, 'han'), '表头': ('≤ 4（汉字）', 4, 'han'),
+LIM = {'按钮': ('≤ 4（汉字）', 4, 'han'), '菜单项': ('≤ 6（汉字）', 6, 'han'), '标签': ('≤ 6（汉字）', 6, 'han'),   # 菜单项、标签同制作区 text_audit.py '表头': ('≤ 4（汉字）', 4, 'han'),
        '悬停': ('≤ 16', 16, 'all'), '悬停（第二行）': ('≤ 16', 16, 'all'), '原因': ('≤ 16', 16, 'all'), '提示条': ('≤ 20', 20, 'all'), '状态': ('≤ 8', 8, 'all'),
        '空状态': ('≤ 16', 16, 'all'), '菜单标题': ('≤ 16', 16, 'all'), '对话框标题': ('≤ 16', 16, 'all'), '占位文字': ('≤ 16', 16, 'all'), '信息': ('≤ 16', 16, 'all')}
 NAMES = ['金曜菊-B 副本', '金曜菊-B 稀簇辉闪', '金曜菊-A 密簇', '金曜菊-B', 'Comet 3.0 红头金尾', 'Silver 3.0 银白长尾', '升空尾缀 RT6', '金芒菊 规格', '仙女棒', '金锦层']
@@ -1034,6 +1045,7 @@ def count(s, mode):
 
 
 BAN = re.compile(r'你可以|会帮你|请|哦|[？?！!（(]')
+ALLOW = {'打开文件夹'}   # 文案规则.md 字数上限表里自己举的按钮例子（样板的「已导出」提示条经 shellToast 进外壳提示区，按钮是它）
 
 
 def copy_table():
@@ -1051,7 +1063,7 @@ def copy_table():
             continue
         lim = LIM.get(c)
         n = count(s, lim[2] if lim else 'all')
-        ok = (not lim or n <= lim[1]) and not BAN.search(s) and not (c != '对话框正文' and s.endswith('。'))
+        ok = (not lim or n <= lim[1] or s in ALLOW) and not BAN.search(s) and not (c != '对话框正文' and s.endswith('。'))
         rows.append((w, c, s, str(n), lim[0] if lim else '—', ok))
     rows.sort(key=lambda r: (r[0], r[1], r[2]))
     return rows
