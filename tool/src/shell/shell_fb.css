@@ -76,7 +76,7 @@ body.sh-fb .sh-delivb .sh-cnt[hidden]{display:none}
   button{cursor:pointer;text-align:inherit}
   button:disabled{cursor:default}
   img{display:block}
-  svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}
+  svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
   svg.i.chevr{transform-origin:8px 8px}
   .sb-auto{scrollbar-gutter:stable;border-color:transparent;transition:border-color .3s}
   .sb-auto.is-scrolling{border-color:var(--g6);transition:none}
