@@ -33,3 +33,18 @@
   const go = () => { const p = $q('#params'); if (!p) return setTimeout(go, 200); new MutationObserver(later).observe(p, { childList: true, subtree: true }); later(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();
+
+// 5.0.01 预览 · 工具条前一版（用户 17:44）：视图条第二行「画面　[适应窗口 | 1:1 | 实机窗口]　[距离 ↔]　[预览曝光 ↔]」
+(() => {
+  if (typeof document === 'undefined') return;
+  const $q = s => document.querySelector(s); let n = 0;
+  const go = () => {
+    const vb = $q('#viewbar'), disp = $q('#dispSeg'), read = $q('#vfRead');
+    if (!vb || !disp || !read) { if (n++ < 300) setTimeout(go, 100); return; }
+    if (vb.querySelector('.p501-br')) return;
+    const br = document.createElement('i'); br.className = 'p501-br';
+    const k = document.createElement('span'); k.className = 'p501-k'; k.textContent = '画面';
+    vb.append(br, k, disp, read);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
