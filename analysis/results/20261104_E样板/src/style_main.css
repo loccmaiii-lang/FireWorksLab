@@ -75,7 +75,7 @@ button:disabled{cursor:default}
 img{display:block}
 /* 图标（§6、v3.3 第 7 条）：16 px 画布，1.5 px 线宽，方头，尖角，只画线框；一律按 16 px 显示（缩小会让线宽变细、光学大小不一），
    小一号的意思（下拉箭头、×、✓）在符号里画小，不在样式里缩 */
-svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}
+svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}   /* E 4.1：图标重新设计，20 格、1.6 线、圆头圆角 */
 /* 折叠箭头（结构树、检查器模块）：v3.5 起箭头画在画布正中，转 90° 绕中心转 */
 svg.i.chevr{transform-origin:8px 8px}
 /* v3.5 第 1 条：图标颜色——默认次文字色，悬停主文字色，开着 / 当前薄荷（图标开关 aria-pressed=true；结构树的「显示」按下是常态，不算开着） */
@@ -264,7 +264,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
 
 /* 3.8 下拉：像命令一样静止无底，右侧 ▾；悬停出浮层底色 */
 .sel{appearance:none;display:inline-flex;align-items:center;height:var(--h-hit);max-width:100%;padding:0 20px 0 6px;border:0;border-radius:var(--r2);color:var(--t2);font-size:var(--fs2);cursor:pointer;white-space:nowrap;
-  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") no-repeat right 4px center}
+  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='%238da3ac' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8.25 10 12.25l4-4'/%3E%3C/svg%3E") no-repeat right 4px center}
 .sel:hover,.sel.is-hover{background-color:var(--hov);color:var(--t1)}
 .sel:focus-visible,.sel.is-focus{outline:2px solid var(--focus);outline-offset:1px}
 .sel.is-open{background-color:var(--press);color:var(--t1)}
@@ -277,7 +277,7 @@ mark{background:none;color:var(--t1);font-weight:var(--fw1);text-decoration:unde
   .sel::picker(select){min-width:max(anchor-size(width),120px);margin:2px 0;padding:4px 0;background:var(--ov);border:1px solid var(--ovLine);border-radius:var(--r2);box-shadow:var(--shadow);color:var(--t1)}
   .sel option{display:flex;align-items:center;gap:8px;min-height:var(--h-hit);padding:0 12px;font-size:var(--fs2);color:var(--t1);white-space:nowrap}
   .sel option::checkmark{content:"";width:12px}
-  .sel option:checked::checkmark{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23b4c5cb' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.06 7.7 6.56 11.2l6.38-6.38'/%3E%3C/svg%3E")}
+  .sel option:checked::checkmark{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='%23b4c5cb' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4.25 10.5 3.75 3.75 7.75-8.5'/%3E%3C/svg%3E")}
   .sel option:hover,.sel option:focus-visible{background:var(--press);outline:none}
 }
 

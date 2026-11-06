@@ -107,6 +107,7 @@
  },
  "css": [
   "style_main.css",
-  "style_shell.css"
+  "style_shell.css",
+  "style_v41.css"
  ]
 }
