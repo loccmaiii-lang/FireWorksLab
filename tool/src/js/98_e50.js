@@ -95,7 +95,7 @@ if (typeof paneGo === 'function') { const paneGo0 = paneGo; paneGo = () => paneG
 })();
 
 // ===================== 检查器（右栏「参数」）：规范 v4 §10 =====================
-// 搜索行 = 搜索框 ＋「筛选 ▾」（仅改动 / 英文名 / 全部参数）＋「全部折叠」＋「⋯」（恢复发射器 / 恢复本层 / 随机微调 / 导入参数）。
+// 搜索行 = 搜索框 ＋「筛选 ▾」（仅改动 / 英文名）＋「全部折叠」＋「⋯」（恢复发射器 / 恢复本层 / 随机微调 / 导入参数）。
 // 「现在改的是」、发射器标签（结构树代替）、发射器说明行（进面包屑悬停提示）、模块「？」说明（进模块标题悬停提示）、空模块说明、底部统计、底部按钮、「和打开时一样」这一条：
 // 只藏不删（脚本照旧读它们），功能都在上面这几处还能做（见 协作/方案/烟花工坊5.0_界面盘点_2026-11-05.md「已删除」）。
 (function e50Inspector() {
@@ -114,15 +114,9 @@ if (typeof paneGo === 'function') { const paneGo0 = paneGo; paneGo = () => paneG
     if (lab0) { lab0.lastChild.textContent = ' 仅改动'; lab0.title = '只显示改过的参数'; }
     if (lab1) { lab1.lastChild.textContent = ' 英文名'; lab1.title = '参数名用英文'; }
     const filt = document.createElement('details'); filt.className = 'ab-more e50-filt';
-    filt.innerHTML = `<summary class="btn" data-tip="仅改动、英文名、全部参数">筛选${ico('cd')}</summary><div class="ab-menu e50-menu" role="menu"></div>`;
+    filt.innerHTML = `<summary class="btn" data-tip="仅改动、英文名">筛选${ico('cd')}</summary><div class="ab-menu e50-menu" role="menu"></div>`;
     const m = filt.querySelector('.ab-menu'); labs.forEach(l => m.appendChild(l));
-    const all = document.createElement('label'); all.className = 'pchg pall'; all.title = '所有发射器的参数排在一起';
-    all.innerHTML = '<input type="checkbox" data-pall> 全部参数'; m.appendChild(all);
-    all.querySelector('input').addEventListener('change', e => {
-      if (typeof selectEmitTab !== 'function') return;
-      if (e.target.checked) { if (pview.tabNow !== '全部') pview._e50prev = pview.tabNow; selectEmitTab('全部'); }
-      else selectEmitTab(pview._e50prev && pview._e50prev !== '全部' ? pview._e50prev : '');
-    });
+    // 5.0.01（审阅 R19）：「全部参数」（所有发射器排一页）删了——搜索 + 全部展开代替
     const fold = document.createElement('button'); fold.type = 'button'; fold.className = 'btn e50-fold'; fold.textContent = '全部折叠';
     fold.addEventListener('click', () => { const ds = openable(), any = ds.some(d => d.open); ds.forEach(d => { if (d.open === any) { d.open = !any; } }); syncFold(); });
     const more = document.createElement('details'); more.className = 'ab-more e50-more';
@@ -153,7 +147,7 @@ if (typeof paneGo === 'function') { const paneGo0 = paneGo; paneGo = () => paneG
     const f = $q('#params .e50-filt'); if (!f) return;
     const pa = f.querySelector('[data-pall]'), all = pview.tabNow === '全部'; if (pa && pa.checked !== all) pa.checked = all;
     const n = $a('input[type=checkbox]', f).filter(c => c.checked).length, sm = f.querySelector('summary');
-    sm.classList.toggle('on', n > 0); const tip = n ? `筛选：${n} 项开着` : '仅改动、英文名、全部参数'; if (sm.dataset.tip !== tip) sm.dataset.tip = tip;
+    sm.classList.toggle('on', n > 0); const tip = n ? `筛选：${n} 项开着` : '仅改动、英文名'; if (sm.dataset.tip !== tip) sm.dataset.tip = tip;
   }
 
   // ---- 模块：「？」说明 → 标题悬停提示；模块里的长说明段落收起 ----
@@ -219,7 +213,7 @@ if (typeof paneGo === 'function') { const paneGo0 = paneGo; paneGo = () => paneG
     for (const p of $a('#params .infohost[data-info=schemeNote] p.hint')) { const sm = p.closest('details.mod') && p.closest('details.mod').querySelector(':scope > summary'), t = p.textContent.trim(); if (sm && sm.dataset.tip !== t) sm.dataset.tip = t; }
     for (const p of $a('#params .infohost p.hint')) { const t = p.textContent.trim(); if (p.dataset.tip !== t && !p.title) p.dataset.tip = t; }
     const fn = $q('#formNote'), lab = $q('#x-form') && $q('#x-form').closest('.field');
-    if (fn && lab) { const t = first(fn.textContent); if (lab.dataset.tip !== t) lab.dataset.tip = t; }
+    if (fn && lab) { const t0 = first(fn.textContent), t = t0.split(/[：，,]/)[0].trim(); if (lab.dataset.tip !== t) lab.dataset.tip = t; }     // 5.0.01：第一句里冒号前那一截
   }
   let sig = '';
   function run() {

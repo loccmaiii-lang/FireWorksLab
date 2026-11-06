@@ -12,22 +12,21 @@ const TEXTY = el => !!el && (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT
 // guard：typing = 光标在任何输入控件（含滑杆、下拉）里不管；text = 只在文字 / 数字输入框里不管（留给输入框自己的撤销）；none = 总是看
 const KEYMAP = [
   { id: 'play', label: '空格', what: '播放 / 暂停', where: '画面', guard: 'typing', test: e => e.code === 'Space' && !e.ctrlKey && !e.metaKey && !e.altKey },
-  { id: 'replay', label: 'R', what: '重播：回到 0 秒再播', where: '画面', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'r' },
-  { id: 'tickPrev', label: '←', what: '退 1 个 tick（1/30 s）', where: '画面', guard: 'typing', test: e => plain(e) && e.key === 'ArrowLeft' },
-  { id: 'tickNext', label: '→', what: '进 1 个 tick（1/30 s）', where: '画面', guard: 'typing', test: e => plain(e) && e.key === 'ArrowRight' },
-  { id: 'bake', label: 'B', what: '按当前参数烘焙贴图（自动烘焙关着时用）', where: '画面', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'b' },
-  { id: 'ref', label: 'V', what: '实拍对照：开 / 关', where: '画面', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'v' },
-  { id: 'focus', label: 'F', what: '精简布局：左右栏一起收起 / 放回（双击画布也行）', where: '布局', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'f' },
-  { id: 'side', label: 'L', what: '左栏（库）显示 / 隐藏', where: '布局', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'l' },
-  { id: 'right', label: 'P', what: '右栏（参数）显示 / 隐藏', where: '布局', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'p' },
-  { id: 'prevItem', label: '↑', what: '左栏上一个 AI 条目（打开的是 AI 条目时）', where: '左栏', guard: 'typing', test: e => plain(e) && e.key === 'ArrowUp' },
-  { id: 'nextItem', label: '↓', what: '左栏下一个 AI 条目', where: '左栏', guard: 'typing', test: e => plain(e) && e.key === 'ArrowDown' },
-  { id: 'undo', label: 'Ctrl+Z', what: '撤销（参数、加层 / 删层 / 挪层、删除效果）', where: '全局', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'z' },
+  { id: 'replay', label: 'R', what: '重播', where: '画面', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'r' },
+  { id: 'tickPrev', label: '←', what: '后退 1 tick', where: '画面', guard: 'typing', test: e => plain(e) && e.key === 'ArrowLeft' },
+  { id: 'tickNext', label: '→', what: '前进 1 tick', where: '画面', guard: 'typing', test: e => plain(e) && e.key === 'ArrowRight' },
+  { id: 'bake', label: 'B', what: '烘焙贴图', where: '画面', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'b' },
+  { id: 'focus', label: 'F', what: '精简布局（双击画面也行）', where: '布局', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'f' },
+  { id: 'side', label: 'L', what: '左栏显示 / 隐藏', where: '布局', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'l' },
+  { id: 'right', label: 'P', what: '右栏显示 / 隐藏', where: '布局', guard: 'typing', test: e => plain(e) && e.key.toLowerCase() === 'p' },
+  { id: 'prevItem', label: '↑', what: '效果库上一个', where: '左栏', guard: 'typing', test: e => plain(e) && e.key === 'ArrowUp' },
+  { id: 'nextItem', label: '↓', what: '效果库下一个', where: '左栏', guard: 'typing', test: e => plain(e) && e.key === 'ArrowDown' },
+  { id: 'undo', label: 'Ctrl+Z', what: '撤销', where: '全局', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'z' },
   { id: 'redo', label: 'Ctrl+Shift+Z / Ctrl+Y', what: '重做', where: '全局', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && ((e.shiftKey && e.key.toLowerCase() === 'z') || e.key.toLowerCase() === 'y') },
-  { id: 'esc', label: 'Esc', what: '关掉最上面的一样：参数说明 → 花型库 → 更新记录 → 打开的菜单 → 抽屉式的栏；都没有时切精简布局', where: '全局', guard: 'none', test: e => e.key === 'Escape' },
-  { id: 'keys', label: '?', what: '看这张快捷键表', where: '全局', guard: 'typing', test: e => !e.ctrlKey && !e.metaKey && !e.altKey && e.key === '?' },
-  { id: 'tree', label: 'Ctrl+/', what: '粒子层结构：打开 / 关掉（有分层粒子图的效果；4.9.123）', where: '右栏', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && (e.key === '/' || e.code === 'Slash') },
-  { id: 'help', label: 'F1', what: '参数说明：打开光标所在参数的说明（固定在右栏底部）；开着时再按一次关掉', where: '右栏', guard: 'none', test: e => e.key === 'F1' && !e.ctrlKey && !e.metaKey && !e.altKey },     // 4.9.8（对话框23）
+  { id: 'esc', label: 'Esc', what: '关掉最上面的一层', where: '全局', guard: 'none', test: e => e.key === 'Escape' },
+  { id: 'keys', label: '?', what: '快捷键表', where: '全局', guard: 'typing', test: e => !e.ctrlKey && !e.metaKey && !e.altKey && e.key === '?' },
+  { id: 'tree', label: 'Ctrl+/', what: '粒子层结构', where: '右栏', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && (e.key === '/' || e.code === 'Slash') },
+  { id: 'help', label: 'F1', what: '参数说明', where: '右栏', guard: 'none', test: e => e.key === 'F1' && !e.ctrlKey && !e.metaKey && !e.altKey },     // 4.9.8（对话框23）
 ];
 function plain(e) { return !e.ctrlKey && !e.metaKey && !e.altKey; }     // 和以前一样：按着 Shift 也算（R / F / V / L / P、方向键）
 const KEY_FNS = {};

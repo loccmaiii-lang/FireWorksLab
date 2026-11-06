@@ -2491,3 +2491,185 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #ptabs,#pReview,#pIter,#vtNote,#rvCopy{display:none!important}
 /* 排队中的条目（还没有结果）以前右栏只放审阅卡，现在写一句 */
 #right.qmode::before{content:'这一项还在排队，没有可调的参数';display:block;padding:24px 16px;color:var(--t3);font-size:var(--fs2)}
+/* ===================== 5.0.01（审阅意见，99_e51.js） ===================== */
+.e51-gone{display:none!important}
+/* 结构树：层行在看层检查器时才填底；看发射器时只留薄荷竖线 */
+#tree .trow.lv1.cur:not(.sel){background:none}
+#tree .trow.lv1.sel .nm{font-weight:var(--fw2,600)}
+/* 层检查器：「效果」「输出」两块连着；颜色只在这里出现 */
+#pMaster #colorControls{display:none}
+#params.e51-layer #colorControls{display:block}
+#params section.egrp[data-g="输出"]>details.mod:not(.e51-out){display:none}
+#params .e51-out .e51-more>details.sec{display:block}
+#params .e51-out>summary .e51-n{margin-left:8px;height:20px;min-height:0;padding:0 6px;border:0;background:none;color:var(--t3);font-size:var(--fs1);font-weight:400;cursor:pointer}
+#params .e51-out>summary .e51-n:hover{color:var(--t1)}
+#params .e51-out .e51-more{margin-top:4px;padding-top:4px;border-top:1px solid var(--line)}
+#params .e51-out .e51-more>details.sec>summary{font-weight:400;color:var(--t2);min-height:28px}
+#params .e51-out>#lhOut{margin:0;padding:0;border:0}
+#params .e51-out>#lhOut>summary{display:none}
+#params .e51-out>#lhOut .field{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;padding-left:var(--in-prm);color:var(--t2)}
+#params .e51-out>#lhOut .field>select{grid-column:2 / 4}
+#params .e51-out>#lhOut .lh-out{display:block}
+#params .e51-out>#lhOut .sl{padding-left:var(--in-prm)}
+#params .e51-out>.field,#params details.mod>.field:has(> .typebtn),#params details.mod>.field:has(> .enname){display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;padding-left:var(--in-prm);font-size:var(--fs2);color:var(--t2)}
+#params .e51-out>.field>select,#params details.mod>.field>.typebtn,#params details.mod>.field>.enname{grid-column:2 / 5;min-width:0}
+#params details.mod>.field>.typebtn{display:flex;align-items:center;gap:8px;overflow:hidden;border:0;background:none;color:var(--t1);text-align:left;padding:0}
+#params details.mod>.field>.typebtn .tb-img{width:20px;height:20px;flex:none}
+#params details.mod>.field>.typebtn .tb-txt{min-width:0;overflow:hidden}
+#params details.mod>.field>.typebtn .tb-txt b{font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+#params details.mod>.field>.typebtn .tb-txt small{display:none}
+#params details.mod>.field>.typebtn em{margin-left:auto;font-style:normal;color:var(--t3);padding-left:8px}
+#params details.mod>.field>.typebtn:hover em{color:var(--t1)}
+#params .enname{display:flex;align-items:center;gap:8px;min-width:0}
+#params .enname b{font-weight:400;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#params .e51-size{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;padding-left:var(--in-prm);color:var(--t2)}
+#params .e51-size>select{grid-column:2 / 4;min-width:0}
+/* 出生方式：一个模块，分段 + 开关 */
+#params #eventInstancePanel.e51-birth>.e51-seg-row{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr);column-gap:10px;align-items:center;min-height:var(--h-prm);padding-left:var(--in-prm);color:var(--t2)}
+.e51-seg{display:inline-flex;border:1px solid var(--line2);width:max-content}
+.e51-seg>button{height:24px;padding:0 10px;border:0;border-right:1px solid var(--line2);background:none;color:var(--t2);cursor:pointer;font:inherit}
+.e51-seg>button:last-child{border-right:0}
+.e51-seg>button:hover{background:var(--hov);color:var(--t1)}
+.e51-seg>button[aria-pressed=true]{background:var(--selbg);color:var(--t1)}
+/* 开关（§4：28 × 16；关 = 线框、方块在左；开 = 薄荷、方块在右） */
+.e51-swsel{display:none!important}
+.e51-sw{position:relative;width:28px;height:16px;min-height:0;padding:0;border:1px solid var(--line2);border-radius:0;background:none;cursor:pointer;justify-self:start;grid-column:2}
+.e51-sw::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;background:var(--t2)}
+.e51-sw[aria-checked=true]{background:var(--acc);border-color:var(--acc)}
+.e51-sw[aria-checked=true]::after{left:auto;right:2px;background:var(--bg)}
+.e51-sw:disabled{opacity:.4;cursor:default}
+#right label.check.e51-swl{display:grid;grid-template-columns:var(--pc-name) auto;column-gap:10px;align-items:center;min-height:var(--h-prm);margin:0;padding-left:var(--in-prm);color:var(--t2);cursor:pointer;justify-content:start}
+#right label.check.e51-swl>.e51-ck{grid-column:1;grid-row:1}
+#right label.check.e51-swl>input[type=checkbox]{grid-column:2;grid-row:1;appearance:none;-webkit-appearance:none;position:relative;width:28px;height:16px;margin:0;border:1px solid var(--line2);border-radius:0;background:none;cursor:pointer}
+#right label.check.e51-swl>input[type=checkbox]::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;background:var(--t2)}
+#right label.check.e51-swl>input[type=checkbox]:checked{background:var(--acc);border-color:var(--acc)}
+#right label.check.e51-swl>input[type=checkbox]:checked::after{left:auto;right:2px;background:var(--bg)}
+#right label.check.e51-swl>input[type=checkbox]:disabled{opacity:.4}
+/* 随机：滑杆上画范围；「分布」只在悬停这一行或展开时出现 */
+#right .sl>.rndb{display:none!important}
+#right .sl>.e51-rb{grid-column:2;grid-row:1;align-self:center;justify-self:stretch;height:6px;margin-left:calc(var(--b0,0) * 100%);width:calc((var(--b1,0) - var(--b0,0)) * 100%);background:var(--line2);pointer-events:none}
+#right .sl>.e51-rb[hidden]{display:none}
+#right .sl>input[type=range]{position:relative;z-index:1}
+#right .sl>.e51-dist{grid-column:1;grid-row:1;justify-self:end;height:20px;min-height:0;padding:0 2px;border:0;background:none;color:var(--t3);font-size:var(--fs1);cursor:pointer;visibility:hidden}
+#right .sl:hover>.e51-dist,#right .sl>.e51-dist.on,#right .sl>.e51-dist:focus-visible{visibility:visible}
+#right .sl>.e51-dist:hover{color:var(--t1)}
+/* 「自动」图标（原「跟着算」按钮和那一行说明） */
+#right .sl>.adef{display:none!important}
+#right .sl>.e51-chain[aria-pressed=true]{color:var(--acc)}
+#right .sl.adef-on>.num{color:var(--t2)}
+/* 换算注进数值悬停 */
+#right .sl>.vwnote{display:none}
+/* 曲线：横跨三列、高 96；关键点框在下面一行 */
+#right #params .curvef .cv-box .cv-tab{display:none}
+#right #params .curvef .cv-box .cv-preview{flex:1 1 auto}
+#right #params .curvef .cv-preview svg{width:100%;height:96px}
+/* 颜色：色带 + 当前段 + 焰色 + 渐变图 */
+#colorControls.e51-color>summary .scope-caption,#colorControls.e51-color>.color-scope{display:none}
+#colorControls.e51-color #matSliders .color-note{display:none}
+#colorControls.e51-color .color-extra>summary,#colorControls.e51-color .color-extra>.hint,#colorControls.e51-color #flames{display:none}
+#colorControls.e51-color .color-extra{padding:0;border:0}
+#colorControls.e51-color .e51-band-row{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) 24px;column-gap:10px;align-items:center;min-height:var(--h-prm);padding-left:var(--in-prm);color:var(--t2)}
+#colorControls.e51-color .e51-band{position:relative;height:16px;border:1px solid var(--line2)}
+#colorControls.e51-color .e51-band>button{position:absolute;top:0;bottom:0;min-height:0;padding:0;border:0;border-right:1px solid var(--bg);cursor:pointer}
+#colorControls.e51-color .e51-band>button.cur{outline:1px solid var(--t1);outline-offset:1px;z-index:1}
+#colorControls.e51-color .e51-add{width:24px;height:24px;min-height:0;padding:0}
+#colorControls.e51-color #stages>.stage-row{display:none}
+#colorControls.e51-color #stages>.stage-row.e51-cur{display:grid;grid-template-columns:var(--pc-name) 28px 64px 12px minmax(0,1fr) 24px;column-gap:6px;align-items:center;min-height:var(--h-prm);padding-left:var(--in-prm)}
+#colorControls.e51-color #stages>.stage-row.e51-cur>input[type=radio]{display:none}
+#colorControls.e51-color #stages>.stage-row.e51-cur>.e51-sl{color:var(--t2)}
+#colorControls.e51-color #stages>.stage-row.e51-cur>.stage-hex{border:0;background:none;padding:0}
+#colorControls.e51-color #matSliders>.sl{padding-left:var(--in-prm)}
+#colorControls.e51-color #stages>.stage-row.e51-cur>.stage-hex{color:var(--t3);font-size:var(--fs1)}
+#colorControls.e51-color #stages>.line2{display:none}
+#colorControls.e51-color .e51-flame{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-num) var(--pc-unit) var(--pc-act);column-gap:10px;align-items:center;min-height:var(--h-prm);padding-left:var(--in-prm);color:var(--t2)}
+#colorControls.e51-color .e51-flame>select{grid-column:2 / 4}
+#colorControls.e51-color #matColors{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr);column-gap:10px;align-items:center;min-height:var(--h-prm);padding-left:var(--in-prm);color:var(--t2)}
+#colorControls.e51-color #matColors .ramp-preview{display:none}
+#colorControls.e51-color #matColors .ramp-pair{display:flex;gap:6px}
+#colorControls.e51-color #matColors .ramp-stop{display:block}
+#colorControls.e51-color #matColors .ramp-stop>span,#colorControls.e51-color #matColors .ramp-stop>output{display:none}
+#colorControls.e51-color #matColors input[type=color]{width:28px;height:20px;padding:0;border:1px solid var(--line2);background:none}
+/* 分层粒子图：三元组一行、区间一行 */
+#right .sl.e51-merged{display:none!important}
+#right .sl.e51-mrow{grid-template-columns:var(--pc-name) minmax(0,1fr) var(--pc-unit) var(--pc-act)}
+#right .sl.e51-mrow>.e51-nums{grid-column:2;display:flex;align-items:center;gap:6px;min-width:0}
+#right .sl.e51-mrow>.e51-nums>.num{width:0;flex:1 1 0;min-width:44px;text-align:right}
+#right .sl.e51-mrow>.e51-nums>.e51-dash{color:var(--t3)}
+#right .sl.e51-mrow>.punit{grid-column:3}
+/* 参数说明：一行一样 */
+#pHelp .ph-cn{color:var(--t3);font-weight:400;margin-left:4px}
+#pHelp .ph-d,#pHelp .ph-meta,#pHelp .ph-x,#pHelp .ph-inert{display:block}
+/* 多层效果根：「整体」 */
+#pCombo.e51-rooted>details.sec{display:none}
+#e51Root{padding:0 var(--pad,16px) 20px}
+#e51Root .e51-whole{margin-top:12px}
+#e51Root .e51-whole{border-bottom:1px solid var(--line);padding-bottom:8px}
+#e51Root .e51-whole>h4{margin:0;display:flex;align-items:center;min-height:32px;font-size:var(--fs2);font-weight:var(--fw2,600);color:var(--t1)}
+#e51Root .e51-ro{display:grid;grid-template-columns:var(--pc-name) minmax(0,1fr) auto;column-gap:10px;align-items:center;min-height:var(--h-prm);padding-left:var(--in-prm);color:var(--t2)}
+#e51Root .e51-ro>.d{color:var(--t3);font-size:var(--fs1)}
+#e51Root .e51-ro>b{font-weight:400;color:var(--t1)}
+#e51Root .e51-lhead,#e51Root .e51-lrow{display:grid;grid-template-columns:20px minmax(0,1fr) 72px 64px;column-gap:8px;align-items:center;min-height:28px;padding:0 0 0 var(--in-prm)}
+#e51Root .e51-lhead{color:var(--t3);font-size:var(--fs1)}
+#e51Root .e51-lrow{width:100%;border:0;background:none;color:var(--t2);text-align:left;cursor:pointer;font:inherit}
+#e51Root .e51-lrow:hover{background:var(--hov);color:var(--t1)}
+#e51Root .e51-lrow .no{color:var(--t3)}
+#e51Root .e51-lrow .nm{color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#e51Root .e51-lrow .v{text-align:right;font-variant-numeric:tabular-nums}
+/* 画面：实拍对照删了；交付清单模式删了；尾缀分层看进右键菜单；取景框四角 */
+#btnRef,#refBox,#simTag,#abDeliv,#rtLayerBar{display:none!important}
+#box>.e51-corner{position:absolute;width:14px;height:14px;border:0 solid var(--t3);pointer-events:none;z-index:2;opacity:.7}
+#box>.e51-corner.tl{left:0;top:0;border-left-width:1px;border-top-width:1px}
+#box>.e51-corner.tr{right:0;top:0;border-right-width:1px;border-top-width:1px}
+#box>.e51-corner.bl{left:0;bottom:0;border-left-width:1px;border-bottom-width:1px}
+#box>.e51-corner.br{right:0;bottom:0;border-right-width:1px;border-bottom-width:1px}
+#box.wide>.e51-corner{display:none}
+.e50-ctx .e51-only{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-top:4px;padding-top:4px}
+.e50-ctx .e51-ml{padding:4px 12px;color:var(--t3);font-size:var(--fs1)}
+.e50-ctx .e51-mi{display:flex;align-items:center;gap:8px;min-height:var(--h-hit);padding:0 12px 0 30px;border:0;background:none;color:var(--t1);text-align:left;cursor:pointer;font:inherit;position:relative}
+.e50-ctx .e51-mi:hover{background:var(--press)}
+.e50-ctx .e51-mi[aria-checked=true]::before{content:'';position:absolute;left:13px;top:50%;width:8px;height:4px;margin-top:-4px;border-left:1.5px solid var(--acc);border-bottom:1.5px solid var(--acc);transform:rotate(-45deg)}
+/* 旧贴图提示：出在画面下方中间的提示区（不压在画面中间） */
+.stale-bar{left:50%!important;right:auto!important;top:auto!important;bottom:12px!important;transform:translateX(-50%);background:var(--ov)!important;border:1px solid var(--ovLine)!important;box-shadow:var(--shadow)}
+/* 序列贴图：一屏——左边当前格 + 整张贴图 + 帧号，右边交付表，下面翻页 */
+#texSeg{display:none!important}
+.canvas-wrap.e51-atlas .canvas-box.wide{width:calc(100cqw - 392px);margin-right:auto}
+.e51-deliv{position:absolute;top:8px;right:8px;bottom:8px;width:376px;overflow:auto;padding:12px;background:var(--panel,#172429);border:1px solid var(--line);z-index:3;font-size:var(--fs2);color:var(--t2)}
+.e51-deliv[hidden]{display:none}
+.e51-deliv .e51-dh{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.e51-deliv .e51-dh b{font-weight:var(--fw2,600);color:var(--t1)}
+.e51-deliv .e51-dh span{color:var(--t3);font-size:var(--fs1)}
+.e51-deliv table{width:100%;border-collapse:collapse}
+.e51-deliv th,.e51-deliv td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-weight:400}
+.e51-deliv th{color:var(--t3);font-size:var(--fs1)}
+.e51-deliv td small{display:block;margin-top:4px;color:var(--t3);font-size:var(--fs1);line-height:1.5}
+.e51-deliv td select{width:100%}
+.e51-deliv tr[data-li]{cursor:pointer}
+.e51-deliv tr.cur td{background:var(--on)}
+.e51-deliv>.hint,.e51-deliv details.dv-more{display:none}
+.e51-deliv .warn{color:var(--amber)}
+.e51-pager{position:absolute;left:12px;bottom:12px;z-index:3;display:flex;align-items:center;gap:8px;padding:2px 4px;background:var(--ov);border:1px solid var(--ovLine);color:var(--t2);font-size:var(--fs1)}
+.e51-pager[hidden]{display:none}
+.e51-pager .t{color:var(--t1)}
+.e51-pager .btn{width:24px;height:24px;min-height:0;padding:0}
+/* 播放条：时间滑杆去掉（拖刻度尺）；时间轴层行的眼睛和「S」去掉 */
+#scrub{display:none!important}
+.timeline>#thGrab{margin-left:auto}
+#tlBars .tlb-observe,#tlBars [data-track-solo]{display:none!important}
+#tlBars .tlr-track{cursor:ew-resize}
+/* 效果库：花型筛选 + 一个列表 + 状态词 */
+.e51-cats{display:flex;width:auto;margin:0 12px 8px}
+.e51-cats>button{flex:1 1 0;min-width:0;height:28px;padding:0 2px;font-size:var(--fs2);white-space:nowrap}
+.e51-cats[hidden]{display:none}
+#libPane.e51-lib #libBody :is(.lg-review,.lg-wip,.lg-myfx)>summary{display:none}
+#libPane.e51-lib #libBody :is(.lg-review,.lg-wip,.lg-myfx)>.lsub{display:none}
+#libPane.e51-lib #libBody .li.e51-dup,#libPane.e51-lib #libBody .li.e51-out{display:none}
+#libPane.e51-lib #libBody .li .bds,#libPane.e51-lib #libBody .tiers{display:none}
+#libPane.e51-lib #libBody .li .tx{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;align-items:baseline}
+#libPane.e51-lib #libBody .li .tx b{grid-column:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#libPane.e51-lib #libBody .li .tx small{grid-column:1;color:var(--t3)}
+#libPane.e51-lib #libBody .li .tx .e51-st{grid-column:2;grid-row:2;color:var(--t3);font-size:var(--fs1)}
+#libPane.e51-lib #libBody .li .tx .e51-st.hi{color:var(--t1)}
+/* 导出菜单：导入范围一行；状态栏「已保存」 */
+#expMenu .e51-scope{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:center;padding:6px 12px 8px;border-top:1px solid var(--line);color:var(--t2);font-size:var(--fs2)}
+.e51-saved{color:var(--t3);font-size:var(--fs1);white-space:nowrap}
+.e51-saved.dirty{color:var(--t2)}

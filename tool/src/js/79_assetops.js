@@ -205,13 +205,12 @@ function changedByEmitter() { const n = {}; for (const [row, , , det] of panelRo
 function renderResetMenu() {
   const host = $('#abResetMenu'), combo = state.tab === 'combo', lay = combo && state.comboSel >= 0, chg = changedByEmitter();
   const items = [];
-  if (!combo || lay) items.push(['open', lay ? `第 ${state.comboSel + 1} 层回到打开时` : '回到打开时', '打开时 = AI 版 / 你保存的样子 / 模板默认']);
-  if (combo) items.push(['openAll', '所有层回到打开时', '整个效果回到打开时的样子']);
-  if (!combo || lay) items.push(['def', `回到「${TYPE_NAMES[state.P.type]}」模板默认`, '这一层的参数和颜色换成花型模板的默认值']);
+  if (!combo || lay) items.push(['open', lay ? `第 ${state.comboSel + 1} 层回到打开时` : '回到打开时', 'Ctrl+Z 能撤销']);
+  if (combo) items.push(['openAll', '所有层回到打开时', 'Ctrl+Z 能撤销']);
+  if (!combo || lay) items.push(['def', `回到「${TYPE_NAMES[state.P.type]}」模板默认`, 'Ctrl+Z 能撤销']);
   const es = Object.entries(chg).filter(([, n]) => n > 0);
   host.innerHTML = items.map(([k, t, d]) => `<button type="button" data-reset="${k}" title="${d}">${t}</button>`).join('')
-    + (es.length ? `<span class="menu-label">只还原一个发射器（到打开时）</span>` + es.map(([e, n]) => `<button type="button" data-reset-e="${e}">「${e}」· ${n} 项改过</button>`).join('') : (!combo || lay ? '<p class="hint">和打开时比还没改过参数</p>' : ''))
-    + '<p class="hint">都能用 Ctrl+Z 撤销。模块标题右边的 ↺ 只还原那一个模块。</p>';
+    + (es.length ? `<span class="menu-label">只还原一个发射器</span>` + es.map(([e, n]) => `<button type="button" data-reset-e="${e}">${e}　${n} 项</button>`).join('') : '');     // 5.0.01（审阅 R20）：菜单只放命令
   host.querySelectorAll('[data-reset]').forEach(b => b.addEventListener('click', () => { $('#abReset').open = false; const k = b.dataset.reset;
     if (k === 'open') resetToOpened(); else if (k === 'openAll') { let s = null; try { s = JSON.parse(wb.sig); } catch (e) { } if (s) { wbApply(s); flash('已恢复到打开时（所有层）'); } } else if (k === 'def') resetToDefaults(); }));
   host.querySelectorAll('[data-reset-e]').forEach(b => b.addEventListener('click', () => { $('#abReset').open = false; resetScope(b.dataset.resetE); }));

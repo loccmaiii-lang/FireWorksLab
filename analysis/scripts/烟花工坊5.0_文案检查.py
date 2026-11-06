@@ -25,14 +25,13 @@ STYLE = [(r'[？?]', '问句'), (r'[！!]', '感叹号'), (r'请|你可以|会�
 
 STATES = [
     ('金芒菊 · 星', "const ef = EFFS().find(e => e.名 === '金芒菊'); await openEffect(ef); selectEmitTab('星');", 15000),
-    ('金芒菊 · 效果', "selectEmitTab('效果');", 800),
+    ('金芒菊 · 层', "selectEmitTab('效果'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true); const m = document.querySelector('#params .e51-out .e51-more'); if (m) m.hidden = false;", 1200),
     ('金芒菊 · 火花', "selectEmitTab('火花');", 800),
     ('金芒菊 · 余烬', "selectEmitTab('余烬');", 800),
     ('金芒菊 · 输出', "selectEmitTab('输出'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1200),
     ('金芒菊 · 全部参数', "selectEmitTab('全部'); document.querySelectorAll('#params details.mod').forEach(d => d.open = true);", 1500),
     ('金芒菊 · 序列贴图', "selectEmitTab('星'); document.querySelector('#viewSeg [data-view=flow]').click();", 2500),
     ('金芒菊 · 引擎回放', "document.querySelector('#viewSeg [data-view=export]').click();", 2500),
-    ('金芒菊 · 交付清单', "document.querySelector('#viewSeg [data-view=delivery]').click();", 2500),
     ('金芒菊 · 导出菜单', "document.querySelector('#viewSeg [data-view=live]').click(); document.querySelector('#expMenuBtn').click();", 800),
     ('金芒菊 · 右键菜单', "document.body.click(); const b = document.getElementById('box').getBoundingClientRect(); document.getElementById('box').dispatchEvent(new MouseEvent('contextmenu', {bubbles: true, clientX: b.left + 200, clientY: b.top + 200}));", 500),
     ('金芒菊 · 筛选与⋯', "document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'})); const f = document.querySelector('#params .e50-filt'); if (f) f.open = true; const m = document.querySelector('#params .e50-more'); if (m) m.open = true;", 500),
@@ -60,7 +59,7 @@ COLLECT = r"""() => {
     : e.closest('option') ? '选项' : e.closest('.e50-warn, p.hint.warn, .ow') ? '原因' : e.closest('#status, .flash') ? '提示条' : e.closest('summary') ? '标题'
     : e.closest('button, .tab, .seg, .chip, .btn') ? '按钮' : '标签';
   const roots = [...document.querySelectorAll('#wsBaker, #vfCtx, .e40-pop')];
-  const skip = e => e.closest('#shell, .sh-toast, #libBody, #pHelp, script, style, #iconDefs, canvas, .tlb-n, #tree .nm, #tree .tx, #abName, #abIdName, #path, #enName, .tb-txt, .dv-prod td:first-child, .dv-prod td small, #dvSizeSpec');     /* 交付清单产物表的规格读数、尺寸档名（spec/尺寸标定.json 的名字）不按文案限长：盘点表偏离 D14 */     /* 效果名是专有名词（结构树根行也是），不按标签限长 */
+  const skip = e => e.closest('#shell, .sh-toast, #libBody, #pHelp, script, style, #iconDefs, canvas, .tlb-n, #tree .nm, #tree .tx, #abName, #abIdName, #path, #enName, .tb-txt, .dv-prod td:first-child, .dv-prod td small, #dvSizeSpec, .e51-size select');     /* 交付清单产物表的规格读数、尺寸档名（spec/尺寸标定.json 的名字）不按文案限长：盘点表偏离 D14 */     /* 效果名是专有名词（结构树根行也是），不按标签限长 */
   for (const R of roots) for (const e of R.querySelectorAll('*')) {
     if (skip(e)) continue;
     if (e.tagName === 'SELECT') { if (vis(e)) for (const o of e.options) if (!o.hidden && /[一-鿿]/.test(o.text)) out.push(['选项', o.text.trim()]); continue; }

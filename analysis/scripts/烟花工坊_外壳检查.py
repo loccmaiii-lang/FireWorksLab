@@ -114,7 +114,7 @@ def t_bar(R, pg, kind, sz):
       return {brand: (q('#shell .sh-brand b') || {}).textContent, ver: ver && ver.textContent, ue: ue && ue.textContent.replace(/\\s+/g, ' ').trim(), ueTip: ue && (ue.dataset.tip || ''),
         gpu: gpu && gpu.textContent.replace(/\\s+/g, ' ').trim(), wb: wb && wb.textContent.trim(), wbDis: wb && wb.getAttribute('aria-disabled'), wbTip: wb && wb.dataset.tip,
         x: [ue, gpu, wb].map(e => e ? Math.round(r(e).left) : -1), top: q('#shell') ? Math.round(r(q('#shell')).top) : -1, h: q('#shell') ? Math.round(r(q('#shell')).height) : -1}; }""")
-    R.ck(S + '顶栏：产品名和版本号', b['brand'] == '烟花工坊' and (b['ver'] or '').startswith('FireWorksLab 5.0.0'), f"{b['brand']}｜{b['ver']}｜顶 {b['top']}、高 {b['h']}")
+    R.ck(S + '顶栏：产品名和版本号', b['brand'] == '烟花工坊' and re.match(r'FireWorksLab 5\.0\.\d+$', b['ver'] or '') is not None, f"{b['brand']}｜{b['ver']}｜顶 {b['top']}、高 {b['h']}")
     R.ck(S + '顶栏：UE 状态', bool(b['ue']) and b['ue'].startswith('UE'), b['ue'] or '没有')
     if kind in ('mock', 'shim'):
         R.ck(S + '顶栏：替身时 UE 悬停写「导入模块：替身」', '导入模块：替身' in (b['ueTip'] or ''), b['ueTip'])

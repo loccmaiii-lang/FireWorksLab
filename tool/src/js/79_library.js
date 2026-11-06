@@ -618,7 +618,7 @@ function initPanels() {
   new ResizeObserver(() => { const W = cw.clientWidth, H = cw.clientHeight; cw.classList.toggle('stack', Math.min(W, H / 2) > Math.min(W / 2, H)); layoutRef(); }).observe(cw);
   // 4.9.4 快捷键登记表（68_keys.js）：键怎么写、在输入框里管不管都在那张表里
   keyBind('focus', e => { e.preventDefault(); toggleFocus(); });
-  keyBind('ref', e => { e.preventDefault(); refToggle(); });   // 实拍对照：R 让给「重播」（用户 2026-10-02 16:22），改成 V
+  // 5.0.01（审阅 V03，用户 11-06「删掉实拍对照」）：V 键和画面上的实拍对照都去掉了（以前：R 让给「重播」后改成 V）
   keyBind('side', e => { e.preventDefault(); setPanels({ side: !panels.side }); });
   keyBind('right', e => { e.preventDefault(); setPanels({ right: !panels.right }); });
   keyBind('esc', (e, t) => { if (TYPING(t) || !((DRAWER.side.matches && panels.side) || (DRAWER.right.matches && panels.right))) return false;

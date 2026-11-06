@@ -844,15 +844,16 @@ async def n1(pg):
     if not r['h0'] or r['h1'] or not r['next'] or not r['stored']: bad.append(f'燃烧时间随机折叠不对：{r}')
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'ignDelay')[0]; if (b.querySelector('.rndb') && !pview.ropen.ignDelay) b.querySelector('.rndb').click(); const j = panelRows.find(([r, it]) => it[0] === 'ignJit')[0]; panelHelp(j); return { inert: j.classList.contains('inert'), why: j._inert, help: $('#pHelp').textContent }; })()")
     info['菊 点火延迟随机'] = {k: r[k] for k in ('inert', 'why')}
-    if not r['inert'] or '点火延迟' not in (r['why'] or '') or '现在不起作用' not in r['help']: bad.append(f'菊的点火延迟随机没标不起作用：{r}')
-    if 'Ignition' not in r['help'] or '·' not in r['help']: bad.append('说明条第一行不是「English · 中文」')
+    if not r['inert'] or '点火延迟' not in (r['why'] or '') or not ('无效' in r['help'] or '不起作用' in r['help']): bad.append(f'菊的点火延迟随机没标不起作用：{r}')
+    if 'Ignition' not in r['help'] or '点火延迟' not in r['help']: bad.append('说明条第一行没有英文名和中文名')     # 4.9.136 改写（5.0.01，审阅 R16：说明压短，英文名、中文名一行，不再用「·」串
     r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it[0] === 'headDimUntil'); return x ? { inert: x[0].classList.contains('inert'), why: x[0]._inert, dim: state.P.headDim } : null; })()")
     info['菊 前段结束'] = r
     if not r or not r['inert'] or '前段亮度' not in (r['why'] or ''): bad.append(f'前段亮度 = 1 时「前段结束」没标不起作用：{r}')
     h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'burn')[0]); return $('#pHelp').textContent; })()")
     full = await pg.evaluate("pnameOf('开花与燃烧', 'burn').cn")
-    if not h.startswith(want[2] + ' · ' + full): bad.append(f'说明条第一行：{h[:40]}')
-    for w in ('调大', 'UE', '星 › 寿命'):
+    # 4.9.136 改写（5.0.01 审阅 R16「参数说明压短」）：第一行英文名 + 中文名（不再用「·」串），一句作用，范围和打开时一行，UE 一行；「调大 / 调小」「星 › 寿命」不再写
+    if not h.startswith(want[2]) or full not in h[:60]: bad.append(f'说明条第一行：{h[:40]}')
+    for w in ('范围', '打开时', 'UE'):
         if w not in h: bad.append(f'说明条没有「{w}」')
     SR = "(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input')); return panelRows.filter(([r]) => !r.hidden).map(([r, it]) => it[0]); }"
     for q, k in (('Lifetime', 'burn'), ('燃烧时间', 'burn'), ('寿命', 'sparkLife'), ('Spawn Burst', 'stars')):
@@ -2550,15 +2551,14 @@ async def w12(pg):
     bad, info = [], {}
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     r = await pg.evaluate("""(async () => { const wait = ms => new Promise(r => setTimeout(r, ms)); const o = { mname: !!document.querySelector('#mname'), shown: $('#enName').textContent, eff: effEnName(), safe0: safeName() };
-      $('#enNameEdit').click(); await wait(80); o.deliv = !$('#delivView').hidden; o.focus = document.activeElement && document.activeElement.id;
-      $('#dvBase').value = 'Kiku Check 9'; $('#dvSaveNames').click(); await wait(80);
+      window.__ans = 'Kiku Check 9'; $('#enNameEdit').click(); await wait(300); o.deliv = !$('#delivView').hidden; o.focus = 'dialog';     // 4.9.136：弹框改（ask_stub 回答 window.__ans）
       o.after = { shown: $('#enName').textContent, safe: safeName(), eff: effEnName() };
       const rs = $('#dvResetNames'); if (rs) rs.click(); await wait(80); o.reset = { shown: $('#enName').textContent, safe: safeName() };
       toggleDeliv(false); return o; })()""")
     info['菊'] = r
     if r['mname']: bad.append('右栏还有可改的「母版名称」输入框')
     if r['shown'] != r['eff']: bad.append(f"右栏显示的英文名 {r['shown']} 和素材包用的 {r['eff']} 不一样")
-    if not r['deliv'] or r['focus'] != 'dvBase': bad.append(f'点「在交付清单里改」没打开交付清单 / 没把光标放到英文名：{r}')
+    if r['deliv']: bad.append(f'点「修改」还打开了交付清单（交付清单模式已删）：{r}')     # 4.9.136 改写（5.0.01，审阅 V01：改英文名用弹框，不再切到交付清单
     if r['after']['shown'] != 'Kiku_Check_9' or r['after']['safe'] != 'Kiku_Check_9': bad.append(f"交付清单改了英文名，右栏 / 导出文件名没跟着：{r['after']}")
     if r['reset']['shown'] != r['shown'] or r['reset']['safe'] != r['safe0']: bad.append(f"恢复默认没回去：{r['reset']}（原来 {r['shown']} / {r['safe0']}）")
     # 沿用旧命名的产物（升空尾缀 V5）交付清单里也能改英文名
@@ -2578,21 +2578,26 @@ W13_JS = r'''async (rec) => {
   await openType('kiku'); await wait(300); selectEmitTab('输出');
   const g = document.querySelector('#params section.egrp[data-g="输出"]'), mods = [...g.querySelectorAll('details.mod')].filter(d => !d.hidden);
   out.mods = mods.map(d => [d.querySelector('summary').firstChild.textContent.trim(), d.open]);
-  const dmod = mods.find(d => d._mod === '直接调'), cmod = mods.find(d => d._mod === '算出来的');
-  if (!dmod || !cmod || mods.indexOf(dmod) !== 0 || mods.indexOf(cmod) !== 1) bad.push('输出的前两个模块不是「直接调」「算出来的」：' + JSON.stringify(out.mods));
-  if (mods.slice(2).some(d => d.open)) bad.push('大面片的其它输出模块没有默认收起：' + JSON.stringify(out.mods));
+  // 4.9.136 改写（5.0.01，审阅 R12 / R13）：输出并成一个模块「输出」，常用的行直接在里面，原来的几个模块收进「+N」（.e51-more）
+  const omod = mods.find(d => d.classList.contains('e51-out')), more = omod && omod.querySelector(':scope > .e51-more');
+  const dmod = omod, cmod = omod;
+  if (!omod || mods.indexOf(omod) !== 0) bad.push('输出的第一个模块不是并起来的「输出」：' + JSON.stringify(out.mods));
+  if (more && [...more.querySelectorAll(':scope > details.mod')].some(d => d.open)) bad.push('「+N」里的输出模块没有默认收起：' + JSON.stringify(out.mods));
   const ctl = d => [...d.querySelectorAll('input[type=range], select, .num')].filter(x => x.offsetParent && !x.closest('.adef') && !(x.classList.contains('num'))).map(x => x.id || (x.closest('[data-info]') || {}).dataset?.info || x.closest('.sl, .field')?._lab || '?');
-  const dkeys = panelRows.filter(([r]) => !r.hidden && r.closest('details') === dmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
-  const spec = ['x-texW', 'x-texH', 'x-cols', 'x-rows'].filter(id => dmod.contains(document.getElementById(id)));
+  const dkeys = panelRows.filter(([r]) => !r.hidden && dmod && r.parentElement === dmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
+  const spec = ['x-texW', 'x-texH', 'x-cols', 'x-rows'].filter(id => dmod && dmod.contains(document.getElementById(id)) && !more.contains(document.getElementById(id)));
   out.direct = { rows: dkeys, spec };
-  const want = ['outPC', 'outMobile', 'cutIn', 'cutOut', 'exposure', 'cellPad'];
-  // 4.9.31：顶上多一项「导出缩放」（用户 10-07 14:56「导出可以让我选0.5/0.8/1这样」，宪章「直接调」那条）
-  if (want.some(k => !dkeys.includes(k)) || spec.length !== 4 || dkeys.filter(k => k !== 'specBox' && k !== 'exportScale').length !== 6 || dkeys[0] !== 'exportScale') bad.push('「直接调」不是那 9 个 + 导出缩放（PC / 手机怎么出、入点、出点、贴图宽 × 高、列 × 行、曝光、留边）：' + JSON.stringify(out.direct));
-  const ckeys = panelRows.filter(([r]) => !r.hidden && r.closest('details') === cmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
+  const want = ['outPC', 'outMobile', 'specBox', 'outCell', 'pageTarget', 'outSummary', 'exposure'];
+  const mkeys = panelRows.filter(([r]) => more && more.contains(r)).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
+  out.more = mkeys.filter(k => ['exportScale', 'cutIn', 'cutOut', 'cellPad'].includes(k));
+  if (want.some(k => !dkeys.includes(k)) || spec.length !== 4) bad.push('「输出」里露出来的不是那几项（PC / 手机、贴图、格子、单格、张数、结果、曝光）：' + JSON.stringify(out.direct));
+  if (['exportScale', 'cutIn', 'cutOut', 'cellPad'].some(k => !mkeys.includes(k))) bad.push('导出缩放、入点、出点、格子留边不在「+N」里：' + JSON.stringify(out.more));
+  if (false) bad.push(JSON.stringify(out.direct));
+  const ckeys = panelRows.filter(([r]) => !r.hidden && (r.parentElement === cmod || (r.closest('details') && r.closest('details')._mod === '算出来的'))).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
   out.calc = ckeys; if (!['pageTarget', 'outCell'].every(k => ckeys.includes(k))) bad.push('「算出来的」缺张数 / 单格：' + JSON.stringify(ckeys));
   // 4.9.13：缺省按运动分（帧率按运动自动分，没有「每帧停几 tick」）；换成固定机位 + 匀速帧时「算出来的」多一行帧率
   state.P.frameBudget = 'fixed'; refreshVisibility();
-  const ck2 = panelRows.filter(([r]) => !r.hidden && r.closest('details') === cmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info); out.calcFixed = ck2;
+  const ck2 = panelRows.filter(([r]) => !r.hidden && (r.parentElement === cmod || (r.closest('details') && r.closest('details')._mod === '算出来的'))).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info); out.calcFixed = ck2;
   if (!ck2.includes('holdTicks') || ckeys.includes('holdTicks')) bad.push('「每帧停几 tick」应只在匀速帧时出现：' + JSON.stringify({ motion: ckeys, fixed: ck2 }));
   const hrow = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'holdTicks')[0], hb = hrow.querySelector('.chain');
   out.hold = { linked: hb && hb.getAttribute('aria-pressed') === 'true', gray: hrow.classList.contains('adef-on'), shown: +hrow.querySelector('.num').value, calc: outCalc().hold };
@@ -2609,7 +2614,7 @@ W13_JS = r'''async (rec) => {
     if (!r || !hidFixed || hidMotion || r[0]._legacy) bad.push('「开花段时长」应是按运动分时显示（不标旧）、匀速帧时不显示：' + JSON.stringify(out.burstSec)); }
   // 2 类别：说明条显示
   selectEmitTab('星'); const sr = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'stars')[0]; panelHelp(sr); out.help = $('#pHelp').textContent.slice(-40);
-  if (!/物理量（颗）|物理量（个）|物理量（/.test($('#pHelp').textContent)) bad.push('说明条没写类别 / 单位：' + out.help);
+  if (!/颗/.test($('#pHelp').textContent) || !/范围/.test($('#pHelp').textContent)) bad.push('说明条没写单位 / 范围：' + out.help);     // 4.9.136（审阅 R16）：说明压短，类别那一段不写了
   out.cats = (() => { const c = {}; for (const id in PEMIT.P) { const k = PEMIT.P[id][4] || '（空）'; c[k] = (c[k] || 0) + 1; } return c; })();
   if (out.cats['（空）']) bad.push(`发射器表还有 ${out.cats['（空）']} 行没类别`);
   // 5 不静默：打开存着「结尾淡出 / 冷却按各自寿命」的旧存档，画面上方写明
@@ -2807,20 +2812,21 @@ async def w15(p, b):
         if r2['st'] != '改过' or not r2['chg']: bad.append(f"第 2 步状态列没写「改过」：{r2['st']}")
         if abs(r2['t'] - 1.2) > 1e-9 or not r2['gen']: bad.append(f'第 2 步时间被动了 / 实时模拟没换代：{r2}')
         if not r2['stale'] or '旧' not in r2['ab']: bad.append(f"第 2 步自动烘焙关时贴图没标旧：{r2['ab']}")
-        # 3 改颜色：火花 › 颜色「去改」→ 本层颜色（写明管整层）→ 改第一段颜色 → 「← 回到 火花 › 颜色」回到原来的位置；另一层颜色不动
-        r3 = await pg.evaluate("""(async () => { const R = $('#right'), d = [...document.querySelectorAll('#params section.egrp[data-g="火花"] > details.mod')].find(x => x._mod === '颜色'); d.open = true; await new Promise(r => setTimeout(r, 30));
-          d.scrollIntoView({ block: 'center' }); await new Promise(r => setTimeout(r, 30)); const s0 = R.scrollTop, c0 = JSON.stringify(state.layers[0].stages);
-          d.querySelector('.clink button').click(); await new Promise(r => setTimeout(r, 50));
-          const cc = $('#colorControls'), b = cc.getBoundingClientRect(), rr = R.getBoundingClientRect(), inView = b.top < rr.bottom && b.bottom > rr.top;
+        # 3 改颜色（4.9.136 改写，5.0.01 审阅 R10 / R11：颜色只在层检查器里出现一次，发射器页的「去改 / 定位」去掉了）：
+        #   火花页看不到颜色；点层（selectEmitTab('效果')）颜色在层检查器里，改第一段 → 只改到金锦层；回到火花，发射器照旧是火花
+        r3 = await pg.evaluate("""(async () => { const wait = ms => new Promise(r => setTimeout(r, ms)), vis = e => !!e && e.getClientRects().length > 0;
+          const inSpark = vis($('#colorControls')); const c0 = JSON.stringify(state.layers[0].stages);
+          selectEmitTab('效果'); await wait(500); const cc = $('#colorControls'); cc.open = true; await wait(50);
+          const inLayer = vis(cc) && !!cc.closest('section.egrp[data-g="效果"]');
           const col = cc.querySelector('#stages input[type=color]'), before = state.layers[1].stages[0][1]; col.value = before === '#123456' ? '#654321' : '#123456'; col.dispatchEvent(new Event('input', { bubbles: true })); col.dispatchEvent(new Event('change', { bubbles: true }));
-          const after = state.layers[1].stages[0][1], other = JSON.stringify(state.layers[0].stages) === c0, sum = cc.querySelector('summary').textContent, back = cc.querySelector('.cback');
-          back.click(); await new Promise(r => setTimeout(r, 50));
-          return { inView, sum, changed: after !== before, other, backText: back.textContent, s0, s1: R.scrollTop, tab: pview.tabNow }; })()""")
+          const after = state.layers[1].stages[0][1], other = JSON.stringify(state.layers[0].stages) === c0, sum = cc.querySelector('summary').textContent;
+          selectEmitTab('火花'); await wait(300);
+          return { inSpark, inLayer, sum, changed: after !== before, other, tab: pview.tabNow }; })()""")
         info['3 改颜色'] = r3
-        if not r3['inView']: bad.append('第 3 步「去改」没滚到本层颜色')
-        if '所有发射器' not in r3['sum']: bad.append(f"第 3 步本层颜色没写明管整层：{r3['sum']}")
+        if r3['inSpark'] or not r3['inLayer']: bad.append(f'第 3 步颜色应只在层检查器里：{r3}')
+        if not r3['sum'].startswith('颜色'): bad.append(f"第 3 步颜色模块名字不对：{r3['sum']}")
         if not r3['changed'] or not r3['other']: bad.append(f'第 3 步颜色没改到金锦层 / 改到了别的层：{r3}')
-        if abs(r3['s1'] - r3['s0']) > 2 or r3['tab'] != '火花': bad.append(f'第 3 步回不到火花原来的位置：{r3}')
+        if r3['tab'] != '火花': bad.append(f'第 3 步回不到火花：{r3}')
         # 4 调接力：效果 › 这一层在整朵里 › 开始时间 → 层的延迟、图层管理那一格、时间轴上金锦层的条一起动；橙引线不动
         r4 = await pg.evaluate("""(async () => { selectEmitTab('效果'); await new Promise(r => setTimeout(r, 30)); const pos = $('#lhPos'), inEff = !!pos && !!pos.closest('section.egrp[data-g="效果"]');
           const bar = () => { stage2.tlSig = ''; buildTlBars(); const m = document.querySelector('#tlBars .tlb-t[data-i="1"] i.main'); return m ? parseFloat(m.style.left) : null; };
@@ -2940,22 +2946,19 @@ async def w16(p, b):
         info['2 调参数'] = s2
         if not ok or abs(s2['life'] - want) > 1e-6: bad.append(f'第 2 步寿命没改到金锦层：{s2}（应 {want}）')
         if not (s2['chg'] and s2['bar'] and s2['rr'] and '1 项' in s2['mod'] and '没保存' in s2['save']): bad.append(f'第 2 步「改过」没标全（行左竖条 / 行尾恢复 / 恢复本模块 / 保存）：{s2}')     # 4.9.132 改写：标签数、底部计数不在了
-        # 3 调色并返回
+        # 3 调色并返回（4.9.136 改写，5.0.01 审阅 R02 / R10：点结构树的层行 = 层检查器，颜色在里面；再点「火花」回来）
         c0 = await pg.evaluate("[JSON.stringify(state.layers[0].stages), state.layers[1].stages[0][1]]")
-        ok = await click("[...document.querySelectorAll('#params section.egrp[data-g=\"火花\"] > details.mod')].find(d => d._mod === '颜色').querySelector('.mgo')", 'mgo')
-        await pg.wait_for_timeout(150)
-        s3a = await pg.evaluate("(() => { const cc = $('#colorControls'), R = $('#right').getBoundingClientRect(), r = cc.getBoundingClientRect(); return { open: cc.open, inView: r.top < R.bottom && r.bottom > R.top, sum: cc.querySelector('summary').textContent }; })()")
+        ok = await click("document.querySelector('#tree .trow[data-layer=\"1\"]')", 'layerrow'); await pg.wait_for_timeout(600)
+        s3a = await pg.evaluate("(() => { const cc = $('#colorControls'); cc.open = true; const R = $('#right').getBoundingClientRect(); cc.scrollIntoView({ block: 'center' }); const r = cc.getBoundingClientRect(); return { open: cc.open, inView: r.top < R.bottom && r.bottom > R.top, sum: cc.querySelector('summary').textContent, layer: pview.tabNow }; })()")
         await pg.evaluate("""(() => { const col = $('#colorControls #stages input[type=color]'); col.value = state.layers[1].stages[0][1] === '#123456' ? '#654321' : '#123456'; col.dispatchEvent(new Event('input', { bubbles: true })); col.dispatchEvent(new Event('change', { bubbles: true })); return 0; })()""")
-        ok = ok and await click("$('#colorControls .cback')", 'back')
-        await pg.wait_for_timeout(150)
-        s3 = await pg.evaluate("""(() => { const d = [...document.querySelectorAll('#params section.egrp[data-g="火花"] > details.mod')].find(d => d._mod === '颜色'), R = $('#right').getBoundingClientRect(), r = d.querySelector('summary').getBoundingClientRect();
-          return { col: state.layers[1].stages[0][1], other: JSON.stringify(state.layers[0].stages), tab: pview.tabNow, back: r.top >= R.top - 1 && r.bottom <= R.bottom + 1 }; })()""")
-        info['3 调色并返回'] = {**s3a, 'tab': s3['tab'], 'back': s3['back'], 'changed': s3['col'] != c0[1], 'other': s3['other'] == c0[0]}
-        if not ok or not s3a['open'] or not s3a['inView'] or '所有发射器' not in s3a['sum']: bad.append(f'第 3 步「定位」没把本层颜色（写明整层共用）展开到眼前：{s3a}')
+        ok = ok and await click("document.querySelector('#tree .trow[data-em=\"火花\"]')", 'back'); await pg.wait_for_timeout(300)
+        s3 = await pg.evaluate("({ col: state.layers[1].stages[0][1], other: JSON.stringify(state.layers[0].stages), tab: pview.tabNow })")
+        info['3 调色并返回'] = {**s3a, 'tab': s3['tab'], 'changed': s3['col'] != c0[1], 'other': s3['other'] == c0[0]}
+        if not ok or not s3a['open'] or not s3a['inView'] or not s3a['sum'].startswith('颜色'): bad.append(f'第 3 步点层行没看到颜色：{s3a}')
         if s3['col'] == c0[1] or s3['other'] != c0[0]: bad.append('第 3 步颜色没改到金锦层 / 改到了别的层')
-        if s3['tab'] != '火花' or not s3['back']: bad.append(f"第 3 步「← 回到」没回到火花 › 颜色：{info['3 调色并返回']}")
+        if s3['tab'] != '火花': bad.append(f"第 3 步点「火花」没回到火花：{info['3 调色并返回']}")
         # 4 调层延迟
-        ok = await click("document.querySelector('#tree .trow[data-em=\"效果\"]')", 'efftab'); await pg.wait_for_timeout(300)     # 4.9.132 改写：结构树
+        ok = await click("document.querySelector('#tree .trow[data-layer=\"1\"]')", 'efftab'); await pg.wait_for_timeout(600)     # 4.9.136 改写：点结构树的层行 = 层检查器（「效果」节点不列了）
         d0 = await pg.evaluate("state.layers[1].delay"); dw = round(d0 + 0.5, 2)
         bar = "(() => { stage2.tlSig = ''; buildTlBars(); const m = document.querySelector('#tlBars .tlb-t[data-i=\"1\"] i.main'); return m ? parseFloat(m.style.left) : null; })()"
         b0 = await pg.evaluate(bar)

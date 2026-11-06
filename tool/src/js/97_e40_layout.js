@@ -23,7 +23,9 @@
     const m = model(), s = JSON.stringify([m.combo, m.sel, m.layers, m.em.map(x => [x.e, x.on]), m.name, m.tab, !!$q('#assetBar') && $q('#assetBar').hidden]);
     if (!force && s === sig) return; sig = s;
     // 5.0.0：自定义发射器行尾一个 ×（原来在参数栏发射器框右上角，发射器框的标题藏起来了）
-    const tree = $q('#tree'), emRows = cur => m.em.map(x => { const xi = /^自定义 (\d+)$/.exec(x.e);
+    // 5.0.01（审阅 R02）：层下面只列真发射器；「效果」「输出」两个节点不列，点层行本身 = 层检查器（99_e51.js 把两块一起显示）
+    const lv = m.em.some(x => x.on && (x.e === '效果' || x.e === '输出'));
+    const tree = $q('#tree'), emRows = cur => m.em.filter(x => x.e !== '效果' && x.e !== '输出').map(x => { const xi = /^自定义 (\d+)$/.exec(x.e);
       return `<div class="trow lv2${x.on && cur ? ' cur' : ''}" role="treeitem" tabindex="0" data-em="${esc(x.e)}">${ico(EMIT_ICO[x.e] || 'star')}<span class="nm">${esc(x.e)}</span>`
         + (xi ? `<span class="ta"><button type="button" class="btn btn-icon" data-exdel="${xi[1]}" aria-label="去掉「${esc(x.e)}」" title="去掉这个发射器&#10;Ctrl+Z 撤销">${ico('x')}</button></span>` : '') + '</div>'; }).join('');
     let h = '';
@@ -32,18 +34,18 @@
       for (const L of m.layers) {
         const cur = L.i === m.sel;
         const solo = state.layerView && state.layerView.solo === L.i;
-        h += `<div class="trow lv1${cur ? ' cur' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}" data-tip="${esc(layerTip(L.i))}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
+        h += `<div class="trow lv1${cur ? ' cur' : ''}${cur && lv ? ' sel' : ''}${L.off ? ' off' : ''}" role="treeitem" tabindex="0" aria-selected="${cur}" data-layer="${L.i}" data-tip="${esc(layerTip(L.i))}"><span class="no">${L.i + 1}</span><span class="nm">${esc(L.name)}</span>`
           + `<span class="ta${L.off || solo ? ' keep' : ''}"><button type="button" class="btn btn-icon eye" data-ta="mute" aria-pressed="${!L.off}" aria-label="显示第 ${L.i + 1} 层" title="${L.off ? '显示' : '隐藏'}这一层（只影响观察）">${ico(L.off ? 'eyeoff' : 'eye')}</button>`
           + `<button type="button" class="btn btn-icon solo" data-ta="solo" aria-pressed="${solo}" aria-label="只看第 ${L.i + 1} 层" title="${solo ? '取消只看' : '只看这一层'}（只影响观察）">${ico(solo ? 'soloon' : 'solo')}</button>`
           + `<button type="button" class="btn btn-icon" data-ta="more" aria-label="第 ${L.i + 1} 层的更多操作" aria-haspopup="menu" title="时间、排序、改名、复制、删除">${ico('more')}</button></span></div>`;
         if (cur) h += emRows(true);
       }
-    } else h = emRows(true);
+    } else h = `<div class="trow lv1 cur${lv ? ' sel' : ''}" role="treeitem" tabindex="0" aria-selected="true" data-l1="1"><span class="no">1</span><span class="nm">${esc(m.name || '第 1 层')}</span></div>` + emRows(true);     // 单层效果也有「1 层」这一行
     tree.innerHTML = h;
     // 面包屑：效果 › 层 › 发射器（末项大号 600）
-    const parts = [{ t: m.name || '效果', act: m.combo ? 'root' : '' }];
+    const parts = [{ t: m.name || '效果', act: m.combo ? 'root' : 'layer' }];
     if (m.combo && m.sel >= 0 && m.layers[m.sel]) parts.push({ t: m.layers[m.sel].name, act: 'layer' });
-    const ce = m.em.find(x => x.on); if (ce && !(m.combo && m.sel < 0)) parts.push({ t: ce.e, act: '' });
+    const ce = m.em.find(x => x.on); if (ce && !lv && !(m.combo && m.sel < 0)) parts.push({ t: ce.e, act: '' });     // 层检查器：路径到层为止
     const th = $q('#treeHead'); if (th) th.classList.toggle('cur', m.combo && m.sel < 0);
     $q('#path').innerHTML = parts.map((p, i) => i === parts.length - 1 ? `<span class="cur">${esc(p.t)}</span>` : `<button type="button" data-path="${p.act}">${esc(p.t)}</button><span class="sep" aria-hidden="true">›</span>`).join('');
   }
@@ -60,14 +62,16 @@
     const xd = e.target.closest && e.target.closest('#tree [data-exdel]');
     if (xd) { if (typeof exRemoveSlot === 'function') exRemoveSlot(+xd.dataset.exdel); setTimeout(() => render(true), 0); return; }
     const t = e.target.closest && e.target.closest('#tree .trow, #path [data-path], #treeHead .ab-id'); if (!t) return;
-    if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); setTimeout(() => render(true), 0); return; }
-    if (t.dataset.layer != null && typeof selectComboLayer === 'function') selectComboLayer(+t.dataset.layer);
+    const toLayer = () => { const b = emitters().find(x => x.e === '效果') || emitters().find(x => x.e === '输出'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); };
+    if (t.id === 'abId') { if (state.tab === 'combo' && typeof selectComboLayer === 'function') selectComboLayer(-1); else toLayer(); setTimeout(() => render(true), 0); return; }
+    if (t.dataset.l1) { toLayer(); setTimeout(() => render(true), 0); return; }
+    if (t.dataset.layer != null && typeof selectComboLayer === 'function') { selectComboLayer(+t.dataset.layer); toLayer(); }
     else if (t.dataset.em && typeof selectEmitTab === 'function') selectEmitTab(t.dataset.em);
     else if (t.dataset.path === 'root' && typeof selectComboLayer === 'function') selectComboLayer(-1);
-    else if (t.dataset.path === 'layer') { const b = emitters().find(x => x.e === '效果'); if (b && typeof selectEmitTab === 'function') selectEmitTab(b.e); }
+    else if (t.dataset.path === 'layer') toLayer();
     setTimeout(() => render(true), 0);
   });
-  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer], #tree .trow[data-em]')) { e.preventDefault(); e.target.click(); } });
+  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('#tree .trow[data-layer], #tree .trow[data-em], #tree .trow[data-l1]')) { e.preventDefault(); e.target.click(); } });
   // 5.0.0 层行的悬停提示（原图层管理卡片上的开始、时长）
   function layerDur(i) { const L = state.layers && state.layers[i], x = L && typeof layerEntryOf === 'function' ? layerEntryOf(L) : null; return x && x.bake && typeof bakeTotal === 'function' ? bakeTotal(x.bake) / (L.rate || 1) : null; }
   function layerTip(i) { const L = state.layers && state.layers[i]; if (!L) return ''; const d = layerDur(i); return `开始 ${(+L.delay || 0).toFixed(2)} s，时长 ${d == null ? '—' : d.toFixed(2) + ' s'}`; }
