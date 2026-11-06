@@ -2487,3 +2487,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 /* 交付清单：单束怎么选的长说明收起来 */
 #delivView details.dv-more{margin:4px 0 8px}
 #delivView details.dv-more>summary{cursor:pointer;color:var(--t3);font-size:var(--fs1)}
+/* 用户 11-06：删「审阅」「工具」两页（通过 / 要改 / 意见、显卡测速）、工具行「写进意见」、状态栏「复制意见」 */
+#ptabs,#pReview,#pIter,#vtNote,#rvCopy{display:none!important}
+/* 排队中的条目（还没有结果）以前右栏只放审阅卡，现在写一句 */
+#right.qmode::before{content:'这一项还在排队，没有可调的参数';display:block;padding:24px 16px;color:var(--t3);font-size:var(--fs2)}

@@ -583,12 +583,16 @@ async def b1(pg):
 
 async def v1(pg):
     bad, info = [], {}
-    secs = await pg.evaluate("[...document.querySelectorAll('#pIter details.sec > summary')].map(x => x.textContent.trim())")
-    old = [x for x in secs if x in ('版本与回滚', '派生配方', 'A/B 分屏对比', '实拍 / 实机截图对比', '数值测量对比')]
-    if old: bad.append(f'工具页还有去掉的东西：{old}')
-    if '导入 / 导出 JSON' not in secs: bad.append(f'工具页没有「导入 / 导出 JSON」：{secs}')
-    btn = await pg.evaluate("['toolImport', 'toolExport', 'toolImportRecipe'].filter(i => !document.getElementById(i))")
-    if btn: bad.append(f'工具页少了按钮 {btn}')
+    # 4.9.135 改写（用户 11-06「审阅和工具……都删掉」）：以前查工具页里有什么 / 没什么；现在右栏没有「审阅」「工具」两页，
+    #   别处调过去（paneGo / setTab('iter')）也留在参数页；配方文件的导入 / 导出入口在结构树 ⋯、搜索行 ⋯
+    pv = await pg.evaluate("""(() => { const vis = e => !!e && !!e.getClientRects().length && getComputedStyle(e).display !== 'none';
+      const shown = () => ({ tabs: vis($('#ptabs')), review: vis($('#pReview')), tools: vis($('#pIter')), params: vis($('#pMaster')), note: vis($('#vtNote')), copy: vis($('#rvCopy')) });
+      const a = shown(); paneGo('tools'); const b = shown(); paneGo('review'); const c = shown(); setTab('iter'); const d = shown();
+      return { a, b, c, d, entries: ['abExportFile', 'abImportFile', 'btnImport'].filter(i => !document.getElementById(i)) }; })()""")
+    for k in ('a', 'b', 'c', 'd'):
+        s = pv[k]
+        if s['tabs'] or s['review'] or s['tools'] or s['note'] or s['copy'] or not s['params']: bad.append(f'右栏还看得到「审阅 / 工具」或意见入口，或者切走了参数页（{k}）：{s}')
+    if pv['entries']: bad.append(f"配方文件 / 导入参数的入口少了：{pv['entries']}")
     hooks = await pg.evaluate("({ single: typeof exportMaster === 'function' && exportMaster.toString().includes('wbAutoExport'), combo: typeof exportCombo === 'function' && exportCombo.toString().includes('wbAutoExport'), fn: typeof wbAutoExport === 'function' })")
     if not all(hooks.values()): bad.append(f'导出时没有存进资产栏版本：{hooks}')
     if not bad:
@@ -2762,16 +2766,15 @@ async def w15(p, b):
           const d = [...document.querySelectorAll('#params details.mod')].find(x => x._key === '火花›生成'); if (d) { d.open = false; await new Promise(r => setTimeout(r, 30)); }
           const R = $('#right'); R.scrollTop = 0; R.scrollTop = Math.min(260, R.scrollHeight - R.clientHeight - 1);
           const mods = Object.fromEntries([...document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod:not(.mod-empty)')].map(x => [x._key, x.open]));
-          return { t: state.t, sel: state.comboSel, tab: pview.tab[emitTabFamily()], solo: state.layerView.solo, mods, scroll: R.scrollTop, tools: !$('#ptabs [data-tab=iter]').hidden }; })()""")
+          return { t: state.t, sel: state.comboSel, tab: pview.tab[emitTabFamily()], solo: state.layerView.solo, mods, scroll: R.scrollTop }; })()""")
         info['切走前'] = {k: v for k, v in r0.items() if k != 'mods'}
-        if not r0['tools']: bad.append('多层效果里看不到「工具」页')
-        await pg.evaluate("$('#ptabs [data-tab=iter]').click()"); await pg.wait_for_timeout(200)     # 用 click() 而不是鼠标：旧版多层里这个按钮藏着，照样要查出切页丢上下文
-        tv = await pg.evaluate("({ tools: !!$('#pIter').offsetParent, params: !!$('#pMaster').offsetParent, layers: !!$('#layerCard').offsetParent, tab: state.tab, t: state.t })")
-        info['工具页'] = tv
-        if not tv['tools'] or tv['params'] or tv['layers']: bad.append(f'切到「工具」页显示不对：{tv}')
-        if tv['tab'] != 'combo': bad.append(f"切到「工具」页把打开的东西换了（state.tab = {tv['tab']}）")
-        await pg.evaluate("$('#ptabs [data-tab=review]').click()"); await pg.wait_for_timeout(200)
-        await pg.evaluate("$('#ptabs [data-tab=master]').click()"); await pg.wait_for_timeout(300)
+        # 4.9.135 改写（用户 11-06 删「审阅」「工具」两页）：以前点「工具」「审阅」再回「参数」查上下文；现在没有这两页，
+        #   以前会切过去的调用（paneGo('tools' / 'review')、setTab('iter')）都留在参数页，下面照样查时间、层、发射器、模块开合、滚动都没动
+        await pg.evaluate("(() => { paneGo('tools'); setTab('iter'); paneGo('review'); return 0; })()"); await pg.wait_for_timeout(300)
+        tv = await pg.evaluate("({ tools: !!$('#pIter').offsetParent, review: !!$('#pReview').offsetParent, params: !!$('#pMaster').offsetParent, tabs: !!$('#ptabs').offsetParent, tab: state.tab })")
+        info['工具 / 审阅页'] = tv
+        if tv['tools'] or tv['review'] or tv['tabs'] or not tv['params']: bad.append(f'「审阅」「工具」页还看得到 / 参数页被切走：{tv}')
+        if tv['tab'] != 'combo': bad.append(f"调 setTab('iter') 把打开的东西换了（state.tab = {tv['tab']}）")
         r1 = await pg.evaluate("""(() => { const R = $('#right'); const mods = Object.fromEntries([...document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod:not(.mod-empty)')].map(x => [x._key, x.open]));
           return { t: state.t, sel: state.comboSel, tab: pview.tab[emitTabFamily()], solo: state.layerView.solo, mods, scroll: R.scrollTop, params: !!$('#pMaster').offsetParent }; })()""")
         info['切回来'] = {k: v for k, v in r1.items() if k != 'mods'}
