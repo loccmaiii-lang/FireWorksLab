@@ -2814,6 +2814,46 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 .e51-saved{color:var(--t3);font-size:var(--fs1);white-space:nowrap}
 .e51-saved.dirty{color:var(--t2)}
 
+/* ===== 5.0.01 预览 · 组件库 E 4.1（2026-11-06，用户 16:30 / 16:45 / 17:06）=====
+   A 能调的看得出（「淡」档）　B 只在悬停出现的改成常驻弱显　C 工作模式改页面标签、右栏工具行收组。图标在 body.html #iconDefs（tool/design-system/icons_v42.py） */
+/* A：数值框、下拉静止就有 1 px 线框 + 很浅的暗底；悬停线亮一级；编辑薄荷框 */
+#right .sl>.num:not(:disabled){border-color:var(--line);background:color-mix(in srgb, var(--g0) 45%, transparent)}
+#right .sl>.num:not(:disabled):hover{border-color:var(--g6)}
+#right .sl>.num:focus{border-color:var(--sel);background:var(--hov)}
+#right .sl.chg>.num{border-color:var(--line)}
+#right .sl.over>.num{border-color:var(--amber)}
+#right .field select:not(:disabled){border-color:var(--line);background-color:color-mix(in srgb, var(--g0) 45%, transparent)}
+#right .field select:not(:disabled):hover{border-color:var(--g6)}
+/* A：滑杆没填的部分 1 px → 2 px、亮一级 */
+input[type="range"]::-webkit-slider-runnable-track{background:linear-gradient(var(--sel),var(--sel)) no-repeat 0 50%/var(--v) 2px,linear-gradient(var(--g6),var(--g6)) no-repeat 0 50%/100% 2px}
+/* B：结构树层行的 显示 / 只看 常驻 35 %，悬停 / 当前行 100 % */
+.trow .ta{display:inline-flex;opacity:.35}
+.trow:hover .ta,.trow:focus-within .ta,.trow.cur .ta,.trow .ta.keep{opacity:1}
+/* B：改过的参数，行尾「恢复」常驻 45 % */
+#right .sl>.rrst:not([hidden]),#right .field>.rrst:not([hidden]){visibility:visible;opacity:.45}
+#right .sl:hover>.rrst,#right .field:hover>.rrst,#right .rrst:focus-visible{opacity:1}
+/* B：导出范围行入点 / 出点带字 */
+.tlx-b .btn-icon:is([data-cut="in"],[data-cut="out"]){width:auto;padding:0 8px 0 6px;gap:4px;color:var(--t2)}
+.tlx-b .btn-icon[data-cut="in"]::after{content:"入点";font-size:var(--fs1)}
+.tlx-b .btn-icon[data-cut="out"]::after{content:"出点";font-size:var(--fs1)}
+/* C：工作模式 = 换页 → 页面标签（文字 + 2 px 薄荷下划线），和「画面大小」分段之间一条竖线 */
+#viewbar #viewSeg{align-self:stretch;border:0;border-radius:0;gap:4px}
+#viewbar #viewSeg button{height:auto;padding:0 12px;border:0;background:none;color:var(--t3)}
+#viewbar #viewSeg button+button{border-left:0}
+#viewbar #viewSeg button:hover{background:none;color:var(--t1)}
+#viewbar #viewSeg button[aria-pressed="true"]{background:none;color:var(--t1);box-shadow:inset 0 -2px 0 var(--sel)}
+#viewbar #dispSeg{position:relative;margin-left:20px}
+#viewbar #dispSeg::before{content:"";position:absolute;left:-12px;top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
+/* C：右栏工具行 [撤销 重做 版本 意见] 一个框；「保存」最常用，主文字色 */
+#assetBar .bx>#vtNote{width:28px;height:calc(var(--h-hit) - 2px);border-radius:0}
+#assetBar #abSave{color:var(--t1)}
+/* 输出栏「数据」：烘焙结果（原底部统计框）放回输出里 */
+#params details.e52-data>.e52-rows{display:flex;flex-direction:column;gap:6px;padding:4px 0 8px 12px;color:var(--t2);font-size:var(--fs1);line-height:1.5}
+#params details.e52-data .e52-r b{color:var(--t1);font-weight:400;font-variant-numeric:tabular-nums}
+#params details.e52-data .e52-r .ok{color:var(--t3)}
+#params details.e52-data .e52-r .warn{color:var(--w3)}
+#params details.e52-data .e52-none{color:var(--t3)}
+
 /* =====================================================================
    烟花工坊 5.0 外壳 · 兜底样式（tool/src/shell/shell_fb.css；对话框9 · S，2026-11-05）
    build.py 总是放进 tool/烟花工坊.html：带 body.sh-fb 的布局和 token 只在缺 v3.7 槽位时起作用（95_shell.js 那时才给 body 加 .sh-fb）；
@@ -3403,8 +3443,7 @@ body.sh-fb .sh-delivb .sh-cnt[hidden]{display:none}
           <button type="button" id="abDelete">删除这个版本</button>
           <p class="hint">版本与恢复点</p>
         </div>
-      </details></div>
-      <button class="btn btn-icon" id="vtNote" type="button" aria-label="写进意见" title="当前画面写进意见"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg></button>
+      </details><i class="bx-sep" aria-hidden="true"></i><button class="btn btn-icon" id="vtNote" type="button" aria-label="写进意见" title="当前画面写进意见"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg></button></div>
       <span class="sp"></span>
       <div class="tgrp bx" role="group" aria-label="还原与保存"><details class="ab-more ab-reset" id="abReset"><summary class="btn" title="回到打开时或模板默认"><svg class="i rv-i" aria-hidden="true"><use href="#i-revert"/></svg><span class="t">还原</span></summary><div class="ab-menu" id="abResetMenu"></div></details><i class="bx-sep" aria-hidden="true"></i><button class="btn primary" id="abSave" type="button" title="保存：你的效果直接保存；AI 做的效果 / 花型模板 / 正式库存成你的效果（原来的不动，之后能加层、删除）">保存</button><i class="bx-sep" aria-hidden="true"></i><button class="btn" id="abSaveAs" type="button" title="另存为：存成一个新的我的效果 / 版本">另存</button></div>
       <div class="split export-actions" id="expBtn">
@@ -93675,6 +93714,41 @@ if (typeof paneGo === 'function') { const paneGo0 = paneGo; paneGo = () => paneG
   const start = () => { if (!ready()) return setTimeout(start, 200); post(); setInterval(() => { if (!document.hidden) post(); }, 400); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
   window.e51Post = post;
+})();
+// 5.0.01 预览（组件库 E 4.1，2026-11-06 用户 17:01 / 17:06）：
+// 1) 输出栏常用 / 少改的一起露出来（不再收进「+N」），方便整套查阅；
+// 2) 「数据」模块：烘焙结果（原底部统计框 #stats：产物 · 帧数 · 单格、帧预算、精灵 · 贴图 · MB、面片面积、画面占比、模拟内核、自检）放进输出栏，紧跟「输出」模块。
+(() => {
+  if (typeof document === 'undefined') return;
+  const $q = s => document.querySelector(s);
+  try { if (typeof store !== 'undefined' && store.get('e51OutMore', null) === null) store.set('e51OutMore', true); } catch (e) {}
+  let rows = null, dataEl = null;     // null = 还没烘焙
+  const html = () => rows && rows.length
+    ? rows.map(r => `<div class="e52-r">${r}</div>`).join('')
+    : '<div class="e52-r e52-none">还没烘焙。烘好后这里写：产物 · 帧数 · 单格 · 通道、帧预算、精灵尺寸 · 贴图张数 · 显存、面片面积、画面占比、模拟内核、自检。</div>';
+  function ensure() {
+    const out = $q('#params .e51-out'); if (!out || !out.parentElement) return;
+    let d = dataEl;
+    if (!d) {
+      d = dataEl = document.createElement('details'); d.className = 'sec mod e52-data'; d._mod = '数据'; d._g = '输出'; d._key = '输出›数据'; d._autoOpen = true; d.open = true;
+      d.innerHTML = '<summary>数据<span class="msum"></span></summary><div class="e52-rows"></div>';
+      d.querySelector('summary').addEventListener('click', () => { d._user = true; });
+    }
+    if (!d._user && !d.open) d.open = true;     // 参数栏重建时默认收起的逻辑会关掉它；你没点过就保持展开
+    document.querySelectorAll('#params details.e52-data').forEach(x => { if (x !== d) x.remove(); });
+    if (d.previousElementSibling !== out) out.after(d);
+    // 查阅用：输出栏下面的各个小模块第一次见到时都展开（之后你开合按你的）
+    out.parentElement.querySelectorAll('details.mod').forEach(m => { if (!m._e52) { m._e52 = true; m._autoOpen = true; if (!m.open && !m.hidden) m.open = true; } });
+    const box = d.querySelector('.e52-rows'), h = html(); if (d._h !== h) { d._h = h; box.innerHTML = h; }
+    const sum = d.querySelector('.msum'); if (sum) { const tx = rows && rows.length ? (rows.some(r => r.includes('class="warn"')) ? '自检有提示' : '自检正常') : '未烘焙'; if (sum.textContent !== tx) sum.textContent = tx; }
+  }
+  if (typeof showStats === 'function') {
+    const f = showStats;
+    showStats = function () { const r = f.apply(this, arguments); const st = $q('#stats'); rows = st ? st.innerHTML.split(/<br\s*\/?>/i).filter(Boolean) : null; ensure(); return r; };
+  }
+  let t = 0; const later = () => { clearTimeout(t); t = setTimeout(ensure, 60); };
+  const go = () => { const p = $q('#params'); if (!p) return setTimeout(go, 200); new MutationObserver(later).observe(p, { childList: true, subtree: true }); later(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();
 </script>
 <script>

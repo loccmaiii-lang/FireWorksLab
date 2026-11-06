@@ -2673,3 +2673,43 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #expMenu .e51-scope{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:center;padding:6px 12px 8px;border-top:1px solid var(--line);color:var(--t2);font-size:var(--fs2)}
 .e51-saved{color:var(--t3);font-size:var(--fs1);white-space:nowrap}
 .e51-saved.dirty{color:var(--t2)}
+
+/* ===== 5.0.01 预览 · 组件库 E 4.1（2026-11-06，用户 16:30 / 16:45 / 17:06）=====
+   A 能调的看得出（「淡」档）　B 只在悬停出现的改成常驻弱显　C 工作模式改页面标签、右栏工具行收组。图标在 body.html #iconDefs（tool/design-system/icons_v42.py） */
+/* A：数值框、下拉静止就有 1 px 线框 + 很浅的暗底；悬停线亮一级；编辑薄荷框 */
+#right .sl>.num:not(:disabled){border-color:var(--line);background:color-mix(in srgb, var(--g0) 45%, transparent)}
+#right .sl>.num:not(:disabled):hover{border-color:var(--g6)}
+#right .sl>.num:focus{border-color:var(--sel);background:var(--hov)}
+#right .sl.chg>.num{border-color:var(--line)}
+#right .sl.over>.num{border-color:var(--amber)}
+#right .field select:not(:disabled){border-color:var(--line);background-color:color-mix(in srgb, var(--g0) 45%, transparent)}
+#right .field select:not(:disabled):hover{border-color:var(--g6)}
+/* A：滑杆没填的部分 1 px → 2 px、亮一级 */
+input[type="range"]::-webkit-slider-runnable-track{background:linear-gradient(var(--sel),var(--sel)) no-repeat 0 50%/var(--v) 2px,linear-gradient(var(--g6),var(--g6)) no-repeat 0 50%/100% 2px}
+/* B：结构树层行的 显示 / 只看 常驻 35 %，悬停 / 当前行 100 % */
+.trow .ta{display:inline-flex;opacity:.35}
+.trow:hover .ta,.trow:focus-within .ta,.trow.cur .ta,.trow .ta.keep{opacity:1}
+/* B：改过的参数，行尾「恢复」常驻 45 % */
+#right .sl>.rrst:not([hidden]),#right .field>.rrst:not([hidden]){visibility:visible;opacity:.45}
+#right .sl:hover>.rrst,#right .field:hover>.rrst,#right .rrst:focus-visible{opacity:1}
+/* B：导出范围行入点 / 出点带字 */
+.tlx-b .btn-icon:is([data-cut="in"],[data-cut="out"]){width:auto;padding:0 8px 0 6px;gap:4px;color:var(--t2)}
+.tlx-b .btn-icon[data-cut="in"]::after{content:"入点";font-size:var(--fs1)}
+.tlx-b .btn-icon[data-cut="out"]::after{content:"出点";font-size:var(--fs1)}
+/* C：工作模式 = 换页 → 页面标签（文字 + 2 px 薄荷下划线），和「画面大小」分段之间一条竖线 */
+#viewbar #viewSeg{align-self:stretch;border:0;border-radius:0;gap:4px}
+#viewbar #viewSeg button{height:auto;padding:0 12px;border:0;background:none;color:var(--t3)}
+#viewbar #viewSeg button+button{border-left:0}
+#viewbar #viewSeg button:hover{background:none;color:var(--t1)}
+#viewbar #viewSeg button[aria-pressed="true"]{background:none;color:var(--t1);box-shadow:inset 0 -2px 0 var(--sel)}
+#viewbar #dispSeg{position:relative;margin-left:20px}
+#viewbar #dispSeg::before{content:"";position:absolute;left:-12px;top:50%;width:1px;height:16px;margin-top:-8px;background:var(--line)}
+/* C：右栏工具行 [撤销 重做 版本 意见] 一个框；「保存」最常用，主文字色 */
+#assetBar .bx>#vtNote{width:28px;height:calc(var(--h-hit) - 2px);border-radius:0}
+#assetBar #abSave{color:var(--t1)}
+/* 输出栏「数据」：烘焙结果（原底部统计框）放回输出里 */
+#params details.e52-data>.e52-rows{display:flex;flex-direction:column;gap:6px;padding:4px 0 8px 12px;color:var(--t2);font-size:var(--fs1);line-height:1.5}
+#params details.e52-data .e52-r b{color:var(--t1);font-weight:400;font-variant-numeric:tabular-nums}
+#params details.e52-data .e52-r .ok{color:var(--t3)}
+#params details.e52-data .e52-r .warn{color:var(--w3)}
+#params details.e52-data .e52-none{color:var(--t3)}
