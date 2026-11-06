@@ -1,0 +1,73 @@
+/* 烟花工坊 5.0.1 预览（只看样子，不进 main）
+   方向：对话框 2026-11-06 两轮——补回「外框、文字、主次」，画风照 4.9.124 冻结色（g / p 色阶），圆角仍 2px。
+   只叠在成品 5.0.0 上，不改任何业务脚本；所有规则挂在 html.p501 下。 */
+
+/* ---------- 0. 公共：有框按钮（135 / 工作台那种） ---------- */
+html.p501{--p501-line:var(--g6);--p501-on-bg:var(--p2);--p501-on-ln:var(--p4);--p501-on-tx:var(--pInk);--p501-h:28px}
+
+/* ---------- 1. 视图条：两行（第一行看什么，第二行看多大） ---------- */
+html.p501 #wsBaker{grid-template-rows:84px minmax(0,1fr) var(--h-status)}
+html.p501 #viewbar{flex-wrap:wrap;align-content:center;row-gap:8px;padding-top:0;padding-bottom:0}
+html.p501 #viewbar>.p501-br{flex-basis:100%;height:0;margin:0}
+html.p501 #viewbar>.p501-k{color:var(--t3);font-size:var(--fs1);margin-left:2px;min-width:28px}
+html.p501 #toolRow>#assetBar{align-items:flex-start;padding-top:5px}
+
+/* 分段：整组外框 + 每段竖线；选中 = 深绿底 + 主色描边 + 浅绿字（4.9.124 模式切换） */
+html.p501 #viewbar .seg{display:inline-flex;gap:0;padding:0;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);overflow:hidden}
+html.p501 #viewbar .seg button{height:var(--p501-h);min-height:0;padding:0 14px;border:0;border-right:1px solid var(--p501-line);border-radius:0;background:none;box-shadow:none;color:var(--t2);font-size:var(--fs2)}
+html.p501 #viewbar .seg button:last-child{border-right:0}
+html.p501 #viewbar .seg button:hover{color:var(--t1);background:var(--g3)}
+html.p501 #viewbar .seg button[aria-pressed="true"]{background:var(--p501-on-bg);color:var(--p501-on-tx);box-shadow:inset 0 0 0 1px var(--p501-on-ln);font-weight:600}
+
+/* 开关钮（库 / 实拍对照 / 网格 / 精简 / 参数）：有框，开着 = 同一种选中 */
+html.p501 #viewbar :is(.tgl,.btn-icon){height:var(--p501-h);min-width:var(--p501-h);border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t2)}
+html.p501 #viewbar :is(.tgl,.btn-icon):hover{color:var(--t1);background:var(--g3)}
+html.p501 #viewbar :is(.tgl,.btn-icon)[aria-pressed="true"]{background:var(--p501-on-bg);color:var(--p501-on-tx);border-color:var(--p501-on-ln)}
+html.p501 #viewbar #btnRef{padding:0 10px}
+
+/* 距离 / 曝光：从画面右下挪到「画面大小」旁边，做成有框的读数钮 */
+html.p501 #viewbar #vfRead{position:static;display:inline-flex;gap:8px;margin:0 0 0 4px;padding:0;background:none;box-shadow:none;text-shadow:none}
+html.p501 #viewbar #vfRead .vr{display:inline-flex;align-items:center;gap:8px;height:var(--p501-h);padding:0 10px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);cursor:ew-resize}
+html.p501 #viewbar #vfRead .vr:hover{background:var(--g3)}
+html.p501 #viewbar #vfRead .vr-k{color:var(--t3);font-size:var(--fs1)}
+html.p501 #viewbar #vfRead .vr-v{color:var(--t1);font-size:var(--fs2);font-variant-numeric:tabular-nums}
+html.p501 #viewbar #vfRead .vr::after{content:"↔";color:var(--t3);font-size:11px}
+
+/* ---------- 2. 右上：保存是唯一的主按钮，其余有框写字 ---------- */
+html.p501 #assetBar .tgrp.bx{border:0;background:none;gap:6px}
+html.p501 #assetBar .tgrp.bx>.bx-sep{display:none}
+html.p501 #assetBar :is(.btn,summary.btn){height:var(--p501-h);min-height:0;padding:0 12px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t1);font-size:var(--fs2)}
+html.p501 #assetBar :is(.ab-ur,summary.btn-icon){width:var(--p501-h);padding:0;color:var(--t2)}
+html.p501 #assetBar .btn:hover:not([disabled]){background:var(--g3)}
+html.p501 #assetBar #abSave{background:var(--p4);border-color:var(--p4);color:var(--p1);font-weight:600}
+html.p501 #assetBar #abSave:hover{background:var(--p5)}
+html.p501 #assetBar #expBtn{gap:0}
+html.p501 #assetBar #expBtn>.btn{border-color:var(--p501-on-ln);background:var(--p501-on-bg);color:var(--p501-on-tx)}
+html.p501 #assetBar #expBtn>.exp-dd{border-left:0;width:24px;padding:0}
+html.p501 #assetBar .btn[disabled]{opacity:.55}
+
+/* ---------- 3. 播放区：按钮有框、播放最大、倍速看得出能下拉 ---------- */
+html.p501 #main>.stage>.timeline{gap:6px;min-height:44px}
+html.p501 #main>.stage>.timeline :is(.btn,summary.btn,.tlloop){height:var(--p501-h);min-height:0;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t1)}
+html.p501 #main>.stage>.timeline #play{width:52px!important;height:32px;background:var(--p4);border-color:var(--p4);color:var(--p1)}
+html.p501 #main>.stage>.timeline #play:hover{background:var(--p5)}
+html.p501 #main>.stage>.timeline #replay{width:var(--p501-h)}
+html.p501 #main>.stage>.timeline #speed{width:64px;padding:0 22px 0 10px;appearance:none;-webkit-appearance:none;
+  background:var(--g2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23b4c5cb' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 8px center}
+html.p501 #main>.stage>.timeline .tlloop{display:inline-flex;align-items:center;gap:6px;width:auto!important;padding:0 10px}
+html.p501 #main>.stage>.timeline .tlloop .tku{display:inline!important;font-size:var(--fs2)}
+html.p501 #main>.stage>.timeline .tlloop:has(input:checked){background:var(--p501-on-bg);border-color:var(--p501-on-ln);color:var(--p501-on-tx)}
+html.p501 #main>.stage>.timeline #tlabel{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--t1);margin:0 6px}
+
+/* 导出范围那行：入出点写成字，和「一并移动」同一套有框按钮 */
+html.p501 .tlbars>.tlx{min-height:36px;border-bottom:1px solid var(--line)}
+html.p501 .tlx .tlx-k{color:var(--t2)}
+html.p501 .tlx .tlx-b{gap:6px}
+html.p501 .tlx .tlx-b .btn-icon{width:auto;height:var(--p501-h);padding:0 10px;gap:6px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t1);font-size:var(--fs2);display:inline-flex;align-items:center}
+html.p501 .tlx .tlx-b .btn-icon::after{content:attr(aria-label)}
+html.p501 .tlx .tlx-b .btn-icon[data-cut="clear"]::after{content:"清除"}
+html.p501 .tlx .tlx-b .btn-icon[disabled]{opacity:.5}
+html.p501 .tlx .tlopt{height:var(--p501-h);padding:0 10px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2)}
+
+/* ---------- 4. 画面区有个标题（和左右栏对齐的那一层） ---------- */
+html.p501 .vf-foot{min-height:24px}
