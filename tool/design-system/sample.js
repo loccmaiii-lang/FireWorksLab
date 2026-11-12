@@ -92,4 +92,8 @@
     if (dialog.returnValue === 'confirm') FWDesign.notify(notice, '已确认样板；未执行资源导入。');
   });
   dialog.addEventListener('cancel', () => { dialog.returnValue = 'cancel'; });
+  FWDesign.createCurveEditor(byId('curve-example'), {
+    label: '大小', value: [[0, 1], [.35, .8], [1, 0]],
+    onCommit: value => { byId('curve-value').textContent = value.map(p => p.join(':')).join(', '); }
+  });
 })();

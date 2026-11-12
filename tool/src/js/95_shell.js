@@ -13,7 +13,7 @@
 'use strict';
 if (window.__fwShell) return;
 window.__fwShell = true;
-const SHELL_VER = '5.0.01';
+const SHELL_VER = '5.0.02';
 
 /* ---------- 1 小工具与浮层（同样板 script_shell.js 第 1 节） ---------- */
 const q = (s, r = document) => r.querySelector(s);

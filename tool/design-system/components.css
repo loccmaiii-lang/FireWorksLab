@@ -1,3 +1,28 @@
+/* E 4.1 共享曲线：正式参数面板与组件样例使用同一份样式。 */
+.fw-curve{--curve-line:var(--line,#2b4149);--curve-text:var(--t2,#b4c5cb);--curve-accent:var(--sel,#00cda4);min-width:0;padding-right:7px;box-sizing:border-box;color:var(--curve-text);font-size:12px}
+.fw-curve .fw-curve-wrap{position:relative;padding-left:12px;margin:4px 0 0}
+.fw-curve .fw-curve-axis{position:absolute;inset:-6px auto -6px -12px;display:flex;flex-direction:column;justify-content:space-between;width:20px;text-align:right;font-variant-numeric:tabular-nums}
+.fw-curve .fw-curve-plot{position:relative;height:96px;border-left:1px solid var(--curve-line);border-bottom:1px solid var(--curve-line);touch-action:none;cursor:crosshair}
+.fw-curve .fw-curve-plot svg{display:block;width:100%;height:100%;overflow:visible}
+.fw-curve .fw-curve-grid{stroke:var(--curve-line);stroke-width:1;vector-effect:non-scaling-stroke;fill:none}
+.fw-curve polyline{stroke:var(--curve-accent);stroke-width:1.5;vector-effect:non-scaling-stroke;fill:none}
+.fw-curve .fw-curve-point{position:absolute;transform:translate(-50%,-50%);width:14px;height:14px;min-height:0;padding:0;border:0;background:none;border-radius:50%;cursor:move;touch-action:none}
+.fw-curve .fw-curve-point::after{content:'';position:absolute;inset:4px;border-radius:50%;background:var(--t1,#d8e4e8)}
+.fw-curve .fw-curve-point.is-selected::after{inset:3px;background:var(--curve-accent);box-shadow:0 0 0 2px var(--bg,#111d21)}
+.fw-curve .fw-curve-point:focus-visible{outline:1px solid var(--curve-accent);outline-offset:1px}
+.fw-curve .fw-curve-read{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:30px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fw-curve .fw-curve-count{margin-right:auto;font-size:11px;color:var(--t3,#8fa6ae)}
+.fw-curve .fw-curve-read label{display:inline-flex;align-items:center;gap:4px;margin:0;padding:0;border:0;font:inherit}
+.fw-curve .fw-curve-read input{width:40px;min-width:0;min-height:0;height:22px;padding:0 3px;text-align:right;font:inherit;color:var(--t1,#d8e4e8);border:1px solid var(--curve-line);background:var(--g1,#0c171b);border-radius:2px}
+.fw-curve .fw-curve-read input:hover{border-color:var(--g6,#38505a)}
+.fw-curve .fw-curve-read input:focus{outline:0;border-color:var(--curve-accent)}
+.fw-curve .fw-curve-read input:not(:focus){cursor:ew-resize}
+.fw-curve .fw-curve-read input.is-dragging{border-color:var(--curve-accent);cursor:ew-resize}
+.fw-curve .fw-curve-read input[aria-invalid=true]{border-color:var(--e3,#f46c70)}
+.fw-curve .fw-curve-error{color:var(--e3,#f46c70);font-size:11px}
+.fw-curve .fw-curve-error[hidden]{display:none}
+@media(max-width:1599px){.fw-curve .fw-curve-read{gap:4px}.fw-curve .fw-curve-read label{gap:2px}.fw-curve .fw-curve-read input{width:34px}.fw-curve .fw-curve-count{font-size:10px}}
+
 /* Shared components: native semantics, scoped styling; no application shortcuts. */
 .fw-scope {
   color-scheme: dark;

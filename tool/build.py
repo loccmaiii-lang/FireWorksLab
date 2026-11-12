@@ -10,7 +10,7 @@ body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
 _jsf = sorted(glob.glob(os.path.join(src, 'js', '*.js')))
 shell_js_files = [f for f in _jsf if os.path.basename(f).startswith('95_shell')]
 js = ''.join(open(f, encoding='utf-8').read() for f in _jsf if f not in shell_js_files)
-js = open(os.path.join(here, 'shared', 'cascade_events.js'), encoding='utf-8').read() + '\n' + js
+js = open(os.path.join(here, 'design-system', 'components.js'), encoding='utf-8').read() + '\n' + open(os.path.join(here, 'shared', 'cascade_events.js'), encoding='utf-8').read() + '\n' + js
 ver = re.search(r"const VERSION = '([^']+)'", js)
 # 仓库根目录的 更新记录.md（最新在上）→ UPDATES，烘焙器顶栏「更新记录」里显示
 import json

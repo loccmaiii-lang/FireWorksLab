@@ -1,0 +1,205 @@
+[
+  {
+    "item": "正式参数面板使用共享曲线编辑器",
+    "pass": true,
+    "count": 36
+  },
+  {
+    "item": "顶栏与本版更新说明一致",
+    "pass": true,
+    "detail": "5.0.02"
+  },
+  {
+    "item": "打开空曲线不改原配方",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "双击加点写入真实参数",
+    "pass": true,
+    "detail": [
+      [
+        0,
+        1
+      ],
+      [
+        0.4977,
+        0.5035
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  {
+    "item": "拖点和单次撤销边界",
+    "pass": true,
+    "detail": [
+      [
+        0,
+        1
+      ],
+      [
+        0.65,
+        0.25
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  {
+    "item": "撤销还原曲线",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "重做恢复曲线",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "精确输入支持大于 1 的倍率",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "数值框拖动也使用共享曲线提交",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "非法数字不改参数",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "方向键微调关键点",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "Esc 取消拖动不写参数",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "Delete 删除中间点",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "保留边界点",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "曲线显示改动及行尾还原",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "行尾还原回到打开时",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "还原操作也可以撤销",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "双击曲线名恢复模板默认",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "保存刷新重开保留曲线",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "1920 完整工具行、紧凑库与曲线布局",
+    "pass": true,
+    "detail": {
+      "toolbar": 40,
+      "thumb": 40,
+      "mode": "rgb(0, 212, 155) 0px -2px 0px 0px inset",
+      "filterFirst": true,
+      "curveFits": true,
+      "pageFits": true,
+      "stageRead": true
+    }
+  },
+  {
+    "item": "1366 完整工具行、紧凑库与曲线布局",
+    "pass": true,
+    "detail": {
+      "toolbar": 36,
+      "thumb": 36,
+      "mode": "rgb(0, 212, 155) 0px -2px 0px 0px inset",
+      "filterFirst": true,
+      "curveFits": true,
+      "pageFits": true,
+      "stageRead": true
+    }
+  },
+  {
+    "item": "真实烘焙可以回放",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "序列贴图入口可用",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "导出菜单可见且不被截断",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "粒子图共享曲线写入数组",
+    "pass": true,
+    "detail": [
+      [
+        0,
+        0.699999988079071
+      ],
+      [
+        0.20000000298023224,
+        1
+      ],
+      [
+        0.4178,
+        0.5564
+      ],
+      [
+        0.6000000238418579,
+        0.7200000286102295
+      ],
+      [
+        1,
+        0.07999999821186066
+      ]
+    ]
+  },
+  {
+    "item": "粒子图曲线撤销",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "组件库样例调用相同编辑器",
+    "pass": true,
+    "detail": null
+  },
+  {
+    "item": "页面无脚本错误",
+    "pass": true,
+    "errors": []
+  }
+]

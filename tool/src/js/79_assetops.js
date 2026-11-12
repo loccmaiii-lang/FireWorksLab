@@ -182,7 +182,7 @@ function resetScope(e, m) {
   const B = panelBaseP(), P = state.P, sg = P.sparkGraph ? structuredClone(P.sparkGraph) : null; let n = 0;
   for (const [row, it, sec, det] of panelRows) {
     if (det._g !== e || (m && det._mod !== m) || !row.classList.contains('chg')) continue;
-    const k = Array.isArray(it) ? it[0] : it.sel || (isPathKey(it.text || it.curve || '') ? it.text || it.curve : ''); if (!k || pGet(B, k) === undefined) continue;
+    const k = Array.isArray(it) ? it[0] : it.sel || it.curve || (isPathKey(it.text || '') ? it.text : ''); if (!k || pGet(B, k) === undefined) continue;
     pSet(P, k, structuredClone(pGet(B, k))); n++;
   }
   if (!n) { flash('这里没有改过的参数'); return; }

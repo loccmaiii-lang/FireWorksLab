@@ -691,7 +691,7 @@ function rowChanged(it, P, B) {
   if (Array.isArray(it)) { const k = it[0], a = +pGet(P, k), b = +pGet(B, k); if (!isFinite(a) && !isFinite(b)) return false; return !(Math.abs((isFinite(a) ? a : 0) - (isFinite(b) ? b : 0)) <= (+it[5] || 0) / 2 + 1e-9); }
   if (it.sel) return String(pGet(P, it.sel)) !== String(pGet(B, it.sel));
   if (it.text) return isPathKey(it.text) ? JSON.stringify(pGet(P, it.text)) !== JSON.stringify(pGet(B, it.text)) : String(P[it.text]) !== String(B[it.text]);
-  if (it.curve && isPathKey(it.curve)) return JSON.stringify(pGet(P, it.curve) || []) !== JSON.stringify(pGet(B, it.curve) || []);     // 4.9.87 分层粒子图的曲线也算改过（平常的曲线行照旧不算）
+  if (it.curve) return JSON.stringify(parseCurve(pGet(P, it.curve)) || []) !== JSON.stringify(parseCurve(pGet(B, it.curve)) || []);
   return false;
 }
 function rowMatches(row, it, sec, q) {
@@ -824,18 +824,29 @@ function buildMasterPanel() {
         if (it.info === 'lowAtNow') row.addEventListener('click', e => { const q = e.target.closest('[data-lowat]'); if (!q) return; state.P.lowAt = q.dataset.lowat === '1' ? +engineTick(state.t).toFixed(4) : 0; onExportScheme(); refreshPanelValues(); row._refresh(); flash(state.P.lowAt > 0 ? `单帧取 ${state.P.lowAt.toFixed(2)} s（Ctrl+Z 撤回）` : '单帧改回自动'); });     // 4.9.29
         if (it.info === 'outSummary') row.addEventListener('click', e => { const b = e.target.closest('[data-pages]'); if (!b) return; state.P.pageTarget = +b.dataset.pages; onParam(); refreshPanelValues(); flash(`贴图张数改成至少 ${b.dataset.pages} 张，正在重新分帧烘焙（Ctrl+Z 撤回）`); });     // 4.9.26 试算「用这个」
         row._refresh(); det.appendChild(row);
-      } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
+      } else if (it.curve) {      // E 4.1：普通发射器与分层粒子图使用同一个编辑器；各自的存档格式保持不变。
         const lab = nm ? p43Label(nm, it.label) : it.label;
-        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="例 0:1, 1:0" title="空 = 不变；时刻 0–1"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
-        const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
-        const cvRaw = () => isPathKey(it.curve) ? graphCurveText(pGet(state.P, it.curve)) : state.P[it.curve];     // 4.9.87 分层粒子图的曲线存成 [[寿命, 倍率], …]，这里按同一种「时刻:值」写法显示
-        const show = () => { const ks = parseCurve(cvRaw()), bad = !ks && !!String(cvRaw() || '').trim(); out.textContent = ks ? `关键点 ${ks.length} 个　${+ks[0][1].toFixed(3)} → ${+ks[ks.length - 1][1].toFixed(3)}` : (bad ? '格式不对' : '不变');     // 5.0.0 文案（§10 读数一行）：每个点的值在下面的文本框里 out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
-          const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig;
-            // 4.9.14（照 01_顺手调参_深化）：图旁边一张小表「寿命 0–1 | 倍率」，就是上面那串数（只读；改还是在输入框里）
-            row.querySelector('.cv-tab').innerHTML = ks && !bad ? `<table class="cv-table"><thead><tr><th>寿命 0–1</th><th>倍率</th></tr></thead><tbody>${ks.map(k => `<tr><td>${(+k[0]).toFixed(2)}</td><td>${(+k[1]).toFixed(2)}</td></tr>`).join('')}</tbody></table>` : ''; } };
-        inp.value = cvRaw() || ''; show();
-        inp.addEventListener('change', () => { if (isPathKey(it.curve)) { graphSetParam(it.curve, parseCurve(inp.value.trim()) || [], it); inp.value = cvRaw() || ''; show(); return; } state.P[it.curve] = inp.value.trim(); show(); onParam(); });
-        row._refresh = () => { inp.value = cvRaw() || ''; show(); };
+        row = document.createElement('div'); row.className = 'field curvef'; row.dataset.curveKey = it.curve;
+        row.innerHTML = `<span class="fk">${lab}</span><div class="curve-editor"></div><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
+        row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm; rrstBind(row);
+        const cvValue = () => parseCurve(pGet(state.P, it.curve)) || [];
+        const editor = row._curve = window.FWDesign.createCurveEditor(row.querySelector('.curve-editor'), {
+          label: /亮度|Bright|bright/.test(it.curve + lab) ? '亮度' : '大小', value: cvValue(),
+          onCommit: points => {
+            if (row._inert) return false;
+            if (isPathKey(it.curve)) return graphSetParam(it.curve, points, it);
+            state.P[it.curve] = points.map(p => p.join(':')).join(', '); onParam(); return true;
+          }
+        });
+        row._refresh = () => editor.setValue(cvValue());
+        row.querySelector('.fk').title = '双击恢复模板默认';
+        row.querySelector('.fk').addEventListener('dblclick', () => {
+          if (row._inert) return;
+          const value = pGet(D, it.curve); if (value == null) return;
+          if (isPathKey(it.curve)) graphSetParam(it.curve, structuredClone(value), it);
+          else { state.P[it.curve] = value; onParam(); }
+          row._refresh(); helpHide(true);
+        });
         det.appendChild(row);
       } else if (it.text && isPathKey(it.text)) {     // 4.9.87 分层粒子图的文字行（层名称、爆发时刻）
         const lab = it.label; row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false"><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
@@ -913,6 +924,7 @@ function refreshVisibility() {
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = whyShort(iw); else row.removeAttribute('title');     // 5.0.0 文案：原因一句（全文在参数说明里）
+    if (row._curve) row._curve.setDisabled(!!iw);
     if (vis && it.sel && it.optOK) { const sl = row.querySelector('select'); if (sl) for (const o of sl.options) { const def = it.options.find(x => String(x[0]) === o.value), ok = !def || !!it.optOK(def[0], P); o.disabled = !ok; o.hidden = !ok && o.value !== sl.value; } }     // 4.9.89 只给这个效果能用的选项（合成一张的帧数、没有星头的 GPU 光点）
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
@@ -1106,15 +1118,6 @@ function inspectorNavItems(names, current) {
   const shown = names.slice(0, 4);
   if (names.includes(current) && !shown.includes(current)) shown[shown.length - 1] = current;
   return { shown, more: names.filter(n => !shown.includes(n)) };
-}
-// 只读图表直接使用引擎的分段线性曲线；编辑仍在原来的数值输入框，拖点编辑以后做。
-function inspectorCurveHTML(keys) {
-  const ks = keys || [[0, 1], [1, 1]], lo = Math.min(0, ...ks.map(k => k[1])), hi = Math.max(1, ...ks.map(k => k[1]));
-  if (!Number.isFinite(lo) || !Number.isFinite(hi)) return '';
-  const x = t => 30 + t * 216, y = v => 82 - (v - lo) / (hi - lo) * 68, fmt = v => +v.toFixed(3);
-  const pts = [[0, ks[0][1]], ...ks, [1, ks[ks.length - 1][1]]];
-  const line = pts.map(k => `${fmt(x(k[0]))},${fmt(y(k[1]))}`).join(' ');
-  return `<svg class="cv-plot" viewBox="0 0 264 106" role="img" aria-label="按寿命变化曲线：横轴寿命零到一，纵轴倍数 ${fmt(lo)} 到 ${fmt(hi)}"><path class="cv-grid" d="M30 14H246M30 48H246M30 82H246M30 14V82M138 14V82M246 14V82"/><polyline class="cv-line" points="${line}"/>${ks.map(k => `<circle class="cv-point" cx="${fmt(x(k[0]))}" cy="${fmt(y(k[1]))}" r="2.8"/>`).join('')}<text x="24" y="18" text-anchor="end">${fmt(hi)}</text><text x="24" y="85" text-anchor="end">${fmt(lo)}</text><text x="30" y="100">0</text><text x="138" y="100" text-anchor="middle">寿命 0.5</text><text x="246" y="100" text-anchor="end">1</text></svg>`;
 }
 function inspectorNavSync(bar) {
   if (!bar) return;

@@ -77,7 +77,7 @@ function bindUndo() {
   window.addEventListener('pointerdown', e => { if (e.button === 0) undo.ptr = true; }, true);
   for (const ev of ['pointerup', 'pointercancel']) window.addEventListener(ev, () => undoRelease('ptr'), true);
   // 按住方向键 / PageUp 调滑杆：松开键才算一步
-  window.addEventListener('keydown', e => { const t = e.target; if (t && t.type === 'range' && /^(Arrow|Page|Home|End)/.test(e.key)) undo.key = true; }, true);
+  window.addEventListener('keydown', e => { const t = e.target; if (t && (t.type === 'range' || t.classList.contains('fw-curve-point')) && /^(Arrow|Page|Home|End)/.test(e.key)) undo.key = true; }, true);
   window.addEventListener('keyup', () => undoRelease('key'), true);
   window.addEventListener('blur', () => { undoRelease('ptr'); undoRelease('key'); undoRelease('color'); });
   // 4.9.4 快捷键登记表（68_keys.js）：光标在文字 / 数字输入框里时留给输入框自己的撤销（表里 guard: text）

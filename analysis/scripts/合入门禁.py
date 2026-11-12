@@ -32,7 +32,11 @@ from browser_runtime import validation_url, verify_validation_source
 
 SRC_PREFIX = ('tool/src/', 'analysis/命名/')
 BUILD_INPUTS = ('tool/src/', 'analysis/命名/', 'tool/design-system/', '更新记录.md', 'spec/尺寸标定.json', 'tool/build.py')
-BUILD_OUTPUTS = ['tool/FireworkBaker.html', 'tool/data/size_spec.js']
+BUILD_OUTPUTS = ['tool/FireworkBaker.html', 'tool/烟花工坊.html', 'tool/data/size_spec.js']
+E41_INPUTS = ('tool/design-system/', 'tool/src/style.css', 'tool/src/body.html', 'tool/src/shell/',
+              'tool/src/js/70_ui.js', 'tool/src/js/79_assetops.js', 'tool/src/js/79_undo.js',
+              'tool/src/js/95_shell', 'tool/src/js/97_e40', 'tool/src/js/98_', 'tool/src/js/99_',
+              'analysis/scripts/E41合入检查.py')
 UI_ITEMS = ['N3', 'W7', 'W37', 'R10', 'R11', 'X1', 'R12', 'R13', 'R18']     # R12：4.9.89 导出接线（合成一张入出点 / 帧数 / 停几 tick、纯星头）；R13：4.9.96 纯星头 CPU 粒子 / 开花闪光 / 尾缀层产物表 / 按时间缩
 
 # ---------------------------------------------------------------- 页面里的检查
@@ -570,6 +574,11 @@ def main():
         lines = [x for x in r.stdout.splitlines() if x.startswith(('✅', '❌'))]
         bad = [x for x in lines if x.startswith('❌')]
         put('界面', r.returncode == 0 and bool(lines), f'{len(lines) - len(bad)}/{len(lines)} 项过' + ('：' + '；'.join(x[:160] for x in bad) if bad else ''))
+    if want('组件', a.all or any(f.startswith(E41_INPUTS) for f in files)):
+        # 回归通过不能替代样板交互验收。正式离线工坊必须包含可编辑曲线和统一组件布局。
+        r = sh(sys.executable, 'analysis/scripts/E41合入检查.py', '--html', str(ROOT / 'tool' / '烟花工坊.html'))
+        lines = [x for x in r.stdout.splitlines() if x.startswith(('PASS ', 'FAIL '))]
+        put('组件', r.returncode == 0 and bool(lines), f'{sum(x.startswith("PASS ") for x in lines)} 项真实操作通过' if r.returncode == 0 else '；'.join((lines[-3:] + r.stdout.splitlines()[-2:]))[:600])
     print(('可以推' if ok_all else '有 ❌，先修再推') + f'（{round(time.time() - T)} s）', flush=True)
     if a.out: json.dump(report, open(a.out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     sys.exit(0 if ok_all else 1)

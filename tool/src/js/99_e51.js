@@ -430,7 +430,7 @@
     const pane = $q('#libPane'), body = $q('#libBody'); if (!pane || !body) return;
     const on = pane.dataset.lt === '效果'; pane.classList.toggle('e51-lib', on);
     let bar = $q('#e51LibCats');
-    if (!bar) { bar = document.createElement('div'); bar.id = 'e51LibCats'; bar.className = 'e51-seg e51-cats'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', '筛选'); body.before(bar);
+    if (!bar) { bar = document.createElement('div'); bar.id = 'e51LibCats'; bar.className = 'e51-seg e51-cats'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', '筛选'); pane.querySelector('.side-head').before(bar);
       bar.addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; libCat = b.dataset.c; try { localStorage.setItem('fw.e51.libCat', libCat); } catch (err) { } libFlat(); }); }
     bar.hidden = !on; if (!on) return;
     const items = $a('#libBody :is(.lg-review, .lg-wip, .lg-myfx) .li[data-key]'), seen = new Set(), have = new Set(['all']);

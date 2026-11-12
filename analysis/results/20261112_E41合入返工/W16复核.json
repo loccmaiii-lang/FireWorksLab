@@ -1,0 +1,8 @@
+[
+ {
+  "item": "W16",
+  "pass": true,
+  "why": "{\"1 选效果与图层\": {\"key\": \"ef:hiki_nishiki\", \"sel\": 1, \"scope\": \"引菊→锦（橙色直线菊转金锦，尾缀3.0_A主层）›金锦›火花\", \"solo\": -1, \"mute\": 0}, \"2 调参数\": {\"life\": 3.2, \"chg\": true, \"bar\": true, \"rr\": true, \"mod\": \"恢复本模块（1 项）\", \"save\": \"保存（有没保存的改动）\", \"stale\": true}, \"3 调色并返回\": {\"open\": true, \"inView\": true, \"sum\": \"颜色1 段↺\", \"layer\": \"效果\", \"tab\": \"火花\", \"changed\": true, \"other\": true}, \"4 调层延迟\": {\"d\": 0.5, \"other\": 0, \"cell\": 0.5, \"b0\": 0, \"b1\": 4.29185}, \"5 撤销 / 重做\": {\"撤销\": {\"d\": 0, \"life\": 3.2, \"col\": \"#123456\"}, \"重做\": {\"d\": 0.5, \"life\": 3.2, \"col\": \"#123456\"}}, \"6 保存\": {\"id\": \"fxmwdcb23lpel9q\", \"life\": 3.2, \"d\": 0.5, \"col\": \"#123456\", \"n\": 2}, \"6 刷新重开\": {\"id\": \"fxmwdcb23lpel9q\", \"life\": 3.2, \"d\": 0.5, \"col\": \"#123456\", \"n\": 2}, \"7 烘焙回放\": {\"view\": \"export\", \"stale\": false, \"layers\": [{\"baked\": true, \"old\": false}, {\"baked\": true, \"old\": false}], \"life\": 3.2, \"want\": 3.2}, \"8 导出时的提示\": [], \"8 导出 PC / 手机\": {\"status\": \"贴图已经是最新的\", \"busy\": \"打包 ZIP…\", \"job\": true, \"idle\": false, \"dis\": false, \"files\": 13, \"pc\": true, \"mobile\": true, \"png\": 9, \"pcEm\": 3, \"mbEm\": 1, \"hiki\": true, \"nishiki\": true, \"life\": 3.2, \"want\": 3.2}}",
+  "sec": 13.9
+ }
+]
