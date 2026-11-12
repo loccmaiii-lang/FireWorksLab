@@ -2575,14 +2575,33 @@ W13_JS = r'''async (rec) => {
   const bad = [], out = {}, wait = ms => new Promise(r => setTimeout(r, ms));
   // 1 输出栏：直接调 9 个控件 + 算出来的 3 个
   store.set('pModOpen', {}); pview.mopen = {};
-  await openType('kiku'); await wait(300); selectEmitTab('输出');
+  await openType('kiku'); selectEmitTab('输出'); await wait(300);
   const g = document.querySelector('#params section.egrp[data-g="输出"]'), mods = [...g.querySelectorAll('details.mod')].filter(d => !d.hidden);
   out.mods = mods.map(d => [d.querySelector('summary').firstChild.textContent.trim(), d.open]);
   // 4.9.136 改写（5.0.01，审阅 R12 / R13）：输出并成一个模块「输出」，常用的行直接在里面，原来的几个模块收进「+N」（.e51-more）
   const omod = mods.find(d => d.classList.contains('e51-out')), more = omod && omod.querySelector(':scope > .e51-more');
   const dmod = omod, cmod = omod;
   if (!omod || mods.indexOf(omod) !== 0) bad.push('输出的第一个模块不是并起来的「输出」：' + JSON.stringify(out.mods));
-  if (more && [...more.querySelectorAll(':scope > details.mod')].some(d => d.open)) bad.push('「+N」里的输出模块没有默认收起：' + JSON.stringify(out.mods));
+  // E 样板 4.1：首次默认展开少改的参数，沿用用户的开合选择。
+  const submods = more ? [...more.querySelectorAll(':scope > details.mod:not([hidden])')] : [];
+  if (!more || more.hidden || !submods.length || submods.some(d => !d.open)) bad.push('少改的输出参数没有默认展开');
+  const data = omod?.nextElementSibling;
+  if (!data?.matches('details.e52-data[open]') || !data.offsetWidth) bad.push('输出下面缺少可见且默认展开的「数据」模块');
+  if (more) {
+    const toggle = omod.querySelector(':scope > summary > .e51-n');
+    toggle.click();
+    if (!more.hidden || store.get('e51OutMore') !== false) bad.push('收起少改的输出参数后没有记住选择');
+    if (data && (!data.offsetWidth || data.previousElementSibling !== omod)) bad.push('收起少改的输出参数时「数据」模块应独立显示');
+    toggle.click();
+    if (more.hidden || store.get('e51OutMore') !== true) bad.push('再次展开少改的输出参数后没有记住选择');
+  }
+  if (data) {
+    const fold = document.querySelector('#params .e50-fold');
+    fold.click(); await wait(500);
+    if (data.open) bad.push('全部折叠后「数据」模块自行展开');
+    fold.click(); await wait(500);
+    if (!data.open || !data.offsetWidth) bad.push('全部展开后「数据」模块没有恢复显示');
+  }
   const ctl = d => [...d.querySelectorAll('input[type=range], select, .num')].filter(x => x.offsetParent && !x.closest('.adef') && !(x.classList.contains('num'))).map(x => x.id || (x.closest('[data-info]') || {}).dataset?.info || x.closest('.sl, .field')?._lab || '?');
   const dkeys = panelRows.filter(([r]) => !r.hidden && dmod && r.parentElement === dmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
   const spec = ['x-texW', 'x-texH', 'x-cols', 'x-rows'].filter(id => dmod && dmod.contains(document.getElementById(id)) && !more.contains(document.getElementById(id)));

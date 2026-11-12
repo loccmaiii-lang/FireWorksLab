@@ -1572,7 +1572,7 @@ header.top .upd{height:32px;min-height:32px;font-size:var(--fs1);padding:4px 12p
 
 /* 搜索 + 仅改动（总看得见，跟着内容滚） */
 #params>.ptools{order:6;position:static;display:flex;align-items:center;gap:12px;margin:10px 0 4px;padding:0;background:none;flex-wrap:nowrap}
-#params>.ptools input[type=search]{flex:1 1 auto;min-width:0;min-height:34px;padding:5px 10px 5px 32px;border:1px solid var(--line2);border-radius:var(--r2);background:var(--low) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Ccircle cx='6' cy='6' r='4.6' fill='none' stroke='%238da3ac' stroke-width='1.4'/%3E%3Cpath d='M9.4 9.4 13 13' stroke='%238da3ac' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 11px 50%;color:var(--text);font-size:var(--fs2)}
+#params>.ptools input[type=search]{flex:1 1 auto;min-width:0;min-height:34px;padding:5px 10px 5px 32px;border:1px solid var(--line2);border-radius:var(--r2);background:var(--low) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Ccircle cx='6' cy='6' r='4.6' fill='none' stroke='%238da3ac' stroke-width='1.4'/%3E%3Cpath d='M9.4 9.4 12.4 12.4' stroke='%238da3ac' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 11px 50%;color:var(--text);font-size:var(--fs2)}
 #params>.ptools input[type=search]:focus{border-color:var(--acc);outline:none}
 #params>.ptools .pchg{flex:none;display:flex;align-items:center;gap:6px;font-size:var(--fs2);color:var(--dim);white-space:nowrap;cursor:pointer}
 #params>.ptools .pchg.pen{font-size:var(--fs1);color:var(--faint)}
@@ -1913,7 +1913,7 @@ html,body{background:var(--g1)}
 body{color:var(--t1);font:var(--fw1) var(--fs2)/var(--lh2) var(--sans);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font-family:inherit;letter-spacing:inherit;font-variant-numeric:tabular-nums}
 b,strong,h1,h2,h3,h4,th{font-weight:var(--fw2)}
-svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;vertical-align:middle}
+svg.i{width:var(--ico);height:var(--ico);flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
 .ui-icon{display:inline-flex}
 svg.i.ui-icon{width:16px;height:16px;background:none;-webkit-mask:none;mask:none}
 :focus{outline:none}
@@ -1985,7 +1985,7 @@ input[type=number]{font-variant-numeric:tabular-nums}
 
 /* 下拉（§4.8）：像命令一样静止无底，右侧箭头 */
 select{appearance:none;-webkit-appearance:none;min-height:var(--h-ctl);padding:0 22px 0 6px;border:1px solid transparent;border-radius:var(--r2);color:var(--t2);font-size:var(--fs2);cursor:pointer;
-  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") no-repeat right 4px center}
+  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='%238da3ac' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8.25 10 12.25l4-4'/%3E%3C/svg%3E") no-repeat right 4px center}
 select:hover{background-color:var(--hov);color:var(--t1);border-color:transparent}
 select:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
 select:disabled{opacity:.5;cursor:default;background-color:transparent}
@@ -2172,7 +2172,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 /* 效果库（下半）：搜索 + 新建一行，列表 */
 .lib-pane{min-height:0}
 .lib-pane>.side-head{flex:none;display:flex;align-items:center;gap:var(--s2);padding:var(--s3) var(--pad) var(--s2);border:0;background:none}
-.lib-pane>.side-head input[type=search]{flex:1;min-width:0;height:var(--h-hit);padding:0 8px 0 28px;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%238da3ac' stroke-width='1.5' stroke-linecap='square'%3E%3Ccircle cx='6.75' cy='6.75' r='4'/%3E%3Cpath d='m9.9 9.9 3 3'/%3E%3C/svg%3E") no-repeat 6px 50%}
+.lib-pane>.side-head input[type=search]{flex:1;min-width:0;height:var(--h-hit);padding:0 8px 0 28px;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='%238da3ac' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='9' r='5.75'/%3E%3Cpath d='m13.25 13.25 3.75 3.75'/%3E%3C/svg%3E") no-repeat 6px 50%}
 .lib-pane>.side-head .lib-new{flex:none;padding:0 8px 0 6px;gap:4px;min-height:var(--h-hit)}
 .lib-pane>.side-head .side-x{display:none}
 #main.drawer-side .lib-pane>.side-head .side-x{display:inline-flex}
@@ -2255,8 +2255,8 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #params details.mod>summary{display:flex;align-items:center;gap:8px;min-height:36px;padding:0 4px 0 0;font-size:var(--fs2);font-weight:var(--fw2);color:var(--t1);list-style:none}
 #params details.mod>summary::before{display:none}
 #params details.mod>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:4px;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
-  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8.25 10 12.25l4-4'/%3E%3C/svg%3E") center/16px 16px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8.25 10 12.25l4-4'/%3E%3C/svg%3E") center/16px 16px no-repeat}
 #params details.mod[open]>summary::after{transform:none}
 #params details.mod>summary:hover::after{background:var(--t1)}
 #params details.mod>summary .msum{font-size:var(--fs1);font-weight:var(--fw1);color:var(--t3)}
@@ -2429,8 +2429,8 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #right details.sec:not(.mod)>summary::-webkit-details-marker{display:none}
 #right details.sec:not(.mod)>summary::before{display:none}
 #right details.sec:not(.mod)>summary::after{content:"";order:9;flex:none;width:16px;height:16px;margin-left:auto;background:var(--t3);transform:rotate(-90deg);transition:transform .12s;
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat;
-  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Cpath d='M3.1 5.55 8 10.45l4.9-4.9'/%3E%3C/svg%3E") center/16px 16px no-repeat}
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8.25 10 12.25l4-4'/%3E%3C/svg%3E") center/16px 16px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8.25 10 12.25l4-4'/%3E%3C/svg%3E") center/16px 16px no-repeat}
 #right details.sec:not(.mod)[open]>summary::after{transform:none}
 #right details.sec:not(.mod)>summary:hover::after{background:var(--t1)}
 #right details.sec details.sec>summary{font-weight:var(--fw1);color:var(--t2);min-height:var(--h-prm)}
@@ -2499,7 +2499,7 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 /* 层检查器：「效果」「输出」两块连着；颜色只在这里出现 */
 #pMaster #colorControls{display:none}
 #params.e51-layer #colorControls{display:block}
-#params section.egrp[data-g="输出"]>details.mod:not(.e51-out){display:none}
+#params section.egrp[data-g="输出"]>details.mod:not(.e51-out,.e52-data){display:none}
 #params .e51-out .e51-more>details.sec{display:block}
 #params .e51-out>summary .e51-n{margin-left:8px;height:20px;min-height:0;padding:0 6px;border:0;background:none;color:var(--t3);font-size:var(--fs1);font-weight:400;cursor:pointer}
 #params .e51-out>summary .e51-n:hover{color:var(--t1)}
@@ -2673,3 +2673,96 @@ header.top .upd{min-height:var(--h-hit);height:var(--h-hit)}
 #expMenu .e51-scope{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:center;padding:6px 12px 8px;border-top:1px solid var(--line);color:var(--t2);font-size:var(--fs2)}
 .e51-saved{color:var(--t3);font-size:var(--fs1);white-space:nowrap}
 .e51-saved.dirty{color:var(--t2)}
+
+/* ===== 5.0.01 预览 · 组件库 E 4.1（2026-11-06，用户 16:30 / 16:45 / 17:06）=====
+   A 能调的看得出（「淡」档）　B 只在悬停出现的改成常驻弱显　C 工作模式改页面标签、右栏工具行收组。图标在 body.html #iconDefs（tool/design-system/icons_v42.py） */
+/* A：数值框、下拉静止就有 1 px 线框 + 很浅的暗底；悬停线亮一级；编辑薄荷框 */
+#right .sl>.num:not(:disabled){border-color:var(--line);background:color-mix(in srgb, var(--g0) 45%, transparent)}
+#right .sl>.num:not(:disabled):hover{border-color:var(--g6)}
+#right .sl>.num:focus{border-color:var(--sel);background:var(--hov)}
+#right .sl.chg>.num{border-color:var(--line)}
+#right .sl.over>.num{border-color:var(--amber)}
+#right .field select:not(:disabled){border-color:var(--line);background-color:color-mix(in srgb, var(--g0) 45%, transparent)}
+#right .field select:not(:disabled):hover{border-color:var(--g6)}
+/* A：滑杆没填的部分 1 px → 2 px、亮一级 */
+input[type="range"]::-webkit-slider-runnable-track{background:linear-gradient(var(--sel),var(--sel)) no-repeat 0 50%/var(--v) 2px,linear-gradient(var(--g6),var(--g6)) no-repeat 0 50%/100% 2px}
+/* B：结构树层行的 显示 / 只看 常驻 35 %，悬停 / 当前行 100 % */
+.trow .ta{display:inline-flex;opacity:.35}
+.trow:hover .ta,.trow:focus-within .ta,.trow.cur .ta,.trow .ta.keep{opacity:1}
+/* B：改过的参数，行尾「恢复」常驻 45 % */
+#right .sl>.rrst:not([hidden]),#right .field>.rrst:not([hidden]){visibility:visible;opacity:.45}
+#right .sl:hover>.rrst,#right .field:hover>.rrst,#right .rrst:focus-visible{opacity:1}
+/* 输出栏「数据」：烘焙结果（原底部统计框）放回输出里 */
+#params details.e52-data>.e52-rows{display:flex;flex-direction:column;gap:6px;padding:4px 0 8px 12px;color:var(--t2);font-size:var(--fs1);line-height:1.5}
+#params details.e52-data .e52-r b{color:var(--t1);font-weight:400;font-variant-numeric:tabular-nums}
+#params details.e52-data .e52-r .ok{color:var(--t3)}
+#params details.e52-data .e52-r .warn{color:var(--w3)}
+#params details.e52-data .e52-none{color:var(--t3)}
+
+/* ===== 5.0.01 预览 · 工具条用「前一版」（2026-11-06 用户 17:44「用前一版」）：视图条两行、按钮有框、选中深绿底 + 主色描边、保存主色实底、播放键实底最大、入出点写字 ===== */
+
+/* ---------- 0. 公共：有框按钮（135 / 工作台那种） ---------- */
+:root{--p501-line:var(--g6);--p501-on-bg:var(--p2);--p501-on-ln:var(--p4);--p501-on-tx:var(--pInk);--p501-h:28px}
+
+/* ---------- 1. 视图条：两行（第一行看什么，第二行看多大） ---------- */
+#wsBaker{grid-template-rows:84px minmax(0,1fr) var(--h-status)}
+#viewbar{flex-wrap:wrap;align-content:center;row-gap:8px;padding-top:0;padding-bottom:0}
+#viewbar>.p501-br{flex-basis:100%;height:0;margin:0}
+#viewbar>.p501-k{color:var(--t3);font-size:var(--fs1);margin-left:2px;min-width:28px}
+#toolRow>#assetBar{align-items:flex-start;padding-top:5px}
+
+/* 分段：整组外框 + 每段竖线；选中 = 深绿底 + 主色描边 + 浅绿字（4.9.124 模式切换） */
+#viewbar .seg{display:inline-flex;gap:0;padding:0;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);overflow:hidden}
+#viewbar .seg button{height:var(--p501-h);min-height:0;padding:0 14px;border:0;border-right:1px solid var(--p501-line);border-radius:0;background:none;box-shadow:none;color:var(--t2);font-size:var(--fs2)}
+#viewbar .seg button:last-child{border-right:0}
+#viewbar .seg button:hover{color:var(--t1);background:var(--g3)}
+#viewbar .seg button[aria-pressed="true"]{background:var(--p501-on-bg);color:var(--p501-on-tx);box-shadow:inset 0 0 0 1px var(--p501-on-ln);font-weight:600}
+
+/* 视图条的开关按钮使用相同的选中样式 */
+#viewbar :is(.tgl,.btn-icon){height:var(--p501-h);min-width:var(--p501-h);border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t2)}
+#viewbar :is(.tgl,.btn-icon):hover{color:var(--t1);background:var(--g3)}
+#viewbar :is(.tgl,.btn-icon)[aria-pressed="true"]{background:var(--p501-on-bg);color:var(--p501-on-tx);border-color:var(--p501-on-ln)}
+
+/* 距离 / 曝光：从画面右下挪到「画面大小」旁边，做成有框的读数钮 */
+#viewbar #vfRead{position:static;display:inline-flex;gap:8px;margin:0 0 0 4px;padding:0;background:none;box-shadow:none;text-shadow:none}
+#viewbar #vfRead .vr{display:inline-flex;align-items:center;gap:8px;height:var(--p501-h);padding:0 10px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);cursor:ew-resize}
+#viewbar #vfRead .vr:hover{background:var(--g3)}
+#viewbar #vfRead .vr-k{color:var(--t3);font-size:var(--fs1)}
+#viewbar #vfRead .vr-v{color:var(--t1);font-size:var(--fs2);font-variant-numeric:tabular-nums}
+#viewbar #vfRead .vr::after{content:"↔";color:var(--t3);font-size:11px}
+
+/* ---------- 2. 右上：保存是唯一的主按钮，其余有框写字 ---------- */
+#assetBar .tgrp.bx{border:0;background:none;gap:6px}
+#assetBar .tgrp.bx>.bx-sep{display:none}
+#assetBar :is(.btn,summary.btn){height:var(--p501-h);min-height:0;padding:0 12px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t1);font-size:var(--fs2)}
+#assetBar :is(.ab-ur,summary.btn-icon){width:var(--p501-h);padding:0;color:var(--t2)}
+#assetBar .btn:hover:not([disabled]){background:var(--g3)}
+#assetBar #abSave{background:var(--p4);border-color:var(--p4);color:var(--p1);font-weight:600}
+#assetBar #abSave:hover{background:var(--p5)}
+#assetBar #expBtn{gap:0}
+#assetBar #expBtn>.btn{border-color:var(--p501-on-ln);background:var(--p501-on-bg);color:var(--p501-on-tx)}
+#assetBar #expBtn>.exp-dd{border-left:0;width:24px;padding:0}
+#assetBar .btn[disabled]{opacity:.55}
+
+/* ---------- 3. 播放区：按钮有框、播放最大、倍速看得出能下拉 ---------- */
+#main>.stage>.timeline{gap:6px;min-height:44px}
+#main>.stage>.timeline :is(.btn,summary.btn,.tlloop){height:var(--p501-h);min-height:0;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t1)}
+#main>.stage>.timeline #play{width:52px!important;height:32px;background:var(--p4);border-color:var(--p4);color:var(--p1)}
+#main>.stage>.timeline #play:hover{background:var(--p5)}
+#main>.stage>.timeline #replay{width:var(--p501-h)}
+#main>.stage>.timeline #speed{width:64px;padding:0 22px 0 10px;appearance:none;-webkit-appearance:none;
+  background:var(--g2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23b4c5cb' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 8px center}
+#main>.stage>.timeline .tlloop{display:inline-flex;align-items:center;gap:6px;width:auto!important;padding:0 10px}
+#main>.stage>.timeline .tlloop .tku{display:inline!important;font-size:var(--fs2)}
+#main>.stage>.timeline .tlloop:has(input:checked){background:var(--p501-on-bg);border-color:var(--p501-on-ln);color:var(--p501-on-tx)}
+#main>.stage>.timeline #tlabel{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--t1);margin:0 6px}
+
+/* 导出范围那行：入出点写成字，和「一并移动」同一套有框按钮 */
+.tlbars>.tlx{min-height:36px;border-bottom:1px solid var(--line)}
+.tlx .tlx-k{color:var(--t2)}
+.tlx .tlx-b{gap:6px}
+.tlx .tlx-b .btn-icon{width:auto;height:var(--p501-h);padding:0 10px;gap:6px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2);color:var(--t1);font-size:var(--fs2);display:inline-flex;align-items:center}
+.tlx .tlx-b .btn-icon::after{content:attr(aria-label)}
+.tlx .tlx-b .btn-icon[data-cut="clear"]::after{content:"清除"}
+.tlx .tlx-b .btn-icon[disabled]{opacity:.5}
+.tlx .tlopt{height:var(--p501-h);padding:0 10px;border:1px solid var(--p501-line);border-radius:var(--r2);background:var(--g2)}

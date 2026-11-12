@@ -111,7 +111,7 @@
       w.querySelector(':scope > summary').addEventListener('click', e => { if (e.target.closest('.e51-n')) return; outOpen = !w.open; store.set('e51OutOpen', outOpen); });     // 只记人点的（参数栏重建时 p43DefaultOpen 会把模块都收起）
       w.querySelector('.e51-n').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); const m = w.querySelector('.e51-more'); m.hidden = !m.hidden; store.set('e51OutMore', !m.hidden); if (!w.open) w.open = true; nSync(w); });
       const first = out.querySelector(':scope > details.mod, :scope > details.sec'); if (first) first.before(w); else out.appendChild(w);
-      w.querySelector('.e51-more').hidden = !store.get('e51OutMore', false);
+      w.querySelector('.e51-more').hidden = !(store.get('e51OutMore', null) ?? true);
     }
     const more = w.querySelector(':scope > .e51-more'), inW = n => n.parentElement === w;
     { const want = pview.q || pview.changed ? true : outOpen; if (w.open !== want) w.open = want; }
@@ -129,8 +129,8 @@
     const now = [...w.children].filter(c => want.includes(c));
     if (now.length !== want.length || now.some((c, i) => c !== want[i])) for (const n of want) more.before(n);
     const fs = $q('#x-form'); if (fs) segSel(fs, { master: '大面片', segments: '分段', trail: '尾缀序列', emitset: '循环 + 粒子', phys: '物理', unit: '星头循环', loop: '地面循环' });     // 产物：分段控件（值不变）
-    // 剩下的旧模块整块收进「+N」
-    for (const d of [...out.querySelectorAll(':scope > details.mod, :scope > details.sec')]) if (d !== w && !more.contains(d)) { more.appendChild(d); d.open = false; }     // 收进「+N」的默认收起
+    // 少改的参数收进「+N」分组，独立的「数据」模块留在输出下面。
+    for (const d of out.querySelectorAll(':scope > details.mod, :scope > details.sec')) if (d !== w && !d.classList.contains('e52-data')) more.appendChild(d);
     for (const d of more.querySelectorAll(':scope > details')) { const s = d.querySelector(':scope > summary'); if (s && s.firstChild && s.firstChild.nodeType === 3 && /^(直接调|算出来的)$/.test(s.firstChild.textContent.trim())) s.firstChild.textContent = s.firstChild.textContent.trim() === '直接调' ? '范围与缩放' : '结果'; }     // 审阅 R12：这两个名字不要了
     if (pview.q || pview.changed) more.hidden = false;
     nSync(w);
@@ -514,8 +514,8 @@
     const cc = $q('#colorControls'); if (cc && state.M && Array.isArray(state.M.stages)) set(cc, `${state.M.stages.length} 段`);
     const ev = $q('#eventInstancePanel'); if (ev) { const cb = ev.querySelector('[data-event-enable]'), mir = [...ev.querySelectorAll('label.check')].find(l => /水平镜像/.test(l.textContent)); set(ev, (cb && cb.checked ? '飞行后' : '单次') + (mir && mir.querySelector('input').checked ? '　水平镜像' : '')); }
   }
-  // 参数栏重建时 p43DefaultOpen 按模块默认展开；收进「+N」的那几个照旧收起、「输出」按人点的
-  if (typeof p43DefaultOpen === 'function') { const f = p43DefaultOpen; p43DefaultOpen = function () { const r = f.apply(this, arguments); for (const d of $a('#params .e51-out > .e51-more > details')) d.open = false; const w = $q('#params .e51-out'); if (w) w.open = outOpen; return r; }; }
+  // 参数栏重建时，保留「输出」外层的开合选择。
+  if (typeof p43DefaultOpen === 'function') { const f = p43DefaultOpen; p43DefaultOpen = function () { const r = f.apply(this, arguments); const w = $q('#params .e51-out'); if (w) w.open = outOpen; return r; }; }
   // ---- 合在一起：参数栏刷新后、和每 0.4 s 跟一次 ----
   let busy = false;
   function post() {

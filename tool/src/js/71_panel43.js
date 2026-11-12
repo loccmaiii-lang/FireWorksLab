@@ -203,13 +203,9 @@ function inertWhy(key, P) {
 }
 function p43Label(nm, fallback) { if (!nm) return fallback; const x = nm.id && typeof PEMIT !== 'undefined' ? PEMIT.P[nm.id] : null; return pview.en ? nm.en || nm.cn : (x && x[2]) || nm.cn || nm.en; }
 const PMODULE = (() => { const m = {}; for (const x of (typeof PMODULES !== 'undefined' ? PMODULES : [])) m[x.cn] = x; return m; })();
-// 4.9.5（宪章遗漏 1，输出栏收口）：大面片 / 分段 / 地面循环的「输出」只展开「直接调」「算出来的」，别的模块默认收起（点开会记住）
-const OUT_FIRST = ['直接调', '算出来的'];
-// 4.9.14：模块默认收起（标题右边写摘要，一眼看完一个发射器有哪些模块、各是多少）；每个发射器第一个有参数的模块默认展开，示范怎么调；
-// 序列效果的「输出」照旧先展开「直接调」「算出来的」（交互宪章第 2 节输出栏收口）。你开合过的按你的（pModOpen）
+// 每个发射器第一个有参数的模块默认展开。E 样板 4.1 的「输出」默认展开所有模块，开合仍按 pModOpen 里的选择。
 function modDefaultOpen(key) {
-  const [e, m] = String(key).split('›');
-  if (e === '输出' && typeof isSeq === 'function' && isSeq(state.P)) return OUT_FIRST.includes(m);
+  if (String(key).startsWith('输出›')) return true;
   return !!(pview.defOpen && pview.defOpen[key]);
 }
 // 程序开 / 关模块（默认、搜索时自动展开）不算你开合过：记下要的样子，toggle 事件来了对得上就不存。
