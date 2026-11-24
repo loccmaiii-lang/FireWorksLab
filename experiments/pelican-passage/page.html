@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf8f1">
+  <link rel="icon" href="data:,">
+  <meta name="description" content="一只鹈鹕、一辆旅行车，以及一段可交互的蔚蓝海岸骑行。">
+  <title>Pelican Passage · Fieldtrip</title>
+  <style>/* FONT_AND_CSS */</style>
+</head>
+<body>
+  <header class="mast">
+    <div class="brand" aria-label="Fieldtrip">
+      <span class="brandmark" aria-hidden="true"><i></i><b></b></span>
+      <span>Fieldtrip<span class="brand-dot">.</span></span>
+    </div>
+    <nav aria-label="场景导航">
+      <button id="ride-tab" class="nav-link selected" aria-current="page">骑行现场</button>
+      <button id="notes-open" class="nav-link" aria-haspopup="dialog">场景手记</button>
+    </nav>
+    <div class="mast-actions">
+      <button id="sound" class="sound" aria-label="环境音" aria-pressed="false"><span class="soundbars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>环境音</span><strong id="sound-value">关</strong></button>
+      <button id="help-open" class="help" aria-label="操作指南" aria-haspopup="dialog" title="操作指南">?</button>
+    </div>
+  </header>
+  <main>
+    <section class="viewport" id="viewport" aria-label="实时三维骑行场景">
+      <canvas id="scene" tabindex="0" aria-label="鹈鹕骑自行车的三维场景。方向键环视，加减键缩放，空格暂停。"></canvas>
+      <div class="headline">
+        <div class="place"><span class="route-line"></span>CÔTE D’AZUR, FRANCE</div>
+        <h1 lang="en">Pelican<br><em>Passage<span>.</span></em></h1>
+        <p>鹈鹕的海岸骑行</p>
+      </div>
+      <div class="live" id="live"><i></i><span>LIVE VIEW</span></div>
+      <div class="gesture"><i class="drag-icon" aria-hidden="true">✥</i><span id="gesture-text">拖动环视</span></div>
+      <div class="tools" aria-label="画面控制">
+        <button id="zoom-out" aria-label="缩小" title="缩小（−）"><i class="minus"></i></button>
+        <button id="zoom-in" aria-label="放大" title="放大（+）"><i class="plus"></i></button>
+        <span></span>
+        <button id="fullscreen" aria-label="进入全屏" title="全屏"><i class="expand"></i></button>
+      </div>
+      <p id="error" role="alert" hidden></p>
+    </section>
+    <section class="controls" aria-label="骑行控制">
+      <div class="transport">
+        <button id="play" class="play" aria-label="暂停骑行" title="暂停或继续（空格）"><i></i></button>
+        <div><span class="eyebrow">PLAYBACK</span><strong id="state-label">骑行中</strong></div>
+      </div>
+      <div class="control-block cadence">
+        <div class="control-label"><i class="speed-icon" aria-hidden="true"></i><span>骑行速度</span></div>
+        <div class="switch" id="rates" aria-label="骑行速度" role="group">
+          <button data-rate="0.5" aria-pressed="false">0.5×</button><button data-rate="1" aria-pressed="true">1×</button><button data-rate="1.5" aria-pressed="false">1.5×</button>
+        </div>
+      </div>
+      <div class="control-block cameras">
+        <div class="control-label"><i class="camera-icon" aria-hidden="true"></i><span>镜头</span></div>
+        <div class="switch" id="cameras" role="group" aria-label="镜头">
+          <button data-cam="coast" aria-pressed="true">海岸</button><button data-cam="follow" aria-pressed="false">跟骑</button><button data-cam="drive" aria-pressed="false">传动</button>
+        </div>
+      </div>
+      <div class="meter"><span class="eyebrow">DISTANCE</span><div><output id="distance">0.00</output><small>km</small></div></div>
+    </section>
+    <footer><span class="edition"><i></i> FIELDTRIP <b>/</b> MOTION STUDIES</span><span class="technology">Three.js <b>·</b> 实时程序化场景</span></footer>
+  </main>
+  <dialog id="info">
+    <div class="dialog-head"><span id="dialog-kicker"></span><button id="dialog-close" aria-label="关闭" autofocus>×</button></div>
+    <h2 id="dialog-title"></h2><div id="dialog-body"></div>
+  </dialog>
+  <noscript>请启用 JavaScript 来观看三维场景。</noscript>
+  <!-- LICENSES -->
+  <script>/* APP */</script>
+</body>
+</html>

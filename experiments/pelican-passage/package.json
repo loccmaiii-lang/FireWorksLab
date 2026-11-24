@@ -1,0 +1,16 @@
+{
+  "name": "pelican-passage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@fontsource/dm-serif-text": "5.2.7",
+    "esbuild": "0.25.12"
+  }
+}
