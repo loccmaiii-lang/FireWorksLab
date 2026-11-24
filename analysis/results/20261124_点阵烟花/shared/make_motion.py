@@ -210,7 +210,7 @@ def main():
                   "initial_intensity": native["flash"]["I"], "peak_multiplier": 1.5,
                   "decay_seconds": native["flash"]["dec"], "cut_seconds": native["flash"]["cut"],
                   "kernel": "1.5 * intensity * 2^(-d²/radius²)"},
-        "opening_reference": "从零时刻起直接采样烘焙器型物心形的原生模拟。点火前一次性校准兔形发射点表，使第 48 帧落在附件的 476 个点心。每个物理步都由原版 Sim.step 计算。灯芯、分色、停形和余火使用点阵样例的美术。",
+        "opening_reference": "476 个点从爆心同时飞出，展开时共用完整的飞行时间。点火前校准发射点表，第 48 帧落在附件点心。运动由烘焙器型物的 Sim.step 算出。点阵的分色、停形和逐点散灭另按本样例的时间线控制。",
         "native_simulation": native,
         "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
         "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",

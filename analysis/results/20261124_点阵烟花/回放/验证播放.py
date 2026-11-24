@@ -67,18 +67,19 @@ def native_reference(browser, metadata):
     try:
         page.goto(url, wait_until='domcontentloaded')
         page.wait_for_function("typeof Sim === 'function' && typeof defaultsFor === 'function'")
-        trace = page.evaluate('''([points, fps, end]) => {
+        trace = page.evaluate('''([points, fps, end, lifetime]) => {
             const p = derive({...defaultsFor('kata').P}), key = '点阵回放验算';
             if (p.pattern !== 'heart') throw Error('型物默认模板已变化');
             shapeCache.set(key + '|' + points.length, points);
-            const sim = new Sim({...p, pattern:'text', text:key, stars:points.length});
+            const sim = new Sim({...p, ...lifetime, pattern:'text', text:key, stars:points.length});
             const frames = [];
             for (let i=0; i<=end; i++) {
                 while (sim.t < i/fps-1e-9) sim.step(H_STEP);
                 frames.push(sim.all.map(star => [star.x, star.y]));
             }
+            if (sim.all.some(star => !star.alive)) throw Error('定形前有星点提前停飞');
             return frames;
-        }''', [launch, metadata['fps'], last])
+        }''', [launch, metadata['fps'], last, metadata['native_simulation']['dotLifetime']])
     finally:
         page.close()
     xy = (np.array(trace) * [1,-1] * metadata['native_simulation']['uvPerMetre']
@@ -88,17 +89,48 @@ def native_reference(browser, metadata):
     return xy, groups, float(max_error)
 
 
-def check_pixels(image, uv, half_radius_uv):
+def check_pixels(image, uv, half_radius_uv, flash_over):
     # 起爆时相邻灯芯连成亮线，局部极大值无法代表线上全部星点。直接验亮核像素的覆盖。
     light = np.asarray(image).max(axis=2)
     cores = np.argwhere(light > 180)[:, ::-1] + 0.5
     assert len(cores) > 0
     expected = np.asarray(uv) * image.size
-    off_path = float(np.percentile(cKDTree(expected).query(cores)[0], 95))
-    missing = float(np.percentile(cKDTree(cores).query(expected)[0], 95))
+    core_distance = cKDTree(expected).query(cores)[0]
+    dot_distance = cKDTree(cores).query(expected)[0]
+    off_path = float(np.percentile(core_distance, 95))
+    missing = float(np.percentile(dot_distance, 95))
     # 重叠亮核加色后可超过单星半高半径。给两倍实测半径，点心到亮像素限一格对角线。
     assert off_path < 2 * half_radius_uv * image.width and missing < np.sqrt(2), (off_path, missing)
-    return dict(core_pixels=len(cores), core_to_sim_px95=round(off_path, 3), sim_to_core_px95=round(missing, 3))
+    if flash_over:
+        # 爆心闪光熄灭后，每一个亮像素都应能找到所属的星，每一颗星都应有亮核。
+        assert core_distance.max() < 2 * half_radius_uv * image.width + np.sqrt(.5), core_distance.max()
+        assert dot_distance.max() < half_radius_uv * image.width + np.sqrt(.5), dot_distance.max()
+    return dict(core_pixels=len(cores), max_core_to_dot_px=round(float(core_distance.max()), 3),
+                max_dot_to_core_px=round(float(dot_distance.max()), 3))
+
+
+def check_contour(xy, target, radius_uv):
+    """逐点检查它是否跟随附近笔画，允许整幅图案同时放大和弯曲。"""
+    centered = target - target.mean(axis=0)
+    scale = np.einsum('tij,ij->t', xy - xy.mean(axis=1, keepdims=True), centered) / np.sum(centered**2)
+    offsets = xy - scale[:, None, None] * target
+    distances, indices = cKDTree(target).query(target, k=5)
+    neighbors = indices[:, 1:]
+    weights = 1 / distances[:, 1:]**2
+    weights /= weights.sum(axis=1, keepdims=True)
+    # 从附件点表选四个固定邻点，比较它与邻域的额外位移。取最差的点，单颗离群也要报出。
+    local = np.einsum('tnkd,nk->tnd', offsets[:, neighbors], weights)
+    errors = np.linalg.norm(offsets - local, axis=2)
+    tick, point = np.unravel_index(np.argmax(errors), errors.shape)
+    assert errors[tick, point] < radius_uv, (
+        f'开花第 {tick} 帧第 {point} 点偏离相邻笔画 {errors[tick,point]*352:.2f} 像素，'
+        f'超过灯芯半高半径 {radius_uv*352:.2f} 像素')
+    reference_edges = target[neighbors] - target[:, None, :]
+    edges = xy[1:, neighbors, :] - xy[1:, :, None, :]
+    # 同点发射后的每一帧，原来相邻的点须保持与附件一致的相对次序。
+    assert np.all(np.sum(edges * reference_edges, axis=-1) > 0), '开花途中相邻灯点交换了位置'
+    return dict(frames=len(xy), points=len(target), neighbors_per_point=neighbors.shape[1],
+                max_local_offset_px352=round(float(errors.max()*352), 3), reversed_edges=0)
 
 
 def main():
@@ -132,16 +164,9 @@ def main():
             results['实际烘焙器逐星对照'] = dict(frames=len(xy), points=len(groups), max_error_512px=err)
             layers = page.evaluate('window.rabbitBakerData.pc.map(l => [l.frames,l.gain])')
             radius_uv = metadata['extraction']['measured_half_height_radius_median_px'] / metadata['source_pixels_per_uv_unit']
-            results['实际开花亮核'] = {}
-            for tick in (3, 6, 18, 30, metadata['formation_frame']):
-                baker, vat = capture(page, tick)
-                # 图集在两次取样间沿用上一格，取每个实际素材格首次显示的 tick。
-                per_color = []
-                for group, (tiles, gain) in enumerate(layers):
-                    start = next(i for i in range(tick+1) if tiles[i] == tiles[tick] and gain[i] > 0)
-                    per_color.extend(xy[start, groups == group])
-                results['实际开花亮核'][tick] = dict(baker=check_pixels(baker, per_color, radius_uv),
-                                                   vat=check_pixels(vat, xy[tick], radius_uv))
+            points = np.loadtxt(RESULT/'shared/points.csv', delimiter=',', skiprows=1)[:, 1:3]
+            target = (points - metadata['reference_center_px']) / metadata['source_pixels_per_uv_unit'] + 0.5
+            results['放大逐帧轮廓'] = check_contour(xy, target, radius_uv)
             for distance in [800,1000,1200]:
                 page.select_option('#scale', str(distance))
                 frames = capture(page,hold,'game')
@@ -184,8 +209,19 @@ def main():
             assert [count-1,0] in [replayed[i:i+2] for i in range(len(replayed)-1)]
             page.click('#play')
             sequence, peaks, energy = [], [], []
+            results['实际开花亮核'] = {}
             for i in range(count):
                 pair = capture(page,i)
+                after_flash = i / fps > metadata['flash']['cut_seconds']
+                if i in (3, 6) or (after_flash and i <= metadata['formation_frame']):
+                    # 图集在两次取样间沿用上一格，取每个素材格首次显示的 tick。
+                    per_color = []
+                    for group, (tiles, gain) in enumerate(layers):
+                        start = next(t for t in range(i+1) if tiles[t] == tiles[i] and gain[t] > 0)
+                        per_color.extend(xy[start, groups == group])
+                    results['实际开花亮核'][i] = dict(
+                        baker=check_pixels(pair[0], per_color, radius_uv, after_flash),
+                        vat=check_pixels(pair[1], xy[i], radius_uv, after_flash))
                 peaks.append([int(np.asarray(im).max()) for im in pair])
                 energy.append([int(np.asarray(im,dtype=np.int64).sum()) for im in pair])
                 sequence.append(label_frame(pair,i,fps))
@@ -195,7 +231,7 @@ def main():
                 assert energy[-12][channel] > energy[-5][channel] >= energy[-1][channel]
             results['播放'] = dict(frames=count,fps=fps,presented=len(set(presented)),
                                   last_eight_peaks=peaks[-8:],last_eight_energy=energy[-8:])
-            checkpoints = [round(.2*fps), round(.5*fps), round(.7*fps), round(.9*fps), hold, round(2.8*fps)]
+            checkpoints = [round(.2*fps), round(.5*fps), round(.63*fps), round(.9*fps), hold, round(2.8*fps)]
             contact = Image.new('RGB',(2*500,3*278),(16,17,18))
             for j,key in enumerate(checkpoints):
                 contact.paste(sequence[key].resize((500,277),Image.Resampling.LANCZOS),

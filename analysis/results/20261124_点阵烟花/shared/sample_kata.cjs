@@ -12,17 +12,22 @@ for (const name of ['00_util', '10_types', '19_spark_late', '20_sim']) {
 const { defaultsFor, shapePoints, shapeCache, Sim, H_STEP } =
   vm.runInContext('({ defaultsFor, shapePoints, shapeCache, Sim, H_STEP })', context);
 const recipe = defaultsFor('kata').P;
+const { targetUV, origin, fps, lastFrame } = JSON.parse(fs.readFileSync(0, 'utf8'));
+const seconds = lastFrame / fps;
+// 兔形的可见寿命由后半段控制。所有点需要飞完整个开花段，包括用来校准初速的试射。
+const dotLifetime = { burn: Math.max(recipe.burn, seconds + H_STEP), burnJit: 0 };
+const dots = { ...recipe, ...dotLifetime };
 
-function fromPoints(points) {
+function fromPoints(points, params = dots) {
   // 心形和文字共用 dirsFor 的同一条 planar 分支。只在本进程给形状入口提供点表。
   const key = '离线点表';
   shapeCache.set(key + '|' + points.length, points);
-  return new Sim({ ...recipe, pattern: 'text', text: key, stars: points.length });
+  return new Sim({ ...params, pattern: 'text', text: key, stars: points.length });
 }
 
 function checkHeart(fps, lastFrame) {
   const original = new Sim(recipe);
-  const fromTable = fromPoints(shapePoints('heart', recipe.stars));
+  const fromTable = fromPoints(shapePoints('heart', recipe.stars), recipe);
   let maxError = 0;
   for (let frame = 0; frame <= lastFrame; frame++) {
     while (original.t < frame / fps - 1e-9) {
@@ -65,8 +70,6 @@ function fitLaunch(points, targets, seconds) {
   throw Error('兔形发射点表未达到定形精度');
 }
 
-const { targetUV, origin, fps, lastFrame } = JSON.parse(fs.readFileSync(0, 'utf8'));
-const seconds = lastFrame / fps;
 const offsets = targetUV.map(([u, v]) => [u - origin[0], origin[1] - v]);
 const extent = Math.max(...offsets.flat().map(Math.abs));
 const outline = offsets.map(([x, y]) => [x / extent, y / extent]);
@@ -84,9 +87,10 @@ for (let i = 0; i <= lastFrame; i++) {
   heartHeights.push(spanY(at(heart, i / fps)));
 }
 const settings = Object.fromEntries(['type', 'pattern', 'stars', 'v0', 'vt', 'grav', 'dirJit',
-  'speedJit', 'tilt', 'seed', 'burstR0', 'wind', 'burn', 'sparkRate'].map(key => [key, recipe[key]]));
+  'speedJit', 'tilt', 'seed', 'burstR0', 'wind', 'burn', 'burnJit', 'sparkRate'].map(key => [key, recipe[key]]));
+if (sim.all.some(s => !s.alive)) throw Error('有图案点在定形前终止了运动');
 process.stdout.write(JSON.stringify({
-  settings, step: H_STEP, heart_check: checkHeart(fps, Math.round(recipe.duration * fps)),
+  settings, dotLifetime, step: H_STEP, heart_check: checkHeart(fps, Math.round(recipe.duration * fps)),
   launch, uvPerMetre, frames, flash: sim.flashes[0],
   relative_height: [0, 0.1, 0.2, 0.6, 1, seconds].map(t => ({
     seconds: t, heart: heartHeights[Math.round(t * fps)] / heartHeights[lastFrame],

@@ -55,11 +55,11 @@
   "maxBrightnessError": 0.0002440810203552246,
   "maxPremultipliedLinearRGBError": 0.0002440810203552246,
   "estimatedTextureBytes": 839520,
-  "sourceMotionSHA256": "dd522a84ea7d04adcd70d2883e1b175cf0c1bc9d18438d2be61764f7d664dea0",
+  "sourceMotionSHA256": "f84091c0675ebf2c4ece892b05b72e51c62d331f3ce51bb7695ae5606181c212",
   "sha256": {
-    "DotRabbit_mesh.fbx": "e331e6df0a794548b4157875f2a2046bb1caa3b31aa312b59d24bdcc97b8599a",
-    "DotRabbit_pos.exr": "7138ae6160938ca8cc30c564b98b3e54932111f44fb93d9dc5850c450dbc82bd",
-    "DotRabbit_col.exr": "144e39c5267cf41e46702d150ee2d459c19f1cbcbb24537f72ad227498bf21bc",
+    "DotRabbit_mesh.fbx": "7236834155e9a5c792829987130ac42b2478c917ed73d5e095508fca4e41fa0f",
+    "DotRabbit_pos.exr": "30739354e06c9090e88b0418999f63f8c82a6e42b353a08d950623d4b3a937b7",
+    "DotRabbit_col.exr": "7d9ce0881f1be42b6ee9e24b9c02c18170949e357c883db5fe909a8372513688",
     "DotRabbit_data.json": "d829351eb685a53da635e0c48c12edd3e04582f663cf13873056fbb5401561e6"
   }
 }
