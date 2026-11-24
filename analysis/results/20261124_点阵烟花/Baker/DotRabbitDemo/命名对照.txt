@@ -1,0 +1,16 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_DotPC_White.png → T_EFX_FireWorks_DotRabbitDemo_White_4x4_01_HD.png
+T_DotPC_White_Cutout.png → T_EFX_FireWorks_DotRabbitDemo_White_4x4_01_C.png
+T_DotPC_White_Ramp.png → T_EFX_FireWorks_DotRabbitDemo_White_R.png
+T_DotPC_Gold.png → T_EFX_FireWorks_DotRabbitDemo_Gold_4x4_01_HD.png
+T_DotPC_Gold_Cutout.png → T_EFX_FireWorks_DotRabbitDemo_Gold_4x4_01_C.png
+T_DotPC_Gold_Ramp.png → T_EFX_FireWorks_DotRabbitDemo_Gold_R.png
+T_DotPC_Cyan.png → T_EFX_FireWorks_DotRabbitDemo_Cyan_4x4_01_HD.png
+T_DotPC_Cyan_Cutout.png → T_EFX_FireWorks_DotRabbitDemo_Cyan_4x4_01_C.png
+T_DotPC_Cyan_Ramp.png → T_EFX_FireWorks_DotRabbitDemo_Cyan_R.png
+T_DotMobile_Mono.png → T_EFX_FireWorks_DotRabbitDemo_Mono_4x4_01.png
+T_DotMobile_Mono_Cutout.png → T_EFX_FireWorks_DotRabbitDemo_Mono_4x4_01_C.png
+T_DotMobile_Mono_Ramp.png → T_EFX_FireWorks_DotRabbitDemo_Mono_R.png
+
+素材包整理（4.9.38）：
+T_EFX_FireWorks_DotRabbitDemo_Mono_R.png → 和 T_EFX_FireWorks_DotRabbitDemo_White_R.png 一模一样，不出（引用改指它）

@@ -1,0 +1,4 @@
+# 成品逐字节签名；在 Windows 检出时保留 ROP 产物各自的原始换行。
+DotRabbit_mesh.fbx -text
+DotRabbit_data.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+DotRabbit_*.exr binary

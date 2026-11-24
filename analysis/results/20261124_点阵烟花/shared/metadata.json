@@ -1,0 +1,97 @@
+{
+  "fps": 30,
+  "frame_count": 64,
+  "duration_seconds": 2.1333333333333333,
+  "canvas_metres": 236.14,
+  "demo_shape_height_metres": 200,
+  "size_basis": "沿用 2026-11-12 本机 ArkRabbit2 原型的 200m 图案高度。是本次比较用的尺度。",
+  "source_pixels_per_uv_unit": 650,
+  "reference_center_px": [
+    1285.4079,
+    347.8423
+  ],
+  "hold_frames_inclusive": [
+    22,
+    41
+  ],
+  "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
+  "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
+  "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",
+  "timing_assumption": "示范动作从中心散开，在第 22–41 帧保持参照图，再轻散下落、渐灭。最后一帧保留弱余光，播放寿命到时退出。",
+  "extraction": {
+    "source_sha256": "f5f888884340714363949f0f1af32d5c76c3bc67f1fc2ba274f575525392b80d",
+    "source_size_px": [
+      1637,
+      771
+    ],
+    "right_crop_starts_x_px": 818,
+    "visible_peaks": 476,
+    "independent_scale_peaks": 476,
+    "other_scale_largest_nearest_distance_px": 1.0,
+    "connected_components_min_rgb_over_200": 474,
+    "max_distance_from_bright_pixel_to_center_px": 2.83,
+    "group_counts": [
+      318,
+      125,
+      33
+    ],
+    "nearest_spacing_median_px": 10.6,
+    "measured_half_height_radius_median_px": 2.932,
+    "palette": [
+      {
+        "name": "白",
+        "core_srgb": [
+          255,
+          255,
+          255
+        ],
+        "halo_srgb": [
+          255,
+          255,
+          255
+        ],
+        "single_color_srgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "name": "金",
+        "core_srgb": [
+          255,
+          249,
+          227
+        ],
+        "halo_srgb": [
+          255,
+          242,
+          97
+        ],
+        "single_color_srgb": [
+          255,
+          246,
+          162
+        ]
+      },
+      {
+        "name": "青",
+        "core_srgb": [
+          227,
+          250,
+          255
+        ],
+        "halo_srgb": [
+          97,
+          216,
+          255
+        ],
+        "single_color_srgb": [
+          162,
+          233,
+          255
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "width": 476,
+  "height": 64,
+  "sideCm": 23614.0,
+  "radiusUV": 0.004510047429931415,
+  "controlPoints": 1910,
+  "triangles": 954,
+  "metadataTriangles": 2,
+  "maxCenterErrorIn512Px": 0.12136118859052658,
+  "maxRadiusErrorIn512Px": 0.0005862712860107422,
+  "maxBrightnessError": 0.0002440810203552246,
+  "maxRGB8Error": 0,
+  "estimatedTextureBytes": 487424,
+  "sha256": {
+    "DotRabbit_mesh.fbx": "8cd959e4d1340cc5fa9121405e3435f022dc65c3dee7d6415a96303375efa069",
+    "DotRabbit_pos.exr": "17d646e4c04f1ef9f9fb53286100f4340f85aee9206bbd5e97c33ab2607da184",
+    "DotRabbit_col.exr": "953230a1eaebe39b00cbe3e712896102616455ec0a8f0b164825f4c21503b4b7",
+    "DotRabbit_data.json": "cbc1055a369032600db48bfc3f3773cafa06a335ac7973b58cfbed00415b889c"
+  }
+}

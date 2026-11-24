@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>点阵烟花 · 双方案对照</title>
+<style>
+:root {color-scheme:dark; font-family:Inter,"Microsoft YaHei UI",sans-serif; background:#101216; color:#edf0f3; accent-color:#efbe6c}
+* {box-sizing:border-box}
+body {max-width:1300px; margin:auto; padding:clamp(15px,3.1vw,48px)}
+h1 {font-weight:650; letter-spacing:-.055em; font-size:clamp(26px,3vw,42px); margin:0 0 7px}
+p {font-size:14px; line-height:1.65; margin:0; color:#b9bec5}
+main {margin-top:23px}
+.pair {display:grid; grid-template-columns:1fr 1fr; gap:12px}
+figure {margin:0; border:1px solid #343841; background:#07080a; border-radius:10px; overflow:hidden}
+figcaption {display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding:12px 16px; background:#1a1c20; font-size:17px; font-weight:650}
+figcaption small {color:#b9bec5; font-size:12px; font-weight:400}
+.stage {aspect-ratio:1.16; background:black; display:grid; place-items:center; overflow:hidden}
+canvas {display:block; max-width:100%; max-height:100%}
+.controls {margin-top:14px; padding:17px 18px; border-radius:10px; border:1px solid #343841; background:#1a1c20}
+.row,.options {display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.options {margin-top:14px; border-top:1px solid #35383d; padding-top:13px; gap:12px 22px}
+button, select {font:inherit; border:1px solid #474c56; border-radius:5px; color:inherit; background:#24272e; padding:7px 10px; cursor:pointer}
+button:focus-visible, select:focus-visible, input:focus-visible {outline:2px solid #ffc972; outline-offset:3px}
+button:disabled {opacity:.55}
+#play {min-width:76px; color:#19130a; border-color:#efbe6c; background:#efbe6c; font-weight:650}
+#seek {flex:1; min-width:100px}
+label,output,.info {font-size:13px; color:#c4c9d1}
+output {font-variant-numeric:tabular-nums; min-width:130px}
+label select {margin-left:5px}
+.info {margin-top:12px; line-height:1.65}
+#error {color:#ffd38b}
+@media(max-width:620px){body{padding:12px}.pair{gap:5px}figcaption{font-size:14px;padding:8px}figcaption small{font-size:10px}.stage{aspect-ratio:1}.controls{padding:12px}.row{gap:7px}output{min-width:100px;font-size:11px}}
+</style>
+</head>
+<body>
+<header><h1>点阵烟花</h1><p>同一只兔子，同一组逐点轨迹。拖动时间轴，查看绽放、成形和余火。</p></header>
+<main>
+<div class="pair">
+ <figure><figcaption>序列贴图 <small id="seqLabel">PC · 三层</small></figcaption><div class="stage"><canvas id="baker" aria-label="序列贴图回放"></canvas></div></figure>
+ <figure><figcaption>顶点动画纹理 <small>VAT · 网格与双纹理</small></figcaption><div class="stage"><canvas id="vat" aria-label="VAT 网格回放"></canvas></div></figure>
+</div>
+<div class="controls">
+ <div class="row"><button id="play" disabled>播放</button><button id="restart" disabled>回到开头</button><input id="seek" type="range" min="0" max="63" step="1" value="30" aria-label="帧"><output id="time"></output></div>
+ <div class="options">
+  <label>序列版本 <select id="platform"><option value="pc">PC 三色</option><option value="mobile">手机单色</option></select></label>
+  <label>观察尺寸 <select id="scale"><option value="fit">放大看点隙</option><option value="800">800 米</option><option value="1000">1000 米</option><option value="1200">1200 米</option></select></label>
+  <span class="info" id="metrics"></span>
+ </div>
+</div>
+<p class="info">距离档按项目 1080p 相机标定。左侧解码序列和 Ramp，右侧通过 FBX 的查找 UV 读取 EXR。两栏采用校准过的光斑，Medic 实际遮罩、UE 压缩、手机 mip 和场景 Bloom 留到引擎内验收。手机选项只切换左侧素材。</p>
+<p role="status" id="error"></p>
+</main>
+<script src="回放/baker_data.js"></script><script src="回放/baker_player.js"></script>
+<script src="VAT/vat_data.js"></script><script src="VAT/vat_player.js"></script>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const [bakerCanvas, vatCanvas] = [$('baker'), $('vat')];
+  let drawBaker, drawVAT, playing = false, firstPlay = true, expired = false, start = 0, raf = 0;
+  let frame = Number($('seek').value);
+  function show() {
+    if (drawBaker) drawBaker(frame, $('platform').value);
+    if (drawVAT) drawVAT(frame);
+    $('seek').value = frame;
+    bakerCanvas.style.visibility = vatCanvas.style.visibility = expired ? 'hidden' : 'visible';
+    $('time').textContent = expired ? '2.13 秒 · 已熄灭' : (frame/30).toFixed(2) + ' 秒 · 帧 ' + frame + '/63';
+    $('seqLabel').textContent = $('platform').value === 'pc' ? 'PC · 三色 · 单格 512' : '手机 · 单色 · 单格 256';
+  }
+  function resize() {
+    const distance = Number($('scale').value);
+    const stage = bakerCanvas.parentElement;
+    const limit = Math.max(1, Math.min(stage.clientWidth, stage.clientHeight));
+    const screenSide = distance ? Math.round(window.rabbitCanvasMetres * 360/780 * 1000/distance) : limit;
+    const side = Math.min(limit, screenSide);
+    for (const c of [bakerCanvas,vatCanvas]) {
+      c.width = c.height = Math.max(1,side);
+      c.style.width = c.style.height = side + 'px';
+    }
+    $('metrics').textContent = distance ? '兔形高约 ' + Math.round(200 * 360/780 * 1000/distance) + ' px（1080p）' : '正面放大 · 兔形高 200 米';
+    show();
+  }
+  function stop() {
+    playing = false;
+    cancelAnimationFrame(raf);
+    $('play').textContent = '播放';
+  }
+  function tick(now) {
+    if (!playing) return;
+    const next = Math.floor((now - start) * 30 / 1000);
+    if (next >= 64) { frame = 63; expired = true; show(); stop(); return; }
+    if (next !== frame) { frame = next; show(); }
+    raf = requestAnimationFrame(tick);
+  }
+  $('play').onclick = () => {
+    if (playing) { stop(); return; }
+    if (firstPlay || frame >= 63) frame = 0;
+    firstPlay = false; expired = false; playing = true; start = performance.now() - frame/30*1000;
+    $('play').textContent = '暂停'; show(); raf = requestAnimationFrame(tick);
+  };
+  $('seek').oninput = () => { stop(); firstPlay = false; expired = false; frame = Number($('seek').value); show(); };
+  $('restart').onclick = () => { stop(); firstPlay = false; expired = false; frame = 0; show(); };
+  $('platform').onchange = show; $('scale').onchange = resize;
+  try {
+    [drawBaker, drawVAT] = await Promise.all([createRabbitBaker(bakerCanvas), createRabbitVAT(vatCanvas)]);
+    resize(); new ResizeObserver(resize).observe(bakerCanvas.parentElement);
+    $('play').disabled = $('restart').disabled = false;
+  } catch (err) {
+    $('error').textContent = '回放加载失败。请用支持 WebGL 2 的 Edge 或 Chrome 打开，保留同目录的“回放”和“VAT”文件夹。' + err.message;
+  }
+})();
+</script>
+</body>
+</html>
