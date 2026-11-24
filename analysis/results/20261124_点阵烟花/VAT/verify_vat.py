@@ -144,11 +144,12 @@ def main():
                   lastNonzeroPeak=float(brightness[lit[-1]].max()), flashLitFrames=flash.tolist(),
                   clockKeysRelativeAgeToSeconds=keys, verifiedSampledFrames=h,
                   recommendedSymmetricBoundsCm=int(np.ceil(np.linalg.norm(extent, axis=2).max() * 1.1 / 100) * 100))
-    payload = dict(meta, mesh=pack(vertices, "<f4"), position=pack(pos, "<f2"), color=pack(color, "<f2"))
+    source_hash = hashlib.sha256((HERE.parent / "shared" / "motion.npz").read_bytes()).hexdigest()
+    payload = dict(meta, sourceMotionSHA256=source_hash, mesh=pack(vertices, "<f4"),
+                   position=pack(pos, "<f2"), color=pack(color, "<f2"))
     (HERE / "vat_data.js").write_text("window.rabbitVATAssets=" + json.dumps(payload, separators=(",", ":")) + ";\n", encoding="utf8")
     hashes = {name: hashlib.sha256((HERE / name).read_bytes()).hexdigest() for name in
               ["DotRabbit_mesh.fbx", "DotRabbit_pos.exr", "DotRabbit_col.exr", "DotRabbit_data.json"]}
-    source_hash = hashlib.sha256((HERE.parent / "shared" / "motion.npz").read_bytes()).hexdigest()
     report = dict(meta, timing=timing, **errors, estimatedTextureBytes=pos.shape[0] * pos.shape[1] * 8 * 2,
                   sourceMotionSHA256=source_hash, sha256=hashes)
     print(json.dumps(report, indent=2))

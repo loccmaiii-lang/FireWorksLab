@@ -49,13 +49,16 @@ def sample_ticks(data, meta, capacity=64):
     last_lit = meta['last_lit_source_frame']
     candidates = [0] + [i for i in range(1, last_lit+1) if cost[i] > cost[i-1]]
     tail = meta['added_tail_start_frame']
-    protected = {0, meta['hold_frames_inclusive'][0], last_lit,
+    formation = meta['hold_frames_inclusive'][0]
+    opening_gap = max(1, meta['fps'] // 10)
+    # 第一个 tick 后引子的亮度已下降，不能借用首帧代替。开花按项目下限每秒至少取 10 格。
+    protected = {0, 1, formation, last_lit,
                  *range(meta['decay_start_frame'], tail), *range(tail-1, last_lit, 4)}
     while len(candidates) > capacity:
         # 删一个样本时，左侧画面多停多久、累计多错过多少运动。
         choices = [(max(cost[b]-cost[a], .02)*(c-b), k)
                    for k, (a,b,c) in enumerate(zip(candidates, candidates[1:], candidates[2:]), 1)
-                   if b not in protected]
+                   if b not in protected and (b >= formation or c-a <= opening_gap)]
         if not choices:
             raise ValueError('单页容量不足以保留指定的阶段')
         candidates.pop(min(choices)[1])

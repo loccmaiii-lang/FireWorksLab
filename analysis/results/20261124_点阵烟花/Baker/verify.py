@@ -28,7 +28,8 @@ def inspect(platform, directory, motion, groups, meta):
     layers = [replay.Pack(str(directory), i) for i in range(len(spec['emitters']))]
     fps = meta['fps']
     hold_tick = sum(meta['hold_frames_inclusive'])//2
-    times = [0, .2, hold_tick/fps, meta['decay_start_frame']/fps, (meta['zero_frame']-1)/fps]
+    # 四个起势时刻覆盖下缘鼓起、脸身撑开、回弹与耳尖伸长，按实际包取格。
+    times = [0, .3, .6, .9, 1.2, hold_tick/fps, meta['decay_start_frame']/fps, (meta['zero_frame']-1)/fps]
     report = replay.check(layers, str(QA / (platform + '.png')), times_s=times)
     if not report['pass']:
         raise ValueError(report['layers'])
@@ -37,6 +38,10 @@ def inspect(platform, directory, motion, groups, meta):
         start_tick = round(layer.delay*fps)
         frames = [layer.frame_at((t/fps-layer.delay)/layer.life) for t in range(start_tick, meta['frame_count'])]
         assert sorted(set(frames)) == list(range(layer.frames)) and frames == sorted(frames)
+        opening = frames[:meta['formation_frame']-start_tick+1]
+        switch_ticks = np.r_[0, np.flatnonzero(np.diff(opening)) + 1, len(opening)]
+        max_gap = int(np.max(np.diff(switch_ticks)))
+        assert max_gap <= fps//10, (layer.e['name'], max_gap)
         end = (meta['zero_frame']/fps-layer.delay)/layer.life
         assert np.max(np.abs(layer.color(end))) < 1e-8
         tail, energy = [], []
@@ -62,6 +67,7 @@ def inspect(platform, directory, motion, groups, meta):
                        'unique_matched_peaks': len(np.unique(nearest)), 'visible_peaks': count,
                        'max_distance_to_peak_px': round(float(np.max(distance)), 2),
                        'tick_start_shown': len(set(frames)), 'replay_check_shown': report['layers'][i]['shown'],
+                       'max_opening_ticks_per_tile': max_gap,
                        'final_display_peak': tail[-6:],
                        'crop_hits': report['layers'][i]['edge_frames'],
                        'empty_middle': report['layers'][i]['empty_mid'], 'empty_tail': report['layers'][i]['empty_tail']})

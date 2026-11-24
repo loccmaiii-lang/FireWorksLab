@@ -1,5 +1,6 @@
 """将两个最终 Cascade 包转成离线浏览器可读取的数据，保留 RGBA 四个独立通道。"""
 import base64
+import hashlib
 import json
 import zlib
 from pathlib import Path
@@ -15,8 +16,7 @@ def encode(raw):
     return base64.b64encode(zlib.compress(raw, 9)).decode("ascii")
 
 
-def read_package(filename, metadata):
-    config = json.loads((ASSETS / filename).read_text(encoding="utf8"))
+def read_package(filename, config, metadata):
     layers = []
     for emitter in config["emitters"]:
         ids = config["materials"][emitter["material"]]["textures"]
@@ -51,11 +51,20 @@ def read_package(filename, metadata):
 
 
 if __name__ == "__main__":
-    metadata = json.loads((HERE.parent / "shared" / "metadata.json").read_text(encoding="utf8"))
-    data = {k: read_package(f, metadata) for k, f in (("pc", "cascade.json"), ("mobile", "cascade_mobile.json"))}
+    shared = HERE.parent / 'shared'
+    metadata = json.loads((shared / 'metadata.json').read_text(encoding='utf8'))
+    files = {'pc': 'cascade.json', 'mobile': 'cascade_mobile.json'}
+    configs = {k: json.loads((ASSETS / filename).read_text(encoding='utf8')) for k, filename in files.items()}
+    motion_hash = configs['pc']['source']['motion_sha256']
+    if motion_hash != configs['mobile']['source']['motion_sha256']:
+        raise ValueError('PC 与手游配置引用了不同的运动数据')
+    if motion_hash != hashlib.sha256((shared / 'motion.npz').read_bytes()).hexdigest():
+        raise ValueError('序列包与当前共享轨迹的 SHA256 不一致，请重新烘焙')
+    data = {k: read_package(filename, configs[k], metadata) for k, filename in files.items()}
     hold = metadata['hold_frames_inclusive']
     timeline = dict(frames=metadata['frame_count'], fps=metadata['fps'], holdFrame=sum(hold)//2,
-                    hold=hold, durationSeconds=metadata['duration_seconds'], terminalFrame=metadata['frame_count']-1)
+                    hold=hold, durationSeconds=metadata['duration_seconds'], terminalFrame=metadata['frame_count']-1,
+                    sourceMotionSHA256=motion_hash)
     side = metadata["canvas_metres"]
     (HERE / "baker_data.js").write_text(
         f"window.rabbitCanvasMetres={side};\nwindow.rabbitTimeline={json.dumps(timeline)};\nwindow.rabbitBakerData="

@@ -26,15 +26,16 @@
   "flash": {
     "center_uv": [
       0.5,
-      0.55
+      0.7734845876693726
     ],
-    "sigma_metres": 4.95,
+    "sigma_metres": 2.2,
+    "initial_intensity": 0.52,
     "peak_multiplier": 1.5,
     "decay_seconds": 0.035,
     "cut_seconds": 0.25,
     "kernel": "1.5 * intensity * 2^(-d²/radius²)"
   },
-  "opening_reference": "花型库 > 形状 > 型物（kata，heart）。同一爆心，星头在 0.05s 内点亮。按 110m/s 参考速度、18m/s 终端速度、9.81m/s² 重力、1/480s 步长求各点轨迹；统一空间缩放匹配兔形高度。最后 0.2s 平滑接入原停形。",
+  "opening_reference": "下方收拢的气囊先横向充宽，伸长率自下而上沿图形累积；脸颊先鼓圆，耳尖与棒端随后拉开，脸侧轻回弹。第 48 帧恢复参考点位。",
   "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
   "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
   "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",

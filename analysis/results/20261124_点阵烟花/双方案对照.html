@@ -7,16 +7,20 @@
 <style>
 :root {color-scheme:dark; font-family:Inter,"Microsoft YaHei UI",sans-serif; background:#101216; color:#edf0f3; accent-color:#efbe6c}
 * {box-sizing:border-box}
-body {max-width:1300px; margin:auto; padding:clamp(15px,3.1vw,48px)}
+body {max-width:1080px; margin:auto; padding:clamp(12px,2.2vw,30px)}
 h1 {font-weight:650; letter-spacing:-.055em; font-size:clamp(26px,3vw,42px); margin:0 0 7px}
 p {font-size:14px; line-height:1.65; margin:0; color:#b9bec5}
 main {margin-top:23px}
-.pair {display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.pair {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
 figure {margin:0; border:1px solid #343841; background:#07080a; border-radius:10px; overflow:hidden}
 figcaption {display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding:12px 16px; background:#1a1c20; font-size:17px; font-weight:650}
 figcaption small {color:#b9bec5; font-size:12px; font-weight:400}
-.stage {aspect-ratio:1.16; background:black; display:grid; place-items:center; overflow:hidden}
-canvas {display:block; max-width:100%; max-height:100%}
+.stage {background:black; display:grid; place-items:center}
+canvas {display:block}
+.stage canvas {width:352px; max-width:100%; height:auto; aspect-ratio:1}
+.game {position:relative; display:grid; place-items:center; height:144px; background:#000; border-top:1px solid #24272e}
+.game span {position:absolute; left:12px; bottom:9px; color:#aeb4bf; font-size:12px; line-height:1.5}
+.game canvas {max-width:100%; height:auto}
 .controls {margin-top:14px; padding:17px 18px; border-radius:10px; border:1px solid #343841; background:#1a1c20}
 .row,.options {display:flex; align-items:center; gap:12px; flex-wrap:wrap}
 .options {margin-top:14px; border-top:1px solid #35383d; padding-top:13px; gap:12px 22px}
@@ -30,25 +34,25 @@ output {font-variant-numeric:tabular-nums; min-width:130px}
 label select {margin-left:5px}
 .info {margin-top:12px; line-height:1.65}
 #error {color:#ffd38b}
-@media(max-width:620px){body{padding:12px}.pair{gap:5px}figcaption{font-size:14px;padding:8px}figcaption small{font-size:10px}.stage{aspect-ratio:1}.controls{padding:12px}.row{gap:7px}output{min-width:100px;font-size:11px}}
+@media(max-width:620px){body{padding:12px}.pair{gap:5px}figcaption{font-size:14px;padding:8px}figcaption small{font-size:10px}.game{height:162px;padding-bottom:16px}.game span{left:0;right:0;bottom:2px;text-align:center;font-size:10px}.controls{padding:12px}.row{gap:7px}output{min-width:100px;font-size:11px}}
 </style>
 </head>
 <body>
-<header><h1>点阵烟花</h1><p>从爆心短闪开始，看星点飞成兔形，再散落熄尽。两栏共用一条时间轴。</p></header>
+<header><h1>兔形点阵烟花</h1><p>固定正面 · 上排看动作，下排看游戏内大小。两栏以同一帧、同一速度循环播放。</p></header>
 <main>
 <div class="pair">
- <figure><figcaption>序列贴图 <small id="seqLabel">PC · 三层</small></figcaption><div class="stage"><canvas id="baker" aria-label="序列贴图回放"></canvas></div></figure>
- <figure><figcaption>顶点动画纹理 <small>VAT · 网格与双纹理</small></figcaption><div class="stage"><canvas id="vat" aria-label="VAT 网格回放"></canvas></div></figure>
+ <figure><figcaption>序列贴图 <small id="seqLabel">PC · 三色</small></figcaption><div class="stage"><canvas data-view="detail" id="baker" width="352" height="352" aria-label="序列贴图动作近看"></canvas></div><div class="game"><span class="distanceLabel">1000 米 · 1080p</span><canvas data-view="game" id="bakerGame" aria-label="序列贴图游戏尺寸"></canvas></div></figure>
+ <figure><figcaption>VAT <small>477 张点片</small></figcaption><div class="stage"><canvas data-view="detail" id="vat" width="352" height="352" aria-label="VAT 动作近看"></canvas></div><div class="game"><span class="distanceLabel">1000 米 · 1080p</span><canvas data-view="game" id="vatGame" aria-label="VAT 游戏尺寸"></canvas></div></figure>
 </div>
 <div class="controls">
- <div class="row"><button id="play" disabled>播放</button><button id="restart" disabled>回到开头</button><input id="seek" type="range" min="0" step="1" value="0" disabled aria-label="帧"><output id="time"></output></div>
+ <div class="row"><button id="play" disabled>播放</button><button id="restart" disabled>从头重播</button><input id="seek" type="range" min="0" step="1" value="0" disabled aria-label="帧"><output id="time"></output></div>
  <div class="options">
-  <label>序列版本 <select id="platform"><option value="pc">PC 三色</option><option value="mobile">手机单色</option></select></label>
-  <label>观察尺寸 <select id="scale"><option value="fit">放大看点隙</option><option value="800">800 米</option><option value="1000">1000 米</option><option value="1200">1200 米</option></select></label>
+  <label>序列版本 <select id="platform" disabled><option value="pc">PC 三色</option><option value="mobile">手机单色</option></select></label>
+  <label>下排距离 <select id="scale" disabled><option value="800">800 米</option><option value="1000" selected>1000 米</option><option value="1200">1200 米</option></select></label>
   <span class="info" id="metrics"></span>
  </div>
 </div>
-<p class="info">距离档按项目 1080p 相机标定。左侧解码序列和 Ramp，右侧通过 FBX 的查找 UV 读取 EXR。两栏采用校准过的光斑，Medic 实际遮罩、UE 压缩、手机 mip 和场景 Bloom 留到引擎内验收。手机选项只切换左侧素材。</p>
+<p class="info">下排按项目 1080p 相机标定，手机选项只切换左侧序列。场景 Bloom、压缩和目标机帧时需在 UE 实测。</p>
 <p role="status" id="error"></p>
 </main>
 <script src="回放/baker_data.js"></script><script src="回放/baker_player.js"></script>
@@ -56,12 +60,11 @@ label select {margin-left:5px}
 <script>
 (async () => {
   const $ = id => document.getElementById(id);
-  const [bakerCanvas, vatCanvas] = [$('baker'), $('vat')];
-  let drawBaker, drawVAT, playing = false, firstPlay = true, finished = false, raf = 0;
+  let draws, playing = false, finished = false, raf = 0;
+  const gapMs = 650;
   let frame = 0, lastFrame, fps, nextAt;
   function show() {
-    if (drawBaker) drawBaker(frame, $('platform').value);
-    if (drawVAT) drawVAT(frame);
+    for (const draw of draws) draw(frame, $('platform').value);
     $('seek').value = frame;
     $('time').textContent = finished ? ((lastFrame+1)/fps).toFixed(2) + ' 秒 · 已播完' :
       (frame/fps).toFixed(2) + ' 秒 · 帧 ' + frame + '/' + lastFrame;
@@ -69,15 +72,10 @@ label select {margin-left:5px}
   }
   function resize() {
     const distance = Number($('scale').value);
-    const stage = bakerCanvas.parentElement;
-    const limit = Math.max(1, Math.min(stage.clientWidth, stage.clientHeight));
-    const screenSide = distance ? Math.round(window.rabbitCanvasMetres * 360/780 * 1000/distance) : limit;
-    const side = Math.min(limit, screenSide);
-    for (const c of [bakerCanvas,vatCanvas]) {
-      c.width = c.height = Math.max(1,side);
-      c.style.width = c.style.height = side + 'px';
-    }
-    $('metrics').textContent = distance ? '兔形高约 ' + Math.round(200 * 360/780 * 1000/distance) + ' px（1080p）' : '正面放大 · 兔形高 200 米';
+    const side = Math.round(window.rabbitCanvasMetres * 360/780 * 1000/distance);
+    for (const c of [$('bakerGame'), $('vatGame')]) c.width = c.height = side;
+    for (const label of document.querySelectorAll('.distanceLabel')) label.textContent = distance + ' 米 · 1080p';
+    $('metrics').textContent = '成形高约 ' + Math.round(200 * 360/780 * 1000/distance) + ' px';
     show();
   }
   function stop() {
@@ -88,33 +86,52 @@ label select {margin-left:5px}
   function tick(now) {
     if (!playing) return;
     if (now >= nextAt) {
-      if (frame === lastFrame) { finished = true; show(); stop(); return; }
-      frame++; show();
-      // 慢机位一次只前进一帧，时间轴走到成品最后一帧才结束。
-      nextAt = Math.max(nextAt + 1000/fps, now);
+      if (frame === lastFrame && !finished) {
+        finished = true;
+        nextAt = now + gapMs;
+      } else {
+        frame = finished ? 0 : frame + 1;
+        finished = false;
+        // 慢机位逐帧播放，末帧全黑后才进入下一轮。
+        nextAt = Math.max(nextAt + 1000/fps, now);
+      }
+      show();
     }
     raf = requestAnimationFrame(tick);
   }
-  $('play').onclick = () => {
-    if (playing) { stop(); return; }
-    if (firstPlay || frame === lastFrame) frame = 0;
-    firstPlay = false; finished = false; playing = true; nextAt = performance.now() + 1000/fps;
-    $('play').textContent = '暂停'; show(); raf = requestAnimationFrame(tick);
-  };
-  $('seek').oninput = () => { stop(); firstPlay = false; finished = false; frame = Number($('seek').value); show(); };
-  $('restart').onclick = () => { stop(); firstPlay = false; finished = false; frame = 0; show(); };
-  document.addEventListener('visibilitychange', () => { if (document.hidden && playing) stop(); });
+  function play() {
+    cancelAnimationFrame(raf);
+    if (frame === lastFrame) frame = 0;
+    finished = false; playing = true; nextAt = performance.now() + 1000/fps;
+    $('play').textContent = '暂停'; show();
+    if (!document.hidden) raf = requestAnimationFrame(tick);
+  }
+  $('play').onclick = () => playing ? stop() : play();
+  $('seek').oninput = () => { stop(); finished = false; frame = Number($('seek').value); show(); };
+  $('restart').onclick = () => { frame = 0; play(); };
+  document.addEventListener('visibilitychange', () => {
+    cancelAnimationFrame(raf);
+    if (!document.hidden && playing) {
+      nextAt = performance.now() + (finished ? gapMs : 1000/fps);
+      raf = requestAnimationFrame(tick);
+    }
+  });
   $('platform').onchange = show; $('scale').onchange = resize;
   try {
     const timeline = window.rabbitTimeline;
-    if (!timeline || timeline.frames !== window.rabbitVATAssets.height) throw new Error('两份素材的时间轴不一致，请刷新此页。');
-    lastFrame = timeline.frames - 1; fps = timeline.fps; frame = timeline.holdFrame;
+    const vat = window.rabbitVATAssets;
+    if (!timeline?.sourceMotionSHA256 || !vat || timeline.frames !== vat.height ||
+        timeline.sourceMotionSHA256 !== vat.sourceMotionSHA256) throw new Error('两份素材版本不一致，请刷新此页并检查同目录的「回放」和「VAT」文件夹。');
+    lastFrame = timeline.frames - 1; fps = timeline.fps;
+    $('platform').value = 'pc'; $('scale').value = '1000';
     $('seek').max = lastFrame;
-    [drawBaker, drawVAT] = await Promise.all([createRabbitBaker(bakerCanvas), createRabbitVAT(vatCanvas)]);
-    resize(); new ResizeObserver(resize).observe(bakerCanvas.parentElement);
-    $('play').disabled = $('restart').disabled = $('seek').disabled = false;
+    draws = await Promise.all([createRabbitBaker($('baker')), createRabbitVAT($('vat')),
+                               createRabbitBaker($('bakerGame')), createRabbitVAT($('vatGame'))]);
+    resize();
+    for (const id of ['play','restart','seek','platform','scale']) $(id).disabled = false;
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) play();
   } catch (err) {
-    $('error').textContent = '回放加载失败。请用支持 WebGL 2 的 Edge 或 Chrome 打开，保留同目录的“回放”和“VAT”文件夹。' + err.message;
+    $('error').textContent = '回放加载失败。' + err.message;
   }
 })();
 </script>

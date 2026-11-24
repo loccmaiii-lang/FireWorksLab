@@ -22,8 +22,8 @@
     "renderVer": 40
    }
   ],
-  "plan_sig": "6553308d",
-  "motion_sha256": "39f298d9625624bdc8eed5115a07995b7db41448ebfd97916204c1e0bc1718a7",
+  "plan_sig": "ad3c43c1",
+  "motion_sha256": "25cc4509f39000b41d09fce6d6957df055346a9eb2960307a6fcf1bb69e18fbb",
   "input": "外部逐点轨迹，经离线适配器栅格化"
  },
  "textures": {
@@ -35,15 +35,15 @@
    "channels": 4,
    "frames": 64,
    "asset": "T_EFX_FireWorks_DotRabbitDemo_White_4x4_01_HD",
-   "sha256": "355e573014edae077bc5f7f86b583710335ece7f9a01209d4d064483241e181e"
+   "sha256": "766c60ab631964b7b56365c8ea56f19ad9bb8208f61cc8a4182ead04e67dd588"
   },
   "L1_cutout": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_White_4x4_01_C.png",
    "class": "cutout",
    "asset": "T_EFX_FireWorks_DotRabbitDemo_White_4x4_01_C",
-   "save_est": 0.394,
-   "hash": "24b627b4aa97dd631b12",
-   "sha256": "48fd41bf862622734091cfec0028c70c9bcd3971fcd448cf258c99958cf26486"
+   "save_est": 0.37,
+   "hash": "ee8ca0f2f5b22e452220",
+   "sha256": "62afebf15cd9302c8c3d29c80951c2f5bbcc295da5879a55ec45a8972ae9af6a"
   },
   "L1_ramp": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_White_R.png",
@@ -60,15 +60,15 @@
    "channels": 4,
    "frames": 63,
    "asset": "T_EFX_FireWorks_DotRabbitDemo_Gold_4x4_01_HD",
-   "sha256": "0c4f4f3426988cb5e60488836ecd66cad1b10ea5d475fa416151ba9e08375746"
+   "sha256": "7101681c2413c9cbfaea2e6660da76271cd68ff756a8d6caa92d10680e0fb43e"
   },
   "L2_cutout": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_Gold_4x4_01_C.png",
    "class": "cutout",
    "asset": "T_EFX_FireWorks_DotRabbitDemo_Gold_4x4_01_C",
-   "save_est": 0.549,
-   "hash": "a2497633604f063e165d",
-   "sha256": "82d2d86f34fe855b7a361ba5324ecc7556c681f3a00ea77bc7aa24f943961d49"
+   "save_est": 0.548,
+   "hash": "e4a18e2f662978411b3a",
+   "sha256": "373606deb7a0d963bbc6fd8a24839f0634bc4882428a05aaf48c9fe0f4014f6d"
   },
   "L2_ramp": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_Gold_R.png",
@@ -85,15 +85,15 @@
    "channels": 4,
    "frames": 63,
    "asset": "T_EFX_FireWorks_DotRabbitDemo_Cyan_4x4_01_HD",
-   "sha256": "9d739c719c24d39748b57662d3edc87ecec2064897b82a9a3ba0bd0c25d9b262"
+   "sha256": "af077ae72223dd3c982603d7709ba2f058623e69d6c4f734077f2727d2d59f37"
   },
   "L3_cutout": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_Cyan_4x4_01_C.png",
    "class": "cutout",
    "asset": "T_EFX_FireWorks_DotRabbitDemo_Cyan_4x4_01_C",
-   "save_est": 0.917,
-   "hash": "15f982ea5b57687bf00",
-   "sha256": "db69bb8d40348ce7cb7c39c6817769f1ca4a9106cf38f2c755f151788b8bda0c"
+   "save_est": 0.929,
+   "hash": "e1fe9a1390540553d80",
+   "sha256": "5f8a39e8cb9a9f62b63fa41ca0566533bc5480981bf48e1593dc3466ce2c58ff"
   },
   "L3_ramp": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_Cyan_R.png",
@@ -203,8 +203,20 @@
          0.01
         ],
         [
-         0.2182,
-         24.01
+         0.0091,
+         1.01
+        ],
+        [
+         0.0364,
+         2.01
+        ],
+        [
+         0.0727,
+         4.01
+        ],
+        [
+         0.2909,
+         28.01
         ],
         [
          0.4364,
@@ -506,8 +518,16 @@
          0.01
         ],
         [
-         0.211,
-         23.01
+         0.0275,
+         1.01
+        ],
+        [
+         0.0642,
+         3.01
+        ],
+        [
+         0.2844,
+         27.01
         ],
         [
          0.4312,
@@ -809,8 +829,16 @@
          0.01
         ],
         [
-         0.211,
-         23.01
+         0.0275,
+         1.01
+        ],
+        [
+         0.0642,
+         3.01
+        ],
+        [
+         0.2844,
+         27.01
         ],
         [
          0.4312,
