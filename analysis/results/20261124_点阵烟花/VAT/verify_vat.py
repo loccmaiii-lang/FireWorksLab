@@ -41,20 +41,31 @@ def read_cards(path):
     corners[:, 2] = -1 - corners[:, 2]
     assert corners.max() < len(vertices) and np.isfinite(vertices).all()
     tags = fbx_array(text.split('UserDataName: "__data_geo"', 1)[1], "UserData", np.int32)
+    visible = tags == 0
     channels = []
     for layer in (0, 1):
         block = text.split(f"LayerElementUV: {layer} {{", 1)[1]
         uv = fbx_array(block, "UV", np.float32).reshape(-1, 2)
         indices = fbx_array(block, "UVIndex", np.int32).reshape(-1, 3)
-        channels.append(uv[indices[tags == 0]].reshape(-1, 2))
-    render_vertices = np.concatenate(channels, axis=1)
-    return render_vertices, len(vertices), len(tags), int((tags != 0).sum())
+        channels.append(uv[indices].reshape(-1, 2))
+    uv_pairs = np.concatenate(channels, axis=1)
+    render_vertices = uv_pairs[np.repeat(visible, 3)]
+    basis = [fbx_array(text, n, np.float32).reshape(-1, 3)
+             for n in ("Normals", "Tangents", "Binormals")]
+    corner_attributes = np.column_stack((vertices[corners.flatten()], uv_pairs, *basis))
+    geometry = dict(controlPoints=len(vertices), visibleControlPoints=int(np.unique(corners[visible]).size),
+                    metadataControlPoints=int(np.unique(corners[~visible]).size),
+                    triangles=len(tags), visibleTriangles=int(visible.sum()), metadataTriangles=int((~visible).sum()),
+                    cornerIndices=corners.size, visibleCornerIndices=corners[visible].size,
+                    uniquePositionUVTangentBasis=len(np.unique(corner_attributes, axis=0)),
+                    webGLCardVertexInputs=len(render_vertices))
+    return render_vertices, geometry
 
 
 def read_assets():
     pos = read_exr(HERE / "DotRabbit_pos.exr")
     color = read_exr(HERE / "DotRabbit_col.exr")
-    vertices, control_points, triangles, hidden = read_cards(HERE / "DotRabbit_mesh.fbx")
+    vertices, geometry = read_cards(HERE / "DotRabbit_mesh.fbx")
     h, w = pos.shape[:2]
     assert pos.shape == color.shape and np.isfinite(pos).all() and np.isfinite(color).all()
     # 当前输出每帧一行，FBX 中 uv2 的 V 向上，EXR 顶行为首帧。
@@ -65,9 +76,15 @@ def read_assets():
     # Labs 把最大 pscale 元数据写入 Houdini 的上轴，即 UE Bound Max Z 的小数部分。
     bound_units = bounds["Bound Max Z"] / 10.0
     max_radius_m = 1.0 / (1.0 - (bound_units % 1.0))
-    side_m = json.loads((HERE.parent / "shared" / "metadata.json").read_text(encoding="utf8"))["canvas_metres"]
+    source_meta = json.loads((HERE.parent / "shared" / "metadata.json").read_text(encoding="utf8"))
+    side_m = source_meta["canvas_metres"]
+    fps = bounds["Houdini FPS"]
+    assert h == source_meta["frame_count"] and fps == source_meta["fps"]
+    assert geometry["visibleControlPoints"] == w * 4 and geometry["webGLCardVertexInputs"] == w * 6
     meta = dict(width=w, height=h, sideCm=side_m * 100, radiusUV=max_radius_m / side_m,
-                controlPoints=control_points, triangles=triangles, metadataTriangles=hidden)
+                fps=fps, durationSeconds=h / fps, shapeCards=source_meta["shape_point_count"],
+                flashID=source_meta["flash_point_id"], flashPeak=source_meta["flash"]["peak_multiplier"],
+                **geometry)
     return vertices, pos, color, meta
 
 
@@ -93,23 +110,47 @@ def pack(values, dtype):
 
 def main():
     vertices, pos, color, meta = read_assets()
-    payload = dict(meta, mesh=pack(vertices, "<f4"), position=pack(pos, "<f2"), color=pack(color, "<f2"))
-    (HERE / "vat_data.js").write_text("window.rabbitVATAssets=" + json.dumps(payload, separators=(",", ":")) + ";\n", encoding="utf8")
-    xy, radius, linear_rgb, brightness = decode()
+    xy, radius, hue, brightness = decode()
     source = np.load(HERE.parent / "shared" / "motion.npz")
-    rgb = np.clip(np.where(linear_rgb <= 0.0031308, linear_rgb * 12.92,
-                           1.055 * linear_rgb ** (1 / 2.4) - 0.055) * 255, 0, 255).round()
+    srgb = source["rgb"].astype(np.float32) / 255
+    linear_rgb = np.where(srgb <= 0.04045, srgb / 12.92, ((srgb + 0.055) / 1.055) ** 2.4)
+    # 所有样点都比较实际发出的 RGB，完全熄灭时三通道必须精确为零。
+    radiance = hue * brightness[:, :, None]
+    expected = linear_rgb[None] * source["intensity"][:, :, None]
+    np.testing.assert_array_equal(radiance[source["intensity"] == 0], 0)
+    np.testing.assert_array_equal(radiance[-1], 0)
     errors = dict(maxCenterErrorIn512Px=float(np.max(np.linalg.norm(xy - source["xy"], axis=2)) * 512),
                   maxRadiusErrorIn512Px=float(np.max(np.abs(radius - source["radius"])) * 512),
                   maxBrightnessError=float(np.max(np.abs(brightness - source["intensity"]))),
-                  maxRGB8Error=int(np.max(np.abs(rgb - source["rgb"][None]))))
+                  maxPremultipliedLinearRGBError=float(np.max(np.abs(radiance - expected))))
     assert errors["maxCenterErrorIn512Px"] < 0.125
     assert errors["maxRadiusErrorIn512Px"] < 0.01
-    assert errors["maxBrightnessError"] < 0.001 and errors["maxRGB8Error"] <= 1
+    assert errors["maxBrightnessError"] < 0.001 and errors["maxPremultipliedLinearRGBError"] < 0.001
+    h, fps = meta["height"], meta["fps"]
+    last = h - 1
+    # 离线演算一次激活的每个 30Hz 采样，末个 tick 停在末帧，直到寿命到期。
+    keys = [[0, 0], [last / h, last / fps], [1, last / fps]]
+    relative_age = np.arange(h + 1) / h
+    seconds = np.interp(relative_age, *np.array(keys).T)
+    addressed = np.floor(seconds * fps + 1e-7).astype(int)
+    np.testing.assert_array_equal(addressed, np.minimum(np.arange(h + 1), last))
+    lit = np.flatnonzero(brightness.max(axis=1) > 0)
+    assert np.array_equal(source["point_id"], np.arange(meta["width"]))
+    flash = np.flatnonzero(brightness[:, meta["flashID"]] > 0)
+    assert len(lit) and len(flash) and lit[-1] < last and flash[-1] < lit[-1]
+    extent = np.abs(xy - 0.5) * meta["sideCm"] + 5 * radius[:, :, None] * meta["sideCm"]
+    timing = dict(lastNonzeroFrame=int(lit[-1]), firstFullyDarkTailFrame=int(lit[-1] + 1),
+                  finalPeakBrightness=float(brightness[-1].max()),
+                  lastNonzeroPeak=float(brightness[lit[-1]].max()), flashLitFrames=flash.tolist(),
+                  clockKeysRelativeAgeToSeconds=keys, verifiedSampledFrames=h,
+                  recommendedSymmetricBoundsCm=int(np.ceil(np.linalg.norm(extent, axis=2).max() * 1.1 / 100) * 100))
+    payload = dict(meta, mesh=pack(vertices, "<f4"), position=pack(pos, "<f2"), color=pack(color, "<f2"))
+    (HERE / "vat_data.js").write_text("window.rabbitVATAssets=" + json.dumps(payload, separators=(",", ":")) + ";\n", encoding="utf8")
     hashes = {name: hashlib.sha256((HERE / name).read_bytes()).hexdigest() for name in
               ["DotRabbit_mesh.fbx", "DotRabbit_pos.exr", "DotRabbit_col.exr", "DotRabbit_data.json"]}
-    report = dict(meta, **errors, estimatedTextureBytes=pos.shape[0] * pos.shape[1] * 8 * 2,
-                  sha256=hashes)
+    source_hash = hashlib.sha256((HERE.parent / "shared" / "motion.npz").read_bytes()).hexdigest()
+    report = dict(meta, timing=timing, **errors, estimatedTextureBytes=pos.shape[0] * pos.shape[1] * 8 * 2,
+                  sourceMotionSHA256=source_hash, sha256=hashes)
     print(json.dumps(report, indent=2))
     (HERE / "verify.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
 

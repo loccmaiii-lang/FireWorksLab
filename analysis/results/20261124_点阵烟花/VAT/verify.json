@@ -1,20 +1,65 @@
 {
-  "width": 476,
-  "height": 64,
+  "width": 477,
+  "height": 110,
   "sideCm": 23614.0,
-  "radiusUV": 0.004510047429931415,
-  "controlPoints": 1910,
-  "triangles": 954,
+  "radiusUV": 0.02468076610062723,
+  "fps": 30.0,
+  "durationSeconds": 3.6666666666666665,
+  "shapeCards": 476,
+  "flashID": 476,
+  "flashPeak": 1.5,
+  "controlPoints": 1914,
+  "visibleControlPoints": 1908,
+  "metadataControlPoints": 6,
+  "triangles": 956,
+  "visibleTriangles": 954,
   "metadataTriangles": 2,
+  "cornerIndices": 2868,
+  "visibleCornerIndices": 2862,
+  "uniquePositionUVTangentBasis": 1914,
+  "webGLCardVertexInputs": 2862,
+  "timing": {
+    "lastNonzeroFrame": 108,
+    "firstFullyDarkTailFrame": 109,
+    "finalPeakBrightness": 0.0,
+    "lastNonzeroPeak": 0.00035858154296875,
+    "flashLitFrames": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "clockKeysRelativeAgeToSeconds": [
+      [
+        0,
+        0
+      ],
+      [
+        0.990909090909091,
+        3.6333333333333333
+      ],
+      [
+        1,
+        3.6333333333333333
+      ]
+    ],
+    "verifiedSampledFrames": 110,
+    "recommendedSymmetricBoundsCm": 15100
+  },
   "maxCenterErrorIn512Px": 0.12136118859052658,
-  "maxRadiusErrorIn512Px": 0.0005862712860107422,
+  "maxRadiusErrorIn512Px": 0.000782012939453125,
   "maxBrightnessError": 0.0002440810203552246,
-  "maxRGB8Error": 0,
-  "estimatedTextureBytes": 487424,
+  "maxPremultipliedLinearRGBError": 0.0002440810203552246,
+  "estimatedTextureBytes": 839520,
+  "sourceMotionSHA256": "39f298d9625624bdc8eed5115a07995b7db41448ebfd97916204c1e0bc1718a7",
   "sha256": {
-    "DotRabbit_mesh.fbx": "8cd959e4d1340cc5fa9121405e3435f022dc65c3dee7d6415a96303375efa069",
-    "DotRabbit_pos.exr": "17d646e4c04f1ef9f9fb53286100f4340f85aee9206bbd5e97c33ab2607da184",
-    "DotRabbit_col.exr": "953230a1eaebe39b00cbe3e712896102616455ec0a8f0b164825f4c21503b4b7",
-    "DotRabbit_data.json": "cbc1055a369032600db48bfc3f3773cafa06a335ac7973b58cfbed00415b889c"
+    "DotRabbit_mesh.fbx": "00ff2c2cd15f3d5ec53acf63329fd5f561fd61d72cb31c6dfa5029a36aeb9723",
+    "DotRabbit_pos.exr": "ace10bcb3c1591591e4777278ee4dc37499bd78bf50f0140ce369fa0209c1512",
+    "DotRabbit_col.exr": "26a6beb6e5bca08863b1cde9b47dbe09acaec5ff44a84471a270298f35317641",
+    "DotRabbit_data.json": "7f8bf64d0f8bde86c357359e03db2d03255bbd95c53ac4b42b700131558ec947"
   }
 }

@@ -1,7 +1,7 @@
 {
   "fps": 30,
-  "frame_count": 64,
-  "duration_seconds": 2.1333333333333333,
+  "frame_count": 110,
+  "duration_seconds": 3.6666666666666665,
   "canvas_metres": 236.14,
   "demo_shape_height_metres": 200,
   "size_basis": "沿用 2026-11-12 本机 ArkRabbit2 原型的 200m 图案高度。是本次比较用的尺度。",
@@ -11,13 +11,34 @@
     347.8423
   ],
   "hold_frames_inclusive": [
-    22,
-    41
+    48,
+    67
   ],
+  "shape_point_count": 476,
+  "flash_point_id": 476,
+  "total_point_count": 477,
+  "opening_start_frame": 0,
+  "formation_frame": 48,
+  "decay_start_frame": 68,
+  "added_tail_start_frame": 90,
+  "last_lit_source_frame": 108,
+  "zero_frame": 109,
+  "flash": {
+    "center_uv": [
+      0.5,
+      0.55
+    ],
+    "sigma_metres": 4.95,
+    "peak_multiplier": 1.5,
+    "decay_seconds": 0.035,
+    "cut_seconds": 0.25,
+    "kernel": "1.5 * intensity * 2^(-d²/radius²)"
+  },
+  "opening_reference": "花型库 > 形状 > 型物（kata，heart）。同一爆心，星头在 0.05s 内点亮。按 110m/s 参考速度、18m/s 终端速度、9.81m/s² 重力、1/480s 步长求各点轨迹；统一空间缩放匹配兔形高度。最后 0.2s 平滑接入原停形。",
   "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
   "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
   "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",
-  "timing_assumption": "示范动作从中心散开，在第 22–41 帧保持参照图，再轻散下落、渐灭。最后一帧保留弱余光，播放寿命到时退出。",
+  "timing_assumption": "第 48 帧到达兔形，第 48–89 帧保留首版的 20 帧停形和 22 帧散落。第 90–109 帧沿余火原出口速度继续并减速，强度相对第 89 帧乘 ((109-f)/20)²，第 109 帧全灭。",
   "extraction": {
     "source_sha256": "f5f888884340714363949f0f1af32d5c76c3bc67f1fc2ba274f575525392b80d",
     "source_size_px": [

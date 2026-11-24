@@ -14,23 +14,24 @@ for (const name of ['00_util', '10_types', '31_plan40', '60_export', '61_naming'
   const file = path.join(source, name + '.js');
   vm.runInContext(fs.readFileSync(file, 'utf8'), context, {filename: file});
 }
-const baker = vm.runInContext('({ VERSION, keysFromTicks40, cutoutFiles, encodePNG, rampPixels, fwlCombo, applyPackNaming, packTidy, packFinalize, utf8 })', context);
+const baker = vm.runInContext('({ VERSION, keysFromTicks40, cutoutFiles, encodePNG, rampPixels, fwlCombo, fwlPlanSig, applyPackNaming, packTidy, packFinalize, utf8 })', context);
 
 async function main() {
   const data = JSON.parse(fs.readFileSync(path.join(scratch, 'layers.json'), 'utf8'));
   const base = 'DotRabbitDemo';
-  const ticks = Array.from({length: data.frames}, (_, i) => i);
-  const layout = {cols: 4, rows: 4, chans: 4, F: data.frames, per: 16};
   const files = [], names = [], groups = {pc: [], mobile: []};
   for (const layer of data.layers) {
+    const first = layer.ticks[0], lifeTicks = data.frames-first;
+    const ticks = layer.ticks.map(f => f-first);
+    const layout = {cols: 4, rows: 4, chans: 4, F: ticks.length, per: 16};
     const side = 4 * layer.cell_size;
     const rgba = new Uint8Array(fs.readFileSync(path.join(scratch, layer.name + '.rgba')));
     if (rgba.byteLength !== side*side*4) throw Error('图集尺寸错误');
     const b = {form: 'master', P: {type: 'dotMotion'}, meta: {L: layout,
-      keys: baker.keysFromTicks40(ticks, data.frames), t0: 0, duration: data.frames/data.fps,
-      Ww: data.widthM, Wh: data.widthM, cx: 0, cy: 0, zoom: false}};
+      keys: baker.keysFromTicks40(ticks, lifeTicks), t0: 0, duration: lifeTicks/data.fps,
+      Ww: data.widthM*layer.view_scale, Wh: data.widthM*layer.view_scale, cx: 0, cy: 0, zoom: false}};
     const L = {stages: [[0, '#ffffff']], ramp0: layer.halo_rgb, ramp1: layer.halo_rgb,
-      ramp2: layer.core_rgb, ramp3: layer.core_rgb, headInt: 1, tailInt: 1};
+      ramp2: layer.core_rgb, ramp3: layer.core_rgb, headInt: 1, tailInt: 1, delay: first/data.fps};
     const ln = 'DotPC_' + layer.name, mn = 'DotMobile_' + layer.name;
     const texName = layer.mobile ? mn : ln;
     groups[layer.mobile ? 'mobile' : 'pc'].push({b, L, texName});
@@ -42,6 +43,18 @@ async function main() {
   for (const [platform, layers] of Object.entries(groups)) {
     const mobile = platform === 'mobile';
     const spec = baker.fwlCombo(base, layers, mobile);
+    // 尾段提亮的纹理只存相对亮度，整体衰减在材质相乘。最后一个可拖动 tick 自然归零。
+    const inputs = data.layers.filter(layer => layer.mobile === mobile);
+    for (const [i, emitter] of spec.emitters.entries()) {
+      const layer = inputs[i], lifeTicks = data.frames-layer.ticks[0];
+      emitter.required.delay_s = layer.ticks[0]/data.fps;
+      emitter.required.duration_s = lifeTicks/data.fps;
+      emitter.modules.find(m => m.m === 'Lifetime').Lifetime.const = lifeTicks/data.fps;
+      const gain = [[layer.ticks[0], 1], ...layer.gain_keys];
+      const colorModule = emitter.modules.find(m => m.m === 'ColorOverLife');
+      colorModule.ColorOverLife.curve = gain.map(([tick, v]) => [(tick-layer.ticks[0])/lifeTicks, [v,v,v]]);
+    }
+    spec.source.plan_sig = baker.fwlPlanSig(spec.emitters);
     spec.source.motion_sha256 = data.motion_sha256;
     spec.source.input = '外部逐点轨迹，经离线适配器栅格化';
     spec.notes.push(mobile ? '手机演示合成一张中性白序列，保留所有点及其运动。' : '白、金、青三个点组各用一张序列，按灰度查色。');

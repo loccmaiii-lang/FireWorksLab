@@ -50,11 +50,14 @@ def cache_points(motion, cache, side_m):
 def render(source_path, destination):
     motion = np.load(source_path, allow_pickle=False)
     frames, points = motion["xy"].shape[:2]
-    side_m = json.loads((source_path.parent / "metadata.json").read_text(encoding="utf8"))["canvas_metres"]
+    spec = json.loads((source_path.parent / "metadata.json").read_text(encoding="utf8"))
+    fps = float(motion["fps"])
+    if fps != spec["fps"] or frames != spec["frame_count"]:
+        raise ValueError("轨迹与 metadata.json 的采样率或帧数不一致")
     with TemporaryDirectory(prefix="rabbit_vat_") as tmp:
         work = Path(tmp)
-        cache_points(motion, work, side_m)
-        hou.setFps(30)
+        cache_points(motion, work, spec["canvas_metres"])
+        hou.setFps(fps)
         hou.playbar.setFrameRange(1, frames)
         obj = hou.node("/obj").createNode("geo", "dot_source")
         source = obj.createNode("file", "frames")

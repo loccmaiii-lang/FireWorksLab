@@ -10,7 +10,7 @@ window.createRabbitVAT = function createRabbitVAT(canvas) {
     const program = gl.createProgram();
     for (const [type, source] of [[gl.VERTEX_SHADER, vertex], [gl.FRAGMENT_SHADER, fragment]]) {
       const shader = gl.createShader(type);
-      gl.shaderSource(shader, "#version 300 es\nprecision highp float;\n" + source);
+      gl.shaderSource(shader, "#version 300 es\nprecision highp float;\nprecision highp int;\n" + source);
       gl.compileShader(shader);
       if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw Error(gl.getShaderInfoLog(shader));
       gl.attachShader(program, shader);
@@ -51,12 +51,15 @@ window.createRabbitVAT = function createRabbitVAT(canvas) {
     uniform int frame;
     uniform float sideCm;
     uniform float radiusUV;
+    uniform int flashID;
     out vec2 radial;
     flat out vec4 tint;
+    flat out int isFlash;
     void main() {
       ivec2 size = textureSize(positions, 0);
       ivec2 address = ivec2(vec2(uv.z, 1.0 - uv.w) * vec2(size)) + ivec2(0, frame);
       vec4 p = texelFetch(positions, address, 0);
+      isFlash = address.x == flashID ? 1 : 0;
       vec4 cd = texelFetch(colors, address, 0);
       float brightness = max(cd.r, max(cd.g, cd.b));
       tint = vec4(cd.rgb / max(brightness, 1e-8), brightness * cd.a);
@@ -65,10 +68,14 @@ window.createRabbitVAT = function createRabbitVAT(canvas) {
     }`, `
     in vec2 radial;
     flat in vec4 tint;
+    flat in int isFlash;
+    uniform float flashPeak;
     out vec4 outColor;
     void main() {
       float d2 = dot(radial, radial);
-      float g = 2.0 * tint.a * (0.95 * exp2(-d2 / (0.43*0.43)) + 0.05 * exp2(-d2 / (1.05*1.05)));
+      float profile = isFlash == 1 ? flashPeak * exp2(-d2)
+        : 2.0 * (0.95 * exp2(-d2 / (0.43*0.43)) + 0.05 * exp2(-d2 / (1.05*1.05)));
+      float g = tint.a * profile;
       outColor = vec4(4.0 * min(g, 253.0/255.0) * tint.rgb, 1.0);
     }`);
   const tonemap = compile(`
@@ -88,6 +95,8 @@ window.createRabbitVAT = function createRabbitVAT(canvas) {
   gl.uniform1i(uniform(program, "colors"), 1);
   gl.uniform1f(uniform(program, "sideCm"), data.sideCm);
   gl.uniform1f(uniform(program, "radiusUV"), data.radiusUV);
+  gl.uniform1i(uniform(program, "flashID"), data.flashID);
+  gl.uniform1f(uniform(program, "flashPeak"), data.flashPeak);
   const time = uniform(program, "frame");
   const fbo = gl.createFramebuffer();
   const accumulation = newTexture();

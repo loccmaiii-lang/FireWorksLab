@@ -15,7 +15,7 @@ def encode(raw):
     return base64.b64encode(zlib.compress(raw, 9)).decode("ascii")
 
 
-def read_package(filename):
+def read_package(filename, metadata):
     config = json.loads((ASSETS / filename).read_text(encoding="utf8"))
     layers = []
     for emitter in config["emitters"]:
@@ -30,22 +30,33 @@ def read_package(filename):
         modules = {m["m"]: m for m in emitter["modules"]}
         duration = modules["Lifetime"]["Lifetime"]["const"]
         curve = modules["DynamicParameter"]["params"]["frame"]["curve"]
-        # 按真实曲线与 30Hz tick 取帧，末帧在粒子寿命内。
-        frame_table = np.floor(np.interp(np.arange(seq["frames"])/30/duration, *zip(*curve))).astype(int)
-        if not np.array_equal(frame_table, np.arange(64)):
-            raise ValueError(f"{filename} 的取帧与这份同步对照不一致")
+        # 共享播放头使用全局 tick；每层的延迟、寿命、局部帧号、亮度取自该包。
+        tick_times = np.arange(metadata['frame_count'])/metadata['fps']
+        age = tick_times-emitter['required']['delay_s']
+        u = np.clip(age/duration, 0, 1)
+        frame_table = np.floor(np.interp(u, *zip(*curve))).astype(int)
+        if np.any((frame_table < 0) | (frame_table >= seq['frames'])):
+            raise ValueError(f'{filename} 帧号越出配置范围')
         colors = modules["ColorOverLife"]["ColorOverLife"]["curve"]
-        assert all(v == [1, 1, 1] for _, v in colors)
+        assert all(v[0] == v[1] == v[2] for _, v in colors)
+        gain = np.interp(u, [t for t,_ in colors], [v[0] for _,v in colors])
+        gain[(age < -1e-7) | (age >= duration-1e-7)] = 0
         assert modules["ColorOverLife"]["AlphaOverLife"]["const"] == 1
         assert seq["cols"] == seq["rows"] == 4
-        layers.append({"side": side, "atlas": pixels, "ramp": lut})
+        width_cm, height_cm = modules['InitialSize']['StartSize']['const'][:2]
+        assert width_cm == height_cm
+        layers.append({"side": side, "atlas": pixels, "ramp": lut, "viewScale": width_cm/(metadata['canvas_metres']*100),
+                       "frames": frame_table.tolist(), "gain": gain.round(9).tolist()})
     return layers
 
 
 if __name__ == "__main__":
-    data = {k: read_package(f) for k, f in (("pc", "cascade.json"), ("mobile", "cascade_mobile.json"))}
     metadata = json.loads((HERE.parent / "shared" / "metadata.json").read_text(encoding="utf8"))
+    data = {k: read_package(f, metadata) for k, f in (("pc", "cascade.json"), ("mobile", "cascade_mobile.json"))}
+    hold = metadata['hold_frames_inclusive']
+    timeline = dict(frames=metadata['frame_count'], fps=metadata['fps'], holdFrame=sum(hold)//2,
+                    hold=hold, durationSeconds=metadata['duration_seconds'], terminalFrame=metadata['frame_count']-1)
     side = metadata["canvas_metres"]
     (HERE / "baker_data.js").write_text(
-        f"window.rabbitCanvasMetres={side};\nwindow.rabbitBakerData="
+        f"window.rabbitCanvasMetres={side};\nwindow.rabbitTimeline={json.dumps(timeline)};\nwindow.rabbitBakerData="
         + json.dumps(data, separators=(",", ":")) + ";\n", encoding="ascii")

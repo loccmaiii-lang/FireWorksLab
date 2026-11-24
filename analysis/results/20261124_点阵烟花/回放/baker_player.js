@@ -20,15 +20,17 @@ window.createRabbitBaker = async function (canvas) {
   precision highp sampler2DArray;
   in vec2 uv;
   uniform sampler2DArray atlas, lut;
-  uniform int frame, layers;
+  uniform int frames[3], layers;
+  uniform float gains[3], viewScales[3];
   out vec4 color;
   void main() {
-    int tile = frame % 16;
-    vec2 location = (uv + vec2(tile % 4, tile / 4)) * 0.25;
     vec3 linear = vec3(0.);
     for (int i = 0; i < layers; i++) {
+      int frame = frames[i], tile = frame % 16;
+      vec2 atlasUV = .5 + (uv-.5)/viewScales[i];
+      vec2 location = (atlasUV + vec2(tile % 4, tile / 4)) * 0.25;
       float v = texture(atlas, vec3(location, float(i)))[frame / 16];
-      linear += 4. * v * texture(lut, vec3(v, .5, float(i))).rgb;
+      linear += 4. * v * gains[i] * texture(lut, vec3(v, .5, float(i))).rgb;
     }
     color = vec4(pow(1. - exp(-linear), vec3(1. / 2.2)), 1.);
   }`;
@@ -45,7 +47,7 @@ window.createRabbitBaker = async function (canvas) {
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
   gl.useProgram(program);
   const loc = key => gl.getUniformLocation(program, key);
-  const frameLoc = loc('frame'), countLoc = loc('layers');
+  const frameLoc = loc('frames[0]'), gainLoc = loc('gains[0]'), scaleLoc = loc('viewScales[0]'), countLoc = loc('layers');
   gl.uniform1i(loc('atlas'), 0);
   gl.uniform1i(loc('lut'), 1);
   gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
@@ -69,18 +71,21 @@ window.createRabbitBaker = async function (canvas) {
     const side = layers[0].side;
     const atlas = await upload(layers, 'atlas', side, side, gl.RGBA8, gl.RGBA);
     const lut = await upload(layers, 'ramp', 256, 1, gl.SRGB8, gl.RGB);
-    platforms[name] = { atlas, lut, count: layers.length };
+    platforms[name] = { atlas, lut, layers };
   }
   if (gl.getError() !== gl.NO_ERROR) throw new Error('序列贴图上传失败');
   return function (frame, platform) {
     gl.viewport(0, 0, canvas.width, canvas.height);
-    const { atlas, lut, count } = platforms[platform];
+    const { atlas, lut, layers } = platforms[platform];
+    if (frame < 0 || frame >= layers[0].frames.length) { gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT); return; }
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(target, atlas);
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(target, lut);
-    gl.uniform1i(countLoc, count);
-    gl.uniform1i(frameLoc, frame);
+    gl.uniform1i(countLoc, layers.length);
+    gl.uniform1iv(frameLoc, layers.map(l => l.frames[frame]));
+    gl.uniform1fv(gainLoc, layers.map(l => l.gain[frame]));
+    gl.uniform1fv(scaleLoc, layers.map(l => l.viewScale));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 };

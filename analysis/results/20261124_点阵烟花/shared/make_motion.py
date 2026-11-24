@@ -9,8 +9,12 @@ import numpy as np
 
 
 HERE = Path(__file__).resolve().parent
-FRAMES = 64
 FPS = 30
+FRAMES = 110
+HOLD_START = 48
+HOLD_END = 67
+TAIL_START = 90
+LAUNCH = np.array([0.5, 0.55])
 DEMO_HEIGHT_METRES = 200
 SOURCE_SPAN_PX = 650
 GROUPS = ["白", "金", "青"]
@@ -89,41 +93,128 @@ def extract(reference):
     return rows, check
 
 
-def sample(points, extraction):
+def original_hold_and_decay(targets, median_radius):
+    """保留初版的随机数顺序和运算，第 22–63 帧对应新第 48–89 帧。"""
+    rng = np.random.default_rng(241124)
+    drift = rng.uniform(-1, 1, (len(targets), 2))
+    fade_speed = rng.uniform(0.72, 1.50, len(targets))
+    phase = rng.uniform(0, 2 * np.pi, len(targets))
+    xy, radius, intensity = [], [], []
+    for frame in range(22, 64):
+        free = max((frame - 41) / 22, 0)
+        pos = LAUNCH + (targets - LAUNCH)
+        pos += 0.011 * np.sin(np.pi) * drift
+        pos += free * (0.04 * (targets - LAUNCH) + 0.022 * drift)
+        pos[:, 1] += 0.032 * free ** 2
+        strength = (1 - 0.93 * free) ** fade_speed
+        tail_spark = 1 - 0.1 * np.sin(phase + free * 4.2) ** 2 * free
+        xy.append(pos)
+        radius.append(np.full(len(targets), median_radius * (1 - free * 0.28)))
+        intensity.append(strength * tail_spark)
+    return np.array(xy), np.array(radius), np.array(intensity)
+
+
+def kata_opening(targets, side_m):
+    # 移植 00_util.js H_STEP 和 20_sim.js Sim.step 的无风星头核心。
+    # 模拟坐标以米计，Y 向上。统一缩放 90 星心形的初速量级适配 200m 的兔形。
+    h = 1 / 480
+    gravity = 9.81
+    drag = gravity / 18**2
+    end_time = HOLD_START / FPS
+    blend_time = 0.2
+    sample_time = np.arange(HOLD_START + 1) / FPS
+    blend_start = end_time - blend_time
+    u = np.maximum(0, (sample_time - blend_start) / blend_time)
+    # 最后 0.2s 用积分时间平滑衔接静止，切线速度从 1 连续降至 0。
+    physical_time = np.minimum(sample_time, blend_start) + blend_time * (u - u**3 + 0.5*u**4)
+    steps = round(physical_time[-1] / h)
+    duration = steps * h
+    desired_metres = (targets - LAUNCH) * np.array([side_m, -side_m])
+    reach_m = np.log1p(drag * 110 * duration) / drag
+    spatial_scale = np.max(np.linalg.norm(desired_metres, axis=1)) / reach_m
+    desired = desired_metres / spatial_scale
+
+    def integrate(initial, keep_path=False):
+        velocity = initial.copy()
+        position = np.zeros_like(initial)
+        path = [position.copy()] if keep_path else []
+        for _ in range(steps):
+            speed = np.linalg.norm(velocity, axis=1, keepdims=True)
+            velocity /= 1 + drag * h * speed
+            velocity[:, 1] -= gravity * h
+            position += velocity * h
+            if keep_path:
+                path.append(position.copy())
+        return np.array(path) if keep_path else position
+
+    # 求每个点的初速度，约束同一时刻到达各自的精确位置。运动途中直接用同一积分核。
+    aim = desired + [0, 0.5 * gravity * duration**2]
+    distance = np.linalg.norm(aim, axis=1, keepdims=True)
+    velocity = aim * np.expm1(drag * distance) / (drag * duration * np.maximum(distance, 1e-12))
+    for _ in range(7):
+        end = integrate(velocity)
+        error = desired - end
+        if np.max(np.abs(error)) < 1e-8:
+            break
+        delta = 0.002
+        jac = np.stack([(integrate(velocity + axis * delta) - end) / delta
+                        for axis in np.eye(2)], axis=2)
+        velocity += np.linalg.solve(jac, error[..., None])[..., 0]
+    path = integrate(velocity, keep_path=True)
+    np.testing.assert_allclose(path[-1], desired, atol=1e-6)
+    index = np.minimum(physical_time / h, steps)
+    left = np.floor(index).astype(int)
+    right = np.minimum(left + 1, steps)
+    interp = (index - left)[:, None, None]
+    sampled = path[left] + (path[right] - path[left]) * interp
+    return LAUNCH + sampled * [spatial_scale / side_m, -spatial_scale / side_m]
+
+
+def continue_decay(xy, radius, intensity):
+    # 延续原尾段出口的切线速度，随阻力渐慢；靠近边缘的点按到边界的剩余路程提前减速。
+    velocity = xy[-1] - xy[-2]
+    margin = 2.2 * radius[-1, :, None]
+    room = np.where(velocity >= 0, 1 - margin - xy[-1], xy[-1] - margin)
+    ticks = np.minimum(20.0, np.min(room / np.maximum(1e-12, np.abs(velocity)), axis=1))
+    if np.min(ticks) <= 0:
+        raise ValueError("原尾段已触及延伸段留边")
+    step = np.arange(1, FRAMES - TAIL_START + 1)[:, None]
+    progress = step / (FRAMES - TAIL_START)
+    elapsed = -np.expm1(-step / ticks) * ticks
+    return (xy[-1] + elapsed[:, :, None] * velocity,
+            radius[-1] * (1 - 0.3 * progress), intensity[-1] * (1 - progress)**2)
+
+
+def sample(points, extraction, side_m):
     centers = points[:, 1:3]
     reference_center = (centers.min(axis=0) + centers.max(axis=0)) * 0.5
     targets = (centers - reference_center) / SOURCE_SPAN_PX + 0.5
-    ids = points[:, 0].astype(int)
-    groups = points[:, 3].astype(np.uint8)
+    ids = np.arange(len(points) + 1, dtype=np.int32)
+    groups = np.append(points[:, 3], 0).astype(np.uint8)
     median_radius = np.median(points[:, 4]) / SOURCE_SPAN_PX
-    rng = np.random.default_rng(241124)
-    drift = rng.uniform(-1, 1, (len(ids), 2))
-    fade_speed = rng.uniform(0.72, 1.50, len(ids))
-    phase = rng.uniform(0, 2 * np.pi, len(ids))
-    launch = np.array([0.5, 0.55])
-    xy, radius, intensity = [], [], []
-    for frame in range(FRAMES):
-        expansion = min(frame / 22, 1)
-        scale = 1 - 0.92 * (1 - expansion) ** 2.6
-        free = max((frame - 41) / (FRAMES - 1 - 41), 0)
-        pos = launch + (targets - launch) * scale
-        pos += 0.011 * np.sin(np.pi * expansion) * drift
-        pos += free * (0.04 * (targets - launch) + 0.022 * drift)
-        pos[:, 1] += 0.032 * free ** 2
-        # 亮度/尺寸分开存；成形停留段每一帧都能和输入点位精确配准。
-        strength = (0.33 + 0.67 * np.sin(0.5 * np.pi * expansion)) * (1 - 0.93 * free) ** fade_speed
-        tail_spark = 1 - 0.1 * np.sin(phase + free * 4.2) ** 2 * free
-        radii = median_radius * (0.53 + 0.47 * np.sin(0.5 * np.pi * expansion)) * (1 - free * 0.28)
-        xy.append(pos)
-        radius.append(np.full(len(ids), radii))
-        intensity.append(strength * tail_spark)
+    kept = original_hold_and_decay(targets, median_radius)
+    tail = continue_decay(*kept)
+    opening = kata_opening(targets, side_m)
+    # 独立星头在 0.05s 内点亮，强度与中心爆闪分别存储。
+    age = np.arange(HOLD_START) / FPS
+    gain = np.minimum(age / 0.05, 1)
+    first = (opening[:-1], np.full((HOLD_START, len(points)), median_radius),
+             np.broadcast_to(gain[:, None], (HOLD_START, len(points))))
+    xy, radius, intensity = [np.concatenate(parts, axis=0) for parts in zip(first, kept, tail)]
+    time = np.arange(FRAMES) / FPS
+    flash_on = time <= 0.25
+    flash_radius = 4.95 * np.sqrt(2 * np.log(2)) / side_m
+    xy = np.concatenate((xy, np.broadcast_to(LAUNCH, (FRAMES, 1, 2))), axis=1)
+    radius = np.column_stack((radius, np.where(flash_on, flash_radius, 0)))
+    intensity = np.column_stack((intensity, np.where(flash_on, np.exp(-time/0.035), 0)))
     palette = extraction["palette"]
     colors = {name: np.array([p[key] for p in palette], dtype=np.uint8)[groups]
               for name, key in [("rgb", "single_color_srgb"), ("core_rgb", "core_srgb"), ("halo_rgb", "halo_srgb")]}
     data = {"xy": np.array(xy, dtype=np.float32), "radius": np.array(radius, dtype=np.float32),
             "intensity": np.array(intensity, dtype=np.float32), "group": groups,
             "point_id": ids.astype(np.int32), "fps": np.int32(FPS), **colors}
-    assert np.allclose(data["xy"][22:42], targets, atol=1e-7)
+    assert np.allclose(data["xy"][HOLD_START:HOLD_END + 1, :-1], targets, atol=1e-7)
+    assert np.max(data["intensity"][-1]) == 0 and np.min(data["intensity"][-2, :-1]) > 0
     assert data["xy"].min() > 0 and data["xy"].max() < 1
     return data, reference_center.tolist()
 
@@ -145,19 +236,26 @@ def main():
     else:
         points = np.loadtxt(HERE / "points.csv", delimiter=",", skiprows=1)
         extraction = json.loads((HERE / "metadata.json").read_text(encoding="utf8"))["extraction"]
-    data, center = sample(points, extraction)
+    side_m = round(SOURCE_SPAN_PX * DEMO_HEIGHT_METRES / np.ptp(points[:, 2]), 2)
+    data, center = sample(points, extraction, side_m)
     np.savez_compressed(out / "motion.npz", **data)
     report = {
         "fps": FPS, "frame_count": FRAMES, "duration_seconds": FRAMES / FPS,
-        "canvas_metres": round(SOURCE_SPAN_PX * DEMO_HEIGHT_METRES / np.ptp(points[:, 2]), 2),
+        "canvas_metres": side_m,
         "demo_shape_height_metres": DEMO_HEIGHT_METRES,
         "size_basis": "沿用 2026-11-12 本机 ArkRabbit2 原型的 200m 图案高度。是本次比较用的尺度。",
         "source_pixels_per_uv_unit": SOURCE_SPAN_PX,
-        "reference_center_px": center, "hold_frames_inclusive": [22, 41],
+        "reference_center_px": center, "hold_frames_inclusive": [HOLD_START, HOLD_END],
+        "shape_point_count": len(points), "flash_point_id": len(points), "total_point_count": len(points) + 1,
+        "opening_start_frame": 0, "formation_frame": HOLD_START, "decay_start_frame": HOLD_END + 1,
+        "added_tail_start_frame": TAIL_START, "last_lit_source_frame": FRAMES - 2, "zero_frame": FRAMES - 1,
+        "flash": {"center_uv": LAUNCH.tolist(), "sigma_metres": 4.95, "peak_multiplier": 1.5,
+                  "decay_seconds": 0.035, "cut_seconds": 0.25, "kernel": "1.5 * intensity * 2^(-d²/radius²)"},
+        "opening_reference": "花型库 > 形状 > 型物（kata，heart）。同一爆心，星头在 0.05s 内点亮。按 110m/s 参考速度、18m/s 终端速度、9.81m/s² 重力、1/480s 步长求各点轨迹；统一空间缩放匹配兔形高度。最后 0.2s 平滑接入原停形。",
         "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
         "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
         "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",
-        "timing_assumption": "示范动作从中心散开，在第 22–41 帧保持参照图，再轻散下落、渐灭。最后一帧保留弱余光，播放寿命到时退出。",
+        "timing_assumption": "第 48 帧到达兔形，第 48–89 帧保留首版的 20 帧停形和 22 帧散落。第 90–109 帧沿余火原出口速度继续并减速，强度相对第 89 帧乘 ((109-f)/20)²，第 109 帧全灭。",
         "extraction": extraction,
     }
     (out / "metadata.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
