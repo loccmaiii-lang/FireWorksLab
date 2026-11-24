@@ -12,6 +12,8 @@ from urllib.parse import quote
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from playwright.sync_api import sync_playwright
+from scipy.ndimage import center_of_mass, label, maximum_filter
+from scipy.spatial import cKDTree
 
 
 RESULT = Path(__file__).resolve().parents[1]
@@ -47,6 +49,38 @@ def label_frame(imgs, frame, fps):
     return out
 
 
+def check_opening(early, forming, held, center_uv):
+    """在实际回放中拦住两种退步：首帧段已是等比小兔，或星点只从一侧伸长。"""
+    def peaks(image):
+        light = np.asarray(image).max(axis=2)
+        labels, count = label((light > 85) & (light == maximum_filter(light, 3)))
+        assert count > 0
+        centers = center_of_mass(light, labels, np.arange(1, count + 1))
+        return np.asarray(centers)[:, ::-1] + 0.5
+
+    center = np.array(held.size) * center_uv
+    reference = peaks(held)
+    tree = cKDTree(reference)
+    final_extent = np.percentile(np.linalg.norm(reference - center, axis=1), 90)
+
+    def measure(image):
+        offsets = peaks(image) - center
+        extent = np.percentile(np.linalg.norm(offsets, axis=1), 90) / final_extent
+        # 把星簇等比放到停形的视尺寸，再数落在参考点心 4 像素内的亮峰。
+        distances = tree.query(center + offsets / extent)[0]
+        quadrant = (offsets[:, 0] > 0).astype(int) + 2 * (offsets[:, 1] > 0)
+        coverage = np.bincount(quadrant, minlength=4) / len(offsets)
+        return dict(peaks=len(offsets), extent=round(float(extent), 3),
+                    on_outline=round(float(np.mean(distances <= 4)), 3),
+                    smallest_quadrant=round(float(coverage.min()), 3))
+
+    first, later = measure(early), measure(forming)
+    assert first['peaks'] > 100 and first['smallest_quadrant'] > 0.10, first
+    assert first['extent'] < 0.55 < later['extent'] < 1 and first['on_outline'] < 0.6, first
+    assert later['on_outline'] > 0.75, later
+    return dict(star_cluster=first, forming_rabbit=later)
+
+
 def main():
     HERE.mkdir(parents=True, exist_ok=True)
     errors = []
@@ -73,14 +107,11 @@ def main():
             assert [im.size for im in held] == [(352,352)] * 2
             page.screenshot(path=str(HERE / '放大对照.png'))
             results = {}
-            # 半秒后下部横向鼓起、耳部尚未撑高。两份实际渲染都应明显偏离整图等比放大。
-            def lit_size(im):
-                y, x = np.nonzero(np.asarray(im).max(axis=2) > 80)
-                return np.array((np.ptp(x) + 1, np.ptp(y) + 1))
-            swelling = capture(page,round(0.6*fps))
-            ratios = [lit_size(a)/lit_size(b) for a,b in zip(swelling,held)]
-            assert all(w > .76 and h < .70 and w-h > .20 for w,h in ratios), ratios
-            results['0.60秒整图亮区宽高占成形比例'] = [r.round(3).tolist() for r in ratios]
+            metadata = json.loads((RESULT / 'shared/metadata.json').read_text(encoding='utf8'))
+            early = capture(page, round(0.20 * fps))
+            forming = capture(page, round(1.07 * fps))
+            results['星簇展开'] = [check_opening(a, b, c, metadata['flash']['center_uv'])
+                                    for a, b, c in zip(early, forming, held)]
             for distance in [800,1000,1200]:
                 page.select_option('#scale', str(distance))
                 frames = capture(page,hold,'game')
@@ -134,7 +165,7 @@ def main():
                 assert energy[-12][channel] > energy[-5][channel] >= energy[-1][channel]
             results['播放'] = dict(frames=count,fps=fps,presented=len(set(presented)),
                                   last_eight_peaks=peaks[-8:],last_eight_energy=energy[-8:])
-            checkpoints = [round(.3*fps), round(.6*fps), round(.9*fps), round(1.2*fps), hold, round(2.8*fps)]
+            checkpoints = [round(.2*fps), round(.5*fps), round(.7*fps), round(.9*fps), hold, round(2.8*fps)]
             contact = Image.new('RGB',(2*500,3*278),(16,17,18))
             for j,key in enumerate(checkpoints):
                 contact.paste(sequence[key].resize((500,277),Image.Resampling.LANCZOS),

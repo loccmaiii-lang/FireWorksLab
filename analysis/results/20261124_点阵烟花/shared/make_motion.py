@@ -119,43 +119,28 @@ def smoothstep(x):
     return x*x*(3 - 2*x)
 
 
-def balloon_opening(targets, median_radius):
-    # h=0 是兔形底边，h=1 是耳尖。先打开发光点两侧的宽度，再撑开这一段的竖向长度。
-    # 把各段伸长率沿高度积分；耳朵会被充起的脸颊往上带，棍、五官及轮廓共用连续变形。
-    bottom, top = targets[:, 1].max(), targets[:, 1].min()
-    height = bottom - top
-    levels = (bottom - targets[:, 1]) / height
-    lattice = np.linspace(0, 1, 513)
-    times = np.arange(HOLD_START) / FPS
-    x0 = (targets[:, 0].min() + targets[:, 0].max()) / 2
-    dx = targets[:, 0] - x0
-    xy, radius, intensity = [], [], []
-    for t in times:
-        def stretch(h):
-            return 0.055 + 0.945 * smoothstep((t - 0.035 - 0.76*h**1.55) / (0.64 + 0.10*h))
+def radial_opening(targets, median_radius):
+    """星点沿爆心到落点的射线展开。暂时放大内圈点距，最后逐点回到参考位置。"""
+    offset = targets - LAUNCH
+    distance = np.linalg.norm(offset, axis=1)
+    outer_radius = distance.max()
+    time = np.arange(HOLD_START)[:, None] / FPS
+    progress = 1 - (1 - time / (HOLD_START / FPS))**2.25
 
-        local = stretch(lattice)
-        lifted = np.r_[0, np.cumsum((local[:-1] + local[1:]) / (2*(len(lattice)-1)))]
-        foot = bottom - 0.125*(1 - smoothstep(t / 0.86))
-        y = foot - height * np.interp(levels, lattice, lifted)
-        width_time = (t - 0.78*levels**1.65) / (0.60 + 0.12*levels)
-        opening = smoothstep(width_time)
-        # 脸部圆鼓一拍后再收回。耳尖上方逐渐变细，这一拍在那里更迟、更弱。
-        cheek = np.exp(-((levels - 0.39) / 0.28)**2)
-        rebound = np.sin(np.pi * np.clip((width_time - 0.48) / 1.06, 0, 1))**2
-        rebound *= 1 - smoothstep((t - 1.27) / 0.33)
-        pressure = np.sin(np.pi * opening)**2
-        width = 0.095 + 0.905*opening + 0.22*pressure + (0.035 + 0.15*cheek)*rebound
-        x = x0 + dx * width
-        # 正面圆鼓时中间略高、两侧略低。这一项随充气波离开而完全消失。
-        crown = np.exp(-(dx / 0.22)**2) * cheek
-        y -= 0.016 * pressure * crown
-        xy.append(np.column_stack((x, y)))
-        density = np.sqrt(np.maximum(0, width * stretch(levels)))
-        radius.append(median_radius * (0.25 + 0.75*np.minimum(density, 1)))
-        # 收拢处点位较密，保持微光；已撑开的部分再到原点径和亮度。
-        intensity.append(smoothstep(t / 0.13) * (0.055 + 0.945*smoothstep((density-0.07)/0.82)))
-    return np.array(xy), np.array(radius), np.array(intensity)
+    # 每个点只取一次初速差。最初的飞行距离主要由初速决定，星团不会描出一只缩小的兔子。
+    speed_offset = np.random.default_rng(430).uniform(-1.15, 0.80, len(targets))
+    spread = 1 - smoothstep((time - 0.22) / 0.72)
+    reach = 0.60 * outer_radius * np.exp(spread * speed_offset)
+
+    # 同一时刻，短射线先走完较大比例，外圈再追上。每条射线单调向外，到头时速度降到零。
+    fraction = progress / (progress + (1 - progress) * np.maximum(distance, 1e-9) / reach)
+    assert (np.diff(fraction, axis=0) >= 0).all() and fraction.max() <= 1
+    xy = LAUNCH + fraction[:, :, None] * offset
+    bulge = 4 * progress * (1 - progress) * (1 - distance / outer_radius)
+    radius = median_radius * (0.59 + 0.41 * smoothstep(time / 0.63)) * (1 + 0.16 * bulge)
+    ignition = smoothstep(time / 0.10) * (0.58 + 0.42 * smoothstep(time / 0.52))
+    intensity = np.broadcast_to(ignition, fraction.shape)
+    return xy, radius, intensity
 
 
 def continue_decay(xy, radius, intensity):
@@ -182,14 +167,12 @@ def sample(points, extraction, side_m):
     median_radius = np.median(points[:, 4]) / SOURCE_SPAN_PX
     kept = original_hold_and_decay(targets, median_radius)
     tail = continue_decay(*kept)
-    first = balloon_opening(targets, median_radius)
+    first = radial_opening(targets, median_radius)
     xy, radius, intensity = [np.concatenate(parts, axis=0) for parts in zip(first, kept, tail)]
     time = np.arange(FRAMES) / FPS
     flash_on = time <= 0.25
     flash_radius = 2.2 * np.sqrt(2 * np.log(2)) / side_m
-    # 引子留在收拢的小气囊中央。熄灭后用原静默坐标，保持已看过的后段所有卡片数据。
-    flash_xy = np.broadcast_to(LAUNCH, (FRAMES, 1, 2)).copy()
-    flash_xy[flash_on, 0, :] = [0.5, targets[:, 1].max() - 0.125 - 0.025]
+    flash_xy = np.broadcast_to(LAUNCH, (FRAMES, 1, 2))
     xy = np.concatenate((xy, flash_xy), axis=1)
     radius = np.column_stack((radius, np.where(flash_on, flash_radius, 0)))
     intensity = np.column_stack((intensity, np.where(flash_on, 0.52*np.exp(-time/0.035), 0)))
@@ -237,7 +220,7 @@ def main():
         "added_tail_start_frame": TAIL_START, "last_lit_source_frame": FRAMES - 2, "zero_frame": FRAMES - 1,
         "flash": {"center_uv": data["xy"][0, -1].tolist(), "sigma_metres": 2.2, "initial_intensity": 0.52, "peak_multiplier": 1.5,
                   "decay_seconds": 0.035, "cut_seconds": 0.25, "kernel": "1.5 * intensity * 2^(-d²/radius²)"},
-        "opening_reference": "下方收拢的气囊先横向充宽，伸长率自下而上沿图形累积；脸颊先鼓圆，耳尖与棒端随后拉开，脸侧轻回弹。第 48 帧恢复参考点位。",
+        "opening_reference": "476 点从同一爆心沿射线起步，初速分散成星簇。展开中内圈先走完较大比例，临时径向放大渐退，显出兔形。第 48 帧精确停在参考点位。",
         "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
         "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
         "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",
