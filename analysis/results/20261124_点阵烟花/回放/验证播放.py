@@ -5,6 +5,7 @@ import functools
 import http.server
 import io
 import json
+import sys
 import threading
 from pathlib import Path
 from urllib.parse import quote
@@ -12,7 +13,6 @@ from urllib.parse import quote
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from playwright.sync_api import sync_playwright
-from scipy.ndimage import center_of_mass, label, maximum_filter
 from scipy.spatial import cKDTree
 
 
@@ -49,36 +49,56 @@ def label_frame(imgs, frame, fps):
     return out
 
 
-def check_opening(early, forming, held, center_uv):
-    """在实际回放中拦住两种退步：首帧段已是等比小兔，或星点只从一侧伸长。"""
-    def peaks(image):
-        light = np.asarray(image).max(axis=2)
-        labels, count = label((light > 85) & (light == maximum_filter(light, 3)))
-        assert count > 0
-        centers = center_of_mass(light, labels, np.arange(1, count + 1))
-        return np.asarray(centers)[:, ::-1] + 0.5
+def native_reference(browser, metadata):
+    """从实际烘焙器页面重新发射同一张点表，与两份素材输入逐帧核对。"""
+    scripts = RESULT.parents[1] / 'scripts'
+    sys.path.insert(0, str(scripts))
+    from browser_runtime import validation_url, verify_validation_source
 
-    center = np.array(held.size) * center_uv
-    reference = peaks(held)
-    tree = cKDTree(reference)
-    final_extent = np.percentile(np.linalg.norm(reference - center, axis=1), 90)
+    template = RESULT.parents[2] / 'tool' / 'FireworkBaker.html'
+    url = validation_url(default=template.as_uri())
+    verify_validation_source(url, template)
+    with np.load(RESULT / 'shared/motion.npz') as motion:
+        launch = motion['launch_shape_xy'].tolist()
+        last = metadata['formation_frame']
+        expected = motion['xy'][:last+1, :-1]
+        groups = motion['group'][:-1]
+    page = browser.new_page()
+    try:
+        page.goto(url, wait_until='domcontentloaded')
+        page.wait_for_function("typeof Sim === 'function' && typeof defaultsFor === 'function'")
+        trace = page.evaluate('''([points, fps, end]) => {
+            const p = derive({...defaultsFor('kata').P}), key = '点阵回放验算';
+            if (p.pattern !== 'heart') throw Error('型物默认模板已变化');
+            shapeCache.set(key + '|' + points.length, points);
+            const sim = new Sim({...p, pattern:'text', text:key, stars:points.length});
+            const frames = [];
+            for (let i=0; i<=end; i++) {
+                while (sim.t < i/fps-1e-9) sim.step(H_STEP);
+                frames.push(sim.all.map(star => [star.x, star.y]));
+            }
+            return frames;
+        }''', [launch, metadata['fps'], last])
+    finally:
+        page.close()
+    xy = (np.array(trace) * [1,-1] * metadata['native_simulation']['uvPerMetre']
+          + metadata['flash']['center_uv'])
+    max_error = np.linalg.norm(xy - expected, axis=2).max() * 512
+    assert max_error < 0.0001, max_error
+    return xy, groups, float(max_error)
 
-    def measure(image):
-        offsets = peaks(image) - center
-        extent = np.percentile(np.linalg.norm(offsets, axis=1), 90) / final_extent
-        # 把星簇等比放到停形的视尺寸，再数落在参考点心 4 像素内的亮峰。
-        distances = tree.query(center + offsets / extent)[0]
-        quadrant = (offsets[:, 0] > 0).astype(int) + 2 * (offsets[:, 1] > 0)
-        coverage = np.bincount(quadrant, minlength=4) / len(offsets)
-        return dict(peaks=len(offsets), extent=round(float(extent), 3),
-                    on_outline=round(float(np.mean(distances <= 4)), 3),
-                    smallest_quadrant=round(float(coverage.min()), 3))
 
-    first, later = measure(early), measure(forming)
-    assert first['peaks'] > 100 and first['smallest_quadrant'] > 0.10, first
-    assert first['extent'] < 0.55 < later['extent'] < 1 and first['on_outline'] < 0.6, first
-    assert later['on_outline'] > 0.75, later
-    return dict(star_cluster=first, forming_rabbit=later)
+def check_pixels(image, uv, half_radius_uv):
+    # 起爆时相邻灯芯连成亮线，局部极大值无法代表线上全部星点。直接验亮核像素的覆盖。
+    light = np.asarray(image).max(axis=2)
+    cores = np.argwhere(light > 180)[:, ::-1] + 0.5
+    assert len(cores) > 0
+    expected = np.asarray(uv) * image.size
+    off_path = float(np.percentile(cKDTree(expected).query(cores)[0], 95))
+    missing = float(np.percentile(cKDTree(cores).query(expected)[0], 95))
+    # 重叠亮核加色后可超过单星半高半径。给两倍实测半径，点心到亮像素限一格对角线。
+    assert off_path < 2 * half_radius_uv * image.width and missing < np.sqrt(2), (off_path, missing)
+    return dict(core_pixels=len(cores), core_to_sim_px95=round(off_path, 3), sim_to_core_px95=round(missing, 3))
 
 
 def main():
@@ -108,10 +128,20 @@ def main():
             page.screenshot(path=str(HERE / '放大对照.png'))
             results = {}
             metadata = json.loads((RESULT / 'shared/metadata.json').read_text(encoding='utf8'))
-            early = capture(page, round(0.20 * fps))
-            forming = capture(page, round(1.07 * fps))
-            results['星簇展开'] = [check_opening(a, b, c, metadata['flash']['center_uv'])
-                                    for a, b, c in zip(early, forming, held)]
+            xy, groups, err = native_reference(browser, metadata)
+            results['实际烘焙器逐星对照'] = dict(frames=len(xy), points=len(groups), max_error_512px=err)
+            layers = page.evaluate('window.rabbitBakerData.pc.map(l => [l.frames,l.gain])')
+            radius_uv = metadata['extraction']['measured_half_height_radius_median_px'] / metadata['source_pixels_per_uv_unit']
+            results['实际开花亮核'] = {}
+            for tick in (3, 6, 18, 30, metadata['formation_frame']):
+                baker, vat = capture(page, tick)
+                # 图集在两次取样间沿用上一格，取每个实际素材格首次显示的 tick。
+                per_color = []
+                for group, (tiles, gain) in enumerate(layers):
+                    start = next(i for i in range(tick+1) if tiles[i] == tiles[tick] and gain[i] > 0)
+                    per_color.extend(xy[start, groups == group])
+                results['实际开花亮核'][tick] = dict(baker=check_pixels(baker, per_color, radius_uv),
+                                                   vat=check_pixels(vat, xy[tick], radius_uv))
             for distance in [800,1000,1200]:
                 page.select_option('#scale', str(distance))
                 frames = capture(page,hold,'game')
@@ -193,8 +223,8 @@ def main():
             sheet.save(RESULT/'成形对照.png')
             page.set_viewport_size({'width':390,'height':844})
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-            # 用户在本机双击 HTML，通过 file 协议也要能读入两套成品。
-            page.goto((RESULT/'双方案对照.html').as_uri())
+            # 从同一交付入口重新载入，复核默认状态和减少动态效果的设置。
+            page.reload()
             page.wait_for_function("!document.querySelector('#play').disabled || document.querySelector('#error').textContent")
             assert page.locator('#error').inner_text() == ''
             assert all(np.asarray(im).max() > 160 for im in capture(page,hold))

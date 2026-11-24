@@ -3,6 +3,7 @@ import argparse
 import csv
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -114,33 +115,15 @@ def original_hold_and_decay(targets, median_radius):
     return np.array(xy), np.array(radius), np.array(intensity)
 
 
-def smoothstep(x):
-    x = np.clip(x, 0, 1)
-    return x*x*(3 - 2*x)
-
-
-def radial_opening(targets, median_radius):
-    """星点沿爆心到落点的射线展开。暂时放大内圈点距，最后逐点回到参考位置。"""
-    offset = targets - LAUNCH
-    distance = np.linalg.norm(offset, axis=1)
-    outer_radius = distance.max()
-    time = np.arange(HOLD_START)[:, None] / FPS
-    progress = 1 - (1 - time / (HOLD_START / FPS))**2.25
-
-    # 每个点只取一次初速差。最初的飞行距离主要由初速决定，星团不会描出一只缩小的兔子。
-    speed_offset = np.random.default_rng(430).uniform(-1.15, 0.80, len(targets))
-    spread = 1 - smoothstep((time - 0.22) / 0.72)
-    reach = 0.60 * outer_radius * np.exp(spread * speed_offset)
-
-    # 同一时刻，短射线先走完较大比例，外圈再追上。每条射线单调向外，到头时速度降到零。
-    fraction = progress / (progress + (1 - progress) * np.maximum(distance, 1e-9) / reach)
-    assert (np.diff(fraction, axis=0) >= 0).all() and fraction.max() <= 1
-    xy = LAUNCH + fraction[:, :, None] * offset
-    bulge = 4 * progress * (1 - progress) * (1 - distance / outer_radius)
-    radius = median_radius * (0.59 + 0.41 * smoothstep(time / 0.63)) * (1 + 0.16 * bulge)
-    ignition = smoothstep(time / 0.10) * (0.58 + 0.42 * smoothstep(time / 0.52))
-    intensity = np.broadcast_to(ignition, fraction.shape)
-    return xy, radius, intensity
+def kata_opening(targets):
+    request = dict(targetUV=targets.tolist(), origin=LAUNCH.tolist(), fps=FPS, lastFrame=HOLD_START)
+    result = subprocess.run(["node", str(HERE / "sample_kata.cjs")], input=json.dumps(request),
+                            encoding="utf8", stdout=subprocess.PIPE, check=True)
+    sample = json.loads(result.stdout)
+    positions = LAUNCH + np.asarray(sample.pop("frames")) * [1, -1] * sample["uvPerMetre"]
+    # 成形帧是最后一个模拟样本，也是旧消散的起点。接合前逐点核验。
+    np.testing.assert_allclose(positions[-1], targets, atol=1e-9, rtol=0)
+    return positions, np.array(sample.pop("launch")), sample
 
 
 def continue_decay(xy, radius, intensity):
@@ -158,7 +141,7 @@ def continue_decay(xy, radius, intensity):
             radius[-1] * (1 - 0.3 * progress), intensity[-1] * (1 - progress)**2)
 
 
-def sample(points, extraction, side_m):
+def sample(points, extraction):
     centers = points[:, 1:3]
     reference_center = (centers.min(axis=0) + centers.max(axis=0)) * 0.5
     targets = (centers - reference_center) / SOURCE_SPAN_PX + 0.5
@@ -167,25 +150,30 @@ def sample(points, extraction, side_m):
     median_radius = np.median(points[:, 4]) / SOURCE_SPAN_PX
     kept = original_hold_and_decay(targets, median_radius)
     tail = continue_decay(*kept)
-    first = radial_opening(targets, median_radius)
+    flight, launch, native = kata_opening(targets)
+    opening_size = (HOLD_START, len(targets))
+    # 沿用原模拟 headI 的 0.05 秒点火段，点径、三色分组和随后的寿命由点阵美术决定。
+    ignition = np.minimum(np.arange(HOLD_START) / (FPS * 0.05), 1.0)[:, None]
+    first = flight[:-1], np.full(opening_size, median_radius), np.broadcast_to(ignition, opening_size)
     xy, radius, intensity = [np.concatenate(parts, axis=0) for parts in zip(first, kept, tail)]
     time = np.arange(FRAMES) / FPS
-    flash_on = time <= 0.25
-    flash_radius = 2.2 * np.sqrt(2 * np.log(2)) / side_m
+    flash = native["flash"]
+    flash_on = time <= flash["cut"]
+    flash_radius = flash["sig"] * native["uvPerMetre"] * np.sqrt(2 * np.log(2))
     flash_xy = np.broadcast_to(LAUNCH, (FRAMES, 1, 2))
     xy = np.concatenate((xy, flash_xy), axis=1)
     radius = np.column_stack((radius, np.where(flash_on, flash_radius, 0)))
-    intensity = np.column_stack((intensity, np.where(flash_on, 0.52*np.exp(-time/0.035), 0)))
+    intensity = np.column_stack((intensity, np.where(flash_on, flash["I"]*np.exp(-time/flash["dec"]), 0)))
     palette = extraction["palette"]
     colors = {name: np.array([p[key] for p in palette], dtype=np.uint8)[groups]
               for name, key in [("rgb", "single_color_srgb"), ("core_rgb", "core_srgb"), ("halo_rgb", "halo_srgb")]}
     data = {"xy": np.array(xy, dtype=np.float32), "radius": np.array(radius, dtype=np.float32),
             "intensity": np.array(intensity, dtype=np.float32), "group": groups,
-            "point_id": ids.astype(np.int32), "fps": np.int32(FPS), **colors}
+            "point_id": ids.astype(np.int32), "fps": np.int32(FPS), "launch_shape_xy": launch, **colors}
     assert np.allclose(data["xy"][HOLD_START:HOLD_END + 1, :-1], targets, atol=1e-7)
     assert np.max(data["intensity"][-1]) == 0 and np.min(data["intensity"][-2, :-1]) > 0
     assert data["xy"].min() > 0 and data["xy"].max() < 1
-    return data, reference_center.tolist()
+    return data, reference_center.tolist(), native
 
 
 def main():
@@ -206,7 +194,7 @@ def main():
         points = np.loadtxt(HERE / "points.csv", delimiter=",", skiprows=1)
         extraction = json.loads((HERE / "metadata.json").read_text(encoding="utf8"))["extraction"]
     side_m = round(SOURCE_SPAN_PX * DEMO_HEIGHT_METRES / np.ptp(points[:, 2]), 2)
-    data, center = sample(points, extraction, side_m)
+    data, center, native = sample(points, extraction)
     np.savez_compressed(out / "motion.npz", **data)
     report = {
         "fps": FPS, "frame_count": FRAMES, "duration_seconds": FRAMES / FPS,
@@ -218,9 +206,12 @@ def main():
         "shape_point_count": len(points), "flash_point_id": len(points), "total_point_count": len(points) + 1,
         "opening_start_frame": 0, "formation_frame": HOLD_START, "decay_start_frame": HOLD_END + 1,
         "added_tail_start_frame": TAIL_START, "last_lit_source_frame": FRAMES - 2, "zero_frame": FRAMES - 1,
-        "flash": {"center_uv": data["xy"][0, -1].tolist(), "sigma_metres": 2.2, "initial_intensity": 0.52, "peak_multiplier": 1.5,
-                  "decay_seconds": 0.035, "cut_seconds": 0.25, "kernel": "1.5 * intensity * 2^(-d²/radius²)"},
-        "opening_reference": "476 点从同一爆心沿射线起步，初速分散成星簇。展开中内圈先走完较大比例，临时径向放大渐退，显出兔形。第 48 帧精确停在参考点位。",
+        "flash": {"center_uv": LAUNCH.tolist(), "sigma_metres": native["flash"]["sig"]*native["uvPerMetre"]*side_m,
+                  "initial_intensity": native["flash"]["I"], "peak_multiplier": 1.5,
+                  "decay_seconds": native["flash"]["dec"], "cut_seconds": native["flash"]["cut"],
+                  "kernel": "1.5 * intensity * 2^(-d²/radius²)"},
+        "opening_reference": "从零时刻起直接采样烘焙器型物心形的原生模拟。点火前一次性校准兔形发射点表，使第 48 帧落在附件的 476 个点心。每个物理步都由原版 Sim.step 计算。灯芯、分色、停形和余火使用点阵样例的美术。",
+        "native_simulation": native,
         "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
         "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
         "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",

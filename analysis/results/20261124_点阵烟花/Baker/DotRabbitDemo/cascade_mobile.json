@@ -12,8 +12,8 @@
     "renderVer": 40
    }
   ],
-  "plan_sig": "8f0c1dc9",
-  "motion_sha256": "1108d41dec99d137f049134b43c8841734a488d768c4acd8c0e25fa6155d3be8",
+  "plan_sig": "6fb7332a",
+  "motion_sha256": "dd522a84ea7d04adcd70d2883e1b175cf0c1bc9d18438d2be61764f7d664dea0",
   "input": "外部逐点轨迹，经离线适配器栅格化"
  },
  "textures": {
@@ -25,15 +25,15 @@
    "channels": 4,
    "frames": 64,
    "asset": "T_EFX_FireWorks_DotRabbitDemo_Mono_4x4_01",
-   "sha256": "a7e8b6cad11596c4035d5e76836a8df40fb0a3865e6d3b9e55929d61b7549f4f"
+   "sha256": "476657f7db75d04dee244749bb0f99ec801e6d4351c97d9daa88bc6443f53c22"
   },
   "L1_cutout": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_Mono_4x4_01_C.png",
    "class": "cutout",
    "asset": "T_EFX_FireWorks_DotRabbitDemo_Mono_4x4_01_C",
    "save_est": 0.406,
-   "hash": "f3c6a6a22af3a39b19bd",
-   "sha256": "6c5279725c2ccabb12bac47c23ce0559b722292456764d371a6f65a918359061"
+   "hash": "13f5a3ca9191ef0c1960",
+   "sha256": "425e19cd4c5a0fc49fd03b7ec9a38591d49a9e3227a659026b53f6dae054f0df"
   },
   "L1_ramp": {
    "file": "T_EFX_FireWorks_DotRabbitDemo_White_R.png",
@@ -119,16 +119,8 @@
          0.01
         ],
         [
-         0.0909,
-         10.01
-        ],
-        [
-         0.1091,
-         11.01
-        ],
-        [
-         0.2364,
-         25.01
+         0.2182,
+         24.01
         ],
         [
          0.4364,

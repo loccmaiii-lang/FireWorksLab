@@ -2,7 +2,7 @@
   "width": 477,
   "height": 110,
   "sideCm": 23614.0,
-  "radiusUV": 0.010969923106194142,
+  "radiusUV": 0.04310547319955309,
   "fps": 30.0,
   "durationSeconds": 3.6666666666666665,
   "shapeCards": 476,
@@ -51,15 +51,15 @@
     "recommendedSymmetricBoundsCm": 15100
   },
   "maxCenterErrorIn512Px": 0.12136118859052658,
-  "maxRadiusErrorIn512Px": 0.0008161067962646484,
+  "maxRadiusErrorIn512Px": 0.0070056915283203125,
   "maxBrightnessError": 0.0002440810203552246,
   "maxPremultipliedLinearRGBError": 0.0002440810203552246,
   "estimatedTextureBytes": 839520,
-  "sourceMotionSHA256": "1108d41dec99d137f049134b43c8841734a488d768c4acd8c0e25fa6155d3be8",
+  "sourceMotionSHA256": "dd522a84ea7d04adcd70d2883e1b175cf0c1bc9d18438d2be61764f7d664dea0",
   "sha256": {
-    "DotRabbit_mesh.fbx": "464ec2553f9bb0f6afe42cc00809bc29655c39fda18dbed283c70365d0ecb439",
-    "DotRabbit_pos.exr": "3134c1ec91a1dcb0365dcadb8874a6f7c09fb3eda08aedf438766d57c8be44d5",
-    "DotRabbit_col.exr": "d381d1ff8dea44327ae0f2109df2e505296ded812fee22fdd08338a803e6601f",
-    "DotRabbit_data.json": "3fb213446e0db374391bb94eb1668163616a522178afe8c659cc7a0f3f95de0e"
+    "DotRabbit_mesh.fbx": "e331e6df0a794548b4157875f2a2046bb1caa3b31aa312b59d24bdcc97b8599a",
+    "DotRabbit_pos.exr": "7138ae6160938ca8cc30c564b98b3e54932111f44fb93d9dc5850c450dbc82bd",
+    "DotRabbit_col.exr": "144e39c5267cf41e46702d150ee2d459c19f1cbcbb24537f72ad227498bf21bc",
+    "DotRabbit_data.json": "d829351eb685a53da635e0c48c12edd3e04582f663cf13873056fbb5401561e6"
   }
 }

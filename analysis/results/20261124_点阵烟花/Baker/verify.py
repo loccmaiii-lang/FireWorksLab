@@ -28,7 +28,7 @@ def inspect(platform, directory, motion, groups, meta):
     layers = [replay.Pack(str(directory), i) for i in range(len(spec['emitters']))]
     fps = meta['fps']
     hold_tick = sum(meta['hold_frames_inclusive'])//2
-    # 从实际包取格，逐段看星簇、轮廓浮现、径向减速与余火。
+    # 从实际包取格，逐段看同点起爆、型物外扩、成形与余火。
     times = [0, .2, .5, .7, .9, hold_tick/fps, meta['decay_start_frame']/fps, (meta['zero_frame']-1)/fps]
     report = replay.check(layers, str(QA / (platform + '.png')), times_s=times)
     if not report['pass']:

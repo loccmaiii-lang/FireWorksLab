@@ -26,16 +26,83 @@
   "flash": {
     "center_uv": [
       0.5,
-      0.550000011920929
+      0.55
     ],
-    "sigma_metres": 2.2,
-    "initial_intensity": 0.52,
+    "sigma_metres": 8.642439989531564,
+    "initial_intensity": 1,
     "peak_multiplier": 1.5,
     "decay_seconds": 0.035,
     "cut_seconds": 0.25,
     "kernel": "1.5 * intensity * 2^(-d²/radius²)"
   },
-  "opening_reference": "476 点从同一爆心沿射线起步，初速分散成星簇。展开中内圈先走完较大比例，临时径向放大渐退，显出兔形。第 48 帧精确停在参考点位。",
+  "opening_reference": "从零时刻起直接采样烘焙器型物心形的原生模拟。点火前一次性校准兔形发射点表，使第 48 帧落在附件的 476 个点心。每个物理步都由原版 Sim.step 计算。灯芯、分色、停形和余火使用点阵样例的美术。",
+  "native_simulation": {
+    "settings": {
+      "type": "kata",
+      "pattern": "heart",
+      "stars": 90,
+      "v0": 110,
+      "vt": 18,
+      "grav": 1,
+      "dirJit": 0.4,
+      "speedJit": 1,
+      "tilt": 0,
+      "seed": 7,
+      "burstR0": 0,
+      "wind": 0,
+      "burn": 2,
+      "sparkRate": 0
+    },
+    "step": 0.0020833333333333333,
+    "heart_check": {
+      "stars": 90,
+      "frames": 82,
+      "max_error": 0
+    },
+    "uvPerMetre": 0.007393696420058606,
+    "flash": {
+      "t0": 0,
+      "x": 0,
+      "y": 0,
+      "I": 1,
+      "sig": 4.95,
+      "dec": 0.035,
+      "cut": 0.25,
+      "main": 1
+    },
+    "relative_height": [
+      {
+        "seconds": 0,
+        "heart": 0,
+        "rabbit": 0
+      },
+      {
+        "seconds": 0.1,
+        "heart": 0.15286547727116176,
+        "rabbit": 0.17031786278412295
+      },
+      {
+        "seconds": 0.2,
+        "heart": 0.27399909752033447,
+        "rabbit": 0.29298556770200646
+      },
+      {
+        "seconds": 0.6,
+        "heart": 0.600563184877582,
+        "rabbit": 0.614779993722095
+      },
+      {
+        "seconds": 1,
+        "heart": 0.807731558398539,
+        "rabbit": 0.8129678824618123
+      },
+      {
+        "seconds": 1.6,
+        "heart": 1,
+        "rabbit": 1
+      }
+    ]
+  },
   "coordinates": "xy[frame,point_id] = [u 向右,v 向下]，原点左上。正面平面，无深度。",
   "radius": "每点亮度降至峰值一半处的半径，以方画布边长为 1。成形段采用参考图实测中位数。",
   "intensity": "线性相对强度 0–1。rgb 为只能单色的材质使用的折中色；core_rgb 与 halo_rgb 为实测近白灯芯与外围色相（sRGB）。",

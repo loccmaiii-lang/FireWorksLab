@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import json
+import re
 import zlib
 from pathlib import Path
 
@@ -69,3 +70,12 @@ if __name__ == "__main__":
     (HERE / "baker_data.js").write_text(
         f"window.rabbitCanvasMetres={side};\nwindow.rabbitTimeline={json.dumps(timeline)};\nwindow.rabbitBakerData="
         + json.dumps(data, separators=(",", ":")) + ";\n", encoding="ascii")
+    # HTML 地址固定，两个数据文件随共用轨迹换缓存版本，刷新旧标签即可看到这一轮。
+    page = HERE.parent / "双方案对照.html"
+    previous = page.read_text(encoding="utf8")
+    updated, count = re.subn(r'(src="(?:回放/baker_data|VAT/vat_data)\.js)(?:\?v=[0-9a-f]+)?"',
+                             lambda m: f'{m[1]}?v={motion_hash[:8]}"', previous)
+    if count != 2:
+        raise ValueError("固定对照页缺少序列或 VAT 数据入口")
+    if updated != previous:
+        page.write_text(updated, encoding="utf8")

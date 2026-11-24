@@ -38,7 +38,7 @@ label select {margin-left:5px}
 </style>
 </head>
 <body>
-<header><h1>兔形点阵烟花</h1><p>固定正面 · 上排看动作，下排看游戏内大小。两栏以同一帧、同一速度循环播放。</p></header>
+<header><h1>兔形点阵烟花</h1><p>型物心形的开花运动 · 固定正面。上排看动作，下排看游戏内大小，两栏同步播放。</p></header>
 <main>
 <div class="pair">
  <figure><figcaption>序列贴图 <small id="seqLabel">PC · 三色</small></figcaption><div class="stage"><canvas data-view="detail" id="baker" width="352" height="352" aria-label="序列贴图动作近看"></canvas></div><div class="game"><span class="distanceLabel">1000 米 · 1080p</span><canvas data-view="game" id="bakerGame" aria-label="序列贴图游戏尺寸"></canvas></div></figure>
@@ -55,8 +55,8 @@ label select {margin-left:5px}
 <p class="info">下排按项目 1080p 相机标定，手机选项只切换左侧序列。场景 Bloom、压缩和目标机帧时需在 UE 实测。</p>
 <p role="status" id="error"></p>
 </main>
-<script src="回放/baker_data.js"></script><script src="回放/baker_player.js"></script>
-<script src="VAT/vat_data.js"></script><script src="VAT/vat_player.js"></script>
+<script src="回放/baker_data.js?v=dd522a84"></script><script src="回放/baker_player.js"></script>
+<script src="VAT/vat_data.js?v=dd522a84"></script><script src="VAT/vat_player.js"></script>
 <script>
 (async () => {
   const $ = id => document.getElementById(id);
