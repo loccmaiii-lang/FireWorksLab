@@ -51,7 +51,9 @@
     "用户验收": "只由用户点「通过」设置，AI 不能改成 true"
   },
   "共享文件": {
-    "点阵烟花 · 双路线 Demo": "负责：点阵烟花（Codex），2026-11-24。已修正随机寿命引起的耳尖、灯棒等点离群。两份成品 49 个展开帧逐点核对，第 19 帧截图位置已复看，原停形和消散已验。固定入口 analysis/results/20261124_点阵烟花/双方案对照.html，黑底正面、左序列右 VAT，下排默认 1000 米。待用户审看。UE 沙盒及手游实测排在电棍调试之后。",
+    "防爆兵技能（电棍特效 · UE 4.24 检修）": "2026-11-27 检修完成（Antigravity，只改 5 个电棍非受击 PS，未提交 P4）：改前 T3D/uasset 备份在 analysis/local/20261127_电棍与VAT检修/（含 保留.txt）。已完成：① 假灯光 StartSize 方块放大至 ≥2.35×最大光半径（Weak 0.20/0.36、Mid 0.23/0.36、Strong 0.25/0.36、Start 0.34、Attack 0.42）；② Tip_Crackle/Tips_Crackle 统一由偏青改为蓝紫 (9.2,8.4,20.0)；③ 3 个 Loop 资产内嵌的 9 个旧 0.45 s Tips_* 发射器已非破坏性停用（LOD0 + RequiredModule bEnabled=False + SoloTracking 同步），RateAlpha 保持完好。5 个资产存盘读回通过，P4 已签出未提交；待用户关卡 3P 连播选档及后续手游 _M 版。详见 对话记录/对话框防爆兵技能.md 第 15 条。",
+    "点阵型物烟花（VAT 3.0 · UE 4.24 v4.5）": "2026-11-27 核验收口（Antigravity 检修更新，基于 11-24/25 UE 落地成果）：A 荧光棒兔（P_EFX_FireWorks_DotRabbitStar_HD，476 点 / 1.583 MB）、B 爱心兔（P_EFX_FireWorks_DotRabbitStar_B_HD，504 点 / 1.677 MB）、C 三小羊 v4.5（P_EFX_FireWorks_DotSheepStar_HD，851 点 / 2.831 MB）及共享 256² 星芒 Mask 已在 UE 4.24 落盘（单三角形 15 Hz 218 帧插值，合计 5,511 顶 / 1,837 面 / ~6.17 MB，FixedBounds 均为 ±16700 cm，T3D 读回核验通过）。已校准 sync_v4_5_sheep_to_ue424.py / tune_abc_burst_and_light_ue424.py 的 DotSheepStar 路径并更新审计报告 analysis/results/20261124_点阵型物烟花/hold10s/ue_export/素材规范与性能审计.md。待验：6 张 NPOT EXR 被 UE 强制 NeverStream=True 需性能组特批；C v4.5 实机 800–1200 m 与偏斜视角人工复看；手游真机 RGBA16F VS 采样兼容性与 _M 资产。",
+    "点阵烟花 · 双路线 Demo": "负责：点阵烟花（Codex），2026-11-24。已修正随机寿命引起的耳尖、灯棒等点离群。两份成品 49 个展开帧逐点核对，第 19 帧截图位置已复看，原停形和消散已验。固定入口 analysis/results/20261124_点阵烟花/双方案对照.html，黑底正面、左序列右 VAT，下排默认 1000 米。待用户审看。后续 UE 4.24 实机落地已转由「点阵型物烟花（VAT 3.0 · UE 4.24 v4.5）」推进。",
     "烟花工坊 · E 样板 4.1 合入 5.0.01": "2026-11-12 返工完成：工坊 5.0.02 / 烘焙器 4.9.138 已推 main（0889f00e），补齐 E 4.1 组件与共享曲线交互、正式版本及离线包；28 项专项自检、外壳 48/48 和完整推送门禁通过，认领释放，待用户验收。",
     "tool/importer（新建，只上传）": "已完成并释放（2026-11-04）：246 文件、22.710 MB 及完整 README 已推 main（e6f40f2d），244 来源原字节保留，交付重建与 reference 一致；既有检查失败、缺失输入和本机路径已列明，交云端烟花工坊（5.0）接续。",
     "网格垂柳UEv3（Codex） · 当前场景测试接入": {

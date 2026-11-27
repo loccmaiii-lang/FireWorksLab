@@ -5,8 +5,8 @@
 放 analysis/local/，不进 Git，默认留 14 天；交付证据（看法.md + 关键图）在 analysis/results/ 进 Git，这里不管。
 
 查的东西：
-  1. analysis/local/ 下一级目录：日期先从目录名取（YYYYMMDD / YYYY-MM-DD），取不到用目录里最新文件的修改时间；
-     超过 --days（默认 14）天 = 「到期」。被 .md 报告提到的标「有报告引用」，到期一样可删（原图只在本机，报告里的小图和结论在 Git）。
+  1. analysis/local/ 下一级目录：取目录名日期（YYYYMMDD / YYYY-MM-DD）与目录内最新文件修改时间的较晚者，
+     避免持续迭代的目录按建夹日期被误删；超过 --days（默认 14）天 = 「到期」。被 .md 报告提到的标「有报告引用」，到期一样可删（原图只在本机，报告里的小图和结论在 Git）。
   2. 永不自动删（「保留」/「问负责人」）：输出/（交付素材与 UE 资产备份）、monitor_state/（本机显卡后台在用）、归档_*、恢复点、
      含 .git 的（git worktree，用 git worktree remove）、名字含「保留」或里面有 保留.txt 的、_tmp 以外以 _ 开头的、
      被跟踪脚本写死路径（analysis/local/<目录>）的。
@@ -133,13 +133,16 @@ def scan_local(days=DAYS, sizes=True, refs=True, now=None):
         reason, cat = _keep_reason(name, path)
         if name == '_tmp':
             continue                                   # _tmp 按文件单独算（scan_tmp）
-        d = _name_date(name)
+        d_name = _name_date(name)
+        d = d_name
         src = '目录名'
         size = newest = files = None
-        if cat is None and name != '__pycache__' and d is None:
+        if cat is None and name != '__pycache__' and (d is None or d < cut or sizes):
             size, newest, files = _walk(path)
-            d = datetime.datetime.fromtimestamp(newest) if newest else None
-            src = '最新文件'
+            d_file = datetime.datetime.fromtimestamp(newest) if newest else None
+            if d_file is not None and (d is None or d_file.date() > d.date()):
+                d = d_file
+                src = '最新文件' if d_name is None else '最新文件/晚于目录名'
         if name == '__pycache__':
             cat, reason = '可删', 'Python 缓存'
         elif cat is None:
